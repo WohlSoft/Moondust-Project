@@ -25,7 +25,7 @@
 #include "./common_features/graphics_funcs.h"
 
 
-void npcedit::on_ResetNPCData_clicked()
+void NpcEdit::on_ResetNPCData_clicked()
 {
     NpcData = StartNPCData; //Restore first version
     setDataBoxes();
@@ -35,7 +35,7 @@ void npcedit::on_ResetNPCData_clicked()
 
 
 ///////////SMBX64 Options switches//////////////////////////////
-void npcedit::on_en_GFXOffsetX_clicked(bool checked)
+void NpcEdit::on_en_GFXOffsetX_clicked(bool checked)
 {
     ui->GFXOffSetX->setEnabled(checked);
     ui->offsetx_label->setEnabled(checked);
@@ -46,7 +46,7 @@ void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_en_GFXOffsetY_clicked(bool checked)
+void NpcEdit::on_en_GFXOffsetY_clicked(bool checked)
 {
     ui->GFXOffSetY->setEnabled(checked);
     ui->offsety_label->setEnabled(checked);
@@ -57,7 +57,7 @@ void npcedit::on_en_GFXOffsetY_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GFXw_clicked(bool checked)
+void NpcEdit::on_En_GFXw_clicked(bool checked)
 {
 
     ui->GFXw->setEnabled(checked);
@@ -69,7 +69,7 @@ void npcedit::on_En_GFXw_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GFXh_clicked(bool checked)
+void NpcEdit::on_En_GFXh_clicked(bool checked)
 {
     ui->GFXh->setEnabled(checked);
     ui->gheight_label->setEnabled(checked);
@@ -80,7 +80,7 @@ void npcedit::on_En_GFXh_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Frames_clicked(bool checked)
+void NpcEdit::on_En_Frames_clicked(bool checked)
 {
     ui->Frames->setEnabled(checked);
     ui->frames_label->setEnabled(checked);
@@ -91,7 +91,7 @@ void npcedit::on_En_Frames_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Framespeed_clicked(bool checked)
+void NpcEdit::on_En_Framespeed_clicked(bool checked)
 {
     ui->Framespeed->setEnabled(checked);
     ui->framespeed_label->setEnabled(checked);
@@ -102,7 +102,7 @@ void npcedit::on_En_Framespeed_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Framestyle_clicked(bool checked)
+void NpcEdit::on_En_Framestyle_clicked(bool checked)
 {
     ui->FrameStyle->setEnabled(checked);
     ui->framestyle_label->setEnabled(checked);
@@ -113,7 +113,7 @@ void npcedit::on_En_Framestyle_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_IsForeground_clicked(bool checked)
+void NpcEdit::on_En_IsForeground_clicked(bool checked)
 {
     ui->IsForeground->setEnabled(checked);
     NpcData.en_foreground=checked;
@@ -122,7 +122,7 @@ void npcedit::on_En_IsForeground_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GrabSide_clicked(bool checked)
+void NpcEdit::on_En_GrabSide_clicked(bool checked)
 {
     ui->GrabSide->setEnabled(checked);
     NpcData.en_grabside=checked;
@@ -131,7 +131,7 @@ void npcedit::on_En_GrabSide_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GrabTop_clicked(bool checked)
+void NpcEdit::on_En_GrabTop_clicked(bool checked)
 {
     ui->GrabTop->setEnabled(checked);
     NpcData.en_grabtop=checked;
@@ -140,7 +140,7 @@ void npcedit::on_En_GrabTop_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_JumpHurt_clicked(bool checked)
+void NpcEdit::on_En_JumpHurt_clicked(bool checked)
 {
     ui->JumpHurt->setEnabled(checked);
     NpcData.en_jumphurt=checked;
@@ -149,7 +149,7 @@ void npcedit::on_En_JumpHurt_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_DontHurt_clicked(bool checked)
+void NpcEdit::on_En_DontHurt_clicked(bool checked)
 {
     ui->DontHurt->setEnabled(checked);
     NpcData.en_nohurt=checked;
@@ -158,7 +158,7 @@ void npcedit::on_En_DontHurt_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Score_clicked(bool checked)
+void NpcEdit::on_En_Score_clicked(bool checked)
 {
     ui->Score->setEnabled(checked);
     ui->score_label->setEnabled(checked);
@@ -168,7 +168,7 @@ void npcedit::on_En_Score_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoEat_clicked(bool checked)
+void NpcEdit::on_En_NoEat_clicked(bool checked)
 {
     ui->NoEat->setEnabled(checked);
     NpcData.en_noyoshi=checked;
@@ -177,7 +177,7 @@ void npcedit::on_En_NoEat_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoFireball_clicked(bool checked)
+void NpcEdit::on_En_NoFireball_clicked(bool checked)
 {
     ui->NoFireball->setEnabled(checked);
     NpcData.en_nofireball=checked;
@@ -186,7 +186,7 @@ void npcedit::on_En_NoFireball_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoIceball_clicked(bool checked)
+void NpcEdit::on_En_NoIceball_clicked(bool checked)
 {
     ui->NoIceball->setEnabled(checked);
     NpcData.en_noiceball=checked;
@@ -195,7 +195,7 @@ void npcedit::on_En_NoIceball_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Width_clicked(bool checked)
+void NpcEdit::on_En_Width_clicked(bool checked)
 {
     ui->Width->setEnabled(checked);
     ui->width_label->setEnabled(checked);
@@ -206,7 +206,7 @@ void npcedit::on_En_Width_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Height_clicked(bool checked)
+void NpcEdit::on_En_Height_clicked(bool checked)
 {
     ui->Height->setEnabled(checked);
     ui->height_label->setEnabled(checked);
@@ -217,7 +217,7 @@ void npcedit::on_En_Height_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Speed_clicked(bool checked)
+void NpcEdit::on_En_Speed_clicked(bool checked)
 {
     ui->Speed->setEnabled(checked);
     ui->speed_label->setEnabled(checked);
@@ -227,7 +227,7 @@ void npcedit::on_En_Speed_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_PlayerBlock_clicked(bool checked)
+void NpcEdit::on_En_PlayerBlock_clicked(bool checked)
 {
     ui->PlayerBlock->setEnabled(checked);
     NpcData.en_playerblock=checked;
@@ -236,7 +236,7 @@ void npcedit::on_En_PlayerBlock_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_PlayerBlockTop_clicked(bool checked)
+void NpcEdit::on_En_PlayerBlockTop_clicked(bool checked)
 {
     ui->PlayerBlockTop->setEnabled(checked);
     NpcData.en_playerblocktop=checked;
@@ -245,7 +245,7 @@ void npcedit::on_En_PlayerBlockTop_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NPCBlock_clicked(bool checked)
+void NpcEdit::on_En_NPCBlock_clicked(bool checked)
 {
     ui->NPCBlock->setEnabled(checked);
     NpcData.en_npcblock=checked;
@@ -254,7 +254,7 @@ void npcedit::on_En_NPCBlock_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NPCBlockTop_clicked(bool checked)
+void NpcEdit::on_En_NPCBlockTop_clicked(bool checked)
 {
     ui->NPCBlockTop->setEnabled(checked);
     NpcData.en_npcblocktop=checked;
@@ -263,7 +263,7 @@ void npcedit::on_En_NPCBlockTop_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoBlockCollision_clicked(bool checked)
+void NpcEdit::on_En_NoBlockCollision_clicked(bool checked)
 {
     ui->NoBlockCollision->setEnabled(checked);
     NpcData.en_noblockcollision=checked;
@@ -272,7 +272,7 @@ void npcedit::on_En_NoBlockCollision_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoGravity_clicked(bool checked)
+void NpcEdit::on_En_NoGravity_clicked(bool checked)
 {
     ui->NoGravity->setEnabled(checked);
     NpcData.en_nogravity=checked;
@@ -281,7 +281,7 @@ void npcedit::on_En_NoGravity_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_TurnCliff_clicked(bool checked)
+void NpcEdit::on_En_TurnCliff_clicked(bool checked)
 {
     ui->TurnCliff->setEnabled(checked);
     NpcData.en_cliffturn=checked;
@@ -294,7 +294,7 @@ void npcedit::on_En_TurnCliff_clicked(bool checked)
 
 
 /////////////////SMBX64 Params//////////////////////////////////
-void npcedit::on_GFXOffSetX_valueChanged(int arg1)
+void NpcEdit::on_GFXOffSetX_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsetx = arg1;
@@ -303,7 +303,7 @@ void npcedit::on_GFXOffSetX_valueChanged(int arg1)
 
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_GFXOffSetY_valueChanged(int arg1)
+void NpcEdit::on_GFXOffSetY_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsety = arg1;
@@ -311,7 +311,7 @@ void npcedit::on_GFXOffSetY_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_GFXw_valueChanged(int arg1)
+void NpcEdit::on_GFXw_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxwidth = arg1;
@@ -319,7 +319,7 @@ void npcedit::on_GFXw_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_GFXh_valueChanged(int arg1)
+void NpcEdit::on_GFXh_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxheight = arg1;
@@ -327,7 +327,7 @@ void npcedit::on_GFXh_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Frames_valueChanged(int arg1)
+void NpcEdit::on_Frames_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.frames = arg1;
@@ -335,7 +335,7 @@ void npcedit::on_Frames_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Framespeed_valueChanged(int arg1)
+void NpcEdit::on_Framespeed_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.framespeed=arg1;
@@ -343,7 +343,7 @@ void npcedit::on_Framespeed_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_FrameStyle_currentIndexChanged(int index)
+void NpcEdit::on_FrameStyle_currentIndexChanged(int index)
 {
     documentWasModified();
     NpcData.framestyle=index;
@@ -351,70 +351,70 @@ void npcedit::on_FrameStyle_currentIndexChanged(int index)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_IsForeground_stateChanged(int arg1)
+void NpcEdit::on_IsForeground_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.foreground=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_GrabSide_stateChanged(int arg1)
+void NpcEdit::on_GrabSide_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.grabside=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_GrabTop_stateChanged(int arg1)
+void NpcEdit::on_GrabTop_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.grabtop=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_JumpHurt_stateChanged(int arg1)
+void NpcEdit::on_JumpHurt_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.jumphurt=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_DontHurt_stateChanged(int arg1)
+void NpcEdit::on_DontHurt_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.nohurt=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Score_currentIndexChanged(int index)
+void NpcEdit::on_Score_currentIndexChanged(int index)
 {
     documentWasModified();
     NpcData.score=index;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoEat_stateChanged(int arg1)
+void NpcEdit::on_NoEat_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.noyoshi=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoFireball_stateChanged(int arg1)
+void NpcEdit::on_NoFireball_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.nofireball=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoIceball_stateChanged(int arg1)
+void NpcEdit::on_NoIceball_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.noiceball=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Width_valueChanged(int arg1)
+void NpcEdit::on_Width_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.width=arg1;
@@ -422,7 +422,7 @@ void npcedit::on_Width_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Height_valueChanged(int arg1)
+void NpcEdit::on_Height_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.height=arg1;
@@ -430,56 +430,56 @@ void npcedit::on_Height_valueChanged(int arg1)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_Speed_valueChanged(double arg1)
+void NpcEdit::on_Speed_valueChanged(double arg1)
 {
     documentWasModified();
     NpcData.speed = arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_PlayerBlock_stateChanged(int arg1)
+void NpcEdit::on_PlayerBlock_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.playerblock=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_PlayerBlockTop_stateChanged(int arg1)
+void NpcEdit::on_PlayerBlockTop_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.playerblocktop=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NPCBlock_stateChanged(int arg1)
+void NpcEdit::on_NPCBlock_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.npcblock=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NPCBlockTop_stateChanged(int arg1)
+void NpcEdit::on_NPCBlockTop_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.npcblocktop=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoBlockCollision_stateChanged(int arg1)
+void NpcEdit::on_NoBlockCollision_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.noblockcollision=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoGravity_stateChanged(int arg1)
+void NpcEdit::on_NoGravity_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.nogravity=arg1;
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_TurnCliff_stateChanged(int arg1)
+void NpcEdit::on_TurnCliff_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.cliffturn=arg1;
@@ -489,7 +489,7 @@ void npcedit::on_TurnCliff_stateChanged(int arg1)
 
 
 //////////Exchanged options/////////////////////////////////////
-void npcedit::on_En_NoHammer_clicked(bool checked)
+void NpcEdit::on_En_NoHammer_clicked(bool checked)
 {
     ui->NoHammer->setEnabled(checked);
     NpcData.en_nohammer=checked;
@@ -498,7 +498,7 @@ void npcedit::on_En_NoHammer_clicked(bool checked)
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_NoHammer_stateChanged(int arg1)
+void NpcEdit::on_NoHammer_stateChanged(int arg1)
 {
     documentWasModified();
     NpcData.nohammer=arg1;
@@ -507,7 +507,7 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
 
 
 
-void npcedit::on_En_NoShell_clicked(bool checked)
+void NpcEdit::on_En_NoShell_clicked(bool checked)
 {
     ui->NoShell->setEnabled(checked);
     NpcData.en_noshell=checked;
@@ -515,7 +515,7 @@ void npcedit::on_En_NoShell_clicked(bool checked)
     documentWasModified();
 }
 
-void npcedit::on_NoShell_stateChanged(int checked)
+void NpcEdit::on_NoShell_stateChanged(int checked)
 {
     documentWasModified();
     NpcData.noshell=checked;
@@ -524,7 +524,7 @@ void npcedit::on_NoShell_stateChanged(int checked)
 
 
 
-void npcedit::on_En_Name_clicked(bool checked)
+void NpcEdit::on_En_Name_clicked(bool checked)
 {
     ui->Name->setEnabled(checked);
     NpcData.en_name=checked;
@@ -533,7 +533,7 @@ void npcedit::on_En_Name_clicked(bool checked)
 }
 
 
-void npcedit::on_Name_textEdited(const QString &arg1)
+void NpcEdit::on_Name_textEdited(const QString &arg1)
 {
     documentWasModified();
     NpcData.name=arg1;
@@ -544,7 +544,7 @@ void npcedit::on_Name_textEdited(const QString &arg1)
 
 
 
-void npcedit::on_DirectLeft_clicked()
+void NpcEdit::on_DirectLeft_clicked()
 {
     ui->DirectLeft->setChecked(true);
     ui->DirectRight->setChecked(false);
@@ -552,7 +552,7 @@ void npcedit::on_DirectLeft_clicked()
     updatePreview();
 }
 
-void npcedit::on_DirectRight_clicked()
+void NpcEdit::on_DirectRight_clicked()
 {
     ui->DirectRight->setChecked(true);
     ui->DirectLeft->setChecked(false);
@@ -561,7 +561,7 @@ void npcedit::on_DirectRight_clicked()
 }
 ////////////////////////////////////////////////////////////////
 
-void npcedit::loadPreview()
+void NpcEdit::loadPreview()
 {
     if(npc_id==0) return;
 
@@ -657,7 +657,7 @@ void npcedit::loadPreview()
     //npcPreview
 }
 
-void npcedit::updatePreview()
+void NpcEdit::updatePreview()
 {
     if(!physics || !npcPreview)
         return;
@@ -694,7 +694,7 @@ void npcedit::updatePreview()
 }
 
 
-void npcedit::loadImageFile()
+void NpcEdit::loadImageFile()
 {
     QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
 
@@ -719,7 +719,7 @@ void npcedit::loadImageFile()
 
 }
 
-void npcedit::refreshImageFile()
+void NpcEdit::refreshImageFile()
 {
     loadImageFile();
     npcPreview->AnimationStop();

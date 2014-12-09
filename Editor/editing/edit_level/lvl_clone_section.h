@@ -15,12 +15,12 @@ class LvlCloneSection : public QDialog
 public:
     explicit LvlCloneSection(QWidget *parent = 0);
     ~LvlCloneSection();
-    void addLevelList(QList<leveledit* > _levels, leveledit *active = NULL);
+    void addLevelList(QList<LevelEdit* > _levels, LevelEdit *active = NULL);
 
     int clone_margin;
-    leveledit* clone_source;
+    LevelEdit* clone_source;
     int clone_source_id;
-    leveledit* clone_target;
+    LevelEdit* clone_target;
     int clone_target_id;
 
 private slots:
@@ -29,7 +29,7 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
-    QList<leveledit* > levels;
+    QList<LevelEdit* > levels;
     Ui::LvlCloneSection *ui;
 };
 

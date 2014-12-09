@@ -294,7 +294,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 else
                 {
-                    npcedit *child = MainWinConnect::pMainWin->createNPCChild();
+                    NpcEdit *child = MainWinConnect::pMainWin->createNPCChild();
                     child->newFile(npcData.id);
                     child->show();
                 }

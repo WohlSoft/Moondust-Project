@@ -32,17 +32,17 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
 
     //Creating of level files list
-    QList<leveledit *> openedLeves;
+    QList<LevelEdit *> openedLeves;
 
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
         if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
-            openedLeves.push_back(qobject_cast<leveledit *>(window->widget()));
+            openedLeves.push_back(qobject_cast<LevelEdit *>(window->widget()));
         }
     }
 
-    leveledit* activeLvlWin=NULL;
+    LevelEdit* activeLvlWin=NULL;
     if(activeChildWindow()==1)
         activeLvlWin = activeLvlEditWin();
 
@@ -64,9 +64,9 @@ void MainWindow::on_actionCloneSectionTo_triggered()
         progress.setCancelButton(0);
         progress.setMinimumDuration(0);
 
-        leveledit * src = box.clone_source;
+        LevelEdit * src = box.clone_source;
         int s_id = box.clone_source_id;
-        leveledit * dst = box.clone_target;
+        LevelEdit * dst = box.clone_target;
         int d_id = box.clone_target_id;
 
         //Init target section
@@ -239,7 +239,7 @@ void MainWindow::on_actionSCT_Delete_triggered()
                                  tr("Do you want to remove all objects of this section?"),
                                  QMessageBox::Yes, QMessageBox::No)==QMessageBox::Yes)
         {
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             QRectF zone;
             bool ok=false;
             long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),

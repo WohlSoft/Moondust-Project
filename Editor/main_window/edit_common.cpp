@@ -84,7 +84,7 @@ void MainWindow::on_actionReload_triggered()
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
 
-        leveledit *child = createLvlChild();
+        LevelEdit *child = createLvlChild();
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts))) {
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
@@ -134,7 +134,7 @@ void MainWindow::on_actionReload_triggered()
         //activeNpcEditWin()->close();
         ui->centralWidget->activeSubWindow()->close();
 
-        npcedit *child = createNPCChild();
+        NpcEdit *child = createNPCChild();
         if (child->loadFile(filePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
             child->show();
@@ -366,7 +366,7 @@ bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
 {
     if(activeChildWindow() == 1)
     {
-        leveledit* edit = activeLvlEditWin();
+        LevelEdit* edit = activeLvlEditWin();
         QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
         x = coor.x();
         y = coor.y();

@@ -45,7 +45,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
 
     if(activeChildWindow()==1)
     {
-        leveledit * box = activeLvlEditWin();
+        LevelEdit * box = activeLvlEditWin();
         if(QFileInfo(fileName).isDir())
         {
             SmartImporter * importer = new SmartImporter((QWidget*)box, fileName, (QWidget*)box);

@@ -234,7 +234,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 
         if (activeChildWindow()==1)
         {
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Square
                                                     : LvlPlacingItems::PMODE_Brush );
@@ -318,7 +318,7 @@ void MainWindow::on_actionLine_triggered(bool checked)
 
     if (activeChildWindow()==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
 
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Line
                                                 : LvlPlacingItems::PMODE_Brush );
@@ -403,7 +403,7 @@ void MainWindow::on_actionFill_triggered(bool checked)
 
     if (activeChildWindow()==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
 
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_FloodFill
                                                 : LvlPlacingItems::PMODE_Brush );

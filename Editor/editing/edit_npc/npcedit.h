@@ -27,19 +27,19 @@
 #include "../../file_formats/npc_filedata.h"
 #include "../_scenes/level/item_npc.h"
 
-#define NPC_EDIT_CLASS "npcedit"
+#define NPC_EDIT_CLASS "NpcEdit"
 
 namespace Ui {
-class npcedit;
+class NpcEdit;
 }
 
-class npcedit : public QWidget
+class NpcEdit : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit npcedit(dataconfigs *configs, QWidget *parent = 0);
-    ~npcedit();
+    explicit NpcEdit(dataconfigs *configs, QWidget *parent = 0);
+    ~NpcEdit();
 
     void newFile(unsigned long npcID);
     bool loadFile(const QString &fileName, NPCConfigFile FileData);
@@ -136,7 +136,7 @@ private slots:
     void on_Name_textEdited(const QString &arg1);
 
 private:
-    Ui::npcedit *ui;
+    Ui::NpcEdit *ui;
 
     dataconfigs *pConfigs;
     NPCConfigFile StartNPCData;

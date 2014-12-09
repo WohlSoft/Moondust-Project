@@ -22,7 +22,7 @@
 #include "./ui_npcedit.h"
 #include "./file_formats/npc_filedata.h"
 
-void npcedit::setDataBoxes()
+void NpcEdit::setDataBoxes()
 {
 
     //Apply NPC data
@@ -357,7 +357,7 @@ void npcedit::setDataBoxes()
 
 }
 
-void npcedit::setDefaultData(unsigned long npc_id)
+void NpcEdit::setDefaultData(unsigned long npc_id)
 {
 
     DefaultNPCData.en_gfxoffsetx=false;

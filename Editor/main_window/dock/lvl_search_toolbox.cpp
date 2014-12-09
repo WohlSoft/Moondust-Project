@@ -32,7 +32,7 @@ void MainWindow::on_FindStartBlock_clicked()
             currentSearches |= SEARCH_BLOCK;
             ui->FindStartBlock->setText(tr("Next Block"));
             ui->Find_Button_ResetBlock->setText(tr("Stop Search"));
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchBlock(edit)){
                 currentSearches ^= SEARCH_BLOCK;
                 ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
@@ -42,7 +42,7 @@ void MainWindow::on_FindStartBlock_clicked()
         }
     }else{ //middle in a search
         if(activeChildWindow()==1){
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchBlock(edit)){
                 currentSearches ^= SEARCH_BLOCK;
                 ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
@@ -60,7 +60,7 @@ void MainWindow::on_FindStartBGO_clicked()
             currentSearches |= SEARCH_BGO;
             ui->FindStartBGO->setText(tr("Next BGO"));
             ui->Find_Button_ResetBGO->setText(tr("Stop Search"));
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchBGO(edit)){
                 currentSearches ^= SEARCH_BGO;
                 ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
@@ -70,7 +70,7 @@ void MainWindow::on_FindStartBGO_clicked()
         }
     }else{ //middle in a search
         if(activeChildWindow()==1){
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchBGO(edit)){
                 currentSearches ^= SEARCH_BGO;
                 ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
@@ -88,7 +88,7 @@ void MainWindow::on_FindStartNPC_clicked()
             currentSearches |= SEARCH_NPC;
             ui->FindStartNPC->setText(tr("Next NPC"));
             ui->Find_Button_ResetNPC->setText(tr("Stop Search"));
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchNPC(edit)){
                 currentSearches ^= SEARCH_NPC;
                 ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -98,7 +98,7 @@ void MainWindow::on_FindStartNPC_clicked()
         }
     }else{ //middle in a search
         if(activeChildWindow()==1){
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             if(doSearchNPC(edit)){
                 currentSearches ^= SEARCH_NPC;
                 ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -259,7 +259,7 @@ void MainWindow::resetNPCSearch()
 }
 
 //return true when finish searching
-bool MainWindow::doSearchBlock(leveledit *edit)
+bool MainWindow::doSearchBlock(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchBlock.index+1 < (unsigned int)gr.size()){
@@ -308,7 +308,7 @@ bool MainWindow::doSearchBlock(leveledit *edit)
     return true;
 }
 
-bool MainWindow::doSearchBGO(leveledit *edit)
+bool MainWindow::doSearchBGO(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchBGO.index+1 < (unsigned int)gr.size()){
@@ -342,7 +342,7 @@ bool MainWindow::doSearchBGO(leveledit *edit)
     return true;
 }
 
-bool MainWindow::doSearchNPC(leveledit *edit)
+bool MainWindow::doSearchNPC(LevelEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchNPC.index+1 < (unsigned int)gr.size()){

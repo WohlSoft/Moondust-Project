@@ -22,7 +22,7 @@ LvlCloneSection::LvlCloneSection(QWidget *parent) :
 }
 
 
-void LvlCloneSection::addLevelList(QList<leveledit* > _levels, leveledit *active)
+void LvlCloneSection::addLevelList(QList<LevelEdit* > _levels, LevelEdit *active)
 {
     levels = _levels;
     int ActiveIndex=0;
@@ -30,7 +30,7 @@ void LvlCloneSection::addLevelList(QList<leveledit* > _levels, leveledit *active
     ui->FileList_src->clear();
     ui->FileList_dst->clear();
 
-    foreach(leveledit * x, levels)
+    foreach(LevelEdit * x, levels)
     {
         ui->FileList_src->addItem(x->windowTitle(), qVariantFromValue(x) );
         ui->FileList_dst->addItem(x->windowTitle(), qVariantFromValue(x) );
@@ -55,7 +55,7 @@ void LvlCloneSection::on_FileList_src_currentIndexChanged(int index)
 {
     ui->SectionList_src->setEnabled(index>=0);
     if(index<0) return;
-    leveledit * x = ui->FileList_src->currentData().value<leveledit *>();
+    LevelEdit * x = ui->FileList_src->currentData().value<LevelEdit *>();
 
     util::memclear(ui->SectionList_src);
     QListWidgetItem * item;
@@ -80,7 +80,7 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
 {
     ui->SectionList_dst->setEnabled(index>=0);
     if(index<0) return;
-    leveledit * x = ui->FileList_dst->currentData().value<leveledit *>();
+    LevelEdit * x = ui->FileList_dst->currentData().value<LevelEdit *>();
 
     util::memclear(ui->SectionList_dst);
     QListWidgetItem * item;
@@ -118,7 +118,7 @@ void LvlCloneSection::on_buttonBox_accepted()
     LevelSection tmps;
     tmps = FileFormats::dummyLvlSection();
 
-    clone_source = ui->FileList_src->currentData().value<leveledit *>();
+    clone_source = ui->FileList_src->currentData().value<LevelEdit *>();
     clone_source_id = ui->SectionList_src->selectedItems().first()->data(3).toInt();
 
     foreach(LevelSection x, clone_source->LvlData.sections)
@@ -136,7 +136,7 @@ void LvlCloneSection::on_buttonBox_accepted()
         return;
     }
 
-    clone_target = ui->FileList_dst->currentData().value<leveledit *>();
+    clone_target = ui->FileList_dst->currentData().value<LevelEdit *>();
     clone_target_id = ui->SectionList_dst->selectedItems().first()->data(3).toInt();
 
     foreach(LevelSection x, clone_target->LvlData.sections)

@@ -35,7 +35,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
     if(npcList->exec()==QDialog::Accepted)
     {
-        npcedit *child = createNPCChild();
+        NpcEdit *child = createNPCChild();
         child->newFile( npcList->npcID );
         child->show();
     }
@@ -47,7 +47,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
 
 void MainWindow::on_actionNewLevel_triggered()
 {
-    leveledit *child = createLvlChild();
+    LevelEdit *child = createLvlChild();
     child->newFile(configs, GlobalSettings::LvlOpts);
     child->show();
     child->updateGeometry();

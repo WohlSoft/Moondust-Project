@@ -42,7 +42,7 @@
 
 
 //Export whole section
-void leveledit::ExportToImage_fn()
+void LevelEdit::ExportToImage_fn()
 {
     if(!sceneCreated) return;
     if(!scene) return;
@@ -52,7 +52,7 @@ void leveledit::ExportToImage_fn()
 
 
 //Export piece
-void leveledit::ExportToImage_fn_piece()
+void LevelEdit::ExportToImage_fn_piece()
 {
     if(!sceneCreated) return;
     if(!scene) return;
@@ -74,7 +74,7 @@ void leveledit::ExportToImage_fn_piece()
 }
 
 
-void leveledit::ExportingReady() //slot
+void LevelEdit::ExportingReady() //slot
 {
     if(!sceneCreated) return;
     if(!scene) return;
@@ -209,7 +209,7 @@ void leveledit::ExportingReady() //slot
 
 
 
-void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
+void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 {
     static int sequenceNumber = 1;
 
@@ -260,7 +260,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 }
 
 
-bool leveledit::save(bool savOptionsDialog)
+bool LevelEdit::save(bool savOptionsDialog)
 {
     if (isUntitled) {
         return saveAs(savOptionsDialog);
@@ -274,7 +274,7 @@ namespace lvl_file_io
     bool isSMBX64limit=false;
 }
 
-bool leveledit::saveAs(bool savOptionsDialog)
+bool LevelEdit::saveAs(bool savOptionsDialog)
 {
     using namespace lvl_file_io;
     bool makeCustomFolder = false;
@@ -355,7 +355,7 @@ bool leveledit::saveAs(bool savOptionsDialog)
     return ret;
 }
 
-bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
+bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     using namespace lvl_file_io;
 
@@ -547,7 +547,7 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
 }
 
 
-bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
+bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -636,12 +636,12 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 }
 
 
-void leveledit::documentWasModified()
+void LevelEdit::documentWasModified()
 {
     //LvlData.modified = true;
 }
 
-bool leveledit::maybeSave()
+bool LevelEdit::maybeSave()
 {
     if (LvlData.modified)
     {
@@ -672,12 +672,12 @@ bool leveledit::maybeSave()
 
 
 //////// Common
-QString leveledit::userFriendlyCurrentFile()
+QString LevelEdit::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
 }
 
-void leveledit::closeEvent(QCloseEvent *event)
+void LevelEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)
     {
@@ -735,7 +735,7 @@ void leveledit::closeEvent(QCloseEvent *event)
     }
 }
 
-void leveledit::setCurrentFile(const QString &fileName)
+void LevelEdit::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
@@ -747,7 +747,7 @@ void leveledit::setCurrentFile(const QString &fileName)
     setWindowTitle(QString(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName).replace("&", "&&&"));
 }
 
-QString leveledit::strippedName(const QString &fullFileName)
+QString LevelEdit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }

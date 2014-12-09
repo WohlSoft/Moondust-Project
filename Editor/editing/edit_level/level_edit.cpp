@@ -37,9 +37,9 @@
 
 #include <QDebug>
 
-leveledit::leveledit(QWidget *parent) :
+LevelEdit::LevelEdit(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::leveledit)
+    ui(new Ui::LevelEdit)
 {
     sceneCreated = false;
     FileType = 0;
@@ -71,13 +71,13 @@ leveledit::leveledit(QWidget *parent) :
 }
 
 
-void leveledit::focusInEvent(QFocusEvent *event)
+void LevelEdit::focusInEvent(QFocusEvent *event)
 {
     ui->graphicsView->setFocus();
     QWidget::focusInEvent(event);
 }
 
-void leveledit::dragEnterEvent(QDragEnterEvent *e)
+void LevelEdit::dragEnterEvent(QDragEnterEvent *e)
 {
     qDebug() << "Entered data into LevelEdit";
     if (e->mimeData()->hasUrls()) {
@@ -85,7 +85,7 @@ void leveledit::dragEnterEvent(QDragEnterEvent *e)
     }
 }
 
-void leveledit::dropEvent(QDropEvent *e)
+void LevelEdit::dropEvent(QDropEvent *e)
 {
     this->raise();
     this->setFocus(Qt::ActiveWindowFocusReason);
@@ -113,7 +113,7 @@ void leveledit::dropEvent(QDropEvent *e)
 }
 
 
-void leveledit::updateScene()
+void LevelEdit::updateScene()
 {
     if(scene->opts.animationEnabled)
     {
@@ -122,7 +122,7 @@ void leveledit::updateScene()
     }
 }
 
-void leveledit::setAutoUpdateTimer(int ms)
+void LevelEdit::setAutoUpdateTimer(int ms)
 {
     if(updateTimer!=NULL)
         delete updateTimer;
@@ -134,7 +134,7 @@ void leveledit::setAutoUpdateTimer(int ms)
     updateTimer->start(ms);
 }
 
-void leveledit::stopAutoUpdateTimer()
+void LevelEdit::stopAutoUpdateTimer()
 {
     if(updateTimer!=NULL)
     {

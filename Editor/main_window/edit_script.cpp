@@ -110,7 +110,7 @@ void MainWindow::on_actionCompile_To_triggered()
 void MainWindow::on_actionAutocode_Lunadll_Original_Language_triggered()
 {
     if(activeChildWindow()==1){
-        leveledit* lvledit = activeLvlEditWin();
+        LevelEdit* lvledit = activeLvlEditWin();
         if(lvledit->LvlData.metaData.script){
             lvledit->LvlData.metaData.script->setUsingCompiler(new AutocodeCompiler(QList<EventCommand*>()));
             updateMenus(true);
@@ -121,7 +121,7 @@ void MainWindow::on_actionAutocode_Lunadll_Original_Language_triggered()
 void MainWindow::on_actionLunaLua_triggered()
 {
     if(activeChildWindow()==1){
-        leveledit* lvledit = activeLvlEditWin();
+        LevelEdit* lvledit = activeLvlEditWin();
         if(lvledit->LvlData.metaData.script){
             lvledit->LvlData.metaData.script->setUsingCompiler(new LunaLuaCompiler(QList<EventCommand*>()));
             updateMenus(true);
