@@ -60,6 +60,7 @@ private:
     void doValidateStrArray(QStringList args);
     void doThrowUnhandledException(QStringList);
     void doSegmentationViolation(QStringList);
+    void doPgeXTest(QStringList args);
 };
 
 #endif // DEVCONSOLE_H

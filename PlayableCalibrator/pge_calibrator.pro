@@ -25,6 +25,7 @@ QT       += gui widgets
 
 DESTDIR = ../bin
 
+static: {
 release:OBJECTS_DIR = ../bin/_build/calibrator/_release/.obj
 release:MOC_DIR     = ../bin/_build/calibrator/_release/.moc
 release:RCC_DIR     = ../bin/_build/calibrator/_release/.rcc
@@ -34,6 +35,17 @@ debug:OBJECTS_DIR   = ../bin/_build/calibrator/_debug/.obj
 debug:MOC_DIR       = ../bin/_build/calibrator/_debug/.moc
 debug:RCC_DIR       = ../bin/_build/calibrator/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/calibrator/_debug/.ui
+} else {
+release:OBJECTS_DIR = ../bin/_build/_dynamic/calibrator/_release/.obj
+release:MOC_DIR     = ../bin/_build/_dynamic/calibrator/_release/.moc
+release:RCC_DIR     = ../bin/_build/_dynamic/calibrator/_release/.rcc
+release:UI_DIR      = ../bin/_build/_dynamic/calibrator/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/_dynamic/calibrator/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/_dynamic/calibrator/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/_dynamic/calibrator/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/_dynamic/calibrator/_debug/.ui
+}
 
 TARGET = pge_calibrator
 TEMPLATE = app
@@ -49,7 +61,6 @@ SOURCES += main.cpp\
     about/about.cpp \
     animator/animate.cpp \
     animator/animationedit.cpp \
-    frame_matrix/MatrixScene.cpp \
     ../_Libs/EasyBMP/EasyBMP.cpp \
     ../_Libs/giflib/dgif_lib.c \
     ../_Libs/giflib/egif_lib.c \
@@ -63,7 +74,6 @@ SOURCES += main.cpp\
     main/graphics.cpp \
     main/settings.cpp \
     image_calibration/image_calibrator.cpp \
-    animator/SpriteScene.cpp \
     main/mw.cpp \
     animator/AnimationScene.cpp
 
@@ -74,8 +84,6 @@ HEADERS  += calibrationmain.h \
     animator/animate.h \
     animator/animationedit.h \
     animator/AnimationScene.h \
-    frame_matrix/MatrixScene.h \
-    animator/SpriteScene.h \
     ../_Libs/EasyBMP/EasyBMP.h \
     ../_Libs/EasyBMP/EasyBMP_BMP.h \
     ../_Libs/EasyBMP/EasyBMP_DataStructures.h \

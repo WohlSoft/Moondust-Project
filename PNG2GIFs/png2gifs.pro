@@ -26,6 +26,7 @@ QT       += core gui
 
 DESTDIR = ../bin
 
+static: {
 release:OBJECTS_DIR = ../bin/_build/png2gifs/_release/.obj
 release:MOC_DIR     = ../bin/_build/png2gifs/_release/.moc
 release:RCC_DIR     = ../bin/_build/png2gifs/_release/.rcc
@@ -35,6 +36,17 @@ debug:OBJECTS_DIR   = ../bin/_build/png2gifs/_debug/.obj
 debug:MOC_DIR       = ../bin/_build/png2gifs/_debug/.moc
 debug:RCC_DIR       = ../bin/_build/png2gifs/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/png2gifs/_debug/.ui
+} else {
+release:OBJECTS_DIR = ../bin/_build/_dynamic/png2gifs/_release/.obj
+release:MOC_DIR     = ../bin/_build/_dynamic/png2gifs/_release/.moc
+release:RCC_DIR     = ../bin/_build/_dynamic/png2gifs/_release/.rcc
+release:UI_DIR      = ../bin/_build/_dynamic/png2gifs/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/_dynamic/png2gifs/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/_dynamic/png2gifs/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/_dynamic/png2gifs/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/_dynamic/png2gifs/_debug/.ui
+}
 
 TARGET = PNG2GIFs
 CONFIG   += console
@@ -43,7 +55,7 @@ CONFIG   += static
 
 TEMPLATE = app
 
-QMAKE_CFLAGS += -Wno-sign-compare
+#QMAKE_CFLAGS += -Wno-sign-compare
 
 RC_FILE = _resources/png2gifs.rc
 

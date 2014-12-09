@@ -18,14 +18,14 @@
 
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
-#include "../../item_select_dialog/itemselectdialog.h"
+#include "../../editing/_dialogs/itemselectdialog.h"
 #include "../../file_formats/wld_filedata.h"
-#include "../../world_scene/item_level.h"
-#include "../../world_scene/item_music.h"
-#include "../../world_scene/item_path.h"
-#include "../../world_scene/item_scene.h"
-#include "../../world_scene/item_tile.h"
-#include "../../common_features/levelfilelist.h"
+#include "../../editing/_scenes/world/item_level.h"
+#include "../../editing/_scenes/world/item_music.h"
+#include "../../editing/_scenes/world/item_path.h"
+#include "../../editing/_scenes/world/item_scene.h"
+#include "../../editing/_scenes/world/item_tile.h"
+#include "../../editing/_dialogs/levelfilelist.h"
 bool lockResetWorld = false;
 
 

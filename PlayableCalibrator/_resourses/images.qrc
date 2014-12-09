@@ -4,5 +4,7 @@
         <file>images/Icon48.png</file>
         <file>images/Icon256.png</file>
         <file>images/NoAni.png</file>
+        <file>images/open.png</file>
+        <file>images/save.png</file>
     </qresource>
 </RCC>

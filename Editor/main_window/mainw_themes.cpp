@@ -48,6 +48,12 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionDebugger->setIcon(Themes::icon(Themes::debugger));
     ui->debuggerBox->setWindowIcon(Themes::icon(Themes::debugger));
 
+    ui->actionTilesetBox->setIcon(Themes::icon(Themes::tileset_box));
+    ui->Tileset_Item_Box->setWindowIcon(Themes::icon(Themes::tileset_box));
+
+    ui->actionBookmarkBox->setIcon(Themes::icon(Themes::bookmarks));
+    ui->bookmarkBox->setWindowIcon(Themes::icon(Themes::bookmarks));
+
     ui->actionPlayMusic->setIcon(Themes::icon(Themes::playmusic));
     ui->actionGridEn->setIcon(Themes::icon(Themes::grid_snap));
     ui->actionAnimation->setIcon(Themes::icon(Themes::animation));

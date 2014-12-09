@@ -33,10 +33,6 @@ void CalibrationMain::OpenFile(QString fileName)
 
     LastOpenDir = ourFile.absoluteDir().path();
 
-    int x, y;
-    x = ui->FrameX->value();
-    y = ui->FrameY->value();
-
     tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
     if(tmp.size()==2)
         imgFileM = tmp[0] + "m." + tmp[1];
@@ -57,20 +53,11 @@ void CalibrationMain::OpenFile(QString fileName)
                     , maskImg )
                 );
 
-    Scene->mSpriteImage = x_imageSprite;
-
     loadConfig(fileName);
 
-    Scene->draw();
-
-    ui->Height->setValue(framesX[x][y].H);
-    ui->Width->setValue(framesX[x][y].W);
-    ui->OffsetX->setValue(framesX[x][y].offsetX);
-    ui->OffsetY->setValue(framesX[x][y].offsetY);
-    ui->EnableFrame->setChecked(framesX[x][y].used);
-
-    Scene->setFrame(ui->FrameX->value(), ui->FrameY->value());
-    Scene->setSquare(ui->OffsetX->value(), ui->OffsetY->value(), ui->Height->value(), ui->Width->value());
+    initScene();
+    updateControls();
+    updateScene();
 }
 
 
@@ -96,9 +83,11 @@ void CalibrationMain::on_MakeTemplateB_clicked()
             if(framesX[i][j].used)
             {
                 temp1->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              framesX[i][j].W-1, framesX[i][j].H-1, QPen(Qt::yellow, 1),Qt::transparent);
+                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
+                               QPen(Qt::yellow, 1),Qt::transparent);
                 temp2->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              framesX[i][j].W-1, framesX[i][j].H-1, QPen(Qt::black, 1),Qt::transparent);
+                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
+                               QPen(Qt::black, 1),Qt::transparent);
             }
         }
 

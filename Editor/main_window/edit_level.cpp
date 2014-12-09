@@ -19,7 +19,6 @@
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
-
 //Open Level Properties
 void MainWindow::on_actionLevelProp_triggered()
 {
@@ -216,16 +215,19 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionGo_to_Section_triggered()
 {
+    qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
     if(WinType==1)
     {
-            leveledit* edit = activeLvlEditWin();
+            LevelEdit* edit = activeLvlEditWin();
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
             edit->goTo(xb, yb, false, QPoint(-10, -10));
     }
 }
+
+
 
 
 // //////////////////////// Locks Begin //////////////////////////////

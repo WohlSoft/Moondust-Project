@@ -34,6 +34,12 @@ public:
 
 extern QList<QVector<frameOpts > > imgOffsets; //!< Image offsets
 extern QList<QVector<frameOpts > > framesX;    //!< Collision boxes settings
+extern int frameWidth;
+extern int frameHeight;
+extern int frameHeightDuck;
+extern int frameGrabOffsetX;
+extern int frameGrabOffsetY;
+extern bool frameOverTopGrab;
 extern FrameSets AniFrames;                    //!< Animation settings
 
 extern frameOpts buffer;

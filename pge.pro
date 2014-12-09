@@ -10,8 +10,6 @@ LazyFixTool.file = LazyFixTool/LazyFixTool.pro
 
 configs.path = bin/configs
 configs.files = Content/configs/*
-data.path = bin/data
-data.files = Content/data/*
 helps.path = bin/help
 helps.files = Content/help/*
 calibrator_cnfs.path = bin/calibrator

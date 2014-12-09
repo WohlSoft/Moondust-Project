@@ -35,6 +35,8 @@ public:
     static QImage loadQImage(QString file);
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static QPixmap drawDegitFont(int number);
+
+    static bool toGif(QImage& img, QString& path);
 };
 
 #endif // GRAPHICS_FUNCS_H

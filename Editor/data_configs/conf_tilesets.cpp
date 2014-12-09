@@ -19,7 +19,7 @@
 #include "data_configs.h"
 
 //#include "../tilesets/tileset.h"
-#include "../tilesets/tilesetgroupeditor.h"
+#include "../tools/tilesets/tilesetgroupeditor.h"
 
 void dataconfigs::loadTilesets()
 {

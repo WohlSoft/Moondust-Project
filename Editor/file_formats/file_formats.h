@@ -63,13 +63,62 @@ public:
     static QString qStrS_multiline(QString input);
 };
 
+
+typedef QPair<QString, QStringList> PGEXSct;
+
 class PGEFile
 {
 public:
-    PGEFile() {}
+    enum PGEX_Item_type
+    {
+        PGEX_Struct=0,
+        PGEX_PlainText
+    };
 
+
+    struct PGEX_Val
+    {
+        QString marker;
+        QString value;
+    };
+
+    struct PGEX_Item
+    {
+        PGEX_Item_type type;
+        QList<PGEX_Val > values;
+    };
+
+    struct PGEX_Entry
+    {
+        QString name;
+        PGEX_Item_type type;
+        QList<PGEX_Item > data;
+        QList<PGEX_Entry > subTree;
+    };
+
+    PGEFile();
+    PGEFile(PGEFile &pgeFile);
+    PGEFile(QString _rawData);
+    void setRawData(QString _rawData);
+    bool buildTreeFromRaw();
+    QString lastError();
+
+    //data tree
+    QList<PGEX_Entry > dataTree;
+
+private:
+    QString _lastError;
+    QString rawData;
+    QList<PGEXSct > rawDataTree;
+
+    //Static functions
+public:
     // /////////////Validators///////////////
-    //returns TRUE on valid data
+    static bool IsSectionTitle(QString in);//Section Title
+
+    static PGEX_Entry buildTree(QStringList &src_data, bool *_valid = 0);
+
+    //returns FALSE on valid data
     static bool IsQStr(QString in);// QUOTED STRING
     static bool IsHex(QString in);// Hex Encoded String
     static bool IsIntU(QString in);// UNSIGNED INT
@@ -103,7 +152,6 @@ public:
     static QString decodeEscape(QString input);
 
     static QString value(QString marker, QString data);
-
 };
 
 
@@ -130,6 +178,9 @@ class FileFormats
 public:
     //File format read/write functions
 
+
+    static MetaData ReadNonSMBX64MetaData(QString RawData, QString filePath="");
+    static QString WriteNonSMBX64MetaData(MetaData metaData);
 
     /******************************Level files***********************************/
     static LevelData OpenLevelFile(QString filePath); //!< Open supported level file via direct path

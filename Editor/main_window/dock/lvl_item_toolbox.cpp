@@ -19,7 +19,7 @@
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 
-#include "../../level_scene/lvl_item_placing.h"
+#include "../../editing/_scenes/level/lvl_item_placing.h"
 #include "../../file_formats/file_formats.h"
 #include "../../common_features/util.h"
 
@@ -95,7 +95,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         if(activeChildWindow()==1)
         {
             long j=0;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(activeLvlEditWin()->sceneCreated)
             foreach(UserBlocks block, edit->scene->uBlocks)
@@ -193,7 +193,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(edit->sceneCreated)
             foreach(UserBGOs bgo, edit->scene->uBGOs)
@@ -291,7 +291,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             //long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
             if(edit->sceneCreated)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
