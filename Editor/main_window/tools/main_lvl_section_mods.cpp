@@ -36,7 +36,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
             openedLeves.push_back(qobject_cast<leveledit *>(window->widget()));
         }

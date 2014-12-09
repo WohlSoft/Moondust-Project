@@ -267,17 +267,17 @@ void MainWindow::save_all()
     int counter=0;
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())=="WorldEdit")
+        if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
         {
         ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
             ChildWindow3->save();
         }
-        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
         ChildWindow0 = qobject_cast<leveledit *>(window->widget());
             ChildWindow0->save();
         }
-        else if(QString(window->widget()->metaObject()->className())=="npcedit")
+        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         {
         ChildWindow2 = qobject_cast<npcedit *>(window->widget());
             ChildWindow2->save();
