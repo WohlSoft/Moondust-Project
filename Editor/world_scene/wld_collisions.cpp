@@ -34,6 +34,9 @@ void WldScene::prepareCollisionBuffer()
     for(int i=0; i<collisionCheckBuffer.size(); i++ )
     {
         bool kick=false;
+        if(collisionCheckBuffer[i]==NULL)
+            kick=true;
+        else
         if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
             kick=true;
         else
@@ -46,10 +49,13 @@ void WldScene::prepareCollisionBuffer()
         if(collisionCheckBuffer[i]->data(0).toString()=="Line")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
+        if(collisionCheckBuffer[i]->data(0).toString()=="LineDrawer")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
+        if(collisionCheckBuffer[i]->data(0).toString()=="WorldMapPoint")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
             kick=true;
         else
         if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))

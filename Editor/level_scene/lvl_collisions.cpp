@@ -37,6 +37,9 @@ void LvlScene::prepareCollisionBuffer()
     for(int i=0; i<collisionCheckBuffer.size(); i++ )
     {
         bool kick=false;
+        if(collisionCheckBuffer[i]==NULL)
+            kick=true;
+        else
         if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
             kick=true;
         else
@@ -46,13 +49,16 @@ void LvlScene::prepareCollisionBuffer()
         if(collisionCheckBuffer[i]->data(0).toString()=="Square")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Line")
+        if(collisionCheckBuffer[i]->data(0).toString()=="Line")//LineDrawer
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="LineDrawer")
             kick=true;
         else
         if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
+        if(collisionCheckBuffer[i]->data(0).toString()=="playerPoint")
             kick=true;
         else
         if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))

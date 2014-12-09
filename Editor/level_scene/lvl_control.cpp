@@ -1078,12 +1078,13 @@ void LvlScene::placeItemUnderCursor()
         QGraphicsItem * xxx;
         while( (xxx=itemCollidesWith(cursor)) != NULL )
         {
+            bool removed=false;
             if(xxx->data(0).toString()=="Block")
             {
                 if(xxx->data(2).toLongLong()>last_block_arrayID) break;
                 overwritedItems.blocks.push_back( dynamic_cast<ItemBlock *>(xxx)->blockData );
                 dynamic_cast<ItemBlock *>(xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="BGO")
@@ -1091,7 +1092,7 @@ void LvlScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_bgo_arrayID) break;
                 overwritedItems.bgo.push_back( dynamic_cast<ItemBGO *>(xxx)->bgoData );
                 dynamic_cast<ItemBGO *>(xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="NPC")
@@ -1099,7 +1100,13 @@ void LvlScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_npc_arrayID) break;
                 overwritedItems.npc.push_back( dynamic_cast<ItemNPC *>(xxx)->npcData );
                 dynamic_cast<ItemNPC *>(xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
+            }
+
+            if(removed) //Remove pointer of deleted item
+            {
+                if(collisionCheckBuffer.contains(xxx))
+                    collisionCheckBuffer.removeAt(collisionCheckBuffer.indexOf(xxx));
             }
         }
     }
