@@ -60,7 +60,7 @@ void DevConsole::log(const QString &logText, const QString &channel, bool raise)
         init();
 
     if(currentDevConsole)
-        currentDevConsole->logToConsole(logText, channel, raise);
+           currentDevConsole->logToConsole(logText, channel, raise);
 }
 
 bool DevConsole::isConsoleShown()
@@ -94,8 +94,13 @@ DevConsole::~DevConsole()
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
+    QString target_channel = channel;
+
+    if(channel=="System") //Prevent creation another "system" tab if switched another UI language
+        target_channel = ui->tabWidget->tabText(0);
+
     for(int i = 0; i < ui->tabWidget->count(); ++i){
-        if(ui->tabWidget->tabText(i)==channel){
+        if(ui->tabWidget->tabText(i)==target_channel){
             QPlainTextEdit* tarEdit = getEditByIndex(i);
             if(!tarEdit)
                 return;
@@ -115,11 +120,11 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
     QPushButton *p = new QPushButton(w);
     l->addWidget(p,1,0,1,1);
     connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
-    p->setText(tr("Clear %1 Log").arg(channel));
+    p->setText(tr("Clear %1 Log").arg(target_channel));
     e->setReadOnly(true);
     e->appendPlainText(logText);
     e->verticalScrollBar()->setValue(e->verticalScrollBar()->maximum());
-    ui->tabWidget->addTab(w,channel);
+    ui->tabWidget->addTab(w,target_channel);
 }
 
 QPlainTextEdit *DevConsole::getEditByIndex(const int &index)
