@@ -28,7 +28,7 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../_resources/editor.qrc">
+   <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -440,7 +440,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../_resources/editor.qrc"/>
+  <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>

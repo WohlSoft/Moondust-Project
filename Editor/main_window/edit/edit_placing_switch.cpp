@@ -17,15 +17,15 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include "../../mainwindow.h"
 
-#include "../editing/_scenes/level/lvl_item_placing.h"
-#include "../editing/_scenes/world/wld_item_placing.h"
-#include "../file_formats/file_formats.h"
+#include "../../editing/_scenes/level/lvl_item_placing.h"
+#include "../../editing/_scenes/world/wld_item_placing.h"
+#include "../../file_formats/file_formats.h"
 
-#include "../defines.h"
+#include "../../defines.h"
 
-#include "global_settings.h"
+#include "../global_settings.h"
 
 
 void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
@@ -65,6 +65,60 @@ void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
                 break;
             }
         }
+    }
+}
+
+void MainWindow::on_actionSetFirstPlayer_triggered()
+{
+    resetEditmodeButtons();
+    ui->actionSetFirstPlayer->setChecked(1);
+
+    ui->ItemProperties->hide();
+
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
+    }
+
+}
+
+void MainWindow::on_actionSetSecondPlayer_triggered()
+{
+    resetEditmodeButtons();
+    ui->actionSetSecondPlayer->setChecked(1);
+
+    ui->ItemProperties->hide();
+
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
+    }
+
+}
+
+void MainWindow::on_actionDrawWater_triggered()
+{
+    resetEditmodeButtons();
+    ui->actionDrawWater->setChecked(1);
+
+    ui->ItemProperties->hide();
+
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
+    }
+}
+
+void MainWindow::on_actionDrawSand_triggered()
+{
+    resetEditmodeButtons();
+    ui->actionDrawSand->setChecked(1);
+
+    ui->ItemProperties->hide();
+
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
     }
 }
 
@@ -272,3 +326,4 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
     }
 }
+

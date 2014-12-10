@@ -37,6 +37,19 @@ bool lock_grp=false;
 bool lock_cat=false;
 
 
+// Level tool box show/hide
+void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
+{
+    ui->actionLVLToolBox->setChecked(visible);
+}
+
+void MainWindow::on_actionLVLToolBox_triggered(bool checked)
+{
+    ui->LevelToolBox->setVisible(checked);
+    if(checked) ui->LevelToolBox->raise();
+}
+
+
 void MainWindow::UpdateLvlCustomItems()
 {
     setLvlItemBoxes(true, true);

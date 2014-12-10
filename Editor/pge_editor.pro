@@ -219,7 +219,6 @@ SOURCES += main.cpp\
     editing/edit_level/lvl_draw.cpp \
     editing/edit_level/lvl_edit_control.cpp \
     editing/edit_level/lvl_files_io.cpp \
-    editing/edit_level/saveimage.cpp \
     editing/edit_npc/npc_data_sets.cpp \
     editing/edit_npc/npcedit.cpp \
     editing/edit_npc/npceditscene.cpp \
@@ -242,26 +241,10 @@ SOURCES += main.cpp\
     file_formats/pge_x.cpp \
     file_formats/smbx64.cpp \
     file_formats/wld_filedata.cpp \
-    main_window/appsettings.cpp \
-    main_window/clipboard.cpp \
-    main_window/data_configs.cpp \
-    main_window/edit_common.cpp \
-    main_window/edit_control.cpp \
-    main_window/edit_level.cpp \
-    main_window/edit_new_file.cpp \
-    main_window/edit_placincg_switch.cpp \
-    main_window/edit_script.cpp \
-    main_window/edit_world.cpp \
     main_window/events.cpp \
-    main_window/files_io.cpp \
     main_window/global_settings.cpp \
-    main_window/main_settings.cpp \
-    main_window/main_testing.cpp \
     main_window/mainw_themes.cpp \
     main_window/menubar.cpp \
-    main_window/music_player.cpp \
-    main_window/recentfiles.cpp \
-    main_window/savingnotificationdialog.cpp \
     main_window/sub_windows.cpp \
     main_window/tools_menu.cpp \
     main_window/translator.cpp \
@@ -280,7 +263,6 @@ SOURCES += main.cpp\
     main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_search_toolbox.cpp \
     main_window/dock/wld_world_settings.cpp \
-    main_window/tools/main_lvl_section_mods.cpp \
     main_window/tools/main_tool_cdata_cleaner.cpp \
     main_window/tools/main_tool_cdata_import.cpp \
     main_window/tools/main_tool_cdata_lazyfix.cpp \
@@ -306,7 +288,37 @@ SOURCES += main.cpp\
     tools/tilesets/tilesetconfiguredialog.cpp \
     tools/tilesets/tilesetgroupeditor.cpp \
     tools/tilesets/tilesetitembutton.cpp \
-    audio/sdl_music_player.cpp
+    audio/sdl_music_player.cpp \
+    main_window/edit/edit_items.cpp \
+    main_window/edit/edit_history.cpp \
+    main_window/edit/edit_mode.cpp \
+    main_window/edit/edit_mode_placing.cpp \
+    main_window/level/level_sections.cpp \
+    main_window/level/level_sections_mods.cpp \
+    main_window/level/level_props.cpp \
+    main_window/level/level_locks.cpp \
+    main_window/edit/edit_clipboard.cpp \
+    main_window/tools/app_settings.cpp \
+    main_window/view/view.cpp \
+    main_window/view/view_zoom.cpp \
+    main_window/file/file_open.cpp \
+    main_window/file/file_save.cpp \
+    main_window/file/file_export_image.cpp \
+    main_window/file/file_reload.cpp \
+    main_window/edit/edit_resize.cpp \
+    main_window/file/file_new.cpp \
+    main_window/file/lvl_export_image.cpp \
+    main_window/world/world_locks.cpp \
+    main_window/script/script_compile.cpp \
+    main_window/script/script_additional_settings.cpp \
+    audio/music_player.cpp \
+    main_window/testing/testing.cpp \
+    main_window/file/file_recent.cpp \
+    editing/_dialogs/savingnotificationdialog.cpp \
+    main_window/tools/data_configs.cpp \
+    main_window/edit/edit_placing_switch.cpp \
+    main_window/_settings/defaults.cpp \
+    main_window/_settings/settings_io.cpp
     
 
 HEADERS  += defines.h \
@@ -394,7 +406,6 @@ HEADERS  += defines.h \
     editing/edit_level/level_edit.h \
     editing/edit_level/levelprops.h \
     editing/edit_level/lvl_clone_section.h \
-    editing/edit_level/saveimage.h \
     editing/edit_npc/npcedit.h \
     editing/edit_npc/npceditscene.h \
     editing/edit_world/wld_saveimage.h \
@@ -404,10 +415,7 @@ HEADERS  += defines.h \
     file_formats/meta_filedata.h \
     file_formats/npc_filedata.h \
     file_formats/wld_filedata.h \
-    main_window/appsettings.h \
     main_window/global_settings.h \
-    main_window/music_player.h \
-    main_window/savingnotificationdialog.h \
     main_window/about_dialog/aboutdialog.h \
     main_window/dock/tileset_item_box.h \
     networking/engine_client.h \
@@ -432,7 +440,12 @@ HEADERS  += defines.h \
     tools/tilesets/tilesetconfiguredialog.h \
     tools/tilesets/tilesetgroupeditor.h \
     tools/tilesets/tilesetitembutton.h \
-    audio/sdl_music_player.h
+    audio/sdl_music_player.h \
+    main_window/tools/app_settings.h \
+    main_window/file/lvl_export_image.h \
+    main_window/dock/lvl_sctc_props.h \
+    audio/music_player.h \
+    editing/_dialogs/savingnotificationdialog.h
 
 
 FORMS    += \
@@ -450,12 +463,9 @@ FORMS    += \
     editing/edit_level/leveledit.ui \
     editing/edit_level/levelprops.ui \
     editing/edit_level/lvl_clone_section.ui \
-    editing/edit_level/saveimage.ui \
     editing/edit_npc/npcedit.ui \
     editing/edit_world/wld_saveimage.ui \
     editing/edit_world/world_edit.ui \
-    main_window/appsettings.ui \
-    main_window/savingnotificationdialog.ui \
     main_window/about_dialog/aboutdialog.ui \
     script/gui/additionalsettings.ui \
     tools/external_tools/gifs2png_gui.ui \
@@ -464,7 +474,10 @@ FORMS    += \
     tools/math/blocksperseconddialog.ui \
     tools/tilesets/tilesetconfiguredialog.ui \
     tools/tilesets/tilesetgroupeditor.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    main_window/tools/app_settings.ui \
+    main_window/file/lvl_export_image.ui \
+    editing/_dialogs/savingnotificationdialog.ui
 
 
 

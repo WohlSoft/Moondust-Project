@@ -19,26 +19,9 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../script/command_compiler/autocodecompiler.h"
-#include "../script/command_compiler/lunaluacompiler.h"
-#include "../script/gui/additionalsettings.h"
 
-void MainWindow::on_actionAdditional_Settings_triggered()
-{
-    if(activeChildWindow() == 1){
-        if(!activeLvlEditWin()->LvlData.metaData.script)
-            return;
-
-        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script);
-
-        addSetting->exec();
-        addSetting->cleanup();
-
-
-        delete addSetting;
-    }
-
-}
+#include "../../script/command_compiler/autocodecompiler.h"
+#include "../../script/command_compiler/lunaluacompiler.h"
 
 void MainWindow::on_actionCompile_To_triggered()
 {
@@ -128,4 +111,6 @@ void MainWindow::on_actionLunaLua_triggered()
         }
     }
 }
+
+
 

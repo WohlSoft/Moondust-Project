@@ -17,11 +17,12 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
-#include "../file_formats/file_formats.h"
+#include "../../mainwindow.h"
+#include "../../file_formats/file_formats.h"
 
-#include "music_player.h"
-#include "global_settings.h"
+
+#include "../../audio/music_player.h"
+#include "../global_settings.h"
 
 
 void MainWindow::openFilesByArgs(QStringList args)
@@ -30,6 +31,26 @@ void MainWindow::openFilesByArgs(QStringList args)
     {
         if(QFile::exists(args[i])) OpenFile(args[i]);
     }
+}
+
+void MainWindow::on_OpenFile_triggered()
+{
+     QString fileName_DATA = QFileDialog::getOpenFileName(this,
+        trUtf8("Open file"),GlobalSettings::openPath,
+        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT)\n"
+        "All SMBX files (*.LVL *.WLD npc-*.TXT)\n"
+        "All PGE files (*.LVLX *.WLDX npc-*.TXT *.INI)\n"
+        "SMBX Level (*.LVL)\n"
+        "PGE Level (*.LVLX)\n"
+        "SMBX World (*.WLD)\n"
+        "PGE World (*.WLDX)\n"
+        "SMBX NPC Config (npc-*.TXT)\n"
+        "All Files (*.*)"),0);
+
+        if(fileName_DATA==NULL) return;
+
+        OpenFile(fileName_DATA);
+
 }
 
 void MainWindow::OpenFile(QString FilePath)
@@ -154,7 +175,7 @@ void MainWindow::OpenFile(QString FilePath)
             child->show();
             child->updateGeometry();
             child->ResetPosition();
-            updateMenus(true);            
+            updateMenus(true);
             setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
@@ -198,149 +219,3 @@ void MainWindow::OpenFile(QString FilePath)
     AddToRecentFiles(FilePath);
     SyncRecentFiles();
 }
-
-
-void MainWindow::save()
-{
-    bool saved=false;
-    int WinType = activeChildWindow();
-    if (WinType!=0)
-    {
-        QProgressDialog progress(tr("Saving of file..."), tr("Abort"), 0, 1, this);
-             progress.setWindowTitle(tr("Saving"));
-             progress.setWindowModality(Qt::WindowModal);
-             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-             progress.setFixedSize(progress.size());
-             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-             progress.setMinimumDuration(0);
-             progress.setAutoClose(false);
-             progress.setCancelButton(NULL);
-        progress.show();
-        qApp->processEvents();
-
-        if(WinType==3)
-            saved = activeWldEditWin()->save(true);
-        if(WinType==2)
-            saved = activeNpcEditWin()->save();
-        if(WinType==1)
-            saved = activeLvlEditWin()->save(true);
-
-        if(saved) statusBar()->showMessage(tr("File saved"), 2000);
-    }
-}
-
-void MainWindow::save_as()
-{
-    bool saved=false;
-    int WinType = activeChildWindow();
-    if (WinType!=0)
-    {
-        if(WinType==3)
-            saved = activeWldEditWin()->saveAs(true);
-        if(WinType==2)
-            saved = activeNpcEditWin()->saveAs();
-        if(WinType==1)
-            saved = activeLvlEditWin()->saveAs(true);
-
-        if(saved) statusBar()->showMessage(tr("File saved"), 2000);
-    }
-}
-
-void MainWindow::save_all()
-{
-    LevelEdit *ChildWindow0=NULL;
-    NpcEdit *ChildWindow2=NULL;
-    WorldEdit *ChildWindow3=NULL;
-
-    QProgressDialog progress(tr("Saving of files..."), tr("Abort"), 0, ui->centralWidget->subWindowList().size(), this);
-         progress.setWindowTitle(tr("Saving"));
-         progress.setWindowModality(Qt::WindowModal);
-         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-         progress.setFixedSize(progress.size());
-         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-         progress.setMinimumDuration(0);
-         progress.setAutoClose(false);
-         progress.setCancelButton(NULL);
-    progress.show();
-    qApp->processEvents();
-
-    int counter=0;
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
-    {
-        if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
-        {
-        ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
-            ChildWindow3->save();
-        }
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
-        {
-        ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
-            ChildWindow0->save();
-        }
-        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
-        {
-        ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
-            ChildWindow2->save();
-        }
-
-        progress.setValue(++counter);
-        qApp->processEvents();
-    }
-
-    progress.close();
-
-}
-
-void MainWindow::close_sw()
-{
-    if(ui->centralWidget->subWindowList().size()>0)
-        ui->centralWidget->activeSubWindow()->close();
-}
-
-int MainWindow::subWins()
-{
-    return ui->centralWidget->subWindowList().size();
-}
-
-
-// ///////////Events////////////////////
-void MainWindow::on_OpenFile_triggered()
-{
-     QString fileName_DATA = QFileDialog::getOpenFileName(this,
-        trUtf8("Open file"),GlobalSettings::openPath,
-        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT)\n"
-        "All SMBX files (*.LVL *.WLD npc-*.TXT)\n"
-        "All PGE files (*.LVLX *.WLDX npc-*.TXT *.INI)\n"
-        "SMBX Level (*.LVL)\n"
-        "PGE Level (*.LVLX)\n"
-        "SMBX World (*.WLD)\n"
-        "PGE World (*.WLDX)\n"
-        "SMBX NPC Config (npc-*.TXT)\n"
-        "All Files (*.*)"),0);
-
-        if(fileName_DATA==NULL) return;
-
-        OpenFile(fileName_DATA);
-
-}
-
-void MainWindow::on_actionSave_triggered()
-{
-    save();
-}
-
-void MainWindow::on_actionSave_as_triggered()
-{
-    save_as();
-}
-
-void MainWindow::on_actionClose_triggered()
-{
-    close_sw();
-}
-
-void MainWindow::on_actionSave_all_triggered()
-{
-    save_all();
-}
-

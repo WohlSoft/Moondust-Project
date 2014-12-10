@@ -20,7 +20,7 @@
 #include "../mainwindow.h"
 
 #include "global_settings.h"
-#include "music_player.h"
+#include "../audio/music_player.h"
 #include "../common_features/graphicsworkspace.h"
 
 namespace mainwindowMenuBar
@@ -478,16 +478,4 @@ void MainWindow::updateWindowMenu()
     }
 }
 
-void MainWindow::applyTextZoom(){
-    bool ok = false;
-    int zoomPercent = 100;
-    zoomPercent = zoom->text().toInt(&ok);
-    if(!ok)
-        return;
 
-    if(activeChildWindow()==1){
-        activeLvlEditWin()->setZoom(zoomPercent);
-    }else if(activeChildWindow()==3){
-        activeWldEditWin()->setZoom(zoomPercent);
-    }
-}

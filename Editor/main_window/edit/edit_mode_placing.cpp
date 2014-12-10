@@ -17,207 +17,10 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include <mainwindow.h>
 
-#include "../editing/_scenes/world/wld_item_placing.h"
-#include "../editing/_scenes/level/lvl_item_placing.h"
-
-
-void MainWindow::on_actionZoomIn_triggered()
-{
-    if(activeChildWindow()==1)
-        activeLvlEditWin()->zoomIn();
-    else
-    if(activeChildWindow()==3)
-        activeWldEditWin()->zoomIn();
-
-}
-
-void MainWindow::on_actionZoomOut_triggered()
-{
-    if(activeChildWindow()==1)
-        activeLvlEditWin()->zoomOut();
-    else
-    if(activeChildWindow()==3)
-        activeWldEditWin()->zoomOut();
-}
-
-void MainWindow::on_actionZoomReset_triggered()
-{
-    if(activeChildWindow()==1)
-        activeLvlEditWin()->ResetZoom();
-    else
-    if(activeChildWindow()==3)
-        activeWldEditWin()->ResetZoom();
-}
-
-/////////////////Switch edit mode////////////////////////////////////////////
-
-void MainWindow::resetEditmodeButtons()
-{
-    ui->actionSelect->setChecked(0);
-    ui->actionSelectOnly->setChecked(0);
-    ui->actionEriser->setChecked(0);
-    ui->actionHandScroll->setChecked(0);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
-
-    ui->PlacingToolbar->setVisible(false);
-        ui->actionOverwriteMode->setVisible(false);
-        ui->actionSquareFill->setVisible(false);
-        ui->actionLine->setVisible(false);
-        ui->actionFill->setVisible(false);
-        ui->actionFloodSectionOnly->setVisible(false);
-
-
-    ui->ResizingToolbar->setVisible(false);
-
-    if(activeChildWindow()==1)
-       activeLvlEditWin()->scene->setMessageBoxItem(false);
-    else if(activeChildWindow()==3)
-       activeWldEditWin()->scene->setMessageBoxItem(false);
-
-}
-
-
-void MainWindow::on_actionSelect_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionSelect->setChecked(1);
-
-    ui->ItemProperties->hide();
-    ui->WLD_ItemProps->hide();
-
-    if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
-    {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
-    }
-    else
-    if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
-    {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
-    }
-}
-
-
-
-void MainWindow::on_actionSelectOnly_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionSelectOnly->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
-    {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
-    }
-    else
-    if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
-    {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
-    }
-}
-
-
-void MainWindow::on_actionEriser_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionEriser->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
-    {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
-    }
-    else
-    if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
-    {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
-    }
-
-}
-
-
-void MainWindow::on_actionHandScroll_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionHandScroll->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
-    {
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
-    }
-    else
-    if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
-    {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
-    }
-}
-
-
-void MainWindow::on_actionSetFirstPlayer_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionSetFirstPlayer->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if((activeChildWindow()==1))
-    {
-        activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
-    }
-
-}
-
-void MainWindow::on_actionSetSecondPlayer_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionSetSecondPlayer->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if((activeChildWindow()==1))
-    {
-        activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
-    }
-
-}
-
-void MainWindow::on_actionDrawWater_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionDrawWater->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if((activeChildWindow()==1))
-    {
-        activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
-    }
-}
-
-void MainWindow::on_actionDrawSand_triggered()
-{
-    resetEditmodeButtons();
-    ui->actionDrawSand->setChecked(1);
-
-    ui->ItemProperties->hide();
-
-    if((activeChildWindow()==1))
-    {
-        activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
-    }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "../../editing/_scenes/world/wld_item_placing.h"
+#include "../../editing/_scenes/level/lvl_item_placing.h"
 
 
 
@@ -300,10 +103,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         }
 }
 
-void MainWindow::on_actionFloodSectionOnly_triggered(bool checked)
-{
-    LvlPlacingItems::noOutSectionFlood=checked;
-}
+
 
 void MainWindow::on_actionLine_triggered(bool checked)
 {
@@ -390,6 +190,8 @@ void MainWindow::on_actionLine_triggered(bool checked)
     }
 }
 
+
+
 void MainWindow::on_actionFill_triggered(bool checked)
 {
     resetEditmodeButtons();
@@ -463,41 +265,15 @@ void MainWindow::on_actionFill_triggered(bool checked)
     }
 }
 
+
+void MainWindow::on_actionFloodSectionOnly_triggered(bool checked)
+{
+    LvlPlacingItems::noOutSectionFlood=checked;
+}
+
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
 {
     LvlPlacingItems::overwriteMode = checked;
     WldPlacingItems::overwriteMode = checked;
 }
 
-void MainWindow::resizeToolbarVisible(bool vis)
-{
-    ui->ResizingToolbar->setVisible(vis);
-}
-
-void MainWindow::on_actionResizeApply_triggered()
-{
-    if (activeChildWindow()==1)
-    {
-        activeLvlEditWin()->scene->applyResizers();
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->applyResizers();
-    }
-    ui->ResizingToolbar->setVisible(false);
-}
-
-void MainWindow::on_actionResizeCancel_triggered()
-{
-    if (activeChildWindow()==1)
-    {
-        activeLvlEditWin()->scene->resetResizers();;
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->resetResizers();
-    }
-    ui->ResizingToolbar->setVisible(false);
-}

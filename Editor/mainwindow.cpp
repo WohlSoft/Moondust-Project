@@ -170,52 +170,17 @@ void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
     QToolTip::showText(pos, msg, this, QRect(), time);
 }
 
-void MainWindow::refreshHistoryButtons()
-{
-    if(activeChildWindow()==1)
-    {
-        if(activeLvlEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-        }
-    }else if(activeChildWindow()==3){
-        if(activeWldEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
-        }
-    }
 
-}
 
 void MainWindow::on_actionContents_triggered()
 {
     QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
 }
 
-void MainWindow::on_actionNew_triggered()
-{
-    ui->menuNew->exec( this->cursor().pos() );
-}
-
 
 void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
-}
-
-
-
-void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
-{
-    if(checked){
-        //this->hide();
-        this->showFullScreen();
-    }else{
-        //this->hide();
-        this->showNormal();
-    }
 }
 
 

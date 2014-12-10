@@ -25,6 +25,18 @@
 
 bool lockReset = false;
 
+void MainWindow::on_FindDock_visibilityChanged(bool visible)
+{
+    ui->actionLVLSearchBox->setChecked(visible);
+}
+
+void MainWindow::on_actionLVLSearchBox_triggered(bool checked)
+{
+    ui->FindDock->setVisible(checked);
+    if(checked) ui->FindDock->raise();
+}
+
+
 void MainWindow::on_FindStartBlock_clicked()
 {
     if(!(currentSearches & SEARCH_BLOCK)){ //start search

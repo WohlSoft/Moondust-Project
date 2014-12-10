@@ -17,35 +17,8 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include <mainwindow.h>
 
-
-
-
-// World tool box show/hide
-void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
-{
-        ui->actionWLDToolBox->setChecked(visible);
-}
-
-void MainWindow::on_actionWLDToolBox_triggered(bool checked)
-{
-    ui->WorldToolBox->setVisible(checked);
-    if(checked) ui->WorldToolBox->raise();
-}
-
-
-void MainWindow::on_WorldSettings_visibilityChanged(bool visible)
-{
-    ui->actionWorld_settings->setChecked(visible);
-}
-
-
-void MainWindow::on_actionWorld_settings_triggered(bool checked)
-{
-    ui->WorldSettings->setVisible(checked);
-    if(checked) ui->WorldSettings->raise();
-}
 
 
 // //////////////////////// Locks Begin //////////////////////////////
@@ -91,18 +64,3 @@ void MainWindow::on_actionLockMusicBoxes_triggered(bool checked)
     }
 }
 
-
-
-void MainWindow::on_actionSemi_transparent_paths_triggered(bool checked)
-{
-    GlobalSettings::LvlOpts.semiTransparentPaths = checked;
-    if(activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->opts.semiTransparentPaths = GlobalSettings::LvlOpts.semiTransparentPaths;
-        activeWldEditWin()->scene->setSemiTransparentPaths(GlobalSettings::LvlOpts.semiTransparentPaths);
-    }
-
-}
-
-
-// //////////////////////// Locks End //////////////////////////////

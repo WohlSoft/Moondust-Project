@@ -50,7 +50,7 @@ void EngineClient::sendLevelData(LevelData _data)
     sendCommand(sendLvlx);
     qApp->processEvents();
 
-    if(engine->waitForReadyRead(1000))
+    if(engine->waitForReadyRead(5000))
     {
         QByteArray data = engine->readAll();
         QString acceptedData = QString::fromUtf8(data);
