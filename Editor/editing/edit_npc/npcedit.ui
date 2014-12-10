@@ -95,7 +95,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>0</string>
+        <string notr="true">0</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1271,7 +1271,7 @@ border-color: rgb(132, 132, 132);</string>
         </rect>
        </property>
        <property name="text">
-        <string>No</string>
+        <string notr="true">No</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
