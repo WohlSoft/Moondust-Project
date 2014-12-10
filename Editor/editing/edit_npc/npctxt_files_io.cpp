@@ -33,7 +33,7 @@ void NpcEdit::newFile(unsigned long npcID)
 
     isUntitled = true;
 
-    curFile = tr("npc-%1.txt").arg(npcID);
+    curFile = QString("npc-%1.txt").arg(npcID);
 
     setWindowTitle(curFile + QString(" [*] (%1)").arg(sequenceNumber++));
 

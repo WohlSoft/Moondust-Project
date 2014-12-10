@@ -188,11 +188,11 @@ void DevConsole::registerCommands()
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
-    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
+    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
-    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Does a PGE-X format testing"));
+    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
 }
 
 void DevConsole::doCommand()
@@ -323,8 +323,12 @@ void DevConsole::doPgeXTest(QStringList args)
 {
     if(!args.isEmpty())
     {
-        QFile file(args.first());
+        QString src;
 
+        foreach(QString s, args)
+            src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+        QFile file(src);
         if (!file.open(QIODevice::ReadOnly))
         {
             log(QString("-> Error: Can't open the file."));
