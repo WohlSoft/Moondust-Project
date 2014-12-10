@@ -17,7 +17,7 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include "../../mainwindow.h"
 
 void MainWindow::SyncRecentFiles()
 {
@@ -111,5 +111,6 @@ void MainWindow::on_action_recent10_triggered()
 {
     OpenFile(QString(ui->action_recent10->text()).replace("&&&", "&"));
 }
+
 
 

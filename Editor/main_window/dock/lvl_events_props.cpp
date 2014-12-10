@@ -40,6 +40,18 @@ long curSectionField=0;
 bool cloneEvent=false;
 long cloneEventId=0;
 
+
+void MainWindow::on_LevelEventsToolBox_visibilityChanged(bool visible)
+{
+    ui->actionLevelEvents->setChecked(visible);
+}
+
+void MainWindow::on_actionLevelEvents_triggered(bool checked)
+{
+    ui->LevelEventsToolBox->setVisible(checked);
+    if(checked) ui->LevelEventsToolBox->raise();
+}
+
 void MainWindow::setEventsBox()
 {
     int WinType = activeChildWindow();

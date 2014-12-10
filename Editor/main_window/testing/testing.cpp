@@ -17,12 +17,12 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include "../../mainwindow.h"
 
-#include "../common_features/app_path.h"
-#include "../common_features/logger_sets.h"
+#include "../../common_features/app_path.h"
+#include "../../common_features/logger_sets.h"
 
-#include "global_settings.h"
+#include "../global_settings.h"
 
 #include <QFileInfo>
 #include <QDir>
@@ -30,7 +30,7 @@
 
 #include <QProcess>
 
-#include "../networking/engine_intproc.h"
+#include "../../networking/engine_intproc.h"
 
 void MainWindow::on_action_doTest_triggered()
 {
@@ -89,3 +89,4 @@ void MainWindow::on_action_testSettings_triggered()
     QMessageBox::Ok);
 
 }
+

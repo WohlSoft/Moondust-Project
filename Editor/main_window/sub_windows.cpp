@@ -192,6 +192,21 @@ void MainWindow::setActiveSubWindow(QWidget *window)
     ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
 }
 
+
+void MainWindow::close_sw()
+{
+    if(ui->centralWidget->subWindowList().size()>0)
+        ui->centralWidget->activeSubWindow()->close();
+}
+
+
+int MainWindow::subWins()
+{
+    return ui->centralWidget->subWindowList().size();
+}
+
+
+
 void MainWindow::SWCascade()
 {
     if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)

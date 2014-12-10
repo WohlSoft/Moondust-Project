@@ -17,12 +17,13 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include "../../mainwindow.h"
 
-#include "../file_formats/file_formats.h"
-#include "music_player.h"
-#include "global_settings.h"
-#include "../script/gui/additionalsettings.h"
+#include "../../file_formats/file_formats.h"
+#include "../../audio/music_player.h"
+#include "../global_settings.h"
+#include "../../script/gui/additionalsettings.h"
+
 
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
@@ -67,7 +68,8 @@ void MainWindow::on_actionReload_triggered()
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                if(FileData.metaData.script){
+                if(FileData.metaData.script)
+                {
                     delete FileData.metaData.script;
                     FileData.metaData.script = NULL;
                 }
@@ -224,198 +226,5 @@ void MainWindow::on_actionReload_triggered()
 
     clearFilter();
 }
-
-
-void MainWindow::on_actionExport_to_image_triggered()
-{
-    on_actionSelect_triggered();
-
-    if(activeChildWindow()==1)
-    {
-        activeLvlEditWin()->ExportToImage_fn_piece();
-    }
-    else
-    if(activeChildWindow()==3)
-    {
-        activeWldEditWin()->ExportToImage_fn();
-    }
-}
-
-void MainWindow::on_actionExport_to_image_section_triggered()
-{
-    if(activeChildWindow()==1)
-    {
-        activeLvlEditWin()->ExportToImage_fn();
-    }
-}
-
-void MainWindow::on_actionReset_position_triggered()
-{
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->ResetPosition();
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-       activeWldEditWin()->ResetPosition();
-    }
-}
-
-
-
-void MainWindow::on_actionAnimation_triggered(bool checked)
-{
-    GlobalSettings::LvlOpts.animationEnabled = checked;
-    if (activeChildWindow()==1)
-    {
-        activeLvlEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
-        if(GlobalSettings::LvlOpts.animationEnabled)
-        {
-            activeLvlEditWin()->scene->startBlockAnimation();
-        }
-        else
-            activeLvlEditWin()->scene->stopAnimation();
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
-        if(GlobalSettings::LvlOpts.animationEnabled)
-        {
-            activeWldEditWin()->scene->startAnimation();
-        }
-        else
-            activeWldEditWin()->scene->stopAnimation();
-    }
-}
-
-
-void MainWindow::on_actionCollisions_triggered(bool checked)
-{
-    GlobalSettings::LvlOpts.collisionsEnabled = checked;
-    if (activeChildWindow()==1)
-    {
-        activeLvlEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
-    }
-
-}
-
-// //////////////////////////////////////////////////////////////
-
-
-void MainWindow::on_actionGridEn_triggered(bool checked)
-{
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->scene->grid = checked;
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-       activeWldEditWin()->scene->grid = checked;
-    }
-}
-
-// //History Manager
-void MainWindow::on_actionUndo_triggered()
-{
-    ui->ItemProperties->hide();
-    ui->WLD_ItemProps->hide();
-    if (activeChildWindow()==1)
-    {
-        //Here must be call
-        activeLvlEditWin()->scene->historyBack();
-        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-    }
-    else if(activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->historyBack();
-        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
-    }
-}
-
-void MainWindow::on_actionRedo_triggered()
-{
-    ui->ItemProperties->hide();
-    ui->WLD_ItemProps->hide();
-    if (activeChildWindow()==1)
-    {
-        //Here must be call
-        activeLvlEditWin()->scene->historyForward();
-        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-    }
-    else if(activeChildWindow()==3)
-    {
-        activeWldEditWin()->scene->historyForward();
-        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
-    }
-}
-
-
-bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
-{
-    if(activeChildWindow() == 1)
-    {
-        LevelEdit* edit = activeLvlEditWin();
-        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
-        x = coor.x();
-        y = coor.y();
-        return true;
-    }
-    else if(activeChildWindow() == 3)
-    {
-        WorldEdit* edit = activeWldEditWin();
-        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
-        x = coor.x();
-        y = coor.y();
-        return true;
-    }
-    return false;
-}
-
-
-
-
-void MainWindow::on_actionAlign_selected_triggered()
-{
-
-    if(activeChildWindow()==1)
-    {
-        activeLvlEditWin()->scene->applyGridToEach(
-                    activeLvlEditWin()->scene->selectedItems()   );
-    }
-
-}
-
-void MainWindow::on_actionRotateLeft_triggered()
-{
-
-}
-
-void MainWindow::on_actionRotateRight_triggered()
-{
-
-}
-
-void MainWindow::on_actionFlipHorizontal_triggered()
-{
-
-}
-
-void MainWindow::on_actionFlipVertical_triggered()
-{
-
-}
-
 
 

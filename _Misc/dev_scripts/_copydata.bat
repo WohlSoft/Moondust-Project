@@ -169,9 +169,17 @@ call :ApplyDir editing\edit_npc
 call :ApplyDir editing\edit_world
 call :ApplyDir file_formats
 call :ApplyDir main_window
+call :ApplyDir main_window\_settings
 call :ApplyDir main_window\about_dialog
 call :ApplyDir main_window\dock
+call :ApplyDir main_window\edit
+call :ApplyDir main_window\file
+call :ApplyDir main_window\level
+call :ApplyDir main_window\script
+call :ApplyDir main_window\testing
 call :ApplyDir main_window\tools
+call :ApplyDir main_window\view
+call :ApplyDir main_window\world
 call :ApplyDir networking
 call :ApplyDir script
 call :ApplyDir script\commands

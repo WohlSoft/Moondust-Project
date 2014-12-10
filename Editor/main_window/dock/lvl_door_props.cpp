@@ -30,6 +30,18 @@
 
 bool lockSetSettings=false;
 
+
+void MainWindow::on_DoorsToolbox_visibilityChanged(bool visible)
+{
+    ui->actionWarpsAndDoors->setChecked(visible);
+}
+void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
+{
+    ui->DoorsToolbox->setVisible(checked);
+    if(checked) ui->DoorsToolbox->raise();
+}
+
+
 void MainWindow::setDoorsToolbox()
 {
     int WinType = activeChildWindow();

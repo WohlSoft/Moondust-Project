@@ -39,9 +39,9 @@
 
 #include "./common_features/mainwinconnect.h"
 
-#include "./main_window/music_player.h"
+#include "./audio/music_player.h"
 #include "./main_window/global_settings.h"
-#include "./main_window/savingnotificationdialog.h"
+#include "../_dialogs/savingnotificationdialog.h"
 
 
 void WorldEdit::ExportToImage_fn()

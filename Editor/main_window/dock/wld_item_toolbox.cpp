@@ -52,6 +52,21 @@ static QString grp_tiles = "";
 static QString grp_paths = "";
 static QString grp_scenes = "";
 
+
+// World tool box show/hide
+void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
+{
+        ui->actionWLDToolBox->setChecked(visible);
+}
+
+void MainWindow::on_actionWLDToolBox_triggered(bool checked)
+{
+    ui->WorldToolBox->setVisible(checked);
+    if(checked) ui->WorldToolBox->raise();
+}
+
+
+
 void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 {
     if((setGrp)&&(activeChildWindow()!=3)) return;

@@ -26,6 +26,20 @@ bool world_settings_lock_fields=false;
 QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;
 
 
+void MainWindow::on_WorldSettings_visibilityChanged(bool visible)
+{
+    ui->actionWorld_settings->setChecked(visible);
+}
+
+
+void MainWindow::on_actionWorld_settings_triggered(bool checked)
+{
+    ui->WorldSettings->setVisible(checked);
+    if(checked) ui->WorldSettings->raise();
+}
+
+
+
 void MainWindow::setCurrentWorldSettings()
 {
     world_settings_lock_fields=true;

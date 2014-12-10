@@ -17,10 +17,6 @@
  */
 
 #include <QtWidgets>
-#include <QGraphicsItem>
-#include <QPixmap>
-#include <QGraphicsScene>
-#include <QProgressDialog>
 
 #include "level_edit.h"
 #include <ui_leveledit.h>
@@ -29,184 +25,14 @@
 
 #include "../../file_formats/file_formats.h"
 #include "../_scenes/level/lvl_scene.h"
-#include "saveimage.h"
+
 #include "../../common_features/logger.h"
 #include "../../common_features/util.h"
 
 #include "../../common_features/mainwinconnect.h"
-#include "../../main_window/music_player.h"
+#include "../../audio/music_player.h"
 #include "../../main_window/global_settings.h"
-#include "../../main_window/savingnotificationdialog.h"
-
-#include <QDebug>
-
-
-//Export whole section
-void LevelEdit::ExportToImage_fn()
-{
-    if(!sceneCreated) return;
-    if(!scene) return;
-
-    scene->setScreenshotSelector();
-}
-
-
-//Export piece
-void LevelEdit::ExportToImage_fn_piece()
-{
-    if(!sceneCreated) return;
-    if(!scene) return;
-
-    MainWinConnect::pMainWin->on_actionSelect_triggered();
-
-    qreal zoom=1.0;
-    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
-    {
-        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
-    }
-
-    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
-    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
-    scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
-    scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
-
-    scene->setScreenshotSelector(true);
-}
-
-
-void LevelEdit::ExportingReady() //slot
-{
-    if(!sceneCreated) return;
-    if(!scene) return;
-
-        long x, y, h, w, th, tw;
-
-        bool proportion;
-        bool forceTiled=false;
-        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
-        QSettings settings(inifile, QSettings::IniFormat);
-        settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", ApplicationPath).toString();
-        proportion = settings.value("export-proportions", true).toBool();
-        settings.endGroup();
-
-
-        if(scene->isFullSection)
-        {
-            x=LvlData.sections[LvlData.CurSection].size_left;
-            y=LvlData.sections[LvlData.CurSection].size_top;
-            w=LvlData.sections[LvlData.CurSection].size_right;
-            h=LvlData.sections[LvlData.CurSection].size_bottom;
-            w=(long)fabs(x-w);
-            h=(long)fabs(y-h);
-        }
-        else
-        {
-            x=qRound(scene->captutedSize.x());
-            y=qRound(scene->captutedSize.y());
-            w=qRound(scene->captutedSize.width());
-            h=qRound(scene->captutedSize.height());
-        }
-
-        tw=w;
-        th=h;
-        QVector<long> imgSize;
-
-        imgSize.push_back(th);
-        imgSize.push_back(tw);
-        imgSize.push_back((int)proportion);
-
-        ExportToImage ExportImage(imgSize);
-        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
-        if(ExportImage.exec()!=QDialog::Rejected)
-            imgSize = ExportImage.imageSize;
-        else return;
-
-        if(imgSize.size()>=3)
-            if((imgSize[0]<0)||(imgSize[1]<0))
-                return;
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-            latest_export_path + "/" +
-            QString("%1_Section_%2%3.png").arg( QFileInfo(curFile).baseName() )
-                                                        .arg(LvlData.CurSection+1)
-                                                        .arg(scene->isFullSection?"":("_"+QString::number(qrand()))),
-                                                        tr("PNG Image (*.png)"));
-        if (fileName.isEmpty())
-            return;
-
-        forceTiled = ExportImage.TiledBackground();
-
-        QFileInfo exported(fileName);
-
-        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
-        progress.setWindowTitle(tr("Please wait..."));
-        progress.setWindowModality(Qt::WindowModal);
-        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-        progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-        progress.setCancelButton(0);
-        progress.setMinimumDuration(0);
-
-        //progress.show();
-
-        if(!progress.wasCanceled()) progress.setValue(0);
-
-        qApp->processEvents();
-        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
-        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
-        if(forceTiled) scene->setTiledBackground(true);
-
-        if(!progress.wasCanceled()) progress.setValue(10);
-        qApp->processEvents();
-        scene->clearSelection(); // Clear selection on export
-
-        latest_export_path = exported.absoluteDir().path();
-        proportion = imgSize[2];
-
-        th=imgSize[0];
-        tw=imgSize[1];
-
-        qApp->processEvents();
-        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
-
-        if(!progress.wasCanceled()) progress.setValue(20);
-
-        qApp->processEvents();
-        QPainter p(&img);
-
-        if(!progress.wasCanceled()) progress.setValue(30);
-        qApp->processEvents();
-        scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
-
-        qApp->processEvents();
-        p.end();
-
-        if(!progress.wasCanceled()) progress.setValue(40);
-        qApp->processEvents();
-        img.save(fileName);
-
-        qApp->processEvents();
-        if(!progress.wasCanceled()) progress.setValue(90);
-
-        qApp->processEvents();
-        if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
-        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
-        if(forceTiled) scene->setTiledBackground(false);
-
-        if(!progress.wasCanceled()) progress.setValue(100);
-        if(!progress.wasCanceled())
-            progress.close();
-
-        settings.beginGroup("Main");
-            settings.setValue("export-path", latest_export_path);
-            settings.setValue("export-proportions", proportion);
-        settings.endGroup();
-}
-
-
-
+#include "../_dialogs/savingnotificationdialog.h"
 
 
 void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)

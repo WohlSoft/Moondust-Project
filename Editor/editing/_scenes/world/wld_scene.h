@@ -220,6 +220,7 @@ public:
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    void applyGridToEach(QList<QGraphicsItem *> items);
     void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
 
     void applyArrayForItemGroup(QList<QGraphicsItem * >items);

@@ -17,7 +17,7 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include <mainwindow.h>
 
 
 //Copy
@@ -58,7 +58,6 @@ void MainWindow::on_actionCut_triggered()
        q2 += LvlBuffer.bgo.size();
        q3 += LvlBuffer.npc.size();
        q4 += LvlBuffer.physez.size();
-       //statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items have been moved to clipboard").arg(q1).arg(q2).arg(q3), 2000);
        statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
     }
     else
@@ -105,21 +104,15 @@ void MainWindow::on_actionPaste_triggered()
 
     if (activeChildWindow()==1)
     {
-       //activeLvlEditWin()->changeCursor(leveledit::MODE_Pasting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
-
        activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
     }
     else
     if (activeChildWindow()==3)
     {
-       //activeWldEditWin()->changeCursor(WorldEdit::MODE_Pasting);
-       //activeWldEditWin()->scene->EditingMode = 4;
-       //activeWldEditWin()->scene->EraserEnabled = false;
-       //activeWldEditWin()->scene->disableMoveItems=true;
-        activeWldEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
-
+       activeWldEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
        activeWldEditWin()->scene->WldBuffer = WldBuffer;
     }
 
 }
+
