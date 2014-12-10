@@ -27,7 +27,7 @@
 
 #include "./file_formats/file_formats.h"
 #include "../_scenes/level/lvl_scene.h"
-#include "saveimage.h"
+#include <main_window/file/lvl_export_image.h>
 #include "./common_features/app_path.h"
 #include "./common_features/logger.h"
 #include "./tools/smart_import/smartimporter.h"
