@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_scene.h"
-#include "../../edit_level/level_edit.h"
+#include <editing/edit_level/level_edit.h>
 
+#include "lvl_scene.h"
 
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)

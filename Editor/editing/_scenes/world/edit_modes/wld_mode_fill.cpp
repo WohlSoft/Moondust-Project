@@ -15,22 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include <QElapsedTimer>
+
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
+#include <common_features/themes.h>
+
 #include "wld_mode_fill.h"
-
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../wld_item_placing.h"
-
 #include "../item_tile.h"
 #include "../item_scene.h"
 #include "../item_path.h"
 #include "../item_level.h"
-
-#include "../../../../common_features/themes.h"
-
-#include <QElapsedTimer>
-
 
 WLD_ModeFill::WLD_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)

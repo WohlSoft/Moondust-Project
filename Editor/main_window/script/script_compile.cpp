@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <script/command_compiler/autocodecompiler.h>
+#include <script/command_compiler/lunaluacompiler.h>
 
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include "../../script/command_compiler/autocodecompiler.h"
-#include "../../script/command_compiler/lunaluacompiler.h"
+#include <mainwindow.h>
+#include <ui_mainwindow.h>
 
 void MainWindow::on_actionCompile_To_triggered()
 {

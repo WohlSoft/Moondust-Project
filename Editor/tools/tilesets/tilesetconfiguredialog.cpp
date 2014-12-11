@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_scenes/world/wld_scene.h>
+
 #include "tilesetconfiguredialog.h"
 #include <ui_tilesetconfiguredialog.h>
-
-#include "../../editing/_scenes/level/lvl_scene.h"
-#include "../../editing/_scenes/world/wld_scene.h"
 
 TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),

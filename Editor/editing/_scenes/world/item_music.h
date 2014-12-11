@@ -28,11 +28,12 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QTimer>
-#include <math.h>
 #include <QMenu>
+#include <math.h>
+
+#include <file_formats/wld_filedata.h>
 
 #include "wld_scene.h"
-#include "../../../file_formats/wld_filedata.h"
 
 class ItemMusic : public QObject, public QGraphicsItem
 {

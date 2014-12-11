@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../mainwindow.h"
+#include <common_features/graphicsworkspace.h>
+#include <audio/music_player.h>
+#include <main_window/global_settings.h>
 
-#include "global_settings.h"
-#include "../audio/music_player.h"
-#include "../common_features/graphicsworkspace.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 namespace mainwindowMenuBar
 {

@@ -21,8 +21,9 @@
 
 #include <QWidget>
 
+#include <data_configs/data_configs.h>
+
 #include "../../defines.h"
-#include "../../data_configs/data_configs.h"
 
 class tileset : public QWidget
 {

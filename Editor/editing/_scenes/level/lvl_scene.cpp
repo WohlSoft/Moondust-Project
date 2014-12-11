@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <editing/edit_level/level_edit.h>
+
 #include "lvl_scene.h"
-#include "../../../common_features/app_path.h"
-
-#include "../../edit_level/level_edit.h"
-
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -33,8 +33,6 @@
 #include "edit_modes/mode_line.h"
 #include "edit_modes/mode_resize.h"
 #include "edit_modes/mode_fill.h"
-
-#include "../../../common_features/themes.h"
 
 LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {

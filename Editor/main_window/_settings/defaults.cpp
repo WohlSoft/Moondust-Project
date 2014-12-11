@@ -16,23 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFont>
+
+#include <common_features/app_path.h>
+#include <common_features/logger_sets.h>
+#include <common_features/graphics_funcs.h>
+#include <common_features/themes.h>
+#include <main_window/global_settings.h>
+#include <main_window/tools/app_settings.h>
+#include <audio/music_player.h>
+#include <audio/sdl_music_player.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-#include <common_features/app_path.h>
-
-#include <common_features/logger_sets.h>
-#include <audio/sdl_music_player.h>
-#include <common_features/themes.h>
-
-#include <main_window/tools/app_settings.h>
-
-#include <audio/music_player.h>
-#include <main_window/global_settings.h>
-
-#include <common_features/graphics_funcs.h>
-
-
-#include <QFont>
 
 PGE_MusPlayer MusPlayer;
 

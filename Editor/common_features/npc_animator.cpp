@@ -16,9 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "npc_animator.h"
-
 #include "logger.h"
+#include "npc_animator.h"
 
 AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
 {

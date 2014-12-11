@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMessageBox>
+
 #include "newlayerbox.h"
 #include <ui_tonewlayerbox.h>
-#include <QMessageBox>
 
 ToNewLayerBox::ToNewLayerBox(LevelData * lData, QWidget *parent) :
     QDialog(parent),

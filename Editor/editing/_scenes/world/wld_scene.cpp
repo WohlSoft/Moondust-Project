@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
-#include "../../../common_features/app_path.h"
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <editing/edit_world/world_edit.h>
 
+#include "wld_scene.h"
 #include "item_tile.h"
 #include "item_scene.h"
 #include "item_path.h"
@@ -35,8 +36,6 @@
 #include "edit_modes/wld_mode_fill.h"
 #include "edit_modes/wld_mode_resize.h"
 #include "edit_modes/wld_mode_setpoint.h"
-
-#include "../../../common_features/themes.h"
 
 WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent) : QGraphicsScene(parent)
 {

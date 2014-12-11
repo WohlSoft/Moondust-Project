@@ -16,21 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../common_features/app_path.h"
-#include "../../common_features/logger_sets.h"
-
-#include "../global_settings.h"
-
 #include <QFileInfo>
 #include <QDir>
 #include <QMessageBox>
-
 #include <QProcess>
 
-#include "../../networking/engine_intproc.h"
+#include <common_features/app_path.h>
+#include <common_features/logger_sets.h>
+#include <main_window/global_settings.h>
+
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
+#include <networking/engine_intproc.h>
 
 void MainWindow::on_action_doTest_triggered()
 {

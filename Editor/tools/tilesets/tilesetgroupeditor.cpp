@@ -16,16 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tilesetgroupeditor.h"
-#include <ui_tilesetgroupeditor.h>
-
 #include <QtDebug>
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/util.h>
+#include <dev_console/devconsole.h>
+#include <defines.h>
+
 #include "tilesetitembutton.h"
-#include "../../common_features/mainwinconnect.h"
-#include "../../common_features/util.h"
-#include "../../dev_console/devconsole.h"
-#include "../../defines.h"
+#include "tilesetgroupeditor.h"
+#include <ui_tilesetgroupeditor.h>
 
 QString TilesetGroupEditor::lastFileName="";
 

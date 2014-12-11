@@ -17,20 +17,18 @@
  */
 
 #include <QtWidgets>
-
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QProgressDialog>
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/app_path.h>
+
 #include "lvl_export_image.h"
 #include "ui_lvl_export_image.h"
-
-#include "../../editing/edit_level/level_edit.h"
+#include <editing/edit_level/level_edit.h>
 #include <ui_leveledit.h>
-
-#include "../../common_features/mainwinconnect.h"
-#include "../../common_features/app_path.h"
 
 //Export whole section
 void LevelEdit::ExportToImage_fn()

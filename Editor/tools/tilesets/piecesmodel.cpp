@@ -16,14 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include "piecesmodel.h"
-
 #include <QIcon>
 #include <QMimeData>
 
-#include "../../common_features/graphics_funcs.h"
-#include "../../common_features/items.h"
+#include <common_features/graphics_funcs.h>
+#include <common_features/items.h>
+
+#include "piecesmodel.h"
 
 PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
     : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)

@@ -16,11 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/grid.h>
+#include <common_features/mainwinconnect.h>
+#include <editing/edit_level/level_edit.h>
+#include <file_formats/file_formats.h>
+
 #include "lvl_scene.h"
-#include "../../edit_level/level_edit.h"
-
-#include "../../../file_formats/file_formats.h"
-
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -28,8 +29,7 @@
 #include "item_door.h"
 #include "item_playerpoint.h"
 
-#include "../../../common_features/grid.h"
-#include "../../../common_features/mainwinconnect.h"
+
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)

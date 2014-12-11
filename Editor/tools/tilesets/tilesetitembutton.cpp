@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/items.h>
+#include <common_features/graphics_funcs.h>
+
 #include "tilesetitembutton.h"
-#include "../../common_features/items.h"
-#include "../../common_features/graphics_funcs.h"
 
 TilesetItemButton::TilesetItemButton(dataconfigs *conf, QGraphicsScene *scene, QWidget *parent) :
     QFrame(parent)

@@ -18,15 +18,13 @@
 
 #include <QtMath>
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/grid.h>
+#include <editing/edit_world/world_edit.h>
+#include <file_formats/file_formats.h>
+
 #include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
-
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../common_features/grid.h"
 #include "wld_item_placing.h"
-
-#include "../../../file_formats/file_formats.h"
-
 
 void WldScene::applyResizers()
 {

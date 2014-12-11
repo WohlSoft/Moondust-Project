@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_scenes/level/lvl_scene.h>
+#include <main_window/dock/lvl_sctc_props.h>
+
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
-
-#include "../../editing/_scenes/level/lvl_scene.h"
-#include "../dock/lvl_sctc_props.h"
 
 void MainWindow::SetCurrentLevelSection(int SctId, int open)
 {

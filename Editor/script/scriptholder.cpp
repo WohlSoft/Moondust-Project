@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/logger.h>
+#include <script/command_compiler/lunaluacompiler.h>
+#include <script/command_compiler/autocodecompiler.h>
+
 #include "scriptholder.h"
-#include "../common_features/logger.h"
-#include "command_compiler/lunaluacompiler.h"
-#include "command_compiler/autocodecompiler.h"
 
 ScriptHolder::ScriptHolder(QObject *parent) :
     QObject(parent),

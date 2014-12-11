@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-#include "./common_features/app_path.h"
+#include <common_features/app_path.h>
 
 WorldEdit::WorldEdit(QWidget *parent) :
     QWidget(parent),

@@ -27,6 +27,7 @@
 #define SCRIPTHOLDER_H
 
 #include <QObject>
+
 #include "command_compiler/basiccompiler.h"
 #include "commands/basiccommand.h"
 #include "commands/eventcommand.h"

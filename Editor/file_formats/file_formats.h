@@ -28,14 +28,11 @@
 #include <QMessageBox>
 #endif
 
-
-
 #include "lvl_filedata.h"
 #include "npc_filedata.h"
 #include "wld_filedata.h"
 
 #include "../data_configs/obj_npc.h"
-
 
 //SMBX64 standard data
 class SMBX64

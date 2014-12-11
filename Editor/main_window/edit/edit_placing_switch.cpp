@@ -16,16 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <editing/_scenes/world/wld_item_placing.h>
+#include <file_formats/file_formats.h>
+
+#include <defines.h>
+#include <main_window/global_settings.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../editing/_scenes/level/lvl_item_placing.h"
-#include "../../editing/_scenes/world/wld_item_placing.h"
-#include "../../file_formats/file_formats.h"
-
-#include "../../defines.h"
-
-#include "../global_settings.h"
+#include <mainwindow.h>
 
 
 void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)

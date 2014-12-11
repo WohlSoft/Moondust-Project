@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/logger.h>
+
 #include "item_tile.h"
-#include "../../../common_features/logger.h"
-
-#include "../../../common_features/mainwinconnect.h"
-
 
 ItemTile::ItemTile(QGraphicsItem *parent)
     : QGraphicsItem(parent)

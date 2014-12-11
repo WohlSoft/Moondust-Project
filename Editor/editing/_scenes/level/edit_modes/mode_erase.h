@@ -19,7 +19,7 @@
 #ifndef LVL_MODE_ERASE_H
 #define LVL_MODE_ERASE_H
 
-#include "../../../../common_features/edit_mode_base.h"
+#include <common_features/edit_mode_base.h>
 
 class LVL_ModeErase : public EditMode
 {

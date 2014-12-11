@@ -32,8 +32,9 @@
 #include <math.h>
 #include <QMenu>
 
+#include <file_formats/wld_filedata.h>
+
 #include "wld_scene.h"
-#include "../../../file_formats/wld_filedata.h"
 
 class ItemPath : public QObject, public QGraphicsItem
 {

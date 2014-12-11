@@ -21,7 +21,8 @@
 
 #include <QList>
 #include <QDialog>
-#include "../../data_configs/data_configs.h"
+
+#include <data_configs/data_configs.h>
 
 
 namespace Ui {

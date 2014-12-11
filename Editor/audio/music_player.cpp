@@ -18,10 +18,11 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-#include "music_player.h"
-#include "../common_features/mainwinconnect.h"
+
+#include <common_features/mainwinconnect.h>
 
 #include "sdl_music_player.h"
+#include "music_player.h"
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId=0;

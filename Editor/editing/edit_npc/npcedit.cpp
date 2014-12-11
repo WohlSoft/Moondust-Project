@@ -18,11 +18,12 @@
 
 #include <QtWidgets>
 
-#include "npcedit.h"
-#include "./ui_npcedit.h"
-#include "./file_formats/file_formats.h"
+#include <common_features/mainwinconnect.h>
+#include <file_formats/file_formats.h>
 
-#include "./common_features/mainwinconnect.h"
+#include "npcedit.h"
+#include <ui_npcedit.h>
+
 
 NpcEdit::NpcEdit(dataconfigs * configs, QWidget *parent) :
     QWidget(parent),

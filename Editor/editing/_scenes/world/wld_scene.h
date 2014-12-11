@@ -23,9 +23,7 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
-
 #include <QGraphicsSceneMouseEvent>
-
 #include <QKeyEvent>
 #include <QBitmap>
 #include <QPainter>
@@ -34,21 +32,16 @@
 #include <QtCore>
 #include <QDebug>
 
-#include "../../../common_features/simple_animator.h"
+#include <common_features/simple_animator.h>
+#include <common_features/graphicsworkspace.h>
+#include <common_features/edit_mode_base.h>
+#include <common_features/logger.h>
+#include <common_features/resizer/item_resizer.h>
+#include <main_window/global_settings.h>
+#include <data_configs/data_configs.h>
+#include <data_configs/custom_data.h>
+#include <file_formats/wld_filedata.h>
 
-#include "../../../file_formats/wld_filedata.h"
-#include "../../../data_configs/data_configs.h"
-
-#include "../../../common_features/logger.h"
-
-#include "../../../common_features/resizer/item_resizer.h"
-
-#include "../../../data_configs/custom_data.h"
-#include "../../../main_window/global_settings.h"
-
-#include "../../../common_features/graphicsworkspace.h"
-
-#include "../../../common_features/edit_mode_base.h"
 
 class WldScene : public QGraphicsScene
 {

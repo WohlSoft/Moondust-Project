@@ -19,6 +19,7 @@
 #define BASICCOMMAND_H
 
 #include <QObject>
+
 #include "../../defines.h"
 
 class BasicCommand : public QObject

@@ -16,19 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/util.h>
+#include <common_features/items.h>
+#include <common_features/graphics_funcs.h>
+#include <editing/_scenes/world/wld_item_placing.h>
+#include <data_configs/custom_data.h>
+#include <file_formats/file_formats.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../editing/_scenes/world/wld_item_placing.h"
-#include "../../file_formats/file_formats.h"
-#include "../../common_features/util.h"
-
-#include "../../data_configs/custom_data.h"
-
-#include "../../common_features/items.h"
-
-#include "../../common_features/graphics_funcs.h"
-
+#include <mainwindow.h>
 
 QString allWLabel = "[all]";
 QString customWLabel = "[custom]";

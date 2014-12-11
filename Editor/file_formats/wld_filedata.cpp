@@ -19,7 +19,6 @@
 #include "wld_filedata.h"
 #include "file_formats.h"
 
-
 WorldTiles FileFormats::dummyWldTile()
 {
     WorldTiles dummyTile;

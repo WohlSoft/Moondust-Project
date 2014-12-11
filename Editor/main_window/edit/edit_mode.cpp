@@ -19,8 +19,6 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-
-
 /////////////////Switch edit mode////////////////////////////////////////////
 
 void MainWindow::resetEditmodeButtons()

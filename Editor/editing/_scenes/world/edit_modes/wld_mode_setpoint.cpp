@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_mode_setpoint.h"
+#include <common_features/mainwinconnect.h>
+#include <common_features/themes.h>
 
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
 #include "../wld_item_placing.h"
-
-#include "../../../../common_features/themes.h"
+#include "wld_mode_setpoint.h"
 
 WLD_ModeSetPoint::WLD_ModeSetPoint(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("SetPoint", parentScene, parent)

@@ -20,7 +20,9 @@
 #define TILESETITEMBUTTON_H
 
 #include <QFrame>
-#include "../../data_configs/data_configs.h"
+
+#include <data_configs/data_configs.h>
+
 #include "../../defines.h"
 
 class TilesetItemButton : public QFrame

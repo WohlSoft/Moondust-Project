@@ -18,22 +18,18 @@
 
 #include <QtWidgets>
 
+#include <common_features/app_path.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/logger.h>
+#include <common_features/util.h>
+#include <main_window/global_settings.h>
+#include <file_formats/file_formats.h>
+#include <audio/music_player.h>
+#include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_dialogs/savingnotificationdialog.h>
+
 #include "level_edit.h"
 #include <ui_leveledit.h>
-
-#include "../../common_features/app_path.h"
-
-#include "../../file_formats/file_formats.h"
-#include "../_scenes/level/lvl_scene.h"
-
-#include "../../common_features/logger.h"
-#include "../../common_features/util.h"
-
-#include "../../common_features/mainwinconnect.h"
-#include "../../audio/music_player.h"
-#include "../../main_window/global_settings.h"
-#include "../_dialogs/savingnotificationdialog.h"
-
 
 void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 {

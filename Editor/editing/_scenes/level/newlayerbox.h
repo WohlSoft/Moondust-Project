@@ -22,7 +22,8 @@
 #include <QDialog>
 #include <QAbstractButton>
 #include <QCloseEvent>
-#include "../../../file_formats/lvl_filedata.h"
+
+#include <file_formats/lvl_filedata.h>
 
 namespace Ui {
 class ToNewLayerBox;

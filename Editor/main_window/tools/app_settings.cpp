@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "app_settings.h"
-#include <ui_app_settings.h>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
@@ -25,13 +23,14 @@
 #include <QProcessEnvironment>
 #include <QByteArray>
 
-#include "../../common_features/app_path.h"
+#include <common_features/app_path.h>
+#include <common_features/logger_sets.h>
+#include <common_features/logger.h>
+#include <common_features/themes.h>
+#include <file_formats/file_formats.h>
 
-#include "../../common_features/logger_sets.h"
-#include "../../file_formats/file_formats.h"
-#include "../../common_features/logger.h"
-
-#include "../../common_features/themes.h"
+#include "app_settings.h"
+#include <ui_app_settings.h>
 
 AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),

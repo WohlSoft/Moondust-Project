@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/themes.h>
+
 #include "item_playerpoint.h"
-#include "../../../common_features/themes.h"
 
 ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent) :
     QGraphicsPixmapItem(parent)

@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
-
 #include <QTranslator>
 #include <QRegExp>
 #include <QFileInfo>
-
 #include <QtDebug>
+
+#include "file_formats.h"
 
 FileStringList::FileStringList()
 {

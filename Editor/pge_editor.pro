@@ -227,7 +227,6 @@ SOURCES += main.cpp\
     editing/edit_world/wld_draw.cpp \
     editing/edit_world/wld_edit_control.cpp \
     editing/edit_world/wld_files_io.cpp \
-    editing/edit_world/wld_saveimage.cpp \
     editing/edit_world/world_edit.cpp \
     file_formats/file_formats.cpp \
     file_formats/file_lvl.cpp \
@@ -318,7 +317,8 @@ SOURCES += main.cpp\
     main_window/tools/data_configs.cpp \
     main_window/edit/edit_placing_switch.cpp \
     main_window/_settings/defaults.cpp \
-    main_window/_settings/settings_io.cpp
+    main_window/_settings/settings_io.cpp \
+    main_window/file/wld_export_image.cpp
     
 
 HEADERS  += defines.h \
@@ -408,7 +408,6 @@ HEADERS  += defines.h \
     editing/edit_level/lvl_clone_section.h \
     editing/edit_npc/npcedit.h \
     editing/edit_npc/npceditscene.h \
-    editing/edit_world/wld_saveimage.h \
     editing/edit_world/world_edit.h \
     file_formats/file_formats.h \
     file_formats/lvl_filedata.h \
@@ -445,7 +444,8 @@ HEADERS  += defines.h \
     main_window/file/lvl_export_image.h \
     main_window/dock/lvl_sctc_props.h \
     audio/music_player.h \
-    editing/_dialogs/savingnotificationdialog.h
+    editing/_dialogs/savingnotificationdialog.h \
+    main_window/file/wld_export_image.h
 
 
 FORMS    += \
@@ -464,7 +464,6 @@ FORMS    += \
     editing/edit_level/levelprops.ui \
     editing/edit_level/lvl_clone_section.ui \
     editing/edit_npc/npcedit.ui \
-    editing/edit_world/wld_saveimage.ui \
     editing/edit_world/world_edit.ui \
     main_window/about_dialog/aboutdialog.ui \
     script/gui/additionalsettings.ui \
@@ -477,7 +476,8 @@ FORMS    += \
     mainwindow.ui \
     main_window/tools/app_settings.ui \
     main_window/file/lvl_export_image.ui \
-    editing/_dialogs/savingnotificationdialog.ui
+    editing/_dialogs/savingnotificationdialog.ui \
+    main_window/file/wld_export_image.ui
 
 
 

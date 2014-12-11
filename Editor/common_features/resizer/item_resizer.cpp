@@ -16,15 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "item_resizer.h"
-
 #include <QBrush>
 #include <QLinearGradient>
 #include <QDebug>
-
 #include <math.h>
-#include "../../common_features/grid.h"
-#include "../../common_features/logger.h"
+
+#include <common_features/grid.h>
+#include <common_features/logger.h>
+
+#include "item_resizer.h"
 
 /**
   *  This box can be re-sized and it can be moved. For moving, we capture

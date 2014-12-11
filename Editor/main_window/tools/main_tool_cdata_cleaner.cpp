@@ -17,8 +17,7 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
+#include <mainwindow.h>
 
 void MainWindow::on_actionCDATA_clear_unused_triggered()
 {

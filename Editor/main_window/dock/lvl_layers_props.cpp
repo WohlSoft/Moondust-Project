@@ -16,21 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_scenes/level/item_bgo.h>
+#include <editing/_scenes/level/item_block.h>
+#include <editing/_scenes/level/item_npc.h>
+#include <editing/_scenes/level/item_water.h>
+#include <editing/_scenes/level/item_door.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <file_formats/file_formats.h>
+#include <common_features/util.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../file_formats/file_formats.h"
-
-#include "../../editing/_scenes/level/item_bgo.h"
-#include "../../editing/_scenes/level/item_block.h"
-#include "../../editing/_scenes/level/item_npc.h"
-#include "../../editing/_scenes/level/item_water.h"
-#include "../../editing/_scenes/level/item_door.h"
-
-#include "../../common_features/util.h"
-
-#include "../../editing/_scenes/level/lvl_item_placing.h"
-
+#include <mainwindow.h>
 
 static bool lockLayerEdit=false;
 

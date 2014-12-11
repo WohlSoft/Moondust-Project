@@ -18,7 +18,6 @@
 
 #include "mainwinconnect.h"
 
-
 MainWindow * MainWinConnect::pMainWin;
 dataconfigs * MainWinConnect::configs;
 

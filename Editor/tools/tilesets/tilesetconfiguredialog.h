@@ -19,11 +19,13 @@
 #ifndef TILESETCONFIGUREDIALOG_H
 #define TILESETCONFIGUREDIALOG_H
 
+#include <QDialog>
+
+#include <data_configs/data_configs.h>
+
 #include "tileset.h"
 #include "piecesmodel.h"
-#include "../../data_configs/data_configs.h"
 
-#include <QDialog>
 
 namespace Ui {
 class TilesetConfigureDialog;

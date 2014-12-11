@@ -16,16 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
+#include <file_formats/file_formats.h>
+#include <editing/edit_world/world_edit.h>
 
+#include "wld_scene.h"
 #include "item_tile.h"
 #include "item_scene.h"
 #include "item_path.h"
 #include "item_level.h"
 #include "item_music.h"
-
-#include "../../../file_formats/file_formats.h"
 #include "wld_item_placing.h"
 
 /*

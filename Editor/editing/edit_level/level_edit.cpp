@@ -21,21 +21,18 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QProgressDialog>
+//#include <QGLWidget>
+#include <QDebug>
+
+#include <common_features/app_path.h>
+#include <common_features/logger.h>
+#include <editing/_scenes/level/lvl_scene.h>
+#include <main_window/file/lvl_export_image.h>
+#include <tools/smart_import/smartimporter.h>
+#include <file_formats/file_formats.h>
 
 #include "level_edit.h"
 #include <ui_leveledit.h>
-
-#include "./file_formats/file_formats.h"
-#include "../_scenes/level/lvl_scene.h"
-#include <main_window/file/lvl_export_image.h>
-#include "./common_features/app_path.h"
-#include "./common_features/logger.h"
-#include "./tools/smart_import/smartimporter.h"
-
-//#include <QGLWidget>
-
-
-#include <QDebug>
 
 LevelEdit::LevelEdit(QWidget *parent) :
     QWidget(parent),

@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
-#include "../../../file_formats/file_formats.h"
+#include <common_features/graphics_funcs.h>
+#include <editing/edit_world/world_edit.h>
+#include <file_formats/file_formats.h>
 
-#include "../../../common_features/graphics_funcs.h"
+#include "wld_scene.h"
 
 //Search and load custom User's files
 

@@ -16,11 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <data_configs/configstatus.h>
+#include <data_configs/config_manager.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-#include "../../data_configs/configstatus.h"
-#include "../../data_configs/config_manager.h"
 
 void MainWindow::on_actionLoad_configs_triggered()
 {

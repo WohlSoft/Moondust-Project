@@ -19,7 +19,8 @@
 #ifndef LVL_ITEM_PLACING_H
 #define LVL_ITEM_PLACING_H
 
-#include "../../../file_formats/lvl_filedata.h"
+#include <file_formats/lvl_filedata.h>
+
 class LvlPlacingItems
 {
 public:

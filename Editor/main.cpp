@@ -16,32 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
-
 #include <QSharedMemory>
 #include <QSystemSemaphore>
 #include <QDesktopWidget>
-
-
-#include "common_features/logger.h"
-#include "common_features/proxystyle.h"
-
-#include "SingleApplication/singleapplication.h"
-
 #include <iostream>
 #include <stdlib.h>
-
-#include "common_features/app_path.h"
-#include "common_features/themes.h"
-#include "common_features/crashhandler.h"
-
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #undef main
-
 #include <QFileInfo>
 #include <QDir>
+
+#include <common_features/logger.h>
+#include <common_features/proxystyle.h>
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <common_features/crashhandler.h>
+#include <SingleApplication/singleapplication.h>
+
+#include "mainwindow.h"
 
 QString ApplicationPath;
 QString ApplicationPath_x;

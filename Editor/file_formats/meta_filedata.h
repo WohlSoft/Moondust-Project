@@ -18,8 +18,9 @@
 #ifndef META_FILEDATA_H
 #define META_FILEDATA_H
 
-#include "../script/scriptholder.h"
 #include <QtCore>
+
+#include "../script/scriptholder.h"
 
 struct Bookmark{
     QString bookmarkName;

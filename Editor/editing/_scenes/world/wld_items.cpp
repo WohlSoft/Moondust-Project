@@ -16,20 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
+#include <common_features/grid.h>
+#include <common_features/mainwinconnect.h>
+#include <editing/edit_world/world_edit.h>
 
+#include "wld_scene.h"
 #include "item_tile.h"
 #include "item_scene.h"
 #include "item_path.h"
 #include "item_level.h"
 #include "item_music.h"
-
 #include "item_point.h"
-
-#include "../../../common_features/grid.h"
-
-#include "../../../common_features/mainwinconnect.h"
 
 QPoint WldScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {

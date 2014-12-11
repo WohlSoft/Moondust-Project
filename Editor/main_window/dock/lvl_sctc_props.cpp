@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-#include "../../audio/music_player.h"
+#include <audio/music_player.h>
 
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 #include "lvl_sctc_props.h"
 
 // Level Section tool box show/hide
