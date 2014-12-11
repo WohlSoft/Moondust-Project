@@ -105,7 +105,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
 
 
     if(scene->opts.animationEnabled)
-        scene->startBlockAnimation(); //Apply block animation
+        scene->startAnimation(); //Apply block animation
 
     scene->applyLayersVisible();
 

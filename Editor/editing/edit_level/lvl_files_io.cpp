@@ -77,7 +77,7 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
 
-    if(options.animationEnabled) scene->startBlockAnimation();
+    if(options.animationEnabled) scene->startAnimation();
     setAutoUpdateTimer(31);
 }
 

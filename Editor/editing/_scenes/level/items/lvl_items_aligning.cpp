@@ -209,3 +209,21 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
 }
 
 
+
+
+void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
+{
+    if(items.size()==0)
+        return;
+
+
+}
+
+void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
+{
+    if(items.size()==0)
+        return;
+
+
+}
+
