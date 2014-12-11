@@ -16,11 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/util.h>
+#include <common_features/graphics_funcs.h>
+
 #include "itemselectdialog.h"
 #include <ui_itemselectdialog.h>
-#include "../../common_features/mainwinconnect.h"
-#include "../../common_features/util.h"
-#include "../../common_features/graphics_funcs.h"
 
 static QString allLabel = "[all]";
 static QString customLabel = "[custom]";

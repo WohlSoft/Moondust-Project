@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
+#include <editing/_dialogs/levelfilelist.h>
+#include <file_formats/file_formats.h>
 
-#include "../../editing/_dialogs/levelfilelist.h"
-#include "../../file_formats/file_formats.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 bool world_settings_lock_fields=false;
 QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;

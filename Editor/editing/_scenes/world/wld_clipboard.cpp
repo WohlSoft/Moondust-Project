@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_scene.h"
-#include "../../edit_level/level_edit.h"
+#include <editing/edit_level/level_edit.h>
 
+#include "wld_scene.h"
 #include "item_tile.h"
 #include "item_scene.h"
 #include "item_path.h"

@@ -16,20 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
+#include <common_features/themes.h>
+
 #include "wld_mode_line.h"
-
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../wld_item_placing.h"
-
 #include "../item_tile.h"
 #include "../item_scene.h"
 #include "../item_path.h"
 #include "../item_level.h"
 #include "../item_music.h"
-
-#include "../../../../common_features/themes.h"
 
 WLD_ModeLine::WLD_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)

@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_scenes/level/item_block.h>
+#include <editing/_scenes/level/item_bgo.h>
+#include <editing/_scenes/level/item_npc.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-#include "../../editing/_dialogs/itemselectdialog.h"
-#include "../../editing/_scenes/level/item_block.h"
-#include "../../editing/_scenes/level/item_bgo.h"
-#include "../../editing/_scenes/level/item_npc.h"
+#include <mainwindow.h>
 
 bool lockReset = false;
 

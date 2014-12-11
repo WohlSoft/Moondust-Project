@@ -29,11 +29,12 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QTimer>
-#include <math.h>
 #include <QMenu>
+#include <math.h>
+
+#include <file_formats/lvl_filedata.h>
 
 #include "lvl_scene.h"
-#include "../../../file_formats/lvl_filedata.h"
 
 class ItemBlock : public QObject, public QGraphicsItem
 {

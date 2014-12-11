@@ -28,6 +28,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
+
 #include "corner_grabber.h"
 
 class ItemResizer : public QGraphicsRectItem

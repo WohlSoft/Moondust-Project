@@ -16,15 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_scene.h"
-#include "../../edit_level/level_edit.h"
-#include "../../../file_formats/file_formats.h"
+#include <common_features/graphics_funcs.h>
+#include <editing/edit_level/level_edit.h>
+#include <file_formats/file_formats.h>
+
 #include "../../../defines.h"
 
-#include "../../../common_features/graphics_funcs.h"
+#include "lvl_scene.h"
 
-//Search and load custom User's files
-
+//Build animators without custom graphics
 void LvlScene::buildAnimators()
 {
     int i;
@@ -117,6 +117,7 @@ void LvlScene::buildAnimators()
 
 }
 
+//Search and load custom User's files
 void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;

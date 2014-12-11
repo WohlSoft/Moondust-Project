@@ -16,12 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "musicfilelist.h"
-#include <ui_musicfilelist.h>
 #include <QDir>
 #include <QDirIterator>
 #include <QMessageBox>
-#include "../../common_features/timecounter.h"
+
+#include <common_features/timecounter.h>
+
+#include "musicfilelist.h"
+#include <ui_musicfilelist.h>
+
 
 MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),

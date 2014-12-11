@@ -16,15 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tileset.h"
-#include <qpainter.h>
+#include <QPainter>
 #include <QPaintEvent>
 #include <QMimeData>
 #include <QDrag>
 
-#include "../../common_features/graphics_funcs.h"
-#include "../../common_features/items.h"
+#include <common_features/graphics_funcs.h>
+#include <common_features/items.h>
 
+#include "tileset.h"
 
 tileset::tileset(dataconfigs* conf, int type, QWidget *parent, int baseSize, int rows, int cols, QGraphicsScene *scene) :
     QWidget(parent)

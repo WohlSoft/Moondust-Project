@@ -21,19 +21,15 @@
 #include <QPixmap>
 #include <QGraphicsScene>
 #include <QProgressDialog>
+#include <QDebug>
+
+#include <common_features/logger.h>
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <file_formats/wld_filedata.h>
 
 #include "world_edit.h"
 #include <ui_world_edit.h>
-
-#include "./file_formats/wld_filedata.h"
-//#include "../level_scene/WldScene.h"
-#include "./common_features/logger.h"
-#include "./common_features/themes.h"
-
-#include "./common_features/mainwinconnect.h"
-
-#include <QDebug>
-
 
 void WorldEdit::mouseReleaseEvent( QMouseEvent * event )
 {

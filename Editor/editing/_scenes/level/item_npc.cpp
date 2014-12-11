@@ -16,20 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../../common_features/logger.h"
+#include <common_features/mainwinconnect.h>
+#include <common_features/logger.h>
+#include <file_formats/file_formats.h>
 
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
-
 #include "itemmsgbox.h"
-
 #include "newlayerbox.h"
 
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../file_formats/file_formats.h"
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)

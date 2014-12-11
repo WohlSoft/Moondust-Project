@@ -19,9 +19,9 @@
 #ifndef MODE_FILL_H
 #define MODE_FILL_H
 
-#include "../../../../common_features/edit_mode_base.h"
-#include "../wld_scene.h"
+#include <common_features/edit_mode_base.h>
 
+#include "../wld_scene.h"
 
 class WLD_ModeFill : public EditMode
 {

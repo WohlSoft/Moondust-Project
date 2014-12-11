@@ -16,15 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopServices>
+
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <editing/_dialogs/npcdialog.h>
+#include <data_configs/config_manager.h>
+
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
-
-#include "editing/_dialogs/npcdialog.h"
-#include "data_configs/config_manager.h"
-#include "common_features/app_path.h"
-#include "common_features/themes.h"
-
-#include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),

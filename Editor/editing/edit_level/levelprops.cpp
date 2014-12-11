@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "levelprops.h"
+#include <file_formats/lvl_filedata.h>
 
+#include "levelprops.h"
 #include <ui_levelprops.h>
-#include "./file_formats/lvl_filedata.h"
+
 
 LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     QDialog(parent),

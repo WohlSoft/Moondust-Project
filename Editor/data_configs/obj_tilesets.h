@@ -20,6 +20,7 @@
 #define OBJ_TILESETS_H
 
 #include <QString>
+
 #include "../defines.h"
 
 struct SimpleTilesetItem{

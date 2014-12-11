@@ -19,7 +19,6 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-
 //Copy
 void MainWindow::on_actionCopy_triggered()
 {

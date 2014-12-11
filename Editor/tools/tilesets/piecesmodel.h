@@ -24,7 +24,8 @@
 #include <QPixmap>
 #include <QPoint>
 #include <QStringList>
-#include "../../data_configs/data_configs.h"
+
+#include <data_configs/data_configs.h>
 
 QT_BEGIN_NAMESPACE
 class QMimeData;

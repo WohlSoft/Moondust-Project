@@ -18,23 +18,19 @@
 
 #include <QtMath>
 
-#include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
+#include <common_features/item_rectangles.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/grid.h>
+#include <file_formats/file_formats.h>
+#include <editing/edit_world/world_edit.h>
 
+#include "wld_scene.h"
 #include "item_tile.h"
 #include "item_scene.h"
 #include "item_path.h"
 #include "item_level.h"
 #include "item_music.h"
-
-
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../common_features/grid.h"
 #include "wld_item_placing.h"
-
-#include "../../../file_formats/file_formats.h"
-
-#include "../../../common_features/item_rectangles.h"
 
 #include "../../../defines.h"
 

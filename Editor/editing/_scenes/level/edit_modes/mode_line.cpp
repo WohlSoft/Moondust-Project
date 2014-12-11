@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mode_line.h"
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
 
 #include "../lvl_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"
-
 #include "../item_bgo.h"
 #include "../item_block.h"
 #include "../item_npc.h"
@@ -30,7 +29,7 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
-#include "../../../../common_features/themes.h"
+#include "mode_line.h"
 
 LVL_ModeLine::LVL_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)

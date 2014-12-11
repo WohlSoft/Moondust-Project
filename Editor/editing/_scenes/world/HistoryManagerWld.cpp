@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+
 #include "item_level.h"
-#include "../../../common_features/mainwinconnect.h"
 #include "item_music.h"
 #include "item_path.h"
 #include "item_scene.h"

@@ -16,13 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_scenes/world/wld_item_placing.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-
-#include "../../editing/_scenes/world/wld_item_placing.h"
-#include "../../editing/_scenes/level/lvl_item_placing.h"
-
-
 
 void MainWindow::on_actionSquareFill_triggered(bool checked)
 {

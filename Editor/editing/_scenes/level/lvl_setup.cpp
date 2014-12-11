@@ -16,21 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_scene.h"
-#include "../../edit_level/level_edit.h"
+#include <common_features/mainwinconnect.h>
+#include <common_features/themes.h>
+#include <main_window/global_settings.h>
+#include <editing/edit_level/level_edit.h>
 
+#include "lvl_scene.h"
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
-#include "../../../main_window/global_settings.h"
-
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../common_features/themes.h"
-
 #include "newlayerbox.h"
-
 
 void LvlScene::SwitchEditingMode(int EdtMode)
 {

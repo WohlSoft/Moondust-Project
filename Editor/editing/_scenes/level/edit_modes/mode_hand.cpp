@@ -16,9 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+
 #include "mode_hand.h"
 #include "../lvl_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
+
 
 LVL_ModeHand::LVL_ModeHand(QGraphicsScene *parentScene, QObject *parent)
 : EditMode("HandScroll", parentScene, parent)

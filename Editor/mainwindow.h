@@ -35,25 +35,25 @@
 #include <QLocale>
 #include <QSplashScreen>
 
-#include "file_formats/lvl_filedata.h"
-#include "file_formats/wld_filedata.h"
-#include "file_formats/npc_filedata.h"
+#include <file_formats/lvl_filedata.h>
+#include <file_formats/wld_filedata.h>
+#include <file_formats/npc_filedata.h>
 
-#include "editing/edit_level/level_edit.h"
-#include "editing/edit_npc/npcedit.h"
-#include "editing/edit_world/world_edit.h"
+#include <editing/edit_level/level_edit.h>
+#include <editing/edit_npc/npcedit.h>
+#include <editing/edit_world/world_edit.h>
 
-#include "editing/edit_level/levelprops.h"
+#include <editing/edit_level/levelprops.h>
 
-#include "main_window/about_dialog/aboutdialog.h"
+#include <main_window/about_dialog/aboutdialog.h>
 
-#include "data_configs/data_configs.h"
+#include <data_configs/data_configs.h>
 
-#include "editing/_dialogs/musicfilelist.h"
-#include "common_features/logger.h"
+#include <editing/_dialogs/musicfilelist.h>
+#include <common_features/logger.h>
 
-#include "tools/tilesets/tileset.h"
-#include "tools/tilesets/tilesetgroupeditor.h"
+#include <tools/tilesets/tileset.h>
+#include <tools/tilesets/tilesetgroupeditor.h>
 
 
 QT_BEGIN_NAMESPACE

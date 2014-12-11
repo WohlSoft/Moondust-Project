@@ -23,9 +23,7 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
-
 #include <QGraphicsSceneMouseEvent>
-
 #include <QKeyEvent>
 #include <QBitmap>
 #include <QPainter>
@@ -35,23 +33,17 @@
 #include <QDebug>
 #include <QList>
 
-#include "../../../common_features/simple_animator.h"
-#include "../../../common_features/npc_animator.h"
-
-#include "../../../file_formats/lvl_filedata.h"
-#include "../../../file_formats/npc_filedata.h"
-#include "../../../data_configs/data_configs.h"
-
-#include "../../../common_features/logger.h"
-
-#include "../../../common_features/resizer/item_resizer.h"
-
-#include "../../../data_configs/custom_data.h"
-#include "../../../main_window/global_settings.h"
-
-#include "../../../common_features/graphicsworkspace.h"
-
-#include "../../../common_features/edit_mode_base.h"
+#include <common_features/logger.h>
+#include <common_features/simple_animator.h>
+#include <common_features/npc_animator.h>
+#include <common_features/resizer/item_resizer.h>
+#include <common_features/graphicsworkspace.h>
+#include <common_features/edit_mode_base.h>
+#include <main_window/global_settings.h>
+#include <data_configs/data_configs.h>
+#include <data_configs/custom_data.h>
+#include <file_formats/lvl_filedata.h>
+#include <file_formats/npc_filedata.h>
 
 class LvlScene : public QGraphicsScene
 {

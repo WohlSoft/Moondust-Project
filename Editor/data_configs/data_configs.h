@@ -22,21 +22,18 @@
 #include <QVector>
 #include <QPixmap>
 #include <QBitmap>
-
 #include <QtWidgets>
 #include <QSettings>
 #include <QProgressDialog>
-#include "../common_features/logger.h"
-
 #include <QDebug>
+
+#include <common_features/logger.h>
 
 #include "obj_block.h"
 #include "obj_bgo.h"
 #include "obj_npc.h"
 #include "obj_BG.h"
-
 #include "obj_wld_items.h"
-
 #include "dc_indexing.h"
 #include "obj_tilesets.h"
 

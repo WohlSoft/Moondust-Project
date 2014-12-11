@@ -16,17 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../file_formats/file_formats.h"
-#include "../../editing/_scenes/level/lvl_item_placing.h"
-
-#include "../../editing/_dialogs/levelfilelist.h"
-
-#include "../../editing/_dialogs/wld_setpoint.h"
-
 #include <QInputDialog>
+
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <editing/_dialogs/levelfilelist.h>
+#include <editing/_dialogs/wld_setpoint.h>
+#include <file_formats/file_formats.h>
+
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 bool lockSetSettings=false;
 

@@ -18,6 +18,7 @@
 
 #ifndef NPC_FILEDATA_H
 #define NPC_FILEDATA_H
+
 #include <QString>
 
 struct NPCConfigFile

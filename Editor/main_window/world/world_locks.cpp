@@ -19,8 +19,6 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-
-
 // //////////////////////// Locks Begin //////////////////////////////
 
 void MainWindow::on_actionLockTiles_triggered(bool checked)

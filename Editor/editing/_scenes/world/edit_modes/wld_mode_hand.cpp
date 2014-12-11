@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+
 #include "wld_mode_hand.h"
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
 
 WLD_ModeHand::WLD_ModeHand(QGraphicsScene *parentScene, QObject *parent)
 : EditMode("HandScroll", parentScene, parent)

@@ -16,14 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <file_formats/file_formats.h>
+#include <audio/music_player.h>
+#include <script/gui/additionalsettings.h>
+#include <main_window/global_settings.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../file_formats/file_formats.h"
-#include "../../audio/music_player.h"
-#include "../global_settings.h"
-#include "../../script/gui/additionalsettings.h"
-
+#include <mainwindow.h>
 
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()

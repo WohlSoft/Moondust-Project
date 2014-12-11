@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/edit_world/world_edit.h>
+
 #include "wld_scene.h"
-#include "../../edit_world/world_edit.h"
 
 // ///////////////////SET Tiles Objects/////////////////////////////////////////////
 void WldScene::setTiles(QProgressDialog &progress)

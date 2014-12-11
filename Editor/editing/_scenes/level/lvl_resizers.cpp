@@ -16,21 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_scene.h"
-#include "../../edit_level/level_edit.h"
 #include <QtMath>
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/grid.h>
+#include <common_features/item_rectangles.h>
+#include <editing/edit_level/level_edit.h>
+#include <file_formats/file_formats.h>
+
+#include "lvl_scene.h"
 #include "item_block.h"
 #include "item_water.h"
-
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../common_features/grid.h"
 #include "lvl_item_placing.h"
-
-#include "../../../file_formats/file_formats.h"
-
-#include "../../../common_features/item_rectangles.h"
-
 
 void LvlScene::applyResizers()
 {

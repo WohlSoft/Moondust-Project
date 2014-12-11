@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <common_features/graphics_funcs.h>
+#include <main_window/global_settings.h>
 
-#include "../main_window/global_settings.h"
-#include "../common_features/graphics_funcs.h"
+#include "data_configs.h"
 
 long dataconfigs::getPathI(unsigned long itemID)
 {

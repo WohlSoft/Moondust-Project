@@ -18,12 +18,12 @@
 
 #include <QtWidgets>
 
-#include "npcedit.h"
-#include "./ui_npcedit.h"
-#include "./file_formats/file_formats.h"
-#include "./main_window/global_settings.h"
-#include "./common_features/mainwinconnect.h"
+#include <common_features/mainwinconnect.h>
+#include <main_window/global_settings.h>
+#include <file_formats/file_formats.h>
 
+#include "npcedit.h"
+#include <ui_npcedit.h>
 
 void NpcEdit::newFile(unsigned long npcID)
 {

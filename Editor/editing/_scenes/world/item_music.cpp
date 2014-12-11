@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/logger.h>
+
 #include "item_music.h"
-#include "../../../common_features/logger.h"
-
-#include "../../../common_features/mainwinconnect.h"
-
 
 ItemMusic::ItemMusic(QGraphicsItem *parent)
     : QGraphicsItem(parent)

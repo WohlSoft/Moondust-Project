@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/themes.h>
+#include <main_window/global_settings.h>
 
-#include "../mainwindow.h"
+#include <mainwindow.h>
 #include <ui_mainwindow.h>
-#include "../common_features/themes.h"
-#include "global_settings.h"
-
 
 void MainWindow::applyTheme(QString themeDir)
 {

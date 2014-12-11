@@ -16,14 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
+
 #include "wld_mode_place.h"
-
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../wld_item_placing.h"
-
-#include "../../../../common_features/themes.h"
 
 WLD_ModePlace::WLD_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)

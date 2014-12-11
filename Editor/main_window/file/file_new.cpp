@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/npcdialog.h>
+#include <editing/_dialogs/itemselectdialog.h>
+#include <audio/music_player.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-
-#include "../../editing/_dialogs/npcdialog.h"
-#include "../../editing/_dialogs/itemselectdialog.h"
-#include "../../audio/music_player.h"
-
 
 void MainWindow::on_actionNew_triggered()
 {

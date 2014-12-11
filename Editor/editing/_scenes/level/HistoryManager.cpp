@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/logger.h>
+#include <common_features/mainwinconnect.h>
+#include <file_formats/file_formats.h>
+#include <audio/music_player.h>
+
 #include "lvl_scene.h"
 #include "item_block.h"
 #include "item_bgo.h"
@@ -23,10 +28,6 @@
 #include "item_water.h"
 #include "item_door.h"
 #include "item_playerpoint.h"
-#include "../../../common_features/logger.h"
-#include "../../../common_features/mainwinconnect.h"
-#include "../../../file_formats/file_formats.h"
-#include "../../../audio/music_player.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {

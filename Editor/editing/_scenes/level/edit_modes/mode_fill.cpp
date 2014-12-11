@@ -15,24 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include <QElapsedTimer>
+
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
+
 #include "mode_fill.h"
-
-#include "../lvl_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"
-
+#include "../lvl_scene.h"
 #include "../item_bgo.h"
 #include "../item_block.h"
 #include "../item_npc.h"
 #include "../item_water.h"
 #include "../item_playerpoint.h"
 #include "../item_door.h"
-
-#include "../../../../common_features/themes.h"
-
-#include <QElapsedTimer>
-
 
 LVL_ModeFill::LVL_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)

@@ -16,14 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mode_place.h"
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
 
 #include "../lvl_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"
 
-#include "../../../../common_features/themes.h"
+#include "mode_place.h"
 
 LVL_ModePlace::LVL_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)

@@ -17,7 +17,7 @@
  */
 
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
+#include <mainwindow.h>
 
 void MainWindow::on_actionExport_to_image_triggered()
 {

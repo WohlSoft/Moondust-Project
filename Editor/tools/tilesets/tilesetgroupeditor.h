@@ -2,10 +2,11 @@
 #define TILESETGROUPEDITOR_H
 
 #include <QDialog>
-#include "tileset.h"
 
-#include "../../common_features/flowlayout.h"
-#include "../../data_configs/obj_tilesets.h"
+#include <common_features/flowlayout.h>
+#include <data_configs/obj_tilesets.h>
+
+#include "tileset.h"
 
 namespace Ui {
 class TilesetGroupEditor;

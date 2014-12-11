@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/graphics_funcs.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-
-#include <common_features/graphics_funcs.h>
 
 
 // //////////////////////////////////////////////////////////////

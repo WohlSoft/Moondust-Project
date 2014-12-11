@@ -2,8 +2,9 @@
 #define ADDITIONALSETTINGS_H
 
 #include <QDialog>
-#include "../scriptholder.h"
 #include <QTreeWidget>
+
+#include "../scriptholder.h"
 
 namespace Ui {
 class AdditionalSettings;

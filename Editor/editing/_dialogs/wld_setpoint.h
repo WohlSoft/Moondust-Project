@@ -3,10 +3,10 @@
 
 #include <QDialog>
 
-#include "../../file_formats/wld_filedata.h"
-#include "../_scenes/world/wld_scene.h"
-#include "../../common_features/logger.h"
-#include "../../common_features/mainwinconnect.h"
+#include <file_formats/wld_filedata.h>
+#include <common_features/logger.h>
+#include <common_features/mainwinconnect.h>
+#include <editing/_scenes/world/wld_scene.h>
 
 namespace Ui {
 class WLD_SetPoint;

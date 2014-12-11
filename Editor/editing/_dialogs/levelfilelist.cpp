@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
+
 #include "levelfilelist.h"
 #include <ui_levelfilelist.h>
-#include <QDir>
 
 LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),

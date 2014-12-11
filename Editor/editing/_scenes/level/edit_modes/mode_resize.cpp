@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mode_resize.h"
+#include <common_features/themes.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
 
 #include "../lvl_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
-
-#include "../../../../common_features/themes.h"
+#include "mode_resize.h"
 
 LVL_ModeResize::LVL_ModeResize(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Resize", parentScene, parent)

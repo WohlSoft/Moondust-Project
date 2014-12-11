@@ -19,7 +19,7 @@
 #ifndef WLD_MODE_ERASE_H
 #define WLD_MODE_ERASE_H
 
-#include "../../../../common_features/edit_mode_base.h"
+#include <common_features/edit_mode_base.h>
 
 class WLD_ModeErase : public EditMode
 {

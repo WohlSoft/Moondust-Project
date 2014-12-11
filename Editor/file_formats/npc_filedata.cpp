@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
-
 #ifndef PGE_ENGINE
-#include "../common_features/logger.h"
+#include <common_features/logger.h>
 #endif
 
+#include "file_formats.h"
 
 NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
 {

@@ -19,7 +19,8 @@
 #define BASICCOMPILER_H
 
 #include <QObject>
-#include "../commands/eventcommand.h"
+
+#include <script/commands/eventcommand.h>
 
 class BasicCompiler : public QObject
 {

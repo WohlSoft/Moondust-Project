@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <script/gui/additionalsettings.h>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#include "../../script/gui/additionalsettings.h"
 
 void MainWindow::on_actionAdditional_Settings_triggered()
 {

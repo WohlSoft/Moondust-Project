@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFontDatabase>
+
 #include "itemmsgbox.h"
 #include <ui_itemmsgbox.h>
-#include <QFontDatabase>
 
 ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *parent) :
     QDialog(parent),

@@ -16,13 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/item_rectangles.h>
+#include <common_features/themes.h>
+
 #include "wld_mode_resize.h"
-
 #include "../wld_scene.h"
-#include "../../../../common_features/mainwinconnect.h"
-#include "../../../../common_features/item_rectangles.h"
-
-#include "../../../../common_features/themes.h"
 
 WLD_ModeResize::WLD_ModeResize(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Resize", parentScene, parent)
