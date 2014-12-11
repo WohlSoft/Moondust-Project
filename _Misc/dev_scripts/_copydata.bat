@@ -162,6 +162,7 @@ call :ApplyDir editing\_dialogs
 call :ApplyDir editing\_scenes
 call :ApplyDir editing\_scenes\level
 call :ApplyDir editing\_scenes\level\edit_modes
+call :ApplyDir editing\_scenes\level\items
 call :ApplyDir editing\_scenes\world
 call :ApplyDir editing\_scenes\world\edit_modes
 call :ApplyDir editing\edit_level
