@@ -52,11 +52,27 @@ languages			Contains locales/translations which are used to translate UI into ot
 
 main_window			Class of main window. It's the main part of the program, and the most important
 
+main_window/_settings		Provides loading/holding/saving of editor's settings
+
 main_window/about_dialog	Provides "About" dialog.
 
 main_window/dock		Provides functions which are used with dock widgets / tool boxes
 
+main_window/edit		Provides [Edit] menu features
+
+main_window/file		Provides [File] menu features
+
+main_window/level		Provides [Level] menu features
+
+main_window/script		Provides [Script] menu features
+
+main_window/testing		Provides [Testing] menu features
+
 main_window/tools		Additional tools which are included into the main window class
+
+main_window/view		Provides [View] menu features
+
+main_window/world		Provides [World] menu features
 
 networking			Provides the networking system
 
