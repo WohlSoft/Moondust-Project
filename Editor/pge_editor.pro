@@ -171,7 +171,6 @@ SOURCES += main.cpp\
     editing/_scenes/level/lvl_scene.cpp \
     editing/_scenes/level/lvl_section.cpp \
     editing/_scenes/level/lvl_setup.cpp \
-    editing/_scenes/level/lvl_usergfx.cpp \
     editing/_scenes/level/newlayerbox.cpp \
     editing/_scenes/level/edit_modes/mode_erase.cpp \
     editing/_scenes/level/edit_modes/mode_fill.cpp \
@@ -321,7 +320,9 @@ SOURCES += main.cpp\
     editing/_scenes/level/items/item_door.cpp \
     editing/_scenes/level/items/item_npc.cpp \
     editing/_scenes/level/items/item_playerpoint.cpp \
-    editing/_scenes/level/items/item_water.cpp
+    editing/_scenes/level/items/item_water.cpp \
+    editing/_scenes/level/data_manager/lvl_animators.cpp \
+    editing/_scenes/level/data_manager/lvl_custom_gfx.cpp
     
 
 HEADERS  += defines.h \
