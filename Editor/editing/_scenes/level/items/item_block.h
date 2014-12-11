@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_DOOR_H
-#define ITEM_DOOR_H
+#ifndef ITEM_BLOCK_H
+#define ITEM_BLOCK_H
 
 #include <QGraphicsItem>
-#include <QGraphicsRectItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -34,63 +34,72 @@
 
 #include <file_formats/lvl_filedata.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 
-class ItemDoor : public QObject, public QGraphicsRectItem
+class ItemBlock : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemDoor(QGraphicsRectItem *parent=0);
-    ~ItemDoor();
+    ItemBlock(QGraphicsItem *parent=0);
+    ~ItemBlock();
 
-    void setDoorData(LevelDoors inD, int doorDir, bool init=false);
+    void setMainPixmap(/*const QPixmap &pixmap*/);
+    void setBlockData(LevelBlock inD, bool is_sz);
     void setContextMenu(QMenu &menu);
+
     void setScenePoint(LvlScene *theScene);
 
-    void setLocked(bool lock);
-
-    int direction;
-    enum doorDirect{
-        D_Entrance=0,
-        D_Exit
-    };
-
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    //////Animation////////
+    void setAnimator(long aniID);
 
     QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsRectItem * image;
 
+    void setSlippery(bool slip);
+    void setInvisible(bool inv);
     void setLayer(QString layer);
+    void setBlockSize(QRect rect);
+
+    void setIncludedNPC(int npcID, bool init=false);
 
     void arrayApply();
     void removeFromArray();
 
-    LevelDoors doorData;
-
+    LevelBlock blockData;
     int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
-    QSize itemSize;
 
     //Locks
     bool isLocked;
+    void setLocked(bool lock);
 
 protected:
     bool mouseLeft;
     bool mouseMid;
     bool mouseRight;
+
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+private slots:
 
 private:
-    LvlScene * scene;
+
+    long animatorID;
+    QRectF imageSize;
+
+    bool animated;
+
 
     QGraphicsItemGroup * grp;
-    QGraphicsPixmapItem * doorLabel;
-    //QGraphicsTextItem * doorLabel_shadow;
-
+    QGraphicsItem * includedNPC;
+    QPixmap currentImage;
+    bool sizable;
+    LvlScene * scene;
+    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
 };
 
-#endif // ITEM_DOOR_H
+#endif // ITEM_BLOCK_H

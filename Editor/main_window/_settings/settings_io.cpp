@@ -59,6 +59,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+        GraphicsHelps::EnableVBEmulate = settings.value("enable-gfx-fix", "true").toBool();
 
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
@@ -110,7 +111,7 @@ void MainWindow::loadSettings()
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
         ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
 
-        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "25000").toInt();
+        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
     settings.endGroup();
 
@@ -206,6 +207,7 @@ void MainWindow::saveSettings()
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
+    settings.setValue("enable-gfx-fix", GraphicsHelps::EnableVBEmulate);
 
     settings.setValue("language", GlobalSettings::locale);
 

@@ -21,9 +21,9 @@
 #include <editing/edit_level/level_edit.h>
 
 #include "lvl_scene.h"
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
+#include "items/item_block.h"
+#include "items/item_bgo.h"
+#include "items/item_npc.h"
 
 #include "edit_modes/mode_hand.h"
 #include "edit_modes/mode_select.h"

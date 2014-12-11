@@ -25,7 +25,7 @@
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
-#include "newlayerbox.h"
+#include "../newlayerbox.h"
 
 
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)

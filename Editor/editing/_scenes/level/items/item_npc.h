@@ -34,7 +34,7 @@
 
 #include <file_formats/lvl_filedata.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 
 class ItemNPC : public QObject, public QGraphicsPixmapItem
 {

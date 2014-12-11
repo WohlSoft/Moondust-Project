@@ -21,327 +21,13 @@
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
 #include "item_playerpoint.h"
-
-
-
-
-QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
-{
-    if((grid)&&(gridSize>0))
-        return Grid::applyGrid(source, gridSize, gridOffset);
-    else
-        return source;
-}
-
-
-void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
-{
-    if(items.size()==0)
-        return;
-
-    QPoint sourcePos=QPoint(0,0);
-    QPoint sourcePosMax=QPoint(0,0);
-    int gridSize=0,gridSizeMax=0, offsetX=0, offsetY=0, offsetXMax=0, offsetYMax=0;//, gridX, gridY, i=0;
-    QGraphicsItem * lead = NULL;
-    //QGraphicsItemGroup *tmp = NULL;
-    QString ObjType;
-
-    foreach(QGraphicsItem * it, items)
-    {
-        if(!it) continue;
-        offsetX=0;
-        offsetY=0;
-        ObjType = it->data(0).toString();
-        if( ObjType == "NPC")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
-            gridSize = dynamic_cast<ItemNPC *>(it)->gridSize;
-            offsetX = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_x;
-            offsetY = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_y;
-        }
-        else
-        if( ObjType == "Block")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemBlock *>(it)->blockData.x, dynamic_cast<ItemBlock *>(it)->blockData.y);
-            gridSize = dynamic_cast<ItemBlock *>(it)->gridSize;
-            //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
-        }
-        else
-        if( ObjType == "BGO")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemBGO *>(it)->bgoData.x, dynamic_cast<ItemBGO *>(it)->bgoData.y);
-            gridSize = dynamic_cast<ItemBGO *>(it)->gridSize;
-            offsetX = dynamic_cast<ItemBGO *>(it)->gridOffsetX;
-            offsetY = dynamic_cast<ItemBGO *>(it)->gridOffsetY;
-        }
-        else
-        if( ObjType == "Water")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->waterData.x, dynamic_cast<ItemWater *>(it)->waterData.y);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "Door_enter")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ix, dynamic_cast<ItemDoor *>(it)->doorData.iy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "Door_exit"){
-            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ox, dynamic_cast<ItemDoor *>(it)->doorData.oy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "playerPoint" )
-        {
-            gridSize = 2 ;
-            sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
-        }
-
-        if(gridSize>gridSizeMax)
-        {
-            offsetXMax = offsetX;
-            offsetYMax = offsetY;
-            gridSizeMax = gridSize;
-            sourcePosMax = sourcePos;
-            lead = it;
-        }
-    }
-
-    QPoint offset;
-    if(lead)
-    {
-        if( sourcePosMax==lead->scenePos().toPoint() && !force )
-            return;
-
-        offset=lead->scenePos().toPoint();
-        lead->setPos(QPointF(applyGrid(lead->scenePos().toPoint(), gridSizeMax, QPoint(offsetXMax,offsetYMax) ) ) );
-
-        offset.setX( offset.x() - lead->scenePos().toPoint().x() );
-        offset.setY( offset.y() - lead->scenePos().toPoint().y() );
-
-        if(items.size()>1)
-        {
-            foreach(QGraphicsItem * it, items)
-            {
-                if(it!=lead)
-                {
-                    QPoint target;
-                    target.setX( it->scenePos().toPoint().x()-offset.x() );
-                    target.setY( it->scenePos().toPoint().y()-offset.y() );
-                    it->setPos(target);
-                }
-                if(force) applyArrayForItem(it);
-            }
-        } else if(force) applyArrayForItem(lead);
-    }
-}
-
-
-void LvlScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
-{
-    foreach(QGraphicsItem * it, items)
-    {
-        if(it) applyArrayForItem(it);
-    }
-}
-
-void LvlScene::applyArrayForItem(QGraphicsItem * item)
-{
-    if(!item) return;
-
-    QString ObjType = item->data(0).toString();
-    if( ObjType == "NPC")
-    {
-        dynamic_cast<ItemNPC *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "Block")
-    {
-        dynamic_cast<ItemBlock *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "BGO")
-    {
-        dynamic_cast<ItemBGO *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "Water")
-    {
-        dynamic_cast<ItemWater *>(item)->arrayApply();
-    }
-    else
-    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
-    {
-        dynamic_cast<ItemDoor *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "playerPoint" )
-    {
-        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
-    }
-
-}
-
-void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
-{
-    if(items.size()==0)
-        return;
-
-    QPoint sourcePos=QPoint(0,0);
-    int gridSize=0,offsetX=0, offsetY=0;//, gridX, gridY, i=0;
-    QString ObjType;
-
-    foreach(QGraphicsItem * it, items)
-    {
-        if(!it) continue;
-        offsetX=0;
-        offsetY=0;
-        ObjType = it->data(0).toString();
-        if( ObjType == "NPC")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
-            gridSize = dynamic_cast<ItemNPC *>(it)->gridSize;
-            offsetX = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_x;
-            offsetY = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_y;
-        }
-        else
-        if( ObjType == "Block")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemBlock *>(it)->blockData.x, dynamic_cast<ItemBlock *>(it)->blockData.y);
-            gridSize = dynamic_cast<ItemBlock *>(it)->gridSize;
-            //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
-        }
-        else
-        if( ObjType == "BGO")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemBGO *>(it)->bgoData.x, dynamic_cast<ItemBGO *>(it)->bgoData.y);
-            gridSize = dynamic_cast<ItemBGO *>(it)->gridSize;
-            offsetX = dynamic_cast<ItemBGO *>(it)->gridOffsetX;
-            offsetY = dynamic_cast<ItemBGO *>(it)->gridOffsetY;
-        }
-        else
-        if( ObjType == "Water")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->waterData.x, dynamic_cast<ItemWater *>(it)->waterData.y);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "Door_enter")
-        {
-            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ix, dynamic_cast<ItemDoor *>(it)->doorData.iy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "Door_exit"){
-            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ox, dynamic_cast<ItemDoor *>(it)->doorData.oy);
-            gridSize = qRound(qreal(pConfigs->default_grid)/2);
-        }
-        else
-        if( ObjType == "playerPoint" )
-        {
-            gridSize = 2 ;
-            sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
-        }
-
-        it->setPos( QPointF(Grid::applyGrid(it->pos().toPoint(), gridSize, QPoint(offsetX, offsetY))) );
-        if( sourcePos != it->scenePos() )
-            applyArrayForItem(it);
-    }
-}
-
-
-
-void LvlScene::returnItemBackGroup(QList<QGraphicsItem * >items)
-{
-    foreach(QGraphicsItem * it, items)
-    {
-        if(it) returnItemBack(it);
-    }
-}
-
-void LvlScene::returnItemBack(QGraphicsItem * item)
-{
-    if(!item) return;
-
-    QString ObjType = item->data(0).toString();
-    if( ObjType == "NPC")
-    {
-        ItemNPC * it = dynamic_cast<ItemNPC *>(item);
-        it->setPos(it->npcData.x, it->npcData.y);
-    }
-    else
-    if( ObjType == "Block")
-    {
-        ItemBlock * it = dynamic_cast<ItemBlock *>(item);
-        it->setPos(it->blockData.x, it->blockData.y);
-    }
-    else
-    if( ObjType == "BGO")
-    {
-        ItemBGO * it = dynamic_cast<ItemBGO *>(item);
-        it->setPos(it->bgoData.x, it->bgoData.y);
-    }
-    else
-    if( ObjType == "Water")
-    {
-        ItemWater * it = dynamic_cast<ItemWater *>(item);
-        it->setPos(it->waterData.x, it->waterData.y);
-    }
-    else
-    if(ObjType == "Door_enter")
-    {
-        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
-        it->setPos(it->doorData.ix, it->doorData.iy);
-    }
-    else
-    if(ObjType == "Door_exit")
-    {
-        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
-        it->setPos(it->doorData.ox, it->doorData.oy);
-    }
-    else
-    if( ObjType == "playerPoint" )
-    {
-        ItemPlayerPoint * it = dynamic_cast<ItemPlayerPoint *>(item);
-        it->setPos(it->pointData.x, it->pointData.y);
-    }
-}
-
-
-
-void LvlScene::Debugger_updateItemList()
-{
-    QString itemList=
-            tr("Player start points:\t\t%1\n"
-               "Blocks:\t\t\t%2\n"
-               "Background objects's:\t%3\n"
-               "Non-playable characters's:\t%4\n"
-               "Warp entries:\t\t%5\n"
-               "Physical env. zones:\t%6\n");
-
-    itemList = itemList.arg(LvlData->players.size())
-            .arg(LvlData->blocks.size())
-            .arg(LvlData->bgo.size())
-            .arg(LvlData->npc.size())
-            .arg(LvlData->doors.size())
-            .arg(LvlData->physez.size());
-
-    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
-}
-
-
-
-
-
-////////////////////////////////// Place new ////////////////////////////////
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
@@ -472,6 +158,15 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 }
 
 
+
+
+
+
+
+
+
+
+
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
     int j,item_i = 0;
@@ -575,6 +270,15 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
+
+
+
+
+
+
+
+
+
 
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
@@ -785,6 +489,13 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     #endif
 }
 
+
+
+
+
+
+
+
 void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 {
     ItemWater *WATERItem = new ItemWater();
@@ -823,6 +534,15 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
     if(PasteFromBuffer) WATERItem->setSelected(true);
 }
 
+
+
+
+
+
+
+
+
+
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
     ItemPlayerPoint *	player = NULL;
@@ -859,6 +579,15 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 }
 
+
+
+
+
+
+
+
+
+
 void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
 {
     if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
@@ -871,6 +600,15 @@ void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
         placeDoorExit(door, toGrid, true);
     }
 }
+
+
+
+
+
+
+
+
+
 
 void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
 {
@@ -890,6 +628,15 @@ void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
     doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, init);
 }
 
+
+
+
+
+
+
+
+
+
 void LvlScene::placeDoorExit(LevelDoors &door, bool toGrid, bool init)
 {
 
@@ -908,3 +655,7 @@ void LvlScene::placeDoorExit(LevelDoors &door, bool toGrid, bool init)
     addItem(doorItemExit);
     doorItemExit->setDoorData(door, ItemDoor::D_Exit, init);
 }
+
+
+
+

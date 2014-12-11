@@ -17,9 +17,9 @@
  */
 
 #include <editing/_dialogs/itemselectdialog.h>
-#include <editing/_scenes/level/item_block.h>
-#include <editing/_scenes/level/item_bgo.h>
-#include <editing/_scenes/level/item_npc.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

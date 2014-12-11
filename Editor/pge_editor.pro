@@ -161,19 +161,12 @@ SOURCES += main.cpp\
     editing/_dialogs/npcdialog.cpp \
     editing/_dialogs/wld_setpoint.cpp \
     editing/_scenes/level/HistoryManager.cpp \
-    editing/_scenes/level/item_bgo.cpp \
-    editing/_scenes/level/item_block.cpp \
-    editing/_scenes/level/item_door.cpp \
-    editing/_scenes/level/item_npc.cpp \
-    editing/_scenes/level/item_playerpoint.cpp \
-    editing/_scenes/level/item_water.cpp \
     editing/_scenes/level/itemmsgbox.cpp \
     editing/_scenes/level/lvl_clipboard.cpp \
     editing/_scenes/level/lvl_collisions.cpp \
     editing/_scenes/level/lvl_control.cpp \
     editing/_scenes/level/lvl_init_filedata.cpp \
     editing/_scenes/level/lvl_item_placing.cpp \
-    editing/_scenes/level/lvl_items.cpp \
     editing/_scenes/level/lvl_resizers.cpp \
     editing/_scenes/level/lvl_scene.cpp \
     editing/_scenes/level/lvl_section.cpp \
@@ -319,7 +312,16 @@ SOURCES += main.cpp\
     main_window/edit/edit_placing_switch.cpp \
     main_window/_settings/defaults.cpp \
     main_window/_settings/settings_io.cpp \
-    main_window/file/wld_export_image.cpp
+    main_window/file/wld_export_image.cpp \
+    editing/_scenes/level/items/lvl_items_modify.cpp \
+    editing/_scenes/level/items/lvl_items_grid.cpp \
+    editing/_scenes/level/items/lvl_items_place.cpp \
+    editing/_scenes/level/items/item_bgo.cpp \
+    editing/_scenes/level/items/item_block.cpp \
+    editing/_scenes/level/items/item_door.cpp \
+    editing/_scenes/level/items/item_npc.cpp \
+    editing/_scenes/level/items/item_playerpoint.cpp \
+    editing/_scenes/level/items/item_water.cpp
     
 
 HEADERS  += defines.h \
@@ -369,12 +371,6 @@ HEADERS  += defines.h \
     editing/_dialogs/musicfilelist.h \
     editing/_dialogs/npcdialog.h \
     editing/_dialogs/wld_setpoint.h \
-    editing/_scenes/level/item_bgo.h \
-    editing/_scenes/level/item_block.h \
-    editing/_scenes/level/item_door.h \
-    editing/_scenes/level/item_npc.h \
-    editing/_scenes/level/item_playerpoint.h \
-    editing/_scenes/level/item_water.h \
     editing/_scenes/level/itemmsgbox.h \
     editing/_scenes/level/lvl_item_placing.h \
     editing/_scenes/level/lvl_scene.h \
@@ -446,7 +442,13 @@ HEADERS  += defines.h \
     main_window/dock/lvl_sctc_props.h \
     audio/music_player.h \
     editing/_dialogs/savingnotificationdialog.h \
-    main_window/file/wld_export_image.h
+    main_window/file/wld_export_image.h \
+    editing/_scenes/level/items/item_bgo.h \
+    editing/_scenes/level/items/item_block.h \
+    editing/_scenes/level/items/item_door.h \
+    editing/_scenes/level/items/item_npc.h \
+    editing/_scenes/level/items/item_playerpoint.h \
+    editing/_scenes/level/items/item_water.h
 
 
 FORMS    += \

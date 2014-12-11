@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_WATER_H
-#define ITEM_WATER_H
+#ifndef ITEM_BGO_H
+#define ITEM_BGO_H
 
 #include <QGraphicsItem>
-#include <QGraphicsPolygonItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -34,51 +34,49 @@
 
 #include <file_formats/lvl_filedata.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 
-class ItemWater : public QObject, public QGraphicsPolygonItem
+class ItemBGO : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemWater(QGraphicsPolygonItem *parent=0);
-    ~ItemWater();
+    ItemBGO(QGraphicsItem *parent=0);
+    ~ItemBGO();
 
-    void setSize(QSize sz);
-    void setRectSize(QRect rect);
-
-    void setType(int tp);
-    void setWaterData(LevelPhysEnv inD);
-
+    void setBGOData(LevelBGO inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
-    void setLocked(bool lock);
-
-    void drawWater();
-
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPolygonItem * image;
+
+
+    //////Animation////////
+    void setAnimator(long aniID);
+
 
     void setLayer(QString layer);
+    void setZMode(int mode, qreal offset, bool init=false);
 
     void arrayApply();
     void removeFromArray();
 
-    LevelPhysEnv waterData;
+    LevelBGO bgoData;
 
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
-    QSize waterSize;
-    int penWidth;
-
-    QPen _pen;
+    int zMode;
+    qreal zOffset;
 
     //Locks
     bool isLocked;
+    void setLocked(bool lock);
+
+
 
 protected:
     bool mouseLeft;
@@ -86,10 +84,15 @@ protected:
     bool mouseRight;
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+    long animatorID;
+    QRectF imageSize;
+
+    bool animated;
     LvlScene * scene;
+
 };
 
-#endif // ITEM_WATER_H
+#endif // ITEM_BGO_H
