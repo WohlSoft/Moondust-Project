@@ -286,19 +286,24 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
                 QStringList tmp;
                 QString common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
 
+                #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Frames Sequance %1").arg(common) );
+                #endif
 
                 tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
                 foreach(QString x, tmp)
                     snpc.frames_left.push_back(x.toInt());
 
+                #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_left.size()) );
+                #endif
 
                 tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
                 foreach(QString x, tmp)
                     snpc.frames_right.push_back(x.toInt());
-
+                #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_right.size()) );
+                #endif
             }
 
 

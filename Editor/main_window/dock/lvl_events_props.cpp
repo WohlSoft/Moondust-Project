@@ -17,10 +17,10 @@
  */
 
 #include <common_features/util.h>
-#include <editing/_scenes/level/item_bgo.h>
-#include <editing/_scenes/level/item_block.h>
-#include <editing/_scenes/level/item_npc.h>
-#include <editing/_scenes/level/item_water.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/items/item_water.h>
 #include <editing/_scenes/level/itemmsgbox.h>
 #include <audio/sdl_music_player.h>
 #include <file_formats/file_formats.h>

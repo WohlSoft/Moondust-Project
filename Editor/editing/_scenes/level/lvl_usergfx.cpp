@@ -48,7 +48,9 @@ void LvlScene::buildAnimators()
 
     for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
     {
-        //WriteToLog(QtDebugMsg, QString("Block Animator ID: %1").arg(i));
+        #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, QString("Block Animator ID: %1").arg(i));
+        #endif
 
         int frameFirst;
         int frameLast;

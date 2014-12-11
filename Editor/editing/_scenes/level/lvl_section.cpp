@@ -65,7 +65,9 @@ void LvlScene::InitSection(int sect)
 
        bool found=false;
 
+       #ifdef _DEBUG_
        WriteToLog(QtDebugMsg, QString("InitSection -> Checking for collisions with other sections"));
+       #endif
 
        //Looking for optimal section position
        while(collided)
@@ -96,7 +98,9 @@ void LvlScene::InitSection(int sect)
                if( leftA >= rightB )
                { continue; }
 
+               #ifdef _DEBUG_
                WriteToLog(QtDebugMsg, QString("InitSection -> Collision found!"));
+               #endif
                found=true;
            }
 
@@ -107,7 +111,9 @@ void LvlScene::InitSection(int sect)
         }
             else
         { //end loop
+            #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, QString("InitSection -> Collision pass"));
+            #endif
             collided=false;
         }
 
@@ -125,11 +131,15 @@ void LvlScene::InitSection(int sect)
 
        LvlData->sections[sect].bgcolor = 16291944;
 
+       #ifdef _DEBUG_
        WriteToLog(QtDebugMsg, QString("InitSection -> Data was applyed X%1 Y%2 W%3 H%4")
                   .arg(x).arg(y).arg(w).arg(h));
+       #endif
     }
     setSectionBG( LvlData->sections[sect] );
 }
+
+
 
 
 void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
@@ -144,7 +154,9 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
     {
         if(findBG->data(0).toString()== QString("BackGround%1").arg(LvlData->sections[sctID].id) )
         {
+            #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, QString("Remove items "+findBG->data(0).toString()+" by id="+QString::number(sctID)+" by SctID="+QString::number(LvlData->sections[sctID].id)) );
+            #endif
             removeItem(findBG);
             if(findBG) delete findBG;
         }
@@ -153,9 +165,13 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
     if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
             LvlData->sections[sctID].background = BG_Id;
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
+    #endif
     setSectionBG(LvlData->sections[sctID], forceTiled);
 }
+
+
 
 
 // ////////////////////////Apply section background/////////////////////////////
@@ -185,7 +201,9 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         w=section.size_right;
         h=section.size_bottom;
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "SetSectionBG-> Check for user images");
+        #endif
 
         isUser1=false; // user's images are exist
         isUser2=false; // user's images are exist
@@ -219,7 +237,9 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 
             if((noimage)&&(!isUser1))
             {
+                #ifdef _DEBUG_
                 WriteToLog(QtWarningMsg, "SetSectionBG-> Image not found");
+                #endif
                 img=image;
             }
         }
@@ -253,8 +273,10 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
             addItem(itemRect);
         }
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("SetSectionBG-> Item placed to x=%1 y=%2 h=%3 w=%4").arg(x).arg(y)
                    .arg((long)fabs(x-w)).arg((long)fabs(y-h)));
+        #endif
         //
 
         if(itemRect!=NULL)
@@ -268,20 +290,27 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 }
 
 
+bool LvlScene::isInSection(long x, long y, int sectionIndex, int padding)
+{
+    return (x >= LvlData->sections[sectionIndex].size_left-padding) &&
+        (x <= LvlData->sections[sectionIndex].size_right+padding) &&
+        (y >= LvlData->sections[sectionIndex].size_top-padding) &&
+             (y <= LvlData->sections[sectionIndex].size_bottom+padding);
+}
+
+
+bool LvlScene::isInSection(long x, long y, int width, int height, int sectionIndex, int padding)
+{
+    return isInSection(x, y, sectionIndex, padding) && isInSection(x+width, y+height, sectionIndex, padding);
+}
+
+
 // ////////////////////////////////////Draw BG image/////////////////////////////////////////////////
 void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                       QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup, bool forceTiled)
 {
-    /* Old Algorith */
-    //QPixmap BackImg;
-    //QPainter * BGPaint;
-    //QPixmap img;
     int si_attach, attach;
-
-    /* New Algorith */
     QGraphicsItem * item;
-    //QGraphicsRectItem * itemR=NULL;
-
     QColor FillColor; //Fill undrawed space with color
 
     long sctW,//Section Width
@@ -300,14 +329,18 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
     sctW = (long)fabs(x-w);
     sctH = (long)fabs(y-h);
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Draw BG -> Draw BG Image");
+    #endif
 
     attach = bgsetup.attached;
 
 // ///////////////////SingleRow BG///////////////////////////
     if((bgsetup.type==0)&&(!bgsetup.editing_tiled)&&(!forceTiled))
     {
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Draw BG -> Style: SingleRow BG");
+        #endif
 
         R1W = srcimg.width();
         R1H = srcimg.height();
@@ -346,14 +379,15 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item->setPos(x,y+RectPlus);
             item->setZValue(Z_backImage);
         }
-
     }
     else
 
 // ///////////////////DoubleRow BG////////////////////////
     if((bgsetup.type==1)&&(!bgsetup.editing_tiled)&&(!forceTiled))
     {
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Draw BG -> Style: DoubleRow BG");
+        #endif
 
         si_attach = bgsetup.second_attached; // Second image attach
 
@@ -371,7 +405,9 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         R1Ho = R1Hc; //Offset from top
         RectPlus=0;
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("Draw BG -> Draw first row, params: "));
+        #endif
 
         // /////////////////////Draw first row//////////////////
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
@@ -380,7 +416,9 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         item->setZValue(Z_backImage);
         // /////////////////////Draw first row//////////////////
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Draw BG -> Draw second row");
+        #endif
 
         R2W = srcimg2.width();
         R2H = srcimg2.height();
@@ -430,7 +468,9 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 // ///////////////////////////////Tiled BG///////////////////////////////
     {
 
+     #ifdef _DEBUG_
      WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
+     #endif
 
      R1W = srcimg.width();
      R1H = srcimg.height();
@@ -469,9 +509,10 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         }
     }
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "acceptedID is "+QString::number(sctID)+" data is "+item->data(0).toString());
-
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
+    #endif
 }
 
 
@@ -483,7 +524,9 @@ void LvlScene::drawSpace()
 {
     const long padding = 400000;
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find and remove current"));
+    #endif
     foreach(QGraphicsItem * spaceItem, items())
     {
         if(spaceItem->data(0).toString()=="Space")
@@ -507,7 +550,9 @@ void LvlScene::drawSpace()
     long l, r, t, b;
          //x, y, h, w;
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find minimal"));
+    #endif
     j=0;
     do
     {
@@ -544,7 +589,9 @@ void LvlScene::drawSpace()
             b = LvlData->sections[i].size_bottom;
     }
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Draw polygon"));
+    #endif
 
     drawing.clear();
     drawing.push_back(QPoint(l-padding, t-padding));
@@ -562,7 +609,10 @@ void LvlScene::drawSpace()
     b = LvlData->sections[LvlData->CurSection].size_bottom;
 
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Draw editing hole"));
+    #endif
+
     drawing.clear();
     drawing.push_back(QPoint(l-1, t-1));
     drawing.push_back(QPoint(r+1, t-1));
@@ -572,7 +622,9 @@ void LvlScene::drawSpace()
 
     bigSpace = bigSpace.subtracted(QPolygon(drawing));
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> add polygon to Item"));
+    #endif
     item = addPolygon(bigSpace, QPen(Qt::NoPen), QBrush(Qt::black));//Add inactive space
     item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 2));
     item->setZValue(Z_sys_interspace1);
@@ -580,6 +632,6 @@ void LvlScene::drawSpace()
     item->setOpacity(qreal(0.4));
     item->setData(0, "Space");
     item2->setData(0, "SectionBorder");
-
 }
+
 

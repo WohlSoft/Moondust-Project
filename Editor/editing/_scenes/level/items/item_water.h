@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_BLOCK_H
-#define ITEM_BLOCK_H
+#ifndef ITEM_WATER_H
+#define ITEM_WATER_H
 
 #include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
+#include <QGraphicsPolygonItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -34,72 +34,62 @@
 
 #include <file_formats/lvl_filedata.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 
-class ItemBlock : public QObject, public QGraphicsItem
+class ItemWater : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemBlock(QGraphicsItem *parent=0);
-    ~ItemBlock();
+    ItemWater(QGraphicsPolygonItem *parent=0);
+    ~ItemWater();
 
-    void setMainPixmap(/*const QPixmap &pixmap*/);
-    void setBlockData(LevelBlock inD, bool is_sz);
+    void setSize(QSize sz);
+    void setRectSize(QRect rect);
+
+    void setType(int tp);
+    void setWaterData(LevelPhysEnv inD);
+
     void setContextMenu(QMenu &menu);
-
     void setScenePoint(LvlScene *theScene);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void setLocked(bool lock);
 
-    //////Animation////////
-    void setAnimator(long aniID);
+    void drawWater();
+
+    QRectF boundingRect() const;
 
     QMenu *ItemMenu;
+//    QGraphicsScene * scene;
+//    QGraphicsPolygonItem * image;
 
-    void setSlippery(bool slip);
-    void setInvisible(bool inv);
     void setLayer(QString layer);
-    void setBlockSize(QRect rect);
-
-    void setIncludedNPC(int npcID, bool init=false);
 
     void arrayApply();
     void removeFromArray();
 
-    LevelBlock blockData;
+    LevelPhysEnv waterData;
+
     int gridSize;
+    int gridOffsetX;
+    int gridOffsetY;
+    QSize waterSize;
+    int penWidth;
+
+    QPen _pen;
 
     //Locks
     bool isLocked;
-    void setLocked(bool lock);
 
 protected:
     bool mouseLeft;
     bool mouseMid;
     bool mouseRight;
-
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private slots:
+    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
 
 private:
-
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
-
-
-    QGraphicsItemGroup * grp;
-    QGraphicsItem * includedNPC;
-    QPixmap currentImage;
-    bool sizable;
     LvlScene * scene;
-    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
 };
 
-#endif // ITEM_BLOCK_H
+#endif // ITEM_WATER_H

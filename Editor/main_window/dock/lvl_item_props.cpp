@@ -19,9 +19,9 @@
 //#include <npc_dialog/npcdialog.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/itemselectdialog.h>
-#include <editing/_scenes/level/item_block.h>
-#include <editing/_scenes/level/item_bgo.h>
-#include <editing/_scenes/level/item_npc.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
 #include <editing/_scenes/level/itemmsgbox.h>
 
 #include <ui_mainwindow.h>

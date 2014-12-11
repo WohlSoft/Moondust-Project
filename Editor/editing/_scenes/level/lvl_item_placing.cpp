@@ -22,10 +22,10 @@
 #include <file_formats/file_formats.h>
 
 #include "lvl_scene.h"
-#include "item_block.h"
-#include "item_bgo.h"
-#include "item_npc.h"
-#include "item_water.h"
+#include "items/item_block.h"
+#include "items/item_bgo.h"
+#include "items/item_npc.h"
+#include "items/item_water.h"
 #include "lvl_item_placing.h"
 
 /*

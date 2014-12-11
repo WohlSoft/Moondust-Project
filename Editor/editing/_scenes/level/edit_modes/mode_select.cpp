@@ -22,12 +22,12 @@
 
 #include "mode_select.h"
 #include "../lvl_scene.h"
-#include "../item_bgo.h"
-#include "../item_block.h"
-#include "../item_npc.h"
-#include "../item_water.h"
-#include "../item_playerpoint.h"
-#include "../item_door.h"
+#include "../items/item_bgo.h"
+#include "../items/item_block.h"
+#include "../items/item_npc.h"
+#include "../items/item_water.h"
+#include "../items/item_playerpoint.h"
+#include "../items/item_door.h"
 
 LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)

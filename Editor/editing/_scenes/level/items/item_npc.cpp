@@ -25,8 +25,8 @@
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
-#include "itemmsgbox.h"
-#include "newlayerbox.h"
+#include "../itemmsgbox.h"
+#include "../newlayerbox.h"
 
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)

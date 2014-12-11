@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <editing/_scenes/level/item_bgo.h>
-#include <editing/_scenes/level/item_block.h>
-#include <editing/_scenes/level/item_npc.h>
-#include <editing/_scenes/level/item_water.h>
-#include <editing/_scenes/level/item_door.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/items/item_water.h>
+#include <editing/_scenes/level/items/item_door.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <file_formats/file_formats.h>
 #include <common_features/util.h>

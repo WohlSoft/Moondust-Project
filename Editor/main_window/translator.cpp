@@ -183,11 +183,12 @@ void MainWindow::loadLanguage(const QString& rLanguage)
         QString languageName = QLocale::languageToString(locale.language());
 
         bool ok  = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-            qDebug() << "Qt Translation: " << ok;
-             ok &= switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-            qDebug() << "Common Translation: " << ok;
             if(ok)
                 qApp->installTranslator(&m_translatorQt);
+            qDebug() << "Qt Translation: " << ok;
+             ok  = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+            qDebug() << "Common Translation: " << ok;
+
 
         WriteToLog(QtDebugMsg, QString("Translation-> try to retranslate"));
 

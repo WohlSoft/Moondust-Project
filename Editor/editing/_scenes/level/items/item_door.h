@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_BGO_H
-#define ITEM_BGO_H
+#ifndef ITEM_DOOR_H
+#define ITEM_DOOR_H
 
 #include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
+#include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -34,49 +34,47 @@
 
 #include <file_formats/lvl_filedata.h>
 
-#include "lvl_scene.h"
+#include "../lvl_scene.h"
 
-class ItemBGO : public QObject, public QGraphicsItem
+class ItemDoor : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemBGO(QGraphicsItem *parent=0);
-    ~ItemBGO();
+    ItemDoor(QGraphicsRectItem *parent=0);
+    ~ItemDoor();
 
-    void setBGOData(LevelBGO inD);
+    void setDoorData(LevelDoors inD, int doorDir, bool init=false);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
+    void setLocked(bool lock);
+
+    int direction;
+    enum doorDirect{
+        D_Entrance=0,
+        D_Exit
+    };
+
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QMenu *ItemMenu;
-
-
-    //////Animation////////
-    void setAnimator(long aniID);
-
+//    QGraphicsScene * scene;
+//    QGraphicsRectItem * image;
 
     void setLayer(QString layer);
-    void setZMode(int mode, qreal offset, bool init=false);
 
     void arrayApply();
     void removeFromArray();
 
-    LevelBGO bgoData;
+    LevelDoors doorData;
 
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
-    int zMode;
-    qreal zOffset;
+    QSize itemSize;
 
     //Locks
     bool isLocked;
-    void setLocked(bool lock);
-
-
 
 protected:
     bool mouseLeft;
@@ -84,15 +82,15 @@ protected:
     bool mouseRight;
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
 
 private:
-    long animatorID;
-    QRectF imageSize;
-
-    bool animated;
     LvlScene * scene;
+
+    QGraphicsItemGroup * grp;
+    QGraphicsPixmapItem * doorLabel;
+    //QGraphicsTextItem * doorLabel_shadow;
 
 };
 
-#endif // ITEM_BGO_H
+#endif // ITEM_DOOR_H

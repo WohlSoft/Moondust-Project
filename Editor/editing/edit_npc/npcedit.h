@@ -26,7 +26,7 @@
 #include <data_configs/data_configs.h>
 #include <file_formats/npc_filedata.h>
 
-#include <editing/_scenes/level/item_npc.h>
+#include <editing/_scenes/level/items/item_npc.h>
 
 #define NPC_EDIT_CLASS "NpcEdit"
 
