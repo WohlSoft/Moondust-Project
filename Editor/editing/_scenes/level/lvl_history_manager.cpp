@@ -599,7 +599,7 @@ void LvlScene::historyBack()
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
+        if(opts.animationEnabled) startAnimation();
 
         break;
     }
@@ -721,7 +721,7 @@ void LvlScene::historyBack()
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
+        if(opts.animationEnabled) startAnimation();
 
         break;
     }
@@ -1598,7 +1598,7 @@ void LvlScene::historyForward()
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
+        if(opts.animationEnabled) startAnimation();
 
         break;
     }
@@ -1648,7 +1648,7 @@ void LvlScene::historyForward()
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
+        if(opts.animationEnabled) startAnimation();
 
         break;
     }

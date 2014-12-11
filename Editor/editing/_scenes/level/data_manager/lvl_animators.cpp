@@ -127,7 +127,7 @@ void LvlScene::buildAnimators()
 
 
 ////////////////////////////////////Animator////////////////////////////////
-void LvlScene::startBlockAnimation()
+void LvlScene::startAnimation()
 {
     long q = LvlData->blocks.size();
     q+= LvlData->bgo.size();

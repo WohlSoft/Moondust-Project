@@ -89,9 +89,6 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     contextMenuOpened = false;
 
-    //Events flags
-    resetPosition = false;
-
     cursor = NULL;
     messageBox = NULL;
     resetCursor();

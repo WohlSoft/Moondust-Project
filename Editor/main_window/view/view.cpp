@@ -46,7 +46,7 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
         activeLvlEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
         if(GlobalSettings::LvlOpts.animationEnabled)
         {
-            activeLvlEditWin()->scene->startBlockAnimation();
+            activeLvlEditWin()->scene->startAnimation();
         }
         else
             activeLvlEditWin()->scene->stopAnimation();

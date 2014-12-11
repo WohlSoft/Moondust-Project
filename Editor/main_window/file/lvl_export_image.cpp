@@ -180,7 +180,7 @@ void LevelEdit::ExportingReady() //slot
         if(!progress.wasCanceled()) progress.setValue(90);
 
         qApp->processEvents();
-        if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
+        if(scene->opts.animationEnabled) scene->startAnimation(); // Restart animation
         if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
         if(forceTiled) scene->setTiledBackground(false);
 

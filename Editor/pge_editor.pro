@@ -160,7 +160,6 @@ SOURCES += main.cpp\
     editing/_dialogs/musicfilelist.cpp \
     editing/_dialogs/npcdialog.cpp \
     editing/_dialogs/wld_setpoint.cpp \
-    editing/_scenes/level/HistoryManager.cpp \
     editing/_scenes/level/itemmsgbox.cpp \
     editing/_scenes/level/lvl_clipboard.cpp \
     editing/_scenes/level/lvl_collisions.cpp \
@@ -180,7 +179,6 @@ SOURCES += main.cpp\
     editing/_scenes/level/edit_modes/mode_resize.cpp \
     editing/_scenes/level/edit_modes/mode_select.cpp \
     editing/_scenes/level/edit_modes/mode_square.cpp \
-    editing/_scenes/world/HistoryManagerWld.cpp \
     editing/_scenes/world/item_level.cpp \
     editing/_scenes/world/item_music.cpp \
     editing/_scenes/world/item_path.cpp \
@@ -313,7 +311,6 @@ SOURCES += main.cpp\
     main_window/_settings/settings_io.cpp \
     main_window/file/wld_export_image.cpp \
     editing/_scenes/level/items/lvl_items_modify.cpp \
-    editing/_scenes/level/items/lvl_items_grid.cpp \
     editing/_scenes/level/items/lvl_items_place.cpp \
     editing/_scenes/level/items/item_bgo.cpp \
     editing/_scenes/level/items/item_block.cpp \
@@ -322,7 +319,10 @@ SOURCES += main.cpp\
     editing/_scenes/level/items/item_playerpoint.cpp \
     editing/_scenes/level/items/item_water.cpp \
     editing/_scenes/level/data_manager/lvl_animators.cpp \
-    editing/_scenes/level/data_manager/lvl_custom_gfx.cpp
+    editing/_scenes/level/data_manager/lvl_custom_gfx.cpp \
+    editing/_scenes/level/lvl_history_manager.cpp \
+    editing/_scenes/world/wld_history_manager.cpp \
+    editing/_scenes/level/items/lvl_items_aligning.cpp
     
 
 HEADERS  += defines.h \
