@@ -43,60 +43,46 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     LvlData = &FileData; //Ad pointer to level data
     _viewPort = parentView;
 
+
+    //set Default Z Indexes
+    Z_backImage = -1000; //Background
+    //Background-2
+    Z_BGOBack2 = -160; // backround BGO
+    Z_blockSizable = -150; // sizable blocks
+    //Background-1
+    Z_BGOBack1 = -100; // backround BGO
+    Z_npcBack = -10; // background NPC
+    Z_Block = 1; // standart block
+    Z_npcStd = 30; // standart NPC
+    Z_Player = 35; //player Point
+    //Foreground-1
+    Z_BGOFore1 = 50; // foreground BGO
+    Z_BlockFore = 100; //LavaBlock
+    Z_npcFore = 150; // foreground NPC
+    //Foreground-2
+    Z_BGOFore2 = 160; // foreground BGO
+    Z_sys_PhysEnv = 500;
+    Z_sys_door = 700;
+    Z_sys_interspace1 = 1000; // interSection space layer
+    Z_sys_sctBorder = 1020; // section Border
+
+
     //Options
     opts.animationEnabled = true;
     opts.collisionsEnabled = true;
-    grid = true;
+
 
     //Indexes
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
     index_npc = pConfigs->index_npc;
 
-    //Editing mode
-    EditingMode = 0;
-    EraserEnabled = false;
-    PasteFromBuffer = false;
-    disableMoveItems = false;
-    DrawMode=false;
-
-    mouseLeft=false; //Left mouse key is pressed
-    mouseMid=false;  //Middle mouse key is pressed
-    mouseRight=false;//Right mouse key is pressed
-
-    mouseMoved=false; //Mouse was moved with right mouseKey
-
-    MousePressEventOnly=false;
-    MouseMoveEventOnly=false;
-    MouseReleaseEventOnly=false;
-
-    last_block_arrayID = 0;
-    last_bgo_arrayID = 0;
-    last_npc_arrayID = 0;
-
-    IncrementingNpcSpecialSpin = 0;
-
-    //Editing process flags
-    IsMoved = false;
-    haveSelected = false;
-
-    emptyCollisionCheck = false;
-
-    placingItem=0;
-
-    pResizer = NULL;
-    isFullSection = false;
-
-    contextMenuOpened = false;
-
-    cursor = NULL;
-    messageBox = NULL;
-    resetCursor();
 
     //set dummy images if target not exist or wrong
     uBlockImg = Themes::Image(Themes::dummy_block);
     uNpcImg =   Themes::Image(Themes::dummy_npc);
     uBgoImg =   Themes::Image(Themes::dummy_bgo);
+
 
     //Build animators for dummies
     SimpleAnimator * tmpAnimator;
@@ -122,40 +108,13 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     animates_NPC.push_back( tmpNpcAnimator );
 
 
+    grid = true;
+    IncrementingNpcSpecialSpin = 0;
 
+    last_block_arrayID = 0;
+    last_bgo_arrayID = 0;
+    last_npc_arrayID = 0;
 
-    //set Default Z Indexes
-    Z_backImage = -1000; //Background
-
-    //Background-2
-    Z_BGOBack2 = -160; // backround BGO
-
-    Z_blockSizable = -150; // sizable blocks
-
-    //Background-1
-    Z_BGOBack1 = -100; // backround BGO
-
-    Z_npcBack = -10; // background NPC
-    Z_Block = 1; // standart block
-    Z_npcStd = 30; // standart NPC
-    Z_Player = 35; //player Point
-
-    //Foreground-1
-    Z_BGOFore1 = 50; // foreground BGO
-    Z_BlockFore = 100; //LavaBlock
-    Z_npcFore = 150; // foreground NPC
-    //Foreground-2
-    Z_BGOFore2 = 160; // foreground BGO
-
-    Z_sys_PhysEnv = 500;
-    Z_sys_door = 700;
-    Z_sys_interspace1 = 1000; // interSection space layer
-    Z_sys_sctBorder = 1020; // section Border
-
-    //HistoryIndex
-    historyIndex=0;
-
-    historyChanged = false;
 
     //Locks
     lock_bgo=false;
@@ -164,8 +123,42 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     lock_door=false;
     lock_water=false;
 
-    connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
+    //Editing mode
+    EditingMode = 0;
+    EraserEnabled = false;
+    PasteFromBuffer = false;
+    disableMoveItems = false;
+    DrawMode=false;
+    placingItem=0;
+
+
+    //Mouse Events
+    IsMoved = false;  //Is Mouse moved after pressing key
+    mouseMoved=false; //Mouse was moved with right mouseKey
+    haveSelected = false;
+    contextMenuOpened = false;
+    mouseLeft=false; //Left mouse key is pressed
+    mouseMid=false;  //Middle mouse key is pressed
+    mouseRight=false;//Right mouse key is pressed
+    MousePressEventOnly=false;
+    MouseMoveEventOnly=false;
+    MouseReleaseEventOnly=false;
+
+    emptyCollisionCheck = false;
+
+    pResizer = NULL;
+    isFullSection = false;
+
+    cursor = NULL;
+    messageBox = NULL;
+    resetCursor();
+
+    //HistoryIndex
+    historyIndex=0;
+    historyChanged = false;
+
+    connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
     //Build edit mode classes
     LVL_ModeHand * modeHand = new LVL_ModeHand(this);
@@ -196,6 +189,7 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     CurrentMode->set();
 }
 
+
 LvlScene::~LvlScene()
 {
     if(messageBox) delete messageBox;
@@ -211,7 +205,6 @@ LvlScene::~LvlScene()
         delete tmp;
     }
 }
-
 
 
 
