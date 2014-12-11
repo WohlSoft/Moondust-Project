@@ -69,6 +69,7 @@ win32: LIBS += libversion
 win32: LIBS += -lDbghelp
 
 #DEFINES += USE_QMEDIAPLAYER
+DEFINES += PGE_EDITOR
 
 INCLUDEPATH += .
 
