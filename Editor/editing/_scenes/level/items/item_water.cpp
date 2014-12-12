@@ -47,6 +47,10 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     waterData.y=this->pos().y();
     waterData.quicksand=false;
 
+    this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
+    this->setData(ITEM_WIDTH, (int)waterData.w);
+    this->setData(ITEM_HEIGHT, (int)waterData.h);
+
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
