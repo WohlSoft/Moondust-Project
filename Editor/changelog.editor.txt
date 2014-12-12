@@ -18,7 +18,7 @@ Editor 0.2.1.6
 - Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
 - Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
 - Added Section modification features: Clone, Delete
-- Added more edit actions: align selected, flip horizontal/vertical
+- Added more edit actions: align selected, flip horizontal/vertical, rotate left/right
 - Added basic scripts generation feature
 - Organized code structure which making code more understandable, flexible and faster
 
