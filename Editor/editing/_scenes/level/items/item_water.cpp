@@ -326,6 +326,8 @@ void ItemWater::arrayApply()
 
     waterData.x = qRound(this->scenePos().x());
     waterData.y = qRound(this->scenePos().y());
+    this->setData(ITEM_WIDTH, (int)waterData.w);
+    this->setData(ITEM_HEIGHT, (int)waterData.h);
 
     if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
@@ -433,6 +435,9 @@ void ItemWater::drawWater()
     y = 1;//waterData.y;
     w = waterData.w-penWidth;
     h = waterData.h-penWidth;
+
+    this->setData(ITEM_WIDTH, (int)waterData.w);
+    this->setData(ITEM_HEIGHT, (int)waterData.h);
 
     //    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
     //    _pen.setCapStyle(Qt::SquareCap);

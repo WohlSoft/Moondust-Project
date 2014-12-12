@@ -221,20 +221,21 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
     //Calculate common width/height of group
 
     zone.setX(qRound(items.first()->scenePos().x()));
-    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt());
+    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt()+1);
     zone.setY(qRound(items.first()->scenePos().y()));
-    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt());
+    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt()+1);
 
     foreach(QGraphicsItem * item, items)
     {
         QString t = item->data(ITEM_TYPE).toString();
-        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water"))
+        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water")
+           && (t!="playerPoint") && (t !="Door_enter")&& (t !="Door_exit"))
             continue;
 
         itemZone.setX(qRound(item->scenePos().x()));
-        itemZone.setWidth(item->data(ITEM_WIDTH).toInt());
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
         itemZone.setY(qRound(item->scenePos().y()));
-        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt());
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
 
         if(itemZone.left()<zone.left()) zone.setLeft(itemZone.left());
         if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
@@ -273,9 +274,35 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
         return;
 
     //Calculate common width/height of group
+    QRect zone = QRect(0,0,0,0);
+    QRect itemZone = QRect(0,0,0,0);
+    //Calculate common width/height of group
 
+    zone.setX(qRound(items.first()->scenePos().x()));
+    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt()+1);
+    zone.setY(qRound(items.first()->scenePos().y()));
+    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt()+1);
+
+    foreach(QGraphicsItem * item, items)
+    {
+        QString t = item->data(ITEM_TYPE).toString();
+        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water")
+           && (t!="playerPoint") && (t !="Door_enter")&& (t !="Door_exit"))
+            continue;
+
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
+
+        if(itemZone.left()<zone.left()) zone.setLeft(itemZone.left());
+        if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
+        if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
+        if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
 
     //Apply rotate formula to each item
+    Q_UNUSED(byClockwise); //Temp dummy, here should be implemented rotating algorinthm
 
 }
 

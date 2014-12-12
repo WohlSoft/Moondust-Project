@@ -216,8 +216,8 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
     this->setPos(pointData.x, pointData.y);
     this->setZValue(scene->Z_Player);
-    this->setData(0, "playerPoint");
-    this->setData(2, QString::number(pointData.id));
+    this->setData(ITEM_TYPE, "playerPoint");
+    this->setData(ITEM_ARRAY_ID, QString::number(pointData.id));
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
@@ -232,6 +232,9 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     }
 
     this->setOffset(qRound(qreal(pnt.w-currentImage.width())/2.0), pnt.h-currentImage.height() );
+
+    this->setData(ITEM_WIDTH, (int)pnt.w);
+    this->setData(ITEM_HEIGHT, (int)pnt.h);
 
     QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
     if(pointData.direction<0)
