@@ -834,6 +834,11 @@ public:
         void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
         void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
+        void on_bps_LayerMov_horSpeed_clicked();
+        void on_bps_LayerMov_vertSpeed_clicked();
+        void on_bps_Scroll_horSpeed_clicked();
+        void on_bps_Scroll_vertSpeed_clicked();
+
     private:
         void AddNewEvent(QString eventName, bool setEdited);
         void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
@@ -1083,6 +1088,8 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
+
+
 
 
 signals:

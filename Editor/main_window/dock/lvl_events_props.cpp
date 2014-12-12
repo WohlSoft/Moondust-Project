@@ -24,6 +24,7 @@
 #include <editing/_scenes/level/itemmsgbox.h>
 #include <audio/sdl_music_player.h>
 #include <file_formats/file_formats.h>
+#include <tools/math/blocksperseconddialog.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -2068,4 +2069,41 @@ void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
         edit->LvlData.modified=true;
     }
 
+}
+
+
+void MainWindow::on_bps_LayerMov_horSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_LayerMov_spX->setValue(bps.result());
+}
+
+void MainWindow::on_bps_LayerMov_vertSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_LayerMov_spY->setValue(bps.result());
+}
+
+void MainWindow::on_bps_Scroll_horSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_Scroll_spX->setValue(bps.result());
+}
+
+void MainWindow::on_bps_Scroll_vertSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_Scroll_spY->setValue(bps.result());
 }
