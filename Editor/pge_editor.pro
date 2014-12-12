@@ -166,7 +166,6 @@ SOURCES += main.cpp\
     editing/_scenes/level/lvl_control.cpp \
     editing/_scenes/level/lvl_init_filedata.cpp \
     editing/_scenes/level/lvl_item_placing.cpp \
-    editing/_scenes/level/lvl_resizers.cpp \
     editing/_scenes/level/lvl_scene.cpp \
     editing/_scenes/level/lvl_section.cpp \
     editing/_scenes/level/lvl_setup.cpp \
@@ -322,7 +321,13 @@ SOURCES += main.cpp\
     editing/_scenes/level/data_manager/lvl_custom_gfx.cpp \
     editing/_scenes/level/lvl_history_manager.cpp \
     editing/_scenes/world/wld_history_manager.cpp \
-    editing/_scenes/level/items/lvl_items_aligning.cpp
+    editing/_scenes/level/items/lvl_items_aligning.cpp \
+    editing/_scenes/level/resizers/lvl_resizer_block.cpp \
+    editing/_scenes/level/resizers/lvl_resizers.cpp \
+    editing/_scenes/level/resizers/lvl_resizer_section.cpp \
+    editing/_scenes/level/resizers/lvl_resizer_section_evnt.cpp \
+    editing/_scenes/level/resizers/lvl_resizer_physenv.cpp \
+    editing/_scenes/level/resizers/lvl_resizer_img_shoot.cpp
     
 
 HEADERS  += defines.h \
