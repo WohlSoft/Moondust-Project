@@ -55,7 +55,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
         if(!it) continue;
         offsetX=0;
         offsetY=0;
-        ObjType = it->data(0).toString();
+        ObjType = it->data(ITEM_TYPE).toString();
         if( ObjType == "NPC")
         {
             sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
@@ -155,7 +155,7 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
         if(!it) continue;
         offsetX=0;
         offsetY=0;
-        ObjType = it->data(0).toString();
+        ObjType = it->data(ITEM_TYPE).toString();
         if( ObjType == "NPC")
         {
             sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
@@ -213,9 +213,57 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
 
 void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
 {
-    if(items.size()==0)
+    if(items.size()<1)
         return;
 
+    QRect zone = QRect(0,0,0,0);
+    QRect itemZone = QRect(0,0,0,0);
+    //Calculate common width/height of group
+
+    zone.setX(qRound(items.first()->scenePos().x()));
+    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt());
+    zone.setY(qRound(items.first()->scenePos().y()));
+    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt());
+
+    foreach(QGraphicsItem * item, items)
+    {
+        QString t = item->data(ITEM_TYPE).toString();
+        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water"))
+            continue;
+
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt());
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt());
+
+        if(itemZone.left()<zone.left()) zone.setLeft(itemZone.left());
+        if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
+        if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
+        if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
+
+    //Apply flipping formula to each item
+    foreach(QGraphicsItem * item, items)
+    {
+        if(vertical)
+        {
+            qreal h1, h2;
+            h1 = qFabs( zone.top() - item->scenePos().y() );
+            h2 = qFabs( (item->scenePos().y() + item->data(ITEM_HEIGHT).toInt()) - zone.bottom());
+
+            item->setY( item->scenePos().y() - h1+h2 );
+
+        }
+        else
+        {
+            qreal w1, w2;
+            w1 = qFabs( zone.left() - item->scenePos().x() );
+            w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
+
+            item->setX( item->scenePos().x() - w1+w2 );
+        }
+        applyArrayForItem(item);
+    }
 
 }
 
@@ -224,6 +272,10 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
     if(items.size()==0)
         return;
 
+    //Calculate common width/height of group
+
+
+    //Apply rotate formula to each item
 
 }
 
