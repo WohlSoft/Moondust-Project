@@ -140,20 +140,20 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
     BlockImage->setFlag(QGraphicsItem::ItemIsMovable, (!lock_block));
 
-    BlockImage->setData(0, "Block");
-    BlockImage->setData(1, QString::number(block.id) );
-    BlockImage->setData(2, QString::number(block.array_id) );
+    BlockImage->setData(ITEM_TYPE, "Block");
+    BlockImage->setData(ITEM_ID, QString::number(block.id) );
+    BlockImage->setData(ITEM_ARRAY_ID, QString::number(block.array_id) );
 
 
     if(pConfigs->main_block[j].sizable)
     {
-        BlockImage->setData(3, "sizable" );
+        BlockImage->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
     }
     else
-        BlockImage->setData(3, "standart" );
+        BlockImage->setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
 
-    BlockImage->setData(9, QString::number(block.w) ); //width
-    BlockImage->setData(10, QString::number(block.h) ); //height
+    BlockImage->setData(ITEM_WIDTH, QString::number(block.w) ); //width
+    BlockImage->setData(ITEM_HEIGHT, QString::number(block.h) ); //height
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 
@@ -260,9 +260,9 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
     BGOItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
 
-    BGOItem->setData(0, "BGO");
-    BGOItem->setData(1, QString::number(bgo.id) );
-    BGOItem->setData(2, QString::number(bgo.array_id) );
+    BGOItem->setData(ITEM_TYPE, "BGO");
+    BGOItem->setData(ITEM_ID, QString::number(bgo.id) );
+    BGOItem->setData(ITEM_ARRAY_ID, QString::number(bgo.array_id) );
 
     BGOItem->zMode = pConfigs->main_bgo[j].view;
     BGOItem->zOffset = pConfigs->main_bgo[j].zOffset;
@@ -473,15 +473,15 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if(NPCItem->localProps.frames>1)
         NPCItem->setData(4, "animated");
 
-    NPCItem->setData(0, "NPC"); // ObjType
-    NPCItem->setData(1, QString::number(npc.id) );
-    NPCItem->setData(2, QString::number(npc.array_id) );
+    NPCItem->setData(ITEM_TYPE, "NPC"); // ObjType
+    NPCItem->setData(ITEM_ID, QString::number(npc.id) );
+    NPCItem->setData(ITEM_ARRAY_ID, QString::number(npc.array_id) );
 
-    NPCItem->setData(7, QString::number((int)NPCItem->localProps.collision_with_blocks) );
-    NPCItem->setData(8, QString::number((int)NPCItem->localProps.no_npc_collions) );
+    NPCItem->setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)NPCItem->localProps.collision_with_blocks) );
+    NPCItem->setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)NPCItem->localProps.no_npc_collions) );
 
-    NPCItem->setData(9, QString::number(NPCItem->localProps.width) ); //width
-    NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
+    NPCItem->setData(ITEM_WIDTH,  QString::number(NPCItem->localProps.width) ); //width
+    NPCItem->setData(ITEM_HEIGHT, QString::number(NPCItem->localProps.height) ); //height
 
     if(PasteFromBuffer) NPCItem->setSelected(true);
     #ifdef _DEBUG_
@@ -528,9 +528,9 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 
     WATERItem->setZValue(Z_sys_PhysEnv);
 
-    WATERItem->setData(0, "Water"); // ObjType
-    WATERItem->setData(1, QString::number(0) );
-    WATERItem->setData(2, QString::number(water.array_id) );
+    WATERItem->setData(ITEM_TYPE, "Water"); // ObjType
+    WATERItem->setData(ITEM_ID, QString::number(0) );
+    WATERItem->setData(ITEM_ARRAY_ID, QString::number(water.array_id) );
     if(PasteFromBuffer) WATERItem->setSelected(true);
 }
 
@@ -551,7 +551,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     {
         foreach(QGraphicsItem * plrt, this->items())
         {
-            if( (plrt->data(0).toString()=="playerPoint")&&((unsigned int)plrt->data(2).toInt()==plr.id) )
+            if( (plrt->data(ITEM_TYPE).toString()=="playerPoint")&&((unsigned int)plrt->data(2).toInt()==plr.id) )
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
                 found=true;

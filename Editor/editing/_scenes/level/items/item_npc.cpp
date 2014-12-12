@@ -304,7 +304,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
@@ -319,7 +319,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
@@ -341,7 +341,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //apply to all selected items.
                         foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                         {
-                            if(SelItem->data(0).toString()=="NPC")
+                            if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                             {
                                 selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                                 ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
@@ -358,7 +358,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
@@ -372,7 +372,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->changeDirection(-1);
@@ -385,7 +385,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->changeDirection(0);
@@ -398,7 +398,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="NPC")
+                    if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->changeDirection(1);

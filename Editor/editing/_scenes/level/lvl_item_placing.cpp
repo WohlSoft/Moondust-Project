@@ -382,31 +382,31 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="NPC";
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=7;
+            flag.first=ITEM_NPC_BLOCK_COLLISION;
             flag.second=QString::number((int)mergedSet.collision_with_blocks);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=8;
+            flag.first=ITEM_NPC_NO_NPC_COLLISION;
             flag.second=QString::number((int)mergedSet.no_npc_collions);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=9;
+            flag.first=ITEM_WIDTH;
             flag.second=QString::number(mergedSet.width);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=10;
+            flag.first=ITEM_HEIGHT;
             flag.second=QString::number(mergedSet.height);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.first=25;
+            flag.first=ITEM_IS_CURSOR;
             flag.second="CURSOR";
         LvlPlacingItems::flags.push_back(flag);
 
@@ -464,7 +464,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         ((QGraphicsRectItem *)cursor)->setBrush(QBrush(QColor(qRgb(0xff,0x00,0x7f))));
         ((QGraphicsRectItem *)cursor)->setPen(QPen(QColor(qRgb(0xff,0x00,0x7f)), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -499,7 +499,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         cursor = addPixmap(playerPixmap);
         dynamic_cast<QGraphicsPixmapItem *>(cursor)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(true);
@@ -554,9 +554,9 @@ void LvlScene::setSquareDrawer()
     foreach(dataFlag flag, LvlPlacingItems::flags)
         cursor->setData(flag.first, flag.second);
 
-    cursor->setData(0, "Square");
+    cursor->setData(ITEM_TYPE, "Square");
 
-    cursor->setData(25, "CURSOR");
+    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
     cursor->setZValue(7000);
     cursor->setOpacity( 0.5 );
     cursor->setVisible(false);
@@ -591,9 +591,9 @@ void LvlScene::setLineDrawer()
     foreach(dataFlag flag, LvlPlacingItems::flags)
         cursor->setData(flag.first, flag.second);
 
-    cursor->setData(0, "LineDrawer");
+    cursor->setData(ITEM_TYPE, "LineDrawer");
 
-    cursor->setData(25, "CURSOR");
+    cursor->setData(ITEM_IS_CURSOR, "CURSOR");
     cursor->setZValue(7000);
     cursor->setOpacity( 0.5 );
     cursor->setVisible(false);

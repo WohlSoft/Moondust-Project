@@ -219,7 +219,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="BGO")
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                         {
                             ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
                         }
@@ -230,7 +230,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="BGO")
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                         {
                             ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
                         }
@@ -241,7 +241,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="BGO")
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                         {
                             ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
                         }
@@ -252,7 +252,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="BGO")
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                         {
                             ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
                         }
@@ -263,7 +263,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="BGO")
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                         {
                             ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
                         }
@@ -280,7 +280,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if(ok)
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="BGO")
+                    if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                     {
                         ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
                     }
@@ -485,8 +485,8 @@ void ItemBGO::setAnimator(long aniID)
                 scene->animates_BGO[aniID]->image().height()
                 );
 
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+    this->setData(ITEM_WIDTH,  QString::number(qRound(imageSize.width())) ); //width
+    this->setData(ITEM_HEIGHT, QString::number(qRound(imageSize.height())) ); //height
 
     //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
 

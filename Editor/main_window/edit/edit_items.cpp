@@ -38,21 +38,38 @@ void MainWindow::on_actionAlign_selected_triggered()
 
 void MainWindow::on_actionRotateLeft_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->rotateGroup(
+                    activeLvlEditWin()->scene->selectedItems(), false   );
+    }
 
 }
 
 void MainWindow::on_actionRotateRight_triggered()
 {
-
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->rotateGroup(
+                    activeLvlEditWin()->scene->selectedItems(), true  );
+    }
 }
 
 void MainWindow::on_actionFlipHorizontal_triggered()
 {
-
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->flipGroup(
+                    activeLvlEditWin()->scene->selectedItems(), false  );
+    }
 }
 
 void MainWindow::on_actionFlipVertical_triggered()
 {
-
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->flipGroup(
+                    activeLvlEditWin()->scene->selectedItems(), true  );
+    }
 }
 

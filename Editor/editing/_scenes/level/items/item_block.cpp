@@ -215,7 +215,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Block")
+                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
                     {
                         selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                         ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
@@ -230,7 +230,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData selData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Block")
+                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
                     {
                         selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                         ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
@@ -266,7 +266,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="Block")
+                        if(SelItem->data(ITEM_TYPE).toString()=="Block")
                         {
                             //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
                             //((ItemBlock *) SelItem)->arrayApply();
@@ -392,7 +392,7 @@ void ItemBlock::arrayApply()
     bool found=false;
     blockData.x = qRound(this->scenePos().x());
     blockData.y = qRound(this->scenePos().y());
-    if(this->data(3).toString()=="sizable")
+    if(this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
         this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
     { //Check index
@@ -461,6 +461,8 @@ void ItemBlock::setBlockSize(QRect rect)
         this->setPos(blockData.x, blockData.y);
     }
     imageSize = QRectF(0,0, blockData.w, blockData.h);
+    this->setData(ITEM_WIDTH, QVariant((int)blockData.w));
+    this->setData(ITEM_HEIGHT, QVariant((int)blockData.h));
     setIncludedNPC(blockData.npc_id);
     arrayApply();
     scene->update();
@@ -517,9 +519,13 @@ void ItemBlock::setAnimator(long aniID)
                 scene->animates_Blocks[aniID]->image().height()
                 );
     //this->setPixmap(scene->animates_Blocks[aniID]->image());
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
-
+    if(!sizable)
+    {
+        blockData.w = qRound(imageSize.width()); //width
+        blockData.h = qRound(imageSize.height()); //height
+        this->setData(ITEM_WIDTH, QVariant((int)blockData.w));
+        this->setData(ITEM_HEIGHT, QVariant((int)blockData.h));
+    }
     //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
     animatorID = aniID;
 }

@@ -218,7 +218,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData modData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Water")
+                    if(SelItem->data(ITEM_TYPE).toString()=="Water")
                     {
                         modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(0);
@@ -232,7 +232,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData modData;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Water")
+                    if(SelItem->data(ITEM_TYPE).toString()=="Water")
                     {
                         modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(1);
