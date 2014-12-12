@@ -203,6 +203,17 @@ public:
         qlonglong last_bgo_arrayID;
         qlonglong last_npc_arrayID;
 
+        //Defining indexes for data values of items
+        #define ITEM_TYPE                    0 //String
+        #define ITEM_ID                      1 //int
+        #define ITEM_ARRAY_ID                2 //int
+        #define ITEM_BLOCK_IS_SIZABLE        3 //bool
+        #define ITEM_NPC_BLOCK_COLLISION     7 //bool
+        #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
+        #define ITEM_WIDTH                   9 //int
+        #define ITEM_HEIGHT                  10 //int
+        #define ITEM_IS_CURSOR               25 //bool
+
         long IncrementingNpcSpecialSpin;
 
         void placeBlock(LevelBlock &block, bool toGrid=false);

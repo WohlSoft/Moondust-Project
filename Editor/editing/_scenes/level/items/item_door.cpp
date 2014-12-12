@@ -162,14 +162,14 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             ItemMenu->addSeparator()->deleteLater();;
 
             QAction *jumpTo=NULL;
-            if(this->data(0).toString()=="Door_enter")
+            if(this->data(ITEM_TYPE).toString()=="Door_enter")
             {
                 jumpTo = ItemMenu->addAction(tr("Jump to exit"));
                 jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
                 jumpTo->deleteLater();
             }
             else
-            if(this->data(0).toString()=="Door_exit")
+            if(this->data(ITEM_TYPE).toString()=="Door_exit")
             {
                 jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
                 jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
@@ -226,13 +226,13 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(selected==jumpTo)
             {
                 //scene->doCopy = true ;
-                if(this->data(0).toString()=="Door_enter")
+                if(this->data(ITEM_TYPE).toString()=="Door_enter")
                 {
                     if(doorData.isSetOut)
                     MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(0, 0), true);
                 }
                 else
-                if(this->data(0).toString()=="Door_exit")
+                if(this->data(ITEM_TYPE).toString()=="Door_exit")
                 {
                     if(doorData.isSetIn)
                     MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(0, 0), true);
@@ -244,14 +244,14 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData modDoors;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
-                        if(SelItem->data(0).toString()=="Door_exit"){
+                        if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
-                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                        }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
@@ -270,14 +270,14 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData modDoors;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
-                        if(SelItem->data(0).toString()=="Door_exit"){
+                        if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
-                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                        }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
@@ -296,14 +296,14 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LevelData modDoors;
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
-                        if(SelItem->data(0).toString()=="Door_exit"){
+                        if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
-                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                        }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
                             LevelDoors door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
@@ -420,7 +420,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, scene->items())
             {
-                if((door->data(0).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
@@ -434,7 +434,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, scene->items())
             {
-                if((door->data(0).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
                     ((ItemDoor *)door)->doorData = doorData;
                     break;

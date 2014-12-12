@@ -148,7 +148,7 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //LevelData selData;
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="playerPoint")
+                        if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
                         {
                             //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                             dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(-1);
@@ -162,7 +162,7 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //LevelData selData;
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        if(SelItem->data(0).toString()=="playerPoint")
+                        if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
                         {
                             //selData.npc.push_back(((ItemPlayerPoint *) SelItem)->npcData);
                             dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(1);
