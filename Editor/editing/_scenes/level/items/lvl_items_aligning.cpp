@@ -248,20 +248,29 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
     {
         if(vertical)
         {
-            qreal h1, h2;
-            h1 = qFabs( zone.top() - item->scenePos().y() );
+            qreal h2;//Opposit height (between bottom side of item and bottom side of zone)
             h2 = qFabs( (item->scenePos().y() + item->data(ITEM_HEIGHT).toInt()) - zone.bottom());
 
-            item->setY( item->scenePos().y() - h1+h2 );
+            item->setY( zone.top()+h2 );
 
         }
         else
         {
-            qreal w1, w2;
-            w1 = qFabs( zone.left() - item->scenePos().x() );
+            qreal w2;//Opposit width (between right side of item and right side of zone)
             w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
 
-            item->setX( item->scenePos().x() - w1+w2 );
+            item->setX( zone.left()+w2 );
+
+            //Flip NPC direction
+            if(item->data(ITEM_TYPE)=="NPC")
+                dynamic_cast<ItemNPC * >(item)->changeDirection(
+                        -dynamic_cast<ItemNPC * >(item)->npcData.direct
+                        );
+            else //Flip Player point direction
+            if(item->data(ITEM_TYPE)=="playerPoint")
+                dynamic_cast<ItemPlayerPoint * >(item)->changeDirection(
+                        -dynamic_cast<ItemPlayerPoint * >(item)->pointData.direction
+                        );
         }
         applyArrayForItem(item);
     }
@@ -276,6 +285,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
     //Calculate common width/height of group
     QRect zone = QRect(0,0,0,0);
     QRect itemZone = QRect(0,0,0,0);
+    QRect targetRect = QRect(0,0,0,0);
     //Calculate common width/height of group
 
     zone.setX(qRound(items.first()->scenePos().x()));
@@ -302,7 +312,47 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
     }
 
     //Apply rotate formula to each item
-    Q_UNUSED(byClockwise); //Temp dummy, here should be implemented rotating algorinthm
+    foreach(QGraphicsItem * item, items)
+    {
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
 
+        //Distacnces between sides
+        qreal dist_t = qFabs(zone.top()-itemZone.top());
+        qreal dist_l = qFabs(zone.left()-itemZone.left());
+        qreal dist_r = qFabs(itemZone.right()-zone.right());
+        qreal dist_b = qFabs(itemZone.bottom()-zone.bottom());
+
+        //If item located in one of quouters of zone rectangle
+
+        if(byClockwise)
+        {
+            targetRect.setX( zone.left() + dist_b );
+            targetRect.setY( zone.top() + dist_l );
+        }
+        else
+        {
+            targetRect.setX( zone.left() + dist_t );
+            targetRect.setY( zone.top() + dist_r );
+        }
+
+        item->setPos(targetRect.x(), targetRect.y());
+
+        if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
+        {
+            //Rotate width and height
+            targetRect.setWidth(itemZone.height()-1);
+            targetRect.setHeight(itemZone.width()-1);
+            if(item->data(ITEM_TYPE)=="Block")
+                dynamic_cast<ItemBlock *>(item)->setBlockSize(targetRect);
+            else
+            if(item->data(ITEM_TYPE)=="Water")
+                dynamic_cast<ItemWater *>(item)->setRectSize(targetRect);
+        }
+
+        applyArrayForItem(item);
+    }
 }
 
