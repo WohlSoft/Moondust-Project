@@ -489,6 +489,34 @@ void LvlScene::addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addRotateHistory(LevelData rotatedItems, bool byClockwise)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rotateOperation;
+    rotateOperation.type = HistoryOperation::LEVELHISTORY_ROTATE;
+    rotateOperation.data = rotatedItems;
+    rotateOperation.extraData = byClockwise;
+    operationList.push_back(rotateOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
+void LvlScene::addFlipHistory(LevelData flippedItems, bool vertical)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rotateOperation;
+    rotateOperation.type = HistoryOperation::LEVELHISTORY_FLIP;
+    rotateOperation.data = flippedItems;
+    rotateOperation.extraData = vertical;
+    operationList.push_back(rotateOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -1531,6 +1559,30 @@ void LvlScene::historyBack()
         findGraphicsItem(resizedWater, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoResizeWater, 0, 0, true, true, true, false, true, true);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_ROTATE:
+    {
+        LevelData rotatedData = lastOperation.data;
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
+                                      ItemTypes::LVL_Block |
+                                      ItemTypes::LVL_BGO |
+                                      ItemTypes::LVL_NPC |
+                                      ItemTypes::LVL_Door |
+                                      ItemTypes::LVL_PhysEnv |
+                                      ItemTypes::LVL_Player)), !lastOperation.extraData.toBool(), false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_FLIP:
+    {
+        LevelData flippedData = lastOperation.data;
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
+                                        ItemTypes::LVL_Block |
+                                        ItemTypes::LVL_BGO |
+                                        ItemTypes::LVL_NPC |
+                                        ItemTypes::LVL_Door |
+                                        ItemTypes::LVL_PhysEnv |
+                                        ItemTypes::LVL_Player)), !lastOperation.extraData.toBool(), false);
+        break;
+    }
     default:
         break;
     }
@@ -2432,6 +2484,30 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         findGraphicsItem(resizedWater, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoResizeWater, 0, 0, true, true, true, false, true, true);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_ROTATE:
+    {
+        LevelData rotatedData = lastOperation.data;
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
+                                      ItemTypes::LVL_Block |
+                                      ItemTypes::LVL_BGO |
+                                      ItemTypes::LVL_NPC |
+                                      ItemTypes::LVL_Door |
+                                      ItemTypes::LVL_PhysEnv |
+                                      ItemTypes::LVL_Player)), lastOperation.extraData.toBool(), false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_FLIP:
+    {
+        LevelData flippedData = lastOperation.data;
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
+                                        ItemTypes::LVL_Block |
+                                        ItemTypes::LVL_BGO |
+                                        ItemTypes::LVL_NPC |
+                                        ItemTypes::LVL_Door |
+                                        ItemTypes::LVL_PhysEnv |
+                                        ItemTypes::LVL_Player)), lastOperation.extraData.toBool(), false);
         break;
     }
     default:
@@ -3540,6 +3616,307 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
 }
 
+QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes::itemTypes findingFilter)
+{
+    QMap<int, LevelDoors> sortedEntranceDoors;
+    QMap<int, LevelDoors> sortedExitDoors;
+    if(findingFilter & ItemTypes::LVL_Door){
+        foreach (LevelDoors door, toFind.doors) {
+            if(door.isSetIn&&!door.isSetOut){
+                sortedEntranceDoors[door.array_id] = door;
+            }
+        }
+        foreach (LevelDoors door, toFind.doors) {
+            if(!door.isSetIn&&door.isSetOut){
+                sortedExitDoors[door.array_id] = door;
+            }
+        }
+    }
+    QMap<int, LevelBlock> sortedBlock;
+    if(findingFilter & ItemTypes::LVL_Block){
+        foreach (LevelBlock block, toFind.blocks)
+        {
+            sortedBlock[block.array_id] = block;
+        }
+    }
+    QMap<int, LevelBGO> sortedBGO;
+    if(findingFilter & ItemTypes::LVL_BGO){
+        foreach (LevelBGO bgo, toFind.bgo)
+        {
+            sortedBGO[bgo.array_id] = bgo;
+        }
+    }
+    QMap<int, LevelNPC> sortedNPC;
+    if(findingFilter & ItemTypes::LVL_NPC){
+        foreach (LevelNPC npc, toFind.npc)
+        {
+            sortedNPC[npc.array_id] = npc;
+        }
+    }
+    QMap<int, LevelPhysEnv> sortedWater;
+    if(findingFilter & ItemTypes::LVL_PhysEnv)
+    {
+        foreach (LevelPhysEnv water, toFind.physez) {
+            sortedWater[water.array_id] = water;
+        }
+    }
+    QMap<int, PlayerPoint> sortedPlayers;
+    if(findingFilter & ItemTypes::LVL_Player){
+        foreach (PlayerPoint player, toFind.players) {
+            sortedPlayers[player.id] = player;
+        }
+    }
+
+    QMap<int, QGraphicsItem*> sortedGraphBlocks;
+    QMap<int, QGraphicsItem*> sortedGraphBGO;
+    QMap<int, QGraphicsItem*> sortedGraphNPC;
+    QMap<int, QGraphicsItem*> sortedGraphWater;
+    QMap<int, QGraphicsItem*> sortedGraphDoorEntrance;
+    QMap<int, QGraphicsItem*> sortedGraphDoorExit;
+    QMap<int, QGraphicsItem*> sortedGraphPlayers;
+    foreach (QGraphicsItem* unsortedItem, items())
+    {
+        if(unsortedItem->data(0).toString()=="Block")
+        {
+            if(findingFilter & ItemTypes::LVL_Block){
+                sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="BGO")
+        {
+            if(findingFilter & ItemTypes::LVL_BGO){
+                sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="NPC")
+        {
+            if(findingFilter & ItemTypes::LVL_NPC){
+                sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="Water")
+        {
+            if(findingFilter & ItemTypes::LVL_PhysEnv){
+                sortedGraphWater[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="Door_enter")
+        {
+            if(findingFilter & ItemTypes::LVL_Door){
+                sortedGraphDoorEntrance[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+
+        }
+        else
+        if(unsortedItem->data(0).toString()=="Door_exit")
+        {
+            if(findingFilter & ItemTypes::LVL_Door){
+                sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="playerPoint")
+        {
+            if(findingFilter & ItemTypes::LVL_Player){
+                sortedGraphPlayers[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+    }
+
+    QList<QGraphicsItem*> returnItems;
+
+    if(findingFilter & ItemTypes::LVL_Block){
+        foreach (QGraphicsItem* item, sortedGraphBlocks)
+        {
+
+            if(sortedBlock.size()!=0)
+            {
+                QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBlock.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBlock.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::LVL_BGO)
+    {
+        foreach (QGraphicsItem* item, sortedGraphBGO)
+        {
+            if(sortedBGO.size()!=0)
+            {
+                QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBGO.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBGO.begin();
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::LVL_NPC)
+    {
+        foreach (QGraphicsItem* item, sortedGraphNPC)
+        {
+            if(sortedNPC.size()!=0)
+            {
+                QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedNPC.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedNPC.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::LVL_PhysEnv)
+    {
+        foreach (QGraphicsItem* item, sortedGraphWater)
+        {
+            if(sortedWater.size()!=0)
+            {
+                QMap<int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedWater.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedWater.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::LVL_Door)
+    {
+        foreach (QGraphicsItem* item, sortedGraphDoorEntrance)
+        {
+            if(sortedEntranceDoors.size()!=0)
+            {
+                QMap<int, LevelDoors>::iterator beginItem = sortedEntranceDoors.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedEntranceDoors.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedEntranceDoors.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+        }
+        foreach (QGraphicsItem* item, sortedGraphDoorExit)
+        {
+            if(sortedExitDoors.size()!=0)
+            {
+                QMap<int, LevelDoors>::iterator beginItem = sortedExitDoors.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedExitDoors.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedExitDoors.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+        }
+        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
+    }
+
+    if(findingFilter & ItemTypes::LVL_Player)
+    {
+        foreach (QGraphicsItem* item, sortedGraphPlayers)
+        {
+            if(sortedPlayers.size()!=0)
+            {
+                QMap<int, PlayerPoint>::iterator beginItem = sortedPlayers.begin();
+                unsigned int currentArrayId = (*beginItem).id;
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedPlayers.begin();
+
+                currentArrayId = (*beginItem).id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+        }
+    }
+    return returnItems;
+}
+
 void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operation, LvlScene::CallbackData customData, LvlScene::callBackLevelDoors clbDoors, bool isEntrance)
 {
     CallbackData cbData = customData;
@@ -3696,6 +4073,8 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: return tr("Changed Levelsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT: return tr("Place Player Point");
     case HistoryOperation::LEVELHISTORY_RESIZEWATER: return tr("Resize Water");
+    case HistoryOperation::LEVELHISTORY_ROTATE: return tr("Rotate");
+    case HistoryOperation::LEVELHISTORY_FLIP: return tr("Flip");
     default:
         return tr("Unknown");
     }

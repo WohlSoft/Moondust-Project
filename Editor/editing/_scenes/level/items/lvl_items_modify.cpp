@@ -220,6 +220,49 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 
 }
 
+///
+/// \brief LvlScene::collectDataFromItem
+/// \param dataToStore The data object where the new data is getting added
+/// \param item The source item where the item has to be found
+///
+/// Copys the data obj from a item and adds it to the LevelData
+///
+void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
+{
+    if(!item) return;
+
+    QString ObjType = item->data(0).toString();
+    if( ObjType == "NPC")
+    {
+        dataToStore.npc << dynamic_cast<ItemNPC *>(item)->npcData;
+    }
+    else
+    if( ObjType == "Block")
+    {
+        dataToStore.blocks << dynamic_cast<ItemBlock *>(item)->blockData;
+    }
+    else
+    if( ObjType == "BGO")
+    {
+        dataToStore.bgo << dynamic_cast<ItemBGO *>(item)->bgoData;
+    }
+    else
+    if( ObjType == "Water")
+    {
+        dataToStore.physez << dynamic_cast<ItemWater *>(item)->waterData;
+    }
+    else
+    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
+    {
+        dataToStore.doors << dynamic_cast<ItemDoor *>(item)->doorData;
+    }
+    else
+    if( ObjType == "playerPoint" )
+    {
+        dataToStore.players << dynamic_cast<ItemPlayerPoint *>(item)->pointData;
+    }
+}
+
 
 
 

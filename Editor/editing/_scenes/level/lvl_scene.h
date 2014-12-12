@@ -245,6 +245,7 @@ public:
         void applyArrayForItemGroup(QList<QGraphicsItem * >items);
         void applyArrayForItem(QGraphicsItem * item);
         void doorPointsSync(long arrayID, bool remove=false);
+        void collectDataFromItem(LevelData& dataToStore, QGraphicsItem* item);
 
         void returnItemBackGroup(QList<QGraphicsItem * >items);
         void returnItemBack(QGraphicsItem * item);
@@ -263,8 +264,8 @@ public:
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
         void applyGridToEach(QList<QGraphicsItem *> items);
 
-        void flipGroup(QList<QGraphicsItem *> items, bool vertical);
-        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise);
+        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory = true);
+        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory = true);
 
     // ///////////////////Collisions///////////////////////////
     public:
@@ -458,7 +459,9 @@ public:
                 LEVELHISTORY_CHANGEDSETTINGSLEVEL,
                 LEVELHISTORY_REPLACEPLAYERPOINT,
                 LEVELHISTORY_RESIZEWATER,
-                LEVELHISTORY_OVERWRITE
+                LEVELHISTORY_OVERWRITE,
+                LEVELHISTORY_ROTATE,
+                LEVELHISTORY_FLIP
             };
             HistoryType type;
             //used most of Operations
@@ -597,6 +600,8 @@ public:
         void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
         void addChangeLevelSettingsHistory(SettingSubType subtype, QVariant extraData);
         void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
+        void addRotateHistory(LevelData rotatedItems, bool byClockwise);
+        void addFlipHistory(LevelData flippedItems, bool vertical);
         //history modifiers
         void historyBack();
         void historyForward();
@@ -739,6 +744,8 @@ public:
                               bool ignoreWater = false,
                               bool ignoreDoors = false,
                               bool ignorePlayer = false);
+
+        QList<QGraphicsItem*> findGraphicsItems(LevelData& toFind, ItemTypes::itemTypes findingFilter);
 
         void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
                               callBackLevelDoors clbDoors, bool isEntrance);
