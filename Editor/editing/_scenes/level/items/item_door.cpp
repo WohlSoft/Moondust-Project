@@ -33,9 +33,9 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
 {
     isLocked=false;
     itemSize = QSize(32,32);
+    this->setData(ITEM_WIDTH, 32);
+    this->setData(ITEM_HEIGHT, 32);
     doorLabel=NULL;
-    //doorLabel_shadow=NULL;
-    //image = new QGraphicsRectItem;
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
@@ -509,7 +509,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 
         this->setPos(ix, iy);
 
-        this->setData(0, "Door_enter"); // ObjType
+        this->setData(ITEM_TYPE, "Door_enter"); // ObjType
     }
     else
     {
@@ -526,7 +526,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 
         this->setPos(ox, oy);
 
-        this->setData(0, "Door_exit"); // ObjType
+        this->setData(ITEM_TYPE, "Door_exit"); // ObjType
     }
     grp->addToGroup(doorLabel);
     //grp->addToGroup(doorLabel_shadow);
@@ -537,8 +537,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     //doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
     doorLabel->setZValue(scene->Z_sys_door+0.0000002);
 
-    this->setData(1, QString::number(0) );
-    this->setData(2, QString::number(doorData.array_id) );
+    this->setData(ITEM_ID, QString::number(0) );
+    this->setData(ITEM_ARRAY_ID, QString::number(doorData.array_id) );
 
     this->setZValue(scene->Z_sys_door);
 
