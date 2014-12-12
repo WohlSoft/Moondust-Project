@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1484</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -2759,8 +2759,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>1358</height>
+          <width>275</width>
+          <height>1546</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3987,7 +3987,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3997,8 +3997,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>361</height>
+          <width>264</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4180,28 +4180,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>115</height>
+          <width>292</width>
+          <height>329</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Layers movement</string>
         </attribute>
-        <layout class="QFormLayout" name="formLayout_4">
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>Set moving layer</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QComboBox" name="LVLEvent_LayerMov_List">
-           <property name="maxVisibleItems">
-            <number>50</number>
-           </property>
-          </widget>
-         </item>
+        <layout class="QGridLayout" name="gridLayout_32">
          <item row="2" column="0">
           <widget class="QLabel" name="label_18">
            <property name="text">
@@ -4219,6 +4205,19 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
            <property name="maximum">
             <double>9999999.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="bps_LayerMov_horSpeed">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>bps</string>
            </property>
           </widget>
          </item>
@@ -4242,7 +4241,20 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="4" column="0" colspan="2">
+         <item row="3" column="2">
+          <widget class="QPushButton" name="bps_LayerMov_vertSpeed">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>bps</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
           <spacer name="verticalSpacer_10">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4255,6 +4267,20 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </spacer>
          </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="QComboBox" name="LVLEvent_LayerMov_List">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="3">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>Set moving layer</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="Autoscroll">
@@ -4262,30 +4288,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
-          <height>93</height>
+          <width>292</width>
+          <height>329</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Autoscroll section</string>
         </attribute>
-        <layout class="QFormLayout" name="formLayout_5">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-         </property>
-         <property name="horizontalSpacing">
-          <number>3</number>
-         </property>
-         <property name="verticalSpacing">
-          <number>3</number>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>Section</string>
-           </property>
-          </widget>
-         </item>
+        <layout class="QGridLayout" name="gridLayout_33">
          <item row="0" column="1">
           <widget class="QSpinBox" name="LVLEvent_Scroll_Sct">
            <property name="minimum">
@@ -4296,34 +4306,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Horisontal speed:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
-           <property name="decimals">
-            <number>5</number>
-           </property>
-           <property name="minimum">
-            <double>-99999999.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>9999999.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Vertical speed:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
            <property name="decimals">
             <number>5</number>
@@ -4336,7 +4319,21 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="5" column="0" colspan="2">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="text">
+            <string>Horisontal speed:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>Section</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
           <spacer name="verticalSpacer_4">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4349,15 +4346,61 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </spacer>
          </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Vertical speed:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
+           <property name="decimals">
+            <number>5</number>
+           </property>
+           <property name="minimum">
+            <double>-99999999.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>9999999.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="bps_Scroll_horSpeed">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>bps</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QPushButton" name="bps_Scroll_vertSpeed">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>bps</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="SectionSettings">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <y>-108</y>
+          <width>264</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4654,8 +4697,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4770,8 +4813,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4868,8 +4911,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5024,7 +5067,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>555</height>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5251,8 +5294,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>300</width>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5400,8 +5443,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>300</width>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5997,8 +6040,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6222,7 +6265,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6343,8 +6386,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6465,8 +6508,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6587,8 +6630,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>220</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6834,8 +6877,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7108,8 +7151,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>28</height>
+              <width>1476</width>
+              <height>115</height>
              </rect>
             </property>
            </widget>
