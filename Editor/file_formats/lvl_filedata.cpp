@@ -284,6 +284,8 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.npc_array_id = 1;
     NewFileData.physenv_array_id = 1;
 
+    //Meta-data
+    NewFileData.metaData.script = NULL;
 
     //Create Section array
     LevelSection section;
