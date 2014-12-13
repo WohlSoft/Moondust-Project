@@ -20,6 +20,7 @@
 #include <ui_world_edit.h>
 
 #include <common_features/app_path.h>
+#include <tools/smart_import/smartimporter.h>
 
 WorldEdit::WorldEdit(QWidget *parent) :
     QWidget(parent),
@@ -51,6 +52,33 @@ void WorldEdit::focusInEvent(QFocusEvent *event)
     QWidget::focusInEvent(event);
 }
 
+
+void WorldEdit::dropEvent(QDropEvent *e)
+{
+    this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+    qApp->setActiveWindow(this);
+
+    bool requestReload = false;
+
+    foreach (const QUrl &url, e->mimeData()->urls()) {
+        const QString &fileName = url.toLocalFile();
+        if(QFileInfo(fileName).isDir())
+        {
+            SmartImporter * importer = new SmartImporter((QWidget*)this, fileName, (QWidget*)this);
+            if(importer->isValid()){
+                if(importer->attemptFastImport()){
+                    requestReload = true;
+                    delete importer;
+                    break;
+                }
+            }
+            delete importer;
+        }
+    }
+    if(requestReload)
+        emit forceReload();
+}
 
 void WorldEdit::updateScene()
 {

@@ -92,10 +92,13 @@ public:
     QTimer *updateTimer;
     void setAutoUpdateTimer(int ms);
     void stopAutoUpdateTimer();
+signals:
+    void forceReload();
 
 protected:
     virtual void focusInEvent(QFocusEvent *event);
     void closeEvent(QCloseEvent *event);
+    void dropEvent(QDropEvent* e);
 
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );

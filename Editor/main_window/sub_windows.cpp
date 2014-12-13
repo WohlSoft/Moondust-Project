@@ -91,6 +91,8 @@ LevelEdit *MainWindow::createLvlChild()
 WorldEdit *MainWindow::createWldChild()
 {
     WorldEdit *child = new WorldEdit;
+    connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+
     QMdiSubWindow *worldWindow = new QMdiSubWindow;
 
     worldWindow->setWidget(child);
