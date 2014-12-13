@@ -188,7 +188,7 @@ public:
 
     // SMBX64 LVL File
     static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath=""); //!< Parse SMBX1-SMBX64 level
-    static QString WriteSMBX64LvlFile(LevelData FileData);  //!< Generate SMBX64 level raw data
+    static QString WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX64 level raw data
 
     // PGE Extended Level File
     static LevelData ReadExtendedLvlFile(QString RawData, QString filePath=""); //!< Parse PGE-X level file

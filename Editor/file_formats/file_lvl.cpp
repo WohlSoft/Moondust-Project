@@ -46,7 +46,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
     //Check magic number: should be number from 0 to 64 and \n character after
     if(
-            ((int)data.at(0)>0x36)||
+            ((int)data.at(0)>0x39)||
             ((int)data.at(0)<0x30)||
             ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
              ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
@@ -133,7 +133,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
         else FileData.stars=line.toInt();   //Number of stars
     } else FileData.stars=0;
 
-    if(file_format >= 62)
+    if(file_format >= 60)
     {
         str_count++;line = in.readLine();   //Read third line
         if( SMBX64::qStr(line) ) //LevelTitle
@@ -215,7 +215,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             else section.noback=SMBX64::wBoolR(line);
         }
 
-        if(file_format >= 32)
+        if(file_format >= 30)
         {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Underwater
@@ -316,24 +316,22 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
         {
             long xnpcID = line.toInt();
             //Convert NPC-ID value from SMBX1/2 to SMBX64
-            if(file_format<18)
+            switch(xnpcID)
             {
-                switch(xnpcID)
-                {
-                    case 100://Mushroom
-                        xnpcID = 1009; break;
-                    case 101://Goomba
-                        xnpcID = 1001; break;
-                    case 102://Fire flower
-                        xnpcID = 1014; break;
-                    case 103://Super leaf
-                        xnpcID = 1034; break;
-                    case 104://Shoe
-                        xnpcID = 1035; break;
-                    default:
-                        break;
-                }
+                case 100://Mushroom
+                    xnpcID = 1009; break;
+                case 101://Goomba
+                    xnpcID = 1001; break;
+                case 102://Fire flower
+                    xnpcID = 1014; break;
+                case 103://Super leaf
+                    xnpcID = 1034; break;
+                case 104://Shoe
+                    xnpcID = 1035; break;
+                default:
+                    break;
             }
+
             if(xnpcID != 0)
             {
                 if(xnpcID > 1000)
@@ -349,13 +347,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             goto badfile;
         else blocks.invisible = SMBX64::wBoolR(line);
 
-        if(file_format >= 62)
+        if(file_format >= 61)
         {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Slippery
                 goto badfile;
             else blocks.slippery = SMBX64::wBoolR(line);
-        }// else blocks.slippery = false;
+        }
 
         if(file_format >= 10)
         {
@@ -363,7 +361,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             if(SMBX64::qStr(line)) //layer
                 goto badfile;
             else blocks.layer = removeQuotes(line);
-
+        }
+        if(file_format >= 14)
+        {
             str_count++;line = in.readLine();
             if(SMBX64::qStr(line)) //event destroy
                 goto badfile;
@@ -379,14 +379,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 goto badfile;
             else blocks.event_no_more = removeQuotes(line);
         }
-        /*
-        else
-        {  //Set default if loading old file version
-            blocks.layer = "Default";
-            blocks.event_destroy="";
-            blocks.event_hit="";
-            blocks.event_no_more="";
-        }*/
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
@@ -448,7 +440,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
      str_count++;line = in.readLine();
      while(line!="\"next\"")
      {
-
          npcdata = dummyLvlNpc();
 
          if(SMBX64::sFloat(line)) //NPC x
@@ -508,7 +499,10 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                  break;
              default: break;
              }
+          }
 
+         if(file_format >= 3)
+         {
              str_count++;line = in.readLine();
              if(SMBX64::wBool(line)) //Generator enabled
                  goto badfile;
@@ -533,8 +527,10 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                      goto badfile;
                  else npcdata.generator_period = line.toInt();
              }
+         }
 
-
+         if(file_format >= 5)
+         {
              str_count++;line = in.readLine();
              while(!line.endsWith('\"')) //Read multilined string
              {
@@ -546,6 +542,10 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                  goto badfile;
 
              else npcdata.msg = removeQuotes(line);
+         }
+
+         if(file_format >= 6)
+         {
 
              str_count++;line = in.readLine();
              if(SMBX64::wBool(line)) //Friendly NPC
@@ -557,11 +557,28 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                  goto badfile;
              else npcdata.nomove = SMBX64::wBoolR(line);
 
+         }
+
+         if(file_format >= 9)
+         {
              str_count++;line = in.readLine();
              if(SMBX64::wBool(line)) //LegacyBoss
                  goto badfile;
              else npcdata.legacyboss = SMBX64::wBoolR(line);
+         }
+         else
+         {
+             switch(npcdata.id)
+             {
+             //set boss flag to TRUE for old file formats
+             case 15: case 39: case 86:
+                 npcdata.legacyboss=true;
+             default: break;
+             }
+         }
 
+         if(file_format >= 10)
+         {
              str_count++;line = in.readLine();
              if(SMBX64::qStr(line)) //Layer
                  goto badfile;
@@ -581,21 +598,14 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
              if(SMBX64::qStr(line)) //Talk event
                  goto badfile;
              else npcdata.event_talk = removeQuotes(line);
+         }
 
+         if(file_format >= 14)
+         {
              str_count++;line = in.readLine();
              if(SMBX64::qStr(line)) //No more objects in layer event
                  goto badfile;
              else npcdata.event_nomore = removeQuotes(line);
-        }
-         else
-         {
-             switch(npcdata.id)
-             {
-             //set boss flag to TRUE for old file formats
-             case 15: case 39: case 86:
-                 npcdata.legacyboss=true;
-             default: break;
-             }
          }
 
          if(file_format >= 63)
@@ -659,7 +669,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
         else doors.type= line.toInt();
 
 
-        if(file_format>=8)
+        if(file_format>=3)
         {
             str_count++;line = in.readLine();
             if(SMBX64::qStr(line)) //Warp to level
@@ -680,7 +690,12 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 doors.lvl_i = SMBX64::wBoolR(line);
                 doors.isSetIn = ((line=="#TRUE#")?false:true);
             }
+        }
+        else
+            doors.isSetIn=true;
 
+        if(file_format>=4)
+        {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Level Exit (End of level)
                 goto badfile;
@@ -701,20 +716,17 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             else doors.world_y= line.toInt();
         }
         else
-        {
-            doors.isSetIn=true;
             doors.isSetOut=true;
-        }
 
-        if(file_format>=8)
+        if(file_format>=7)
         {
             str_count++;line = in.readLine();
             if(SMBX64::Int(line)) //Need a stars
                 goto badfile;
             else doors.stars= line.toInt();
-        } //else doors.stars=0;
+        }
 
-        if(file_format>=10)
+        if(file_format>=12)
         {
             str_count++;line = in.readLine();
             if(SMBX64::qStr(line)) //Layer
@@ -725,37 +737,30 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             if(SMBX64::wBool(line)) //<unused>, always FALSE
                 goto badfile;
             else doors.unknown= SMBX64::wBoolR(line);
+        }
 
-        }/* else
-        {
-            doors.layer = "Default";
-            doors.unknown = false;
-        }*/
-
-        if(file_format>=28)
+        if(file_format>=23)
         {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //No Yoshi
                 goto badfile;
             else doors.novehicles = SMBX64::wBoolR(line);
-
+        }
+        if(file_format>=25)
+        {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Allow NPC
                 goto badfile;
             else doors.allownpc= SMBX64::wBoolR(line);
-
+        }
+        if(file_format>=26)
+        {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Locked
                 goto badfile;
             else doors.locked= SMBX64::wBoolR(line);
         }
-        /*
-        else
-        {
-            doors.noyoshi=false;
-            doors.allownpc=false;
-            doors.locked=false;
-        }*/
+
         doors.array_id = FileData.doors_array_id;
         FileData.doors_array_id++;
         doors.index = FileData.doors.size(); //Apply element index
@@ -765,7 +770,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
     }
 
     ////////////Water/QuickSand Data//////////
-    if(file_format>=32)
+    if(file_format>=29)
     {
         str_count++;line = in.readLine();
         while(line!="\"next\"")
@@ -796,7 +801,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             else waters.unknown = line.toInt();
 
 
-            if(file_format>=63)
+            if(file_format>=62)
             {
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //Quicksand
@@ -825,7 +830,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
     {
         ////////////Layers Data//////////
         str_count++;line = in.readLine();
-        while(line!="\"next\"")
+        while((line!="\"next\"")&&(!line.isNull()))
         {
             if(SMBX64::qStr(line)) //Layer name
                 goto badfile;
@@ -854,31 +859,34 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 goto badfile;
             else events.name=removeQuotes(line);
 
-            str_count++;line = in.readLine();
-            while(!line.endsWith('\"')) //Read multilined string
+            if(file_format>=11)
             {
-                line.append('\n');
-                str_count++;line.append(in.readLine());
+                str_count++;line = in.readLine();
+                while(!line.endsWith('\"')) //Read multilined string
+                {
+                    line.append('\n');
+                    str_count++;line.append(in.readLine());
+                }
+                if(SMBX64::qStr(line)) //Event message
+                    goto badfile;
+                else events.msg=removeQuotes(line);
             }
 
-            if(SMBX64::qStr(line)) //Event message
-                goto badfile;
-            else events.msg=removeQuotes(line);
-
-
-            if(file_format>=18)
+            if(file_format>=14)
             {
                 str_count++;line = in.readLine();
                 if(SMBX64::Int(line)) //PlaySound
                     goto badfile;
                 else events.sound_id  = line.toInt();
             }
-            //else events.sound_id  = 0;
 
-            str_count++;line = in.readLine();
-            if(SMBX64::Int(line)) //EndGame
-                goto badfile;
-            else events.end_game  = line.toInt();
+            if(file_format>=18)
+            {
+                str_count++;line = in.readLine();
+                if(SMBX64::Int(line)) //EndGame
+                    goto badfile;
+                else events.end_game  = line.toInt();
+            }
 
             events.layers.clear();
 
@@ -886,7 +894,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             events.layers_show.clear();
             events.layers_toggle.clear();
 
-            for(i=0; i<21; i++)
+            for(i=0; i<sct; i++)
             {
                 str_count++;line = in.readLine();
                 if(SMBX64::qStr(line)) //Hide layer
@@ -899,10 +907,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 else events_layers.show=removeQuotes(line);
 
 
+                if(file_format>=14)
+                {
                 str_count++;line = in.readLine();
                 if(SMBX64::qStr(line)) //Toggle layer
                     goto badfile;
                 else events_layers.toggle=removeQuotes(line);
+                } else events_layers.toggle="";
 
                 if(events_layers.hide!="") events.layers_hide.push_back(events_layers.hide);
                 if(events_layers.show!="") events.layers_show.push_back(events_layers.show);
@@ -911,42 +922,45 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 events.layers.push_back(events_layers);
             }
 
-            events.sets.clear();
-            for(i=0; i<21; i++)
+            if(file_format>=13)
             {
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Music
-                    goto badfile;
-                else events_sets.music_id  = line.toInt();
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Background
-                    goto badfile;
-                else events_sets.background_id = line.toInt();
+                events.sets.clear();
+                for(i=0; i<21; i++)
+                {
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Music
+                        goto badfile;
+                    else events_sets.music_id  = line.toInt();
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Background
+                        goto badfile;
+                    else events_sets.background_id = line.toInt();
 
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Position to: LEFT
-                    goto badfile;
-                else events_sets.position_left = line.toInt();
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Position to: LEFT
+                        goto badfile;
+                    else events_sets.position_left = line.toInt();
 
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Position to: TOP
-                    goto badfile;
-                else events_sets.position_top = line.toInt();
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Position to: TOP
+                        goto badfile;
+                    else events_sets.position_top = line.toInt();
 
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Position to: BOTTOM
-                    goto badfile;
-                else events_sets.position_bottom = line.toInt();
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Position to: BOTTOM
+                        goto badfile;
+                    else events_sets.position_bottom = line.toInt();
 
-                str_count++;line = in.readLine();
-                if(SMBX64::sInt(line)) //Set Position to: RIGHT
-                    goto badfile;
-                else events_sets.position_right = line.toInt();
+                    str_count++;line = in.readLine();
+                    if(SMBX64::sInt(line)) //Set Position to: RIGHT
+                        goto badfile;
+                    else events_sets.position_right = line.toInt();
 
-            events.sets.push_back(events_sets);
+                events.sets.push_back(events_sets);
+                }
             }
 
-            if(file_format>=28)
+            if(file_format>=26)
             {
                 str_count++;line = in.readLine();
                 if(SMBX64::qStr(line)) //Trigger
@@ -958,11 +972,18 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                     goto badfile;
                 else events.trigger_timer = line.toInt();
 
+            }
+
+            if(file_format>=27)
+            {
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //No Smoke
                     goto badfile;
                 else events.nosmoke = SMBX64::wBoolR(line);
+            }
 
+            if(file_format>=28)
+            {
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //Hold ALT-JUMP player control
                     goto badfile;
@@ -1013,23 +1034,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                     goto badfile;
                 else events.ctrl_up = SMBX64::wBoolR(line);
             }
-            /*
-            else
-            {
-                events.trigger= "";
-                events.trigger_timer=0;
-                events.nosmoke = false;
-                events.altjump=false;
-                events.altrun=false;
-                events.down=false;
-                events.drop=false;
-                events.jump=false;
-                events.left=false;
-                events.right=false;
-                events.run=false;
-                events.start=false;
-                events.up=false;
-            }*/
 
             if(file_format>=32)
             {
@@ -1054,17 +1058,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                 else events.layer_speed_y = line.replace(QChar(','), QChar('.')).toFloat();
 
             }
-            /*
-            else
-            {
-                events.autostart = false;
-                events.movelayer = "";
-                events.layer_speed_x = 0;
-                events.layer_speed_x = 0;
-            }*/
 
-
-            if(file_format>=49)
+            if(file_format>=33)
             {
                 str_count++;line = in.readLine();
                 if(SMBX64::sFloat(line)) //Move screen horizontal speed
@@ -1081,13 +1076,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
                     goto badfile;
                 else events.scroll_section = line.toInt();
             }
-            /*
-            else
-            {
-                events.move_camera_x = 0;
-                events.move_camera_y = 0;
-                events.scroll_section = 0;
-            }*/
 
             events.array_id = FileData.events_array_id;
             FileData.events_array_id++;
@@ -1194,7 +1182,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
 //*********************************************************
 
 
-QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
+QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 {
     QString TextData;
     int i, j;
@@ -1207,14 +1195,27 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
             FileData.stars++;
     }
 
+    //Prevent out of range: 0....64
+    if(file_format<0) file_format = 0;
+    else
+    if(file_format>64) file_format = 64;
 
-    TextData += SMBX64::IntS(64);                     //Format version 64
+
+
+    TextData += SMBX64::IntS(file_format);                     //Format version
+    if(file_format>=17)
     TextData += SMBX64::IntS(FileData.stars);         //Number of stars
+    if(file_format>=60)
     TextData += SMBX64::qStrS(FileData.LevelName);  //Level name
 
+    int s_limit=21;
+
+    if(file_format < 8)
+        s_limit=6;
+    qDebug() << "sections "<<s_limit << "format "<<file_format ;
 
     //Sections settings
-    for(i=0; i<FileData.sections.size() && i<21; i++)
+    for(i=0; (i<s_limit)&&(i<FileData.sections.size()) ; i++)
     {
         TextData += SMBX64::IntS(FileData.sections[i].size_left);
         TextData += SMBX64::IntS(FileData.sections[i].size_top);
@@ -1225,13 +1226,27 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::BoolS(FileData.sections[i].IsWarp);
         TextData += SMBX64::BoolS(FileData.sections[i].OffScreenEn);
         TextData += SMBX64::IntS(FileData.sections[i].background);
+        if(file_format>=1)
         TextData += SMBX64::BoolS(FileData.sections[i].noback);
+        if(file_format>=30)
         TextData += SMBX64::BoolS(FileData.sections[i].underwater);
+        if(file_format>=2)
         TextData += SMBX64::qStrS(FileData.sections[i].music_file);
     }
-    for( ; i<21 ; i++) //Protector
-        TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n#FALSE#\n\"\"\n";
+    for( ; i<s_limit ; i++) //Protector
+    {
+        if(file_format<1)
+            TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n";
+        else if(file_format<2)
+            TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n";
+        else if(file_format<30)
+            TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n\"\"\n";
+        else
+            TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n#FALSE#\n\"\"\n";
+    }
         //append dummy section data, if array size is less than 21
+
+    qDebug() << "i="<< i;
 
     //Players start point
     int playerpoints=0;
@@ -1272,26 +1287,55 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
       for (QMap<long, QMap<long, LevelBlock > >::iterator bBrr = (* bArr).begin(); bBrr != (* bArr).end(); bBrr++)
         for (QMap<long, LevelBlock >::iterator block = (* bBrr).begin(); block != (*bBrr).end(); block++)
         {
-        TextData += SMBX64::IntS((*block).x);
-        TextData += SMBX64::IntS((*block).y);
-        TextData += SMBX64::IntS((*block).h);
-        TextData += SMBX64::IntS((*block).w);
-        TextData += SMBX64::IntS((*block).id);
-        int npcID = (*block).npc_id;
-        if(npcID < 0)
-        {
-            npcID *= -1; if(npcID>99) npcID = 99;
-        }
-        else
-        if(npcID!=0)
-            npcID+=1000;
-        TextData += SMBX64::IntS(npcID);
-        TextData += SMBX64::BoolS((*block).invisible);
-        TextData += SMBX64::BoolS((*block).slippery);
-        TextData += SMBX64::qStrS((*block).layer);
-        TextData += SMBX64::qStrS((*block).event_destroy);
-        TextData += SMBX64::qStrS((*block).event_hit);
-        TextData += SMBX64::qStrS((*block).event_no_more);
+            TextData += SMBX64::IntS((*block).x);
+            TextData += SMBX64::IntS((*block).y);
+            TextData += SMBX64::IntS((*block).h);
+            TextData += SMBX64::IntS((*block).w);
+            TextData += SMBX64::IntS((*block).id);
+            int npcID = (*block).npc_id;
+            if(npcID < 0)
+            {
+                npcID *= -1; if(npcID>99) npcID = 99;
+            }
+            else
+            if(npcID!=0)
+            {
+                npcID+=1000;
+                if(file_format<18)
+                {
+                    long xnpcID = npcID;
+                    //Convert NPC-ID value from SMBX64 to SMBX1/2
+                    switch(xnpcID)
+                    {
+                        case 1009://Mushroom
+                            xnpcID = 100; break;
+                        case 1001://Goomba
+                            xnpcID = 101; break;
+                        case 1014://Fire flower
+                            xnpcID = 102; break;
+                        case 1034://Super leaf
+                            xnpcID = 103; break;
+                        case 1035://Shoe
+                            xnpcID = 104; break;
+                        default:
+                            break;
+                    }
+                    npcID = xnpcID;
+                }
+            }
+
+            TextData += SMBX64::IntS(npcID);
+            TextData += SMBX64::BoolS((*block).invisible);
+            if(file_format>=61)
+            TextData += SMBX64::BoolS((*block).slippery);
+            if(file_format>=10)
+            TextData += SMBX64::qStrS((*block).layer);
+            if(file_format>=14)
+                {
+                TextData += SMBX64::qStrS((*block).event_destroy);
+                TextData += SMBX64::qStrS((*block).event_hit);
+                TextData += SMBX64::qStrS((*block).event_no_more);
+                }
         }
     }
     TextData += "\"next\"\n";//Separator
@@ -1314,6 +1358,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
             TextData += SMBX64::IntS( (*bgo).x);
             TextData += SMBX64::IntS( (*bgo).y);
             TextData += SMBX64::IntS( (*bgo).id);
+            if(file_format>=10)
             TextData += SMBX64::qStrS( (*bgo).layer);
             }
     }
@@ -1328,59 +1373,73 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS(FileData.npc[i].direct);
         TextData += SMBX64::IntS(FileData.npc[i].id);
 
-        switch(FileData.npc[i].id)
+        if(file_format>=10)
         {
-            //SMBX64 Fixed special options for NPC
-            /*Containers*/
-            case 283:/*Bubble*/
-            case 91: /*buried*/
-            case 284: /*SMW Lakitu*/
-            case 96: /*egg*/
+            switch(FileData.npc[i].id)
+            {
+                //SMBX64 Fixed special options for NPC
+                /*Containers*/
+                case 283:/*Bubble*/
+                case 91: /*buried*/
+                case 284: /*SMW Lakitu*/
+                case 96: /*egg*/
 
-            /*Items*/
-            /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
-            /*paragoomba*/ case 243: case 244:
-            /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
-            /*WarpSelection*/ case 288: case 289:
-            /*firebar*/ case 260:
-        TextData += SMBX64::IntS(FileData.npc[i].special_data);
+                /*Items*/
+                /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
+                /*paragoomba*/ case 243: case 244:
+                /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
+                /*WarpSelection*/ case 288: case 289:
+                /*firebar*/ case 260:
+            TextData += SMBX64::IntS(FileData.npc[i].special_data);
 
-            if((FileData.npc[i].id==91)&&(FileData.npc[i].special_data==288)) // Warp Section value for included into herb magic potion
-                TextData += SMBX64::IntS(FileData.npc[i].special_data2);
+                if((FileData.npc[i].id==91)&&(FileData.npc[i].special_data==288)) // Warp Section value for included into herb magic potion
+                    TextData += SMBX64::IntS(FileData.npc[i].special_data2);
 
-            break;
-            default:
                 break;
+                default:
+                    break;
+            }
         }
 
-        TextData += SMBX64::BoolS(FileData.npc[i].generator);
-
-        if(FileData.npc[i].generator)
+        if(file_format>=3)
         {
-            TextData += SMBX64::IntS(FileData.npc[i].generator_direct);
-            TextData += SMBX64::IntS(FileData.npc[i].generator_type);
-            TextData += SMBX64::IntS(FileData.npc[i].generator_period);
+            TextData += SMBX64::BoolS(FileData.npc[i].generator);
+            if(FileData.npc[i].generator)
+            {
+                TextData += SMBX64::IntS(FileData.npc[i].generator_direct);
+                TextData += SMBX64::IntS(FileData.npc[i].generator_type);
+                TextData += SMBX64::IntS(FileData.npc[i].generator_period);
+            }
         }
+
+        if(file_format>=5)
         TextData += SMBX64::qStrS_multiline(FileData.npc[i].msg);
 
-        TextData += SMBX64::BoolS(FileData.npc[i].friendly);
-        TextData += SMBX64::BoolS(FileData.npc[i].nomove);
+        if(file_format>=6)
+        {
+            TextData += SMBX64::BoolS(FileData.npc[i].friendly);
+            TextData += SMBX64::BoolS(FileData.npc[i].nomove);
+        }
+        if(file_format>=9)
         TextData += SMBX64::BoolS(FileData.npc[i].legacyboss);
 
-        TextData += SMBX64::qStrS(FileData.npc[i].layer);
-        TextData += SMBX64::qStrS(FileData.npc[i].event_activate);
-        TextData += SMBX64::qStrS(FileData.npc[i].event_die);
-        TextData += SMBX64::qStrS(FileData.npc[i].event_talk);
+        if(file_format>=10)
+        {
+            TextData += SMBX64::qStrS(FileData.npc[i].layer);
+            TextData += SMBX64::qStrS(FileData.npc[i].event_activate);
+            TextData += SMBX64::qStrS(FileData.npc[i].event_die);
+            TextData += SMBX64::qStrS(FileData.npc[i].event_talk);
+        }
+        if(file_format>=14)
         TextData += SMBX64::qStrS(FileData.npc[i].event_nomore);
+        if(file_format>=63)
         TextData += SMBX64::qStrS(FileData.npc[i].attach_layer);
     }
     TextData += "\"next\"\n";//Separator
 
-
     //Doors
     for(i=0; i<FileData.doors.size(); i++)
     {
-
         if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
             if(!FileData.doors[i].isSetIn) continue; // Skip broken door
         if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_i)) )
@@ -1393,111 +1452,157 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS(FileData.doors[i].idirect);
         TextData += SMBX64::IntS(FileData.doors[i].odirect);
         TextData += SMBX64::IntS(FileData.doors[i].type);
-        TextData += SMBX64::qStrS(FileData.doors[i].lname);
-        TextData += SMBX64::IntS(FileData.doors[i].warpto);
-        TextData += SMBX64::BoolS(FileData.doors[i].lvl_i);
-        TextData += SMBX64::BoolS(FileData.doors[i].lvl_o);
-        TextData += SMBX64::IntS(FileData.doors[i].world_x);
-        TextData += SMBX64::IntS(FileData.doors[i].world_y);
+        if(file_format>=3)
+        {
+            TextData += SMBX64::qStrS(FileData.doors[i].lname);
+            TextData += SMBX64::IntS(FileData.doors[i].warpto);
+            TextData += SMBX64::BoolS(FileData.doors[i].lvl_i);
+        }
+        if(file_format>=4)
+        {
+            TextData += SMBX64::BoolS(FileData.doors[i].lvl_o);
+            TextData += SMBX64::IntS(FileData.doors[i].world_x);
+            TextData += SMBX64::IntS(FileData.doors[i].world_y);
+        }
+        if(file_format>=7)
         TextData += SMBX64::IntS(FileData.doors[i].stars);
-        TextData += SMBX64::qStrS(FileData.doors[i].layer);
-        TextData += SMBX64::BoolS(FileData.doors[i].unknown);
+        if(file_format>=12)
+        {
+            TextData += SMBX64::qStrS(FileData.doors[i].layer);
+            TextData += SMBX64::BoolS(FileData.doors[i].unknown);
+        }
+        if(file_format>=23)
         TextData += SMBX64::BoolS(FileData.doors[i].novehicles);
+        if(file_format>=25)
         TextData += SMBX64::BoolS(FileData.doors[i].allownpc);
+        if(file_format>=26)
         TextData += SMBX64::BoolS(FileData.doors[i].locked);
     }
-    TextData += "\"next\"\n";//Separator
 
     //Water
-    for(i=0; i<FileData.physez.size(); i++)
+    if(file_format>=29)
     {
-        TextData += SMBX64::IntS(FileData.physez[i].x);
-        TextData += SMBX64::IntS(FileData.physez[i].y);
-        TextData += SMBX64::IntS(FileData.physez[i].w);
-        TextData += SMBX64::IntS(FileData.physez[i].h);
-        TextData += SMBX64::IntS(FileData.physez[i].unknown);
-        TextData += SMBX64::BoolS(FileData.physez[i].quicksand);
-        TextData += SMBX64::qStrS(FileData.physez[i].layer);
+        TextData += "\"next\"\n";//Separator
+        for(i=0; i<FileData.physez.size(); i++)
+        {
+            TextData += SMBX64::IntS(FileData.physez[i].x);
+            TextData += SMBX64::IntS(FileData.physez[i].y);
+            TextData += SMBX64::IntS(FileData.physez[i].w);
+            TextData += SMBX64::IntS(FileData.physez[i].h);
+            TextData += SMBX64::IntS(FileData.physez[i].unknown);
+            if(file_format>=62)
+            TextData += SMBX64::BoolS(FileData.physez[i].quicksand);
+            TextData += SMBX64::qStrS(FileData.physez[i].layer);
+        }
     }
-    TextData += "\"next\"\n";//Separator
 
-    //Layers
-    for(i=0; i<FileData.layers.size(); i++)
+    if(file_format>=10)
     {
-        TextData += SMBX64::qStrS(FileData.layers[i].name);
-        TextData += SMBX64::BoolS(FileData.layers[i].hidden);
-    }
-    TextData += "\"next\"\n";//Separator
 
-    LevelEvents_layers layerSet;
-    for(i=0; i<FileData.events.size(); i++)
-    {
-        TextData += SMBX64::qStrS(FileData.events[i].name);
-        TextData += SMBX64::qStrS_multiline(FileData.events[i].msg);
-        TextData += SMBX64::IntS(FileData.events[i].sound_id);
-        TextData += SMBX64::IntS(FileData.events[i].end_game);
+        TextData += "\"next\"\n";//Separator
 
-        FileData.events[i].layers.clear();
-        for(j=0; j<20; j++)
+        //Layers
+        for(i=0; i<FileData.layers.size(); i++)
         {
-            layerSet.hide =
-                    ((j<FileData.events[i].layers_hide.size())?
-                      FileData.events[i].layers_hide[j] : "");
-            layerSet.show =
-                    ((j<FileData.events[i].layers_show.size())?
-                      FileData.events[i].layers_show[j] : "");;
-            layerSet.toggle =
-                    ((j<FileData.events[i].layers_toggle.size())?
-                      FileData.events[i].layers_toggle[j] : "");
-
-            FileData.events[i].layers.push_back(layerSet);
+            TextData += SMBX64::qStrS(FileData.layers[i].name);
+            TextData += SMBX64::BoolS(FileData.layers[i].hidden);
         }
+        TextData += "\"next\"\n";//Separator
 
-        for(j=0; j< FileData.events[i].layers.size()  && j<20; j++)
+        LevelEvents_layers layerSet;
+        for(i=0; i<FileData.events.size(); i++)
         {
-            TextData += SMBX64::qStrS(FileData.events[i].layers[j].hide);
-            TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
-            TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
+            TextData += SMBX64::qStrS(FileData.events[i].name);
+            if(file_format>=11)
+            TextData += SMBX64::qStrS_multiline(FileData.events[i].msg);
+            if(file_format>=14)
+            TextData += SMBX64::IntS(FileData.events[i].sound_id);
+            if(file_format>=18)
+            TextData += SMBX64::IntS(FileData.events[i].end_game);
+
+            FileData.events[i].layers.clear();
+            for(j=0; j<20; j++)
+            {
+                layerSet.hide =
+                        ((j<FileData.events[i].layers_hide.size())?
+                          FileData.events[i].layers_hide[j] : "");
+                layerSet.show =
+                        ((j<FileData.events[i].layers_show.size())?
+                          FileData.events[i].layers_show[j] : "");;
+                layerSet.toggle =
+                        ((j<FileData.events[i].layers_toggle.size())?
+                          FileData.events[i].layers_toggle[j] : "");
+
+                FileData.events[i].layers.push_back(layerSet);
+            }
+
+            for(j=0; j< FileData.events[i].layers.size()  && j<s_limit-1; j++)
+            {
+                TextData += SMBX64::qStrS(FileData.events[i].layers[j].hide);
+                TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
+                if(file_format>=14)
+                TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
+            }
+            for( ; j<s_limit; j++)
+            {
+                if(file_format>=14)
+                TextData += "\"\"\n\"\"\n\"\"\n"; //(21st element is SMBX 1.3 bug protector)
+                else
+                TextData += "\"\"\n\"\"\n";
+            }
+
+            if(file_format>=13)
+            {
+                for(j=0; j< FileData.events[i].sets.size()  && j<s_limit; j++)
+                {
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].music_id);
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].background_id);
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].position_left);
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].position_top);
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].position_bottom);
+                    TextData += SMBX64::IntS(FileData.events[i].sets[j].position_right);
+                }
+                for( ; j<s_limit; j++) // Protector
+                    TextData += "0\n0\n0\n-1\n-1\n-1\n";
+            }
+
+            if(file_format>=26){
+            TextData += SMBX64::qStrS(FileData.events[i].trigger);
+            TextData += SMBX64::IntS(FileData.events[i].trigger_timer);
+            }
+
+            if(file_format>=27)
+            TextData += SMBX64::BoolS(FileData.events[i].nosmoke);
+
+            if(file_format>=28)
+            {
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_altjump);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_altrun);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_down);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_drop);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_jump);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_left);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_right);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_run);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_start);
+            TextData += SMBX64::BoolS(FileData.events[i].ctrl_up);
+            }
+
+            if(file_format>=32)
+            {
+            TextData += SMBX64::BoolS(FileData.events[i].autostart);
+
+            TextData += SMBX64::qStrS(FileData.events[i].movelayer);
+            TextData += SMBX64::FloatS(FileData.events[i].layer_speed_x);
+            TextData += SMBX64::FloatS(FileData.events[i].layer_speed_y);
+            }
+            if(file_format>=33)
+            {
+            TextData += SMBX64::FloatS(FileData.events[i].move_camera_x);
+            TextData += SMBX64::FloatS(FileData.events[i].move_camera_y);
+            TextData += SMBX64::IntS(FileData.events[i].scroll_section);
+            }
         }
-        for( ; j<21; j++)
-            TextData += "\"\"\n\"\"\n\"\"\n"; //(21st element is SMBX 1.3 bug protector)
-
-        for(j=0; j< FileData.events[i].sets.size()  && j<21; j++)
-        {
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].music_id);
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].background_id);
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_left);
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_top);
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_bottom);
-            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_right);
-        }
-        for( ; j<21; j++) // Protector
-            TextData += "0\n0\n0\n-1\n-1\n-1\n";
-
-        TextData += SMBX64::qStrS(FileData.events[i].trigger);
-        TextData += SMBX64::IntS(FileData.events[i].trigger_timer);
-
-        TextData += SMBX64::BoolS(FileData.events[i].nosmoke);
-
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_altjump);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_altrun);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_down);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_drop);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_jump);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_left);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_right);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_run);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_start);
-        TextData += SMBX64::BoolS(FileData.events[i].ctrl_up);
-
-        TextData += SMBX64::BoolS(FileData.events[i].autostart);
-
-        TextData += SMBX64::qStrS(FileData.events[i].movelayer);
-        TextData += SMBX64::FloatS(FileData.events[i].layer_speed_x);
-        TextData += SMBX64::FloatS(FileData.events[i].layer_speed_y);
-        TextData += SMBX64::FloatS(FileData.events[i].move_camera_x);
-        TextData += SMBX64::FloatS(FileData.events[i].move_camera_y);
-        TextData += SMBX64::IntS(FileData.events[i].scroll_section);
     }
 
     return TextData;
