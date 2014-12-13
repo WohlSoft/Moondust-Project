@@ -98,6 +98,7 @@ signals:
 protected:
     virtual void focusInEvent(QFocusEvent *event);
     void closeEvent(QCloseEvent *event);
+    void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent* e);
 
 private slots:

@@ -53,6 +53,14 @@ void WorldEdit::focusInEvent(QFocusEvent *event)
 }
 
 
+void WorldEdit::dragEnterEvent(QDragEnterEvent *e)
+{
+    qDebug() << "Entered data into WorldEdit";
+    if (e->mimeData()->hasUrls()) {
+        e->acceptProposedAction();
+    }
+}
+
 void WorldEdit::dropEvent(QDropEvent *e)
 {
     this->raise();
