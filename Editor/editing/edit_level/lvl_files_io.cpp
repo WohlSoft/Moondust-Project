@@ -216,10 +216,12 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         int file_format=64;
         if(choiceVersionID)
         {
+            QApplication::restoreOverrideCursor();
             bool ok=true;
             file_format = QInputDialog::getInt(this, tr("SMBX file version"),
                                   tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
             if(!ok) file_format=64;
+            QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
         //Blocks limit
