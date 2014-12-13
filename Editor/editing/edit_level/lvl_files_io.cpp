@@ -81,19 +81,20 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     setAutoUpdateTimer(31);
 }
 
+namespace lvl_file_io
+{
+    bool isSMBX64limit=false;
+    bool choiceVersionID=false;
+}
 
 bool LevelEdit::save(bool savOptionsDialog)
 {
     if (isUntitled) {
         return saveAs(savOptionsDialog);
     } else {
+        lvl_file_io::choiceVersionID=false;
         return saveFile(curFile);
     }
-}
-
-namespace lvl_file_io
-{
-    bool isSMBX64limit=false;
 }
 
 bool LevelEdit::saveAs(bool savOptionsDialog)
@@ -131,6 +132,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
                                     (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
 
     QString fileSMBX64="SMBX64 (1.3) Level file (*.lvl)";
+    QString fileSMBXany="SMBX 0..64 Level file (*.lvl) [choose version]";
     QString filePGEX="Extended Level file (*.lvlx)";
 
     QString selectedFilter;
@@ -141,6 +143,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
     QString filter =
             fileSMBX64+";;"+
+            fileSMBXany+";;"+
             filePGEX;
 
     bool ret;
@@ -148,6 +151,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     RetrySave:
 
     isSMBX64limit=false;
+    choiceVersionID=false;
     isNotDone=true;
     while(isNotDone)
     {
@@ -155,6 +159,9 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
         if (fileName.isEmpty())
             return false;
+
+        if(selectedFilter==fileSMBXany)
+            choiceVersionID=true;
 
         if( (!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)) )
         {
@@ -205,6 +212,16 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         //SMBX64 Standard check
 
         isSMBX64limit=false;
+
+        int file_format=64;
+        if(choiceVersionID)
+        {
+            bool ok=true;
+            file_format = QInputDialog::getInt(this, tr("SMBX file version"),
+                                  tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+            if(!ok) file_format=64;
+        }
+
         //Blocks limit
         if(LvlData.blocks.size()>16384)
         {
@@ -307,7 +324,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         }
 
         QTextStream out(&file);
-        out << FileFormats::WriteSMBX64LvlFile(LvlData);
+        out << FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
         file.close();
 
         //save additional meta data
