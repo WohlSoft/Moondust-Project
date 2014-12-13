@@ -32,6 +32,7 @@ public:
     static void WriteToLog(QtMsgType type, QString msg);
     static void LoadLogSettings();
 
+    static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 };
 
 
