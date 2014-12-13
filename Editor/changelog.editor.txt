@@ -21,6 +21,7 @@ Editor 0.2.1.6
 - Added more edit actions: align selected, flip horizontal/vertical, rotate left/right
 - Added basic scripts generation feature
 - Organized code structure which making code more understandable, flexible and faster
+- Added layar movement speed calculator which will help you calculate speed in blocks per seconds.
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
