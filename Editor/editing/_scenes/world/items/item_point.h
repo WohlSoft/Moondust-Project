@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_MUSIC_H
-#define ITEM_MUSIC_H
+#ifndef ITEM_POINT_H
+#define ITEM_POINT_H
 
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -33,18 +33,16 @@
 
 #include <file_formats/wld_filedata.h>
 
-#include "wld_scene.h"
+#include "../wld_scene.h"
 
-class ItemMusic : public QObject, public QGraphicsItem
+class ItemPoint : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    ItemMusic(QGraphicsItem *parent=0);
-    ~ItemMusic();
+    ItemPoint(QGraphicsItem *parent=0);
+    ~ItemPoint();
 
-    void setMusicData(WorldMusic inD);
-    void setContextMenu(QMenu &menu);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
@@ -53,12 +51,6 @@ public:
     QMenu *ItemMenu;
 
     //void setLayer(QString layer);
-
-    void arrayApply();
-    void removeFromArray();
-
-    WorldMusic musicData;
-    QString musicTitle;
 
     int gridSize;
     int gridOffsetX;
@@ -86,4 +78,4 @@ private:
 };
 
 
-#endif // ITEM_MUSIC_H
+#endif // ITEM_POINT_H
