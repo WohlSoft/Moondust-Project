@@ -18,7 +18,7 @@
 
 #include <editing/_scenes/world/wld_item_placing.h>
 #include <editing/_dialogs/itemselectdialog.h>
-#include <editing/_scenes/world/item_level.h>
+#include <editing/_scenes/world/items/item_level.h>
 #include <editing/_dialogs/levelfilelist.h>
 #include <file_formats/file_formats.h>
 
