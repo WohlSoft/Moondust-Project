@@ -177,6 +177,8 @@ void LocalServer::onCMD(QString data)
       switch(commands.indexOf(data)){
         case 0:
         {
+              if(!MainWinConnect::pMainWin->continueLoad) break;
+
               emit showUp();
               qApp->setActiveWindow(MainWinConnect::pMainWin);
               if(!MainWinConnect::pMainWin->isMaximized())
@@ -188,6 +190,8 @@ void LocalServer::onCMD(QString data)
         }
         case 1:
         {
+              if(!MainWinConnect::pMainWin->continueLoad) break;
+
               MainWinConnect::pMainWin->showMinimized();
               qApp->setActiveWindow(MainWinConnect::pMainWin);
               if(MainWinConnect::pMainWin->activeChildWindow()==1)
@@ -200,6 +204,8 @@ void LocalServer::onCMD(QString data)
         }
         case 2:
         {
+              if(!MainWinConnect::pMainWin->continueLoad) break;
+
               MainWinConnect::pMainWin->showNormal();
               qApp->setActiveWindow(MainWinConnect::pMainWin);
               if(MainWinConnect::pMainWin->activeChildWindow()==1)
