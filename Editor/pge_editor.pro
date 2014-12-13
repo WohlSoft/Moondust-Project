@@ -178,22 +178,14 @@ SOURCES += main.cpp\
     editing/_scenes/level/edit_modes/mode_resize.cpp \
     editing/_scenes/level/edit_modes/mode_select.cpp \
     editing/_scenes/level/edit_modes/mode_square.cpp \
-    editing/_scenes/world/item_level.cpp \
-    editing/_scenes/world/item_music.cpp \
-    editing/_scenes/world/item_path.cpp \
-    editing/_scenes/world/item_point.cpp \
-    editing/_scenes/world/item_scene.cpp \
-    editing/_scenes/world/item_tile.cpp \
     editing/_scenes/world/wld_clipboard.cpp \
     editing/_scenes/world/wld_collisions.cpp \
     editing/_scenes/world/wld_control.cpp \
     editing/_scenes/world/wld_init_filedata.cpp \
     editing/_scenes/world/wld_item_placing.cpp \
     editing/_scenes/world/wld_items.cpp \
-    editing/_scenes/world/wld_resizers.cpp \
     editing/_scenes/world/wld_scene.cpp \
     editing/_scenes/world/wld_setup.cpp \
-    editing/_scenes/world/wld_usergfx.cpp \
     editing/_scenes/world/edit_modes/wld_mode_erase.cpp \
     editing/_scenes/world/edit_modes/wld_mode_fill.cpp \
     editing/_scenes/world/edit_modes/wld_mode_hand.cpp \
@@ -327,7 +319,20 @@ SOURCES += main.cpp\
     editing/_scenes/level/resizers/lvl_resizer_section.cpp \
     editing/_scenes/level/resizers/lvl_resizer_section_evnt.cpp \
     editing/_scenes/level/resizers/lvl_resizer_physenv.cpp \
-    editing/_scenes/level/resizers/lvl_resizer_img_shoot.cpp
+    editing/_scenes/level/resizers/lvl_resizer_img_shoot.cpp \
+    editing/_scenes/world/items/item_level.cpp \
+    editing/_scenes/world/items/item_music.cpp \
+    editing/_scenes/world/items/item_path.cpp \
+    editing/_scenes/world/items/item_point.cpp \
+    editing/_scenes/world/items/item_scene.cpp \
+    editing/_scenes/world/items/item_tile.cpp \
+    editing/_scenes/world/items/wld_items_aligning.cpp \
+    editing/_scenes/world/items/wld_items_modify.cpp \
+    editing/_scenes/world/items/wld_items_place.cpp \
+    editing/_scenes/world/data_manager/wld_animators.cpp \
+    editing/_scenes/world/resizers/wld_resizers.cpp \
+    editing/_scenes/world/resizers/wld_resizer_img_shoot.cpp \
+    editing/_scenes/world/data_manager/wld_custom_gfx.cpp
     
 
 HEADERS  += defines.h \
@@ -389,12 +394,6 @@ HEADERS  += defines.h \
     editing/_scenes/level/edit_modes/mode_resize.h \
     editing/_scenes/level/edit_modes/mode_select.h \
     editing/_scenes/level/edit_modes/mode_square.h \
-    editing/_scenes/world/item_level.h \
-    editing/_scenes/world/item_music.h \
-    editing/_scenes/world/item_path.h \
-    editing/_scenes/world/item_point.h \
-    editing/_scenes/world/item_scene.h \
-    editing/_scenes/world/item_tile.h \
     editing/_scenes/world/wld_item_placing.h \
     editing/_scenes/world/wld_scene.h \
     editing/_scenes/world/edit_modes/wld_mode_erase.h \
@@ -454,7 +453,13 @@ HEADERS  += defines.h \
     editing/_scenes/level/items/item_door.h \
     editing/_scenes/level/items/item_npc.h \
     editing/_scenes/level/items/item_playerpoint.h \
-    editing/_scenes/level/items/item_water.h
+    editing/_scenes/level/items/item_water.h \
+    editing/_scenes/world/items/item_level.h \
+    editing/_scenes/world/items/item_music.h \
+    editing/_scenes/world/items/item_path.h \
+    editing/_scenes/world/items/item_point.h \
+    editing/_scenes/world/items/item_scene.h \
+    editing/_scenes/world/items/item_tile.h
 
 
 FORMS    += \

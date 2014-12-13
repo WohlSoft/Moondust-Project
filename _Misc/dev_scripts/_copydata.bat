@@ -167,6 +167,9 @@ call :ApplyDir editing\_scenes\level\data_manager
 call :ApplyDir editing\_scenes\level\resizers
 call :ApplyDir editing\_scenes\world
 call :ApplyDir editing\_scenes\world\edit_modes
+call :ApplyDir editing\_scenes\world\items
+call :ApplyDir editing\_scenes\world\data_manager
+call :ApplyDir editing\_scenes\world\resizers
 call :ApplyDir editing\edit_level
 call :ApplyDir editing\edit_npc
 call :ApplyDir editing\edit_world
