@@ -30,10 +30,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    continueLoad = false;
     //thread1 = new QThread;
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
-
+    this->hide();
     setDefaults(); // Apply default common settings
 
     //Create empty config directory if not exists
@@ -69,7 +70,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
             return;
         }
     }
-    continueLoad = true;
+    //continueLoad = true;
     askConfigAgain = cmanager->askAgain;
 
     currentConfigDir = configPath;
@@ -106,9 +107,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     {
         QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
         WriteToLog(QtFatalMsg, "<Error, application closed>");
+        continueLoad = false;
         this->close();
         return;
     }
+    continueLoad = true;
 }
 
 MainWindow::~MainWindow()
