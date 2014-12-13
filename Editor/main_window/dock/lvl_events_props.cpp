@@ -16,20 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/util.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/items/item_water.h>
+#include <editing/_scenes/level/itemmsgbox.h>
+#include <audio/sdl_music_player.h>
+#include <file_formats/file_formats.h>
+#include <tools/math/blocksperseconddialog.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_npc.h"
-#include "../../level_scene/item_water.h"
-
-#include "../../level_scene/itemmsgbox.h"
-
-#include "../../file_formats/file_formats.h"
-
-#include "../../common_features/util.h"
-#include "../../common_features/sdl_music_player.h"
+#include <mainwindow.h>
 
 long currentEventArrayID=0;
 bool lockSetEventSettings=false;
@@ -39,6 +37,18 @@ long curSectionField=0;
 
 bool cloneEvent=false;
 long cloneEventId=0;
+
+
+void MainWindow::on_LevelEventsToolBox_visibilityChanged(bool visible)
+{
+    ui->actionLevelEvents->setChecked(visible);
+}
+
+void MainWindow::on_actionLevelEvents_triggered(bool checked)
+{
+    ui->LevelEventsToolBox->setVisible(checked);
+    if(checked) ui->LevelEventsToolBox->raise();
+}
 
 void MainWindow::setEventsBox()
 {
@@ -185,7 +195,7 @@ void MainWindow::setEventData(long index)
 
         if( (activeLvlEditWin()->LvlData.events.size() > 0) && (cIndex >= 0))
         {
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
             currentEventArrayID=cIndex;
             foreach(LevelEvents event, edit->LvlData.events)
             {
@@ -312,7 +322,7 @@ void MainWindow::eventSectionSettingsSync()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -418,7 +428,7 @@ void MainWindow::eventLayerVisiblySyncList()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -509,7 +519,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         if(item->data(3).toString()=="NewEvent")
         {
             bool AlreadyExist=false;
@@ -605,7 +615,7 @@ long MainWindow::getEventArrayIndex()
 {
     if(activeChildWindow()!=1) return -2;
 
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     bool found=false;
     long i;
     for(i=0; i< edit->LvlData.events.size();i++)
@@ -639,7 +649,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
 
     ui->LVLEvents_List->addItem( item );
 
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
 
     if(setEdited)
     {
@@ -706,7 +716,7 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
 {
     lockSetEventSettings=true;
     //Find layer enrty in array and apply settings
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     for(int i=0; i < edit->LvlData.events.size(); i++)
     {
         if( edit->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
@@ -760,7 +770,7 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
 void MainWindow::ModifyEvent(QString eventName, QString newEventName)
 {
     //Apply layer's name to all items
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -869,7 +879,7 @@ void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -893,7 +903,7 @@ void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -915,7 +925,7 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -938,7 +948,7 @@ void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -967,7 +977,7 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -989,7 +999,7 @@ void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1019,7 +1029,7 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1041,7 +1051,7 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1077,7 +1087,7 @@ void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1098,7 +1108,7 @@ void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1120,7 +1130,7 @@ void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1148,7 +1158,7 @@ void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1169,7 +1179,7 @@ void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1191,7 +1201,7 @@ void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1224,7 +1234,7 @@ void MainWindow::on_LVLEvent_SctSize_none_clicked()
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1269,7 +1279,7 @@ void MainWindow::on_LVLEvent_SctSize_reset_clicked()
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1314,7 +1324,7 @@ void MainWindow::on_LVLEvent_SctSize_define_clicked()
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1360,7 +1370,7 @@ void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1392,7 +1402,7 @@ void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1424,7 +1434,7 @@ void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1455,7 +1465,7 @@ void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1486,7 +1496,7 @@ void MainWindow::on_LVLEvent_SctSize_Set_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         if(curSectionField!=edit->LvlData.CurSection)
         {
             QMessageBox::information(this, tr("Get section size"),
@@ -1522,7 +1532,7 @@ void MainWindow::on_LVLEvent_SctMus_none_clicked()
     {
         ui->LVLEvent_SctMus_List->setEnabled(false);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1548,7 +1558,7 @@ void MainWindow::on_LVLEvent_SctMus_reset_clicked()
     {
         ui->LVLEvent_SctMus_List->setEnabled(false);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1573,7 +1583,7 @@ void MainWindow::on_LVLEvent_SctMus_define_clicked()
     {
         ui->LVLEvent_SctMus_List->setEnabled(true);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1598,7 +1608,7 @@ void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1623,7 +1633,7 @@ void MainWindow::on_LVLEvent_SctBg_none_clicked()
     {
         ui->LVLEvent_SctBg_List->setEnabled(false);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1649,7 +1659,7 @@ void MainWindow::on_LVLEvent_SctBg_reset_clicked()
     {
         ui->LVLEvent_SctBg_List->setEnabled(false);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1675,7 +1685,7 @@ void MainWindow::on_LVLEvent_SctBg_define_clicked()
     {
         ui->LVLEvent_SctBg_List->setEnabled(true);
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1702,7 +1712,7 @@ void MainWindow::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
     if (WinType==1)
     {
         lockEventSectionDataList=true;
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1728,7 +1738,7 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1767,7 +1777,7 @@ void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
         QList<QVariant> soundData;
@@ -1813,7 +1823,7 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
         QList<QVariant> endData;
@@ -1838,7 +1848,7 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1857,7 +1867,7 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1875,7 +1885,7 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1893,7 +1903,7 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1911,7 +1921,7 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1929,7 +1939,7 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1947,7 +1957,7 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1965,7 +1975,7 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1983,7 +1993,7 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2001,7 +2011,7 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2023,7 +2033,7 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2046,7 +2056,7 @@ void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 
     if (WinType==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2059,4 +2069,41 @@ void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
         edit->LvlData.modified=true;
     }
 
+}
+
+
+void MainWindow::on_bps_LayerMov_horSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_LayerMov_spX->setValue(bps.result());
+}
+
+void MainWindow::on_bps_LayerMov_vertSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_LayerMov_spY->setValue(bps.result());
+}
+
+void MainWindow::on_bps_Scroll_horSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_Scroll_spX->setValue(bps.result());
+}
+
+void MainWindow::on_bps_Scroll_vertSpeed_clicked()
+{
+    BlocksPerSecondDialog bps;
+    if(!bps.exec())
+        return;
+
+    ui->LVLEvent_Scroll_spY->setValue(bps.result());
 }

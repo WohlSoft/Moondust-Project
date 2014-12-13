@@ -16,10 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <tools/tilesets/tilesetgroupeditor.h>
 
-//#include "../tilesets/tileset.h"
-#include "../tilesets/tilesetgroupeditor.h"
+#include "data_configs.h"
 
 void dataconfigs::loadTilesets()
 {

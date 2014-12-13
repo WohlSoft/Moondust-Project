@@ -16,13 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
-
 #include <QTranslator>
 #include <QRegExp>
 #include <QFileInfo>
-
 #include <QtDebug>
+
+#include "file_formats.h"
+#ifdef PGE_EDITOR
+#include <common_features/themes.h>
+#endif
 
 FileStringList::FileStringList()
 {
@@ -143,9 +145,11 @@ WorldData FileFormats::OpenWorldFile(QString filePath)
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
-    #ifndef PGE_ENGINE
-    QMessageBox * box = new QMessageBox();
+    #ifdef PGE_EDITOR
+    QMessageBox * box;
+    box= new QMessageBox();
     box->setWindowTitle( QTranslator::tr("Bad File") );
+    box->setWindowIcon( Themes::icon(Themes::debugger) );
     box->setText(
                 QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
                           +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error

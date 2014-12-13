@@ -27,6 +27,7 @@
 #include <QVector>
 #include <QImage>
 #include <QSettings>
+
 #include "app_path.h"
 
 

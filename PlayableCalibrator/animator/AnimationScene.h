@@ -50,14 +50,14 @@ public:
     QPixmap mSpriteImage;
     QPixmap NoAnimate;
 
-    QTimer * timer;
+    QTimer timer;
 
 public slots:
     void nextFrame();
 
 private:
-    QGraphicsPixmapItem * ImageFrame;
-    QGraphicsRectItem * sizer;
+    QGraphicsPixmapItem ImageFrame;
+    QGraphicsRectItem GRound;
     QPoint mPos;
     int mXDir;
     int x, y, dir;

@@ -16,14 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "crashhandler.h"
-#include <ui_crashhandler.h>
-#include "dev_console/devconsole.h"
 #include <QDesktopServices>
-
-//temp
-//#include <QMessageBox>
-
 #ifdef _WIN32
     #include <windows.h>
     #include <dbghelp.h>
@@ -32,6 +25,12 @@
     #include <unistd.h>
 #endif
 #include <signal.h>
+
+#include <dev_console/devconsole.h>
+
+#include "crashhandler.h"
+#include <ui_crashhandler.h>
+
 
 QString CrashHandler::getStacktrace()
 {

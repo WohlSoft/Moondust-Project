@@ -25,8 +25,10 @@ class LunaLuaCompiler : public BasicCompiler
 {
     Q_OBJECT
 public:
-    explicit LunaLuaCompiler(QList<EventCommand>* commands, QObject *parent = 0);
+    explicit LunaLuaCompiler(QList<EventCommand *> commands, QObject *parent = 0);
     ~LunaLuaCompiler();
+
+    virtual QString compileCode();
 
 signals:
 

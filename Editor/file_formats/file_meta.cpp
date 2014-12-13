@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "file_formats.h"
-
 
 MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 {
@@ -33,6 +31,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
 
     MetaData FileData;
+    FileData.script = new ScriptHolder();
 
     QString errorString;
 

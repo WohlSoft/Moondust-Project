@@ -2,6 +2,7 @@
 #define ITEMS_H
 
 #include <QPixmap>
+
 #include "../defines.h"
 #include "mainwinconnect.h"
 

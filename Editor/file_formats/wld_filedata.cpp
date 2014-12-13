@@ -19,7 +19,6 @@
 #include "wld_filedata.h"
 #include "file_formats.h"
 
-
 WorldTiles FileFormats::dummyWldTile()
 {
     WorldTiles dummyTile;
@@ -142,6 +141,9 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.musicbox_array_id = 0;
 
     NewFileData.stars = 0;
+
+    //Meta-data
+    NewFileData.metaData.script = NULL;
 
     return NewFileData;
 }

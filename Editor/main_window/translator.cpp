@@ -16,16 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/app_path.h>
+#include <common_features/logger_sets.h>
+#include <dev_console/devconsole.h>
+#include <main_window/global_settings.h>
+
 #include <ui_mainwindow.h>
-#include "../mainwindow.h"
-#include "../common_features/logger_sets.h"
-#include "../dev_console/devconsole.h"
-
-#include "../common_features/app_path.h"
-
-#include "global_settings.h"
-
-
+#include <mainwindow.h>
 
 void MainWindow::setDefLang()
 {
@@ -74,11 +71,14 @@ void MainWindow::setDefLang()
 
            langListSync();
        }
+       qDebug() << "Common Translation: " << ok;
 
        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
                 WriteToLog(QtDebugMsg, QString("Qt Translation: %1").arg((int)ok));
        if(ok)
         qApp->installTranslator(&m_translatorQt);
+
+       qDebug() << "Qt Translation: " << ok;
 
        ui->retranslateUi(this);
 }
@@ -182,8 +182,13 @@ void MainWindow::loadLanguage(const QString& rLanguage)
 
         QString languageName = QLocale::languageToString(locale.language());
 
-        bool ok = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-             ok = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+        bool ok  = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
+            if(ok)
+                qApp->installTranslator(&m_translatorQt);
+            qDebug() << "Qt Translation: " << ok;
+             ok  = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+            qDebug() << "Common Translation: " << ok;
+
 
         WriteToLog(QtDebugMsg, QString("Translation-> try to retranslate"));
 

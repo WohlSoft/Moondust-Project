@@ -16,24 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopServices>
+
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <editing/_dialogs/npcdialog.h>
+#include <data_configs/config_manager.h>
+
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
-
-#include "npc_dialog/npcdialog.h"
-#include "data_configs/config_manager.h"
-#include "common_features/app_path.h"
-#include "common_features/themes.h"
-
-#include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    continueLoad = false;
     //thread1 = new QThread;
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
-
+    this->hide();
     setDefaults(); // Apply default common settings
 
     //Create empty config directory if not exists
@@ -69,7 +70,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
             return;
         }
     }
-    continueLoad = true;
+    //continueLoad = true;
     askConfigAgain = cmanager->askAgain;
 
     currentConfigDir = configPath;
@@ -106,9 +107,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     {
         QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
         WriteToLog(QtFatalMsg, "<Error, application closed>");
+        continueLoad = false;
         this->close();
         return;
     }
+    continueLoad = true;
 }
 
 MainWindow::~MainWindow()
@@ -170,33 +173,11 @@ void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
     QToolTip::showText(pos, msg, this, QRect(), time);
 }
 
-void MainWindow::refreshHistoryButtons()
-{
-    if(activeChildWindow()==1)
-    {
-        if(activeLvlEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-        }
-    }else if(activeChildWindow()==3){
-        if(activeWldEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
-        }
-    }
 
-}
 
 void MainWindow::on_actionContents_triggered()
 {
     QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
-}
-
-void MainWindow::on_actionNew_triggered()
-{
-    ui->menuNew->exec( this->cursor().pos() );
 }
 
 
@@ -207,14 +188,4 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 
 
 
-void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
-{
-    if(checked){
-        //this->hide();
-        this->showFullScreen();
-    }else{
-        //this->hide();
-        this->showNormal();
-    }
-}
 

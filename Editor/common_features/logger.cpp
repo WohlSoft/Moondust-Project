@@ -22,12 +22,10 @@
 #include <QSettings>
 #include <QDebug>
 
+#include <dev_console/devconsole.h>
+
 #include "app_path.h"
-
 #include "logger_sets.h"
-#include "../dev_console/devconsole.h"
-
-
 
 QString     LogWriter::DebugLogFile;
 QtMsgType   LogWriter::logLevel;

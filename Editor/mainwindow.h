@@ -35,24 +35,25 @@
 #include <QLocale>
 #include <QSplashScreen>
 
-#include "file_formats/lvl_filedata.h"
-#include "file_formats/wld_filedata.h"
-#include "file_formats/npc_filedata.h"
+#include <file_formats/lvl_filedata.h>
+#include <file_formats/wld_filedata.h>
+#include <file_formats/npc_filedata.h>
 
-#include "edit_level/level_edit.h"
-#include "edit_npc/npcedit.h"
-#include "edit_world/world_edit.h"
+#include <editing/edit_level/level_edit.h>
+#include <editing/edit_npc/npcedit.h>
+#include <editing/edit_world/world_edit.h>
 
-#include "about_dialog/aboutdialog.h"
-#include "edit_level/levelprops.h"
+#include <editing/edit_level/levelprops.h>
 
-#include "data_configs/data_configs.h"
+#include <main_window/about_dialog/aboutdialog.h>
 
-#include "common_features/musicfilelist.h"
-#include "common_features/logger.h"
+#include <data_configs/data_configs.h>
 
-#include "tilesets/tileset.h"
-#include "tilesets/tilesetgroupeditor.h"
+#include <editing/_dialogs/musicfilelist.h>
+#include <common_features/logger.h>
+
+#include <tools/tilesets/tileset.h>
+#include <tools/tilesets/tilesetgroupeditor.h>
 
 
 QT_BEGIN_NAMESPACE
@@ -105,6 +106,7 @@ public:
  * - Warps toolbox
  * - Level Search box
  * - Locks
+ * - Script
  *
  * World Editing
  * - World Settings toolbox
@@ -270,14 +272,14 @@ public:
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
         ///
         int activeChildWindow();
-        leveledit   *activeLvlEditWin();    //!< Active Window type 1
-        npcedit     *activeNpcEditWin();    //!< Active Window type 2
+        LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
         int subWins();              //!< Returns number of opened subwindows
 
     public slots:
-        leveledit   *createLvlChild();  //!< Create empty Level Editing subWindow
-        npcedit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
+        LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow
+        NpcEdit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
         WorldEdit   *createWldChild();  //!< Create empty World map Editing subWindow
 
         void setActiveSubWindow(QWidget *window);  //!< Switch to target subWindow
@@ -362,6 +364,7 @@ public:
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
         void on_actionFill_triggered(bool checked);
+        void on_actionFloodSectionOnly_triggered(bool checked);
 
         void on_action_Placing_ShowProperties_triggered(bool checked);
     private:
@@ -831,6 +834,11 @@ public:
         void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
         void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
+        void on_bps_LayerMov_horSpeed_clicked();
+        void on_bps_LayerMov_vertSpeed_clicked();
+        void on_bps_Scroll_horSpeed_clicked();
+        void on_bps_Scroll_vertSpeed_clicked();
+
     private:
         void AddNewEvent(QString eventName, bool setEdited);
         void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
@@ -911,9 +919,9 @@ public:
         LevelBGO curSearchBGO;
         LevelNPC curSearchNPC;
 
-        bool doSearchBlock(leveledit* edit);
-        bool doSearchBGO(leveledit* edit);
-        bool doSearchNPC(leveledit* edit);
+        bool doSearchBlock(LevelEdit* edit);
+        bool doSearchBGO(LevelEdit* edit);
+        bool doSearchNPC(LevelEdit* edit);
 // ///////////////////////////////////////////////////////////////
 
 
@@ -926,6 +934,13 @@ public:
         void on_actionLockDoors_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ///////////////////// Script ///////////////////////////
+    private slots:
+        void on_actionAdditional_Settings_triggered();
+        void on_actionCompile_To_triggered();
+        void on_actionAutocode_Lunadll_Original_Language_triggered();
+        void on_actionLunaLua_triggered();
+// ////////////////////////////////////////////////////////
 
 
 // ////////////////////////////////////////////////////////////////////////////////
@@ -1074,7 +1089,8 @@ private slots:
 // ///////Please move them into it's category/////////////////////
     private slots:
 
-    void on_actionAdditional_Settings_triggered();
+
+
 
 signals:
     void closeEditor();

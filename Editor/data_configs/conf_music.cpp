@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <main_window/global_settings.h>
 
-#include "../main_window/global_settings.h"
+#include "data_configs.h"
 
 long dataconfigs::getMusLvlI(unsigned long itemID)
 {
