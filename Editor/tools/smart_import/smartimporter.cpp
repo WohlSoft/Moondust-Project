@@ -89,6 +89,60 @@ bool SmartImporter::attemptFastImport()
         uLVL.createDirIfNotExsist();
         uLVL.import(filteredFiles);
         return true;
+    }else if(targetWorldWindow){
+        if(targetWorldWindow->isUntitled){
+            QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the world, so you can import custom graphics!"), QMessageBox::Ok);
+            return false;
+        }
+
+        CustomDirManager uLVL(targetLevelWindow->LvlData.path, targetLevelWindow->LvlData.filename);
+        QDir sourceDir(importPath);
+        if(!sourceDir.exists())
+            return false;
+
+        QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
+        QStringList filteredFiles;
+        foreach (QString tarFile, allFiles) {
+            //Also import global used custom level data
+            if(tarFile.startsWith("block-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("background-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("background2-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("npc-", Qt::CaseInsensitive) &&
+                    (tarFile.endsWith(".gif", Qt::CaseInsensitive)||
+                    tarFile.endsWith(".txt", Qt::CaseInsensitive)))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("effect-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("yoshib-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("yoshit-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("mario-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("luigi-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("peach-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("toad-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("link-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("tile-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("path-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("level-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("scene-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+        }
+
+        uLVL.createDirIfNotExsist();
+        uLVL.import(filteredFiles, false);
+        return true;
     }
     return false;
 }
