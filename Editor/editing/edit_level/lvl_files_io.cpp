@@ -220,7 +220,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
             bool ok=true;
             file_format = QInputDialog::getInt(this, tr("SMBX file version"),
                                   tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
-            if(!ok) file_format=64;
+            if(!ok) return false;
             QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
