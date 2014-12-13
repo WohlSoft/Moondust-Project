@@ -54,7 +54,7 @@ void MainWindow::on_OpenFile_triggered()
 
 void MainWindow::OpenFile(QString FilePath)
 {
-
+    if(!continueLoad) return;
     qApp->setActiveWindow(this);
 
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
@@ -80,32 +80,38 @@ void MainWindow::OpenFile(QString FilePath)
 
         LevelData FileData;
 
+        WriteToLog(QtDebugMsg, "> parsing level file format");
         if(in_1.suffix().toLower() == "lvl")
             FileData = FileFormats::ReadLevelFile(file);         //Read SMBX LVL File
         else
             FileData = FileFormats::ReadExtendedLevelFile(file); //Read PGE LVLX File
 
         if( !FileData.ReadFileValid ) return;
+        WriteToLog(QtDebugMsg, "File was read!");
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
 
         file.close();
+        WriteToLog(QtDebugMsg, "> Opem meta-file");
         file.setFileName(FilePath+".meta");
         if(QFileInfo(FilePath+".meta").exists())
         {
+            WriteToLog(QtDebugMsg, "> meta-file found, open them!");
             if (file.open(QIODevice::ReadOnly))
             {
                 QString metaRaw;
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                if(FileData.metaData.script){
+                if(FileData.metaData.script != NULL)
+                {
                     delete FileData.metaData.script;
                     FileData.metaData.script = NULL;
                 }
 
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+                WriteToLog(QtDebugMsg, "Meta-File was read!");
             }
             else
             {
@@ -114,8 +120,10 @@ void MainWindow::OpenFile(QString FilePath)
             }
         }
 
+        WriteToLog(QtDebugMsg, "Creating of sub-window");
         LevelEdit *child = createLvlChild();
-        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
+        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) )
+        {
             child->show();
             child->updateGeometry();
             child->ResetPosition();

@@ -142,6 +142,9 @@ WorldData FileFormats::dummyWldDataArray()
 
     NewFileData.stars = 0;
 
+    //Meta-data
+    NewFileData.metaData.script = NULL;
+
     return NewFileData;
 }
 
