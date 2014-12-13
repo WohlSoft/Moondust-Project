@@ -16,19 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../mainwindow.h"
-
-#include "../tilesets/tilesetconfiguredialog.h"
-#include "../tilesets/tilesetgroupeditor.h"
-#include "../npc_dialog/npcdialog.h"
 #include <QDesktopServices>
-#include "../dev_console/devconsole.h"
 
-#include "../external_tools/lazyfixtool_gui.h"
-#include "../external_tools/gifs2png_gui.h"
-#include "../external_tools/png2gifs_gui.h"
+#include <tools/tilesets/tilesetconfiguredialog.h>
+#include <tools/tilesets/tilesetgroupeditor.h>
+#include <tools/external_tools/lazyfixtool_gui.h>
+#include <tools/external_tools/gifs2png_gui.h>
+#include <tools/external_tools/png2gifs_gui.h>
+#include <editing/_dialogs/npcdialog.h>
+#include <dev_console/devconsole.h>
 
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {

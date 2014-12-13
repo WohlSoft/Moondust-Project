@@ -15,4 +15,4 @@ helps.files = Content/help/*
 calibrator_cnfs.path = bin/calibrator
 calibrator_cnfs.files  = Content/calibrator/*
 
-INSTALLS += configs data helps calibrator_cnfs
+INSTALLS += configs helps calibrator_cnfs

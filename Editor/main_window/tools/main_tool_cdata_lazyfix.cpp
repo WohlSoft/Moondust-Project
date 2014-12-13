@@ -16,12 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/graphics_funcs.h>
+#include <common_features/app_path.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../common_features/graphics_funcs.h"
-#include "../../common_features/app_path.h"
-
+#include <mainwindow.h>
 
 void lazyFixTool_doMagicIn(QString path, QString q, QString OPath)
 {
@@ -138,7 +137,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
 
     if(activeChildWindow()==1)
     {
-        leveledit *e = activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e->isUntitled)
         {
             QMessageBox::warning(this, tr("File is untitled"),

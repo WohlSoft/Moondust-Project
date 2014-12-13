@@ -21,7 +21,7 @@ public:
     ~ImageCalibrator();
 
     bool init(QString imgPath);
-    SpriteScene * Scene;
+    QGraphicsScene *Scene;
     QString targetPath;
     QString pngPath;
     QString gifPath;
@@ -39,6 +39,7 @@ private slots:
     void on_WritePNG_GIF_clicked();
     void on_WritePNG_clicked();
     void on_WriteGIF_clicked();
+    void updateControls();
     void updateScene();
     void saveCalibrates();
     void loadCalibrates();

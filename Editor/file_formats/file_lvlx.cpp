@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
-
 #include <QFileInfo>
 #include <QDir>
 
+#include "file_formats.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -69,9 +68,8 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
 
     QString errorString;
 
-    typedef QPair<QString, QStringList> PGEXSct;
-    PGEXSct PGEXsection;
 
+    PGEXSct PGEXsection;
     QList<PGEXSct > PGEXTree;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
@@ -92,6 +90,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
         {
             data = in.readLine();
             if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
+            if(QString(PGEXsection.first).remove(' ').isEmpty()) continue;
             PGEXsection.second.push_back(data);
         }
         PGEXTree.push_back(PGEXsection);

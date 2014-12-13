@@ -16,17 +16,51 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
-
 #include <QFileInfo>
 #include <QDir>
 
+#include "file_formats.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 LevelData FileFormats::ReadLevelFile(QFile &inf)
 {
+    QByteArray data;
+
+    data = inf.read(7);
+    if( (data.size()==0) || (data.size()<7))
+    {
+        LevelData FileData = dummyLvlDataArray();
+        if(data.size()==0)
+        BadFileMsg(inf.fileName()+
+            QString("\nFile is empty! (size of file is 0 bytes)"),
+                   0, "<FILE IS EMPTY>");
+        else
+        BadFileMsg(inf.fileName()+
+            QString("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
+                   0, "<FILE IS TOO SMALL>");
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+
+    //Check magic number: should be number from 0 to 64 and \n character after
+    if(
+            ((int)data.at(0)>0x36)||
+            ((int)data.at(0)<0x30)||
+            ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
+             ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
+      )
+    {
+        LevelData FileData = dummyLvlDataArray();
+        BadFileMsg(inf.fileName()+
+            "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+
+
+    inf.reset();
     QTextStream in(&inf);   //Read File
 
     in.setAutoDetectUnicode(true);
@@ -79,6 +113,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
     FileData.physenv_array_id = 1;
     FileData.layers_array_id = 1;
     FileData.events_array_id = 1;
+
+    //set NULL to pointers in the Meta
+    FileData.metaData.script = NULL;
 
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
@@ -170,10 +207,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
             goto badfile;
         else section.background=line.toInt();
 
-        str_count++;line = in.readLine();
-        if(SMBX64::wBool(line)) //NoTurnBack
-            goto badfile;
-        else section.noback=SMBX64::wBoolR(line);
+        if(file_format >= 1)
+        {
+            str_count++;line = in.readLine();
+            if(SMBX64::wBool(line)) //NoTurnBack
+                goto badfile;
+            else section.noback=SMBX64::wBoolR(line);
+        }
 
         if(file_format >= 32)
         {

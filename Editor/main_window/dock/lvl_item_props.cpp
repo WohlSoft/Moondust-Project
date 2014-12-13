@@ -16,17 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//#include <npc_dialog/npcdialog.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <editing/_dialogs/itemselectdialog.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/itemmsgbox.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-#include "../../level_scene/lvl_item_placing.h"
-//#include "../../npc_dialog/npcdialog.h"
-#include "../../item_select_dialog/itemselectdialog.h"
-
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_npc.h"
-#include "../../level_scene/itemmsgbox.h"
-
+#include <mainwindow.h>
 
 int npcSpecSpinOffset=0;
 int npcSpecSpinOffset_2=0;

@@ -16,25 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/util.h>
+#include <common_features/items.h>
+#include <common_features/graphics_funcs.h>
+#include <data_configs/custom_data.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <file_formats/file_formats.h>
+
 #include <ui_mainwindow.h>
-#include "../../mainwindow.h"
-
-#include "../../level_scene/lvl_item_placing.h"
-#include "../../file_formats/file_formats.h"
-#include "../../common_features/util.h"
-
-#include "../../data_configs/custom_data.h"
-
-#include "../../common_features/items.h"
-
-#include "../../common_features/graphics_funcs.h"
-
+#include <mainwindow.h>
 
 QString allLabel = "[all]";
 QString customLabel = "[custom]";
 
 bool lock_grp=false;
 bool lock_cat=false;
+
+
+// Level tool box show/hide
+void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
+{
+    ui->actionLVLToolBox->setChecked(visible);
+}
+
+void MainWindow::on_actionLVLToolBox_triggered(bool checked)
+{
+    ui->LevelToolBox->setVisible(checked);
+    if(checked) ui->LevelToolBox->raise();
+}
 
 
 void MainWindow::UpdateLvlCustomItems()
@@ -95,7 +104,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         if(activeChildWindow()==1)
         {
             long j=0;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(activeLvlEditWin()->sceneCreated)
             foreach(UserBlocks block, edit->scene->uBlocks)
@@ -193,7 +202,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(edit->sceneCreated)
             foreach(UserBGOs bgo, edit->scene->uBGOs)
@@ -291,7 +300,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             //long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
             if(edit->sceneCreated)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {

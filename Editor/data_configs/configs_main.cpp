@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/app_path.h>
+#include <main_window/global_settings.h>
+
 #include "data_configs.h"
-
-#include "../common_features/app_path.h"
-
-#include "../main_window/global_settings.h"
 
 long ConfStatus::total_blocks=0;
 long ConfStatus::total_bgo=0;

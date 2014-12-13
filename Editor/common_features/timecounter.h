@@ -18,8 +18,10 @@
 
 #ifndef TIMECOUNTER_H
 #define TIMECOUNTER_H
+
 #include <QTime>
 #include <QString>
+
 #include "logger.h"
 
 class TimeCounter

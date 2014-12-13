@@ -16,14 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
+#include <editing/_dialogs/levelfilelist.h>
+#include <file_formats/file_formats.h>
 
-#include "../../common_features/levelfilelist.h"
-#include "../../file_formats/file_formats.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 bool world_settings_lock_fields=false;
 QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;
+
+
+void MainWindow::on_WorldSettings_visibilityChanged(bool visible)
+{
+    ui->actionWorld_settings->setChecked(visible);
+}
+
+
+void MainWindow::on_actionWorld_settings_triggered(bool checked)
+{
+    ui->WorldSettings->setVisible(checked);
+    if(checked) ui->WorldSettings->raise();
+}
+
 
 
 void MainWindow::setCurrentWorldSettings()

@@ -20,14 +20,18 @@
 #include <QImage>
 #include <QFile>
 #include <QTextStream>
+#include <QtDebug>
+
+#include <common_features/logger.h>
+
 #include "graphics_funcs.h"
+
 #include "../../_Libs/EasyBMP/EasyBMP.h"
 extern "C"{
 #include "../../_Libs/giflib/gif_lib.h"
 }
-#include "logger.h"
 
-#include <QtDebug>
+
 
 bool GraphicsHelps::EnableVBEmulate=true;
 

@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <ui_mainwindow.h>
-#include "../../mainwindow.h"
+#include <common_features/app_path.h>
+#include <tools/smart_import/smartimporter.h>
 
-#include "../../common_features/app_path.h"
-#include "../../smart_import/smartimporter.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 void MainWindow::on_actionCDATA_Import_triggered()
 {
@@ -45,7 +45,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
 
     if(activeChildWindow()==1)
     {
-        leveledit * box = activeLvlEditWin();
+        LevelEdit * box = activeLvlEditWin();
         if(QFileInfo(fileName).isDir())
         {
             SmartImporter * importer = new SmartImporter((QWidget*)box, fileName, (QWidget*)box);

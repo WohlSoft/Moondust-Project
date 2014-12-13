@@ -26,7 +26,7 @@
 #include <QList>
 #include <QString>
 
-#include "../data_configs/obj_npc.h"
+#include <data_configs/obj_npc.h>
 
 class AdvNpcAnimator : public QObject
 {

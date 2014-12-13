@@ -19,10 +19,11 @@
 #ifndef CUSTOM_DATA_H
 #define CUSTOM_DATA_H
 
-#include "../file_formats/npc_filedata.h"
-#include "../data_configs/obj_npc.h"
 #include <QPixmap>
 #include <QBitmap>
+
+#include <file_formats/npc_filedata.h>
+#include <data_configs/obj_npc.h>
 
 struct UserIMGs
 {

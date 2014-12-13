@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common_features/app_path.h"
+#include <common_features/app_path.h>
+#include <main_window/global_settings.h>
 
 #include "data_configs.h"
-
-#include "../main_window/global_settings.h"
 
 long dataconfigs::getBgI(unsigned long itemID)
 {

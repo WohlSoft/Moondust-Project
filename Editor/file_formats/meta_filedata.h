@@ -18,8 +18,12 @@
 #ifndef META_FILEDATA_H
 #define META_FILEDATA_H
 
-#include "../script/scriptholder.h"
 #include <QtCore>
+
+//Editor's headers shouldn't appears in the engine
+#ifdef PGE_EDITOR
+#include <script/scriptholder.h>
+#endif
 
 struct Bookmark{
     QString bookmarkName;
@@ -32,8 +36,11 @@ struct MetaData
 {
     QVector<Bookmark> bookmarks;
 
+    //For Editor application only
+    #ifdef PGE_EDITOR
     //only for level
     ScriptHolder* script;
+    #endif
 };
 
 #endif // META_FILEDATA_H

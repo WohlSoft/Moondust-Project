@@ -17,7 +17,6 @@
  */
 
 #include "simple_animator.h"
-
 #include "logger.h"
 
 SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)

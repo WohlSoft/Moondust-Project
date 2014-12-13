@@ -1,20 +1,34 @@
-#include "devconsole.h"
-#include <ui_devconsole.h>
-
-#include <stdexcept>
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <QScrollBar>
 #include <QSettings>
 #include <QCryptographicHash>
+#include <stdexcept>
+
+#include <common_features/app_path.h>
+#include <common_features/mainwinconnect.h>
+#include <file_formats/file_formats.h>
+
+#include "devconsole.h"
+#include <ui_devconsole.h>
 
 #include "../version.h"
-
-#include "../common_features/app_path.h"
-
-#include "../common_features/mainwinconnect.h"
-
-
-#include "../file_formats/file_formats.h"
 
 DevConsole *DevConsole::currentDevConsole = 0;
 
@@ -60,7 +74,7 @@ void DevConsole::log(const QString &logText, const QString &channel, bool raise)
         init();
 
     if(currentDevConsole)
-        currentDevConsole->logToConsole(logText, channel, raise);
+           currentDevConsole->logToConsole(logText, channel, raise);
 }
 
 bool DevConsole::isConsoleShown()
@@ -94,8 +108,13 @@ DevConsole::~DevConsole()
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
+    QString target_channel = channel;
+
+    if(channel=="System") //Prevent creation another "system" tab if switched another UI language
+        target_channel = ui->tabWidget->tabText(0);
+
     for(int i = 0; i < ui->tabWidget->count(); ++i){
-        if(ui->tabWidget->tabText(i)==channel){
+        if(ui->tabWidget->tabText(i)==target_channel){
             QPlainTextEdit* tarEdit = getEditByIndex(i);
             if(!tarEdit)
                 return;
@@ -115,11 +134,11 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
     QPushButton *p = new QPushButton(w);
     l->addWidget(p,1,0,1,1);
     connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
-    p->setText(tr("Clear %1 Log").arg(channel));
+    p->setText(tr("Clear %1 Log").arg(target_channel));
     e->setReadOnly(true);
     e->appendPlainText(logText);
     e->verticalScrollBar()->setValue(e->verticalScrollBar()->maximum());
-    ui->tabWidget->addTab(w,channel);
+    ui->tabWidget->addTab(w,target_channel);
 }
 
 QPlainTextEdit *DevConsole::getEditByIndex(const int &index)
@@ -188,10 +207,11 @@ void DevConsole::registerCommands()
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
-    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
+    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
 }
 
 void DevConsole::doCommand()
@@ -290,5 +310,88 @@ void DevConsole::doSegmentationViolation(QStringList)
 {
     int* my_nullptr = 0;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
+}
+
+
+QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth=1)
+{
+    QString treeView="";
+
+    for(int i=0; i<entry.size(); i++)
+    {
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("=============\n");
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("SubTree name: %1\n").arg(entry[i].name);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Branch type: %1\n").arg(entry[i].type);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Entries: %1\n").arg(entry[i].data.size());
+        if(entry[i].subTree.size()>0)
+        {
+            treeView += ______recourseBuildPGEX_Tree(entry[i].subTree, depth+1);
+        }
+    }
+
+    return treeView;
+}
+
+
+
+void DevConsole::doPgeXTest(QStringList args)
+{
+    if(!args.isEmpty())
+    {
+        QString src;
+
+        foreach(QString s, args)
+            src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+        QFile file(src);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            log(QString("-> Error: Can't open the file."));
+            return;
+        }
+
+        QTextStream in(&file);   //Read File
+        PGEFile pgeX_Data;
+        QString raw = in.readAll();
+        pgeX_Data.setRawData( raw );
+
+        if( pgeX_Data.buildTreeFromRaw() )
+        {
+            QString treeView="";
+            for(int i=0; i<pgeX_Data.dataTree.size(); i++)
+            {
+                treeView += QString("=============\n");
+                treeView += QString("Section Name %1\n").arg(pgeX_Data.dataTree[i].name);
+                treeView += QString("Section type: %1\n").arg(pgeX_Data.dataTree[i].type);
+                treeView += QString("Entries %1\n").arg(pgeX_Data.dataTree[i].data.size());
+
+//                foreach(PGEFile::PGEX_Item x, pgeX_Data.dataTree[i].data)
+//                {
+//                    if(x.values.size()>0)
+//                    {
+//                        treeView += x.values.first().marker + ":"+x.values.first().value + ";\n";
+//                    }
+//                }
+
+                if(pgeX_Data.dataTree[i].subTree.size()>0)
+                {
+                    treeView += ______recourseBuildPGEX_Tree(pgeX_Data.dataTree[i].subTree);
+                }
+            }
+            log(QString("-> File read:\nRaw size is %1\n%2").arg(raw.size()).arg(treeView),
+                ui->tabWidget->tabText(0));
+
+        }
+        else
+        {
+            log(QString("-> File invalid: %1").arg(pgeX_Data.lastError()), ui->tabWidget->tabText(0));
+        }
+
+    }
+
 }
 

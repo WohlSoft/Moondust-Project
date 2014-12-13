@@ -25,19 +25,36 @@ class EventCommand : public BasicCommand
 {
     Q_OBJECT
 public:
-    explicit EventCommand(QObject *parent = 0);
+    enum EventType{
+        EVENTTYPE_LOAD = 0,
+        EVENTTYPE_LOOP
+    };
+
+    explicit EventCommand(EventType evType, QObject *parent = 0);
 
     virtual QString compileSegment(Script::CompilerType compiler, int tabOffset);
-    static bool supportCompiler(Script::CompilerType compiler);
+    virtual bool supportCompiler(Script::CompilerType compiler);
+
 
     ~EventCommand();
+
+    EventType eventType() const;
+    void setEventType(const EventType &eventType);
+
+    void addBasicCommand(BasicCommand* command);
+    int countCommands();
+    void removeBasicCommand(int i);
+    void deleteBasicCommand(BasicCommand* cmd);
+
+    QList<BasicCommand*> findCommandsByMarker(const QString &marker);
 
 signals:
 
 public slots:
 
 private:
-
+    EventType m_eventType;
+    QList<BasicCommand*> m_childCmds;
 
 };
 

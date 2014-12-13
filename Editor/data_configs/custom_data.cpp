@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "custom_data.h"
 #include <QFile>
 #include <QDir>
+
+#include "custom_data.h"
 
 CustomDirManager::CustomDirManager()
 {}

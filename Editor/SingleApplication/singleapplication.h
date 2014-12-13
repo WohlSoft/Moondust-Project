@@ -1,10 +1,10 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "localserver.h"
-
 #include <QObject>
 #include <QLocalSocket>
+
+#include "localserver.h"
 
 /**
  * @brief The Application class handles trivial application initialization procedures

@@ -16,24 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../mainwindow.h"
-#include <ui_mainwindow.h>
-#include "tileset_item_box.h"
-#include "../../common_features/util.h"
-#include "../../data_configs/obj_tilesets.h"
-#include "../../data_configs/data_configs.h"
-#include "../../tilesets/tilesetitembutton.h"
-#include "../../dev_console/devconsole.h"
-#include "../../common_features/logger.h"
-
-#include "../../tilesets/tilesetconfiguredialog.h"
-#include "../../common_features/themes.h"
-
 #include <QMessageBox>
 #include <QScrollArea>
-
 //#include <QElapsedTimer>
 //#include <QtConcurrent/QtConcurrentRun>
+
+#include <common_features/logger.h>
+#include <common_features/themes.h>
+#include <common_features/util.h>
+#include <tools/tilesets/tilesetitembutton.h>
+#include <tools/tilesets/tilesetconfiguredialog.h>
+#include <data_configs/obj_tilesets.h>
+#include <data_configs/data_configs.h>
+#include <dev_console/devconsole.h>
+
+#include <mainwindow.h>
+#include <ui_mainwindow.h>
+#include "tileset_item_box.h"
+
 
 namespace pge_tilesetbox
 {
