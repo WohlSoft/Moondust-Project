@@ -205,7 +205,7 @@ void doMagicIn(QString path, QString q, QString OPath)
 
 
 
-    image = ImgSrc;
+    image = ImgSrc.convertToFormat(QImage::Format_RGB32);
     mask = ImgSrc.alphaChannel();
     mask.invertPixels();
     for(int w=0; w < mask.width(); w++)
