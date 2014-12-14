@@ -9,14 +9,14 @@ public:
         LVL_Block       = 0,
         LVL_BGO         = 1,
         LVL_NPC         = 2,
-        LVL_PhysEnv     = 3,
-        LVL_Door        = 4,
-        LVL_Player      = 5,
-        WLD_Tile        = 6,
-        WLD_Scenery     = 7,
-        WLD_Path        = 8,
-        WLD_Level       = 9,
-        WLD_MusicBox    = 10
+        LVL_PhysEnv     = 8,
+        LVL_Door        = 9,
+        LVL_Player      = 10,
+        WLD_Tile        = 3,
+        WLD_Scenery     = 4,
+        WLD_Path        = 5,
+        WLD_Level       = 6,
+        WLD_MusicBox    = 7
     };
 
     //Multiselectable
