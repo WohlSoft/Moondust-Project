@@ -1563,24 +1563,24 @@ void LvlScene::historyBack()
     {
         LevelData rotatedData = lastOperation.data;
         rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
-                                      ItemTypes::LVL_Block |
-                                      ItemTypes::LVL_BGO |
-                                      ItemTypes::LVL_NPC |
-                                      ItemTypes::LVL_Door |
-                                      ItemTypes::LVL_PhysEnv |
-                                      ItemTypes::LVL_Player)), !lastOperation.extraData.toBool(), false);
+                                      ItemTypes::LVL_S_Block |
+                                      ItemTypes::LVL_S_BGO |
+                                      ItemTypes::LVL_S_NPC |
+                                      ItemTypes::LVL_S_Door |
+                                      ItemTypes::LVL_S_PhysEnv |
+                                      ItemTypes::LVL_S_Player)), !lastOperation.extraData.toBool(), false);
         break;
     }
     case HistoryOperation::LEVELHISTORY_FLIP:
     {
         LevelData flippedData = lastOperation.data;
         flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
-                                        ItemTypes::LVL_Block |
-                                        ItemTypes::LVL_BGO |
-                                        ItemTypes::LVL_NPC |
-                                        ItemTypes::LVL_Door |
-                                        ItemTypes::LVL_PhysEnv |
-                                        ItemTypes::LVL_Player)), !lastOperation.extraData.toBool(), false);
+                                        ItemTypes::LVL_S_Block |
+                                        ItemTypes::LVL_S_BGO |
+                                        ItemTypes::LVL_S_NPC |
+                                        ItemTypes::LVL_S_Door |
+                                        ItemTypes::LVL_S_PhysEnv |
+                                        ItemTypes::LVL_S_Player)), !lastOperation.extraData.toBool(), false);
         break;
     }
     default:
@@ -2490,24 +2490,24 @@ void LvlScene::historyForward()
     {
         LevelData rotatedData = lastOperation.data;
         rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
-                                      ItemTypes::LVL_Block |
-                                      ItemTypes::LVL_BGO |
-                                      ItemTypes::LVL_NPC |
-                                      ItemTypes::LVL_Door |
-                                      ItemTypes::LVL_PhysEnv |
-                                      ItemTypes::LVL_Player)), lastOperation.extraData.toBool(), false);
+                                      ItemTypes::LVL_S_Block |
+                                      ItemTypes::LVL_S_BGO |
+                                      ItemTypes::LVL_S_NPC |
+                                      ItemTypes::LVL_S_Door |
+                                      ItemTypes::LVL_S_PhysEnv |
+                                      ItemTypes::LVL_S_Player)), lastOperation.extraData.toBool(), false);
         break;
     }
     case HistoryOperation::LEVELHISTORY_FLIP:
     {
         LevelData flippedData = lastOperation.data;
         flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
-                                        ItemTypes::LVL_Block |
-                                        ItemTypes::LVL_BGO |
-                                        ItemTypes::LVL_NPC |
-                                        ItemTypes::LVL_Door |
-                                        ItemTypes::LVL_PhysEnv |
-                                        ItemTypes::LVL_Player)), lastOperation.extraData.toBool(), false);
+                                        ItemTypes::LVL_S_Block |
+                                        ItemTypes::LVL_S_BGO |
+                                        ItemTypes::LVL_S_NPC |
+                                        ItemTypes::LVL_S_Door |
+                                        ItemTypes::LVL_S_PhysEnv |
+                                        ItemTypes::LVL_S_Player)), lastOperation.extraData.toBool(), false);
         break;
     }
     default:
@@ -3620,7 +3620,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 {
     QMap<int, LevelDoors> sortedEntranceDoors;
     QMap<int, LevelDoors> sortedExitDoors;
-    if(findingFilter & ItemTypes::LVL_Door){
+    if(findingFilter & ItemTypes::LVL_S_Door){
         foreach (LevelDoors door, toFind.doors) {
             if(door.isSetIn&&!door.isSetOut){
                 sortedEntranceDoors[door.array_id] = door;
@@ -3633,35 +3633,35 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
     QMap<int, LevelBlock> sortedBlock;
-    if(findingFilter & ItemTypes::LVL_Block){
+    if(findingFilter & ItemTypes::LVL_S_Block){
         foreach (LevelBlock block, toFind.blocks)
         {
             sortedBlock[block.array_id] = block;
         }
     }
     QMap<int, LevelBGO> sortedBGO;
-    if(findingFilter & ItemTypes::LVL_BGO){
+    if(findingFilter & ItemTypes::LVL_S_BGO){
         foreach (LevelBGO bgo, toFind.bgo)
         {
             sortedBGO[bgo.array_id] = bgo;
         }
     }
     QMap<int, LevelNPC> sortedNPC;
-    if(findingFilter & ItemTypes::LVL_NPC){
+    if(findingFilter & ItemTypes::LVL_S_NPC){
         foreach (LevelNPC npc, toFind.npc)
         {
             sortedNPC[npc.array_id] = npc;
         }
     }
     QMap<int, LevelPhysEnv> sortedWater;
-    if(findingFilter & ItemTypes::LVL_PhysEnv)
+    if(findingFilter & ItemTypes::LVL_S_PhysEnv)
     {
         foreach (LevelPhysEnv water, toFind.physez) {
             sortedWater[water.array_id] = water;
         }
     }
     QMap<int, PlayerPoint> sortedPlayers;
-    if(findingFilter & ItemTypes::LVL_Player){
+    if(findingFilter & ItemTypes::LVL_S_Player){
         foreach (PlayerPoint player, toFind.players) {
             sortedPlayers[player.id] = player;
         }
@@ -3678,35 +3678,35 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
     {
         if(unsortedItem->data(0).toString()=="Block")
         {
-            if(findingFilter & ItemTypes::LVL_Block){
+            if(findingFilter & ItemTypes::LVL_S_Block){
                 sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="BGO")
         {
-            if(findingFilter & ItemTypes::LVL_BGO){
+            if(findingFilter & ItemTypes::LVL_S_BGO){
                 sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="NPC")
         {
-            if(findingFilter & ItemTypes::LVL_NPC){
+            if(findingFilter & ItemTypes::LVL_S_NPC){
                 sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="Water")
         {
-            if(findingFilter & ItemTypes::LVL_PhysEnv){
+            if(findingFilter & ItemTypes::LVL_S_PhysEnv){
                 sortedGraphWater[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="Door_enter")
         {
-            if(findingFilter & ItemTypes::LVL_Door){
+            if(findingFilter & ItemTypes::LVL_S_Door){
                 sortedGraphDoorEntrance[unsortedItem->data(2).toInt()] = unsortedItem;
             }
 
@@ -3714,14 +3714,14 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         else
         if(unsortedItem->data(0).toString()=="Door_exit")
         {
-            if(findingFilter & ItemTypes::LVL_Door){
+            if(findingFilter & ItemTypes::LVL_S_Door){
                 sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="playerPoint")
         {
-            if(findingFilter & ItemTypes::LVL_Player){
+            if(findingFilter & ItemTypes::LVL_S_Player){
                 sortedGraphPlayers[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
@@ -3729,7 +3729,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
     QList<QGraphicsItem*> returnItems;
 
-    if(findingFilter & ItemTypes::LVL_Block){
+    if(findingFilter & ItemTypes::LVL_S_Block){
         foreach (QGraphicsItem* item, sortedGraphBlocks)
         {
 
@@ -3758,7 +3758,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
 
-    if(findingFilter & ItemTypes::LVL_BGO)
+    if(findingFilter & ItemTypes::LVL_S_BGO)
     {
         foreach (QGraphicsItem* item, sortedGraphBGO)
         {
@@ -3788,7 +3788,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
 
-    if(findingFilter & ItemTypes::LVL_NPC)
+    if(findingFilter & ItemTypes::LVL_S_NPC)
     {
         foreach (QGraphicsItem* item, sortedGraphNPC)
         {
@@ -3815,7 +3815,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
 
-    if(findingFilter & ItemTypes::LVL_PhysEnv)
+    if(findingFilter & ItemTypes::LVL_S_PhysEnv)
     {
         foreach (QGraphicsItem* item, sortedGraphWater)
         {
@@ -3842,7 +3842,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
 
-    if(findingFilter & ItemTypes::LVL_Door)
+    if(findingFilter & ItemTypes::LVL_S_Door)
     {
         foreach (QGraphicsItem* item, sortedGraphDoorEntrance)
         {
@@ -3893,7 +3893,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
-    if(findingFilter & ItemTypes::LVL_Player)
+    if(findingFilter & ItemTypes::LVL_S_Player)
     {
         foreach (QGraphicsItem* item, sortedGraphPlayers)
         {
