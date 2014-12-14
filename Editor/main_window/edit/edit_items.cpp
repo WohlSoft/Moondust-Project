@@ -43,6 +43,12 @@ void MainWindow::on_actionRotateLeft_triggered()
         activeLvlEditWin()->scene->rotateGroup(
                     activeLvlEditWin()->scene->selectedItems(), false   );
     }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->rotateGroup(
+                    activeWldEditWin()->scene->selectedItems(), false   );
+    }
 
 }
 
@@ -53,6 +59,12 @@ void MainWindow::on_actionRotateRight_triggered()
         activeLvlEditWin()->scene->rotateGroup(
                     activeLvlEditWin()->scene->selectedItems(), true  );
     }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->rotateGroup(
+                    activeWldEditWin()->scene->selectedItems(), true   );
+    }
 }
 
 void MainWindow::on_actionFlipHorizontal_triggered()
@@ -62,6 +74,13 @@ void MainWindow::on_actionFlipHorizontal_triggered()
         activeLvlEditWin()->scene->flipGroup(
                     activeLvlEditWin()->scene->selectedItems(), false  );
     }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->flipGroup(
+                    activeWldEditWin()->scene->selectedItems(), false  );
+    }
+
 }
 
 void MainWindow::on_actionFlipVertical_triggered()
@@ -70,6 +89,12 @@ void MainWindow::on_actionFlipVertical_triggered()
     {
         activeLvlEditWin()->scene->flipGroup(
                     activeLvlEditWin()->scene->selectedItems(), true  );
+    }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->flipGroup(
+                    activeWldEditWin()->scene->selectedItems(), true  );
     }
 }
 
