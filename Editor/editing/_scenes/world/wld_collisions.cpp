@@ -37,28 +37,28 @@ void WldScene::prepareCollisionBuffer()
         if(collisionCheckBuffer[i]==NULL)
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="YellowRectangle")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Space")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Space")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Square")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Square")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Line")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Line")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="LineDrawer")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="LineDrawer")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="WorldMapPoint")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="WorldMapPoint")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="SectionBorder")
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString().startsWith("BackGround"))
             kick=true;
 
         if(kick) {collisionCheckBuffer.removeAt(i); i--;}
@@ -81,8 +81,8 @@ bool WldScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
 
     //9 - width, 10 - height
     QRectF findZone = QRectF(items->first()->scenePos(),
-                      QSizeF(items->first()->data(9).toInt(),
-                            items->first()->data(10).toInt()) );
+                      QSizeF(items->first()->data(ITEM_WIDTH).toInt(),
+                            items->first()->data(ITEM_HEIGHT).toInt()) );
     //get Zone
     foreach(QGraphicsItem * it, *items)
     {
@@ -90,10 +90,10 @@ bool WldScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
         if(it->scenePos().x()-10 < findZone.left()) findZone.setLeft(it->scenePos().x());
         if(it->scenePos().y()-10 < findZone.top()) findZone.setTop(it->scenePos().y());
 
-        if(it->scenePos().x()+it->data(9).toInt() > findZone.right())
-            findZone.setRight(it->scenePos().x()+it->data(9).toInt());
-        if(it->scenePos().y()+it->data(10).toInt() > findZone.bottom())
-            findZone.setBottom(it->scenePos().y()+it->data(10).toInt());
+        if(it->scenePos().x()+it->data(ITEM_WIDTH).toInt() > findZone.right())
+            findZone.setRight(it->scenePos().x()+it->data(ITEM_WIDTH).toInt());
+        if(it->scenePos().y()+it->data(ITEM_HEIGHT).toInt() > findZone.bottom())
+            findZone.setBottom(it->scenePos().y()+it->data(ITEM_HEIGHT).toInt());
     }
 
     findZone.setLeft(findZone.left()-10);
@@ -149,7 +149,7 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
     else
         collisions = this->items(
                 QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
-                item->data(9).toReal()+20, item->data(10).toReal()+20 ),
+                item->data(ITEM_WIDTH).toReal()+20, item->data(ITEM_HEIGHT).toReal()+20 ),
                 Qt::IntersectsItemBoundingRect);
 
     //collidingItems(item, Qt::IntersectsItemBoundingRect);
@@ -161,29 +161,29 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
                  continue;
             if(!it->isVisible()) continue;
 
-            if(it->data(0).isNull())
+            if(it->data(ITEM_TYPE).isNull())
                  continue;
-            if(it->data(0).toString()=="YellowRectangle")
+            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
                 continue;
-            if(it->data(0).toString()=="Space")
+            if(it->data(ITEM_TYPE).toString()=="Space")
                 continue;
-            if(it->data(0).toString()=="Square")
+            if(it->data(ITEM_TYPE).toString()=="Square")
                 continue;
 
-            if(item->data(0).toString()!=it->data(0).toString()) continue;
+            if(item->data(ITEM_TYPE).toString()!=it->data(0).toString()) continue;
 
-            if(item->data(0).toString()=="SCENERY")
-                if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+            if(item->data(ITEM_TYPE).toString()=="SCENERY")
+                if(item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt()) continue;
 
             leftA = item->scenePos().x();
-            rightA = item->scenePos().x()+item->data(9).toLongLong();
+            rightA = item->scenePos().x()+item->data(ITEM_WIDTH).toLongLong();
             topA = item->scenePos().y();
-            bottomA = item->scenePos().y()+item->data(10).toLongLong();
+            bottomA = item->scenePos().y()+item->data(ITEM_HEIGHT).toLongLong();
 
             leftB = it->scenePos().x();
-            rightB = it->scenePos().x()+it->data(9).toLongLong();
+            rightB = it->scenePos().x()+it->data(ITEM_WIDTH).toLongLong();
             topB = it->scenePos().y();
-            bottomB = it->scenePos().y()+it->data(10).toLongLong();
+            bottomB = it->scenePos().y()+it->data(ITEM_HEIGHT).toLongLong();
 
             if( bottomA <= topB )
             { continue; }
@@ -206,11 +206,11 @@ QGraphicsItem * WldScene::itemCollidesCursor(QGraphicsItem * item)
             if (it == item)
                  continue;
             if( (
-                    (it->data(0).toString()=="TILE")||
-                    (it->data(0).toString()=="SCENERY")||
-                    (it->data(0).toString()=="PATH")||
-                    (it->data(0).toString()=="LEVEL")||
-                    (it->data(0).toString()=="MUSICBOX")
+                    (it->data(ITEM_TYPE).toString()=="TILE")||
+                    (it->data(ITEM_TYPE).toString()=="SCENERY")||
+                    (it->data(ITEM_TYPE).toString()=="PATH")||
+                    (it->data(ITEM_TYPE).toString()=="LEVEL")||
+                    (it->data(ITEM_TYPE).toString()=="MUSICBOX")
               )&&(it->isVisible() ) )
                 return it;
     }
