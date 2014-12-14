@@ -132,7 +132,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
                                     (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
 
     QString fileSMBX64="SMBX64 (1.3) Level file (*.lvl)";
-    QString fileSMBXany="SMBX 0..64 Level file (*.lvl) [choose version]";
+    QString fileSMBXany="SMBX0...64 Level file (*.lvl) [choose version]";
     QString filePGEX="Extended Level file (*.lvlx)";
 
     QString selectedFilter;
