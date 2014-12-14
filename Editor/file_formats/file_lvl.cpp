@@ -114,8 +114,11 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
     FileData.layers_array_id = 1;
     FileData.events_array_id = 1;
 
-    //set NULL to pointers in the Meta
-    FileData.metaData.script = NULL;
+
+
+    #ifdef PGE_EDITOR
+    FileData.metaData.script = NULL; //set NULL to pointers in the Meta
+    #endif
 
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
