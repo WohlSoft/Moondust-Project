@@ -176,3 +176,146 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
 }
 
 
+
+
+
+
+void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory)
+{
+    if(items.size()<1)
+        return;
+
+    //For history
+    //WorldData rotatedData;
+
+    QRect zone = QRect(0,0,0,0);
+    QRect itemZone = QRect(0,0,0,0);
+    //Calculate common width/height of group
+
+    zone.setX(qRound(items.first()->scenePos().x()));
+    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt()+1);
+    zone.setY(qRound(items.first()->scenePos().y()));
+    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt()+1);
+
+    foreach(QGraphicsItem * item, items)
+    {
+        QString t = item->data(ITEM_TYPE).toString();
+        if((t!="TILE") && (t!="SCENERY")&& (t!="PATH") && (t!="LEVEL")
+           && (t!="MUSICBOX") )
+            continue;
+
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
+
+        if(itemZone.left()<zone.left()) zone.setLeft(itemZone.left());
+        if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
+        if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
+        if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
+
+    //Apply flipping formula to each item
+    foreach(QGraphicsItem * item, items)
+    {
+        if(vertical)
+        {
+            qreal h2;//Opposit height (between bottom side of item and bottom side of zone)
+            h2 = qFabs( (item->scenePos().y() + item->data(ITEM_HEIGHT).toInt()) - zone.bottom());
+
+            item->setY( zone.top()+h2 );
+
+        }
+        else
+        {
+            qreal w2;//Opposit width (between right side of item and right side of zone)
+            w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
+
+            item->setX( zone.left()+w2 );
+        }
+        applyArrayForItem(item);
+        //if(recordHistory)
+            //collectDataFromItem(rotatedData, item);
+    }
+
+    //if(recordHistory){
+    //    addFlipHistory(rotatedData, vertical);
+    //}
+}
+
+void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory)
+{
+    if(items.size()==0)
+        return;
+
+    //For history
+    //WorldData rotatedData;
+
+    //Calculate common width/height of group
+    QRect zone = QRect(0,0,0,0);
+    QRect itemZone = QRect(0,0,0,0);
+    QRect targetRect = QRect(0,0,0,0);
+    //Calculate common width/height of group
+
+    zone.setX(qRound(items.first()->scenePos().x()));
+    zone.setWidth(items.first()->data(ITEM_WIDTH).toInt()+1);
+    zone.setY(qRound(items.first()->scenePos().y()));
+    zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt()+1);
+
+    foreach(QGraphicsItem * item, items)
+    {
+        QString t = item->data(ITEM_TYPE).toString();
+        if((t!="TILE") && (t!="SCENERY")&& (t!="PATH") && (t!="LEVEL")
+           && (t!="MUSICBOX") )
+            continue;
+
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
+
+        if(itemZone.left()<zone.left()) zone.setLeft(itemZone.left());
+        if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
+        if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
+        if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
+
+    //Apply rotate formula to each item
+    foreach(QGraphicsItem * item, items)
+    {
+        itemZone.setX(qRound(item->scenePos().x()));
+        itemZone.setWidth(item->data(ITEM_WIDTH).toInt()+1);
+        itemZone.setY(qRound(item->scenePos().y()));
+        itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
+
+        //Distacnces between sides
+        qreal dist_t = qFabs(zone.top()-itemZone.top());
+        qreal dist_l = qFabs(zone.left()-itemZone.left());
+        qreal dist_r = qFabs(itemZone.right()-zone.right());
+        qreal dist_b = qFabs(itemZone.bottom()-zone.bottom());
+
+        //If item located in one of quouters of zone rectangle
+
+        if(byClockwise)
+        {
+            targetRect.setX( zone.left() + dist_b );
+            targetRect.setY( zone.top() + dist_l );
+        }
+        else
+        {
+            targetRect.setX( zone.left() + dist_t );
+            targetRect.setY( zone.top() + dist_r );
+        }
+
+        item->setPos(targetRect.x(), targetRect.y());
+        applyArrayForItem(item);
+        //if(recordHistory)
+        //    collectDataFromItem(rotatedData, item);
+    }
+
+    //if(recordHistory){
+    //    addRotateHistory(rotatedData, byClockwise);
+    //}
+}
+
+
