@@ -284,9 +284,8 @@ void ItemTile::setAnimator(long aniID)
                 scene->animates_Tiles[aniID]->image().height()
                 );
 
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
-
+    this->setData(ITEM_WIDTH, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(ITEM_HEIGHT, QString::number(qRound(imageSize.height())) ); //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
     animatorID = aniID;
