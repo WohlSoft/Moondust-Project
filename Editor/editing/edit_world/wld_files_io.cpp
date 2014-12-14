@@ -83,21 +83,21 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     setAutoUpdateTimer(31);
 }
 
+namespace wld_file_io
+{
+    bool isSMBX64limit=false;
+    bool choiceVersionID=false;
+}
 
 bool WorldEdit::save(bool savOptionsDialog)
 {
     if (isUntitled) {
         return saveAs(savOptionsDialog);
     } else {
+        wld_file_io::choiceVersionID=false;
         return saveFile(curFile);
     }
 }
-
-namespace wld_file_io
-{
-    bool isSMBX64limit=false;
-}
-
 
 bool WorldEdit::saveAs(bool savOptionsDialog)
 {
@@ -128,6 +128,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
                                     (WldData.EpisodeTitle.isEmpty()?curFile:util::filePath(WldData.EpisodeTitle)):curFile;
 
     QString fileSMBX64="SMBX64 (1.3) World map file (*.wld)";
+    QString fileSMBXany="SMBX0...64 Level file (*.wld) [choose version]";
     QString filePGEX="Extended World map file (*.wldx)";
 
     QString selectedFilter;
@@ -138,6 +139,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
 
     QString filter =
             fileSMBX64+";;"+
+            fileSMBXany+";;"+
             filePGEX;
 
     bool ret;
@@ -145,6 +147,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     RetrySave:
 
     isSMBX64limit=false;
+    choiceVersionID=false;
     isNotDone=true;
     while(isNotDone)
     {
@@ -152,6 +155,9 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
 
         if (fileName.isEmpty())
             return false;
+
+        if(selectedFilter==fileSMBXany)
+            choiceVersionID=true;
 
         if( (!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)) )
         {
@@ -204,6 +210,18 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         //SMBX64 Standard check
 
         isSMBX64limit=false;
+
+        int file_format=64;
+        if(choiceVersionID)
+        {
+            QApplication::restoreOverrideCursor();
+            bool ok=true;
+            file_format = QInputDialog::getInt(this, tr("SMBX file version"),
+                                  tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+            if(!ok) return false;
+            QApplication::setOverrideCursor(Qt::WaitCursor);
+        }
+
         //Tiles limit
         if(WldData.tiles.size()>20000)
         {

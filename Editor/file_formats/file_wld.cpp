@@ -163,10 +163,13 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             goto badfile;
         else FileData.nocharacter4 = SMBX64::wBoolR(line);
 
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Link
-            goto badfile;
-        else FileData.nocharacter5 = SMBX64::wBoolR(line);
+        if(file_format >= 56)
+        {
+            str_count++;line = in.readLine();
+            if( SMBX64::wBool(line) ) //Edisode without Link
+                goto badfile;
+            else FileData.nocharacter5 = SMBX64::wBoolR(line);
+        }
 
         //Convert into the bool array
         FileData.nocharacter<<
@@ -175,11 +178,9 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
              FileData.nocharacter3<<
              FileData.nocharacter4<<
              FileData.nocharacter5;
-
-
     }
 
-    if(file_format >= 10)
+    if(file_format >= 3)
     {
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Autostart level
@@ -200,12 +201,12 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
     if(file_format >= 20)
     {
         str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //Stars quantity
+        if( SMBX64::Int(line) ) //Stars number
             goto badfile;
         else FileData.stars = line.toInt();
     }
 
-    if(file_format >= 10)
+    if(file_format >= 17)
     {
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Author 1
@@ -375,7 +376,7 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             goto badfile;
         else lvlitem.right_exit = line.toInt();
 
-        if(file_format >= 10)
+        if(file_format >= 4)
         {
             str_count++;line = in.readLine();
             if(SMBX64::Int(line)) //Enter via Level's warp
@@ -383,7 +384,7 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             else lvlitem.entertowarp = line.toInt();
         }
 
-        if(file_format >= 28)
+        if(file_format >= 22)
         {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Always Visible
