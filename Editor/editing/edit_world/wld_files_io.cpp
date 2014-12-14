@@ -290,7 +290,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         }
         QTextStream out(&file);
         WldData.smbx64strict = true; //Enable SMBX64 standard strict mode
-        out << FileFormats::WriteSMBX64WldFile(WldData);
+        out << FileFormats::WriteSMBX64WldFile(WldData, file_format);
         file.close();
 
         //save additional meta data

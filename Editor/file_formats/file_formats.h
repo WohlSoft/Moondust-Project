@@ -188,7 +188,7 @@ public:
 
     // SMBX64 LVL File
     static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath=""); //!< Parse SMBX1-SMBX64 level
-    static QString WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX64 level raw data
+    static QString WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
     // PGE Extended Level File
     static LevelData ReadExtendedLvlFile(QString RawData, QString filePath=""); //!< Parse PGE-X level file
@@ -215,7 +215,7 @@ public:
 
     // SMBX64 WLD File
     static WorldData ReadSMBX64WldFile(QString RawData, QString filePath); //!< Parse SMBX1-SMBX64 world
-    static QString WriteSMBX64WldFile(WorldData FileData);  //!< Generate SMBX64 world raw data
+    static QString WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
 
     // PGE Extended World map File
     static WorldData ReadExtendedWldFile(QString RawData, QString filePath); //!< Parse PGE-X world file
