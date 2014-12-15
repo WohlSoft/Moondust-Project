@@ -137,7 +137,6 @@ SOURCES += main.cpp\
     common_features/themes.cpp \
     common_features/timecounter.cpp \
     common_features/util.cpp \
-    common_features/resizer/cornergrabber.cpp \
     common_features/resizer/item_resizer.cpp \
     data_configs/conf_lvl_bgo.cpp \
     data_configs/conf_lvl_bkgrd.cpp \
@@ -334,7 +333,8 @@ SOURCES += main.cpp\
     editing/_scenes/world/resizers/wld_resizer_img_shoot.cpp \
     editing/_scenes/world/data_manager/wld_custom_gfx.cpp \
     file_formats/file_sav.cpp \
-    file_formats/save_filedata.cpp
+    file_formats/save_filedata.cpp \
+    common_features/resizer/corner_grabber.cpp
     
 
 HEADERS  += defines.h \
