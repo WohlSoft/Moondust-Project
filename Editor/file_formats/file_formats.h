@@ -31,6 +31,7 @@
 #include "lvl_filedata.h"
 #include "npc_filedata.h"
 #include "wld_filedata.h"
+#include "save_filedata.h"
 
 #include "../data_configs/obj_npc.h"
 
@@ -227,6 +228,13 @@ public:
     static WorldPaths dummyWldPath();
     static WorldLevels dummyWldLevel();
     static WorldMusic dummyWldMusic();
+
+    /****************************Save of game file********************************/
+    static GamesaveData ReadSMBX64SavFile(QString RawData, QString filePath);  //!< Parse SMBX1-SMBX64 game save
+    static GamesaveData dummySaveDataArray();
+
+    //Save Data
+    static saveCharacterState dummySavCharacterState();
 
 
     /******************************NPC.txt file***********************************/
