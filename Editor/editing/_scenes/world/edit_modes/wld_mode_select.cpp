@@ -46,14 +46,14 @@ void WLD_ModeSelect::set()
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
+    s->resetCursor();
+    s->resetResizers();
+    s->unserPointSelector();
+
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
     s->DrawMode=false;
     s->disableMoveItems=false;
-
-    s->resetCursor();
-    s->resetResizers();
-    s->unserPointSelector();
 
     s->_viewPort->setInteractive(true);
     s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));

@@ -34,14 +34,15 @@ void LVL_ModeHand::set()
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    s->EraserEnabled=false;
-    s->PasteFromBuffer=false;
-    s->DrawMode=false;
-    s->disableMoveItems=false;
 
     s->clearSelection();
     s->resetCursor();
     s->resetResizers();
+
+    s->EraserEnabled=false;
+    s->PasteFromBuffer=false;
+    s->DrawMode=false;
+    s->disableMoveItems=false;
 
     s->_viewPort->setCursor(Qt::ArrowCursor);
     s->_viewPort->setInteractive(false);

@@ -65,6 +65,7 @@ void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         unsetCursor();
         ungrabMouse();
         this->setSelected(false);
+        mouseEvent->accept();
         return;
     }
 
