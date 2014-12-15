@@ -46,13 +46,13 @@ void LVL_ModeFill::set()
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
+    s->clearSelection();
+    s->resetResizers();
+
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
     s->DrawMode=true;
     s->disableMoveItems=false;
-
-    s->clearSelection();
-    s->resetResizers();
 
     s->_viewPort->setInteractive(true);
     s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));

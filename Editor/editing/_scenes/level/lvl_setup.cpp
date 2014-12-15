@@ -90,9 +90,8 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     case MODE_Fill:
         switchMode("Fill");
         break;
+
     case MODE_Selecting:
-
-
     default:
         switchMode("Select");
         break;
@@ -103,12 +102,14 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
 void LvlScene::switchMode(QString title)
 {
+    qDebug() << "Switching mode " << title;
     for(int i=0; i<EditModes.size(); i++)
     {
         if(EditModes[i]->name()==title)
         {
             CurrentMode = EditModes[i];
             CurrentMode->set();
+            qDebug() << "mode " << title << "switched!";
             break;
         }
     }

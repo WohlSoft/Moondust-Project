@@ -35,13 +35,13 @@ void LVL_ModeResize::set()
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
+    s->clearSelection();
+    s->resetCursor();
+
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
     s->DrawMode=true;
     s->disableMoveItems=true;
-
-    s->clearSelection();
-    s->resetCursor();
 
     s->_viewPort->setInteractive(true);
     s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));

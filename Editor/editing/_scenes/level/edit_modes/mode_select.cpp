@@ -47,13 +47,13 @@ void LVL_ModeSelect::set()
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
+    s->resetCursor();
+    s->resetResizers();
+
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
     s->DrawMode=false;
     s->disableMoveItems=false;
-
-    s->resetCursor();
-    s->resetResizers();
 
     s->_viewPort->setInteractive(true);
     s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
