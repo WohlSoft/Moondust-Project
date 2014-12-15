@@ -46,6 +46,7 @@ public:
     qreal mouseDownY;
 
     enum {kMouseReleased=0, kMouseDown, kMouseMoving}; ///< define the mouse states
+    void setSize(qreal width, qreal height);
 
 private:
 
