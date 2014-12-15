@@ -210,6 +210,17 @@ public:
     qlonglong last_level_arrayID;
     qlonglong last_musicbox_arrayID;
 
+    //Defining indexes for data values of items
+    #define ITEM_TYPE                    0 //String
+    #define ITEM_ID                      1 //int
+    #define ITEM_ARRAY_ID                2 //int
+    #define ITEM_BLOCK_IS_SIZABLE        3 //bool
+    #define ITEM_NPC_BLOCK_COLLISION     7 //bool
+    #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
+    #define ITEM_WIDTH                   9 //int
+    #define ITEM_HEIGHT                  10 //int
+    #define ITEM_IS_CURSOR               25 //bool
+
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
@@ -397,6 +408,9 @@ public:
     void removeSelectedWldItems();
     void removeWldItems(QList<QGraphicsItem * > items, bool globalHistory=false);
     void removeWldItem(QGraphicsItem * item, bool globalHistory=false);
+
+    void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory=true);
+    void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory=true);
 
 public slots:
     void selectionChanged();

@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
+#include <common_features/mainwinconnect.h>
 
-#include "item_tile.h"
+#include "item_scene.h"
 
-ItemTile::ItemTile(QGraphicsItem *parent)
+ItemScene::ItemScene(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
     gridSize=32;
@@ -38,14 +38,19 @@ ItemTile::ItemTile(QGraphicsItem *parent)
 }
 
 
-ItemTile::~ItemTile()
+ItemScene::~ItemScene()
 {
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
 }
 
-void ItemTile::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void ItemScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
+    {
+        QGraphicsItem::mousePressEvent(mouseEvent); return;
+    }
+
     if(scene->DrawMode)
     {
         unsetCursor();
@@ -71,7 +76,7 @@ void ItemTile::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     QGraphicsItem::mousePressEvent(mouseEvent);
 }
 
-void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void ItemScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     int multimouse=0;
     bool callContext=false;
@@ -100,11 +105,10 @@ void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
 
-
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext)&&(!scene->contextMenuOpened))
     {
-        if((!scene->lock_tile)&&(!scene->DrawMode)&&(!isLocked))
+        if((!scene->lock_scene)&&(!scene->DrawMode)&&(!isLocked))
         {
             scene->contextMenuOpened = true; //bug protector
             //Remove selection from non-bgo items
@@ -147,27 +151,26 @@ void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(selected==remove)
             {
-               scene->removeSelectedWldItems();
+                scene->removeSelectedWldItems();
             }
         }
-
     }
 }
 
-void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemScene::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     QGraphicsItem::contextMenuEvent(event);
 }
 
 
 ///////////////////MainArray functions/////////////////////////////
-//void ItemTile::setLayer(QString layer)
+//void ItemScene::setLayer(QString layer)
 //{
 //    foreach(LevelLayers lr, scene->WldData->layers)
 //    {
 //        if(lr.name==layer)
 //        {
-//            tileData.layer = layer;
+//            sceneData.layer = layer;
 //            this->setVisible(!lr.hidden);
 //            arrayApply();
 //        break;
@@ -175,15 +178,16 @@ void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
-void ItemTile::arrayApply()
+void ItemScene::arrayApply()
 {
     bool found=false;
-    tileData.x = qRound(this->scenePos().x());
-    tileData.y = qRound(this->scenePos().y());
 
-    if(tileData.index < (unsigned int)scene->WldData->tiles.size())
+    sceneData.x = qRound(this->scenePos().x());
+    sceneData.y = qRound(this->scenePos().y());
+
+    if(sceneData.index < (unsigned int)scene->WldData->scenery.size())
     { //Check index
-        if(tileData.array_id == scene->WldData->tiles[tileData.index].array_id)
+        if(sceneData.array_id == scene->WldData->scenery[sceneData.index].array_id)
         {
             found=true;
         }
@@ -192,26 +196,26 @@ void ItemTile::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->WldData->tiles[tileData.index] = tileData; //apply current tileData
+        scene->WldData->scenery[sceneData.index] = sceneData; //apply current sceneData
     }
     else
-    for(int i=0; i<scene->WldData->tiles.size(); i++)
+    for(int i=0; i<scene->WldData->scenery.size(); i++)
     { //after find it into array
-        if(scene->WldData->tiles[i].array_id == tileData.array_id)
+        if(scene->WldData->scenery[i].array_id == sceneData.array_id)
         {
-            tileData.index = i;
-            scene->WldData->tiles[i] = tileData;
+            sceneData.index = i;
+            scene->WldData->scenery[i] = sceneData;
             break;
         }
     }
 }
 
-void ItemTile::removeFromArray()
+void ItemScene::removeFromArray()
 {
     bool found=false;
-    if(tileData.index < (unsigned int)scene->WldData->tiles.size())
+    if(sceneData.index < (unsigned int)scene->WldData->scenery.size())
     { //Check index
-        if(tileData.array_id == scene->WldData->tiles[tileData.index].array_id)
+        if(sceneData.array_id == scene->WldData->scenery[sceneData.index].array_id)
         {
             found=true;
         }
@@ -219,38 +223,38 @@ void ItemTile::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->tiles.remove(tileData.index);
+        scene->WldData->scenery.remove(sceneData.index);
     }
     else
-    for(int i=0; i<scene->WldData->tiles.size(); i++)
+    for(int i=0; i<scene->WldData->scenery.size(); i++)
     {
-        if(scene->WldData->tiles[i].array_id == tileData.array_id)
+        if(scene->WldData->scenery[i].array_id == sceneData.array_id)
         {
-            scene->WldData->tiles.remove(i); break;
+            scene->WldData->scenery.remove(i); break;
         }
     }
 }
 
-void ItemTile::setTileData(WorldTiles inD)
+void ItemScene::setSceneData(WorldScenery inD)
 {
-    tileData = inD;
+    sceneData = inD;
 }
 
 
-QRectF ItemTile::boundingRect() const
+QRectF ItemScene::boundingRect() const
 {
     return imageSize;
 }
 
-void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void ItemScene::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     if(animatorID<0)
     {
         painter->drawRect(QRect(0,0,1,1));
         return;
     }
-    if(scene->animates_Tiles.size()>animatorID)
-        painter->drawPixmap(imageSize, scene->animates_Tiles[animatorID]->image(), imageSize);
+    if(scene->animates_Scenery.size()>animatorID)
+        painter->drawPixmap(imageSize, scene->animates_Scenery[animatorID]->image(), imageSize);
     else
         painter->drawRect(QRect(0,0,32,32));
 
@@ -258,17 +262,17 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
-        painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
+        painter->setPen(QPen(QBrush(Qt::yellow), 2, Qt::DotLine));
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
     }
 }
 
-void ItemTile::setContextMenu(QMenu &menu)
+void ItemScene::setContextMenu(QMenu &menu)
 {
     ItemMenu = &menu;
 }
 
-void ItemTile::setScenePoint(WldScene *theScene)
+void ItemScene::setScenePoint(WldScene *theScene)
 {
     scene = theScene;
 }
@@ -276,18 +280,18 @@ void ItemTile::setScenePoint(WldScene *theScene)
 
 ////////////////Animation///////////////////
 
-void ItemTile::setAnimator(long aniID)
+void ItemScene::setAnimator(long aniID)
 {
-    if(aniID<scene->animates_Tiles.size())
+    if(aniID<scene->animates_Scenery.size())
     imageSize = QRectF(0,0,
-                scene->animates_Tiles[aniID]->image().width(),
-                scene->animates_Tiles[aniID]->image().height()
+                scene->animates_Scenery[aniID]->image().width(),
+                scene->animates_Scenery[aniID]->image().height()
                 );
 
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+    this->setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
+    this->setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
 
-    //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
+    //WriteToLog(QtDebugMsg, QString("Scenery Animator ID: %1").arg(aniID));
 
     animatorID = aniID;
 }

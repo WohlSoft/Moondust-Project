@@ -33,8 +33,9 @@ ItemMusic::ItemMusic(QGraphicsItem *parent)
     musicTitle = "";
     scene=NULL;
     imageSize = QRectF(0,0,32,32);
-    this->setData(9, QString::number(32));
-    this->setData(10, QString::number(32));
+
+    this->setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
+    this->setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
 
     mouseLeft=false;
     mouseMid=false;

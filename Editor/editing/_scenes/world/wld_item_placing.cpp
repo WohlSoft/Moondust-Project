@@ -20,11 +20,11 @@
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"
-#include "item_tile.h"
-#include "item_scene.h"
-#include "item_path.h"
-#include "item_level.h"
-#include "item_music.h"
+#include "items/item_tile.h"
+#include "items/item_scene.h"
+#include "items/item_path.h"
+#include "items/item_level.h"
+#include "items/item_music.h"
 #include "wld_item_placing.h"
 
 /*

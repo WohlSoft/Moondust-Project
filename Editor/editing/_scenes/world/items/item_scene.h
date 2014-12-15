@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ItemTile_H
-#define ItemTile_H
+#ifndef ItemScene_H
+#define ItemScene_H
 
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -34,17 +34,17 @@
 
 #include <file_formats/wld_filedata.h>
 
-#include "wld_scene.h"
+#include "../wld_scene.h"
 
-class ItemTile : public QObject, public QGraphicsItem
+class ItemScene : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    ItemTile(QGraphicsItem *parent=0);
-    ~ItemTile();
+    ItemScene(QGraphicsItem *parent=0);
+    ~ItemScene();
 
-    void setTileData(WorldTiles inD);
+    void setSceneData(WorldScenery inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(WldScene *theScene);
 
@@ -61,7 +61,7 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    WorldTiles tileData;
+    WorldScenery sceneData;
 
     int gridSize;
     int gridOffsetX;
@@ -88,4 +88,4 @@ private:
 
 };
 
-#endif // ItemTile_H
+#endif // ItemScene_H

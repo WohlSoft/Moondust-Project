@@ -144,13 +144,13 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
     if(item==NULL)
         return NULL;
 
-    if(item->data(0).toString()=="YellowRectangle")
+    if(item->data(ITEM_TYPE).toString()=="YellowRectangle")
         return NULL;
-    if(item->data(0).toString()=="Water")
+    if(item->data(ITEM_TYPE).toString()=="Water")
         return NULL;
-    if(item->data(0).toString()=="Door_exit")
+    if(item->data(ITEM_TYPE).toString()=="Door_exit")
         return NULL;
-    if(item->data(0).toString()=="Door_enter")
+    if(item->data(ITEM_TYPE).toString()=="Door_enter")
         return NULL;
 
     QList<QGraphicsItem *> collisions;
@@ -165,7 +165,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
     else
         collisions = this->items(
                 QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
-                item->data(9).toReal()+20, item->data(10).toReal()+20 ),
+                item->data(ITEM_WIDTH).toReal()+20, item->data(ITEM_HEIGHT).toReal()+20 ),
                 Qt::IntersectsItemBoundingRect);
 
 
@@ -187,47 +187,48 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
                  continue;
             if(!it->isVisible())
                 continue;
-            if(it->data(0).isNull())
+            if(it->data(ITEM_TYPE).isNull())
                  continue;
-            if(it->data(0).toString()=="YellowRectangle")
+            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
                 continue;
-            if(it->data(0).toString()=="Space")
+            if(it->data(ITEM_TYPE).toString()=="Space")
                 continue;
-            if(it->data(0).toString()=="Square")
+            if(it->data(ITEM_TYPE).toString()=="Square")
                 continue;
-            if(it->data(0).toString()=="SectionBorder")
+            if(it->data(ITEM_TYPE).toString()=="SectionBorder")
                 continue;
-            if(it->data(0).toString()=="PlayerPoint")
+            if(it->data(ITEM_TYPE).toString()=="PlayerPoint")
                 continue;
-            if(it->data(0).toString().startsWith("BackGround"))
+            if(it->data(ITEM_TYPE).toString().startsWith("BackGround"))
                 continue;
 
             if(
-               (it->data(0).toString()!="Block")&&
-               (it->data(0).toString()!="BGO")&&
-               (it->data(0).toString()!="NPC")
+               (it->data(ITEM_TYPE).toString()!="Block")&&
+               (it->data(ITEM_TYPE).toString()!="BGO")&&
+               (it->data(ITEM_TYPE).toString()!="NPC")
                     ) continue;
 
-          if(item->data(0).toString()=="NPC")
+          if(item->data(ITEM_TYPE).toString()=="NPC")
           {
-              if( item->data(8).toBool() ) // Disabled collisions with other NPCs
+              if( item->data(ITEM_NPC_NO_NPC_COLLISION).toBool() ) // Disabled collisions with other NPCs
               {
-                  if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+                  if(item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt()) continue;
               }
               else
               {
                   if(
                           (
-                           (it->data(0).toString()=="Block")
-                           &&(!item->data(7).toBool()) //BlockCollision
+                           (it->data(ITEM_TYPE).toString()=="Block")
+                           &&(!item->data(ITEM_NPC_BLOCK_COLLISION).toBool()) //BlockCollision
                            )
                           ||
                           (
-                           (it->data(0).toString()=="NPC")
-                           &&(it->data(8).toBool()) //NpcCollision
+                           (it->data(ITEM_TYPE).toString()=="NPC")
+                           &&(it->data(ITEM_NPC_NO_NPC_COLLISION).toBool()) //NpcCollision
                            )
                           ||
-                          ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
+                          ((it->data(ITEM_TYPE).toString()!="NPC")
+                           &&(it->data(ITEM_TYPE).toString()!="Block"))
                      )
                             continue;
               }
@@ -238,18 +239,19 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
           {
               if(
                       (
-                       (it->data(0).toString()=="NPC")
-                       &&(!it->data(7).toBool()) //BlockCollision
+                       (it->data(ITEM_TYPE).toString()=="NPC")
+                       &&(!it->data(ITEM_NPC_BLOCK_COLLISION).toBool()) //BlockCollision
                        ) ||
-                      ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
+                      ((it->data(ITEM_TYPE).toString()!="NPC")
+                       &&(it->data(ITEM_TYPE).toString()!="Block"))
                  )
                         continue;
 
           }
           else
-                if(item->data(0).toString()!=it->data(0).toString()) continue;
+                if(item->data(ITEM_TYPE).toString()!=it->data(ITEM_TYPE).toString()) continue;
 
-          if(item->data(3).toString()=="sizable")
+          if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable")
           {   // Don't collide with sizable block
               #ifdef _DEBUG_
               WriteToLog(QtDebugMsg, QString("sizable block") );
@@ -257,20 +259,20 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
               continue;
           }
 
-          if(it->data(3).toString()=="sizable") continue; // Don't collide with sizable block
+          if(it->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") continue; // Don't collide with sizable block
 
-          if(item->data(0).toString()=="BGO")
-            if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+          if(item->data(ITEM_TYPE).toString()=="BGO")
+            if(item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt()) continue;
 
           leftA = item->scenePos().x();
-          rightA = item->scenePos().x()+item->data(9).toReal();
+          rightA = item->scenePos().x()+item->data(ITEM_WIDTH).toReal();
           topA = item->scenePos().y();
-          bottomA = item->scenePos().y()+item->data(10).toReal();
+          bottomA = item->scenePos().y()+item->data(ITEM_HEIGHT).toReal();
 
           leftB = it->scenePos().x();
-          rightB = it->scenePos().x()+it->data(9).toReal();
+          rightB = it->scenePos().x()+it->data(ITEM_WIDTH).toReal();
           topB = it->scenePos().y();
-          bottomB = it->scenePos().y()+it->data(10).toReal();
+          bottomB = it->scenePos().y()+it->data(ITEM_HEIGHT).toReal();
 
           #ifdef _DEBUG_
           WriteToLog(QtDebugMsg, QString("Collision check -> Item1 L%1 | T%2 | R%3 |  B%4")
@@ -279,9 +281,9 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
                      .arg(leftB).arg(topB).arg(rightB).arg(bottomB));
 
           WriteToLog(QtDebugMsg, QString("Collision check -> Item1 W%1, H%2")
-                     .arg(item->data(9).toReal()).arg(item->data(10).toReal()));
+                     .arg(item->data(ITEM_WIDTH).toReal()).arg(item->data(ITEM_HEIGHT).toReal()));
           WriteToLog(QtDebugMsg, QString("Collision check -> Item2 W%1, H%2")
-                     .arg(it->data(9).toReal()).arg(it->data(10).toReal()));
+                     .arg(it->data(ITEM_WIDTH).toReal()).arg(it->data(ITEM_HEIGHT).toReal()));
 
           WriteToLog(QtDebugMsg, QString("Collision check -> B%1 <= T%2 -> %3")
                      .arg(bottomA).arg(topB).arg(bottomA <= topB));

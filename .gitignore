@@ -46,3 +46,6 @@ editor_*.qm
 #unpacked libraries sources
 /_Libs/_sources/SDL/*
 !/_Libs/_sources
+
+#Temp files of LibreOffice
+.~lock.*

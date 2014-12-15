@@ -31,8 +31,8 @@ ItemPoint::ItemPoint(QGraphicsItem *parent)
     animatorID=-1;
     scene=NULL;
     imageSize = QRectF(0,0,32,32);
-    this->setData(9, QString::number(32));
-    this->setData(10, QString::number(32));
+    this->setData(ITEM_WIDTH, QString::number(32));
+    this->setData(ITEM_HEIGHT, QString::number(32));
 
     mouseLeft=false;
     mouseMid=false;

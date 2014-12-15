@@ -23,11 +23,11 @@
 #include "wld_mode_square.h"
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
-#include "../item_tile.h"
-#include "../item_scene.h"
-#include "../item_path.h"
-#include "../item_level.h"
-#include "../item_music.h"
+#include "../items/item_tile.h"
+#include "../items/item_scene.h"
+#include "../items/item_path.h"
+#include "../items/item_level.h"
+#include "../items/item_music.h"
 
 WLD_ModeSquare::WLD_ModeSquare(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Square", parentScene, parent)

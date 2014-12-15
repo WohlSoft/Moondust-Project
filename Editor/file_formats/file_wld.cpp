@@ -163,10 +163,13 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             goto badfile;
         else FileData.nocharacter4 = SMBX64::wBoolR(line);
 
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Link
-            goto badfile;
-        else FileData.nocharacter5 = SMBX64::wBoolR(line);
+        if(file_format >= 56)
+        {
+            str_count++;line = in.readLine();
+            if( SMBX64::wBool(line) ) //Edisode without Link
+                goto badfile;
+            else FileData.nocharacter5 = SMBX64::wBoolR(line);
+        }
 
         //Convert into the bool array
         FileData.nocharacter<<
@@ -175,11 +178,9 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
              FileData.nocharacter3<<
              FileData.nocharacter4<<
              FileData.nocharacter5;
-
-
     }
 
-    if(file_format >= 10)
+    if(file_format >= 3)
     {
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Autostart level
@@ -200,12 +201,12 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
     if(file_format >= 20)
     {
         str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //Stars quantity
+        if( SMBX64::Int(line) ) //Stars number
             goto badfile;
         else FileData.stars = line.toInt();
     }
 
-    if(file_format >= 10)
+    if(file_format >= 17)
     {
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Author 1
@@ -375,7 +376,7 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             goto badfile;
         else lvlitem.right_exit = line.toInt();
 
-        if(file_format >= 10)
+        if(file_format >= 4)
         {
             str_count++;line = in.readLine();
             if(SMBX64::Int(line)) //Enter via Level's warp
@@ -383,7 +384,7 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
             else lvlitem.entertowarp = line.toInt();
         }
 
-        if(file_format >= 28)
+        if(file_format >= 22)
         {
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Always Visible
@@ -476,12 +477,19 @@ return FileData;
 //*********************************************************
 
 
-QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
+QString FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
 {
     QString TextData;
     int i;
 
-    TextData += SMBX64::IntS(64);                     //Format version 64
+    //Prevent out of range: 0....64
+    if(file_format<0) file_format = 0;
+    else
+    if(file_format>64) file_format = 64;
+
+
+
+    TextData += SMBX64::IntS(file_format);              //Format version
     TextData += SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title
 
     FileData.nocharacter1 = (FileData.nocharacter.size()>0)?FileData.nocharacter[0]:false;
@@ -490,15 +498,23 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
     FileData.nocharacter4 = (FileData.nocharacter.size()>3)?FileData.nocharacter[3]:false;
     FileData.nocharacter5 = (FileData.nocharacter.size()>4)?FileData.nocharacter[4]:false;
 
-    TextData += SMBX64::BoolS(FileData.nocharacter1);
-    TextData += SMBX64::BoolS(FileData.nocharacter2);
-    TextData += SMBX64::BoolS(FileData.nocharacter3);
-    TextData += SMBX64::BoolS(FileData.nocharacter4);
-    TextData += SMBX64::BoolS(FileData.nocharacter5);
-    TextData += SMBX64::qStrS(FileData.IntroLevel_file);
-    TextData += SMBX64::BoolS(FileData.HubStyledWorld);
-    TextData += SMBX64::BoolS(FileData.restartlevel);
-    TextData += SMBX64::IntS(FileData.stars);
+    if(file_format>=55)
+    {
+        TextData += SMBX64::BoolS(FileData.nocharacter1);
+        TextData += SMBX64::BoolS(FileData.nocharacter2);
+        TextData += SMBX64::BoolS(FileData.nocharacter3);
+        TextData += SMBX64::BoolS(FileData.nocharacter4);
+        if(file_format>=56)
+            TextData += SMBX64::BoolS(FileData.nocharacter5);
+    }
+    if(file_format>=3)
+    {
+        TextData += SMBX64::qStrS(FileData.IntroLevel_file);
+        TextData += SMBX64::BoolS(FileData.HubStyledWorld);
+        TextData += SMBX64::BoolS(FileData.restartlevel);
+    }
+    if(file_format>=20)
+        TextData += SMBX64::IntS(FileData.stars);
 
     QStringList credits = FileData.authors.split(QChar('\n'));
     FileData.author1 = (credits.size()>0) ? credits[0] : "";
@@ -507,11 +523,14 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
     FileData.author4 = (credits.size()>3) ? credits[3] : "";
     FileData.author5 = (credits.size()>4) ? credits[4] : "";
 
-    TextData += SMBX64::qStrS(FileData.author1);
-    TextData += SMBX64::qStrS(FileData.author2);
-    TextData += SMBX64::qStrS(FileData.author3);
-    TextData += SMBX64::qStrS(FileData.author4);
-    TextData += SMBX64::qStrS(FileData.author5);
+    if(file_format>=17)
+    {
+        TextData += SMBX64::qStrS(FileData.author1);
+        TextData += SMBX64::qStrS(FileData.author2);
+        TextData += SMBX64::qStrS(FileData.author3);
+        TextData += SMBX64::qStrS(FileData.author4);
+        TextData += SMBX64::qStrS(FileData.author5);
+    }
 
     for(i=0;i<FileData.tiles.size();i++)
     {
@@ -548,13 +567,17 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
         TextData += SMBX64::IntS(FileData.levels[i].left_exit);
         TextData += SMBX64::IntS(FileData.levels[i].bottom_exit);
         TextData += SMBX64::IntS(FileData.levels[i].right_exit);
-        TextData += SMBX64::IntS(FileData.levels[i].entertowarp);
-        TextData += SMBX64::BoolS(FileData.levels[i].alwaysVisible);
-        TextData += SMBX64::BoolS(FileData.levels[i].pathbg);
-        TextData += SMBX64::BoolS(FileData.levels[i].gamestart);
-        TextData += SMBX64::IntS(FileData.levels[i].gotox);
-        TextData += SMBX64::IntS(FileData.levels[i].gotoy);
-        TextData += SMBX64::BoolS(FileData.levels[i].bigpathbg);
+        if(file_format>=4)
+            TextData += SMBX64::IntS(FileData.levels[i].entertowarp);
+        if(file_format>=22)
+        {
+            TextData += SMBX64::BoolS(FileData.levels[i].alwaysVisible);
+            TextData += SMBX64::BoolS(FileData.levels[i].pathbg);
+            TextData += SMBX64::BoolS(FileData.levels[i].gamestart);
+            TextData += SMBX64::IntS(FileData.levels[i].gotox);
+            TextData += SMBX64::IntS(FileData.levels[i].gotoy);
+            TextData += SMBX64::BoolS(FileData.levels[i].bigpathbg);
+        }
     }
     TextData += "\"next\"\n";//Separator
 
