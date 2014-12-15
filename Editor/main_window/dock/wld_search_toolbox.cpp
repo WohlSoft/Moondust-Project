@@ -17,11 +17,11 @@
  */
 
 #include <editing/_dialogs/itemselectdialog.h>
-#include <editing/_scenes/world/item_level.h>
-#include <editing/_scenes/world/item_music.h>
-#include <editing/_scenes/world/item_path.h>
-#include <editing/_scenes/world/item_scene.h>
-#include <editing/_scenes/world/item_tile.h>
+#include <editing/_scenes/world/items/item_level.h>
+#include <editing/_scenes/world/items/item_music.h>
+#include <editing/_scenes/world/items/item_path.h>
+#include <editing/_scenes/world/items/item_scene.h>
+#include <editing/_scenes/world/items/item_tile.h>
 #include <editing/_dialogs/levelfilelist.h>
 #include <file_formats/wld_filedata.h>
 

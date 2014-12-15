@@ -16,24 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LOGGER_SETS_H
-#define LOGGER_SETS_H
+#include <QtMath>
 
-#include <QString>
-#include <QtMsgHandler>
+#include <common_features/mainwinconnect.h>
+#include <common_features/grid.h>
+#include <editing/edit_world/world_edit.h>
+#include <file_formats/file_formats.h>
 
-class LogWriter
+#include "../wld_scene.h"
+#include "../wld_item_placing.h"
+
+
+
+void WldScene::applyResizers()
 {
-public:
-    static QString DebugLogFile;
-    static QtMsgType logLevel;
-    static bool   enabled;
+    if(pResizer!=NULL )
+    {
+        switch(pResizer->type)
+        {
+        case 0:
+            setScreenshotSelector(false, true);
+            break;
+        default:
+            break;
+        }
+    }
+}
 
-    static void WriteToLog(QtMsgType type, QString msg);
-    static void LoadLogSettings();
 
-    static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-};
+void WldScene::resetResizers()
+{
+    if(pResizer!=NULL )
+    {
+        switch(pResizer->type)
+        {
+        case 0:
+            setScreenshotSelector(false, false);
+            break;
+        default:
+            break;
+        }
+    }
+}
 
 
-#endif // LOGGER_SETS_H
+

@@ -21,11 +21,11 @@
 #include <main_window/global_settings.h>
 
 #include "wld_scene.h"
-#include "item_tile.h"
-#include "item_scene.h"
-#include "item_path.h"
-#include "item_level.h"
-#include "item_music.h"
+#include "items/item_tile.h"
+#include "items/item_scene.h"
+#include "items/item_path.h"
+#include "items/item_level.h"
+#include "items/item_music.h"
 
 void WldScene::SwitchEditingMode(int EdtMode)
 {
@@ -134,64 +134,6 @@ void WldScene::switchMode(QString title)
 }
 
 
-
-////////////////////////////////////Animator////////////////////////////////
-void WldScene::startAnimation()
-{
-    long q = WldData->tiles.size();
-    q+= WldData->levels.size();
-    q+= WldData->scenery.size();
-    q+= WldData->paths.size();
-
-    if( q > GlobalSettings::animatorItemsLimit )
-    {
-        WriteToLog(QtWarningMsg,
-           QString("Can't start animation: too many items on map: %1").arg(q));
-        return;
-    }
-
-    foreach(SimpleAnimator * tile, animates_Tiles)
-    {
-        tile->start();
-    }
-    foreach(SimpleAnimator * scene, animates_Scenery)
-    {
-        scene->start();
-    }
-    foreach(SimpleAnimator * path, animates_Paths)
-    {
-        path->start();
-    }
-    foreach(SimpleAnimator * lvl, animates_Levels)
-    {
-        lvl->start();
-    }
-
-
-}
-
-void WldScene::stopAnimation()
-{
-
-    foreach(SimpleAnimator * tile, animates_Tiles)
-    {
-        tile->stop();
-    }
-    foreach(SimpleAnimator * scene, animates_Scenery)
-    {
-        scene->stop();
-    }
-    foreach(SimpleAnimator * path, animates_Paths)
-    {
-        path->stop();
-    }
-    foreach(SimpleAnimator * lvl, animates_Levels)
-    {
-        lvl->stop();
-    }
-
-    update();
-}
 
 void WldScene::hideMusicBoxes(bool visible)
 {

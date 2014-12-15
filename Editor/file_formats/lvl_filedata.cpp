@@ -285,7 +285,9 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.physenv_array_id = 1;
 
     //Meta-data
+    #ifdef PGE_EDITOR
     NewFileData.metaData.script = NULL;
+    #endif
 
     //Create Section array
     LevelSection section;

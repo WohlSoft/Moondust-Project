@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>IDA - E:\Program Files (x86)\A2XT\Main Game\a2mbxtIDA2.idb (a2mbxt_forIDA_NEW.exe)</title>
+<style type="text/css">
+pre{	
+font-family: FixedSys;
+}
+</style>
+</head>
+<body>
+
+<pre>
+
+<span style="white-space: pre; font-family: FixedSys; color: blue; background: white">
+<span style="color:gray">int __cdecl unkInitVals()
+</span><span style="color:navy">{
+  __int16 v0; // </span><span style="color:#8080ff">fps@1
+  </span><span style="color:gray">int result</span><span style="color:navy">; </span><span style="color:gray">// </span><span style="color:#8080ff">eax@2
+
+  </span>UNDEF<span style="color:navy">(</span><span style="color:#8080ff">v0</span><span style="color:navy">);
+  </span>flt_B2C6E8 <span style="color:navy">= </span>-5.7<span style="color:navy">;
+  if ( </span><span style="color:#8080ff">v0 &amp; </span><span style="color:navy">0xD )
+  {
+    </span><span style="color:#8080ff">result </span><span style="color:navy">= </span>_vbaFPException<span style="color:navy">();
+  </span><span style="background:navy"></span><span style="color:navy">}
+  else
+  {
+    </span>Jumpheight <span style="color:navy">= 20;
+    </span>Jumpheight_Jumpblock <span style="color:navy">= 25;
+    </span>Jumpheight_JumpOnOtherPlayer <span style="color:navy">= 22;
+    </span>word_B2C6E2 <span style="color:navy">= 22;
+    </span>word_B2C6E4 <span style="color:navy">= 55;
+    </span>dword_B2C6EC <span style="color:navy">= 1086324736;
+    </span>dword_B2C6F0 <span style="color:navy">= 1077936128;
+    </span>dword_B2C6F8 <span style="color:navy">= 1053609165;
+    </span><span style="color:green">// Array goes as followed:
+    // +--------+ &lt;-- Small begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Big begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Fire begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Leaf begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Tanookie begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Hammer begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+ &lt;-- Ice begin
+    // |  Mario |
+    // |  Luigi |
+    // |  Peach |
+    // |  Toad  |
+    // |  Link  |
+    // +--------+
+    </span>Gravity <span style="color:navy">= 12;
+    </span>Hitbox_h_ptr<span style="color:navy">[0] = 30;                       </span><span style="color:green">// Mario small
+    </span>Hitbox_w_ptr<span style="color:navy">[0] = 24;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[0] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[0] = -2;
+    </span>Hitbox_h_ptr<span style="color:navy">[5] = 54;                       </span><span style="color:green">// Mario big
+    </span>Hitbox_w_ptr<span style="color:navy">[5] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[5] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[5] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[5] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[10] = 54;                      </span><span style="color:green">// Mario fire
+    </span>Hitbox_w_ptr<span style="color:navy">[10] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[10] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[10] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[10] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[30] = 54;                      </span><span style="color:green">// Mario ice
+    </span>Hitbox_w_ptr<span style="color:navy">[30] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[30] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[30] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[30] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[15] = 54;                      </span><span style="color:green">// Mario leaf
+    </span>Hitbox_w_ptr<span style="color:navy">[15] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[15] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[15] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[15] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[20] = 54;                      </span><span style="color:green">// Mario tanuki
+    </span>Hitbox_w_ptr<span style="color:navy">[20] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[20] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[20] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[20] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[25] = 54;                      </span><span style="color:green">// Mario hammer
+    </span>Hitbox_w_ptr<span style="color:navy">[25] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[25] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[25] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[25] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[1] = 30;                       </span><span style="color:green">// Luigi small
+    </span>Hitbox_w_ptr<span style="color:navy">[1] = 24;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[1] = 16;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[1] = -4;
+    </span>Hitbox_h_ptr<span style="color:navy">[6] = 60;                       </span><span style="color:green">// Luigi big
+    </span>Hitbox_w_ptr<span style="color:navy">[6] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[6] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[6] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[6] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[11] = 60;                      </span><span style="color:green">// Luigi fire
+    </span>Hitbox_w_ptr<span style="color:navy">[11] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[11] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[11] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[11] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[16] = 60;                      </span><span style="color:green">// Luigi leaf
+    </span>Hitbox_w_ptr<span style="color:navy">[16] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[16] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[16] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[16] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[21] = 60;                      </span><span style="color:green">// Luigi tanooki
+    </span>Hitbox_w_ptr<span style="color:navy">[21] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[21] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[21] = 18;
+    </span>Hitbox_h_ptr<span style="color:navy">[26] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[31] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[7] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[12] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[17] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[22] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[27] = 60;
+    </span>Hitbox_h_ptr<span style="color:navy">[32] = 60;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[21] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[26] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[26] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[26] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[26] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[31] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[31] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[31] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[31] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[2] = 38;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[2] = 26;
+    </span>Hitbox_w_ptr<span style="color:navy">[2] = 24;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[2] = 0;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[2] = 0;
+    </span>Hitbox_w_ptr<span style="color:navy">[7] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[7] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[7] = 0;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[7] = 0;
+    </span>Hitbox_w_ptr<span style="color:navy">[12] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[12] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[12] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[12] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[17] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[17] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[17] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[17] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[22] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[22] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[22] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[22] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[27] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[27] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[27] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[27] = 16;
+    </span>Hitbox_w_ptr<span style="color:navy">[32] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[32] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[32] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[32] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[3] = 30;
+    </span>Hitbox_w_ptr<span style="color:navy">[3] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[3] = 26;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[3] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[3] = -2;
+    </span>Hitbox_h_ptr<span style="color:navy">[8] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[8] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[8] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[8] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[8] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[13] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[13] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[13] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[13] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[13] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[18] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[18] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[18] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[18] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[18] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[23] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[23] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[23] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[23] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[23] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[28] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[28] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[28] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[28] = 18;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[28] = 16;
+    </span>Hitbox_h_ptr<span style="color:navy">[33] = 50;
+    </span>Hitbox_w_ptr<span style="color:navy">[33] = 24;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[33] = 30;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[33] = 18;
+    </span>Hitbox_h_ptr<span style="color:navy">[4] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[9] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[14] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[19] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[24] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[29] = 54;
+    </span>Hitbox_h_ptr<span style="color:navy">[34] = 54;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[4] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[9] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[14] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[19] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[24] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[29] = 18;
+    </span>Hitbox_unk1_widthGrabOffset<span style="color:navy">[34] = 18;
+    </span>word_B2C85C <span style="color:navy">= 30;
+    </span>Hitbox_w_ptr<span style="color:navy">[4] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[9] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[14] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[19] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[24] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[29] = 22;
+    </span>Hitbox_w_ptr<span style="color:navy">[34] = 22;
+    </span><span style="color:#8080ff">result </span><span style="color:navy">= 1048911544;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[33] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[4] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[4] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[9] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[9] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[14] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[14] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[19] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[19] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[24] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[24] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[29] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[29] = 16;
+    </span>Hitbox_h_d_ptr<span style="color:navy">[34] = 44;
+    </span>Hitbox_unk2_heightGrabOffset<span style="color:navy">[34] = 16;
+    </span>unkOffscreenCounter <span style="color:navy">= 180;
+    </span>dword_B2C860 <span style="color:navy">= 1088631603;
+    </span>dword_B2C864 <span style="color:navy">= 1093664768;
+    </span>bufferY_block_npc_collisionCheck <span style="color:navy">= 1048911544;
+    </span>dword_B2C878 <span style="color:navy">= 1048911544;
+    </span>dword_B2C868 <span style="color:navy">= 1067030938;
+    </span>dword_B2C86C <span style="color:navy">= 1065353216;
+    </span>dword_B2C870 <span style="color:navy">= 1072064102;
+    </span>pswitchLength <span style="color:navy">= 777;
+  </span><span style="background:navy"></span><span style="color:navy">}
+  return </span><span style="color:#8080ff">result</span><span style="color:navy">;
+</span><span style="background:#8080ff"></span><span style="color:navy">}
+</span></span></pre></body></html>

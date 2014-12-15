@@ -15,8 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ITEM_POINT_H
-#define ITEM_POINT_H
+
+#ifndef ItemTile_H
+#define ItemTile_H
 
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -33,16 +34,18 @@
 
 #include <file_formats/wld_filedata.h>
 
-#include "wld_scene.h"
+#include "../wld_scene.h"
 
-class ItemPoint : public QObject, public QGraphicsItem
+class ItemTile : public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    ItemPoint(QGraphicsItem *parent=0);
-    ~ItemPoint();
+    ItemTile(QGraphicsItem *parent=0);
+    ~ItemTile();
 
+    void setTileData(WorldTiles inD);
+    void setContextMenu(QMenu &menu);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
@@ -50,7 +53,15 @@ public:
 
     QMenu *ItemMenu;
 
+    //////Animation////////
+    void setAnimator(long aniID);
+
     //void setLayer(QString layer);
+
+    void arrayApply();
+    void removeFromArray();
+
+    WorldTiles tileData;
 
     int gridSize;
     int gridOffsetX;
@@ -77,5 +88,4 @@ private:
 
 };
 
-
-#endif // ITEM_POINT_H
+#endif // ItemTile_H

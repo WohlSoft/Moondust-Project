@@ -143,7 +143,9 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.stars = 0;
 
     //Meta-data
+    #ifdef PGE_EDITOR
     NewFileData.metaData.script = NULL;
+    #endif
 
     return NewFileData;
 }

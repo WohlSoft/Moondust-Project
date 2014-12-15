@@ -1,4 +1,4 @@
-Editor 0.2.1.6
+Editor 0.2.1.7
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
@@ -22,6 +22,9 @@ Editor 0.2.1.6
 - Added basic scripts generation feature
 - Organized code structure which making code more understandable, flexible and faster
 - Added layar movement speed calculator which will help you calculate speed in blocks per seconds.
+- More accurate SMBX file formats support: Now PGE can parse SMBX files of ANY version (from 0 to 64)
+- Added saving of SMBX LVL and WLD formats with selecting of file format version (useful to edit old episodes which made by old SMBX'es with saving of compatibility with them)
+- Added reading of SAV files which show game save statistics in the editor.
 
 Editor 0.2.1.1
 - Fixed zoom icons customization

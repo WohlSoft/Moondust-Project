@@ -34,7 +34,7 @@
 
 #include <file_formats/wld_filedata.h>
 
-#include "wld_scene.h"
+#include "../wld_scene.h"
 
 class ItemPath : public QObject, public QGraphicsItem
 {

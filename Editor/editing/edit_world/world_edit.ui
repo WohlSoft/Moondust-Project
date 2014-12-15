@@ -10,6 +10,9 @@
     <height>500</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>World Map</string>
   </property>
@@ -40,6 +43,9 @@
        <width>500</width>
        <height>400</height>
       </size>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
      </property>
      <property name="backgroundBrush">
       <brush brushstyle="SolidPattern">

@@ -20,7 +20,7 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QSettings>
-#include <QDebug>
+#include <QtDebug>
 
 #include <dev_console/devconsole.h>
 
@@ -61,6 +61,7 @@ void LogWriter::LoadLogSettings()
 
     logSettings.endGroup();
     qDebug()<< QString("LogLevel %1, log file %2").arg(logLevel).arg(DebugLogFile);
+    qInstallMessageHandler(logMessageHandler);
 }
 
 void LogWriter::WriteToLog(QtMsgType type, QString msg)
@@ -101,6 +102,62 @@ outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 QTextStream ts(&outFile);
 ts << txt << endl;
 outFile.close();
+}
+
+void LogWriter::logMessageHandler(QtMsgType type,
+                  const QMessageLogContext& context,
+                             const QString& msg)
+{
+    switch (type)
+    {
+        case QtDebugMsg:
+            if(logLevel==QtFatalMsg) return;
+        case QtWarningMsg:
+            if(logLevel==QtCriticalMsg) return;
+        case QtCriticalMsg:
+            if(logLevel==QtWarningMsg) return;
+        case QtFatalMsg:
+            break;
+    }
+
+    QByteArray lMessage = msg.toLocal8Bit();
+    QString txt = NULL;
+    switch (type)
+    {
+        case QtDebugMsg:
+        txt = QString("Debug (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtWarningMsg:
+        txt = QString("Warning: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtCriticalMsg:
+        txt = QString("Critical: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtFatalMsg:
+        txt = QString("Fatal: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        abort();
+    }
+    QFile outFile(DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+    outFile.close();
 }
 
 

@@ -31,17 +31,25 @@ void MainWindow::on_actionCDATA_Import_triggered()
         sourceDir = QFileInfo(activeLvlEditWin()->curFile).absoluteDir().path();
     }
     else
-        return;
+    if(activeChildWindow()==3)
+    {
+        sourceDir = QFileInfo(activeWldEditWin()->curFile).absoluteDir().path();
+    }
+    else
+    return;
 
     //QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Select directory with custom data to import"),
                                                  sourceDir,
                                                  QFileDialog::DontResolveSymlinks);
+
+    qDebug()<<"File path: "<< fileName;
+
     if(fileName.isEmpty()) return;
 
+    qApp->setActiveWindow(this);
     this->setFocus();
     this->raise();
-    qApp->setActiveWindow(this);
 
     if(activeChildWindow()==1)
     {
@@ -61,4 +69,26 @@ void MainWindow::on_actionCDATA_Import_triggered()
             delete importer;
         }
     }
+    else if(activeChildWindow()==3)
+    {
+        WorldEdit * box = activeWldEditWin();
+        if(QFileInfo(fileName).isDir())
+        {
+            qDebug()<<"build";
+            SmartImporter * importer = new SmartImporter((QWidget*)box, fileName, (QWidget*)box);
+            if(importer->isValid())
+            {
+                qDebug()<<"do Attempt to import!";
+                if(importer->attemptFastImport())
+                {
+                    qDebug()<<"Imported!";
+                    on_actionReload_triggered();
+                }
+                else qDebug()<<"Import fail";
+            }
+            delete importer;
+        }
+    }
+    else
+        qDebug() << "No active windows";
 }

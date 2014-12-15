@@ -32,8 +32,12 @@ SmartImporter::SmartImporter(QWidget *parentWid, const QString &importPath, QWid
     else
         this->importPath = importPath + QString("/");
 
-    targetLevelWindow = qobject_cast<LevelEdit*>(targetImport);
-    targetWorldWindow = qobject_cast<WorldEdit*>(targetImport);
+    targetLevelWindow = NULL;
+    targetWorldWindow = NULL;
+    if(QString(targetImport->metaObject()->className())==LEVEL_EDIT_CLASS)
+        targetLevelWindow = qobject_cast<LevelEdit*>(targetImport);
+    else if(QString(targetImport->metaObject()->className())==WORLD_EDIT_CLASS)
+        targetWorldWindow = qobject_cast<WorldEdit*>(targetImport);
 }
 
 bool SmartImporter::isValid()
@@ -43,8 +47,10 @@ bool SmartImporter::isValid()
 
 bool SmartImporter::attemptFastImport()
 {
-    if(targetLevelWindow){
-        if(targetLevelWindow->isUntitled){
+    if(targetLevelWindow)
+    {
+        if(targetLevelWindow->isUntitled)
+        {
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the level, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
         }
@@ -55,7 +61,8 @@ bool SmartImporter::attemptFastImport()
 
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
         QStringList filteredFiles;
-        foreach (QString tarFile, allFiles) {
+        foreach (QString tarFile, allFiles)
+        {
             if(tarFile.endsWith(".tileset.ini", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
             if(tarFile.startsWith("block-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
@@ -88,6 +95,39 @@ bool SmartImporter::attemptFastImport()
 
         uLVL.createDirIfNotExsist();
         uLVL.import(filteredFiles);
+        return true;
+    }
+    else if(targetWorldWindow)
+    {
+        if(targetWorldWindow->isUntitled){
+            QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the world, so you can import custom graphics!"), QMessageBox::Ok);
+            return false;
+        }
+
+        CustomDirManager uWLD(targetWorldWindow->WldData.path, targetWorldWindow->WldData.filename);
+        QDir sourceDir(importPath);
+        if(!sourceDir.exists())
+            return false;
+
+        QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
+        QStringList filteredFiles;
+        foreach (QString tarFile, allFiles)
+        {
+            //Also import global used custom level data
+            if(tarFile.startsWith("player-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("tile-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("path-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("level-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("scene-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+        }
+
+        uWLD.createDirIfNotExsist();
+        uWLD.import(filteredFiles, false);
         return true;
     }
     return false;

@@ -23,41 +23,8 @@
 #include <editing/edit_world/world_edit.h>
 #include <file_formats/file_formats.h>
 
-#include "wld_scene.h"
-#include "wld_item_placing.h"
-
-void WldScene::applyResizers()
-{
-    if(pResizer!=NULL )
-    {
-        switch(pResizer->type)
-        {
-        case 0:
-            setScreenshotSelector(false, true);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-
-void WldScene::resetResizers()
-{
-    if(pResizer!=NULL )
-    {
-        switch(pResizer->type)
-        {
-        case 0:
-            setScreenshotSelector(false, false);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-
+#include "../wld_scene.h"
+#include "../wld_item_placing.h"
 
 void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {

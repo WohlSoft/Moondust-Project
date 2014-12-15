@@ -36,7 +36,7 @@ void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),GlobalSettings::openPath,
-        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT)\n"
+        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT *.SAV)\n"
         "All SMBX files (*.LVL *.WLD npc-*.TXT)\n"
         "All PGE files (*.LVLX *.WLDX npc-*.TXT *.INI)\n"
         "SMBX Level (*.LVL)\n"
@@ -44,12 +44,12 @@ void MainWindow::on_OpenFile_triggered()
         "SMBX World (*.WLD)\n"
         "PGE World (*.WLDX)\n"
         "SMBX NPC Config (npc-*.TXT)\n"
+        "SMBX Game Save file (*.SAV)\n"
         "All Files (*.*)"),0);
 
         if(fileName_DATA==NULL) return;
 
         OpenFile(fileName_DATA);
-
 }
 
 void MainWindow::OpenFile(QString FilePath)
@@ -213,6 +213,94 @@ void MainWindow::OpenFile(QString FilePath)
         } else {
             child->close();
         }
+    }
+    else
+    if(in_1.suffix().toLower() == "sav")
+    {
+        GamesaveData FileData;
+
+        QTextStream in(&file);   //Read File
+        in.setAutoDetectUnicode(true);
+        in.setLocale(QLocale::system());
+        in.setCodec(QTextCodec::codecForLocale());
+
+        QString statistics;
+        FileData = FileFormats::ReadSMBX64SavFile( in.readAll(), file.fileName() );
+
+        statistics+= QString("SMBX Game Save file version %1\n\n").arg(FileData.version);
+        if(FileData.gameCompleted)
+            statistics+= "      ====This game was completed====\n\n";
+        statistics+= QString("Lives: %1,   Coins:%2,   ").arg(FileData.lives).arg(FileData.coins);
+        statistics+= QString("Total stars: %1,   Gotten stars: %2\n")
+                .arg(FileData.totalStars)
+                .arg(FileData.gottenStars.size());
+        statistics+= QString("Position X=%1, Y=%2\n")
+                .arg(FileData.worldPosX)
+                .arg(FileData.worldPosY);
+
+        if(FileData.musicID>0)
+        {
+            long item=configs.getMusWldI(FileData.musicID);
+            if(item>=0)
+            {
+                statistics+= QString("Current music: %1\n\n").arg(configs.main_music_wld[item].name);
+            }
+        }
+
+        statistics += "\n===========Players:============\n";
+        for(int i=0; i<FileData.characterStates.size();i++)
+        {
+            if(i<configs.characters.size())
+                statistics += QString("%1:\n").arg(configs.characters[i].name);
+            else
+                statistics += QString("<unknown character>:\n");
+            statistics += QString("Health: %1,    ").arg(FileData.characterStates[i].health);
+            statistics += QString("Power-UP: %1,    ").arg(FileData.characterStates[i].state);
+            switch(FileData.characterStates[i].mountType)
+            {
+            case 0:
+                break;
+            case 1:
+                statistics += QString("Mounted transport: Shoe - ");
+                switch(FileData.characterStates[i].mountID)
+                {
+                case 1:
+                    statistics += QString("Kuribo's (green)");break;
+                case 2:
+                    statistics += QString("Podoboo's (red)");break;
+                case 3:
+                    statistics += QString("Lakitu's (blue)");break;
+                default:
+                    statistics += QString("of God Power :D");break;
+                }
+                break;
+            case 3:
+                statistics += QString("Mounted transport: Yoshi");break;
+            default:
+                statistics += QString("Mounted transport: <unknown>");break;
+            }
+
+            if(FileData.characterStates[i].itemID>0)
+            {
+              int item= configs.getNpcI(FileData.characterStates[i].itemID);
+              if(item>=0)
+              {
+                statistics += QString("%2Has item: %1").arg(configs.main_npc[item].name)
+                        .arg(FileData.characterStates[i].mountType>0?",    ":"");
+              }
+            }
+
+        if(i<FileData.characterStates.size()-1)
+            statistics += "\n----------------------------\n";
+        }
+        statistics += "\n=========================\n";
+
+        if( !FileData.ReadFileValid ) return;
+
+        QMessageBox::information(this, tr("Game save statistics"),
+         statistics,
+         QMessageBox::Ok);
+
     }
     else
     {
