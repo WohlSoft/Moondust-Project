@@ -334,7 +334,8 @@ SOURCES += main.cpp\
     editing/_scenes/world/data_manager/wld_custom_gfx.cpp \
     file_formats/file_sav.cpp \
     file_formats/save_filedata.cpp \
-    common_features/resizer/corner_grabber.cpp
+    common_features/resizer/corner_grabber.cpp \
+    data_configs/conf_rotation_tables.cpp
     
 
 HEADERS  += defines.h \
@@ -462,7 +463,8 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/item_point.h \
     editing/_scenes/world/items/item_scene.h \
     editing/_scenes/world/items/item_tile.h \
-    file_formats/save_filedata.h
+    file_formats/save_filedata.h \
+    data_configs/obj_rotation_table.h
 
 
 FORMS    += \

@@ -36,6 +36,7 @@
 #include "obj_wld_items.h"
 #include "dc_indexing.h"
 #include "obj_tilesets.h"
+#include "obj_rotation_table.h"
 
 struct DataFolders
 {
@@ -129,8 +130,10 @@ public:
     QVector<obj_sound > main_sound;
 
     //Tilesets
-    QVector<SimpleTileset>      main_tilesets;
-    QVector<SimpleTilesetGroup> main_tilesets_grp;
+    QVector<SimpleTileset >      main_tilesets;
+    QVector<SimpleTilesetGroup > main_tilesets_grp;
+
+    QVector<obj_rotation_table > main_rotation_table;
 
     bool check(); //Returns true, if something config entry is not initialized
 
@@ -195,6 +198,8 @@ private:
 
     void loadMusic(QProgressDialog *prgs=NULL);
     void loadSound(QProgressDialog *prgs=NULL);
+
+    void loadRotationTable();
 
     void addError(QString bug, QtMsgType level=QtWarningMsg);
 };

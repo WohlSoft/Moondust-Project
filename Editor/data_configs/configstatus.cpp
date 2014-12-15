@@ -178,6 +178,15 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
     ui->ItemsStatus->addItem(item);
 
+    //Rotation rules table
+    item = new QListWidgetItem;
+    item->setText(tr("Default rotation rules (%1)").arg(configs->main_rotation_table.size()));
+    if(configs->main_rotation_table.size()==0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
 
     ////////////////////////DirList/////////////////////////
     QTableWidgetItem * itemDir;
