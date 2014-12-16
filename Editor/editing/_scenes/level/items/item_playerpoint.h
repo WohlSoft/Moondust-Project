@@ -24,8 +24,11 @@
 #include <file_formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
+#include "lvl_base_item.h"
 
-class ItemPlayerPoint : public QObject, public QGraphicsPixmapItem
+class ItemPlayerPoint : public QObject,
+                        public QGraphicsPixmapItem,
+                        public LvlBaseItem
 {
     Q_OBJECT
 public:

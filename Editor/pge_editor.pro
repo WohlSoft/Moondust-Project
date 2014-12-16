@@ -335,7 +335,8 @@ SOURCES += main.cpp\
     file_formats/file_sav.cpp \
     file_formats/save_filedata.cpp \
     common_features/resizer/corner_grabber.cpp \
-    data_configs/conf_rotation_tables.cpp
+    data_configs/conf_rotation_tables.cpp \
+    editing/_scenes/level/items/lvl_base_item.cpp
     
 
 HEADERS  += defines.h \
@@ -464,7 +465,8 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/item_scene.h \
     editing/_scenes/world/items/item_tile.h \
     file_formats/save_filedata.h \
-    data_configs/obj_rotation_table.h
+    data_configs/obj_rotation_table.h \
+    editing/_scenes/level/items/lvl_base_item.h
 
 
 FORMS    += \

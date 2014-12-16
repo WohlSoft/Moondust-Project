@@ -35,8 +35,11 @@
 #include <file_formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
+#include "lvl_base_item.h"
 
-class ItemBGO : public QObject, public QGraphicsItem
+class ItemBGO : public QObject,
+                public QGraphicsItem,
+                public LvlBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
