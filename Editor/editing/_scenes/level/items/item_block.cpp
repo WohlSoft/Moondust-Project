@@ -41,6 +41,8 @@ ItemBlock::ItemBlock(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    this->setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -168,8 +170,11 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 slipp->deleteLater();
 
             QAction *resize = ItemMenu->addAction(tr("Resize"));
-                resize->setVisible( (this->data(3).toString()=="sizable") );
+                resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
                 resize->deleteLater();
+
+            QAction *transform = ItemMenu->addAction(tr("Transform into"));
+                transform->deleteLater();
 
             ItemMenu->addSeparator()->deleteLater();;
             QAction *chNPC = ItemMenu->addAction(tr("Change included NPC..."));
@@ -245,6 +250,23 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->setBlockResizer(this, true);
             }
             else
+            if(selected==transform)
+            {
+                bool ok=false;
+                int transformTO;
+                transformTO = QInputDialog::getInt(NULL, "Target Block ID",
+                                                   "Please enter target block ID which you want to set",
+                                                   0,0,2147483600,1,&ok);
+                if(ok)
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                    {
+                        ((ItemBlock *) SelItem)->transformTo(transformTO);
+                    }
+                }
+            }
+            else
             if(selected==chNPC)
             {
                 LevelData selData;
@@ -314,11 +336,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-
-//    else
-//    {
-        QGraphicsItem::contextMenuEvent(event);
-//    }
+    QGraphicsItem::contextMenuEvent(event);
 }
 
 void ItemBlock::setSlippery(bool slip)
@@ -387,6 +405,94 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
     if(!init) arrayApply();
 }
 
+void ItemBlock::transformTo(long target_id)
+{
+    if(target_id<1) return;
+
+    bool noimage=true, found=false;
+    int j, item_i=0;
+    long animator=0;
+
+    //Check Index exists
+    if(target_id < scene->index_blocks.size())
+    {
+        j = scene->index_blocks[target_id].i;
+        item_i = j;
+        animator = scene->index_blocks[target_id].ai;
+
+        if(j < scene->pConfigs->main_block.size())
+        {
+            if(scene->pConfigs->main_block[j].id == blockData.id)
+            {
+                found=true;noimage=false;
+            }
+        }
+    }
+
+    if(!found)
+    {
+        for(j=0;j<scene->pConfigs->main_block.size();j++)
+        {
+            if(scene->pConfigs->main_block[j].id==blockData.id)
+            {
+                noimage=false;
+                item_i = j;
+                break;
+            }
+        }
+    }
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    blockData.id = target_id;
+
+    sizable = scene->pConfigs->main_block[item_i].sizable;
+    imageSize = QRectF(0,0,blockData.w, blockData.h);
+
+    this->gridSize = scene->pConfigs->main_block[item_i].grid;
+
+    this->setAnimator(animator);
+
+    if((!noimage) && (scene->pConfigs->main_block[item_i].animated))
+    {
+        this->setData(4, "animated");
+    }
+
+    if(blockData.npc_id != 0)
+    {
+        this->setIncludedNPC(blockData.npc_id, true);
+    }
+
+    if(scene->pConfigs->main_block[item_i].sizable)
+    {
+        this->setMainPixmap();
+        this->setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
+        //sbZ += 0.0000000001;
+    }
+    else
+    {
+        if(scene->pConfigs->main_block[j].view==1)
+            this->setZValue(scene->Z_BlockFore); // applay lava block Z
+        else
+            this->setZValue(scene->Z_Block); // applay standart block Z
+    }
+
+    this->setData(ITEM_ID, QString::number(blockData.id) );
+
+    if(scene->pConfigs->main_block[item_i].sizable)
+    {
+        this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
+    }
+    else
+        this->setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
+
+    this->setData(ITEM_WIDTH, QString::number(blockData.w) ); //width
+    this->setData(ITEM_HEIGHT, QString::number(blockData.h) ); //height
+
+    arrayApply();
+}
+
 ///////////////////MainArray functions/////////////////////////////
 void ItemBlock::arrayApply()
 {
@@ -439,6 +545,27 @@ void ItemBlock::removeFromArray()
         }
     }
 }
+
+void ItemBlock::returnBack()
+{
+    this->setPos(blockData.x, blockData.y);
+}
+
+QPoint ItemBlock::gridOffset()
+{
+    return QPoint(0,0);
+}
+
+int ItemBlock::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemBlock::sourcePos()
+{
+    return QPoint(blockData.x, blockData.y);
+}
+
 
 void ItemBlock::setMainPixmap(/*const QPixmap &pixmap*/) // Init Sizable block
 {

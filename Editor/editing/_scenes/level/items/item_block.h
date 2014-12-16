@@ -61,15 +61,23 @@ public:
 
     QMenu *ItemMenu;
 
+    //Block specific
     void setSlippery(bool slip);
     void setInvisible(bool inv);
-    void setLayer(QString layer);
     void setBlockSize(QRect rect);
-
     void setIncludedNPC(int npcID, bool init=false);
 
+    void transformTo(long target_id);
+
+    //Common
+    void setLayer(QString layer);
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
 
     LevelBlock blockData;
     int gridSize;
