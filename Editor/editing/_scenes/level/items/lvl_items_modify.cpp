@@ -48,36 +48,47 @@ void LvlScene::applyArrayForItem(QGraphicsItem * item)
 {
     if(!item) return;
 
-    QString ObjType = item->data(0).toString();
-    if( ObjType == "NPC")
+    QString ObjType = item->data(ITEM_TYPE).toString();
+    if( ( ObjType == "NPC" ) ||
+        ( ObjType == "Block" ) ||
+        ( ObjType == "BGO" ) ||
+        ( ObjType == "Water" ) ||
+        ( ObjType == "Door_enter" ) ||
+        ( ObjType == "Door_exit" ) ||
+        ( ObjType == "playerPoint" )
+            )
     {
-        dynamic_cast<ItemNPC *>(item)->arrayApply();
+        dynamic_cast<LvlBaseItem *>(item)->arrayApply();
     }
-    else
-    if( ObjType == "Block")
-    {
-        dynamic_cast<ItemBlock *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "BGO")
-    {
-        dynamic_cast<ItemBGO *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "Water")
-    {
-        dynamic_cast<ItemWater *>(item)->arrayApply();
-    }
-    else
-    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
-    {
-        dynamic_cast<ItemDoor *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "playerPoint" )
-    {
-        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
-    }
+//    if( ObjType == "NPC")
+//    {
+//        dynamic_cast<ItemNPC *>(item)->arrayApply();
+//    }
+//    else
+//    if( ObjType == "Block")
+//    {
+//        dynamic_cast<ItemBlock *>(item)->arrayApply();
+//    }
+//    else
+//    if( ObjType == "BGO")
+//    {
+//        dynamic_cast<ItemBGO *>(item)->arrayApply();
+//    }
+//    else
+//    if( ObjType == "Water")
+//    {
+//        dynamic_cast<ItemWater *>(item)->arrayApply();
+//    }
+//    else
+//    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
+//    {
+//        dynamic_cast<ItemDoor *>(item)->arrayApply();
+//    }
+//    else
+//    if( ObjType == "playerPoint" )
+//    {
+//        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
+//    }
 
 }
 
