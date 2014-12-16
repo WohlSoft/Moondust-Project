@@ -40,29 +40,33 @@ void LvlScene::prepareCollisionBuffer()
         if(collisionCheckBuffer[i]==NULL)
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
+        if(collisionCheckBuffer[i]->data(ITEM_IS_ITEM).isNull())
             kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="YellowRectangle")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Space")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Square")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Line")//LineDrawer
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="LineDrawer")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="SectionBorder")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString().startsWith("BackGround"))
+//            kick=true;
         else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Space")
+        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="playerPoint")
             kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Square")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString()=="Line")//LineDrawer
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString()=="LineDrawer")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString()=="playerPoint")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
-            kick=true;
+
 
         if(kick) {collisionCheckBuffer.removeAt(i); i--;}
     }
@@ -189,18 +193,20 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
                 continue;
             if(it->data(ITEM_TYPE).isNull())
                  continue;
-            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
+            if(it->data(ITEM_IS_ITEM).isNull())
                 continue;
-            if(it->data(ITEM_TYPE).toString()=="Space")
-                continue;
-            if(it->data(ITEM_TYPE).toString()=="Square")
-                continue;
-            if(it->data(ITEM_TYPE).toString()=="SectionBorder")
-                continue;
+//            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
+//                continue;
+//            if(it->data(ITEM_TYPE).toString()=="Space")
+//                continue;
+//            if(it->data(ITEM_TYPE).toString()=="Square")
+//                continue;
+//            if(it->data(ITEM_TYPE).toString()=="SectionBorder")
+//                continue;
             if(it->data(ITEM_TYPE).toString()=="PlayerPoint")
                 continue;
-            if(it->data(ITEM_TYPE).toString().startsWith("BackGround"))
-                continue;
+//            if(it->data(ITEM_TYPE).toString().startsWith("BackGround"))
+//                continue;
 
             if(
                (it->data(ITEM_TYPE).toString()!="Block")&&
@@ -235,7 +241,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
           }
           else
-          if(item->data(0).toString()=="Block")
+          if(item->data(ITEM_TYPE).toString()=="Block")
           {
               if(
                       (
@@ -323,40 +329,40 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             if(!it->isVisible()) continue;
 
             //skip locked items
-            if((it->data(0).toString()=="Block"))
+            if((it->data(ITEM_TYPE).toString()=="Block"))
             {
                 if((lock_block)|| dynamic_cast<ItemBlock*>(it)->isLocked) continue;
             }
             else
-            if((it->data(0).toString()=="BGO"))
+            if((it->data(ITEM_TYPE).toString()=="BGO"))
             {
                 if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->isLocked) continue;
             }
             else
-            if((it->data(0).toString()=="NPC"))
+            if((it->data(ITEM_TYPE).toString()=="NPC"))
             {
                 if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->isLocked) continue;
             }
             else
-            if((it->data(0).toString()=="Water"))
+            if((it->data(ITEM_TYPE).toString()=="Water"))
             {
                 if((lock_water)|| dynamic_cast<ItemWater*>(it)->isLocked) continue;
             }
             else
-            if((it->data(0).toString()=="Door_enter")||(it->data(0).toString()=="Door_exit"))
+            if((it->data(ITEM_TYPE).toString()=="Door_enter")||(it->data(ITEM_TYPE).toString()=="Door_exit"))
             {
                 if((lock_door)|| dynamic_cast<ItemDoor*>(it)->isLocked) continue;
             }
 
             if( (
-                    (it->data(0).toString()=="Block")||
-                    (it->data(0).toString()=="BGO")||
-                    (it->data(0).toString()=="NPC")||
-                    (it->data(0).toString()=="Door_exit")||
-                    (it->data(0).toString()=="Door_enter")||
-                    (it->data(0).toString()=="Water")||
-                    (it->data(0).toString()=="player1")||
-                    (it->data(0).toString()=="player2")
+                    (it->data(ITEM_TYPE).toString()=="Block")||
+                    (it->data(ITEM_TYPE).toString()=="BGO")||
+                    (it->data(ITEM_TYPE).toString()=="NPC")||
+                    (it->data(ITEM_TYPE).toString()=="Door_exit")||
+                    (it->data(ITEM_TYPE).toString()=="Door_enter")||
+                    (it->data(ITEM_TYPE).toString()=="Water")||
+                    (it->data(ITEM_TYPE).toString()=="player1")||
+                    (it->data(ITEM_TYPE).toString()=="player2")
               )&&(it->isVisible() ) )
                 return it;
     }

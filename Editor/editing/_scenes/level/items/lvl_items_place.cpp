@@ -510,6 +510,7 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
         water.x = newPos.x();
         water.y = newPos.y();
     }
+
     WATERItem->setScenePoint(this);
     WATERItem->setContextMenu(waterMenu);
     WATERItem->setWaterData(water);
@@ -517,6 +518,8 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 
     this->addItem( WATERItem );
     WATERItem->setPos(QPointF(newPos));
+
+    WATERItem->gridSize = pConfigs->default_grid/2;
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene x=%1").arg(WATERItem->pos().x()));
@@ -551,7 +554,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     {
         foreach(QGraphicsItem * plrt, this->items())
         {
-            if( (plrt->data(ITEM_TYPE).toString()=="playerPoint")&&((unsigned int)plrt->data(2).toInt()==plr.id) )
+            if( (plrt->data(ITEM_TYPE).toString()=="playerPoint")&&((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt()==plr.id) )
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
                 found=true;

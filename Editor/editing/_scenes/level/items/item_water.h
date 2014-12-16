@@ -70,6 +70,11 @@ public:
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
+
     LevelPhysEnv waterData;
 
     int gridSize;

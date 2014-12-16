@@ -152,18 +152,6 @@ void LvlScene::startAnimation()
     {
         npcA->start();
     }
-
-//    QList<QGraphicsItem*> ItemList = items();
-//    QGraphicsItem *tmp;
-//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
-//    {
-//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemNPC *>(tmp)->AnimationStart();
-//        }
-//    }
-
 }
 
 void LvlScene::stopAnimation()
@@ -180,17 +168,6 @@ void LvlScene::stopAnimation()
     {
         npcA->stop();
     }
-
-//    QList<QGraphicsItem*> ItemList = items();
-//    QGraphicsItem *tmp;
-//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
-//    {
-//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemNPC *>(tmp)->AnimationStop();
-//        }
-//    }
 
     update();
 }

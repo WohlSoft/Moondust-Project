@@ -64,8 +64,15 @@ public:
     void setLayer(QString layer);
     void setZMode(int mode, qreal offset, bool init=false);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
 
     LevelBGO bgoData;
 

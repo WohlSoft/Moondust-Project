@@ -38,12 +38,17 @@ void LvlBaseItem::setLayer(QString layer)
     Q_UNUSED(layer);
 }
 
-int LvlBaseItem::gridSize()
+int LvlBaseItem::getGridSize()
 {
     return 1;
 }
 
 QPoint LvlBaseItem::gridOffset()
+{
+    return QPoint(0,0);
+}
+
+QPoint LvlBaseItem::sourcePos()
 {
     return QPoint(0,0);
 }

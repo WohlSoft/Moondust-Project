@@ -258,7 +258,7 @@ void LvlScene::openProps()
     QList<QGraphicsItem * > items = this->selectedItems();
     if(!items.isEmpty())
     {
-        if(items.first()->data(0).toString()=="Block")
+        if(items.first()->data(ITEM_TYPE).toString()=="Block")
         {
             MainWinConnect::pMainWin->LvlItemProps(0,
                           dynamic_cast<ItemBlock *>(items.first())->blockData,
@@ -266,7 +266,7 @@ void LvlScene::openProps()
                           FileFormats::dummyLvlNpc(), false);
         }
         else
-        if(items.first()->data(0).toString()=="BGO")
+        if(items.first()->data(ITEM_TYPE).toString()=="BGO")
         {
             MainWinConnect::pMainWin->LvlItemProps(1,
                               FileFormats::dummyLvlBlock(),
@@ -274,7 +274,7 @@ void LvlScene::openProps()
                               FileFormats::dummyLvlNpc(), false);
         }
         else
-        if(items.first()->data(0).toString()=="NPC")
+        if(items.first()->data(ITEM_TYPE).toString()=="NPC")
         {
             MainWinConnect::pMainWin->LvlItemProps(2,
                               FileFormats::dummyLvlBlock(),

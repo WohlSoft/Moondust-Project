@@ -56,16 +56,22 @@ public:
     virtual void setLayer(QString layer);
 
     ///
-    /// \brief gridSize
+    /// \brief getGridSize
     /// \return grid size of item
     ///
-    virtual int gridSize();
+    virtual int getGridSize();
 
     ///
     /// \brief gridOffset
     /// \return offset between grid point and aligned point
     ///
     virtual QPoint gridOffset();
+
+    ///
+    /// \brief sourcePos
+    /// \return registred position of item
+    ///
+    virtual QPoint sourcePos();
 };
 
 #endif // LVLBASEITEM_H

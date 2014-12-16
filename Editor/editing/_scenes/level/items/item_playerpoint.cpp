@@ -27,6 +27,8 @@ ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent) :
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    this->setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -274,6 +276,27 @@ void ItemPlayerPoint::removeFromArray()
         }
     }
 }
+
+void ItemPlayerPoint::returnBack()
+{
+    this->setPos(pointData.x, pointData.y);
+}
+
+QPoint ItemPlayerPoint::gridOffset()
+{
+    return QPoint(0,0);
+}
+
+int ItemPlayerPoint::getGridSize()
+{
+    return 2;
+}
+
+QPoint ItemPlayerPoint::sourcePos()
+{
+    return QPoint(pointData.x, pointData.y);
+}
+
 
 void ItemPlayerPoint::setScenePoint(LvlScene *theScene)
 {
