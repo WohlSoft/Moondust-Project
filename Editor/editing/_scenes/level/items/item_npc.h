@@ -77,8 +77,15 @@ public:
 
     void changeDirection(int dir);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
 
     QPoint fPos() const;
     void setFrame(int);

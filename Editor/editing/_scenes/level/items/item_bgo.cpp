@@ -44,6 +44,8 @@ ItemBGO::ItemBGO(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    this->setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -394,6 +396,27 @@ void ItemBGO::removeFromArray()
     }
 }
 
+void ItemBGO::returnBack()
+{
+    this->setPos(bgoData.x, bgoData.y);
+}
+
+QPoint ItemBGO::gridOffset()
+{
+    return QPoint(gridOffsetX, gridOffsetY);
+}
+
+int ItemBGO::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemBGO::sourcePos()
+{
+    return QPoint(bgoData.x, bgoData.y);
+}
+
+
 void ItemBGO::setBGOData(LevelBGO inD)
 {
     bgoData = inD;
@@ -437,6 +460,10 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
     if(!init) arrayApply();
 }
 
+void ItemBGO::transformTo(long target_id)
+{
+
+}
 
 QRectF ItemBGO::boundingRect() const
 {

@@ -212,6 +212,7 @@ public:
         #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
         #define ITEM_WIDTH                   9 //int
         #define ITEM_HEIGHT                  10 //int
+        #define ITEM_IS_ITEM                 24 //bool
         #define ITEM_IS_CURSOR               25 //bool
 
         long IncrementingNpcSpecialSpin;

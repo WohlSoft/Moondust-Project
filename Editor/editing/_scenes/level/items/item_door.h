@@ -69,6 +69,11 @@ public:
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
+
     LevelDoors doorData;
 
     int gridSize;

@@ -39,6 +39,8 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    this->setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -420,7 +422,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, scene->items())
             {
-                if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_exit")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==doorData.array_id))
                 {
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
@@ -434,7 +436,7 @@ void ItemDoor::arrayApply()
         {
             foreach(QGraphicsItem * door, scene->items())
             {
-                if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                if((door->data(ITEM_TYPE).toString()=="Door_enter")&&((unsigned int)door->data(ITEM_ARRAY_ID).toInt()==doorData.array_id))
                 {
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
@@ -463,6 +465,34 @@ void ItemDoor::removeFromArray()
     }
     arrayApply();
 }
+
+
+void ItemDoor::returnBack()
+{
+    if(direction==D_Entrance)
+        this->setPos(doorData.ix, doorData.iy);
+    else
+        this->setPos(doorData.ox, doorData.oy);
+}
+
+QPoint ItemDoor::gridOffset()
+{
+    return QPoint(gridOffsetX, gridOffsetY);
+}
+
+int ItemDoor::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemDoor::sourcePos()
+{
+    if(direction==D_Entrance)
+        return QPoint(doorData.ix, doorData.iy);
+    else
+        return QPoint(doorData.ox, doorData.oy);
+}
+
 
 void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 {

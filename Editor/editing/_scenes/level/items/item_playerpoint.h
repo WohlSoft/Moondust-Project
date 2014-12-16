@@ -39,6 +39,11 @@ public:
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
+
     void setScenePoint(LvlScene *theScene);
     void setPointData(PlayerPoint pnt, bool init=false);
 
