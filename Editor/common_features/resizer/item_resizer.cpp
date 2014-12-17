@@ -20,6 +20,8 @@
 #include <QLinearGradient>
 #include <QDebug>
 #include <math.h>
+#include <QMenu>
+#include <QTranslator>
 
 #include <common_features/grid.h>
 #include <common_features/logger.h>
@@ -60,10 +62,15 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
     _resizerColor = color;
 
     _grid = grid;
+    _grid_backup = grid;
+    _no_grid=false;
+    _no_limit=false;
 
     this->setRect(0,0,_width,_height);
     this->setZValue(50000);
     targetItem = NULL;
+
+    this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
     QBrush brush;
     brush.setStyle(Qt::DiagCrossPattern);
@@ -79,19 +86,21 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
 
     this->setAcceptHoverEvents(true);
 
-    _corners[0] = new CornerGrabber(this,0,_resizerColor);
-    _corners[1] = new CornerGrabber(this,1,_resizerColor);
-    _corners[2] = new CornerGrabber(this,2,_resizerColor);
-    _corners[3] = new CornerGrabber(this,3,_resizerColor);
+    //Sides
     _corners[4] = new CornerGrabber(this,4,_resizerColor);
     _corners[5] = new CornerGrabber(this,5,_resizerColor);
     _corners[6] = new CornerGrabber(this,6,_resizerColor);
     _corners[7] = new CornerGrabber(this,7,_resizerColor);
 
+    //corners
+    _corners[0] = new CornerGrabber(this,0,_resizerColor);
+    _corners[1] = new CornerGrabber(this,1,_resizerColor);
+    _corners[2] = new CornerGrabber(this,2,_resizerColor);
+    _corners[3] = new CornerGrabber(this,3,_resizerColor);
+
     _minSize = QSizeF(64, 64); //set Default minimal size
-
+    _minSize_backup = _minSize;
     setCornerPositions();
-
 }
 
 /**
@@ -109,7 +118,10 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
 
     CornerGrabber * corner = dynamic_cast<CornerGrabber *>(watched);
-    if ( corner == NULL) return false; // not expected to get here
+    if ( corner == NULL)
+    {
+        return false; // not expected to get here
+    }
 
     QGraphicsSceneMouseEvent * mevent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
     if ( mevent == NULL)
@@ -150,7 +162,6 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             return false;
             break;
     }
-
 
     if ( corner->getMouseState() == CornerGrabber::kMouseMoving )
     {
@@ -318,9 +329,118 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 // for supporting moving the box across the scene
 void ItemResizer::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event )
 {
+    if(event->button()==Qt::RightButton)
+    {
+        QMenu contextMenu;
+        QAction* crop_top =    contextMenu.addAction(QTranslator::tr("Cut top here"));
+        QAction* crop_bottom = contextMenu.addAction(QTranslator::tr("Cut bottom here"));
+        QAction* crop_left =   contextMenu.addAction(QTranslator::tr("Cut left here"));
+        QAction* crop_right =  contextMenu.addAction(QTranslator::tr("Cut right here"));
+        contextMenu.addSeparator();
+
+        QAction* no_grid =     contextMenu.addAction(QTranslator::tr("Don't snap to grid"));
+        no_grid->setCheckable(true);
+        no_grid->setChecked(_no_grid);
+
+        QAction* no_limit =     contextMenu.addAction(QTranslator::tr("Disable minimal size limit"));
+        no_limit->setCheckable(true);
+        no_limit->setChecked(_no_limit);
+
+        QAction* answer = contextMenu.exec( event->screenPos() );
+        if(answer==NULL)
+        {
+            event->setAccepted(true);
+            return;
+        }
+
+        if(answer==no_grid)
+        {
+            if(no_grid->isChecked())
+            {
+                _no_grid = true;
+                _grid_backup = _grid;
+                _grid = 1;
+            }
+            else
+            {
+                _no_grid = false;
+                _grid = _grid_backup;
+            }
+            event->setAccepted(true);
+            return;
+        }
+        else
+        if(answer==no_limit)
+        {
+            if(no_limit->isChecked())
+            {
+                _no_limit = true;
+                _minSize_backup = _minSize;
+                _minSize=QSize(16,16);
+            }
+            else
+            {
+                _no_limit = false;
+                _minSize = _minSize_backup;
+            }
+            event->setAccepted(true);
+            return;
+        }
+
+        QPointF target = event->scenePos();
+        target = QPointF(Grid::applyGrid(target.toPoint(), _grid ));
+
+        QRectF rect;
+        rect.setTop(this->scenePos().y());
+        rect.setLeft(this->scenePos().x());
+        rect.setWidth(_width);
+        rect.setHeight(_height);
+
+        if(answer==crop_top)
+        {
+            rect.setTop(target.y());
+
+            if(rect.height()<_minSize.height())
+                rect.setTop( rect.top()-(_minSize.height()-rect.height()) );
+        }
+        else
+        if(answer==crop_bottom)
+        {
+            rect.setBottom(target.y());
+
+            if(rect.height()<_minSize.height())
+                rect.setBottom( rect.bottom()+(_minSize.height()-rect.height()) );
+        }
+        else
+        if(answer==crop_left)
+        {
+            rect.setLeft(target.x());
+
+            if(rect.width()<_minSize.width())
+                rect.setLeft( rect.left()-(_minSize.width()-rect.width()) );
+        }
+        else
+        if(answer==crop_right)
+        {
+            rect.setRight(target.x());
+
+            if(rect.width()<_minSize.width())
+                rect.setRight( rect.right()+(_minSize.width()-rect.width()) );
+        }
+
+        _width = rect.width();
+        _height = rect.height();
+
+        _drawingWidth  =  _width;
+        _drawingHeight =  _height;
+
+        this->setPos( rect.topLeft() );
+        this->setRect(0, 0, _width, _height);
+        setCornerPositions();
+    }
+
     event->setAccepted(true);
 }
-
 
 // for supporting moving the box across the scene
 void ItemResizer::mousePressEvent ( QGraphicsSceneMouseEvent * event )
@@ -331,6 +451,9 @@ void ItemResizer::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 
     QPointF newPos = event->scenePos() ;
     _location = (newPos-_dragStart);
+
+    ____lastLocation = _location;
+    ____offset = this->scenePos()-event->scenePos();
     //qDebug() << QString("Move -1 loc X:%1 Y:%2").arg(_location.x()).arg(_location.y());
 }
 
@@ -338,6 +461,30 @@ void ItemResizer::mousePressEvent ( QGraphicsSceneMouseEvent * event )
 // for supporting moving the box across the scene
 void ItemResizer::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 {
+    if(event->buttons() & Qt::LeftButton)
+    {
+        _dragStart = event->pos();
+
+        QPointF newPos = event->scenePos() ;
+        _location = (newPos-_dragStart);
+
+        QPoint gridOffset;
+        gridOffset = QPoint(0,0);
+
+        if(this->rect().height() <= _minSize.height() )
+        {
+            gridOffset.setY(-(qRound(_minSize.height())%_grid));
+        }
+        ____lastLocation = QPointF(
+                    Grid::applyGrid( (____lastLocation-(event->lastScenePos()-event->scenePos())).toPoint(), _grid, gridOffset)
+                    );
+        if( ____lastLocation != this->scenePos() )
+        {
+            this->setPos( ____lastLocation );
+        }
+        ____lastLocation = event->scenePos()+____offset;
+
+    }
     event->accept();
     /*
     QPointF newPos = event->pos() ;
@@ -380,10 +527,21 @@ void ItemResizer::setCornerPositions()
     _corners[2]->setPos(_drawingWidth-5 , _drawingHeight-5);
     _corners[3]->setPos(_drawingOrigenX-5, _drawingHeight-5);
 
-    _corners[4]->setPos( (_drawingOrigenX-5) + qreal((double)_width/2), _drawingOrigenY-5); //top
-    _corners[5]->setPos( (_drawingOrigenX-5),  (_drawingOrigenY-5)+qreal((double)_height/2) ); //left
-    _corners[6]->setPos( (_drawingOrigenX-5) + qreal(_width/2), (_drawingHeight-5));  //bottom
-    _corners[7]->setPos( (_drawingWidth-5), (_drawingHeight-5)-qreal((double)_height/2)); //right
+    //_corners[4]->setPos( (_drawingOrigenX-5) + qreal((double)_width/2), _drawingOrigenY-5); //top
+    _corners[4]->setPos( (_drawingOrigenX+2), _drawingOrigenY-2); //top
+    _corners[4]->setSize(_width-2, 4 );
+
+    //_corners[5]->setPos( (_drawingOrigenX-5),  (_drawingOrigenY-5)+qreal((double)_height/2) ); //left
+    _corners[5]->setPos( (_drawingOrigenX-2), _drawingOrigenY+2); //left
+    _corners[5]->setSize(4, _height-2 );
+
+    //_corners[6]->setPos( (_drawingOrigenX-5) + qreal(_width/2), (_drawingHeight-5));  //bottom
+    _corners[6]->setPos( _drawingOrigenX-2, (_drawingHeight-2));  //bottom
+    _corners[6]->setSize(_width-2, 4 );
+
+    //_corners[7]->setPos( (_drawingWidth-5), (_drawingHeight-5)-qreal((double)_height/2)); //right
+    _corners[7]->setPos( (_drawingWidth-2), (_drawingOrigenY+2)); //right
+    _corners[7]->setSize(4, _height-2 );
 }
 
 QRectF ItemResizer::boundingRect() const

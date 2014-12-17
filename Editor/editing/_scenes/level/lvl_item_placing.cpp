@@ -611,7 +611,7 @@ void LvlScene::setFloodFiller()
 void LvlScene::updateCursoredNpcDirection()
 {
     if(!cursor) return;
-    if(cursor->data(0).toString()!="NPC") return;
+    if(cursor->data(ITEM_TYPE).toString()!="NPC") return;
 
     ((QGraphicsPixmapItem *)cursor)->setPixmap(getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct));
     ((QGraphicsPixmapItem *)cursor)->setOffset(

@@ -35,8 +35,11 @@
 #include <file_formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
+#include "lvl_base_item.h"
 
-class ItemWater : public QObject, public QGraphicsPolygonItem
+class ItemWater : public QObject,
+                  public QGraphicsPolygonItem,
+                  public LvlBaseItem
 {
     Q_OBJECT
 public:
@@ -66,6 +69,11 @@ public:
 
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
 
     LevelPhysEnv waterData;
 

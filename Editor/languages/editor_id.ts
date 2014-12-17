@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<TS version="2.1" language="id_ID">
 <context>
     <name>AdditionalSettings</name>
     <message>
@@ -580,11 +580,6 @@ You can take any configuration package here:&lt;br&gt;%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="214"/>
-        <source>Arg: {Path to file} testing of PGE-X file format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../dev_console/devconsole.cpp" line="211"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
         <translation type="unfinished"></translation>
@@ -597,6 +592,11 @@ You can take any configuration package here:&lt;br&gt;%2</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="213"/>
         <source>Does a segmentation violation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dev_console/devconsole.cpp" line="214"/>
+        <source>Arg: {Path to file} testing of PGE-X file format</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1334,6 +1334,12 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
+        <source>Output dir, where will be saved fixed images
+(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
         <translation type="unfinished"></translation>
@@ -1373,12 +1379,6 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
-        <source>Output dir, where will be saved fixed images
-(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1454,32 +1454,6 @@ Please, check the application directory.</source>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="94"/>
         <source>6/%1 Applying Doors...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="119"/>
-        <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="124"/>
-        <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
-        <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="445"/>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="133"/>
-        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1655,6 +1629,12 @@ because object configurations are not loaded
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="445"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="490"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
@@ -1663,6 +1643,26 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="492"/>
         <source> not saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="119"/>
+        <source>Export current section to image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="124"/>
+        <source>PNG Image (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
+        <source>Saving section image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="133"/>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1892,6 +1892,50 @@ or delete them first with &apos;Delete Section&apos; option.</source>
 </context>
 <context>
     <name>LvlScene</name>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="51"/>
+        <source>Search User Backgrounds %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="109"/>
+        <source>Search User Blocks %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="211"/>
+        <source>Search User BGOs %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="280"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="292"/>
+        <source>Search User NPCs %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="402"/>
+        <source>Wrong custom images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="403"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="236"/>
+        <source>Player start points:		%1
+Blocks:			%2
+Background objects&apos;s:	%3
+Non-playable characters&apos;s:	%4
+Warp entries:		%5
+Physical env. zones:	%6
+</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="1593"/>
         <source>Undone: %1</source>
@@ -2399,50 +2443,6 @@ or delete them first with &apos;Delete Section&apos; option.</source>
         <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="236"/>
-        <source>Player start points:		%1
-Blocks:			%2
-Background objects&apos;s:	%3
-Non-playable characters&apos;s:	%4
-Warp entries:		%5
-Physical env. zones:	%6
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="51"/>
-        <source>Search User Backgrounds %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="109"/>
-        <source>Search User Blocks %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="211"/>
-        <source>Search User BGOs %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="280"/>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="292"/>
-        <source>Search User NPCs %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="402"/>
-        <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="403"/>
-        <source>This level have a wrong custom graphics files.
-You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
-Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -2485,6 +2485,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="213"/>
+        <source>Section modifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="239"/>
         <source>World</source>
         <translation type="unfinished"></translation>
@@ -2520,6 +2525,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="310"/>
+        <source>Custom data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="332"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
@@ -2528,6 +2538,16 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../mainwindow.ui" line="360"/>
         <location filename="../mainwindow.ui" line="4755"/>
         <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="368"/>
+        <source>Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="375"/>
+        <source>Switch Compiler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2977,23 +2997,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3110"/>
-        <source>SMBX64 defines:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3150"/>
-        <location filename="../mainwindow.ui" line="5412"/>
-        <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3170"/>
-        <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
-This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3023"/>
         <source>Z-Position</source>
         <translation type="unfinished"></translation>
@@ -3034,20 +3037,62 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3553"/>
-        <source>Attach to:</source>
+        <location filename="../mainwindow.ui" line="3110"/>
+        <source>SMBX64 defines:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3560"/>
-        <location filename="../mainwindow.ui" line="5578"/>
-        <source>Set as Boss</source>
+        <location filename="../mainwindow.ui" line="3150"/>
+        <location filename="../mainwindow.ui" line="5412"/>
+        <source>Sort priority:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3170"/>
+        <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
+This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3234"/>
         <location filename="../mainwindow.ui" line="3573"/>
         <source>Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3261"/>
+        <location filename="../mainwindow.ui" line="5186"/>
+        <location filename="../mainwindow.ui" line="5398"/>
+        <location filename="../mainwindow.ui" line="5537"/>
+        <location filename="../mainwindow.ui" line="6344"/>
+        <location filename="../mainwindow.ui" line="6466"/>
+        <location filename="../mainwindow.ui" line="6588"/>
+        <location filename="../mainwindow.ui" line="6761"/>
+        <location filename="../mainwindow.ui" line="6957"/>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3272"/>
+        <source>Warp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3277"/>
+        <source>Projectile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3291"/>
+        <location filename="../mainwindow.ui" line="3689"/>
+        <location filename="../mainwindow.ui" line="5623"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="330"/>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3363"/>
+        <source>Delay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3077,6 +3122,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="3553"/>
+        <source>Attach to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3560"/>
+        <location filename="../mainwindow.ui" line="5578"/>
+        <source>Set as Boss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="3630"/>
         <location filename="../mainwindow.ui" line="5564"/>
         <source>Doesn&apos;t move</source>
@@ -3085,62 +3141,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3644"/>
         <source>Contains of current NPC-Container</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3261"/>
-        <location filename="../mainwindow.ui" line="5186"/>
-        <location filename="../mainwindow.ui" line="5398"/>
-        <location filename="../mainwindow.ui" line="5537"/>
-        <location filename="../mainwindow.ui" line="6344"/>
-        <location filename="../mainwindow.ui" line="6466"/>
-        <location filename="../mainwindow.ui" line="6588"/>
-        <location filename="../mainwindow.ui" line="6761"/>
-        <location filename="../mainwindow.ui" line="6957"/>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="213"/>
-        <source>Section modifications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="310"/>
-        <source>Custom data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="368"/>
-        <source>Script</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="375"/>
-        <source>Switch Compiler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3272"/>
-        <source>Warp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3277"/>
-        <source>Projectile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3291"/>
-        <location filename="../mainwindow.ui" line="3689"/>
-        <location filename="../mainwindow.ui" line="5623"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="330"/>
-        <source>Direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3363"/>
-        <source>Delay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3218,11 +3218,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4280"/>
-        <source>Set moving layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="4194"/>
         <location filename="../mainwindow.ui" line="4325"/>
         <source>Horisontal speed:</source>
@@ -3240,6 +3235,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="4227"/>
         <location filename="../mainwindow.ui" line="4352"/>
         <source>Vertical speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="4280"/>
+        <source>Set moving layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4670,59 +4670,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/edit/edit_clipboard.cpp" line="33"/>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/edit/edit_clipboard.cpp" line="44"/>
-        <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/edit/edit_clipboard.cpp" line="60"/>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/edit/edit_clipboard.cpp" line="71"/>
-        <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/wld_world_settings.cpp" line="338"/>
-        <location filename="../main_window/file/file_save.cpp" line="30"/>
-        <location filename="../main_window/file/file_save.cpp" line="76"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
-        <location filename="../main_window/tools/data_configs.cpp" line="29"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="30"/>
-        <source>Reloading configurations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="62"/>
-        <source>Reloading configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="63"/>
-        <source>Configuration succesfully reloaded!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="98"/>
-        <source>Configuration changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="98"/>
-        <source>The Configuration was switched!
-To start work with new configuration, please restart application.</source>
+        <location filename="../main_window/dock/bookmark_box.cpp" line="168"/>
+        <source>Rename Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5087,8 +5036,79 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/dock/wld_world_settings.cpp" line="338"/>
+        <location filename="../main_window/file/file_save.cpp" line="30"/>
+        <location filename="../main_window/file/file_save.cpp" line="76"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="29"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="339"/>
         <source>Counting stars...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/edit/edit_clipboard.cpp" line="33"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/edit/edit_clipboard.cpp" line="44"/>
+        <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/edit/edit_clipboard.cpp" line="60"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/edit/edit_clipboard.cpp" line="71"/>
+        <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_new.cpp" line="41"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="38"/>
+        <source>Open file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="130"/>
+        <source>Level file loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="192"/>
+        <location filename="../main_window/file/file_reload.cpp" line="213"/>
+        <source>World map file loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="210"/>
+        <source>NPC Config loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="300"/>
+        <source>Game save statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="307"/>
+        <source>Bad file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="308"/>
+        <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5129,42 +5149,6 @@ File not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="192"/>
-        <location filename="../main_window/file/file_reload.cpp" line="213"/>
-        <source>World map file loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_new.cpp" line="41"/>
-        <source>Create new NPC.txt configuration file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_open.cpp" line="130"/>
-        <source>Level file loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_open.cpp" line="210"/>
-        <source>NPC Config loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_open.cpp" line="300"/>
-        <source>Game save statistics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_open.cpp" line="307"/>
-        <source>Bad file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/file_open.cpp" line="308"/>
-        <source>This file have unknown extension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/file/file_save.cpp" line="30"/>
         <source>Saving of file...</source>
         <translation type="unfinished"></translation>
@@ -5187,42 +5171,54 @@ File not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="38"/>
-        <source>Open file</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
+        <source>Clonning of section...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="47"/>
-        <source>Engine is not found</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="57"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="200"/>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="48"/>
-        <source>Can&apos;t start testing, engine is not found: 
-%1
-Please, check the application directory.</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="222"/>
+        <source>Section has been clonned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="56"/>
-        <source>Engine already runned</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="223"/>
+        <source>Section has been successfully clonned!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="57"/>
-        <source>Engine is already testing another level.
-Please exit from engine and try again.</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="236"/>
+        <source>Remove section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="84"/>
-        <source>Dummy</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="237"/>
+        <source>Do you want to remove all objects of this section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="85"/>
-        <source>Sorry, the testing feature is under construction.
-Settings will available soon.</source>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="243"/>
+        <source>Margin of section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="244"/>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="307"/>
+        <source>Section has been removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="308"/>
+        <source>Section %1 has been successfully deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5272,111 +5268,6 @@ Settings will available soon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="210"/>
-        <source>Current Language changed to %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/bookmark_box.cpp" line="168"/>
-        <source>Rename Bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
-        <source>Clonning of section...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="222"/>
-        <source>Section has been clonned</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="223"/>
-        <source>Section has been successfully clonned!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="236"/>
-        <source>Remove section</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="237"/>
-        <source>Do you want to remove all objects of this section?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="243"/>
-        <source>Margin of section</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="244"/>
-        <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="307"/>
-        <source>Section has been removed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="308"/>
-        <source>Section %1 has been successfully deleted!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="42"/>
-        <source>Select directory with custom data to import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="143"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="160"/>
-        <source>File is untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="144"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="161"/>
-        <source>File doesn&apos;t use custom graphics.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="194"/>
-        <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
-        <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
-        <source>Fixing of masks...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="57"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="200"/>
-        <source>Please wait...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="229"/>
-        <source>Done</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="230"/>
-        <source>Masks has been fixed!
-Please reload current file to apply result.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/script/script_compile.cpp" line="44"/>
         <location filename="../main_window/script/script_compile.cpp" line="67"/>
         <source>Already exsist</source>
@@ -5421,6 +5312,115 @@ Overwrite?</source>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="86"/>
         <source>Sucessfully compiled to %1/lunadll.txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="47"/>
+        <source>Engine is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="48"/>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, check the application directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="56"/>
+        <source>Engine already runned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="57"/>
+        <source>Engine is already testing another level.
+Please exit from engine and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="84"/>
+        <source>Dummy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="85"/>
+        <source>Sorry, the testing feature is under construction.
+Settings will available soon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs.cpp" line="30"/>
+        <source>Reloading configurations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs.cpp" line="62"/>
+        <source>Reloading configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs.cpp" line="63"/>
+        <source>Configuration succesfully reloaded!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs.cpp" line="98"/>
+        <source>Configuration changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs.cpp" line="98"/>
+        <source>The Configuration was switched!
+To start work with new configuration, please restart application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="42"/>
+        <source>Select directory with custom data to import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="143"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="160"/>
+        <source>File is untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="144"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="161"/>
+        <source>File doesn&apos;t use custom graphics.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="194"/>
+        <source>Nothing to do</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
+        <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
+        <source>Fixing of masks...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="229"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="230"/>
+        <source>Masks has been fixed!
+Please reload current file to apply result.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/translator.cpp" line="210"/>
+        <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5846,6 +5846,36 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QTranslator</name>
     <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="335"/>
+        <source>Cut top here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="336"/>
+        <source>Cut bottom here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="337"/>
+        <source>Cut left here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="338"/>
+        <source>Cut right here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="341"/>
+        <source>Don&apos;t snap to grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/resizer/item_resizer.cpp" line="345"/>
+        <source>Disable minimal size limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../file_formats/file_formats.cpp" line="81"/>
         <location filename="../file_formats/file_formats.cpp" line="117"/>
         <source>File open error</source>
@@ -5878,36 +5908,6 @@ File: %1
     <message>
         <location filename="../file_formats/file_formats.cpp" line="156"/>
         <source>Line Data: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="335"/>
-        <source>Cut top here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="336"/>
-        <source>Cut bottom here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="337"/>
-        <source>Cut left here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="338"/>
-        <source>Cut right here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="341"/>
-        <source>Don&apos;t snap to grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/resizer/item_resizer.cpp" line="345"/>
-        <source>Disable minimal size limit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6414,6 +6414,48 @@ Bottom:	%4</source>
 <context>
     <name>WldScene</name>
     <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="51"/>
+        <source>Search User Tiles %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="123"/>
+        <source>Search User Sceneries %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="189"/>
+        <source>Search User Paths %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="255"/>
+        <source>Search User Levels %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="326"/>
+        <source>Wrong custom images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="327"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/wld_control.cpp" line="239"/>
+        <source>Tiles:		%1
+Sceneries:			%2
+Paths:	%3
+Levels:	%4
+Music boxes:		%5
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="306"/>
         <source>Undone: %1</source>
         <translation type="unfinished"></translation>
@@ -6549,48 +6591,6 @@ Bottom:	%4</source>
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../editing/_scenes/world/wld_control.cpp" line="239"/>
-        <source>Tiles:		%1
-Sceneries:			%2
-Paths:	%3
-Levels:	%4
-Music boxes:		%5
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="51"/>
-        <source>Search User Tiles %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="123"/>
-        <source>Search User Sceneries %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="189"/>
-        <source>Search User Paths %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="255"/>
-        <source>Search User Levels %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="326"/>
-        <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="327"/>
-        <source>This level have a wrong custom graphics files.
-You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
-Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>WorldEdit</name>
@@ -6627,32 +6627,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../editing/edit_world/wld_draw.cpp" line="87"/>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="90"/>
-        <source>Export selected area to image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="94"/>
-        <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="103"/>
-        <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
-        <location filename="../main_window/file/wld_export_image.cpp" line="103"/>
-        <source>Abort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="104"/>
-        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6803,6 +6777,12 @@ because object configurations are not loaded
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="103"/>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
         <source>Loading World data</source>
         <translation type="unfinished"></translation>
@@ -6821,6 +6801,26 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="448"/>
         <source>Episode title: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/wld_export_image.cpp" line="90"/>
+        <source>Export selected area to image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/wld_export_image.cpp" line="94"/>
+        <source>PNG Image (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/wld_export_image.cpp" line="103"/>
+        <source>Saving section image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/wld_export_image.cpp" line="104"/>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

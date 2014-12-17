@@ -167,6 +167,10 @@ public:
         void startAnimation();
         void stopAnimation();
 
+        void getConfig_Block(unsigned long item_id, long &array_index, long &animator_id, obj_block &mergedSet, bool *ok=0);
+        void getConfig_BGO(unsigned long item_id, long &array_index, long &animator_id, obj_bgo &mergedSet, bool *ok=0);
+        void getConfig_NPC(unsigned long item_id, long &array_index, long &animator_id, obj_npc &mergedSet, bool *ok=0);
+
         // ///////////////////Init Level/////////////////////////
         void loadUserData(QProgressDialog &progress);  //!< Load custom graphics and item settings
 
@@ -212,6 +216,7 @@ public:
         #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
         #define ITEM_WIDTH                   9 //int
         #define ITEM_HEIGHT                  10 //int
+        #define ITEM_IS_ITEM                 24 //bool
         #define ITEM_IS_CURSOR               25 //bool
 
         long IncrementingNpcSpecialSpin;

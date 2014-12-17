@@ -153,11 +153,34 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(lMessage.constData());
         abort();
     }
+
     QFile outFile(DebugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
     outFile.close();
+
+    if(!DevConsole::isConsoleShown())
+        return;
+
+    switch (type)
+    {
+    case QtDebugMsg:
+        DevConsole::log(msg, QString("Debug"));
+        break;
+    case QtWarningMsg:
+        DevConsole::log(msg, QString("Warning"));
+        break;
+    case QtCriticalMsg:
+        DevConsole::log(msg, QString("Critical"));
+        break;
+    case QtFatalMsg:
+        DevConsole::log(msg, QString("Fatal"));
+        break;
+    default:
+        DevConsole::log(msg);
+        break;
+    }
 }
 
 

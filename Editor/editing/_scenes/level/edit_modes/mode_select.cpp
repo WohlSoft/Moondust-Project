@@ -47,13 +47,13 @@ void LVL_ModeSelect::set()
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
+    s->resetCursor();
+    s->resetResizers();
+
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
     s->DrawMode=false;
     s->disableMoveItems=false;
-
-    s->resetCursor();
-    s->resetResizers();
 
     s->_viewPort->setInteractive(true);
     s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
@@ -92,8 +92,8 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
             if(s->selectedItems().size()==1)
             {
                 QGraphicsItem * it = s->selectedItems().first();
-                QString itp = it->data(0).toString();
-                long itd = it->data(1).toInt();
+                QString itp = it->data(ITEM_TYPE).toString();
+                long itd = it->data(ITEM_ID).toInt();
                 if(itp=="Block")
                 {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd); return;}
                 else if(itp=="BGO")
@@ -160,7 +160,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if ((!selectedList.isEmpty())&&(s->mouseMoved))
     {
         //Set Grid Size/Offset, sourcePosition
-        setItemSourceData(selectedList.first(), selectedList.first()->data(0).toString());
+        setItemSourceData(selectedList.first(), selectedList.first()->data(ITEM_TYPE).toString());
         //Check first selected element is it was moved
         if( (sourcePos == QPoint(
                  (long)(selectedList.first()->scenePos().x()),
@@ -195,10 +195,10 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin();
              it != selectedList.end(); it++)
         { ////////////////////////SECOND FETCH///////////////////////
-           ObjType = (*it)->data(0).toString();
+           ObjType = (*it)->data(ITEM_TYPE).toString();
 
            /////////////////////////GET DATA///////////////
-           setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
+           setItemSourceData((*it), (*it)->data(ITEM_TYPE).toString()); //Set Grid Size/Offset, sourcePosition
            /////////////////////////GET DATA/////////////////////
 
            //Check position

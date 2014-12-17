@@ -16,43 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OBJ_BG_H
-#define OBJ_BG_H
+#include "lvl_base_item.h"
 
-#include <QString>
-#include <QPixmap>
+LvlBaseItem::LvlBaseItem()
+{}
 
-struct obj_BG{
+LvlBaseItem::~LvlBaseItem()
+{}
 
-    unsigned long id;
-    QString name;
+void LvlBaseItem::arrayApply()
+{}
 
-    QString image_n;
+void LvlBaseItem::returnBack()
+{}
 
-    QPixmap image;
-    unsigned int type;//convert from string
-    float repeat_h;
-    unsigned int repead_v;
-    unsigned int attached;
-    bool editing_tiled;
-    bool animated;
-    unsigned int frames;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+void LvlBaseItem::removeFromArray()
+{}
 
-    unsigned int display_frame;
+void LvlBaseItem::setLayer(QString layer)
+{
+    Q_UNUSED(layer);
+}
 
-    bool magic;
-    unsigned int magic_strips;
-    QString magic_splits;
-    QString magic_speeds;
+int LvlBaseItem::getGridSize()
+{
+    return 1;
+}
 
-    QString second_image_n;
-    QPixmap second_image;
+QPoint LvlBaseItem::gridOffset()
+{
+    return QPoint(0,0);
+}
 
-    float second_repeat_h;
-    unsigned int second_repeat_v;
-    unsigned int second_attached;
+QPoint LvlBaseItem::sourcePos()
+{
+    return QPoint(0,0);
+}
 
-};
-
-#endif // OBJ_BG_H

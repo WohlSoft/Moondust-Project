@@ -16,43 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OBJ_BG_H
-#define OBJ_BG_H
+#ifndef OBJ_ROTATION_TABLE_H
+#define OBJ_ROTATION_TABLE
 
-#include <QString>
-#include <QPixmap>
 
-struct obj_BG{
 
-    unsigned long id;
-    QString name;
-
-    QString image_n;
-
-    QPixmap image;
-    unsigned int type;//convert from string
-    float repeat_h;
-    unsigned int repead_v;
-    unsigned int attached;
-    bool editing_tiled;
-    bool animated;
-    unsigned int frames;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-    unsigned int display_frame;
-
-    bool magic;
-    unsigned int magic_strips;
-    QString magic_splits;
-    QString magic_speeds;
-
-    QString second_image_n;
-    QPixmap second_image;
-
-    float second_repeat_h;
-    unsigned int second_repeat_v;
-    unsigned int second_attached;
-
+///
+/// \brief The obj_rotation_table struct
+///
+/// Defining the transformation rule when you try to rotate or flip selected item
+///
+struct obj_rotation_table
+{
+    int type;           //!< Item type index
+    long id;            //!< Item ID
+    long rotate_left;   //!< Transform into ID on rotate left
+    long rotate_right;  //!< Transform into ID on rotate right
+    long flip_h;        //!< Transform into ID on flip horizontal
+    long flip_v;        //!< Transform into ID on flip vertical
 };
 
-#endif // OBJ_BG_H
+#endif
+
+

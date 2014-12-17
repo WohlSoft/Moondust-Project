@@ -65,6 +65,8 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -525,6 +527,11 @@ void ItemNPC::changeDirection(int dir)
     arrayApply();
 }
 
+void ItemNPC::transformTo(long target_id)
+{
+
+}
+
 void ItemNPC::setIncludedNPC(int npcID, bool init)
 {
     if(DisableScene)
@@ -730,6 +737,27 @@ void ItemNPC::removeFromArray()
             scene->LvlData->npc.remove(i); break;
         }
     }
+}
+
+
+void ItemNPC::returnBack()
+{
+    this->setPos(npcData.x, npcData.y);
+}
+
+QPoint ItemNPC::gridOffset()
+{
+    return QPoint(localProps.grid_offset_x, localProps.grid_offset_y);
+}
+
+int ItemNPC::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemNPC::sourcePos()
+{
+    return QPoint(npcData.x, npcData.y);
 }
 
 

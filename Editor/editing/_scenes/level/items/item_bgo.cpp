@@ -31,6 +31,19 @@
 ItemBGO::ItemBGO(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    setScenePoint(parentScene);
+    scene->addItem(this);
+}
+
+void ItemBGO::construct()
+{
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
@@ -44,6 +57,9 @@ ItemBGO::ItemBGO(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    setData(ITEM_TYPE, "BGO");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -52,6 +68,7 @@ ItemBGO::~ItemBGO()
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
 }
+
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -127,9 +144,9 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             this->setSelected(1);
-            ItemMenu->clear();
+            QMenu ItemMenu;
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
+            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
             LayerName->deleteLater();
 
             QAction *setLayer;
@@ -151,13 +168,16 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setLayer->deleteLater();
                 layerItems.push_back(setLayer);
             }
-            ItemMenu->addSeparator()->deleteLater();
+            ItemMenu.addSeparator()->deleteLater();
+
+            QAction *transform = ItemMenu.addAction(tr("Transform into"));
+                transform->deleteLater();
 
             bool isLvlx = !scene->LvlData->smbx64strict;
 
-            QAction *ZOffset = ItemMenu->addAction(tr("Change Z-Offset..."));
+            QAction *ZOffset = ItemMenu.addAction(tr("Change Z-Offset..."));
             ZOffset->setEnabled(isLvlx);
-            QMenu *ZMode = ItemMenu->addMenu(tr("Z-Layer"));
+            QMenu *ZMode = ItemMenu.addMenu(tr("Z-Layer"));
             ZMode->setEnabled(isLvlx);
 
             QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
@@ -176,19 +196,19 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             ZMode_fg2->setCheckable(true);
             ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
 
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+            ItemMenu.addSeparator()->deleteLater();
+            QAction *copyBGO = ItemMenu.addAction(tr("Copy"));
             copyBGO->deleteLater();
-            QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
+            QAction *cutBGO = ItemMenu.addAction(tr("Cut"));
             cutBGO->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
+            ItemMenu.addSeparator()->deleteLater();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
             remove->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *props = ItemMenu->addAction(tr("Properties..."));
+            ItemMenu.addSeparator()->deleteLater();
+            QAction *props = ItemMenu.addAction(tr("Properties..."));
             props->deleteLater();
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -287,6 +307,23 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             }
             else
+            if(selected==transform)
+            {
+                bool ok=false;
+                int transformTO;
+                transformTO = QInputDialog::getInt(NULL, "Target BGO ID",
+                                                   "Please enter target BGO ID which you want to set",
+                                                  0,0,2147483600,1,&ok);
+                if(ok)
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                    {
+                        ((ItemBGO *) SelItem)->transformTo(transformTO);
+                    }
+                }
+            }
+            else
             if(selected==props)
             {
                 scene->openProps();
@@ -317,10 +354,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-//    else
-//    {
-        QGraphicsItem::contextMenuEvent(event);
-//    }
+    QGraphicsItem::contextMenuEvent(event);
 }
 
 
@@ -394,9 +428,58 @@ void ItemBGO::removeFromArray()
     }
 }
 
-void ItemBGO::setBGOData(LevelBGO inD)
+void ItemBGO::returnBack()
+{
+    setPos(bgoData.x, bgoData.y);
+}
+
+QPoint ItemBGO::gridOffset()
+{
+    return QPoint(gridOffsetX, gridOffsetY);
+}
+
+int ItemBGO::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemBGO::sourcePos()
+{
+    return QPoint(bgoData.x, bgoData.y);
+}
+
+void ItemBGO::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
+}
+
+
+void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 {
     bgoData = inD;
+
+    if(mergedSet)
+    {
+        localProps = (*mergedSet);
+        zMode       = localProps.view;
+        zOffset     = localProps.zOffset;
+        gridSize    = localProps.grid;
+        gridOffsetX = localProps.offsetX;
+        gridOffsetY = localProps.offsetY;
+        setZMode(bgoData.z_mode, bgoData.z_offset, true);
+    }
+
+    if(animator_id)
+    {
+        setAnimator( (*animator_id) );
+    }
+
+    setPos(bgoData.x, bgoData.y);
+
+    setData(ITEM_ID, QString::number(bgoData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(bgoData.array_id) );
 }
 
 void ItemBGO::setZMode(int mode, qreal offset, bool init)
@@ -437,6 +520,25 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
     if(!init) arrayApply();
 }
 
+void ItemBGO::transformTo(long target_id)
+{
+    if(target_id<1) return;
+
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_bgo mergedSet;
+
+    //Get BGO settings
+    scene->getConfig_BGO((unsigned long)target_id, item_i, animator, mergedSet, &noimage);
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    bgoData.id = target_id;
+    setBGOData(bgoData, &mergedSet, &animator);
+    arrayApply();
+}
 
 QRectF ItemBGO::boundingRect() const
 {
@@ -464,10 +566,6 @@ void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
     }
 }
 
-void ItemBGO::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
-}
 
 void ItemBGO::setScenePoint(LvlScene *theScene)
 {
@@ -487,8 +585,6 @@ void ItemBGO::setAnimator(long aniID)
 
     this->setData(ITEM_WIDTH,  QString::number(qRound(imageSize.width())) ); //width
     this->setData(ITEM_HEIGHT, QString::number(qRound(imageSize.height())) ); //height
-
-    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
 
     animatorID = aniID;
 }

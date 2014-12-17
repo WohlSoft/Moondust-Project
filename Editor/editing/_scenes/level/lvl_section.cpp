@@ -152,10 +152,10 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
 
     foreach (QGraphicsItem * findBG, items() )
     {
-        if(findBG->data(0).toString()== QString("BackGround%1").arg(LvlData->sections[sctID].id) )
+        if(findBG->data(ITEM_TYPE).toString()== QString("BackGround%1").arg(LvlData->sections[sctID].id) )
         {
             #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, QString("Remove items "+findBG->data(0).toString()+" by id="+QString::number(sctID)+" by SctID="+QString::number(LvlData->sections[sctID].id)) );
+            WriteToLog(QtDebugMsg, QString("Remove items "+findBG->data(ITEM_TYPE).toString()+" by id="+QString::number(sctID)+" by SctID="+QString::number(LvlData->sections[sctID].id)) );
             #endif
             removeItem(findBG);
             if(findBG) delete findBG;
@@ -261,7 +261,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
             DrawBG(x, y, w, h, section.id, img, img2, pConfigs->main_bg[j], forceTiled);
             //BgItem[section.id]->setParentItem(item);
             //addItem(item);
-            //item->setData(0, "BackGround"+QString::number(section.id) );
+            //item->setData(ITEM_TYPE, "BackGround"+QString::number(section.id) );
             //item->setPos(x, y);
         }
         else
@@ -281,7 +281,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 
         if(itemRect!=NULL)
         {
-            itemRect->setData(0, QString("BackGround%1").arg(section.id) );
+            itemRect->setData(ITEM_TYPE, QString("BackGround%1").arg(section.id) );
             itemRect->setZValue(Z_backImage);
         }
 
@@ -368,14 +368,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         // /////////////////////Draw row//////////////////
 
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
-        item->setData(0, QString("BackGround%1").arg(sctID) );
+        item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
         item->setZValue(Z_backImage);
 
         if(R1H < sctH)
         {
             item = addRect(0, 0, sctW, sctH-R1H, Qt::NoPen, QBrush(FillColor));
-            item->setData(0, QString("BackGround%1").arg(sctID) );
+            item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y+RectPlus);
             item->setZValue(Z_backImage);
         }
@@ -411,7 +411,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
         // /////////////////////Draw first row//////////////////
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
-        item->setData(0, QString("BackGround%1").arg(sctID) );
+        item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
         item->setZValue(Z_backImage);
         // /////////////////////Draw first row//////////////////
@@ -444,7 +444,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
             // /////////////////////Draw second row//////////////////
             item = addRect(0, 0, sctW, R2H-R2Hc, Qt::NoPen, QBrush( srcimg2.copy(0, R2Ho, R2W, R2H-R2Hc) ));
-            item->setData(0, QString("BackGround%1").arg(sctID) );
+            item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
             item->setPos(x, y+toY);
             item->setZValue(Z_backImage+0.0000000001);
             // /////////////////////Draw second row//////////////////
@@ -457,7 +457,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         if( R1H+RectPlus < sctH )
         {
             item = addRect(0, 0, sctW, sctH-R1H-RectPlus, Qt::NoPen, QBrush(FillColor));
-            item->setData(0, QString("BackGround%1").arg(sctID) );
+            item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(Z_backImage);
         }
@@ -486,14 +486,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item = addRect(0, 0, sctW, RectPlus, Qt::NoPen,
                            QBrush(srcimg.copy(0, R1H-RectPlus, R1W, RectPlus))
                            );
-            item->setData(0, QString("BackGround%1").arg(sctID) );
+            item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(Z_backImage);
 
             if(sctH >= R1H)
             {
                 item = addRect(0, 0, sctW, sctH-RectPlus, Qt::NoPen, QBrush(srcimg));
-                item->setData(0, "BackGround"+QString::number(sctID) );
+                item->setData(ITEM_TYPE, "BackGround"+QString::number(sctID) );
                 item->setPos(x,y+RectPlus);
                 item->setZValue(Z_backImage);
             }
@@ -503,14 +503,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         {
             //Attached to Top
             item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
-            item->setData(0, QString("BackGround%1").arg(sctID) );
+            item->setData(ITEM_TYPE, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(Z_backImage);
         }
     }
 
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, "acceptedID is "+QString::number(sctID)+" data is "+item->data(0).toString());
+    WriteToLog(QtDebugMsg, "acceptedID is "+QString::number(sctID)+" data is "+item->data(ITEM_TYPE).toString());
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
     #endif
 }
@@ -529,12 +529,12 @@ void LvlScene::drawSpace()
     #endif
     foreach(QGraphicsItem * spaceItem, items())
     {
-        if(spaceItem->data(0).toString()=="Space")
+        if(spaceItem->data(ITEM_TYPE).toString()=="Space")
         {
             removeItem(spaceItem); delete spaceItem;
             continue;
         }
-        if(spaceItem->data(0).toString()=="SectionBorder")
+        if(spaceItem->data(ITEM_TYPE).toString()=="SectionBorder")
         {
             removeItem(spaceItem); delete spaceItem;
             continue;
@@ -630,8 +630,8 @@ void LvlScene::drawSpace()
     item->setZValue(Z_sys_interspace1);
     item2->setZValue(Z_sys_sctBorder);
     item->setOpacity(qreal(0.4));
-    item->setData(0, "Space");
-    item2->setData(0, "SectionBorder");
+    item->setData(ITEM_TYPE, "Space");
+    item2->setData(ITEM_TYPE, "SectionBorder");
 }
 
 
