@@ -31,6 +31,19 @@
 ItemBGO::ItemBGO(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    setScenePoint(parentScene);
+    scene->addItem(this);
+}
+
+void ItemBGO::construct()
+{
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
@@ -55,6 +68,7 @@ ItemBGO::~ItemBGO()
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
 }
+
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -434,6 +448,13 @@ QPoint ItemBGO::sourcePos()
     return QPoint(bgoData.x, bgoData.y);
 }
 
+void ItemBGO::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
+}
+
 
 void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 {
@@ -454,6 +475,8 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
     {
         setAnimator( (*animator_id) );
     }
+
+    setPos(bgoData.x, bgoData.y);
 
     setData(ITEM_ID, QString::number(bgoData.id) );
     setData(ITEM_ARRAY_ID, QString::number(bgoData.array_id) );
@@ -514,6 +537,7 @@ void ItemBGO::transformTo(long target_id)
 
     bgoData.id = target_id;
     setBGOData(bgoData, &mergedSet, &animator);
+    arrayApply();
 }
 
 QRectF ItemBGO::boundingRect() const

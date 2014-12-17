@@ -44,13 +44,15 @@ class ItemBlock : public QObject,
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
+    ItemBlock(LvlScene *parentScene, QGraphicsItem *parent=0);
     ItemBlock(QGraphicsItem *parent=0);
     ~ItemBlock();
+private:
+    void construct();
 
+public:
     void setMainPixmap(/*const QPixmap &pixmap*/);
-    void setBlockData(LevelBlock inD, bool is_sz);
-    void setContextMenu(QMenu &menu);
-
+    void setBlockData(LevelBlock inD, obj_block *mergedSet=0, long *animator=0);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
@@ -58,8 +60,6 @@ public:
 
     //////Animation////////
     void setAnimator(long aniID);
-
-    QMenu *ItemMenu;
 
     //Block specific
     void setSlippery(bool slip);
@@ -80,6 +80,8 @@ public:
     QPoint sourcePos();
 
     LevelBlock blockData;
+    obj_block localProps;
+
     int gridSize;
 
     //Locks
