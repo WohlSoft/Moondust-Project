@@ -97,7 +97,7 @@ void LvlScene::getConfig_BGO(unsigned long item_id, long &array_index, long &ani
         if(j<pConfigs->main_bgo.size())
         {
         if(pConfigs->main_bgo[j].id == item_id)
-            found=true;
+            found=true;noimage=false;
         }
     }
 
