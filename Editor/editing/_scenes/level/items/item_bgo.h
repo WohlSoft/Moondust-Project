@@ -47,15 +47,11 @@ public:
     ItemBGO(QGraphicsItem *parent=0);
     ~ItemBGO();
 
-    void setBGOData(LevelBGO inD);
-    void setContextMenu(QMenu &menu);
+    void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
-
 
     //////Animation////////
     void setAnimator(long aniID);
@@ -75,6 +71,7 @@ public:
     QPoint sourcePos();
 
     LevelBGO bgoData;
+    obj_bgo localProps;
 
     int gridSize;
     int gridOffsetX;
