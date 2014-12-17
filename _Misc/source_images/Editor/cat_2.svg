@@ -10,9 +10,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:export-ydpi="150"
-   inkscape:export-xdpi="150"
-   inkscape:export-filename="V:\engine.wohlnet.ru\docs\docs\_files_for_posts\Logo_2\cat_3.png"
+   inkscape:export-ydpi="48.000286"
+   inkscape:export-xdpi="48.000286"
+   inkscape:export-filename="D:\Developer\__GitHubRepos\PlatGEnWohl\Engine\_resources\icon\cat_256.png"
    style="enable-background:new"
    sodipodi:docname="cat_2.svg"
    inkscape:version="0.48.4 r"
@@ -586,7 +586,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.8455487"
      inkscape:cx="290.04063"
-     inkscape:cy="123.96908"
+     inkscape:cy="232.33794"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="false"
@@ -671,7 +671,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
