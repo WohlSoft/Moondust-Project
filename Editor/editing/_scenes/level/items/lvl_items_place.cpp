@@ -31,52 +31,54 @@
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
-    bool noimage=true, found=false;
-    int j, item_i=0;
+    bool noimage=true;
+    long item_i=0;
     long animator=0;
 
     ItemBlock *BlockImage = new ItemBlock;
 
+    getConfig_Block(block.id, item_i, animator, &noimage);
+
     //Check Index exists
-    if(block.id < (unsigned int)index_blocks.size())
-    {
-        j = index_blocks[block.id].i;
-        item_i = j;
-        animator = index_blocks[block.id].ai;
+//    if(block.id < (unsigned int)index_blocks.size())
+//    {
+//        j = index_blocks[block.id].i;
+//        item_i = j;
+//        animator = index_blocks[block.id].ai;
 
-        if(j<pConfigs->main_block.size())
-        {
-            if(pConfigs->main_block[j].id == block.id)
-            {
-                found=true;noimage=false;
-            }
-        //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Index: %1[i=%2], value: %3").arg(block.id).arg(j).arg(pConfigs->main_block[j].id));
-        }
-    }
+//        if(j<pConfigs->main_block.size())
+//        {
+//            if(pConfigs->main_block[j].id == block.id)
+//            {
+//                found=true;noimage=false;
+//            }
+//        //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Index: %1[i=%2], value: %3").arg(block.id).arg(j).arg(pConfigs->main_block[j].id));
+//        }
+//    }
 
 
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_block.size();j++)
-        {
-            if(pConfigs->main_block[j].id==block.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-            }
-        }
-    }
+//    //if Index found
+//    if(!found)
+//    {
+//        for(j=0;j<pConfigs->main_block.size();j++)
+//        {
+//            if(pConfigs->main_block[j].id==block.id)
+//            {
+//                noimage=false;
+//                item_i = j;
+//                break;
+//            }
+//        }
+//    }
 
-    if(noimage)
-    {
-        if(j >= pConfigs->main_block.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
+//    if(noimage)
+//    {
+//        if(j >= pConfigs->main_block.size())
+//        {
+//            j=0;
+//            item_i = j;
+//        }
+//    }
 
     BlockImage->setBlockData(block, pConfigs->main_block[item_i].sizable);
     BlockImage->gridSize = pConfigs->main_block[item_i].grid;
@@ -123,7 +125,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     }
     //////////////////////////////////////////////////////////////////////////////////
 
-    if(pConfigs->main_block[j].sizable)
+    if(pConfigs->main_block[item_i].sizable)
     {
         BlockImage->setMainPixmap();
         BlockImage->setZValue( Z_blockSizable + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
@@ -131,7 +133,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     }
     else
     {
-        if(pConfigs->main_block[j].view==1)
+        if(pConfigs->main_block[item_i].view==1)
             BlockImage->setZValue(Z_BlockFore); // applay lava block Z
         else
             BlockImage->setZValue(Z_Block); // applay standart block Z
@@ -145,7 +147,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     BlockImage->setData(ITEM_ARRAY_ID, QString::number(block.array_id) );
 
 
-    if(pConfigs->main_block[j].sizable)
+    if(pConfigs->main_block[item_i].sizable)
     {
         BlockImage->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
     }

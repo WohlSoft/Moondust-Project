@@ -167,6 +167,8 @@ public:
         void startAnimation();
         void stopAnimation();
 
+        void getConfig_Block(unsigned long item_id, long &array_index, long &animator_id, bool *ok=0);
+
         // ///////////////////Init Level/////////////////////////
         void loadUserData(QProgressDialog &progress);  //!< Load custom graphics and item settings
 

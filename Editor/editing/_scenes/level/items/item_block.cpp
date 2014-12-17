@@ -409,38 +409,12 @@ void ItemBlock::transformTo(long target_id)
 {
     if(target_id<1) return;
 
-    bool noimage=true, found=false;
-    int j, item_i=0;
+    bool noimage=true;
+    long item_i=0;
     long animator=0;
 
-    //Check Index exists
-    if(target_id < scene->index_blocks.size())
-    {
-        j = scene->index_blocks[target_id].i;
-        item_i = j;
-        animator = scene->index_blocks[target_id].ai;
-
-        if(j < scene->pConfigs->main_block.size())
-        {
-            if(scene->pConfigs->main_block[j].id == blockData.id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-    if(!found)
-    {
-        for(j=0;j<scene->pConfigs->main_block.size();j++)
-        {
-            if(scene->pConfigs->main_block[j].id==blockData.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-            }
-        }
-    }
+    //Get block settings
+    scene->getConfig_Block(target_id, item_i, animator, &noimage);
 
     if(noimage)
         return;//Don't transform, target item is not found
@@ -448,6 +422,7 @@ void ItemBlock::transformTo(long target_id)
     blockData.id = target_id;
 
     sizable = scene->pConfigs->main_block[item_i].sizable;
+
     imageSize = QRectF(0,0,blockData.w, blockData.h);
 
     this->gridSize = scene->pConfigs->main_block[item_i].grid;
@@ -472,7 +447,7 @@ void ItemBlock::transformTo(long target_id)
     }
     else
     {
-        if(scene->pConfigs->main_block[j].view==1)
+        if(scene->pConfigs->main_block[item_i].view==1)
             this->setZValue(scene->Z_BlockFore); // applay lava block Z
         else
             this->setZValue(scene->Z_Block); // applay standart block Z
