@@ -111,6 +111,13 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 }
 
 
+
+
+
+
+
+
+
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
     long item_i = 0;
@@ -119,8 +126,6 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     obj_bgo mergedSet;
 
     getConfig_BGO(bgo.id, item_i, animator, mergedSet, &noimage);
-
-    ItemBGO *BGOItem = new ItemBGO;
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
@@ -131,48 +136,14 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         bgo.y = newPos.y();
     }
 
+    ItemBGO *BGOItem = new ItemBGO;
     BGOItem->setScenePoint(this);
-
-    BGOItem->setBGOData(bgo);
-    BGOItem->gridSize = mergedSet.grid;
-    BGOItem->gridOffsetX = mergedSet.offsetX;
-    BGOItem->gridOffsetY = mergedSet.offsetY;
-    BGOItem->setAnimator(animator);
-    BGOItem->setContextMenu(bgoMenu);
+    BGOItem->setBGOData(bgo, &mergedSet, &animator);
     addItem(BGOItem);
-
-
-    #ifdef _DEBUG_
-        WriteToLog(QtDebugMsg, QString("BGO Item-> grid config value %1").arg(mergedSet.grid));
-        WriteToLog(QtDebugMsg, QString("BGO Item-> grid value %1").arg(BGOItem->gridSize));
-        WriteToLog(QtDebugMsg, QString("BGO Item-> j value %1").arg(j));
-    #endif
-
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
-
     BGOItem->setPos( QPointF(newPos) );
-
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 2 %1 %2").arg(newPos.x()).arg(newPos.y()));
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 3 %1 %2").arg(BGOItem->pos().x()).arg(BGOItem->pos().y()));
-
-
-    if((!noimage) && (mergedSet.animated))
-    {
-        //tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
-        //BGOItem->setAnimation(pConfigs->main_bgo[j].frames, pConfigs->main_bgo[j].framespeed);
-        BGOItem->setData(4, "animated");
-    }
 
     BGOItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
     BGOItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
-
-    BGOItem->setData(ITEM_TYPE, "BGO");
-    BGOItem->setData(ITEM_ID, QString::number(bgo.id) );
-    BGOItem->setData(ITEM_ARRAY_ID, QString::number(bgo.array_id) );
-
-    BGOItem->zMode = mergedSet.view;
-    BGOItem->zOffset = mergedSet.zOffset;
-    BGOItem->setZMode(bgo.z_mode, bgo.z_offset, true);
 
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
