@@ -109,7 +109,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_pt.ts \
     languages/editor_ja.ts \
     languages/editor_zh.ts \
-    languages/editor_bg.ts
+    languages/editor_bg.ts \
+    languages/editor_id.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -336,7 +337,8 @@ SOURCES += main.cpp\
     file_formats/save_filedata.cpp \
     common_features/resizer/corner_grabber.cpp \
     data_configs/conf_rotation_tables.cpp \
-    editing/_scenes/level/items/lvl_base_item.cpp
+    editing/_scenes/level/items/lvl_base_item.cpp \
+    editing/_scenes/level/data_manager/lvl_config_index.cpp
     
 
 HEADERS  += defines.h \
