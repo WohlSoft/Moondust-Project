@@ -412,42 +412,40 @@ void ItemBlock::transformTo(long target_id)
     bool noimage=true;
     long item_i=0;
     long animator=0;
+    obj_block mergedSet;
 
     //Get block settings
-    scene->getConfig_Block(target_id, item_i, animator, &noimage);
+    scene->getConfig_Block(target_id, item_i, animator, mergedSet, &noimage);
 
     if(noimage)
         return;//Don't transform, target item is not found
 
     blockData.id = target_id;
 
-    sizable = scene->pConfigs->main_block[item_i].sizable;
+    sizable = mergedSet.sizable;
 
     imageSize = QRectF(0,0,blockData.w, blockData.h);
 
-    this->gridSize = scene->pConfigs->main_block[item_i].grid;
+    this->gridSize = mergedSet.grid;
 
     this->setAnimator(animator);
 
-    if((!noimage) && (scene->pConfigs->main_block[item_i].animated))
-    {
+    if((!noimage) && (mergedSet.animated))
         this->setData(4, "animated");
-    }
 
     if(blockData.npc_id != 0)
-    {
         this->setIncludedNPC(blockData.npc_id, true);
-    }
 
-    if(scene->pConfigs->main_block[item_i].sizable)
+    if(mergedSet.sizable)
     {
         this->setMainPixmap();
-        this->setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
+        this->setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000)
+                + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
         //sbZ += 0.0000000001;
     }
     else
     {
-        if(scene->pConfigs->main_block[item_i].view==1)
+        if(mergedSet.view==1)
             this->setZValue(scene->Z_BlockFore); // applay lava block Z
         else
             this->setZValue(scene->Z_Block); // applay standart block Z
@@ -455,10 +453,8 @@ void ItemBlock::transformTo(long target_id)
 
     this->setData(ITEM_ID, QString::number(blockData.id) );
 
-    if(scene->pConfigs->main_block[item_i].sizable)
-    {
+    if(mergedSet.sizable)
         this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
-    }
     else
         this->setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
 
