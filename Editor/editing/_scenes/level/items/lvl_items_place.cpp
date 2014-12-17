@@ -39,83 +39,21 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     getConfig_Block(block.id, item_i, animator, mergedSet, &noimage);
 
-    ItemBlock *BlockImage = new ItemBlock;
-
-    BlockImage->setBlockData(block, mergedSet.sizable);
-    BlockImage->gridSize = mergedSet.grid;
-
-    addItem(BlockImage);
-
     //Set pointers
-    BlockImage->setScenePoint(this);
-    BlockImage->setContextMenu(blockMenu);
-
-    BlockImage->setAnimator(animator);
-
-    if((!noimage) && (mergedSet.animated))
-    {
-        BlockImage->setData(4, "animated");
-    }
-
-    if(block.invisible)
-        BlockImage->setOpacity(qreal(0.5));
-
     QPoint newPos = QPoint(block.x, block.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(block.x, block.y), BlockImage->gridSize);
+        newPos = applyGrid(QPoint(block.x, block.y), mergedSet.grid);
         block.x = newPos.x();
-        BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();
-        BlockImage->blockData.y = newPos.y();
     }
 
-    BlockImage->setPos(QPointF(newPos));
+    ItemBlock *BlockImage = new ItemBlock(this);
+    BlockImage->setBlockData(block, &mergedSet, &animator);
+    BlockImage->setLocked(lock_block);
 
-    //////////////////////////////Included NPC////////////////////////////////////////
-    if(block.npc_id != 0)
-    {
-        BlockImage->setIncludedNPC(block.npc_id, true);
-    }
-    //////////////////////////////////////////////////////////////////////////////////
-
-    if(mergedSet.sizable)
-    {
-        BlockImage->setMainPixmap();
-        BlockImage->setZValue( Z_blockSizable + ((double)block.y/(double)100000000000)
-                 + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
-    }
-    else
-    {
-        if(mergedSet.view==1)
-            BlockImage->setZValue(Z_BlockFore); // applay lava block Z
-        else
-            BlockImage->setZValue(Z_Block); // applay standart block Z
-    }
-
-    BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
-    BlockImage->setFlag(QGraphicsItem::ItemIsMovable, (!lock_block));
-
-    BlockImage->setData(ITEM_TYPE, "Block");
-    BlockImage->setData(ITEM_ID, QString::number(block.id) );
-    BlockImage->setData(ITEM_ARRAY_ID, QString::number(block.array_id) );
-
-    if(mergedSet.sizable)
-        BlockImage->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
-    else
-        BlockImage->setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
-
-    BlockImage->setData(ITEM_WIDTH, QString::number(block.w) ); //width
-    BlockImage->setData(ITEM_HEIGHT, QString::number(block.h) ); //height
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
-
-
-
-
-
-
-
 
 
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
@@ -136,14 +74,9 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         bgo.y = newPos.y();
     }
 
-    ItemBGO *BGOItem = new ItemBGO;
-    BGOItem->setScenePoint(this);
+    ItemBGO *BGOItem = new ItemBGO(this);
     BGOItem->setBGOData(bgo, &mergedSet, &animator);
-    addItem(BGOItem);
-    BGOItem->setPos( QPointF(newPos) );
-
-    BGOItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
-    BGOItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
+    BGOItem->setLocked(lock_bgo);
 
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }

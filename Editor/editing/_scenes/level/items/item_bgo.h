@@ -45,7 +45,11 @@ class ItemBGO : public QObject,
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemBGO(QGraphicsItem *parent=0);
+    ItemBGO(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemBGO();
+private:
+    void construct();
+public:
 
     void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
     void setScenePoint(LvlScene *theScene);

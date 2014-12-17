@@ -30,6 +30,20 @@
 ItemBlock::ItemBlock(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+
+    setScenePoint(parentScene);
+    parentScene->addItem(this);
+}
+
+void ItemBlock::construct()
+{
     animated = false;
     animatorID=-1;
     imageSize = QRectF(0,0,10,10);
@@ -42,7 +56,8 @@ ItemBlock::ItemBlock(QGraphicsItem *parent)
     mouseMid=false;
     mouseRight=false;
 
-    this->setData(ITEM_IS_ITEM, 1);
+    setData(ITEM_TYPE, "Block");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -54,6 +69,7 @@ ItemBlock::~ItemBlock()
     if(grp!=NULL) delete grp;
     //if(timer) delete timer;
 }
+
 
 void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -133,8 +149,8 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
             this->setSelected(1);
-            ItemMenu->clear();
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
+            QMenu ItemMenu;
+            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
@@ -157,42 +173,42 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 layerItems.push_back(setLayer);
             }
 
-            ItemMenu->addSeparator()->deleteLater();;
+            ItemMenu.addSeparator()->deleteLater();;
 
-            QAction *invis = ItemMenu->addAction(tr("Invisible"));
+            QAction *invis = ItemMenu.addAction(tr("Invisible"));
                 invis->setCheckable(1);
                 invis->setChecked( blockData.invisible );
                 invis->deleteLater();
 
-            QAction *slipp = ItemMenu->addAction(tr("Slippery"));
+            QAction *slipp = ItemMenu.addAction(tr("Slippery"));
                 slipp->setCheckable(1);
                 slipp->setChecked( blockData.slippery );
                 slipp->deleteLater();
 
-            QAction *resize = ItemMenu->addAction(tr("Resize"));
+            QAction *resize = ItemMenu.addAction(tr("Resize"));
                 resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
                 resize->deleteLater();
 
-            QAction *transform = ItemMenu->addAction(tr("Transform into"));
+            QAction *transform = ItemMenu.addAction(tr("Transform into"));
                 transform->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *chNPC = ItemMenu->addAction(tr("Change included NPC..."));
+            ItemMenu.addSeparator()->deleteLater();;
+            QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
             chNPC->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *copyBlock = ItemMenu->addAction( tr("Copy") );
+            ItemMenu.addSeparator()->deleteLater();;
+            QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
             copyBlock->deleteLater();
-            QAction *cutBlock = ItemMenu->addAction( tr("Cut") );
+            QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
             cutBlock->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *remove = ItemMenu->addAction( tr("Remove") );
+            ItemMenu.addSeparator()->deleteLater();;
+            QAction *remove = ItemMenu.addAction( tr("Remove") );
             remove->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *props = ItemMenu->addAction(tr("Properties..."));
+            ItemMenu.addSeparator()->deleteLater();;
+            QAction *props = ItemMenu.addAction(tr("Properties..."));
             props->deleteLater();
 
-     QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+     QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -421,46 +437,7 @@ void ItemBlock::transformTo(long target_id)
         return;//Don't transform, target item is not found
 
     blockData.id = target_id;
-
-    sizable = mergedSet.sizable;
-
-    imageSize = QRectF(0,0,blockData.w, blockData.h);
-
-    this->gridSize = mergedSet.grid;
-
-    this->setAnimator(animator);
-
-    if((!noimage) && (mergedSet.animated))
-        this->setData(4, "animated");
-
-    if(blockData.npc_id != 0)
-        this->setIncludedNPC(blockData.npc_id, true);
-
-    if(mergedSet.sizable)
-    {
-        this->setMainPixmap();
-        this->setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000)
-                + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
-        //sbZ += 0.0000000001;
-    }
-    else
-    {
-        if(mergedSet.view==1)
-            this->setZValue(scene->Z_BlockFore); // applay lava block Z
-        else
-            this->setZValue(scene->Z_Block); // applay standart block Z
-    }
-
-    this->setData(ITEM_ID, QString::number(blockData.id) );
-
-    if(mergedSet.sizable)
-        this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
-    else
-        this->setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
-
-    this->setData(ITEM_WIDTH, QString::number(blockData.w) ); //width
-    this->setData(ITEM_HEIGHT, QString::number(blockData.h) ); //height
-
+    setBlockData(blockData, &mergedSet, &animator);
     arrayApply();
 }
 
@@ -538,9 +515,8 @@ QPoint ItemBlock::sourcePos()
 }
 
 
-void ItemBlock::setMainPixmap(/*const QPixmap &pixmap*/) // Init Sizable block
+void ItemBlock::setMainPixmap() // Init Sizable block
 {
-    //currentImage = pixmap;
     if(sizable)
     {
         currentImage = drawSizableBlock(blockData.w, blockData.h, scene->animates_Blocks[animatorID]->wholeImage());
@@ -568,11 +544,52 @@ void ItemBlock::setBlockSize(QRect rect)
 }
 
 
-void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
+void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animator)
 {
+    if(!scene) return;
+
     blockData = inD;
-    sizable = is_sz;
+
+    if(mergedSet)
+    {
+        localProps = (*mergedSet);
+        sizable = localProps.sizable;
+        gridSize = localProps.grid;
+
+        if(localProps.sizable)
+        {
+            setZValue( scene->Z_blockSizable + ((double)blockData.y/(double)100000000000)
+                     + 1 - ((double)blockData.w * (double)0.0000000000000001) ); // applay sizable block Z
+
+            setData(ITEM_BLOCK_IS_SIZABLE, "sizable" );
+        }
+        else
+        {
+            if(localProps.view==1)
+                setZValue(scene->Z_BlockFore); // applay lava block Z
+            else
+                setZValue(scene->Z_Block); // applay standart block Z
+
+            setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
+        }
+    }
+
+    if(animator)
+        setAnimator((*animator));
+
+    setPos(blockData.x, blockData.y);
+
+    if(blockData.invisible)
+        setOpacity(qreal(0.5));
+
+    setIncludedNPC(blockData.npc_id, true);
+
     imageSize = QRectF(0,0,blockData.w, blockData.h);
+
+    setData(ITEM_ID, QString::number(blockData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(blockData.array_id) );
+    setData(ITEM_WIDTH, QString::number(blockData.w) ); //width
+    setData(ITEM_HEIGHT, QString::number(blockData.h) ); //height
 }
 
 
@@ -617,21 +634,15 @@ void ItemBlock::setAnimator(long aniID)
                 scene->animates_Blocks[aniID]->image().width(),
                 scene->animates_Blocks[aniID]->image().height()
                 );
-    //this->setPixmap(scene->animates_Blocks[aniID]->image());
     if(!sizable)
     {
         blockData.w = qRound(imageSize.width()); //width
         blockData.h = qRound(imageSize.height()); //height
-        this->setData(ITEM_WIDTH, QVariant((int)blockData.w));
-        this->setData(ITEM_HEIGHT, QVariant((int)blockData.h));
+        setData(ITEM_WIDTH, QVariant((int)blockData.w));
+        setData(ITEM_HEIGHT, QVariant((int)blockData.h));
     }
-    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
     animatorID = aniID;
-}
-
-void ItemBlock::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
+    setMainPixmap();
 }
 
 
