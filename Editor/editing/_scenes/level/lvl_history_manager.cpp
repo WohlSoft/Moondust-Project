@@ -1092,7 +1092,7 @@ void LvlScene::historyBack()
         for (int i = 0; i < LvlData->events.size(); i++) {
             if(LvlData->events[i].array_id == (unsigned int)array_id){
                 for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == array_id){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == array_id){
                         delete MainWinConnect::pMainWin->getEventList()->item(j);
                     }
                 }
@@ -1137,7 +1137,7 @@ void LvlScene::historyBack()
         for (int i = 0; i < LvlData->events.size(); i++) {
             if(LvlData->events[i].array_id == (unsigned int)dupEvents.array_id){
                 for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if((unsigned int)MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == dupEvents.array_id){
+                    if((unsigned int)MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == dupEvents.array_id){
                         delete MainWinConnect::pMainWin->getEventList()->item(j);
                     }
                 }
@@ -2071,7 +2071,7 @@ void LvlScene::historyForward()
         for (int i = 0; i < LvlData->events.size(); i++) {
             if(LvlData->events[i].array_id == (unsigned int)rmEvents.array_id){
                 for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == (int)rmEvents.array_id){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
                         delete MainWinConnect::pMainWin->getEventList()->item(j);
                     }
                 }
@@ -3363,53 +3363,53 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     QMap<int, QGraphicsItem*> sortedGraphPlayers;
     foreach (QGraphicsItem* unsortedItem, items())
     {
-        if(unsortedItem->data(0).toString()=="Block")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Block")
         {
             if(!ignoreBlock){
-                sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphBlocks[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="BGO")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="BGO")
         {
             if(!ignoreBGO){
-                sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphBGO[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="NPC")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="NPC")
         {
             if(!ignoreNPC){
-                sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphNPC[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="Water")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Water")
         {
             if(!ignoreWater){
-                sortedGraphWater[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphWater[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="Door_enter")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Door_enter")
         {
             if(!ignoreDoors){
-                sortedGraphDoorEntrance[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphDoorEntrance[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
 
         }
         else
-        if(unsortedItem->data(0).toString()=="Door_exit")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Door_exit")
         {
             if(!ignoreDoors){
-                sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphDoorExit[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="playerPoint")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="playerPoint")
         {
             if(!ignorePlayer){
-                sortedGraphPlayers[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphPlayers[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
     }
@@ -3422,7 +3422,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedBlock.erase(beginItem);
@@ -3431,7 +3431,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBlock.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbBlock)(cbData,(*beginItem));
@@ -3453,7 +3453,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedBGO.erase(beginItem);
@@ -3463,7 +3463,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 beginItem = sortedBGO.begin();
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbBgo)(cbData,(*beginItem));
@@ -3485,7 +3485,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedNPC.erase(beginItem);
@@ -3496,7 +3496,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 				
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbNpc)(cbData,(*beginItem));
@@ -3514,7 +3514,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedWater.erase(beginItem);
@@ -3525,7 +3525,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbWater)(cbData,(*beginItem));
@@ -3543,7 +3543,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelDoors>::iterator beginItem = sortedEntranceDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedEntranceDoors.erase(beginItem);
@@ -3554,7 +3554,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbDoor)(cbData,(*beginItem),true);
@@ -3568,7 +3568,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             {
                 QMap<int, LevelDoors>::iterator beginItem = sortedExitDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedExitDoors.erase(beginItem);
@@ -3579,7 +3579,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbDoor)(cbData,(*beginItem),false);
@@ -3604,7 +3604,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 currentArrayId = (*beginItem).id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbPlayer)(cbData,(*beginItem));
@@ -3676,53 +3676,53 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
     QMap<int, QGraphicsItem*> sortedGraphPlayers;
     foreach (QGraphicsItem* unsortedItem, items())
     {
-        if(unsortedItem->data(0).toString()=="Block")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Block")
         {
             if(findingFilter & ItemTypes::LVL_S_Block){
-                sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphBlocks[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="BGO")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="BGO")
         {
             if(findingFilter & ItemTypes::LVL_S_BGO){
-                sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphBGO[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="NPC")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="NPC")
         {
             if(findingFilter & ItemTypes::LVL_S_NPC){
-                sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphNPC[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="Water")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Water")
         {
             if(findingFilter & ItemTypes::LVL_S_PhysEnv){
-                sortedGraphWater[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphWater[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="Door_enter")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Door_enter")
         {
             if(findingFilter & ItemTypes::LVL_S_Door){
-                sortedGraphDoorEntrance[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphDoorEntrance[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
 
         }
         else
-        if(unsortedItem->data(0).toString()=="Door_exit")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="Door_exit")
         {
             if(findingFilter & ItemTypes::LVL_S_Door){
-                sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphDoorExit[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
-        if(unsortedItem->data(0).toString()=="playerPoint")
+        if(unsortedItem->data(ITEM_TYPE).toString()=="playerPoint")
         {
             if(findingFilter & ItemTypes::LVL_S_Player){
-                sortedGraphPlayers[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphPlayers[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
     }
@@ -3737,7 +3737,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedBlock.erase(beginItem);
@@ -3746,7 +3746,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBlock.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3766,7 +3766,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedBGO.erase(beginItem);
@@ -3776,7 +3776,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
                 beginItem = sortedBGO.begin();
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3796,7 +3796,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedNPC.erase(beginItem);
@@ -3807,7 +3807,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3823,7 +3823,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedWater.erase(beginItem);
@@ -3834,7 +3834,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3850,7 +3850,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelDoors>::iterator beginItem = sortedEntranceDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedEntranceDoors.erase(beginItem);
@@ -3861,7 +3861,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3873,7 +3873,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
             {
                 QMap<int, LevelDoors>::iterator beginItem = sortedExitDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedExitDoors.erase(beginItem);
@@ -3884,7 +3884,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
                 currentArrayId = (*beginItem).array_id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3907,7 +3907,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
 
                 currentArrayId = (*beginItem).id;
 
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     returnItems << item;
                 }
@@ -3923,8 +3923,8 @@ void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operat
     cbData.hist = operation;
     foreach (QGraphicsItem* i, items())
     {
-        if(i->data(2).toInt() == array_id){
-            if(isEntrance && i->data(0).toString()=="Door_enter"){
+        if(i->data(ITEM_ARRAY_ID).toInt() == array_id){
+            if(isEntrance && i->data(ITEM_TYPE).toString()=="Door_enter"){
                 //(this->*clbDoors)(CallbackData, LevelDoors, bool)
                 //find DoorData
                 foreach(LevelDoors findDoor, LvlData->doors){
@@ -3934,7 +3934,7 @@ void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operat
                         break;
                     }
                 }
-            }else if(!isEntrance && i->data(0).toString()=="Door_exit"){
+            }else if(!isEntrance && i->data(ITEM_TYPE).toString()=="Door_exit"){
                 foreach(LevelDoors findDoor, LvlData->doors){
                     if(array_id == (int)findDoor.array_id){
                         cbData.item = i;

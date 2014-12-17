@@ -35,24 +35,27 @@
 #include <file_formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
+#include "lvl_base_item.h"
 
-class ItemBGO : public QObject, public QGraphicsItem
+class ItemBGO : public QObject,
+                public QGraphicsItem,
+                public LvlBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemBGO(QGraphicsItem *parent=0);
+    ItemBGO(LvlScene *parentScene, QGraphicsItem *parent=0);
     ~ItemBGO();
+private:
+    void construct();
+public:
 
-    void setBGOData(LevelBGO inD);
-    void setContextMenu(QMenu &menu);
+    void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
-
 
     //////Animation////////
     void setAnimator(long aniID);
@@ -61,10 +64,18 @@ public:
     void setLayer(QString layer);
     void setZMode(int mode, qreal offset, bool init=false);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
+
     LevelBGO bgoData;
+    obj_bgo localProps;
 
     int gridSize;
     int gridOffsetX;

@@ -109,7 +109,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_pt.ts \
     languages/editor_ja.ts \
     languages/editor_zh.ts \
-    languages/editor_bg.ts
+    languages/editor_bg.ts \
+    languages/editor_id.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -137,7 +138,6 @@ SOURCES += main.cpp\
     common_features/themes.cpp \
     common_features/timecounter.cpp \
     common_features/util.cpp \
-    common_features/resizer/cornergrabber.cpp \
     common_features/resizer/item_resizer.cpp \
     data_configs/conf_lvl_bgo.cpp \
     data_configs/conf_lvl_bkgrd.cpp \
@@ -334,7 +334,11 @@ SOURCES += main.cpp\
     editing/_scenes/world/resizers/wld_resizer_img_shoot.cpp \
     editing/_scenes/world/data_manager/wld_custom_gfx.cpp \
     file_formats/file_sav.cpp \
-    file_formats/save_filedata.cpp
+    file_formats/save_filedata.cpp \
+    common_features/resizer/corner_grabber.cpp \
+    data_configs/conf_rotation_tables.cpp \
+    editing/_scenes/level/items/lvl_base_item.cpp \
+    editing/_scenes/level/data_manager/lvl_config_index.cpp
     
 
 HEADERS  += defines.h \
@@ -462,7 +466,9 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/item_point.h \
     editing/_scenes/world/items/item_scene.h \
     editing/_scenes/world/items/item_tile.h \
-    file_formats/save_filedata.h
+    file_formats/save_filedata.h \
+    data_configs/obj_rotation_table.h \
+    editing/_scenes/level/items/lvl_base_item.h
 
 
 FORMS    += \

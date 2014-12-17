@@ -90,9 +90,8 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     case MODE_Fill:
         switchMode("Fill");
         break;
+
     case MODE_Selecting:
-
-
     default:
         switchMode("Select");
         break;
@@ -103,12 +102,14 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
 void LvlScene::switchMode(QString title)
 {
+    qDebug() << "Switching mode " << title;
     for(int i=0; i<EditModes.size(); i++)
     {
         if(EditModes[i]->name()==title)
         {
             CurrentMode = EditModes[i];
             CurrentMode->set();
+            qDebug() << "mode " << title << "switched!";
             break;
         }
     }
@@ -123,9 +124,9 @@ void LvlScene::hideWarpsAndDoors(bool visible)
     }
 
     foreach (QGraphicsItem* i, items()) {
-        if(i->data(0).toString()=="Water"){
+        if(i->data(ITEM_TYPE).toString()=="Water"){
             i->setVisible(!localLayers[((ItemWater*)i)->waterData.layer].hidden && visible);
-        }else if(i->data(0).toString()=="Door_exit" || i->data(0).toString()=="Door_enter"){
+        }else if(i->data(ITEM_TYPE).toString()=="Door_exit" || i->data(ITEM_TYPE).toString()=="Door_enter"){
             i->setVisible(!localLayers[((ItemDoor*)i)->doorData.layer].hidden && visible);
         }
     }
@@ -143,7 +144,7 @@ void LvlScene::applyLayersVisible()
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(0)=="Block")
+        if((*it)->data(ITEM_TYPE)=="Block")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -155,7 +156,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if((*it)->data(0)=="BGO")
+        if((*it)->data(ITEM_TYPE)=="BGO")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -167,7 +168,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if((*it)->data(0)=="NPC")
+        if((*it)->data(ITEM_TYPE)=="NPC")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -179,7 +180,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if((*it)->data(0)=="Water")
+        if((*it)->data(ITEM_TYPE)=="Water")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -191,7 +192,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if(((*it)->data(0)=="Door_enter")||((*it)->data(0)=="Door_exit"))
+        if(((*it)->data(ITEM_TYPE)=="Door_enter")||((*it)->data(ITEM_TYPE)=="Door_exit"))
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -236,35 +237,35 @@ void LvlScene::setLocked(int type, bool lock)
         switch(type)
         {
         case 1://Block
-            if((*it)->data(0).toString()=="Block")
+            if((*it)->data(ITEM_TYPE).toString()=="Block")
             {
                 (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
                 (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
             }
             break;
         case 2://BGO
-            if((*it)->data(0).toString()=="BGO")
+            if((*it)->data(ITEM_TYPE).toString()=="BGO")
             {
                 (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
                 (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
             }
             break;
         case 3://NPC
-            if((*it)->data(0).toString()=="NPC")
+            if((*it)->data(ITEM_TYPE).toString()=="NPC")
             {
                 (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
                 (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
             }
             break;
         case 4://Water
-            if((*it)->data(0).toString()=="Water")
+            if((*it)->data(ITEM_TYPE).toString()=="Water")
             {
                 (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
                 (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
             }
             break;
         case 5://Doors
-            if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+            if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
             {
                 (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
                 (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
@@ -315,7 +316,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
         {
             foreach(QGraphicsItem * SelItem, selectedItems() )
             {
-                if(SelItem->data(0).toString()=="Block")
+                if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
                     modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->blockData);
                     dynamic_cast<ItemBlock *>(SelItem)->blockData.layer = lr.name;
@@ -323,7 +324,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                     dynamic_cast<ItemBlock *>(SelItem)->arrayApply();
                 }
                 else
-                if(SelItem->data(0).toString()=="BGO")
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
                     modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->bgoData);
                     dynamic_cast<ItemBGO *>(SelItem)->bgoData.layer = lr.name;
@@ -331,7 +332,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                     dynamic_cast<ItemBGO *>(SelItem)->arrayApply();
                 }
                 else
-                if(SelItem->data(0).toString()=="NPC")
+                if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                 {
                     modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->npcData);
                     dynamic_cast<ItemNPC *>(SelItem)->npcData.layer = lr.name;
@@ -339,7 +340,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                     dynamic_cast<ItemNPC *>(SelItem)->arrayApply();
                 }
                 else
-                if(SelItem->data(0).toString()=="Water")
+                if(SelItem->data(ITEM_TYPE).toString()=="Water")
                 {
                     modData.physez.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
                     dynamic_cast<ItemWater *>(SelItem)->waterData.layer = lr.name;
@@ -347,17 +348,17 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                     dynamic_cast<ItemWater *>(SelItem)->arrayApply();
                 }
                 else
-                if((SelItem->data(0).toString()=="Door_exit")  ||
-                        (SelItem->data(0).toString()=="Door_enter"))
+                if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")  ||
+                        (SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                 {
-                    if(SelItem->data(0).toString()=="Door_exit"){
+                    if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
                         LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
                         tDoor.isSetOut = true;
                         tDoor.isSetIn = false;
                         modData.doors.push_back(tDoor);
                     }
                     else
-                    if(SelItem->data(0).toString()=="Door_enter"){
+                    if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
                         LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
                         tDoor.isSetOut = false;
                         tDoor.isSetIn = true;

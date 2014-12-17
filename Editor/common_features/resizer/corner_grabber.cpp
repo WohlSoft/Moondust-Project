@@ -46,6 +46,12 @@ int CornerGrabber::getMouseState()
     return _mouseButtonState;
 }
 
+void CornerGrabber::setSize(qreal width, qreal height)
+{
+    _width=width;
+    _height=height;
+}
+
 int CornerGrabber::getCorner()
 {
     return _corner;

@@ -22,7 +22,6 @@
 #include <QString>
 #include <QPixmap>
 
-
 struct obj_bgo{
     //    [background-1]
     unsigned long id;

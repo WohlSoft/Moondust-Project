@@ -41,11 +41,15 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     this->setPen(_pen);
     this->setBrush(QBrush(Qt::NoBrush));
 
+    gridSize=16;
+
     waterData.w=32;
     waterData.h=32;
     waterData.x=this->pos().x();
     waterData.y=this->pos().y();
     waterData.quicksand=false;
+
+    this->setData(ITEM_IS_ITEM, 1);
 
     this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
     this->setData(ITEM_WIDTH, (int)waterData.w);
@@ -382,6 +386,28 @@ void ItemWater::removeFromArray()
         }
     }
 }
+
+
+void ItemWater::returnBack()
+{
+    this->setPos(waterData.x, waterData.y);
+}
+
+QPoint ItemWater::gridOffset()
+{
+    return QPoint(0, 0);
+}
+
+int ItemWater::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemWater::sourcePos()
+{
+    return QPoint(waterData.x, waterData.y);
+}
+
 
 void ItemWater::setType(int tp)
 {

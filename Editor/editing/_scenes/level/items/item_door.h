@@ -35,8 +35,11 @@
 #include <file_formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
+#include "lvl_base_item.h"
 
-class ItemDoor : public QObject, public QGraphicsRectItem
+class ItemDoor : public QObject,
+                 public QGraphicsRectItem,
+                 public LvlBaseItem
 {
     Q_OBJECT
 public:
@@ -65,6 +68,11 @@ public:
 
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    QPoint gridOffset();
+    int getGridSize();
+    QPoint sourcePos();
 
     LevelDoors doorData;
 
