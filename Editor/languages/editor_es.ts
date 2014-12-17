@@ -260,27 +260,27 @@
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
         <source>Blocks per second calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques por segundo calculador</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="50"/>
         <source>Block Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de bloque:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="57"/>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> bloques</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="76"/>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>por </translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="79"/>
         <source> second</source>
-        <translation type="unfinished"></translation>
+        <translation> segundos</translation>
     </message>
 </context>
 <context>
@@ -622,12 +622,12 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="210"/>
         <source>Arg: {String array} validating the PGE-X string array</source>
-        <translation type="unfinished"></translation>
+        <translation>Arg: {String array} validando el array PGE-X</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="214"/>
         <source>Arg: {Path to file} testing of PGE-X file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Arg: {Ruta de archivo} probando el formato PGE-X</translation>
     </message>
     <message>
         <source>Args: {String array} validating the PGE-X string array</source>
@@ -1524,7 +1524,7 @@ Por favor, controle la ruta de aplicación.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="119"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar sección actual a imagen</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="124"/>
@@ -1597,13 +1597,13 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="168"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="193"/>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>La extensión no está definida</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="169"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="194"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>La extensión no está definida, por favor especifique una extensión!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="221"/>
@@ -1624,7 +1624,7 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="290"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>El límite SMBX64 ha sido excedido</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="231"/>
@@ -1728,7 +1728,8 @@ Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en f
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="400"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer archivo %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="416"/>
@@ -1749,7 +1750,8 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="490"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; fue modificado.
+¿Desea guardar sus cambios?</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="492"/>
@@ -3304,12 +3306,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="368"/>
         <source>Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Script</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="375"/>
         <source>Switch Compiler</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar compilador</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="463"/>
@@ -4341,27 +4343,27 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="9354"/>
         <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones adicionales</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9362"/>
         <source>Compile To: </source>
-        <translation type="unfinished"></translation>
+        <translation>Compilar a: </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9373"/>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation type="unfinished"></translation>
+        <translation>Autocode [Lenguaje de Lunadll]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9384"/>
         <source>LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9395"/>
         <source>Don&apos;t fill out of section</source>
-        <translation type="unfinished"></translation>
+        <translation>No llenar sección</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -5109,18 +5111,18 @@ El archivo no existe.</translation>
     <message>
         <location filename="../main_window/menubar.cpp" line="247"/>
         <source>Compile To: LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilar a: LunaLua</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="251"/>
         <source>Compile To: Autocode [Lunadll Original Language]</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilar a: autocódigo [Lenguaje de Lunadll]</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="255"/>
         <location filename="../main_window/menubar.cpp" line="262"/>
         <source>Compile To:</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilar a:</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="417"/>
@@ -5613,13 +5615,14 @@ Por favor recargue el archivo actual para aplicar el resultado.</translation>
         <location filename="../main_window/script/script_compile.cpp" line="44"/>
         <location filename="../main_window/script/script_compile.cpp" line="67"/>
         <source>Already exsist</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya existe</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="44"/>
         <source>Lunadll.lua already exsist!
 Overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Lunadll.lua ya existe!
+¿Sobreescribir?</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="51"/>
@@ -5639,23 +5642,24 @@ Overwrite?</source>
         <location filename="../main_window/script/script_compile.cpp" line="63"/>
         <location filename="../main_window/script/script_compile.cpp" line="86"/>
         <source>Successfully compiled!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Compilado exitosamente!</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="63"/>
         <source>Sucessfully compiled to %1/lunadll.lua</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado exitosamente a %1/lunadll.lua</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="67"/>
         <source>lunadll.txt already exsist!
 Overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>¡lunadll.txt ya existe!
+¿Sobreescribir?</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="86"/>
         <source>Sucessfully compiled to %1/lunadll.txt</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado exitosamente a %1/lunadll.txt</translation>
     </message>
 </context>
 <context>
@@ -5913,7 +5917,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="1036"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[nada]</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="1128"/>
@@ -5967,7 +5971,8 @@ Do you want to continue?</source>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="59"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer archivo %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="104"/>
@@ -6000,7 +6005,8 @@ Do you want to continue?</source>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="149"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; ha sido modificado.
+¿Desea guardar sus cambios?</translation>
     </message>
 </context>
 <context>
