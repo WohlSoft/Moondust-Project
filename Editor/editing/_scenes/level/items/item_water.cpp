@@ -29,15 +29,32 @@
 ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     : QGraphicsPolygonItem(parent)
 {
+    construct();
+}
+
+ItemWater::ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent)
+    : QGraphicsPolygonItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    gridSize = scene->pConfigs->default_grid/2;
+    setZValue(scene->Z_sys_PhysEnv);
+    setLocked(scene->lock_water);
+}
+
+void ItemWater::construct()
+{
     isLocked=false;
     waterSize = QSize(32,32);
     penWidth=2;
 
-    _pen = QPen(Qt::darkBlue);
+    _pen = QPen(Qt::darkBlue, penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
     _pen.setWidth(penWidth);
     _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
-    _pen.setMiterLimit(0);
+
     this->setPen(_pen);
     this->setBrush(QBrush(Qt::NoBrush));
 
@@ -49,22 +66,20 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     waterData.y=this->pos().y();
     waterData.quicksand=false;
 
-    this->setData(ITEM_IS_ITEM, 1);
-
-    this->setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    this->setData(ITEM_WIDTH, (int)waterData.w);
-    this->setData(ITEM_HEIGHT, (int)waterData.h);
+    setData(ITEM_TYPE, "Water");
+    setData(ITEM_IS_ITEM, 1);
+    setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
+    setData(ITEM_WIDTH, (int)waterData.w);
+    setData(ITEM_HEIGHT, (int)waterData.h);
 
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
 }
 
-
 ItemWater::~ItemWater()
-{
-   // WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
-}
+{}
+
 
 void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -143,9 +158,9 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             this->setSelected(1);
-            ItemMenu->clear();
+            QMenu ItemMenu;
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
+            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
             LayerName->deleteLater();
 
             QAction *setLayer;
@@ -169,9 +184,9 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 layerItems.push_back(setLayer);
             }
 
-            ItemMenu->addSeparator();
+            ItemMenu.addSeparator();
 
-            QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
+            QMenu * WaterType = ItemMenu.addMenu(tr("Environment type"));
                 WaterType->deleteLater();
 
             QAction *setAsWater = WaterType->addAction(tr("Water"));
@@ -185,23 +200,23 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setAsQuicksand->deleteLater();
 
 
-            QAction *showRectangleValues = ItemMenu->addAction(tr("Show zone range data"));
+            QAction *showRectangleValues = ItemMenu.addAction(tr("Show zone range data"));
                 showRectangleValues->deleteLater();
 
-            QAction *resize = ItemMenu->addAction(tr("Resize"));
+            QAction *resize = ItemMenu.addAction(tr("Resize"));
                 resize->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *copyWater = ItemMenu->addAction(tr("Copy"));
+            ItemMenu.addSeparator()->deleteLater();
+            QAction *copyWater = ItemMenu.addAction(tr("Copy"));
                 copyWater->deleteLater();
-            QAction *cutWater = ItemMenu->addAction(tr("Cut"));
+            QAction *cutWater = ItemMenu.addAction(tr("Cut"));
                 cutWater->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
+            ItemMenu.addSeparator()->deleteLater();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
                 remove->deleteLater();
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -306,10 +321,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-//    else
-//    {
-        QGraphicsPolygonItem::contextMenuEvent(event);
-//    }
+    QGraphicsPolygonItem::contextMenuEvent(event);
 }
 
 
@@ -454,35 +466,29 @@ void ItemWater::setWaterData(LevelPhysEnv inD)
 {
     waterData = inD;
     waterSize = QSize(waterData.w, waterData.h);
-    //drawWater();
+    setPos(waterData.x, waterData.y);
+    setData(ITEM_ID, QString::number(0) );
+    setData(ITEM_ARRAY_ID, QString::number(waterData.array_id) );
+    drawWater();
 }
 
 void ItemWater::drawWater()
 {
     long x, y, h, w;
 
-    x = 1;//waterData.x;
-    y = 1;//waterData.y;
+    x = 1;
+    y = 1;
     w = waterData.w-penWidth;
     h = waterData.h-penWidth;
 
-    this->setData(ITEM_WIDTH, (int)waterData.w);
-    this->setData(ITEM_HEIGHT, (int)waterData.h);
-
-    //    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
-    //    _pen.setCapStyle(Qt::SquareCap);
-    //    _pen.setJoinStyle(Qt::MiterJoin);
-    //    setPen(_pen);
+    setData(ITEM_WIDTH, (int)waterData.w);
+    setData(ITEM_HEIGHT, (int)waterData.h);
 
     setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
 
-    //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
-    //this->setBrush(Qt::NoBrush);
-    //this->setRect(x, y, w, h);
-
     QVector<QPointF > points;
     points.clear();
-    // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
+
     points.push_back(QPointF(x+3, y));
     points.push_back(QPointF(x+w, y));
     points.push_back(QPointF(x+w,y+h));
@@ -495,17 +501,6 @@ void ItemWater::drawWater()
     points.push_back(QPointF(x+3, y));
 
     this->setPolygon( QPolygonF(points) );
-/*
-    WriteToLog(QtDebugMsg, "WaterDraw -> ============================");
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> x=%1").arg(waterData.x));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> y=%1").arg(waterData.y));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> w=%1").arg(waterData.w));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> h=%1").arg(waterData.h));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> sand %1").arg((int)waterData.quicksand));
-
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd x=%1").arg(this->pos().x()));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd y=%1").arg(this->pos().y()));
- */
 }
 
 
@@ -520,11 +515,6 @@ void ItemWater::setLocked(bool lock)
 QRectF ItemWater::boundingRect() const
 {
     return QRectF(-1,-1,waterSize.width()+penWidth,waterSize.height()+penWidth);
-}
-
-void ItemWater::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
 }
 
 void ItemWater::setScenePoint(LvlScene *theScene)

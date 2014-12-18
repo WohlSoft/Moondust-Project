@@ -31,6 +31,21 @@
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     : QGraphicsRectItem(parent)
 {
+    construct();
+}
+
+ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent)
+    : QGraphicsRectItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    setLocked(scene->lock_door);
+}
+
+void ItemDoor::construct()
+{
     isLocked=false;
     itemSize = QSize(32,32);
     this->setData(ITEM_WIDTH, 32);
@@ -43,16 +58,12 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     this->setData(ITEM_IS_ITEM, 1);
 }
 
-
 ItemDoor::~ItemDoor()
 {
-    //WriteToLog(QtDebugMsg, "!<-Door destroy->!");
     if(doorLabel!=NULL) delete doorLabel;
-    //if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
     if(grp!=NULL) delete grp;
-
-    //WriteToLog(QtDebugMsg, "!<-Door destroyed->!");
 }
+
 
 void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -131,13 +142,13 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             this->setSelected(1);
-            ItemMenu->clear();
+            QMenu ItemMenu;
 
-            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname).replace("&", "&&&"));
+            QAction *openLvl = ItemMenu.addAction(tr("Open target level: %1").arg(doorData.lname).replace("&", "&&&"));
             openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
             openLvl->deleteLater();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
+            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
                 LayerName->deleteLater();
 
             QAction *setLayer;
@@ -161,58 +172,58 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 layerItems.push_back(setLayer);
             }
 
-            ItemMenu->addSeparator()->deleteLater();;
+            ItemMenu.addSeparator()->deleteLater();;
 
             QAction *jumpTo=NULL;
             if(this->data(ITEM_TYPE).toString()=="Door_enter")
             {
-                jumpTo = ItemMenu->addAction(tr("Jump to exit"));
+                jumpTo = ItemMenu.addAction(tr("Jump to exit"));
                 jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
                 jumpTo->deleteLater();
             }
             else
             if(this->data(ITEM_TYPE).toString()=="Door_exit")
             {
-                jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
+                jumpTo = ItemMenu.addAction(tr("Jump to entrance"));
                 jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
                 jumpTo->deleteLater();
             }
 
-            ItemMenu->addSeparator()->deleteLater();
+            ItemMenu.addSeparator()->deleteLater();
 
 
-            QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
+            QAction * NoTransport = ItemMenu.addAction(tr("No Vehicles"));
             NoTransport->setCheckable(true);
             NoTransport->setChecked( doorData.novehicles );
             NoTransport->deleteLater();
 
-            QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
+            QAction * AllowNPC = ItemMenu.addAction(tr("Allow NPC"));
             AllowNPC->setCheckable(true);
             AllowNPC->setChecked( doorData.allownpc );
             AllowNPC->deleteLater();
 
-            QAction * Locked = ItemMenu->addAction(tr("Locked"));
+            QAction * Locked = ItemMenu.addAction(tr("Locked"));
             Locked->setCheckable(true);
             Locked->setChecked( doorData.locked );
             Locked->deleteLater();
 
             /*
-            ItemMenu->addSeparator();
-            QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
+            ItemMenu.addSeparator();
+            QAction *copyDoor = ItemMenu.addAction(tr("Copy"));
                 copyDoor->setDisabled(true);
-            QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
+            QAction *cutDoor = ItemMenu.addAction(tr("Cut"));
                 cutDoor->setDisabled(true);
             */
 
-            ItemMenu->addSeparator()->deleteLater();;
-                QAction *remove = ItemMenu->addAction(tr("Remove"));
+            ItemMenu.addSeparator()->deleteLater();;
+                QAction *remove = ItemMenu.addAction(tr("Remove"));
                 remove->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();;
-                QAction *props = ItemMenu->addAction(tr("Properties..."));
+            ItemMenu.addSeparator()->deleteLater();;
+                QAction *props = ItemMenu.addAction(tr("Properties..."));
                 props->deleteLater();
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -353,10 +364,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-//    else
-//    {
-        QGraphicsRectItem::contextMenuEvent(event);
-//    }
+    QGraphicsRectItem::contextMenuEvent(event);
 }
 
 
@@ -537,9 +545,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
         //doorLabel->setFont(font2);
         doorLabel->setPos(ix+2, iy+2);
 
-        this->setPos(ix, iy);
-
-        this->setData(ITEM_TYPE, "Door_enter"); // ObjType
+        setPos(ix, iy);
+        setData(ITEM_TYPE, "Door_enter"); // ObjType
     }
     else
     {
@@ -554,9 +561,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
         //doorLabel->setFont(font2);
         doorLabel->setPos(ox+16, oy+16);
 
-        this->setPos(ox, oy);
-
-        this->setData(ITEM_TYPE, "Door_exit"); // ObjType
+        setPos(ox, oy);
+        setData(ITEM_TYPE, "Door_exit"); // ObjType
     }
     grp->addToGroup(doorLabel);
     //grp->addToGroup(doorLabel_shadow);
@@ -591,16 +597,10 @@ QRectF ItemDoor::boundingRect() const
     return QRectF(-1,-1,itemSize.width()+2,itemSize.height()+2);
 }
 
-void ItemDoor::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
-}
-
 void ItemDoor::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
     grp = new QGraphicsItemGroup(this);
     doorLabel = NULL;
-    //doorLabel_shadow = NULL;
 }
 

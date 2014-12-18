@@ -44,7 +44,12 @@ class ItemWater : public QObject,
     Q_OBJECT
 public:
     ItemWater(QGraphicsPolygonItem *parent=0);
+    ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent=0);
     ~ItemWater();
+private:
+    void construct();
+
+public:
 
     void setSize(QSize sz);
     void setRectSize(QRect rect);
@@ -52,7 +57,6 @@ public:
     void setType(int tp);
     void setWaterData(LevelPhysEnv inD);
 
-    void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
     void setLocked(bool lock);
@@ -60,10 +64,6 @@ public:
     void drawWater();
 
     QRectF boundingRect() const;
-
-    QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPolygonItem * image;
 
     void setLayer(QString layer);
 
