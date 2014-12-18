@@ -52,6 +52,41 @@ public:
     WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
     ~WldScene();
 
+/* //////////////////////Contents/////////////////////////////
+ *
+ * COMMON
+ * - Common
+ * - Miscellaneous
+ * - GFX Manager
+ *
+ * ITEMS
+ * - Init Items
+ * - Item Locks
+ * - Item Modifying
+ * - Aligning
+ * - Collisions
+ *
+ * EDITING
+ * - Edit modes
+ * - Placing Mode settings
+ * - Mouse Events
+ *
+ * WORLD SETTINGS
+ * - Resizers
+ *
+ * HISTORY
+ * - History Manager
+ *
+ */
+
+
+// ////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////COMMON/////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////
+
+    // ///////////////////Common////////////////////////
+
+
     bool grid;
 
     void SwitchEditingMode(int EdtMode);
@@ -219,6 +254,7 @@ public:
     #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
     #define ITEM_WIDTH                   9 //int
     #define ITEM_HEIGHT                  10 //int
+    #define ITEM_IS_ITEM                 24 //bool
     #define ITEM_IS_CURSOR               25 //bool
 
     void removeItemUnderCursor();
@@ -411,6 +447,11 @@ public:
 
     void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory=true);
     void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory=true);
+
+    void getConfig_Tile(unsigned long item_id, long &array_index, long &animator_id, obj_w_tile &mergedSet, bool *ok);
+    void getConfig_Scenery(unsigned long item_id, long &array_index, long &animator_id, obj_w_scenery &mergedSet, bool *ok);
+    void getConfig_Path(unsigned long item_id, long &array_index, long &animator_id, obj_w_path &mergedSet, bool *ok);
+    void getConfig_Level(unsigned long item_id, long &array_index, long &animator_id, obj_w_level &mergedSet, bool *ok);
 
 public slots:
     void selectionChanged();
