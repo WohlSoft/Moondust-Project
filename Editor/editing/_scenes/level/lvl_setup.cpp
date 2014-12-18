@@ -239,36 +239,31 @@ void LvlScene::setLocked(int type, bool lock)
         case 1://Block
             if((*it)->data(ITEM_TYPE).toString()=="Block")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
+                dynamic_cast<ItemBlock *>(*it)->setLocked(lock);
             }
             break;
         case 2://BGO
             if((*it)->data(ITEM_TYPE).toString()=="BGO")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
+                dynamic_cast<ItemBGO *>(*it)->setLocked(lock);
             }
             break;
         case 3://NPC
             if((*it)->data(ITEM_TYPE).toString()=="NPC")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
+                dynamic_cast<ItemNPC *>(*it)->setLocked(lock);
             }
             break;
         case 4://Water
             if((*it)->data(ITEM_TYPE).toString()=="Water")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                dynamic_cast<ItemWater *>(*it)->setLocked(lock);
             }
             break;
         case 5://Doors
             if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                dynamic_cast<ItemDoor *>(*it)->setLocked(lock);
             }
             break;
         default: break;

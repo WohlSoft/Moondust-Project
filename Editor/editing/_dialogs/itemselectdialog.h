@@ -90,6 +90,13 @@ private slots:
     void on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index);
 
     void on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *);
+    void on_Sel_List_Block_itemDoubleClicked(QListWidgetItem *);
+    void on_Sel_List_BGO_itemDoubleClicked(QListWidgetItem *);
+    void on_Sel_List_Tile_itemDoubleClicked(QTableWidgetItem *);
+    void on_Sel_List_Scenery_itemDoubleClicked(QListWidgetItem *);
+    void on_Sel_List_Path_itemDoubleClicked(QTableWidgetItem *);
+    void on_Sel_List_Level_itemDoubleClicked(QListWidgetItem *);
+    void on_Sel_List_Music_itemDoubleClicked(QListWidgetItem *);
 
 private:
     void selectListItem(QListWidget *w, int array_id);

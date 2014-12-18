@@ -18,6 +18,7 @@
 
 #include <QInputDialog>
 
+#include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 
@@ -38,8 +39,10 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
     construct();
+    if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    setLocked(scene->lock_bgo);
 }
 
 void ItemBGO::construct()
@@ -147,13 +150,12 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QMenu ItemMenu;
 
             QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
-            LayerName->deleteLater();
 
             QAction *setLayer;
             QList<QAction *> layerItems;
 
             QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator()->deleteLater();
+                LayerName->addSeparator();
 
             foreach(LevelLayers layer, scene->LvlData->layers)
             {
@@ -165,38 +167,37 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
                 setLayer->setChecked( layer.name==bgoData.layer );
-                setLayer->deleteLater();
                 layerItems.push_back(setLayer);
             }
-            ItemMenu.addSeparator()->deleteLater();
-
-            QAction *transform = ItemMenu.addAction(tr("Transform into"));
-                transform->deleteLater();
+            ItemMenu.addSeparator();
 
             bool isLvlx = !scene->LvlData->smbx64strict;
 
             QAction *ZOffset = ItemMenu.addAction(tr("Change Z-Offset..."));
-            ZOffset->setEnabled(isLvlx);
+                ZOffset->setEnabled(isLvlx);
             QMenu *ZMode = ItemMenu.addMenu(tr("Z-Layer"));
-            ZMode->setEnabled(isLvlx);
+                ZMode->setEnabled(isLvlx);
 
             QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
-            ZMode_bg2->setCheckable(true);
-            ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
+                ZMode_bg2->setCheckable(true);
+                ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
             QAction *ZMode_bg1 = ZMode->addAction(tr("Background"));
-            ZMode_bg1->setCheckable(true);
-            ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
+                ZMode_bg1->setCheckable(true);
+                ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
             QAction *ZMode_def = ZMode->addAction(tr("Default"));
-            ZMode_def->setCheckable(true);
-            ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
+                ZMode_def->setCheckable(true);
+                ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
             QAction *ZMode_fg1 = ZMode->addAction(tr("Foreground"));
-            ZMode_fg1->setCheckable(true);
-            ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
+                ZMode_fg1->setCheckable(true);
+                ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
             QAction *ZMode_fg2 = ZMode->addAction(tr("Foreground-2"));
-            ZMode_fg2->setCheckable(true);
-            ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
+                ZMode_fg2->setCheckable(true);
+                ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
+                ItemMenu.addSeparator();
 
-            ItemMenu.addSeparator()->deleteLater();
+            QAction *transform = ItemMenu.addAction(tr("Transform into"));
+                ItemMenu.addSeparator();
+
             QAction *copyBGO = ItemMenu.addAction(tr("Copy"));
             copyBGO->deleteLater();
             QAction *cutBGO = ItemMenu.addAction(tr("Cut"));
@@ -309,19 +310,23 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(selected==transform)
             {
-                bool ok=false;
                 int transformTO;
-                transformTO = QInputDialog::getInt(NULL, "Target BGO ID",
-                                                   "Please enter target BGO ID which you want to set",
-                                                  0,0,2147483600,1,&ok);
-                if(ok)
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
+                blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+                blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+                if(blockList->exec()==QDialog::Accepted)
                 {
-                    if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                    transformTO = blockList->bgoID;
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
-                        ((ItemBGO *) SelItem)->transformTo(transformTO);
+                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->transformTo(transformTO);
+                        }
                     }
                 }
+                delete blockList;
             }
             else
             if(selected==props)

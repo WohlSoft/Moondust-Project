@@ -18,6 +18,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
+#include <editing/_dialogs/itemselectdialog.h>
 #include <file_formats/file_formats.h>
 
 #include "item_block.h"
@@ -28,14 +29,29 @@
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
-
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
+{
+    DisableScene = noScene;
+    construct();
+}
+
+ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent)
+    : QGraphicsPixmapItem(parent)
+{
+    DisableScene=false;
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    setLocked(scene->lock_npc);
+}
+
+void ItemNPC::construct()
 {
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     generatorArrow = NULL;
     includedNPC = NULL;
-    DisableScene = noScene;
     animated = false;
     aniDirect=false;
     aniBiDirect=false;
@@ -66,18 +82,20 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     mouseMid=false;
     mouseRight=false;
 
+    setData(ITEM_TYPE, "NPC"); // ObjType
     setData(ITEM_IS_ITEM, 1);
 }
 
 
+
+
 ItemNPC::~ItemNPC()
 {
-    //WriteToLog(QtDebugMsg, "!<-NPC destroyed->!");
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
     if(timer) delete timer;
-
 }
+
 
 
 void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -157,18 +175,15 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 this->setSelected(true);
             }
 
-
             this->setSelected(1);
-            ItemMenu->clear();
+            QMenu ItemMenu;
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer).replace("&", "&&&"));
+            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
-            LayerName->deleteLater();
 
             QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            newLayer->deleteLater();
             LayerName->addSeparator()->deleteLater();
 
             foreach(LevelLayers layer, scene->LvlData->layers)
@@ -181,83 +196,58 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
                 setLayer->setChecked( layer.name==npcData.layer );
-                setLayer->deleteLater();
                 layerItems.push_back(setLayer);
             }
-
-            //
-            ItemMenu->addSeparator()->deleteLater();
+            ItemMenu.addSeparator()->deleteLater();
             QString NPCpath1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
             QString NPCpath2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
 
             QAction *newNpc;
+                if( (!scene->LvlData->untitled)&&((QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1))) )
+                    newNpc = ItemMenu.addAction(tr("Edit NPC-Configuration"));
+                else
+                    newNpc = ItemMenu.addAction(tr("New NPC-Configuration"));
+                newNpc->setEnabled(!scene->LvlData->untitled);
+                ItemMenu.addSeparator();
 
-            if( (!scene->LvlData->untitled)&&((QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1))) )
-                newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
-            else
-                newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
-            newNpc->setEnabled(!scene->LvlData->untitled);
-            newNpc->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-
-            QMenu * chDir = ItemMenu->addMenu(
+            QMenu * chDir = ItemMenu.addMenu(
                         tr("Set %1").arg(
                         (localProps.direct_alt_title!="") ?
                             localProps.direct_alt_title : tr("Direction") ) );
-            chDir->deleteLater();
-
-            QAction *setLeft = chDir->addAction( (localProps.direct_alt_left!="") ? localProps.direct_alt_left : tr("Left"));
-                setLeft->setCheckable(true);
-                setLeft->setChecked(npcData.direct==-1);
-                setLeft->deleteLater();
-
-            QAction *setRand = chDir->addAction(tr("Random"));
-                setRand->setVisible( !localProps.direct_disable_random );
-                setRand->setCheckable(true);
-                setRand->setChecked(npcData.direct==0);
-                setRand->deleteLater();
-
-            QAction *setRight = chDir->addAction( (localProps.direct_alt_right!="") ? localProps.direct_alt_right : tr("Right") );
-                setRight->setCheckable(true);
-                setRight->setChecked(npcData.direct==1);
-                setRight->deleteLater();
-
-            ItemMenu->addSeparator()->deleteLater();
-
-            QAction *fri = ItemMenu->addAction(tr("Friendly"));
+                QAction *setLeft = chDir->addAction( (localProps.direct_alt_left!="") ? localProps.direct_alt_left : tr("Left"));
+                    setLeft->setCheckable(true);
+                    setLeft->setChecked(npcData.direct==-1);
+                QAction *setRand = chDir->addAction(tr("Random"));
+                    setRand->setVisible( !localProps.direct_disable_random );
+                    setRand->setCheckable(true);
+                    setRand->setChecked(npcData.direct==0);
+                QAction *setRight = chDir->addAction( (localProps.direct_alt_right!="") ? localProps.direct_alt_right : tr("Right") );
+                    setRight->setCheckable(true);
+                    setRight->setChecked(npcData.direct==1);
+                    ItemMenu.addSeparator();
+            QAction *fri = ItemMenu.addAction(tr("Friendly"));
                 fri->setCheckable(1);
                 fri->setChecked( npcData.friendly );
-                fri->deleteLater();
-
-            QAction *stat = ItemMenu->addAction(tr("Doesn't move"));
+            QAction *stat = ItemMenu.addAction(tr("Doesn't move"));
                 stat->setCheckable(1);
                 stat->setChecked( npcData.nomove );
-                stat->deleteLater();
-
-
-            QAction *msg = ItemMenu->addAction(tr("Set message..."));
-                msg->deleteLater();
-
-            ItemMenu->addSeparator()->deleteLater();;
-
-            QAction *boss = ItemMenu->addAction(tr("Set as Boss"));
+            QAction *msg = ItemMenu.addAction(tr("Set message..."));
+                ItemMenu.addSeparator();
+            QAction *boss = ItemMenu.addAction(tr("Set as Boss"));
                 boss->setCheckable(1);
                 boss->setChecked( npcData.legacyboss );
+                ItemMenu.addSeparator();
+            QAction *transform = ItemMenu.addAction(tr("Transform into"));
+                ItemMenu.addSeparator();
+            QAction *copyNpc = ItemMenu.addAction(tr("Copy"));
+            QAction *cutNpc = ItemMenu.addAction(tr("Cut"));
+                ItemMenu.addSeparator();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
+                ItemMenu.addSeparator();
+            QAction *props = ItemMenu.addAction(tr("Properties..."));
 
-            ItemMenu->addSeparator()->deleteLater();;
 
-            QAction *copyNpc = ItemMenu->addAction(tr("Copy"));
-                copyNpc->deleteLater();
-            QAction *cutNpc = ItemMenu->addAction(tr("Cut"));
-                cutNpc->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-                remove->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *props = ItemMenu->addAction(tr("Properties..."));
-                props->deleteLater();
-
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -275,6 +265,27 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //scene->doCopy = true ;
                 MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==transform)
+            {
+                int transformTO;
+                ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
+                npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
+                npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+                if(npcList->exec()==QDialog::Accepted)
+                {
+                    transformTO = npcList->npcID;
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(ITEM_TYPE).toString()=="NPC")
+                        {
+                            ((ItemNPC *) SelItem)->transformTo(transformTO);
+                        }
+                    }
+                }
+                delete npcList;
             }
             else
             if(selected==newNpc){
@@ -442,17 +453,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-//    if(DisableScene)
-//    {
-//        QGraphicsPixmapItem::contextMenuEvent(event);
-//        return;
-//    }
-
-
-//    else
-//    {
-        QGraphicsPixmapItem::contextMenuEvent(event);
-//    }
+    QGraphicsPixmapItem::contextMenuEvent(event);
 }
 
 //Change arrtibutes
@@ -529,7 +530,23 @@ void ItemNPC::changeDirection(int dir)
 
 void ItemNPC::transformTo(long target_id)
 {
+    if(!scene)
+        return;
 
+    if(target_id<1) return;
+
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_npc mergedSet;
+
+    scene->getConfig_NPC(target_id, item_i, animator, mergedSet, &noimage);
+    if(noimage) return;
+
+    npcData.id = target_id;
+
+    setNpcData(npcData, &mergedSet, &animator);
+    arrayApply();
 }
 
 void ItemNPC::setIncludedNPC(int npcID, bool init)
@@ -786,9 +803,47 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     offseted.setBottom(offseted.bottom()+this->offset().y());
 }
 
-void ItemNPC::setNpcData(LevelNPC inD)
+void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
 {
     npcData = inD;
+    if(!scene) return;
+
+    if(mergedSet)
+    {
+        localProps = (*mergedSet);
+        if(localProps.foreground)
+            setZValue(scene->Z_npcFore);
+        else
+        if(localProps.background)
+            setZValue(scene->Z_npcBack);
+        else
+            setZValue(scene->Z_npcStd);
+
+        if((localProps.container)&&(npcData.special_data>0))
+            setIncludedNPC(npcData.special_data, true);
+
+        npcData.is_star = localProps.is_star;
+    }
+
+    if(animator_id)
+        setAnimator(*animator_id);
+
+    setPos( npcData.x, npcData.y );
+
+    changeDirection(npcData.direct);
+
+    setGenerator(npcData.generator,
+                 npcData.generator_direct,
+                 npcData.generator_type, true);
+
+    setData(ITEM_ID, QString::number(npcData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(npcData.array_id) );
+
+    setData(ITEM_NPC_BLOCK_COLLISION,  QString::number((int)localProps.collision_with_blocks) );
+    setData(ITEM_NPC_NO_NPC_COLLISION, QString::number((int)localProps.no_npc_collions) );
+
+    setData(ITEM_WIDTH,  QString::number(localProps.width) ); //width
+    setData(ITEM_HEIGHT, QString::number(localProps.height) ); //height
 }
 
 
@@ -829,11 +884,6 @@ void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 }
 
-void ItemNPC::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
-}
-
 void ItemNPC::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
@@ -850,11 +900,10 @@ void ItemNPC::setAnimator(long aniID)
                 scene->animates_NPC[aniID]->image(-1).width(),
                 scene->animates_NPC[aniID]->image(-1).height()
                 );
-    //this->setPixmap(scene->animates_Blocks[aniID]->image());
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
 
-    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+    this->setData(ITEM_WIDTH, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(ITEM_HEIGHT, QString::number(qRound(imageSize.height())) ); //height
+
     animatorID = aniID;
     extAnimator = true;
     animated = true;
@@ -867,7 +916,8 @@ void ItemNPC::setAnimator(long aniID)
     imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
                              - BurriedOffset);
 
-    this->setPixmap(QPixmap(imageSize.width(), imageSize.height()));
+    setPixmap(QPixmap(imageSize.width(),
+                      imageSize.height()));
 
     setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 
@@ -876,7 +926,6 @@ void ItemNPC::setAnimator(long aniID)
     offseted.setTop(offseted.top()+this->offset().y());
     offseted.setRight(offseted.right()+this->offset().x());
     offseted.setBottom(offseted.bottom()+this->offset().y());
-
 }
 
 ////////////////Animation///////////////////

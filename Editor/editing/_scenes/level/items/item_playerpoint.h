@@ -33,6 +33,11 @@ class ItemPlayerPoint : public QObject,
     Q_OBJECT
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = 0);
+    explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = 0);
+    ~ItemPlayerPoint();
+private:
+    void construct();
+public:
 
     void changeDirection(int dir);
 
