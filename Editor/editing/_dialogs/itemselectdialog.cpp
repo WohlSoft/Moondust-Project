@@ -59,12 +59,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     QListWidgetItem * empScenery = new QListWidgetItem();
     QListWidgetItem * empLevel = new QListWidgetItem();
     QListWidgetItem * empMusic = new QListWidgetItem();
-    empBlock->setFont(font);
-    empBGO->setFont(font);
-    empNPC->setFont(font);
-    empScenery->setFont(font);
-    empLevel->setFont(font);
-    empMusic->setFont(font);
+        empBlock->setFont(font);
+        empBGO->setFont(font);
+        empNPC->setFont(font);
+        empScenery->setFont(font);
+        empLevel->setFont(font);
+        empMusic->setFont(font);
     QString emTxt = tr("[Empty]");
     empBlock->setText(emTxt);
     empBGO->setText(emTxt);
@@ -121,7 +121,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Music));
 
 
-    if(npcExtraData & NPCEXTRA_WITHCOINS){
+    if(npcExtraData & NPCEXTRA_WITHCOINS)
+    {
         npcFromList = new QRadioButton(tr("NPC from List"));
         npcCoins = new QRadioButton(tr("Coins"));
         npcCoinsSel = new QSpinBox();
@@ -132,21 +133,26 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         addExtraDataControl(npcCoins);
         addExtraDataControl(npcCoinsSel);
         connect(npcFromList, SIGNAL(toggled(bool)), this, SLOT(npcTypeChange(bool)));
-        if(isCoinSel){
+        if(isCoinSel)
+        {
             npcCoinsSel->setValue(curSelIDNPC);
             npcCoins->setChecked(true);
-            //npcFromList->setChecked(false);
             npcTypeChange(true);
-        }else{
+        }
+        else
+        {
             npcFromList->setChecked(true);
         }
-    }else{
+    }
+    else
+    {
         npcFromList = 0;
         npcCoins = 0;
         npcCoinsSel = 0;
     }
 
-    if(blockTab){
+    if(blockTab)
+    {
         foreach(obj_block blockItem, conf->main_block)
         {
             //Add category
@@ -165,7 +171,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
     }
 
-    if(bgoTab){
+    if(bgoTab)
+    {
         foreach(obj_bgo bgoItem, conf->main_bgo)
         {
             //Add category
@@ -179,7 +186,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
     }
 
-    if(npcTab){
+    if(npcTab)
+    {
         foreach(obj_npc npcItem, conf->main_npc)
         {
             //Add category
@@ -196,7 +204,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     }
 
 
-    if(sceneryTab){
+    if(sceneryTab)
+    {
         foreach (obj_w_scenery sceneryItem, conf->main_wscene) {
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(sceneryItem.id));
@@ -207,7 +216,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
     }
 
-    if(levelTab){
+    if(levelTab)
+    {
         foreach (obj_w_level levelItem, conf->main_wlevels) {
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(levelItem.id));
@@ -218,7 +228,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         }
     }
 
-    if(musicTab){
+    if(musicTab)
+    {
         foreach (obj_music musicItem, conf->main_music_wld) {
             //Add category
             QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id));
@@ -228,7 +239,6 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             ui->Sel_List_Music->addItem(item);
         }
     }
-
 
     updateBoxes();
     setWldItemBoxes();
@@ -243,6 +253,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     selectListItem(ui->Sel_List_Tile, curSelIDTile);
     selectListItem(ui->Sel_List_Path, curSelIDPath);
+
     if(!isCoinSel)
         selectListItem(ui->Sel_List_NPC, curSelIDNPC);
 }
@@ -975,9 +986,6 @@ void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
         return;
     if(updateLabelVis(extraMusicWid, ui->Sel_Tab_Music))
         return;
-
-
-
 }
 
 void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
@@ -992,10 +1000,48 @@ void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
 }
 
 
+
+void ItemSelectDialog::on_Sel_List_Block_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
+void ItemSelectDialog::on_Sel_List_BGO_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
 void ItemSelectDialog::on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *)
 {
     on_Sel_DiaButtonBox_accepted();
 }
+
+
+void ItemSelectDialog::on_Sel_List_Tile_itemDoubleClicked(QTableWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
+void ItemSelectDialog::on_Sel_List_Scenery_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
+void ItemSelectDialog::on_Sel_List_Path_itemDoubleClicked(QTableWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
+void ItemSelectDialog::on_Sel_List_Level_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
+void ItemSelectDialog::on_Sel_List_Music_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
 
 void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 {
@@ -1160,11 +1206,18 @@ void ItemSelectDialog::checkExtraDataVis(QList<QWidget*> &l, QWidget *t)
 
 bool ItemSelectDialog::updateLabelVis(QList<QWidget*> &l, QWidget *t)
 {
-    if((ui->Sel_TabCon_ItemType->indexOf(t)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(t)==ui->Sel_TabCon_ItemType->currentIndex() : false)){
+    if(  (ui->Sel_TabCon_ItemType->indexOf(t)!=-1 ?
+            ui->Sel_TabCon_ItemType->indexOf(t)==ui->Sel_TabCon_ItemType->currentIndex()
+            :false)
+       )
+    {
         ui->Sel_Label_ExtraData->setVisible(!l.isEmpty());
-        if(l.isEmpty()){
+        if(l.isEmpty())
+        {
             ui->horizontalLayout->removeItem(ui->verticalLayout);
-        }else{
+        }
+        else
+        {
             ui->horizontalLayout->addLayout(ui->verticalLayout);
         }
         return true;
