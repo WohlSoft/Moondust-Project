@@ -43,11 +43,15 @@ class ItemNPC : public QObject,
 {
     Q_OBJECT
 public:
+    ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent=0);
     ItemNPC(bool noScene=false, QGraphicsPixmapItem *parent=0);
     ~ItemNPC();
+private:
+    void construct();
 
+public:
     void setMainPixmap(const QPixmap &pixmap);
-    void setNpcData(LevelNPC inD);
+    void setNpcData(LevelNPC inD, obj_npc *mergedSet=0, long *animator_id=0);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene=NULL);
 
@@ -55,10 +59,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QPixmap mainImage;
-
-    QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPixmapItem * image;
 
     //////Animation////////
     void setAnimation(int frames, int framespeed, int framestyle, int direct,

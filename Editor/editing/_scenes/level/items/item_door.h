@@ -44,10 +44,13 @@ class ItemDoor : public QObject,
     Q_OBJECT
 public:
     ItemDoor(QGraphicsRectItem *parent=0);
+    ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent=0);
     ~ItemDoor();
+private:
+    void construct();
+public:
 
     void setDoorData(LevelDoors inD, int doorDir, bool init=false);
-    void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
     void setLocked(bool lock);
@@ -59,10 +62,6 @@ public:
     };
 
     QRectF boundingRect() const;
-
-    QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsRectItem * image;
 
     void setLayer(QString layer);
 

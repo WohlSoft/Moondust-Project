@@ -37,9 +37,10 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
     construct();
-
+    if(!parentScene) return;
     setScenePoint(parentScene);
     parentScene->addItem(this);
+    setLocked(scene->lock_block);
 }
 
 void ItemBlock::construct()
@@ -147,8 +148,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 this->setSelected(true);
             }
 
-
-            this->setSelected(1);
+            this->setSelected(true);
             QMenu ItemMenu;
             QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
 
@@ -157,7 +157,6 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
             LayerName->addSeparator()->deleteLater();;
-            newLayer->deleteLater();
 
             foreach(LevelLayers layer, scene->LvlData->layers)
             {
@@ -169,44 +168,33 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
                 setLayer->setChecked( layer.name==blockData.layer );
-                newLayer->deleteLater();
                 layerItems.push_back(setLayer);
             }
 
-            ItemMenu.addSeparator()->deleteLater();;
+                ItemMenu.addSeparator();
 
             QAction *invis = ItemMenu.addAction(tr("Invisible"));
                 invis->setCheckable(1);
                 invis->setChecked( blockData.invisible );
-                invis->deleteLater();
 
             QAction *slipp = ItemMenu.addAction(tr("Slippery"));
                 slipp->setCheckable(1);
                 slipp->setChecked( blockData.slippery );
-                slipp->deleteLater();
 
             QAction *resize = ItemMenu.addAction(tr("Resize"));
                 resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
-                resize->deleteLater();
 
-            QAction *transform = ItemMenu.addAction(tr("Transform into"));
-                transform->deleteLater();
-
-            ItemMenu.addSeparator()->deleteLater();;
+                ItemMenu.addSeparator();
             QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
-            chNPC->deleteLater();
-
-            ItemMenu.addSeparator()->deleteLater();;
+                ItemMenu.addSeparator();
+            QAction *transform = ItemMenu.addAction(tr("Transform into"));
+                ItemMenu.addSeparator();
             QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
-            copyBlock->deleteLater();
             QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
-            cutBlock->deleteLater();
-            ItemMenu.addSeparator()->deleteLater();;
+                ItemMenu.addSeparator();
             QAction *remove = ItemMenu.addAction( tr("Remove") );
-            remove->deleteLater();
-            ItemMenu.addSeparator()->deleteLater();;
+                ItemMenu.addSeparator();
             QAction *props = ItemMenu.addAction(tr("Properties..."));
-            props->deleteLater();
 
      QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
@@ -229,6 +217,27 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(selected==copyBlock)
             {
                 MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==transform)
+            {
+                int transformTO;
+                ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
+                blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+                blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+                if(blockList->exec()==QDialog::Accepted)
+                {
+                    transformTO = blockList->blockID;
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                        {
+                            ((ItemBlock *) SelItem)->transformTo(transformTO);
+                        }
+                    }
+                }
+                delete blockList;
             }
             else
             if(selected==invis)
@@ -264,23 +273,6 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(selected==resize)
             {
                 scene->setBlockResizer(this, true);
-            }
-            else
-            if(selected==transform)
-            {
-                bool ok=false;
-                int transformTO;
-                transformTO = QInputDialog::getInt(NULL, "Target Block ID",
-                                                   "Please enter target block ID which you want to set",
-                                                   0,0,2147483600,1,&ok);
-                if(ok)
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                    {
-                        ((ItemBlock *) SelItem)->transformTo(transformTO);
-                    }
-                }
             }
             else
             if(selected==chNPC)
