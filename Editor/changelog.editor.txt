@@ -20,7 +20,7 @@ Editor 0.2.1.7
 - Added Section modification features: Clone, Delete
 - Added more edit actions: align selected, flip horizontal/vertical, rotate left/right
 - Added basic scripts generation feature
-- Organized code structure which making code more understandable, flexible and faster
+- Organized structure of source code which making code more understandable, flexible and faster
 - Added layar movement speed calculator which will help you calculate speed in blocks per seconds.
 - More accurate SMBX file formats support: Now PGE can parse SMBX files of ANY version (from 0 to 64)
 - Added saving of SMBX LVL and WLD formats with selecting of file format version (useful to edit old episodes which made by old SMBX'es with saving of compatibility with them)
