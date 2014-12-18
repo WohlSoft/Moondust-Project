@@ -25,6 +25,14 @@
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
+    //Disable all animations to take speed-up
+    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    {
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+            qobject_cast<LevelEdit *>(window->widget())->scene->stopAnimation();
+        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+            qobject_cast<WorldEdit *>(window->widget())->scene->stopAnimation();
+    }
 
     QProgressDialog progress("Please wait...", tr("Abort"), 0,100, this);
     progress.setWindowTitle(tr("Reloading configurations"));
@@ -34,9 +42,9 @@ void MainWindow::on_actionLoad_configs_triggered()
     progress.setFixedSize(progress.size());
     progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
     progress.setCancelButton(0);
-    progress.setMinimumDuration(0);
+    progress.setMinimumDuration(1);
     progress.setAutoClose(false);
-    //progress.show();
+    progress.show();
 
     if(!progress.wasCanceled()) progress.setValue(1);
 
@@ -58,6 +66,21 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     if(!progress.wasCanceled())
         progress.close();
+
+    //Restore all animations states back
+    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    {
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+        {
+            if(qobject_cast<LevelEdit *>(window->widget())->scene->opts.animationEnabled)
+                qobject_cast<LevelEdit *>(window->widget())->scene->startAnimation();
+        }
+        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+        {
+            if(qobject_cast<WorldEdit *>(window->widget())->scene->opts.animationEnabled)
+                qobject_cast<WorldEdit *>(window->widget())->scene->startAnimation();
+        }
+    }
 
     QMessageBox::information(this, tr("Reloading configuration"),
     tr("Configuration succesfully reloaded!"),
