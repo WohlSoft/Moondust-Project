@@ -332,6 +332,11 @@ void MainWindow::on_WLD_DoCountStars_clicked()
 
     if (activeChildWindow()==3)
     {
+        QString __backUP;
+        __backUP = ui->WLD_DoCountStars->text();
+        ui->WLD_DoCountStars->setEnabled(false);
+        ui->WLD_DoCountStars->setText(tr("Counting..."));
+
         WorldEdit * edit = activeWldEditWin();
         dirPath = edit->WldData.path;
 
@@ -341,7 +346,7 @@ void MainWindow::on_WLD_DoCountStars_clicked()
              progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
              progress.setFixedSize(progress.size());
              progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-             progress.setMinimumDuration(0);
+             progress.setMinimumDuration(1);
 
         QStringList LevelAlreadyChecked;
 
@@ -386,7 +391,9 @@ void MainWindow::on_WLD_DoCountStars_clicked()
             qApp->processEvents();
         }
 
-        //qDebug() << "total " << starzzz;
+        ui->WLD_DoCountStars->setEnabled(true);
+        ui->WLD_DoCountStars->setText(__backUP);
+
         if(progress.wasCanceled()) return;
         ui->WLD_Stars->setValue(starzzz);
         progress.close();
