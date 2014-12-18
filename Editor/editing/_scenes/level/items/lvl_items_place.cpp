@@ -29,6 +29,8 @@
 #include "item_door.h"
 #include "item_playerpoint.h"
 
+
+
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
     bool noimage=true;

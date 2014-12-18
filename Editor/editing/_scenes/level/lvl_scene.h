@@ -101,13 +101,6 @@ public:
         void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
         void sortBGOArray(QVector<LevelBGO > &bgos);
 
-    private:
-        QMenu blockMenu;
-        QMenu bgoMenu;
-        QMenu npcMenu;
-        QMenu waterMenu;
-        QMenu DoorMenu;
-
     public:
         //default objects Z value
         int Z_backImage;
