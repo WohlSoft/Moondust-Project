@@ -20,16 +20,35 @@
 
 #include "item_playerpoint.h"
 
-ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent) :
-    QGraphicsPixmapItem(parent)
+ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent)
+    : QGraphicsPixmapItem(parent)
+{
+    construct();
+}
+
+ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsPixmapItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+}
+
+void ItemPlayerPoint::construct()
 {
     scene=NULL;
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
 
-    this->setData(ITEM_IS_ITEM, 1);
+    setData(ITEM_TYPE, "playerPoint");
+    setData(ITEM_IS_ITEM, 1);
 }
+
+ItemPlayerPoint::~ItemPlayerPoint()
+{}
+
 
 
 void ItemPlayerPoint::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -218,7 +237,6 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
     this->setPos(pointData.x, pointData.y);
     this->setZValue(scene->Z_Player);
-    this->setData(ITEM_TYPE, "playerPoint");
     this->setData(ITEM_ARRAY_ID, QString::number(pointData.id));
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
