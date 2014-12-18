@@ -42,16 +42,17 @@ class ItemTile : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemTile(QGraphicsItem *parent=0);
+    ItemTile(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemTile();
+private:
+    void construct();
+public:
 
-    void setTileData(WorldTiles inD);
-    void setContextMenu(QMenu &menu);
+    void setTileData(WorldTiles inD, obj_w_tile *mergedSet=0, long *animator_id=0);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
 
     //////Animation////////
     void setAnimator(long aniID);
@@ -62,6 +63,7 @@ public:
     void removeFromArray();
 
     WorldTiles tileData;
+    obj_w_tile localProps;
 
     int gridSize;
     int gridOffsetX;

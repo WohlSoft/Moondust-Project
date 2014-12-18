@@ -42,16 +42,17 @@ class ItemPath : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemPath(QGraphicsItem *parent=0);
+    ItemPath(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemPath();
+private:
+    void construct();
+public:
 
-    void setPathData(WorldPaths inD);
-    void setContextMenu(QMenu &menu);
+    void setPathData(WorldPaths inD, obj_w_path *mergedSet=0, long *animator_id=0);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
 
     //////Animation////////
     void setAnimator(long aniID);
@@ -62,6 +63,7 @@ public:
     void removeFromArray();
 
     WorldPaths pathData;
+    obj_w_path localProps;
 
     int gridSize;
     int gridOffsetX;

@@ -325,6 +325,10 @@ public:
         LevelData placingItems;
         LevelData overwritedItems;
 
+        ///
+        /// \brief cursor
+        /// Abstact item which using to check collision before place item. Using in the placing and erasing modes
+        ///
         QGraphicsItem * cursor;
         void resetCursor();
 

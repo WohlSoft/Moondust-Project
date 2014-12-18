@@ -24,6 +24,22 @@
 ItemMusic::ItemMusic(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    this->setZValue(scene->musicZ);
+    gridSize = scene->pConfigs->default_grid;
+}
+
+void ItemMusic::construct()
+{
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
@@ -34,20 +50,23 @@ ItemMusic::ItemMusic(QGraphicsItem *parent)
     scene=NULL;
     imageSize = QRectF(0,0,32,32);
 
-    this->setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
-    this->setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
+    setData(ITEM_TYPE, "MUSICBOX");
+
+    setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
+    setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
 
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
 }
 
-
 ItemMusic::~ItemMusic()
 {
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
 }
+
+
 
 void ItemMusic::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -124,28 +143,23 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 this->setSelected(true);
             }
 
-            this->setSelected(1);
-            ItemMenu->clear();
+            this->setSelected(true);
+            QMenu ItemMenu;
 
             if(!musicTitle.isEmpty())
             {
-                QAction *title = ItemMenu->addAction(QString("[%1]").arg(musicTitle));
+                QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
                 title->setEnabled(false);
-                title->deleteLater();
             }
 
-            QAction *play = ItemMenu->addAction(tr("Play this"));
-            play->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-            copyTile->deleteLater();
-            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-            cutTile->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-            remove->deleteLater();
+            QAction *play = ItemMenu.addAction(tr("Play this"));
+                ItemMenu.addSeparator();
+            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+                ItemMenu.addSeparator();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -263,6 +277,9 @@ void ItemMusic::removeFromArray()
 void ItemMusic::setMusicData(WorldMusic inD)
 {
     musicData = inD;
+    setPos(musicData.x, musicData.y);
+    setData(ITEM_ID, QString::number(musicData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(musicData.array_id) );
 }
 
 
@@ -295,11 +312,6 @@ void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
     }
-}
-
-void ItemMusic::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
 }
 
 void ItemMusic::setScenePoint(WldScene *theScene)

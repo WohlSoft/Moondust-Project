@@ -24,6 +24,21 @@
 ItemPath::ItemPath(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemPath::ItemPath(WldScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    setZValue(scene->pathZ);
+}
+
+void ItemPath::construct()
+{
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
@@ -35,14 +50,13 @@ ItemPath::ItemPath(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
+
+    setData(ITEM_TYPE, "PATH");
 }
 
 
 ItemPath::~ItemPath()
-{
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
-}
+{}
 
 void ItemPath::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -120,18 +134,15 @@ void ItemPath::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 this->setSelected(true);
             }
 
-            this->setSelected(1);
-            ItemMenu->clear();
+            this->setSelected(true);
+            QMenu ItemMenu;
 
-            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-            copyTile->deleteLater();
-            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-            cutTile->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-            remove->deleteLater();
+            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+                ItemMenu.addSeparator();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -238,9 +249,21 @@ void ItemPath::removeFromArray()
     }
 }
 
-void ItemPath::setPathData(WorldPaths inD)
+void ItemPath::setPathData(WorldPaths inD, obj_w_path *mergedSet, long *animator_id)
 {
     pathData = inD;
+    setPos(pathData.x, pathData.y);
+
+    setData(ITEM_ID, QString::number(pathData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(pathData.array_id) );
+
+    if(mergedSet)
+    {
+        localProps = *mergedSet;
+        gridSize = localProps.grid;
+    }
+    if(animator_id)
+        setAnimator(*animator_id);
 }
 
 
@@ -268,11 +291,6 @@ void ItemPath::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         painter->setPen(QPen(QBrush(Qt::blue), 2, Qt::DotLine));
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
     }
-}
-
-void ItemPath::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
 }
 
 void ItemPath::setScenePoint(WldScene *theScene)
