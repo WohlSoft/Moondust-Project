@@ -92,8 +92,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     {
     case 0: //blocks
         {
-            placingItem=PLC_Block;
-
             long j;
 
             tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, &j);
@@ -106,11 +104,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::gridSz=pConfigs->main_block[j].grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
+            if( (itemID != LvlPlacingItems::blockSet.id) || (placingItem!=PLC_Block) )
+                LvlPlacingItems::blockSet.layer = "Default";
+            LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
             LvlPlacingItems::blockSet.id = itemID;
 
             LvlPlacingItems::blockSet.w = tImg.width();
             LvlPlacingItems::blockSet.h = tImg.height();
-            LvlPlacingItems::blockSet.layer = "Default";
+
 
             //Place sizable blocks in the square fill mode
             if(pConfigs->main_block[j].sizable)
@@ -122,6 +123,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
             LvlPlacingItems::itemW = LvlPlacingItems::blockSet.w;
             LvlPlacingItems::itemH = LvlPlacingItems::blockSet.h;
+
+            placingItem=PLC_Block;
 
             LvlPlacingItems::flags.clear();
             QPair<int, QVariant > flag;
@@ -153,8 +156,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 flag.second = "CURSOR";
             LvlPlacingItems::flags.push_back(flag);
 
-
-            LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
 
             //Square fill mode (uses own cursor item)
             //if(LvlPlacingItems::squareFillingMode)
@@ -212,8 +213,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(pConfigs->main_bgo[j].offsetX,
                                              pConfigs->main_bgo[j].offsetY);
 
+        if( (itemID != LvlPlacingItems::bgoSet.id) || (placingItem!=PLC_BGO) )
+            LvlPlacingItems::bgoSet.layer = "Default";
+        LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
         LvlPlacingItems::bgoSet.id = itemID;
-
 
         long w = tImg.width();
         long h = tImg.height();//( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
@@ -221,6 +224,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::itemW = w;
         LvlPlacingItems::itemH = h;
 
+        placingItem=PLC_BGO;
 
         LvlPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
@@ -245,7 +249,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             flag.second = "CURSOR";
         LvlPlacingItems::flags.push_back(flag);
 
-        LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
 
         //Square fill mode
         if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square)
@@ -274,10 +277,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setVisible(false);
         cursor->setEnabled(true);
 
-        placingItem=PLC_BGO;
-
-        LvlPlacingItems::bgoSet.id = itemID;
-
         //flood fill uses 'item' cursor
         if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_FloodFill)
         {
@@ -289,65 +288,17 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     }
     case 2: //npcs
     {
-        int j;
-        bool found=false;
-        bool isUserTxt=false;
+        long j, animator;
         obj_npc mergedSet;
 
-        placingItem=PLC_NPC;
-        LvlPlacingItems::npcSet.id = itemID;
-
-        if(itemID < (unsigned int)index_npc.size())
-        {
-            j = index_npc[itemID].gi;
-
-            if(j<pConfigs->main_npc.size())
-            {
-            if(pConfigs->main_npc[j].id == itemID)
-                found=true;
-            }
-        }
-
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            if(index_npc[itemID].type==1)
-            {
-                if(uNPCs[index_npc[itemID].i].withTxt)
-                {
-                    isUserTxt=true;
-                    mergedSet = uNPCs[index_npc[itemID].i].merged;
-                }
-                else
-                    mergedSet = pConfigs->main_npc[index_npc[itemID].gi];
-            }
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uNPCs.size();j++)
-            {
-                if(uNPCs[j].id==itemID)
-                {
-                    if(uNPCs[j].withTxt)
-                    {
-                        isUserTxt=true;
-                        mergedSet = uNPCs[j].merged;
-                    }
-                    break;
-                }
-            }
-
-            j=pConfigs->getNpcI(itemID);
-            if(j>=0)
-            {
-                if(!isUserTxt)
-                    mergedSet = pConfigs->main_npc[j];
-            }
-
-        }
+        getConfig_NPC(itemID, j, animator, mergedSet);
 
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
+
+        if( (itemID != LvlPlacingItems::npcSet.id) || (placingItem!=PLC_NPC) )
+            LvlPlacingItems::npcSet.layer = "Default";
+        LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
+        LvlPlacingItems::npcSet.id = itemID;
 
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz=16;
@@ -382,6 +333,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
 
+        placingItem = PLC_NPC;
+
             flag.first=ITEM_TYPE;
             flag.second="NPC";
         LvlPlacingItems::flags.push_back(flag);
@@ -409,8 +362,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             flag.first=ITEM_IS_CURSOR;
             flag.second="CURSOR";
         LvlPlacingItems::flags.push_back(flag);
-
-        LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
 
         //Line mode
         if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Line)
