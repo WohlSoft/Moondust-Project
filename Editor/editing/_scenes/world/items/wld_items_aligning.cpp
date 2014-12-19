@@ -225,6 +225,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
 
             item->setY( zone.top()+h2 );
 
+            applyRotationTable(item, RT_FlipV);
         }
         else
         {
@@ -232,6 +233,8 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
 
             item->setX( zone.left()+w2 );
+
+            applyRotationTable(item, RT_FlipH);
         }
         applyArrayForItem(item);
         //if(recordHistory)
@@ -300,11 +303,15 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         {
             targetRect.setX( zone.left() + dist_b );
             targetRect.setY( zone.top() + dist_l );
+
+            applyRotationTable(item, RT_RotateRight);
         }
         else
         {
             targetRect.setX( zone.left() + dist_t );
             targetRect.setY( zone.top() + dist_r );
+
+            applyRotationTable(item, RT_RotateLeft);
         }
 
         item->setPos(targetRect.x(), targetRect.y());
@@ -316,6 +323,117 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
     //if(recordHistory){
     //    addRotateHistory(rotatedData, byClockwise);
     //}
+}
+
+
+void WldScene::applyRotationTable(QGraphicsItem *item, WldScene::rotateActions act)
+{
+    if(!item) return;
+    if(item->data(ITEM_IS_ITEM).isNull()) return;
+
+    QString itemType = item->data(ITEM_TYPE).toString();
+    long itemID = item->data(ITEM_ID).toInt();
+
+    if(itemType=="TILE")
+    {
+        if(local_rotation_table_tiles.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_tiles[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_tiles[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_tiles[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_tiles[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemTile *>(item)->transformTo(target);
+        }
+    }
+    else
+    if(itemType=="SCENERY")
+    {
+        if(local_rotation_table_sceneries.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_sceneries[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_sceneries[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_sceneries[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_sceneries[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemScene *>(item)->transformTo(target);
+        }
+    }
+    else
+    if(itemType=="PATH")
+    {
+        if(local_rotation_table_paths.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_paths[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_paths[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_paths[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_paths[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemPath *>(item)->transformTo(target);
+        }
+    }
+    else
+    if(itemType=="LEVEL")
+    {
+        if(local_rotation_table_levels.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_levels[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_levels[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_levels[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_levels[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemLevel *>(item)->transformTo(target);
+        }
+    }
+
 }
 
 
