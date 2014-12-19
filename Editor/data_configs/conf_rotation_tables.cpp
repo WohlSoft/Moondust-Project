@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <common_features/items.h>
 
+#include "data_configs.h"
 
 
 void dataconfigs::loadRotationTable()
@@ -25,7 +26,7 @@ void dataconfigs::loadRotationTable()
     unsigned int i;
 
     obj_rotation_table rTable;
-    long totalEntries;
+
     QString rtables_ini = config_dir + "rotation_table.ini";
 
     if(!QFile::exists(rtables_ini))
@@ -37,23 +38,23 @@ void dataconfigs::loadRotationTable()
     QSettings rtable_set(rtables_ini, QSettings::IniFormat);
     rtable_set.setIniCodec("UTF-8");
 
-    rtable_set.beginGroup("main");
-        totalEntries = rtable_set.value("total", "0").toInt();
-    rtable_set.endGroup();
+    main_rotation_table.clear();
 
-    if(totalEntries==0)
+    QStringList groups = rtable_set.childGroups();
+
+    if(groups.size()==0)
     {
         addError(QString("ERROR LOADING of rotation_table.ini: number of items not define, or empty config"), QtWarningMsg);
         return;
     }
 
-    main_rotation_table.clear();
-
-    for(i=1; i<=totalEntries; i++)
+    for(i=0; i<(unsigned)groups.size(); i++)
     {
+        if(groups[i]=="main")
+            continue;
 
-        rtable_set.beginGroup( QString("rule-"+QString::number(i)) );
-            rTable.type=rtable_set.value("type", "0").toInt();
+        rtable_set.beginGroup( groups[i] );
+            rTable.type=Items::getItemType(rtable_set.value("type", "-1").toString());
             rTable.id=rtable_set.value("id", "0").toInt();
             rTable.rotate_left=rtable_set.value("rotate-left", "0").toInt();
             rTable.rotate_right=rtable_set.value("rotate-right", "0").toInt();
