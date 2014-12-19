@@ -124,11 +124,8 @@ MainWindow::~MainWindow()
 //Exit from application
 void MainWindow::on_Exit_triggered()
 {
-    //ui->centralWidget->closeAllSubWindows();
     if(!MainWindow::close())
         return;
-    //qApp->quit();
-    //exit(0);
 }
 
 
@@ -148,7 +145,6 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
     test3->setEnabled(false);
 
     cu->exec(pos);
-
 }
 
 
