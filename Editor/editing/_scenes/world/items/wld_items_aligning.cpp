@@ -187,6 +187,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
 
     //For history
     //WorldData rotatedData;
+    Q_UNUSED(recordHistory);
 
     QRect zone = QRect(0,0,0,0);
     QRect itemZone = QRect(0,0,0,0);
@@ -199,9 +200,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
 
     foreach(QGraphicsItem * item, items)
     {
-        QString t = item->data(ITEM_TYPE).toString();
-        if((t!="TILE") && (t!="SCENERY")&& (t!="PATH") && (t!="LEVEL")
-           && (t!="MUSICBOX") )
+        if( item->data(ITEM_IS_ITEM).isNull() )
             continue;
 
         itemZone.setX(qRound(item->scenePos().x()));
@@ -223,18 +222,18 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             qreal h2;//Opposit height (between bottom side of item and bottom side of zone)
             h2 = qFabs( (item->scenePos().y() + item->data(ITEM_HEIGHT).toInt()) - zone.bottom());
 
-            item->setY( zone.top()+h2 );
-
             applyRotationTable(item, RT_FlipV);
+
+            item->setY( zone.top()+h2 );
         }
         else
         {
             qreal w2;//Opposit width (between right side of item and right side of zone)
             w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
 
-            item->setX( zone.left()+w2 );
-
             applyRotationTable(item, RT_FlipH);
+
+            item->setX( zone.left()+w2 );
         }
         applyArrayForItem(item);
         //if(recordHistory)
@@ -253,6 +252,7 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     //For history
     //WorldData rotatedData;
+    Q_UNUSED(recordHistory);
 
     //Calculate common width/height of group
     QRect zone = QRect(0,0,0,0);
@@ -267,9 +267,7 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     foreach(QGraphicsItem * item, items)
     {
-        QString t = item->data(ITEM_TYPE).toString();
-        if((t!="TILE") && (t!="SCENERY")&& (t!="PATH") && (t!="LEVEL")
-           && (t!="MUSICBOX") )
+        if( item->data(ITEM_IS_ITEM).isNull() )
             continue;
 
         itemZone.setX(qRound(item->scenePos().x()));

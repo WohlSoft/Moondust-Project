@@ -62,6 +62,8 @@ void dataconfigs::loadRotationTable()
             rTable.flip_v=rtable_set.value("flip-v", "0").toInt();
         rtable_set.endGroup();
 
+        if(rTable.type<0) continue;
+
         main_rotation_table.push_back(rTable);
 
         if( rtable_set.status() != QSettings::NoError )
