@@ -18,6 +18,7 @@ public:
     /// \return The Pixmap
     ///
     static QPixmap getItemGFX(int itemType, unsigned long ItemID, bool whole=false, long  *confId = NULL, QGraphicsScene *scene=NULL);
+    static int getItemType(QString type);
 };
 
 #endif // ITEMS_H
