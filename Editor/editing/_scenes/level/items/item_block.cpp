@@ -431,6 +431,9 @@ void ItemBlock::transformTo(long target_id)
     blockData.id = target_id;
     setBlockData(blockData, &mergedSet, &animator);
     arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 ///////////////////MainArray functions/////////////////////////////
