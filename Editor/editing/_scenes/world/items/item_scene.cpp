@@ -193,7 +193,25 @@ void ItemScene::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
 void ItemScene::transformTo(long target_id)
 {
+    if(target_id<1) return;
 
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_w_scenery mergedSet;
+
+    //Get Scenery settings
+    scene->getConfig_Scenery(target_id, item_i, animator, mergedSet, &noimage);
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    sceneData.id = target_id;
+    setSceneData(sceneData, &mergedSet, &animator);
+    arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 void ItemScene::arrayApply()

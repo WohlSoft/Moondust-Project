@@ -192,7 +192,25 @@ void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
 void ItemTile::transformTo(long target_id)
 {
+    if(target_id<1) return;
 
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_w_tile mergedSet;
+
+    //Get Tile settings
+    scene->getConfig_Tile(target_id, item_i, animator, mergedSet, &noimage);
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    tileData.id = target_id;
+    setTileData(tileData, &mergedSet, &animator);
+    arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 void ItemTile::arrayApply()
