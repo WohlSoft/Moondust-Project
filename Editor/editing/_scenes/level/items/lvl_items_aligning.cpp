@@ -255,79 +255,16 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             qreal h2;//Opposit height (between bottom side of item and bottom side of zone)
             h2 = qFabs( (item->scenePos().y() + item->data(ITEM_HEIGHT).toInt()) - zone.bottom());
 
-            foreach(obj_rotation_table x, pConfigs->main_rotation_table)
-            {
-                if(
-                    (x.type == ItemTypes::LVL_Block)&&
-                    (item->data(ITEM_TYPE).toString()=="Block") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBlock *>(item)->transformTo(x.flip_v);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_BGO)&&
-                    (item->data(ITEM_TYPE).toString()=="BGO") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBGO *>(item)->transformTo(x.flip_v);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_NPC)&&
-                    (item->data(ITEM_TYPE).toString()=="NPC") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemNPC *>(item)->transformTo(x.flip_v);
-                    break;
-                }
-            }
+            applyRotationTable(item, RT_FlipV);
 
             item->setY( zone.top()+h2 );
-
         }
         else
         {
             qreal w2;//Opposit width (between right side of item and right side of zone)
             w2 = qFabs( (item->scenePos().x() + item->data(ITEM_WIDTH).toInt() ) - zone.right() );
 
-            foreach(obj_rotation_table x, pConfigs->main_rotation_table)
-            {
-                if(
-                    (x.type==ItemTypes::LVL_Block)&&
-                    (item->data(ITEM_TYPE).toString()=="Block") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBlock *>(item)->transformTo(x.flip_h);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_BGO)&&
-                    (item->data(ITEM_TYPE).toString()=="BGO") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBGO *>(item)->transformTo(x.flip_h);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_NPC)&&
-                    (item->data(ITEM_TYPE).toString()=="NPC") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemNPC *>(item)->transformTo(x.flip_h);
-                    break;
-                }
-            }
+            applyRotationTable(item, RT_FlipH);
 
             item->setX( zone.left()+w2 );
 
@@ -407,78 +344,15 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
         if(byClockwise)
         {
+            if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()!="sizable")
+                applyRotationTable(item, RT_RotateRight);
             targetRect.setX( zone.left() + dist_b );
             targetRect.setY( zone.top() + dist_l );
-
-            foreach(obj_rotation_table x, pConfigs->main_rotation_table)
-            {
-                if(
-                    (x.type==ItemTypes::LVL_Block)&&
-                    (item->data(ITEM_TYPE).toString()=="Block") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBlock *>(item)->transformTo(x.rotate_right);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_BGO)&&
-                    (item->data(ITEM_TYPE).toString()=="BGO") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBGO *>(item)->transformTo(x.rotate_right);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_NPC)&&
-                    (item->data(ITEM_TYPE).toString()=="NPC") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemNPC *>(item)->transformTo(x.rotate_right);
-                    break;
-                }
-            }
-
         }
         else
         {
-            foreach(obj_rotation_table x, pConfigs->main_rotation_table)
-            {
-                if(
-                    (x.type==ItemTypes::LVL_Block)&&
-                    (item->data(ITEM_TYPE).toString()=="Block") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBlock *>(item)->transformTo(x.rotate_left);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_BGO)&&
-                    (item->data(ITEM_TYPE).toString()=="BGO") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemBGO *>(item)->transformTo(x.rotate_left);
-                    break;
-                }
-                else
-                if(
-                    (x.type==ItemTypes::LVL_NPC)&&
-                    (item->data(ITEM_TYPE).toString()=="NPC") &&
-                    (x.id == item->data(ITEM_ID).toInt())
-                  )
-                {
-                    dynamic_cast<ItemNPC *>(item)->transformTo(x.rotate_left);
-                    break;
-                }
-            }
-
+            if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()!="sizable")
+                applyRotationTable(item, RT_RotateLeft);
             targetRect.setX( zone.left() + dist_t );
             targetRect.setY( zone.top() + dist_r );
         }
@@ -504,6 +378,90 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     if(recordHistory){
         addRotateHistory(rotatedData, byClockwise);
+    }
+}
+
+void LvlScene::applyRotationTable(QGraphicsItem *item, LvlScene::rotateActions act)
+{
+    if(!item) return;
+    if(item->data(ITEM_IS_ITEM).isNull()) return;
+
+    QString itemType = item->data(ITEM_TYPE).toString();
+    long itemID = item->data(ITEM_ID).toInt();
+
+    if(itemType=="Block")
+    {
+        if(local_rotation_table_blocks.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_blocks[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_blocks[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_blocks[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_blocks[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemBlock *>(item)->transformTo(target);
+        }
+    }
+    else
+    if(itemType=="BGO")
+    {
+        if(local_rotation_table_bgo.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_bgo[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_bgo[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_bgo[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_bgo[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemBGO *>(item)->transformTo(target);
+        }
+    }
+    else
+    if(itemType=="NPC")
+    {
+        if(local_rotation_table_npc.contains(itemID))
+        {
+            long target=0;
+            switch(act)
+            {
+                case RT_RotateLeft:
+                    target = local_rotation_table_npc[itemID].rotate_left;
+                    break;
+                case RT_RotateRight:
+                    target = local_rotation_table_npc[itemID].rotate_right;
+                    break;
+                case RT_FlipH:
+                    target = local_rotation_table_npc[itemID].flip_h;
+                    break;
+                case RT_FlipV:
+                    target = local_rotation_table_npc[itemID].flip_v;
+                    break;
+            }
+            if(target>0)
+                dynamic_cast<ItemBGO *>(item)->transformTo(target);
+        }
     }
 }
 
