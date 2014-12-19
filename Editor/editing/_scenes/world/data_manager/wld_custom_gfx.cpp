@@ -17,6 +17,7 @@
  */
 
 #include <common_features/graphics_funcs.h>
+#include <common_features/items.h>
 #include <editing/edit_world/world_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -40,10 +41,60 @@ void WldScene::loadUserData(QProgressDialog &progress)
     uPaths.clear();
     uLevels.clear();
 
-    QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
-    QString uWLDD = WldData->path + "/" + WldData->filename;
-    QString uWLDs = WldData->path + "/";
+    //QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
+    //QString uWLDD = WldData->path + "/" + WldData->filename;
+    //QString uWLDs = WldData->path + "/";
     CustomDirManager uWLD(WldData->path, WldData->filename);
+
+    //Load custom rotation rules
+    QString rTableFile = uWLD.getCustomFile("rotation_table.ini");
+    if(!rTableFile.isEmpty())
+    {
+        QSettings rTableINI(rTableFile, QSettings::IniFormat);
+        rTableINI.setIniCodec("UTF-8");
+
+        QStringList rules = rTableINI.childGroups();
+
+        int count=0;
+        foreach(QString x, rules)
+        {
+            obj_rotation_table t;
+            rTableINI.beginGroup(x);
+                t.id = rTableINI.value("id", 0).toInt();
+                t.type = Items::getItemType(rTableINI.value("type", "-1").toString());
+                t.rotate_left = rTableINI.value("rotate-left", 0).toInt();
+                t.rotate_right = rTableINI.value("rotate-right", 0).toInt();
+                t.flip_h = rTableINI.value("flip-h", 0).toInt();
+                t.flip_v = rTableINI.value("flip-v", 0).toInt();
+            rTableINI.endGroup();
+            if(t.id<=0) continue;
+
+            if(t.type==ItemTypes::WLD_Tile)
+            {
+                local_rotation_table_tiles[t.id]=t;
+                count++;
+            }
+            else
+            if(t.type==ItemTypes::WLD_Scenery)
+            {
+                local_rotation_table_sceneries[t.id]=t;
+                count++;
+            }
+            else
+            if(t.type==ItemTypes::WLD_Path)
+            {
+                local_rotation_table_paths[t.id]=t;
+                count++;
+            }
+            else
+            if(t.type==ItemTypes::WLD_Level)
+            {
+                local_rotation_table_levels[t.id]=t;
+                count++;
+            }
+        }
+        qDebug() << "Loaded custom rotation rules: " << count;
+    }
 
     if(!progress.wasCanceled())
     {

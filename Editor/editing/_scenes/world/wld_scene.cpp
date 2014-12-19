@@ -123,6 +123,26 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
         tmpAnimator = new SimpleAnimator(uLevelImg, 0);
     animates_Levels.push_back( tmpAnimator );
 
+    //Init default rotation tables
+    local_rotation_table_tiles.clear();
+    local_rotation_table_sceneries.clear();
+    local_rotation_table_paths.clear();
+    local_rotation_table_levels.clear();
+    foreach(obj_rotation_table x, pConfigs->main_rotation_table)
+    {
+        if(x.type==ItemTypes::WLD_Tile)
+            local_rotation_table_tiles[x.id]=x;
+        else
+        if(x.type==ItemTypes::WLD_Scenery)
+            local_rotation_table_sceneries[x.id]=x;
+        else
+        if(x.type==ItemTypes::WLD_Path)
+            local_rotation_table_paths[x.id]=x;
+        else
+        if(x.type==ItemTypes::WLD_Level)
+            local_rotation_table_levels[x.id]=x;
+    }
+
 
     //set Default Z Indexes
     tileZ=0; // tiles

@@ -254,6 +254,19 @@ public:
         void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory=true);
         void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory=true);
 
+        enum rotateActions
+        {
+            RT_RotateLeft=0,
+            RT_RotateRight,
+            RT_FlipH,
+            RT_FlipV
+        };
+        void applyRotationTable(QGraphicsItem * item, rotateActions act);
+        QMap<long, obj_rotation_table > local_rotation_table_tiles;
+        QMap<long, obj_rotation_table > local_rotation_table_sceneries;
+        QMap<long, obj_rotation_table > local_rotation_table_paths;
+        QMap<long, obj_rotation_table > local_rotation_table_levels;
+
     // ///////////////////Collisions///////////////////////////
     public:
         QList<QGraphicsItem *> collisionCheckBuffer;
