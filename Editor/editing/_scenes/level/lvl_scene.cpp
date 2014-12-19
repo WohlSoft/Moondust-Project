@@ -107,6 +107,23 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
         AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(uNpcImg, dummyNpc);
     animates_NPC.push_back( tmpNpcAnimator );
 
+    //Init default rotation tables
+    local_rotation_table_blocks.clear();
+    local_rotation_table_bgo.clear();
+    local_rotation_table_npc.clear();
+    foreach(obj_rotation_table x, pConfigs->main_rotation_table)
+    {
+        if(x.type==ItemTypes::LVL_Block)
+            local_rotation_table_blocks[x.id]=x;
+        else
+        if(x.type==ItemTypes::LVL_BGO)
+            local_rotation_table_bgo[x.id]=x;
+        else
+        if(x.type==ItemTypes::LVL_NPC)
+            local_rotation_table_npc[x.id]=x;
+    }
+
+
 
     grid = true;
     IncrementingNpcSpecialSpin = 0;
