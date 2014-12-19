@@ -543,6 +543,9 @@ void ItemBGO::transformTo(long target_id)
     bgoData.id = target_id;
     setBGOData(bgoData, &mergedSet, &animator);
     arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 QRectF ItemBGO::boundingRect() const
