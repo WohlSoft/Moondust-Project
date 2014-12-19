@@ -236,3 +236,4 @@ void MainWindow::setTabView()
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     updateWindowMenu();
 }
+
