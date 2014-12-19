@@ -52,6 +52,7 @@ void ItemPath::construct()
     mouseRight=false;
 
     setData(ITEM_TYPE, "PATH");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -192,6 +193,12 @@ void ItemPath::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
+void ItemPath::transformTo(long target_id)
+{
+
+}
+
+
 void ItemPath::arrayApply()
 {
     bool found=false;
@@ -247,6 +254,21 @@ void ItemPath::removeFromArray()
             scene->WldData->paths.remove(i); break;
         }
     }
+}
+
+void ItemPath::returnBack()
+{
+    setPos(pathData.x, pathData.y);
+}
+
+int ItemPath::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemPath::sourcePos()
+{
+    return QPoint(pathData.x, pathData.y);
 }
 
 void ItemPath::setPathData(WorldPaths inD, obj_w_path *mergedSet, long *animator_id)
@@ -315,3 +337,4 @@ void ItemPath::setAnimator(long aniID)
 
     animatorID = aniID;
 }
+

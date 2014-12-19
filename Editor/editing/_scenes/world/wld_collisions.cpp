@@ -37,29 +37,31 @@ void WldScene::prepareCollisionBuffer()
         if(collisionCheckBuffer[i]==NULL)
             kick=true;
         else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="YellowRectangle")
+        if(collisionCheckBuffer[i]->data(ITEM_IS_ITEM).isNull())
             kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Space")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Square")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Line")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="LineDrawer")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="WorldMapPoint")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="SectionBorder")
-            kick=true;
-        else
-        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString().startsWith("BackGround"))
-            kick=true;
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="YellowRectangle")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Space")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Square")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="Line")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="LineDrawer")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="WorldMapPoint")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString()=="SectionBorder")
+//            kick=true;
+//        else
+//        if(collisionCheckBuffer[i]->data(ITEM_TYPE).toString().startsWith("BackGround"))
+//            kick=true;
 
         if(kick) {collisionCheckBuffer.removeAt(i); i--;}
     }
@@ -163,12 +165,12 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
             if(it->data(ITEM_TYPE).isNull())
                  continue;
-            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
+            if(it->data(ITEM_IS_ITEM).isNull())
                 continue;
-            if(it->data(ITEM_TYPE).toString()=="Space")
-                continue;
-            if(it->data(ITEM_TYPE).toString()=="Square")
-                continue;
+//            if(it->data(ITEM_TYPE).toString()=="Space")
+//                continue;
+//            if(it->data(ITEM_TYPE).toString()=="Square")
+//                continue;
 
             if(item->data(ITEM_TYPE).toString()!=it->data(0).toString()) continue;
 

@@ -34,8 +34,11 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemMusic : public QObject, public QGraphicsItem
+class ItemMusic : public QObject,
+                  public QGraphicsItem,
+                  public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -55,6 +58,10 @@ public:
 
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
 
     WorldMusic musicData;
     QString musicTitle;

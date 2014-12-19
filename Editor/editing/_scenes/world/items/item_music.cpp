@@ -51,6 +51,7 @@ void ItemMusic::construct()
     imageSize = QRectF(0,0,32,32);
 
     setData(ITEM_TYPE, "MUSICBOX");
+    setData(ITEM_IS_ITEM, 1);
 
     setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
     setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
@@ -272,6 +273,21 @@ void ItemMusic::removeFromArray()
             scene->WldData->music.remove(i); break;
         }
     }
+}
+
+void ItemMusic::returnBack()
+{
+    setPos(musicData.x, musicData.y);
+}
+
+int ItemMusic::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemMusic::sourcePos()
+{
+    return QPoint(musicData.x, musicData.y);
 }
 
 void ItemMusic::setMusicData(WorldMusic inD)

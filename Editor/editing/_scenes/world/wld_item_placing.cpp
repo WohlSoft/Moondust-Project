@@ -101,23 +101,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="TILE";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -193,23 +193,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="SCENERY";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -233,7 +233,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -284,23 +284,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="PATH";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -323,7 +323,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -379,23 +379,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="LEVEL";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -426,7 +426,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -450,20 +450,20 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         placingItem=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=32;
+        WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = 16;
-        WldPlacingItems::c_offset_y = 16;
+        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
 
-        cursor = addRect(0,0, 32, 32);
-        cursor->setData(0, "MUSICBOX");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(32));
-        cursor->setData(10, QString::number(32));
+        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
+        cursor->setData(ITEM_TYPE, "MUSICBOX");
+        cursor->setData(ITEM_ID, QString::number(itemID));
+        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
+        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
         ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -476,20 +476,20 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         placingItem=MODE_SetPoint;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=32;
+        WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = 16;
-        WldPlacingItems::c_offset_y = 16;
+        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
 
-        cursor = addRect(0,0, 32, 32);
-        cursor->setData(0, "WorldMapPoint");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(32));
-        cursor->setData(10, QString::number(32));
+        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
+        cursor->setData(ITEM_TYPE, "WorldMapPoint");
+        cursor->setData(ITEM_ID, QString::number(itemID));
+        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
+        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
         ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);

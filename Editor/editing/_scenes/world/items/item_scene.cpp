@@ -53,6 +53,7 @@ void ItemScene::construct()
     mouseMid=false;
     mouseRight=false;
     setData(ITEM_TYPE, "SCENERY");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 
@@ -190,6 +191,11 @@ void ItemScene::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
+void ItemScene::transformTo(long target_id)
+{
+
+}
+
 void ItemScene::arrayApply()
 {
     bool found=false;
@@ -245,6 +251,21 @@ void ItemScene::removeFromArray()
             scene->WldData->scenery.remove(i); break;
         }
     }
+}
+
+void ItemScene::returnBack()
+{
+    setPos(sceneData.x, sceneData.y);
+}
+
+int ItemScene::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemScene::sourcePos()
+{
+    return QPoint(sceneData.x, sceneData.y);
 }
 
 void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *animator_id)
@@ -313,3 +334,5 @@ void ItemScene::setAnimator(long aniID)
 
     animatorID = aniID;
 }
+
+

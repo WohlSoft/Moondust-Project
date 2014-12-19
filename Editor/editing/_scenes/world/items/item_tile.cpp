@@ -41,8 +41,6 @@ ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
 void ItemTile::construct()
 {
     gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
     isLocked=false;
 
     animatorID=-1;
@@ -53,6 +51,7 @@ void ItemTile::construct()
     mouseRight=false;
 
     setData(ITEM_TYPE, "TILE");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 ItemTile::~ItemTile()
@@ -191,6 +190,11 @@ void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
+void ItemTile::transformTo(long target_id)
+{
+
+}
+
 void ItemTile::arrayApply()
 {
     bool found=false;
@@ -246,6 +250,22 @@ void ItemTile::removeFromArray()
         }
     }
 }
+
+void ItemTile::returnBack()
+{
+    setPos(tileData.x, tileData.y);
+}
+
+int ItemTile::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemTile::sourcePos()
+{
+    return QPoint(tileData.x, tileData.y);
+}
+
 
 void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator_id)
 {
