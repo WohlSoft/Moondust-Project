@@ -547,6 +547,9 @@ void ItemNPC::transformTo(long target_id)
 
     setNpcData(npcData, &mergedSet, &animator);
     arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 void ItemNPC::setIncludedNPC(int npcID, bool init)

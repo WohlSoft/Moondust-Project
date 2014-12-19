@@ -46,39 +46,11 @@ void WldScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
 void WldScene::applyArrayForItem(QGraphicsItem * item)
 {
     if(!item) return;
-
-    QString ObjType = item->data(0).toString();
-    if( ObjType == "TILE")
+    if(!item->data(ITEM_IS_ITEM).isNull())
     {
-        dynamic_cast<ItemTile *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "SCENERY")
-    {
-        dynamic_cast<ItemScene *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "PATH")
-    {
-        dynamic_cast<ItemPath *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "LEVEL")
-    {
-        dynamic_cast<ItemLevel *>(item)->arrayApply();
-    }
-    else
-    if( ObjType == "MUSICBOX" )
-    {
-        dynamic_cast<ItemMusic *>(item)->arrayApply();
+        dynamic_cast<WldBaseItem *>(item)->arrayApply();
     }
 }
-
-
-
-
-
-
 
 
 void WldScene::returnItemBackGroup(QList<QGraphicsItem * >items)
@@ -93,45 +65,11 @@ void WldScene::returnItemBack(QGraphicsItem * item)
 {
     if(!item) return;
 
-    QString ObjType = item->data(0).toString();
-    if( ObjType == "TILE")
+    if(!item->data(ITEM_IS_ITEM).isNull())
     {
-        ItemTile * it = dynamic_cast<ItemTile *>(item);
-        it->setPos(it->tileData.x, it->tileData.y);
-    }
-    else
-    if( ObjType == "SCENERY")
-    {
-        ItemScene * it = dynamic_cast<ItemScene *>(item);
-        it->setPos(it->sceneData.x, it->sceneData.y);
-    }
-    else
-    if( ObjType == "PATH")
-    {
-        ItemPath * it = dynamic_cast<ItemPath *>(item);
-        it->setPos(it->pathData.x, it->pathData.y);
-    }
-    else
-    if( ObjType == "LEVEL")
-    {
-        ItemLevel * it = dynamic_cast<ItemLevel *>(item);
-        it->setPos(it->levelData.x, it->levelData.y);
-    }
-    else
-    if(ObjType == "MUSICBOX")
-    {
-        ItemMusic * it = dynamic_cast<ItemMusic *>(item);
-        it->setPos(it->musicData.x, it->musicData.y);
+        dynamic_cast<WldBaseItem *>(item)->returnBack();
     }
 }
-
-
-
-
-
-
-
-
 
 
 

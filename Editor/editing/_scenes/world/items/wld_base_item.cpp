@@ -16,32 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../pge_version.h" //Global Project version file
+#include "wld_base_item.h"
 
-#ifndef EDITOR_VERSION_H
-#define EDITOR_VERSION_H
+WldBaseItem::WldBaseItem()
+{}
 
-//Version of this program
-#define _FILE_VERSION "0.2.1.8"
-#define _FILE_RELEASE "-dev"
+WldBaseItem::~WldBaseItem()
+{}
 
-#define _VF1 0
-#define _VF2 2
-#define _VF3 1
-#define _VF4 8
+void WldBaseItem::arrayApply()
+{}
+
+void WldBaseItem::returnBack()
+{}
+
+void WldBaseItem::removeFromArray()
+{}
+
+void WldBaseItem::setLayer(QString layer)
+{
+    Q_UNUSED(layer);
+}
+
+int WldBaseItem::getGridSize()
+{
+    return 1;
+}
+
+QPoint WldBaseItem::gridOffset()
+{
+    return QPoint(0,0);
+}
+
+QPoint WldBaseItem::sourcePos()
+{
+    return QPoint(0,0);
+}
 
 
-#define _FILE_DESC "Platformer Game Engine - Editor"
-
-#define _INTERNAL_NAME "pge_editor"
-
-#ifdef _WIN32
-	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
-#else
-	#define _ORIGINAL_NAME "pge_editor" // for any other platforms
-#endif
-
-//Uncomment this for enable detal logging
-//#define _DEBUG_
-
-#endif

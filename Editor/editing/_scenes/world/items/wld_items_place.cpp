@@ -34,92 +34,27 @@
 
 void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 {
-    bool noimage=true, found=false;
-    int j, item_i = 0;
+    bool noimage=true;
+    long item_i = 0;
     long animator=0;
-
-    ItemTile *TileItem = new ItemTile;
+    obj_w_tile mergedSet;
 
     //Check Index exists
-    if(tile.id < (unsigned int)index_tiles.size())
-    {
-        j = index_tiles[tile.id].i;
-        item_i = j;
-        animator = index_tiles[tile.id].ai;
-
-        if(j<pConfigs->main_wtiles.size())
-        {
-            if(pConfigs->main_wtiles[j].id == tile.id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_wtiles.size();j++)
-        {
-            if(pConfigs->main_wtiles[j].id==tile.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-                //if(!isUser)
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_wtiles.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
-
-    TileItem->gridSize = pConfigs->main_wtiles[item_i].grid;
-
-    addItem(TileItem);
-
-    //Set pointers
-    TileItem->setScenePoint(this);
-
-    TileItem->setContextMenu(tileMenu);
-
-    TileItem->setAnimator(animator);
-
-    if((!noimage) && (pConfigs->main_wtiles[item_i].animated))
-    {
-        TileItem->setData(4, "animated");
-    }
+    getConfig_Tile(tile.id, item_i, animator, mergedSet, &noimage);
 
     QPoint newPos = QPoint(tile.x, tile.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(tile.x, tile.y), TileItem->gridSize);
+        newPos = applyGrid(QPoint(tile.x, tile.y), mergedSet.grid);
         tile.x = newPos.x();
-        TileItem->tileData.x = newPos.x();
         tile.y = newPos.y();
-        TileItem->tileData.y = newPos.y();
     }
 
-
-    TileItem->setTileData(tile);
-
-    TileItem->setPos(QPointF(newPos));
-
-    TileItem->setZValue(tileZ);
+    ItemTile *TileItem = new ItemTile(this);
+    TileItem->setTileData(tile, &mergedSet, &animator);
 
     TileItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_tile));
     TileItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_tile));
-
-    TileItem->setData(0, "TILE");
-    TileItem->setData(1, QString::number(tile.id) );
-    TileItem->setData(2, QString::number(tile.array_id) );
 
     if(PasteFromBuffer) TileItem->setSelected(true);
 }
@@ -130,91 +65,26 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 
 void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 {
-    bool noimage=true, found=false;
-    int j, item_i = 0;
+    bool noimage=true;
+    long item_i = 0;
     long animator=0;
+    obj_w_scenery mergedSet;
 
-    ItemScene *SceneItem = new ItemScene;
-
-    //Check Index exists
-    if(scenery.id < (unsigned int)index_scenes.size())
-    {
-        j = index_scenes[scenery.id].i;
-        item_i = j;
-        animator = index_scenes[scenery.id].ai;
-
-        if(j<pConfigs->main_wscene.size())
-        {
-            if(pConfigs->main_wscene[j].id == scenery.id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_wscene.size();j++)
-        {
-            if(pConfigs->main_wscene[j].id==scenery.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-                //if(!isUser)
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_wscene.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
-
-    SceneItem->gridSize = pConfigs->main_wscene[item_i].grid;
-
-    addItem(SceneItem);
-
-    //Set pointers
-    SceneItem->setScenePoint(this);
-
-    SceneItem->setContextMenu(sceneMenu);
-
-    SceneItem->setAnimator(animator);
-
-    if((!noimage) && (pConfigs->main_wscene[item_i].animated))
-    {
-        SceneItem->setData(4, "animated");
-    }
+    getConfig_Scenery(scenery.id, item_i, animator, mergedSet, &noimage);
 
     QPoint newPos = QPoint(scenery.x, scenery.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(scenery.x, scenery.y), SceneItem->gridSize);
+        newPos = applyGrid(QPoint(scenery.x, scenery.y), mergedSet.grid);
         scenery.x = newPos.x();
-        SceneItem->sceneData.x = newPos.x();
         scenery.y = newPos.y();
-        SceneItem->sceneData.y = newPos.y();
     }
 
-    SceneItem->setSceneData(scenery);
-
-    SceneItem->setPos(QPointF(newPos));
-
-    SceneItem->setZValue(sceneZ);
+    ItemScene *SceneItem = new ItemScene(this);
+    SceneItem->setSceneData(scenery, &mergedSet, &animator);
 
     SceneItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_scene));
     SceneItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_scene));
-
-    SceneItem->setData(0, "SCENERY");
-    SceneItem->setData(1, QString::number(scenery.id) );
-    SceneItem->setData(2, QString::number(scenery.array_id) );
 
     if(PasteFromBuffer) SceneItem->setSelected(true);
 }
@@ -225,92 +95,28 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 
 void WldScene::placePath(WorldPaths &path, bool toGrid)
 {
-    bool noimage=true, found=false;
-    int j, item_i=0;
+    bool noimage=true;
+    long item_i=0;
     long animator=0;
+    obj_w_path mergedSet;
 
-    ItemPath *PathItem = new ItemPath;
-
-    //Check Index exists
-    if(path.id < (unsigned int)index_paths.size())
-    {
-        j = index_paths[path.id].i;
-        item_i = j;
-        animator = index_paths[path.id].ai;
-
-        if(j<pConfigs->main_wpaths.size())
-        {
-            if(pConfigs->main_wpaths[j].id == path.id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_wpaths.size();j++)
-        {
-            if(pConfigs->main_wpaths[j].id==path.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-                //if(!isUser)
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_wpaths.size())
-        {
-            j=0;
-            item_i = 0;
-        }
-    }
-
-    PathItem->gridSize = pConfigs->main_wpaths[item_i].grid;
-
-    addItem(PathItem);
-
-    //Set pointers
-    PathItem->setScenePoint(this);
-
-    PathItem->setContextMenu(pathMenu);
-
-    PathItem->setAnimator(animator);
-
-    if((!noimage) && (pConfigs->main_wpaths[item_i].animated))
-    {
-        PathItem->setData(4, "animated");
-    }
+    getConfig_Path(path.id, item_i, animator, mergedSet, &noimage);
 
     QPoint newPos = QPoint(path.x, path.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(path.x, path.y), PathItem->gridSize);
+        newPos = applyGrid(QPoint(path.x, path.y), mergedSet.grid);
         path.x = newPos.x();
-        PathItem->pathData.x = newPos.x();
         path.y = newPos.y();
-        PathItem->pathData.y = newPos.y();
     }
 
-    PathItem->setPathData(path);
+    ItemPath *PathItem = new ItemPath(this);
+    PathItem->setPathData(path, &mergedSet, &animator);
 
-    PathItem->setPos(QPointF(newPos));
-
-    PathItem->setZValue(pathZ);
     PathItem->setOpacity(opts.semiTransparentPaths ? 0.5 : 1);
 
     PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_path));
     PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_path));
-
-    PathItem->setData(0, "PATH");
-    PathItem->setData(1, QString::number(path.id) );
-    PathItem->setData(2, QString::number(path.array_id) );
 
     if(PasteFromBuffer) PathItem->setSelected(true);
 }
@@ -321,118 +127,29 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 
 void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 {
-    bool noimage=true, found=false;
-    int j, item_i = 0;
-    long animator=0;
+    bool noimage=true;
+    long item_i = 0, q=0;
+    long animator=0, pathAnimator=0, bPathAnimator=0;
+    obj_w_level mergedSet,tmp;
 
-    ItemLevel *LevelItem = new ItemLevel;
-
-    //Check Index exists
-    if(level.id < (unsigned int)index_levels.size())
-    {
-        j = index_levels[level.id].i;
-        item_i = j;
-        animator = index_levels[level.id].ai;
-
-        if(j<pConfigs->main_wlevels.size())
-        {
-            if(pConfigs->main_wlevels[j].id == level.id)
-            {
-                found=true;noimage=false;
-            }
-        }
-    }
-
-
-    //if Index found
-    if(!found)
-    {
-        for(j=0;j<pConfigs->main_wlevels.size();j++)
-        {
-            if(pConfigs->main_wlevels[j].id==level.id)
-            {
-                noimage=false;
-                item_i = j;
-                break;
-                //if(!isUser)
-            }
-        }
-    }
-
-    if(noimage)
-    {
-        if(j >= pConfigs->main_wlevels.size())
-        {
-            j=0;
-            item_i = j;
-        }
-    }
-
-    LevelItem->gridSize = pConfigs->main_wlevels[item_i].grid;
-
-    addItem(LevelItem);
-
-    //Set pointers
-    LevelItem->setScenePoint(this);
-
-    LevelItem->setContextMenu(levelMenu);
-
-    if((!noimage) && (pConfigs->main_wlevels[item_i].animated))
-    {
-        LevelItem->setData(4, "animated");
-    }
+    getConfig_Level(level.id, item_i, animator, mergedSet, &noimage);
+    getConfig_Level(pConfigs->marker_wlvl.path, q, pathAnimator, tmp);
+    getConfig_Level(pConfigs->marker_wlvl.bigpath, q, bPathAnimator, tmp);
 
     QPoint newPos = QPoint(level.x, level.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(level.x, level.y), LevelItem->gridSize);
+        newPos = applyGrid(QPoint(level.x, level.y), mergedSet.grid);
         level.x = newPos.x();
-        LevelItem->levelData.x = newPos.x();
         level.y = newPos.y();
-        LevelItem->levelData.y = newPos.y();
     }
 
-    LevelItem->setLevelData(level);
-    LevelItem->setPos(QPointF(newPos));
+    ItemLevel *LevelItem = new ItemLevel(this);
 
-    long pathAnimator=0;
-    long bPathAnimator=0;
-    long q=0;
-
-    if(pConfigs->marker_wlvl.path < (unsigned int)index_levels.size())
-    {
-        q = index_levels[pConfigs->marker_wlvl.path].i;
-        if(j<pConfigs->main_wlevels.size())
-        {
-            if(pConfigs->main_wlevels[q].id == pConfigs->marker_wlvl.path)
-            {
-                pathAnimator = index_levels[pConfigs->marker_wlvl.path].ai;
-            }
-        }
-    }
-
-    if(pConfigs->marker_wlvl.bigpath < (unsigned int)index_levels.size())
-    {
-        q = index_levels[pConfigs->marker_wlvl.bigpath].i;
-        if(j<pConfigs->main_wlevels.size())
-        {
-            if(pConfigs->main_wlevels[q].id == pConfigs->marker_wlvl.bigpath)
-            {
-                bPathAnimator = index_levels[pConfigs->marker_wlvl.bigpath].ai;
-            }
-        }
-    }
-
-    LevelItem->setAnimator(animator, pathAnimator, bPathAnimator);
-
-    LevelItem->setZValue(levelZ);
+    LevelItem->setLevelData(level, &mergedSet, &animator, &pathAnimator, &bPathAnimator);
 
     LevelItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_level));
     LevelItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_level));
-
-    LevelItem->setData(0, "LEVEL");
-    LevelItem->setData(1, QString::number(level.id) );
-    LevelItem->setData(2, QString::number(level.array_id) );
 
     if(PasteFromBuffer) LevelItem->setSelected(true);
 }
@@ -443,44 +160,23 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 
 void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
 {
-    ItemMusic *MusicBoxItem = new ItemMusic;
-
-
     int j = pConfigs->getMusWldI(musicbox.id);
 
-    MusicBoxItem->gridSize = pConfigs->default_grid;
-
-    addItem(MusicBoxItem);
-
-    //Set pointers
-    MusicBoxItem->setScenePoint(this);
-
-    MusicBoxItem->setContextMenu(musicMenu);
+    ItemMusic *MusicBoxItem = new ItemMusic(this);
 
     QPoint newPos = QPoint(musicbox.x, musicbox.y);
     if(toGrid)
     {
         newPos = applyGrid(QPoint(musicbox.x, musicbox.y), MusicBoxItem->gridSize);
         musicbox.x = newPos.x();
-        MusicBoxItem->musicData.x = newPos.x();
         musicbox.y = newPos.y();
-        MusicBoxItem->musicData.y = newPos.y();
     }
 
-    if(j>=0) MusicBoxItem->musicTitle = pConfigs->main_music_wld[j].name;
-
     MusicBoxItem->setMusicData(musicbox);
-
-    MusicBoxItem->setPos(QPointF(newPos));
-
-    MusicBoxItem->setZValue(musicZ);
+    if(j>=0) MusicBoxItem->musicTitle = pConfigs->main_music_wld[j].name;
 
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_musbox));
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_musbox));
-
-    MusicBoxItem->setData(0, "MUSICBOX");
-    MusicBoxItem->setData(1, QString::number(musicbox.id) );
-    MusicBoxItem->setData(2, QString::number(musicbox.array_id) );
 
     if(PasteFromBuffer) MusicBoxItem->setSelected(true);
 }

@@ -65,10 +65,6 @@ QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
 bool LvlPlacingItems::sizableBlock=false;
 
-//bool LvlPlacingItems::squareFillingMode=false;
-//bool LvlPlacingItems::lineMode=false;
-//bool LvlPlacingItems::floodFillingMode=false;
-
 bool LvlPlacingItems::overwriteMode=false;
 bool LvlPlacingItems::noOutSectionFlood=false;
 
@@ -112,6 +108,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::blockSet.w = tImg.width();
             LvlPlacingItems::blockSet.h = tImg.height();
 
+            placingItem=PLC_Block;
 
             //Place sizable blocks in the square fill mode
             if(pConfigs->main_block[j].sizable)
@@ -123,8 +120,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
             LvlPlacingItems::itemW = LvlPlacingItems::blockSet.w;
             LvlPlacingItems::itemH = LvlPlacingItems::blockSet.h;
-
-            placingItem=PLC_Block;
 
             LvlPlacingItems::flags.clear();
             QPair<int, QVariant > flag;
