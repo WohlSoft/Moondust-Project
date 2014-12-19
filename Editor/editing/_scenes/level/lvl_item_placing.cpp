@@ -65,10 +65,6 @@ QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
 bool LvlPlacingItems::sizableBlock=false;
 
-//bool LvlPlacingItems::squareFillingMode=false;
-//bool LvlPlacingItems::lineMode=false;
-//bool LvlPlacingItems::floodFillingMode=false;
-
 bool LvlPlacingItems::overwriteMode=false;
 bool LvlPlacingItems::noOutSectionFlood=false;
 

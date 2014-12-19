@@ -54,6 +54,7 @@ void ItemLevel::construct()
     mouseRight=false;
 
     setData(ITEM_TYPE, "LEVEL");
+    setData(ITEM_IS_ITEM, 1);
 }
 
 ItemLevel::~ItemLevel()
@@ -275,6 +276,11 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
+void ItemLevel::transformTo(long target_id)
+{
+
+}
+
 void ItemLevel::arrayApply()
 {
     bool found=false;
@@ -329,6 +335,21 @@ void ItemLevel::removeFromArray()
             scene->WldData->levels.remove(i); break;
         }
     }
+}
+
+void ItemLevel::returnBack()
+{
+    setPos(levelData.x, levelData.y);
+}
+
+int ItemLevel::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemLevel::sourcePos()
+{
+    return QPoint(levelData.x, levelData.y);
 }
 
 
@@ -497,3 +518,4 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
     bPathID = bPath;
     animatorID = aniID;
 }
+

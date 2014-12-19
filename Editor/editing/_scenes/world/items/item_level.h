@@ -35,8 +35,11 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemLevel : public QObject, public QGraphicsItem
+class ItemLevel : public QObject,
+                  public QGraphicsItem,
+                  public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -61,8 +64,14 @@ public:
 
     //void setLayer(QString layer);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
 
     void setPath(bool p);
     void setbPath(bool p);

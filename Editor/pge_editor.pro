@@ -339,7 +339,8 @@ SOURCES += main.cpp\
     data_configs/conf_rotation_tables.cpp \
     editing/_scenes/level/items/lvl_base_item.cpp \
     editing/_scenes/level/data_manager/lvl_config_index.cpp \
-    editing/_scenes/world/data_manager/wld_config_index.cpp
+    editing/_scenes/world/data_manager/wld_config_index.cpp \
+    editing/_scenes/world/items/wld_base_item.cpp
     
 
 HEADERS  += defines.h \
@@ -469,7 +470,8 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/item_tile.h \
     file_formats/save_filedata.h \
     data_configs/obj_rotation_table.h \
-    editing/_scenes/level/items/lvl_base_item.h
+    editing/_scenes/level/items/lvl_base_item.h \
+    editing/_scenes/world/items/wld_base_item.h
 
 
 FORMS    += \
