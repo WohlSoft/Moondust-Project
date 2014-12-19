@@ -69,53 +69,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     {
     case 0: //Tiles
     {
-        int j;
-        bool noimage=true, found=false;
-        bool isUser=false;
+        long j=0, animator=0;
+        bool noimage=true;
+        obj_w_tile tileConf;
 
-        noimage=true;
-        isUser=false;
+        getConfig_Tile(itemID, j, animator, tileConf, &noimage);
 
-        //Check Index exists
-        if(itemID < (unsigned int)index_tiles.size())
+        if(!noimage)
         {
-            j = index_tiles[itemID].i;
-
-            if(j<pConfigs->main_wtiles.size())
-            {
-                if(pConfigs->main_wtiles[j].id == itemID)
-                    found=true;
-            }
-        }
-
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            isUser=true;
-            noimage=false;
-            tImg = animates_Tiles[index_tiles[itemID].ai]->wholeImage();
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uTiles.size();j++)
-            {
-                if(uTiles[j].id==itemID)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uTiles[j].image;
-                    break;
-                }
-            }
-
-            j=pConfigs->getTileI(itemID);
-            if(j>=0)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_wtiles[j].image;
-            }
+            tImg = animates_Tiles[animator]->wholeImage();
         }
 
         if((noimage)||(tImg.isNull()))
@@ -130,7 +92,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
 
         long w = tImg.width();
-        long h = tImg.height()/( (pConfigs->main_wtiles[j].animated)?pConfigs->main_wtiles[j].frames:1);
+        long h = tImg.height()/( (tileConf.animated)?tileConf.frames:1);
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -139,23 +101,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="TILE";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -172,7 +134,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h*pConfigs->main_wtiles[j].display_frame,w,h));
+        cursor = addPixmap(tImg.copy(0,h*tileConf.display_frame,w,h));
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
@@ -198,60 +160,21 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 1: //Sceneries
     {
-        int j;
-        bool noimage=true, found=false;
-        bool isUser=false;
+        long j=0, animator=0;
+        bool noimage=true;
+        obj_w_scenery sceneConf;
 
-        noimage=true;
-        isUser=false;
+        getConfig_Scenery(itemID, j, animator, sceneConf, &noimage);
 
-        //Check Index exists
-        if(itemID < (unsigned int)index_scenes.size())
+        if(!noimage)
         {
-            j = index_scenes[itemID].i;
-
-            if(j<pConfigs->main_wscene.size())
-            {
-                if(pConfigs->main_wscene[j].id == itemID)
-                    found=true;
-            }
-        }
-
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            isUser=true;
-            noimage=false;
-            tImg = animates_Scenery[index_scenes[itemID].ai]->wholeImage();
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uScenes.size();j++)
-            {
-                if(uScenes[j].id==itemID)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uScenes[j].image;
-                    break;
-                }
-            }
-
-            j=pConfigs->getSceneI(itemID);
-            if(j>=0)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_wscene[j].image;
-            }
+            tImg = animates_Scenery[animator]->wholeImage();
         }
 
         if((noimage)||(tImg.isNull()))
         {
             tImg=uSceneImg;
         }
-
 
         WldPlacingItems::gridSz=qRound(qreal(pConfigs->default_grid)/2);
         WldPlacingItems::gridOffset = QPoint(0, 0);
@@ -265,28 +188,28 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemH = h;
 
         long iw = tImg.width();
-        long ih = tImg.height()/( (pConfigs->main_wscene[j].animated)?pConfigs->main_wscene[j].frames:1);
+        long ih = tImg.height()/( (sceneConf.animated)?sceneConf.frames:1);
 
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="SCENERY";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -304,13 +227,13 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,ih * pConfigs->main_wscene[j].display_frame ,iw,ih));
+        cursor = addPixmap(tImg.copy(0,ih * sceneConf.display_frame ,iw,ih));
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -331,53 +254,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
     }
     case 2: //Path
     {
-        int j;
-        bool noimage=true, found=false;
-        bool isUser=false;
+        long j=0, animator=0;
+        bool noimage=true;
+        obj_w_path pathConf;
 
-        noimage=true;
-        isUser=false;
+        getConfig_Path(itemID, j, animator, pathConf, &noimage);
 
-        //Check Index exists
-        if(itemID < (unsigned int)index_paths.size())
+        if(!noimage)
         {
-            j = index_paths[itemID].i;
-
-            if(j<pConfigs->main_wpaths.size())
-            {
-                if(pConfigs->main_wpaths[j].id == itemID)
-                    found=true;
-            }
-        }
-
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            isUser=true;
-            noimage=false;
-            tImg = animates_Paths[index_paths[itemID].ai]->wholeImage();
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uPaths.size();j++)
-            {
-                if(uPaths[j].id==itemID)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uPaths[j].image;
-                    break;
-                }
-            }
-
-            j=pConfigs->getBgoI(itemID);
-            if(j>=0)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_wpaths[j].image;
-            }
+            tImg = animates_Paths[animator]->wholeImage();
         }
 
         if((noimage)||(tImg.isNull()))
@@ -385,15 +270,13 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             tImg=uPathImg;
         }
 
-
         WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::PathSet.id = itemID;
 
-
         long w = tImg.width();
-        long h = tImg.height()/( (pConfigs->main_wpaths[j].animated)?pConfigs->main_wpaths[j].frames:1);
+        long h = tImg.height()/( (pathConf.animated)?pathConf.frames:1);
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -401,23 +284,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="PATH";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -434,13 +317,13 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,h * pConfigs->main_wpaths[j].display_frame, w ,h));
+        cursor = addPixmap(tImg.copy(0,h * pathConf.display_frame, w ,h));
 
         //set data flags
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -462,53 +345,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
     case 3: //Level
     {
-        int j;
-        bool noimage=true, found=false;
-        bool isUser=false;
 
-        noimage=true;
-        isUser=false;
+        long j=0, animator=0;
+        bool noimage=true;
+        obj_w_level wlevelConf;
 
-        //Check Index exists
-        if(itemID < (unsigned int)index_levels.size())
+        getConfig_Level(itemID, j, animator, wlevelConf, &noimage);
+
+        if(!noimage)
         {
-            j = index_levels[itemID].i;
-
-            if(j<pConfigs->main_wlevels.size())
-            {
-                if(pConfigs->main_wlevels[j].id == itemID)
-                    found=true;
-            }
-        }
-
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            isUser=true;
-            noimage=false;
-            tImg = animates_Levels[index_levels[itemID].ai]->wholeImage();
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uLevels.size();j++)
-            {
-                if(uLevels[j].id==itemID)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uLevels[j].image;
-                    break;
-                }
-            }
-
-            j=pConfigs->getWLevelI(itemID);
-            if(j>=0)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_wlevels[j].image;
-            }
+            tImg = animates_Levels[animator]->wholeImage();
         }
 
         if((noimage)||(tImg.isNull()))
@@ -516,18 +362,16 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             tImg=uLevelImg;
         }
 
-
         WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0, 0);
 
         WldPlacingItems::LevelSet.id = itemID;
 
-
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
 
         long iw = tImg.width();
-        long ih = tImg.height()/( (pConfigs->main_wlevels[j].animated)?pConfigs->main_wlevels[j].frames:1);
+        long ih = tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1);
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -535,23 +379,23 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.clear();
         QPair<int, QVariant > flag;
 
-            flag.first=0;
+            flag.first=ITEM_TYPE;
             flag.second="LEVEL";
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first=1;
+            flag.first=ITEM_ID;
             flag.second=QString::number(itemID);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 9;
+            flag.first = ITEM_WIDTH;
             flag.second = QString::number(w);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 10;
+            flag.first = ITEM_HEIGHT;
             flag.second = QString::number(h);
         WldPlacingItems::flags.push_back(flag);
 
-            flag.first = 25;
+            flag.first = ITEM_IS_CURSOR;
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
@@ -569,11 +413,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setLineDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0, ih * pConfigs->main_wlevels[j].display_frame ,iw,ih));
+        cursor = addPixmap(tImg.copy(0, ih * wlevelConf.display_frame ,iw,ih));
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
         int imgOffsetY = (int)qRound( -qreal(
-                  tImg.height()/( (pConfigs->main_wlevels[j].animated)?pConfigs->main_wlevels[j].frames:1))
+                  tImg.height()/( (wlevelConf.animated)?wlevelConf.frames:1))
                   + WldPlacingItems::gridSz);
 
         ((QGraphicsPixmapItem*)cursor)->setOffset(imgOffsetX, imgOffsetY );
@@ -582,7 +426,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -606,20 +450,20 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         placingItem=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=32;
+        WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = 16;
-        WldPlacingItems::c_offset_y = 16;
+        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
 
-        cursor = addRect(0,0, 32, 32);
-        cursor->setData(0, "MUSICBOX");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(32));
-        cursor->setData(10, QString::number(32));
+        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
+        cursor->setData(ITEM_TYPE, "MUSICBOX");
+        cursor->setData(ITEM_ID, QString::number(itemID));
+        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
+        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
         ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -632,20 +476,20 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         placingItem=MODE_SetPoint;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=32;
+        WldPlacingItems::gridSz=pConfigs->default_grid;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
-        WldPlacingItems::c_offset_x = 16;
-        WldPlacingItems::c_offset_y = 16;
+        WldPlacingItems::c_offset_x = pConfigs->default_grid/2;
+        WldPlacingItems::c_offset_y = pConfigs->default_grid/2;
 
-        cursor = addRect(0,0, 32, 32);
-        cursor->setData(0, "WorldMapPoint");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(32));
-        cursor->setData(10, QString::number(32));
+        cursor = addRect(0,0, pConfigs->default_grid, pConfigs->default_grid);
+        cursor->setData(ITEM_TYPE, "WorldMapPoint");
+        cursor->setData(ITEM_ID, QString::number(itemID));
+        cursor->setData(ITEM_WIDTH, QString::number(pConfigs->default_grid));
+        cursor->setData(ITEM_HEIGHT, QString::number(pConfigs->default_grid));
         ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
         ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
-        cursor->setData(25, "CURSOR");
+        cursor->setData(ITEM_IS_CURSOR, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);

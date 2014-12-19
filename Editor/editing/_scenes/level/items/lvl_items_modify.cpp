@@ -48,41 +48,10 @@ void LvlScene::applyArrayForItem(QGraphicsItem * item)
 {
     if(!item) return;
 
-    //QString ObjType = item->data(ITEM_TYPE).toInt();
     if( item->data(ITEM_IS_ITEM).toInt() == 1 )
     {
         dynamic_cast<LvlBaseItem *>(item)->arrayApply();
     }
-//    if( ObjType == "NPC")
-//    {
-//        dynamic_cast<ItemNPC *>(item)->arrayApply();
-//    }
-//    else
-//    if( ObjType == "Block")
-//    {
-//        dynamic_cast<ItemBlock *>(item)->arrayApply();
-//    }
-//    else
-//    if( ObjType == "BGO")
-//    {
-//        dynamic_cast<ItemBGO *>(item)->arrayApply();
-//    }
-//    else
-//    if( ObjType == "Water")
-//    {
-//        dynamic_cast<ItemWater *>(item)->arrayApply();
-//    }
-//    else
-//    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
-//    {
-//        dynamic_cast<ItemDoor *>(item)->arrayApply();
-//    }
-//    else
-//    if( ObjType == "playerPoint" )
-//    {
-//        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
-//    }
-
 }
 
 
@@ -103,47 +72,9 @@ void LvlScene::returnItemBack(QGraphicsItem * item)
 {
     if(!item) return;
 
-    QString ObjType = item->data(ITEM_TYPE).toString();
-    if( ObjType == "NPC")
+    if( item->data(ITEM_IS_ITEM).toInt() == 1 )
     {
-        ItemNPC * it = dynamic_cast<ItemNPC *>(item);
-        it->setPos(it->npcData.x, it->npcData.y);
-    }
-    else
-    if( ObjType == "Block")
-    {
-        ItemBlock * it = dynamic_cast<ItemBlock *>(item);
-        it->setPos(it->blockData.x, it->blockData.y);
-    }
-    else
-    if( ObjType == "BGO")
-    {
-        ItemBGO * it = dynamic_cast<ItemBGO *>(item);
-        it->setPos(it->bgoData.x, it->bgoData.y);
-    }
-    else
-    if( ObjType == "Water")
-    {
-        ItemWater * it = dynamic_cast<ItemWater *>(item);
-        it->setPos(it->waterData.x, it->waterData.y);
-    }
-    else
-    if(ObjType == "Door_enter")
-    {
-        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
-        it->setPos(it->doorData.ix, it->doorData.iy);
-    }
-    else
-    if(ObjType == "Door_exit")
-    {
-        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
-        it->setPos(it->doorData.ox, it->doorData.oy);
-    }
-    else
-    if( ObjType == "playerPoint" )
-    {
-        ItemPlayerPoint * it = dynamic_cast<ItemPlayerPoint *>(item);
-        it->setPos(it->pointData.x, it->pointData.y);
+        dynamic_cast<LvlBaseItem *>(item)->returnBack();
     }
 }
 

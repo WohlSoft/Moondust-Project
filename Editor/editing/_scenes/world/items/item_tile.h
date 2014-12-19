@@ -35,37 +35,46 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemTile : public QObject, public QGraphicsItem
+class ItemTile : public QObject,
+                 public QGraphicsItem,
+                 public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemTile(QGraphicsItem *parent=0);
+    ItemTile(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemTile();
+private:
+    void construct();
+public:
 
-    void setTileData(WorldTiles inD);
-    void setContextMenu(QMenu &menu);
+    void setTileData(WorldTiles inD, obj_w_tile *mergedSet=0, long *animator_id=0);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
 
     //////Animation////////
     void setAnimator(long aniID);
 
     //void setLayer(QString layer);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
+
     WorldTiles tileData;
+    obj_w_tile localProps;
 
     int gridSize;
-    int gridOffsetX;
-    int gridOffsetY;
 
     //Locks
     bool isLocked;

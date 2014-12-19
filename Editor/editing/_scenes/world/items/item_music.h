@@ -34,28 +34,34 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemMusic : public QObject, public QGraphicsItem
+class ItemMusic : public QObject,
+                  public QGraphicsItem,
+                  public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemMusic(QGraphicsItem *parent=0);
+    ItemMusic(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemMusic();
+private:
+    void construct();
+public:
 
     void setMusicData(WorldMusic inD);
-    void setContextMenu(QMenu &menu);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    QMenu *ItemMenu;
-
-    //void setLayer(QString layer);
-
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
 
     WorldMusic musicData;
     QString musicTitle;

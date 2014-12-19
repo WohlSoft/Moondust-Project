@@ -24,9 +24,23 @@
 ItemTile::ItemTile(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+
+}
+
+ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    setZValue(scene->tileZ);
+}
+
+void ItemTile::construct()
+{
     gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
     isLocked=false;
 
     animatorID=-1;
@@ -35,14 +49,18 @@ ItemTile::ItemTile(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
-}
 
+    setData(ITEM_TYPE, "TILE");
+    setData(ITEM_IS_ITEM, 1);
+}
 
 ItemTile::~ItemTile()
 {
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
 }
+
+
 
 void ItemTile::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -114,18 +132,15 @@ void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 this->setSelected(true);
             }
 
-            this->setSelected(1);
-            ItemMenu->clear();
+            this->setSelected(this);
+            QMenu ItemMenu;
 
-            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-            copyTile->deleteLater();
-            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-            cutTile->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-            remove->deleteLater();
+            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+                ItemMenu.addSeparator();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
 
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -174,6 +189,11 @@ void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //        }
 //    }
 //}
+
+void ItemTile::transformTo(long target_id)
+{
+
+}
 
 void ItemTile::arrayApply()
 {
@@ -231,9 +251,37 @@ void ItemTile::removeFromArray()
     }
 }
 
-void ItemTile::setTileData(WorldTiles inD)
+void ItemTile::returnBack()
+{
+    setPos(tileData.x, tileData.y);
+}
+
+int ItemTile::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemTile::sourcePos()
+{
+    return QPoint(tileData.x, tileData.y);
+}
+
+
+void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator_id)
 {
     tileData = inD;
+    setPos(tileData.x, tileData.y);
+
+    if(mergedSet)
+    {
+        localProps = *mergedSet;
+        gridSize = localProps.grid;
+    }
+    if(animator_id)
+        setAnimator(*animator_id);
+
+    setData(ITEM_ID, QString::number(tileData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(tileData.array_id) );
 }
 
 
@@ -261,11 +309,6 @@ void ItemTile::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
         painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
     }
-}
-
-void ItemTile::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
 }
 
 void ItemTile::setScenePoint(WldScene *theScene)

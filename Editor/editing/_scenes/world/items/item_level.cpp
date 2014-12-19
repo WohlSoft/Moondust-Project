@@ -24,6 +24,21 @@
 ItemLevel::ItemLevel(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
+    construct();
+}
+
+ItemLevel::ItemLevel(WldScene *parentScene, QGraphicsItem *parent)
+    : QGraphicsItem(parent)
+{
+    construct();
+    if(!parentScene) return;
+    setScenePoint(parentScene);
+    scene->addItem(this);
+    setZValue(scene->levelZ);
+}
+
+void ItemLevel::construct()
+{
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
@@ -37,14 +52,15 @@ ItemLevel::ItemLevel(QGraphicsItem *parent)
     mouseLeft=false;
     mouseMid=false;
     mouseRight=false;
-}
 
+    setData(ITEM_TYPE, "LEVEL");
+    setData(ITEM_IS_ITEM, 1);
+}
 
 ItemLevel::~ItemLevel()
-{
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
-}
+{}
+
+
 
 void ItemLevel::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -120,49 +136,37 @@ void ItemLevel::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             this->setSelected(1);
-            ItemMenu->clear();
+            QMenu ItemMenu;
 
-            QAction *LvlTitle = ItemMenu->addAction(QString("[%1]").arg(levelData.title));
-            LvlTitle->setEnabled(false);
-            LvlTitle->setVisible(!levelData.title.isEmpty());
-            LvlTitle->deleteLater();
+            QAction *LvlTitle = ItemMenu.addAction(QString("[%1]").arg(levelData.title));
+                LvlTitle->setEnabled(false);
+                LvlTitle->setVisible(!levelData.title.isEmpty());
 
-            QAction *openLvl = ItemMenu->addAction(tr("Open target file: %1").arg(levelData.lvlfile));
-            openLvl->setVisible( (!levelData.lvlfile.isEmpty()) && (QFile(scene->WldData->path + "/" + levelData.lvlfile).exists()) );
-            openLvl->deleteLater();
+            QAction *openLvl = ItemMenu.addAction(tr("Open target file: %1").arg(levelData.lvlfile));
+                openLvl->setVisible( (!levelData.lvlfile.isEmpty()) && (QFile(scene->WldData->path + "/" + levelData.lvlfile).exists()) );
+                ItemMenu.addSeparator();
 
+            QAction *setPathBG = ItemMenu.addAction(tr("Path background"));
+                setPathBG->setCheckable(true);
+                setPathBG->setChecked(levelData.pathbg);
 
-            ItemMenu->addSeparator()->deleteLater();
+            QAction *setBigPathBG = ItemMenu.addAction(tr("Big Path background"));
+                setBigPathBG->setCheckable(true);
+                setBigPathBG->setChecked(levelData.bigpathbg);
 
-            QAction *setPathBG = ItemMenu->addAction(tr("Path background"));
-            setPathBG->setCheckable(true);
-            setPathBG->setChecked(levelData.pathbg);
-            setPathBG->deleteLater();
-
-            QAction *setBigPathBG = ItemMenu->addAction(tr("Big Path background"));
-            setBigPathBG->setCheckable(true);
-            setBigPathBG->setChecked(levelData.bigpathbg);
-            setBigPathBG->deleteLater();
-
-            QAction *setAlVis = ItemMenu->addAction(tr("Always Visible"));
-            setAlVis->setCheckable(true);
-            setAlVis->setChecked(levelData.alwaysVisible);
-            setAlVis->deleteLater();
-
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-            copyTile->deleteLater();
-            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-            cutTile->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-            remove->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
-            QAction *props = ItemMenu->addAction(tr("Properties..."));
-            props->deleteLater();
+            QAction *setAlVis = ItemMenu.addAction(tr("Always Visible"));
+                setAlVis->setCheckable(true);
+                setAlVis->setChecked(levelData.alwaysVisible);
+                ItemMenu.addSeparator();
+            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+                ItemMenu.addSeparator();
+            QAction *remove = ItemMenu.addAction(tr("Remove"));
+                ItemMenu.addSeparator();
+            QAction *props = ItemMenu.addAction(tr("Properties..."));
 
             scene->contextMenuOpened = true; //bug protector
-    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
             if(!selected)
             {
@@ -272,6 +276,11 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 //    }
 //}
 
+void ItemLevel::transformTo(long target_id)
+{
+
+}
+
 void ItemLevel::arrayApply()
 {
     bool found=false;
@@ -328,6 +337,21 @@ void ItemLevel::removeFromArray()
     }
 }
 
+void ItemLevel::returnBack()
+{
+    setPos(levelData.x, levelData.y);
+}
+
+int ItemLevel::getGridSize()
+{
+    return gridSize;
+}
+
+QPoint ItemLevel::sourcePos()
+{
+    return QPoint(levelData.x, levelData.y);
+}
+
 
 void ItemLevel::alwaysVisible(bool v)
 {
@@ -365,9 +389,25 @@ void ItemLevel::setbPath(bool p)
     scene->update();
 }
 
-void ItemLevel::setLevelData(WorldLevels inD)
+void ItemLevel::setLevelData(WorldLevels inD, obj_w_level *mergedSet,
+                             long *animator_id, long *path_id, long *bPath_id)
 {
     levelData = inD;
+
+    setPos(levelData.x, levelData.y);
+
+    setData(ITEM_ID, QString::number(levelData.id) );
+    setData(ITEM_ARRAY_ID, QString::number(levelData.array_id) );
+
+    if(mergedSet)
+    {
+        localProps = *mergedSet;
+        gridSize = localProps.grid;
+    }
+
+    if(animator_id && path_id && bPath_id)
+        setAnimator(*animator_id, *path_id, *bPath_id);
+
 }
 
 
@@ -413,11 +453,6 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
         painter->drawRect(imgOffsetX+1,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
     }
-}
-
-void ItemLevel::setContextMenu(QMenu &menu)
-{
-    ItemMenu = &menu;
 }
 
 void ItemLevel::setScenePoint(WldScene *theScene)
@@ -483,3 +518,4 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
     bPathID = bPath;
     animatorID = aniID;
 }
+

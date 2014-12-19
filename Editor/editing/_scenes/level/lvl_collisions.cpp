@@ -195,18 +195,8 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
                  continue;
             if(it->data(ITEM_IS_ITEM).isNull())
                 continue;
-//            if(it->data(ITEM_TYPE).toString()=="YellowRectangle")
-//                continue;
-//            if(it->data(ITEM_TYPE).toString()=="Space")
-//                continue;
-//            if(it->data(ITEM_TYPE).toString()=="Square")
-//                continue;
-//            if(it->data(ITEM_TYPE).toString()=="SectionBorder")
-//                continue;
             if(it->data(ITEM_TYPE).toString()=="PlayerPoint")
                 continue;
-//            if(it->data(ITEM_TYPE).toString().startsWith("BackGround"))
-//                continue;
 
             if(
                (it->data(ITEM_TYPE).toString()!="Block")&&

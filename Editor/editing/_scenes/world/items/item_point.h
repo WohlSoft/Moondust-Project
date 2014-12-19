@@ -34,8 +34,11 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemPoint : public QObject, public QGraphicsItem
+class ItemPoint : public QObject,
+                  public QGraphicsItem,
+                  public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)

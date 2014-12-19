@@ -35,33 +35,44 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemPath : public QObject, public QGraphicsItem
+class ItemPath : public QObject,
+                 public QGraphicsItem,
+                 public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemPath(QGraphicsItem *parent=0);
+    ItemPath(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemPath();
+private:
+    void construct();
+public:
 
-    void setPathData(WorldPaths inD);
-    void setContextMenu(QMenu &menu);
+    void setPathData(WorldPaths inD, obj_w_path *mergedSet=0, long *animator_id=0);
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
 
     //////Animation////////
     void setAnimator(long aniID);
 
     //void setLayer(QString layer);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
 
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
+
     WorldPaths pathData;
+    obj_w_path localProps;
 
     int gridSize;
     int gridOffsetX;

@@ -35,31 +35,43 @@
 #include <file_formats/wld_filedata.h>
 
 #include "../wld_scene.h"
+#include "wld_base_item.h"
 
-class ItemLevel : public QObject, public QGraphicsItem
+class ItemLevel : public QObject,
+                  public QGraphicsItem,
+                  public WldBaseItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
     ItemLevel(QGraphicsItem *parent=0);
+    ItemLevel(WldScene *parentScene, QGraphicsItem *parent=0);
     ~ItemLevel();
+private:
+    void construct();
+public:
 
-    void setLevelData(WorldLevels inD);
-    void setContextMenu(QMenu &menu);
+    void setLevelData(WorldLevels inD, obj_w_level *mergedSet=0,
+                      long *animator_id=0, long *path_id=0, long *bPath_id=0
+                      );
     void setScenePoint(WldScene *theScene);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    QMenu *ItemMenu;
 
     //////Animation////////
     void setAnimator(long aniID, long path=0, long bPath=0);
 
     //void setLayer(QString layer);
 
+    void transformTo(long target_id);
+
     void arrayApply();
     void removeFromArray();
+
+    void returnBack();
+    int getGridSize();
+    QPoint sourcePos();
 
     void setPath(bool p);
     void setbPath(bool p);
@@ -67,6 +79,7 @@ public:
     void alwaysVisible(bool v);
 
     WorldLevels levelData;
+    obj_w_level localProps;
 
     int gridSize;
     int gridOffsetX;
