@@ -16,11 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopServices>
-
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
-#include <editing/_dialogs/npcdialog.h>
 #include <data_configs/config_manager.h>
 
 #include <ui_mainwindow.h>
@@ -134,14 +131,7 @@ void MainWindow::on_Exit_triggered()
     //exit(0);
 }
 
-//Open About box
-void MainWindow::on_actionAbout_triggered()
-{
-    aboutDialog about;
-    about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
-    about.exec();
-}
+
 
 
 //Toolbar context menu
@@ -174,18 +164,7 @@ void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
 }
 
 
-
-void MainWindow::on_actionContents_triggered()
-{
-    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
-}
-
-
 void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
-
-
-

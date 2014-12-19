@@ -43,13 +43,8 @@
 #include <editing/edit_npc/npcedit.h>
 #include <editing/edit_world/world_edit.h>
 
-#include <editing/edit_level/levelprops.h>
-
-#include <main_window/about_dialog/aboutdialog.h>
-
 #include <data_configs/data_configs.h>
 
-#include <editing/_dialogs/musicfilelist.h>
 #include <common_features/logger.h>
 
 #include <tools/tilesets/tileset.h>
@@ -430,6 +425,7 @@ public:
     private slots:
         void on_actionContents_triggered();
         void on_actionAbout_triggered();
+        void on_actionSMBX_like_GUI_triggered();
 // ////////////////////////////////////////////////////////
 
 // //////////////// Configuration manager /////////////////
@@ -1088,8 +1084,6 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
-
-
 
 
 signals:
