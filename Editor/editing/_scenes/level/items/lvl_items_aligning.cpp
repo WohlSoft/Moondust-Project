@@ -231,9 +231,7 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
 
     foreach(QGraphicsItem * item, items)
     {
-        QString t = item->data(ITEM_TYPE).toString();
-        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water")
-           && (t!="playerPoint") && (t !="Door_enter")&& (t !="Door_exit"))
+        if(item->data(ITEM_IS_ITEM).isNull())
             continue;
 
         itemZone.setX(qRound(item->scenePos().x()));
@@ -310,9 +308,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
     foreach(QGraphicsItem * item, items)
     {
-        QString t = item->data(ITEM_TYPE).toString();
-        if((t!="Block") && (t!="BGO")&& (t!="NPC") && (t!="Water")
-           && (t!="playerPoint") && (t !="Door_enter")&& (t !="Door_exit"))
+        if(item->data(ITEM_IS_ITEM).isNull())
             continue;
 
         itemZone.setX(qRound(item->scenePos().x()));
