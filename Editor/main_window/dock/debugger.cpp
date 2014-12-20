@@ -54,6 +54,7 @@ void MainWindow::Debugger_UpdateItemList(QString list)
 }
 
 
+
 void MainWindow::on_DEBUG_GotoPoint_clicked()
 {
     if(ui->DEBUG_GotoX->text().isEmpty()) return;
@@ -76,3 +77,42 @@ void MainWindow::on_DEBUG_GotoPoint_clicked()
     ui->DEBUG_GotoX->setText("");
     ui->DEBUG_GotoY->setText("");
 }
+
+
+
+void MainWindow::Debugger_loadCustomCounters()
+{
+
+}
+
+
+void MainWindow::Debugger_saveCustomCounters()
+{
+
+}
+
+
+
+void MainWindow::on_DEBUG_AddCustomCounter_clicked()
+{
+
+}
+
+
+void MainWindow::on_DEBUG_RefreshCoutners_clicked()
+{
+
+}
+
+
+void MainWindow::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
+{
+
+}
+
+
+void MainWindow::on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos)
+{
+
+}
+
