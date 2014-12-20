@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1484</width>
-    <height>3287</height>
+    <width>1470</width>
+    <height>3201</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,7 +105,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1484</width>
+     <width>1470</width>
      <height>21</height>
     </rect>
    </property>
@@ -4183,7 +4183,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>234</height>
+          <height>138</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4291,7 +4291,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>234</height>
+          <height>207</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4699,8 +4699,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>234</height>
+          <width>255</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4816,7 +4816,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>234</height>
+          <height>132</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4914,7 +4914,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>234</height>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5069,7 +5069,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>555</height>
+          <height>518</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5297,7 +5297,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>555</height>
+          <height>490</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5446,7 +5446,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>555</height>
+          <height>490</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6267,7 +6267,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>452</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6389,7 +6389,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>399</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6511,7 +6511,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>399</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6633,7 +6633,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>399</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6880,7 +6880,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>465</height>
+          <height>399</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7153,7 +7153,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1476</width>
+              <width>1480</width>
               <height>127</height>
              </rect>
             </property>
@@ -7171,7 +7171,7 @@ p, li { white-space: pre-wrap; }
    <property name="minimumSize">
     <size>
      <width>280</width>
-     <height>388</height>
+     <height>500</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -7188,7 +7188,7 @@ p, li { white-space: pre-wrap; }
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_6">
-    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,80,0">
+    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,80,0,0">
      <item row="0" column="0">
       <widget class="QGroupBox" name="DEBUG_MousePoint">
        <property name="minimumSize">
@@ -7246,19 +7246,6 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-     </item>
-     <item row="1" column="0">
-      <spacer name="verticalSpacer_24">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
      </item>
      <item row="0" column="1" rowspan="2">
       <widget class="QGroupBox" name="GotoPoint">
@@ -7325,25 +7312,12 @@ p, li { white-space: pre-wrap; }
        </layout>
       </widget>
      </item>
-     <item row="3" column="0" colspan="2">
-      <spacer name="verticalSpacer_23">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="2" column="0" colspan="2">
       <widget class="QGroupBox" name="DEBUG_Items_grp">
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>200</height>
+         <height>120</height>
         </size>
        </property>
        <property name="title">
@@ -7360,6 +7334,88 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="wordWrap">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer_24">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <spacer name="verticalSpacer_23">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QGroupBox" name="DEBUG_customCounters">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>110</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Custom counters</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_34">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="DEBUG_AddCustomCounter">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>81</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="DEBUG_RefreshCoutners">
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+          <property name="icon">
+           <iconset resource="_resources/editor.qrc">
+            <normaloff>:/reload.png</normaloff>:/reload.png</iconset>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
+         <widget class="QListWidget" name="DEBUG_CustomCountersList">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
           </property>
          </widget>
         </item>

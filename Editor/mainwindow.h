@@ -413,11 +413,20 @@ public:
         void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
         void Debugger_UpdateItemList(QString list);
 
+        void Debugger_loadCustomCounters();
+        void Debugger_saveCustomCounters();
+
     private slots:
         void on_actionDebugger_triggered(bool checked);
 
         void on_debuggerBox_visibilityChanged(bool visible);
         void on_DEBUG_GotoPoint_clicked();
+
+        void on_DEBUG_AddCustomCounter_clicked();
+        void on_DEBUG_RefreshCoutners_clicked();
+
+        void on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item);
+        void on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos);
 // ////////////////////////////////////////////////////////
 
 
@@ -1084,6 +1093,7 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
+
 
 
 signals:
