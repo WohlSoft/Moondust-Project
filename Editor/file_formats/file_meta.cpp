@@ -18,6 +18,10 @@
 
 #include "file_formats.h"
 
+#ifdef PGE_EDITOR
+#include <script/commands/memorycommand.h>
+#endif
+
 MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 {
     int str_count=0;        //Line Counter
@@ -112,9 +116,9 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
             }
         }
     }
-    errorString="";
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
+    errorString.clear(); //If no errors, clear string;
     return FileData;
 
     badfile:    //If file format is not correct
@@ -143,6 +147,41 @@ QString FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
             TextData += "\n";
         }
         TextData += "META_BOOKMARKS_END\n";
+
+        #ifdef PGE_EDITOR
+        if(metaData.script)
+        {
+            TextData += "META_SCRIPT_EVENTS\n";
+            foreach(EventCommand* x, metaData.script->events())
+            {
+                TextData += "EVENT\n";
+                TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                TextData += "\n";
+
+                if(x->basicCommands().size()>0)
+                {
+                    TextData += "BASIC_COMMANDS\n";
+                    foreach(BasicCommand *y, x->basicCommands())
+                    {
+                        TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                        if(QString(y->metaObject()->className())=="MemoryCommand")
+                        {
+                            MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
+                            TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                            TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                            TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                            TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                        }
+                        TextData += "\n";
+                    }
+                    TextData += "BASIC_COMMANDS_END\n";
+                }
+                TextData += "EVENT_END\n";
+            }
+            TextData += "META_SCRIPT_EVENTS_END\n";
+        }
+        #endif
     }
     return TextData;
 }
