@@ -45,8 +45,10 @@ public:
     int countCommands();
     void removeBasicCommand(int i);
     void deleteBasicCommand(BasicCommand* cmd);
+    QList<BasicCommand*> basicCommands();
 
     QList<BasicCommand*> findCommandsByMarker(const QString &marker);
+
 
 signals:
 
