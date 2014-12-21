@@ -195,7 +195,25 @@ void ItemPath::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
 void ItemPath::transformTo(long target_id)
 {
+    if(target_id<1) return;
 
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_w_path mergedSet;
+
+    //Get Path settings
+    scene->getConfig_Path(target_id, item_i, animator, mergedSet, &noimage);
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    pathData.id = target_id;
+    setPathData(pathData, &mergedSet, &animator);
+    arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 

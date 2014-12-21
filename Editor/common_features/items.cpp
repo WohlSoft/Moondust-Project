@@ -456,3 +456,50 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
     //return null if wrong item
     return QPixmap();
 }
+
+
+
+int Items::getItemType(QString type)
+{
+    int target=0;
+
+    if(type.toLower()=="block")
+        target=ItemTypes::LVL_Block;
+    else
+    if(type.toLower()=="bgo")
+        target=ItemTypes::LVL_BGO;
+    else
+    if(type.toLower()=="npc")
+        target=ItemTypes::LVL_NPC;
+    else
+    if((type.toLower()=="physenv")||(type.toLower()=="water"))
+        target=ItemTypes::LVL_PhysEnv;
+    else
+    if((type.toLower()=="warp")||(type.toLower()=="door"))
+        target=ItemTypes::LVL_Door;
+    else
+    if((type.toLower()=="character")||(type.toLower()=="player"))
+        target=ItemTypes::LVL_Player;
+    else
+    if(type.toLower()=="tile")
+        target=ItemTypes::WLD_Tile;
+    else
+    if(type.toLower()=="scenery")
+        target=ItemTypes::WLD_Scenery;
+    else
+    if(type.toLower()=="path")
+        target=ItemTypes::WLD_Path;
+    else
+    if(type.toLower()=="level")
+        target=ItemTypes::WLD_Level;
+    else
+    if(type.toLower()=="musicbix")
+        target=ItemTypes::WLD_MusicBox;
+    else
+    {
+        bool ok=true;
+        target = type.toInt(&ok);
+        if(!ok) target=-1;
+    }
+    return target;
+}

@@ -16,8 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/edit_level/levelprops.h>
+
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
+
+
 
 //Open Level Properties
 void MainWindow::on_actionLevelProp_triggered()

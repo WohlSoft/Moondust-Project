@@ -18,15 +18,13 @@
 
 #include "file_formats.h"
 
+#ifdef PGE_EDITOR
+#include <script/commands/memorycommand.h>
+#endif
+
 MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 {
-
-    FileStringList in;
-    in.addData( RawData );
-
     int str_count=0;        //Line Counter
-    int i;                  //counters
-    //int file_format=0;        //File format number
     QString line;           //Current Line data
 
 
@@ -35,119 +33,92 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
     QString errorString;
 
-    typedef QPair<QString, QStringList> PGEXSct;
-    PGEXSct PGEXsection;
-
-    QList<PGEXSct > PGEXTree;
-
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    //Read Sections
-    bool sectionOpened=false;
-
-    //Read PGE-X Tree
-    while(!in.atEnd())
+    PGEFile pgeX_Data(RawData);
+    if( !pgeX_Data.buildTreeFromRaw() )
     {
-        PGEXsection.first = in.readLine();
-        PGEXsection.second.clear();
-
-        if(QString(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
-
-        sectionOpened=true;
-        QString data;
-        while(!in.atEnd())
-        {
-            data = in.readLine();
-            if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
-            PGEXsection.second.push_back(data);
-        }
-        PGEXTree.push_back(PGEXsection);
-
-        // WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
-        //        .arg(PGEXsection.first)
-        //        .arg(PGEXsection.second.size())
-        //        .arg(sectionOpened?"opened":"closed")
-        //        );
-    }
-
-    if(sectionOpened)
-    {
-        errorString=QString("Section [%1] is not closed").arg(PGEXsection.first);
+        errorString = pgeX_Data.lastError();
         goto badfile;
     }
 
-    foreach(PGEXSct sct, PGEXTree) //look sections
+    for(int section=0; section<pgeX_Data.dataTree.size(); section++) //look sections
     {
-
-        //WriteToLog(QtDebugMsg, QString("Section %1")
-        //          .arg(sct.first) );
-            bool good;
-            for(i=0; i<sct.second.size();i++) //Look Entries
+        if(pgeX_Data.dataTree[section].name=="JOKES")
+        {
+            #ifndef PGE_ENGINE
+            if(!pgeX_Data.dataTree[section].data.isEmpty())
+                if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
+                    QMessageBox::information(nullptr, "Jokes",
+                            pgeX_Data.dataTree[section].data[0].values[0].value,
+                            QMessageBox::Ok);
+            #endif
+        }
+        else
+        if(pgeX_Data.dataTree[section].name=="META_BOOKMARKS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
             {
-                if(QString(sct.second[i]).remove(' ').isEmpty()) continue; //Skip empty strings
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
 
-                if(sct.first=="JOKES")
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    #ifndef PGE_ENGINE
-                    QMessageBox::information(nullptr, "Jokes", sct.second[i], QMessageBox::Ok);
-                    #endif
-                    continue;
-                }
-
-                QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);
-                line = sct.second[i];
-
-                if(!good)
-                {
-                    errorString=QString("Wrong data string format [%1]").arg(sct.second[i]);
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
                     goto badfile;
                 }
-                errorString=QString("Wrong value data type");
 
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
 
-                //Scan values
-                if(sct.first=="META_BOOKMARKS") // Bookmarks
+                Bookmark meta_bookmark;
+                meta_bookmark.bookmarkName = "";
+                meta_bookmark.x = 0;
+                meta_bookmark.y = 0;
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
-                    Bookmark meta_bookmark;
-                    meta_bookmark.bookmarkName = "";
-                    meta_bookmark.x = 0;
-                    meta_bookmark.y = 0;
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
 
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="BM") //Bookmark name
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  meta_bookmark.bookmarkName = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
+                      if(v.marker=="BM") //Bookmark name
+                      {
+                          if(PGEFile::IsQStr(v.value))
+                              meta_bookmark.bookmarkName = PGEFile::X2STR(v.value);
                           else
-                          if(value[0]=="X") // Position X
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  meta_bookmark.x = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="X") // Position X
+                      {
+                          if(PGEFile::IsIntS(v.value))
+                              meta_bookmark.x = v.value.toInt();
                           else
-                          if(value[0]=="Y") //Position Y
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  meta_bookmark.y = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    FileData.bookmarks.push_back(meta_bookmark);
-                }//Bookmarks
-
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="Y") //Position Y
+                      {
+                          if(PGEFile::IsIntS(v.value))
+                              meta_bookmark.y = v.value.toInt();
+                          else
+                              goto badfile;
+                      }
+                }
+                FileData.bookmarks.push_back(meta_bookmark);
             }
+        }
     }
-
-
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
+    errorString.clear(); //If no errors, clear string;
     return FileData;
 
     badfile:    //If file format is not correct
@@ -176,6 +147,41 @@ QString FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
             TextData += "\n";
         }
         TextData += "META_BOOKMARKS_END\n";
+
+        #ifdef PGE_EDITOR
+        if(metaData.script)
+        {
+            TextData += "META_SCRIPT_EVENTS\n";
+            foreach(EventCommand* x, metaData.script->events())
+            {
+                TextData += "EVENT\n";
+                TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                TextData += "\n";
+
+                if(x->basicCommands().size()>0)
+                {
+                    TextData += "BASIC_COMMANDS\n";
+                    foreach(BasicCommand *y, x->basicCommands())
+                    {
+                        TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                        if(QString(y->metaObject()->className())=="MemoryCommand")
+                        {
+                            MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
+                            TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                            TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                            TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                            TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                        }
+                        TextData += "\n";
+                    }
+                    TextData += "BASIC_COMMANDS_END\n";
+                }
+                TextData += "EVENT_END\n";
+            }
+            TextData += "META_SCRIPT_EVENTS_END\n";
+        }
+        #endif
     }
     return TextData;
 }

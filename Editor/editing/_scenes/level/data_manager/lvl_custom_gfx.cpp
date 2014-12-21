@@ -17,6 +17,7 @@
  */
 
 #include <common_features/graphics_funcs.h>
+#include <common_features/items.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -45,6 +46,52 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     bool loaded1, loaded2;
 
     CustomDirManager uLVL(LvlData->path, LvlData->filename);
+
+    //Load custom rotation rules
+    QString rTableFile = uLVL.getCustomFile("rotation_table.ini");
+    if(!rTableFile.isEmpty())
+    {
+        QSettings rTableINI(rTableFile, QSettings::IniFormat);
+        rTableINI.setIniCodec("UTF-8");
+
+        QStringList rules = rTableINI.childGroups();
+
+        int count=0;
+        foreach(QString x, rules)
+        {
+            obj_rotation_table t;
+            rTableINI.beginGroup(x);
+                t.id = rTableINI.value("id", 0).toInt();
+                t.type = Items::getItemType(rTableINI.value("type", "-1").toString());
+                t.rotate_left = rTableINI.value("rotate-left", 0).toInt();
+                t.rotate_right = rTableINI.value("rotate-right", 0).toInt();
+                t.flip_h = rTableINI.value("flip-h", 0).toInt();
+                t.flip_v = rTableINI.value("flip-v", 0).toInt();
+            rTableINI.endGroup();
+            if(t.id<=0) continue;
+
+            if(t.type==ItemTypes::LVL_Block)
+            {
+                local_rotation_table_blocks[t.id]=t;
+                count++;
+            }
+            else
+            if(t.type==ItemTypes::LVL_BGO)
+            {
+                local_rotation_table_bgo[t.id]=t;
+                count++;
+            }
+            else
+            if(t.type==ItemTypes::LVL_NPC)
+            {
+                local_rotation_table_npc[t.id]=t;
+                count++;
+            }
+        }
+        qDebug() << "Loaded custom rotation rules: " << count;
+    }
+
+
 
     if(!progress.wasCanceled())
         progress.setLabelText(
