@@ -52,6 +52,13 @@ struct DataFolders
     QString gcustom;
 };
 
+struct EngineSetup
+{
+    int screen_w;
+    int screen_h;
+    int wld_viewport_w;
+    int wld_viewport_h;
+};
 
 
 
@@ -91,6 +98,8 @@ public:
     QString data_dir;
 
     QString splash_logo;
+
+    EngineSetup engine;
 
     //Playable Characters
     QVector<obj_playable_character > characters;
