@@ -128,10 +128,13 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     QSettings mainset(main_ini, QSettings::IniFormat);
     mainset.setIniCodec("UTF-8");
 
-    mainset.beginGroup("main");
+    QString customAppPath = ApplicationPath;
 
+    mainset.beginGroup("main");
+        customAppPath = mainset.value("application-path", ApplicationPath).toString();
+        customAppPath.replace('\\', '/');
         data_dir = (mainset.value("application-dir", false).toBool() ?
-                        ApplicationPath + "/" : config_dir + "data/" );
+                        customAppPath + "/" : config_dir + "data/" );
 
         ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
 
