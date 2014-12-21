@@ -56,7 +56,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
         {
             if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong data syntax, section [%1]").arg(pgeX_Data.dataTree[section].name);
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
                 goto badfile;
             }
 
@@ -64,7 +64,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
             {
                 if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data syntax, section [%1], data line %2")
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(pgeX_Data.dataTree[section].name)
                             .arg(sdata);
                     goto badfile;
@@ -80,10 +80,11 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong data syntax, section [%1], data line %2, marker %3")
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\Value %4")
                             .arg(pgeX_Data.dataTree[section].name)
                             .arg(sdata)
-                            .arg(sval);
+                            .arg(v.marker)
+                            .arg(v.value);
 
                       if(v.marker=="BM") //Bookmark name
                       {
