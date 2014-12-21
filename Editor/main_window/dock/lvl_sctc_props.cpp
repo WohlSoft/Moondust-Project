@@ -17,6 +17,7 @@
  */
 
 #include <audio/music_player.h>
+#include <editing/_dialogs/musicfilelist.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

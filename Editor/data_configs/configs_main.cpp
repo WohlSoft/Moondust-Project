@@ -45,6 +45,12 @@ QString ConfStatus::defaultTheme="";
 dataconfigs::dataconfigs()
 {
     default_grid=0;
+
+    engine.screen_w=800;
+    engine.screen_h=600;
+
+    engine.wld_viewport_w=668;
+    engine.wld_viewport_h=403;
 }
 
 /*
@@ -118,53 +124,75 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
         return false;
     }
 
-    QString dirs_ini = config_dir + "main.ini";
-    QSettings dirset(dirs_ini, QSettings::IniFormat);
-    dirset.setIniCodec("UTF-8");
+    QString main_ini = config_dir + "main.ini";
+    QSettings mainset(main_ini, QSettings::IniFormat);
+    mainset.setIniCodec("UTF-8");
 
-    dirset.beginGroup("main");
+    QString customAppPath = ApplicationPath;
 
-        data_dir = (dirset.value("application-dir", false).toBool() ?
-                        ApplicationPath + "/" : config_dir + "data/" );
+    mainset.beginGroup("main");
+        customAppPath = mainset.value("application-path", ApplicationPath).toString();
+        customAppPath.replace('\\', '/');
+        data_dir = (mainset.value("application-dir", false).toBool() ?
+                        customAppPath + "/" : config_dir + "data/" );
 
-        ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
+        ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
 
-        dirs.worlds = data_dir + dirset.value("worlds", "worlds").toString() + "/";
+        dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music = data_dir + dirset.value("music", "data/music").toString() + "/";
-        dirs.sounds = data_dir + dirset.value("sound", "data/sound").toString() + "/";
+        dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
+        dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
 
-        dirs.glevel = data_dir + dirset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld= data_dir + dirset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = data_dir + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld= data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcustom = data_dir + dirset.value("custom-data", "data-custom").toString() + "/";
-    dirset.endGroup();
+        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
+    mainset.endGroup();
 
     ConfStatus::configPath = config_dir;
 
-    dirset.beginGroup("graphics");
-        default_grid = dirset.value("default-grid", 32).toInt();
-    dirset.endGroup();
+    mainset.beginGroup("graphics");
+        default_grid = mainset.value("default-grid", 32).toInt();
+    mainset.endGroup();
 
-    if( dirset.status() != QSettings::NoError )
+    if( mainset.status() != QSettings::NoError )
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(dirset.status()));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
     }
 
 
     characters.clear();
 
-    dirset.beginGroup("characters");
-        int characters_q = dirset.value("characters", 0).toInt();
+    mainset.beginGroup("characters");
+        int characters_q = mainset.value("characters", 0).toInt();
         for(int i=1; i<= characters_q; i++)
         {
             obj_playable_character pchar;
             pchar.id = i;
-            pchar.name = dirset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
+            pchar.name = mainset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
             characters.push_back(pchar);
         }
-    dirset.endGroup();
+    mainset.endGroup();
+
+
+    //Basic settings of engine
+    QString engine_ini = config_dir + "engine.ini";
+    if(QFile::exists(engine_ini)) //Load if exist, is not required
+    {
+        QSettings engineset(engine_ini, QSettings::IniFormat);
+        engineset.setIniCodec("UTF-8");
+
+        engineset.beginGroup("common");
+        engine.screen_w = engineset.value("screen-width", engine.screen_w).toInt();
+        engine.screen_h = engineset.value("screen-height", engine.screen_h).toInt();
+        engineset.endGroup();
+
+        engineset.beginGroup("world-map");
+        engine.wld_viewport_w = engineset.value("viewport-width", engine.wld_viewport_w).toInt();
+        engine.wld_viewport_h = engineset.value("viewport-height", engine.wld_viewport_h).toInt();
+        engineset.endGroup();
+    }
 
 
     ////////////////////////////////Preparing////////////////////////////////////////

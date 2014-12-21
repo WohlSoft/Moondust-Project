@@ -43,13 +43,8 @@
 #include <editing/edit_npc/npcedit.h>
 #include <editing/edit_world/world_edit.h>
 
-#include <editing/edit_level/levelprops.h>
-
-#include <main_window/about_dialog/aboutdialog.h>
-
 #include <data_configs/data_configs.h>
 
-#include <editing/_dialogs/musicfilelist.h>
 #include <common_features/logger.h>
 
 #include <tools/tilesets/tileset.h>
@@ -418,11 +413,20 @@ public:
         void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
         void Debugger_UpdateItemList(QString list);
 
+        void Debugger_loadCustomCounters();
+        void Debugger_saveCustomCounters();
+
     private slots:
         void on_actionDebugger_triggered(bool checked);
 
         void on_debuggerBox_visibilityChanged(bool visible);
         void on_DEBUG_GotoPoint_clicked();
+
+        void on_DEBUG_AddCustomCounter_clicked();
+        void on_DEBUG_RefreshCoutners_clicked();
+
+        void on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item);
+        void on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos);
 // ////////////////////////////////////////////////////////
 
 
@@ -430,6 +434,7 @@ public:
     private slots:
         void on_actionContents_triggered();
         void on_actionAbout_triggered();
+        void on_actionSMBX_like_GUI_triggered();
 // ////////////////////////////////////////////////////////
 
 // //////////////// Configuration manager /////////////////
@@ -1088,7 +1093,6 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
-
 
 
 

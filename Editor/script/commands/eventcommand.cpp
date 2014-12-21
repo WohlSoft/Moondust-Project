@@ -120,6 +120,11 @@ void EventCommand::deleteBasicCommand(BasicCommand *cmd)
     }
 }
 
+QList<BasicCommand *> EventCommand::basicCommands()
+{
+    return m_childCmds;
+}
+
 QList<BasicCommand *> EventCommand::findCommandsByMarker(const QString &marker)
 {
     QList<BasicCommand *> foundItems;

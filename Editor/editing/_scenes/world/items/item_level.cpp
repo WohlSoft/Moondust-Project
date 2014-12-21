@@ -278,7 +278,25 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
 void ItemLevel::transformTo(long target_id)
 {
+    if(target_id<1) return;
 
+    bool noimage=true;
+    long item_i=0;
+    long animator=0;
+    obj_w_level mergedSet;
+
+    //Get Level settings
+    scene->getConfig_Level(target_id, item_i, animator, mergedSet, &noimage);
+
+    if(noimage)
+        return;//Don't transform, target item is not found
+
+    levelData.id = target_id;
+    setLevelData(levelData, &mergedSet, &animator);
+    arrayApply();
+
+    if(!scene->opts.animationEnabled)
+        scene->update();
 }
 
 void ItemLevel::arrayApply()
