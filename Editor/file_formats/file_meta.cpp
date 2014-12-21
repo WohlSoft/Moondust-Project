@@ -31,8 +31,6 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     PGEFile pgeX_Data(RawData);
-    pgeX_Data.setRawData( RawData );
-
     if( !pgeX_Data.buildTreeFromRaw() )
     {
         errorString = pgeX_Data.lastError();
@@ -80,7 +78,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\Value %4")
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(pgeX_Data.dataTree[section].name)
                             .arg(sdata)
                             .arg(v.marker)
