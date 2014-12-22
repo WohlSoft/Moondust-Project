@@ -38,24 +38,9 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
     in.addData( RawData );
 
     int str_count=0;        //Line Counter
-    int i;                  //counters
-    //int file_format=0;        //File format number
+
     QString line;           //Current Line data
     LevelData FileData;
-
-    LevelSection section;
-    //int sct;
-    PlayerPoint player;
-    LevelBlock block;
-    LevelBGO bgodata;
-    LevelNPC npcdata;
-    LevelDoors door;
-    LevelPhysEnv physiczone;
-    LevelLayers layer;
-    LevelEvents event;
-    //LevelEvents_layers events_layers;
-    //LevelEvents_Sets events_sets;
-
     FileData = dummyLvlDataArray();
 
     //Add path data
@@ -66,1214 +51,1434 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
         FileData.path = in_1.absoluteDir().absolutePath();
     }
 
+    FileData.untitled = false;
+    FileData.modified = false;
+
+    LevelSection lvl_section;
+
+    PlayerPoint player;
+    LevelBlock block;
+    LevelBGO bgodata;
+    LevelNPC npcdata;
+    LevelDoors door;
+    LevelPhysEnv physiczone;
+    LevelLayers layer;
+    LevelEvents event;
+
     QString errorString;
 
-
-    PGEXSct PGEXsection;
-    QList<PGEXSct > PGEXTree;
-
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    //Read Sections
-    bool sectionOpened=false;
-
-    //Read PGE-X Tree
-    while(!in.atEnd())
+    PGEFile pgeX_Data(RawData);
+    if( !pgeX_Data.buildTreeFromRaw() )
     {
-        PGEXsection.first = in.readLine();
-        PGEXsection.second.clear();
-
-        if(QString(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
-
-        sectionOpened=true;
-        QString data;
-        while(!in.atEnd())
-        {
-            data = in.readLine();
-            if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
-            if(QString(PGEXsection.first).remove(' ').isEmpty()) continue;
-            PGEXsection.second.push_back(data);
-        }
-        PGEXTree.push_back(PGEXsection);
-
-        // WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
-        //        .arg(PGEXsection.first)
-        //        .arg(PGEXsection.second.size())
-        //        .arg(sectionOpened?"opened":"closed")
-        //        );
-    }
-
-    if(sectionOpened)
-    {
-        errorString=QString("Section [%1] is not closed").arg(PGEXsection.first);
+        errorString = pgeX_Data.lastError();
         goto badfile;
     }
 
-    foreach(PGEXSct sct, PGEXTree) //look sections
+    for(int section=0; section<pgeX_Data.dataTree.size(); section++) //look sections
     {
-
-        //WriteToLog(QtDebugMsg, QString("Section %1")
-        //          .arg(sct.first) );
-
-            bool good;
-            for(i=0; i<sct.second.size();i++) //Look Entries
+        ///////////////////JOKES//////////////////////
+        if(pgeX_Data.dataTree[section].name=="JOKES")
+        {
+            #ifndef PGE_ENGINE
+            if(!pgeX_Data.dataTree[section].data.isEmpty())
+                if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
+                    QMessageBox::information(nullptr, "Jokes",
+                            pgeX_Data.dataTree[section].data[0].values[0].value,
+                            QMessageBox::Ok);
+            #endif
+        }//jokes
+        else ///////////////////HEADER//////////////////////
+        if(pgeX_Data.dataTree[section].name=="HEAD")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
             {
-                if(QString(sct.second[i]).remove(' ').isEmpty()) continue; //Skip empty strings
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
 
-                if(sct.first=="JOKES")
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    #ifndef PGE_ENGINE
-                    QMessageBox::information(nullptr, "Jokes", sct.second[i], QMessageBox::Ok);
-                    #endif
-                    continue;
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
                 }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
 
-
-
-                QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);
-                line = sct.second[i];
-
-                if(!good)
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
-                    errorString=QString("Wrong data string format [%1]").arg(sct.second[i]);
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="TL") //Level Title
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            FileData.LevelName = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SZ") //Starz number
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            FileData.stars = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                }
+            }
+        }//HEADER
+        ///////////////////////////////MetaDATA/////////////////////////////////////////////
+        else
+        if(pgeX_Data.dataTree[section].name=="META_BOOKMARKS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
                     goto badfile;
                 }
 
-                errorString=QString("Wrong value data type");
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
 
-                //Scan values
-                if(sct.first=="HEAD") // Head
+                Bookmark meta_bookmark;
+                meta_bookmark.bookmarkName = "";
+                meta_bookmark.x = 0;
+                meta_bookmark.y = 0;
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="TL") //Level Title
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  FileData.LevelName = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SZ") //Starz number
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  FileData.stars = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                    }
-                }//Header
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
 
-                ///////////////////////////////MetaDATA/////////////////////////////////////////////
-                else //Bookmarks
-                if(sct.first=="META_BOOKMARKS") // Bookmarks
+                      if(v.marker=="BM") //Bookmark name
+                      {
+                          if(PGEFile::IsQStr(v.value))
+                              meta_bookmark.bookmarkName = PGEFile::X2STR(v.value);
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="X") // Position X
+                      {
+                          if(PGEFile::IsIntS(v.value))
+                              meta_bookmark.x = v.value.toInt();
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="Y") //Position Y
+                      {
+                          if(PGEFile::IsIntS(v.value))
+                              meta_bookmark.y = v.value.toInt();
+                          else
+                              goto badfile;
+                      }
+                }
+                FileData.metaData.bookmarks.push_back(meta_bookmark);
+            }
+        }//meta bookmarks
+        ///////////////////////////////MetaDATA//End////////////////////////////////////////
+
+        else ///////////////////SECTION//////////////////////
+        if(pgeX_Data.dataTree[section].name=="SECTION")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    Bookmark meta_bookmark;
-                    meta_bookmark.bookmarkName = "";
-                    meta_bookmark.x = 0;
-                    meta_bookmark.y = 0;
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                lvl_section = dummyLvlSection();
 
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="BM") //Bookmark name
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  meta_bookmark.bookmarkName = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="X") // Position X
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  meta_bookmark.x = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="Y") //Position Y
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  meta_bookmark.y = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    FileData.metaData.bookmarks.push_back(meta_bookmark);
-                }//Bookmarks
-
-                ///////////////////////////////MetaDATA//End////////////////////////////////////////
-
-                else
-                if(sct.first=="SECTION") //Level Sections
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
-                    section = dummyLvlSection();
-                    foreach(QStringList value, sectData) //Look markers and values
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="SC") //Section ID
                     {
-                          if(value[0]=="SC") //Section ID
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  section.id = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="L") //Left side
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                              {
-                                  section.size_left= value[1].toInt();
-                                  section.PositionX=value[1].toInt()-10;
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="R")//Right side
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  section.size_right= value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="T") //Top side
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                              {
-                                  section.size_top= value[1].toInt();
-                                  section.PositionY=value[1].toInt()-10;
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="B")//Bottom side
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  section.size_bottom= value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="MZ")//Stuff music ID
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  section.music_id= value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="BG")//Stuff music ID
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  section.background= value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="MF")//External music file path
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  section.music_file=PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="CS")//Connect sides
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  section.IsWarp=(bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="OE")//Offscreen exit
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  section.OffScreenEn=(bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SR")//Right-way scroll only (No Turn-back)
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  section.noback=(bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="UW")//Underwater bit
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  section.underwater=(bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-
-                    } //Level Sections
-
-                    //add captured value into array
-                    bool found=false;
-                    int q=0;
-
-                    if(section.id >= FileData.sections.size())
-                    {
-                        int needToAdd = (FileData.sections.size()-1) - section.id;
-                        while(needToAdd > 0)
-                        {
-                            LevelSection dummySct = dummyLvlSection();
-                            dummySct.id = FileData.sections.size();
-                            FileData.sections.push_back(dummySct);
-                            needToAdd--;
-                        }
-                    }
-
-                    for(q=0; q<FileData.sections.size();q++)
-                    {
-                        if(FileData.sections[q].id==section.id){found=true; break;}
-                    }
-                    if(found)
-                        FileData.sections[q] = section;
-                    else
-                    {
-                        FileData.sections.push_back(section);
-                    }
-
-                }//Level Section
-
-
-                else
-                if(sct.first=="STARTPOINT") // Player's points
-                {
-                    player = dummyLvlPlayerPoint();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="ID") //ID of player point
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  player.id = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="X")
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  player.x = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="Y")
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  player.y = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="D")
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  player.direction = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    //add captured value into array
-                    bool found=false;
-                    int q=0;
-                    for(q=0; q<FileData.players.size();q++)
-                    {
-                        if(FileData.players[q].id==player.id){found=true; break;}
-                    }
-
-                    PlayerPoint sz = dummyLvlPlayerPoint(player.id);
-                    player.w = sz.w;
-                    player.h = sz.h;
-
-                    if(found)
-                        FileData.players[q] = player;
-                    else
-                        FileData.players.push_back(player);
-
-                }//Player's points
-
-                else
-                if(sct.first=="BLOCK") // Blocks
-                {
-
-                    block = dummyLvlBlock();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="ID") //Block ID
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  block.id = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="X") // Position X
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  block.x = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="Y") //Position Y
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  block.y = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="W") //Width
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  block.w = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="H") //Height
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  block.h = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="CN") //Contains (coins/NPC)
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  block.npc_id = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="IV") //Invisible
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  block.invisible = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SL") //Slippery
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  block.slippery = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LR") //Layer name
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  block.layer = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    block.array_id = FileData.blocks_array_id++;
-                    block.index = FileData.blocks.size();
-                    FileData.blocks.push_back(block);
-                }//Blocks
-
-
-                else
-                if(sct.first=="BGO") // BGO
-                {
-                    bgodata = dummyLvlBgo();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                              if(value[0]=="ID") //BGO ID
-                              {
-                                  if(PGEFile::IsIntU(value[1]))
-                                      bgodata.id = value[1].toInt();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="X") //X Position
-                              {
-                                  if(PGEFile::IsIntS(value[1]))
-                                      bgodata.x = value[1].toInt();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="Y") //Y Position
-                              {
-                                  if(PGEFile::IsIntS(value[1]))
-                                      bgodata.y = value[1].toInt();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="ZO") //Z Offset
-                              {
-                                  if(PGEFile::IsFloat(value[1]))
-                                      bgodata.z_offset = value[1].toDouble();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="ZP") //Z Position
-                              {
-                                  if(PGEFile::IsIntS(value[1]))
-                                      bgodata.z_mode = value[1].toInt();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="SP") //SMBX64 Sorting priority
-                              {
-                                  if(PGEFile::IsIntS(value[1]))
-                                      bgodata.smbx64_sp = value[1].toInt();
-                                  else
-                                      goto badfile;
-                              }
-                              else
-                              if(value[0]=="LR") //Layer name
-                              {
-                                  if(PGEFile::IsQStr(value[1]))
-                                      bgodata.layer = PGEFile::X2STR(value[1]);
-                                  else
-                                      goto badfile;
-                              }
-                    }
-
-                    bgodata.array_id = FileData.bgo_array_id++;
-                    bgodata.index = FileData.bgo.size();
-                    FileData.bgo.push_back(bgodata);
-                }//BGO
-
-                else
-                if(sct.first=="NPC") // NPC
-                {
-                    npcdata = dummyLvlNpc();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                        if(value[0]=="ID") //NPC ID
-                        {
-                            if(PGEFile::IsIntU(value[1]))
-                                npcdata.id = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
+                        if(PGEFile::IsIntU(v.value))
+                            lvl_section.id = v.value.toInt();
                         else
-                        if(value[0]=="X") //X position
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.x = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="Y") //Y position
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.y = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="D") //Direction
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.direct = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="S1") //Special value 1
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.special_data = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="S2") //Special value 2
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.special_data2 = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="GE") //Generator
-                        {
-                            if(PGEFile::IsBool(value[1]))
-                                npcdata.generator = (bool)value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="GT") //Generator type
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.generator = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="GD") //Generator direction
-                        {
-                            if(PGEFile::IsIntS(value[1]))
-                                npcdata.generator_direct = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="GM") //Generator period
-                        {
-                            if(PGEFile::IsIntU(value[1]))
-                                npcdata.generator_period = value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="MG") //Message
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.msg = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="FD") //Friendly
-                        {
-                            if(PGEFile::IsBool(value[1]))
-                                npcdata.friendly = (bool)value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="NM") //Don't move
-                        {
-                            if(PGEFile::IsBool(value[1]))
-                                npcdata.nomove = (bool)value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="BS") //Boss algorithm
-                        {
-                            if(PGEFile::IsBool(value[1]))
-                                npcdata.legacyboss = (bool)value[1].toInt();
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="LR") //Layer
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.layer = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="LA") //Attach Layer
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.attach_layer = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="EA") //Event slot "Activated"
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.event_activate = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="ED") //Event slot "Death/Take/Destroy"
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.event_die = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="ET") //Event slot "Talk"
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.event_talk = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                        else
-                        if(value[0]=="EE") //Event slot "Layer is empty"
-                        {
-                            if(PGEFile::IsQStr(value[1]))
-                                npcdata.event_nomore = PGEFile::X2STR(value[1]);
-                            else
-                                goto badfile;
-                        }
-                    }
-                    npcdata.array_id = FileData.npc_array_id++;
-                    npcdata.index = FileData.npc.size();
-                    FileData.npc.push_back(npcdata);
-                }//NPC
-
-                else
-                if(sct.first=="PHYSICS") // PHYSICS
-                {
-                    physiczone = dummyLvlPhysEnv();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="ET") //Environment type
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  physiczone.quicksand = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="X") //X position
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  physiczone.x = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="Y") //Y position
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  physiczone.y = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="W") //Width
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  physiczone.w = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="H") //Height
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  physiczone.h = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LR") //Layer
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  physiczone.layer = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                    }
-                    physiczone.array_id = FileData.physenv_array_id++;
-                    physiczone.index = FileData.physez.size();
-                    FileData.physez.push_back(physiczone);
-                }//PHYSICS
-
-                else
-                if(sct.first=="DOORS") // DOORS
-                {
-                    door = dummyLvlDoor();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                        if(value[0]=="IX") //Input point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.ix = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="IY") //Input point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.iy = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="OX") //Output point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.ox = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="OY") //Output point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.oy = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="DT") //Input point
-                        {
-                          if(PGEFile::IsIntU(value[1]))
-                              door.type = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="ID") //Input direction
-                        {
-                          if(PGEFile::IsIntU(value[1]))
-                              door.idirect = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="OD") //Output direction
-                        {
-                          if(PGEFile::IsIntU(value[1]))
-                              door.odirect = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="WX") //Target world map point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.world_x = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="WY") //Target world map point
-                        {
-                          if(PGEFile::IsIntS(value[1]))
-                              door.world_y = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="LF") //Target level file
-                        {
-                          if(PGEFile::IsQStr(value[1]))
-                              door.lname = PGEFile::X2STR(value[1]);
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="LI") //Target level file's input warp
-                        {
-                          if(PGEFile::IsIntU(value[1]))
-                              door.warpto = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="ET") //Level Entrance
-                        {
-                          if(PGEFile::IsBool(value[1]))
-                              door.lvl_i = (bool)value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="EX") //Level exit
-                        {
-                          if(PGEFile::IsBool(value[1]))
-                              door.lvl_o = (bool)value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="SL") //Stars limit
-                        {
-                          if(PGEFile::IsIntU(value[1]))
-                              door.stars = value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="NV") //No Vehicles
-                        {
-                          if(PGEFile::IsBool(value[1]))
-                              door.novehicles = (bool)value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="AI") //Allow grabbed items
-                        {
-                          if(PGEFile::IsBool(value[1]))
-                              door.allownpc = (bool)value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="LC") //Door is locked
-                        {
-                          if(PGEFile::IsBool(value[1]))
-                              door.locked = (bool)value[1].toInt();
-                          else
-                              goto badfile;
-                        }
-                        else
-                        if(value[0]=="LR") //Layer
-                        {
-                          if(PGEFile::IsQStr(value[1]))
-                              door.layer = PGEFile::X2STR(value[1]);
-                          else
-                              goto badfile;
-                        }
-                    }
-
-                    door.isSetIn = ( !door.lvl_i );
-                    door.isSetOut = ( !door.lvl_o || (door.lvl_i));
-
-                    door.array_id = FileData.doors_array_id++;
-                    door.index = FileData.doors.size();
-                    FileData.doors.push_back(door);
-                }//DOORS
-
-                else
-                if(sct.first=="LAYERS")
-                {
-                    layer = dummyLvlLayer();
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="LR") //Layer name
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  layer.name = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="HD") //Hidden
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  layer.hidden = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LC") //Locked
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  layer.locked = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    //add captured value into array
-                    bool found=false;
-                    int q=0;
-                    for(q=0; q<FileData.layers.size();q++)
-                    {
-                        if(FileData.layers[q].name==layer.name){found=true; break;}
-                    }
-                    if(found)
-                    {
-                        layer.array_id = FileData.layers[q].array_id;
-                        FileData.layers[q] = layer;
+                            goto badfile;
                     }
                     else
+                    if(v.marker=="L") //Left side
                     {
-                        layer.array_id = FileData.layers_array_id++;
-                        FileData.layers.push_back(layer);
+                        if(PGEFile::IsIntS(v.value))
+                        {
+                            lvl_section.size_left= v.value.toInt();
+                            lvl_section.PositionX=v.value.toInt()-10;
+                        }
+                        else
+                            goto badfile;
                     }
-                }//LAYERS
+                    else
+                    if(v.marker=="R")//Right side
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            lvl_section.size_right= v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="T") //Top side
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                        {
+                            lvl_section.size_top= v.value.toInt();
+                            lvl_section.PositionY=v.value.toInt()-10;
+                        }
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="B")//Bottom side
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            lvl_section.size_bottom= v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MZ")//Stuff music ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            lvl_section.music_id= v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="BG")//Stuff music ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            lvl_section.background= v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MF")//External music file path
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            lvl_section.music_file=PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="CS")//Connect sides
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            lvl_section.IsWarp=(bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="OE")//Offscreen exit
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            lvl_section.OffScreenEn=(bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SR")//Right-way scroll only (No Turn-back)
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            lvl_section.noback=(bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="UW")//Underwater bit
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            lvl_section.underwater=(bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                }
 
-                //EVENTS comming soon
+                //add captured value into array
+                bool found=false;
+                int q=0;
+
+                if(lvl_section.id >= FileData.sections.size())
+                {
+                    int needToAdd = (FileData.sections.size()-1) - lvl_section.id;
+                    while(needToAdd > 0)
+                    {
+                        LevelSection dummySct = dummyLvlSection();
+                        dummySct.id = FileData.sections.size();
+                        FileData.sections.push_back(dummySct);
+                        needToAdd--;
+                    }
+                }
+
+                for(q=0; q<FileData.sections.size();q++)
+                {
+                    if(FileData.sections[q].id==lvl_section.id){found=true; break;}
+                }
+                if(found)
+                    FileData.sections[q] = lvl_section;
+                else
+                {
+                    FileData.sections.push_back(lvl_section);
+                }
+            }
+        }//SECTION
+        else ///////////////////STARTPOINT//////////////////////
+        if(pgeX_Data.dataTree[section].name=="STARTPOINT")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                player = dummyLvlPlayerPoint();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ID") //ID of player point
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            player.id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="X")
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            player.x = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="Y")
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            player.y = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="D")
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            player.direction = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                }
+
+                //add captured value into array
+                bool found=false;
+                int q=0;
+                for(q=0; q<FileData.players.size();q++)
+                {
+                    if(FileData.players[q].id==player.id){found=true; break;}
+                }
+
+                PlayerPoint sz = dummyLvlPlayerPoint(player.id);
+                player.w = sz.w;
+                player.h = sz.h;
+
+                if(found)
+                    FileData.players[q] = player;
+                else
+                    FileData.players.push_back(player);
+            }
+        }//STARTPOINT
+        else ///////////////////BLOCK//////////////////////
+        if(pgeX_Data.dataTree[section].name=="BLOCK")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                block = dummyLvlBlock();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ID") //Block ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            block.id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="X") // Position X
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            block.x = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="Y") //Position Y
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            block.y = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="W") //Width
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            block.w = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="H") //Height
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            block.h = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="CN") //Contains (coins/NPC)
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            block.npc_id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="IV") //Invisible
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            block.invisible = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SL") //Slippery
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            block.slippery = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LR") //Layer name
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.layer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                }
+
+                block.array_id = FileData.blocks_array_id++;
+                block.index = FileData.blocks.size();
+                FileData.blocks.push_back(block);
+            }
+        }//BLOCK
+        else ///////////////////BGO//////////////////////
+        if(pgeX_Data.dataTree[section].name=="BGO")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                bgodata = dummyLvlBgo();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ID") //BGO ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            bgodata.id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="X") //X Position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            bgodata.x = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="Y") //Y Position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            bgodata.y = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="ZO") //Z Offset
+                    {
+                        if(PGEFile::IsFloat(v.value))
+                            bgodata.z_offset = v.value.toDouble();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="ZP") //Z Position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            bgodata.z_mode = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SP") //SMBX64 Sorting priority
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            bgodata.smbx64_sp = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LR") //Layer name
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            bgodata.layer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                }
+
+                bgodata.array_id = FileData.bgo_array_id++;
+                bgodata.index = FileData.bgo.size();
+                FileData.bgo.push_back(bgodata);
+            }
+        }//BGO
+        else ///////////////////NPC//////////////////////
+        if(pgeX_Data.dataTree[section].name=="NPC")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                npcdata = dummyLvlNpc();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ID") //NPC ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            npcdata.id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="X") //X position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.x = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="Y") //Y position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.y = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="D") //Direction
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.direct = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="S1") //Special value 1
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.special_data = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="S2") //Special value 2
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.special_data2 = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="GE") //Generator
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            npcdata.generator = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="GT") //Generator type
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.generator = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="GD") //Generator direction
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            npcdata.generator_direct = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="GM") //Generator period
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            npcdata.generator_period = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MG") //Message
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.msg = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="FD") //Friendly
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            npcdata.friendly = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="NM") //Don't move
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            npcdata.nomove = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="BS") //Boss algorithm
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            npcdata.legacyboss = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LR") //Layer
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.layer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LA") //Attach Layer
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.attach_layer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EA") //Event slot "Activated"
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.event_activate = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="ED") //Event slot "Death/Take/Destroy"
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.event_die = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="ET") //Event slot "Talk"
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.event_talk = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EE") //Event slot "Layer is empty"
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            npcdata.event_nomore = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                }
+
+                npcdata.array_id = FileData.npc_array_id++;
+                npcdata.index = FileData.npc.size();
+                FileData.npc.push_back(npcdata);
+            }
+        }//TILES
+        else ///////////////////PHYSICS//////////////////////
+        if(pgeX_Data.dataTree[section].name=="PHYSICS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                physiczone = dummyLvlPhysEnv();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ET") //Environment type
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            physiczone.quicksand = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="X") //X position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            physiczone.x = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="Y") //Y position
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            physiczone.y = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="W") //Width
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            physiczone.w = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="H") //Height
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            physiczone.h = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LR") //Layer
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            physiczone.layer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                }
+
+                physiczone.array_id = FileData.physenv_array_id++;
+                physiczone.index = FileData.physez.size();
+                FileData.physez.push_back(physiczone);
+            }
+        }//PHYSICS
+        else ///////////////////DOORS//////////////////////
+        if(pgeX_Data.dataTree[section].name=="DOORS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                door = dummyLvlDoor();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="IX") //Input point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.ix = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="IY") //Input point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.iy = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="OX") //Output point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.ox = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="OY") //Output point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.oy = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="DT") //Input point
+                    {
+                      if(PGEFile::IsIntU(v.value))
+                          door.type = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="ID") //Input direction
+                    {
+                      if(PGEFile::IsIntU(v.value))
+                          door.idirect = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="OD") //Output direction
+                    {
+                      if(PGEFile::IsIntU(v.value))
+                          door.odirect = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="WX") //Target world map point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.world_x = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="WY") //Target world map point
+                    {
+                      if(PGEFile::IsIntS(v.value))
+                          door.world_y = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="LF") //Target level file
+                    {
+                      if(PGEFile::IsQStr(v.value))
+                          door.lname = PGEFile::X2STR(v.value);
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="LI") //Target level file's input warp
+                    {
+                      if(PGEFile::IsIntU(v.value))
+                          door.warpto = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="ET") //Level Entrance
+                    {
+                      if(PGEFile::IsBool(v.value))
+                          door.lvl_i = (bool)v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="EX") //Level exit
+                    {
+                      if(PGEFile::IsBool(v.value))
+                          door.lvl_o = (bool)v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="SL") //Stars limit
+                    {
+                      if(PGEFile::IsIntU(v.value))
+                          door.stars = v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="NV") //No Vehicles
+                    {
+                      if(PGEFile::IsBool(v.value))
+                          door.novehicles = (bool)v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="AI") //Allow grabbed items
+                    {
+                      if(PGEFile::IsBool(v.value))
+                          door.allownpc = (bool)v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="LC") //Door is locked
+                    {
+                      if(PGEFile::IsBool(v.value))
+                          door.locked = (bool)v.value.toInt();
+                      else
+                          goto badfile;
+                    }
+                    else
+                    if(v.marker=="LR") //Layer
+                    {
+                      if(PGEFile::IsQStr(v.value))
+                          door.layer = PGEFile::X2STR(v.value);
+                      else
+                          goto badfile;
+                    }
+                }
+
+                door.isSetIn = ( !door.lvl_i );
+                door.isSetOut = ( !door.lvl_o || (door.lvl_i));
+
+                door.array_id = FileData.doors_array_id++;
+                door.index = FileData.doors.size();
+                FileData.doors.push_back(door);
+            }
+        }//DOORS
+
+        else ///////////////////LAYERS//////////////////////
+        if(pgeX_Data.dataTree[section].name=="LAYERS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                layer = dummyLvlLayer();
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="LR") //Layer name
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            layer.name = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="HD") //Hidden
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            layer.hidden = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LC") //Locked
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            layer.locked = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                }
+
+                //add captured value into array
+                bool found=false;
+                int q=0;
+                for(q=0; q<FileData.layers.size();q++)
+                {
+                    if(FileData.layers[q].name==layer.name){found=true; break;}
+                }
+                if(found)
+                {
+                    layer.array_id = FileData.layers[q].array_id;
+                    FileData.layers[q] = layer;
+                }
+                else
+                {
+                    layer.array_id = FileData.layers_array_id++;
+                    FileData.layers.push_back(layer);
+                }
+            }
+        }//LAYERS
+
+        //EVENTS comming soon
 //                else
 //                if(sct.first=="EVENTS_CLASSIC") //Action-styled events
 //                {
 //                    foreach(QStringList value, sectData) //Look markers and values
 //                    {
-//                            //  if(value[0]=="TL") //Level Title
+//                            //  if(v.marker=="TL") //Level Title
 //                            //  {
-//                            //      if(PGEFile::IsQStr(value[1]))
-//                            //          FileData.LevelName = PGEFile::X2STR(value[1]);
+//                            //      if(PGEFile::IsQStr(v.value))
+//                            //          FileData.LevelName = PGEFile::X2STR(v.value);
 //                            //      else
 //                            //          goto badfile;
 //                            //  }
 //                            //  else
-//                            //  if(value[0]=="SZ") //Starz number
+//                            //  if(v.marker=="SZ") //Starz number
 //                            //  {
-//                            //      if(PGEFile::IsIntU(value[1]))
-//                            //          FileData.stars = value[1].toInt();
+//                            //      if(PGEFile::IsIntU(v.value))
+//                            //          FileData.stars = v.value.toInt();
 //                            //      else
 //                            //          goto badfile;
 //                            //  }
 //                    }
 //                }//EVENTS
 
-                else
-                if(sct.first=="EVENTS_CLASSIC") //SMBX-compatible events
-                {
-                    event = dummyLvlEvent();
-
-                    foreach(QStringList value, sectData) //Look markers and values
-                    {
-                          if(value[0]=="ET") //Event Title
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  event.name = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="MG") //Event Message
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  event.msg = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SD") //Play Sound ID
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  event.sound_id = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="EG") //End game algorithm
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  event.end_game = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LH") //Hide layers
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                                  event.layers_hide = PGEFile::X2STRArr(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LS") //Show layers
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                                  event.layers_show = PGEFile::X2STRArr(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="LT") //Toggle layers
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                                  event.layers_toggle = PGEFile::X2STRArr(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SM") //Switch music
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                              {
-                                  QStringList musicSets = PGEFile::X2STRArr(value[1]);
-                                  int q=0;
-                                  for(q=0;q<event.sets.size() && q<musicSets.size(); q++)
-                                  {
-                                      if(!PGEFile::IsIntS(musicSets[q])) goto badfile;
-                                      event.sets[q].music_id = musicSets[q].toInt();
-                                  }
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SB") //Switch background
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                              {
-                                  QStringList bgSets = PGEFile::X2STRArr(value[1]);
-                                  int q=0;
-                                  for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
-                                  {
-                                      if(!PGEFile::IsIntS(bgSets[q])) goto badfile;
-                                      event.sets[q].background_id = bgSets[q].toInt();
-                                  }
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="SS") //Section Size
-                          {
-                              if(PGEFile::IsStringArray(value[1]))
-                              {
-                                  QStringList bgSets = PGEFile::X2STRArr(value[1]);
-                                  int q=0;
-                                  for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
-                                  {
-                                      QStringList sizes = bgSets[q].split(',');
-                                      if(sizes.size()!=4) goto badfile;
-                                      if(!PGEFile::IsIntS(sizes[0])) goto badfile;
-                                      event.sets[q].position_left = sizes[0].toInt();
-                                      if(!PGEFile::IsIntS(sizes[1])) goto badfile;
-                                      event.sets[q].position_top = sizes[1].toInt();
-                                      if(!PGEFile::IsIntS(sizes[2])) goto badfile;
-                                      event.sets[q].position_bottom = sizes[2].toInt();
-                                      if(!PGEFile::IsIntS(sizes[3])) goto badfile;
-                                      event.sets[q].position_right = sizes[3].toInt();
-                                  }
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="TE") //Trigger event
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  event.trigger = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="TD") //Trigger delay
-                          {
-                              if(PGEFile::IsIntU(value[1]))
-                                  event.trigger_timer = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="DS") //Disable smoke
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  event.nosmoke = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="AU") //Auto start
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  event.autostart = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="AU") //Auto start
-                          {
-                              if(PGEFile::IsBool(value[1]))
-                                  event.autostart = (bool)value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="PC") //Player controls
-                          {
-                              if(PGEFile::IsBoolArray(value[1]))
-                              {
-                                  QList<bool > controls = PGEFile::X2BollArr(value[1]);
-                                  if(controls.size()>=1) event.ctrl_up = controls[0];
-                                  if(controls.size()>=2) event.ctrl_down = controls[1];
-                                  if(controls.size()>=3) event.ctrl_left = controls[2];
-                                  if(controls.size()>=4) event.ctrl_right = controls[3];
-                                  if(controls.size()>=5) event.ctrl_run = controls[4];
-                                  if(controls.size()>=6) event.ctrl_jump = controls[5];
-                                  if(controls.size()>=7) event.ctrl_drop = controls[6];
-                                  if(controls.size()>=8) event.ctrl_start = controls[7];
-                                  if(controls.size()>=9) event.ctrl_altrun = controls[8];
-                                  if(controls.size()>=10) event.ctrl_altjump = controls[9];
-                              }
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="ML") //Move layer
-                          {
-                              if(PGEFile::IsQStr(value[1]))
-                                  event.movelayer = PGEFile::X2STR(value[1]);
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="MX") //Layer motion speed X
-                          {
-                              if(PGEFile::IsFloat(value[1]))
-                                  event.layer_speed_x = value[1].toDouble();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="MY") //Layer motion speed Y
-                          {
-                              if(PGEFile::IsFloat(value[1]))
-                                  event.layer_speed_y = value[1].toDouble();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="AS") //Autoscroll section ID
-                          {
-                              if(PGEFile::IsIntS(value[1]))
-                                  event.scroll_section = value[1].toInt();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="AX") //Autoscroll speed X
-                          {
-                              if(PGEFile::IsFloat(value[1]))
-                                  event.move_camera_x = value[1].toDouble();
-                              else
-                                  goto badfile;
-                          }
-                          else
-                          if(value[0]=="AY") //Autoscroll speed Y
-                          {
-                              if(PGEFile::IsFloat(value[1]))
-                                  event.move_camera_y = value[1].toDouble();
-                              else
-                                  goto badfile;
-                          }
-                    }
-
-                    //add captured value into array
-                    bool found=false;
-                    int q=0;
-                    for(q=0; q<FileData.events.size();q++)
-                    {
-                        if(FileData.events[q].name==event.name){found=true; break;}
-                    }
-                    if(found)
-                    {
-                        event.array_id = FileData.events[q].array_id;
-                        FileData.events[q] = event;
-                    }
-                    else
-                    {
-                        event.array_id = FileData.events_array_id++;
-                        FileData.events.push_back(event);
-                    }
-                }//EVENTS_CLASSIC
-
+        else ///////////////////EVENTS_CLASSIC//////////////////////
+        if(pgeX_Data.dataTree[section].name=="EVENTS_CLASSIC")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
             }
 
-        //}//Head Section end
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                event = dummyLvlEvent();
 
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                    if(v.marker=="ET") //Event Title
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            event.name = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MG") //Event Message
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            event.msg = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SD") //Play Sound ID
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            event.sound_id = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EG") //End game algorithm
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            event.end_game = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LH") //Hide layers
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                            event.layers_hide = PGEFile::X2STRArr(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LS") //Show layers
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                            event.layers_show = PGEFile::X2STRArr(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="LT") //Toggle layers
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                            event.layers_toggle = PGEFile::X2STRArr(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SM") //Switch music
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                        {
+                            QStringList musicSets = PGEFile::X2STRArr(v.value);
+                            int q=0;
+                            for(q=0;q<event.sets.size() && q<musicSets.size(); q++)
+                            {
+                                if(!PGEFile::IsIntS(musicSets[q])) goto badfile;
+                                event.sets[q].music_id = musicSets[q].toInt();
+                            }
+                        }
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SB") //Switch background
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                        {
+                            QStringList bgSets = PGEFile::X2STRArr(v.value);
+                            int q=0;
+                            for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
+                            {
+                                if(!PGEFile::IsIntS(bgSets[q])) goto badfile;
+                                event.sets[q].background_id = bgSets[q].toInt();
+                            }
+                        }
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="SS") //Section Size
+                    {
+                        if(PGEFile::IsStringArray(v.value))
+                        {
+                            QStringList bgSets = PGEFile::X2STRArr(v.value);
+                            int q=0;
+                            for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
+                            {
+                                QStringList sizes = bgSets[q].split(',');
+                                if(sizes.size()!=4) goto badfile;
+                                if(!PGEFile::IsIntS(sizes[0])) goto badfile;
+                                event.sets[q].position_left = sizes[0].toInt();
+                                if(!PGEFile::IsIntS(sizes[1])) goto badfile;
+                                event.sets[q].position_top = sizes[1].toInt();
+                                if(!PGEFile::IsIntS(sizes[2])) goto badfile;
+                                event.sets[q].position_bottom = sizes[2].toInt();
+                                if(!PGEFile::IsIntS(sizes[3])) goto badfile;
+                                event.sets[q].position_right = sizes[3].toInt();
+                            }
+                        }
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="TE") //Trigger event
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            event.trigger = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="TD") //Trigger delay
+                    {
+                        if(PGEFile::IsIntU(v.value))
+                            event.trigger_timer = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="DS") //Disable smoke
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            event.nosmoke = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="AU") //Auto start
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            event.autostart = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="AU") //Auto start
+                    {
+                        if(PGEFile::IsBool(v.value))
+                            event.autostart = (bool)v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="PC") //Player controls
+                    {
+                        if(PGEFile::IsBoolArray(v.value))
+                        {
+                            QList<bool > controls = PGEFile::X2BollArr(v.value);
+                            if(controls.size()>=1) event.ctrl_up = controls[0];
+                            if(controls.size()>=2) event.ctrl_down = controls[1];
+                            if(controls.size()>=3) event.ctrl_left = controls[2];
+                            if(controls.size()>=4) event.ctrl_right = controls[3];
+                            if(controls.size()>=5) event.ctrl_run = controls[4];
+                            if(controls.size()>=6) event.ctrl_jump = controls[5];
+                            if(controls.size()>=7) event.ctrl_drop = controls[6];
+                            if(controls.size()>=8) event.ctrl_start = controls[7];
+                            if(controls.size()>=9) event.ctrl_altrun = controls[8];
+                            if(controls.size()>=10) event.ctrl_altjump = controls[9];
+                        }
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="ML") //Move layer
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            event.movelayer = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MX") //Layer motion speed X
+                    {
+                        if(PGEFile::IsFloat(v.value))
+                            event.layer_speed_x = v.value.toDouble();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="MY") //Layer motion speed Y
+                    {
+                        if(PGEFile::IsFloat(v.value))
+                            event.layer_speed_y = v.value.toDouble();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="AS") //Autoscroll section ID
+                    {
+                        if(PGEFile::IsIntS(v.value))
+                            event.scroll_section = v.value.toInt();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="AX") //Autoscroll speed X
+                    {
+                        if(PGEFile::IsFloat(v.value))
+                            event.move_camera_x = v.value.toDouble();
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="AY") //Autoscroll speed Y
+                    {
+                        if(PGEFile::IsFloat(v.value))
+                            event.move_camera_y = v.value.toDouble();
+                        else
+                            goto badfile;
+                    }
+                }
+
+                //add captured value into array
+                bool found=false;
+                int q=0;
+                for(q=0; q<FileData.events.size();q++)
+                {
+                    if(FileData.events[q].name==event.name){found=true; break;}
+                }
+                if(found)
+                {
+                    event.array_id = FileData.events[q].array_id;
+                    FileData.events[q] = event;
+                }
+                else
+                {
+                    event.array_id = FileData.events_array_id++;
+                    FileData.events.push_back(event);
+                }
+            }
+        }//EVENTS_CLASSIC
     }
-
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
+    errorString.clear(); //If no errors, clear string;
     FileData.ReadFileValid=true;
     return FileData;
 
