@@ -18,6 +18,7 @@
 
 #include "graphicsworkspace.h"
 #include "logger.h"
+#include <QElapsedTimer>
 
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
@@ -105,25 +106,45 @@ QRubberBand *GraphicsWorkspace::rubberBand() const
         return NULL;
 }
 
-
+int stepSumm=0;
 void GraphicsWorkspace::moveLeft()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()-step);
+        QElapsedTimer t;
+        t.start();
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value()-(step+stepSumm));
+        int l = t.elapsed();
+        if(l>keyTime){ l=0; stepSumm=step<<2;} else stepSumm=0;
+        lMover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveRight()
 {
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()+step);
+        QElapsedTimer t;
+        t.start();
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value()+(step+stepSumm));
+        int l = t.elapsed();
+        if(l>keyTime){ l=0; stepSumm=step<<2;} else stepSumm=0;
+        rMover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveUp()
 {
-    verticalScrollBar()->setValue(verticalScrollBar()->value()-step);
+        QElapsedTimer t;
+        t.start();
+    verticalScrollBar()->setValue(verticalScrollBar()->value()-(step+stepSumm));
+        int l = t.elapsed();
+        if(l>keyTime){ l=0; stepSumm=step<<2;} else stepSumm=0;
+        uMover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveDown()
 {
-    verticalScrollBar()->setValue(verticalScrollBar()->value()+step);
+        QElapsedTimer t;
+        t.start();
+    verticalScrollBar()->setValue(verticalScrollBar()->value()+(step+stepSumm));
+        int l = t.elapsed();
+        if(l>keyTime){ l=0; stepSumm=step<<2;} else stepSumm=0;
+        dMover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
