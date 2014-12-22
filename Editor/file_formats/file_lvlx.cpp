@@ -20,6 +20,9 @@
 #include <QDir>
 
 #include "file_formats.h"
+#ifdef PGE_EDITOR
+#include <script/commands/memorycommand.h>
+#endif
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -1529,6 +1532,41 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += "\n";
         }
         TextData += "META_BOOKMARKS_END\n";
+
+        #ifdef PGE_EDITOR
+        if(FileData.metaData.script)
+        {
+            TextData += "META_SCRIPT_EVENTS\n";
+            foreach(EventCommand* x, FileData.metaData.script->events())
+            {
+                TextData += "EVENT\n";
+                TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                TextData += "\n";
+
+                if(x->basicCommands().size()>0)
+                {
+                    TextData += "BASIC_COMMANDS\n";
+                    foreach(BasicCommand *y, x->basicCommands())
+                    {
+                        TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                        if(QString(y->metaObject()->className())=="MemoryCommand")
+                        {
+                            MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
+                            TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                            TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                            TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                            TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                        }
+                        TextData += "\n";
+                    }
+                    TextData += "BASIC_COMMANDS_END\n";
+                }
+                TextData += "EVENT_END\n";
+            }
+            TextData += "META_SCRIPT_EVENTS_END\n";
+        }
+        #endif
     }
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
