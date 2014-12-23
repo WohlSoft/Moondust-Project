@@ -1430,6 +1430,8 @@ QString WldScene::getHistoryText(WldScene::HistoryOperation operation)
     case HistoryOperation::WORLDHISTORY_MOVE: return tr("Move");
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD: return tr("Changed Worldsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM: return tr("Changed Itemsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::WORLDHISTORY_ROTATE: return tr("Rotate");
+    case HistoryOperation::WORLDHISTORY_FLIP: return tr("Flip");
     default:
         return tr("Unknown");
     }
