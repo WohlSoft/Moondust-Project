@@ -116,6 +116,34 @@ void WldScene::addChangeSettingsHistory(WorldData modifiedItems, WldScene::Setti
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addRotateHistory(WorldData rotatedItems, bool byClockwise)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rotateOperation;
+    rotateOperation.type = HistoryOperation::WORLDHISTORY_ROTATE;
+    rotateOperation.data = rotatedItems;
+    rotateOperation.extraData = byClockwise;
+    operationList.push_back(rotateOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
+void WldScene::addFlipHistory(WorldData flippedItems, bool vertical)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rotateOperation;
+    rotateOperation.type = HistoryOperation::WORLDHISTORY_FLIP;
+    rotateOperation.data = flippedItems;
+    rotateOperation.extraData = vertical;
+    operationList.push_back(rotateOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;
@@ -294,6 +322,28 @@ void WldScene::historyBack()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_ROTATE:
+    {
+        WorldData rotatedData = lastOperation.data;
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
+                                      ItemTypes::WLD_S_Tile |
+                                      ItemTypes::WLD_S_Scenery |
+                                      ItemTypes::WLD_S_Path |
+                                      ItemTypes::WLD_S_Level |
+                                      ItemTypes::WLD_S_MusicBox)), !lastOperation.extraData.toBool(), false);
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_FLIP:
+    {
+        WorldData flippedData = lastOperation.data;
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
+                                        ItemTypes::WLD_S_Tile |
+                                        ItemTypes::WLD_S_Scenery |
+                                        ItemTypes::WLD_S_Path |
+                                        ItemTypes::WLD_S_Level |
+                                        ItemTypes::WLD_S_MusicBox)), !lastOperation.extraData.toBool(), false);
         break;
     }
     default:
@@ -491,6 +541,28 @@ void WldScene::historyForward()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_ROTATE:
+    {
+        WorldData rotatedData = lastOperation.data;
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
+                                      ItemTypes::WLD_S_Tile |
+                                      ItemTypes::WLD_S_Scenery |
+                                      ItemTypes::WLD_S_Path |
+                                      ItemTypes::WLD_S_Level |
+                                      ItemTypes::WLD_S_MusicBox)), lastOperation.extraData.toBool(), false);
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_FLIP:
+    {
+        WorldData flippedData = lastOperation.data;
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
+                                        ItemTypes::WLD_S_Tile |
+                                        ItemTypes::WLD_S_Scenery |
+                                        ItemTypes::WLD_S_Path |
+                                        ItemTypes::WLD_S_Level |
+                                        ItemTypes::WLD_S_MusicBox)), lastOperation.extraData.toBool(), false);
         break;
     }
     default:
@@ -862,35 +934,35 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
         if(unsortedItem->data(0).toString()=="TILE")
         {
             if(!ignoreTiles){
-                sortedGraphTiles[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphTiles[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="PATH")
         {
             if(!ignorePaths){
-                sortedGraphPath[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphPath[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="SCENERY")
         {
             if(!ignoreScenery){
-                sortedGraphScenery[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphScenery[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="LEVEL")
         {
             if(!ignoreLevels){
-                sortedGraphLevels[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphLevels[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
         else
         if(unsortedItem->data(0).toString()=="MUSICBOX")
         {
             if(!ignoreLevels){
-                sortedGraphMusic[unsortedItem->data(2).toInt()] = unsortedItem;
+                sortedGraphMusic[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
             }
         }
     }
@@ -903,7 +975,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             {
                 QMap<int, WorldTiles>::iterator beginItem = sortedTiles.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedTiles.erase(beginItem);
@@ -912,7 +984,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedTiles.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbTiles)(cbData,(*beginItem));
@@ -934,7 +1006,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             {
                 QMap<int, WorldPaths>::iterator beginItem = sortedPaths.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedPaths.erase(beginItem);
@@ -943,7 +1015,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedPaths.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbPaths)(cbData,(*beginItem));
@@ -965,7 +1037,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             {
                 QMap<int, WorldScenery>::iterator beginItem = sortedScenery.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedScenery.erase(beginItem);
@@ -974,7 +1046,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedScenery.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbScenery)(cbData,(*beginItem));
@@ -996,7 +1068,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             {
                 QMap<int, WorldLevels>::iterator beginItem = sortedLevels.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedLevels.erase(beginItem);
@@ -1005,7 +1077,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedLevels.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbLevels)(cbData,(*beginItem));
@@ -1027,7 +1099,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             {
                 QMap<int, WorldMusic>::iterator beginItem = sortedMusic.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
                     //not found
                     sortedMusic.erase(beginItem);
@@ -1036,7 +1108,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedMusic.begin();
                 currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
                 {
                     cbData.item = item;
                     (this->*clbMusic)(cbData,(*beginItem));
@@ -1049,6 +1121,235 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             }
         }
     }
+}
+
+QList<QGraphicsItem *> WldScene::findGraphicsItems(WorldData &toFind, ItemTypes::itemTypesMultiSelectable findingFilter)
+{
+    QMap<int, WorldTiles> sortedTiles;
+    if(findingFilter & ItemTypes::WLD_S_Tile){
+        foreach (WorldTiles tile, toFind.tiles)
+        {
+            sortedTiles[tile.array_id] = tile;
+        }
+    }
+    QMap<int, WorldScenery> sortedScenery;
+    if(findingFilter & ItemTypes::WLD_S_Scenery){
+        foreach (WorldScenery scenery, toFind.scenery)
+        {
+            sortedScenery[scenery.array_id] = scenery;
+        }
+    }
+    QMap<int, WorldPaths> sortedPath;
+    if(findingFilter & ItemTypes::WLD_S_Path){
+        foreach (WorldPaths path, toFind.paths)
+        {
+            sortedPath[path.array_id] = path;
+        }
+    }
+    QMap<int, WorldLevels> sortedLevel;
+    if(findingFilter & ItemTypes::WLD_S_Level)
+    {
+        foreach (WorldLevels level, toFind.levels) {
+            sortedLevel[level.array_id] = level;
+        }
+    }
+    QMap<int, WorldMusic> sortedMusic;
+    if(findingFilter & ItemTypes::WLD_S_MusicBox){
+        foreach (WorldMusic music, toFind.music) {
+            sortedMusic[music.id] = music;
+        }
+    }
+
+    QMap<int, QGraphicsItem*> sortedGraphTile;
+    QMap<int, QGraphicsItem*> sortedGraphScenery;
+    QMap<int, QGraphicsItem*> sortedGraphPath;
+    QMap<int, QGraphicsItem*> sortedGraphLevel;
+    QMap<int, QGraphicsItem*> sortedGraphMusicBox;
+    foreach (QGraphicsItem* unsortedItem, items())
+    {
+        if(unsortedItem->data(ITEM_TYPE).toString()=="TILE")
+        {
+            if(findingFilter & ItemTypes::WLD_S_Tile){
+                sortedGraphTile[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(ITEM_TYPE).toString()=="SCENERY")
+        {
+            if(findingFilter & ItemTypes::WLD_S_Scenery){
+                sortedGraphScenery[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(ITEM_TYPE).toString()=="PATH")
+        {
+            if(findingFilter & ItemTypes::WLD_S_Path){
+                sortedGraphPath[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(ITEM_TYPE).toString()=="LEVEL")
+        {
+            if(findingFilter & ItemTypes::WLD_S_Level){
+                sortedGraphLevel[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(ITEM_TYPE).toString()=="MUSICBOX")
+        {
+            if(findingFilter & ItemTypes::WLD_S_MusicBox){
+                sortedGraphMusicBox[unsortedItem->data(ITEM_ARRAY_ID).toInt()] = unsortedItem;
+            }
+
+        }
+    }
+
+    QList<QGraphicsItem*> returnItems;
+
+    if(findingFilter & ItemTypes::WLD_S_Tile){
+        foreach (QGraphicsItem* item, sortedGraphTile)
+        {
+
+            if(sortedTiles.size()!=0)
+            {
+                QMap<int, WorldTiles>::iterator beginItem = sortedTiles.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedTiles.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedTiles.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    if(findingFilter & ItemTypes::WLD_S_Path){
+        foreach (QGraphicsItem* item, sortedGraphPath)
+        {
+
+            if(sortedPath.size()!=0)
+            {
+                QMap<int, WorldPaths>::iterator beginItem = sortedPath.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedPath.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedPath.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::WLD_S_Scenery){
+        foreach (QGraphicsItem* item, sortedGraphScenery)
+        {
+
+            if(sortedScenery.size()!=0)
+            {
+                QMap<int, WorldScenery>::iterator beginItem = sortedScenery.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedScenery.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedScenery.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::WLD_S_Level){
+        foreach (QGraphicsItem* item, sortedGraphLevel)
+        {
+
+            if(sortedLevel.size()!=0)
+            {
+                QMap<int, WorldLevels>::iterator beginItem = sortedLevel.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedLevel.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedLevel.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(findingFilter & ItemTypes::WLD_S_MusicBox){
+        foreach (QGraphicsItem* item, sortedGraphMusicBox)
+        {
+
+            if(sortedMusic.size()!=0)
+            {
+                QMap<int, WorldMusic>::iterator beginItem = sortedMusic.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedMusic.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedMusic.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()==currentArrayId)
+                {
+                    returnItems << item;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    return returnItems;
 }
 
 QPoint WldScene::calcTopLeftCorner(WorldData *data)
