@@ -52,6 +52,37 @@ void WldScene::applyArrayForItem(QGraphicsItem * item)
     }
 }
 
+void WldScene::collectDataFromItem(WorldData &dataToStore, QGraphicsItem *item)
+{
+    if(!item) return;
+
+    QString ObjType = item->data(ITEM_TYPE).toString();
+    if( ObjType == "TILE")
+    {
+        dataToStore.tiles << dynamic_cast<ItemTile *>(item)->tileData;
+    }
+    else
+    if( ObjType == "SCENERY")
+    {
+        dataToStore.scenery << dynamic_cast<ItemScene *>(item)->sceneData;
+    }
+    else
+    if( ObjType == "PATH")
+    {
+        dataToStore.paths << dynamic_cast<ItemPath *>(item)->pathData;
+    }
+    else
+    if( ObjType == "LEVEL")
+    {
+        dataToStore.levels << dynamic_cast<ItemLevel *>(item)->levelData;
+    }
+    else
+    if( ObjType == "MUSICBOX" )
+    {
+        dataToStore.music << dynamic_cast<ItemMusic *>(item)->musicData;
+    }
+}
+
 
 void WldScene::returnItemBackGroup(QList<QGraphicsItem * >items)
 {

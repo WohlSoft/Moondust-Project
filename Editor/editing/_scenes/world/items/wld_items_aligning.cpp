@@ -186,8 +186,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         return;
 
     //For history
-    //WorldData rotatedData;
-    Q_UNUSED(recordHistory);
+    WorldData rotatedData;
 
     QRect zone = QRect(0,0,0,0);
     QRect itemZone = QRect(0,0,0,0);
@@ -236,13 +235,13 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             item->setX( zone.left()+w2 );
         }
         applyArrayForItem(item);
-        //if(recordHistory)
-            //collectDataFromItem(rotatedData, item);
+        if(recordHistory)
+            collectDataFromItem(rotatedData, item);
     }
 
-    //if(recordHistory){
-    //    addFlipHistory(rotatedData, vertical);
-    //}
+    if(recordHistory){
+        addFlipHistory(rotatedData, vertical);
+    }
 }
 
 void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory)
@@ -251,9 +250,7 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         return;
 
     //For history
-    //WorldData rotatedData;
-    Q_UNUSED(recordHistory);
-
+    WorldData rotatedData;
     //Calculate common width/height of group
     QRect zone = QRect(0,0,0,0);
     QRect itemZone = QRect(0,0,0,0);
@@ -314,13 +311,13 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
         item->setPos(targetRect.x(), targetRect.y());
         applyArrayForItem(item);
-        //if(recordHistory)
-        //    collectDataFromItem(rotatedData, item);
+        if(recordHistory)
+            collectDataFromItem(rotatedData, item);
     }
 
-    //if(recordHistory){
-    //    addRotateHistory(rotatedData, byClockwise);
-    //}
+    if(recordHistory){
+        addRotateHistory(rotatedData, byClockwise);
+    }
 }
 
 
