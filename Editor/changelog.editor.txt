@@ -1,4 +1,4 @@
-Editor 0.2.1.7
+Editor 0.2.1.8
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
