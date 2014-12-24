@@ -115,6 +115,184 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                 FileData.bookmarks.push_back(meta_bookmark);
             }
         }
+        #ifdef PGE_EDITOR
+        else
+        if(pgeX_Data.dataTree[section].name=="META_SCRIPT_EVENTS")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").
+                            arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            if(pgeX_Data.dataTree[section].subTree.size()>0)
+            {
+                if(!FileData.script)
+                    FileData.script = new ScriptHolder();
+            }
+
+            //Read subtree
+            for(int subtree=0;subtree<pgeX_Data.dataTree[section].subTree.size();subtree++)
+            {
+                if(pgeX_Data.dataTree[section].subTree[subtree].name=="EVENT")
+                {
+                    if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+                    {
+                        errorString=QString("Wrong section data syntax:\nSection [%1]\nSubtree [%2]").
+                                    arg(pgeX_Data.dataTree[section].name).
+                                    arg(pgeX_Data.dataTree[section].subTree[subtree].name);
+                        goto badfile;
+                    }
+
+                    EventCommand * event = new EventCommand(EventCommand::EVENTTYPE_LOAD);
+
+                    for(int sdata=0;sdata<pgeX_Data.dataTree[section].subTree[subtree].data.size();sdata++)
+                    {
+                        if(pgeX_Data.dataTree[section].subTree[subtree].data[sdata].type!=PGEFile::PGEX_Struct)
+                        {
+                            errorString=QString("Wrong data item syntax:\nSubtree [%1]\nData line %2")
+                                    .arg(pgeX_Data.dataTree[section].subTree[subtree].name)
+                                    .arg(sdata);
+                            goto badfile;
+                        }
+
+                        PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].subTree[subtree].data[sdata];
+
+                        //Get values
+                        for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                        {
+                            PGEFile::PGEX_Val v = x.values[sval];
+                            errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                                    .arg(pgeX_Data.dataTree[section].name)
+                                    .arg(sdata)
+                                    .arg(v.marker)
+                                    .arg(v.value);
+
+                            if(v.marker=="TL") //Marker
+                            {
+                                if(PGEFile::IsQStr(v.value))
+                                    event->setMarker(PGEFile::X2STR(v.value));
+                                else
+                                    goto badfile;
+                            }
+                            else
+                            if(v.marker=="ET") //Event type
+                            {
+                                if(PGEFile::IsIntS(v.value))
+                                    event->setEventType( (EventCommand::EventType)v.value.toInt() );
+                                else
+                                    goto badfile;
+                            }
+                        }
+                    }//Event header
+
+                    //Basic commands subtree
+                    if(event->eventType()==EventCommand::EVENTTYPE_LOAD)
+                    {
+                        for(int subtree2=0;subtree2<pgeX_Data.dataTree[section].subTree[subtree].subTree.size();subtree2++)
+                        {
+                            if(pgeX_Data.dataTree[section].subTree[subtree2].subTree[subtree2].name=="BASIC_COMMANDS")
+                            {
+                                if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+                                {
+                                    errorString=QString("Wrong section data syntax:\nSection [%1]\nSubtree [%2]\nSubtree [%2]").
+                                                arg(pgeX_Data.dataTree[section].name).
+                                                arg(pgeX_Data.dataTree[section].subTree[subtree].name).
+                                                arg(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].name);
+                                    goto badfile;
+                                }
+
+                                for(int sdata=0;sdata<pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data.size();sdata++)
+                                {
+                                    if(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data[sdata].type!=PGEFile::PGEX_Struct)
+                                    {
+                                        errorString=QString("Wrong data item syntax:\nSubtree [%1]\nData line %2")
+                                                .arg(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].name)
+                                                .arg(sdata);
+                                        goto badfile;
+                                    }
+
+                                    PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data[sdata];
+
+                                    QString name="";
+                                    QString commandType="";
+                                    int hx=0;
+                                    int ft=0;
+                                    double vf=0.0;
+
+                                    //Get values
+                                    for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                                    {
+                                        PGEFile::PGEX_Val v = x.values[sval];
+                                        errorString=QString("Wrong value syntax\nSubtree [%1]\nData line %2\nMarker %3\nValue %4")
+                                                .arg(pgeX_Data.dataTree[section].subTree[subtree2].name)
+                                                .arg(sdata)
+                                                .arg(v.marker)
+                                                .arg(v.value);
+
+                                        if(v.marker=="N") //Command name
+                                        {
+                                            if(PGEFile::IsQStr(v.value))
+                                                name = PGEFile::X2STR(v.value);
+                                            else
+                                                goto badfile;
+                                        }
+                                        else
+                                        if(v.marker=="CT") //Command type
+                                        {
+                                            if(PGEFile::IsQStr(v.value))
+                                                commandType = PGEFile::X2STR(v.value);
+                                            else
+                                                goto badfile;
+                                        }
+
+
+                                        //MemoryCommand specific values
+                                        else
+                                        if(v.marker=="HX") //Heximal value
+                                        {
+                                            if(PGEFile::IsIntS(v.value))
+                                                hx = v.value.toInt();
+                                            else
+                                                goto badfile;
+                                        }
+                                        else
+                                        if(v.marker=="FT") //Field type
+                                        {
+                                            if(PGEFile::IsIntS(v.value))
+                                                ft = v.value.toInt();
+                                            else
+                                                goto badfile;
+                                        }
+                                        else
+                                        if(v.marker=="V") //Value
+                                        {
+                                            if(PGEFile::IsFloat(v.value))
+                                                vf = v.value.toDouble();
+                                            else
+                                                goto badfile;
+                                        }
+                                    }
+
+                                    if(commandType=="MEMORY")
+                                    {
+                                        MemoryCommand *cmd =
+                                           new MemoryCommand(hx,(MemoryCommand::FieldType)ft, vf);
+                                        cmd->setMarker(name);
+                                        event->addBasicCommand(cmd);
+                                    }
+                                }//commands list
+                            }//Basic command subtree
+                        }//subtrees
+                    }
+
+                    FileData.script->revents() << event;
+                }//EVENT tree
+
+            }//META_SCRIPT_EVENTS subtree
+        }//META_SCRIPT_EVENTS Section
+        #endif
     }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
@@ -151,35 +329,39 @@ QString FileFormats::WriteNonSMBX64MetaData(MetaData metaData)
         #ifdef PGE_EDITOR
         if(metaData.script)
         {
-            TextData += "META_SCRIPT_EVENTS\n";
-            foreach(EventCommand* x, metaData.script->events())
+            if(!metaData.script->events().isEmpty())
             {
-                TextData += "EVENT\n";
-                TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
-                TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
-                TextData += "\n";
-
-                if(x->basicCommands().size()>0)
+                TextData += "META_SCRIPT_EVENTS\n";
+                foreach(EventCommand* x, metaData.script->events())
                 {
-                    TextData += "BASIC_COMMANDS\n";
-                    foreach(BasicCommand *y, x->basicCommands())
+                    TextData += "EVENT\n";
+                    if(!x->marker().isEmpty())
+                        TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                    TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                    TextData += "\n";
+
+                    if(x->basicCommands().size()>0)
                     {
-                        TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
-                        if(QString(y->metaObject()->className())=="MemoryCommand")
+                        TextData += "BASIC_COMMANDS\n";
+                        foreach(BasicCommand *y, x->basicCommands())
                         {
-                            MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
-                            TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
-                            TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
-                            TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
-                            TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                            TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                            if(QString(y->metaObject()->className())=="MemoryCommand")
+                            {
+                                MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
+                                TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                                TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                                TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                                TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                            }
+                            TextData += "\n";
                         }
-                        TextData += "\n";
+                        TextData += "BASIC_COMMANDS_END\n";
                     }
-                    TextData += "BASIC_COMMANDS_END\n";
+                    TextData += "EVENT_END\n";
                 }
-                TextData += "EVENT_END\n";
+                TextData += "META_SCRIPT_EVENTS_END\n";
             }
-            TextData += "META_SCRIPT_EVENTS_END\n";
         }
         #endif
     }
