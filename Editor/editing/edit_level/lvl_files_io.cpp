@@ -392,7 +392,8 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-    LvlData.metaData.script = new ScriptHolder;
+    if(!LvlData.metaData.script)
+        LvlData.metaData.script = new ScriptHolder;
     LvlData.modified = false;
     LvlData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
