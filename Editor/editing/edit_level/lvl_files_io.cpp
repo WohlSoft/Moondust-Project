@@ -105,7 +105,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     if(savOptionsDialog){
         SavingNotificationDialog* sav = new SavingNotificationDialog(false);
         sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
-        sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+        sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit* lvlNameBox = new QLineEdit();
         QCheckBox* mkDirCustom = new QCheckBox();
         mkDirCustom->setText(QString(""));
