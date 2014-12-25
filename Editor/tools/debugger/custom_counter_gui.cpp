@@ -19,6 +19,7 @@
 #include <QMenu>
 
 #include <common_features/util.h>
+#include <common_features/mainwinconnect.h>
 
 #include "custom_counter_gui.h"
 #include "ui_custom_counter_gui.h"
@@ -28,6 +29,21 @@ CustomCounterGUI::CustomCounterGUI(QWidget *parent) :
     ui(new Ui::CustomCounterGUI)
 {
     ui->setupUi(this);
+    if(MainWinConnect::pMainWin->activeChildWindow()==1)
+    {
+        ui->ItemType->addItem(tr("Block"), QVariant(int(ItemTypes::LVL_Block)));
+        ui->ItemType->addItem(tr("BGO"), QVariant(int(ItemTypes::LVL_BGO)));
+        ui->ItemType->addItem(tr("NPC"), QVariant(int(ItemTypes::LVL_NPC)));
+    }
+    else
+    if(MainWinConnect::pMainWin->activeChildWindow()==3)
+    {
+        ui->ItemType->addItem(tr("Tile"), QVariant(int(ItemTypes::WLD_Tile)));
+        ui->ItemType->addItem(tr("Scenery"), QVariant(int(ItemTypes::WLD_Scenery)));
+        ui->ItemType->addItem(tr("Path"), QVariant(int(ItemTypes::WLD_Path)));
+        ui->ItemType->addItem(tr("Level"), QVariant(int(ItemTypes::WLD_Level)));
+        ui->ItemType->addItem(tr("Music"), QVariant(int(ItemTypes::WLD_MusicBox)));
+    }
 }
 
 
@@ -42,18 +58,24 @@ void CustomCounterGUI::setCounterData(CustomCounter &data)
     util::memclear(ui->ItemList);
     foreach(long x, counterData.items)
     {
-        ui->ItemList->addItem(QString("Item-%1").arg(x));
+        QListWidgetItem *item;
+        item = new QListWidgetItem(ui->ItemList);
+        item->setData(Qt::UserRole, QVariant((int)x));
+        item->setText(QString("Item-%1").arg(x));
+        ui->ItemList->addItem(item);
     }
 
 }
 
-void CustomCounterGUI::on_ItemType_currentIndexChanged(int index)
+void CustomCounterGUI::on_ItemType_currentIndexChanged(int)
 {
 
 }
 
 void CustomCounterGUI::on_ItemList_customContextMenuRequested(const QPoint &pos)
 {
+    if(ui->ItemList->selectedItems().isEmpty()) return;
+
     QMenu menu;
     QAction* replace = menu.addAction("Set another item");
     QAction* remove = menu.addAction("Remove");

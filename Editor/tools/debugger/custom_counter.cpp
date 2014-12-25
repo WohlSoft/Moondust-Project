@@ -21,9 +21,11 @@
 CustomCounter::CustomCounter()
 {
     type = (ItemTypes::itemTypes)0;
+    name = "<Unknown>";
+    windowType=0;
 }
 
-CustomCounter::CustomCounter(CustomCounter &c)
+CustomCounter::CustomCounter(const CustomCounter &c)
 {
     this->type  = c.type;
     this->items = c.items;

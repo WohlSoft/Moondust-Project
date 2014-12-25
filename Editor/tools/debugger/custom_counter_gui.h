@@ -39,12 +39,9 @@ public:
     CustomCounter counterData;
 
 private slots:
-    void on_ItemType_currentIndexChanged(int index);
-
+    void on_ItemType_currentIndexChanged(int);
     void on_ItemList_customContextMenuRequested(const QPoint &pos);
-
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
 
 private:
