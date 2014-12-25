@@ -71,7 +71,7 @@ win32: LIBS += -lDbghelp
 #DEFINES += USE_QMEDIAPLAYER
 DEFINES += PGE_EDITOR
 
-INCLUDEPATH += .
+INCLUDEPATH += . _includes
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
@@ -341,7 +341,9 @@ SOURCES += main.cpp\
     editing/_scenes/level/data_manager/lvl_config_index.cpp \
     editing/_scenes/world/data_manager/wld_config_index.cpp \
     editing/_scenes/world/items/wld_base_item.cpp \
-    main_window/help.cpp
+    main_window/help.cpp \
+    tools/debugger/custom_counter.cpp \
+    tools/debugger/custom_counter_gui.cpp
     
 
 HEADERS  += defines.h \
@@ -472,7 +474,9 @@ HEADERS  += defines.h \
     file_formats/save_filedata.h \
     data_configs/obj_rotation_table.h \
     editing/_scenes/level/items/lvl_base_item.h \
-    editing/_scenes/world/items/wld_base_item.h
+    editing/_scenes/world/items/wld_base_item.h \
+    tools/debugger/custom_counter.h \
+    tools/debugger/custom_counter_gui.h
 
 
 FORMS    += \
@@ -504,7 +508,8 @@ FORMS    += \
     main_window/tools/app_settings.ui \
     main_window/file/lvl_export_image.ui \
     editing/_dialogs/savingnotificationdialog.ui \
-    main_window/file/wld_export_image.ui
+    main_window/file/wld_export_image.ui \
+    tools/debugger/custom_counter_gui.ui
 
 
 

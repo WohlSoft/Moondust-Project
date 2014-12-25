@@ -759,7 +759,7 @@ public:
                               bool ignoreDoors = false,
                               bool ignorePlayer = false);
 
-        QList<QGraphicsItem*> findGraphicsItems(LevelData& toFind, ItemTypes::itemTypes findingFilter);
+        QList<QGraphicsItem*> findGraphicsItems(LevelData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
 
         void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
                               callBackLevelDoors clbDoors, bool isEntrance);
