@@ -234,6 +234,7 @@ public:
 
         void applyArrayForItemGroup(QList<QGraphicsItem * >items);
         void applyArrayForItem(QGraphicsItem * item);
+        void collectDataFromItem(WorldData& dataToStore, QGraphicsItem* item);
 
         void returnItemBackGroup(QList<QGraphicsItem * >items);
         void returnItemBack(QGraphicsItem * item);
@@ -402,7 +403,9 @@ public:
                 WORLDHISTORY_OVERWRITE,
                 WORLDHISTORY_MOVE,                     //moved
                 WORLDHISTORY_CHANGEDSETTINGSWORLD,
-                WORLDHISTORY_CHANGEDSETTINGSWORLDITEM
+                WORLDHISTORY_CHANGEDSETTINGSWORLDITEM,
+                WORLDHISTORY_ROTATE,
+                WORLDHISTORY_FLIP
             };
             HistoryType type;
             //used most of Operations
@@ -455,6 +458,8 @@ public:
         void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
         void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
         void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
+        void addRotateHistory(WorldData rotatedItems, bool byClockwise);
+        void addFlipHistory(WorldData flippedItems, bool vertical);
 
         //history modifiers
         void historyBack();
@@ -518,6 +523,9 @@ public:
                               bool ignoreScenery = false,
                               bool ignoreLevels = false,
                               bool ignoreMusicbox = false);
+
+        QList<QGraphicsItem*> findGraphicsItems(WorldData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
+
         QPoint calcTopLeftCorner(WorldData* data);
         QString getHistoryText(HistoryOperation operation);
         QString getHistorySettingText(SettingSubType subType);

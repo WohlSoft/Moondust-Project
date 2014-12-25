@@ -1562,7 +1562,7 @@ void LvlScene::historyBack()
     case HistoryOperation::LEVELHISTORY_ROTATE:
     {
         LevelData rotatedData = lastOperation.data;
-        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
                                       ItemTypes::LVL_S_Block |
                                       ItemTypes::LVL_S_BGO |
                                       ItemTypes::LVL_S_NPC |
@@ -1574,7 +1574,7 @@ void LvlScene::historyBack()
     case HistoryOperation::LEVELHISTORY_FLIP:
     {
         LevelData flippedData = lastOperation.data;
-        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
                                         ItemTypes::LVL_S_Block |
                                         ItemTypes::LVL_S_BGO |
                                         ItemTypes::LVL_S_NPC |
@@ -2489,7 +2489,7 @@ void LvlScene::historyForward()
     case HistoryOperation::LEVELHISTORY_ROTATE:
     {
         LevelData rotatedData = lastOperation.data;
-        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypes>(
+        rotateGroup(findGraphicsItems(rotatedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
                                       ItemTypes::LVL_S_Block |
                                       ItemTypes::LVL_S_BGO |
                                       ItemTypes::LVL_S_NPC |
@@ -2501,7 +2501,7 @@ void LvlScene::historyForward()
     case HistoryOperation::LEVELHISTORY_FLIP:
     {
         LevelData flippedData = lastOperation.data;
-        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypes>(
+        flipGroup(findGraphicsItems(flippedData, static_cast<ItemTypes::itemTypesMultiSelectable>(
                                         ItemTypes::LVL_S_Block |
                                         ItemTypes::LVL_S_BGO |
                                         ItemTypes::LVL_S_NPC |
@@ -3616,7 +3616,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
 }
 
-QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes::itemTypes findingFilter)
+QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter)
 {
     QMap<int, LevelDoors> sortedEntranceDoors;
     QMap<int, LevelDoors> sortedExitDoors;

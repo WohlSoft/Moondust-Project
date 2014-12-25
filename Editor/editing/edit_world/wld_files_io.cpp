@@ -106,7 +106,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     if(savOptionsDialog){
         SavingNotificationDialog* sav = new SavingNotificationDialog(false);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
-        sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+        sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit* wldNameBox = new QLineEdit();
         sav->addUserItem(tr("Episode Title: "),wldNameBox);
         sav->setAdjustSize(400,150);
