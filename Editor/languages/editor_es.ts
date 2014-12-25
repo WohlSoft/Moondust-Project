@@ -481,7 +481,7 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="183"/>
         <source>Default rotation rules (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Reglas de rotación predeterminadas (%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="194"/>
@@ -763,7 +763,7 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="198"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="201"/>
@@ -831,7 +831,7 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="190"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
@@ -1077,7 +1077,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="240"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="242"/>
@@ -1618,12 +1618,12 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="221"/>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="222"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
+        <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="230"/>
@@ -2176,12 +2176,12 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="4076"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="4077"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltear</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="4079"/>
@@ -3469,7 +3469,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="4378"/>
         <location filename="../mainwindow.ui" line="4391"/>
         <source>bps</source>
-        <translation type="unfinished"></translation>
+        <translation>bps</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4296"/>
@@ -5079,7 +5079,7 @@ El archivo no existe.</translation>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="300"/>
         <source>Game save statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Estadísticas de guardado</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="307"/>
@@ -6166,32 +6166,32 @@ File: %1
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="335"/>
         <source>Cut top here</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar arriba</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="336"/>
         <source>Cut bottom here</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar abajo</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="337"/>
         <source>Cut left here</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar izquierda</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="338"/>
         <source>Cut right here</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar derecha</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="341"/>
         <source>Don&apos;t snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>No ajustar a la grilla</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="345"/>
         <source>Disable minimal size limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitar límite de tamaño</translation>
     </message>
 </context>
 <context>
@@ -6228,7 +6228,7 @@ File: %1
     <message>
         <location filename="../tools/smart_import/smartimporter.cpp" line="103"/>
         <source>You need to save the world, so you can import custom graphics!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Necesita guardar el mundo para importar gráficos personalizados!</translation>
     </message>
 </context>
 <context>
@@ -6980,12 +6980,12 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="219"/>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="220"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
+        <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="228"/>
