@@ -296,7 +296,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::npcSet.id = itemID;
 
         if(LvlPlacingItems::npcSet.generator)
-            LvlPlacingItems::gridSz=16;
+            LvlPlacingItems::gridSz=(pConfigs->default_grid/2);
         else
             LvlPlacingItems::gridSz=mergedSet.grid;
 
