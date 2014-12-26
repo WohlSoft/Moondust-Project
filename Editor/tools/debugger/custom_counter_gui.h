@@ -35,7 +35,11 @@ public:
     explicit CustomCounterGUI(QWidget *parent = 0);
     ~CustomCounterGUI();
     void setCounterData(CustomCounter &data);
-
+    void addCntItem(QString name, long id);
+    void replaceItem(long what, long with);
+    void removeItem(long what);
+    void addCItem(long item, QString name="");
+    QString makeItemName(long item);
     CustomCounter counterData;
 
 private slots:
@@ -44,8 +48,13 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
+    void on_AddItem_clicked();
+
+    void on_RemoveItem_clicked();
+
 private:
     Ui::CustomCounterGUI *ui;
+    bool lockCombobox;
 };
 
 #endif // CUSTOM_COUNTER_GUI_H
