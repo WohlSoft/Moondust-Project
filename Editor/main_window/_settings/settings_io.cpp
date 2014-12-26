@@ -243,6 +243,9 @@ void MainWindow::saveSettings()
         else
             settings.setValue("log-level", "0");
     settings.endGroup();
+
+    //Save settings of custom counters in the debugger
+    Debugger_saveCustomCounters();
 }
 
 

@@ -27,12 +27,12 @@ CustomCounter::CustomCounter()
 
 CustomCounter::CustomCounter(const CustomCounter &c)
 {
-    this->type  = c.type;
     this->items = c.items;
+    this->type  = c.type;
+    this->name  = c.name;
+    this->windowType = c.windowType;
 }
 
 CustomCounter::~CustomCounter()
-{
-
-}
+{}
 

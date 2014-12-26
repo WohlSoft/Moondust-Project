@@ -392,6 +392,9 @@ void MainWindow::updateMenus(bool force)
     setTileSetBox();
     UpdateLvlCustomItems();
     updateWindowMenu();
+
+    //Update debugger's custom counters
+    on_DEBUG_RefreshCoutners_clicked();
 }
 
 
