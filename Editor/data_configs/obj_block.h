@@ -46,7 +46,8 @@ struct obj_block
         SHAPE_triangle_top_right=1,
         SHAPE_triangle_bottom_left=-2,
         SHAPE_triangle_bottom_right=2,
-        SHAPE_triangle_polygonal=3
+        SHAPE_polygonal=3,
+        SHAPE_cyrcle=4
     };
     bool lava;
     bool destroyable;
