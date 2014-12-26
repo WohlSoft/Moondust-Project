@@ -26,6 +26,7 @@ Editor 0.2.1.8
 - Added saving of SMBX LVL and WLD formats with selecting of file format version (useful to edit old episodes which made by old SMBX'es with saving of compatibility with them)
 - Added reading of SAV files which show game save statistics in the editor.
 - Better resizer boxes, now they are movable and more flexible, added context menu to cut size by any side.
+- Added custom counters which giving able to count any specific item ID's.
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
