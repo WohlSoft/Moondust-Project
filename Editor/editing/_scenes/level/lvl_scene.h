@@ -205,6 +205,7 @@ public:
         #define ITEM_ID                      1 //int
         #define ITEM_ARRAY_ID                2 //int
         #define ITEM_BLOCK_IS_SIZABLE        3 //bool
+        #define ITEM_BLOCK_SHAPE             5 //int
         #define ITEM_NPC_BLOCK_COLLISION     7 //bool
         #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
         #define ITEM_WIDTH                   9 //int
