@@ -193,6 +193,7 @@ call :ApplyDir script\gui
 call :ApplyDir script\command_compiler
 call :ApplyDir SingleApplication
 call :ApplyDir tools
+call :ApplyDir tools\debugger
 call :ApplyDir tools\math
 call :ApplyDir tools\external_tools
 call :ApplyDir tools\math
