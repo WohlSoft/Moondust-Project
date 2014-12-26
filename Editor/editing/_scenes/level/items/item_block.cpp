@@ -567,6 +567,7 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
 
             setData(ITEM_BLOCK_IS_SIZABLE, "standart" );
         }
+        setData(ITEM_BLOCK_SHAPE, localProps.phys_shape);
     }
 
     if(animator)
