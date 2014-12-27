@@ -2727,7 +2727,7 @@ Physical env. zones:	 %6</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="334"/>
-        <location filename="../main_window/dock/debugger.cpp" line="363"/>
+        <location filename="../main_window/dock/debugger.cpp" line="368"/>
         <source>Edit</source>
         <translation>Edit</translation>
     </message>
@@ -3147,7 +3147,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3807"/>
         <location filename="../mainwindow.ui" line="7467"/>
-        <location filename="../main_window/dock/debugger.cpp" line="364"/>
+        <location filename="../main_window/dock/debugger.cpp" line="369"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -5207,6 +5207,9 @@ Please, select necessary world map in a list:</translation>
         <location filename="../main_window/file/file_reload.cpp" line="40"/>
         <location filename="../main_window/file/file_reload.cpp" line="120"/>
         <location filename="../main_window/file/file_reload.cpp" line="156"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="34"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
         <source>File not saved</source>
         <translation>File not saved</translation>
     </message>
@@ -5214,6 +5217,9 @@ Please, select necessary world map in a list:</translation>
         <location filename="../main_window/file/file_reload.cpp" line="41"/>
         <location filename="../main_window/file/file_reload.cpp" line="121"/>
         <location filename="../main_window/file/file_reload.cpp" line="157"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="35"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="45"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation>File doesn&apos;t saved on disk.</translation>
     </message>
@@ -5755,6 +5761,7 @@ Settings will available soon.</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="243"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="323"/>
         <source>Margin of section</source>
         <translation>Margin of section</translation>
     </message>
@@ -5774,7 +5781,12 @@ Settings will available soon.</translation>
         <translation>Section %1 has been successfully deleted!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="42"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="324"/>
+        <source>Please select, how far items out of section should be rotated too (in pixels)</source>
+        <translation>Please select, how far items out of section should be rotated too (in pixels)</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="54"/>
         <source>Select directory with custom data to import</source>
         <translation>Select directory with custom data to import</translation>
     </message>
