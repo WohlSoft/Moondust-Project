@@ -263,8 +263,8 @@ public:
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
         void applyGridToEach(QList<QGraphicsItem *> items);
 
-        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory = true);
-        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory = true);
+        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory = true, bool flipSection=false);
+        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory = true, bool rotateSection=false);
 
         enum rotateActions
         {
