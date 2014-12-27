@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMessageBox>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -27,6 +29,12 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         QStringList filesForRemove;
         LevelEdit * box = activeLvlEditWin();
         if(!box->sceneCreated) return;
+        if(box->isUntitled)
+        {
+            QMessageBox::warning(this, tr("File not saved"),
+                tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
+        }
 
         LvlScene * s = box->scene;
         QString levelDirectory(box->LvlData.path);

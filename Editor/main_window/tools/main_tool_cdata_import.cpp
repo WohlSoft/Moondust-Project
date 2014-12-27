@@ -28,11 +28,23 @@ void MainWindow::on_actionCDATA_Import_triggered()
     QString sourceDir = ApplicationPath;
     if(activeChildWindow()==1)
     {
+        if(activeLvlEditWin()->isUntitled)
+        {
+            QMessageBox::warning(this, tr("File not saved"),
+                tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
+        }
         sourceDir = QFileInfo(activeLvlEditWin()->curFile).absoluteDir().path();
     }
     else
     if(activeChildWindow()==3)
     {
+        if(activeWldEditWin()->isUntitled)
+        {
+            QMessageBox::warning(this, tr("File not saved"),
+                tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
+        }
         sourceDir = QFileInfo(activeWldEditWin()->curFile).absoluteDir().path();
     }
     else
