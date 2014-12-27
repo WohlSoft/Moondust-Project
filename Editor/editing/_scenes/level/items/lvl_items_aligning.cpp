@@ -212,7 +212,7 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
 
 
 
-void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory)
+void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory, bool flipSection)
 {
     if(items.size()==0)
         return;
@@ -243,6 +243,20 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
         if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
         if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
+
+    if(flipSection)
+    {
+        QRect section;
+        section.setTop(LvlData->sections[LvlData->CurSection].size_top);
+        section.setLeft(LvlData->sections[LvlData->CurSection].size_left);
+        section.setRight(LvlData->sections[LvlData->CurSection].size_right);
+        section.setBottom(LvlData->sections[LvlData->CurSection].size_bottom);
+
+        if(section.left()<zone.left()) zone.setLeft(section.left());
+        if(section.top()<zone.top()) zone.setTop(section.top());
+        if(section.right()>zone.right()) zone.setRight(section.right());
+        if(section.bottom()>zone.bottom()) zone.setBottom(section.bottom());
     }
 
     //Apply flipping formula to each item
@@ -282,12 +296,43 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             collectDataFromItem(rotatedData, item);
     }
 
+    if(flipSection)
+    {
+        QRect section;
+        section.setTop(LvlData->sections[LvlData->CurSection].size_top);
+        section.setLeft(LvlData->sections[LvlData->CurSection].size_left);
+        section.setRight(LvlData->sections[LvlData->CurSection].size_right);
+        section.setBottom(LvlData->sections[LvlData->CurSection].size_bottom);
+        if(vertical)
+        {
+            qreal h2;//Opposit height (between bottom side of item and bottom side of zone)
+            h2 = qFabs( (section.y() + section.height()) - zone.bottom());
+            int h = section.height();
+            section.setY( zone.top()+h2 );
+            section.setHeight(h);
+        }
+        else
+        {
+            qreal w2;//Opposit height (between bottom side of item and bottom side of zone)
+            w2 = qFabs( (section.x() + section.width() ) - zone.right() );
+            int w = section.width();
+            section.setX( zone.left()+w2 );
+            section.setWidth(w);
+        }
+        LvlData->sections[LvlData->CurSection].size_top=section.top();
+        LvlData->sections[LvlData->CurSection].size_left=section.left();
+        LvlData->sections[LvlData->CurSection].size_right=section.right();
+        LvlData->sections[LvlData->CurSection].size_bottom=section.bottom();
+        ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+        drawSpace();
+    }
+
     if(recordHistory){
         addFlipHistory(rotatedData, vertical);
     }
 }
 
-void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory)
+void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory, bool rotateSection)
 {
     if(items.size()==0)
         return;
@@ -320,6 +365,20 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         if(itemZone.top()<zone.top()) zone.setTop(itemZone.top());
         if(itemZone.right()>zone.right()) zone.setRight(itemZone.right());
         if(itemZone.bottom()>zone.bottom()) zone.setBottom(itemZone.bottom());
+    }
+
+    if(rotateSection)
+    {
+        QRect section;
+        section.setTop(LvlData->sections[LvlData->CurSection].size_top);
+        section.setLeft(LvlData->sections[LvlData->CurSection].size_left);
+        section.setRight(LvlData->sections[LvlData->CurSection].size_right);
+        section.setBottom(LvlData->sections[LvlData->CurSection].size_bottom);
+
+        if(section.left()<zone.left()) zone.setLeft(section.left());
+        if(section.top()<zone.top()) zone.setTop(section.top());
+        if(section.right()>zone.right()) zone.setRight(section.right());
+        if(section.bottom()>zone.bottom()) zone.setBottom(section.bottom());
     }
 
     //Apply rotate formula to each item
@@ -370,6 +429,45 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         applyArrayForItem(item);
         if(recordHistory)
             collectDataFromItem(rotatedData, item);
+    }
+
+    if(rotateSection)
+    {
+        QRect section;
+        section.setTop(LvlData->sections[LvlData->CurSection].size_top);
+        section.setLeft(LvlData->sections[LvlData->CurSection].size_left);
+        section.setRight(LvlData->sections[LvlData->CurSection].size_right);
+        section.setBottom(LvlData->sections[LvlData->CurSection].size_bottom);
+
+        //Distacnces between sides
+        qreal dist_t = qFabs(zone.top()-section.top());
+        qreal dist_l = qFabs(zone.left()-section.left());
+        qreal dist_r = qFabs(section.right()-zone.right());
+        qreal dist_b = qFabs(section.bottom()-zone.bottom());
+
+        if(byClockwise)
+        {
+            targetRect.setX( zone.left() + dist_b );
+            targetRect.setY( zone.top() + dist_l );
+        }
+        else
+        {
+            targetRect.setX( zone.left() + dist_t );
+            targetRect.setY( zone.top() + dist_r );
+        }
+        targetRect.setWidth(section.height());
+        targetRect.setHeight(section.width());
+        section.setX(targetRect.x());
+        section.setY(targetRect.y());
+        section.setWidth(targetRect.width());
+        section.setHeight(targetRect.height());
+
+        LvlData->sections[LvlData->CurSection].size_top=section.top();
+        LvlData->sections[LvlData->CurSection].size_left=section.left();
+        LvlData->sections[LvlData->CurSection].size_right=section.right();
+        LvlData->sections[LvlData->CurSection].size_bottom=section.bottom();
+        ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+        drawSpace();
     }
 
     if(recordHistory){
