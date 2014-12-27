@@ -17,7 +17,7 @@ Editor 0.2.1.9
 - All graphics issues prevented with implementing of alternate unmasking algorithm
 - Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
 - Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
-- Added Section modification features: Clone, Delete
+- Added Section modification features: Clone, Delete, Rotate left/right, Flip horizontal/vertical
 - Added more edit actions: align selected, flip horizontal/vertical, rotate left/right
 - Added basic scripts generation feature
 - Organized structure of source code which making code more understandable, flexible and faster
