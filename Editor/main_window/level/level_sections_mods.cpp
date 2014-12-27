@@ -315,7 +315,28 @@ void MainWindow::on_actionSCT_Delete_triggered()
 
 void MainWindow::on_actionSCT_RotateLeft_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        QRectF zone;
+        bool ok=false;
+        long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
+                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                       32, 0, 214948, 1, &ok);
 
+        if(!ok) return;
+
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        //QList<QGraphicsItem *> itemsToRemove;
+        //foreach(QGraphicsItem *x, edit->scene->items(zone))
+        //{}
+        //Select items
+        //Call rotate function
+        //Apply rotation rule to section boundaries from original rotation rectangle
+    }
 }
 
 void MainWindow::on_actionSCT_RotateRight_triggered()
