@@ -226,7 +226,7 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
                     {
                         foreach(long q, customCounters[i].items)
                         {
-                            if(q==configs.marker_npc.coin_in_block) {
+                            if((unsigned)q==configs.marker_npc.coin_in_block) {
                                 if(e->LvlData.blocks[j].npc_id<0)
                                     { countItems+=e->LvlData.blocks[j].npc_id*-1; break;} }
                             else if(e->LvlData.blocks[j].npc_id==q) {countItems++; break;}
