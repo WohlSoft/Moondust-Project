@@ -225,7 +225,12 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
                     for(int j=0;j<e->LvlData.blocks.size();j++)
                     {
                         foreach(long q, customCounters[i].items)
-                        { if(e->LvlData.blocks[j].npc_id==q) {countItems++; break;} }
+                        {
+                            if(q==configs.marker_npc.coin_in_block) {
+                                if(e->LvlData.blocks[j].npc_id<0)
+                                    { countItems+=e->LvlData.blocks[j].npc_id*-1; break;} }
+                            else if(e->LvlData.blocks[j].npc_id==q) {countItems++; break;}
+                        }
                     }
                 }
             }
