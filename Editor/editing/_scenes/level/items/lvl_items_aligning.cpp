@@ -340,7 +340,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
 
         QPoint tmp(s_left,s_top);
         tmp = Grid::applyGrid(tmp, 32);
-        zone.setX(tmp.x());
+        zone.setX(s_left);
         zone.setY(tmp.y());
         zone.setWidth(abs(tmp.x()-s_right)+1);
         zone.setHeight(abs(tmp.y()-s_bottom)+1);
@@ -371,13 +371,31 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         itemZone.setHeight(item->data(ITEM_HEIGHT).toInt()+1);
 
         //Distacnces between sides
-        qreal dist_t = qFabs(zone.top()-itemZone.top());
-        qreal dist_l = qFabs(zone.left()-itemZone.left());
-        qreal dist_r = qFabs(itemZone.right()-zone.right());
-        qreal dist_b = qFabs(itemZone.bottom()-zone.bottom());
+        qreal dist_t = 0;
+        if(zone.top()<=itemZone.top())
+                dist_t=qFabs(zone.top()-itemZone.top());
+        else
+                dist_t=-qFabs(itemZone.top()-zone.top());
+
+        qreal dist_l = 0;
+        if(zone.left()<=itemZone.left())
+            dist_l = qFabs(zone.left()-itemZone.left());
+        else
+            dist_l = -qFabs(itemZone.left()-zone.left());
+
+        qreal dist_r = 0;
+        if(itemZone.right()<=zone.right())
+            dist_r = qFabs(itemZone.right()-zone.right());
+        else
+            dist_r = -qFabs(zone.right()-itemZone.right());
+
+        qreal dist_b = 0;
+        if(itemZone.bottom()<=zone.bottom())
+            dist_b = qFabs(itemZone.bottom()-zone.bottom());
+        else
+            dist_b = -qFabs(zone.bottom()-itemZone.bottom());
 
         //If item located in one of quouters of zone rectangle
-
         if(byClockwise)
         {
             if(item->data(ITEM_BLOCK_IS_SIZABLE).toString()!="sizable")
@@ -419,6 +437,10 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         int s_right=LvlData->sections[LvlData->CurSection].size_right;
         int s_bottom=LvlData->sections[LvlData->CurSection].size_bottom;
 
+        QPoint tmp(s_left,s_top);
+        tmp = Grid::applyGrid(tmp, 32);
+        s_left = tmp.x();
+        s_top = tmp.y();
         int ns_right = s_left+abs(s_top-s_bottom);
         int ns_bottom= s_top+abs(s_left-s_right);
         s_bottom = ns_bottom;
@@ -428,6 +450,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         LvlData->sections[LvlData->CurSection].size_left=s_left;
         LvlData->sections[LvlData->CurSection].size_right=s_right;
         LvlData->sections[LvlData->CurSection].size_bottom=s_bottom;
+
         ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
         drawSpace();
     }
