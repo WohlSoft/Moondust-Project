@@ -18,6 +18,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
+#include <common_features/spash_screen.h>
 #include <data_configs/config_manager.h>
 
 #include <ui_mainwindow.h>
@@ -34,9 +35,18 @@ MainWindow::MainWindow(QMdiArea *parent) :
     this->hide();
     setDefaults(); // Apply default common settings
 
+    WriteToLog(QtDebugMsg, QString("Set UI..."));
+    ui->setupUi(this);
+
+    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
+    setDefLang();
+
+    setUiDefults(); //Apply default UI settings
+
     //Create empty config directory if not exists
     if(!QDir(ApplicationPath + "/" +  "configs").exists())
         QDir().mkdir(ApplicationPath + "/" +  "configs");
+
 
     // Config manager
     ConfigManager *cmanager;
@@ -79,26 +89,41 @@ MainWindow::MainWindow(QMdiArea *parent) :
     configs.loadBasics();
     Themes::loadTheme(tPack);
 
+    /*********************Splash Screen**********************/
     QPixmap splashimg(configs.splash_logo.isEmpty()?
                       Themes::Image(Themes::splash) :
                       configs.splash_logo);
 
-    QSplashScreen splash(splashimg);
+    EditorSpashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
     splash.setDisabled(true);
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
+
+
+    for(int a=0; a<configs.animations.size();a++)
+    {
+        //QPoint pt(416,242);
+        QPoint pt(configs.animations[a].x, configs.animations[a].y);
+        //QPixmap img = QPixmap("coin.png");
+        splash.addAnimation(pt,
+                            configs.animations[a].img,
+                            configs.animations[a].frames,
+                            configs.animations[a].speed);
+    }
+    splash.startAnimations();
+
     splash.show();
+    /*********************Splash Screen**********************/
 
+    /*********************Loading of config pack**********************/
     bool ok=configs.loadconfigs();
+    /*********************Loading of config pack**********************/
 
+    /*********************Splash Screen end**********************/
     splash.finish(this);
+    /*********************Splash Screen end**********************/
 
-    WriteToLog(QtDebugMsg, QString("Set UI..."));
-    ui->setupUi(this);
-
-    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
-    setDefLang();
-    setUiDefults(); //Apply default UI settings
+    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
     if(!ok)
     {

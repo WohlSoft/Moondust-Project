@@ -68,8 +68,6 @@ void MainWindow::setUiDefults()
 
     setSoundList();
 
-    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
-
     WldLvlExitTypeListReset();
 
     //MainWindow Geometry;
