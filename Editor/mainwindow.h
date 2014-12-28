@@ -1088,6 +1088,8 @@ private slots:
 // ////////////////////////////////////////////////////////////////////////////////
     private slots:
         void on_action_doTest_triggered();
+        void on_action_doSafeTest_triggered();
+
         void on_action_testSettings_triggered();
 
 // ////////////////////Unsorted slots/////////////////////////////
