@@ -20,6 +20,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
+#include <main_window/global_settings.h>
 #include <tools/debugger/custom_counter_gui.h>
 
 #include "../../mainwindow.h"
@@ -97,36 +98,58 @@ namespace mainwindow_debugger_box
 void MainWindow::Debugger_loadCustomCounters()
 {
     using namespace mainwindow_debugger_box;
-    QSettings cCounters(ApplicationPath+"/pge_editor.ini", QSettings::IniFormat);
+
+    QString userDFile=ApplicationPath+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
+    QString debuggerFile = userDFile;
+    if(!QFile(debuggerFile).exists())
+    {
+        debuggerFile = configs.config_dir+"/counters.ini";
+    }
+    reload:
+    QSettings cCounters(debuggerFile, QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
 
-    cCounters.beginGroup("custom-counters");
-        int cntn = cCounters.value("total", 0).toInt();
-    cCounters.endGroup();
-
-    customCounters.clear();
-
-    for(;cntn>0;cntn--)
     {
-        bool valid=true;
-        CustomCounter counter;
-        QStringList items;
-        cCounters.beginGroup(QString("custom-counter-%1").arg(cntn));
-            counter.name = cCounters.value("name", "").toString();
-                if(counter.name.isEmpty()) valid=false;
-            counter.type = (ItemTypes::itemTypes)cCounters.value("type", 0).toInt();
-            counter.windowType = cCounters.value("window-type", 0).toInt();
-            QString tmp = cCounters.value("items", "").toString();
-                if(tmp.isEmpty()) {valid=false; goto skip;}
-                items = tmp.split(',');
-                foreach(QString x, items)
-                {
-                    counter.items.push_back(x.toLong());
-                }
-                skip:
+        cCounters.beginGroup("custom-counters");
+            int cntn = cCounters.value("total", 0).toInt();
         cCounters.endGroup();
-        if(valid) customCounters.push_back(counter);
+
+        if(cntn<=0)
+        {
+            if(debuggerFile==userDFile)
+            {
+                debuggerFile = configs.config_dir+"/counters.ini";
+                goto reload;
+            }
+            else
+                goto quit;
+        }
+
+        customCounters.clear();
+
+        for(;cntn>0;cntn--)
+        {
+            bool valid=true;
+            CustomCounter counter;
+            QStringList items;
+            cCounters.beginGroup(QString("custom-counter-%1").arg(cntn));
+                counter.name = cCounters.value("name", "").toString();
+                    if(counter.name.isEmpty()) valid=false;
+                counter.type = (ItemTypes::itemTypes)cCounters.value("type", 0).toInt();
+                counter.windowType = cCounters.value("window-type", 0).toInt();
+                QString tmp = cCounters.value("items", "").toString();
+                    if(tmp.isEmpty()) {valid=false; goto skip;}
+                    items = tmp.split(',');
+                    foreach(QString x, items)
+                    {
+                        counter.items.push_back(x.toLong());
+                    }
+                    skip:
+            cCounters.endGroup();
+            if(valid) customCounters.push_back(counter);
+        }
     }
+    quit:
     isLoaded=true;
 }
 
@@ -136,8 +159,11 @@ void MainWindow::Debugger_saveCustomCounters()
     using namespace mainwindow_debugger_box;
     if(!isLoaded) return;
 
-    QSettings cCounters(ApplicationPath+"/pge_editor.ini", QSettings::IniFormat);
+    QString debuggerFile = ApplicationPath+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
+
+    QSettings cCounters(debuggerFile, QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
+    cCounters.clear();
 
     cCounters.beginGroup("custom-counters");
         cCounters.setValue("total", customCounters.size());
@@ -160,7 +186,6 @@ void MainWindow::Debugger_saveCustomCounters()
         cCounters.endGroup();
     }
 }
-
 
 
 void MainWindow::on_DEBUG_AddCustomCounter_clicked()
@@ -372,7 +397,7 @@ void MainWindow::on_DEBUG_CustomCountersList_customContextMenuRequested(const QP
     if(selected==remove)
     {
         customCounters.remove(itemID);
-        delete item;
+        on_DEBUG_RefreshCoutners_clicked();
     }
     else
     if(selected==edit)
