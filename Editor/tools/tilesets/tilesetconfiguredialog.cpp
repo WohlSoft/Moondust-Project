@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/app_path.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 
@@ -57,6 +58,8 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpItems(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpTileset(int)));
     connect(ui->TilesetName, SIGNAL(textChanged(QString)), m_tileset, SLOT(setName(QString)));
+
+    connect(this, SIGNAL(windowShowed()), SLOT(showNotify()), Qt::QueuedConnection);
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
@@ -336,4 +339,40 @@ void TilesetConfigureDialog::on_customOnly_clicked()
     if(mode==GFX_Staff) return;
     setUpItems(ui->comboBox->currentIndex());
 
+}
+
+void TilesetConfigureDialog::showEvent(QShowEvent *event)
+{
+    QDialog::showEvent(event);
+    qApp->processEvents();
+    emit windowShowed();
+}
+
+void TilesetConfigureDialog::showNotify()
+{
+    QSettings cCounters(ApplicationPath+"/pge_editor.ini", QSettings::IniFormat);
+    cCounters.setIniCodec("UTF-8");
+    cCounters.beginGroup("message-boxes");
+    bool showNotice=cCounters.value("tileset-editor-greeting",true).toBool();
+    if((mode==GFX_Staff) && (showNotice))
+    {
+        QMessageBox msg;
+        msg.setWindowTitle(tr("Tileset box editor"));
+        msg.setWindowIcon(this->windowIcon());
+        QCheckBox box;
+        box.setText(tr("Don't show this message again."));
+        msg.setCheckBox(&box);
+        msg.setText(tr("Welcome to tileset editor!\nThis is an editor of config global tilesets.\n"
+                       "All tilesets which made here will be saved in this folder:\n%1\n"
+                       "I.e. there are will work globally for this configuration package.\n\n"
+                       "If you wish to create level/world specific tilesets with usign of custom graphics,\n"
+                       "please, open the Tileset Item Box and find the button \"New Tileset\" "
+                       "in the \"Custom\" tab.")
+                       .arg(m_conf->config_dir + "tilesets/"));
+        msg.setStandardButtons(QMessageBox::Ok);
+        msg.exec();
+        showNotice = !box.isChecked();
+    }
+    cCounters.setValue("tileset-editor-greeting",showNotice);
+    cCounters.endGroup();
 }
