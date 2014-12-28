@@ -140,20 +140,20 @@ public:
     // ///////////////////GFX Manager////////////////////////
     public:
         //Object Indexing:
-        QVector<blocksIndexes > index_blocks;
-        QVector<bgoIndexes > index_bgo;
-        QVector<npcIndexes > index_npc;
+        QList<blocksIndexes > index_blocks;
+        QList<bgoIndexes > index_bgo;
+        QList<npcIndexes > index_npc;
 
         //Custom data containers
-        QVector<UserBGs > uBGs;
-        QVector<UserBGOs > uBGOs;
-        QVector<UserBlocks > uBlocks;
-        QVector<UserNPCs > uNPCs;
+        QList<UserBGs > uBGs;
+        QList<UserBGOs > uBGOs;
+        QList<UserBlocks > uBlocks;
+        QList<UserNPCs > uNPCs;
 
         //Animators
-        QVector<SimpleAnimator * > animates_BGO;
-        QVector<SimpleAnimator * > animates_Blocks;
-        QVector<AdvNpcAnimator * > animates_NPC;
+        QList<SimpleAnimator * > animates_BGO;
+        QList<SimpleAnimator * > animates_Blocks;
+        QList<AdvNpcAnimator * > animates_NPC;
 
         void buildAnimators();
 
