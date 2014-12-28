@@ -53,10 +53,13 @@ void MainWindow::on_action_doTest_triggered()
 
     if(IntEngine::isWorking())
     {
-        QMessageBox::information(this, tr("Engine already runned"),
+        if(QMessageBox::warning(this, tr("Engine already runned"),
                              tr("Engine is already testing another level.\n"
-                                "Please exit from engine and try again."),
-                             QMessageBox::Ok);
+                                "Do you want to abort current testing process?"),
+                             QMessageBox::Abort|QMessageBox::Cancel)==QMessageBox::Abort)
+        {
+            IntEngine::quit();
+        }
         return;
     }
 
@@ -76,6 +79,50 @@ void MainWindow::on_action_doTest_triggered()
 
     if(!IntEngine::isWorking()) IntEngine::init();
 }
+
+
+void MainWindow::on_action_doSafeTest_triggered()
+{
+    QString command;
+
+    #ifdef _WIN32
+    command = ApplicationPath+"/pge_engine.exe";
+    #elif __APPLE__
+    command = ApplicationPath+"/pge_engine.app/Contents/MacOS/pge_engine";
+    #else
+    command = ApplicationPath+"/pge_engine";
+    #endif
+
+
+    if(!QFileInfo(command).exists())
+    {
+        QMessageBox::warning(this, tr("Engine is not found"),
+                             tr("Can't start testing, engine is not found: \n%1\nPlease, check the application directory.")
+                             .arg(command),
+                             QMessageBox::Ok);
+        return;
+    }
+
+    if(activeChildWindow()==1)
+    {
+        if(activeLvlEditWin()->isUntitled)
+        {
+            QMessageBox::warning(this, tr("Save file first"),
+            tr("To run testing of saved file, please save them into disk first!\n"
+               "You can run testing without saving of file if you will use \"Run testing\" menu item."),
+            QMessageBox::Ok);
+            return;
+        }
+
+        QStringList args;
+        args << "--debug";
+        args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
+        args << activeLvlEditWin()->curFile;
+
+        QProcess::startDetached(command, args);
+    }
+}
+
 
 
 void MainWindow::on_action_testSettings_triggered()

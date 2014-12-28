@@ -362,6 +362,7 @@
      <string>Test</string>
     </property>
     <addaction name="action_doTest"/>
+    <addaction name="action_doSafeTest"/>
     <addaction name="separator"/>
     <addaction name="action_testSettings"/>
    </widget>
@@ -9459,6 +9460,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSMBX_like_GUI">
    <property name="text">
     <string>SMBX-like GUI</string>
+   </property>
+  </action>
+  <action name="action_doSafeTest">
+   <property name="text">
+    <string>Run testing of saved file</string>
    </property>
   </action>
  </widget>
