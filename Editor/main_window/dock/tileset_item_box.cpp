@@ -123,6 +123,18 @@ void MainWindow::on_newTileset_clicked()
     //future = QtConcurrent::run(loopForever); //<! Tiny test with thread
     //QMessageBox::information(this, "test", "test", QMessageBox::Ok);
 
+    bool untitled=false;
+    if(activeChildWindow()==1)
+        untitled=activeLvlEditWin()->isUntitled;
+    else if(activeChildWindow()==3)
+        untitled=activeWldEditWin()->isUntitled;
+
+    if(untitled)
+    {
+        QMessageBox::warning(this, tr("File not saved"),
+        tr("File doesn't saved on disk."), QMessageBox::Ok);
+            return;
+    }
 
     TilesetConfigureDialog* tilesetConfDia;
 
