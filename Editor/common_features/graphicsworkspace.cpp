@@ -113,7 +113,7 @@ void GraphicsWorkspace::moveLeft()
         t.start();
     horizontalScrollBar()->setValue(horizontalScrollBar()->value()-(step+stepSumm));
         int l = t.elapsed();
-        if(l>keyTime){ l=l-keyTime; stepSumm=step<<2;} else stepSumm=0;
+        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
         lMover.setInterval(keyTime-l);
 }
 
@@ -123,7 +123,7 @@ void GraphicsWorkspace::moveRight()
         t.start();
     horizontalScrollBar()->setValue(horizontalScrollBar()->value()+(step+stepSumm));
         int l = t.elapsed();
-        if(l>keyTime){ l=l-keyTime; stepSumm=step<<2;} else stepSumm=0;
+        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
         rMover.setInterval(keyTime-l);
 }
 
@@ -133,7 +133,7 @@ void GraphicsWorkspace::moveUp()
         t.start();
     verticalScrollBar()->setValue(verticalScrollBar()->value()-(step+stepSumm));
         int l = t.elapsed();
-        if(l>keyTime){ l=l-keyTime; stepSumm=step<<2;} else stepSumm=0;
+        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
         uMover.setInterval(keyTime-l);
 }
 
@@ -143,7 +143,7 @@ void GraphicsWorkspace::moveDown()
         t.start();
     verticalScrollBar()->setValue(verticalScrollBar()->value()+(step+stepSumm));
         int l = t.elapsed();
-        if(l>keyTime){ l=l-keyTime; stepSumm=step<<2;} else stepSumm=0;
+        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
         dMover.setInterval(keyTime-l);
 }
 
