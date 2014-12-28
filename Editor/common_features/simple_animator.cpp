@@ -19,9 +19,74 @@
 #include "simple_animator.h"
 #include "logger.h"
 
-SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
+SimpleAnimator::SimpleAnimator(QObject *parent)
+    :QObject(parent)
 {
-    timer=NULL;
+    QPixmap dummy;
+    setSettings(dummy, false, 1, 64, 0, -1, false, false);
+}
+
+SimpleAnimator::SimpleAnimator(const SimpleAnimator &a, QObject *parent):
+    QObject(parent)
+{
+    mainImage = a.mainImage;
+    animated = a.animated;
+    frameFirst = a.frameFirst;
+    frameLast = a.frameLast;
+    CurrentFrame = a.CurrentFrame;
+    frameCurrent = a.frameCurrent;
+    bidirectional = a.bidirectional;
+    reverce = a.reverce;
+    speed = a.speed;
+    framesQ = a.framesQ;
+    frameWidth = a.frameWidth;
+    frameHeight = a.frameHeight;
+    frameSize = a.frameSize;
+    frames = a.frames;
+    connect(
+                &timer, SIGNAL(timeout()),
+                this,
+                SLOT( nextFrame() ) );
+    if(a.timer.isActive())
+        start();
+}
+
+SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &a)
+{
+    mainImage = a.mainImage;
+    animated = a.animated;
+    frameFirst = a.frameFirst;
+    frameLast = a.frameLast;
+    CurrentFrame = a.CurrentFrame;
+    frameCurrent = a.frameCurrent;
+    bidirectional = a.bidirectional;
+    reverce = a.reverce;
+    speed = a.speed;
+    framesQ = a.framesQ;
+    frameWidth = a.frameWidth;
+    frameHeight = a.frameHeight;
+    frameSize = a.frameSize;
+    frames = a.frames;
+    connect(
+                &timer, SIGNAL(timeout()),
+                this,
+                SLOT( nextFrame() ) );
+    if(a.timer.isActive())
+        start();
+    return *this;
+}
+
+SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid, QObject *parent)
+    : QObject(parent)
+{
+    setSettings(sprite, enables, framesq, fspeed, First, Last, rev, bid);
+}
+
+SimpleAnimator::~SimpleAnimator()
+{}
+
+void SimpleAnimator::setSettings(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
+{
     mainImage = sprite;
     animated = enables;
     frameFirst = First;
@@ -56,18 +121,12 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
     createAnimationFrames();
 
     setFrame(frameFirst);
-
-    timer = new QTimer(this);
     connect(
-                timer, SIGNAL(timeout()),
+                &timer, SIGNAL(timeout()),
                 this,
                 SLOT( nextFrame() ) );
 }
 
-SimpleAnimator::~SimpleAnimator()
-{
-    delete timer;
-}
 
 //Returns images
 
@@ -91,6 +150,7 @@ QPixmap SimpleAnimator::wholeImage()
 {
     return mainImage;
 }
+
 
 //Animation process
 void SimpleAnimator::nextFrame()
@@ -156,13 +216,13 @@ void SimpleAnimator::start()
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
 
-    timer->start(speed);
+    timer.start(speed);
 }
 
 void SimpleAnimator::stop()
 {
     if(!animated) return;
-    timer->stop();
+    timer.stop();
     setFrame(frameFirst);
 }
 
