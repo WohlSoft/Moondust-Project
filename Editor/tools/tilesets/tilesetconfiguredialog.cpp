@@ -362,11 +362,11 @@ void TilesetConfigureDialog::showNotify()
         QCheckBox box;
         box.setText(tr("Don't show this message again."));
         msg.setCheckBox(&box);
-        msg.setText(tr("Welcome to tileset editor!\nThis is an editor of config global tilesets.\n"
+        msg.setText(tr("Welcome to tileset editor!\n\nThis is an editor of global tilesets.\n"
                        "All tilesets which made here will be saved in this folder:\n%1\n"
-                       "I.e. there are will work globally for this configuration package.\n\n"
-                       "If you wish to create level/world specific tilesets with usign of custom graphics,\n"
-                       "please, open the Tileset Item Box and find the button \"New Tileset\" "
+                       "I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.\n\n"
+                       "If you wish to create level/world specific tilesets with using of custom graphics, "
+                       "please open the Tileset Item Box and find the button \"New Tileset\" "
                        "in the \"Custom\" tab.")
                        .arg(m_conf->config_dir + "tilesets/"));
         msg.setStandardButtons(QMessageBox::Ok);
