@@ -616,6 +616,7 @@ public:
 // ///////////////Level Item Properties box //////////////////
     public:
         void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
+        void LvlItemProps_hide();
 
         long blockPtr;  //!< ArrayID of editing item (-1 - use system)
         long bgoPtr;    //!< ArrayID of editing item
@@ -989,6 +990,7 @@ public:
 // ///////////////World Item Properties box //////////////////
     public:
         void WldItemProps(int Type, WorldLevels level, bool newItem=false);
+        void WldItemProps_hide();
         long wlvlPtr;   //!< ArrayID of editing item
 
     public slots:

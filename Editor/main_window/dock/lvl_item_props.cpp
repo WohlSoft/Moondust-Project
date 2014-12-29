@@ -546,6 +546,20 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     }
 }
 
+void MainWindow::LvlItemProps_hide()
+{
+    ui->ItemProperties->hide();
+    ui->action_Placing_ShowProperties->setChecked(false);
+
+    ui->blockProp->setVisible(false);
+    ui->bgoProps->setVisible(false);
+    ui->npcProps->setVisible(false);
+
+    LvlItemPropsLock=true;
+    LockItemProps = true;
+    LvlPlacingItems::npcSpecialAutoIncrement=false;
+}
+
 
 void MainWindow::refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem)
 {

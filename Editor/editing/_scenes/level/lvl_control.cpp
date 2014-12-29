@@ -50,11 +50,6 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 // /////////////////////////////Selection was changes////////////////////////////////
 void LvlScene::selectionChanged()
 {
-    if(this->selectedItems().isEmpty())
-    {
-        MainWinConnect::pMainWin->LvlItemProps(-1, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc());
-    }
-
     #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "Selection Changed!");
     #endif
@@ -119,6 +114,9 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
+
+    //Close properties box
+    MainWinConnect::pMainWin->LvlItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
@@ -282,17 +280,11 @@ void LvlScene::openProps()
                               dynamic_cast<ItemNPC *>(items.first())->npcData, false);
         }
         else
-        MainWinConnect::pMainWin->LvlItemProps(-1,
-                                               FileFormats::dummyLvlBlock(),
-                                               FileFormats::dummyLvlBgo(),
-                                               FileFormats::dummyLvlNpc());
+        MainWinConnect::pMainWin->LvlItemProps_hide();
     }
     else
     {
-        MainWinConnect::pMainWin->LvlItemProps(-1,
-                                               FileFormats::dummyLvlBlock(),
-                                               FileFormats::dummyLvlBgo(),
-                                               FileFormats::dummyLvlNpc());
+        MainWinConnect::pMainWin->LvlItemProps_hide();
     }
 
     QGraphicsScene::selectionChanged();
