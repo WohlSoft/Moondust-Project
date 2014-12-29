@@ -115,6 +115,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.show();
     /*********************Splash Screen**********************/
 
+    loadSettings();
+
     /*********************Loading of config pack**********************/
     bool ok=configs.loadconfigs();
     /*********************Loading of config pack**********************/
@@ -124,6 +126,14 @@ MainWindow::MainWindow(QMdiArea *parent) :
     /*********************Splash Screen end**********************/
 
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
+
+    //Apply objects into tools
+    setLevelSectionData();
+    setLvlItemBoxes();
+    setWldItemBoxes();
+    setSoundList();
+    WldLvlExitTypeListReset();
+    updateWindowMenu();
 
     if(!ok)
     {
