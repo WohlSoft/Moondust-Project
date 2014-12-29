@@ -49,12 +49,6 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void WldScene::selectionChanged()
 {
-    if(this->selectedItems().isEmpty())
-    {
-        if(EditingMode!=MODE_SetPoint)
-            MainWinConnect::pMainWin->WldItemProps(-1, FileFormats::dummyWldLevel());
-    }
-
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Selection Changed!");
     #endif
@@ -122,6 +116,9 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
+
+    if(EditingMode!=MODE_SetPoint)
+        MainWinConnect::pMainWin->WldItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
     haveSelected=(!selectedItems().isEmpty());
@@ -266,15 +263,11 @@ void WldScene::openProps()
                           false);
         }
         else
-        MainWinConnect::pMainWin->WldItemProps(-1,
-                                               FileFormats::dummyWldLevel(),
-                                               false);
+        MainWinConnect::pMainWin->WldItemProps_hide();
     }
     else
     {
-        MainWinConnect::pMainWin->WldItemProps(-1,
-                                               FileFormats::dummyWldLevel(),
-                                               false );
+        MainWinConnect::pMainWin->WldItemProps_hide();
     }
 
     QGraphicsScene::selectionChanged();
