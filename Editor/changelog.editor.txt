@@ -28,6 +28,7 @@ Editor 0.2.1.9
 - Better resizer boxes, now they are movable and more flexible, added context menu to cut size by any side.
 - Added custom counters which giving able to count any specific item ID's.
 - Fixed placement of NPC's to the slopes
+- Added animated splash screens system into the editor
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
