@@ -24,7 +24,6 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->drawPixmap(rect(), buffer, buffer.rect());
     painter->setPen(Qt::black);
     painter->setBrush(Qt::white);
-    painter->drawText(QPoint(5,5), "Loading something message...");
     for(int i=0; i<animations.size(); i++)
     {
         QRect x;
