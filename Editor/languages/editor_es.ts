@@ -5821,14 +5821,22 @@ Overwrite?</source>
         <translation>Compilado exitosamente a %1/lunadll.txt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>Configuration error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="127"/>
+        <location filename="../mainwindow.cpp" line="126"/>
         <source>Configuration can&apos;t be loaded.
 See in PGE_Editor_log.txt for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="135"/>
+        <source>Configuration package is loaded with errors.
+Please open the Tools/Global Configuration/Configuration Status
+to get more information.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

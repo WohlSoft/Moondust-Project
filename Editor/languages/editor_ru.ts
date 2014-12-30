@@ -5960,16 +5960,26 @@ Overwrite?</source>
         <translation>Успешно скомпилировано в %1/lunadll.txt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>Configuration error</source>
         <translation>Ошибка конфигурации</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="127"/>
+        <location filename="../mainwindow.cpp" line="126"/>
         <source>Configuration can&apos;t be loaded.
 See in PGE_Editor_log.txt for more information.</source>
         <translation>Конфигурация не может быть загружена.
 Смотрите подробности в PGE_Editor_log.txt для более подробной информации.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="135"/>
+        <source>Configuration package is loaded with errors.
+Please open the Tools/Global Configuration/Configuration Status
+to get more information.</source>
+        <translation>Конфигурационный пакет загружен с ошибками.
+Пожауйста, откройте Инструменты/Глобальная Конфигурация/Состояние текущей конфигурации
+чтобы получить подробнуюю информацию.</translation>
     </message>
 </context>
 <context>
