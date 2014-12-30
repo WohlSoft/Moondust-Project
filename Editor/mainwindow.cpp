@@ -129,7 +129,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
         return;
     }
 
-    if(!configs.check())
+    if(configs.check())
     {
         QMessageBox::warning(this, tr("Configuration error"),
             tr("Configuration package is loaded with errors.\nPlease open the Tools/Global Configuration/Configuration Status\n"
