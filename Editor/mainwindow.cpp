@@ -68,12 +68,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
         else
         {
             delete cmanager;
-            ui->setupUi(this);
-            setDefLang();
-            setUiDefults(); //Apply default UI settings
             WriteToLog(QtWarningMsg, "<Configuration is not selected>");
             continueLoad = false;
-            this->close();
             return;
         }
     }
@@ -124,6 +120,23 @@ MainWindow::MainWindow(QMdiArea *parent) :
     /*********************Splash Screen end**********************/
     splash.finish(this);
     /*********************Splash Screen end**********************/
+    if(!ok)
+    {
+        QMessageBox::critical(this, tr("Configuration error"),
+                              tr("Configuration can't be loaded.\nSee in PGE_Editor_log.txt for more information."), QMessageBox::Ok);
+        WriteToLog(QtFatalMsg, "<Error, application closed>");
+        continueLoad = false;
+        return;
+    }
+
+    if(!configs.check())
+    {
+        QMessageBox::warning(this, tr("Configuration error"),
+            tr("Configuration package is loaded with errors.\nPlease open the Tools/Global Configuration/Configuration Status\n"
+               "to get more information."), QMessageBox::Ok);
+    }
+
+    continueLoad = true;
 
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
@@ -134,16 +147,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setSoundList();
     WldLvlExitTypeListReset();
     updateWindowMenu();
-
-    if(!ok)
-    {
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
-        WriteToLog(QtFatalMsg, "<Error, application closed>");
-        continueLoad = false;
-        this->close();
-        return;
-    }
-    continueLoad = true;
 }
 
 MainWindow::~MainWindow()
