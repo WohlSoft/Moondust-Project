@@ -57,14 +57,9 @@ LevelEdit::LevelEdit(QWidget *parent) :
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);
     ui->graphicsView->verticalScrollBar()->setTracking(true);
 
-    //ui->graphicsView->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::DirectRendering)));
-    //ui->graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    //ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-            /*
-             * 	setOptimizationFlags(QGraphicsView::DontClipPainter);
-        setOptimizationFlags(QGraphicsView::DontSavePainterState);
-        setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);*/
-    //connect(ui->graphicsView, SIGNAL(keyPressEvent(QKeyEvent *)), this, SLOT(gViewKeyPress(QKeyEvent *)));
 }
 
 

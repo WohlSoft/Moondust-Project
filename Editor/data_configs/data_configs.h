@@ -60,6 +60,14 @@ struct EngineSetup
     int wld_viewport_h;
 };
 
+struct obj_splash_ani
+{
+    QPixmap img;
+    unsigned int frames;
+    unsigned int speed;
+    unsigned int x;
+    unsigned int y;
+};
 
 
 ////////////////////Common items///////////////////////////
@@ -98,51 +106,52 @@ public:
     QString data_dir;
 
     QString splash_logo;
+    QList<obj_splash_ani > animations;
 
     EngineSetup engine;
 
     //Playable Characters
-    QVector<obj_playable_character > characters;
+    QList<obj_playable_character > characters;
 
     //Level map items
-    QVector<obj_BG > main_bg;
-    QVector<obj_bgo > main_bgo;
-    QVector<obj_block > main_block;
-    QVector<obj_npc > main_npc;
+    QList<obj_BG > main_bg;
+    QList<obj_bgo > main_bgo;
+    QList<obj_block > main_block;
+    QList<obj_npc > main_npc;
     npc_Markers marker_npc;
 
     //Indexes
-    QVector<blocksIndexes > index_blocks;
-    QVector<bgoIndexes > index_bgo;
-    QVector<npcIndexes > index_npc;
+    QList<blocksIndexes > index_blocks;
+    QList<bgoIndexes > index_bgo;
+    QList<npcIndexes > index_npc;
 
     //World map items
-    QVector<obj_w_tile > main_wtiles;
-    QVector<obj_w_path > main_wpaths;
-    QVector<obj_w_scenery > main_wscene;
-    QVector<obj_w_level > main_wlevels;
+    QList<obj_w_tile > main_wtiles;
+    QList<obj_w_path > main_wpaths;
+    QList<obj_w_scenery > main_wscene;
+    QList<obj_w_level > main_wlevels;
     wld_levels_Markers marker_wlvl;
 
     //Indexes
-    QVector<wTileIndexes > index_wtiles;
-    QVector<wPathIndexes > index_wpaths;
-    QVector<wSceneIndexes > index_wscene;
-    QVector<wLevelIndexes > index_wlvl;
+    QList<wTileIndexes > index_wtiles;
+    QList<wPathIndexes > index_wpaths;
+    QList<wSceneIndexes > index_wscene;
+    QList<wLevelIndexes > index_wlvl;
 
     //Common items
     unsigned long music_custom_id;
     unsigned long music_w_custom_id;
-    QVector<obj_music > main_music_lvl;
-    QVector<obj_music > main_music_wld;
-    QVector<obj_music > main_music_spc;
+    QList<obj_music > main_music_lvl;
+    QList<obj_music > main_music_wld;
+    QList<obj_music > main_music_spc;
 
     QVector<obj_sound > main_sound;
 
     //Tilesets
-    QVector<SimpleTileset >      main_tilesets;
-    QVector<SimpleTilesetGroup > main_tilesets_grp;
+    QList<SimpleTileset >      main_tilesets;
+    QList<SimpleTilesetGroup > main_tilesets_grp;
 
-    QVector<obj_rotation_table > main_rotation_table;
+    QList<obj_rotation_table > main_rotation_table;
 
     bool check(); //Returns true, if something config entry is not initialized
 

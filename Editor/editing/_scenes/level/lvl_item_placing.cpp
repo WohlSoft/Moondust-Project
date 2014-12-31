@@ -124,30 +124,34 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::flags.clear();
             QPair<int, QVariant > flag;
 
-                flag.first=0;
+                flag.first=ITEM_TYPE;
                 flag.second="Block";
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.first=1;
+                flag.first=ITEM_ID;
                 flag.second=QString::number(LvlPlacingItems::blockSet.id);
             LvlPlacingItems::flags.push_back(flag);
 
             if(pConfigs->main_block[j].sizable)
             {
-                flag.first=3;
+                flag.first=ITEM_BLOCK_IS_SIZABLE;
                 flag.second = "sizable";
             LvlPlacingItems::flags.push_back(flag);
             }
 
-                flag.first = 9;
+                flag.first = ITEM_BLOCK_SHAPE;
+                flag.second = QString::number(pConfigs->main_block[j].phys_shape);
+            LvlPlacingItems::flags.push_back(flag);
+
+                flag.first = ITEM_WIDTH;
                 flag.second = QString::number(LvlPlacingItems::blockSet.w);
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.first = 10;
+                flag.first = ITEM_HEIGHT;
                 flag.second = QString::number(LvlPlacingItems::blockSet.h);
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.first = 25;
+                flag.first = ITEM_IS_CURSOR;
                 flag.second = "CURSOR";
             LvlPlacingItems::flags.push_back(flag);
 
@@ -296,7 +300,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::npcSet.id = itemID;
 
         if(LvlPlacingItems::npcSet.generator)
-            LvlPlacingItems::gridSz=16;
+            LvlPlacingItems::gridSz=(pConfigs->default_grid/2);
         else
             LvlPlacingItems::gridSz=mergedSet.grid;
 

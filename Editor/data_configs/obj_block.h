@@ -22,7 +22,8 @@
 #include <QString>
 #include <QPixmap>
 
-struct obj_block{
+struct obj_block
+{
     unsigned long id;
         QString image_n;
         QString mask_n;
@@ -38,12 +39,28 @@ struct obj_block{
     int collision;
     bool slopeslide;
     int phys_shape;
+    enum shapes
+    {
+        SHAPE_rect=0,
+        SHAPE_triangle_top_left=-1,
+        SHAPE_triangle_top_right=1,
+        SHAPE_triangle_bottom_left=-2,
+        SHAPE_triangle_bottom_right=2,
+        SHAPE_polygonal=3,
+        SHAPE_cyrcle=4
+    };
     bool lava;
     bool destroyable;
     bool destroyable_by_bomb;
     bool destroyable_by_fireball;
     bool spawn; //split string by "-" in != "0"
         int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
+        enum spawnes{
+            SPAWN_Nothing=0,
+            SPAWN_NPC=1,
+            SPAWN_Block=2,
+            SPAWN_BGO=3
+        };
         unsigned long spawn_obj_id;
     unsigned long effect;
     bool bounce;

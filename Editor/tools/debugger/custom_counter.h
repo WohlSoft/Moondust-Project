@@ -20,6 +20,7 @@
 #define CUSTOMCOUNTER_H
 
 #include <QVector>
+#include <QString>
 
 #include <GlobalDefines>
 
@@ -27,10 +28,12 @@ class CustomCounter
 {
 public:
     CustomCounter();
-    CustomCounter(CustomCounter &c);
+    CustomCounter(const CustomCounter &c);
     ~CustomCounter();
     ItemTypes::itemTypes type;
     QVector<long > items;
+    QString name;
+    int windowType;
 };
 
 #endif // CUSTOMCOUNTER_H

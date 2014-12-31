@@ -254,21 +254,21 @@ void MainWindow::on_actionSCT_Delete_triggered()
             QList<QGraphicsItem *> itemsToRemove;
             foreach(QGraphicsItem *x, edit->scene->items(zone))
             {
-                if(x->data(0)=="Block")
+                if(!x->data(ITEM_IS_ITEM).isNull())
                     itemsToRemove.push_back(x);
-                else
-                if(x->data(0)=="BGO")
-                    itemsToRemove.push_back(x);
-                if(x->data(0)=="NPC")
-                    itemsToRemove.push_back(x);
-                if(x->data(0)=="Water")
-                    itemsToRemove.push_back(x);
-                if(x->data(0)=="Door_enter")
-                    itemsToRemove.push_back(x);
-                if(x->data(0)=="Door_exit")
-                    itemsToRemove.push_back(x);
-                if(x->data(0)=="playerPoint")
-                    itemsToRemove.push_back(x);
+//                else
+//                if(x->data(0)=="BGO")
+//                    itemsToRemove.push_back(x);
+//                if(x->data(0)=="NPC")
+//                    itemsToRemove.push_back(x);
+//                if(x->data(0)=="Water")
+//                    itemsToRemove.push_back(x);
+//                if(x->data(0)=="Door_enter")
+//                    itemsToRemove.push_back(x);
+//                if(x->data(0)=="Door_exit")
+//                    itemsToRemove.push_back(x);
+//                if(x->data(0)=="playerPoint")
+//                    itemsToRemove.push_back(x);
             }
 
             //remove all items in the section
@@ -315,21 +315,109 @@ void MainWindow::on_actionSCT_Delete_triggered()
 
 void MainWindow::on_actionSCT_RotateLeft_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        QRectF zone;
+        bool ok=false;
+        long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
+                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                       32, 0, 214948, 1, &ok);
 
+        if(!ok) return;
+
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        QList<QGraphicsItem *> itemsToModify;
+        foreach(QGraphicsItem *x, edit->scene->items(zone))
+        {
+            if(!x->data(ITEM_IS_ITEM).isNull())
+                itemsToModify.push_back(x);
+        }
+        edit->scene->rotateGroup(itemsToModify, false, true, true);
+    }
 }
 
 void MainWindow::on_actionSCT_RotateRight_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        QRectF zone;
+        bool ok=false;
+        long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
+                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                       32, 0, 214948, 1, &ok);
 
+        if(!ok) return;
+
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        QList<QGraphicsItem *> itemsToModify;
+        foreach(QGraphicsItem *x, edit->scene->items(zone))
+        {
+            if(!x->data(ITEM_IS_ITEM).isNull())
+                itemsToModify.push_back(x);
+        }
+        edit->scene->rotateGroup(itemsToModify, true, true, true);
+    }
 }
 
 void MainWindow::on_actionSCT_FlipHorizontal_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        QRectF zone;
+        bool ok=false;
+        long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
+                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                       32, 0, 214948, 1, &ok);
 
+        if(!ok) return;
+
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        QList<QGraphicsItem *> itemsToModify;
+        foreach(QGraphicsItem *x, edit->scene->items(zone))
+        {
+            if(!x->data(ITEM_IS_ITEM).isNull())
+                itemsToModify.push_back(x);
+        }
+        edit->scene->flipGroup(itemsToModify, false, true, true);
+    }
 }
 
 void MainWindow::on_actionSCT_FlipVertical_triggered()
 {
+    if(activeChildWindow()==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+        QRectF zone;
+        bool ok=false;
+        long outOfSectionMargin = QInputDialog::getInt(this, tr("Margin of section"),
+                       tr("Please select, how far items out of section should be rotated too (in pixels)"),
+                       32, 0, 214948, 1, &ok);
 
+        if(!ok) return;
+
+        zone.setLeft(edit->LvlData.sections[edit->LvlData.CurSection].size_left-outOfSectionMargin);
+        zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top-outOfSectionMargin);
+        zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right+outOfSectionMargin);
+        zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom+outOfSectionMargin);
+        QList<QGraphicsItem *> itemsToModify;
+        foreach(QGraphicsItem *x, edit->scene->items(zone))
+        {
+            if(!x->data(ITEM_IS_ITEM).isNull())
+                itemsToModify.push_back(x);
+        }
+        edit->scene->flipGroup(itemsToModify, true, true, true);
+    }
 }
 

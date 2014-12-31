@@ -193,11 +193,14 @@ call :ApplyDir script\gui
 call :ApplyDir script\command_compiler
 call :ApplyDir SingleApplication
 call :ApplyDir tools
+call :ApplyDir tools\debugger
 call :ApplyDir tools\math
 call :ApplyDir tools\external_tools
 call :ApplyDir tools\math
 call :ApplyDir tools\smart_import
 call :ApplyDir tools\tilesets
+del /F /Q %TARGETDIR%\Editor\_includes
+xcopy /Y /E /I "%SOURCEDIR%\Editor\_includes" %TARGETDIR%\Editor\_includes
 
 del /F /Q %TARGETDIR%\Editor\_resources
 xcopy /Y /E /I "%SOURCEDIR%\Editor\_resources" %TARGETDIR%\Editor\_resources
