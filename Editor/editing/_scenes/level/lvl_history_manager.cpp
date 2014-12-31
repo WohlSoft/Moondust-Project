@@ -4091,6 +4091,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_DIRECTION: return tr("Direction");
     case SETTING_CHANGENPC: return tr("Included NPC");
     case SETTING_WATERTYPE: return tr("Water Type");
+    case SETTING_LAYER: return tr("Layer");
     case SETTING_NOYOSHI: return tr("No Yoshi");
     case SETTING_ALLOWNPC: return tr("Allow NPC");
     case SETTING_LOCKED: return tr("Locked");

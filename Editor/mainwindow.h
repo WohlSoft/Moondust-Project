@@ -870,7 +870,7 @@ public:
         void on_DoorsToolbox_visibilityChanged(bool visible);
 
         void on_WarpList_currentIndexChanged(int index); //Door list
-
+        void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
         void on_WarpAdd_clicked();
         void on_WarpRemove_clicked();
         void on_WarpSetEntrance_clicked();
@@ -896,6 +896,8 @@ public:
         void on_WarpLevelFile_editingFinished();
         void on_WarpToExitNu_valueChanged(int arg1);
         void on_WarpBrowseLevels_clicked();
+    private:
+        bool lockWarpSetSettings;
 // ////////////////////////////////////////////////////////
 
 
@@ -1097,8 +1099,6 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
-
-
 
 signals:
     void closeEditor();
