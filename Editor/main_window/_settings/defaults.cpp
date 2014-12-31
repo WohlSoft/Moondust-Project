@@ -43,6 +43,7 @@ void MainWindow::setDefaults()
     LvlItemPropsLock=true;
     lockTilesetBox=false;
     LvlEventBoxLock=false;
+    lockWarpSetSettings=false;
 
     askConfigAgain=false;
 

@@ -343,6 +343,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(selected==newLayer)
             {
                 scene->setLayerToSelected();
+                scene->applyLayersVisible();
             }
             else
             {
@@ -353,6 +354,8 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         //FOUND!!!
                         scene->setLayerToSelected(lItem->data().toString());
+                        scene->applyLayersVisible();
+                        MainWinConnect::pMainWin->setDoorData(-2);
                         break;
                     }//Find selected layer's item
                 }

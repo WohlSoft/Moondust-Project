@@ -506,6 +506,7 @@ public:
             SETTING_DIRECTION,          //extraData: int [New Dir]
             SETTING_CHANGENPC,          //extraData: int [New NPC ID]
             SETTING_WATERTYPE,          //extraData: bool [IsWater = true, IsQuicksand = false]
+            SETTING_LAYER,            //extraData: String [Layer name]
             SETTING_NOYOSHI,            //extraData: bool [Activated?]
             SETTING_ALLOWNPC,           //extraData: bool [Activated?]
             SETTING_LOCKED,             //extraData: bool [Activated?]
