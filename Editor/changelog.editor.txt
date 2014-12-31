@@ -1,4 +1,4 @@
-Editor 0.2.1.8
+Editor 0.2.1.9
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
@@ -17,7 +17,7 @@ Editor 0.2.1.8
 - All graphics issues prevented with implementing of alternate unmasking algorithm
 - Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
 - Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
-- Added Section modification features: Clone, Delete
+- Added Section modification features: Clone, Delete, Rotate left/right, Flip horizontal/vertical
 - Added more edit actions: align selected, flip horizontal/vertical, rotate left/right
 - Added basic scripts generation feature
 - Organized structure of source code which making code more understandable, flexible and faster
@@ -26,6 +26,9 @@ Editor 0.2.1.8
 - Added saving of SMBX LVL and WLD formats with selecting of file format version (useful to edit old episodes which made by old SMBX'es with saving of compatibility with them)
 - Added reading of SAV files which show game save statistics in the editor.
 - Better resizer boxes, now they are movable and more flexible, added context menu to cut size by any side.
+- Added custom counters which giving able to count any specific item ID's.
+- Fixed placement of NPC's to the slopes
+- Added animated splash screens system into the editor
 
 Editor 0.2.1.1
 - Fixed zoom icons customization

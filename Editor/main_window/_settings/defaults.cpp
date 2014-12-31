@@ -61,17 +61,6 @@ void MainWindow::setUiDefults()
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     #endif
 
-    //Apply objects into tools
-    setLevelSectionData();
-    setLvlItemBoxes();
-    setWldItemBoxes();
-
-    setSoundList();
-
-    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
-
-    WldLvlExitTypeListReset();
-
     //MainWindow Geometry;
     QRect mwg = this->geometry();
 
@@ -162,9 +151,6 @@ void MainWindow::setUiDefults()
     font.setStyleHint(QFont::TypeWriter);
     font.setWeight(8);
     ui->DEBUG_Items->setFont(font);
-
-
-    loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
         this, SLOT(updateMenus()));
@@ -420,6 +406,4 @@ void MainWindow::setUiDefults()
 
     //for tileset
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
-
-    updateWindowMenu();
 }

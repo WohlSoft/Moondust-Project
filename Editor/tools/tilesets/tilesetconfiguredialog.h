@@ -56,6 +56,10 @@ private slots:
     void on_OpenTileset_clicked();
 
     void on_customOnly_clicked();
+    void showEvent( QShowEvent * event );
+    void showNotify();
+signals:
+    void windowShowed();
 
 private:
     QString lastFileName;

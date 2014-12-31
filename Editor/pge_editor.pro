@@ -343,7 +343,8 @@ SOURCES += main.cpp\
     editing/_scenes/world/items/wld_base_item.cpp \
     main_window/help.cpp \
     tools/debugger/custom_counter.cpp \
-    tools/debugger/custom_counter_gui.cpp
+    tools/debugger/custom_counter_gui.cpp \
+    common_features/spash_screen.cpp
     
 
 HEADERS  += defines.h \
@@ -476,7 +477,8 @@ HEADERS  += defines.h \
     editing/_scenes/level/items/lvl_base_item.h \
     editing/_scenes/world/items/wld_base_item.h \
     tools/debugger/custom_counter.h \
-    tools/debugger/custom_counter_gui.h
+    tools/debugger/custom_counter_gui.h \
+    common_features/spash_screen.h
 
 
 FORMS    += \

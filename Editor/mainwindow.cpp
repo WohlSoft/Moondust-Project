@@ -18,6 +18,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
+#include <common_features/spash_screen.h>
 #include <data_configs/config_manager.h>
 
 #include <ui_mainwindow.h>
@@ -34,9 +35,18 @@ MainWindow::MainWindow(QMdiArea *parent) :
     this->hide();
     setDefaults(); // Apply default common settings
 
+    WriteToLog(QtDebugMsg, QString("Set UI..."));
+    ui->setupUi(this);
+
+    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
+    setDefLang();
+
+    setUiDefults(); //Apply default UI settings
+
     //Create empty config directory if not exists
     if(!QDir(ApplicationPath + "/" +  "configs").exists())
         QDir().mkdir(ApplicationPath + "/" +  "configs");
+
 
     // Config manager
     ConfigManager *cmanager;
@@ -58,12 +68,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
         else
         {
             delete cmanager;
-            ui->setupUi(this);
-            setDefLang();
-            setUiDefults(); //Apply default UI settings
             WriteToLog(QtWarningMsg, "<Configuration is not selected>");
             continueLoad = false;
-            this->close();
             return;
         }
     }
@@ -79,36 +85,68 @@ MainWindow::MainWindow(QMdiArea *parent) :
     configs.loadBasics();
     Themes::loadTheme(tPack);
 
+    /*********************Splash Screen**********************/
     QPixmap splashimg(configs.splash_logo.isEmpty()?
                       Themes::Image(Themes::splash) :
                       configs.splash_logo);
 
-    QSplashScreen splash(splashimg);
+    EditorSpashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
     splash.setDisabled(true);
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
+
+
+    for(int a=0; a<configs.animations.size();a++)
+    {
+        //QPoint pt(416,242);
+        QPoint pt(configs.animations[a].x, configs.animations[a].y);
+        //QPixmap img = QPixmap("coin.png");
+        splash.addAnimation(pt,
+                            configs.animations[a].img,
+                            configs.animations[a].frames,
+                            configs.animations[a].speed);
+    }
+    splash.startAnimations();
+
     splash.show();
+    /*********************Splash Screen**********************/
 
+    loadSettings();
+
+    /*********************Loading of config pack**********************/
     bool ok=configs.loadconfigs();
+    /*********************Loading of config pack**********************/
 
+    /*********************Splash Screen end**********************/
     splash.finish(this);
-
-    WriteToLog(QtDebugMsg, QString("Set UI..."));
-    ui->setupUi(this);
-
-    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
-    setDefLang();
-    setUiDefults(); //Apply default UI settings
-
+    /*********************Splash Screen end**********************/
     if(!ok)
     {
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Configuration error"),
+                              tr("Configuration can't be loaded.\nSee in PGE_Editor_log.txt for more information."), QMessageBox::Ok);
         WriteToLog(QtFatalMsg, "<Error, application closed>");
         continueLoad = false;
-        this->close();
         return;
     }
+
+    if(configs.check())
+    {
+        QMessageBox::warning(this, tr("Configuration error"),
+            tr("Configuration package is loaded with errors.\nPlease open the Tools/Global Configuration/Configuration Status\n"
+               "to get more information."), QMessageBox::Ok);
+    }
+
     continueLoad = true;
+
+    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
+
+    //Apply objects into tools
+    setLevelSectionData();
+    setLvlItemBoxes();
+    setWldItemBoxes();
+    setSoundList();
+    WldLvlExitTypeListReset();
+    updateWindowMenu();
 }
 
 MainWindow::~MainWindow()
@@ -164,5 +202,4 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
 

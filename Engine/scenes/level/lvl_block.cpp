@@ -90,7 +90,7 @@ void LVL_Block::init()
     switch(setup->phys_shape)
     {
     //triangles
-    case 1: //up-left
+    case 1: //Top-Right triangle
         {
           b2Vec2 vertices[3];
           //Left-top
@@ -103,7 +103,7 @@ void LVL_Block::init()
           isRectangle = false;
           break;
         }
-    case -1: // Up-right
+    case -1: //Top-Left triangle
         {
           b2Vec2 vertices[3];
           //Left-bottom
@@ -116,7 +116,7 @@ void LVL_Block::init()
           isRectangle = false;
           break;
         }
-    case 2: //right
+    case 2: //Bottom-Right triangle
         {
           b2Vec2 vertices[3];
           //Left-top
@@ -129,7 +129,7 @@ void LVL_Block::init()
           isRectangle = false;
           break;
         }
-    case -2: //left
+    case -2: //Bottom-Left triangle
         {
           b2Vec2 vertices[3];
           //Left-top
@@ -146,7 +146,7 @@ void LVL_Block::init()
         //Is not implemented, create the box:
 
     //rectangle box
-    default: //Box shape
+    default: //Rectangle box shape
         shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
     }
 
@@ -195,11 +195,15 @@ void LVL_Block::render(float camX, float camY)
         int w = width;
         int h = height;
 
-        int x,y, i, j;
+        int x,y, x2, y2, i, j;
         int hc, wc;
 
         x = qRound(qreal(texture.w)/3);  // Width of one piece
         y = qRound(qreal(texture.h)/3); // Height of one piece
+
+        //Double size
+        x2 = x<<1;
+        y2 = y<<1;
 
         int fLnt = 0; // Free Lenght
         int fWdt = 0; // Free Width
@@ -207,95 +211,95 @@ void LVL_Block::render(float camX, float camY)
         int dX=0; //Draw Offset. This need for crop junk on small sizes
         int dY=0;
 
-        if(w < 2*x) dX = (2*x-w)/2; else dX=0;
-        if(h < 2*y) dY = (2*y-h)/2; else dY=0;
+        if(w < x2) dX = (x2-w)>>1; else dX=0;
+        if(h < y2) dY = (y2-h)>>1; else dY=0;
 
         //L Draw left border
-        if(h > 2*y)
+        if(h > (y2))
         {
             hc=0;
-            for(i=0; i<((h-2*y) / y); i++ )
+            for(i=0; i<((h-y2) / y); i++ )
             {
                 drawPiece(blockG, QRectF(0, x+hc, x-dX, y), QRectF(0, y, x-dX, y));
                 hc+=x;
             }
-                fLnt = (h-2*y)%y;
+                fLnt = (h-y2)%y;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(0, x+hc, x-dX, fLnt), QRectF(0, y, x-dX, fLnt));
         }
 
         //T Draw top border
-        if(w > 2*x)
+        if(w > (x2))
         {
             hc=0;
-            for(i=0; i<( (w-2*x) / x); i++ )
+            for(i=0; i<( (w-(x2)) / x); i++ )
             {
                 drawPiece(blockG, QRectF(x+hc, 0, x, y-dY), QRectF(x, 0, x, y-dY));
                     hc+=x;
             }
-                fLnt = (w-2*x)%x;
+                fLnt = (w-(x2))%x;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(x+hc, 0, fLnt, y-dY), QRectF(x, 0, fLnt, y-dY));
         }
 
         //B Draw bottom border
-        if(w > 2*x)
+        if(w > (x2))
         {
             hc=0;
-            for(i=0; i< ( (w-2*x) / x); i++ )
+            for(i=0; i< ( (w-(x2)) / x); i++ )
             {
                 drawPiece(blockG, QRectF(x+hc, h-y+dY, x, y-dY), QRectF(x, texture.w-y+dY, x, y-dY));
                     hc+=x;
             }
-                fLnt = (w-2*x)%x;
+                fLnt = (w-(x2))%x;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(x+hc, h-y+dY, fLnt, y-dY), QRectF(x, texture.w-y+dY, fLnt, y-dY));
         }
 
         //R Draw right border
-        if(h > 2*y)
+        if(h > (y2))
         {
             hc=0;
-            for(i=0; i<((h-2*y) / y); i++ )
+            for(i=0; i<((h-(y2)) / y); i++ )
             {
                 drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, y), QRectF(texture.w-x+dX, y, x-dX, y));
                     hc+=x;
             }
-                fLnt = (h-2*y)%y;
+                fLnt = (h-y2)%y;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, fLnt), QRectF(texture.w-x+dX, y, x-dX, fLnt));
         }
 
 
         //C Draw center
-        if( w > 2*x && h > 2*y)
+        if( w > (x2) && h > (y2))
         {
             hc=0;
             wc=0;
-            for(i=0; i<((h-2*y) / y); i++ )
+            for(i=0; i<((h-y2) / y); i++ )
             {
                 hc=0;
-                for(j=0; j<((w-2*x) / x); j++ )
+                for(j=0; j<((w-x2) / x); j++ )
                 {
                     drawPiece(blockG, QRectF(x+hc, y+wc, x, y), QRectF(x, y, x, y));
                     hc+=x;
                 }
-                    fLnt = (w-2*x)%x;
+                    fLnt = (w-x2)%x;
                     if(fLnt != 0 )
                         drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, y), QRectF(x, y, fLnt, y));
                 wc+=y;
             }
 
-            fWdt = (h-2*y)%y;
+            fWdt = (h-y2)%y;
             if(fWdt !=0)
             {
                 hc=0;
-                for(j=0; j<((w-2*x) / x); j++ )
+                for(j=0; j<((w-x2) / x); j++ )
                 {
                     drawPiece(blockG, QRectF(x+hc, y+wc, x, y), QRectF(x, y, x, y));
                     hc+=x;
                 }
-                    fLnt = (w-2*x)%x;
+                    fLnt = (w-x2)%x;
                     if(fLnt != 0 )
                         drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, fWdt), QRectF(x, y, fLnt, fWdt));
             }

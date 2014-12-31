@@ -114,22 +114,22 @@ public:
     // ///////////////////GFX Manager////////////////////////
     public:
         //Object Indexing:
-        QVector<wTileIndexes > index_tiles;
-        QVector<wSceneIndexes > index_scenes;
-        QVector<wPathIndexes > index_paths;
-        QVector<wLevelIndexes > index_levels;
+        QList<wTileIndexes > index_tiles;
+        QList<wSceneIndexes > index_scenes;
+        QList<wPathIndexes > index_paths;
+        QList<wLevelIndexes > index_levels;
 
         //Custom data containers
-        QVector<UserIMGs > uTiles;
-        QVector<UserIMGs > uScenes;
-        QVector<UserIMGs > uPaths;
-        QVector<UserIMGs > uLevels;
+        QList<UserIMGs > uTiles;
+        QList<UserIMGs > uScenes;
+        QList<UserIMGs > uPaths;
+        QList<UserIMGs > uLevels;
 
         //Animators
-        QVector<SimpleAnimator * > animates_Tiles;
-        QVector<SimpleAnimator * > animates_Scenery;
-        QVector<SimpleAnimator * > animates_Paths;
-        QVector<SimpleAnimator * > animates_Levels;
+        QList<SimpleAnimator * > animates_Tiles;
+        QList<SimpleAnimator * > animates_Scenery;
+        QList<SimpleAnimator * > animates_Paths;
+        QList<SimpleAnimator * > animates_Levels;
 
         void buildAnimators();
 

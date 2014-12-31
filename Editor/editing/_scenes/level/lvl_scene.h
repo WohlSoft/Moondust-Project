@@ -140,20 +140,20 @@ public:
     // ///////////////////GFX Manager////////////////////////
     public:
         //Object Indexing:
-        QVector<blocksIndexes > index_blocks;
-        QVector<bgoIndexes > index_bgo;
-        QVector<npcIndexes > index_npc;
+        QList<blocksIndexes > index_blocks;
+        QList<bgoIndexes > index_bgo;
+        QList<npcIndexes > index_npc;
 
         //Custom data containers
-        QVector<UserBGs > uBGs;
-        QVector<UserBGOs > uBGOs;
-        QVector<UserBlocks > uBlocks;
-        QVector<UserNPCs > uNPCs;
+        QList<UserBGs > uBGs;
+        QList<UserBGOs > uBGOs;
+        QList<UserBlocks > uBlocks;
+        QList<UserNPCs > uNPCs;
 
         //Animators
-        QVector<SimpleAnimator * > animates_BGO;
-        QVector<SimpleAnimator * > animates_Blocks;
-        QVector<AdvNpcAnimator * > animates_NPC;
+        QList<SimpleAnimator * > animates_BGO;
+        QList<SimpleAnimator * > animates_Blocks;
+        QList<AdvNpcAnimator * > animates_NPC;
 
         void buildAnimators();
 
@@ -205,6 +205,7 @@ public:
         #define ITEM_ID                      1 //int
         #define ITEM_ARRAY_ID                2 //int
         #define ITEM_BLOCK_IS_SIZABLE        3 //bool
+        #define ITEM_BLOCK_SHAPE             5 //int
         #define ITEM_NPC_BLOCK_COLLISION     7 //bool
         #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
         #define ITEM_WIDTH                   9 //int
@@ -262,8 +263,8 @@ public:
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
         void applyGridToEach(QList<QGraphicsItem *> items);
 
-        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory = true);
-        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory = true);
+        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory = true, bool flipSection=false);
+        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory = true, bool rotateSection=false);
 
         enum rotateActions
         {

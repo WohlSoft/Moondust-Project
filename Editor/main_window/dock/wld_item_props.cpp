@@ -124,6 +124,12 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
     wld_tools_lock=false;
 }
 
+void MainWindow::WldItemProps_hide()
+{
+    ui->WLD_ItemProps->hide();
+    ui->action_Placing_ShowProperties->setChecked(false);
+}
+
 
 void MainWindow::WldLvlExitTypeListReset()
 {

@@ -355,7 +355,7 @@ void LvlScene::placeItemUnderCursor()
 
             LvlData->npc.push_back(LvlPlacingItems::npcSet);
 
-            placeNPC(LvlPlacingItems::npcSet, true);
+            placeNPC(LvlPlacingItems::npcSet, !LvlPlacingItems::npcSet.generator);
 
             placingItems.npc.push_back(LvlPlacingItems::npcSet);
             wasPlaced=true;

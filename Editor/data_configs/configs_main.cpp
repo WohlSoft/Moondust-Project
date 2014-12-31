@@ -83,9 +83,11 @@ void dataconfigs::loadBasics()
     QSettings guiset(gui_ini, QSettings::IniFormat);
     guiset.setIniCodec("UTF-8");
 
+    int Animations=0;
     guiset.beginGroup("gui");
         splash_logo = guiset.value("editor-splash", "").toString();
         ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
+        Animations =  guiset.value("animations", 0).toInt();
     guiset.endGroup();
 
     guiset.beginGroup("main");
@@ -106,6 +108,28 @@ void dataconfigs::loadBasics()
             WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
             splash_logo = "";//Themes::Image(Themes::splash);
         }
+
+        obj_splash_ani tempAni;
+
+        animations.clear();
+        for(;Animations>0;Animations--)
+        {
+            guiset.beginGroup(QString("splash-animation-%1").arg(Animations));
+            QString img = guiset.value("image", "").toString();
+                if(img.isEmpty()) goto skip;
+                tempAni.img = QPixmap(data_dir + img);
+                if(tempAni.img.isNull()) goto skip;
+            tempAni.frames = guiset.value("frames", 1).toInt();
+            tempAni.speed = guiset.value("speed", 128).toInt();
+            tempAni.x = guiset.value("x", 0).toInt();
+            tempAni.y = guiset.value("y", 0).toInt();
+
+            animations.push_front(tempAni);
+
+            skip:
+            guiset.endGroup();
+        }
+
     }
 }
 

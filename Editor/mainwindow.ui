@@ -362,6 +362,7 @@
      <string>Test</string>
     </property>
     <addaction name="action_doTest"/>
+    <addaction name="action_doSafeTest"/>
     <addaction name="separator"/>
     <addaction name="action_testSettings"/>
    </widget>
@@ -2708,7 +2709,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::NoDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Item Properties</string>
@@ -4183,7 +4184,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>138</height>
+          <height>157</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4291,7 +4292,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>207</height>
+          <height>153</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4699,8 +4700,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
-          <height>159</height>
+          <width>272</width>
+          <height>176</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4816,7 +4817,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>132</height>
+          <height>153</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4914,7 +4915,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>114</height>
+          <height>153</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5069,7 +5070,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>518</height>
+          <height>531</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5297,7 +5298,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>490</height>
+          <height>531</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5446,7 +5447,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>490</height>
+          <height>531</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6267,7 +6268,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>452</height>
+          <height>444</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6389,7 +6390,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>399</height>
+          <height>444</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6511,7 +6512,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>399</height>
+          <height>444</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6633,7 +6634,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>399</height>
+          <height>444</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6880,7 +6881,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>399</height>
+          <height>444</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7153,7 +7154,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1480</width>
+              <width>1462</width>
               <height>127</height>
              </rect>
             </property>
@@ -7179,7 +7180,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
    </property>
    <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::NoDockWidgetArea</set>
    </property>
    <property name="windowTitle">
     <string>Debugger</string>
@@ -7188,7 +7189,7 @@ p, li { white-space: pre-wrap; }
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_6">
-    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,80,0,0">
+    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,0,80,0">
      <item row="0" column="0">
       <widget class="QGroupBox" name="DEBUG_MousePoint">
        <property name="minimumSize">
@@ -7414,6 +7415,9 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="1" column="0" colspan="3">
          <widget class="QListWidget" name="DEBUG_CustomCountersList">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="editTriggers">
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
@@ -9456,6 +9460,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSMBX_like_GUI">
    <property name="text">
     <string>SMBX-like GUI</string>
+   </property>
+  </action>
+  <action name="action_doSafeTest">
+   <property name="text">
+    <string>Run testing of saved file</string>
    </property>
   </action>
  </widget>
