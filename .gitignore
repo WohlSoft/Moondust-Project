@@ -25,6 +25,7 @@ ui_*.h
 qrc_*.cpp
 Makefile
 Makefile.*
+*/Makefile.*
 *-build-*
 *build-*
 /bin
