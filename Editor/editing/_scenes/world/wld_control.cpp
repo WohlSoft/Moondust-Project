@@ -117,7 +117,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
 
-    if(EditingMode!=MODE_SetPoint)
+    if( ((EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly)) && (EditingMode!=MODE_SetPoint))
         MainWinConnect::pMainWin->WldItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
