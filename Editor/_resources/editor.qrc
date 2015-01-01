@@ -114,6 +114,8 @@
         <file>images/properties.png</file>
         <file>images/bookmarks.png</file>
         <file>images/tileset_box.png</file>
+        <file>images/lock_open.png</file>
+        <file>images/lock_closed.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

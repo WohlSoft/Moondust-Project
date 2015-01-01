@@ -616,6 +616,7 @@ public:
 // ///////////////Level Item Properties box //////////////////
     public:
         void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
+        void LvlItemProps_updateLayer(QString lname="");
         void LvlItemProps_hide();
 
         long blockPtr;  //!< ArrayID of editing item (-1 - use system)
@@ -1098,6 +1099,9 @@ private slots:
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
+    public:
+    public slots:
+    protected:
     private slots:
 
 signals:

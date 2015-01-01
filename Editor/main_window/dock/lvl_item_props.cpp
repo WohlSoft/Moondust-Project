@@ -37,9 +37,67 @@ void MainWindow::on_ItemProperties_visibilityChanged(bool visible)
     ui->action_Placing_ShowProperties->setChecked(visible);
 }
 
+namespace LvlItemProps_namespace
+{
+    int curItemType=-1;
+    QString BlockEventDestroy="";
+    QString BlockEventHit="";
+    QString BlockEventLayerEmpty="";
+
+    QString NpcEventActivated="";
+    QString NpcEventDeath="";
+    QString NpcEventTalk="";
+    QString NpcEventLayerEmpty="";
+}
+
+void MainWindow::LvlItemProps_updateLayer(QString lname)
+{
+    if(LvlItemPropsLock) return;
+    LvlItemPropsLock=true;
+    using namespace LvlItemProps_namespace;
+    if(lname.isEmpty())
+        lname=LvlPlacingItems::layer;
+
+    switch(curItemType)
+    {
+        case 0:
+        {
+            ui->PROPS_BlockLayer->setCurrentIndex(0);
+            for(int i=0; i<ui->PROPS_BlockLayer->count();i++)
+            {
+                if(ui->PROPS_BlockLayer->itemText(i)==lname)
+                {ui->PROPS_BlockLayer->setCurrentIndex(i); break;}
+            }
+        }
+        break;
+        case 1:
+        {
+            ui->PROPS_BGOLayer->setCurrentIndex(0);
+            for(int i=0; i<ui->PROPS_BGOLayer->count();i++)
+            {
+                if(ui->PROPS_BGOLayer->itemText(i)==lname)
+                {ui->PROPS_BGOLayer->setCurrentIndex(i); break;}
+            }
+        }
+        break;
+        case 2:
+        {
+            ui->PROPS_NpcLayer->setCurrentIndex(0);
+            for(int i=0; i<ui->PROPS_NpcLayer->count();i++)
+            {
+                if(ui->PROPS_NpcLayer->itemText(i)==lname)
+                {ui->PROPS_NpcLayer->setCurrentIndex(i); break;}
+            }
+        }
+    }
+    LvlItemPropsLock=false;
+}
+
+
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
+    using namespace LvlItemProps_namespace;
 
     setLayerLists();
     EventListsSync();
@@ -53,12 +111,23 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
     LvlPlacingItems::npcSpecialAutoIncrement=false;
 
+    ui->PROPS_BlkEventDestroyedLock->setVisible(newItem);
+    ui->PROPS_BlkEventHitLock->setVisible(newItem);
+    ui->PROPS_BlkEventLEmptyLock->setVisible(newItem);
+
+    ui->PROPS_NpcEventActovateLock->setVisible(newItem);
+    ui->PROPS_NpcEventDeathLock->setVisible(newItem);
+    ui->PROPS_NpcEventTalkLock->setVisible(newItem);
+    ui->PROPS_NpcEventLEmptyLock->setVisible(newItem);
+
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
     */
     LvlItemPropsLock=true;
+
+    curItemType=Type;
 
     switch(Type)
     {
@@ -113,6 +182,24 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             block.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             LvlPlacingItems::layer = block.layer;
+
+            if(ui->PROPS_BlkEventDestroyedLock->isChecked())
+                LvlPlacingItems::blockSet.event_destroy=BlockEventDestroy;
+            else
+                LvlPlacingItems::blockSet.event_destroy="";
+            block.event_destroy = LvlPlacingItems::blockSet.event_destroy;
+
+            if(ui->PROPS_BlkEventHitLock->isChecked())
+                LvlPlacingItems::blockSet.event_hit=BlockEventHit;
+            else
+                LvlPlacingItems::blockSet.event_hit="";
+            block.event_hit=LvlPlacingItems::blockSet.event_hit;
+
+            if(ui->PROPS_BlkEventLEmptyLock->isChecked())
+                LvlPlacingItems::blockSet.event_no_more=BlockEventLayerEmpty;
+            else
+                LvlPlacingItems::blockSet.event_no_more="";
+            block.event_no_more=LvlPlacingItems::blockSet.event_no_more;
         }
 
 
@@ -320,6 +407,30 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             npc.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             LvlPlacingItems::layer = npc.layer;
+
+            if(ui->PROPS_NpcEventActovateLock->isChecked())
+                LvlPlacingItems::npcSet.event_activate=NpcEventActivated;
+            else
+                LvlPlacingItems::npcSet.event_activate="";
+            npc.event_activate=LvlPlacingItems::npcSet.event_activate;
+
+            if(ui->PROPS_NpcEventDeathLock->isChecked())
+                LvlPlacingItems::npcSet.event_die=NpcEventDeath;
+            else
+                LvlPlacingItems::npcSet.event_die="";
+            npc.event_die=LvlPlacingItems::npcSet.event_die;
+
+            if(ui->PROPS_NpcEventTalkLock->isChecked())
+                LvlPlacingItems::npcSet.event_talk=NpcEventTalk;
+            else
+                LvlPlacingItems::npcSet.event_talk="";
+            npc.event_talk=LvlPlacingItems::npcSet.event_talk;
+
+            if(ui->PROPS_NpcEventLEmptyLock->isChecked())
+                LvlPlacingItems::npcSet.event_nomore=NpcEventLayerEmpty;
+            else
+                LvlPlacingItems::npcSet.event_nomore="";
+            npc.event_nomore=LvlPlacingItems::npcSet.event_nomore;
         }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
@@ -896,6 +1007,7 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(blockPtr<0)
     {
@@ -903,6 +1015,8 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
             LvlPlacingItems::blockSet.event_destroy = arg1;
         else
             LvlPlacingItems::blockSet.event_destroy = "";
+
+        BlockEventDestroy=LvlPlacingItems::blockSet.event_destroy;
     }
     else
     if (activeChildWindow()==1)
@@ -934,6 +1048,7 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(blockPtr<0)
     {
@@ -941,6 +1056,8 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
             LvlPlacingItems::blockSet.event_hit = arg1;
         else
             LvlPlacingItems::blockSet.event_hit = "";
+
+        BlockEventHit = LvlPlacingItems::blockSet.event_hit;
     }
     else
     if (activeChildWindow()==1)
@@ -972,6 +1089,7 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(blockPtr<0)
     {
@@ -979,6 +1097,7 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
             LvlPlacingItems::blockSet.event_no_more = arg1;
         else
             LvlPlacingItems::blockSet.event_no_more = "";
+        BlockEventLayerEmpty = LvlPlacingItems::blockSet.event_no_more;
     }
 
     else
@@ -2158,6 +2277,7 @@ void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &ar
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(npcPtr<0)
     {
@@ -2165,6 +2285,7 @@ void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &ar
             LvlPlacingItems::npcSet.event_activate = arg1;
         else
             LvlPlacingItems::npcSet.event_activate = "";
+        NpcEventActivated = LvlPlacingItems::npcSet.event_activate;
     }
     else
     if (activeChildWindow()==1)
@@ -2195,6 +2316,7 @@ void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(npcPtr<0)
     {
@@ -2202,6 +2324,7 @@ void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
             LvlPlacingItems::npcSet.event_die = arg1;
         else
             LvlPlacingItems::npcSet.event_die = "";
+        NpcEventDeath = LvlPlacingItems::npcSet.event_die;
     }
     else
     if (activeChildWindow()==1)
@@ -2232,6 +2355,7 @@ void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(npcPtr<0)
     {
@@ -2239,6 +2363,7 @@ void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
             LvlPlacingItems::npcSet.event_talk = arg1;
         else
             LvlPlacingItems::npcSet.event_talk = "";
+        NpcEventTalk = LvlPlacingItems::npcSet.event_talk;
     }
     else
     if (activeChildWindow()==1)
@@ -2269,6 +2394,7 @@ void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &
 {
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
+    using namespace LvlItemProps_namespace;
 
     if(npcPtr<0)
     {
@@ -2276,6 +2402,7 @@ void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &
             LvlPlacingItems::npcSet.event_nomore = arg1;
         else
             LvlPlacingItems::npcSet.event_nomore = "";
+        NpcEventLayerEmpty = LvlPlacingItems::npcSet.event_nomore;
     }
     else
     if (activeChildWindow()==1)

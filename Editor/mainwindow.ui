@@ -2790,7 +2790,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-915</y>
           <width>279</width>
           <height>1358</height>
          </rect>
@@ -2825,7 +2825,7 @@ p, li { white-space: pre-wrap; }
            <property name="title">
             <string>Block</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_13">
+           <layout class="QGridLayout" name="gridLayout_13" columnstretch="45,45,0">
             <property name="leftMargin">
              <number>1</number>
             </property>
@@ -2841,6 +2841,179 @@ p, li { white-space: pre-wrap; }
             <property name="spacing">
              <number>1</number>
             </property>
+            <item row="11" column="2">
+             <widget class="QPushButton" name="PROPS_BlkEventHitLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Events</string>
+              </property>
+              <property name="textFormat">
+               <enum>Qt::PlainText</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="BlockHitedLabel">
+              <property name="text">
+               <string>Hited:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="0">
+             <widget class="QLabel" name="BlockLayerEmpty">
+              <property name="text">
+               <string>Layer empty:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="QComboBox" name="PROPS_BlkEventHited">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QComboBox" name="PROPS_BlkEventDestroy">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <widget class="QComboBox" name="PROPS_BlkEventLayerEmpty">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="2">
+             <widget class="QCheckBox" name="PROPS_BlkSlippery">
+              <property name="text">
+               <string>Slippery</string>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="0" colspan="2">
+             <spacer name="verticalSpacer_15">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="3" column="0" colspan="2">
+             <widget class="QCheckBox" name="PROPS_BlockInvis">
+              <property name="text">
+               <string>Invisible</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QLabel" name="PROPS_BlockID">
+              <property name="text">
+               <string notr="true">BlockID: [z]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="PROPS_blockPos">
+              <property name="text">
+               <string notr="true">Pos: [x. y]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0" colspan="3">
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" colspan="3">
+             <widget class="QPushButton" name="PROPS_BlockIncludes">
+              <property name="text">
+               <string notr="true">Contained NPC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1" colspan="2">
+             <widget class="QComboBox" name="PROPS_BlockLayer">
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">CurrentLayer</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="BlockLayerLabel">
+              <property name="text">
+               <string>Layer:</string>
+              </property>
+             </widget>
+            </item>
             <item row="2" column="0">
              <widget class="QPushButton" name="PROPS_BlockResize">
               <property name="text">
@@ -2863,48 +3036,6 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="BlockLayerLabel">
-              <property name="text">
-               <string>Layer:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QComboBox" name="PROPS_BlockLayer">
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">CurrentLayer</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="8" column="0" colspan="2">
-             <widget class="Line" name="line">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0">
-             <widget class="QLabel" name="label">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Events</string>
-              </property>
-              <property name="textFormat">
-               <enum>Qt::PlainText</enum>
-              </property>
-             </widget>
-            </item>
             <item row="10" column="0">
              <widget class="QLabel" name="BlockEventDestroy">
               <property name="text">
@@ -2912,110 +3043,51 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="10" column="1">
-             <widget class="QComboBox" name="PROPS_BlkEventDestroy">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QLabel" name="BlockHitedLabel">
-              <property name="text">
-               <string>Hited:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="1">
-             <widget class="QComboBox" name="PROPS_BlkEventHited">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="12" column="0">
-             <widget class="QLabel" name="BlockLayerEmpty">
-              <property name="text">
-               <string>Layer empty:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="1">
-             <widget class="QComboBox" name="PROPS_BlkEventLayerEmpty">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="13" column="0" colspan="2">
-             <spacer name="verticalSpacer_15">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+            <item row="10" column="2">
+             <widget class="QPushButton" name="PROPS_BlkEventDestroyedLock">
+              <property name="maximumSize">
                <size>
-                <width>20</width>
-                <height>40</height>
+                <width>24</width>
+                <height>20</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item row="6" column="0" colspan="2">
-             <widget class="QPushButton" name="PROPS_BlockIncludes">
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
               <property name="text">
-               <string notr="true">Contained NPC</string>
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
-            <item row="4" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_BlkSlippery">
-              <property name="text">
-               <string>Slippery</string>
+            <item row="12" column="2">
+             <widget class="QPushButton" name="PROPS_BlkEventLEmptyLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
               </property>
-             </widget>
-            </item>
-            <item row="3" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_BlockInvis">
-              <property name="text">
-               <string>Invisible</string>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
               </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_blockPos">
               <property name="text">
-               <string notr="true">Pos: [x. y]</string>
+               <string notr="true"/>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_BlockID">
-              <property name="text">
-               <string notr="true">BlockID: [z]</string>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -3049,7 +3121,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing">
              <number>1</number>
             </property>
-            <item row="3" column="0" colspan="2">
+            <item row="3" column="0" colspan="3">
              <widget class="QGroupBox" name="PROPS_BGO_Z_Pos">
               <property name="title">
                <string>Z-Position</string>
@@ -3130,7 +3202,7 @@ p, li { white-space: pre-wrap; }
               </property>
              </spacer>
             </item>
-            <item row="5" column="0" colspan="2">
+            <item row="5" column="0" colspan="3">
              <widget class="QLabel" name="SMBX64title">
               <property name="font">
                <font>
@@ -3143,14 +3215,14 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="0" column="0" colspan="2">
+            <item row="0" column="0" colspan="3">
              <widget class="QLabel" name="PROPS_bgoPos">
               <property name="text">
                <string notr="true">Pos: [x. y]</string>
               </property>
              </widget>
             </item>
-            <item row="8" column="0" colspan="2">
+            <item row="8" column="0" colspan="3">
              <spacer name="verticalSpacer_14">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -3163,7 +3235,7 @@ p, li { white-space: pre-wrap; }
               </property>
              </spacer>
             </item>
-            <item row="6" column="1">
+            <item row="6" column="2">
              <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
               <property name="minimum">
                <number>-1</number>
@@ -3183,14 +3255,14 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2">
+            <item row="1" column="0" colspan="3">
              <widget class="QLabel" name="PROPS_BgoID">
               <property name="text">
                <string notr="true">BgoID: [z]</string>
               </property>
              </widget>
             </item>
-            <item row="7" column="1">
+            <item row="7" column="2">
              <widget class="QLabel" name="SMBX64_SP_Help">
               <property name="maximumSize">
                <size>
@@ -3207,7 +3279,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </property>
              </widget>
             </item>
-            <item row="4" column="0" colspan="2">
+            <item row="4" column="0" colspan="3">
              <widget class="Line" name="line_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -3221,7 +3293,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="2" column="2">
              <widget class="QComboBox" name="PROPS_BGOLayer">
               <item>
                <property name="text">
@@ -3244,7 +3316,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <property name="title">
             <string>NPC</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_15">
+           <layout class="QGridLayout" name="gridLayout_15" columnstretch="45,45,0">
             <property name="leftMargin">
              <number>1</number>
             </property>
@@ -3260,7 +3332,170 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <property name="spacing">
              <number>1</number>
             </property>
-            <item row="24" column="0" colspan="2">
+            <item row="30" column="1">
+             <widget class="QComboBox" name="PROPS_NpcEventActivate">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="31" column="0">
+             <widget class="QLabel" name="NpcEventDeath">
+              <property name="text">
+               <string>Death:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="33" column="1">
+             <widget class="QComboBox" name="PROPS_NpcEventEmptyLayer">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="32" column="0">
+             <widget class="QLabel" name="NpcEventTalk">
+              <property name="text">
+               <string>Talk:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="31" column="1">
+             <widget class="QComboBox" name="PROPS_NpcEventDeath">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="32" column="1">
+             <widget class="QComboBox" name="PROPS_NpcEventTalk">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="30" column="0">
+             <widget class="QLabel" name="NpcEventActivate">
+              <property name="text">
+               <string>Activate:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="33" column="0">
+             <widget class="QLabel" name="NpcEventTalk_2">
+              <property name="text">
+               <string>Layer empty:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="28" column="0">
+             <widget class="QLabel" name="NpcLayerAttach">
+              <property name="text">
+               <string>Attach to:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="27" column="0">
+             <widget class="QLabel" name="NpcLayerLabel">
+              <property name="text">
+               <string>Layer:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="30" column="2">
+             <widget class="QPushButton" name="PROPS_NpcEventActovateLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="29" column="0" colspan="3">
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="28" column="1" colspan="2">
+             <widget class="QComboBox" name="PROPS_NpcAttachLayer">
+              <property name="currentText">
+               <string notr="true">[none]</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">[none]</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="27" column="1" colspan="2">
+             <widget class="QComboBox" name="PROPS_NpcLayer">
+              <property name="currentText">
+               <string notr="true">CurrentLayer</string>
+              </property>
+              <property name="maxVisibleItems">
+               <number>50</number>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">CurrentLayer</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="25" column="0" colspan="3">
              <widget class="QGroupBox" name="PROPS_NPCGenBox">
               <property name="title">
                <string>Generator</string>
@@ -3317,6 +3552,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                   <size>
                    <width>61</width>
                    <height>81</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="title">
@@ -3406,7 +3647,110 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </layout>
              </widget>
             </item>
-            <item row="7" column="0" colspan="2">
+            <item row="26" column="0" colspan="3">
+             <widget class="Line" name="line_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="23" column="0" colspan="3">
+             <widget class="Line" name="line_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="22" column="0" colspan="3">
+             <widget class="QComboBox" name="PROPS_NPCSpecial2Box">
+              <property name="currentText">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item row="20" column="0" colspan="3">
+             <widget class="QSpinBox" name="PROPS_NPCSpecial2Spin"/>
+            </item>
+            <item row="19" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NpcSpecial2title">
+              <property name="text">
+               <string notr="true">SpecialSecondTitle</string>
+              </property>
+             </widget>
+            </item>
+            <item row="18" column="0" colspan="3">
+             <widget class="Line" name="Line_Special2_sep">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="17" column="0" colspan="3">
+             <widget class="QComboBox" name="PROPS_NPCSpecialBox">
+              <property name="currentText">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item row="15" column="0" colspan="3">
+             <widget class="QPushButton" name="PROPS_NPCContaiter">
+              <property name="text">
+               <string notr="true">Contaiter</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="16" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NPCBoxLabel">
+              <property name="text">
+               <string notr="true">SpecialBox</string>
+              </property>
+             </widget>
+            </item>
+            <item row="14" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NpcContainsLabel">
+              <property name="text">
+               <string>Contains of current NPC-Container</string>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="0" colspan="3">
+             <widget class="QCheckBox" name="PROPS_NPCSpecialSpin_Auto">
+              <property name="text">
+               <string>Auto-increment</string>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="0" colspan="3">
+             <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
+            </item>
+            <item row="11" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NpcSpinLabel">
+              <property name="text">
+               <string notr="true">SpecialSpin</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0" colspan="3">
+             <widget class="Line" name="line_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0" colspan="3">
+             <widget class="QPushButton" name="PROPS_NpcTMsg">
+              <property name="text">
+               <string notr="true">TalkMsg</string>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0" colspan="3">
              <widget class="QLabel" name="PROPS_NpcTMsgLabel">
               <property name="font">
                <font>
@@ -3419,303 +3763,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </property>
              </widget>
             </item>
-            <item row="14" column="0" colspan="2">
-             <widget class="QPushButton" name="PROPS_NPCContaiter">
-              <property name="text">
-               <string notr="true">Contaiter</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="28" column="0" colspan="2">
-             <widget class="Line" name="line_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="29" column="1">
-             <widget class="QComboBox" name="PROPS_NpcEventActivate">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="27" column="1">
-             <widget class="QComboBox" name="PROPS_NpcAttachLayer">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="11" column="0" colspan="2">
-             <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
-            </item>
-            <item row="15" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NPCBoxLabel">
-              <property name="text">
-               <string notr="true">SpecialBox</string>
-              </property>
-             </widget>
-            </item>
-            <item row="30" column="0">
-             <widget class="QLabel" name="NpcEventDeath">
-              <property name="text">
-               <string>Death:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="32" column="1">
-             <widget class="QComboBox" name="PROPS_NpcEventEmptyLayer">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="31" column="0">
-             <widget class="QLabel" name="NpcEventTalk">
-              <property name="text">
-               <string>Talk:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="33" column="0" colspan="2">
-             <spacer name="verticalSpacer_16">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="30" column="1">
-             <widget class="QComboBox" name="PROPS_NpcEventDeath">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="31" column="1">
-             <widget class="QComboBox" name="PROPS_NpcEventTalk">
-              <property name="currentText">
-               <string notr="true">[none]</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">[none]</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="29" column="0">
-             <widget class="QLabel" name="NpcEventActivate">
-              <property name="text">
-               <string>Activate:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="32" column="0">
-             <widget class="QLabel" name="NpcEventTalk_2">
-              <property name="text">
-               <string>Layer empty:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_NpcFri">
-              <property name="text">
-               <string>Friendly</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0" colspan="2">
-             <widget class="QPushButton" name="PROPS_NpcTMsg">
-              <property name="text">
-               <string notr="true">TalkMsg</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="27" column="0">
-             <widget class="QLabel" name="NpcLayerAttach">
-              <property name="text">
-               <string>Attach to:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_NpcBoss">
-              <property name="text">
-               <string>Set as Boss</string>
-              </property>
-             </widget>
-            </item>
-            <item row="23" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_NpcGenerator">
-              <property name="font">
-               <font>
-                <weight>50</weight>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Generator</string>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0" colspan="2">
-             <widget class="Line" name="line_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NpcPos">
-              <property name="text">
-               <string notr="true">Pos: [x. y]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="22" column="0" colspan="2">
-             <widget class="Line" name="line_5">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="25" column="0" colspan="2">
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="16" column="0" colspan="2">
-             <widget class="QComboBox" name="PROPS_NPCSpecialBox">
-              <property name="currentText">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item row="26" column="1">
-             <widget class="QComboBox" name="PROPS_NpcLayer">
-              <property name="currentText">
-               <string notr="true">CurrentLayer</string>
-              </property>
-              <property name="maxVisibleItems">
-               <number>50</number>
-              </property>
-              <item>
-               <property name="text">
-                <string notr="true">CurrentLayer</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="5" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_NPCNoMove">
-              <property name="text">
-               <string>Doesn't move</string>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NpcSpinLabel">
-              <property name="text">
-               <string notr="true">SpecialSpin</string>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NpcContainsLabel">
-              <property name="text">
-               <string>Contains of current NPC-Container</string>
-              </property>
-             </widget>
-            </item>
-            <item row="26" column="0">
-             <widget class="QLabel" name="NpcLayerLabel">
-              <property name="text">
-               <string>Layer:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NpcID">
-              <property name="text">
-               <string notr="true">NpcID: [z]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="19" column="0" colspan="2">
-             <widget class="QSpinBox" name="PROPS_NPCSpecial2Spin"/>
-            </item>
-            <item row="18" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_NpcSpecial2title">
-              <property name="text">
-               <string notr="true">SpecialSecondTitle</string>
-              </property>
-             </widget>
-            </item>
-            <item row="17" column="0" colspan="2">
-             <widget class="Line" name="Line_Special2_sep">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="21" column="0" colspan="2">
-             <widget class="QComboBox" name="PROPS_NPCSpecial2Box">
-              <property name="currentText">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0" colspan="2">
+            <item row="3" column="0" colspan="3">
              <widget class="QGroupBox" name="PROPS_NpcDir">
               <property name="title">
                <string>Direction</string>
@@ -3763,12 +3811,138 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </layout>
              </widget>
             </item>
-            <item row="12" column="0" colspan="2">
-             <widget class="QCheckBox" name="PROPS_NPCSpecialSpin_Auto">
+            <item row="4" column="0" colspan="3">
+             <widget class="QCheckBox" name="PROPS_NpcFri">
               <property name="text">
-               <string>Auto-increment</string>
+               <string>Friendly</string>
               </property>
              </widget>
+            </item>
+            <item row="5" column="0" colspan="3">
+             <widget class="QCheckBox" name="PROPS_NPCNoMove">
+              <property name="text">
+               <string>Doesn't move</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0" colspan="3">
+             <widget class="QCheckBox" name="PROPS_NpcBoss">
+              <property name="text">
+               <string>Set as Boss</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NpcID">
+              <property name="text">
+               <string notr="true">NpcID: [z]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="QLabel" name="PROPS_NpcPos">
+              <property name="text">
+               <string notr="true">Pos: [x. y]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="24" column="0" colspan="3">
+             <widget class="QCheckBox" name="PROPS_NpcGenerator">
+              <property name="font">
+               <font>
+                <weight>50</weight>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Generator</string>
+              </property>
+             </widget>
+            </item>
+            <item row="31" column="2">
+             <widget class="QPushButton" name="PROPS_NpcEventDeathLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="32" column="2">
+             <widget class="QPushButton" name="PROPS_NpcEventTalkLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="33" column="2">
+             <widget class="QPushButton" name="PROPS_NpcEventLEmptyLock">
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Don't reset event to 'none'</string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="_resources/editor.qrc">
+                <normaloff>:/images/lock_open.png</normaloff>
+                <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="34" column="0" colspan="3">
+             <spacer name="verticalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -4029,7 +4203,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>139</width>
           <height>360</height>
          </rect>
         </property>
@@ -4212,8 +4386,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>157</height>
+          <width>255</width>
+          <height>121</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4431,7 +4605,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>231</width>
           <height>461</height>
          </rect>
         </property>
@@ -4729,8 +4903,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>176</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4845,8 +5019,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>153</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4943,8 +5117,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>153</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5326,8 +5500,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>531</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5475,8 +5649,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>531</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6418,8 +6592,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>444</height>
+          <width>153</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6540,8 +6714,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>444</height>
+          <width>153</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6662,8 +6836,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>444</height>
+          <width>231</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6909,8 +7083,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>444</height>
+          <width>153</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7183,8 +7357,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1462</width>
-              <height>127</height>
+              <width>98</width>
+              <height>28</height>
              </rect>
             </property>
            </widget>
