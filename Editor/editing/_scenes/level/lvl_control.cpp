@@ -116,7 +116,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     { return; }
 
     //Close properties box
-    MainWinConnect::pMainWin->LvlItemProps_hide();
+    if( (EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly) )
+        MainWinConnect::pMainWin->LvlItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
