@@ -83,7 +83,11 @@ void MainWindow::setDoorData(long index)
     lockWarpSetSettings=true;
 
     int WinType = activeChildWindow();
-    if (WinType==1)
+
+    qDebug() << "Current warp indes is " << ui->WarpList->currentIndex();
+    qDebug() << "Activated windows type is " << WinType;
+
+    if(WinType==1)
     {
         if( (activeLvlEditWin()->LvlData.doors.size() > 0) && (cIndex < activeLvlEditWin()->LvlData.doors.size()) )
         {

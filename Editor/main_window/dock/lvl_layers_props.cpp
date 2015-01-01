@@ -114,7 +114,7 @@ void MainWindow::setLayerLists()
     ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
-    lockWarpSetSettings = true;
+    lockWarpSetSettings = false;
     LvlItemPropsLock = false;
     LvlEventBoxLock = false;
 }
@@ -752,6 +752,7 @@ void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
+    LvlItemProps_updateLayer(LvlPlacingItems::layer);
 }
 
 void MainWindow::on_LvlLayerList_itemSelectionChanged()
