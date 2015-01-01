@@ -24,12 +24,14 @@ SET packFull=%packFull% "%TESTDIR%\icons"
 SET packFull=%packFull% "%TESTDIR%\lab\empty\configs"
 
 rem PGE Additional Tools
+del /Q /F "%TESTDIR%\calibrator\templates\*.*"
 SET packTools=
 SET packTools=%packTools% "%TESTDIR%\GIFs2PNG.exe"
 SET packTools=%packTools% "%TESTDIR%\*Readme.txt"
 SET packTools=%packTools% "%TESTDIR%\LazyFixTool.exe"
 SET packTools=%packTools% "%TESTDIR%\PNG2GIFs.exe"
 SET packTools=%packTools% "%TESTDIR%\pge_calibrator.exe"
+SET packTools=%packTools% "%TESTDIR%\calibrator"
 
 rem standalone help documents
 SET packHelp=
