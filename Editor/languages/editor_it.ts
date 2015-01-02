@@ -1015,21 +1015,26 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <name>ItemMusic</name>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="156"/>
+        <source>&lt;Silence&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="159"/>
         <source>Play this</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="158"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="161"/>
         <source>Copy</source>
         <translation type="unfinished">copia</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="159"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="162"/>
         <source>Cut</source>
         <translation type="unfinished">taglia</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="161"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="164"/>
         <source>Remove</source>
         <translation type="unfinished">rimuovi</translation>
     </message>
@@ -4916,6 +4921,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="152"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="61"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="62"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="234"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
