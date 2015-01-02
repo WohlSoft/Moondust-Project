@@ -151,8 +151,11 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
                 title->setEnabled(false);
+            }else if(musicData.id==0)
+            {
+                QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
+                title->setEnabled(false);
             }
-
             QAction *play = ItemMenu.addAction(tr("Play this"));
                 ItemMenu.addSeparator();
             QAction *copyTile = ItemMenu.addAction(tr("Copy"));
