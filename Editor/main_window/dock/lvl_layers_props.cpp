@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,56 +55,25 @@ void MainWindow::setLayersBox()
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
 
             item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
-            item->setData(3, QString::number( layer.array_id ) );
+            item->setData(Qt::UserRole, QString::number( layer.array_id ) );
             ui->LvlLayerList->addItem( item );
         }
 
     }
 }
 
-
-void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
-{
-    int WinType = activeChildWindow();
-    int itemType=0;
-    bool allow = ( (WinType==1) && activeLvlEditWin()->sceneCreated );
-
-    if(allow) itemType = activeLvlEditWin()->scene->placingItem;
-
-    if( (allow) && (itemType==LvlScene::PLC_Block ||
-                    itemType==LvlScene::PLC_BGO ||
-                    itemType==LvlScene::PLC_NPC ||
-                    itemType==LvlScene::PLC_Water) )
-        LvlPlacingItems::layer=item->text();
-    else
-        LvlPlacingItems::layer="";
-    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
-    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
-    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
-    LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
-}
-
-void MainWindow::on_LvlLayerList_itemSelectionChanged()
-{
-    if(ui->LvlLayerList->selectedItems().isEmpty())
-        LvlPlacingItems::layer="";
-    else
-        LvlPlacingItems::layer= ui->LvlLayerList->selectedItems().first()->text();
-
-    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
-    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
-    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
-}
-
 void MainWindow::setLayerLists()
 {
     ui->ItemProperties->hide();
     LvlItemPropsLock=true;
+    lockWarpSetSettings=true;
 
     //save old entry from search!
     QString curSearchLayerBlock = ui->Find_Combo_LayerBlock->currentText();
     QString curSearchLayerBGO = ui->Find_Combo_LayerBGO->currentText();
     QString curSearchLayerNPC = ui->Find_Combo_LayerNPC->currentText();
+
+    QString curWarpLayer = ui->WarpLayer->currentText();
 
     int WinType = activeChildWindow();
     LvlItemPropsLock = true;
@@ -113,6 +82,7 @@ void MainWindow::setLayerLists()
     ui->PROPS_NpcLayer->clear();
     ui->PROPS_BlockLayer->clear();
     ui->PROPS_NpcAttachLayer->clear();
+    ui->WarpLayer->clear();
     ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
     ui->LVLEvent_LayerMov_List->clear();
     ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
@@ -131,15 +101,20 @@ void MainWindow::setLayerLists()
             ui->PROPS_BlockLayer->addItem(layer.name);
             ui->PROPS_NpcAttachLayer->addItem(layer.name);
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
+            ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
             ui->Find_Combo_LayerBlock->addItem(layer.name);
             ui->Find_Combo_LayerBGO->addItem(layer.name);
             ui->Find_Combo_LayerNPC->addItem(layer.name);
         }
     }
 
+    if(!curWarpLayer.isEmpty())
+        ui->WarpLayer->setCurrentText(curWarpLayer);
+
     ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
+    lockWarpSetSettings = false;
     LvlItemPropsLock = false;
     LvlEventBoxLock = false;
 }
@@ -311,7 +286,7 @@ void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
     {
         for(int i=0;i< activeLvlEditWin()->LvlData.layers.size(); i++)
         {
-            if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)layerItem->data(3).toInt() )
+            if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)layerItem->data(Qt::UserRole).toInt() )
             {
                 activeLvlEditWin()->LvlData.layers.remove(i);
                 delete layerItem;
@@ -579,6 +554,8 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
     setLayerLists();  //Sync comboboxes in properties
 }
 
+
+
 void MainWindow::AddNewLayer(QString layerName, bool setEdited)
 {
     QListWidgetItem * item;
@@ -588,14 +565,18 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
     item->setCheckState( Qt::Checked );
-    item->setData(3, QString("NewLayer") );
+    item->setData(Qt::UserRole, QString("NewLayer") );
     ui->LvlLayerList->addItem( item );
 
     if(setEdited)
     {
-        ui->LvlLayerList->setFocus();
-        ui->LvlLayerList->scrollToItem( item );
-        ui->LvlLayerList->editItem( item );
+        on_LvlLayerList_itemChanged(item);
+        if(item)
+        {
+            ui->LvlLayerList->setFocus();
+            ui->LvlLayerList->scrollToItem( item );
+            ui->LvlLayerList->editItem( item );
+        }
     }
     else
     {
@@ -623,7 +604,7 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
             NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
             activeLvlEditWin()->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
 
-            item->setData(3, QString::number(NewLayer.array_id));
+            item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
 
             activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
             activeLvlEditWin()->LvlData.modified=true;
@@ -640,7 +621,7 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
     LevelEdit * edit = activeLvlEditWin();
     for(int i=0; i < edit->LvlData.layers.size(); i++)
     {
-        if( edit->LvlData.layers[i].array_id==(unsigned int)item->data(3).toInt() )
+        if( edit->LvlData.layers[i].array_id==(unsigned int)item->data(Qt::UserRole).toInt() )
         {
             int l=0;
             bool merge=false;
@@ -731,7 +712,7 @@ void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStar
         }
     }
 
-    setLayerLists();  //Sync comboboxes in properties
+    setLayerLists(); //Sync comboboxes in properties
 }
 
 
@@ -749,20 +730,41 @@ void MainWindow::on_actionLayersBox_triggered(bool checked)
 void MainWindow::on_AddLayer_clicked()
 {
     AddNewLayer(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ), true);
-    /*
-    QListWidgetItem * item;
-    item = new QListWidgetItem;
-    item->setText(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ) );
-    item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEditable);
-    item->setFlags(item->flags() | Qt::ItemIsEnabled);
-    item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-    item->setCheckState( Qt::Checked );
-    item->setData(3, QString("NewLayer") );
-    ui->LvlLayerList->addItem( item );
+}
 
-    ui->LvlLayerList->setFocus();
-    ui->LvlLayerList->editItem( item );
-    */
+
+void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
+{
+    int WinType = activeChildWindow();
+    int itemType=0;
+    bool allow = ( (WinType==1) && activeLvlEditWin()->sceneCreated );
+
+    if(allow) itemType = activeLvlEditWin()->scene->placingItem;
+
+    if( (allow) && (itemType==LvlScene::PLC_Block ||
+                    itemType==LvlScene::PLC_BGO ||
+                    itemType==LvlScene::PLC_NPC ||
+                    itemType==LvlScene::PLC_Water) )
+        LvlPlacingItems::layer=item->text();
+    else
+        LvlPlacingItems::layer="";
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
+    LvlItemProps_updateLayer(LvlPlacingItems::layer);
+}
+
+void MainWindow::on_LvlLayerList_itemSelectionChanged()
+{
+    if(ui->LvlLayerList->selectedItems().isEmpty())
+        LvlPlacingItems::layer="";
+    else
+        LvlPlacingItems::layer= ui->LvlLayerList->selectedItems().first()->text();
+
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
 }
 
 
@@ -773,7 +775,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 
     if (WinType==1)
     {
-        if(item->data(3).toString()=="NewLayer")
+        if(item->data(Qt::UserRole).toString()=="NewLayer")
         {
             bool AlreadyExist=false;
             foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
@@ -799,82 +801,22 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                 NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
                 activeLvlEditWin()->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
 
-                item->setData(3, QString::number(NewLayer.array_id));
+                item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
 
                 activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
                 activeLvlEditWin()->LvlData.modified=true;
             }
 
-        }//if(item->data(3).toString()=="NewLayer")
+        }//if(item->data(Qt::UserRole).toString()=="NewLayer")
         else
         {
             QString layerName = item->text();
             QString oldLayerName = item->text();
-            //unsigned int layerArId = (unsigned int)item->data(3).toInt();
+            //unsigned int layerArId = (unsigned int)item->data(Qt::UserRole).toInt();
             bool layerVisible = (item->checkState()==Qt::Checked);
 
             ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
 
-            //Find layer enrty in array and apply settings
-            /*for(int i=0; i < activeLvlEditWin()->LvlData.layers.size(); i++)
-            {
-                if( activeLvlEditWin()->LvlData.layers[i].array_id==layerArId )
-                {
-                    oldLayerName = activeLvlEditWin()->LvlData.layers[i].name;
-                    activeLvlEditWin()->LvlData.layers[i].name = layerName;
-                    activeLvlEditWin()->LvlData.layers[i].hidden = !layerVisible;
-                    break;
-                }
-            }*/
-            //Apply layer's name/visibly to all items
-            //ModifyLayer(oldLayerName, layerName, layerVisible);
-
-            /*
-            QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
-
-            for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
-            {
-                if((*it)->data(0).toString()=="Block")
-                {
-                    if(((ItemBlock *)(*it))->blockData.layer!=oldLayerName)
-                        continue;
-                    ((ItemBlock *)(*it))->blockData.layer = layerName;
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                if((*it)->data(0).toString()=="BGO")
-                {
-                    if(((ItemBGO *)(*it))->bgoData.layer!=oldLayerName)
-                        continue;
-                    ((ItemBGO *)(*it))->bgoData.layer = layerName;
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                if((*it)->data(0).toString()=="NPC")
-                {
-                    if(((ItemNPC *)(*it))->npcData.layer!=oldLayerName)
-                        continue;
-                    ((ItemNPC *)(*it))->npcData.layer = layerName;
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                if((*it)->data(0).toString()=="Water")
-                {
-                    //if(((ItemWater *)(*it))->waterData.layer!=oldLayerName)
-                    //    continue;
-                    //((ItemWater *)(*it))->waterData.layer = layerName;
-                    //(*it)->setVisible(layerVisible);
-                }
-                else
-                if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
-                {
-                    //if(((ItemDoor *)(*it))->doorData.layer!=oldLayerName)
-                    //    continue;
-                    //((ItemDoor *)(*it))->doorData.layer = layerName;
-                    //(*it)->setVisible(layerVisible);
-                }
-            }
-            */
             activeLvlEditWin()->LvlData.modified=true;
         }
 
@@ -888,30 +830,6 @@ void MainWindow::on_RemoveLayer_clicked()
     if(ui->LvlLayerList->selectedItems().isEmpty()) return;
 
     RemoveCurrentLayer(true);
-   /*
-   QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
-
-   if(selected.isEmpty()) return;
-
-   if(selected[0]->text()=="Destroyed Blocks") return;
-   if(selected[0]->text()=="Spawned NPCs") return;
-   if(selected[0]->text()=="Default") return;
-
-   int WinType = activeChildWindow();
-
-   if (WinType==1)
-   {
-       for(int i=0;i< activeLvlEditWin()->LvlData.layers.size(); i++)
-       {
-           if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)selected[0]->data(3).toInt() )
-           {
-               activeLvlEditWin()->LvlData.layers.remove(i);
-               delete selected[0];
-               break;
-           }
-       }
-   }
-    */
 }
 
 
@@ -948,100 +866,6 @@ void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
         if(selected==removeLayer){
             RemoveCurrentLayer(false);
         }
-        /*
-        QString layerName = ui->LvlLayerList->selectedItems()[0]->text();
-        bool layerVisible = true;
-        bool saveItems = (selected==removeLayerOnly);
-
-        if(saveItems)
-        { //Find default layer visibly
-            foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
-            {
-                if( layer.name=="Default" )
-                {
-                    layerVisible=!layer.hidden;
-                    break;
-                }
-            }
-        }
-
-
-        //Apply layer's name/visibly to all items
-        QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
-
-        for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
-        {
-            if((*it)->data(0).toString()=="Block")
-            {
-                if(((ItemBlock *)(*it))->blockData.layer!=layerName)
-                    continue;
-                if(saveItems)
-                {
-                    ((ItemBlock *)(*it))->blockData.layer = "Default";
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                {
-                    ((ItemBlock *)(*it))->removeFromArray();
-                    activeLvlEditWin()->scene->removeItem((*it));
-                }
-            }
-            else
-            if((*it)->data(0).toString()=="BGO")
-            {
-                if(((ItemBGO *)(*it))->bgoData.layer!=layerName)
-                    continue;
-                if(saveItems)
-                {
-                    ((ItemBGO *)(*it))->bgoData.layer = "Default";
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                {
-                    ((ItemBGO *)(*it))->removeFromArray();
-                    activeLvlEditWin()->scene->removeItem((*it));
-                }
-            }
-            else
-            if((*it)->data(0).toString()=="NPC")
-            {
-                if(((ItemNPC *)(*it))->npcData.layer!=layerName)
-                    continue;
-                if(saveItems)
-                {
-                    ((ItemNPC *)(*it))->npcData.layer = "Default";
-                    (*it)->setVisible(layerVisible);
-                }
-                else
-                {
-                    ((ItemNPC *)(*it))->removeFromArray();
-                    activeLvlEditWin()->scene->removeItem((*it));
-                }
-            }
-            else
-            if((*it)->data(0).toString()=="Water")
-            {
-                //if(((ItemWater *)(*it))->waterData.layer!=layerName)
-                //    continue;
-                //((ItemWater *)(*it))->waterData.layer = layerName;
-                //(*it)->setVisible(layerVisible);
-            }
-            else
-            if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
-            {
-                //if(((ItemDoor *)(*it))->doorData.layer!=layerName)
-                //    continue;
-                //((ItemDoor *)(*it))->doorData.layer = layerName;
-                //(*it)->setVisible(layerVisible);
-            }
-        }
-        activeLvlEditWin()->LvlData.modified=true;
-
-
-        on_RemoveLayer_clicked();
-        */
     }
-
-
 }
 

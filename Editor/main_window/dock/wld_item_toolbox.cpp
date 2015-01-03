@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -228,6 +228,14 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
+    {//Place zero music item <Silence>
+        item = new QListWidgetItem();
+        item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+        item->setText( tr("[Silence]") );
+        item->setData(3, QString::number(0) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+        ui->WLD_MusicList->addItem( item );
+    };
     foreach(obj_music musicItem, configs.main_music_wld)
     {
             item = new QListWidgetItem();

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -616,6 +616,7 @@ public:
 // ///////////////Level Item Properties box //////////////////
     public:
         void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
+        void LvlItemProps_updateLayer(QString lname="");
         void LvlItemProps_hide();
 
         long blockPtr;  //!< ArrayID of editing item (-1 - use system)
@@ -870,7 +871,7 @@ public:
         void on_DoorsToolbox_visibilityChanged(bool visible);
 
         void on_WarpList_currentIndexChanged(int index); //Door list
-
+        void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
         void on_WarpAdd_clicked();
         void on_WarpRemove_clicked();
         void on_WarpSetEntrance_clicked();
@@ -896,6 +897,8 @@ public:
         void on_WarpLevelFile_editingFinished();
         void on_WarpToExitNu_valueChanged(int arg1);
         void on_WarpBrowseLevels_clicked();
+    private:
+        bool lockWarpSetSettings;
 // ////////////////////////////////////////////////////////
 
 
@@ -1096,9 +1099,10 @@ private slots:
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
+    public:
+    public slots:
+    protected:
     private slots:
-
-
 
 signals:
     void closeEditor();

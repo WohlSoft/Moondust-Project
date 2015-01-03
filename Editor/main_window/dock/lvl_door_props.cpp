@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,6 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-
-bool lockSetSettings=false;
-
 
 void MainWindow::on_DoorsToolbox_visibilityChanged(bool visible)
 {
@@ -83,10 +80,14 @@ void MainWindow::setDoorData(long index)
     else
         cIndex = index;
 
-    lockSetSettings=true;
+    lockWarpSetSettings=true;
 
     int WinType = activeChildWindow();
-    if (WinType==1)
+
+    qDebug() << "Current warp indes is " << ui->WarpList->currentIndex();
+    qDebug() << "Activated windows type is " << WinType;
+
+    if(WinType==1)
     {
         if( (activeLvlEditWin()->LvlData.doors.size() > 0) && (cIndex < activeLvlEditWin()->LvlData.doors.size()) )
         {
@@ -116,6 +117,13 @@ void MainWindow::setDoorData(long index)
 
                     ui->WarpEntranceGrp->setEnabled(  door.type==1 );
                     ui->WarpExitGrp->setEnabled( door.type==1 );
+
+                    ui->WarpLayer->setEnabled(true);
+                    for(int i=0; i<ui->WarpLayer->count();i++)
+                    {
+                        if(ui->WarpLayer->itemData(i).toString()==door.layer)
+                        { ui->WarpLayer->setCurrentIndex(i); break;}
+                    }
 
                     switch(door.idirect)
                     { //Entrance direction: [3] down, [1] up, [2] left, [4] right
@@ -202,6 +210,8 @@ void MainWindow::setDoorData(long index)
             ui->WarpNeedAStars->setEnabled(false);
             ui->WarpNeedAStars->setValue(0);
 
+            ui->WarpLayer->setEnabled(false);
+
             ui->WarpEntranceGrp->setEnabled(false);
             ui->WarpExitGrp->setEnabled(false);
 
@@ -222,7 +232,7 @@ void MainWindow::setDoorData(long index)
 
         }
     }
-    lockSetSettings=false;
+    lockWarpSetSettings=false;
 }
 
 
@@ -234,6 +244,7 @@ void MainWindow::on_WarpList_currentIndexChanged(int index)
 {
     setDoorData(index);
 }
+
 
 /*
 void MainWindow::on_goToWarpDoor_clicked()
@@ -421,6 +432,29 @@ void MainWindow::on_WarpSetExit_clicked()
 }
 
 
+void MainWindow::on_WarpLayer_currentIndexChanged(const QString &arg1)
+{
+    if(lockWarpSetSettings) return;
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        LevelEdit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].layer = arg1; break;
+            }
+        }
+        //edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_LAYER, QVariant(arg1));
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
+        edit->scene->applyLayersVisible();
+    }
+}
+
+
 //////////// Flags///////////
 void MainWindow::on_WarpNoYoshi_clicked(bool checked)
 {
@@ -438,7 +472,6 @@ void MainWindow::on_WarpNoYoshi_clicked(bool checked)
         }
         edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_NOYOSHI, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
-
     }
 }
 void MainWindow::on_WarpAllowNPC_clicked(bool checked)
@@ -484,7 +517,7 @@ void MainWindow::on_WarpLock_clicked(bool checked)
 
 void MainWindow::on_WarpType_currentIndexChanged(int index)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -512,7 +545,7 @@ void MainWindow::on_WarpType_currentIndexChanged(int index)
 
 void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -539,7 +572,7 @@ void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 /////////Entrance Direction/////////////////
 void MainWindow::on_Entr_Down_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -563,7 +596,7 @@ void MainWindow::on_Entr_Down_clicked()
 }
 void MainWindow::on_Entr_Right_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -587,7 +620,7 @@ void MainWindow::on_Entr_Right_clicked()
 
 void MainWindow::on_Entr_Up_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -610,7 +643,7 @@ void MainWindow::on_Entr_Up_clicked()
 }
 void MainWindow::on_Entr_Left_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -635,7 +668,7 @@ void MainWindow::on_Entr_Left_clicked()
 /////////Exit Direction/////////////////
 void MainWindow::on_Exit_Up_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -659,7 +692,7 @@ void MainWindow::on_Exit_Up_clicked()
 
 void MainWindow::on_Exit_Left_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -683,7 +716,7 @@ void MainWindow::on_Exit_Left_clicked()
 
 void MainWindow::on_Exit_Down_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -707,7 +740,7 @@ void MainWindow::on_Exit_Down_clicked()
 
 void MainWindow::on_Exit_Right_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -733,7 +766,7 @@ void MainWindow::on_Exit_Right_clicked()
 
 void MainWindow::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg1)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     if(!ui->WarpToMapX->isModified()) return;
     ui->WarpToMapX->setModified(false);
@@ -764,7 +797,7 @@ void MainWindow::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
 
 void MainWindow::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg1)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     if(!ui->WarpToMapY->isModified()) return;
     ui->WarpToMapY->setModified(false);
@@ -795,7 +828,7 @@ void MainWindow::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg
 
 void MainWindow::on_WarpGetXYFromWorldMap_clicked()
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     // QMessageBox::information(this, "Comming soon", "Selecting point from world map comming with WorldMap Editor in next versions of this programm", QMessageBox::Ok);
 
@@ -900,7 +933,7 @@ void MainWindow::on_WarpGetXYFromWorldMap_clicked()
 /////Door mode (Level Entrance / Level Exit)
 void MainWindow::on_WarpLevelExit_clicked(bool checked)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -961,7 +994,7 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
 
 void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -1040,7 +1073,7 @@ void MainWindow::on_WarpBrowseLevels_clicked()
 
 void MainWindow::on_WarpLevelFile_editingFinished()//_textChanged(const QString &arg1)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     if(!ui->WarpLevelFile->isModified()) return;
     ui->WarpLevelFile->setModified(false);
@@ -1062,7 +1095,7 @@ void MainWindow::on_WarpLevelFile_editingFinished()//_textChanged(const QString 
 }
 void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
 {
-    if(lockSetSettings) return;
+    if(lockWarpSetSettings) return;
 
     int WinType = activeChildWindow();
     if (WinType==1)

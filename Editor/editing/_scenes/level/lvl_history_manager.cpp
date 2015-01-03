@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -4091,6 +4091,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_DIRECTION: return tr("Direction");
     case SETTING_CHANGENPC: return tr("Included NPC");
     case SETTING_WATERTYPE: return tr("Water Type");
+    case SETTING_LAYER: return tr("Layer");
     case SETTING_NOYOSHI: return tr("No Yoshi");
     case SETTING_ALLOWNPC: return tr("Allow NPC");
     case SETTING_LOCKED: return tr("Locked");

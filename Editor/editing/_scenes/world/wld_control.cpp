@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
     { return; }
 
-    if(EditingMode!=MODE_SetPoint)
+    if( ((EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly)) && (EditingMode!=MODE_SetPoint))
         MainWinConnect::pMainWin->WldItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
