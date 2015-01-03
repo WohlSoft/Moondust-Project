@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,7 +116,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     { return; }
 
     //Close properties box
-    MainWinConnect::pMainWin->LvlItemProps_hide();
+    if( (EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly) )
+        MainWinConnect::pMainWin->LvlItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 

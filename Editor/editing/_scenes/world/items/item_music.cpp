@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,8 +151,11 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
                 title->setEnabled(false);
+            }else if(musicData.id==0)
+            {
+                QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
+                title->setEnabled(false);
             }
-
             QAction *play = ItemMenu.addAction(tr("Play this"));
                 ItemMenu.addSeparator();
             QAction *copyTile = ItemMenu.addAction(tr("Copy"));
