@@ -184,7 +184,7 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             //Add to Index
             if(i <= (unsigned int)index_wlvl.size())
             {
-                index_wlvl[i].i = i-1;
+                index_wlvl[i].i = i;
             }
 
         skipLevel:
