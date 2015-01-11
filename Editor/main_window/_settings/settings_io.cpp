@@ -113,6 +113,11 @@ void MainWindow::loadSettings()
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
+        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+
     settings.endGroup();
 
     settings.beginGroup("Recent");
