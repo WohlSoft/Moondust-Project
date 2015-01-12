@@ -18,6 +18,7 @@
 
 #include <editing/_dialogs/levelfilelist.h>
 #include <file_formats/file_formats.h>
+#include <common_features/mainwinconnect.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -286,8 +287,18 @@ namespace starCounter
             if( !getLevelHead.ReadFileValid ) return 0;
 
             //qDebug() << "world "<< getLevelHead.stars << getLevelHead.filename;
-            starCount += getLevelHead.stars;
-            //qDebug() << "starCount "<<starCount;
+
+            int foundStars=0;
+            //Mark all stars
+            for(int q=0; q< getLevelHead.npc.size(); q++)
+            {
+               int id = MainWinConnect::pMainWin->configs.getNpcI(getLevelHead.npc[q].id);
+               if(id<0) continue;
+               getLevelHead.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[id].is_star;
+               if((getLevelHead.npc[q].is_star)&&(!getLevelHead.npc[q].friendly))
+                    foundStars++;
+            }
+            starCount += foundStars;//getLevelHead.stars;
 
             for(int i=0;i<getLevelHead.doors.size(); i++)
             {
@@ -334,11 +345,15 @@ void MainWindow::on_WLD_DoCountStars_clicked()
     {
         QString __backUP;
         __backUP = ui->WLD_DoCountStars->text();
+
         ui->WLD_DoCountStars->setEnabled(false);
         ui->WLD_DoCountStars->setText(tr("Counting..."));
 
         WorldEdit * edit = activeWldEditWin();
         dirPath = edit->WldData.path;
+
+        //Stop animations to increase performance
+        edit->scene->stopAnimation();
 
         QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), this);
              progress.setWindowTitle(tr("Counting stars..."));
@@ -390,6 +405,10 @@ void MainWindow::on_WLD_DoCountStars_clicked()
             if(progress.wasCanceled()) break;
             qApp->processEvents();
         }
+
+        //Start animations again
+        if(edit->scene->opts.animationEnabled)
+            edit->scene->startAnimation();
 
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);
