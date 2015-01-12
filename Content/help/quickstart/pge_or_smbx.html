@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>PGE or SMBX? What difference?</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<a/>
+<h1 style="text-align: center">PGE or SMBX? What difference?</h1>
+<img alt="" height="223" src="PGEorSMBX.png" style="float: left" width="283" />
+<p>&nbsp;</p>
+<p>First of all:</p>
+<p><strong>SMBX</strong> - is a game with internal engine which written in 
+Visual Basic 6 and working on Windows PC. First version was out in 2009'th year 
+and development was stopped in 2011'th year. SMBX uses united application for a 
+game engine and editing system.</p>
+<p>&nbsp;</p>
+<p><strong>PGE</strong> - is a full featured game engine written in C++ which 
+based on researched tech stuff of SMBX engine and fully compatible with them: 
+you can open and save it's levels, worlds and othe stuff. With SMBX64 
+standardized configuration packaged is able to play original SMBX levels and 
+episodes!</p>
+<p>PGE started in edge between 2013 and 2014'th years. PGE have multiple 
+components: editor, engine and additional helpful tools. PGE is new and more 
+progressive system than original SMBX Engine. In development process was solved 
+already exists in the original SMBX problems and issues which was in them. PGE 
+Editor have support of more features, more faster, flexible and universal.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>This is a table which compares SMBX and PGE's editors:</p>
+<p>&nbsp;</p>
+<p>
+<table class="tbl">
+	<thead>
+		<tr>
+			<th class="headerSort" role="columnheader button" tabindex="0" title="Упорядочить по возрастанию">
+			feature </th>
+			<th class="headerSort" role="columnheader button" tabindex="0" title="Упорядочить по возрастанию">
+			SMBX internal editor </th>
+			<th class="headerSort" role="columnheader button" tabindex="0" title="Упорядочить по возрастанию">
+			PGE Editor </th>
+		</tr>
+	</thead>
+	<tr>
+		<th>Selection </th>
+		<td>Drag one item with switching into placing mode </td>
+		<td>Multiselection with moving groups of items, also with "no collision" 
+		thing you can place items over each other </td>
+	</tr>
+	<tr>
+		<th>Placing </th>
+		<td>Single items only (brush),<br />
+		Flood-fill (level blocks only) </td>
+		<td>Single-placing (brush),<br />
+		Rectangle draw,<br />
+		Line draw,<br />
+		Flood fill,<br />
+		Placing with overwrite mode.<br />
+		Sizable blocks
+		<p>drawing be rectangle drawing.<br />
+		Sizable blocks can be resized. </p>
+		</td>
+	</tr>
+	<tr>
+		<th>Cliboard </th>
+		<td>None </td>
+		<td>Supports copy/cut/paste of blocks, BGOs, NPC,s PhysEnvZones(water) 
+		for level editor and Tiles, Sceneries, Paths, Musicboxes, Level points 
+		for world map editor. </td>
+	</tr>
+	<tr>
+		<th>Position bookmarks </th>
+		<td>None </td>
+		<td>Yes </td>
+	</tr>
+	<tr>
+		<th>Advanced </th>
+		<td>None </td>
+		<td>Flip, Rotate, align selected items;<br />
+		Duplicating/switching pick-up of item to place with middle mouse button
+		</td>
+	</tr>
+	<tr>
+		<th>Layers </th>
+		<td>You can't drag layers in list for sort and renaming of layer will 
+		cause lose of connections (events, NPC's attaching) </td>
+		<td>You can drag layers in list for make them more orderer, when you 
+		rename layer, connections will be SAVED </td>
+	</tr>
+	<tr>
+		<th>Events </th>
+		<td>Renaming of event causing lose of connections. To define the 
+		settings by event you should edit settings of current section and you 
+		will "capture" them into event, after them you can edit section settings 
+		back </td>
+		<td>You also can drag events in list, and renaming of event SAVING ALL 
+		CONNECTIONS. Also you shoundn't edit section settings to define "Change 
+		settings" event. You can define any section settings in the same event 
+		without changing of current section settings. </td>
+	</tr>
+	<tr>
+		<th>ItemBox </th>
+		<td>Static tileset UI-integrated item-box. All settings switches in one 
+		item box, you can't edit tilesets. </td>
+		<td>You have list-styled item box with filter search and editable 
+		tileset item box for your combos of items. All tilesets is an INI files 
+		in the configuration package. </td>
+	</tr>
+	<tr>
+		<th>Properties and settings of items </th>
+		<td>To edit settings of one item you should drag them from map and place 
+		again after changing of the settings. </td>
+		<td>You can call context menu to edit some settings and you can edit 
+		full settings by "Properties box". You CAN add selected items into layer 
+		or you can create new layer for selected items. </td>
+	</tr>
+	<tr>
+		<th>Warps </th>
+		<td>You can only place warp points with its settings. List of warps is 
+		hidden. </td>
+		<td>Entry-style warps. You have list of available warps in the level. To 
+		place warp points, you should create warp entry for them. Available to 
+		jump between warp points, open target level file, also you can choice 
+		target point from world map directly to create "warp to world". </td>
+	</tr>
+	<tr>
+		<th>Resizing of items </th>
+		<td>Is not available, you should remove item and place again with new 
+		size settings. </td>
+		<td>You can resize item in the interactive mode by moving of corner/side 
+		grabbers to define new size of item. </td>
+	</tr>
+	<tr>
+		<th>Screenshots </th>
+		<td>Current view port only. </td>
+		<td>You can export into the image file a whole section of the level or 
+		selected range of the world map. </td>
+	</tr>
+	<tr>
+		<th>Custom GFX Sizes </th>
+		<td>Image sizes of the custom graphics should have same size which have 
+		original sprite. </td>
+		<td>You can use images with any sizes as custom graphics for your items. 
+		Item sizes will be captured from image size dynamically. </td>
+	</tr>
+	<tr>
+		<th>Render of alpha-channel </th>
+		<td>"AND" color mixing algorith for make transparency images. 
+		Semi-transparency images will have color glitches. </td>
+		<td>Support of the Alpha-channel. Semi-transparent images will be 
+		rendered correctly without any glitches. </td>
+	</tr>
+	<tr>
+		<th>Scrolling </th>
+		<td>Arrow keys only </td>
+		<td>Arrow keys, Mouse Wheel, Scroll bar scrolling. </td>
+	</tr>
+	<tr>
+		<th>Position saving </th>
+		<td>Position will be reset when you switch section </td>
+		<td>Position for each section will be saved and will be restored when 
+		you will switch in the section back. If you lost in the big space, you 
+		can return back by compass button. </td>
+	</tr>
+	<tr>
+		<th>Zoom </th>
+		<td>None </td>
+		<td>Alt-key and mouse-wheel for zoom in/out </td>
+	</tr>
+	<tr>
+		<th>Animation </th>
+		<td>Playing always </td>
+		<td>Possible to disable/enable animations </td>
+	</tr>
+	<tr>
+		<th>Viewport size </th>
+		<td>Fixed 800x600 px </td>
+		<td>Variable, equal to window size, can be resized. </td>
+	</tr>
+	<tr>
+		<th>Multi Document Interface (MDI) </th>
+		<td>One file only </td>
+		<td>Multiple files. </td>
+	</tr>
+	<tr>
+		<th>Open file </th>
+		<td>From "Open" dialog only </td>
+		<td>- From "Open" dialog,
+		<p>- by drag&amp;drop into editor, - open from command line (is able to 
+		associate files with editor). </p>
+		</td>
+	</tr>
+	<tr>
+		<th style="height: 25px">History manager </th>
+		<td style="height: 25px">None </td>
+		<td style="height: 25px">Undo/Redo almost any actions: place, remove, 
+		move, change settings, modify, resize. </td>
+	</tr>
+</table>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p><a class="back_link" href="../Editor_QuickStart.html">&lt;&lt; Back</a></p><br />
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
+Wohlstand project. All rights reserved.</p>
+
+</body>
+
+</html>

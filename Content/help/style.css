@@ -27,3 +27,14 @@ a{
 	font-weight:bold;
 	color: red;	
 }
+
+table.tbl
+{
+	border-collapse: collapse;
+	border: 1px solid #000000;
+}
+
+.tbl td,.tbl th
+{
+	border: 1px solid #000000;
+}
