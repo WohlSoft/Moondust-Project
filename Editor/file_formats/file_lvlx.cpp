@@ -35,7 +35,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
 }
 
-LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
+LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bool sielent)
 {
     FileStringList in;
     in.addData( RawData );
@@ -1664,7 +1664,8 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+    if(!sielent)
+        BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -1689,12 +1690,14 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
     }
 
     //HEAD section
-    TextData += "HEAD\n";
-    TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
-    TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
-    TextData += "\n";
-    TextData += "HEAD_END\n";
-
+    if( (!FileData.LevelName.isEmpty())||(FileData.stars>0) )
+    {
+        TextData += "HEAD\n";
+        TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.LevelName)); // Level title
+        TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
+        TextData += "\n";
+        TextData += "HEAD_END\n";
+    }
 
     //////////////////////////////////////MetaData////////////////////////////////////////////////
     //Bookmarks
@@ -1753,8 +1756,9 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
 
     //SECTION section
-    TextData += "SECTION\n";
 
+    //Count available level sections
+    int totalSections=0;
     for(i=0; i< FileData.sections.size(); i++)
     {
         if(
@@ -1764,48 +1768,77 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 (FileData.sections[i].size_top==0)
            )
             continue; //Skip unitialized sections
-        TextData += PGEFile::value("SC", PGEFile::IntS(FileData.sections[i].id));  // Section ID
-        TextData += PGEFile::value("L", PGEFile::IntS(FileData.sections[i].size_left));  // Left size
-        TextData += PGEFile::value("R", PGEFile::IntS(FileData.sections[i].size_right));  // Right size
-        TextData += PGEFile::value("T", PGEFile::IntS(FileData.sections[i].size_top));  // Top size
-        TextData += PGEFile::value("B", PGEFile::IntS(FileData.sections[i].size_bottom));  // Bottom size
-
-        TextData += PGEFile::value("MZ", PGEFile::IntS(FileData.sections[i].music_id));  // Music ID
-        TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.sections[i].music_file));  // Music file
-
-        TextData += PGEFile::value("BG", PGEFile::IntS(FileData.sections[i].background));  // Background ID
-        //TextData += PGEFile::value("BG", PGEFile::qStrS(FileData.sections[i].background_file));  // Background file
-
-        if(FileData.sections[i].IsWarp)
-            TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].IsWarp));  // Connect sides
-        if(FileData.sections[i].OffScreenEn)
-            TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
-        if(FileData.sections[i].noback)
-            TextData += PGEFile::value("SR", PGEFile::BoolS(FileData.sections[i].noback));  // Right-way scroll only (No Turn-back)
-        if(FileData.sections[i].underwater)
-            TextData += PGEFile::value("UW", PGEFile::BoolS(FileData.sections[i].underwater));  // Underwater bit
-        //TextData += PGEFile::value("SL", PGEFile::BoolS(FileData.sections[i].noforward));  // Left-way scroll only (No Turn-forward)
-        TextData += "\n";
+        totalSections++;
     }
-    TextData += "SECTION_END\n";
+
+    //Don't store section data entry if no data to add
+    if(totalSections>0)
+    {
+        TextData += "SECTION\n";
+        for(i=0; i< FileData.sections.size(); i++)
+        {
+            if(
+                    (FileData.sections[i].size_bottom==0) &&
+                    (FileData.sections[i].size_left==0) &&
+                    (FileData.sections[i].size_right==0) &&
+                    (FileData.sections[i].size_top==0)
+               )
+                continue; //Skip unitialized sections
+            TextData += PGEFile::value("SC", PGEFile::IntS(FileData.sections[i].id));  // Section ID
+            TextData += PGEFile::value("L", PGEFile::IntS(FileData.sections[i].size_left));  // Left size
+            TextData += PGEFile::value("R", PGEFile::IntS(FileData.sections[i].size_right));  // Right size
+            TextData += PGEFile::value("T", PGEFile::IntS(FileData.sections[i].size_top));  // Top size
+            TextData += PGEFile::value("B", PGEFile::IntS(FileData.sections[i].size_bottom));  // Bottom size
+
+            TextData += PGEFile::value("MZ", PGEFile::IntS(FileData.sections[i].music_id));  // Music ID
+            TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.sections[i].music_file));  // Music file
+
+            TextData += PGEFile::value("BG", PGEFile::IntS(FileData.sections[i].background));  // Background ID
+            //TextData += PGEFile::value("BG", PGEFile::qStrS(FileData.sections[i].background_file));  // Background file
+
+            if(FileData.sections[i].IsWarp)
+                TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].IsWarp));  // Connect sides
+            if(FileData.sections[i].OffScreenEn)
+                TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
+            if(FileData.sections[i].noback)
+                TextData += PGEFile::value("SR", PGEFile::BoolS(FileData.sections[i].noback));  // Right-way scroll only (No Turn-back)
+            if(FileData.sections[i].underwater)
+                TextData += PGEFile::value("UW", PGEFile::BoolS(FileData.sections[i].underwater));  // Underwater bit
+            //TextData += PGEFile::value("SL", PGEFile::BoolS(FileData.sections[i].noforward));  // Left-way scroll only (No Turn-forward)
+            TextData += "\n";
+        }
+        TextData += "SECTION_END\n";
+    }
 
     //STARTPOINT section
-    TextData += "STARTPOINT\n";
+    int totalPlayerPoints=0;
     for(i=0; i< FileData.players.size(); i++)
     {
         if((FileData.players[i].w==0)&&
            (FileData.players[i].h==0))
             continue; //Skip empty points
-
-        TextData += PGEFile::value("ID", PGEFile::IntS(FileData.players[i].id));  // Player ID
-        TextData += PGEFile::value("X", PGEFile::IntS(FileData.players[i].x));  // Player X
-        TextData += PGEFile::value("Y", PGEFile::IntS(FileData.players[i].y));  // Player Y
-        TextData += PGEFile::value("D", PGEFile::IntS(FileData.players[i].direction));  // Direction -1 left, 1 right
-
-        TextData += "\n";
+        totalPlayerPoints++;
     }
-    TextData += "STARTPOINT_END\n";
 
+    //Don't store section data entry if no data to add
+    if(totalPlayerPoints>0)
+    {
+        TextData += "STARTPOINT\n";
+        for(i=0; i< FileData.players.size(); i++)
+        {
+            if((FileData.players[i].w==0)&&
+               (FileData.players[i].h==0))
+                continue; //Skip empty points
+
+            TextData += PGEFile::value("ID", PGEFile::IntS(FileData.players[i].id));  // Player ID
+            TextData += PGEFile::value("X", PGEFile::IntS(FileData.players[i].x));  // Player X
+            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.players[i].y));  // Player Y
+            TextData += PGEFile::value("D", PGEFile::IntS(FileData.players[i].direction));  // Direction -1 left, 1 right
+
+            TextData += "\n";
+        }
+        TextData += "STARTPOINT_END\n";
+    }
 
     //BLOCK section
     if(!FileData.blocks.isEmpty())

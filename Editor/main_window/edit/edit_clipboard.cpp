@@ -18,6 +18,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <file_formats/file_formats.h>
 
 //Copy
 void MainWindow::on_actionCopy_triggered()
@@ -31,6 +32,8 @@ void MainWindow::on_actionCopy_triggered()
        q3 += LvlBuffer.npc.size();
        q4 += LvlBuffer.physez.size();
        statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
+       //Save buffer into external clipboard in PGE-X format
+       QApplication::clipboard()->setText(FileFormats::WriteExtendedLvlFile(LvlBuffer));
     }
     else
     if (activeChildWindow()==3) //if active window is a worldEditor
@@ -42,6 +45,8 @@ void MainWindow::on_actionCopy_triggered()
        q4 += WldBuffer.levels.size();
        q5 += WldBuffer.music.size();
        statusBar()->showMessage(tr("%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard").arg(q1).arg(q2).arg(q3).arg(q4).arg(q5), 2000);
+       //Save buffer into external clipboard in PGE-X format
+       QApplication::clipboard()->setText(FileFormats::WriteExtendedWldFile(WldBuffer));
     }
 }
 
@@ -58,6 +63,7 @@ void MainWindow::on_actionCut_triggered()
        q3 += LvlBuffer.npc.size();
        q4 += LvlBuffer.physez.size();
        statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
+       QApplication::clipboard()->setText(FileFormats::WriteExtendedLvlFile(LvlBuffer));
     }
     else
     if (activeChildWindow()==3) //if active window is a worldEditor
@@ -69,6 +75,7 @@ void MainWindow::on_actionCut_triggered()
        q4 += WldBuffer.levels.size();
        q5 += WldBuffer.music.size();
        statusBar()->showMessage(tr("%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard").arg(q1).arg(q2).arg(q3).arg(q4).arg(q5), 2000);
+       QApplication::clipboard()->setText(FileFormats::WriteExtendedWldFile(WldBuffer));
     }
 }
 
@@ -77,6 +84,10 @@ void MainWindow::on_actionPaste_triggered()
 {
     if (activeChildWindow()==1)
     {
+        LevelData tmp;
+        tmp = FileFormats::ReadExtendedLvlFile(QApplication::clipboard()->text(), "<clipboard>", true);
+        if(tmp.ReadFileValid)
+            LvlBuffer = tmp;
         if
         (   //if buffer is empty
                 (LvlBuffer.blocks.size()==0)&&
@@ -88,6 +99,11 @@ void MainWindow::on_actionPaste_triggered()
     else
     if (activeChildWindow()==3)
     {
+        WorldData tmp;
+        tmp = FileFormats::ReadExtendedWldFile(QApplication::clipboard()->text(), "<clipboard>", true);
+        if(tmp.ReadFileValid)
+            WldBuffer = tmp;
+
         if
         (   //if buffer is empty
                 (WldBuffer.tiles.size()==0)&&

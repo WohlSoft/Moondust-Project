@@ -100,7 +100,7 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
     return ReadSMBX64WldFile( in.readAll(), inf.fileName() );
 }
 
-WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
+WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent)
 {
     FileStringList in;
     in.addData( RawData );
@@ -466,7 +466,8 @@ FileData.ReadFileValid=true;
 return FileData;
 
 badfile:    //If file format not corrects
-    BadFileMsg(FileData.path, str_count, line);
+    if(!sielent)
+        BadFileMsg(FileData.path, str_count, line);
     FileData.ReadFileValid=false;
 return FileData;
 }

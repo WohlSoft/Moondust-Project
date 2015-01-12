@@ -70,7 +70,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
 }
 
-LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
+LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool sielent)
 {
     FileStringList in;
     in.addData( RawData );
@@ -1175,7 +1175,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
+    if(!sielent)
+        BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
