@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=/d/MinGW/msys/1.0/build/SDL/lib
+includedir=/d/MinGW/msys/1.0/build/SDL/include
+
+Name: SDL2_mixer
+Description: mixer library for Simple DirectMedia Layer
+Version: 2.0.0
+Requires: sdl2 >= 2.0.0
+Libs: -L${libdir} -lSDL2_mixer
+Cflags: -I${includedir}/SDL2
+
