@@ -209,12 +209,13 @@ decode_frame(mad_data *mp3_mad) {
     else
     {
         mad_doResample=0;
-        //mp3_mad->frame.header.samplerate = mad_target_samplerate;
+        mp3_mad->frame.header.samplerate = mad_target_samplerate;
     }
 
     /* The first frame determines some key properties of the stream.
        In particular, it tells us enough to set up the convert
        structure now. */
+
     SDL_BuildAudioCVT(&mp3_mad->cvt, AUDIO_S16, pcm->channels, mp3_mad->frame.header.samplerate, mp3_mad->mixer.format, mp3_mad->mixer.channels, mp3_mad->mixer.freq);
   }
 
@@ -226,7 +227,6 @@ decode_frame(mad_data *mp3_mad) {
   if(mad_doResample!=0)
   {
       nchannels = pcm->channels;
-
       nsamples = mad_resample_block(&mad_resampler_state_left, pcm->length,
               pcm->samples[0],
                 left_ch);
