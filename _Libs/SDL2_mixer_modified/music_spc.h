@@ -28,7 +28,12 @@
 
 /* This file supports MOD tracker music streams */
 
-struct SNES_SPC;
+struct MUSIC_SPC
+{
+    int playing;
+    int volume;
+    int spc_t_sample_rate;
+};
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
@@ -39,28 +44,28 @@ extern int SPC_init(SDL_AudioSpec *mixer);
 extern void SPC_exit(void);
 
 /* Set the volume for a MOD stream */
-extern void SPC_setvolume(struct SNES_SPC *music, int volume);
+extern void SPC_setvolume(struct MUSIC_SPC *music, int volume);
 
 /* Load a MOD stream from an SDL_RWops object */
-extern struct SNES_SPC *SPC_new_RW(SDL_RWops *rw, int freerw);
+extern struct MUSIC_SPC *SPC_new_RW(SDL_RWops *rw, int freerw);
 
 /* Start playback of a given MOD stream */
-extern void SPC_play(struct SNES_SPC *music);
+extern void SPC_play(struct MUSIC_SPC *music);
 
 /* Return non-zero if a stream is currently playing */
-extern int SPC_playing(struct SNES_SPC *music);
+extern int SPC_playing(struct MUSIC_SPC *music);
 
 /* Play some of a stream previously started with MOD_play() */
-extern int SPC_playAudio(struct SNES_SPC *music, Uint8 *stream, int len);
+extern int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len);
 
 /* Stop playback of a stream previously started with MOD_play() */
-extern void SPC_stop(struct SNES_SPC *music);
+extern void SPC_stop(struct MUSIC_SPC *music);
 
 /* Close the given MOD stream */
-extern void SPC_delete(struct SNES_SPC *music);
+extern void SPC_delete(struct MUSIC_SPC *music);
 
 /* Jump (seek) to a given position (time is in seconds) */
-extern void SPC_jump_to_time(struct SNES_SPC *music, double time);
+extern void SPC_jump_to_time(struct MUSIC_SPC *music, double time);
 
 #endif /* SPC_MUSIC */
 

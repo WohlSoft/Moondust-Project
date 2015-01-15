@@ -98,7 +98,7 @@ struct _Mix_Music {
         struct MODULE *module;
 #endif
 #ifdef SPC_MUSIC
-        struct SNES_SPC *snes_spcmus;
+        struct MUSIC_SPC *snes_spcmus;
 #endif
 #ifdef MID_MUSIC
 #ifdef USE_TIMIDITY_MIDI
