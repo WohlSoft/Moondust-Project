@@ -84,7 +84,6 @@ macx: {
 }
 
 win32: static: {
-    DEFINES += MIKMOD_STATIC
     LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
 }
 
