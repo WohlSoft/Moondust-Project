@@ -298,8 +298,10 @@ void SPC_stop(struct MUSIC_SPC *music)
 void SPC_delete(struct MUSIC_SPC *music)
 {
     if(music)
+    {
         music->playing=-1;
-    SDL_free(music);
+        free(music);
+    }
     SPC_exit();
 }
 
