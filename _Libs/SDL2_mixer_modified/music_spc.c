@@ -247,9 +247,9 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
     for(i=0,j=0; i<len;i+=2,j++)
     {
         Sint8 t;
-            t=(buf[j]*2)&0xff;
+            t=(buf[j])&0xff;
         dstt[i]=t;
-            t=(((buf[j]*2) >> 8) & 0xff);
+            t=(((buf[j]) >> 8) & 0xff);
         dstt[i+1]=t;
     }
 
