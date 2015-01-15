@@ -11,7 +11,7 @@ if '%1'=='full' upx.exe "%SOURCEDIR%\bin\LazyFixTool.exe"
 if '%1'=='full' upx.exe "%SOURCEDIR%\bin\PNG2GIFs.exe"
 if '%1'=='full' upx.exe "%SOURCEDIR%\bin\GIFs2PNG.exe"
 if '%1'=='full' upx.exe "%SOURCEDIR%\bin\pge_calibrator.exe"
-if '%1'=='full' upx.exe "%SOURCEDIR%\bin\pge_editor.exe"
+upx.exe "%SOURCEDIR%\bin\pge_editor.exe"
 if '%1'=='full' upx.exe "%SOURCEDIR%\bin\pge_engine.exe"
 copy "%SOURCEDIR%\bin\*.exe" "%TESTDIR%"
 rem if errorlevel 1 goto wrong
