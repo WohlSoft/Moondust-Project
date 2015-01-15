@@ -43,7 +43,9 @@ MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
             //MikMod (Modules)
             << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
             << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
-            << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni";
+            << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
+            //SNES SPC
+            << "*.spc";
 
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
