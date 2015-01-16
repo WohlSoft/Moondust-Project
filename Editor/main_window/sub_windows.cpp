@@ -110,6 +110,9 @@ WorldEdit *MainWindow::createWldChild()
     levelWindowP->update();
     ui->centralWidget->updateGeometry();
 
+    GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+    connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
+
     return child;
 }
 
