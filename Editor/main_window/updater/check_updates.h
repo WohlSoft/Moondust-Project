@@ -48,6 +48,13 @@ public:
     ~UpdateChecker();
     void startRequest(QUrl url);
 
+    enum VersionType
+    {
+        V_STABLE=0,
+        V_DEVEL
+    };
+
+
 private slots:
     void cancelDownload();
     void httpFinished();
@@ -67,9 +74,15 @@ private:
     bool httpRequestAborted;
     QByteArray buffer;
 
+    bool checkingInProcess;
+    QString _backup;
+    int which_version;
+
 private slots:
     void on_close_clicked();
     void on_CheckStable_clicked();
+
+    void on_CheckAlpha_clicked();
 
 private:
     Ui::UpdateChecker *ui;

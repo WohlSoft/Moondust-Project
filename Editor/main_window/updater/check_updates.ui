@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
+    <width>407</width>
     <height>317</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>407</width>
+    <height>317</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Check for updates</string>
@@ -96,6 +102,9 @@
      <property name="text">
       <string>Click to check updates</string>
      </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="11" column="0">
@@ -147,6 +156,9 @@
     <widget class="QLabel" name="updatesStable">
      <property name="text">
       <string>Click to check updates</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
