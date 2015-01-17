@@ -477,7 +477,8 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/wld_base_item.h \
     tools/debugger/custom_counter.h \
     tools/debugger/custom_counter_gui.h \
-    common_features/spash_screen.h
+    common_features/spash_screen.h \
+    editing/_components/history/ihistoryelement.h
 
 
 FORMS    += \
