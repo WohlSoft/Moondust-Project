@@ -144,7 +144,7 @@ void UpdateChecker::httpFinished()
     QVariant redirectionTarget = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     if (reply->error()) {
         buffer.clear();
-        QMessageBox::information(this, tr("HTTP"),
+        QMessageBox::warning(this, tr("HTTP"),
                                  tr("Check failed: %1.")
                                  .arg(reply->errorString()));
 
