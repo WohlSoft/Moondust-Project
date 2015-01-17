@@ -17,6 +17,6 @@ SET LINUXSERV2=\\172.16.0.12\root$\root\QTTest\PlatGEnWohl
 SET WINSERV1=\\172.16.0.5\c$\SMBX PlatGEnWohl Qt5
 SET WINSERV2=
 
-SET QTPATH=D:\DevTools\Qt\5.3.0\5.3\mingw482_32
+SET QTPATH=D:\DevTools\Qt\5.4.0\5.4\mingw491_32
 
 SET G_DRIVE=T:\home\Grive\PGE Project
