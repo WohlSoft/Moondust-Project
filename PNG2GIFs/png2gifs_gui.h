@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDialog>
-#include <QFuture>
+#include <QTimer>
 
 namespace Ui {
 class PNG2GIFsGUI;
@@ -20,18 +20,20 @@ public:
 protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent *e);
+    void closeEvent(QCloseEvent *event);
 
 private slots:
     void on_LabelDropFiles_clicked();
     void on_targetPathBrowse_clicked();
-    void doConversion(PNG2GIFsGUI *ptr);
+    static void doConversion(PNG2GIFsGUI *ptr);
+    void doLoop();
 
 private:
-    friend void doConversion(PNG2GIFsGUI *ptr);
+    friend  void doConversion(PNG2GIFsGUI *ptr);
     Ui::PNG2GIFsGUI *ui;
     bool isConverting;
     QStringList ConversionTask;
-    QFuture<void> taskFuture;
+    QTimer loop;
 };
 
 #endif // PNG2GIFS_GUI_H
