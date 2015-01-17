@@ -146,7 +146,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setWldItemBoxes();
     setSoundList();
     WldLvlExitTypeListReset();
-    updateWindowMenu();
 }
 
 MainWindow::~MainWindow()
