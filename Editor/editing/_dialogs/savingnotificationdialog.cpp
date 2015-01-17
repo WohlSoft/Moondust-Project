@@ -24,6 +24,12 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, QWidg
     ui(new Ui::SavingNotificationDialog)
 {
     ui->setupUi(this);
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    #endif
     ui->button_Discard->setVisible(showDiscardButton);
 }
 
