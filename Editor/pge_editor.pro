@@ -344,7 +344,10 @@ SOURCES += main.cpp\
     tools/debugger/custom_counter.cpp \
     tools/debugger/custom_counter_gui.cpp \
     common_features/spash_screen.cpp \
-    main_window/updater/check_updates.cpp
+    main_window/updater/check_updates.cpp \
+    editing/_components/history/historyelementmodification.cpp \
+    editing/_components/history/ihistoryelement.cpp \
+    editing/_components/history/itemsearcher.cpp
     
 
 HEADERS  += defines.h \
@@ -481,7 +484,9 @@ HEADERS  += defines.h \
     common_features/spash_screen.h \
     editing/_components/history/ihistoryelement.h \
     main_window/updater/check_updates.h \
-    main_window/updater/updater_links.h
+    main_window/updater/updater_links.h \
+    editing/_components/history/historyelementmodification.h \
+    editing/_components/history/itemsearcher.h
 
 
 FORMS    += \
