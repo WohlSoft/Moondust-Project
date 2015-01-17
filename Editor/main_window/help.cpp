@@ -19,6 +19,7 @@
 #include <QDesktopServices>
 #include <common_features/app_path.h>
 #include <main_window/about_dialog/aboutdialog.h>
+#include <main_window/updater/check_updates.h>
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
@@ -41,6 +42,23 @@ void MainWindow::on_actionSMBX_like_GUI_triggered()
         on_actionWLDToolBox_triggered(false);
 
     on_actionTilesetBox_triggered(true);
+}
+
+
+
+void MainWindow::on_actionChange_log_triggered()
+{
+    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/changelog.editor.txt" ) );
+}
+
+
+
+void MainWindow::on_actionCheckUpdates_triggered()
+{
+    UpdateChecker updater;
+    updater.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    updater.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, updater.size(), qApp->desktop()->availableGeometry()));
+    updater.exec();
 }
 
 
