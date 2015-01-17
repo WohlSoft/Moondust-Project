@@ -154,11 +154,11 @@ QImage loadQImage(QString file)
 }
 
 
-void doMagicIn(QString path, QString q, QString OPath)
+int doMagicIn(QString path, QString q, QString OPath)
 {
     //skip unexists pairs
     if(!QFile(path+q).exists())
-        return;
+        return CNV_SKIPPED;
 
     QImage ImgSrc;
     QImage image;
@@ -167,7 +167,7 @@ void doMagicIn(QString path, QString q, QString OPath)
     ImgSrc = loadQImage(path+q);
 
     if(ImgSrc.isNull()) //Skip null images
-        return;
+        return CNV_FAILED;
     QString bname = QFileInfo(path+q).baseName();
 
     QString saveToImg = QString(OPath+(bname.toLower())+".gif");
@@ -222,4 +222,6 @@ void doMagicIn(QString path, QString q, QString OPath)
     }
 
     if(removeSource) QFile(path+q).remove();
+
+    return CNV_SUCCESS;
 }
