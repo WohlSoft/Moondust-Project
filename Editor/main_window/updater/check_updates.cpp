@@ -141,7 +141,7 @@ void UpdateChecker::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes)
 }
 
 #ifndef QT_NO_SSL
-void HttpWindow::sslErrors(QNetworkReply*,const QList<QSslError> &errors)
+void UpdateChecker::sslErrors(QNetworkReply*,const QList<QSslError> &errors)
 {
     QString errorString;
     foreach (const QSslError &error, errors) {
