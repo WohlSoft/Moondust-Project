@@ -34,6 +34,10 @@ UpdateChecker::UpdateChecker(QWidget *parent) :
     ui(new Ui::UpdateChecker)
 {
     ui->setupUi(this);
+
+    checkingInProcess=false;
+    _backup="";
+    which_version=V_STABLE;
 }
 
 UpdateChecker::~UpdateChecker()
@@ -49,16 +53,35 @@ void UpdateChecker::on_close_clicked()
 
 
 
-
 void UpdateChecker::on_CheckStable_clicked()
 {
+    if(checkingInProcess) return;
     url = STABLE_CHECK;
     buffer.clear();
     httpRequestAborted = false;
+    checkingInProcess = true;
+    _backup = ui->CheckStable->text();
+    ui->CheckStable->setText(tr("Checking..."));
+    ui->CheckStable->setEnabled(false);
+    which_version=V_STABLE;
     startRequest(url);
 }
 
 
+
+void UpdateChecker::on_CheckAlpha_clicked()
+{
+    if(checkingInProcess) return;
+    url = DEVEL_CHECK;
+    buffer.clear();
+    httpRequestAborted = false;
+    checkingInProcess = true;
+    _backup = ui->CheckAlpha->text();
+    ui->CheckAlpha->setText(tr("Checking..."));
+    ui->CheckAlpha->setEnabled(false);
+    which_version=V_DEVEL;
+    startRequest(url);
+}
 
 
 
@@ -80,11 +103,37 @@ void UpdateChecker::cancelDownload()
     //statusLabel->setText(tr("Download canceled."));
     httpRequestAborted = true;
     reply->abort();
-    //downloadButton->setEnabled(true);
+    checkingInProcess=false;
+
+    switch(which_version)
+    {
+    case V_STABLE:
+        ui->CheckStable->setText(_backup);
+        ui->CheckStable->setEnabled(true);
+        break;
+    case V_DEVEL:
+        ui->CheckAlpha->setText(_backup);
+        ui->CheckAlpha->setEnabled(true);
+        break;
+    }
 }
 
 void UpdateChecker::httpFinished()
 {
+    checkingInProcess=false;
+
+    switch(which_version)
+    {
+    case V_STABLE:
+        ui->CheckStable->setText(_backup);
+        ui->CheckStable->setEnabled(true);
+        break;
+    case V_DEVEL:
+        ui->CheckAlpha->setText(_backup);
+        ui->CheckAlpha->setEnabled(true);
+        break;
+    }
+
     if (httpRequestAborted) {
         buffer.clear();
         reply->deleteLater();
@@ -96,11 +145,21 @@ void UpdateChecker::httpFinished()
     if (reply->error()) {
         buffer.clear();
         QMessageBox::information(this, tr("HTTP"),
-                                 tr("Download failed: %1.")
+                                 tr("Check failed: %1.")
                                  .arg(reply->errorString()));
-        ui->updatesStable->setText(QString("Fail: %1").arg(reply->errorString()));
-        //downloadButton->setEnabled(true);
-    } else if (!redirectionTarget.isNull()) {
+
+        switch(which_version)
+        {
+        case V_STABLE:
+            ui->updatesStable->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(tr("Check failed!")));
+            break;
+        case V_DEVEL:
+            ui->updatesAlpha->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(tr("Check failed!")));
+            break;
+        }
+    }
+    else if (!redirectionTarget.isNull())
+    {
         QUrl newUrl = url.resolved(redirectionTarget.toUrl());
         if (QMessageBox::question(this, tr("HTTP"),
                                   tr("Redirect to %1 ?").arg(newUrl.toString()),
@@ -114,8 +173,28 @@ void UpdateChecker::httpFinished()
     } else {
         //QString fileName = QFileInfo(QUrl(urlLineEdit->text()).path()).fileName();
         //statusLabel->setText(tr("Downloaded %1 to %2.").arg(fileName).arg(QDir::currentPath()));
-        ui->updatesStable->setText(QString("Latest is %1").arg(QString::fromLocal8Bit(buffer)));
-        //downloadButton->setEnabled(true);
+        QString latest = QString::fromLocal8Bit(buffer);
+        latest.remove('\n');
+        latest = latest.trimmed();
+
+        switch(which_version)
+        {
+        case V_STABLE:
+            if(latest == QString("%1%2").arg(_FILE_VERSION).arg(_FILE_RELEASE))
+                ui->updatesStable->setText(QString("<span style=\"color:#005500;\">You have a latest version!</span>"));
+            else
+                ui->updatesStable->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">Available new update!</a></span>")
+                                           .arg(STABLE_LINK));
+            break;
+        case V_DEVEL:
+            if(latest == QString("%1").arg(_DATE_OF_BUILD))
+                ui->updatesAlpha->setText(QString("<span style=\"color:#005500;\">You have a latest version!</span>"));
+            else
+                ui->updatesAlpha->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">Available new update!</a></span>")
+                                           .arg(DEVEL_LINK));
+            break;
+        }
+
     }
 
     reply->deleteLater();
