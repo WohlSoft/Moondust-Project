@@ -3,10 +3,13 @@
 #include <ui_png2gifs_gui.h>
 
 #include <QDragEnterEvent>
-#include <QtConcurrent/QtConcurrent>
+#include <QCloseEvent>
+//#include <QtConcurrent/QtConcurrent>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QMimeData>
 #include <QUrl>
+
 
 PNG2GIFsGUI::PNG2GIFsGUI(QWidget *parent) :
     QDialog(parent),
@@ -14,6 +17,7 @@ PNG2GIFsGUI::PNG2GIFsGUI(QWidget *parent) :
 {
     ui->setupUi(this);
     isConverting=false;
+    connect(&loop, SIGNAL(timeout()), this, SLOT(doLoop()) );
 }
 
 PNG2GIFsGUI::~PNG2GIFsGUI()
@@ -46,21 +50,23 @@ void PNG2GIFsGUI::dropEvent(QDropEvent *e)
             ConversionTask<<fileName;
     }
 
-    taskFuture = QtConcurrent::run(this, &doConversion, this);
+    //QtConcurrent::run(this, &doConversion(PNG2GIFsGUI*), this);
+    qApp->setActiveWindow(this);
+    doConversion(this);
 }
 
-//void PNG2GIFsGUI::closeEvent(QCloseEvent *event)
-//{
-//    if (ui->centralWidget->currentSubWindow()) {
-//        event->ignore();
-//    }
-//    else
-//    {
-//        saveSettings();
-//        closeEditor();
-//        event->accept();
-//    }
-//}
+void PNG2GIFsGUI::closeEvent(QCloseEvent *event)
+{
+    if(isConverting)
+    {
+        QMessageBox::warning(this, "Busy", "Conversion in process!");
+        event->ignore();
+    }
+    else
+    {
+        event->accept();
+    }
+}
 
 void PNG2GIFsGUI::on_LabelDropFiles_clicked()
 {
@@ -88,7 +94,7 @@ void PNG2GIFsGUI::doConversion(PNG2GIFsGUI *ptr)
     ptr->ui->LabelDropFiles->setText("Converting...");
     ptr->ui->LabelDropFiles->setEnabled(false);
 
-    if(ConversionTask.isEmpty())
+    if(ptr->ConversionTask.isEmpty())
     {
         ptr->ui->progressBar->setMaximum(100);
         ptr->ui->progressBar->setValue(0);
@@ -97,28 +103,54 @@ void PNG2GIFsGUI::doConversion(PNG2GIFsGUI *ptr)
         return;
     }
 
-    isConverting=true;
+    int answers_success=0;
+    int answers_skipped=0;
+    int answers_failed=0;
 
-    ptr->ui->progressBar->setMaximum(ConversionTask.size());
+    ptr->isConverting=true;
+
+    ptr->ui->progressBar->setMaximum(ptr->ConversionTask.size());
     ptr->ui->progressBar->setValue(0);
 
-    //qApp->processEvents();
-    foreach(QString q, ConversionTask)
+    ptr->loop.start(1);
+    qApp->processEvents();
+    foreach(QString q, ptr->ConversionTask)
     {
         QString OPath=ptr->ui->targetPath->text();
         QString path=QFileInfo(q).absoluteDir().path()+"/";
         QString fname = QFileInfo(q).fileName();
         if(OPath.isEmpty()) OPath=path;
-        doMagicIn(path, fname, OPath);
-        ptr->ui->progressBar->setValue(ptr->ui->progressBar->value()+1);
-        //qApp->processEvents();
-    }
+        switch(doMagicIn(path, fname, OPath))
+        {
+            case CNV_SUCCESS:answers_success++;break;
+            case CNV_FAILED:answers_failed++;break;
+            case CNV_SKIPPED:answers_skipped++;break;
+        }
 
-    isConverting=false;
+        ptr->ui->progressBar->setValue(ptr->ui->progressBar->value()+1);
+        qApp->processEvents();
+    }
+    ptr->loop.stop();
+
+    ptr->isConverting=false;
 
     ptr->ui->progressBar->setMaximum(100);
     ptr->ui->progressBar->setValue(0);
 
     ptr->ui->LabelDropFiles->setText(_backup);
     ptr->ui->LabelDropFiles->setEnabled(true);
+
+    QMessageBox::information(ptr, "Converted",
+                             QString("Conversion was completed!\n"
+                                     "Successfully converted: %1/%2 images\n"
+                                     "Failed conversions: %3 files\n"
+                                     "And %4 skipped files.")
+                             .arg(answers_success)
+                             .arg(ptr->ConversionTask.size())
+                             .arg(answers_failed).arg(answers_skipped));
+}
+
+void PNG2GIFsGUI::doLoop()
+{
+    qApp->processEvents();
 }
