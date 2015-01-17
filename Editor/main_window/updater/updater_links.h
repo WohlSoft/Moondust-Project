@@ -16,38 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "aboutdialog.h"
-#include <ui_aboutdialog.h>
+#ifndef UPDATER_LINKS_H
+#define UPDATER_LINKS_H
 
-#include "../../version.h"
+#define STABLE_LINK "http://engine.wohlnet.ru/#links"
+#define DEVEL_LINK "http://engine.wohlnet.ru/docs/_laboratory/"
 
-aboutDialog::aboutDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::aboutDialog)
-{
-    ui->setupUi(this);
+#define STABLE_CHECK "http://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_stable.txt"
+#define DEVEL_CHECK "http://raw.githubusercontent.com/Wohlhabend-Networks/PlatGEnWohl/master/_Misc/versions/editor_dev.txt"
 
-    #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
-    #endif
+#endif // UPDATER_LINKS_H
 
-    ui->About1->setText(ui->About1->text()
-                        .arg(_FILE_VERSION)
-                        .arg(_FILE_RELEASE)
-                        .arg(QString("Build date: <u>%2</u>")
-                             .arg(_DATE_OF_BUILD))
-                        );
-}
-
-aboutDialog::~aboutDialog()
-{
-    delete ui;
-}
-
-void aboutDialog::on_pushButton_clicked()
-{
-    this->close();
-}

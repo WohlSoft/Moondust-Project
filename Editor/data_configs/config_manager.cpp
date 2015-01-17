@@ -35,6 +35,13 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     QListWidgetItem * item;
 
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    #endif
+
     currentConfig = "";
     themePack = "";
     askAgain = false;
