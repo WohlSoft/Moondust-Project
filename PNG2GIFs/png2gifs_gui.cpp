@@ -51,6 +51,7 @@ void PNG2GIFsGUI::dropEvent(QDropEvent *e)
     }
 
     //QtConcurrent::run(this, &doConversion(PNG2GIFsGUI*), this);
+    qApp->setActiveWindow(this);
     doConversion(this);
 }
 
