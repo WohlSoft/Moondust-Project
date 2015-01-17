@@ -343,7 +343,8 @@ SOURCES += main.cpp\
     main_window/help.cpp \
     tools/debugger/custom_counter.cpp \
     tools/debugger/custom_counter_gui.cpp \
-    common_features/spash_screen.cpp
+    common_features/spash_screen.cpp \
+    main_window/updater/check_updates.cpp
     
 
 HEADERS  += defines.h \
@@ -477,7 +478,9 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/wld_base_item.h \
     tools/debugger/custom_counter.h \
     tools/debugger/custom_counter_gui.h \
-    common_features/spash_screen.h
+    common_features/spash_screen.h \
+    main_window/updater/check_updates.h \
+    main_window/updater/updater_links.h
 
 
 FORMS    += \
@@ -510,7 +513,8 @@ FORMS    += \
     main_window/file/lvl_export_image.ui \
     editing/_dialogs/savingnotificationdialog.ui \
     main_window/file/wld_export_image.ui \
-    tools/debugger/custom_counter_gui.ui
+    tools/debugger/custom_counter_gui.ui \
+    main_window/updater/check_updates.ui
 
 
 
