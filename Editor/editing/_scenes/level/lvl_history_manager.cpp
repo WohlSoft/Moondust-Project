@@ -53,13 +53,13 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     //add cleanup redo elements
     cleanupRedoElements();
     //add new element
-    HistoryOperation rmOperation;
+    HistoryOperation plOperation;
     HistoryElementModification* modf = new HistoryElementModification(LevelData(), placedItems);
     modf->setCustomHistoryName(tr("Place"));
     modf->setScene(this);
-    rmOperation.newElement = QSharedPointer<IHistoryElement>(modf);
+    plOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
-    operationList.push_back(rmOperation);
+    operationList.push_back(plOperation);
     historyIndex++;
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -70,13 +70,13 @@ void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems
     //add cleanup redo elements
     cleanupRedoElements();
     //add new element
-    HistoryOperation rmOperation;
+    HistoryOperation overwriteOperation;
     HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
     modf->setCustomHistoryName(tr("Place & Overwrite"));
     modf->setScene(this);
-    rmOperation.newElement = QSharedPointer<IHistoryElement>(modf);
+    overwriteOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
-    operationList.push_back(rmOperation);
+    operationList.push_back(overwriteOperation);
     historyIndex++;
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -103,22 +103,16 @@ void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y
 
 void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems)
 {
+    //add cleanup redo elements
     cleanupRedoElements();
+    //add new element
+    HistoryOperation moveOperation;
+    HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
+    modf->setCustomHistoryName(tr("Move"));
+    modf->setScene(this);
+    moveOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
-    //calc new Pos:
-    long baseX=0, baseY=0;
-
-    //set first base
-    QPoint base = calcTopLeftCorner(&targetMovedItems);
-    baseX = (long)base.x();
-    baseY = (long)base.y();
-
-    HistoryOperation mvOperation;
-    mvOperation.type = HistoryOperation::LEVELHISTORY_MOVE;
-    mvOperation.data = sourceMovedItems;
-    mvOperation.x = baseX;
-    mvOperation.y = baseY;
-    operationList.push_back(mvOperation);
+    operationList.push_back(moveOperation);
     historyIndex++;
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -543,16 +537,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_MOVE:
-    {
-        //revert move
-        LevelData movedSourceData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, &LvlScene::historyUndoMoveDoors, &LvlScene::historyUndoMovePlayerPoint);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
     {
         LevelData modifiedSourceData = lastOperation.data;
@@ -1400,26 +1384,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_MOVE:
-    {
-
-        //revert move
-        LevelData movedSourceData = lastOperation.data;
-
-        //calc new Pos:
-        long baseX=0, baseY=0;
-
-        //set first base
-        QPoint base = calcTopLeftCorner(&movedSourceData);
-        baseX = (long)base.x();
-        baseY = (long)base.y();
-
-        CallbackData cbData;
-        cbData.x = baseX;
-        cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, &LvlScene::historyRedoMoveDoors, &LvlScene::historyRedoMovePlayerPoint);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
     {
         LevelData modifiedSourceData = lastOperation.data;
@@ -3641,103 +3605,6 @@ void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operat
             }
         }
     }
-}
-
-QPoint LvlScene::calcTopLeftCorner(LevelData *data)
-{
-    //calc new Pos:
-    int baseX=0, baseY=0;
-
-    //set first base
-    if(!data->blocks.isEmpty()){
-        baseX = (int)data->blocks[0].x;
-        baseY = (int)data->blocks[0].y;
-    }else if(!data->bgo.isEmpty()){
-        baseX = (int)data->bgo[0].x;
-        baseY = (int)data->bgo[0].y;
-    }else if(!data->npc.isEmpty()){
-        baseX = (int)data->npc[0].x;
-        baseY = (int)data->npc[0].y;
-    }else if(!data->physez.isEmpty()){
-        baseX = (int)data->physez[0].x;
-        baseY = (int)data->physez[0].y;
-    }else if(!data->doors.isEmpty()){
-        if(data->doors[0].isSetIn&&!data->doors[0].isSetOut){
-            baseX = data->doors[0].ix;
-            baseY = data->doors[0].iy;
-        }
-        else
-        if(!data->doors[0].isSetIn&&data->doors[0].isSetOut){
-            baseX = data->doors[0].ox;
-            baseY = data->doors[0].oy;
-        }
-    }else if(!data->players.isEmpty()){
-        baseX = (int)data->players[0].x;
-        baseY = (int)data->players[0].y;
-    }
-
-    foreach (LevelBlock block, data->blocks) {
-        if((int)block.x<baseX){
-            baseX = (int)block.x;
-        }
-        if((int)block.y<baseY){
-            baseY = (int)block.y;
-        }
-    }
-    foreach (LevelBGO bgo, data->bgo){
-        if((int)bgo.x<baseX){
-            baseX = (int)bgo.x;
-        }
-        if((int)bgo.y<baseY){
-            baseY = (int)bgo.y;
-        }
-    }
-    foreach (LevelNPC npc, data->npc){
-        if((int)npc.x<baseX){
-            baseX = (int)npc.x;
-        }
-        if((int)npc.y<baseY){
-            baseY = (int)npc.y;
-        }
-    }
-    foreach (LevelPhysEnv water, data->physez) {
-        if((int)water.x<baseX){
-            baseX = (int)water.x;
-        }
-        if((int)water.y<baseY){
-            baseY = (int)water.y;
-        }
-    }
-    foreach (LevelDoors door, data->doors) {
-        if(door.isSetIn&&!door.isSetOut){
-            if((int)door.ix<baseX){
-                baseX = (int)door.ix;
-            }
-            if((int)door.iy<baseY){
-                baseY = (int)door.iy;
-            }
-        }
-        else
-        if(!door.isSetIn&&door.isSetOut){
-            if((int)door.ox<baseX){
-                baseX = (int)door.ox;
-            }
-            if((int)door.oy<baseY){
-                baseY = (int)door.oy;
-            }
-        }
-    }
-    foreach (PlayerPoint plPoint, data->players) {
-        if((int)plPoint.x<baseX){
-            baseX = (int)plPoint.x;
-        }
-        if((int)plPoint.y<baseY){
-            baseY = (int)plPoint.y;
-        }
-    }
-
-
-    return QPoint(baseX, baseY);
 }
 
 QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)

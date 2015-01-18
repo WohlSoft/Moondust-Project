@@ -20,6 +20,7 @@ public:
 
 
     void processReplacement(const LevelData &toRemoveData, const LevelData &toPlaceData);
+    void processReplacement(const WorldData &toRemoveData, const WorldData &toPlaceData);
 
     QString customHistoryName() const;
     void setCustomHistoryName(const QString &customHistoryName);
