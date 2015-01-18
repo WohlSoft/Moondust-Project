@@ -45,6 +45,8 @@
 #include <file_formats/lvl_filedata.h>
 #include <file_formats/npc_filedata.h>
 
+#include <editing/_components/history/ihistoryelement.h>
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -245,6 +247,7 @@ public:
         void applyArrayForItem(QGraphicsItem * item);
         void doorPointsSync(long arrayID, bool remove=false);
         void collectDataFromItem(LevelData& dataToStore, QGraphicsItem* item);
+        void placeAll(const LevelData &data);
 
         void returnItemBackGroup(QList<QGraphicsItem * >items);
         void returnItemBack(QGraphicsItem * item);
@@ -488,6 +491,8 @@ public:
             long x, y;
             //misc
             QVariant extraData;
+            //new System
+            QSharedPointer<IHistoryElement> newElement;
         };
         struct CallbackData{
             QGraphicsItem* item;
