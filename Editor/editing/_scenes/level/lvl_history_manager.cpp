@@ -37,8 +37,10 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     cleanupRedoElements();
     //add new element
     HistoryOperation rmOperation;
-    rmOperation.newElement = QSharedPointer<IHistoryElement>(new HistoryElementModification(removedItems, LevelData()));
-    rmOperation.newElement->setScene(this);
+    HistoryElementModification* modf = new HistoryElementModification(removedItems, LevelData());
+    modf->setCustomHistoryName(tr("Remove"));
+    modf->setScene(this);
+    rmOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
     operationList.push_back(rmOperation);
     historyIndex++;
@@ -51,11 +53,13 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     //add cleanup redo elements
     cleanupRedoElements();
     //add new element
-    HistoryOperation plOperation;
-    plOperation.type = HistoryOperation::LEVELHISTORY_PLACE;
-    plOperation.data = placedItems;
+    HistoryOperation rmOperation;
+    HistoryElementModification* modf = new HistoryElementModification(LevelData(), placedItems);
+    modf->setCustomHistoryName(tr("Place"));
+    modf->setScene(this);
+    rmOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
-    operationList.push_back(plOperation);
+    operationList.push_back(rmOperation);
     historyIndex++;
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -63,14 +67,16 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
 
 void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems)
 {
+    //add cleanup redo elements
     cleanupRedoElements();
+    //add new element
+    HistoryOperation rmOperation;
+    HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
+    modf->setCustomHistoryName(tr("Place & Overwrite"));
+    modf->setScene(this);
+    rmOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
-    HistoryOperation ovOperation;
-    ovOperation.type = HistoryOperation::LEVELHISTORY_OVERWRITE;
-    ovOperation.data = placedItems;
-    ovOperation.data_mod = removedItems;
-
-    operationList.push_back(ovOperation);
+    operationList.push_back(rmOperation);
     historyIndex++;
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
@@ -537,128 +543,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_PLACE:
-    {
-        //revert place
-        LevelData placeData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, 0, false, false, false, false, false);
-
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_OVERWRITE:
-    {
-
-        //revert remove
-        LevelData deletedData = lastOperation.data_mod;
-        bool hasToUpdateDoorData = false;
-
-        foreach (LevelBlock block, deletedData.blocks)
-        {
-            //place them back
-            LvlData->blocks.push_back(block);
-            placeBlock(block);
-
-        }
-
-        foreach (LevelBGO bgo, deletedData.bgo)
-        {
-            //place them back
-            LvlData->bgo.push_back(bgo);
-            placeBGO(bgo);
-
-        }
-
-        foreach (LevelNPC npc, deletedData.npc)
-        {
-            //place them back
-            LvlData->npc.push_back(npc);
-            placeNPC(npc);
-
-        }
-
-        foreach (LevelPhysEnv water, deletedData.physez)
-        {
-            //place them back
-            LvlData->physez.push_back(water);
-            placeWater(water);
-        }
-
-        foreach (LevelDoors door, deletedData.doors)
-        {
-            LevelDoors originalDoor;
-            bool found = false;
-            foreach(LevelDoors findDoor, LvlData->doors){
-                if(door.array_id == findDoor.array_id){
-                    originalDoor = findDoor;
-                    found = true;
-                    break;
-                }
-            }
-            if(!found)
-                break;
-
-            if(door.isSetIn&&!door.isSetOut)
-            {
-                originalDoor.ix = door.ix;
-                originalDoor.iy = door.iy;
-                originalDoor.isSetIn = true;
-                placeDoorEnter(originalDoor, false, false);
-            }
-            else
-            if(!door.isSetIn&&door.isSetOut)
-            {
-                originalDoor.ox = door.ox;
-                originalDoor.oy = door.oy;
-                originalDoor.isSetOut = true;
-                placeDoorExit(originalDoor, false, false);
-            }
-            hasToUpdateDoorData = true;
-        }
-
-        foreach(PlayerPoint plr, deletedData.players)
-        {
-//            bool found=false;
-//            int q=0;
-//            for(q=0; q < LvlData->players.size();q++)
-//            {
-//                 if(LvlData->players[q].id == plr.id)
-//                 {
-//                     found=true;
-//                     break;
-//                 }
-//            }
-//            if(!found)
-//            {
-//                q = LvlData->players.size();
-//                LvlData->players.push_back(plr);
-//            }
-//            else
-//                LvlData->players[q]=plr;
-//            for(int i = 0; i < LvlData->players.size(); i++){
-//                if(LvlData->players[i].id == plr.id){
-//                    LvlData->players[i] = plr;
-//                }
-//            }
-            placePlayerPoint(plr);
-        }
-
-        if(hasToUpdateDoorData)
-            MainWinConnect::pMainWin->setDoorData(-2);
-
-        //revert place
-        LevelData placeData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, 0, false, false, false, false, false);
-
-        //refresh Animation control
-        if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startAnimation();
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_MOVE:
     {
         //revert move
@@ -1514,104 +1398,8 @@ void LvlScene::historyForward()
         return;
     }
 
-
-
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_PLACE:
-    {
-        //redo place
-        LevelData placedData = lastOperation.data;
-
-        foreach (LevelBlock block, placedData.blocks)
-        {
-            //place them back
-            LvlData->blocks.push_back(block);
-            placeBlock(block);
-        }
-
-        foreach (LevelBGO bgo, placedData.bgo)
-        {
-            //place them back
-
-            //WriteToLog(QtDebugMsg, QString("History-> placed items pos %1 %2").arg(bgo.x).arg(bgo.y));
-
-            LvlData->bgo.push_back(bgo);
-            //WriteToLog(QtDebugMsg, QString("History-> added into the array items pos %1 %2").arg(bgo.x).arg(bgo.y));
-            placeBGO(bgo);
-            //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
-        }
-
-        foreach (LevelNPC npc, placedData.npc)
-        {
-            //place them back
-            LvlData->npc.push_back(npc);
-            placeNPC(npc);
-        }
-
-        foreach (LevelPhysEnv water, placedData.physez)
-        {
-            //place them back
-            LvlData->physez.push_back(water);
-            placeWater(water);
-        }
-
-        //refresh Animation control
-        if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startAnimation();
-
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_OVERWRITE:
-    {
-        //redo remove
-        LevelData deletedData = lastOperation.data_mod;
-
-        CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
-
-        //redo place
-        LevelData placedData = lastOperation.data;
-
-        foreach (LevelBlock block, placedData.blocks)
-        {
-            //place them back
-            LvlData->blocks.push_back(block);
-            placeBlock(block);
-        }
-
-        foreach (LevelBGO bgo, placedData.bgo)
-        {
-            //place them back
-
-            //WriteToLog(QtDebugMsg, QString("History-> placed items pos %1 %2").arg(bgo.x).arg(bgo.y));
-
-            LvlData->bgo.push_back(bgo);
-            //WriteToLog(QtDebugMsg, QString("History-> added into the array items pos %1 %2").arg(bgo.x).arg(bgo.y));
-            placeBGO(bgo);
-            //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
-        }
-
-        foreach (LevelNPC npc, placedData.npc)
-        {
-            //place them back
-            LvlData->npc.push_back(npc);
-            placeNPC(npc);
-        }
-
-        foreach (LevelPhysEnv water, placedData.physez)
-        {
-            //place them back
-            LvlData->physez.push_back(water);
-            placeWater(water);
-        }
-
-        //refresh Animation control
-        if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startAnimation();
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_MOVE:
     {
 
