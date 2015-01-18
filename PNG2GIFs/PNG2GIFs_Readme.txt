@@ -5,8 +5,15 @@ This is a part of the Platformer Game Engine by Wohlstand
 --------------------------------------------------------------------------------
 This program is distributed under the GNU GPLv3 license 
 ================================================================================
+GitHub Repo:
+https://github.com/Wohlhabend-Networks/PlatGEnWohl
 --------------------------------------------------------------------------------
 Usage:
+--------------------------------------------------------------------------------
+To use tool you need simply run it without any arguments, but will be opened
+GUI window which giving able to drag&drop files into them.
+
+You can use tool for batch conversion if you will use it with arguments:
 --------------------------------------------------------------------------------
 Syntax:
 
@@ -37,6 +44,9 @@ PNG2GIFs . ../npc_png
 
 
 Change Log:
+
+1.1.0
+-Added User-Friendly GUI
 
 1.0.0
 -First version

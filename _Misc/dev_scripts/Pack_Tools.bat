@@ -20,11 +20,11 @@ SET LazyFixTool=%LazyFixTool% "%TESTDIR%\LazyFixTool_Readme.txt"
 SET LazyFixTool=%LazyFixTool% "%TESTDIR%\LazyFixTool.exe"
 
 del %LabDir%\..\_builds\GIFs2PNG\GIFs2PNG_1.0.5_Win32.zip
-del %LabDir%\..\_builds\PNG2GIFs\PNG2GIFs_1.0.0_Win32.zip
+del %LabDir%\..\_builds\PNG2GIFs\PNG2GIFs_1.1.0_Win32.zip
 del %LabDir%\..\_builds\LazyFixTool\LazyFixTool_2.0.0_Win32.zip
 
 "%SEVENZIP%\7z" a -tzip %LabDir%\..\_builds\GIFs2PNG\GIFs2PNG_1.0.5_Win32.zip %GIFs2PNG%
-"%SEVENZIP%\7z" a -tzip %LabDir%\..\_builds\PNG2GIFs\PNG2GIFs_1.0.0_Win32.zip %PNG2GIFs%
+"%SEVENZIP%\7z" a -tzip %LabDir%\..\_builds\PNG2GIFs\PNG2GIFs_1.1.0_Win32.zip %PNG2GIFs%
 "%SEVENZIP%\7z" a -tzip %LabDir%\..\_builds\LazyFixTool\LazyFixTool_2.0.0_Win32.zip %LazyFixTool%
 
 IF NOT '%1'=='nopause' pause

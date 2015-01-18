@@ -118,6 +118,17 @@ void MainWindow::loadSettings()
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
         ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
 
+        if(!continueLoad)
+        { //Hide all unitialized dock widgets
+           QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
+           foreach(QDockWidget* dw, dockWidgets)
+               dw->hide();
+
+           //Refresh state of menubars
+           updateWindowMenu();
+           updateMenus(true);
+        }
+
     settings.endGroup();
 
     settings.beginGroup("Recent");
