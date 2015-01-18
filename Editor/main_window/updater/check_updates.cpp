@@ -40,6 +40,10 @@ UpdateChecker::UpdateChecker(QWidget *parent) :
     which_version=V_STABLE;
 
     shadowCheck = false;
+
+    //Temporary disable checkboxes, because feature was not implemented
+    ui->AutoCheckStable->setEnabled(false);
+    ui->AutoCheckAlpha->setEnabled(false);
 }
 
 UpdateChecker::~UpdateChecker()
@@ -182,17 +186,17 @@ void UpdateChecker::httpFinished()
         {
         case V_STABLE:
             if(latest == QString("%1%2").arg(_FILE_VERSION).arg(_FILE_RELEASE))
-                ui->updatesStable->setText(QString("<span style=\"color:#005500;\">You have a latest version!</span>"));
+                ui->updatesStable->setText(QString("<span style=\"color:#005500;\">%1</span>").arg(tr("You have a latest version!")));
             else
-                ui->updatesStable->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">Available new update!</a></span>")
-                                           .arg(STABLE_LINK));
+                ui->updatesStable->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">%2</a></span>")
+                                           .arg(STABLE_LINK).arg(tr("Available new update!")));
             break;
         case V_DEVEL:
             if(latest == QString("%1").arg(_DATE_OF_BUILD))
-                ui->updatesAlpha->setText(QString("<span style=\"color:#005500;\">You have a latest version!</span>"));
+                ui->updatesAlpha->setText(QString("<span style=\"color:#005500;\">%1</span>").arg(tr("You have a latest version!")));
             else
-                ui->updatesAlpha->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">Available new update!</a></span>")
-                                           .arg(DEVEL_LINK));
+                ui->updatesAlpha->setText(QString("<span style=\"color:#0000FF;\"><a href=\"%1\">%3 %2</a></span>")
+                                           .arg(DEVEL_LINK).arg(latest).arg(tr("Latest update is")));
             break;
         }
 
@@ -223,7 +227,6 @@ void UpdateChecker::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes)
 void UpdateChecker::runShadowUpdateCheck()
 {
     shadowCheck=true;
-
 }
 
 #ifndef QT_NO_SSL
