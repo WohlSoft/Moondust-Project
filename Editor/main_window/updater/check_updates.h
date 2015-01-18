@@ -62,6 +62,8 @@ private slots:
     void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
     //void slotAuthenticationRequired(QNetworkReply*,QAuthenticator *);
 
+    void runShadowUpdateCheck();
+
 #ifndef QT_NO_SSL
     void sslErrors(QNetworkReply*,const QList<QSslError> &errors);
 #endif
@@ -77,6 +79,10 @@ private:
     bool checkingInProcess;
     QString _backup;
     int which_version;
+
+    bool shadowCheck;
+    bool autoCheckStable;
+    bool autoCheckAlpha;
 
 private slots:
     void on_close_clicked();

@@ -38,6 +38,8 @@ UpdateChecker::UpdateChecker(QWidget *parent) :
     checkingInProcess=false;
     _backup="";
     which_version=V_STABLE;
+
+    shadowCheck = false;
 }
 
 UpdateChecker::~UpdateChecker()
@@ -82,7 +84,6 @@ void UpdateChecker::on_CheckAlpha_clicked()
     which_version=V_DEVEL;
     startRequest(url);
 }
-
 
 
 
@@ -217,6 +218,12 @@ void UpdateChecker::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes)
 
     Q_UNUSED(totalBytes);
     Q_UNUSED(bytesRead);
+}
+
+void UpdateChecker::runShadowUpdateCheck()
+{
+    shadowCheck=true;
+
 }
 
 #ifndef QT_NO_SSL
