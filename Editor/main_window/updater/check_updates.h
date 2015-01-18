@@ -48,12 +48,21 @@ public:
     ~UpdateChecker();
     void startRequest(QUrl url);
 
+    enum VersionType
+    {
+        V_STABLE=0,
+        V_DEVEL
+    };
+
+
 private slots:
     void cancelDownload();
     void httpFinished();
     void httpReadyRead();
     void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
     //void slotAuthenticationRequired(QNetworkReply*,QAuthenticator *);
+
+    void runShadowUpdateCheck();
 
 #ifndef QT_NO_SSL
     void sslErrors(QNetworkReply*,const QList<QSslError> &errors);
@@ -67,9 +76,19 @@ private:
     bool httpRequestAborted;
     QByteArray buffer;
 
+    bool checkingInProcess;
+    QString _backup;
+    int which_version;
+
+    bool shadowCheck;
+    bool autoCheckStable;
+    bool autoCheckAlpha;
+
 private slots:
     void on_close_clicked();
     void on_CheckStable_clicked();
+
+    void on_CheckAlpha_clicked();
 
 private:
     Ui::UpdateChecker *ui;
