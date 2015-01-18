@@ -42,6 +42,8 @@
 #include <data_configs/custom_data.h>
 #include <file_formats/wld_filedata.h>
 
+#include <editing/_components/history/ihistoryelement.h>
+
 
 class WldScene : public QGraphicsScene
 {
@@ -235,6 +237,7 @@ public:
         void applyArrayForItemGroup(QList<QGraphicsItem * >items);
         void applyArrayForItem(QGraphicsItem * item);
         void collectDataFromItem(WorldData& dataToStore, QGraphicsItem* item);
+        void placeAll(const WorldData &data);
 
         void returnItemBackGroup(QList<QGraphicsItem * >items);
         void returnItemBack(QGraphicsItem * item);
@@ -415,6 +418,8 @@ public:
             int subtype;
             //misc
             QVariant extraData;
+            //new System
+            QSharedPointer<IHistoryElement> newElement;
         };
         struct CallbackData{
             QGraphicsItem* item;
@@ -525,8 +530,6 @@ public:
                               bool ignoreMusicbox = false);
 
         QList<QGraphicsItem*> findGraphicsItems(WorldData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
-
-        QPoint calcTopLeftCorner(WorldData* data);
         QString getHistoryText(HistoryOperation operation);
         QString getHistorySettingText(SettingSubType subType);
     private:

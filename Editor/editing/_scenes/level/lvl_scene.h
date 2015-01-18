@@ -771,7 +771,6 @@ public:
         void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
                               callBackLevelDoors clbDoors, bool isEntrance);
         //miscellaneous
-        QPoint  calcTopLeftCorner(LevelData* data);
         QString getHistoryText(HistoryOperation operation);
         QString getHistorySettingText(SettingSubType subType);
 
