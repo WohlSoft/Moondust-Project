@@ -68,9 +68,9 @@ void MainWindow::loadSettings()
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
-        GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", false).toBool();
-        GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
-        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", false).toBool();
+        GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", true).toBool();
+        GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", true).toBool();
+        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", true).toBool();
 
         GlobalSettings::Placing_dontShowPropertiesBox = settings.value("editor-placing-no-propsbox", false).toBool();
 
