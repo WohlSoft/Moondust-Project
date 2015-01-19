@@ -72,9 +72,13 @@ void PNG2GIFsGUI::on_LabelDropFiles_clicked()
 {
     QStringList fileName_DATA = QFileDialog::getOpenFileNames(this,
        trUtf8("Open file"), qApp->applicationDirPath(),
-       QString("PNG Images (*.PNG)\n"),0);
+       QString("PNG Images (*.png);;All files (*.*)\n"),0);
        if(fileName_DATA.isEmpty()) return;
 
+   ConversionTask.clear();
+   ConversionTask << fileName_DATA;
+   qApp->setActiveWindow(this);
+   doConversion(this);
 }
 
 void PNG2GIFsGUI::on_targetPathBrowse_clicked()
