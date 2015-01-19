@@ -72,6 +72,7 @@ void MainWindow::setUiDefults()
 
     //MainWindow Geometry;
     QRect mwg = this->geometry();
+    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
 
     int GOffset=240;
     //Define the default geometry for toolboxes
@@ -136,10 +137,11 @@ void MainWindow::setUiDefults()
 
 
     dock_TilesetBox = new TilesetItemBox(this, this);
+    dock_TilesetBox->setVisible(false);
     addDockWidget(Qt::BottomDockWidgetArea, dock_TilesetBox);
     dock_TilesetBox->setGeometry(
-                mwg.x()+GOffset,
-                mwg.y()+mwg.height()-600,
+                dg.x()+GOffset,
+                dg.y()+dg.height()-600,
                 800,
                 300
                 );

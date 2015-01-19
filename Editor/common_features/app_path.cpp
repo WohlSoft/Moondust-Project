@@ -56,7 +56,7 @@ void AppPathManager::initAppPath()
     QSettings setup;
     bool userDir;
     userDir = setup.value("EnableUserDir", false).toBool();
-openUserDir:
+//openUserDir:
 
     if(userDir)
     {
@@ -77,19 +77,6 @@ openUserDir:
     }
     else
     {
-        QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-        if(!path.isEmpty())
-        {
-            QDir appDir(path+"/.PGE_Project");
-            if(!appDir.exists())
-                if(!appDir.mkpath(path+"/.PGE_Project"))
-                    goto defaultSettingsPath;
-
-            setup.setValue("EnableUserDir", true);
-            userDir = true;
-            goto openUserDir;
-        }
-        else
         goto defaultSettingsPath;
     }
 
@@ -106,6 +93,26 @@ QString AppPathManager::settingsFile()
 QString AppPathManager::userAppDir()
 {
     return _settingsPath;
+}
+
+void AppPathManager::install()
+{
+    QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    if(!path.isEmpty())
+    {
+        QDir appDir(path+"/.PGE_Project");
+        if(!appDir.exists())
+            if(!appDir.mkpath(path+"/.PGE_Project"))
+                return;
+
+        QSettings setup;
+        setup.setValue("EnableUserDir", true);
+    }
+}
+
+bool AppPathManager::userDirIsAvailable()
+{
+    return (_settingsPath != ApplicationPath);
 }
 
 

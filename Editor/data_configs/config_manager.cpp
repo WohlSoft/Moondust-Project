@@ -50,9 +50,22 @@ ConfigManager::ConfigManager(QWidget *parent) :
     QDir configDir(configPath);
     QStringList configs = configDir.entryList(QDir::AllDirs);
 
+    typedef QPair<QString, QString > configPackPair;
+    QList<configPackPair > config_paths;
+
     foreach(QString c, configs)
     {
         QString config_dir = configPath+c+"/";
+        configPackPair path;
+        path.first = c;
+        path.second = config_dir;
+        config_paths<<path;
+    }
+
+    foreach(configPackPair confD, config_paths)
+    {
+        QString c=confD.first;
+        QString config_dir=confD.second;
         QString configName;
         QString data_dir;
         QString splash_logo;

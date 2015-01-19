@@ -58,7 +58,7 @@ public:
     QString selectedTheme;
 
     void applySettings();
-
+    static bool associateFiles();
 
 private slots:
     void on_setLogFile_clicked();

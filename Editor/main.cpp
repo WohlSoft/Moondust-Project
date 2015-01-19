@@ -31,6 +31,7 @@
 #include <common_features/logger.h>
 #include <common_features/proxystyle.h>
 #include <common_features/app_path.h>
+#include <common_features/installer.h>
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
 #include <SingleApplication/singleapplication.h>
@@ -55,6 +56,24 @@ int main(int argc, char *argv[])
 
     //Init system paths
     AppPathManager::initAppPath();
+
+    foreach(QString arg, a->arguments())
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
+
+            Installer::moveFromAppToUser();
+            Installer::associateFiles();
+
+            QApplication::quit();
+            QApplication::exit();
+            delete a;
+            delete as;
+            return 0;
+        }
+    }
 
     //Init themes engine
     Themes::init();

@@ -16,25 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef APP_PATH_H
-#define APP_PATH_H
+#ifndef INSTALLER_H
+#define INSTALLER_H
 
-#include <QString>
+#include <QObject>
 
-extern QString ApplicationPath;
-extern QString ApplicationPath_x;
-
-class AppPathManager
+class Installer : public QObject
 {
-    public:
-        static void initAppPath();
-        static QString settingsFile();
-        static QString userAppDir();
-        static void install();
-        static bool userDirIsAvailable();
+    Q_OBJECT
 
-    private:
-        static QString _settingsPath;
+public:
+    Installer(QObject *parent=0);
+    ~Installer();
+    static void moveFromAppToUser();
+    static bool associateFiles();
 };
 
-#endif // APP_PATH_H
+#endif // INSTALLER_H

@@ -348,7 +348,8 @@ SOURCES += main.cpp\
     editing/_components/history/ihistoryelement.cpp \
     editing/_components/history/itemsearcher.cpp \
     main_window/dock/tileset_item_box.cpp \
-    common_features/app_path.cpp
+    common_features/app_path.cpp \
+    common_features/installer.cpp
     
 
 HEADERS  += defines.h \
@@ -489,7 +490,8 @@ HEADERS  += defines.h \
     editing/_components/history/itemsearcher.h \
     main_window/dock/tileset_item_box.h \
     main_window/dock/toolboxes.h \
-    main_window/dock/toolboxes_protos.h
+    main_window/dock/toolboxes_protos.h \
+    common_features/installer.h
 
 
 FORMS    += \
