@@ -18,9 +18,21 @@
 
 #ifndef APP_PATH_H
 #define APP_PATH_H
+
 #include <QString>
 
 extern QString ApplicationPath;
 extern QString ApplicationPath_x;
+
+class AppPathManager
+{
+    public:
+        static void initAppPath();
+        static QString settingsFile();
+        static QString userAppDir();
+
+    private:
+        static QString _settingsPath;
+};
 
 #endif // APP_PATH_H

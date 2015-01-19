@@ -25,7 +25,7 @@
 void MainWindow::on_actionCDATA_Import_triggered()
 {
 
-    QString sourceDir = ApplicationPath;
+    QString sourceDir = AppPathManager::userAppDir();
     if(activeChildWindow()==1)
     {
         if(activeLvlEditWin()->isUntitled)

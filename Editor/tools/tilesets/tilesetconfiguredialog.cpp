@@ -350,7 +350,7 @@ void TilesetConfigureDialog::showEvent(QShowEvent *event)
 
 void TilesetConfigureDialog::showNotify()
 {
-    QSettings cCounters(ApplicationPath+"/pge_editor.ini", QSettings::IniFormat);
+    QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
     cCounters.beginGroup("message-boxes");
     bool showNotice=cCounters.value("tileset-editor-greeting",true).toBool();
