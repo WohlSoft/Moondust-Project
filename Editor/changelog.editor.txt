@@ -30,6 +30,9 @@ Editor 0.2.2
 - Fixed placement of NPC's to the slopes
 - Added animated splash screens system into the editor
 - Fixed layers and event slots reset bug in the item properties dialog
+- Fixed default sizes of Sub-windows in sub-window mode
+- Stars counter no more count friendly NPC's
+- Added ability to copy and paste level and world data into external clipboard with able to paste/copy into any text file!
 
 Editor 0.2.1.1
 - Fixed zoom icons customization

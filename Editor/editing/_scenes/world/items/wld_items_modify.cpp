@@ -417,7 +417,41 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
     }
 }
 
+void WldScene::placeAll(const WorldData &data){
+    foreach (WorldTiles tile, data.tiles)
+    {
+        //place them back
+        WldData->tiles.push_back(tile);
+        placeTile(tile);
+    }
+    foreach (WorldPaths path, data.paths)
+    {
+        //place them back
+        WldData->paths.push_back(path);
+        placePath(path);
+    }
+    foreach (WorldScenery scenery, data.scenery)
+    {
+        //place them back
+        WldData->scenery.push_back(scenery);
+        placeScenery(scenery);
+    }
+    foreach (WorldLevels level, data.levels)
+    {
+        //place them back
+        WldData->levels.push_back(level);
+        placeLevel(level);
+    }
+    foreach (WorldMusic music, data.music)
+    {
+        WldData->music.push_back(music);
+        placeMusicbox(music);
+    }
 
+    //refresh Animation control
+    if(opts.animationEnabled) stopAnimation();
+    if(opts.animationEnabled) startAnimation();
+}
 
 
 

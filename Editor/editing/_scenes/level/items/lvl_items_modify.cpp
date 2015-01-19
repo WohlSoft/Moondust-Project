@@ -198,6 +198,87 @@ void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
     }
 }
 
+void LvlScene::placeAll(const LevelData &data)
+{
+    bool hasToUpdateDoorData = false;
+
+    foreach (LevelBlock block, data.blocks)
+    {
+        //place them back
+        LvlData->blocks.push_back(block);
+        placeBlock(block);
+
+    }
+
+    foreach (LevelBGO bgo, data.bgo)
+    {
+        //place them back
+        LvlData->bgo.push_back(bgo);
+        placeBGO(bgo);
+
+    }
+
+    foreach (LevelNPC npc, data.npc)
+    {
+        //place them back
+        LvlData->npc.push_back(npc);
+        placeNPC(npc);
+
+    }
+
+    foreach (LevelPhysEnv water, data.physez)
+    {
+        //place them back
+        LvlData->physez.push_back(water);
+        placeWater(water);
+    }
+
+    foreach (LevelDoors door, data.doors)
+    {
+        LevelDoors originalDoor;
+        bool found = false;
+        foreach(LevelDoors findDoor, LvlData->doors){
+            if(door.array_id == findDoor.array_id){
+                originalDoor = findDoor;
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            break;
+
+        if(door.isSetIn&&!door.isSetOut)
+        {
+            originalDoor.ix = door.ix;
+            originalDoor.iy = door.iy;
+            originalDoor.isSetIn = true;
+            placeDoorEnter(originalDoor, false, false);
+        }
+        else
+        if(!door.isSetIn&&door.isSetOut)
+        {
+            originalDoor.ox = door.ox;
+            originalDoor.oy = door.oy;
+            originalDoor.isSetOut = true;
+            placeDoorExit(originalDoor, false, false);
+        }
+        hasToUpdateDoorData = true;
+    }
+
+    foreach(PlayerPoint plr, data.players)
+    {
+        placePlayerPoint(plr);
+    }
+
+    if(hasToUpdateDoorData)
+        MainWinConnect::pMainWin->setDoorData(-2);
+
+
+    //refresh Animation control
+    if(opts.animationEnabled) stopAnimation();
+    if(opts.animationEnabled) startAnimation();
+}
+
 
 
 

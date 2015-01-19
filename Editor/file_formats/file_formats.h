@@ -188,11 +188,11 @@ public:
     static LevelData dummyLvlDataArray(); //!< Generate empty level map
 
     // SMBX64 LVL File
-    static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath=""); //!< Parse SMBX1-SMBX64 level
+    static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath="", bool sielent=false); //!< Parse SMBX1-SMBX64 level
     static QString WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
     // PGE Extended Level File
-    static LevelData ReadExtendedLvlFile(QString RawData, QString filePath=""); //!< Parse PGE-X level file
+    static LevelData ReadExtendedLvlFile(QString RawData, QString filePath="", bool sielent=false); //!< Parse PGE-X level file
     static QString WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
 
     // Lvl Data
@@ -215,11 +215,11 @@ public:
     static WorldData dummyWldDataArray(); //!< Generate empty world map
 
     // SMBX64 WLD File
-    static WorldData ReadSMBX64WldFile(QString RawData, QString filePath); //!< Parse SMBX1-SMBX64 world
+    static WorldData ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent=false); //!< Parse SMBX1-SMBX64 world
     static QString WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
 
     // PGE Extended World map File
-    static WorldData ReadExtendedWldFile(QString RawData, QString filePath); //!< Parse PGE-X world file
+    static WorldData ReadExtendedWldFile(QString RawData, QString filePath, bool sielent=false); //!< Parse PGE-X world file
     static QString WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
 
     //Wld Data

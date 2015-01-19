@@ -439,9 +439,9 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
     LevelData modData;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+        if((*it)->data(ITEM_IS_CURSOR).toString()=="CURSOR") continue; //skip cursor item
 
-        if((*it)->data(0).toString()=="Block")
+        if((*it)->data(ITEM_TYPE).toString()=="Block")
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
             {
@@ -453,7 +453,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
 
         }
         else
-        if((*it)->data(0).toString()=="BGO")
+        if((*it)->data(ITEM_TYPE).toString()=="BGO")
         {
             if(((ItemBGO *)(*it))->bgoData.layer==layerName)
             {
@@ -465,7 +465,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
         else
-        if((*it)->data(0).toString()=="NPC")
+        if((*it)->data(ITEM_TYPE).toString()=="NPC")
         {
             if(((ItemNPC *)(*it))->npcData.layer==layerName)
             {
@@ -476,7 +476,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
         else
-        if((*it)->data(0).toString()=="Water")
+        if((*it)->data(ITEM_TYPE).toString()=="Water")
         {
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
@@ -487,16 +487,16 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
         else
-        if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+        if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
         {
             if(((ItemDoor *)(*it))->doorData.layer==layerName)
             {
-                if((*it)->data(0).toString()=="Door_enter"){
+                if((*it)->data(ITEM_TYPE).toString()=="Door_enter"){
                     LevelDoors tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     modData.doors.push_back(tData);
-                }else if((*it)->data(0).toString()=="Door_exit"){
+                }else if((*it)->data(ITEM_TYPE).toString()=="Door_exit"){
                     LevelDoors tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
@@ -508,6 +508,13 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
     }
+
+   //Apply new layer name for non-placed warps
+   for(int i=0; i<edit->LvlData.doors.size();i++)
+   {
+       if(edit->LvlData.doors[i].layer==layerName)
+            edit->LvlData.doors[i].layer = newLayerName;
+   }
 
     if(historyRecord == 0){
         if(newLayerName == "Default"){
@@ -692,6 +699,7 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
     ModifyLayer(oldLayerName, newLayerName, visible);
 
     setLayerLists();  //Sync comboboxes in properties
+    setDoorData(-2);
 }
 
 void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)

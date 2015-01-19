@@ -33,7 +33,7 @@ WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
     return ReadExtendedWldFile( in.readAll(), inf.fileName() );
 }
 
-WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath)
+WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bool sielent)
 {
      FileStringList in;
      in.addData( RawData );
@@ -691,7 +691,8 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath)
      return FileData;
 
      badfile:    //If file format not corrects
-         BadFileMsg(FileData.path, str_count, line);
+         if(!sielent)
+            BadFileMsg(FileData.path, str_count, line);
          FileData.ReadFileValid=false;
      return FileData;
 }
@@ -708,32 +709,46 @@ QString FileFormats::WriteExtendedWldFile(WorldData FileData)
     long i;
     bool addArray=false;
 
+    addArray=false;
+    foreach(bool x, FileData.nocharacter)
+    { if(x) addArray=true; }
     //HEAD section
-    TextData += "HEAD\n";
-        if(!FileData.EpisodeTitle.isEmpty())
-            TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
+    if(
+            (!FileData.EpisodeTitle.isEmpty())||
+            (addArray)||
+            (!FileData.IntroLevel_file.isEmpty())||
+            (FileData.HubStyledWorld)||
+            (FileData.restartlevel)||
+            (FileData.stars>0)||
+            (!FileData.authors.isEmpty())
+      )
+    {
+        TextData += "HEAD\n";
+            if(!FileData.EpisodeTitle.isEmpty())
+                TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
 
-        addArray=false;
-        foreach(bool x, FileData.nocharacter)
-        { if(x) addArray=true; }
-        if(addArray)
-            TextData += PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
+            addArray=false;
+            foreach(bool x, FileData.nocharacter)
+            { if(x) addArray=true; }
+            if(addArray)
+                TextData += PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
 
-        if(!FileData.IntroLevel_file.isEmpty())
-            TextData += PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
+            if(!FileData.IntroLevel_file.isEmpty())
+                TextData += PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
 
-        if(FileData.HubStyledWorld)
-            TextData += PGEFile::value("HB", PGEFile::BoolS(FileData.HubStyledWorld)); // Hub-styled episode
+            if(FileData.HubStyledWorld)
+                TextData += PGEFile::value("HB", PGEFile::BoolS(FileData.HubStyledWorld)); // Hub-styled episode
 
-        if(FileData.restartlevel)
-            TextData += PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
-        if(FileData.stars>0)
-            TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
-        if(!FileData.authors.isEmpty())
-            TextData += PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
+            if(FileData.restartlevel)
+                TextData += PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
+            if(FileData.stars>0)
+                TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
+            if(!FileData.authors.isEmpty())
+                TextData += PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
 
-    TextData += "\n";
-    TextData += "HEAD_END\n";
+        TextData += "\n";
+        TextData += "HEAD_END\n";
+    }
 
     //////////////////////////////////////MetaData////////////////////////////////////////////////
     //Bookmarks

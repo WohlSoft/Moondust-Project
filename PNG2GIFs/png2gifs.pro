@@ -22,7 +22,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += gui widgets
 
 DESTDIR = ../bin
 
@@ -52,6 +52,7 @@ TARGET = PNG2GIFs
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
+CONFIG   += thread
 
 TEMPLATE = app
 
@@ -68,15 +69,22 @@ SOURCES += \
     ../_Libs/giflib/gif_hash.c \
     ../_Libs/giflib/gifalloc.c \
     ../_Libs/giflib/quantize.c \
+    png2gifs_gui.cpp \
+    png2gifs_converter.cpp
 
 HEADERS += \
     ../_Libs/giflib/gif_hash.h \
     ../_Libs/giflib/gif_lib.h \
     ../_Libs/giflib/gif_lib_private.h \
-    version.h
+    version.h \
+    png2gifs_gui.h \
+    png2gifs_converter.h
 
 RESOURCES += \
     _resources/png2gifs.qrc
 
 OTHER_FILES += \
     _resources/png2gifs.rc
+
+FORMS += \
+    png2gifs_gui.ui

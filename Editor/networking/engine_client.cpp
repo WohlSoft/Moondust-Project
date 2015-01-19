@@ -156,9 +156,9 @@ void EngineClient::run()
 
 void EngineClient::exec()
 {
-    QElapsedTimer pingPong;
-    pingPong.start();
-    bool pingSent=false;
+    //QElapsedTimer pingPong;
+    //pingPong.start();
+    //bool pingSent=false;
       while(engine->isOpen() && !this->isFinished())
       {
             if(engine->waitForReadyRead(1000))
@@ -188,7 +188,7 @@ void EngineClient::exec()
                         if(x=="PONG")
                         {
                             qDebug() << "Accepted PONG";
-                            pingSent = false;
+                            //pingSent = false;
                         }
                         else
                         if(x=="READY")
@@ -202,27 +202,27 @@ void EngineClient::exec()
             else
                 engine->close();
 
-            if(pingPong.elapsed()>5000)
-            {
-                if(pingSent)
-                {
-                    qDebug() << "Mr. Ping Timeout is here! :D. Engine is not answer";
-                    engine->close();
-                    _connected=false;
-                    break;
-                }
-                else
-                {
-                    qDebug() << "Ping";
-                    pingPong.restart();
-                    QString str = QString("PING\n\n");
-                    QByteArray bytes;
-                    bytes = str.toUtf8();
-                    engine->write(bytes);
-                    engine->flush();
-                    pingSent=true;
-                }
-            }
+//            if(pingPong.elapsed()>5000)
+//            {
+//                if(pingSent)
+//                {
+//                    qDebug() << "Mr. Ping Timeout is here! :D. Engine is not answer";
+//                    engine->close();
+//                    _connected=false;
+//                    break;
+//                }
+//                else
+//                {
+//                    qDebug() << "Ping";
+//                    pingPong.restart();
+//                    QString str = QString("PING\n\n");
+//                    QByteArray bytes;
+//                    bytes = str.toUtf8();
+//                    engine->write(bytes);
+//                    engine->flush();
+//                    pingSent=true;
+//                }
+//            }
             qDebug() << "Tick";
             msleep(100);
       }

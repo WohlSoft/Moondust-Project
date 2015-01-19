@@ -7,7 +7,17 @@ call _paths.bat
 copy %SOURCEDIR%\Editor\languages\*.qm "%TESTDIR%\languages"
 copy %SOURCEDIR%\Editor\languages\*.png "%TESTDIR%\languages"
 
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\LazyFixTool.exe"
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\PNG2GIFs.exe"
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\GIFs2PNG.exe"
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\pge_calibrator.exe"
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\pge_editor.exe"
+if '%1'=='full' upx.exe --compress-icons=0 "%SOURCEDIR%\bin\pge_engine.exe"
 copy "%SOURCEDIR%\bin\*.exe" "%TESTDIR%"
+copy "%SOURCEDIR%\GIFs2PNG\*_Readme.txt" "%TESTDIR%"
+copy "%SOURCEDIR%\LazyFixTool\*_Readme.txt" "%TESTDIR%"
+copy "%SOURCEDIR%\PNG2GIFs\*_Readme.txt" "%TESTDIR%"
+copy "%SOURCEDIR%\PlayableCalibrator\*_Readme.txt" "%TESTDIR%"
 rem if errorlevel 1 goto wrong
 
 copy "%SOURCEDIR%\Editor\changelog.editor.txt" "%TESTDIR%"

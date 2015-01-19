@@ -74,7 +74,7 @@ LevelEdit *MainWindow::createLvlChild()
     levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                             800, 610);
+                             860, 680);
     levelWindowP->setWindowIcon(Themes::icon(Themes::level_16));
     levelWindowP->updateGeometry();
     levelWindowP->update();
@@ -104,11 +104,14 @@ WorldEdit *MainWindow::createWldChild()
     levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                             800, 610);
+                             860, 680);
     levelWindowP->setWindowIcon(Themes::icon(Themes::world_16));
     levelWindowP->updateGeometry();
     levelWindowP->update();
     ui->centralWidget->updateGeometry();
+
+    GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+    connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
 
     return child;
 }
@@ -214,6 +217,15 @@ void MainWindow::SWCascade()
     if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
         setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->cascadeSubWindows();
+
+    foreach(QMdiSubWindow * w, ui->centralWidget->subWindowList())
+    {
+        if(
+                (QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)||
+                (QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+           ) w->setGeometry(w->x(), w->y(), 860, 680);
+    }
+
 }
 
 void MainWindow::SWTile()

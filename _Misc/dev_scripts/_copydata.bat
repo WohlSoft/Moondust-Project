@@ -159,6 +159,8 @@ call :ApplyDir data_configs
 call :ApplyDir dev_console
 call :ApplyDir editing
 call :ApplyDir editing\_dialogs
+call :ApplyDir editing\_components
+call :ApplyDir editing\_components\history
 call :ApplyDir editing\_scenes
 call :ApplyDir editing\_scenes\level
 call :ApplyDir editing\_scenes\level\edit_modes
@@ -185,6 +187,7 @@ call :ApplyDir main_window\script
 call :ApplyDir main_window\testing
 call :ApplyDir main_window\tools
 call :ApplyDir main_window\view
+call :ApplyDir main_window\updater
 call :ApplyDir main_window\world
 call :ApplyDir networking
 call :ApplyDir script

@@ -26,6 +26,14 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui(new Ui::aboutDialog)
 {
     ui->setupUi(this);
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    #endif
+
     ui->About1->setText(ui->About1->text()
                         .arg(_FILE_VERSION)
                         .arg(_FILE_RELEASE)
