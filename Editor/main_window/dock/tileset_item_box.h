@@ -28,7 +28,7 @@ public:
 public slots:
     void setTileSetBox(bool force=false);
 
-    void on_Tileset_Item_Box_visibilityChanged(bool visible);
+    void on_TilesetItemBox_visibilityChanged(bool visible);
     void on_newTileset_clicked();
     void on_tilesetGroup_currentIndexChanged(int index);
 
@@ -45,7 +45,6 @@ public slots:
     QVector<SimpleTileset> loadCustomTilesets();
     void makeCurrentTileset();
     void makeAllTilesets();
-
 
 private:
     void construct(MainWindow *ParentMW);

@@ -89,7 +89,7 @@ namespace pge_tilesetbox
     int comboCurrent = 0;
 }
 
-void TilesetItemBox::on_Tileset_Item_Box_visibilityChanged(bool visible)
+void TilesetItemBox::on_TilesetItemBox_visibilityChanged(bool visible)
 {
     if(!mw) return;
     mw->ui->actionTilesetBox->setChecked(visible);
@@ -567,4 +567,3 @@ void TilesetItemBox::makeAllTilesets()
 
     DevConsole::log(QString("index %1 count %2").arg(current).arg(cat->count()), "Debug");
 }
-
