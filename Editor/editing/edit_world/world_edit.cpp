@@ -31,7 +31,7 @@ WorldEdit::WorldEdit(QWidget *parent) :
     currentMusic = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-    latest_export_path = ApplicationPath;
+    latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
     ui->setupUi(this);
     updateTimer=NULL;

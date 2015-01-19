@@ -17,6 +17,7 @@
  */
 
 #include <common_features/app_path.h>
+#include <common_features/themes.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -181,7 +182,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
     QGraphicsRectItem * itemRect=NULL;
     QBrush brush;
     QPen pen;
-    QPixmap image = QPixmap(ApplicationPath + "/" + "data/nobg.gif");
+    QPixmap image = Themes::Image(Themes::dummy_bg);
     QPixmap img;
     QPixmap img2; //Second image buffer
     //need a BGitem

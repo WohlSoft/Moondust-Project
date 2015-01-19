@@ -39,7 +39,7 @@ void DevConsole::init()
 
     currentDevConsole = new DevConsole();
 
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
@@ -178,7 +178,7 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");

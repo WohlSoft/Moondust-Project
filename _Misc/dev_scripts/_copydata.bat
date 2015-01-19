@@ -32,10 +32,12 @@ rem ============== GIFs2PNG ====================
 IF NOT EXIST %TARGETDIR%\GIFs2PNG\*.* md %TARGETDIR%\GIFs2PNG
 del %TARGETDIR%\GIFs2PNG\*.cpp
 del %TARGETDIR%\GIFs2PNG\*.h
+del %TARGETDIR%\GIFs2PNG\*.ui
 del %TARGETDIR%\GIFs2PNG\*.pro
 del %TARGETDIR%\GIFs2PNG\*.txt
 copy "%SOURCEDIR%\GIFs2PNG\*.cpp" %TARGETDIR%\GIFs2PNG
 copy "%SOURCEDIR%\GIFs2PNG\*.h" %TARGETDIR%\GIFs2PNG
+copy "%SOURCEDIR%\GIFs2PNG\*.ui" %TARGETDIR%\GIFs2PNG
 copy "%SOURCEDIR%\GIFs2PNG\*.pro" %TARGETDIR%\GIFs2PNG
 copy "%SOURCEDIR%\GIFs2PNG\*.txt" %TARGETDIR%\GIFs2PNG
 del /F /Q %TARGETDIR%\GIFs2PNG\_resources
@@ -48,9 +50,11 @@ IF NOT EXIST %TARGETDIR%\PNG2GIFs\*.* md %TARGETDIR%\PNG2GIFs
 del %TARGETDIR%\PNG2GIFs\*.cpp
 del %TARGETDIR%\PNG2GIFs\*.pro
 del %TARGETDIR%\PNG2GIFs\*.h
+del %TARGETDIR%\PNG2GIFs\*.ui
 del %TARGETDIR%\PNG2GIFs\*.txt
 copy "%SOURCEDIR%\PNG2GIFs\*.cpp" %TARGETDIR%\PNG2GIFs
 copy "%SOURCEDIR%\PNG2GIFs\*.h" %TARGETDIR%\PNG2GIFs
+copy "%SOURCEDIR%\PNG2GIFs\*.ui" %TARGETDIR%\PNG2GIFs
 copy "%SOURCEDIR%\PNG2GIFs\*.pro" %TARGETDIR%\PNG2GIFs
 copy "%SOURCEDIR%\PNG2GIFs\*.txt" %TARGETDIR%\PNG2GIFs
 del /F /Q %TARGETDIR%\PNG2GIFs\libs
@@ -65,9 +69,11 @@ IF NOT EXIST %TARGETDIR%\LazyFixTool\*.* md %TARGETDIR%\LazyFixTool
 del %TARGETDIR%\LazyFixTool\*.cpp
 del %TARGETDIR%\LazyFixTool\*.pro
 del %TARGETDIR%\LazyFixTool\*.h
+del %TARGETDIR%\LazyFixTool\*.ui
 del %TARGETDIR%\LazyFixTool\*.txt
 copy "%SOURCEDIR%\LazyFixTool\*.cpp" %TARGETDIR%\LazyFixTool
 copy "%SOURCEDIR%\LazyFixTool\*.h" %TARGETDIR%\LazyFixTool
+copy "%SOURCEDIR%\LazyFixTool\*.ui" %TARGETDIR%\LazyFixTool
 copy "%SOURCEDIR%\LazyFixTool\*.pro" %TARGETDIR%\LazyFixTool
 copy "%SOURCEDIR%\LazyFixTool\*.txt" %TARGETDIR%\LazyFixTool
 

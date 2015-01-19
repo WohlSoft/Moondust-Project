@@ -37,18 +37,12 @@
 
 #include "mainwindow.h"
 
-QString ApplicationPath;
-QString ApplicationPath_x;
-
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
     QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
-
     QApplication *a = new QApplication(argc, argv);
-
-
 
     SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
@@ -57,44 +51,26 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    a->setStyle(new PGE_ProxyStyle);
 
+    //Init system paths
+    AppPathManager::initAppPath();
 
-
-
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
-
-    #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    #endif
-
-    /*
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    QString test="/home/vasya/pge/"+osX_bundle;
-    qDebug() << test << " <- before";
-    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
-        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    qDebug() << test << " <- after";
-    */
-
+    //Init themes engine
     Themes::init();
 
+    //Init SDL Audio subsystem
     SDL_Init(SDL_INIT_AUDIO);
 
-    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
-
+    //Init log writer
     LoadLogSettings();
 
-    // ////////////////////////////////////////////////////
-    a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
     int ret=0;
     QRect screenSize;
 
+    //Init Main Window class
     MainWindow *w = new MainWindow;
     if(!w->continueLoad)
     {
@@ -102,6 +78,7 @@ int main(int argc, char *argv[])
         goto QuitFromEditor;
     }
 
+    //Init default geometry of main window
     screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
     w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                        QSize(screenSize.width()-100,\
@@ -115,10 +92,13 @@ int main(int argc, char *argv[])
     w->activateWindow();
     w->raise();
 
+    //Open files which opened by command line
     w->openFilesByArgs(a->arguments());
 
+    //Set acception of external file openings
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
+    //Run main loop
     ret=a->exec();
 
 QuitFromEditor:

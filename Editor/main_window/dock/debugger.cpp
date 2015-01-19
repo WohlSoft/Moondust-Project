@@ -99,7 +99,7 @@ void MainWindow::Debugger_loadCustomCounters()
 {
     using namespace mainwindow_debugger_box;
 
-    QString userDFile=ApplicationPath+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
+    QString userDFile=AppPathManager::userAppDir()+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
     QString debuggerFile = userDFile;
     if(!QFile(debuggerFile).exists())
     {
@@ -159,7 +159,7 @@ void MainWindow::Debugger_saveCustomCounters()
     using namespace mainwindow_debugger_box;
     if(!isLoaded) return;
 
-    QString debuggerFile = ApplicationPath+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
+    QString debuggerFile = AppPathManager::userAppDir()+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
 
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
     cCounters.setIniCodec("UTF-8");
@@ -216,7 +216,6 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
     util::memclear(ui->DEBUG_CustomCountersList);
     for(int i=0;i<customCounters.size();i++)
     {
-        qDebug() << "Window Type:" << customCounters[i].windowType;
         if(customCounters[i].windowType!=win) continue;
         QListWidgetItem *item;
         item = new QListWidgetItem(ui->DEBUG_CustomCountersList);

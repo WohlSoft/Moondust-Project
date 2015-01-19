@@ -30,7 +30,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui(new Ui::MainWindow)
 {
     continueLoad = false;
-    //thread1 = new QThread;
+
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
     this->hide();

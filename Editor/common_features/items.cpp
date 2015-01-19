@@ -17,6 +17,7 @@
  */
 
 #include <common_features/mainwinconnect.h>
+#include <common_features/themes.h>
 
 #include "items.h"
 #include "app_path.h"
@@ -200,7 +201,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 if((noimage)||(tImg.isNull()))
                 {
-                    tImg=QPixmap(ApplicationPath + "/" + "data/unknown_npc.png");
+                    tImg = Themes::Image(Themes::dummy_npc);
                 }
                 else
                 {

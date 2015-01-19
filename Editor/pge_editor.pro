@@ -347,7 +347,8 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementmodification.cpp \
     editing/_components/history/ihistoryelement.cpp \
     editing/_components/history/itemsearcher.cpp \
-    main_window/dock/tileset_item_box.cpp
+    main_window/dock/tileset_item_box.cpp \
+    common_features/app_path.cpp
     
 
 HEADERS  += defines.h \

@@ -34,7 +34,7 @@
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -150,7 +150,7 @@ void MainWindow::loadSettings()
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");

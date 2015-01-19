@@ -17,6 +17,7 @@
  */
 
 #include <common_features/app_path.h>
+#include <common_features/themes.h>
 #include <main_window/global_settings.h>
 
 #include "data_configs.h"
@@ -154,7 +155,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                     }
                     else
                     {
-                        sbg.second_image = QPixmap(ApplicationPath + "/" + "data/nobg.gif");
+                        sbg.second_image = Themes::Image(Themes::dummy_bg);
                     }
                     sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
                     tmpstr = bgset.value("second-repeat-v", "NR").toString();

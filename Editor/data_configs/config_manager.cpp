@@ -133,7 +133,7 @@ ConfigManager::~ConfigManager()
 ///
 QString ConfigManager::isPreLoaded()
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
