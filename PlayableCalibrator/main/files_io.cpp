@@ -22,6 +22,7 @@
 #include "ui_calibrationmain.h"
 #include "globals.h"
 #include "graphics.h"
+#include "app_path.h"
 
 
 void CalibrationMain::OpenFile(QString fileName)
@@ -71,8 +72,8 @@ void CalibrationMain::on_MakeTemplateB_clicked()
     createDirs();
 
     QFileInfo ourFile(currentFile);
-    QString targetFile =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
-    QString targetFile2 =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
+    QString targetFile =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
+    QString targetFile2 =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
 
     temp1->setBackgroundBrush(QBrush(Qt::black));
     temp2->setBackgroundBrush(QBrush(Qt::white));
