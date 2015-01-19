@@ -64,15 +64,22 @@ int main(int argc, char *argv[])
 
     ///Generating application path
 
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
+    //Init system paths
+    AppPathManager::initAppPath();
 
-    #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    QString osX_bundle = QCoreApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    #endif
+    foreach(QString arg, a.arguments())
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
+
+            QApplication::quit();
+            QApplication::exit();
+
+            return 0;
+        }
+    }
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";

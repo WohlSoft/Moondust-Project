@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,23 @@
 
 #ifndef APP_PATH_H
 #define APP_PATH_H
+
 #include <QString>
 
 extern QString ApplicationPath;
 extern QString ApplicationPath_x;
+
+class AppPathManager
+{
+    public:
+        static void initAppPath();
+        static QString settingsFile();
+        static QString userAppDir();
+        static void install();
+        static bool userDirIsAvailable();
+
+    private:
+        static QString _settingsPath;
+};
 
 #endif // APP_PATH_H
