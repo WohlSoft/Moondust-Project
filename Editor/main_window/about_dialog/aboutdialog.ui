@@ -47,10 +47,7 @@
     <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
-  </property>
-  <property name="styleSheet">
-   <string notr="true"/>
+   <bool>false</bool>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -76,9 +73,6 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
      </property>
      <property name="locale">
       <locale language="English" country="UnitedStates"/>
