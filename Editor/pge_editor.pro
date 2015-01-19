@@ -25,6 +25,10 @@
 QT       += gui widgets network
 QT       -= opengl
 
+win32:{
+QT       += winextras
+}
+
 DESTDIR = ../bin
 
 static: {
@@ -63,7 +67,12 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
-LIBS += -lSDL2 -lSDL2_mixer
+macx: {
+    INCLUDEPATH += -F$$(HOME)/Library/Frameworks
+    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+} else {
+    LIBS += -lSDL2 -lSDL2_mixer
+}
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
