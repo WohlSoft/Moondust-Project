@@ -17,6 +17,7 @@
  */
 
 #include <editing/edit_level/level_edit.h>
+#include <file_formats/file_formats.h>
 
 #include "wld_scene.h"
 #include "items/item_tile.h"
@@ -32,7 +33,7 @@ WorldData WldScene::copy(bool cut)
     //Get Selected Items
     QList<QGraphicsItem*> selectedList = selectedItems();
 
-    WorldData copyData;
+    WorldData copyData=FileFormats::dummyWldDataArray();
 
     if (!selectedList.isEmpty())
     {

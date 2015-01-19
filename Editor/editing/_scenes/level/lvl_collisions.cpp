@@ -121,7 +121,7 @@ bool LvlScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
             if(CheckZone[i] == (*items)[j])
             {
                 CheckZone.removeOne(CheckZone[i]);
-                i--;
+                i--; break;
             }
         }
     }

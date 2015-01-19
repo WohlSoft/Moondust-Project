@@ -606,7 +606,7 @@ void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
 
         QFont font;
         font.setFamily("Times");
-        font.setWeight(100);
+        font.setWeight(99);
         font.setPointSize(25);
         messageBox = new QGraphicsSimpleTextItem(text);
         messageBox->setPen(QPen(QBrush(Qt::black), 2));

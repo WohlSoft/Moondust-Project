@@ -113,6 +113,22 @@ void MainWindow::loadSettings()
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
+        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+        if(!continueLoad)
+        { //Hide all unitialized dock widgets
+           QList<QDockWidget *> dockWidgets = findChildren<QDockWidget *>();
+           foreach(QDockWidget* dw, dockWidgets)
+               dw->hide();
+
+           //Refresh state of menubars
+           updateWindowMenu();
+           updateMenus(true);
+        }
+
     settings.endGroup();
 
     settings.beginGroup("Recent");

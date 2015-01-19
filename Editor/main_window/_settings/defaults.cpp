@@ -26,6 +26,7 @@
 #include <main_window/tools/app_settings.h>
 #include <audio/music_player.h>
 #include <audio/sdl_music_player.h>
+#include <file_formats/file_formats.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -54,12 +55,18 @@ void MainWindow::setDefaults()
     cat_blocks="[all]";
     cat_bgos="[all]";
     cat_npcs="[all]";
+
+    WldBuffer=FileFormats::dummyWldDataArray();
+    LvlBuffer=FileFormats::dummyLvlDataArray();
 }
 
 void MainWindow::setUiDefults()
 {
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
     #endif
 
     //MainWindow Geometry;

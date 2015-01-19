@@ -17,6 +17,7 @@
  */
 
 #include <editing/edit_level/level_edit.h>
+#include <file_formats/file_formats.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -31,7 +32,9 @@ LevelData LvlScene::copy(bool cut)
     //Get Selected Items
     QList<QGraphicsItem*> selectedList = selectedItems();
 
-    LevelData copyData;
+    LevelData copyData=FileFormats::dummyLvlDataArray();
+    copyData.layers.clear();
+    copyData.events.clear();
 
     if (!selectedList.isEmpty())
     {

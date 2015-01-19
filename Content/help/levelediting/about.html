@@ -10,19 +10,19 @@
 
 <body style="max-width:1200px;">
 <p style="text-align: center">
-<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
+<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
 <h1 style="text-align: left">Level editing &gt; About</h1>
 <p style="text-align: left; margin-left: 40px;"><strong>Levels</strong> - is the total space 
 available to the player(s) during the course of completing a discrete objective.</p>
 <p style="text-align: left; margin-left: 40px;">Here you can made levels for 
 your game.</p>
 <p style="text-align: left; text-indent: 40px;">The main level unis is a <strong>
-section</strong>. Section - separated sub-area of level which have his own settigs: 
+section</strong>. Section - is a separated sub-area of level which have his own settigs: 
 music, background, physics, etc. Player can move between sections by special 
 points - warps. All sections placed in a single space, and you can see many 
 sections, but you can set settings only for current section.</p>
-<p style="text-align: left; text-indent: 40px;"><strong>Blocks</strong> - the 
-solid objects which are tiles with his shape and size. The main construction 
+<p style="text-align: left; text-indent: 40px;"><strong>Blocks</strong> - are a 
+solid objects which are tiles with its shape and size. The main construction 
 material of which level consists. The majority of blocks 
 interacts from players on whom it can stand about which the player can hit which 
 can be a limiting wall. There are blocks the touch to which hurt to the game 
@@ -35,28 +35,28 @@ one of characters, for other characters theese blocks working as normal, etc. As
 there is a special type of blocks which can have any size. This is a Sizable 
 blocks.</p>
 <p style="text-align: left; text-indent: 40px;"><strong>Background objects.</strong> 
-- is a sceneries. But some BGO can have special features: platform movement 
+- are a sceneries. But some BGO can have special features: platform movement 
 paths, will define movement paths for moting "platforms", reverser, what will 
 revert platform's speed back. Some BGO allows to clibmb on them. BGO can be 
 background and foreground. Foreground BGO placing over all other level items.</p>
 <p style="text-align: left; text-indent: 40px;"><strong>Non-playable characters</strong> 
-- is a main game unit, what building the game process: theese is a enemies, 
+- are a main game unit, what building the game process: theese is a enemies, 
 friends, items, power-ups, sceneries, etc. Each NPC have his algorithm, and can 
 be programmed.</p>
-<p style="text-align: left; text-indent: 40px;"><strong>Warps</strong> - is a 
+<p style="text-align: left; text-indent: 40px;"><strong>Warps</strong> - are a 
 special units, which allow to player teleport from first warp point (Entrance) to 
 second (Exit). Player can teleport between difference places of one section, and 
 also player can teleport between sections. This is a one way for enter to 
 another section, but exclusion is some NPCs, what can generate warp to other 
 section.</p>
 <p style="text-align: left; text-indent: 40px;"><strong>Physical environment 
-area</strong> (Water, Quicksand, etc.) - this is a specual unit what define the 
-physical environment inside his rectangle.</p>
-<p style="text-align: left; text-indent: 40px;"><strong>Layers</strong> - is a 
-groups of items, what can be used for fast access to them by special events.</p>
-<p style="text-align: left; text-indent: 40px;"><strong>Events</strong> - is a 
-special data of level, what cat dinamicly define and change the game process 
-options. For example: section settings, hide/show objects on seleted layers, move 
+area</strong> (Water, Quicksand, etc.) - this is a specual unit which defining the 
+physical environment inside its rectangle.</p>
+<p style="text-align: left; text-indent: 40px;"><strong>Layers</strong> - are a 
+groups of items which can be used for fast access to them by special events.</p>
+<p style="text-align: left; text-indent: 40px;"><strong>Events</strong> - are a 
+special data of level which can dinamicly define and change the game process 
+options. For example: section settings, hide/show objects on target layers, move 
 objects on layer, made scrolling of section, etc.</p>
 <p style="text-align: left; text-indent: 40px;">&nbsp;</p>
 <p style="text-align: center; text-indent: 40px;"><em>Level editing 
@@ -65,6 +65,49 @@ interface</em>&nbsp;</p>
 <img alt="" height="855" src="../screenshots/LevelEditing/005_levelEditingSpace.png" width="1166" /></p>
 
 
+<p style="text-align: left">&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-decoration: underline"><strong>Each level should have:</strong></p>
+<ul>
+	<li><strong>Title of level</strong> - The name of level which showing in the 
+	world map or in the battle mode. You will asked for it when you will try to 
+	save level. Or you can edit them in the "Level" -&gt; "Properties" menu.</li>
+	<li><strong>Player's start/spawn point</strong> where player can start it's 
+	walk. Also you can put instead of them any warps, but you will able start 
+	this level when you was entered to them with definition of entrance warp ID! 
+	If you will put no start points, you will haven't able to start level!</li>
+	<li><strong>Exit from level</strong>: this is aspecial NPC which triggers 
+	the exit and ends level with successful result. Without exits player will 
+	not be able exit from your level.<ul>
+		<li><strong>Standard exits</strong>: ends level when one of them was 
+		taken by player. In the SMBX64 configurations are&nbsp; 
+		NPC-11(Card roulette), NPC-16 (Dungeon ball), NPC-41 (Crystal sphare),
+		NPC-197 (Goal tape), NPC-97 (Star).</li>
+		<li><strong>Secret exit</strong>: in the SMBX64 configurations is a 
+		combination of NPC-31 (key) and BGO-35 (key hole). To activate this exit 
+		player should contact by carried key with key hole.</li>
+		<li><strong>Offscreen exit</strong>: This exit is not require any 
+		special items, you need to enable a flag on section where player will exit 
+		from level when it will walk out of screen.</li>
+		<li><strong>Warp exit:</strong> this is a warp which have alone entrance 
+		point. Level will be ended when player will enter into them. Also warps 
+		can be used to make warps between difference levels or even warp to 
+		specific world map coordinates. If coordinates will not be defined, 
+		player will exit from level into same position where player was entered 
+		into level or will exit from level through same warp point where it 
+		entered via hub level.</li>
+		<li><strong>End game exit:</strong> This exit will trigger end of 
+		episode. You can call it via special event command.</li>
+		<li><strong>Boss fight exit:</strong> Some NPC's can spawn exit item 
+		after defeating of them. In the SMBX64 standard there are NPC-15 
+		(boom-boom) will spawn NPC-16 (Dungeon ball), NPC-39 (Birdo) will spawn 
+		NPC-41 (Crystal sphare), NPC-86 (Bowser IIIrd) will activate end of 
+		episode. <span style="text-decoration: underline">To enable spawning of 
+		exit you should enable "Set as boss" flag for this NPC!</span></li>
+	</ul>
+	</li>
+</ul>
+<p style="text-align: left; text-indent: 40px;">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">&nbsp;</p>
