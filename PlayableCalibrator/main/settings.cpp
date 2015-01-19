@@ -28,16 +28,22 @@
 #include "animator/animate.h"
 #include "animator/aniFrames.h"
 #include "main/globals.h"
+#include "main/app_path.h"
 
 
 void CalibrationMain::createDirs()
 {
-    if(!QDir(QApplication::applicationDirPath() + "/calibrator").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator");
-    if(!QDir(QApplication::applicationDirPath() + "/calibrator/spriteconf").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator/spriteconf");
-    if(!QDir(QApplication::applicationDirPath() + "/calibrator/templates").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator/templates");
+    if(!QDir(ApplicationPath + "/calibrator").exists())
+        QDir().mkdir(ApplicationPath + "/calibrator");
+    if(!QDir(ApplicationPath + "/calibrator/spriteconf").exists())
+        QDir().mkdir(ApplicationPath + "/calibrator/spriteconf");
+    if(!QDir(ApplicationPath + "/calibrator/templates").exists())
+        QDir().mkdir(ApplicationPath + "/calibrator/templates");
+
+    if(AppPathManager::userDirIsAvailable())
+    {
+        QDir().mkpath(AppPathManager::userAppDir() + "/calibrator/templates");
+    }
 }
 
 void CalibrationMain::loadConfig(QString fileName)
@@ -52,7 +58,7 @@ void CalibrationMain::loadConfig(QString fileName)
         ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
     else
         //Load Default
-        ini_sprite = QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+        ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
 
     conf.beginGroup("common");
@@ -199,7 +205,7 @@ void CalibrationMain::saveConfig(QString fileName)
     QFileInfo ourFile(fileName);
     QString ini_sprite;
     ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
-    //ini_sprite = QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    //ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
