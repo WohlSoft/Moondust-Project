@@ -18,6 +18,13 @@
 
 #include <QLayout>
 #include <QWidgetItem>
+#include <QDialog>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QTableWidget>
+#include <QComboBox>
 
 #include "util.h"
 
@@ -112,4 +119,13 @@ QString util::filePath(QString s)
     t.replace('>', '_');
     t.replace('|', '_');
     return t;
+}
+
+
+void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
+{
+    if(CloseButtonOnly)
+        dialog->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    dialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+    dialog->size(), qApp->desktop()->availableGeometry(0)));
 }
