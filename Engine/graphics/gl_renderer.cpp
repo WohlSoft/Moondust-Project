@@ -86,7 +86,7 @@ bool GlRenderer::init()
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    ScreenshotPath = ApplicationPath+"/screenshots/";
+    ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
 
     return true;
@@ -123,7 +123,7 @@ void GlRenderer::makeShot()
         shotImg.setPixel( QPoint(x,y), qRgb(pixels[i],pixels[i+1], pixels[i+2]) );
     }
 
-    if(!QDir(ScreenshotPath).exists()) QDir().mkdir(ScreenshotPath);
+    if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
     QTime time = QTime::currentTime();
