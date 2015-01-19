@@ -39,9 +39,9 @@ void MainWindow::loadSettings()
 
     settings.beginGroup("Main");
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
-        GlobalSettings::openPath = settings.value("lastpath", ".").toString();
-        GlobalSettings::savePath = settings.value("lastsavepath", ".").toString();
-        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", ".").toString();
+        GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
         GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
         GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
