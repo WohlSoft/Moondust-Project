@@ -19,6 +19,7 @@
 #include <common_features/graphicsworkspace.h>
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/toolboxes.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -90,7 +91,7 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
 
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
@@ -110,7 +111,7 @@ void MainWindow::updateMenus(bool force)
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
 
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
@@ -120,7 +121,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
@@ -134,17 +135,17 @@ void MainWindow::updateMenus(bool force)
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
         ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
 
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
-        ui->Tileset_Item_Box->setVisible( 0 );
+        dock_TilesetBox->setVisible( 0 );
         ui->debuggerBox->setVisible( 0 );
         ui->bookmarkBox->setVisible( 0 );
     }

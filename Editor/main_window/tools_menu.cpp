@@ -16,8 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDesktopServices>
-
+#include <common_features/util.h>
 #include <tools/tilesets/tilesetconfiguredialog.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
 #include <tools/external_tools/lazyfixtool_gui.h>
@@ -32,6 +31,7 @@
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
     TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
+    util::DialogToCenter(tilesetConfDia);
     tilesetConfDia->exec();
     delete tilesetConfDia;
 
@@ -49,6 +49,8 @@ void MainWindow::on_actionTileset_groups_editor_triggered()
         groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
     else
         groupDialog = new TilesetGroupEditor(NULL, this);
+
+    util::DialogToCenter(groupDialog);
     groupDialog->exec();
     delete groupDialog;
 
@@ -74,8 +76,7 @@ void MainWindow::on_actionLazyFixTool_triggered()
         return;
     }
     lazyfixGUI = new LazyFixTool_gui;
-    lazyfixGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    lazyfixGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, lazyfixGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(lazyfixGUI, true);
     lazyfixGUI->show();
 }
 
@@ -90,8 +91,7 @@ void MainWindow::on_actionGIFs2PNG_triggered()
         return;
     }
     gifToPngGUI = new gifs2png_gui;
-    gifToPngGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    gifToPngGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, gifToPngGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(gifToPngGUI, true);
     gifToPngGUI->show();
 }
 
@@ -106,8 +106,7 @@ void MainWindow::on_actionPNG2GIFs_triggered()
         return;
     }
     pngToGifGUI = new png2gifs_gui;
-    pngToGifGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    pngToGifGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pngToGifGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(pngToGifGUI, true);
     pngToGifGUI->show();
 }
 

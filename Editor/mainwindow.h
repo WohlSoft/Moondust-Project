@@ -55,6 +55,12 @@ QT_BEGIN_NAMESPACE
     class QMimeData;
 QT_END_NAMESPACE
 
+
+/*************************Dock widgets***************************/
+class TilesetItemBox;
+/*************************Dock widgets*end***********************/
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -63,6 +69,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
+    /************************Friend classes***************************/
+    friend class TilesetItemBox;
+    /************************Friend classes***************************/
+
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
@@ -75,6 +85,7 @@ public:
  * - Miltilanguage
  * - Recent Files
  * - Sub Windows
+ * - Dock widgwets
  * - Editing features
  * - Clipboard
  * - EditMode switch
@@ -379,28 +390,14 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////// Tileset box /////////////////////////
+    public:
+        TilesetItemBox *dock_TilesetBox;
     public slots:
         void setTileSetBox(); //!< Refresh tileset box's data
-
-        void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);
-        QWidget *findTabWidget(const QString &categoryItem);
-        QWidget *makeCategory(const QString &categoryItem);
-        QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
-        QComboBox *getGroupComboboxOfTab(QWidget *catTab);
-        void clearTilesetGroups();
-        void makeCurrentTileset();
-        void makeSelectedTileset(int tabIndex);
-        void makeAllTilesets();
-        void editSelectedTileset();
-        QVector<SimpleTileset> loadCustomTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
         void on_actionTileset_groups_editor_triggered();
-
-        void on_tilesetGroup_currentIndexChanged(int index);
-        void on_newTileset_clicked();
-        void on_Tileset_Item_Box_visibilityChanged(bool visible);
         void on_actionTilesetBox_triggered(bool checked);
     private:
         bool lockTilesetBox;

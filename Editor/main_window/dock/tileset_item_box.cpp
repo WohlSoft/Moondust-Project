@@ -1,3 +1,4 @@
+
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
@@ -18,12 +19,11 @@
 
 #include <QMessageBox>
 #include <QScrollArea>
-//#include <QElapsedTimer>
-//#include <QtConcurrent/QtConcurrentRun>
 
 #include <common_features/logger.h>
 #include <common_features/themes.h>
 #include <common_features/util.h>
+#include <tools/tilesets/tileset.h>
 #include <tools/tilesets/tilesetitembutton.h>
 #include <tools/tilesets/tilesetconfiguredialog.h>
 #include <data_configs/obj_tilesets.h>
@@ -32,7 +32,55 @@
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
+
 #include "tileset_item_box.h"
+#include "ui_tileset_item_box.h"
+
+void MainWindow::on_actionTilesetBox_triggered(bool checked)
+{
+    dock_TilesetBox->setVisible(checked);
+    if(checked) dock_TilesetBox->raise();
+}
+
+ // Create and refresh tileset box data
+void MainWindow::setTileSetBox()
+{
+    dock_TilesetBox->setTileSetBox();
+}
+
+TilesetItemBox::TilesetItemBox(QWidget *parent) :
+    QDockWidget(parent),
+    ui(new Ui::TilesetItemBox)
+{
+    construct(NULL);
+}
+
+TilesetItemBox::TilesetItemBox(MainWindow *ParentMW, QWidget *parent) :
+    QDockWidget(parent),
+    ui(new Ui::TilesetItemBox)
+{
+    construct(ParentMW);
+}
+
+
+void TilesetItemBox::construct(MainWindow *ParentMW)
+{
+    setParentMW(ParentMW);
+    ui->setupUi(this);
+    this->hide();
+    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
+    ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+}
+
+void TilesetItemBox::setParentMW(MainWindow *ParentMW)
+{
+    mw = ParentMW;
+}
+
+TilesetItemBox::~TilesetItemBox()
+{
+    delete ui;
+}
 
 
 namespace pge_tilesetbox
@@ -41,53 +89,18 @@ namespace pge_tilesetbox
     int comboCurrent = 0;
 }
 
-
-// THREAD TEST
-//void loopForever()
-//{
-//    QElapsedTimer tickTack;
-//    tickTack.start();
-//    int ticks=0;
-//    while(1)
-//    {
-//        if(ticks>20) break;
-
-//        DevConsole::log(QString("Tick %1").arg(ticks), "Timer");
-//        while(1)
-//        {
-//            if(tickTack.elapsed()>=1000) break;
-//        }
-//        ticks++;
-//        tickTack.restart();
-//    }
-//}
-//QFuture<void> future;
-// THREAD TEST
-
-TilesetItemBox::TilesetItemBox(QWidget *parent) :
-    QDockWidget(parent)
+void TilesetItemBox::on_Tileset_Item_Box_visibilityChanged(bool visible)
 {
-
-}
-
-void MainWindow::on_Tileset_Item_Box_visibilityChanged(bool visible)
-{
-    ui->actionTilesetBox->setChecked(visible);
+    if(!mw) return;
+    mw->ui->actionTilesetBox->setChecked(visible);
     if(visible) setTileSetBox();  //!< update when it show
 }
 
-void MainWindow::on_actionTilesetBox_triggered(bool checked)
+void TilesetItemBox::setTileSetBox(bool force)
 {
-    ui->Tileset_Item_Box->setVisible(checked);
-    if(checked) ui->Tileset_Item_Box->raise();
-}
-
-
- // Create and refresh tileset box data
-void MainWindow::setTileSetBox()
-{
-    if(lockTilesetBox) return;
-    if(!ui->Tileset_Item_Box->isVisible()) return; //!< Don't update invisible
+    if(!mw) return;
+    if(mw->lockTilesetBox) return;
+    if((!this->isVisible()) && (!force)) return; //!< Don't update invisible
 
     pge_tilesetbox::current = ui->TileSetsCategories->currentIndex();
 
@@ -98,7 +111,7 @@ void MainWindow::setTileSetBox()
     //QStringList entries;
     //entries = grpDir.entryList(filters, QDir::Files);
 
-    foreach (SimpleTilesetGroup grp, configs.main_tilesets_grp) {
+    foreach (SimpleTilesetGroup grp, mw->configs.main_tilesets_grp) {
         prepareTilesetGroup(grp);
     }
 
@@ -107,27 +120,28 @@ void MainWindow::setTileSetBox()
 
 
 
-void MainWindow::on_tilesetGroup_currentIndexChanged(int index)
+void TilesetItemBox::on_tilesetGroup_currentIndexChanged(int index)
 {
+    if(!mw) return;
     Q_UNUSED(index);
     WriteToLog(QtDebugMsg, "TilesetBox -> change combobox's index");
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
     makeCurrentTileset();
 }
 
 
 
-void MainWindow::on_newTileset_clicked()
+void TilesetItemBox::on_newTileset_clicked()
 {
     // THREAD TEST
     //future = QtConcurrent::run(loopForever); //<! Tiny test with thread
     //QMessageBox::information(this, "test", "test", QMessageBox::Ok);
 
     bool untitled=false;
-    if(activeChildWindow()==1)
-        untitled=activeLvlEditWin()->isUntitled;
-    else if(activeChildWindow()==3)
-        untitled=activeWldEditWin()->isUntitled;
+    if(mw->activeChildWindow()==1)
+        untitled=mw->activeLvlEditWin()->isUntitled;
+    else if(mw->activeChildWindow()==3)
+        untitled=mw->activeWldEditWin()->isUntitled;
 
     if(untitled)
     {
@@ -138,31 +152,39 @@ void MainWindow::on_newTileset_clicked()
 
     TilesetConfigureDialog* tilesetConfDia;
 
-    if(activeChildWindow()==1)
-        tilesetConfDia = new TilesetConfigureDialog(&configs, activeLvlEditWin()->scene, this);
-    else if(activeChildWindow()==3)
-        tilesetConfDia = new TilesetConfigureDialog(&configs, activeWldEditWin()->scene, this);
+    if(mw->activeChildWindow()==1)
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, mw->activeLvlEditWin()->scene, mw);
+    else if(mw->activeChildWindow()==3)
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, mw->activeWldEditWin()->scene, mw);
     else
-        tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, NULL, mw);
+
+    util::DialogToCenter(tilesetConfDia);
 
     tilesetConfDia->exec();
     delete tilesetConfDia;
 
-    configs.loadTilesets();
+    mw->configs.loadTilesets();
     setTileSetBox();
 }
 
-void MainWindow::editSelectedTileset()
+void TilesetItemBox::setTabPosition(QTabWidget::TabPosition pos)
+{
+    ui->TileSetsCategories->setTabPosition(pos);
+}
+
+void TilesetItemBox::editSelectedTileset()
 {
     TilesetConfigureDialog* tilesetConfDia;
 
-    if(activeChildWindow()==1)
-        tilesetConfDia = new TilesetConfigureDialog(&configs, activeLvlEditWin()->scene, this);
-    else if(activeChildWindow()==3)
-        tilesetConfDia = new TilesetConfigureDialog(&configs, activeWldEditWin()->scene, this);
+    if(mw->activeChildWindow()==1)
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, mw->activeLvlEditWin()->scene, mw);
+    else if(mw->activeChildWindow()==3)
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, mw->activeWldEditWin()->scene, mw);
     else
-        tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
+        tilesetConfDia = new TilesetConfigureDialog(&mw->configs, NULL, mw);
 
+    util::DialogToCenter(tilesetConfDia);
 
     QPushButton* b = qobject_cast<QPushButton*>(sender());
     if(!b){
@@ -198,11 +220,11 @@ void MainWindow::editSelectedTileset()
 
     delete tilesetConfDia;
 
-    configs.loadTilesets();
+    mw->configs.loadTilesets();
     setTileSetBox();
 }
 
-QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
+QScrollArea* TilesetItemBox::getFrameTilesetOfTab(QWidget* catTab)
 {
     WriteToLog(QtDebugMsg, "TilesetBox -> find QScroll Area");
 
@@ -217,14 +239,14 @@ QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
     return 0;
 }
 
-QComboBox* MainWindow::getGroupComboboxOfTab(QWidget* catTab)
+QComboBox* TilesetItemBox::getGroupComboboxOfTab(QWidget* catTab)
 {
     WriteToLog(QtDebugMsg, "TilesetBox -> findCombobox");
     QComboBox* comboxes = catTab->findChild<QComboBox*>();
     return comboxes;
 }
 
-QWidget* MainWindow::findTabWidget(const QString &categoryItem)
+QWidget* TilesetItemBox::findTabWidget(const QString &categoryItem)
 {
     WriteToLog(QtDebugMsg, "TilesetBox -> find Tab");
 
@@ -237,7 +259,7 @@ QWidget* MainWindow::findTabWidget(const QString &categoryItem)
     return 0;
 }
 
-QWidget* MainWindow::makeCategory(const QString &categoryItem)
+QWidget* TilesetItemBox::makeCategory(const QString &categoryItem)
 {
     QTabWidget* TileSetsCategories = ui->TileSetsCategories;
     QWidget* catWid;
@@ -284,9 +306,9 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem)
     return catWid;
 }
 
-void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups)
+void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups)
 {
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
 
     QWidget *t = findTabWidget(tilesetGroups.groupCat);
     if(!t){
@@ -304,9 +326,9 @@ void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups)
     connect(c, SIGNAL(currentIndexChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
 }
 
-void MainWindow::clearTilesetGroups()
+void TilesetItemBox::clearTilesetGroups()
 {
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     int i = 0;
@@ -327,9 +349,9 @@ void MainWindow::clearTilesetGroups()
 }
 
 
-void MainWindow::makeSelectedTileset(int tabIndex)
+void TilesetItemBox::makeSelectedTileset(int tabIndex)
 {
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     if(!(cat->tabText(tabIndex) == "Custom"))
@@ -368,24 +390,24 @@ void MainWindow::makeSelectedTileset(int tabIndex)
         #endif
 
         QString currentGroup = currentCombo->currentText();
-        for(int i = 0; i < configs.main_tilesets_grp.size(); i++)
+        for(int i = 0; i < mw->configs.main_tilesets_grp.size(); i++)
         {
-            if((configs.main_tilesets_grp[i].groupCat == category)
-             &&(configs.main_tilesets_grp[i].groupName == currentGroup))//category
+            if((mw->configs.main_tilesets_grp[i].groupCat == category)
+             &&(mw->configs.main_tilesets_grp[i].groupName == currentGroup))//category
             {
                 #ifdef _DEBUG_
                 DevConsole::log(QString("Group %1").arg(configs.main_tilesets_grp[i].groupName), "Debug");
                 DevConsole::log(QString("Tilesets %1").arg(configs.main_tilesets_grp[i].tilesets.size()), "Debug");
                 #endif
 
-                QStringList l = configs.main_tilesets_grp[i].tilesets;
+                QStringList l = mw->configs.main_tilesets_grp[i].tilesets;
                 foreach(QString s, l)
                 {
-                    for(int j = 0; j < configs.main_tilesets.size(); j++)
+                    for(int j = 0; j < mw->configs.main_tilesets.size(); j++)
                     {
-                        if(s == configs.main_tilesets[j].fileName)
+                        if(s == mw->configs.main_tilesets[j].fileName)
                         {
-                            SimpleTileset &s = configs.main_tilesets[j];
+                            SimpleTileset &s = mw->configs.main_tilesets[j];
                             QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                             ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
                             QGridLayout* l = new QGridLayout(tilesetNameWrapper);
@@ -394,11 +416,11 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                             for(int k=0; k<s.items.size(); k++)
                             {
                                 SimpleTilesetItem &item = s.items[k];
-                                TilesetItemButton* tbutton = new TilesetItemButton(&configs, NULL, tilesetNameWrapper);
+                                TilesetItemButton* tbutton = new TilesetItemButton(&mw->configs, NULL, tilesetNameWrapper);
                                 tbutton->applySize(32,32);
                                 tbutton->applyItem(s.type, item.id);
                                 l->addWidget(tbutton, item.row, item.col);
-                                connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
+                                connect(tbutton, SIGNAL(clicked(int,ulong)), mw, SLOT(SwitchPlacingItem(int,ulong)));
                             }
                             break;
                         }
@@ -454,14 +476,14 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                 for(int k=0; k<s.items.size(); k++)
                 {
                     SimpleTilesetItem &item = s.items[k];
-                    TilesetItemButton* tbutton = new TilesetItemButton(&configs, NULL, tilesetNameWrapper);
+                    TilesetItemButton* tbutton = new TilesetItemButton(&mw->configs, NULL, tilesetNameWrapper);
                     tbutton->applySize(32,32);
                     tbutton->applyItem(s.type, item.id);
                     l->addWidget(tbutton, item.row, item.col);
                     if(item.col >= mostRighter){
                         mostRighter = item.col + 1;
                     }
-                    connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
+                    connect(tbutton, SIGNAL(clicked(int,ulong)), mw, SLOT(SwitchPlacingItem(int,ulong)));
                 }
                 QPushButton* b = new QPushButton(Themes::icon(Themes::pencil),"",tilesetNameWrapper);
                 b->setMaximumSize(32,32);
@@ -473,24 +495,24 @@ void MainWindow::makeSelectedTileset(int tabIndex)
     }
 }
 
-QVector<SimpleTileset> MainWindow::loadCustomTilesets(){
+QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets(){
     QVector<SimpleTileset> ctsets;
 
     QString path;
     QString cfolder;
     bool doIt=false;
-    if(activeChildWindow()==1)
+    if(mw->activeChildWindow()==1)
     {
-        path = activeLvlEditWin()->LvlData.path+"/";
-        cfolder = activeLvlEditWin()->LvlData.filename+"/";
-        doIt = !activeLvlEditWin()->LvlData.untitled;
+        path = mw->activeLvlEditWin()->LvlData.path+"/";
+        cfolder = mw->activeLvlEditWin()->LvlData.filename+"/";
+        doIt = !mw->activeLvlEditWin()->LvlData.untitled;
     }
     else
-    if(activeChildWindow()==3)
+    if(mw->activeChildWindow()==3)
     {
-        path = activeWldEditWin()->WldData.path+"/";
-        cfolder = activeWldEditWin()->WldData.filename+"/";
-        doIt = !activeWldEditWin()->WldData.untitled;
+        path = mw->activeWldEditWin()->WldData.path+"/";
+        cfolder = mw->activeWldEditWin()->WldData.filename+"/";
+        doIt = !mw->activeWldEditWin()->WldData.untitled;
     }
 
     if(doIt)
@@ -520,17 +542,17 @@ QVector<SimpleTileset> MainWindow::loadCustomTilesets(){
     return ctsets;
 }
 
-void MainWindow::makeCurrentTileset()
+void TilesetItemBox::makeCurrentTileset()
 {
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     makeSelectedTileset(cat->currentIndex());
 }
 
-void MainWindow::makeAllTilesets()
+void TilesetItemBox::makeAllTilesets()
 {
-    if(lockTilesetBox) return;
+    if(mw->lockTilesetBox) return;
 
     using namespace pge_tilesetbox;
     QTabWidget* cat = ui->TileSetsCategories;
@@ -545,3 +567,4 @@ void MainWindow::makeAllTilesets()
 
     DevConsole::log(QString("index %1 count %2").arg(current).arg(cat->count()), "Debug");
 }
+

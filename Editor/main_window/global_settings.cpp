@@ -44,9 +44,9 @@ bool GlobalSettings::TilesetBoxVis=false;
 bool GlobalSettings::DebuggerBoxVis=false;
 bool GlobalSettings::BookmarksBoxVis=false;
 
-bool GlobalSettings::MidMouse_allowDuplicate=false;
-bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
-bool GlobalSettings::MidMouse_allowSwitchToDrag=false;
+bool GlobalSettings::MidMouse_allowDuplicate=true;
+bool GlobalSettings::MidMouse_allowSwitchToPlace=true;
+bool GlobalSettings::MidMouse_allowSwitchToDrag=true;
 
 bool GlobalSettings::Placing_dontShowPropertiesBox=false;
 
