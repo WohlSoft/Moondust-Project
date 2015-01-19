@@ -24,6 +24,7 @@
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>
 #include <main_window/tools/app_settings.h>
+#include <main_window/dock/toolboxes.h>
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 
@@ -92,7 +93,7 @@ void MainWindow::loadSettings()
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
-        ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
+        dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
         ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
         ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
@@ -107,7 +108,7 @@ void MainWindow::loadSettings()
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
 
-        ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
+        dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
         ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
 
@@ -116,7 +117,8 @@ void MainWindow::loadSettings()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         if(!continueLoad)
         { //Hide all unitialized dock widgets
@@ -183,7 +185,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
-    settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
+    settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
     settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
     settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
 
@@ -199,7 +201,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
     settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
 
-    settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
+    settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
     settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
     settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
 
@@ -320,8 +322,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
-
+        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         applyTheme(GlobalSettings::currentTheme.isEmpty() ?
                        ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )

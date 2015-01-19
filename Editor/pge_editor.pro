@@ -238,7 +238,6 @@ SOURCES += main.cpp\
     main_window/dock/lvl_layers_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_search_toolbox.cpp \
-    main_window/dock/tileset_item_box.cpp \
     main_window/dock/wld_item_props.cpp \
     main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_search_toolbox.cpp \
@@ -347,7 +346,8 @@ SOURCES += main.cpp\
     main_window/updater/check_updates.cpp \
     editing/_components/history/historyelementmodification.cpp \
     editing/_components/history/ihistoryelement.cpp \
-    editing/_components/history/itemsearcher.cpp
+    editing/_components/history/itemsearcher.cpp \
+    main_window/dock/tileset_item_box.cpp
     
 
 HEADERS  += defines.h \
@@ -433,7 +433,6 @@ HEADERS  += defines.h \
     file_formats/wld_filedata.h \
     main_window/global_settings.h \
     main_window/about_dialog/aboutdialog.h \
-    main_window/dock/tileset_item_box.h \
     networking/engine_client.h \
     networking/engine_intproc.h \
     script/scriptholder.h \
@@ -486,7 +485,10 @@ HEADERS  += defines.h \
     main_window/updater/check_updates.h \
     main_window/updater/updater_links.h \
     editing/_components/history/historyelementmodification.h \
-    editing/_components/history/itemsearcher.h
+    editing/_components/history/itemsearcher.h \
+    main_window/dock/tileset_item_box.h \
+    main_window/dock/toolboxes.h \
+    main_window/dock/toolboxes_protos.h
 
 
 FORMS    += \
@@ -520,7 +522,8 @@ FORMS    += \
     editing/_dialogs/savingnotificationdialog.ui \
     main_window/file/wld_export_image.ui \
     tools/debugger/custom_counter_gui.ui \
-    main_window/updater/check_updates.ui
+    main_window/updater/check_updates.ui \
+    main_window/dock/tileset_item_box.ui
 
 
 

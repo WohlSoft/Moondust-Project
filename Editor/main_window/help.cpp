@@ -18,6 +18,7 @@
 
 #include <QDesktopServices>
 #include <common_features/app_path.h>
+#include <common_features/util.h>
 #include <main_window/about_dialog/aboutdialog.h>
 #include <main_window/updater/check_updates.h>
 
@@ -56,8 +57,7 @@ void MainWindow::on_actionChange_log_triggered()
 void MainWindow::on_actionCheckUpdates_triggered()
 {
     UpdateChecker updater;
-    updater.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    updater.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, updater.size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(&updater, true);
     updater.exec();
 }
 
@@ -67,7 +67,6 @@ void MainWindow::on_actionCheckUpdates_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
     aboutDialog about;
-    about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(&about, true);
     about.exec();
 }

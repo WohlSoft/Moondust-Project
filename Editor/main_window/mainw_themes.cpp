@@ -18,6 +18,7 @@
 
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/toolboxes.h>
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
@@ -48,7 +49,7 @@ void MainWindow::applyTheme(QString themeDir)
     ui->debuggerBox->setWindowIcon(Themes::icon(Themes::debugger));
 
     ui->actionTilesetBox->setIcon(Themes::icon(Themes::tileset_box));
-    ui->Tileset_Item_Box->setWindowIcon(Themes::icon(Themes::tileset_box));
+    dock_TilesetBox->setWindowIcon(Themes::icon(Themes::tileset_box));
 
     ui->actionBookmarkBox->setIcon(Themes::icon(Themes::bookmarks));
     ui->bookmarkBox->setWindowIcon(Themes::icon(Themes::bookmarks));

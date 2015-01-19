@@ -24,6 +24,7 @@
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <main_window/tools/app_settings.h>
+#include <main_window/dock/toolboxes.h>
 #include <audio/music_player.h>
 #include <audio/sdl_music_player.h>
 #include <file_formats/file_formats.h>
@@ -133,7 +134,10 @@ void MainWindow::setUiDefults()
                 ui->WorldFindDock->height()
                 );
 
-    ui->Tileset_Item_Box->setGeometry(
+
+    dock_TilesetBox = new TilesetItemBox(this, this);
+    addDockWidget(Qt::BottomDockWidgetArea, dock_TilesetBox);
+    dock_TilesetBox->setGeometry(
                 mwg.x()+GOffset,
                 mwg.y()+mwg.height()-600,
                 800,
@@ -208,7 +212,7 @@ void MainWindow::setUiDefults()
     ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
 
-    ui->Tileset_Item_Box->hide();
+    dock_TilesetBox->hide();
     ui->debuggerBox->hide();
     ui->bookmarkBox->hide();
 
@@ -243,7 +247,6 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
     ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-    ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
     muVol = new QSlider(Qt::Horizontal);
@@ -408,10 +411,4 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
-
-    //for tileset dock
-    //connect(ui->TileSetsCategories, SIGNAL(currentChanged(int)), this, SLOT(makeCurrentTileset()));
-
-    //for tileset
-    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
 }
