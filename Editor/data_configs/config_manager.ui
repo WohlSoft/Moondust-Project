@@ -17,6 +17,9 @@
    <iconset resource="../_resources/editor.qrc">
     <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label">

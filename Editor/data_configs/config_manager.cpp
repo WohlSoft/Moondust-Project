@@ -19,6 +19,9 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QDesktopWidget>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
 #include <common_features/app_path.h>
 #include <common_features/util.h>
@@ -35,6 +38,23 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     QListWidgetItem * item;
 
+    #ifdef Q_OS_WIN
+    QtWin::setCompositionEnabled(true);
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, 2,2,2,9+ui->buttonBox->height());
+        //this->setAttribute(Qt::WA_NoSystemBackground, false);
+        //setStyleSheet("background: white;");
+        QtWin::enableBlurBehindWindow(this);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+        setStyleSheet(QString("ConfigManager { background: %1; }").arg(QtWin::realColorizationColor().name()));
+    }
+    #endif
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     #endif
