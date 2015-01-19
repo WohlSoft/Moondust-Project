@@ -22,13 +22,13 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "0.2.2"
-#define _FILE_RELEASE "-rc"
+#define _FILE_VERSION "0.2.2.1"
+#define _FILE_RELEASE "-dev"
 
 #define _VF1 0
 #define _VF2 2
 #define _VF3 2
-#define _VF4 0
+#define _VF4 1
 
 
 #define _FILE_DESC "Platformer Game Engine - Editor"

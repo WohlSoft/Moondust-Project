@@ -64,9 +64,10 @@ TilesetItemBox::TilesetItemBox(MainWindow *ParentMW, QWidget *parent) :
 
 void TilesetItemBox::construct(MainWindow *ParentMW)
 {
+    mw=NULL;
+    setVisible(false);
     setParentMW(ParentMW);
     ui->setupUi(this);
-    this->hide();
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
 }

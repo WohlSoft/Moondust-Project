@@ -187,7 +187,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
     QPixmap img2; //Second image buffer
     //need a BGitem
 
-    bool isUser1=false, isUser2=false, noimage=false;
+    bool isUser1=false, isUser2=false, noimage=false, wrong=false;
     long x,y,h,w, j;
 
     if(
@@ -242,6 +242,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
                 WriteToLog(QtWarningMsg, "SetSectionBG-> Image not found");
                 #endif
                 img=image;
+                wrong=true;
             }
         }
         else noimage=true;
@@ -267,6 +268,8 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         }
         else
         {
+            if(wrong)
+                brush.setTexture(image);
             itemRect = new QGraphicsRectItem;
             itemRect->setPen(pen);
             itemRect->setBrush(brush);
