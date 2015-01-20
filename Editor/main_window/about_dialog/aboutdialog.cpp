@@ -30,17 +30,23 @@ aboutDialog::aboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    #ifdef Q_OS_WIN
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
-    QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
-    QtWin::enableBlurBehindWindow(this);
-    #endif
-
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     #endif
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+        QtWin::enableBlurBehindWindow(this);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+    }
     #endif
 
     ui->About1->setText(ui->About1->text()
