@@ -19,12 +19,37 @@
 #include "configstatus.h"
 #include <ui_configstatus.h>
 
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
+
 ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConfigStatus)
 {
     configs = &conf;
     ui->setupUi(this);
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+        QtWin::enableBlurBehindWindow(this);
+        ui->gridLayout->setMargin(0);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+        setStyleSheet(QString("AppSettings { background: %1; }").arg(QtWin::realColorizationColor().name()));
+    }
+    #endif
 
     //Create Statistics
     ui->ItemsStatus->clear();

@@ -22,6 +22,9 @@
 #include <math.h>
 #include <QProcessEnvironment>
 #include <QByteArray>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
 #include <common_features/app_path.h>
 #include <common_features/installer.h>
@@ -44,6 +47,20 @@ AppSettings::AppSettings(QWidget *parent) :
     #endif
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+        QtWin::enableBlurBehindWindow(this);
+        ui->gridLayout->setMargin(0);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+        setStyleSheet(QString("AppSettings { background: %1; }").arg(QtWin::realColorizationColor().name()));
+    }
     #endif
 
     QStringList themes=Themes::availableThemes();

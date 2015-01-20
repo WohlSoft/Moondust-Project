@@ -18,7 +18,6 @@
 
 #include "aboutdialog.h"
 #include <ui_aboutdialog.h>
-
 #ifdef Q_OS_WIN
 #include <QtWin>
 #endif
@@ -33,7 +32,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
 
     #ifdef Q_OS_WIN
     this->setAttribute(Qt::WA_TranslucentBackground, true);
-    QtWin::extendFrameIntoClientArea(this, -1,-1,-1,200);
+    QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
     QtWin::enableBlurBehindWindow(this);
     #endif
 
