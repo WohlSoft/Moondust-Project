@@ -358,7 +358,8 @@ SOURCES += main.cpp\
     main_window/dock/tileset_item_box.cpp \
     common_features/app_path.cpp \
     common_features/installer.cpp \
-    main_window/dock/lvl_item_properties.cpp
+    main_window/dock/lvl_item_properties.cpp \
+    main_window/windows_extras.cpp
     
 
 HEADERS  += defines.h \
