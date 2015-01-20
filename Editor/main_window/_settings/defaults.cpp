@@ -191,11 +191,9 @@ void MainWindow::setUiDefults()
 
     ui->centralWidget->cascadeSubWindows();
 
-
     ui->ResizingToolbar->setVisible(false);
         ui->applyResize->setVisible(false);
         ui->cancelResize->setVisible(false);
-
 
     ui->PlacingToolbar->setVisible(false);
         ui->actionOverwriteMode->setVisible(false);
