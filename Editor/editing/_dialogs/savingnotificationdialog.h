@@ -19,10 +19,16 @@ public:
         SAVE_CANCLE
     };
 
+    enum DialogType
+    {
+        D_WARN,
+        D_QUESTION
+    };
+
     //any settings placed HERE
     SaveMode savemode;
 
-    explicit SavingNotificationDialog(bool showDiscardButton, QWidget *parent = 0);
+    explicit SavingNotificationDialog(bool showDiscardButton, DialogType dType=D_QUESTION, QWidget *parent = 0);
     ~SavingNotificationDialog();
 
     void setSavingTitle(const QString &title);
