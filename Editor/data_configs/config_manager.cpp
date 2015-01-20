@@ -30,6 +30,125 @@
 #include "config_manager.h"
 #include <ui_config_manager.h>
 
+
+#include <QPainter>
+#include <QAbstractItemDelegate>
+
+class ListDelegate : public QAbstractItemDelegate
+{
+public:
+    ListDelegate(QObject *parent = 0);
+
+    void paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
+    QSize sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const;
+
+    virtual ~ListDelegate();
+};
+
+ListDelegate::ListDelegate(QObject *parent)
+    : QAbstractItemDelegate(parent) {}
+
+ListDelegate::~ListDelegate() {}
+
+void ListDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+{
+    QRect r = option.rect;
+
+    //Color: #C4C4C4
+    QPen linePen(QColor::fromRgb(211,211,211), 2, Qt::SolidLine);
+
+    //Color: #005A83
+    QPen lineMarkedPen(QColor::fromRgb(0,90,131), 1, Qt::SolidLine);
+
+    //Color: #333
+    QPen fontPen(QColor::fromRgb(51,51,51), 1, Qt::SolidLine);
+
+    //Color: #fff
+    QPen fontMarkedPen(Qt::white, 1, Qt::SolidLine);
+
+    //BORDER
+    painter->setPen(linePen);
+    painter->drawLine(r.topLeft(),r.topRight());
+    painter->drawLine(r.topRight(),r.bottomRight());
+    painter->drawLine(r.bottomLeft(),r.bottomRight());
+    painter->drawLine(r.topLeft(),r.bottomLeft());
+
+    if(option.state & QStyle::State_Selected)
+    {
+        QLinearGradient gradientSelected(r.left(),r.top(),r.left(),r.height()+r.top());
+        gradientSelected.setColorAt(0.0, QColor::fromRgb(119,213,247));
+        gradientSelected.setColorAt(0.9, QColor::fromRgb(27,134,183));
+        gradientSelected.setColorAt(1.0, QColor::fromRgb(0,120,174));
+        painter->setBrush(gradientSelected);
+        painter->drawRect(r);
+
+        //BORDER
+        painter->setPen(lineMarkedPen);
+        painter->drawLine(r.topLeft(),r.topRight());
+        painter->drawLine(r.topRight(),r.bottomRight());
+        painter->drawLine(r.bottomLeft(),r.bottomRight());
+        painter->drawLine(r.topLeft(),r.bottomLeft());
+
+        painter->setPen(fontMarkedPen);
+    }
+    else
+    {
+        //BACKGROUND
+        //ALTERNATING COLORS
+        painter->setBrush( (index.row() % 2) ? Qt::white : QColor(252,252,252) );
+        painter->drawRect(r);
+
+        //BORDER
+        painter->setPen(linePen);
+        painter->drawLine(r.topLeft(),r.topRight());
+        painter->drawLine(r.topRight(),r.bottomRight());
+        painter->drawLine(r.bottomLeft(),r.bottomRight());
+        painter->drawLine(r.topLeft(),r.bottomLeft());
+
+        painter->setPen(fontPen);
+    }
+
+    //GET TITLE, DESCRIPTION AND ICON
+    QIcon ic = QIcon(qvariant_cast<QPixmap>(index.data(Qt::DecorationRole)));
+    QString title = index.data(Qt::DisplayRole).toString();
+    QString description = index.data(Qt::UserRole + 1).toString();
+
+    int imageSpace = 10;
+    if (!ic.isNull())
+    {
+        //ICON
+        r = option.rect.adjusted(5, 10, -10, -10);
+        ic.paint(painter, r, Qt::AlignVCenter|Qt::AlignLeft);
+        imageSpace = 80;
+    }
+
+    //TITLE
+    r = option.rect.adjusted(imageSpace, 0, -10, -30);
+    painter->setFont( QFont( "Lucida Grande", 10, QFont::Bold ) );
+    painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, title, &r);
+
+    //DESCRIPTION
+    r = option.rect.adjusted(imageSpace, 30, -10, 30);
+    painter->setFont( QFont( "Lucida Grande", 8, QFont::Normal ) );
+    painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
+}
+
+QSize ListDelegate::sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const
+{
+    Q_UNUSED(index);
+    Q_UNUSED(option);
+    return QSize(200, 60); // very dumb value
+}
+
+
+
+
+
+
+
+
+
+
 ConfigManager::ConfigManager(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ConfigManager)
@@ -38,14 +157,17 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     QListWidgetItem * item;
 
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
     #ifdef Q_OS_WIN
-    QtWin::setCompositionEnabled(true);
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
     if(QtWin::isCompositionEnabled())
     {
         this->setAttribute(Qt::WA_TranslucentBackground, true);
-        QtWin::extendFrameIntoClientArea(this, 2,2,2,9+ui->buttonBox->height());
-        //this->setAttribute(Qt::WA_NoSystemBackground, false);
-        //setStyleSheet("background: white;");
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,1);
         QtWin::enableBlurBehindWindow(this);
     }
     else
@@ -55,12 +177,8 @@ ConfigManager::ConfigManager(QWidget *parent) :
         setStyleSheet(QString("ConfigManager { background: %1; }").arg(QtWin::realColorizationColor().name()));
     }
     #endif
-    #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
-    #endif
+
+    connect(ui->configList, SIGNAL(clicked(QModelIndex)), ui->configList, SLOT(update()));
 
     currentConfig = "";
     themePack = "";
@@ -82,11 +200,16 @@ ConfigManager::ConfigManager(QWidget *parent) :
         config_paths<<path;
     }
 
+    ui->configList->setItemDelegate(new ListDelegate(ui->configList));
+    ui->configList->setStyleSheet("{paint-alternating-row-colors-for-empty-area:1;"
+                                  "alternate-background-color: #2C2C2C;}");
     foreach(configPackPair confD, config_paths)
     {
         QString c=confD.first;
         QString config_dir=confD.second;
         QString configName;
+        QString configDesc;
+        bool smbx_compatible;
         QString data_dir;
         QString splash_logo;
 
@@ -105,6 +228,8 @@ ConfigManager::ConfigManager(QWidget *parent) :
             data_dir = (guiset.value("application-dir", "0").toBool() ?
                             ApplicationPath + "/" : config_dir + "data/" );
             configName = guiset.value("config_name", QDir(config_dir).dirName()).toString();
+            configDesc = guiset.value("config_desc", config_dir).toString();
+            smbx_compatible =  guiset.value("smbx-compatible", false).toBool();
         guiset.endGroup();
 
         //Default splash image
@@ -120,12 +245,12 @@ ConfigManager::ConfigManager(QWidget *parent) :
         }
 
         item = new QListWidgetItem( configName );
-
-        item->setIcon( QIcon( GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(70,40)) ) );
+        item->setData(Qt::DecorationRole, GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(70,40)));
         item->setData(3, c);
+        item->setData(Qt::UserRole + 1, configDesc);
+        item->setData(Qt::UserRole + 2, smbx_compatible);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-        ui->configList->addItem( item );
+        ui->configList->addItem( item);
     }
 
     //Warning message: if no installed config packs

@@ -19,7 +19,6 @@
 #include <common_features/app_path.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
-
 #include "tilesetconfiguredialog.h"
 #include <ui_tilesetconfiguredialog.h>
 
@@ -28,6 +27,13 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    #endif
 
     scn = scene;
     mode = GFX_Staff;
@@ -60,6 +66,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     connect(ui->TilesetName, SIGNAL(textChanged(QString)), m_tileset, SLOT(setName(QString)));
 
     connect(this, SIGNAL(windowShowed()), SLOT(showNotify()), Qt::QueuedConnection);
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
+    connect(ui->spin_width, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
+    connect(ui->spin_height, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
