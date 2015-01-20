@@ -38,6 +38,7 @@ class NpcEdit : public QWidget
 {
     Q_OBJECT
     
+    friend class MainWindow;
 public:
     explicit NpcEdit(dataconfigs *configs, QWidget *parent = 0);
     ~NpcEdit();
