@@ -47,7 +47,6 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     {
         QtWin::resetExtendedFrame(this);
         setAttribute(Qt::WA_TranslucentBackground, false);
-        setStyleSheet(QString("AppSettings { background: %1; }").arg(QtWin::realColorizationColor().name()));
     }
     #endif
 
