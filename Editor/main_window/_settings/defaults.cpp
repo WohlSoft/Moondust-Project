@@ -58,6 +58,9 @@ void MainWindow::setDefaults()
 
     WldBuffer=FileFormats::dummyWldDataArray();
     LvlBuffer=FileFormats::dummyLvlDataArray();
+
+    dock_TilesetBox = NULL;
+    dock_LvlItemProps = NULL;
 }
 
 void MainWindow::setUiDefults()
@@ -142,7 +145,7 @@ void MainWindow::setUiDefults()
 
     dock_TilesetBox = new TilesetItemBox(this, this);
     dock_TilesetBox->setVisible(false);
-    addDockWidget(Qt::BottomDockWidgetArea, dock_TilesetBox);
+    addDockWidget(Qt::NoDockWidgetArea, dock_TilesetBox);
     dock_TilesetBox->setGeometry(
                 dg.x()+GOffset,
                 dg.y()+dg.height()-600,

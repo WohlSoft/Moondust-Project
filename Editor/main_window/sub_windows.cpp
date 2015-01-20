@@ -25,8 +25,8 @@
 //Edit NPC
 NpcEdit *MainWindow::createNPCChild()
 {
-    NpcEdit *child = new NpcEdit(&configs);
-    QMdiSubWindow *npcWindow = new QMdiSubWindow;
+    QMdiSubWindow *npcWindow = new QMdiSubWindow(ui->centralWidget);
+    NpcEdit *child = new NpcEdit(&configs, npcWindow);
     npcWindow->setWidget(child);
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -41,11 +41,6 @@ NpcEdit *MainWindow::createNPCChild()
                  520,640);
 
     ui->centralWidget->updateGeometry();
- /*   connect(child, SIGNAL(copyAvailable(bool)),
-            cutAct, SLOT(setEnabled(bool)));
-    connect(child, SIGNAL(copyAvailable(bool)),
-            copyAct, SLOT(setEnabled(bool)));
- */
 
     return child;
 }
@@ -55,10 +50,9 @@ NpcEdit *MainWindow::createNPCChild()
 //Edit LEVEL
 LevelEdit *MainWindow::createLvlChild()
 {
-    LevelEdit *child = new LevelEdit;
+    QMdiSubWindow *levelWindow = new QMdiSubWindow(ui->centralWidget);
+    LevelEdit *child = new LevelEdit(levelWindow);
     connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
-
-    QMdiSubWindow *levelWindow = new QMdiSubWindow;
 
     levelWindow->setWidget(child);
     levelWindow->setAttribute(Qt::WA_DeleteOnClose);
@@ -90,10 +84,9 @@ LevelEdit *MainWindow::createLvlChild()
 //Edit WORLD
 WorldEdit *MainWindow::createWldChild()
 {
-    WorldEdit *child = new WorldEdit;
+    QMdiSubWindow *worldWindow = new QMdiSubWindow(ui->centralWidget);
+    WorldEdit *child = new WorldEdit(worldWindow);
     connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
-
-    QMdiSubWindow *worldWindow = new QMdiSubWindow;
 
     worldWindow->setWidget(child);
     worldWindow->setAttribute(Qt::WA_DeleteOnClose);

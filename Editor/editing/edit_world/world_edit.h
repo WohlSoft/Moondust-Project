@@ -38,6 +38,7 @@ class WorldEdit : public QWidget
 {
     Q_OBJECT
 
+    friend class MainWindow;
 public:
     explicit WorldEdit(QWidget *parent = 0);
     ~WorldEdit();
