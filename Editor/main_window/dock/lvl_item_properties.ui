@@ -177,19 +177,6 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QPushButton" name="PROPS_BlockResize">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>23</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Resize</string>
-             </property>
-            </widget>
-           </item>
            <item row="5" column="0" colspan="2">
             <widget class="QLabel" name="label_10">
              <property name="minimumSize">
@@ -392,6 +379,19 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QPushButton" name="PROPS_BlockResize">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Resize</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
