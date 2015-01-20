@@ -117,6 +117,10 @@ int main(int argc, char *argv[])
     //Set acception of external file openings
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
+#ifdef Q_OS_WIN
+    w->initWindowsThumbnail();
+#endif
+
     //Run main loop
     ret=a->exec();
 
