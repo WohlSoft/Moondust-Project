@@ -18,6 +18,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <main_window/dock/lvl_item_properties.h>
 
 /////////////////Switch edit mode////////////////////////////////////////////
 
@@ -57,7 +58,7 @@ void MainWindow::on_actionSelect_triggered()
     resetEditmodeButtons();
     ui->actionSelect->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
     ui->WLD_ItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
@@ -77,7 +78,7 @@ void MainWindow::on_actionSelectOnly_triggered()
     resetEditmodeButtons();
     ui->actionSelectOnly->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
     {
@@ -96,7 +97,7 @@ void MainWindow::on_actionEriser_triggered()
     resetEditmodeButtons();
     ui->actionEriser->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
@@ -116,7 +117,7 @@ void MainWindow::on_actionHandScroll_triggered()
     resetEditmodeButtons();
     ui->actionHandScroll->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {

@@ -22,6 +22,7 @@
 #include <editing/_dialogs/levelfilelist.h>
 #include <editing/_dialogs/wld_setpoint.h>
 #include <file_formats/file_formats.h>
+#include <main_window/dock/lvl_item_properties.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -371,7 +372,7 @@ void MainWindow::on_WarpSetEntrance_clicked()
        edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
        edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Entrance);
 
-       ui->ItemProperties->hide();
+       dock_LvlItemProps->hide();
 
        edit->setFocus();
     }
@@ -425,7 +426,7 @@ void MainWindow::on_WarpSetExit_clicked()
         edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
         edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Exit);
 
-       ui->ItemProperties->hide();
+       dock_LvlItemProps->hide();
 
        activeLvlEditWin()->setFocus();
     }

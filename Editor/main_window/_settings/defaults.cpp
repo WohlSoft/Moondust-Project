@@ -42,7 +42,6 @@ void MainWindow::setDefaults()
     GlobalSettings::LvlOpts.collisionsEnabled = true;
     GlobalSettings::LvlOpts.semiTransparentPaths = false;
 
-    LvlItemPropsLock=true;
     lockTilesetBox=false;
     LvlEventBoxLock=false;
     lockWarpSetSettings=false;
@@ -101,12 +100,17 @@ void MainWindow::setUiDefults()
                 ui->LevelEventsToolBox->width(),
                 ui->LevelEventsToolBox->height()
                 );
-    ui->ItemProperties->setGeometry(
-                mwg.x()+mwg.width()-ui->ItemProperties->width()-GOffset,
+
+    dock_LvlItemProps = new LvlItemProperties(this,this);
+    dock_LvlItemProps->setVisible(false);
+    addDockWidget(Qt::NoDockWidgetArea, dock_LvlItemProps);
+    dock_LvlItemProps->setGeometry(
+                mwg.x()+mwg.width()-dock_LvlItemProps->width()-GOffset,
                 mwg.y()+120,
-                ui->ItemProperties->width(),
-                ui->ItemProperties->height()
+                dock_LvlItemProps->width(),
+                dock_LvlItemProps->height()
                 );
+
     ui->FindDock->setGeometry(
                 mwg.x()+mwg.width()-ui->FindDock->width()-GOffset,
                 mwg.y()+120,
@@ -206,7 +210,7 @@ void MainWindow::setUiDefults()
     ui->LevelEventsToolBox->hide();
     ui->LevelSectionSettings->hide();
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
     ui->FindDock->hide();
 
     ui->WorldToolBox->hide();
