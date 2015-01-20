@@ -19,6 +19,7 @@
 #include <QtMath>
 
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_item_properties.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -117,7 +118,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     //Close properties box
     if( (EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly) )
-        MainWinConnect::pMainWin->LvlItemProps_hide();
+        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
@@ -259,33 +260,27 @@ void LvlScene::openProps()
     {
         if(items.first()->data(ITEM_TYPE).toString()=="Block")
         {
-            MainWinConnect::pMainWin->LvlItemProps(0,
-                          dynamic_cast<ItemBlock *>(items.first())->blockData,
-                          FileFormats::dummyLvlBgo(),
-                          FileFormats::dummyLvlNpc(), false);
+            MainWinConnect::pMainWin->dock_LvlItemProps->
+                    OpenBlock(dynamic_cast<ItemBlock *>(items.first())->blockData);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="BGO")
         {
-            MainWinConnect::pMainWin->LvlItemProps(1,
-                              FileFormats::dummyLvlBlock(),
-                              dynamic_cast<ItemBGO *>(items.first())->bgoData,
-                              FileFormats::dummyLvlNpc(), false);
+            MainWinConnect::pMainWin->dock_LvlItemProps->
+                    OpenBGO(dynamic_cast<ItemBGO *>(items.first())->bgoData);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="NPC")
         {
-            MainWinConnect::pMainWin->LvlItemProps(2,
-                              FileFormats::dummyLvlBlock(),
-                              FileFormats::dummyLvlBgo(),
-                              dynamic_cast<ItemNPC *>(items.first())->npcData, false);
+            MainWinConnect::pMainWin->dock_LvlItemProps->
+                    OpenNPC(dynamic_cast<ItemNPC *>(items.first())->npcData);
         }
         else
-        MainWinConnect::pMainWin->LvlItemProps_hide();
+        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
     }
     else
     {
-        MainWinConnect::pMainWin->LvlItemProps_hide();
+        MainWinConnect::pMainWin->dock_LvlItemProps->CloseBox();
     }
 
     QGraphicsScene::selectionChanged();

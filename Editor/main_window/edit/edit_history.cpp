@@ -18,6 +18,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <main_window/dock/lvl_item_properties.h>
 
 void MainWindow::refreshHistoryButtons()
 {
@@ -41,7 +42,7 @@ void MainWindow::refreshHistoryButtons()
 // //History Manager
 void MainWindow::on_actionUndo_triggered()
 {
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
     ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {
@@ -61,7 +62,7 @@ void MainWindow::on_actionUndo_triggered()
 
 void MainWindow::on_actionRedo_triggered()
 {
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
     ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {

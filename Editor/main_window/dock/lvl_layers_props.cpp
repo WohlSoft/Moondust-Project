@@ -24,6 +24,8 @@
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <file_formats/file_formats.h>
 #include <common_features/util.h>
+#include <main_window/dock/lvl_item_properties.h>
+#include <ui_lvl_item_properties.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -64,8 +66,8 @@ void MainWindow::setLayersBox()
 
 void MainWindow::setLayerLists()
 {
-    ui->ItemProperties->hide();
-    LvlItemPropsLock=true;
+    dock_LvlItemProps->hide();
+    dock_LvlItemProps->LvlItemPropsLock=true;
     lockWarpSetSettings=true;
 
     //save old entry from search!
@@ -76,14 +78,14 @@ void MainWindow::setLayerLists()
     QString curWarpLayer = ui->WarpLayer->currentText();
 
     int WinType = activeChildWindow();
-    LvlItemPropsLock = true;
+    dock_LvlItemProps->LvlItemPropsLock = true;
     LvlEventBoxLock = true;
-    ui->PROPS_BGOLayer->clear();
-    ui->PROPS_NpcLayer->clear();
-    ui->PROPS_BlockLayer->clear();
-    ui->PROPS_NpcAttachLayer->clear();
+    dock_LvlItemProps->ui->PROPS_BGOLayer->clear();
+    dock_LvlItemProps->ui->PROPS_NpcLayer->clear();
+    dock_LvlItemProps->ui->PROPS_BlockLayer->clear();
+    dock_LvlItemProps->ui->PROPS_NpcAttachLayer->clear();
     ui->WarpLayer->clear();
-    ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
+    dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
     ui->LVLEvent_LayerMov_List->clear();
     ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
     ui->Find_Combo_LayerBlock->clear();
@@ -96,10 +98,10 @@ void MainWindow::setLayerLists()
         {
             if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
                 continue;
-            ui->PROPS_BGOLayer->addItem(layer.name);
-            ui->PROPS_NpcLayer->addItem(layer.name);
-            ui->PROPS_BlockLayer->addItem(layer.name);
-            ui->PROPS_NpcAttachLayer->addItem(layer.name);
+            dock_LvlItemProps->ui->PROPS_BGOLayer->addItem(layer.name);
+            dock_LvlItemProps->ui->PROPS_NpcLayer->addItem(layer.name);
+            dock_LvlItemProps->ui->PROPS_BlockLayer->addItem(layer.name);
+            dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(layer.name);
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
             ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
             ui->Find_Combo_LayerBlock->addItem(layer.name);
@@ -115,7 +117,7 @@ void MainWindow::setLayerLists()
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
     lockWarpSetSettings = false;
-    LvlItemPropsLock = false;
+    dock_LvlItemProps->LvlItemPropsLock = false;
     LvlEventBoxLock = false;
 }
 
@@ -760,7 +762,7 @@ void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
-    LvlItemProps_updateLayer(LvlPlacingItems::layer);
+    dock_LvlItemProps->LvlItemProps_updateLayer(LvlPlacingItems::layer);
 }
 
 void MainWindow::on_LvlLayerList_itemSelectionChanged()

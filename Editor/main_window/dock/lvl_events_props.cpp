@@ -25,6 +25,8 @@
 #include <audio/sdl_music_player.h>
 #include <file_formats/file_formats.h>
 #include <tools/math/blocksperseconddialog.h>
+#include <main_window/dock/lvl_item_properties.h>
+#include <ui_lvl_item_properties.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -80,8 +82,8 @@ void MainWindow::setEventsBox()
 
 void MainWindow::EventListsSync()
 {
-    ui->ItemProperties->hide();
-    LvlItemPropsLock=true;
+    dock_LvlItemProps->hide();
+    dock_LvlItemProps->LvlItemPropsLock=true;
     lockSetEventSettings=true;
 
     QString curDestroyedBlock = ui->Find_Combo_EventDestoryedBlock->currentText();
@@ -90,25 +92,25 @@ void MainWindow::EventListsSync()
 
     int WinType = activeChildWindow();
 
-    ui->PROPS_BlkEventDestroy->clear();
-    ui->PROPS_BlkEventHited->clear();
-    ui->PROPS_BlkEventLayerEmpty->clear();
+    dock_LvlItemProps->ui->PROPS_BlkEventDestroy->clear();
+    dock_LvlItemProps->ui->PROPS_BlkEventHited->clear();
+    dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->clear();
 
-    ui->PROPS_NpcEventActivate->clear();
-    ui->PROPS_NpcEventDeath->clear();
-    ui->PROPS_NpcEventTalk->clear();
-    ui->PROPS_NpcEventEmptyLayer->clear();
+    dock_LvlItemProps->ui->PROPS_NpcEventActivate->clear();
+    dock_LvlItemProps->ui->PROPS_NpcEventDeath->clear();
+    dock_LvlItemProps->ui->PROPS_NpcEventTalk->clear();
+    dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->clear();
     ui->LVLEvent_TriggerEvent->clear();
 
     QString noEvent = tr("[None]");
-    ui->PROPS_BlkEventDestroy->addItem(noEvent);
-    ui->PROPS_BlkEventHited->addItem(noEvent);
-    ui->PROPS_BlkEventLayerEmpty->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_BlkEventDestroy->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_BlkEventHited->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->addItem(noEvent);
 
-    ui->PROPS_NpcEventActivate->addItem(noEvent);
-    ui->PROPS_NpcEventDeath->addItem(noEvent);
-    ui->PROPS_NpcEventTalk->addItem(noEvent);
-    ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_NpcEventActivate->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(noEvent);
+    dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
     ui->LVLEvent_TriggerEvent->addItem(noEvent);
 
     ui->Find_Combo_EventDestoryedBlock->clear();
@@ -119,14 +121,14 @@ void MainWindow::EventListsSync()
     {
         foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
         {
-            ui->PROPS_BlkEventDestroy->addItem(event.name);
-            ui->PROPS_BlkEventHited->addItem(event.name);
-            ui->PROPS_BlkEventLayerEmpty->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_BlkEventDestroy->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_BlkEventHited->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->addItem(event.name);
 
-            ui->PROPS_NpcEventActivate->addItem(event.name);
-            ui->PROPS_NpcEventDeath->addItem(event.name);
-            ui->PROPS_NpcEventTalk->addItem(event.name);
-            ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_NpcEventActivate->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(event.name);
+            dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
             ui->LVLEvent_TriggerEvent->addItem(event.name);
 
             ui->Find_Combo_EventDestoryedBlock->addItem(event.name);

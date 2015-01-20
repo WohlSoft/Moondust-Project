@@ -24,6 +24,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <main_window/dock/lvl_item_properties.h>
+#include <ui_lvl_item_properties.h>
+
 void MainWindow::setDefLang()
 {
     /*
@@ -135,12 +138,12 @@ void MainWindow::slotLanguageChanged(QAction* action)
         lockTilesetBox=true;
 
         int doorType = ui->WarpType->currentIndex(); //backup combobox's index
-        int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
+        int npcGenType = dock_LvlItemProps->ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
 
         loadLanguage(action->data().toString());
 
         ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
-        ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
+        dock_LvlItemProps->ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
 
         lockTilesetBox=false;
 

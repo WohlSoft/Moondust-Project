@@ -57,7 +57,7 @@ QT_END_NAMESPACE
 
 
 /*************************Dock widgets***************************/
-class TilesetItemBox;
+#include <main_window/dock/toolboxes_protos.h>
 /*************************Dock widgets*end***********************/
 
 
@@ -71,6 +71,7 @@ class MainWindow : public QMainWindow
     
     /************************Friend classes***************************/
     friend class TilesetItemBox;
+    friend class LvlItemProperties;
     /************************Friend classes***************************/
 
 public:
@@ -614,62 +615,7 @@ public:
 
 // ///////////////Level Item Properties box //////////////////
     public:
-        void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
-        void LvlItemProps_updateLayer(QString lname="");
-        void LvlItemProps_hide();
-
-        long blockPtr;  //!< ArrayID of editing item (-1 - use system)
-        long bgoPtr;    //!< ArrayID of editing item
-        long npcPtr;    //!< ArrayID of editing item
-
-        bool LvlItemPropsLock; //!< Protector for allow apply changes only if filed was edit by human
-
-    private slots:
-        void on_ItemProperties_visibilityChanged(bool visible);
-        void on_PROPS_BlockResize_clicked();
-
-        //void on_PROPS_BlockSquareFill_clicked(bool checked);
-        void on_PROPS_BlockInvis_clicked(bool checked);
-        void on_PROPS_BlkSlippery_clicked(bool checked);
-        void on_PROPS_BlockIncludes_clicked();
-        void on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
-
-        void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
-        //void on_PROPS_BGOSquareFill_clicked(bool checked);
-        void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
-        void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
-        void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
-
-        void on_PROPS_NPCDirLeft_clicked();
-        void on_PROPS_NPCDirRand_clicked();
-        void on_PROPS_NPCDirRight_clicked();
-        void on_PROPS_NpcFri_clicked(bool checked);
-        void on_PROPS_NPCNoMove_clicked(bool checked);
-        void on_PROPS_NpcBoss_clicked(bool checked);
-        void on_PROPS_NpcTMsg_clicked();
-        void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
-        void on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked);
-        void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
-        void on_PROPS_NPCContaiter_clicked();
-        void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
-        void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
-        void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
-        void on_PROPS_NpcGenerator_clicked(bool checked);
-        void on_PROPS_NPCGenType_currentIndexChanged(int index);
-        void on_PROPS_NPCGenTime_valueChanged(double arg1);
-        void on_PROPS_NPCGenUp_clicked();
-        void on_PROPS_NPCGenLeft_clicked();
-        void on_PROPS_NPCGenDown_clicked();
-        void on_PROPS_NPCGenRight_clicked();
-        void on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
+        LvlItemProperties *dock_LvlItemProps;
 // ///////////////////////////////////////////////////////////
 
 
@@ -768,8 +714,6 @@ public:
     private slots:
         void on_actionLevelEvents_triggered(bool checked);
         void on_LevelEventsToolBox_visibilityChanged(bool visible);
-
-        void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false);
 
         void on_LVLEvents_List_itemSelectionChanged();
         void on_LVLEvents_List_itemChanged(QListWidgetItem *item);

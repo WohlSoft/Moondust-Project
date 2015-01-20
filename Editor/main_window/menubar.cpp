@@ -75,7 +75,7 @@ void MainWindow::updateMenus(bool force)
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 
-    ui->ItemProperties->setVisible(false);
+    dock_LvlItemProps->setVisible(false);
     ui->WLD_ItemProps->setVisible(false);
 
 

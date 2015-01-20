@@ -87,7 +87,7 @@ void MainWindow::loadSettings()
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
         ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
-        ui->ItemProperties->setFloating(settings.value("item-props-box-float", true).toBool());
+        dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         ui->FindDock->setFloating(settings.value("level-search-float", true).toBool());
         //ui->WorldToolBox->setFloating(settings.value("world-item-box-float", false).toBool());
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
@@ -101,7 +101,7 @@ void MainWindow::loadSettings()
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
         ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
-        ui->ItemProperties->restoreGeometry(settings.value("item-props-box-geometry", ui->ItemProperties->saveGeometry()).toByteArray());
+        dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         ui->FindDock->restoreGeometry(settings.value("level-search-geometry", ui->FindDock->saveGeometry()).toByteArray());
         ui->WorldToolBox->restoreGeometry(settings.value("world-item-box-geometry", ui->WorldToolBox->saveGeometry()).toByteArray());
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
@@ -178,7 +178,7 @@ void MainWindow::saveSettings()
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
     settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
-    settings.setValue("item-props-box-float", ui->ItemProperties->isFloating());
+    settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
     settings.setValue("level-search-float", ui->FindDock->isFloating());
 
     settings.setValue("world-item-box-float", ui->WorldToolBox->isFloating());
@@ -193,7 +193,7 @@ void MainWindow::saveSettings()
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
     settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
     settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
-    settings.setValue("item-props-box-geometry", ui->ItemProperties->saveGeometry());
+    settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
     settings.setValue("level-search-geometry", ui->FindDock->saveGeometry());
 
     settings.setValue("world-item-box-geometry", ui->WorldToolBox->saveGeometry());
