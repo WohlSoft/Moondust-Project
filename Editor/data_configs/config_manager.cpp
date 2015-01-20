@@ -174,7 +174,6 @@ ConfigManager::ConfigManager(QWidget *parent) :
     {
         QtWin::resetExtendedFrame(this);
         setAttribute(Qt::WA_TranslucentBackground, false);
-        setStyleSheet(QString("ConfigManager { background: %1; }").arg(QtWin::realColorizationColor().name()));
     }
     #endif
 

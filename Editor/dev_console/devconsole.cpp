@@ -121,7 +121,6 @@ DevConsole::DevConsole(QWidget *parent) :
     {
         QtWin::resetExtendedFrame(this);
         setAttribute(Qt::WA_TranslucentBackground, false);
-        setStyleSheet(QString("DevConsole { background: %1; }").arg(QtWin::realColorizationColor().name()));
     }
     #endif
     if(!hasFocus()) setWindowOpacity(0.9);
