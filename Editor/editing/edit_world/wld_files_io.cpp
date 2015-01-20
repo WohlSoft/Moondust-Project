@@ -104,7 +104,8 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     using namespace wld_file_io;
 
     if(savOptionsDialog){
-        SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+        SavingNotificationDialog* sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
+        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit* wldNameBox = new QLineEdit();
@@ -440,7 +441,8 @@ void WorldEdit::documentWasModified()
 bool WorldEdit::maybeSave()
 {
     if (WldData.modified) {
-        SavingNotificationDialog* sav = new SavingNotificationDialog(true);
+        SavingNotificationDialog* sav = new SavingNotificationDialog(true,SavingNotificationDialog::D_WARN, this);
+        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
