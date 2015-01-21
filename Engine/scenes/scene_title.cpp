@@ -39,7 +39,22 @@ TitleScene::~TitleScene()
 {
     glDisable(GL_TEXTURE_2D);
     glDeleteTextures( 1, &(background.texture) );
-    SDL_RemoveTimer(fader_timer_id);
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.stop();
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(imgs[i].t.texture) );
+    }
+    imgs.clear();
+
+    if(fader_timer_id)
+        SDL_RemoveTimer(fader_timer_id);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
 }
 
 void TitleScene::init()
@@ -49,7 +64,35 @@ void TitleScene::init()
     else
         background = GraphicsHelps::loadTexture(background, ":/images/cat_splash.png");
 
+    glClearColor(float(ConfigManager::LoadingScreen.bg_color_r)/255.0f,
+                 float(ConfigManager::LoadingScreen.bg_color_g)/255.0f,
+                 float(ConfigManager::LoadingScreen.bg_color_b)/255.0f, 1.0f);
+                // Set background color from file
 
+    imgs.clear();
+
+    for(int i=0; i<ConfigManager::LoadingScreen.AdditionalImages.size(); i++)
+    {
+        if(ConfigManager::LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+
+        TitleScene_misc_img img;
+        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::LoadingScreen.AdditionalImages[i].imgFile);
+
+        img.x = ConfigManager::LoadingScreen.AdditionalImages[i].x;
+        img.y = ConfigManager::LoadingScreen.AdditionalImages[i].y;
+        img.a.construct(ConfigManager::LoadingScreen.AdditionalImages[i].animated,
+                        ConfigManager::LoadingScreen.AdditionalImages[i].frames,
+                        ConfigManager::LoadingScreen.updateDelay);
+
+        img.frmH = (img.t.h / ConfigManager::LoadingScreen.AdditionalImages[i].frames);
+
+        imgs.push_back(img);
+    }
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.start();
+    }
 }
 
 void TitleScene::setWaitTime(unsigned int time)
@@ -99,6 +142,35 @@ void TitleScene::render()
         glVertex2f( loadAniG.left(),  loadAniG.bottom());
         glEnd();
     glDisable(GL_TEXTURE_2D);
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        QRectF imgRect = QRectF(imgs[i].x,
+                               imgs[i].y,
+                               imgs[i].t.w,
+                               imgs[i].frmH);
+        glEnable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBindTexture( GL_TEXTURE_2D, imgs[i].t.texture );
+
+        AniPos x(0,1);
+               x = imgs[i].a.image();
+
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0, x.first );
+            glVertex2f( imgRect.left(), imgRect.top());
+
+            glTexCoord2f( 1, x.first );
+            glVertex2f(  imgRect.right(), imgRect.top());
+
+            glTexCoord2f( 1, x.second );
+            glVertex2f(  imgRect.right(),  imgRect.bottom());
+
+            glTexCoord2f( 0, x.second );
+            glVertex2f( imgRect.left(),  imgRect.bottom());
+            glEnd();
+        glDisable(GL_TEXTURE_2D);
+    }
 
     if(fader_opacity>0.0f)
     {

@@ -114,11 +114,16 @@ LevelScene::LevelScene()
 
 LevelScene::~LevelScene()
 {
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
+
     LvlSceneP::s = NULL;
     //stop animators
 
     //desroy animators
-
 
     //destroy textures
     qDebug() << "clear textures";
