@@ -222,7 +222,21 @@ int TitleScene::exec()
                 break;
 
                 case SDL_KEYDOWN: // If pressed key
-                  doExit=true;
+                    switch(event.key.keysym.sym)
+                    {
+                      case SDLK_t:
+                          PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                      break;
+                      case SDLK_F3:
+                          PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
+                      break;
+                      case SDLK_F12:
+                          GlRenderer::makeShot();
+                      break;
+                      default:
+                        doExit=true;
+                        break;
+                    }
                 break;
 
                 case SDL_KEYUP:

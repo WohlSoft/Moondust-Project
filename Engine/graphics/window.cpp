@@ -125,22 +125,25 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
 
     if (IsFullScreen(win))
     {
+        //Show mouse cursor
+        SDL_ShowCursor(SDL_ENABLE);
+
         // Swith to WINDOWED mode
         if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
-      {
-         std::cout<<"Setting windowed failed : "<<SDL_GetError()<<std::endl;
-         return -1;
-      }
-
+        {
+            std::cout<<"Setting windowed failed : "<<SDL_GetError()<<std::endl;
+            return -1;
+        }
         return 0;
     }
 
     // Swith to FULLSCREEN mode
     if (SDL_SetWindowFullscreen(win, SDL_TRUE) < 0)
-   {
-      std::cout<<"Setting fullscreen failed : "<<SDL_GetError()<<std::endl;
-      return -1;
-   }
-
-   return 1;
+    {
+        //Hide mouse cursor in full screen mdoe
+        std::cout<<"Setting fullscreen failed : "<<SDL_GetError()<<std::endl;
+        return -1;
+    }
+    SDL_ShowCursor(SDL_DISABLE);
+    return 1;
 }
