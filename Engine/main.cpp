@@ -44,7 +44,9 @@
 #include "gui/pge_msgbox.h"
 #include "networking/intproc.h"
 #include "graphics/graphics.h"
+
 #include "scenes/scene_level.h"
+#include "scenes/scene_title.h"
 
 #include <Box2D/Box2D.h>
 
@@ -183,6 +185,54 @@ int main(int argc, char *argv[])
     {}
 
 
+if(!fileToPpen.isEmpty())
+{
+    if(
+       (fileToPpen.endsWith(".lvl", Qt::CaseInsensitive))
+            ||
+       (fileToPpen.endsWith(".lvlx", Qt::CaseInsensitive)))
+
+    goto PlayLevel;
+}
+
+TitleScreeen:
+{
+    TitleScene *ttl = new TitleScene;
+    ttl->setWaitTime(10000);
+
+    ttl->init();
+    ttl->setFade(25, 0.0f, 0.02f);
+    int ret = ttl->exec();
+    delete ttl;
+    if(ret==-1) goto ExitFromApplication;
+
+    goto MainMenu;
+}
+
+CreditsScreeen:
+{
+
+}
+
+GameOverScreeen:
+{
+
+}
+
+MainMenu:
+{
+
+}
+
+
+PlayWorldMap:
+{
+
+}
+
+
+PlayLevel:
+{
     bool playAgain = true;
     int entranceID = 0;
     while(playAgain)
@@ -275,9 +325,10 @@ int main(int argc, char *argv[])
             }
 
             ConfigManager::unloadLevelConfigs();
-
             delete lScene;
     }
+}
+ExitFromApplication:
 
     if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();

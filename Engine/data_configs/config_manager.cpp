@@ -256,6 +256,15 @@ bool ConfigManager::loadBasics()
         LoadingScreen.bg_color_g = engineset.value("bg-color-g", 0).toInt();
         LoadingScreen.bg_color_b = engineset.value("bg-color-b", 0).toInt();
         LoadingScreen.backgroundImg = engineset.value("background", "").toString();
+        if(!LoadingScreen.backgroundImg.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+LoadingScreen.backgroundImg).isNull())
+                LoadingScreen.backgroundImg = dirs.gcommon+LoadingScreen.backgroundImg;
+            else
+                LoadingScreen.backgroundImg = "";
+
+        }
+
         LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
         LoadScreenImages = engineset.value("additional-images", 0).toInt();
     engineset.endGroup();
