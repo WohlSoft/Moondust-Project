@@ -22,6 +22,8 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
+#define _LATEST_STABLE "0.2.2-rc"
+
 #define _FILE_VERSION "0.2.2.1"
 #define _FILE_RELEASE "-dev"
 

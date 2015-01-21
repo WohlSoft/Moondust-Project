@@ -22,6 +22,7 @@
 #include <QDir>
 
 #include "app_path.h"
+#include "../version.h"
 
 QString ApplicationPath;
 QString ApplicationPath_x;
@@ -30,8 +31,8 @@ QString AppPathManager::_settingsPath;
 
 void AppPathManager::initAppPath()
 {
-    QApplication::setOrganizationName("Wohlhabend Networks");
-    QApplication::setOrganizationDomain("engine.wohlnet.ru");
+    QApplication::setOrganizationName(_COMPANY);
+    QApplication::setOrganizationDomain(_PGE_URL);
     QApplication::setApplicationName("PGE Editor");
 
     ApplicationPath = QApplication::applicationDirPath();
