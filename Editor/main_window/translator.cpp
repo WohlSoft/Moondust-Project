@@ -239,7 +239,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             if(dock_LvlItemProps)
                 dock_LvlItemProps->ui->retranslateUi(dock_LvlItemProps);
             if(dock_LvlWarpProps)
-                dock_LvlItemProps->ui->retranslateUi(dock_LvlWarpProps);
+                dock_LvlWarpProps->ui->retranslateUi(dock_LvlWarpProps);
 
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
