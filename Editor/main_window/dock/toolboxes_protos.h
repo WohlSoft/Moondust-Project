@@ -3,5 +3,6 @@
 
 class TilesetItemBox;
 class LvlItemProperties;
+class LvlWarpBox;
 
 #endif // TOOLBOXES_PROTOS_H

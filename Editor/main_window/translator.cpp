@@ -28,6 +28,7 @@
 
 #include <ui_lvl_item_properties.h>
 #include <ui_tileset_item_box.h>
+#include <ui_lvl_warp_props.h>
 
 #include <ui_leveledit.h>
 #include <ui_world_edit.h>
@@ -143,12 +144,12 @@ void MainWindow::slotLanguageChanged(QAction* action)
 
         lockTilesetBox=true;
 
-        int doorType = ui->WarpType->currentIndex(); //backup combobox's index
+        int doorType = dock_LvlWarpProps->ui->WarpType->currentIndex(); //backup combobox's index
         int npcGenType = dock_LvlItemProps->ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
 
         loadLanguage(action->data().toString());
 
-        ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
+        dock_LvlWarpProps->ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
         dock_LvlItemProps->ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
 
         lockTilesetBox=false;
@@ -237,6 +238,8 @@ void MainWindow::loadLanguage(const QString& rLanguage)
                 dock_TilesetBox->ui->retranslateUi(dock_TilesetBox);
             if(dock_LvlItemProps)
                 dock_LvlItemProps->ui->retranslateUi(dock_LvlItemProps);
+            if(dock_LvlWarpProps)
+                dock_LvlItemProps->ui->retranslateUi(dock_LvlWarpProps);
 
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
