@@ -19,12 +19,24 @@
 #ifndef SCENE_TITLE_H
 #define SCENE_TITLE_H
 
+#include <QVector>
 #include <common_features/pge_texture.h>
+#include <common_features/simple_animator.h>
 
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_timer.h>
 
 #include "scene.h"
+
+struct TitleScene_misc_img
+{
+    int x;
+    int y;
+    PGE_Texture t;
+    SimpleAnimator a;
+    int frmH;
+};
+
 class TitleScene : public Scene
 {
 public:
@@ -51,6 +63,7 @@ private:
     unsigned int _waitTimer;
 
     PGE_Texture background;
+    QVector<TitleScene_misc_img > imgs;
 };
 
 #endif // SCENE_TITLE_H

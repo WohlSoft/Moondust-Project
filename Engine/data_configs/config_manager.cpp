@@ -276,11 +276,22 @@ bool ConfigManager::loadBasics()
         LoadingScreenAdditionalImage img;
 
         img.imgFile = engineset.value("image", "").toString();
+
+        if(!img.imgFile.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+img.imgFile).isNull())
+                img.imgFile = dirs.gcommon+img.imgFile;
+            else
+                img.imgFile = "";
+        }
+
         img.animated = engineset.value("animated", false).toBool();
         if(img.animated)
-            img.frames = engineset.value("animated", 1).toInt();
+            img.frames = engineset.value("frames", 1).toInt();
         else
             img.frames = 1;
+        if(img.frames<=0) img.frames = 1;
+
         img.x =  engineset.value("pos-x", 1).toInt();
         img.y =  engineset.value("pos-y", 1).toInt();
         LoadingScreen.AdditionalImages.push_back(img);
