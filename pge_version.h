@@ -29,9 +29,11 @@
 #define _VP4 2
 
 
-#define _COPYRIGHT "2014 by Wohlstand"
+#define _COPYRIGHT "2014-2015 by Wohlstand"
 
-#define _COMPANY "Wohlhabend Network System"
+#define _COMPANY "Wohlhabend Networks"
+
+#define _PGE_URL "engine.wohlnet.ru"
 
 #define _PRODUCT_NAME "Platformer Game Engine"
 
