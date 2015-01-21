@@ -573,28 +573,28 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="240"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="36"/>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="37"/>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="38"/>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
@@ -604,22 +604,22 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="46"/>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="47"/>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="48"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="239"/>
@@ -802,25 +802,25 @@ Puede tomar cualquier paquete aquí: %2</translation>
         <location filename="../common_features/installer.cpp" line="102"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Archivo de nivel PGE</translation>
+        <translation>Archivo de nivel PGE</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="106"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Mapa PGE</translation>
+        <translation>Mapa PGE</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="110"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Archivo de nivel SMBX</translation>
+        <translation>Archivo de nivel SMBX</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="114"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Mapa SMBX</translation>
+        <translation>Mapa SMBX</translation>
     </message>
 </context>
 <context>
@@ -972,32 +972,32 @@ Puede tomar cualquier paquete aquí: %2</translation>
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="148"/>
         <source>Open target level: %1</source>
         <translation>Abriendo nivel destino: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="152"/>
         <source>Layer: </source>
         <translation>Capa:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="158"/>
         <source>Add to new layer...</source>
         <translation>Añadir a nueva capa...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="181"/>
         <source>Jump to exit</source>
         <translation>Ir a salida</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="187"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
         <source>Jump to entrance</source>
         <translation>Ir a entrada</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="196"/>
         <source>No Vehicles</source>
         <translation>No transporte</translation>
     </message>
@@ -1006,22 +1006,22 @@ Puede tomar cualquier paquete aquí: %2</translation>
         <translation type="vanished">No yoshi</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="201"/>
         <source>Allow NPC</source>
         <translation>Aceptar PNJ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="206"/>
         <source>Locked</source>
         <translation>Bloqueado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="223"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="224"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="219"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="220"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
@@ -1095,7 +1095,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="156"/>
         <source>&lt;Silence&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Silencio&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="159"/>
@@ -1662,7 +1662,7 @@ Por favor, controle la ruta de aplicación.</translation>
         <translation>Guardar sección en imagen...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="447"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="449"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="132"/>
         <source>Abort</source>
         <translation>Abortar</translation>
@@ -1679,7 +1679,7 @@ Por favor, controle la ruta de aplicación.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="53"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="419"/>
         <source>Configurations not loaded</source>
         <translation>Configuraciones no cargadas</translation>
     </message>
@@ -1693,7 +1693,7 @@ porque las configuraciones no están cargadas.
 Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="107"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="109"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
@@ -1702,61 +1702,61 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <translation type="vanished">Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="110"/>
         <source>Saving</source>
-        <translation type="unfinished">Guardando</translation>
+        <translation>Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="112"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="496"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="114"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="499"/>
         <source>Level title: </source>
         <translation>Título:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="113"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="115"/>
         <source>Make custom folder</source>
         <translation>Hacer carpeta personalizada</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="158"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="160"/>
         <source>Save As</source>
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="168"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="193"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="170"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="195"/>
         <source>Extension is not set</source>
         <translation>La extensión no está definida</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="169"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="194"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="171"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="196"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>La extensión no está definida, por favor especifique una extensión!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="222"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="224"/>
         <source>SMBX file version</source>
         <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="223"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="225"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="231"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="241"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="251"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="261"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="271"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="291"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="233"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="243"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="253"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="263"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="273"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="283"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="293"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>El límite SMBX64 ha sido excedido</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="232"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="234"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
 The maximum number of blocks is %2.
 
@@ -1767,7 +1767,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="242"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="244"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
 The maximum number of Background Objects is %2.
 
@@ -1778,7 +1778,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="252"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="254"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
 The maximum number of Non-Playable Characters is %2.
 
@@ -1789,7 +1789,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="262"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="264"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Warps
 The maximum number of Warps is %2.
 
@@ -1800,7 +1800,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="272"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="274"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
 The maximum number of Water Boxes is %2.
 
@@ -1811,7 +1811,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="282"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="284"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Layers
 The maximum number of Layers is %2.
 
@@ -1822,7 +1822,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="292"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="294"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Events
 The maximum number of Events is %2.
 
@@ -1833,35 +1833,35 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="322"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="339"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="362"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="324"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="341"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="364"/>
         <source>File save error</source>
         <translation>Error de escritura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="323"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="340"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="363"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="325"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="342"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="365"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>No se puede escribir archivo %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="401"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="403"/>
         <source>Read file error</source>
         <translation>Error de lectura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="402"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="404"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>No se puede leer archivo %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="418"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="420"/>
         <source>Cannot open level file %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -1870,20 +1870,20 @@ porque no se cargaron las configuraciones de objetos.
 Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="447"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="448"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="449"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="450"/>
         <source>Loading level data</source>
         <translation>Cargando datos de nivel</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="492"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="495"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; fue modificado.
 ¿Desea guardar sus cambios?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="494"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="497"/>
         <source> not saved</source>
         <translation>No guardado</translation>
     </message>
@@ -2120,256 +2120,268 @@ o elimínela con su respectiva opción.</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="34"/>
         <source>Item Properties</source>
-        <translation type="unfinished">Propiedades de ítem</translation>
+        <translation>Propiedades de ítem</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="92"/>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="176"/>
         <source>Slippery</source>
-        <translation type="unfinished">Resbaladizo</translation>
+        <translation>Resbaladizo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="189"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="395"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="210"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="197"/>
         <source>Block contents:</source>
-        <translation type="unfinished">Contenido:</translation>
+        <translation>Contenido:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="204"/>
+        <source>Destroyed: </source>
+        <translation>Destruído:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="217"/>
-        <source>Destroyed: </source>
-        <translation type="unfinished">Destruído:</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="230"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="254"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="278"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="948"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1053"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1077"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1101"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="241"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="265"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1136"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1201"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1332"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1363"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="302"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="289"/>
         <source>Events</source>
-        <translation type="unfinished">Eventos</translation>
+        <translation>Eventos</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="312"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="299"/>
         <source>Hited:</source>
-        <translation type="unfinished">Golpeado:</translation>
+        <translation>Golpeado:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="319"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="721"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="306"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1079"/>
         <source>Layer empty:</source>
-        <translation type="unfinished">Capa vacía:</translation>
+        <translation>Capa vacía:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="353"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="584"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1388"/>
+        <source>Layer:</source>
+        <translation>Capa:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="366"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="581"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="935"/>
-        <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="379"/>
         <source>Invisible</source>
-        <translation type="unfinished">Invisible</translation>
+        <translation>Invisible</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="408"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="411"/>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="429"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="432"/>
         <source>Z-Position</source>
-        <translation type="unfinished">Posición Z</translation>
+        <translation>Posición Z</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="435"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="438"/>
         <source>Z-Offset:</source>
-        <translation type="unfinished">Z-Offset:</translation>
+        <translation>Z-Offset:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="442"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="445"/>
         <source>Z-Layer:</source>
-        <translation type="unfinished">Capa Z:</translation>
+        <translation>Capa Z:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="453"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="456"/>
         <source>Background-2</source>
-        <translation type="unfinished">Fondo-2</translation>
+        <translation>Fondo-2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="458"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="461"/>
         <source>Background</source>
-        <translation type="unfinished">Fondo</translation>
+        <translation>Fondo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="463"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="466"/>
         <source>Default</source>
-        <translation type="unfinished">Predeterminado</translation>
+        <translation>Predeterminado</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="468"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="471"/>
         <source>Foreground</source>
-        <translation type="unfinished">Primer plano</translation>
+        <translation>Primer plano</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="473"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="476"/>
         <source>Foreground-2</source>
-        <translation type="unfinished">Primer plano-2</translation>
+        <translation>Primer plano-2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="516"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="519"/>
         <source>SMBX64 defines:</source>
-        <translation type="unfinished">SMBX64 define:</translation>
+        <translation>SMBX64 define:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="543"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="546"/>
         <source>Sort priority:</source>
-        <translation type="unfinished">Sortear prioridad:</translation>
+        <translation>Sortear prioridad:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="563"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="566"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="unfinished">Ésta es una clasificación de prioridad de matrices. Con ésta opción puedes hacer un OF como uno de primer plano. (si el valor es -1: será usado como predeterminado de la configuración global del OF).
+        <translation>Ésta es una clasificación de prioridad de matrices. Con ésta opción puedes hacer un OF como uno de primer plano. (si el valor es -1: será usado como predeterminado de la configuración global del OF).
 Ésta opción usada por un error de SMBX de su renderización. Para ésto pueda funcionar, necesitas ubicar cualquier objeto de primer plano. Ésta opción no será guardada en el archivo LVL, y necesita fijarlos secundarios y después recargar el archivo.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="619"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="625"/>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="655"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="895"/>
+        <source>Up</source>
+        <translation>Arriba</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="955"/>
+        <source>Down</source>
+        <translation>Abajo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1057"/>
         <source>Death:</source>
-        <translation type="unfinished">Muerte:</translation>
+        <translation>Muerte:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1035"/>
+        <source>Talk:</source>
+        <translation>Hablar:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="998"/>
+        <source>Activate:</source>
+        <translation>Activado:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1181"/>
+        <source>Attach to:</source>
+        <translation>Atajar Capa:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="646"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="777"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="465"/>
+        <source>Direction</source>
+        <translation>Dirección</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="670"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="865"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="470"/>
+        <source>Left</source>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="677"/>
-        <source>Talk:</source>
-        <translation type="unfinished">Hablar:</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="714"/>
-        <source>Activate:</source>
-        <translation type="unfinished">Activado:</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="728"/>
-        <source>Attach to:</source>
-        <translation type="unfinished">Atajar Capa:</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="735"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="846"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="465"/>
-        <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="759"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="470"/>
-        <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="766"/>
         <source>Random</source>
-        <translation type="unfinished">Aleatorio</translation>
+        <translation>Aleatorio</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="773"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="684"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="925"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="477"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="783"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1040"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="700"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1167"/>
         <source>Generator</source>
-        <translation type="unfinished">Generador</translation>
+        <translation>Generador</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="810"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="727"/>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="745"/>
         <source>Warp</source>
-        <translation type="unfinished">Traslado</translation>
+        <translation>Traslado</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="826"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="750"/>
         <source>Projectile</source>
-        <translation type="unfinished">Proyectil</translation>
+        <translation>Proyectil</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="918"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="734"/>
         <source>Delay:</source>
-        <translation type="unfinished">Retraso:</translation>
+        <translation>Retraso:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1157"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1086"/>
         <source>Contains of current NPC-Container</source>
-        <translation type="unfinished">Contenidos del contenedor de PNJ actual</translation>
+        <translation>Contenidos del contenedor de PNJ actual</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1164"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1305"/>
         <source>Auto-increment</source>
-        <translation type="unfinished">Auto-incremento</translation>
+        <translation>Auto-incremento</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1204"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1242"/>
         <source>Talk message:</source>
-        <translation type="unfinished">Mensaje:</translation>
+        <translation>Mensaje:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1211"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1120"/>
         <source>Friendly</source>
-        <translation type="unfinished">Amigable</translation>
+        <translation>Amigable</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1218"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1249"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished">No se mueve</translation>
+        <translation>No se mueve</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1225"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1100"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="170"/>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation type="unfinished">ID de Bloque: %1, Array ID: %2</translation>
+        <translation>ID de Bloque: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="235"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="307"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="460"/>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished">Posición: [%1, %2]</translation>
+        <translation>Posición: [%1, %2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="245"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1007"/>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 monedas</translation>
+        <translation>%1 monedas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="246"/>
@@ -2377,17 +2389,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1008"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1748"/>
         <source>[empty]</source>
-        <translation type="unfinished">[vacío]</translation>
+        <translation>[vacío]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="302"/>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation type="unfinished">ID de OF: %1, Array ID: %2</translation>
+        <translation>ID de OF: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="363"/>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation type="unfinished">ID de PNJ: %1, Array ID: %2</translation>
+        <translation>ID de PNJ: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="572"/>
@@ -2434,520 +2446,520 @@ Usted verá fantasmas u otras imágenes en vez de sus gráficos o ítems persona
 Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este nivel.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="534"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="1367"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="535"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="1368"/>
         <source>Undone: %1</source>
         <translation>Sin terminar: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="1381"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="2181"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="1382"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="2182"/>
         <source>Redone: %1</source>
         <translation>Rehacer: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="41"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3613"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="42"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3614"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="58"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3614"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="59"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3615"/>
         <source>Place</source>
         <translation>Colocar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="75"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3615"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="76"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3616"/>
         <source>Place &amp; Overwrite</source>
         <translation>Colocar y sobreescribir</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="111"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3616"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3617"/>
         <source>Move</source>
         <translation>Mover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3617"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3618"/>
         <source>Changed Setting [%1]</source>
         <translation>Opción cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3618"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3619"/>
         <source>Change Layer</source>
         <translation>Cambiar capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3619"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3620"/>
         <source>Resize Block</source>
         <translation>Redimensionar Bloque</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3620"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3621"/>
         <source>Place Door</source>
         <translation>Colocar puerta</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3621"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3622"/>
         <source>Add Warp</source>
         <translation>Añadir traslado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3622"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3623"/>
         <source>Remove Warp</source>
         <translation>Remover traslado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3623"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3624"/>
         <source>Changed Warpsetting [%1]</source>
         <translation>Opción de traslado cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3624"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3625"/>
         <source>Add Event</source>
         <translation>Añadir Evento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3625"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3626"/>
         <source>Remove Event</source>
         <translation>Remover Evento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3626"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3627"/>
         <source>Copy Event</source>
         <translation>Copiar evento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3627"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3628"/>
         <source>Changed Eventsetting [%1]</source>
         <translation>Preferencia Cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3628"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3629"/>
         <source>Move Items to new Layer</source>
         <translation>Mover ítems a nueva capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3629"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3630"/>
         <source>New Layer</source>
         <translation>Nueva capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3630"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3631"/>
         <source>Remove layer with items</source>
         <translation>Remover capa con ítems</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3631"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3632"/>
         <source>Rename Event</source>
         <translation>Renombrar evento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3632"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3633"/>
         <source>Rename Layer</source>
         <translation>Renombrar capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3633"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3634"/>
         <source>Remove layers and save items</source>
         <translation>Remover capa y guardar elementos</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3634"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3635"/>
         <source>Merge Layer</source>
         <translation>Combinar capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3635"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3636"/>
         <source>Changed Sectionsetting [%1]</source>
         <translation>Preferencia cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3636"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3637"/>
         <source>Changed Levelsetting [%1]</source>
         <translation>Cambiada la preferencia [%1]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3637"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3638"/>
         <source>Place Player Point</source>
         <translation>Colocar punto del jugador</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3638"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3639"/>
         <source>Resize Water</source>
         <translation>Redimensionar Agua</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3639"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3640"/>
         <source>Rotate</source>
         <translation>Rotar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3640"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3641"/>
         <source>Flip</source>
         <translation>Voltear</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3642"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3722"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3643"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3723"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3649"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3650"/>
         <source>Slippery</source>
         <translation>Resbaladizo</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3650"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3651"/>
         <source>Friendly</source>
         <translation>Amigable</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3651"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3652"/>
         <source>Boss</source>
         <translation>Jefe</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3652"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3653"/>
         <source>Not Moveable</source>
         <translation>No mover</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3653"/>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3697"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3654"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3698"/>
         <source>Message</source>
         <translation>Mensaje</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3654"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3655"/>
         <source>Direction</source>
         <translation>Dirección</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3655"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3656"/>
         <source>Included NPC</source>
         <translation>Cambiar NPC incluído</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3656"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3657"/>
         <source>Water Type</source>
         <translation>Tipo de ambiente</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3657"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3658"/>
         <source>Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3658"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3659"/>
         <source>No Yoshi</source>
         <translation>No Yoshi</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3659"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3660"/>
         <source>Allow NPC</source>
         <translation>Habilitar PNJ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3660"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3661"/>
         <source>Locked</source>
         <translation>Bloqueado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3661"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3662"/>
         <source>Warp Type</source>
         <translation>Tipo de traslado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3662"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3663"/>
         <source>Need Stars</source>
         <translation>Necesita estrellas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3663"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3664"/>
         <source>Entrance Direction</source>
         <translation>Dirección de entrada</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3664"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3665"/>
         <source>Exit Direction</source>
         <translation>Dirección de salida</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3665"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3666"/>
         <source>Set Level Exit</source>
         <translation>Fijar Salida del nivel</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3666"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3667"/>
         <source>Set Level Entrance</source>
         <translation>Fijar entrada del nivel</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3667"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3668"/>
         <source>Level Warp To</source>
         <translation>Trasladar a</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3668"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3669"/>
         <source>Activate Generator</source>
         <translation>Activar Generador</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3669"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3670"/>
         <source>Generator Type</source>
         <translation>Tipo de generador</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3670"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3671"/>
         <source>Generator Direction</source>
         <translation>Dirección de generador</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3671"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3672"/>
         <source>Generator Time</source>
         <translation>Tiempo de generador</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3672"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3673"/>
         <source>Attach Layer</source>
         <translation>Atajar Capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3673"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3674"/>
         <source>Event Block Destroyed</source>
         <translation>Evento Bloque Destruído</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3674"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3675"/>
         <source>Event Block Hited</source>
         <translation>Evento Bloque Golpeado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3675"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3676"/>
         <source>Event Layer Empty</source>
         <translation>Evento Capa Vacía</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3676"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3677"/>
         <source>Event NPC Activate</source>
         <translation>Evento PNJ Activado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3677"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3678"/>
         <source>Event NPC Die</source>
         <translation>Evento PNJ muerto</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3678"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3679"/>
         <source>Event NPC Talk</source>
         <translation>Evento Diálogo PNJ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3679"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3680"/>
         <source>NPC Special Data</source>
         <translation>Datos especial de PNJ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3680"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3681"/>
         <source>Autostart</source>
         <translation>Autoinicio</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3681"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3682"/>
         <source>Layer Smoke Effect</source>
         <translation>Efecto de humo</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3682"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3683"/>
         <source>Add Hide Layer</source>
         <translation>Añadir capa oculta</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3683"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3684"/>
         <source>Remove Hide Layer</source>
         <translation>Remover capa oculta</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3684"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3685"/>
         <source>Add Show Layer</source>
         <translation>Añadir capa visible</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3685"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3686"/>
         <source>Remove Show Layer</source>
         <translation>Remover capa visible</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3686"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3687"/>
         <source>Add Toggle Layer</source>
         <translation>Añadir capa intercambiable</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3687"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3688"/>
         <source>Remove Toggle Layer</source>
         <translation>Remover capa intercambiable</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3688"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3689"/>
         <source>Moving Layer</source>
         <translation>Moviendo capa</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3689"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3690"/>
         <source>Layer Speed Horizontal</source>
         <translation>Velocidad horizontal</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3690"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3691"/>
         <source>Layer Speed Vertical</source>
         <translation>Velocidad vertical</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3691"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3692"/>
         <source>Autoscroll Layer</source>
         <translation>Autodesplazamiento</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3692"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3693"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Velocidad de Autodesplazamiento Horizontal</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3693"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3694"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Velocidad de Autodesplazamiento Vertical</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3694"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3695"/>
         <source>Section Size</source>
         <translation>Tamaño de sección</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3695"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3696"/>
         <source>Section Music</source>
         <translation>Música de sección</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3696"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3697"/>
         <source>Section Background</source>
         <translation>Fondo de sección</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3698"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3699"/>
         <source>Sound</source>
         <translation>Sonido</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3699"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3700"/>
         <source>End Game</source>
         <translation>Fin del juego</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3700"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3701"/>
         <source>Up Key Activate</source>
         <translation>Activar Tecla Arriba</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3701"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3702"/>
         <source>Down Key Activate</source>
         <translation>Activar Tecla Abajo</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3702"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3703"/>
         <source>Left Key Activate</source>
         <translation>Activar Tecla Izquierda</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3703"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3704"/>
         <source>Right Key Activate</source>
         <translation>Activar Tecla Derecha</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3704"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3705"/>
         <source>Run Key Activate</source>
         <translation>Activar Tecla de Corrida</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3705"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3706"/>
         <source>Alt Run Key Activate</source>
         <translation>Activar tecla de Corrida secundaria</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3706"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3707"/>
         <source>Jump Key Activate</source>
         <translation>Activar Tecla de Salto</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3707"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3708"/>
         <source>Alt Jump Key Activate</source>
         <translation>Activar Tecla de Salto secundario</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3708"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3709"/>
         <source>Drop Key Activate</source>
         <translation>Activar tecla de Soltado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3709"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3710"/>
         <source>Start Key Activate</source>
         <translation>Activar Tecla de Inicio</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3710"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3711"/>
         <source>Trigger Activate</source>
         <translation>Activar función</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3711"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3712"/>
         <source>Trigger Delay</source>
         <translation>Retardar Función</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3712"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3713"/>
         <source>Is Warp</source>
         <translation>Es traslado</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3713"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3714"/>
         <source>No Back</source>
         <translation>Sin Retorno</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3714"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3715"/>
         <source>Off Screen Exit</source>
         <translation>Salida fuera de pantalla</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3715"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3716"/>
         <source>Underwater</source>
         <translation>Bajo agua</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3716"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3717"/>
         <source>Background Image</source>
         <translation>Imagen de fondo</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3717"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3718"/>
         <source>Music</source>
         <translation>Música</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3718"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3719"/>
         <source>Custom Music</source>
         <translation>Música propia</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3719"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3720"/>
         <source>Level Name</source>
         <translation>Nombre del nivel</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3720"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="3721"/>
         <source>BGO Sorting Priority</source>
         <translation>Prioridad de OFs</translation>
     </message>
@@ -2970,6 +2982,194 @@ Zonas físicas de ambiente:	%6
     </message>
 </context>
 <context>
+    <name>LvlWarpBox</name>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="28"/>
+        <source>Warps and Doors</source>
+        <translation>Traslados y puertas</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="53"/>
+        <source>Main</source>
+        <translation>Principal</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="102"/>
+        <source>Layer:</source>
+        <translation>Capa:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="149"/>
+        <source>No Vehicles</source>
+        <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
+        <translation>No vehículos</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="156"/>
+        <source>Allow NPC</source>
+        <comment>Please, translate as &quot;Allow items&quot;</comment>
+        <translation>Aceptar PNJ</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="163"/>
+        <source>Locked</source>
+        <translation>Bloqueado</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="189"/>
+        <source>Set Exit</source>
+        <translation>Fijar salida</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="246"/>
+        <source>0 - Instant</source>
+        <translation>0 - Instantáneo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="251"/>
+        <source>1 - Pipe</source>
+        <translation>1 - Tubo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="256"/>
+        <source>2 - Door</source>
+        <translation>2 - Puerta</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="264"/>
+        <source>Need stars</source>
+        <translation>Necesita estrellas</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="271"/>
+        <source>Warp type</source>
+        <translation>Tipo de traslado</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="297"/>
+        <source>Set Entrance</source>
+        <translation>Fijar entrada</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="331"/>
+        <source>Pipe direction</source>
+        <translation>Dirección de tubo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="352"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="843"/>
+        <source>Entrance</source>
+        <translation>Entrada</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="398"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="741"/>
+        <source>Down</source>
+        <translation>Abajo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="428"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="636"/>
+        <source>Left</source>
+        <translation>Izquierda</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="458"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="688"/>
+        <source>Right</source>
+        <translation>Derecha</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="507"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="606"/>
+        <source>Up</source>
+        <translation>Arriba</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="576"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="836"/>
+        <source>Exit</source>
+        <translation>Salir</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="794"/>
+        <source>Warp to World map</source>
+        <translation>Trasladar al mapa</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="800"/>
+        <source>X:</source>
+        <translation>X:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="810"/>
+        <source>Y:</source>
+        <translation>Y:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="820"/>
+        <source>Set</source>
+        <translation>Fijar</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="830"/>
+        <source>Level door</source>
+        <translation>Puerta del nivel</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="866"/>
+        <source>Warp to other level</source>
+        <translation>Trasladar a otro nivel</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="872"/>
+        <source>Level file</source>
+        <translation>Archivo de nivel</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="904"/>
+        <source>Warp to</source>
+        <comment>Translate as &quot;Door #&quot;</comment>
+        <translation>Trasladar a</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="891"/>
+        <source>World map files not found</source>
+        <translation>Archivos de mapa no encontrados</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="892"/>
+        <source>You haven&apos;t available world map files with this level file.
+Please, put this level file with a world map, or create new world map in the same fomder with this level file.
+File path: %1</source>
+        <translation>No tiene habilitados los archivos de mapa con este archivo de nivel.
+Por favor, ponga éste archivo de nivel con un mapa, o cree un nuevo mundo en la misma carpeta con éste nivel.
+Ruta de archivo: %1</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="903"/>
+        <source>Select world map file</source>
+        <translation>Seleccione archivo de mapa</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="904"/>
+        <source>Found more than one world map files.
+Please, select necessary world map in a list:</source>
+        <translation>Encontrados más de un archivo de mapa.
+Por favor, seleccione el mapa necesario en la lista:</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="915"/>
+        <source>File open error</source>
+        <translation>Error al abrir archivo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="916"/>
+        <source>Can&apos;t open the file.</source>
+        <translation>No se puede abrir archivo.</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="117"/>
@@ -2978,7 +3178,7 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <location filename="../mainwindow.ui" line="121"/>
-        <location filename="../mainwindow.ui" line="7723"/>
+        <location filename="../mainwindow.ui" line="7048"/>
         <source>New</source>
         <translation>Nuevo</translation>
     </message>
@@ -2994,8 +3194,8 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <location filename="../mainwindow.ui" line="182"/>
-        <location filename="../mainwindow.ui" line="4726"/>
-        <location filename="../mainwindow.ui" line="5614"/>
+        <location filename="../mainwindow.ui" line="4051"/>
+        <location filename="../mainwindow.ui" line="4939"/>
         <source>Level</source>
         <translation>Nivel</translation>
     </message>
@@ -3062,7 +3262,7 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <location filename="../mainwindow.ui" line="854"/>
-        <location filename="../mainwindow.ui" line="4427"/>
+        <location filename="../mainwindow.ui" line="3752"/>
         <source>NPC</source>
         <translation>PNJ</translation>
     </message>
@@ -3077,7 +3277,7 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1311"/>
-        <location filename="../mainwindow.ui" line="5370"/>
+        <location filename="../mainwindow.ui" line="4695"/>
         <source>Scenery</source>
         <translation>Decoraciones</translation>
     </message>
@@ -3115,13 +3315,13 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../mainwindow.ui" line="1568"/>
         <location filename="../mainwindow.ui" line="1748"/>
-        <location filename="../mainwindow.ui" line="7162"/>
+        <location filename="../mainwindow.ui" line="6487"/>
         <source>Section Settings</source>
         <translation>Opciones de Sección</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1599"/>
-        <location filename="../mainwindow.ui" line="5861"/>
+        <location filename="../mainwindow.ui" line="5186"/>
         <source>Music</source>
         <translation>Música</translation>
     </message>
@@ -3175,7 +3375,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Pasando de la pantalla, el jugador entra a la pantalla por el otro lado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6990"/>
+        <location filename="../mainwindow.ui" line="6315"/>
         <source>Warp section</source>
         <translation>Zona de sesgo</translation>
     </message>
@@ -3190,7 +3390,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1847"/>
-        <location filename="../mainwindow.ui" line="7026"/>
+        <location filename="../mainwindow.ui" line="6351"/>
         <source>Underwater</source>
         <translation>Bajo agua</translation>
     </message>
@@ -3257,13 +3457,13 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2034"/>
-        <location filename="../mainwindow.ui" line="7893"/>
+        <location filename="../mainwindow.ui" line="7218"/>
         <source>Apply</source>
         <translation>Aplicar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2047"/>
-        <location filename="../mainwindow.ui" line="7908"/>
+        <location filename="../mainwindow.ui" line="7233"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -3272,175 +3472,146 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation type="vanished">Traslados y puertas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2101"/>
         <source>Warp to World map</source>
-        <translation>Trasladar al mapa</translation>
+        <translation type="vanished">Trasladar al mapa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2113"/>
-        <location filename="../mainwindow.ui" line="4876"/>
+        <location filename="../mainwindow.ui" line="4201"/>
         <source>Set</source>
         <translation>Fijar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2126"/>
         <source>Y:</source>
-        <translation>Y:</translation>
+        <translation type="vanished">Y:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2149"/>
         <source>X:</source>
-        <translation>X:</translation>
+        <translation type="vanished">X:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2189"/>
         <source>Main</source>
-        <translation>Principal</translation>
+        <translation type="vanished">Principal</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2211"/>
         <source>0 - Instant</source>
-        <translation>0 - Instantáneo</translation>
+        <translation type="vanished">0 - Instantáneo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2216"/>
         <source>1 - Pipe</source>
-        <translation>1 - Tubo</translation>
+        <translation type="vanished">1 - Tubo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2221"/>
         <source>2 - Door</source>
-        <translation>2 - Puerta</translation>
+        <translation type="vanished">2 - Puerta</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2235"/>
         <source>Warp type</source>
-        <translation>Tipo de traslado</translation>
+        <translation type="vanished">Tipo de traslado</translation>
     </message>
     <message>
         <source>No Yoshi</source>
         <translation type="vanished">No Yoshi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2261"/>
         <source>Need stars</source>
-        <translation>Necesita estrellas</translation>
+        <translation type="vanished">Necesita estrellas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2284"/>
         <source>Locked</source>
-        <translation>Bloqueado</translation>
+        <translation type="vanished">Bloqueado</translation>
     </message>
     <message>
         <source>Allow NPC</source>
         <translation type="vanished">Habilitar PNJ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2310"/>
         <source>Set Entrance</source>
-        <translation>Fijar entrada</translation>
+        <translation type="vanished">Fijar entrada</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2323"/>
         <source>Set Exit</source>
-        <translation>Fijar salida</translation>
+        <translation type="vanished">Fijar salida</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2411"/>
         <source>Warp to other level</source>
-        <translation>Trasladar a otro nivel</translation>
+        <translation type="vanished">Trasladar a otro nivel</translation>
     </message>
     <message>
         <source>Warp to</source>
         <translation type="vanished">Trasladar a</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2456"/>
-        <location filename="../mainwindow.ui" line="5644"/>
+        <location filename="../mainwindow.ui" line="4969"/>
         <source>Level file</source>
         <translation>Archivo de nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2486"/>
         <source>Level door</source>
-        <translation>Puerta del nivel</translation>
+        <translation type="vanished">Puerta del nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2498"/>
-        <location filename="../mainwindow.ui" line="2537"/>
         <source>Entrance</source>
-        <translation>Entrada</translation>
+        <translation type="vanished">Entrada</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2511"/>
-        <location filename="../mainwindow.ui" line="2640"/>
         <source>Exit</source>
-        <translation>Salir</translation>
+        <translation type="vanished">Salir</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2525"/>
         <source>Pipe direction</source>
-        <translation>Dirección de tubo</translation>
+        <translation type="vanished">Dirección de tubo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2555"/>
-        <location filename="../mainwindow.ui" line="2655"/>
-        <location filename="../mainwindow.ui" line="3462"/>
-        <location filename="../mainwindow.ui" line="3810"/>
-        <location filename="../mainwindow.ui" line="4623"/>
+        <location filename="../mainwindow.ui" line="2787"/>
+        <location filename="../mainwindow.ui" line="3135"/>
+        <location filename="../mainwindow.ui" line="3948"/>
         <source>Left</source>
         <translation>Izquierda</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2571"/>
-        <location filename="../mainwindow.ui" line="2671"/>
-        <location filename="../mainwindow.ui" line="3517"/>
-        <location filename="../mainwindow.ui" line="3838"/>
-        <location filename="../mainwindow.ui" line="4643"/>
+        <location filename="../mainwindow.ui" line="2842"/>
+        <location filename="../mainwindow.ui" line="3163"/>
+        <location filename="../mainwindow.ui" line="3968"/>
         <source>Right</source>
         <translation>Derecha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2584"/>
-        <location filename="../mainwindow.ui" line="2684"/>
-        <location filename="../mainwindow.ui" line="3824"/>
+        <location filename="../mainwindow.ui" line="3149"/>
         <source>Up</source>
         <translation>Arriba</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2600"/>
-        <location filename="../mainwindow.ui" line="2700"/>
-        <location filename="../mainwindow.ui" line="3817"/>
+        <location filename="../mainwindow.ui" line="3142"/>
         <source>Down</source>
         <translation>Abajo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2750"/>
-        <location filename="../mainwindow.ui" line="7617"/>
+        <location filename="../mainwindow.ui" line="2075"/>
+        <location filename="../mainwindow.ui" line="6942"/>
         <source>Layers</source>
         <translation>Capas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2781"/>
-        <location filename="../mainwindow.ui" line="6275"/>
+        <location filename="../mainwindow.ui" line="2106"/>
+        <location filename="../mainwindow.ui" line="5600"/>
         <location filename="../main_window/dock/debugger.cpp" line="393"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2791"/>
-        <location filename="../mainwindow.ui" line="6192"/>
-        <location filename="../mainwindow.ui" line="6282"/>
+        <location filename="../mainwindow.ui" line="2116"/>
+        <location filename="../mainwindow.ui" line="5517"/>
+        <location filename="../mainwindow.ui" line="5607"/>
         <source>Add</source>
         <translation>Añadir</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2801"/>
+        <location filename="../mainwindow.ui" line="2126"/>
         <source>Lock</source>
         <translation>Bloquear</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4701"/>
+        <location filename="../mainwindow.ui" line="4026"/>
         <source>Item Properties</source>
         <translation>Propiedades de ítem</translation>
     </message>
@@ -3449,7 +3620,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation type="vanished">Editor - Motor de juego de plataformas (Bajo Construcción)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6289"/>
+        <location filename="../mainwindow.ui" line="5614"/>
         <source>Go To...</source>
         <translation>Ir a...</translation>
     </message>
@@ -3462,7 +3633,7 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation type="vanished">SMBX64 define:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4388"/>
+        <location filename="../mainwindow.ui" line="3713"/>
         <source>Sort priority:</source>
         <translation>Sortear prioridad:</translation>
     </message>
@@ -3481,54 +3652,54 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Contenidos del contenedor de PNJ actual</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2880"/>
+        <location filename="../mainwindow.ui" line="2205"/>
         <source>Classic Events</source>
         <translation>Eventos clásicos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2981"/>
+        <location filename="../mainwindow.ui" line="2306"/>
         <source>Layer visibly</source>
         <translation>Visibilidad de capa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3002"/>
+        <location filename="../mainwindow.ui" line="2327"/>
         <source>Disable smoke effects</source>
         <translation>Deshabilitar efecto de humo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3067"/>
+        <location filename="../mainwindow.ui" line="2392"/>
         <source>Show</source>
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3093"/>
+        <location filename="../mainwindow.ui" line="2418"/>
         <source>Toggle</source>
         <translation>Intercambiar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3128"/>
+        <location filename="../mainwindow.ui" line="2453"/>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3164"/>
+        <location filename="../mainwindow.ui" line="2489"/>
         <source>Layers movement</source>
         <translation>Movimiento de capas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3256"/>
+        <location filename="../mainwindow.ui" line="2581"/>
         <source>Set moving layer</source>
         <translation>Fijar capa móvil</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3170"/>
-        <location filename="../mainwindow.ui" line="3301"/>
+        <location filename="../mainwindow.ui" line="2495"/>
+        <location filename="../mainwindow.ui" line="2626"/>
         <source>Horisontal speed:</source>
         <translation>Velocidad horizontal:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3203"/>
-        <location filename="../mainwindow.ui" line="3328"/>
+        <location filename="../mainwindow.ui" line="2528"/>
+        <location filename="../mainwindow.ui" line="2653"/>
         <source>Vertical speed:</source>
         <translation>Velocidad vertical:</translation>
     </message>
@@ -3537,157 +3708,157 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Autodesplazamiento</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3308"/>
+        <location filename="../mainwindow.ui" line="2633"/>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="241"/>
         <source>Section</source>
         <translation>Sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3383"/>
+        <location filename="../mainwindow.ui" line="2708"/>
         <source>Section settings</source>
         <translation>Opciones de sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3395"/>
+        <location filename="../mainwindow.ui" line="2720"/>
         <source>Current section:</source>
         <translation>Sección actual:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3417"/>
+        <location filename="../mainwindow.ui" line="2742"/>
         <source>Set size and position</source>
         <translation>Fijar tamaño y posición</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3423"/>
-        <location filename="../mainwindow.ui" line="3561"/>
-        <location filename="../mainwindow.ui" line="3619"/>
+        <location filename="../mainwindow.ui" line="2748"/>
+        <location filename="../mainwindow.ui" line="2886"/>
+        <location filename="../mainwindow.ui" line="2944"/>
         <source>Don&apos;t change</source>
         <translation>No cambiar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3442"/>
+        <location filename="../mainwindow.ui" line="2767"/>
         <source>Capture...</source>
         <translation>Capturar...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3449"/>
-        <location filename="../mainwindow.ui" line="3568"/>
-        <location filename="../mainwindow.ui" line="3626"/>
+        <location filename="../mainwindow.ui" line="2774"/>
+        <location filename="../mainwindow.ui" line="2893"/>
+        <location filename="../mainwindow.ui" line="2951"/>
         <source>Reset to default</source>
         <translation>Reiniciar a predeterminado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3478"/>
+        <location filename="../mainwindow.ui" line="2803"/>
         <source>Top</source>
         <translation>Arriba</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3488"/>
+        <location filename="../mainwindow.ui" line="2813"/>
         <source>Define new:</source>
         <translation>Definir nuevo:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3501"/>
+        <location filename="../mainwindow.ui" line="2826"/>
         <source>Bottom</source>
         <translation>Abajo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3555"/>
+        <location filename="../mainwindow.ui" line="2880"/>
         <source>Set music</source>
         <translation>Fijar música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3575"/>
+        <location filename="../mainwindow.ui" line="2900"/>
         <source>Replace music to:</source>
         <translation>Reemplazar música por:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3613"/>
+        <location filename="../mainwindow.ui" line="2938"/>
         <source>Set background</source>
         <translation>Fijar fondo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3633"/>
+        <location filename="../mainwindow.ui" line="2958"/>
         <source>Replace background to:</source>
         <translation>Reemplazar fondo por:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3681"/>
+        <location filename="../mainwindow.ui" line="3006"/>
         <source>Common</source>
         <translation>Común</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3751"/>
+        <location filename="../mainwindow.ui" line="3076"/>
         <source>Display message:</source>
         <translation>Mostrar mensaje:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3718"/>
+        <location filename="../mainwindow.ui" line="3043"/>
         <source>Play sound:</source>
         <translation>Reproducir sonido:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3693"/>
+        <location filename="../mainwindow.ui" line="3018"/>
         <source>Do end game:</source>
         <translation>Terminar juego:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3762"/>
+        <location filename="../mainwindow.ui" line="3087"/>
         <source>Nothing</source>
         <translation>Nada</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3767"/>
+        <location filename="../mainwindow.ui" line="3092"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Final &quot;Bowser defeat&quot;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3797"/>
+        <location filename="../mainwindow.ui" line="3122"/>
         <source>Player Control hold keys</source>
         <translation>Mantener teclas de control</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3803"/>
+        <location filename="../mainwindow.ui" line="3128"/>
         <source>Run</source>
         <translation>Correr</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3831"/>
+        <location filename="../mainwindow.ui" line="3156"/>
         <source>Drop</source>
         <translation>Soltar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3845"/>
+        <location filename="../mainwindow.ui" line="3170"/>
         <source>Alt-run</source>
         <translation>Correr secundario</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3852"/>
+        <location filename="../mainwindow.ui" line="3177"/>
         <source>Start</source>
         <translation>Comenzar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3859"/>
+        <location filename="../mainwindow.ui" line="3184"/>
         <source>Jump</source>
         <translation>Salto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3866"/>
+        <location filename="../mainwindow.ui" line="3191"/>
         <source>Alt-jump</source>
         <translation>Salto secundario</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3895"/>
+        <location filename="../mainwindow.ui" line="3220"/>
         <source>Trigger event</source>
         <translation>Evento seguido</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3911"/>
+        <location filename="../mainwindow.ui" line="3236"/>
         <source>Delay</source>
         <translation>Retardo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2942"/>
+        <location filename="../mainwindow.ui" line="2267"/>
         <source>Events list</source>
         <translation>Lista de eventos</translation>
     </message>
@@ -3728,7 +3899,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="469"/>
-        <location filename="../mainwindow.ui" line="7081"/>
+        <location filename="../mainwindow.ui" line="6406"/>
         <source>Level Toolbox</source>
         <translation>Herramientas de nivel</translation>
     </message>
@@ -3791,28 +3962,24 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Sin retorno (deshabilitar movimiento a izquierda)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2072"/>
-        <location filename="../mainwindow.ui" line="7397"/>
+        <location filename="../mainwindow.ui" line="6722"/>
         <source>Warps and Doors</source>
         <translation>Traslados y puertas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2248"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Sin vehículos</translation>
+        <translation type="vanished">Sin vehículos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2297"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation>Habilitar PNJ</translation>
+        <translation type="vanished">Habilitar PNJ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2423"/>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation>Trasladar a</translation>
+        <translation type="vanished">Trasladar a</translation>
     </message>
     <message>
         <source>Z-Position</source>
@@ -3847,7 +4014,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Primer plano-2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4540"/>
+        <location filename="../mainwindow.ui" line="3865"/>
         <source>Doesn&apos;t move</source>
         <translation>No se mueve</translation>
     </message>
@@ -3856,41 +4023,41 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Auto-incremento</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3196"/>
-        <location filename="../mainwindow.ui" line="3229"/>
-        <location filename="../mainwindow.ui" line="3354"/>
-        <location filename="../mainwindow.ui" line="3367"/>
+        <location filename="../mainwindow.ui" line="2521"/>
+        <location filename="../mainwindow.ui" line="2554"/>
+        <location filename="../mainwindow.ui" line="2679"/>
+        <location filename="../mainwindow.ui" line="2692"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3272"/>
+        <location filename="../mainwindow.ui" line="2597"/>
         <source>Autoscroll section</source>
         <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="365"/>
-        <location filename="../mainwindow.ui" line="3731"/>
+        <location filename="../mainwindow.ui" line="3056"/>
         <source>Test</source>
         <translation>Probar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3942"/>
+        <location filename="../mainwindow.ui" line="3267"/>
         <source>Autostart event</source>
         <translation>Comenzar automáticamente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3981"/>
+        <location filename="../mainwindow.ui" line="3306"/>
         <source>Create copy of event</source>
         <translation>Crear copia de evento</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4013"/>
+        <location filename="../mainwindow.ui" line="3338"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4169"/>
+        <location filename="../mainwindow.ui" line="3494"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="52"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="62"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="192"/>
@@ -3898,26 +4065,26 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar Bloque</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4196"/>
-        <location filename="../mainwindow.ui" line="4309"/>
-        <location filename="../mainwindow.ui" line="4485"/>
-        <location filename="../mainwindow.ui" line="5269"/>
-        <location filename="../mainwindow.ui" line="5391"/>
-        <location filename="../mainwindow.ui" line="5513"/>
-        <location filename="../mainwindow.ui" line="5692"/>
-        <location filename="../mainwindow.ui" line="5882"/>
+        <location filename="../mainwindow.ui" line="3521"/>
+        <location filename="../mainwindow.ui" line="3634"/>
+        <location filename="../mainwindow.ui" line="3810"/>
+        <location filename="../mainwindow.ui" line="4594"/>
+        <location filename="../mainwindow.ui" line="4716"/>
+        <location filename="../mainwindow.ui" line="4838"/>
+        <location filename="../mainwindow.ui" line="5017"/>
+        <location filename="../mainwindow.ui" line="5207"/>
         <source>Search?</source>
         <translation>¿Buscar?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4071"/>
-        <location filename="../mainwindow.ui" line="4350"/>
-        <location filename="../mainwindow.ui" line="4464"/>
-        <location filename="../mainwindow.ui" line="5347"/>
-        <location filename="../mainwindow.ui" line="5469"/>
-        <location filename="../mainwindow.ui" line="5591"/>
-        <location filename="../mainwindow.ui" line="5767"/>
-        <location filename="../mainwindow.ui" line="5960"/>
+        <location filename="../mainwindow.ui" line="3396"/>
+        <location filename="../mainwindow.ui" line="3675"/>
+        <location filename="../mainwindow.ui" line="3789"/>
+        <location filename="../mainwindow.ui" line="4672"/>
+        <location filename="../mainwindow.ui" line="4794"/>
+        <location filename="../mainwindow.ui" line="4916"/>
+        <location filename="../mainwindow.ui" line="5092"/>
+        <location filename="../mainwindow.ui" line="5285"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="51"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="61"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="79"/>
@@ -3969,49 +4136,49 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">No vehículos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4081"/>
-        <location filename="../mainwindow.ui" line="4367"/>
-        <location filename="../mainwindow.ui" line="4506"/>
-        <location filename="../mainwindow.ui" line="5283"/>
-        <location filename="../mainwindow.ui" line="5405"/>
-        <location filename="../mainwindow.ui" line="5527"/>
-        <location filename="../mainwindow.ui" line="5713"/>
-        <location filename="../mainwindow.ui" line="5896"/>
+        <location filename="../mainwindow.ui" line="3406"/>
+        <location filename="../mainwindow.ui" line="3692"/>
+        <location filename="../mainwindow.ui" line="3831"/>
+        <location filename="../mainwindow.ui" line="4608"/>
+        <location filename="../mainwindow.ui" line="4730"/>
+        <location filename="../mainwindow.ui" line="4852"/>
+        <location filename="../mainwindow.ui" line="5038"/>
+        <location filename="../mainwindow.ui" line="5221"/>
         <source>Data</source>
         <translation>Datos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4112"/>
+        <location filename="../mainwindow.ui" line="3437"/>
         <source>Slippery:</source>
         <translation>Resbaladizo:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4129"/>
+        <location filename="../mainwindow.ui" line="3454"/>
         <source>Contains NPC:</source>
         <translation>Contiene PNJ:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4155"/>
+        <location filename="../mainwindow.ui" line="3480"/>
         <source>Invisible:</source>
         <translation>Invisible:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4227"/>
+        <location filename="../mainwindow.ui" line="3552"/>
         <source>Ev. Destroyed:</source>
         <translation>Ev. Destruído:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4234"/>
+        <location filename="../mainwindow.ui" line="3559"/>
         <source>Ev. Hited</source>
         <translation>Ev. Golpeado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4241"/>
+        <location filename="../mainwindow.ui" line="3566"/>
         <source>Ev. Layer Empty:</source>
         <translation>Ev. Capa vacía:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4329"/>
+        <location filename="../mainwindow.ui" line="3654"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="80"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="90"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="208"/>
@@ -4019,7 +4186,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar OF</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4471"/>
+        <location filename="../mainwindow.ui" line="3796"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="108"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="118"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="229"/>
@@ -4027,125 +4194,125 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar PNJ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4585"/>
+        <location filename="../mainwindow.ui" line="3910"/>
         <source>Contains Msg:</source>
         <translation>Contiene Msj:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4656"/>
+        <location filename="../mainwindow.ui" line="3981"/>
         <source>Case Sensitive?</source>
         <translation>¿Sensible a las mayúsculas?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4747"/>
+        <location filename="../mainwindow.ui" line="4072"/>
         <source>Big path background</source>
         <translation>Camino grande de fondo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4761"/>
-        <location filename="../mainwindow.ui" line="5706"/>
+        <location filename="../mainwindow.ui" line="4086"/>
+        <location filename="../mainwindow.ui" line="5031"/>
         <source>Path background</source>
         <translation>Camino de fondo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4768"/>
-        <location filename="../mainwindow.ui" line="5668"/>
+        <location filename="../mainwindow.ui" line="4093"/>
+        <location filename="../mainwindow.ui" line="4993"/>
         <source>Game start point</source>
         <translation>Punto de comienzo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4782"/>
+        <location filename="../mainwindow.ui" line="4107"/>
         <source>Always visible</source>
         <translation>Siempre visible</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4789"/>
+        <location filename="../mainwindow.ui" line="4114"/>
         <source>Level file:</source>
         <translation>Archivo de nivel:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4796"/>
+        <location filename="../mainwindow.ui" line="4121"/>
         <source>Level title</source>
         <translation>Título del nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4803"/>
+        <location filename="../mainwindow.ui" line="4128"/>
         <source>Enter to door ID:</source>
         <translation>ID de puerta:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4819"/>
-        <location filename="../mainwindow.ui" line="5156"/>
+        <location filename="../mainwindow.ui" line="4144"/>
+        <location filename="../mainwindow.ui" line="4481"/>
         <source>Browse</source>
         <translation>Explorar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4842"/>
+        <location filename="../mainwindow.ui" line="4167"/>
         <source>Go to coordinates:</source>
         <translation>Ir a coordenadas:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4911"/>
+        <location filename="../mainwindow.ui" line="4236"/>
         <source>Open path by exists:</source>
         <translation>Abrir camino por el que existe:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4991"/>
+        <location filename="../mainwindow.ui" line="4316"/>
         <source>World Settings</source>
         <translation>Opciones del mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5046"/>
+        <location filename="../mainwindow.ui" line="4371"/>
         <source>Intro level:</source>
         <translation>Nivel de intro:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5059"/>
+        <location filename="../mainwindow.ui" line="4384"/>
         <source>Disable characters:</source>
         <translation>Deshabilitar personajes:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5105"/>
+        <location filename="../mainwindow.ui" line="4430"/>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
         <translation>Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5118"/>
+        <location filename="../mainwindow.ui" line="4443"/>
         <source>World title:</source>
         <translation>Título del mundo:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5033"/>
+        <location filename="../mainwindow.ui" line="4358"/>
         <source>Count</source>
         <translation>Cuenta</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5139"/>
+        <location filename="../mainwindow.ui" line="4464"/>
         <source>Total stars:</source>
         <translation>Total de estrellas:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5132"/>
+        <location filename="../mainwindow.ui" line="4457"/>
         <source>Hub-styled world (without world map)</source>
         <translation>Mundo sin mapa (Hub-styled)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5125"/>
+        <location filename="../mainwindow.ui" line="4450"/>
         <source>Restart last level after fail</source>
         <translation>Reiniciar último nivel después de fallar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5165"/>
+        <location filename="../mainwindow.ui" line="4490"/>
         <source>Placing</source>
         <translation>Colocando</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5182"/>
+        <location filename="../mainwindow.ui" line="4507"/>
         <source>Resizing</source>
         <translation>Redimensionando</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5967"/>
+        <location filename="../mainwindow.ui" line="5292"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="80"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="311"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="321"/>
@@ -4153,12 +4320,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6321"/>
+        <location filename="../mainwindow.ui" line="5646"/>
         <source>Open...</source>
         <translation>Abrir...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6324"/>
+        <location filename="../mainwindow.ui" line="5649"/>
         <source>Open (Ctrl+O)</source>
         <translation>Abrir (Ctrl + O)</translation>
     </message>
@@ -4167,623 +4334,624 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Salir del programa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6347"/>
+        <location filename="../mainwindow.ui" line="5672"/>
         <source>Level...</source>
         <translation>Nivel...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6356"/>
+        <location filename="../mainwindow.ui" line="5681"/>
         <source>World map...</source>
         <translation>Mapa...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6365"/>
+        <location filename="../mainwindow.ui" line="5690"/>
         <source>NPC config...</source>
         <translation>Configuración de PNJ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6377"/>
+        <location filename="../mainwindow.ui" line="5702"/>
+        <location filename="../main_window/windows_extras.cpp" line="13"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6380"/>
+        <location filename="../mainwindow.ui" line="5705"/>
         <source>Save (Ctrl+S)</source>
         <translation>Guardar (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6398"/>
+        <location filename="../mainwindow.ui" line="5723"/>
         <source>Save as...</source>
         <translation>Guardar como...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6401"/>
+        <location filename="../mainwindow.ui" line="5726"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>Guardar como (Ctrl+Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6415"/>
+        <location filename="../mainwindow.ui" line="5740"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6423"/>
+        <location filename="../mainwindow.ui" line="5748"/>
         <source>Save all</source>
         <translation>Guardar todo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6426"/>
+        <location filename="../mainwindow.ui" line="5751"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>Guardar todo(Ctrl+Alt+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6434"/>
+        <location filename="../mainwindow.ui" line="5759"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6448"/>
+        <location filename="../mainwindow.ui" line="5773"/>
         <source>Contents</source>
         <translation>Contenidos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6451"/>
+        <location filename="../mainwindow.ui" line="5776"/>
         <source>Contents (F1)</source>
         <translation>Contenidos (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6470"/>
+        <location filename="../mainwindow.ui" line="5795"/>
         <source>Section 1</source>
         <translation>Sección 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6473"/>
+        <location filename="../mainwindow.ui" line="5798"/>
         <source>Section 1 (Ctrl+1)</source>
         <translation>Sección 1 (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6495"/>
+        <location filename="../mainwindow.ui" line="5820"/>
         <source>Section 2</source>
         <translation>Sección 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6498"/>
+        <location filename="../mainwindow.ui" line="5823"/>
         <source>Section 2 (Ctrl+2)</source>
         <translation>Sección 2 (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6520"/>
+        <location filename="../mainwindow.ui" line="5845"/>
         <source>Section 3</source>
         <translation>Sección 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6523"/>
+        <location filename="../mainwindow.ui" line="5848"/>
         <source>Section 3 (Ctrl+3)</source>
         <translation>Sección 3 (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6545"/>
+        <location filename="../mainwindow.ui" line="5870"/>
         <source>Section 4</source>
         <translation>Sección 4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6548"/>
+        <location filename="../mainwindow.ui" line="5873"/>
         <source>Section 4 (Ctrl+4)</source>
         <translation>Sección 4 (Ctrl+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6570"/>
+        <location filename="../mainwindow.ui" line="5895"/>
         <source>Section 5</source>
         <translation>Sección 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6573"/>
+        <location filename="../mainwindow.ui" line="5898"/>
         <source>Section 5 (Ctrl+5)</source>
         <translation>Sección (Ctrl+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6595"/>
+        <location filename="../mainwindow.ui" line="5920"/>
         <source>Section 6</source>
         <translation>Sección 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6598"/>
+        <location filename="../mainwindow.ui" line="5923"/>
         <source>Section 6 (Ctrl+6)</source>
         <translation>Sección 6 (Ctrl+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6620"/>
+        <location filename="../mainwindow.ui" line="5945"/>
         <source>Section 7</source>
         <translation>Sección 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6623"/>
+        <location filename="../mainwindow.ui" line="5948"/>
         <source>Section 7 (Ctrl+7)</source>
         <translation>Sección 7 (Ctrl+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6645"/>
+        <location filename="../mainwindow.ui" line="5970"/>
         <source>Section 8</source>
         <translation>Sección 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6648"/>
+        <location filename="../mainwindow.ui" line="5973"/>
         <source>Section 8 (Ctrl+8)</source>
         <translation>Sección 8 (Ctrl+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6670"/>
+        <location filename="../mainwindow.ui" line="5995"/>
         <source>Section 9</source>
         <translation>Sección 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6673"/>
+        <location filename="../mainwindow.ui" line="5998"/>
         <source>Section 9 (Ctrl+9)</source>
         <translation>Sección 9 (Ctrl+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6695"/>
+        <location filename="../mainwindow.ui" line="6020"/>
         <source>Section 10</source>
         <translation>Sección 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6698"/>
+        <location filename="../mainwindow.ui" line="6023"/>
         <source>Section 10 (Ctrl+0)</source>
         <translation>Sección 10 (Ctrl+10)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6720"/>
+        <location filename="../mainwindow.ui" line="6045"/>
         <source>Section 11</source>
         <translation>Sección 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6723"/>
+        <location filename="../mainwindow.ui" line="6048"/>
         <source>Section 11 (Ctrl+Alt+1)</source>
         <translation>Sección 11 (Ctrl+Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6745"/>
+        <location filename="../mainwindow.ui" line="6070"/>
         <source>Section 12</source>
         <translation>Sección 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6748"/>
+        <location filename="../mainwindow.ui" line="6073"/>
         <source>Section 12 (Ctrl+Alt+2)</source>
         <translation>Sección 12 (Ctrl+Alt+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6770"/>
+        <location filename="../mainwindow.ui" line="6095"/>
         <source>Section 13</source>
         <translation>Sección 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6773"/>
+        <location filename="../mainwindow.ui" line="6098"/>
         <source>Section 13 (Ctrl+Alt+3)</source>
         <translation>Sección 13 (Ctrl+Alt+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6795"/>
+        <location filename="../mainwindow.ui" line="6120"/>
         <source>Section 14</source>
         <translation>Sección 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6798"/>
+        <location filename="../mainwindow.ui" line="6123"/>
         <source>Section 14 (Ctrl+Alt+4)</source>
         <translation>Sección 14 (Ctrl+Alt+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6820"/>
+        <location filename="../mainwindow.ui" line="6145"/>
         <source>Section 15</source>
         <translation>Sección 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6823"/>
+        <location filename="../mainwindow.ui" line="6148"/>
         <source>Section 15 (Ctrl+Alt+5)</source>
         <translation>Sección 15 (Ctrl+Alt+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6845"/>
+        <location filename="../mainwindow.ui" line="6170"/>
         <source>Section 16</source>
         <translation>Sección 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6848"/>
+        <location filename="../mainwindow.ui" line="6173"/>
         <source>Section 16 (Ctrl+Alt+6)</source>
         <translation>Sección 16 (Ctrl+Alt+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6870"/>
+        <location filename="../mainwindow.ui" line="6195"/>
         <source>Section 17</source>
         <translation>Sección 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6873"/>
+        <location filename="../mainwindow.ui" line="6198"/>
         <source>Section 17 (Ctrl+Alt+7)</source>
         <translation>Sección 17 (Ctrl+Alt+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6895"/>
+        <location filename="../mainwindow.ui" line="6220"/>
         <source>Section 18</source>
         <translation>Sección 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6898"/>
+        <location filename="../mainwindow.ui" line="6223"/>
         <source>Section 18 (Ctrl+Alt+8)</source>
         <translation>Sección 18 (Ctrl+Alt+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6920"/>
+        <location filename="../mainwindow.ui" line="6245"/>
         <source>Section 19</source>
         <translation>Sección 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6923"/>
+        <location filename="../mainwindow.ui" line="6248"/>
         <source>Section 19 (Ctrl+Alt+9)</source>
         <translation>Sección 19 (Ctrl+Alt+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6945"/>
+        <location filename="../mainwindow.ui" line="6270"/>
         <source>Section 20</source>
         <translation>Sección 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6948"/>
+        <location filename="../mainwindow.ui" line="6273"/>
         <source>Section 20 (Ctrl+Alt+0)</source>
         <translation>Sección 20 (Ctrl+Alt+0)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6970"/>
+        <location filename="../mainwindow.ui" line="6295"/>
         <source>Section 21</source>
         <translation>Sección 21</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6973"/>
+        <location filename="../mainwindow.ui" line="6298"/>
         <source>Section 21 (Alt+1)</source>
         <translation>Sección 21 (Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7004"/>
+        <location filename="../mainwindow.ui" line="6329"/>
         <source>Offscreen exit</source>
         <translation>Salida fuera de la pantalla</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7015"/>
+        <location filename="../mainwindow.ui" line="6340"/>
         <source>No turn back</source>
         <translation>Sin retorno</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7034"/>
+        <location filename="../mainwindow.ui" line="6359"/>
         <source>Export to image...</source>
         <translation>Exportar a imagen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7037"/>
+        <location filename="../mainwindow.ui" line="6362"/>
         <source>Export current section to image (F12)</source>
         <translation>Exportar sección actual a imagen (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7048"/>
-        <location filename="../mainwindow.ui" line="7069"/>
+        <location filename="../mainwindow.ui" line="6373"/>
+        <location filename="../mainwindow.ui" line="6394"/>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7056"/>
+        <location filename="../mainwindow.ui" line="6381"/>
         <source>Disable world map</source>
         <translation>Deshabilitar mapa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7415"/>
+        <location filename="../mainwindow.ui" line="6740"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>Habilita animación en objetos animados. Si el mapa tiene demasiados objetos, es recomendado desactivar esta opción</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7735"/>
+        <location filename="../mainwindow.ui" line="7060"/>
         <source>Level Search</source>
         <translation>Buscar nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7738"/>
+        <location filename="../mainwindow.ui" line="7063"/>
         <source>Search for an Item on the Level</source>
         <translation>Buscar por un elemento en el nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7746"/>
+        <location filename="../mainwindow.ui" line="7071"/>
         <source>Refresh menus</source>
         <translation>Refrescar menús</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7754"/>
+        <location filename="../mainwindow.ui" line="7079"/>
         <source>Fullscreen</source>
         <translation>Pantalla completa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7762"/>
+        <location filename="../mainwindow.ui" line="7087"/>
         <source>Tilesets Editor</source>
         <translation>Editor de tilesets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7767"/>
+        <location filename="../mainwindow.ui" line="7092"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>Arreglar gráficos perezosos (LazyFixTool)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7772"/>
+        <location filename="../mainwindow.ui" line="7097"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>Convertir GIF con máscara a PNG (GIFs2PNG)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7777"/>
+        <location filename="../mainwindow.ui" line="7102"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>Convertir PNG a GIF con máscara (PNG2GIFs)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7789"/>
+        <location filename="../mainwindow.ui" line="7114"/>
         <source>World settings</source>
         <translation>Opciones de Mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7802"/>
+        <location filename="../mainwindow.ui" line="7127"/>
         <source>Lock tiles</source>
         <translation>Bloquear baldozas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7815"/>
+        <location filename="../mainwindow.ui" line="7140"/>
         <source>Lock Sceneries</source>
         <translation>Bloquear decoraciones</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7828"/>
+        <location filename="../mainwindow.ui" line="7153"/>
         <source>Lock Paths</source>
         <translation>Bloquear caminos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7841"/>
+        <location filename="../mainwindow.ui" line="7166"/>
         <source>Lock Levels</source>
         <translation>Bloquear niveles</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7854"/>
+        <location filename="../mainwindow.ui" line="7179"/>
         <source>Lock Music Boxes</source>
         <translation>Bloquear cajas de música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7866"/>
+        <location filename="../mainwindow.ui" line="7191"/>
         <source>Square Fill</source>
         <translation>Relleno cuadrado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7869"/>
+        <location filename="../mainwindow.ui" line="7194"/>
         <source>Square Fill (Shift+S)</source>
         <translation>Relleno cuadrado (Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7884"/>
+        <location filename="../mainwindow.ui" line="7209"/>
         <source>Overwrite mode</source>
         <translation>Modo de sobreescritura</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7896"/>
+        <location filename="../mainwindow.ui" line="7221"/>
         <source>Apply (Enter)</source>
         <translation>Aplicar (Enter)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7911"/>
+        <location filename="../mainwindow.ui" line="7236"/>
         <source>Cancel (Esc)</source>
         <translation>Cancelar (Esc)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7926"/>
+        <location filename="../mainwindow.ui" line="7251"/>
         <source>Line</source>
         <translation>Línea</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7929"/>
+        <location filename="../mainwindow.ui" line="7254"/>
         <source>Line (Shift+D)</source>
         <translation>Línea (Shift+D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7944"/>
+        <location filename="../mainwindow.ui" line="7269"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
         <translation>Buscar en el mapa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7952"/>
+        <location filename="../mainwindow.ui" line="7277"/>
         <source>Show Development Console</source>
         <translation>Mostrar consola</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7957"/>
+        <location filename="../mainwindow.ui" line="7282"/>
         <source>Tileset Groups Editor</source>
         <translation>Editor de grupos de tilesets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7966"/>
+        <location filename="../mainwindow.ui" line="7291"/>
         <source>Zoom In</source>
         <translation>Zoom +</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7978"/>
+        <location filename="../mainwindow.ui" line="7303"/>
         <source>Zoom Out</source>
         <translation>Zoom -</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7990"/>
+        <location filename="../mainwindow.ui" line="7315"/>
         <source>Reset Zoom</source>
         <translation>Reiniciar Zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8022"/>
+        <location filename="../mainwindow.ui" line="7347"/>
         <source>Change configuration...</source>
         <translation>Cambiar configuración...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8030"/>
+        <location filename="../mainwindow.ui" line="7355"/>
         <source>Semi-transparent paths</source>
         <translation>Caminos semi-transparentes</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8035"/>
+        <location filename="../mainwindow.ui" line="7360"/>
         <source>Export section to image...</source>
         <translation>Exportar sección a imagen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8038"/>
+        <location filename="../mainwindow.ui" line="7363"/>
         <source>Export whole level section to image</source>
         <translation>Exportar sección entera a imagen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8043"/>
+        <location filename="../mainwindow.ui" line="7368"/>
         <source>Run testing &lt;Alpha&gt;</source>
         <translation>Ejecutar prueba &lt;Alpha&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8048"/>
+        <location filename="../mainwindow.ui" line="7373"/>
         <source>Settings</source>
         <translation>Opciones</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8060"/>
+        <location filename="../mainwindow.ui" line="7385"/>
         <source>Fill</source>
         <translation>Llenar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8065"/>
+        <location filename="../mainwindow.ui" line="7390"/>
         <source>Clear unused data</source>
         <translation>Limpiar datos sin usar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8077"/>
+        <location filename="../mainwindow.ui" line="7402"/>
         <source>Show properties</source>
         <translation>Mostrar propiedades</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8080"/>
+        <location filename="../mainwindow.ui" line="7405"/>
         <source>Show properties of item</source>
         <translation>Mostrar propiedades de artículo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8085"/>
+        <location filename="../mainwindow.ui" line="7410"/>
         <source>Sprite Editor</source>
         <translation>Editor de gráficos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8090"/>
+        <location filename="../mainwindow.ui" line="7415"/>
         <source>Import...</source>
         <translation>Importar...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8093"/>
+        <location filename="../mainwindow.ui" line="7418"/>
         <source>Import</source>
         <translation>Importar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8101"/>
+        <location filename="../mainwindow.ui" line="7426"/>
         <source>Enable GFX fix (reload of the file required)</source>
         <translation>Habilitar arreglo de GFX (recargar el archivo requerido)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8104"/>
+        <location filename="../mainwindow.ui" line="7429"/>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
         <translation>Ésta función habilita máscara alternativa aplicando un algoritmo que permite la correcta visualización de máscaras mal hechas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8119"/>
+        <location filename="../mainwindow.ui" line="7444"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
         <translation>Marcadores de posición. Guardando posición de la cámara actual el cual permite saltar rápidamente.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8127"/>
+        <location filename="../mainwindow.ui" line="7452"/>
         <source>Clone section to...</source>
         <translation>Clonar sección a...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8135"/>
-        <location filename="../mainwindow.ui" line="8175"/>
+        <location filename="../mainwindow.ui" line="7460"/>
+        <location filename="../mainwindow.ui" line="7500"/>
         <source>Rotate left</source>
         <translation>Rotar a izquierda</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8143"/>
-        <location filename="../mainwindow.ui" line="8183"/>
+        <location filename="../mainwindow.ui" line="7468"/>
+        <location filename="../mainwindow.ui" line="7508"/>
         <source>Rotate right</source>
         <translation>Rotar a la derecha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8151"/>
-        <location filename="../mainwindow.ui" line="8191"/>
+        <location filename="../mainwindow.ui" line="7476"/>
+        <location filename="../mainwindow.ui" line="7516"/>
         <source>Flip horizontal</source>
         <translation>Voltear horizontalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8159"/>
-        <location filename="../mainwindow.ui" line="8199"/>
+        <location filename="../mainwindow.ui" line="7484"/>
+        <location filename="../mainwindow.ui" line="7524"/>
         <source>Flip vertical</source>
         <translation>Voltear verticalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8167"/>
+        <location filename="../mainwindow.ui" line="7492"/>
         <source>Align selected</source>
         <translation>Alinear seleccionado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8204"/>
+        <location filename="../mainwindow.ui" line="7529"/>
         <source>Fix wrong masks</source>
         <translation>Arreglar máscaras mal hechas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8207"/>
+        <location filename="../mainwindow.ui" line="7532"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Ésta herramienta arreglará todas las máscaras de imágenes que causen errores visuales</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8215"/>
+        <location filename="../mainwindow.ui" line="7540"/>
         <source>Delete section</source>
         <translation>Eliminar sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8223"/>
+        <location filename="../mainwindow.ui" line="7548"/>
         <source>Additional Settings</source>
         <translation>Opciones adicionales</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8231"/>
+        <location filename="../mainwindow.ui" line="7556"/>
         <source>Compile To: </source>
         <translation>Compilar a: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8242"/>
+        <location filename="../mainwindow.ui" line="7567"/>
         <source>Autocode [Lunadll Original Language]</source>
         <translation>Autocode [Lenguaje de Lunadll]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8253"/>
+        <location filename="../mainwindow.ui" line="7578"/>
         <source>LunaLua</source>
         <translation>LunaLua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8264"/>
+        <location filename="../mainwindow.ui" line="7589"/>
         <source>Don&apos;t fill out of section</source>
         <translation>No llenar sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8269"/>
+        <location filename="../mainwindow.ui" line="7594"/>
         <source>SMBX-like GUI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8274"/>
+        <location filename="../mainwindow.ui" line="7599"/>
         <source>Run testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8279"/>
+        <location filename="../mainwindow.ui" line="7604"/>
         <source>Change log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8284"/>
+        <location filename="../mainwindow.ui" line="7609"/>
         <source>Check for updates...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4796,7 +4964,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7084"/>
+        <location filename="../mainwindow.ui" line="6409"/>
         <source>Level objects tool box</source>
         <translation>Herramientas de objetos de nivel</translation>
     </message>
@@ -4805,37 +4973,37 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7120"/>
+        <location filename="../mainwindow.ui" line="6445"/>
         <source>Select and Move</source>
         <translation>Seleccionar y mover</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7123"/>
+        <location filename="../mainwindow.ui" line="6448"/>
         <source>Select (S)</source>
         <translation>Seleccionar (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7590"/>
+        <location filename="../mainwindow.ui" line="6915"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>Presionar botón del ratón en área y mover para dibujar la zona de arena</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7691"/>
+        <location filename="../mainwindow.ui" line="7016"/>
         <source>Go to Section</source>
         <translation>Ir a sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7714"/>
+        <location filename="../mainwindow.ui" line="7039"/>
         <source>Current configuration status...</source>
         <translation>Estado actual de configuración...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7144"/>
+        <location filename="../mainwindow.ui" line="6469"/>
         <source>Eriser</source>
         <translation>Borrador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4050"/>
+        <location filename="../mainwindow.ui" line="3375"/>
         <source>Block</source>
         <translation>Bloque</translation>
     </message>
@@ -4856,15 +5024,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Contenido:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2381"/>
-        <location filename="../mainwindow.ui" line="4088"/>
-        <location filename="../mainwindow.ui" line="4381"/>
-        <location filename="../mainwindow.ui" line="4520"/>
+        <location filename="../mainwindow.ui" line="3413"/>
+        <location filename="../mainwindow.ui" line="3706"/>
+        <location filename="../mainwindow.ui" line="3845"/>
         <source>Layer:</source>
         <translation>Capa:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7703"/>
+        <location filename="../mainwindow.ui" line="7028"/>
         <source>Events</source>
         <translation>Eventos</translation>
     </message>
@@ -4881,17 +5048,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Capa vacía:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4278"/>
+        <location filename="../mainwindow.ui" line="3603"/>
         <source>BGO</source>
         <translation>OF</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4599"/>
+        <location filename="../mainwindow.ui" line="3924"/>
         <source>Direction</source>
         <translation>Dirección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4633"/>
+        <location filename="../mainwindow.ui" line="3958"/>
         <source>Random</source>
         <translation>Aleatorio</translation>
     </message>
@@ -4912,7 +5079,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Hablar:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4547"/>
+        <location filename="../mainwindow.ui" line="3872"/>
         <source>Friendly</source>
         <translation>Amigable</translation>
     </message>
@@ -4921,7 +5088,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">No mover</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4554"/>
+        <location filename="../mainwindow.ui" line="3879"/>
         <source>Set as Boss</source>
         <translation>Fijar como jefe</translation>
     </message>
@@ -4930,14 +5097,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Generador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4162"/>
-        <location filename="../mainwindow.ui" line="4374"/>
-        <location filename="../mainwindow.ui" line="4513"/>
-        <location filename="../mainwindow.ui" line="5320"/>
-        <location filename="../mainwindow.ui" line="5442"/>
-        <location filename="../mainwindow.ui" line="5564"/>
-        <location filename="../mainwindow.ui" line="5737"/>
-        <location filename="../mainwindow.ui" line="5933"/>
+        <location filename="../mainwindow.ui" line="3487"/>
+        <location filename="../mainwindow.ui" line="3699"/>
+        <location filename="../mainwindow.ui" line="3838"/>
+        <location filename="../mainwindow.ui" line="4645"/>
+        <location filename="../mainwindow.ui" line="4767"/>
+        <location filename="../mainwindow.ui" line="4889"/>
+        <location filename="../mainwindow.ui" line="5062"/>
+        <location filename="../mainwindow.ui" line="5258"/>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
@@ -4954,17 +5121,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Retraso:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5208"/>
+        <location filename="../mainwindow.ui" line="4533"/>
         <source>World map Search</source>
         <translation>Buscar en el mapa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5248"/>
+        <location filename="../mainwindow.ui" line="4573"/>
         <source>Tile</source>
         <translation>Azulejo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5354"/>
+        <location filename="../mainwindow.ui" line="4679"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="122"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="227"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="237"/>
@@ -4972,7 +5139,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar azulejo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5476"/>
+        <location filename="../mainwindow.ui" line="4801"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="108"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="255"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="265"/>
@@ -4980,12 +5147,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar decoración</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5492"/>
+        <location filename="../mainwindow.ui" line="4817"/>
         <source>Path</source>
         <translation>Directorio</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5598"/>
+        <location filename="../mainwindow.ui" line="4923"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="94"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="283"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="293"/>
@@ -4993,22 +5160,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar camino</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5654"/>
+        <location filename="../mainwindow.ui" line="4979"/>
         <source>Big Path Background</source>
         <translation>Fondo de camino grande</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5661"/>
+        <location filename="../mainwindow.ui" line="4986"/>
         <source>Always Visible</source>
         <translation>Siempre visible</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5678"/>
+        <location filename="../mainwindow.ui" line="5003"/>
         <source>Contains Title</source>
         <translation>Contiene título</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5760"/>
+        <location filename="../mainwindow.ui" line="5085"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="66"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="199"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="209"/>
@@ -5016,7 +5183,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="8005"/>
+        <location filename="../mainwindow.ui" line="7330"/>
         <source>Tileset Item Box</source>
         <translation>Caja de tileset</translation>
     </message>
@@ -5029,65 +5196,65 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Nuevo tileset</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5993"/>
-        <location filename="../mainwindow.ui" line="8017"/>
+        <location filename="../mainwindow.ui" line="5318"/>
+        <location filename="../mainwindow.ui" line="7342"/>
         <source>Debugger</source>
         <translation>Depurador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6009"/>
+        <location filename="../mainwindow.ui" line="5334"/>
         <source>Mouse coordinates</source>
         <translation>Coordenadas del mouse</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6067"/>
+        <location filename="../mainwindow.ui" line="5392"/>
         <source>Go to point:</source>
         <translation>Ir a punto:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6116"/>
+        <location filename="../mainwindow.ui" line="5441"/>
         <source>Go!</source>
         <translation>¡Ir!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6132"/>
+        <location filename="../mainwindow.ui" line="5457"/>
         <source>Items</source>
         <translation>Items</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6186"/>
+        <location filename="../mainwindow.ui" line="5511"/>
         <source>Custom counters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6212"/>
+        <location filename="../mainwindow.ui" line="5537"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6250"/>
-        <location filename="../mainwindow.ui" line="8116"/>
+        <location filename="../mainwindow.ui" line="5575"/>
+        <location filename="../mainwindow.ui" line="7441"/>
         <source>Position bookmarks</source>
         <translation>Marcadores de posición</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6335"/>
+        <location filename="../mainwindow.ui" line="5660"/>
         <source>Exit program</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <translation>Salir del programa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7064"/>
+        <location filename="../mainwindow.ui" line="6389"/>
         <source>Restart level after fail</source>
         <translation>Recomenzar nivel después de perder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7099"/>
+        <location filename="../mainwindow.ui" line="6424"/>
         <source>World Toolbox</source>
         <translation>Herramientas del mundo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7147"/>
+        <location filename="../mainwindow.ui" line="6472"/>
         <source>Eriser (E)</source>
         <translation>Borrador (E)</translation>
     </message>
@@ -5096,181 +5263,181 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Opciones de sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7173"/>
+        <location filename="../mainwindow.ui" line="6498"/>
         <source>Reload configurations</source>
         <translation>Recargar configuración</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7188"/>
+        <location filename="../mainwindow.ui" line="6513"/>
         <source>Reset position</source>
         <translation>Reiniciar posición</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7203"/>
+        <location filename="../mainwindow.ui" line="6528"/>
         <source>Attach to grid</source>
         <translation>Atajar a la grilla</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7216"/>
+        <location filename="../mainwindow.ui" line="6541"/>
         <source>Lock all Blocks</source>
         <translation>Bloquear todos los bloques</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7229"/>
+        <location filename="../mainwindow.ui" line="6554"/>
         <source>Lock all BGO</source>
         <translation>Bloquear todos los OF (Objetos de Fondo)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7242"/>
+        <location filename="../mainwindow.ui" line="6567"/>
         <source>Lock all NPC</source>
         <translation>Bloquear todos los PNJ (Personajes No Jugadores)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7255"/>
+        <location filename="../mainwindow.ui" line="6580"/>
         <source>Lock all door objects</source>
         <translation>Bloquear todos los objetos de puerta</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7268"/>
+        <location filename="../mainwindow.ui" line="6593"/>
         <source>Lock all water squares</source>
         <translation>Bloquear todos los cuadrados de agua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7280"/>
+        <location filename="../mainwindow.ui" line="6605"/>
         <source>Set first player position</source>
         <translation>Fijar primer posición del jugador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7283"/>
+        <location filename="../mainwindow.ui" line="6608"/>
         <source>Set first player start point</source>
         <translation>Fijar primer punto de partida</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7295"/>
+        <location filename="../mainwindow.ui" line="6620"/>
         <source>Set second player position</source>
         <translation>Fijar segunda posición de jugador</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7298"/>
+        <location filename="../mainwindow.ui" line="6623"/>
         <source>Set second player start point</source>
         <translation>Fijar segundo punto de partida</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7310"/>
+        <location filename="../mainwindow.ui" line="6635"/>
         <source>Play music</source>
         <translation>Reproducir música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7313"/>
+        <location filename="../mainwindow.ui" line="6638"/>
         <source>Play music (F11)</source>
         <translation>Reproducir música</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7328"/>
+        <location filename="../mainwindow.ui" line="6653"/>
         <source>Reload file data</source>
         <translation>Recargar datos de archivo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7331"/>
+        <location filename="../mainwindow.ui" line="6656"/>
         <source>Reload current file data</source>
         <translation>Recargar datos de archivo actual</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7349"/>
+        <location filename="../mainwindow.ui" line="6674"/>
         <source>Scroll hand</source>
         <translation>Rodar con la mano</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7352"/>
+        <location filename="../mainwindow.ui" line="6677"/>
         <source>Scrolling (D)</source>
         <translation>Ruedo (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7367"/>
+        <location filename="../mainwindow.ui" line="6692"/>
         <source>Undo</source>
         <translation>Deshacer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7382"/>
+        <location filename="../mainwindow.ui" line="6707"/>
         <source>Redo</source>
         <translation>Rehacer</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7412"/>
+        <location filename="../mainwindow.ui" line="6737"/>
         <source>Animation</source>
         <translation>Animación</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7426"/>
-        <location filename="../mainwindow.ui" line="7437"/>
-        <location filename="../mainwindow.ui" line="7448"/>
-        <location filename="../mainwindow.ui" line="7459"/>
-        <location filename="../mainwindow.ui" line="7470"/>
-        <location filename="../mainwindow.ui" line="7481"/>
-        <location filename="../mainwindow.ui" line="7492"/>
-        <location filename="../mainwindow.ui" line="7503"/>
-        <location filename="../mainwindow.ui" line="7514"/>
-        <location filename="../mainwindow.ui" line="7525"/>
+        <location filename="../mainwindow.ui" line="6751"/>
+        <location filename="../mainwindow.ui" line="6762"/>
+        <location filename="../mainwindow.ui" line="6773"/>
+        <location filename="../mainwindow.ui" line="6784"/>
+        <location filename="../mainwindow.ui" line="6795"/>
+        <location filename="../mainwindow.ui" line="6806"/>
+        <location filename="../mainwindow.ui" line="6817"/>
+        <location filename="../mainwindow.ui" line="6828"/>
+        <location filename="../mainwindow.ui" line="6839"/>
+        <location filename="../mainwindow.ui" line="6850"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;vacío&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7540"/>
+        <location filename="../mainwindow.ui" line="6865"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7543"/>
+        <location filename="../mainwindow.ui" line="6868"/>
         <source>Copy selected items</source>
         <translation>Copiar ítems seleccionados</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7554"/>
+        <location filename="../mainwindow.ui" line="6879"/>
         <source>Collisions</source>
         <translation>Colisiones</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7557"/>
+        <location filename="../mainwindow.ui" line="6882"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7572"/>
+        <location filename="../mainwindow.ui" line="6897"/>
         <source>Draw Water zone</source>
         <translation>Dibujar zona de agua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7575"/>
+        <location filename="../mainwindow.ui" line="6900"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>Presionar botón del ratón en área y mover para dibujar zona de agua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7587"/>
+        <location filename="../mainwindow.ui" line="6912"/>
         <source>Draw QuickSand zone</source>
         <translation>Dibujar zona de arenas movedizas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7602"/>
+        <location filename="../mainwindow.ui" line="6927"/>
         <source>Paste</source>
         <translation>Pegar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7628"/>
+        <location filename="../mainwindow.ui" line="6953"/>
         <source>[No opened files]</source>
         <translation>[No hay archivos abiertos]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7643"/>
+        <location filename="../mainwindow.ui" line="6968"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7672"/>
+        <location filename="../mainwindow.ui" line="6997"/>
         <source>Select only</source>
         <translation>Sólo seleccionar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7680"/>
+        <location filename="../mainwindow.ui" line="7005"/>
         <source>Application settings</source>
         <translation>Opciones de aplicación</translation>
     </message>
@@ -5289,8 +5456,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="358"/>
-        <location filename="../main_window/file/file_save.cpp" line="30"/>
-        <location filename="../main_window/file/file_save.cpp" line="76"/>
+        <location filename="../main_window/file/file_save.cpp" line="31"/>
+        <location filename="../main_window/file/file_save.cpp" line="77"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
         <location filename="../main_window/tools/data_configs.cpp" line="37"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
@@ -5324,36 +5491,31 @@ Para trabajar con la nueva configuración, por favor reinicie la aplicación.</t
         <translation>¡Configuración recargada exitosamente!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="854"/>
         <source>World map files not found</source>
-        <translation>Archivos de mapa no encontrados</translation>
+        <translation type="vanished">Archivos de mapa no encontrados</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="855"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation>No tiene habilitados los archivos de mapa con este archivo de nivel.
+        <translation type="vanished">No tiene habilitados los archivos de mapa con este archivo de nivel.
 Por favor, ponga éste archivo de nivel con un mapa, o cree un nuevo mundo en la misma carpeta con éste nivel.
 Ruta de archivo: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="866"/>
         <source>Select world map file</source>
-        <translation>Seleccione archivo de mapa</translation>
+        <translation type="vanished">Seleccione archivo de mapa</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="867"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation>Encontrados más de un archivo de mapa.
+        <translation type="vanished">Encontrados más de un archivo de mapa.
 Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="878"/>
-        <location filename="../main_window/file/file_open.cpp" line="69"/>
-        <location filename="../main_window/file/file_open.cpp" line="118"/>
-        <location filename="../main_window/file/file_open.cpp" line="175"/>
+        <location filename="../main_window/file/file_open.cpp" line="70"/>
+        <location filename="../main_window/file/file_open.cpp" line="119"/>
+        <location filename="../main_window/file/file_open.cpp" line="176"/>
         <location filename="../main_window/file/file_reload.cpp" line="46"/>
         <location filename="../main_window/file/file_reload.cpp" line="79"/>
         <location filename="../main_window/file/file_reload.cpp" line="126"/>
@@ -5363,10 +5525,9 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <translation>Error al abrir archivo</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_door_props.cpp" line="879"/>
-        <location filename="../main_window/file/file_open.cpp" line="70"/>
-        <location filename="../main_window/file/file_open.cpp" line="119"/>
-        <location filename="../main_window/file/file_open.cpp" line="176"/>
+        <location filename="../main_window/file/file_open.cpp" line="71"/>
+        <location filename="../main_window/file/file_open.cpp" line="120"/>
+        <location filename="../main_window/file/file_open.cpp" line="177"/>
         <location filename="../main_window/file/file_reload.cpp" line="80"/>
         <location filename="../main_window/file/file_reload.cpp" line="127"/>
         <location filename="../main_window/file/file_reload.cpp" line="192"/>
@@ -5418,37 +5579,37 @@ El archivo no existe.</translation>
         <translation>Configuración PNJ recargada</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="657"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="659"/>
         <source>Layers merge</source>
         <translation>Fusión de capas</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="658"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="660"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="742"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="744"/>
         <source>New Layer %1</source>
         <translation>Nueva Capa %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="858"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="860"/>
         <source>Rename layer</source>
         <translation>Renombrar capa</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="862"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="864"/>
         <source>Remove layer with items</source>
         <translation>Remover capa con ítems</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="863"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="865"/>
         <source>Remove layer and save items</source>
         <translation>Remover capas y guardar ítems</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="130"/>
+        <location filename="../main_window/file/file_open.cpp" line="131"/>
         <source>Level file loaded</source>
         <translation>Nivel cargado</translation>
     </message>
@@ -5462,55 +5623,55 @@ El archivo no existe.</translation>
         <translation type="vanished">Perdón, el soporte de mapas no está implementado en ésta versión.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="192"/>
+        <location filename="../main_window/file/file_open.cpp" line="193"/>
         <location filename="../main_window/file/file_reload.cpp" line="213"/>
         <source>World map file loaded</source>
         <translation>Mapa cargado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="210"/>
+        <location filename="../main_window/file/file_open.cpp" line="211"/>
         <source>NPC Config loaded</source>
         <translation>Configuración PNJ cargada</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="300"/>
+        <location filename="../main_window/file/file_open.cpp" line="301"/>
         <source>Game save statistics</source>
         <translation>Estadísticas de guardado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="307"/>
+        <location filename="../main_window/file/file_open.cpp" line="308"/>
         <source>Bad file</source>
         <translation>Archivo corrupto</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="308"/>
+        <location filename="../main_window/file/file_open.cpp" line="309"/>
         <source>This file have unknown extension</source>
         <translation>Éste archivo tiene una extensión desconocida</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="30"/>
+        <location filename="../main_window/file/file_save.cpp" line="31"/>
         <source>Saving of file...</source>
         <translation>Guardado de archivo...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="31"/>
-        <location filename="../main_window/file/file_save.cpp" line="77"/>
+        <location filename="../main_window/file/file_save.cpp" line="32"/>
+        <location filename="../main_window/file/file_save.cpp" line="78"/>
         <source>Saving</source>
         <translation>Guardando</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="49"/>
-        <location filename="../main_window/file/file_save.cpp" line="66"/>
+        <location filename="../main_window/file/file_save.cpp" line="50"/>
+        <location filename="../main_window/file/file_save.cpp" line="67"/>
         <source>File saved</source>
         <translation>Archivo guardado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="76"/>
+        <location filename="../main_window/file/file_save.cpp" line="77"/>
         <source>Saving of files...</source>
         <translation>Guardado de archivos...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="38"/>
+        <location filename="../main_window/file/file_open.cpp" line="39"/>
         <source>Open file</source>
         <translation>Abrir archivo</translation>
     </message>
@@ -5561,12 +5722,12 @@ El archivo no existe.</translation>
         <translation>[No hay archivos abiertos]</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="219"/>
+        <location filename="../main_window/translator.cpp" line="256"/>
         <source>Current Language changed to %1</source>
         <translation>Idioma actual cambiado a %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_new.cpp" line="41"/>
+        <location filename="../main_window/file/file_new.cpp" line="42"/>
         <source>Create new NPC.txt configuration file</source>
         <translation>Crear nuevo NPC.txt </translation>
     </message>
@@ -5585,15 +5746,15 @@ El archivo no existe.</translation>
         <translation>%1 monedas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4139"/>
-        <location filename="../mainwindow.ui" line="4176"/>
-        <location filename="../mainwindow.ui" line="4360"/>
-        <location filename="../mainwindow.ui" line="4478"/>
-        <location filename="../mainwindow.ui" line="5327"/>
-        <location filename="../mainwindow.ui" line="5449"/>
-        <location filename="../mainwindow.ui" line="5571"/>
-        <location filename="../mainwindow.ui" line="5805"/>
-        <location filename="../mainwindow.ui" line="5940"/>
+        <location filename="../mainwindow.ui" line="3464"/>
+        <location filename="../mainwindow.ui" line="3501"/>
+        <location filename="../mainwindow.ui" line="3685"/>
+        <location filename="../mainwindow.ui" line="3803"/>
+        <location filename="../mainwindow.ui" line="4652"/>
+        <location filename="../mainwindow.ui" line="4774"/>
+        <location filename="../mainwindow.ui" line="4896"/>
+        <location filename="../mainwindow.ui" line="5130"/>
+        <location filename="../mainwindow.ui" line="5265"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="131"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="150"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="161"/>
@@ -5631,8 +5792,8 @@ El archivo no existe.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="105"/>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="88"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="90"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="92"/>
         <source>[None]</source>
         <translation>[Nada]</translation>
     </message>
@@ -6106,6 +6267,11 @@ See in PGE_Editor_log.txt for more information.</source>
 Please open the Tools/Global Configuration/Configuration Status
 to get more information.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/windows_extras.cpp" line="20"/>
+        <source>Open</source>
+        <translation>Abrir</translation>
     </message>
 </context>
 <context>
@@ -6633,17 +6799,17 @@ File: %1
 <context>
     <name>SavingNotificationDialog</name>
     <message>
-        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="58"/>
+        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="128"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="65"/>
+        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="135"/>
         <source>Discard</source>
         <translation>Descartar</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="72"/>
+        <location filename="../editing/_dialogs/savingnotificationdialog.ui" line="142"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -6941,32 +7107,32 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="26"/>
         <source>Tileset Item Box</source>
-        <translation type="unfinished">Caja de tileset</translation>
+        <translation>Caja de tileset</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="140"/>
         <source>Search: </source>
-        <translation type="unfinished">Buscar:</translation>
+        <translation>Buscar:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.ui" line="147"/>
         <source>New tileset</source>
-        <translation type="unfinished">Nuevo tileset</translation>
+        <translation>Nuevo tileset</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.cpp" line="148"/>
         <source>File not saved</source>
-        <translation type="unfinished">Archivo no guardado</translation>
+        <translation>Archivo no guardado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.cpp" line="149"/>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation type="unfinished">El archivo no fue guardado en el disco.</translation>
+        <translation>El archivo no fue guardado en el disco.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.cpp" line="281"/>
         <source>Group:</source>
-        <translation type="unfinished">Grupo:</translation>
+        <translation>Grupo:</translation>
     </message>
 </context>
 <context>
@@ -7028,7 +7194,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="82"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="103"/>
@@ -7403,12 +7569,12 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="1164"/>
         <source>Rotate</source>
-        <translation type="unfinished">Rotar</translation>
+        <translation>Rotar</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="1165"/>
         <source>Flip</source>
-        <translation type="unfinished">Voltear</translation>
+        <translation>Voltear</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="1167"/>
@@ -7578,48 +7744,48 @@ porque las configuraciones del proyecto no están cargadas.
 Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="109"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="110"/>
         <source>Saving</source>
-        <translation type="unfinished">Guardando</translation>
+        <translation>Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="154"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="155"/>
         <source>Save As</source>
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="164"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="200"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="165"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="201"/>
         <source>Extension is not set</source>
         <translation>La extensión no se definió</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="165"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="201"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="166"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="202"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>¡La extensión no se definió, por favor ponga una extensión!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="219"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="220"/>
         <source>SMBX file version</source>
         <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="220"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="221"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="228"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="238"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="248"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="258"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="269"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="239"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="249"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="259"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="270"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>El límite SMBX64 fue excedido</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="230"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Tiles
 The maximum number of Tiles is %2.
 
@@ -7630,7 +7796,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="239"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="240"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
 The maximum number of Sceneries is %2.
 
@@ -7641,7 +7807,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="249"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="250"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Paths
 The maximum number of Paths is %2.
 
@@ -7652,7 +7818,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="259"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="260"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Levels
 The maximum number of Levels is %2.
 
@@ -7663,7 +7829,7 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="270"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="271"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
 The maximum number of Music Boxes is %2.
 
@@ -7674,28 +7840,28 @@ El número máximo de objetos es %2.
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="302"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="325"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="303"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="326"/>
         <source>File save error</source>
         <translation>Error de escritura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="303"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="326"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="287"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="304"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="327"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>No se puede escribir archivo %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="362"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="363"/>
         <source>Read file error</source>
         <translation>Error de lectura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="363"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="364"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>No se puede leer archivo %1:
@@ -7703,7 +7869,7 @@ Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en fo
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="56"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="378"/>
         <source>Configurations not loaded</source>
         <translation>Configuraciones no cargadas</translation>
     </message>
@@ -7728,7 +7894,7 @@ Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en fo
         <translation>Por favor, espere...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="109"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
@@ -7737,7 +7903,7 @@ Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en fo
         <translation type="vanished">Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="111"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="112"/>
         <source>Episode Title: </source>
         <translation>Título:</translation>
     </message>
@@ -7750,23 +7916,23 @@ porque no se cargaron las configuraciones de objetos.
 Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
         <source>Loading World map data</source>
         <translation>Cargando datos del mapa</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="448"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="450"/>
         <source>Episode title: </source>
         <translation>Título:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="402"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="103"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="378"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="379"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -7775,17 +7941,17 @@ porque las configuraciones no están cargadas.
 Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="403"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="404"/>
         <source>Loading World data</source>
         <translation>Cargando datos del mundo</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="446"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="448"/>
         <source> not saved</source>
         <translation>No guardado</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="444"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="446"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; fue modificado.
