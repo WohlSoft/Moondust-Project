@@ -58,6 +58,7 @@ void LvlWarpBox::construct(MainWindow *ParentMW)
 {
     mw = NULL;
     ui->setupUi(this);
+    setVisible(false);
     mw = ParentMW;
 
     lockWarpSetSettings = false;

@@ -110,6 +110,8 @@ protected:
     QPoint mouse_pos;
 
 private:
+    void npc_refreshMinHeight();
+
     int npcSpecSpinOffset;
     int npcSpecSpinOffset_2;
     bool LockItemProps;

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>274</width>
-    <height>441</height>
+    <width>297</width>
+    <height>483</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>274</width>
-    <height>441</height>
+    <width>297</width>
+    <height>483</height>
    </size>
   </property>
   <property name="font">
@@ -52,6 +52,9 @@
     </property>
     <item>
      <widget class="QScrollArea" name="scrollArea">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -59,8 +62,8 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-941</y>
-         <width>255</width>
+         <y>0</y>
+         <width>280</width>
          <height>1358</height>
         </rect>
        </property>
@@ -373,7 +376,7 @@
               <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -600,7 +603,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               <enum>Qt::Vertical</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>

@@ -142,7 +142,7 @@ void MainWindow::slotLanguageChanged(QAction* action)
         // load the language depending on the action content
         GlobalSettings::locale = m_currLang;
 
-        lockTilesetBox=true;
+        dock_TilesetBox->lockTilesetBox=true;
 
         int doorType = dock_LvlWarpProps->ui->WarpType->currentIndex(); //backup combobox's index
         int npcGenType = dock_LvlItemProps->ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
@@ -152,7 +152,7 @@ void MainWindow::slotLanguageChanged(QAction* action)
         dock_LvlWarpProps->ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
         dock_LvlItemProps->ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
 
-        lockTilesetBox=false;
+        dock_TilesetBox->lockTilesetBox=false;
 
         setLvlItemBoxes();
         setLevelSectionData();

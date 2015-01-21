@@ -18,6 +18,7 @@
 
 #include <file_formats/file_formats.h>
 #include <common_features/util.h>
+#include <defines.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/level/items/item_block.h>
@@ -112,19 +113,32 @@ void LvlItemProperties::mouseMoveEvent(QMouseEvent *event)
 
 void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem)
 {
-    LvlItemProps(0, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem);
+    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem);
 }
 
 void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem)
 {
-    LvlItemProps(1, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem);
+    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem);
 }
 
 void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem)
 {
-    LvlItemProps(2, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem);
+    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem);
 }
 
+void LvlItemProperties::CloseBox()
+{
+    this->hide();
+    mw->ui->action_Placing_ShowProperties->setChecked(false);
+
+    ui->blockProp->setVisible(false);
+    ui->bgoProps->setVisible(false);
+    ui->npcProps->setVisible(false);
+
+    LvlItemPropsLock=true;
+    LockItemProps = true;
+    LvlPlacingItems::npcSpecialAutoIncrement=false;
+}
 
 void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
@@ -160,7 +174,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
     switch(Type)
     {
-    case 0:
+    case ItemTypes::LVL_Block:
     {
         if(newItem)
             blockPtr = -1;
@@ -284,7 +298,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->blockProp->raise();
         break;
     }
-    case 1:
+    case ItemTypes::LVL_BGO:
     {
         if(newItem)
             bgoPtr = -1;
@@ -353,7 +367,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->bgoProps->raise();
         break;
     }
-    case 2:
+    case ItemTypes::LVL_NPC:
     {
         if(newItem)
             npcPtr = -1;
@@ -670,6 +684,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         this->raise();
         ui->npcProps->show();
         ui->npcProps->raise();
+        npc_refreshMinHeight();
         break;
     }
     case -1: //Nothing to edit
@@ -679,19 +694,6 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
     }
 }
 
-void LvlItemProperties::CloseBox()
-{
-    this->hide();
-    mw->ui->action_Placing_ShowProperties->setChecked(false);
-
-    ui->blockProp->setVisible(false);
-    ui->bgoProps->setVisible(false);
-    ui->npcProps->setVisible(false);
-
-    LvlItemPropsLock=true;
-    LockItemProps = true;
-    LvlPlacingItems::npcSpecialAutoIncrement=false;
-}
 
 void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
 {
@@ -734,6 +736,58 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
         }
     }
     LvlItemPropsLock=false;
+}
+
+void LvlItemProperties::npc_refreshMinHeight()
+{
+    //Calculate max height value
+    int minHeightOfBox=0;
+    minHeightOfBox+=ui->PROPS_NpcPos->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcID->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcDir->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcFri->height()+2;
+    minHeightOfBox+=ui->PROPS_NPCNoMove->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcTMsgLabel->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcTMsg->height()+2;
+    if(ui->line_6->isVisible())
+        minHeightOfBox+=ui->line_6->height()+2;
+    if(ui->PROPS_NpcSpinLabel->isVisible())
+        minHeightOfBox+=ui->PROPS_NpcSpinLabel->height()+2;
+    if(ui->PROPS_NPCSpecialSpin->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCSpecialSpin->height()+2;
+    if(ui->PROPS_NPCSpecialSpin_Auto->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCSpecialSpin_Auto->height()+2;
+    if(ui->PROPS_NpcContainsLabel->isVisible())
+        minHeightOfBox+=ui->PROPS_NpcContainsLabel->height()+2;
+    if(ui->PROPS_NPCContaiter->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCContaiter->height()+2;
+    if(ui->PROPS_NPCBoxLabel->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCBoxLabel->height()+2;
+    if(ui->PROPS_NPCSpecialBox->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCSpecialBox->height()+2;
+    if(ui->Line_Special2_sep->isVisible())
+        minHeightOfBox+=ui->Line_Special2_sep->height()+2;
+    if(ui->PROPS_NpcSpecial2title->isVisible())
+        minHeightOfBox+=ui->PROPS_NpcSpecial2title->height()+2;
+    if(ui->PROPS_NPCSpecial2Spin->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCSpecial2Spin->height()+2;
+    if(ui->PROPS_NPCSpecial2Box->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCSpecial2Box->height()+2;
+
+    minHeightOfBox+=ui->line_5->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcGenerator->height()+2;
+
+    if(ui->PROPS_NPCGenBox->isVisible())
+        minHeightOfBox+=ui->PROPS_NPCGenBox->height()+2;
+    if(ui->line_2->isVisible())
+        minHeightOfBox+=ui->line_2->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcLayer->height()+2;
+    minHeightOfBox+=ui->line_3->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcEventActivate->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcEventDeath->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcEventTalk->height()+2;
+    minHeightOfBox+=ui->PROPS_NpcEventEmptyLayer->height()+2;
+    ui->npcProps->setMinimumHeight(minHeightOfBox);
 }
 
 void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem)
@@ -838,6 +892,7 @@ void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, lon
             ui->PROPS_NPCSpecial2Spin->setValue( spcOpts2 + npcSpecSpinOffset_2 );
         }
     }
+    npc_refreshMinHeight();
 }
 
 
@@ -2084,8 +2139,10 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
     }
     ui->PROPS_NPCGenBox->setVisible( checked );
 
-
+    npc_refreshMinHeight();
 }
+
+
 void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
 {
     if(LvlItemPropsLock) return;

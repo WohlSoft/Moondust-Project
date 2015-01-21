@@ -54,6 +54,10 @@ int main(int argc, char *argv[])
 
     a->setStyle(new PGE_ProxyStyle);
 
+    QFont fnt = a->font();
+    fnt.setPointSize(8);
+    a->setFont(fnt);
+
     //Init system paths
     AppPathManager::initAppPath();
 

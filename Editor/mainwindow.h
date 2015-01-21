@@ -402,8 +402,6 @@ public:
         void on_actionConfigure_Tilesets_triggered();
         void on_actionTileset_groups_editor_triggered();
         void on_actionTilesetBox_triggered(bool checked);
-    private:
-        bool lockTilesetBox;
 
 // ////////////////////////////////////////////////////////
 
