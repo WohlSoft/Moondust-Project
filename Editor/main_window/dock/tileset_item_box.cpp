@@ -65,11 +65,13 @@ TilesetItemBox::TilesetItemBox(MainWindow *ParentMW, QWidget *parent) :
 void TilesetItemBox::construct(MainWindow *ParentMW)
 {
     mw=NULL;
-    setVisible(false);
     setParentMW(ParentMW);
     ui->setupUi(this);
+    setVisible(false);
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+    lockTilesetBox=false;
 }
 
 void TilesetItemBox::setParentMW(MainWindow *ParentMW)
@@ -99,7 +101,7 @@ void TilesetItemBox::on_TilesetItemBox_visibilityChanged(bool visible)
 void TilesetItemBox::setTileSetBox(bool force)
 {
     if(!mw) return;
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
     if((!this->isVisible()) && (!force)) return; //!< Don't update invisible
 
     pge_tilesetbox::current = ui->TileSetsCategories->currentIndex();
@@ -125,7 +127,7 @@ void TilesetItemBox::on_tilesetGroup_currentIndexChanged(int index)
     if(!mw) return;
     Q_UNUSED(index);
     WriteToLog(QtDebugMsg, "TilesetBox -> change combobox's index");
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
     makeCurrentTileset();
 }
 
@@ -308,7 +310,7 @@ QWidget* TilesetItemBox::makeCategory(const QString &categoryItem)
 
 void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups)
 {
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
 
     QWidget *t = findTabWidget(tilesetGroups.groupCat);
     if(!t){
@@ -328,7 +330,7 @@ void TilesetItemBox::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups
 
 void TilesetItemBox::clearTilesetGroups()
 {
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     int i = 0;
@@ -351,7 +353,7 @@ void TilesetItemBox::clearTilesetGroups()
 
 void TilesetItemBox::makeSelectedTileset(int tabIndex)
 {
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     if(!(cat->tabText(tabIndex) == "Custom"))
@@ -544,7 +546,7 @@ QVector<SimpleTileset> TilesetItemBox::loadCustomTilesets(){
 
 void TilesetItemBox::makeCurrentTileset()
 {
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
 
     QTabWidget* cat = ui->TileSetsCategories;
     makeSelectedTileset(cat->currentIndex());
@@ -552,7 +554,7 @@ void TilesetItemBox::makeCurrentTileset()
 
 void TilesetItemBox::makeAllTilesets()
 {
-    if(mw->lockTilesetBox) return;
+    if(lockTilesetBox) return;
 
     using namespace pge_tilesetbox;
     QTabWidget* cat = ui->TileSetsCategories;

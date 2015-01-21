@@ -68,6 +68,8 @@ private:
     void construct(MainWindow *ParentMW);
     Ui::TilesetItemBox *ui;
     MainWindow *mw;
+
+    bool lockTilesetBox;
 };
 
 #endif // TILESET_ITEM_BOX_H

@@ -42,7 +42,6 @@ void MainWindow::setDefaults()
     GlobalSettings::LvlOpts.collisionsEnabled = true;
     GlobalSettings::LvlOpts.semiTransparentPaths = false;
 
-    lockTilesetBox=false;
     LvlEventBoxLock=false;
 
     askConfigAgain=false;
