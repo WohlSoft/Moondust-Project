@@ -195,6 +195,8 @@ if(!fileToPpen.isEmpty())
     goto PlayLevel;
 }
 
+if(interprocessing) goto PlayLevel;
+
 TitleScreeen:
 {
     TitleScene *ttl = new TitleScene;
@@ -212,11 +214,13 @@ TitleScreeen:
 CreditsScreeen:
 {
 
+    goto MainMenu;
 }
 
 GameOverScreeen:
 {
 
+    goto MainMenu;
 }
 
 MainMenu:
