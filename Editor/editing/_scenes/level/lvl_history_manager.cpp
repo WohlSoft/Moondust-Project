@@ -20,6 +20,7 @@
 #include <common_features/mainwinconnect.h>
 #include <file_formats/file_formats.h>
 #include <audio/music_player.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -707,7 +708,7 @@ void LvlScene::historyBack()
 
         bool found = false;
 
-        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
 
         if((warplist->currentIndex()==listindex)&&(warplist->count()>2))
         {
@@ -742,9 +743,9 @@ void LvlScene::historyBack()
         WriteToLog(QtDebugMsg, QString("HistoryManager -> found and removed = %1").arg(found));
 
 
-        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+        if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         //warplist->update();
         //warplist->repaint();
@@ -755,7 +756,7 @@ void LvlScene::historyBack()
         LevelDoors removedDoor = lastOperation.data.doors[0];
         LvlData->doors.insert(removedDoor.index, removedDoor);
 
-        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
         warplist->insertItem(removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
                              .arg(removedDoor.array_id).arg(removedDoor.ix).arg(removedDoor.iy).arg(removedDoor.ox).arg(removedDoor.oy),
                              removedDoor.array_id);
@@ -776,7 +777,7 @@ void LvlScene::historyBack()
         }
 
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
@@ -853,7 +854,7 @@ void LvlScene::historyBack()
             doorp[index].warpto = extraData.toList()[0].toInt();
         }
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
         doorPointsSync(array_id);
 
         break;            
@@ -1183,7 +1184,7 @@ void LvlScene::historyBack()
         findGraphicsItem(lastOperation.data, &lastOperation, cbData, &LvlScene::historyUpdateVisibleBlocks, &LvlScene::historyUpdateVisibleBGO, &LvlScene::historyUpdateVisibleNPC, &LvlScene::historyUpdateVisibleWater, &LvlScene::historyUpdateVisibleDoor, 0, false, false, false, false, false, true);
 
         //just in case
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
@@ -1221,7 +1222,7 @@ void LvlScene::historyBack()
         }
 
         //just in case
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->ModifyLayer(newName, oldName);
@@ -1238,7 +1239,7 @@ void LvlScene::historyBack()
         findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         //just in case
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
@@ -1255,7 +1256,7 @@ void LvlScene::historyBack()
         findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         //just in case
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
@@ -1558,7 +1559,7 @@ void LvlScene::historyForward()
             placeDoorExit(door, false, false);
         }
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         break;
     }
@@ -1573,7 +1574,7 @@ void LvlScene::historyForward()
         newDoor.index = doorindex;
 
         LvlData->doors.insert(doorindex, newDoor);
-        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
         warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
                           .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
                           newDoor.array_id);
@@ -1586,9 +1587,9 @@ void LvlScene::historyForward()
             warplist->setCurrentIndex( warplist->count()-1 );
         }
 
-        MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(true);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(true);
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
         break;
     }
     case HistoryOperation::LEVELHISTORY_REMOVEWARP:
@@ -1605,7 +1606,7 @@ void LvlScene::historyForward()
             }
         }
 
-        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
         for(int i = 0; i < warplist->count(); i++){
             if((unsigned int)warplist->itemData(i).toInt() == removedDoor.array_id){
                 warplist->removeItem(i);
@@ -1613,9 +1614,9 @@ void LvlScene::historyForward()
             }
         }
 
-        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+        if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
@@ -1690,7 +1691,7 @@ void LvlScene::historyForward()
             doorp[index].warpto = extraData.toList()[1].toInt();
         }
 
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
         doorPointsSync(array_id);
 
         break;
@@ -2028,7 +2029,7 @@ void LvlScene::historyForward()
         }
 
         //just in case
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->ModifyLayer(oldName, newName);
@@ -2916,7 +2917,7 @@ void LvlScene::historyRemoveDoors(LvlScene::CallbackData cbData, LevelDoors /*do
 {
     ((ItemDoor *)(cbData.item))->removeFromArray();
     if((cbData.item)) delete (cbData.item);
-    MainWinConnect::pMainWin->setDoorData(-2);
+    MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 }
 
 void LvlScene::historyUpdateVisibleBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -3247,7 +3248,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 }
             }
         }
-        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2); //update Door data
     }
 
     if(!ignorePlayer)
@@ -3550,7 +3551,7 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
                 }
             }
         }
-        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2); //update Door data
     }
 
     if(findingFilter & ItemTypes::LVL_S_Player)

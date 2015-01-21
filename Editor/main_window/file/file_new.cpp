@@ -19,6 +19,7 @@
 #include <editing/_dialogs/npcdialog.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <audio/music_player.h>
+#include <main_window/dock/toolboxes.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -61,7 +62,7 @@ void MainWindow::on_actionNewLevel_triggered()
     updateMenus(true);
     SetCurrentLevelSection(0);
     on_actionSelect_triggered();
-    setDoorsToolbox();
+    dock_LvlWarpProps->init();
     setLayersBox();
 
     if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);

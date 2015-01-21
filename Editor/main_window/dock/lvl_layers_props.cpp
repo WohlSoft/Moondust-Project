@@ -25,7 +25,9 @@
 #include <file_formats/file_formats.h>
 #include <common_features/util.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/lvl_warp_props.h>
 #include <ui_lvl_item_properties.h>
+#include <ui_lvl_warp_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -68,14 +70,14 @@ void MainWindow::setLayerLists()
 {
     dock_LvlItemProps->hide();
     dock_LvlItemProps->LvlItemPropsLock=true;
-    lockWarpSetSettings=true;
+    dock_LvlWarpProps->lockWarpSetSettings=true;
 
     //save old entry from search!
     QString curSearchLayerBlock = ui->Find_Combo_LayerBlock->currentText();
     QString curSearchLayerBGO = ui->Find_Combo_LayerBGO->currentText();
     QString curSearchLayerNPC = ui->Find_Combo_LayerNPC->currentText();
 
-    QString curWarpLayer = ui->WarpLayer->currentText();
+    QString curWarpLayer = dock_LvlWarpProps->ui->WarpLayer->currentText();
 
     int WinType = activeChildWindow();
     dock_LvlItemProps->LvlItemPropsLock = true;
@@ -84,7 +86,7 @@ void MainWindow::setLayerLists()
     dock_LvlItemProps->ui->PROPS_NpcLayer->clear();
     dock_LvlItemProps->ui->PROPS_BlockLayer->clear();
     dock_LvlItemProps->ui->PROPS_NpcAttachLayer->clear();
-    ui->WarpLayer->clear();
+    dock_LvlWarpProps->ui->WarpLayer->clear();
     dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
     ui->LVLEvent_LayerMov_List->clear();
     ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
@@ -103,7 +105,7 @@ void MainWindow::setLayerLists()
             dock_LvlItemProps->ui->PROPS_BlockLayer->addItem(layer.name);
             dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(layer.name);
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
-            ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
+            dock_LvlWarpProps->ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
             ui->Find_Combo_LayerBlock->addItem(layer.name);
             ui->Find_Combo_LayerBGO->addItem(layer.name);
             ui->Find_Combo_LayerNPC->addItem(layer.name);
@@ -111,12 +113,12 @@ void MainWindow::setLayerLists()
     }
 
     if(!curWarpLayer.isEmpty())
-        ui->WarpLayer->setCurrentText(curWarpLayer);
+        dock_LvlWarpProps->ui->WarpLayer->setCurrentText(curWarpLayer);
 
     ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
-    lockWarpSetSettings = false;
+    dock_LvlWarpProps->lockWarpSetSettings = false;
     dock_LvlItemProps->LvlItemPropsLock = false;
     LvlEventBoxLock = false;
 }
@@ -701,7 +703,7 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
     ModifyLayer(oldLayerName, newLayerName, visible);
 
     setLayerLists();  //Sync comboboxes in properties
-    setDoorData(-2);
+    dock_LvlWarpProps->setDoorData(-2);
 }
 
 void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)

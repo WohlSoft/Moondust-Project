@@ -240,7 +240,6 @@ SOURCES += main.cpp\
     main_window/about_dialog/aboutdialog.cpp \
     main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
-    main_window/dock/lvl_door_props.cpp \
     main_window/dock/lvl_events_props.cpp \
     main_window/dock/lvl_item_toolbox.cpp \
     main_window/dock/lvl_layers_props.cpp \
@@ -359,7 +358,8 @@ SOURCES += main.cpp\
     common_features/app_path.cpp \
     common_features/installer.cpp \
     main_window/dock/lvl_item_properties.cpp \
-    main_window/windows_extras.cpp
+    main_window/windows_extras.cpp \
+    main_window/dock/lvl_warp_props.cpp
     
 
 HEADERS  += defines.h \
@@ -502,7 +502,8 @@ HEADERS  += defines.h \
     main_window/dock/toolboxes.h \
     main_window/dock/toolboxes_protos.h \
     common_features/installer.h \
-    main_window/dock/lvl_item_properties.h
+    main_window/dock/lvl_item_properties.h \
+    main_window/dock/lvl_warp_props.h
 
 
 FORMS    += \
@@ -538,7 +539,8 @@ FORMS    += \
     tools/debugger/custom_counter_gui.ui \
     main_window/updater/check_updates.ui \
     main_window/dock/tileset_item_box.ui \
-    main_window/dock/lvl_item_properties.ui
+    main_window/dock/lvl_item_properties.ui \
+    main_window/dock/lvl_warp_props.ui
 
 
 

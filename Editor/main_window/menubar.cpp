@@ -85,7 +85,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
         GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
 
-        GlobalSettings::LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
+        GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
         GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
         GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
@@ -97,7 +97,7 @@ void MainWindow::updateMenus(bool force)
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
-        ui->DoorsToolbox->setVisible( 0 );
+        dock_LvlWarpProps->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
         ui->FindDock->setVisible( 0 );
@@ -106,7 +106,7 @@ void MainWindow::updateMenus(bool force)
     {
         ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
         ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
-        ui->DoorsToolbox->setVisible( GlobalSettings::LevelDoorsBoxVis );
+        dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
@@ -298,7 +298,7 @@ void MainWindow::updateMenus(bool force)
 
         SetCurrentLevelSection(0, 1);
 
-        setDoorsToolbox();
+        dock_LvlWarpProps->init();
         setLayersBox();
         setEventsBox();
 

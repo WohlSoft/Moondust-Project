@@ -44,7 +44,6 @@ void MainWindow::setDefaults()
 
     lockTilesetBox=false;
     LvlEventBoxLock=false;
-    lockWarpSetSettings=false;
 
     askConfigAgain=false;
 
@@ -61,6 +60,7 @@ void MainWindow::setDefaults()
 
     dock_TilesetBox = NULL;
     dock_LvlItemProps = NULL;
+    dock_LvlWarpProps = NULL;
 }
 
 void MainWindow::setUiDefults()
@@ -78,11 +78,14 @@ void MainWindow::setUiDefults()
 
     int GOffset=240;
     //Define the default geometry for toolboxes
-    ui->DoorsToolbox->setGeometry(
-                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-GOffset,
+    dock_LvlWarpProps = new LvlWarpBox(this, this);
+    dock_LvlWarpProps->setVisible(false);
+    addDockWidget(Qt::NoDockWidgetArea, dock_LvlWarpProps);
+    dock_LvlWarpProps->setGeometry(
+                mwg.x()+mwg.width()-dock_LvlWarpProps->width()-GOffset,
                 mwg.y()+120,
-                ui->DoorsToolbox->width(),
-                ui->DoorsToolbox->height()
+                dock_LvlWarpProps->width(),
+                dock_LvlWarpProps->height()
                 );
 
     ui->LevelSectionSettings->setGeometry(
@@ -206,7 +209,7 @@ void MainWindow::setUiDefults()
     ui->LevelToolBox->hide();
 
 
-    ui->DoorsToolbox->hide();
+    dock_LvlWarpProps->hide();
     ui->LevelLayers->hide();
     ui->LevelEventsToolBox->hide();
     ui->LevelSectionSettings->hide();
