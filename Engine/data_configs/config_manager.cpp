@@ -146,7 +146,7 @@ bool ConfigManager::loadBasics()
         dirs.gworld= data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
         dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcommon = data_dir + mainset.value("graphics-common", "data-custom").toString() + "/";
+        dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
 
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
@@ -262,7 +262,6 @@ bool ConfigManager::loadBasics()
                 LoadingScreen.backgroundImg = dirs.gcommon+LoadingScreen.backgroundImg;
             else
                 LoadingScreen.backgroundImg = "";
-
         }
 
         LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
