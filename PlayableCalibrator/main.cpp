@@ -18,6 +18,7 @@
  */
 
 #include <QtWidgets/QApplication>
+#include <QDesktopWidget>
 #include "calibrationmain.h"
 #include <main/app_path.h>
 
@@ -44,6 +45,8 @@ int main(int argc, char *argv[])
     CalibrationMain w;
 
     w.setWindowFlags(w.windowFlags() & ~(Qt::WindowMaximizeButtonHint));
+    w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+    w.size(), qApp->desktop()->availableGeometry(0)));
 
     if(!w.wasCanceled)
         w.show();
