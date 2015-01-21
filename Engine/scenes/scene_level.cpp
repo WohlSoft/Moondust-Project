@@ -108,8 +108,7 @@ LevelScene::LevelScene()
     /*********Z-Layers*************/
 
     errorMsg = "";
-
-    qDebug() << 1000.0/(float)PGE_Window::PhysStep;
+    //qDebug() << 1000.0/(float)PGE_Window::PhysStep;
 }
 
 LevelScene::~LevelScene()
