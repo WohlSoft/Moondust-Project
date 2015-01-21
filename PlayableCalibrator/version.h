@@ -28,7 +28,7 @@
 
 #define _VF1 0
 #define _VF2 2
-#define _VF3 0
+#define _VF3 1
 #define _VF4 2
 
 #define _FILE_DESC "Playble Character Sprite Calibrator"
