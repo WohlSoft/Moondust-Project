@@ -32,7 +32,11 @@ EditorPipe::~EditorPipe()
 {
     for(int i = 0; i < clients.size(); ++i)
     {
-        if(clients[i]) clients[i]->close();
+        if(clients[i])
+        {
+            clients[i]->disconnectFromServer();
+            clients[i]->close();
+        }
     }
     server->close();
     this->wait(1000);
@@ -66,15 +70,15 @@ bool EditorPipe::sendToEditor(QString command)
         QByteArray bytes;
         bytes = str.toUtf8();
         socket.write(bytes);
-        socket.flush();
         //if(!socket.flush())
         //{
         //    qDebug() << "sendToEditor(QString command) fail to send: " << socket.errorString();
         //    return false;
         //}
         socket.waitForBytesWritten(10000);
+        socket.flush();
         QThread::msleep(100);
-        socket.close();
+        socket.disconnectFromServer();
         qDebug() << "Bytes sent: " <<command;
         return true;
     }
