@@ -6,9 +6,12 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 
+#include <QAbstractSocket>
 #include <file_formats.h>
 
 #define LOCAL_SERVER_NAME "PGEEngine42e3j"
+
+//Q_DECLARE_METATYPE(QAbstractSocket::SocketState)
 
 class EditorPipe : public QThread
 {
@@ -25,7 +28,7 @@ public:
     bool do_parseLevelData;
     LevelData accepted_lvl;    // When accepted PARSE_LVLX\n\n, parse data and call signal
     bool levelIsLoad();
-    void sendToEditor(QString command);
+    bool sendToEditor(QString command);
 
 private:
     bool levelAccepted;

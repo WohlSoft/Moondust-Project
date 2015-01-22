@@ -217,7 +217,7 @@ CreditsScreeen:
     goto MainMenu;
 }
 
-GameOverScreeen:
+GameOverScreen:
 {
 
     goto MainMenu;
@@ -258,7 +258,7 @@ PlayLevel:
                 if(interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
-                    if(!sceneResult)
+                    if((!sceneResult) && (!lScene->doExit))
                     {
                         SDL_Delay(50);
                         PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")
@@ -330,6 +330,9 @@ PlayLevel:
 
             ConfigManager::unloadLevelConfigs();
             delete lScene;
+
+            if(interprocessing)
+                goto ExitFromApplication;
     }
 }
 ExitFromApplication:
