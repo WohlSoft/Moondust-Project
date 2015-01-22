@@ -24,7 +24,9 @@ EngineClient * IntEngine::engineSocket=NULL;
 IntEngine *IntEngine_protector=NULL;
 
 IntEngine::IntEngine()
-{}
+{
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
+}
 
 IntEngine::~IntEngine()
 {}

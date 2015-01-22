@@ -31,7 +31,7 @@
  */
 LocalServer::LocalServer()
 {
-
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
 }
 
 /**

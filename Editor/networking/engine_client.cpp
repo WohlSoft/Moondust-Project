@@ -39,6 +39,8 @@ EngineClient::EngineClient()
 
     readyToSendLvlx = false;
     _connected = true;
+    _busy = false;
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
 }
 
 /**
@@ -70,11 +72,16 @@ void EngineClient::sendLevelData(LevelData _data)
         sendLvlx = QString("SEND_LVLX: %1/%2").arg(ApplicationPath).arg("_untitled.lvlx");
 
     WriteToLog(QtDebugMsg, "Send LVLX data to engine "+sendLvlx);
+    _busy=true;
+    qApp->processEvents();
+    msleep(20);
+    qApp->processEvents();
     if(!sendCommand(sendLvlx))
     {
         IntEngine::quit();
         return;
     }
+    _busy=false;
     qApp->processEvents();
 
     //Pause
@@ -99,16 +106,26 @@ void EngineClient::sendLevelData(LevelData _data)
     rawData.append("\n");
 
     qDebug() << "Sending data to engine...";
+    _busy=true;
+    qApp->processEvents();
+    msleep(50);
+    qApp->processEvents();
     if(!sendCommand(rawData))
     {
         IntEngine::quit();
         return;
     }
+    _busy=false;
+    _busy=true;
+    qApp->processEvents();
+    msleep(50);
+    qApp->processEvents();
     if(!sendCommand("PARSE_LVLX\n\n"))
     {
         IntEngine::quit();
         return;
     }
+    _busy=false;
     qDebug() << "Sent, testing is started";
 }
 
@@ -116,22 +133,27 @@ bool EngineClient::sendCommand(QString command)
 {
     if(!engine->isOpen())
             OpenConnection();
+    if(!engine->isOpen())
+        return false;
 
     QByteArray bytes;
     bytes = command.toUtf8();
     engine->write(bytes);
+    engine->flush();
     engine->waitForBytesWritten(10000);
-    //engine->flush();
     return true;
 }
 
 void EngineClient::OpenConnection()
 {
+    _busy=false;
     if(engine->isOpen())
     {
         qDebug()<<"Connected to "+engine->serverName();
         return;
     }
+
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
 
     qDebug()<<"Connect to Engine " << ENGINE_SERVER_NAME;
 
@@ -150,6 +172,8 @@ void EngineClient::OpenConnection()
 
 void EngineClient::closeConnection()
 {
+    _busy=false;
+    engine->disconnectFromServer();
     engine->close();
 }
 
@@ -174,6 +198,11 @@ void EngineClient::exec()
     //bool pingSent=false;
       while(engine->isOpen() && !this->isFinished())
       {
+            if(_busy)
+            {
+                msleep(100);
+                continue;
+            }
             if(engine->waitForReadyRead(1000))
             {
                 QByteArray data = engine->readAll();

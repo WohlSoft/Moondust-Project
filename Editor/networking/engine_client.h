@@ -58,6 +58,7 @@ private slots:
 private:
     QLocalSocket* engine;
     bool _connected;
+    bool _busy;
     bool readyToSendLvlx;
 };
 

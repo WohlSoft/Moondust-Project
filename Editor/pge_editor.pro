@@ -25,7 +25,11 @@
 QT       += gui widgets network
 QT       -= opengl
 
-win32: QT += winextras
+win32: {
+QT += winextras
+} else {
+QT -= winextras
+}
 
 DESTDIR = ../bin
 
