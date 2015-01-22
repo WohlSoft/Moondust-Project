@@ -16,11 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSharedMemory>
-#include <QSystemSemaphore>
-#include <QDesktopWidget>
-#include <iostream>
-#include <stdlib.h>
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
@@ -48,7 +43,7 @@ int main(int argc, char *argv[])
     SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
     {
-        std::cout << "Editor already runned!\n";
+        QTextStream(stdout) << "Editor already runned!\n";
         return 0;
     }
 
@@ -91,8 +86,6 @@ int main(int argc, char *argv[])
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
     int ret=0;
-    QRect screenSize;
-
     //Init Main Window class
     MainWindow *w = new MainWindow;
     if(!w->continueLoad)
@@ -101,19 +94,14 @@ int main(int argc, char *argv[])
         goto QuitFromEditor;
     }
 
-    //Init default geometry of main window
-    screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
-    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-                                       QSize(screenSize.width()-100,\
-                                             screenSize.height()-100), screenSize));
-
     a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
 
-    w->showNormal();
-    w->activateWindow();
+    w->show();
+    w->setWindowState(w->windowState()|Qt::WindowActive);
     w->raise();
+    QApplication::setActiveWindow(w);
 
     //Open files which opened by command line
     w->openFilesByArgs(a->arguments());

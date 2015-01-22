@@ -74,6 +74,10 @@ void MainWindow::setUiDefults()
     //MainWindow Geometry;
     QRect mwg = this->geometry();
     QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    //Init default geometry of main window
+    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                                       QSize(dg.width()-100,
+                                             dg.height()-100), dg));
 
     int GOffset=240;
     //Define the default geometry for toolboxes

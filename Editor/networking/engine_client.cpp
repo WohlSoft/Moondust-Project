@@ -20,6 +20,7 @@
 #include <QApplication>
 
 #include <common_features/app_path.h>
+#include <common_features/logger.h>
 
 #include "engine_intproc.h"
 #include "engine_client.h"
@@ -46,13 +47,17 @@ EngineClient::EngineClient()
  */
 EngineClient::~EngineClient()
 {
-  engine->close();
-  delete engine;
+    if(engine)
+    {
+        engine->close();
+        delete engine;
+    }
 }
 
 void EngineClient::sendLevelData(LevelData _data)
 {
     if(!_data.ReadFileValid) return;
+    if(!engine) return;
 
     if(!engine->isOpen())
         OpenConnection();
@@ -64,34 +69,22 @@ void EngineClient::sendLevelData(LevelData _data)
     else
         sendLvlx = QString("SEND_LVLX: %1/%2").arg(ApplicationPath).arg("_untitled.lvlx");
 
-    qDebug() << sendLvlx;
-    sendCommand(sendLvlx);
-    qApp->processEvents();
-
-    if(engine->waitForReadyRead(5000))
+    WriteToLog(QtDebugMsg, "Send LVLX data to engine "+sendLvlx);
+    if(!sendCommand(sendLvlx))
     {
-        QByteArray data = engine->readAll();
-        QString acceptedData = QString::fromUtf8(data);
-
-        if(!acceptedData.isEmpty())
-        {
-            QStringList StrData = acceptedData.split("\n\n");
-            foreach(QString x, StrData)
-            {
-                if(x=="READY")
-                {
-                    qDebug() << "Engine is ready to accept data";
-                    readyToSendLvlx = true;
-                }
-            }
-        }
+        IntEngine::quit();
+        return;
     }
+    qApp->processEvents();
 
     //Pause
     QElapsedTimer time;
     time.start();
     while(!readyToSendLvlx)
     {
+        qApp->processEvents();
+        if(!IntEngine::isWorking())
+            return;
         if(time.elapsed()>5000)
         {
             qDebug() << "Time out: Engine is not answer, abort operation";
@@ -99,20 +92,27 @@ void EngineClient::sendLevelData(LevelData _data)
             return;
         }
     }
+    WriteToLog(QtDebugMsg, "readyToSendLvlx is true", true);
     readyToSendLvlx=false;
 
     QString rawData = FileFormats::WriteExtendedLvlFile(_data);
     rawData.append("\n");
 
     qDebug() << "Sending data to engine...";
-    sendCommand(rawData);
-    sendCommand("PARSE_LVLX\n\n");
+    if(!sendCommand(rawData))
+    {
+        IntEngine::quit();
+        return;
+    }
+    if(!sendCommand("PARSE_LVLX\n\n"))
+    {
+        IntEngine::quit();
+        return;
+    }
     qDebug() << "Sent, testing is started";
-
-    msleep(100);
 }
 
-void EngineClient::sendCommand(QString command)
+bool EngineClient::sendCommand(QString command)
 {
     if(!engine->isOpen())
             OpenConnection();
@@ -120,24 +120,37 @@ void EngineClient::sendCommand(QString command)
     QByteArray bytes;
     bytes = command.toUtf8();
     engine->write(bytes);
-    if(!engine->waitForBytesWritten(10000))
-    {
-        qDebug()<<"Error of command sending";
-    }
+    engine->waitForBytesWritten(10000);
+    //engine->flush();
+    return true;
 }
 
 void EngineClient::OpenConnection()
 {
+    if(engine->isOpen())
+    {
+        qDebug()<<"Connected to "+engine->serverName();
+        return;
+    }
+
     qDebug()<<"Connect to Engine " << ENGINE_SERVER_NAME;
 
     engine->connectToServer(QString(ENGINE_SERVER_NAME));
-
     qDebug()<<"Wait for connection";
 
     if(engine->waitForConnected(20000))
     {
         qDebug()<<"Connected";
     }
+    else
+    {
+        qDebug()<<"Failed to connect: " << engine->errorString();
+    }
+}
+
+void EngineClient::closeConnection()
+{
+    engine->close();
 }
 
 bool EngineClient::isConnected()
@@ -170,11 +183,11 @@ void EngineClient::exec()
                 {
                     QStringList StrData = acceptedData.split("\n\n");
 
-                    qDebug()<< "EngineClient::exec() accepted: " << acceptedData;
+                    WriteToLog(QtDebugMsg, "EngineClient::exec() accepted: "+acceptedData, true);
 
                     foreach(QString x, StrData)
                     {
-                        qDebug()<<"Accepted from engine: " << x;
+                        WriteToLog(QtDebugMsg, "Accepted from engine: "+x, true);
 
                         if(x=="PING")
                         {
@@ -187,21 +200,17 @@ void EngineClient::exec()
                         else
                         if(x=="PONG")
                         {
-                            qDebug() << "Accepted PONG";
-                            //pingSent = false;
+                            WriteToLog(QtDebugMsg, "Accepted PONG", true);
                         }
                         else
                         if(x=="READY")
                         {
-                            qDebug() << "Accepted READY";
+                            WriteToLog(QtDebugMsg, "Accepted READY", true);
                             readyToSendLvlx = true;
                         }
                     }
                 }
             }
-            else
-                engine->close();
-
 //            if(pingPong.elapsed()>5000)
 //            {
 //                if(pingSent)
@@ -223,10 +232,11 @@ void EngineClient::exec()
 //                    pingSent=true;
 //                }
 //            }
-            qDebug() << "Tick";
+            //WriteToLog(QtDebugMsg, "Tick", true);
             msleep(100);
       }
-      qDebug() << "Connection with engine was finished";
+      engine->close();
+      WriteToLog(QtDebugMsg, "Connection with engine was finished", true);
 }
 
 
@@ -251,8 +261,8 @@ void EngineClient::displayError(QLocalSocket::LocalSocketError socketError)
     switch (socketError)
     {
         default:
-            qDebug() << QString("The following error occurred: %1.")
-                                     .arg(engine->errorString());
+            WriteToLog(QtDebugMsg, QString("The following error occurred: %1.")
+                       .arg(engine->errorString()), true);
     }
 
 }

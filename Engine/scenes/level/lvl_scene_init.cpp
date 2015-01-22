@@ -173,6 +173,8 @@ bool LevelScene::init()
     qDebug()<<"Create cameras";
 
     loaderStep();
+    //quit from game if window was closed
+    if(!isLevelContinues) return false;
 
     //Init Cameras
     PGE_LevelCamera* camera;
@@ -212,6 +214,7 @@ bool LevelScene::init()
     for(int i=0; i<data.blocks.size(); i++)
     {
         loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
         placeBlock(data.blocks[i]);
     }
 
@@ -220,6 +223,8 @@ bool LevelScene::init()
     for(int i=0; i<data.bgo.size(); i++)
     {
         loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        if(!isLevelContinues) return false;
         placeBGO(data.bgo[i]);
     }
 
@@ -228,6 +233,7 @@ bool LevelScene::init()
     for(int i=0; i<data.doors.size(); i++)
     {
         loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
 
         LVL_Warp * warpP;
         warpP = new LVL_Warp();
@@ -249,6 +255,7 @@ bool LevelScene::init()
         for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
         {
             loaderStep();
+            if(!isLevelContinues) return false;//!< quit from game if window was closed
 
             int i = players_count;
             if(data.players[i].w==0 && data.players[i].h==0) continue;

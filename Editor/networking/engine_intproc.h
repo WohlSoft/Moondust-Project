@@ -19,19 +19,28 @@
 #ifndef ENGINE_INTPROCINTPROC_H
 #define ENGINE_INTPROCINTPROC_H
 
+#include <QObject>
 #include "engine_client.h"
+struct LevelData;
 
-class IntEngine
+class IntEngine: public QObject
 {
+    Q_OBJECT
+
 public:
     IntEngine();
-    static void init();
+    ~IntEngine();
+    static void init(LevelData *lvlData=NULL);
 
     static void quit();
 
     static EngineClient * engineSocket;
     static bool isWorking();
 
+    static void setTestLvlBuffer(LevelData &buffer);
+    static LevelData testBuffer;
+private slots:
+    void destroyEngine();
 };
 
 #endif // ENGINE_INTPROCINTPROC_H

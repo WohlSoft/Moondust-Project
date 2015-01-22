@@ -133,6 +133,9 @@ DevConsole::~DevConsole()
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
+    if(MainWinConnect::pMainWin->isMinimized())
+        return;
+
     QString target_channel = channel;
 
     if(channel=="System") //Prevent creation another "system" tab if switched another UI language

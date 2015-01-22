@@ -21,6 +21,7 @@ EditorPipe::EditorPipe()
     accepted_lvl.ReadFileValid = false;
 
     levelAccepted=false;
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
 }
 
 /**
@@ -29,11 +30,12 @@ EditorPipe::EditorPipe()
  */
 EditorPipe::~EditorPipe()
 {
-    server->close();
     for(int i = 0; i < clients.size(); ++i)
     {
         if(clients[i]) clients[i]->close();
     }
+    server->close();
+    this->wait(1000);
 }
 
 void EditorPipe::shut()
@@ -50,7 +52,7 @@ bool EditorPipe::levelIsLoad()
 
 
 
-void EditorPipe::sendToEditor(QString command)
+bool EditorPipe::sendToEditor(QString command)
 {
     QLocalSocket socket;
 
@@ -59,17 +61,27 @@ void EditorPipe::sendToEditor(QString command)
 
     if(socket.waitForConnected(100))
     {
+        qDebug() << "Connected";
         QString str = QString(command);
         QByteArray bytes;
         bytes = str.toUtf8();
         socket.write(bytes);
         socket.flush();
+        //if(!socket.flush())
+        //{
+        //    qDebug() << "sendToEditor(QString command) fail to send: " << socket.errorString();
+        //    return false;
+        //}
+        socket.waitForBytesWritten(10000);
         QThread::msleep(100);
         socket.close();
+        qDebug() << "Bytes sent: " <<command;
+        return true;
     }
     else
     {
-        qDebug() << "sendToEditor(QString command)" << socket.errorString();
+        qDebug() << "sendToEditor(QString command) fail to connect: " << socket.errorString();
+        return false;
     }
 }
 
@@ -120,21 +132,21 @@ void EditorPipe::run()
  */
 void EditorPipe::exec()
 {
-    loop:
+    //loop:
     while(server->isListening())
     {
         msleep(100);
         if(!server->waitForNewConnection(100))
-            {
-                QString msg = server->errorString();
-                if(!msg.isEmpty())
-                qDebug() << "exec()" << msg;
-            }
+        {
+            QString msg = server->errorString();
+            if(!msg.isEmpty())
+            qDebug() << "exec()" << msg;
+        }
 
 
         for(int i = 0; i < clients.size(); ++i)
         {
-            if(clients[i]->waitForReadyRead(100))
+            if(clients[i]->waitForReadyRead(1000))
             {
                 QByteArray data = clients[i]->readAll();
                 QString acceptedData = QString::fromUtf8(data);
@@ -159,12 +171,11 @@ void EditorPipe::exec()
 
                     QByteArray toClient = QString("READY\n\n").toUtf8();
                     clients[i]->write(toClient);
-                    clients[i]->flush();
-                    if(clients[i]->waitForBytesWritten(100))
+                    if(clients[i]->waitForBytesWritten(1000))
                         qDebug() << "'Ready' sent";
                     else
-                        qDebug() << "Fail to send 'Ready'";
-
+                        qDebug() << "Fail to send 'Ready': "
+                                 << clients[i]->errorString();
                 }
                 else
                 if(acceptedData=="PARSE_LVLX\n\n")
@@ -178,21 +189,21 @@ void EditorPipe::exec()
                 if(acceptedData=="PING\n\n")
                 {
                     QByteArray toClient = QString("PONG\n\n").toUtf8();
+                    clients[i]->reset();
                     clients[i]->write(toClient);
-                    clients[i]->flush();
-                    if(clients[i]->waitForBytesWritten(100))
+                    if(clients[i]->waitForBytesWritten(1000))
                         qDebug() << "sent";
                     else
-                        qDebug() << "error";
+                        qDebug() << "error"
+                                 << clients[i]->errorString();
 
                     qDebug()<< "Ping-Pong!";
                 }
             }
         }
     }
-    qDebug() << "Listen " << server->isListening() << LOCAL_SERVER_NAME;
-    msleep(100);
-    goto loop;
+    //qDebug() << "Listen " << server->isListening() << LOCAL_SERVER_NAME;
+    //goto loop;
 }
 
 
