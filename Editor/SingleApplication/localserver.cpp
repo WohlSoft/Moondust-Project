@@ -169,56 +169,55 @@ void LocalServer::onCMD(QString data)
   {
     data.remove("CMD:");
 
+    qDebug()<<"Accepted data: "+data;
+
     QStringList commands;
     commands << "showUp";
     commands << "CONNECT_TO_ENGINE";
     commands << "ENGINE_CLOSED";
 
-      switch(commands.indexOf(data)){
-        case 0:
+    if(MainWinConnect::pMainWin->continueLoad)
+        switch(commands.indexOf(data))
         {
-              if(!MainWinConnect::pMainWin->continueLoad) break;
-
-              emit showUp();
-              qApp->setActiveWindow(MainWinConnect::pMainWin);
-              if(!MainWinConnect::pMainWin->isMaximized())
+            case 0:
+            {
+                emit showUp();
+                qApp->setActiveWindow(MainWinConnect::pMainWin);
+                if(!MainWinConnect::pMainWin->isMaximized())
                 MainWinConnect::pMainWin->showNormal();
-              else
+                else
                 MainWinConnect::pMainWin->showMaximized();
-              MainWinConnect::pMainWin->raise();
-              break;
+                MainWinConnect::pMainWin->raise();
+                break;
+            }
+            case 1:
+            {
+                if(!IntEngine::isWorking())
+                {
+                    LevelData tmp = IntEngine::testBuffer;
+                    IntEngine::init(&tmp);
+                }
+                MainWinConnect::pMainWin->showMinimized();
+                IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
+                break;
+            }
+            case 2:
+            {
+                MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
+                                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
+                                                          |Qt::WindowActive);
+                qApp->setActiveWindow(MainWinConnect::pMainWin);
+                if(MainWinConnect::pMainWin->activeChildWindow()==1)
+                {
+                    MainWinConnect::pMainWin->activeLvlEditWin()->setFocus();
+                    MainWinConnect::pMainWin->activeLvlEditWin()->raise();
+                }
+                IntEngine::quit();
+                break;
+            }
+            default:
+              emit acceptedCommand(data);
         }
-        case 1:
-        {
-              if(!MainWinConnect::pMainWin->continueLoad) break;
-
-              MainWinConnect::pMainWin->showMinimized();
-              qApp->setActiveWindow(MainWinConnect::pMainWin);
-              if(MainWinConnect::pMainWin->activeChildWindow()==1)
-              {
-                  IntEngine::engineSocket->sendLevelData(
-                         MainWinConnect::pMainWin->activeLvlEditWin()->LvlData
-                     );
-              }
-              break;
-        }
-        case 2:
-        {
-              if(!MainWinConnect::pMainWin->continueLoad) break;
-
-              MainWinConnect::pMainWin->showNormal();
-              qApp->setActiveWindow(MainWinConnect::pMainWin);
-              if(MainWinConnect::pMainWin->activeChildWindow()==1)
-              {
-                  MainWinConnect::pMainWin->activeLvlEditWin()->setFocus();
-                  MainWinConnect::pMainWin->activeLvlEditWin()->raise();
-              }
-              IntEngine::quit();
-              break;
-        }
-        default:
-          emit acceptedCommand(data);
-      }
   }
   else
       emit acceptedCommand(data);

@@ -129,6 +129,7 @@ call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\fontman" %TARGETDIR%\Engine\fontma
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\physics\engine" %TARGETDIR%\Engine\physics\engine
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\scenes" %TARGETDIR%\Engine\scenes
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\scenes\level" %TARGETDIR%\Engine\scenes\level
+call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\scenes\intro" %TARGETDIR%\Engine\scenes\intro
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\controls" %TARGETDIR%\Engine\controls
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\common_features" %TARGETDIR%\Engine\common_features
 call :UpdateFilrsInDirDir "%SOURCEDIR%\Engine\networking" %TARGETDIR%\Engine\networking

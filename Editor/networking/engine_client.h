@@ -36,8 +36,9 @@ public:
     ~EngineClient();
 
     void sendLevelData(LevelData _data);
-    void sendCommand(QString command);
+    bool sendCommand(QString command);
     void OpenConnection();
+    void closeConnection();
     bool isConnected();
 
 protected:
