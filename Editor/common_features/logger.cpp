@@ -116,11 +116,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
     switch (type)
     {
         case QtDebugMsg:
-            if(logLevel==QtFatalMsg) return;
+            if(logLevel==QtWarningMsg) return;
         case QtWarningMsg:
             if(logLevel==QtCriticalMsg) return;
         case QtCriticalMsg:
-            if(logLevel==QtWarningMsg) return;
+            if(logLevel==QtFatalMsg) return;
         case QtFatalMsg:
             break;
     }
@@ -194,10 +194,12 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
-void WriteToLog(QtMsgType type, QString msg)
+void WriteToLog(QtMsgType type, QString msg, bool noConsole)
 {
     LogWriter::WriteToLog(type, msg);
 
+    if(noConsole)
+        return;
     if(!DevConsole::isConsoleShown())
         return;
 

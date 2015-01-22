@@ -380,6 +380,8 @@ int LevelScene::exec()
     bool running = true;
     int doUpdate_render=0;
     float doUpdate_physics=0;
+    isLevelContinues=true;
+    doExit=false;
     while(running)
     {
 
