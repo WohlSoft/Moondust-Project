@@ -76,6 +76,7 @@ macx: {
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
+win32: LIBS += libwinmm
 
 #DEFINES += USE_QMEDIAPLAYER
 DEFINES += PGE_EDITOR
