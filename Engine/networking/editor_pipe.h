@@ -39,16 +39,19 @@ protected:
 
 signals:
     void dataReceived(QString data);
-    void privateDataReceived(QString data);
+    void privateDataReceived(QString data, QLocalSocket *client);
     void showUp();
     void openFile(QString path);
 
 private slots:
     void slotNewConnection();
-    void slotOnData(QString data);
+    void slotReadClientData();
+    void slotOnData(QString data, QLocalSocket *client);
+    void icomingData(QString in, QLocalSocket *client);
     void displayError(QLocalSocket::LocalSocketError socketError);
 
 private:
+    QString buffer;
     QLocalServer* server;
     QVector<QLocalSocket*> clients;
 };
