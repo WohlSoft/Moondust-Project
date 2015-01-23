@@ -26,13 +26,6 @@
 TitleScene::TitleScene()
 {
     _waitTimer=5000;
-
-    /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
-    /*********Fader*************/
 }
 
 TitleScene::~TitleScene()
@@ -47,14 +40,6 @@ TitleScene::~TitleScene()
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
     imgs.clear();
-
-    if(fader_timer_id)
-        SDL_RemoveTimer(fader_timer_id);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
-    //Clear screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Reset modelview matrix
-    glLoadIdentity();
 }
 
 void TitleScene::init()
@@ -172,17 +157,7 @@ void TitleScene::render()
         glDisable(GL_TEXTURE_2D);
     }
 
-    if(fader_opacity>0.0f)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
-        glBegin( GL_QUADS );
-            glVertex2f( 0, 0);
-            glVertex2f( PGE_Window::Width, 0);
-            glVertex2f( PGE_Window::Width, PGE_Window::Height);
-            glVertex2f( 0, PGE_Window::Height);
-        glEnd();
-    }
+    Scene::render();
 }
 
 int TitleScene::exec()
@@ -260,40 +235,3 @@ int TitleScene::exec()
     }
     return 0;
 }
-
-
-
-
-
-
-
-/**************************Fader*******************************/
-void TitleScene::setFade(int speed, float target, float step)
-{
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fader_timer_id = SDL_AddTimer(speed, &TitleScene::nextOpacity, this);
-}
-
-unsigned int TitleScene::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    TitleScene *self = reinterpret_cast<TitleScene *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void TitleScene::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &TitleScene::nextOpacity, this);
-}
-/**************************Fader**end**************************/

@@ -23,40 +23,6 @@
 #include "../../networking/intproc.h"
 
 
-/**************************Fader*******************************/
-void LevelScene::setFade(int speed, float target, float step)
-{
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fader_timer_id = SDL_AddTimer(speed, &LevelScene::nextOpacity, this);
-}
-
-unsigned int LevelScene::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    LevelScene *self = reinterpret_cast<LevelScene *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void LevelScene::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &LevelScene::nextOpacity, this);
-}
-/**************************Fader**end**************************/
-
-
-
-
 /**************************LoadAnimation*******************************/
 namespace lvl_scene_loader
 {

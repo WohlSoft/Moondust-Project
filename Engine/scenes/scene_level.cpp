@@ -355,17 +355,7 @@ void LevelScene::render()
 
     renderBlack:
 
-    if(fader_opacity>0.0f)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
-        glBegin( GL_QUADS );
-            glVertex2f( 0, 0);
-            glVertex2f( PGE_Window::Width, 0);
-            glVertex2f( PGE_Window::Width, PGE_Window::Height);
-            glVertex2f( 0, PGE_Window::Height);
-        glEnd();
-    }
+    Scene::render();
 
     if(IsLoaderWorks) drawLoader();
 }
