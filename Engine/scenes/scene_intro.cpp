@@ -37,6 +37,7 @@ void IntroScene::update()
 void IntroScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     //Reset modelview matrix
     glLoadIdentity();
 //    glDisable(GL_TEXTURE_2D);
@@ -116,17 +117,23 @@ int IntroScene::exec()
     bool doExit=false;
 
     menu.clear();
-    menu.addMenuItem("1", "Menuitem 1");
-    menu.addMenuItem("2", "Menuitem 2");
-    menu.addMenuItem("3", "Menuitem 3");
-    menu.addMenuItem("4", "Menuitem 4");
-    menu.addMenuItem("5", "Menuitem 5");
-    menu.addMenuItem("6", "Menuitem about crap");
+    menu.addMenuItem("game1p", "1 Player Game");
+    menu.addMenuItem("game2p", "2 Player Game");
+    menu.addMenuItem("gamebt", "Battle Game");
+    menu.addMenuItem("Options", "Options");
+    menu.addMenuItem("Exit", "Exit");
+    menu.addMenuItem("1", "Hi everybody!");
+    menu.addMenuItem("2", "Ich bin GLÜCKLICH!");
+    menu.addMenuItem("3", "Кое-что по-русски");
+    menu.addMenuItem("4", "Menuitem ⑨");
     menu.addMenuItem("7", "Menuitem about money");
+    menu.addMenuItem("6", "Menuitem about crap");
     menu.addMenuItem("8", "Menuitem about skunks");
     menu.addMenuItem("9", "he-he-he");
     menu.addMenuItem("9", "Is fantasy unlimited?");
     menu.addMenuItem("10", "YES!");
+
+    menu.sort();
 
     while(running)
     {
@@ -198,7 +205,7 @@ int IntroScene::exec()
 
         if(!doExit)
         {
-            if(menu.itemWasSelected())
+            if(menu.isSelected())
             {
                 if(menu.isAccepted())
                 {

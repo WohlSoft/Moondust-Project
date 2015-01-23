@@ -30,8 +30,7 @@ PGE_Menu::PGE_Menu()
     arrowDownViz=false;
     _EndSelection=false;
     _accept=false;
-    renderPos = QPoint(100,100);
-    menuItemRect = QRect(0,0, 400, 50);
+    menuRect = QRect(250,348, 400, 30);
 }
 
 PGE_Menu::~PGE_Menu()
@@ -45,7 +44,7 @@ void PGE_Menu::addMenuItem(QString value, QString title)
     item.value = value;
     item.title = (title.isEmpty() ? value : title);
     item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, menuItemRect.width()*2, menuItemRect.height()*2),
+                                                  QRect(0,0, menuRect.width()*2, menuRect.height()*2),
                                                   Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap);
     _items.push_back(item);
 }
@@ -58,6 +57,7 @@ void PGE_Menu::clear()
         glDeleteTextures(1, &_items[i].textTexture );
     }
     _items.clear();
+    reset();
 }
 
 void PGE_Menu::selectUp()
@@ -119,15 +119,27 @@ void PGE_Menu::setItemsNumber(int q)
 
 void PGE_Menu::sort()
 {
-    for(int i=0; i+1<_items.size(); i++)
+    int count=0;
+    while(count<_items.size()-1)
     {
-        if(namefileLessThan(_items[i], _items[i+1]))
+        count=0;
+        for(int i=0; i+1<_items.size(); i++)
         {
-            _items.swap(i, i+1);
-            i=0;
+            count++;
+            if(namefileLessThan(_items[i], _items[i+1]))
+            {
+                _items.swap(i, i+1);
+                break;
+            }
         }
     }
 }
+
+bool PGE_Menu::namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2)
+{
+    return (QString::compare(d1.title, d2.title, Qt::CaseInsensitive)>0); // sort by title
+}
+
 
 void PGE_Menu::render()
 {
@@ -138,19 +150,19 @@ void PGE_Menu::render()
             glDisable(GL_TEXTURE_2D);
             glColor4f( 1.f, 1.f, 0.f, 1.0f);
             glBegin( GL_QUADS );
-                glVertex2f( renderPos.x()-20+0, renderPos.y()+0 + j*menuItemRect.height());
-                glVertex2f( renderPos.x()-20+10, renderPos.y()+0 + j*menuItemRect.height());
-                glVertex2f( renderPos.x()-20+10, renderPos.y()+10 + j*menuItemRect.height());
-                glVertex2f( renderPos.x()-20+0, renderPos.y()+10 + j*menuItemRect.height());
+                glVertex2f( menuRect.x()-20+0, menuRect.y()+0 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+10, menuRect.y()+0 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+10, menuRect.y()+10 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+0, menuRect.y()+10 + j*menuRect.height());
             glEnd();
         }
-        FontManager::SDL_string_render2D(renderPos.x(),
-                                        renderPos.y() + j*menuItemRect.height(),
+        FontManager::SDL_string_render2D(menuRect.x(),
+                                        menuRect.y() + j*menuRect.height(),
                                         &_items[i].textTexture);
     }
 }
 
-bool PGE_Menu::itemWasSelected()
+bool PGE_Menu::isSelected()
 {
     return _EndSelection;
 }
@@ -158,6 +170,15 @@ bool PGE_Menu::itemWasSelected()
 bool PGE_Menu::isAccepted()
 {
     return _accept;
+}
+
+void PGE_Menu::reset()
+{
+    _EndSelection=false;
+    _accept=false;
+    _offset=0;
+    _line=0;
+    _currentItem=0;
 }
 
 const PGE_Menuitem PGE_Menu::currentItem()
@@ -173,9 +194,70 @@ const PGE_Menuitem PGE_Menu::currentItem()
     }
 }
 
-bool PGE_Menu::namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2)
+int PGE_Menu::currentItemI()
 {
-    return d1.title<d2.title; // sort by title
+    return _currentItem;
+}
+
+void PGE_Menu::setCurrentItem(int i)
+{
+    if((i>0)&&(i<_items.size()-1))
+    {
+        _currentItem=i;
+    }
+}
+
+int PGE_Menu::line()
+{
+    return _line;
+}
+
+void PGE_Menu::setLine(int ln)
+{
+    if((ln>=0) && (ln<_itemsOnScreen))
+        _line = ln;
+    else
+        _line = _itemsOnScreen/2;
+}
+
+int PGE_Menu::offset()
+{
+    return _offset;
+}
+
+void PGE_Menu::setOffset(int of)
+{
+    if((of>=0)&&(of< (_items.size()-_itemsOnScreen)))
+       _offset=of;
+    else
+        _offset=0;
+}
+
+void PGE_Menu::setPos(int x, int y)
+{
+    menuRect.setX(x);
+    menuRect.setY(y);
+}
+
+void PGE_Menu::setPos(QPoint p)
+{
+    menuRect.setTopLeft(p);
+}
+
+void PGE_Menu::setSize(int w, int h)
+{
+    menuRect.setWidth(w);
+    menuRect.setHeight(h);
+}
+
+void PGE_Menu::setSize(QSize s)
+{
+    menuRect.setSize(s);
+}
+
+QRect PGE_Menu::rect()
+{
+    return menuRect;
 }
 
 PGE_Menuitem::PGE_Menuitem()
