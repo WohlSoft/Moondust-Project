@@ -4,6 +4,7 @@ Editor 0.2.2.1
 - Added update checking
 - Better history manager
 - Added support of user specific settings and logs
+- Interprocess communication system is fixed for Linux and Windows systems!
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

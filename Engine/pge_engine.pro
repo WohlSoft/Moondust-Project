@@ -162,7 +162,8 @@ SOURCES += main.cpp \
     fontman/font_manager.cpp \
     networking/editor_pipe.cpp \
     networking/intproc.cpp \
-    scenes/intro/pge_menu.cpp
+    scenes/intro/pge_menu.cpp \
+    common_features/logger.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -264,7 +265,9 @@ HEADERS  += \
     fontman/font_manager.h \
     networking/editor_pipe.h \
     networking/intproc.h \
-    scenes/intro/pge_menu.h
+    scenes/intro/pge_menu.h \
+    common_features/logger.h \
+    common_features/logger_sets.h
 
 FORMS    += \
     data_configs/select_config.ui

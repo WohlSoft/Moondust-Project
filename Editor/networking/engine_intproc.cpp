@@ -53,8 +53,6 @@ void IntEngine::init(LevelData *lvlData)
         qDebug() << "Installing new engine socket";
         if(!engineSocket) engineSocket = new EngineClient();
         qDebug() << "Starting session";
-        engineSocket->closeConnection();
-        engineSocket->OpenConnection();
         engineSocket->start();
         qDebug() << "done";
     }
@@ -62,21 +60,20 @@ void IntEngine::init(LevelData *lvlData)
 
 void IntEngine::quit()
 {
+    qDebug() << "isWorking check";
     if(isWorking())
     {
+        qDebug() << "closeConnection call";
         engineSocket->closeConnection();
-        engineSocket->quit();
-        engineSocket->wait(100);
-        engineSocket->terminate();
-        //delete engineSocket;
-        //engineSocket = NULL;
+        qDebug() << "done";
     }
 }
 
 bool IntEngine::isWorking()
 {
     bool isRuns=false;
-    isRuns = ((engineSocket!=NULL) && (engineSocket->isRunning()));
+    isRuns = (engineSocket!=NULL); if(!isRuns) return false;
+    isRuns = (engineSocket->isRunning());
     return isRuns;
 }
 
