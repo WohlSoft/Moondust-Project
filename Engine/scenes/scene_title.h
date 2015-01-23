@@ -23,9 +23,6 @@
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
 
-#include <SDL2/SDL_opengl.h>
-#include <SDL2/SDL_timer.h>
-
 #include "scene.h"
 
 struct TitleScene_misc_img
@@ -47,17 +44,6 @@ public:
     void setWaitTime(unsigned int time);
     void render();
     int exec();
-
-    /**************Fader**************/
-    float fader_opacity;
-    float target_opacity;
-    float fade_step;
-    int fadeSpeed;
-    void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
-    void fadeStep();
-    SDL_TimerID fader_timer_id;
-    /**************Fader**************/
 
 private:
     unsigned int _waitTimer;

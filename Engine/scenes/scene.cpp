@@ -17,10 +17,18 @@
  */
 
 #include "scene.h"
+#include <QString>
+#include <graphics/window.h>
 
 Scene::Scene()
 {
     sceneType = _Unknown;
+    /*********Fader*************/
+    fader_opacity=1.0f;
+    target_opacity=1.0f;
+    fade_step=0.0f;
+    fadeSpeed=25;
+    /*********Fader*************/
 }
 
 Scene::Scene(TypeOfScene _type)
@@ -29,13 +37,33 @@ Scene::Scene(TypeOfScene _type)
 }
 
 Scene::~Scene()
-{}
+{
+    if(fader_timer_id)
+        SDL_RemoveTimer(fader_timer_id);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
+}
 
 void Scene::update()
 {}
 
 void Scene::render()
-{}
+{
+    if(fader_opacity>0.0f)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
+        glBegin( GL_QUADS );
+            glVertex2f( 0, 0);
+            glVertex2f( PGE_Window::Width, 0);
+            glVertex2f( PGE_Window::Width, PGE_Window::Height);
+            glVertex2f( 0, PGE_Window::Height);
+        glEnd();
+    }
+}
 
 int Scene::exec()
 {
@@ -46,3 +74,35 @@ Scene::TypeOfScene Scene::type()
 {
     return sceneType;
 }
+
+
+/**************************Fader*******************************/
+void Scene::setFade(int speed, float target, float step)
+{
+    fade_step = fabs(step);
+    target_opacity = target;
+    fadeSpeed = speed;
+    fader_timer_id = SDL_AddTimer(speed, &Scene::nextOpacity, this);
+}
+
+unsigned int Scene::nextOpacity(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    Scene *self = reinterpret_cast<Scene *>(p);
+    self->fadeStep();
+    return 0;
+}
+
+void Scene::fadeStep()
+{
+    if(fader_opacity < target_opacity)
+        fader_opacity+=fade_step;
+    else
+        fader_opacity-=fade_step;
+
+    if(fader_opacity>=1.0 || fader_opacity<=0.0)
+        SDL_RemoveTimer(fader_timer_id);
+    else
+        fader_timer_id = SDL_AddTimer(fadeSpeed, &Scene::nextOpacity, this);
+}
+/**************************Fader**end**************************/
