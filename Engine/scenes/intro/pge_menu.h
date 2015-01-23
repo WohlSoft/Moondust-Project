@@ -21,11 +21,32 @@
 
 #include <QString>
 #include <QList>
+#include <QRect>
+#include <QPoint>
 
-struct PGE_Menuitem
+#undef main
+#include <SDL2/SDL_opengl.h>
+#undef main
+
+class PGE_Menuitem
 {
+public:
+    PGE_Menuitem();
+    ~PGE_Menuitem();
+    PGE_Menuitem(const PGE_Menuitem &_it);
+    PGE_Menuitem operator=(const PGE_Menuitem &_it)
+    {
+        this->title = _it.title;
+        this->value = _it.value;
+        this->textTexture = _it.textTexture;
+        return *this;
+    }
+
     QString title;
     QString value;
+private:
+    GLuint textTexture;
+    friend class PGE_Menu;
 };
 
 class PGE_Menu
@@ -46,16 +67,24 @@ public:
     void setItemsNumber(int q);
 
     void sort();
+    void render();
 
     bool itemWasSelected();
-    PGE_Menuitem currentItem();
+    bool isAccepted();
+    const PGE_Menuitem currentItem();
 
 private:
+    QPoint renderPos;
+    QRect menuItemRect;
+
     int _itemsOnScreen;
     int _currentItem;
+    int _line;
+    int _offset;
     bool arrowUpViz;
     bool arrowDownViz;
-    bool menuItemSeelcted;
+    bool _EndSelection;
+    bool _accept;
     QList<PGE_Menuitem > _items;
     bool namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2);
 

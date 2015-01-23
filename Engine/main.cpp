@@ -48,6 +48,7 @@
 
 #include "scenes/scene_level.h"
 #include "scenes/scene_title.h"
+#include "scenes/scene_intro.h"
 
 #include <Box2D/Box2D.h>
 
@@ -229,7 +230,12 @@ GameOverScreen:
 
 MainMenu:
 {
-
+    IntroScene * iScene = new IntroScene();
+    iScene->setFade(25, 0.0f, 0.05f);
+    int answer = iScene->exec();
+    delete iScene;
+    if(answer<0) goto ExitFromApplication;
+    goto PlayLevel;
 }
 
 
