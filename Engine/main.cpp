@@ -29,6 +29,7 @@
 
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
+#include "common_features/logger.h"
 
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
@@ -82,6 +83,9 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
+
+    //Init log writer
+    LoadLogSettings();
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
