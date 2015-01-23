@@ -63,19 +63,33 @@ public:
     void selectDown();
     void acceptItem();
     void rejectItem();
+    void reset();
 
     void setItemsNumber(int q);
 
     void sort();
     void render();
 
-    bool itemWasSelected();
+    bool isSelected();
     bool isAccepted();
     const PGE_Menuitem currentItem();
+    int currentItemI();
+    void setCurrentItem(int i);
+    int line();
+    void setLine(int ln);
+    int offset();
+    void setOffset(int of);
+
+    //Position and size Rectangle
+    QRect rect();
+    void setPos(int x, int y);
+    void setPos(QPoint p);
+    void setSize(int w, int h);
+    void setSize(QSize s);
 
 private:
-    QPoint renderPos;
-    QRect menuItemRect;
+    //QPoint renderPos;
+    QRect menuRect;
 
     int _itemsOnScreen;
     int _currentItem;
