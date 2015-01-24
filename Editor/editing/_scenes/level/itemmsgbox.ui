@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>241</height>
+    <width>438</width>
+    <height>264</height>
    </rect>
   </property>
   <property name="font">
@@ -36,7 +36,7 @@
      </property>
      <property name="text">
       <string>Please, enter NPC's talkative message
-Message limits: max line lenth is 28 characters</string>
+Message limits: max line lenth is 27 characters</string>
      </property>
     </widget>
    </item>
@@ -44,7 +44,7 @@ Message limits: max line lenth is 28 characters</string>
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="minimumSize">
       <size>
-       <width>434</width>
+       <width>420</width>
        <height>162</height>
       </size>
      </property>
@@ -75,7 +75,7 @@ color: rgb(255, 255, 255);</string>
       <bool>false</bool>
      </property>
      <property name="plainText">
-      <string notr="true">XxXxXxXxXxXxXxXxXxXxXxXxXxXYYYYYYYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZZZZZZ</string>
+      <string notr="true">XxXxXxXxXxXxXxXxXxXxXxXxXxYYYYYYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZZZZZ</string>
      </property>
      <property name="maximumBlockCount">
       <number>28</number>
