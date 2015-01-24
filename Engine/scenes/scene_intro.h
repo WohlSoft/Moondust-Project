@@ -24,6 +24,7 @@
 #include <QStack>
 #include "scene.h"
 #include "intro/pge_menu.h"
+#include <common_features/pge_texture.h>
 
 typedef QPair<int, int > menustate;
 
@@ -31,6 +32,7 @@ class IntroScene : public Scene
 {
 public:
     IntroScene();
+    ~IntroScene();
     void update();
     void render();
     void renderMouse();
@@ -60,11 +62,13 @@ public:
 
 private:
     QPoint mousePos;
-    bool offscreen;
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
     QMap<CurrentMenu, menustate> menustates;
     QStack<int > menuChain;
+
+    PGE_Texture cursor;
+    bool _cursorIsLoaded;
 };
 
 #endif // SCENE_INTRO_H

@@ -248,12 +248,12 @@ void LVL_Block::render(float camX, float camY)
             hc=0;
             for(i=0; i< ( (w-(x2)) / x); i++ )
             {
-                drawPiece(blockG, QRectF(x+hc, h-y+dY, x, y-dY), QRectF(x, texture.w-y+dY, x, y-dY));
+                drawPiece(blockG, QRectF(x+hc, h-y+dY, x, y-dY), QRectF(x, texture.h-y+dY, x, y-dY));
                     hc+=x;
             }
                 fLnt = (w-(x2))%x;
                 if( fLnt != 0)
-                    drawPiece(blockG, QRectF(x+hc, h-y+dY, fLnt, y-dY), QRectF(x, texture.w-y+dY, fLnt, y-dY));
+                    drawPiece(blockG, QRectF(x+hc, h-y+dY, fLnt, y-dY), QRectF(x, texture.h-y+dY, fLnt, y-dY));
         }
 
         //R Draw right border
