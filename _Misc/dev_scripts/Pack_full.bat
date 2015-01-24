@@ -66,11 +66,9 @@ rem Updating of basic config pack
 "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_full.zip %packConfig%
 "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_lite.zip %packConfigLite%
 
-rem for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
-rem set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%:%ldt:~10,2%:%ldt:~12,2%
-rem echo %ldt% > "%SOURCEDIR%"\_Misc\versions\editor_dev.txt
-
-copy "%SOURCEDIR%"\_Misc\versions\*.txt "%LabDir%\_versions"
+for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 2^>NUL`) do if '.%%i.'=='.LocalDateTime.' set ldt=%%j
+set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2% %ldt:~8,2%:%ldt:~10,2%:%ldt:~12,2%
+echo %ldt% > "%LabDir%\_versions\editor_dev.txt"
 
 echo copy updated archives to Google Drive
 copy %LabDir%\pge_editor_dev.zip "%G_DRIVE%\_laboratory\"
