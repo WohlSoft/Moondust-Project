@@ -34,6 +34,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QSplashScreen>
+#include <QWinThumbnailToolBar>
 
 #include <file_formats/lvl_filedata.h>
 #include <file_formats/wld_filedata.h>
@@ -103,6 +104,7 @@ public:
  * - Music Player
  * - Bookmarks
  * - Windows Extras
+ * - Latest Active Window (See cpp file for comments)
  *
  * Level Editing
  * - Level Properties
@@ -281,6 +283,7 @@ public:
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
         ///
         int activeChildWindow();
+        int activeChildWindow(QMdiSubWindow* wnd);
         LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
         NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
@@ -519,8 +522,22 @@ public:
 // ////////////////// Windows Extras //////////////////////
     public:
         void initWindowsThumbnail();
+    public slots:
+        void updateWindowsThumbnailPixmap();
+        void drawDefaultThumb();
+    private:
+        QWinThumbnailToolBar* pge_thumbbar;
 // ////////////////////////////////////////////////////////
 #endif
+
+// /////////////// Latest Active Window ///////////////////
+    public slots:
+        void recordSwitchedWindow(QMdiSubWindow * window);
+        void recordRemovedWindow(QObject* possibleDeletedWindow);
+    private:
+        QMdiSubWindow* latest;
+// ////////////////////////////////////////////////////////
+
 
 // ////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////Level Editing///////////////////////////////////////
