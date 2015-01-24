@@ -20,6 +20,9 @@
 #include <QSettings>
 #include <QCryptographicHash>
 #include <stdexcept>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
 #include <common_features/app_path.h>
 #include <common_features/mainwinconnect.h>
@@ -39,12 +42,13 @@ void DevConsole::init()
 
     currentDevConsole = new DevConsole();
 
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
     settings.endGroup();
+
 }
 
 void DevConsole::show()
@@ -98,7 +102,28 @@ DevConsole::DevConsole(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(windowFlags() | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     connect(ui->button_cl_sysLog, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
+    connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(update()));
     registerCommands();
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+        QtWin::enableBlurBehindWindow(this);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+    }
+    #endif
+    if(!hasFocus()) setWindowOpacity(0.9);
 }
 
 DevConsole::~DevConsole()
@@ -108,6 +133,9 @@ DevConsole::~DevConsole()
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
+    if(MainWinConnect::pMainWin->isMinimized())
+        return;
+
     QString target_channel = channel;
 
     if(channel=="System") //Prevent creation another "system" tab if switched another UI language
@@ -178,7 +206,7 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
@@ -188,6 +216,15 @@ void DevConsole::closeEvent(QCloseEvent *event)
 }
 
 
+void DevConsole::focusInEvent(QFocusEvent *)
+{
+     setWindowOpacity(1.0);
+}
+
+void DevConsole::focusOutEvent(QFocusEvent *)
+{
+     setWindowOpacity(0.9);
+}
 
 void DevConsole::on_button_send_clicked()
 {

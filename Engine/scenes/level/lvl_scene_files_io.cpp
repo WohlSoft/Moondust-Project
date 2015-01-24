@@ -50,7 +50,11 @@ bool LevelScene::loadFileIP()
 
     data.ReadFileValid = false;
 
-    IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE");
+    if(!IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE"))
+    {
+        errorMsg += "Editor is not started!\n";
+        return false;
+    }
 
     QElapsedTimer time;
     time.start();
@@ -60,6 +64,9 @@ bool LevelScene::loadFileIP()
     while(!IntProc::editor->levelIsLoad())
     {
         loaderStep();
+        //Abort loading process and exit from game if window was closed
+        if(!isLevelContinues) return false;
+
         qApp->processEvents();
         if(time.elapsed()>10000)
         {

@@ -25,6 +25,12 @@
 QT       += gui widgets network
 QT       -= opengl
 
+win32: {
+QT += winextras
+} else {
+QT -= winextras
+}
+
 DESTDIR = ../bin
 
 static: {
@@ -63,10 +69,16 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
-LIBS += -lSDL2 -lSDL2_mixer
+macx: {
+    INCLUDEPATH += -F$$(HOME)/Library/Frameworks
+    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+} else {
+    LIBS += -lSDL2 -lSDL2_mixer
+}
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
+win32: LIBS += libwinmm
 
 #DEFINES += USE_QMEDIAPLAYER
 DEFINES += PGE_EDITOR
@@ -231,14 +243,11 @@ SOURCES += main.cpp\
     main_window/about_dialog/aboutdialog.cpp \
     main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
-    main_window/dock/lvl_door_props.cpp \
     main_window/dock/lvl_events_props.cpp \
-    main_window/dock/lvl_item_props.cpp \
     main_window/dock/lvl_item_toolbox.cpp \
     main_window/dock/lvl_layers_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_search_toolbox.cpp \
-    main_window/dock/tileset_item_box.cpp \
     main_window/dock/wld_item_props.cpp \
     main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_search_toolbox.cpp \
@@ -347,7 +356,13 @@ SOURCES += main.cpp\
     main_window/updater/check_updates.cpp \
     editing/_components/history/historyelementmodification.cpp \
     editing/_components/history/ihistoryelement.cpp \
-    editing/_components/history/itemsearcher.cpp
+    editing/_components/history/itemsearcher.cpp \
+    main_window/dock/tileset_item_box.cpp \
+    common_features/app_path.cpp \
+    common_features/installer.cpp \
+    main_window/dock/lvl_item_properties.cpp \
+    main_window/windows_extras.cpp \
+    main_window/dock/lvl_warp_props.cpp
     
 
 HEADERS  += defines.h \
@@ -433,7 +448,6 @@ HEADERS  += defines.h \
     file_formats/wld_filedata.h \
     main_window/global_settings.h \
     main_window/about_dialog/aboutdialog.h \
-    main_window/dock/tileset_item_box.h \
     networking/engine_client.h \
     networking/engine_intproc.h \
     script/scriptholder.h \
@@ -486,7 +500,13 @@ HEADERS  += defines.h \
     main_window/updater/check_updates.h \
     main_window/updater/updater_links.h \
     editing/_components/history/historyelementmodification.h \
-    editing/_components/history/itemsearcher.h
+    editing/_components/history/itemsearcher.h \
+    main_window/dock/tileset_item_box.h \
+    main_window/dock/toolboxes.h \
+    main_window/dock/toolboxes_protos.h \
+    common_features/installer.h \
+    main_window/dock/lvl_item_properties.h \
+    main_window/dock/lvl_warp_props.h
 
 
 FORMS    += \
@@ -520,7 +540,10 @@ FORMS    += \
     editing/_dialogs/savingnotificationdialog.ui \
     main_window/file/wld_export_image.ui \
     tools/debugger/custom_counter_gui.ui \
-    main_window/updater/check_updates.ui
+    main_window/updater/check_updates.ui \
+    main_window/dock/tileset_item_box.ui \
+    main_window/dock/lvl_item_properties.ui \
+    main_window/dock/lvl_warp_props.ui
 
 
 

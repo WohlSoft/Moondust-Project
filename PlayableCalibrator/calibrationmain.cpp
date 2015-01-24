@@ -32,6 +32,7 @@
 
 #include "main/globals.h"
 #include "main/graphics.h"
+#include "main/app_path.h"
 
 #include "main/mw.h"
 
@@ -54,11 +55,11 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     frmX=0;
     frmY=0;
 
-    currentFile = "";//QApplication::applicationDirPath()+"/peach-2.gif";
+    currentFile = "";
 
     ui->setupUi(this);
 
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_calibrator.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
           LastOpenDir = settings.value("lastpath", ".").toString();
@@ -132,7 +133,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
 void CalibrationMain::closeEvent(QCloseEvent *event)
 {
-    QString config = QApplication::applicationDirPath() + "/" + "pge_calibrator.ini";
+    QString config = AppPathManager::settingsFile();
     QSettings opts(config, QSettings::IniFormat);
     opts.beginGroup("Main");
         opts.setValue("lastpath", LastOpenDir);
@@ -224,7 +225,7 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 bool CalibrationMain::on_OpenSprite_clicked()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
-            trUtf8("Open sprite file"),(LastOpenDir.isEmpty()? QApplication::applicationDirPath() : LastOpenDir),
+            trUtf8("Open sprite file"),(LastOpenDir.isEmpty()? AppPathManager::userAppDir() : LastOpenDir),
             tr("SMBX playble sprite (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;"
                "GIF images (*.gif);;"
                "PNG images (*.png);;"

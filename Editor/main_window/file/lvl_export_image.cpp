@@ -72,10 +72,10 @@ void LevelEdit::ExportingReady() //slot
 
         bool proportion;
         bool forceTiled=false;
-        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+        QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", ApplicationPath).toString();
+        latest_export_path = settings.value("export-path", AppPathManager::userAppDir()).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 

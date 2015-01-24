@@ -20,6 +20,7 @@
 #include <common_features/themes.h>
 #include <common_features/spash_screen.h>
 #include <data_configs/config_manager.h>
+#include <main_window/dock/toolboxes.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -29,7 +30,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui(new Ui::MainWindow)
 {
     continueLoad = false;
-    //thread1 = new QThread;
+
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
     this->hide();
@@ -146,6 +147,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setWldItemBoxes();
     setSoundList();
     WldLvlExitTypeListReset();
+    dock_TilesetBox->setTileSetBox(true);
 }
 
 MainWindow::~MainWindow()

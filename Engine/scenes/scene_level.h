@@ -171,16 +171,6 @@ public:
     double Z_sys_sctBorder; // section Border
     /**************Z-Layers**************/
 
-    /**************Fader**************/
-    float fader_opacity;
-    float target_opacity;
-    float fade_step;
-    int fadeSpeed;
-    void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
-    void fadeStep();
-    SDL_TimerID fader_timer_id;
-    /**************Fader**************/
 
     /**************LoadScreen**************/
     int loaderSpeed;

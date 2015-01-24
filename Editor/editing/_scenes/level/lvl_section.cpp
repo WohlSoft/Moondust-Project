@@ -17,6 +17,7 @@
  */
 
 #include <common_features/app_path.h>
+#include <common_features/themes.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -181,12 +182,12 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
     QGraphicsRectItem * itemRect=NULL;
     QBrush brush;
     QPen pen;
-    QPixmap image = QPixmap(ApplicationPath + "/" + "data/nobg.gif");
+    QPixmap image = Themes::Image(Themes::dummy_bg);
     QPixmap img;
     QPixmap img2; //Second image buffer
     //need a BGitem
 
-    bool isUser1=false, isUser2=false, noimage=false;
+    bool isUser1=false, isUser2=false, noimage=false, wrong=false;
     long x,y,h,w, j;
 
     if(
@@ -241,6 +242,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
                 WriteToLog(QtWarningMsg, "SetSectionBG-> Image not found");
                 #endif
                 img=image;
+                wrong=true;
             }
         }
         else noimage=true;
@@ -266,6 +268,8 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         }
         else
         {
+            if(wrong)
+                brush.setTexture(image);
             itemRect = new QGraphicsRectItem;
             itemRect->setPen(pen);
             itemRect->setBrush(brush);

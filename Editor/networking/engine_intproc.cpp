@@ -17,35 +17,76 @@
  */
 
 #include "engine_intproc.h"
+#include <file_formats/file_formats.h>
+#include <common_features/mainwinconnect.h>
 
 EngineClient * IntEngine::engineSocket=NULL;
+IntEngine *IntEngine_protector=NULL;
 
 IntEngine::IntEngine()
+{
+    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
+}
+
+IntEngine::~IntEngine()
 {}
 
-void IntEngine::init()
+
+LevelData IntEngine::testBuffer;
+
+void IntEngine::init(LevelData *lvlData)
 {
+    testBuffer = FileFormats::dummyLvlDataArray();
+
+    if(!IntEngine_protector)
+    {
+        IntEngine_protector = new IntEngine;
+        connect(MainWinConnect::pMainWin, SIGNAL(destroyed()), IntEngine_protector, SLOT(destroyEngine()));
+    }
+
+    if(lvlData)
+        testBuffer = (*lvlData);
+
+    qDebug() << "INIT Interprocessing...";
     if(!isWorking())
     {
-        if(engineSocket!=NULL) delete engineSocket;
-        engineSocket = new EngineClient();
+        qDebug() << "Installing new engine socket";
+        if(!engineSocket) engineSocket = new EngineClient();
+        qDebug() << "Starting session";
         engineSocket->start();
+        qDebug() << "done";
     }
 }
 
 void IntEngine::quit()
 {
+    qDebug() << "isWorking check";
     if(isWorking())
     {
-        engineSocket->exit();
-        delete engineSocket;
-        engineSocket = NULL;
+        qDebug() << "closeConnection call";
+        engineSocket->closeConnection();
+        qDebug() << "done";
     }
 }
 
 bool IntEngine::isWorking()
 {
     bool isRuns=false;
-    isRuns = (engineSocket!=NULL && !engineSocket->isConnected());
+    isRuns = (engineSocket!=NULL); if(!isRuns) return false;
+    isRuns = (engineSocket->isRunning());
     return isRuns;
+}
+
+void IntEngine::setTestLvlBuffer(LevelData &buffer)
+{
+    testBuffer = buffer;
+}
+
+void IntEngine::destroyEngine()
+{
+    if(engineSocket)
+    {
+        delete engineSocket;
+        engineSocket = NULL;
+    }
 }

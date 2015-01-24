@@ -23,6 +23,7 @@
 
 void MainWindow::save()
 {
+    qApp->setActiveWindow(this);
     bool saved=false;
     int WinType = activeChildWindow();
     if (WinType!=0)

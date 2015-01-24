@@ -20,11 +20,17 @@
 #define SCENE_INTRO_H
 
 #include "scene.h"
+#include "intro/pge_menu.h"
 
 class IntroScene : public Scene
 {
 public:
     IntroScene();
+    void update();
+    void render();
+    int exec();
+    PGE_Menu menu;
+    bool doExit;
 };
 
 #endif // SCENE_INTRO_H

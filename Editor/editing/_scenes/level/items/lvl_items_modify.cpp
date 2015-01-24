@@ -22,6 +22,7 @@
 #include <editing/edit_level/level_edit.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <file_formats/file_formats.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include "../lvl_scene.h"
 #include "item_block.h"
@@ -271,7 +272,7 @@ void LvlScene::placeAll(const LevelData &data)
     }
 
     if(hasToUpdateDoorData)
-        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
 
     //refresh Animation control
@@ -523,7 +524,7 @@ void LvlScene::placeItemUnderCursor()
                         placeDoorExit(door, false, false);
                     }
                 }
-                MainWinConnect::pMainWin->setDoorData(-2);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
                 break;
              }
             }
@@ -668,7 +669,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
                 historyBuffer.doors.push_back(doorData);
                 dynamic_cast<ItemDoor *>(*it)->removeFromArray();
                 if((*it)) delete (*it);
-                MainWinConnect::pMainWin->setDoorData(-2);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
                 deleted=true;
             }
             else

@@ -108,17 +108,21 @@ LevelScene::LevelScene()
     /*********Z-Layers*************/
 
     errorMsg = "";
-
-    qDebug() << 1000.0/(float)PGE_Window::PhysStep;
+    //qDebug() << 1000.0/(float)PGE_Window::PhysStep;
 }
 
 LevelScene::~LevelScene()
 {
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
+
     LvlSceneP::s = NULL;
     //stop animators
 
     //desroy animators
-
 
     //destroy textures
     qDebug() << "clear textures";
@@ -351,17 +355,7 @@ void LevelScene::render()
 
     renderBlack:
 
-    if(fader_opacity>0.0f)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
-        glBegin( GL_QUADS );
-            glVertex2f( 0, 0);
-            glVertex2f( PGE_Window::Width, 0);
-            glVertex2f( PGE_Window::Width, PGE_Window::Height);
-            glVertex2f( 0, PGE_Window::Height);
-        glEnd();
-    }
+    Scene::render();
 
     if(IsLoaderWorks) drawLoader();
 }
@@ -376,6 +370,8 @@ int LevelScene::exec()
     bool running = true;
     int doUpdate_render=0;
     float doUpdate_physics=0;
+    isLevelContinues=true;
+    doExit=false;
     while(running)
     {
 

@@ -18,6 +18,9 @@
 
 #include "aboutdialog.h"
 #include <ui_aboutdialog.h>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
 #include "../../version.h"
 
@@ -32,6 +35,18 @@ aboutDialog::aboutDialog(QWidget *parent) :
     #endif
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+        QtWin::enableBlurBehindWindow(this);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+    }
     #endif
 
     ui->About1->setText(ui->About1->text()

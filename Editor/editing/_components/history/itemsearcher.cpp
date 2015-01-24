@@ -1,5 +1,6 @@
 #include "itemsearcher.h"
 
+#include <main_window/dock/lvl_warp_props.h>
 #include <editing/_scenes/level/items/item_block.h>
 #include <editing/_scenes/level/items/item_bgo.h>
 #include <editing/_scenes/level/items/item_npc.h>
@@ -302,7 +303,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
                 }
             }
         }
-        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
+        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2); //update Door data
     }
 
     if(m_findFilter & ItemTypes::LVL_S_Player)

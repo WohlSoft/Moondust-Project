@@ -19,6 +19,7 @@
 #include <common_features/graphicsworkspace.h>
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/toolboxes.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -74,7 +75,7 @@ void MainWindow::updateMenus(bool force)
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 
-    ui->ItemProperties->setVisible(false);
+    dock_LvlItemProps->setVisible(false);
     ui->WLD_ItemProps->setVisible(false);
 
 
@@ -84,19 +85,19 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
         GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
 
-        GlobalSettings::LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
+        GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
         GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
         GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
         GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
 
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
-        ui->DoorsToolbox->setVisible( 0 );
+        dock_LvlWarpProps->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
         ui->FindDock->setVisible( 0 );
@@ -105,12 +106,12 @@ void MainWindow::updateMenus(bool force)
     {
         ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
         ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
-        ui->DoorsToolbox->setVisible( GlobalSettings::LevelDoorsBoxVis );
+        dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
 
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
@@ -120,7 +121,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
@@ -134,17 +135,17 @@ void MainWindow::updateMenus(bool force)
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
         ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
 
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
-        ui->Tileset_Item_Box->setVisible( 0 );
+        dock_TilesetBox->setVisible( 0 );
         ui->debuggerBox->setVisible( 0 );
         ui->bookmarkBox->setVisible( 0 );
     }
@@ -238,6 +239,7 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionAdditional_Settings->setEnabled( (WinType==1) );
 
+    ui->menuScript->setEnabled( WinType == 1 );
     ui->actionCompile_To->setEnabled( false );
     ui->menuSwitch_Compiler->setEnabled( false );
     if(WinType==1){
@@ -297,7 +299,7 @@ void MainWindow::updateMenus(bool force)
 
         SetCurrentLevelSection(0, 1);
 
-        setDoorsToolbox();
+        dock_LvlWarpProps->init();
         setLayersBox();
         setEventsBox();
 

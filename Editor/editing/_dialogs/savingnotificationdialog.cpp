@@ -18,18 +18,56 @@
 
 #include "savingnotificationdialog.h"
 #include <ui_savingnotificationdialog.h>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
-SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, QWidget *parent) :
+SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, DialogType dType, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SavingNotificationDialog)
 {
     ui->setupUi(this);
-    #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
+
+    if(parent)
+    {
+        this->setWindowIcon(parent->windowIcon());
+    }
+    else
+    {
+        #ifdef Q_OS_MAC
+        this->setWindowIcon(QIcon(":/cat_builder.icns"));
+        #endif
+        #ifdef Q_OS_WIN
+        this->setWindowIcon(QIcon(":/cat_builder.ico"));
+        #endif
+    }
+
     #ifdef Q_OS_WIN
-    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+        QtWin::enableBlurBehindWindow(this);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+    }
+
+    switch(dType)
+    {
+        case D_WARN:       PlaySound(L"SystemAsterisk", NULL, SND_ASYNC);break;
+        case D_QUESTION:   PlaySound(L"SystemQuestion", NULL, SND_ASYNC);break;
+    }
     #endif
+    switch(dType)
+    {
+        case D_WARN:       ui->icon->setPixmap(QPixmap(":/warn.png"));break;
+        case D_QUESTION:   ui->icon->setPixmap(QPixmap(":/question.png"));break;
+    }
+
+
     ui->button_Discard->setVisible(showDiscardButton);
 }
 

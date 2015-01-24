@@ -22,8 +22,12 @@
 #include <math.h>
 #include <QProcessEnvironment>
 #include <QByteArray>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#endif
 
 #include <common_features/app_path.h>
+#include <common_features/installer.h>
 #include <common_features/logger_sets.h>
 #include <common_features/logger.h>
 #include <common_features/themes.h>
@@ -43,6 +47,19 @@ AppSettings::AppSettings(QWidget *parent) :
     #endif
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QtWin::isCompositionEnabled())
+    {
+        this->setAttribute(Qt::WA_TranslucentBackground, true);
+        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+        QtWin::enableBlurBehindWindow(this);
+        ui->gridLayout->setMargin(0);
+    }
+    else
+    {
+        QtWin::resetExtendedFrame(this);
+        setAttribute(Qt::WA_TranslucentBackground, false);
+    }
     #endif
 
     QStringList themes=Themes::availableThemes();
@@ -211,100 +228,10 @@ void AppSettings::on_buttonBox_accepted()
 
 void AppSettings::on_AssociateFiles_clicked()
 {
+    bool success = Installer::associateFiles();
 
-    bool success = true;
-
-    #ifdef _WIN32
-        //QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
-        QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
-
-        // add template
-        WriteToLog(QtDebugMsg, registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvl"));
-        WriteToLog(QtDebugMsg, registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wld"));
-        //registry_hkcr
-        //QFile l(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.lvl"));
-        //QFile w(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.wld"));
-        QFile l(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvl"));
-        QFile w(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wld"));
-
-        success = l.open(QIODevice::WriteOnly);
-        if(success){
-            l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::dummyLvlDataArray()).toStdString().c_str()));
-            l.close();
-        }
-        success = w.open(QIODevice::WriteOnly);
-        if(success){
-            w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::dummyWldDataArray()).toStdString().c_str()));
-            w.close();
-        }
-
-
-        // file extension(s)
-        registry_hkcu.setValue("Software/Classes/.lvlx/Default", "PGEWohlstand.Level"); //Reserved
-        registry_hkcu.setValue("Software/Classes/.wldx/Default", "PGEWohlstand.World"); //Reserved
-        registry_hkcu.setValue("Software/Classes/.lvl/Default", "SMBX64.Level");
-        registry_hkcu.setValue("Software/Classes/.wld/Default", "SMBX64.World");
-
-        registry_hkcu.setValue("Software/Classes/.lvl/ShellNew/FileName", "sample.lvl");
-        registry_hkcu.setValue("Software/Classes/.wld/ShellNew/FileName", "sample.wld");
-        //registry_hkcr.setValue(".lvlx/Default", "PGWWohlstand.Level");
-        //registry_hkcr.setValue(".wldx/Default", "PGWWohlstand.World");
-
-
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Default", tr("PGE Level file", "File Types"));
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
-
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Default", tr("PGE World Map", "File Types"));
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",2");
-        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
-
-        registry_hkcu.setValue("Software/Classes/SMBX64.Level/Default", tr("SMBX Level file", "File Types"));
-        registry_hkcu.setValue("Software/Classes/SMBX64.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",3");
-        registry_hkcu.setValue("Software/Classes/SMBX64.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
-
-        registry_hkcu.setValue("Software/Classes/SMBX64.World/Default", tr("SMBX World Map", "File Types"));
-        registry_hkcu.setValue("Software/Classes/SMBX64.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",4");
-        registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
-
-        // User variable(s)
-        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
-
-    #elif defined __APPLE__
-        // only useful when other apps have taken precedence over our file extensions and you want to reset it
-    //Need write correct strings for allow associations for Mac OS:
-    /*
-        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>lvl</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
-        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>wld</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
-        system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
-     */
-    success=false; // remove this when associator was created
-    #else
-
-        // Here need correctly associate too
-      /*
-        // this is a little silly due to all the system commands below anyway - just use mkdir -p ?  Does have the advantage of the alert I guess
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime/packages");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/applications");
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars-mimeinfo.xml "+QDir::home().absolutePath()+"/.local/share/mime/packages").toLocal8Bit().constData())==0;
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hwengine.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
-        if (success) success = system(("update-mime-database "+QDir::home().absolutePath()+"/.local/share/mime").toLocal8Bit().constData())==0;
-        if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-level")==0;
-        if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-world")==0;
-        // hack to add user's settings to hwengine. might be better at this point to read in the file, append it, and write it out to its new home.  This assumes no spaces in the data dir path
-        if (success) success = system(("sed -i 's|^\\(Exec=.*\\) \\(%f\\)|\\1 \\2 |' "+QDir::home().absolutePath()+"/.local/share/applications/pge_editor.desktop").toLocal8Bit().constData())==0;
-      */
-    success=false; // remove this when associator was created
-    #endif
-        if (success)
-            QMessageBox::information(this, tr("Success"), tr("All file associations have been set"), QMessageBox::Ok);
-        else
-            QMessageBox::warning(this, tr("Error"), QMessageBox::tr("File association failed."), QMessageBox::Ok);
-
+    if (success)
+        QMessageBox::information(this, tr("Success"), tr("All file associations have been set"), QMessageBox::Ok);
+    else
+        QMessageBox::warning(this, tr("Error"), QMessageBox::tr("File association failed."), QMessageBox::Ok);
 }

@@ -18,15 +18,35 @@
  */
 
 #include <QtWidgets/QApplication>
+#include <QDesktopWidget>
 #include "calibrationmain.h"
+#include <main/app_path.h>
 
 int main(int argc, char *argv[])
 {
     QApplication::addLibraryPath(".");
     QApplication a(argc, argv);
+
+    AppPathManager::initAppPath();
+
+    foreach(QString arg, a.arguments())
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
+
+            QApplication::quit();
+            QApplication::exit();
+            return 0;
+        }
+    }
+
     CalibrationMain w;
 
     w.setWindowFlags(w.windowFlags() & ~(Qt::WindowMaximizeButtonHint));
+    w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+    w.size(), qApp->desktop()->availableGeometry(0)));
 
     if(!w.wasCanceled)
         w.show();

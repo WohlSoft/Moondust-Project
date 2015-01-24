@@ -55,6 +55,12 @@ QT_BEGIN_NAMESPACE
     class QMimeData;
 QT_END_NAMESPACE
 
+
+/*************************Dock widgets***************************/
+#include <main_window/dock/toolboxes_protos.h>
+/*************************Dock widgets*end***********************/
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -63,6 +69,12 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
+    /************************Friend classes***************************/
+    friend class TilesetItemBox;
+    friend class LvlItemProperties;
+    friend class LvlWarpBox;
+    /************************Friend classes***************************/
+
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
@@ -75,6 +87,7 @@ public:
  * - Miltilanguage
  * - Recent Files
  * - Sub Windows
+ * - Dock widgwets
  * - Editing features
  * - Clipboard
  * - EditMode switch
@@ -89,6 +102,7 @@ public:
  * - Search Boxes common
  * - Music Player
  * - Bookmarks
+ * - Windows Extras
  *
  * Level Editing
  * - Level Properties
@@ -379,31 +393,15 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////// Tileset box /////////////////////////
+    public:
+        TilesetItemBox *dock_TilesetBox;
     public slots:
         void setTileSetBox(); //!< Refresh tileset box's data
-
-        void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);
-        QWidget *findTabWidget(const QString &categoryItem);
-        QWidget *makeCategory(const QString &categoryItem);
-        QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
-        QComboBox *getGroupComboboxOfTab(QWidget *catTab);
-        void clearTilesetGroups();
-        void makeCurrentTileset();
-        void makeSelectedTileset(int tabIndex);
-        void makeAllTilesets();
-        void editSelectedTileset();
-        QVector<SimpleTileset> loadCustomTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
         void on_actionTileset_groups_editor_triggered();
-
-        void on_tilesetGroup_currentIndexChanged(int index);
-        void on_newTileset_clicked();
-        void on_Tileset_Item_Box_visibilityChanged(bool visible);
         void on_actionTilesetBox_triggered(bool checked);
-    private:
-        bool lockTilesetBox;
 
 // ////////////////////////////////////////////////////////
 
@@ -517,6 +515,12 @@ public:
 // ////////////////////////////////////////////////////////
 
 
+#ifdef Q_OS_WIN
+// ////////////////// Windows Extras //////////////////////
+    public:
+        void initWindowsThumbnail();
+// ////////////////////////////////////////////////////////
+#endif
 
 // ////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////Level Editing///////////////////////////////////////
@@ -617,62 +621,7 @@ public:
 
 // ///////////////Level Item Properties box //////////////////
     public:
-        void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
-        void LvlItemProps_updateLayer(QString lname="");
-        void LvlItemProps_hide();
-
-        long blockPtr;  //!< ArrayID of editing item (-1 - use system)
-        long bgoPtr;    //!< ArrayID of editing item
-        long npcPtr;    //!< ArrayID of editing item
-
-        bool LvlItemPropsLock; //!< Protector for allow apply changes only if filed was edit by human
-
-    private slots:
-        void on_ItemProperties_visibilityChanged(bool visible);
-        void on_PROPS_BlockResize_clicked();
-
-        //void on_PROPS_BlockSquareFill_clicked(bool checked);
-        void on_PROPS_BlockInvis_clicked(bool checked);
-        void on_PROPS_BlkSlippery_clicked(bool checked);
-        void on_PROPS_BlockIncludes_clicked();
-        void on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
-
-        void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
-        //void on_PROPS_BGOSquareFill_clicked(bool checked);
-        void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
-        void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
-        void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
-
-        void on_PROPS_NPCDirLeft_clicked();
-        void on_PROPS_NPCDirRand_clicked();
-        void on_PROPS_NPCDirRight_clicked();
-        void on_PROPS_NpcFri_clicked(bool checked);
-        void on_PROPS_NPCNoMove_clicked(bool checked);
-        void on_PROPS_NpcBoss_clicked(bool checked);
-        void on_PROPS_NpcTMsg_clicked();
-        void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
-        void on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked);
-        void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
-        void on_PROPS_NPCContaiter_clicked();
-        void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
-        void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
-        void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
-        void on_PROPS_NpcGenerator_clicked(bool checked);
-        void on_PROPS_NPCGenType_currentIndexChanged(int index);
-        void on_PROPS_NPCGenTime_valueChanged(double arg1);
-        void on_PROPS_NPCGenUp_clicked();
-        void on_PROPS_NPCGenLeft_clicked();
-        void on_PROPS_NPCGenDown_clicked();
-        void on_PROPS_NPCGenRight_clicked();
-        void on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1);
-        void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
+        LvlItemProperties *dock_LvlItemProps;
 // ///////////////////////////////////////////////////////////
 
 
@@ -772,8 +721,6 @@ public:
         void on_actionLevelEvents_triggered(bool checked);
         void on_LevelEventsToolBox_visibilityChanged(bool visible);
 
-        void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false);
-
         void on_LVLEvents_List_itemSelectionChanged();
         void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
 
@@ -859,48 +806,12 @@ public:
 
 // //////////////// Warps toolbox /////////////////////////
 
-    public slots:
-        // Warps and doors
-        void setDoorsToolbox();
-        void setDoorData(long index=-1);
-        void SwitchToDoor(long arrayID);
-        QComboBox* getWarpList();
-        void setWarpRemoveButtonEnabled(bool isEnabled);
-        void removeItemFromWarpList(int index);
+    public:
+        LvlWarpBox * dock_LvlWarpProps;
 
     private slots:
         void on_actionWarpsAndDoors_triggered(bool checked);
-        void on_DoorsToolbox_visibilityChanged(bool visible);
 
-        void on_WarpList_currentIndexChanged(int index); //Door list
-        void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
-        void on_WarpAdd_clicked();
-        void on_WarpRemove_clicked();
-        void on_WarpSetEntrance_clicked();
-        void on_WarpSetExit_clicked();
-        void on_WarpNoYoshi_clicked(bool checked);
-        void on_WarpAllowNPC_clicked(bool checked);
-        void on_WarpLock_clicked(bool checked);
-        void on_WarpType_currentIndexChanged(int index);
-        void on_WarpNeedAStars_valueChanged(int arg1);
-        void on_Entr_Down_clicked();
-        void on_Entr_Right_clicked();
-        void on_Entr_Up_clicked();
-        void on_Entr_Left_clicked();
-        void on_Exit_Up_clicked();
-        void on_Exit_Left_clicked();
-        void on_Exit_Right_clicked();
-        void on_Exit_Down_clicked();
-        void on_WarpToMapX_editingFinished();
-        void on_WarpToMapY_editingFinished();
-        void on_WarpGetXYFromWorldMap_clicked();
-        void on_WarpLevelExit_clicked(bool checked);
-        void on_WarpLevelEntrance_clicked(bool checked);
-        void on_WarpLevelFile_editingFinished();
-        void on_WarpToExitNu_valueChanged(int arg1);
-        void on_WarpBrowseLevels_clicked();
-    private:
-        bool lockWarpSetSettings;
 // ////////////////////////////////////////////////////////
 
 

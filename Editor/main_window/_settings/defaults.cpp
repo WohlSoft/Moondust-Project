@@ -24,6 +24,7 @@
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <main_window/tools/app_settings.h>
+#include <main_window/dock/toolboxes.h>
 #include <audio/music_player.h>
 #include <audio/sdl_music_player.h>
 #include <file_formats/file_formats.h>
@@ -41,10 +42,7 @@ void MainWindow::setDefaults()
     GlobalSettings::LvlOpts.collisionsEnabled = true;
     GlobalSettings::LvlOpts.semiTransparentPaths = false;
 
-    LvlItemPropsLock=true;
-    lockTilesetBox=false;
     LvlEventBoxLock=false;
-    lockWarpSetSettings=false;
 
     askConfigAgain=false;
 
@@ -58,6 +56,10 @@ void MainWindow::setDefaults()
 
     WldBuffer=FileFormats::dummyWldDataArray();
     LvlBuffer=FileFormats::dummyLvlDataArray();
+
+    dock_TilesetBox = NULL;
+    dock_LvlItemProps = NULL;
+    dock_LvlWarpProps = NULL;
 }
 
 void MainWindow::setUiDefults()
@@ -71,14 +73,22 @@ void MainWindow::setUiDefults()
 
     //MainWindow Geometry;
     QRect mwg = this->geometry();
+    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    //Init default geometry of main window
+    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                                       QSize(dg.width()-100,
+                                             dg.height()-100), dg));
 
     int GOffset=240;
     //Define the default geometry for toolboxes
-    ui->DoorsToolbox->setGeometry(
-                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-GOffset,
+    dock_LvlWarpProps = new LvlWarpBox(this, this);
+    dock_LvlWarpProps->setVisible(false);
+    addDockWidget(Qt::NoDockWidgetArea, dock_LvlWarpProps);
+    dock_LvlWarpProps->setGeometry(
+                mwg.x()+mwg.width()-dock_LvlWarpProps->width()-GOffset,
                 mwg.y()+120,
-                ui->DoorsToolbox->width(),
-                ui->DoorsToolbox->height()
+                dock_LvlWarpProps->width(),
+                dock_LvlWarpProps->height()
                 );
 
     ui->LevelSectionSettings->setGeometry(
@@ -99,12 +109,17 @@ void MainWindow::setUiDefults()
                 ui->LevelEventsToolBox->width(),
                 ui->LevelEventsToolBox->height()
                 );
-    ui->ItemProperties->setGeometry(
-                mwg.x()+mwg.width()-ui->ItemProperties->width()-GOffset,
+
+    dock_LvlItemProps = new LvlItemProperties(this,this);
+    dock_LvlItemProps->setVisible(false);
+    addDockWidget(Qt::NoDockWidgetArea, dock_LvlItemProps);
+    dock_LvlItemProps->setGeometry(
+                mwg.x()+mwg.width()-dock_LvlItemProps->width()-GOffset,
                 mwg.y()+120,
-                ui->ItemProperties->width(),
-                ui->ItemProperties->height()
+                dock_LvlItemProps->width(),
+                dock_LvlItemProps->height()
                 );
+
     ui->FindDock->setGeometry(
                 mwg.x()+mwg.width()-ui->FindDock->width()-GOffset,
                 mwg.y()+120,
@@ -133,9 +148,13 @@ void MainWindow::setUiDefults()
                 ui->WorldFindDock->height()
                 );
 
-    ui->Tileset_Item_Box->setGeometry(
-                mwg.x()+GOffset,
-                mwg.y()+mwg.height()-600,
+
+    dock_TilesetBox = new TilesetItemBox(this, this);
+    dock_TilesetBox->setVisible(false);
+    addDockWidget(Qt::NoDockWidgetArea, dock_TilesetBox);
+    dock_TilesetBox->setGeometry(
+                dg.x()+GOffset,
+                dg.y()+dg.height()-600,
                 800,
                 300
                 );
@@ -178,11 +197,9 @@ void MainWindow::setUiDefults()
 
     ui->centralWidget->cascadeSubWindows();
 
-
     ui->ResizingToolbar->setVisible(false);
         ui->applyResize->setVisible(false);
         ui->cancelResize->setVisible(false);
-
 
     ui->PlacingToolbar->setVisible(false);
         ui->actionOverwriteMode->setVisible(false);
@@ -195,12 +212,12 @@ void MainWindow::setUiDefults()
     ui->LevelToolBox->hide();
 
 
-    ui->DoorsToolbox->hide();
+    dock_LvlWarpProps->hide();
     ui->LevelLayers->hide();
     ui->LevelEventsToolBox->hide();
     ui->LevelSectionSettings->hide();
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
     ui->FindDock->hide();
 
     ui->WorldToolBox->hide();
@@ -208,7 +225,7 @@ void MainWindow::setUiDefults()
     ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
 
-    ui->Tileset_Item_Box->hide();
+    dock_TilesetBox->hide();
     ui->debuggerBox->hide();
     ui->bookmarkBox->hide();
 
@@ -243,7 +260,6 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
     ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-    ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
     muVol = new QSlider(Qt::Horizontal);
@@ -408,10 +424,4 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
-
-    //for tileset dock
-    //connect(ui->TileSetsCategories, SIGNAL(currentChanged(int)), this, SLOT(makeCurrentTileset()));
-
-    //for tileset
-    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
 }
