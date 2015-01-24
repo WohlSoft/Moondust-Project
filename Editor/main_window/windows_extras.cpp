@@ -25,8 +25,35 @@ void MainWindow::initWindowsThumbnail()
     pge_thumbbar->addButton(thumbbnt_save);
     pge_thumbbar->addButton(thumbbnt_open);
 
-    //":/images/save.png"
-    //QMessageBox::information(this, )
+
+
+    pge_thumbbar->setIconicPixmapNotificationsEnabled(true);
+    connect(pge_thumbbar, SIGNAL(iconicThumbnailPixmapRequested()), this, SLOT(updateWindowsThumbnailPixmap()));
+
+}
+
+void MainWindow::updateWindowsThumbnailPixmap()
+{
+    QRect viewPort;
+
+    if(activeChildWindow(latest) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+        viewPort = edit->scene->getViewportRect();
+    }else if(activeChildWindow(latest) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+        viewPort = edit->scene->getViewportRect();
+    }
+
+    QPixmap previewPixmap(viewPort.width(), viewPort.height());
+    QPainter previewPainter(&previewPixmap);
+
+    if(activeChildWindow(latest) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+        edit->scene->render(previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+    }else if(activeChildWindow(latest) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+        edit->scene->render(previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+    }
 
 }
 
