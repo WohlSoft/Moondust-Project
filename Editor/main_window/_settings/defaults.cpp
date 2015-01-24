@@ -60,6 +60,9 @@ void MainWindow::setDefaults()
     dock_TilesetBox = NULL;
     dock_LvlItemProps = NULL;
     dock_LvlWarpProps = NULL;
+
+    LastActiveSubWindow = NULL;
+    pge_thumbbar = NULL;
 }
 
 void MainWindow::setUiDefults()

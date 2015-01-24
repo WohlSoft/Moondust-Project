@@ -88,6 +88,7 @@ public:
  * - Miltilanguage
  * - Recent Files
  * - Sub Windows
+ * -- Latest Active Window (See sub_windows.cpp for comments)
  * - Dock widgwets
  * - Editing features
  * - Clipboard
@@ -104,7 +105,6 @@ public:
  * - Music Player
  * - Bookmarks
  * - Windows Extras
- * - Latest Active Window (See cpp file for comments)
  *
  * Level Editing
  * - Level Properties
@@ -312,7 +312,17 @@ public:
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
         QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
+
+        // /////////////// Latest Active Window ///////////////////
+    public slots:
+        void recordSwitchedWindow(QMdiSubWindow * window);
+        void recordRemovedWindow(QObject* possibleDeletedWindow);
+    private:
+        QMdiSubWindow* LastActiveSubWindow;
+        // ////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////
+
+
 
 
 // ////////////////////Editing features////////////////////
@@ -529,14 +539,6 @@ public:
         QWinThumbnailToolBar* pge_thumbbar;
 // ////////////////////////////////////////////////////////
 #endif
-
-// /////////////// Latest Active Window ///////////////////
-    public slots:
-        void recordSwitchedWindow(QMdiSubWindow * window);
-        void recordRemovedWindow(QObject* possibleDeletedWindow);
-    private:
-        QMdiSubWindow* latest;
-// ////////////////////////////////////////////////////////
 
 
 // ////////////////////////////////////////////////////////////////////////////////
