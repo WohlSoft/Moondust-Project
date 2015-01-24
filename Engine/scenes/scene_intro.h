@@ -21,6 +21,7 @@
 
 #include <QMap>
 #include <QPair>
+#include <QStack>
 #include "scene.h"
 #include "intro/pge_menu.h"
 
@@ -41,7 +42,11 @@ public:
         menu_main=0,
         menu_options,
         menu_playlevel,
-        menu_tests
+        menu_tests,
+        menu_dummy_and_big,
+        //For fetching
+        menuFirst=menu_main,
+        menuLast=menu_dummy_and_big
     };
 
     enum menuAnswer
@@ -56,7 +61,7 @@ private:
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
     QMap<CurrentMenu, menustate> menustates;
-
+    QStack<int > menuChain;
 };
 
 #endif // SCENE_INTRO_H
