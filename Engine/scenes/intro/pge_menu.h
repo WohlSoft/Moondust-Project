@@ -57,38 +57,39 @@ public:
 
     void addMenuItem(QString value, QString title="");
 
-    void clear();
+    void clear(); //!< Clean all menuitems
 
-    void selectUp();
-    void selectDown();
-    void acceptItem();
-    void rejectItem();
-    void reset();
+    void selectUp();   //!< move selection cursor up
+    void selectDown(); //!< move selection cursor down
+    void acceptItem(); //!< Accept currently selected item
+    void rejectItem(); //!< Reject menu
+    void resetState(); //!< Reset state after acception or rejection
 
-    void setItemsNumber(int q);
+    void reset();   //!< Reset menu to initial state
 
-    void sort();
-    void render();
+    void setItemsNumber(int q); //!< Set number of item which will show on screen
 
-    bool isSelected();
-    bool isAccepted();
-    const PGE_Menuitem currentItem();
-    int currentItemI();
-    void setCurrentItem(int i);
-    int line();
-    void setLine(int ln);
-    int offset();
-    void setOffset(int of);
+    void sort();   //!< Sort menu items in alphabetic order
+    void render(); //!< Draw menu on screen
+
+    bool isSelected();  //!< Is menu was accepted or rejected
+    bool isAccepted();  //!< Is menu was accepted, else rejected
+    const PGE_Menuitem currentItem(); //!< Returns current menu item entry
+    int currentItemI();       //!< Returns index of current menu item
+    void setCurrentItem(int i); //!< Sets current index of menuitem
+    int line();  //!< Returns number of current line where cursor is located on screen
+    void setLine(int ln); //!< Sets current line number
+    int offset();          //!< Returns scrolling offset from begin of menu list
+    void setOffset(int of);//!< Sets scrolling offset from begin of menu list
 
     //Position and size Rectangle
-    QRect rect();
-    void setPos(int x, int y);
-    void setPos(QPoint p);
-    void setSize(int w, int h);
-    void setSize(QSize s);
+    QRect rect(); //!< Returns rectangle of menu box
+    void setPos(int x, int y); //!< Sets current position of menu box
+    void setPos(QPoint p);     //!< Sets current position of menu box
+    void setSize(int w, int h); //!< Sets size of menu box
+    void setSize(QSize s);      //!< Sets size of menu box
 
 private:
-    //QPoint renderPos;
     QRect menuRect;
 
     int _itemsOnScreen;

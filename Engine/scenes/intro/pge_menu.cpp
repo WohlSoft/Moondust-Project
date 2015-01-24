@@ -158,6 +158,8 @@ bool PGE_Menu::isAccepted()
     return _accept;
 }
 
+
+
 void PGE_Menu::reset()
 {
     _EndSelection=false;
@@ -166,6 +168,13 @@ void PGE_Menu::reset()
     _line=0;
     _currentItem=0;
 }
+
+void PGE_Menu::resetState()
+{
+    _EndSelection=false;
+    _accept=false;
+}
+
 
 const PGE_Menuitem PGE_Menu::currentItem()
 {
