@@ -69,6 +69,7 @@ void PGE_Menu::selectUp()
     {
         _offset--;
         _line=0;
+        if(_offset<0) _offset=0;
     }
 
     if(_currentItem<0)
@@ -201,9 +202,22 @@ int PGE_Menu::currentItemI()
 
 void PGE_Menu::setCurrentItem(int i)
 {
+    //If no out of range
     if((i>0)&&(i<_items.size()-1))
     {
         _currentItem=i;
+        //Scroll to selected item
+        if(i<_offset)
+        {
+            _offset=i;
+            _line=0;
+        }
+        else
+        if(i > (_offset+_itemsOnScreen-1))
+        {
+            _offset=i-_itemsOnScreen+1;
+            _line=_itemsOnScreen-1;
+        }
     }
 }
 
@@ -228,7 +242,14 @@ int PGE_Menu::offset()
 void PGE_Menu::setOffset(int of)
 {
     if((of>=0)&&(of< (_items.size()-_itemsOnScreen)))
+    {
        _offset=of;
+       if(
+           ((_currentItem-_offset)>=0)&&
+           ((_currentItem-_offset)<_itemsOnScreen)
+         )
+            _line = _currentItem-_offset;
+    }
     else
         _offset=0;
 }
