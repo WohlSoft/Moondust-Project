@@ -130,6 +130,9 @@ public:
     public:
         LevelEditingSettings opts;
 
+        QPoint getViewportPos(); //!< Returns current position of viewport
+        QRect getViewportRect(); //!< Returns current rectangle of viewport
+
         //Clipboard
         LevelData copy(bool cut = false);
         void paste(LevelData BufferIn, QPoint pos);
