@@ -362,7 +362,8 @@ SOURCES += main.cpp\
     common_features/installer.cpp \
     main_window/dock/lvl_item_properties.cpp \
     main_window/windows_extras.cpp \
-    main_window/dock/lvl_warp_props.cpp
+    main_window/dock/lvl_warp_props.cpp \
+    main_window/latest_active_menu.cpp
     
 
 HEADERS  += defines.h \

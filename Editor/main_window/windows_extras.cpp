@@ -1,11 +1,12 @@
 #include "mainwindow.h"
+#include <ui_mainwindow.h>
 
 #ifdef Q_OS_WIN
 #include <QtWinExtras>
 
 void MainWindow::initWindowsThumbnail()
 {
-    QWinThumbnailToolBar *pge_thumbbar = new QWinThumbnailToolBar(this);
+    pge_thumbbar = new QWinThumbnailToolBar(this);
     pge_thumbbar->setWindow(this->windowHandle());
 
 
@@ -25,9 +26,62 @@ void MainWindow::initWindowsThumbnail()
     pge_thumbbar->addButton(thumbbnt_save);
     pge_thumbbar->addButton(thumbbnt_open);
 
-    //":/images/save.png"
-    //QMessageBox::information(this, )
 
+
+    pge_thumbbar->setIconicPixmapNotificationsEnabled(true);
+    connect(pge_thumbbar, SIGNAL(iconicThumbnailPixmapRequested()), this, SLOT(updateWindowsThumbnailPixmap()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateWindowsThumbnailPixmap()));
+}
+
+void MainWindow::updateWindowsThumbnailPixmap()
+{
+    QRect viewPort;
+
+    if(!latest){
+        drawDefaultThumb();
+        return;
+    }
+
+    if(activeChildWindow(latest) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+        viewPort = edit->scene->getViewportRect();
+    }else if(activeChildWindow(latest) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+        viewPort = edit->scene->getViewportRect();
+    }else{
+        drawDefaultThumb();
+        return;
+    }
+
+    QPixmap previewPixmap(viewPort.width(), viewPort.height());
+    QPainter previewPainter(&previewPixmap);
+
+    if(activeChildWindow(latest) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+        edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+    }else if(activeChildWindow(latest) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+        edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+    }else{
+        drawDefaultThumb();
+        return;
+    }
+
+
+
+    if(pge_thumbbar){
+        pge_thumbbar->setIconicThumbnailPixmap(previewPixmap);
+    }
+}
+
+void MainWindow::drawDefaultThumb()
+{
+    QPixmap defPixmap(400,300);
+    QPainter defThumbPainter(&defPixmap);
+    defThumbPainter.setFont(QFont("Monospace", 30));
+    defThumbPainter.fillRect(QRectF(defPixmap.rect()), QBrush(QColor(128,128,128), Qt::SolidPattern));
+    defThumbPainter.drawText(defPixmap.rect(), Qt::AlignCenter, tr("No file loaded!"));
+    pge_thumbbar->setIconicThumbnailPixmap(defPixmap);
 }
 
 
