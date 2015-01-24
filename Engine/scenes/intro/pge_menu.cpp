@@ -30,7 +30,7 @@ PGE_Menu::PGE_Menu()
     arrowDownViz=false;
     _EndSelection=false;
     _accept=false;
-    menuRect = QRect(250,348, 300, 30);
+    menuRect = QRect(260,380, 350, 30);
 }
 
 PGE_Menu::~PGE_Menu()
@@ -44,8 +44,8 @@ void PGE_Menu::addMenuItem(QString value, QString title)
     item.value = value;
     item.title = (title.isEmpty() ? value : title);
     item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, menuRect.width()*2, menuRect.height()*2),
-                                                  Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap);
+                                                  QRect(0,0, menuRect.width(), menuRect.height()),
+                                                  Qt::AlignLeft | Qt::AlignVCenter );
     _items.push_back(item);
 }
 
@@ -95,6 +95,27 @@ void PGE_Menu::selectDown()
         _currentItem = 0;
         _line=0;
         _offset=0;
+    }
+}
+
+void PGE_Menu::scrollUp()
+{
+    if(_items.size()<=_itemsOnScreen) return;
+    if(_offset>0)
+    {
+        _offset--;
+        _currentItem--;
+    }
+}
+
+void PGE_Menu::scrollDown()
+{
+    if(_items.size()<=_itemsOnScreen) return;
+
+    if(_offset < (_items.size()-_itemsOnScreen))
+    {
+        _offset++;
+        _currentItem++;
     }
 }
 
@@ -175,6 +196,40 @@ void PGE_Menu::resetState()
     _accept=false;
 }
 
+void PGE_Menu::setMouseHoverPos(int x, int y)
+{
+    int item = findItem(x,y);
+    if(item<0) return;
+    setCurrentItem(item);
+}
+
+void PGE_Menu::setMouseClickPos(int x, int y)
+{
+    int item = findItem(x,y);
+    if(item<0) return;
+    acceptItem();
+}
+
+int PGE_Menu::findItem(int x, int y)
+{
+    if(x>menuRect.right()) return -1;
+    if(x<menuRect.left())  return -1;
+    if(y<menuRect.top())  return -1;
+    if(y>menuRect.top()+menuRect.height()*_itemsOnScreen) return -1;
+
+    int pos = menuRect.y();
+    for(int i=0; (i<_itemsOnScreen) && (i<_items.size()); i++)
+    {
+        if( (y > pos) && ( y<(pos+menuRect.height()) ) )
+        {
+            return _offset+i;
+        }
+        pos+=menuRect.height();
+    }
+
+    return -1;
+}
+
 
 const PGE_Menuitem PGE_Menu::currentItem()
 {
@@ -197,7 +252,7 @@ int PGE_Menu::currentItemI()
 void PGE_Menu::setCurrentItem(int i)
 {
     //If no out of range
-    if((i>0)&&(i<_items.size()))
+    if((i>=0)&&(i<_items.size()))
     {
         _currentItem=i;
         autoOffset();
@@ -244,9 +299,10 @@ void PGE_Menu::setOffset(int of)
 /// Automatically sets offset and line number values
 void PGE_Menu::autoOffset()
 {
-    if(_items.size()<_itemsOnScreen)
+    if(_items.size()<=_itemsOnScreen)
     {
         _offset=0;
+        _line=_currentItem;
         return;
     }
 
@@ -260,6 +316,10 @@ void PGE_Menu::autoOffset()
     {
         _offset=_currentItem-_itemsOnScreen+1;
         _line=_itemsOnScreen-1;
+    }
+    else
+    {
+        _line=_currentItem-_offset;
     }
 }
 
@@ -328,19 +388,22 @@ void PGE_Menu::render()
 
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
     {
+        int xPos = menuRect.x();
+        int yPos = menuRect.y()+ j*menuRect.height();
+
         if(i==_currentItem)
         {
             glDisable(GL_TEXTURE_2D);
             glColor4f( 1.f, 1.f, 0.f, 1.0f);
             glBegin( GL_QUADS );
-                glVertex2f( menuRect.x()-20+0, menuRect.y()+0 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+10, menuRect.y()+0 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+10, menuRect.y()+10 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+0, menuRect.y()+10 + j*menuRect.height());
+                glVertex2f( xPos-20,      yPos + (menuRect.height()/2)-5 );
+                glVertex2f( xPos-20+10,   yPos + (menuRect.height()/2)-5 );
+                glVertex2f( xPos-20+10,10+yPos + (menuRect.height()/2)-5 );
+                glVertex2f( xPos-20,   10+yPos + (menuRect.height()/2)-5 );
             glEnd();
         }
-        FontManager::SDL_string_render2D(menuRect.x(),
-                                        menuRect.y() + j*menuRect.height(),
+
+        FontManager::SDL_string_render2D(xPos,yPos,
                                         &_items[i].textTexture);
     }
 }
