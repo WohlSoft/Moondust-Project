@@ -34,6 +34,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QSplashScreen>
+#include <QWinThumbnailToolBar>
 
 #include <file_formats/lvl_filedata.h>
 #include <file_formats/wld_filedata.h>
@@ -523,10 +524,13 @@ public:
         void initWindowsThumbnail();
     public slots:
         void updateWindowsThumbnailPixmap();
+        void drawDefaultThumb();
+    private:
+        QWinThumbnailToolBar* pge_thumbbar;
 // ////////////////////////////////////////////////////////
 #endif
 
-// ////////////////// Windows Extras //////////////////////
+// /////////////// Latest Active Window ///////////////////
     public slots:
         void recordSwitchedWindow(QMdiSubWindow * window);
         void recordRemovedWindow(QObject* possibleDeletedWindow);
