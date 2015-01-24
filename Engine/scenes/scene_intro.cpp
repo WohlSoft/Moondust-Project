@@ -133,6 +133,9 @@ int IntroScene::exec()
     menu.addMenuItem("9", "Is fantasy unlimited?");
     menu.addMenuItem("10", "YES!");
 
+    menu.setOffset(5);
+    menu.setCurrentItem(7);
+
     menu.sort();
 
     while(running)
