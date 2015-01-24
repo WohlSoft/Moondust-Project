@@ -101,6 +101,7 @@ private:
     bool _accept;
     QList<PGE_Menuitem > _items;
     bool namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2);
+    void autoOffset();
 
 };
 
