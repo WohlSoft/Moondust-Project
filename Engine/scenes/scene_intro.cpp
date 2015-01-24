@@ -116,27 +116,13 @@ int IntroScene::exec()
     float doUpdate_Render=0;
     bool doExit=false;
 
-    menu.clear();
-    menu.addMenuItem("game1p", "1 Player Game");
-    menu.addMenuItem("game2p", "2 Player Game");
-    menu.addMenuItem("gamebt", "Battle Game");
-    menu.addMenuItem("Options", "Options");
-    menu.addMenuItem("Exit", "Exit");
-    menu.addMenuItem("1", "Hi everybody!");
-    menu.addMenuItem("2", "Ich bin GLÜCKLICH!");
-    menu.addMenuItem("3", "Кое-что по-русски");
-    menu.addMenuItem("4", "Menuitem ⑨");
-    menu.addMenuItem("7", "Menuitem about money");
-    menu.addMenuItem("6", "Menuitem about crap");
-    menu.addMenuItem("8", "Menuitem about skunks");
-    menu.addMenuItem("9", "he-he-he");
-    menu.addMenuItem("9", "Is fantasy unlimited?");
-    menu.addMenuItem("10", "YES!");
-    menu.addMenuItem("124560", "4356537!");
-    menu.addMenuItem("324560", "3511dh537!");
+    menustates.clear();
+    menustates[menu_main]      = menustate(0, 0);
+    menustates[menu_options]   = menustate(0, 0);
+    menustates[menu_playlevel] = menustate(0, 0);
+    menustates[menu_tests]     = menustate(0, 0);
 
-    menu.setCurrentItem(8);
-    menu.sort();
+    setMenu(menu_main);
 
     while(running)
     {
@@ -212,22 +198,124 @@ int IntroScene::exec()
             {
                 if(menu.isAccepted())
                 {
-                    PGE_MsgBox msgBox(this, "Accepted menuitem: ["+menu.currentItem().title+"]",
-                                      PGE_MsgBox::msg_warn);
-                    msgBox.exec();
-                    ret=1;
+                    menustates[_currentMenu].first = menu.currentItemI();
+                    menustates[_currentMenu].second = menu.offset();
+
+                    QString value = menu.currentItem().value;
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            if(value=="Options")
+                            {
+                                setMenu(menu_options);
+                            }
+                            else
+                            if(value=="Exit")
+                            {
+                                ret = ANSWER_EXIT;
+                                doExit=true;
+                            }
+                        break;
+                        case menu_options:
+                            if(value=="tests")
+                            {
+                                setMenu(menu_tests);
+                            }
+
+                        break;
+                        case menu_tests:
+                            if(value=="credits")
+                            {
+                                ret = ANSWER_CREDITS;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="title")
+                            {
+                                ret = ANSWER_TITLE;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="gameover")
+                            {
+                                ret = ANSWER_GAMEOVER;
+                                doExit=true;
+                            }
+
+                        break;
+                        case menu_playlevel:
+
+                        break;
+
+                    }
                 }
                 else
                 {
-                    PGE_MsgBox msgBox(this, "Menu rejected",
-                                      PGE_MsgBox::msg_warn);
-                    msgBox.exec();
-                    ret=-1;
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            menu.reset();
+                            menu.setCurrentItem(4);
+                        break;
+                        case menu_options:
+                            menu.reset();
+                            setMenu(menu_main);
+                        break;
+                            menu.reset();
+                            setMenu(menu_main);
+                        case menu_playlevel:
+                        break;
+                    }
                 }
-                doExit=true;
             }
         }
     }
     menu.clear();
     return ret;
+}
+
+void IntroScene::setMenu(IntroScene::CurrentMenu _menu)
+{
+    switch(_menu)
+    {
+        case menu_main:
+            _currentMenu=_menu;
+            menu.clear();
+            menu.addMenuItem("game1p", "1 Player Game");
+            menu.addMenuItem("game2p", "2 Player Game");
+            menu.addMenuItem("gamebt", "Battle Game");
+            menu.addMenuItem("Options", "Options");
+            menu.addMenuItem("Exit", "Exit");
+
+            menu.setCurrentItem(menustates[_menu].first);
+            menu.setOffset(menustates[_menu].second);
+        break;
+        case menu_options:
+            _currentMenu=_menu;
+            menu.clear();
+            menu.addMenuItem("tests", "Test of screens");
+
+            menu.setCurrentItem(menustates[_menu].first);
+            menu.setOffset(menustates[_menu].second);
+        break;
+        case menu_playlevel:
+            _currentMenu=_menu;
+            menu.clear();
+            menu.addMenuItem("dummy", "Less menuitems");
+            menu.addMenuItem("dummy1", "he-he 1");
+
+            menu.setCurrentItem(menustates[_menu].first);
+            menu.setOffset(menustates[_menu].second);
+        break;
+        case menu_tests:
+            _currentMenu=_menu;
+            menu.clear();
+            menu.addMenuItem("credits", "Credits");
+            menu.addMenuItem("title", "Title screen");
+            menu.addMenuItem("gameover", "Game over screen");
+
+            menu.setCurrentItem(menustates[_menu].first);
+            menu.setOffset(menustates[_menu].second);
+        break;
+    }
 }

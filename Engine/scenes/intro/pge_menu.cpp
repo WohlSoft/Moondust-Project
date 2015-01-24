@@ -76,7 +76,7 @@ void PGE_Menu::selectUp()
     {
         _currentItem=_items.size()-1;
         _line = _itemsOnScreen-1;
-        _offset=_items.size()-_itemsOnScreen;
+        _offset = (_items.size()>_itemsOnScreen)? _items.size()-_itemsOnScreen : 0;
     }
 }
 
@@ -188,7 +188,7 @@ int PGE_Menu::currentItemI()
 void PGE_Menu::setCurrentItem(int i)
 {
     //If no out of range
-    if((i>0)&&(i<_items.size()-1))
+    if((i>0)&&(i<_items.size()))
     {
         _currentItem=i;
         autoOffset();
@@ -235,6 +235,12 @@ void PGE_Menu::setOffset(int of)
 /// Automatically sets offset and line number values
 void PGE_Menu::autoOffset()
 {
+    if(_items.size()<_itemsOnScreen)
+    {
+        _offset=0;
+        return;
+    }
+
     if(_currentItem-_itemsOnScreen > _offset)
     {
         _offset=_currentItem-_itemsOnScreen+1;
