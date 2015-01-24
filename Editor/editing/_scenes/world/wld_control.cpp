@@ -275,7 +275,7 @@ void WldScene::openProps()
 
 QPoint WldScene::getViewportPos()
 {
-    QPoint vpPos(0,0,0,0);
+    QPoint vpPos(0,0);
     if(_viewPort)
     {
         vpPos.setX(this->_viewPort->horizontalScrollBar()->value());
