@@ -43,17 +43,17 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(400,250), float _padding=20);
+               msgType _type=msg_info, QPoint boxCenterPos=QPoint(-1,-1), QSizeF boxSize=QSizeF(0,0), float _padding=20, QString texture="");
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
     void exec();
 
-    void buildBox();
+    void buildBox(bool centered=false);
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(400,250), float _padding=20);
+                    msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(0,0), QPoint pos=QPoint(-1,-1), float _padding=20, QString texture="");
     msgType type;
     QRect _sizeRect;
     QString message;

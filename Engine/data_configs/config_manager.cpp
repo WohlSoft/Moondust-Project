@@ -46,6 +46,9 @@ ConfigManager::screenType ConfigManager::screen_type = ConfigManager::SCR_Static
 //Loading Screen setings
 LoadingScreenData ConfigManager::LoadingScreen;
 
+//Cursors data
+MainCursors ConfigManager::cursors;
+
 //World map settings
 WorldMapData ConfigManager::WorldMap;
 
@@ -199,6 +202,24 @@ bool ConfigManager::loadBasics()
             screen_type = SCR_Dynamic;
         else
             screen_type = SCR_Static;
+
+        cursors.normal = engineset.value("cursor-image-normal", "").toString();
+        if(!cursors.normal.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+cursors.normal).isNull())
+                cursors.normal=dirs.gcommon+cursors.normal;
+            else
+                cursors.normal.clear();
+        }
+
+        cursors.rubber = engineset.value("cursor-image-rubber", "").toString();
+        if(!cursors.rubber.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+cursors.rubber).isNull())
+                cursors.rubber=dirs.gcommon+cursors.rubber;
+            else
+                cursors.rubber.clear();
+        }
     engineset.endGroup();
 
 

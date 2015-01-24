@@ -111,6 +111,13 @@ struct LoadingScreenData
 };
 
 
+struct MainCursors
+{
+    QString normal;
+    QString rubber;
+};
+
+
 ////////////////////Common items///////////////////////////
 struct obj_music
 {
@@ -153,6 +160,9 @@ public:
 
     //LoadingScreen
     static LoadingScreenData LoadingScreen;
+
+    //curors
+    static MainCursors cursors;
 
     //World map data
     static WorldMapData WorldMap;

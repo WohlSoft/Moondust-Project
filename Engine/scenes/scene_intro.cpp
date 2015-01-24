@@ -20,16 +20,38 @@
 #include <graphics/graphics.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
+#include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
 
 #include "scene_intro.h"
+#include <QtDebug>
 
 IntroScene::IntroScene()
 {
     doExit=false;
-    offscreen=false;
     mousePos.setX(-300);
     mousePos.setY(-300);
+    _cursorIsLoaded=false;
+
+    if(ConfigManager::cursors.normal.isEmpty())
+    {
+        _cursorIsLoaded=false;
+    }
+    else
+    {
+        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::cursors.normal);
+        _cursorIsLoaded=true;
+    }
+}
+
+IntroScene::~IntroScene()
+{
+    qDebug()<<"Destroy intro scene";\
+    if(_cursorIsLoaded)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &cursor.texture);
+    }
 }
 
 void IntroScene::update()
@@ -114,14 +136,34 @@ void IntroScene::renderMouse()
 {
     int posX=mousePos.x();
     int posY=mousePos.y();
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 1.f, 0.f, 1.0f);
-    glBegin( GL_QUADS );
-        glVertex2f( posX, posY);
-        glVertex2f( posX+10, posY);
-        glVertex2f( posX+10, posY+10);
-        glVertex2f( posX, posY+10);
-    glEnd();
+
+    if(_cursorIsLoaded)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBindTexture(GL_TEXTURE_2D, cursor.texture);
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0, 0 );
+            glVertex2f( posX, posY);
+            glTexCoord2f( 1, 0 );
+            glVertex2f( posX+cursor.w, posY);
+            glTexCoord2f( 1, 1 );
+            glVertex2f( posX+cursor.w, posY+cursor.h);
+            glTexCoord2f( 0, 1 );
+            glVertex2f( posX, posY+cursor.h);
+        glEnd();
+    }
+    else
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 1.f, 0.f, 1.0f);
+        glBegin( GL_QUADS );
+            glVertex2f( posX, posY);
+            glVertex2f( posX+10, posY);
+            glVertex2f( posX+10, posY+10);
+            glVertex2f( posX, posY+10);
+        glEnd();
+    }
 }
 
 int IntroScene::exec()
