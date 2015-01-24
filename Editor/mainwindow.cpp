@@ -148,7 +148,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setSoundList();
     WldLvlExitTypeListReset();
     dock_TilesetBox->setTileSetBox(true);
-    latest = 0;
+    LastActiveSubWindow = 0;
 }
 
 MainWindow::~MainWindow()

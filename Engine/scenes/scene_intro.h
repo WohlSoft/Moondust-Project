@@ -19,8 +19,13 @@
 #ifndef SCENE_INTRO_H
 #define SCENE_INTRO_H
 
+#include <QMap>
+#include <QPair>
+#include <QStack>
 #include "scene.h"
 #include "intro/pge_menu.h"
+
+typedef QPair<int, int > menustate;
 
 class IntroScene : public Scene
 {
@@ -31,6 +36,32 @@ public:
     int exec();
     PGE_Menu menu;
     bool doExit;
+
+    enum CurrentMenu
+    {
+        menu_main=0,
+        menu_options,
+        menu_playlevel,
+        menu_tests,
+        menu_dummy_and_big,
+        //For fetching
+        menuFirst=menu_main,
+        menuLast=menu_dummy_and_big
+    };
+
+    enum menuAnswer
+    {
+        ANSWER_EXIT=0,
+        ANSWER_CREDITS,
+        ANSWER_TITLE,
+        ANSWER_GAMEOVER
+    };
+
+private:
+    CurrentMenu _currentMenu;
+    void setMenu(CurrentMenu _menu);
+    QMap<CurrentMenu, menustate> menustates;
+    QStack<int > menuChain;
 };
 
 #endif // SCENE_INTRO_H

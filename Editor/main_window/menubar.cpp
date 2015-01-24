@@ -24,14 +24,8 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-namespace mainwindowMenuBar
-{
-    QMdiSubWindow *LastActiveSubWindow = NULL;
-}
-
 void MainWindow::updateMenus(bool force)
 {
-    using namespace mainwindowMenuBar;
     if(!force)
     {
         //Don't update if window is not active
@@ -39,8 +33,7 @@ void MainWindow::updateMenus(bool force)
          //Don't update if this is - same subWindow
         if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
     }
-
-    LastActiveSubWindow = ui->centralWidget->activeSubWindow();
+    LastActiveSubWindow=ui->centralWidget->activeSubWindow();
 
     WriteToLog(QtDebugMsg, QString("Update menus"));
 

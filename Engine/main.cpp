@@ -234,7 +234,19 @@ MainMenu:
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     delete iScene;
-    if(answer<0) goto ExitFromApplication;
+
+    switch(answer)
+    {
+        case IntroScene::ANSWER_EXIT:
+            goto ExitFromApplication;
+        case IntroScene::ANSWER_CREDITS:
+            goto CreditsScreeen;
+        case IntroScene::ANSWER_TITLE:
+            goto TitleScreeen;
+        case IntroScene::ANSWER_GAMEOVER:
+            goto GameOverScreen;
+    }
+
     goto PlayLevel;
 }
 
