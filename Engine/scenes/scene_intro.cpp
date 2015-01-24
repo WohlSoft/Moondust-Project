@@ -117,16 +117,15 @@ int IntroScene::exec()
     bool doExit=false;
 
     menustates.clear();
-    menustates[menu_main]      = menustate(0, 0);
-    menustates[menu_options]   = menustate(0, 0);
-    menustates[menu_playlevel] = menustate(0, 0);
-    menustates[menu_tests]     = menustate(0, 0);
+    menuChain.clear();
+
+    for(int i=menuFirst; i<menuLast;i++)
+        menustates[(CurrentMenu)i] = menustate(0, 0);
 
     setMenu(menu_main);
 
     while(running)
     {
-
         //UPDATE Events
         start_render=SDL_GetTicks();
         render();
@@ -207,6 +206,7 @@ int IntroScene::exec()
                         case menu_main:
                             if(value=="Options")
                             {
+                                menuChain.push(_currentMenu);
                                 setMenu(menu_options);
                             }
                             else
@@ -226,7 +226,14 @@ int IntroScene::exec()
                         case menu_options:
                             if(value=="tests")
                             {
+                                menuChain.push(_currentMenu);
                                 setMenu(menu_tests);
+                            }
+                            else
+                            if(value=="dab")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_dummy_and_big);
                             }
                             else
                             {
@@ -260,6 +267,8 @@ int IntroScene::exec()
                         case menu_playlevel:
 
                         break;
+                    default:
+                        break;
 
                     }
                 }
@@ -271,14 +280,13 @@ int IntroScene::exec()
                             menu.reset();
                             menu.setCurrentItem(4);
                         break;
-                        case menu_options:
+                    default:
+                        if(menuChain.size()>0)
+                        {
+                            setMenu((CurrentMenu)menuChain.last());
+                            menuChain.pop();
                             menu.reset();
-                            setMenu(menu_main);
-                        break;
-                        case menu_tests:
-                            menu.reset();
-                            setMenu(menu_options);
-                        case menu_playlevel:
+                        }
                         break;
                     }
                 }
@@ -291,46 +299,50 @@ int IntroScene::exec()
 
 void IntroScene::setMenu(IntroScene::CurrentMenu _menu)
 {
+    if(_menu<menuFirst) return;
+    if(_menu>menuLast) return;
+
+    _currentMenu=_menu;
+    menu.clear();
     switch(_menu)
     {
         case menu_main:
-            _currentMenu=_menu;
-            menu.clear();
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
             menu.addMenuItem("gamebt", "Battle Game");
             menu.addMenuItem("Options", "Options");
             menu.addMenuItem("Exit", "Exit");
-
-            menu.setCurrentItem(menustates[_menu].first);
-            menu.setOffset(menustates[_menu].second);
         break;
-        case menu_options:
-            _currentMenu=_menu;
-            menu.clear();
-            menu.addMenuItem("tests", "Test of screens");
-
-            menu.setCurrentItem(menustates[_menu].first);
-            menu.setOffset(menustates[_menu].second);
-        break;
+            case menu_options:
+                menu.addMenuItem("tests", "Test of screens");
+                menu.addMenuItem("dab", "Dummy and big menu");
+            break;
+                case menu_tests:
+                    menu.addMenuItem("credits", "Credits");
+                    menu.addMenuItem("title", "Title screen");
+                    menu.addMenuItem("gameover", "Game over screen");
+                break;
+                case menu_dummy_and_big:
+                    menu.addMenuItem("1", "Item 1");
+                    menu.addMenuItem("2", "Item 2");
+                    menu.addMenuItem("3", "Item 3");
+                    menu.addMenuItem("4", "Кое-что по-русски");
+                    menu.addMenuItem("5", "Ich bin glücklich!");
+                    menu.addMenuItem("6", "¿Que se ocupas?");
+                    menu.addMenuItem("7", "Minä rakastan sinua!");
+                    menu.addMenuItem("8", "هذا هو اختبار صغير");
+                    menu.addMenuItem("9", "這是一個小測試!");
+                    menu.addMenuItem("10", "דאס איז אַ קליין פּרובירן");
+                    menu.addMenuItem("11", "આ નાના કસોટી છે");
+                    menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
+                break;
         case menu_playlevel:
-            _currentMenu=_menu;
-            menu.clear();
             menu.addMenuItem("dummy", "Less menuitems");
             menu.addMenuItem("dummy1", "he-he 1");
-
-            menu.setCurrentItem(menustates[_menu].first);
-            menu.setOffset(menustates[_menu].second);
         break;
-        case menu_tests:
-            _currentMenu=_menu;
-            menu.clear();
-            menu.addMenuItem("credits", "Credits");
-            menu.addMenuItem("title", "Title screen");
-            menu.addMenuItem("gameover", "Game over screen");
-
-            menu.setCurrentItem(menustates[_menu].first);
-            menu.setOffset(menustates[_menu].second);
+    default:
         break;
     }
+    menu.setCurrentItem(menustates[_menu].first);
+    menu.setOffset(menustates[_menu].second);
 }
