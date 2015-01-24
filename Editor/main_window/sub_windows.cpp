@@ -124,7 +124,6 @@ int MainWindow::activeChildWindow()
     {
         return activeChildWindow(activeSubWindow);
     }
-
     return 0;
 }
 
@@ -132,11 +131,34 @@ int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 {
     if(QString(wnd->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         return 1;
+    else
     if(QString(wnd->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         return 2;
+    else
     if(QString(wnd->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
         return 3;
+    else
+    return 0;
 }
+
+/*
+ * QMdiArea::activeSubWindow doesn't return a valid window when the main window is minized.
+ * This class should help to record the latest actie window anyway.
+ */
+
+void MainWindow::recordSwitchedWindow(QMdiSubWindow *window)
+{
+    LastActiveSubWindow = window;
+}
+
+void MainWindow::recordRemovedWindow(QObject *possibleDeletedWindow)
+{
+    if((QObject*)possibleDeletedWindow == LastActiveSubWindow)
+        LastActiveSubWindow = 0;
+}
+
+
+
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {
@@ -199,6 +221,7 @@ void MainWindow::setActiveSubWindow(QWidget *window)
         return;
     ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
 }
+
 
 
 void MainWindow::close_sw()

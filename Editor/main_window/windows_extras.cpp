@@ -37,16 +37,16 @@ void MainWindow::updateWindowsThumbnailPixmap()
 {
     QRect viewPort;
 
-    if(!latest){
+    if(!LastActiveSubWindow){
         drawDefaultThumb();
         return;
     }
 
-    if(activeChildWindow(latest) == 1){
-        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+    if(activeChildWindow(LastActiveSubWindow) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(LastActiveSubWindow->widget());
         viewPort = edit->scene->getViewportRect();
-    }else if(activeChildWindow(latest) == 3){
-        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+    }else if(activeChildWindow(LastActiveSubWindow) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
         viewPort = edit->scene->getViewportRect();
     }else{
         drawDefaultThumb();
@@ -56,11 +56,11 @@ void MainWindow::updateWindowsThumbnailPixmap()
     QPixmap previewPixmap(viewPort.width(), viewPort.height());
     QPainter previewPainter(&previewPixmap);
 
-    if(activeChildWindow(latest) == 1){
-        LevelEdit* edit = qobject_cast<LevelEdit*>(latest->widget());
+    if(activeChildWindow(LastActiveSubWindow) == 1){
+        LevelEdit* edit = qobject_cast<LevelEdit*>(LastActiveSubWindow->widget());
         edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
-    }else if(activeChildWindow(latest) == 3){
-        WorldEdit* edit = qobject_cast<WorldEdit*>(latest->widget());
+    }else if(activeChildWindow(LastActiveSubWindow) == 3){
+        WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
         edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
     }else{
         drawDefaultThumb();
