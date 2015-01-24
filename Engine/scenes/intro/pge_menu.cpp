@@ -120,27 +120,33 @@ void PGE_Menu::setItemsNumber(int q)
 
 void PGE_Menu::sort()
 {
-    int count=0;
-    while(count<_items.size()-1)
+    while(1)
     {
-        count=0;
-        for(int i=0; i+1<_items.size(); i++)
+        bool swaped=false;
+        for(int i=0; i<_items.size()-1; i++)
         {
-            count++;
             if(namefileLessThan(_items[i], _items[i+1]))
             {
                 _items.swap(i, i+1);
-                break;
+
+                if(_currentItem==i)
+                    _currentItem=i+1;
+                else
+                if(_currentItem==i+1)
+                    _currentItem=i;
+
+                swaped=true;
             }
         }
+        if(!swaped) break;
     }
+    autoOffset();
 }
 
 bool PGE_Menu::namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2)
 {
     return (QString::compare(d1.title, d2.title, Qt::CaseInsensitive)>0); // sort by title
 }
-
 
 void PGE_Menu::render()
 {
@@ -206,18 +212,7 @@ void PGE_Menu::setCurrentItem(int i)
     if((i>0)&&(i<_items.size()-1))
     {
         _currentItem=i;
-        //Scroll to selected item
-        if(i<_offset)
-        {
-            _offset=i;
-            _line=0;
-        }
-        else
-        if(i > (_offset+_itemsOnScreen-1))
-        {
-            _offset=i-_itemsOnScreen+1;
-            _line=_itemsOnScreen-1;
-        }
+        autoOffset();
     }
 }
 
@@ -244,15 +239,37 @@ void PGE_Menu::setOffset(int of)
     if((of>=0)&&(of< (_items.size()-_itemsOnScreen)))
     {
        _offset=of;
-       if(
-           ((_currentItem-_offset)>=0)&&
-           ((_currentItem-_offset)<_itemsOnScreen)
-         )
-            _line = _currentItem-_offset;
+       _line = _currentItem-of;
+       _line = ((_line>0)?
+                   ((_line<_itemsOnScreen)?_line : _itemsOnScreen)
+                   :0 );
+       autoOffset();
     }
     else
-        _offset=0;
+    {
+        autoOffset();
+    }
 }
+
+///
+/// \brief PGE_Menu::autoOffset
+/// Automatically sets offset and line number values
+void PGE_Menu::autoOffset()
+{
+    if(_currentItem-_itemsOnScreen > _offset)
+    {
+        _offset=_currentItem-_itemsOnScreen+1;
+        _line=_itemsOnScreen-1;
+    }
+    else
+    if(_currentItem > (_offset+_itemsOnScreen-1))
+    {
+        _offset=_currentItem-_itemsOnScreen+1;
+        _line=_itemsOnScreen-1;
+    }
+}
+
+
 
 void PGE_Menu::setPos(int x, int y)
 {
