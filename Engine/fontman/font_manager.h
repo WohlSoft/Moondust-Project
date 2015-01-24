@@ -39,6 +39,8 @@ public:
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
     static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags);
 
+    static QFont font();
+
     static void printText(QString text, int x, int y);
     static void printText(QString text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
 

@@ -222,6 +222,11 @@ GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags)
     //glDeleteTextures(1, &textTexture );
 }
 
+QFont FontManager::font()
+{
+    return defaultFont;
+}
+
 void FontManager::printText(QString text, int x, int y, int pointSize, QRgb color)
 {
     if(!isInit) return;
