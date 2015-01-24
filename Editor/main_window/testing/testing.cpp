@@ -31,7 +31,6 @@
 
 void MainWindow::on_action_doTest_triggered()
 {
-
     QString command;
 
     #ifdef _WIN32
@@ -72,12 +71,19 @@ void MainWindow::on_action_doTest_triggered()
         args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
         args << "--interprocessing";//activeLvlEditWin()->curFile;
 
+        qDebug() << "Executing engine..." << command;
         QProcess::startDetached(command, args);
+
+        QElapsedTimer t; t.start();
+        while(t.elapsed()<500);
+
+        qDebug() << "Installing interprocessing...";
+        if(!IntEngine::isWorking()) IntEngine::init();
+        IntEngine::setTestLvlBuffer(activeLvlEditWin()->LvlData);
+        qDebug() << "Started";
     }
     else
         return;
-
-    if(!IntEngine::isWorking()) IntEngine::init();
 }
 
 

@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     main/settings.cpp \
     image_calibration/image_calibrator.cpp \
     main/mw.cpp \
-    animator/AnimationScene.cpp
+    animator/AnimationScene.cpp \
+    main/app_path.cpp
 
 HEADERS  += calibrationmain.h \
     frame_matrix/matrix.h \
@@ -95,7 +96,8 @@ HEADERS  += calibrationmain.h \
     main/graphics.h \
     version.h \
     image_calibration/image_calibrator.h \
-    main/mw.h
+    main/mw.h \
+    main/app_path.h
 
 FORMS    += calibrationmain.ui \
     about/about.ui \

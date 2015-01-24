@@ -24,6 +24,7 @@
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>
 #include <main_window/tools/app_settings.h>
+#include <main_window/dock/toolboxes.h>
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 
@@ -33,14 +34,14 @@
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
-        GlobalSettings::openPath = settings.value("lastpath", ".").toString();
-        GlobalSettings::savePath = settings.value("lastsavepath", ".").toString();
-        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", ".").toString();
+        GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
         GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
         GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
@@ -67,9 +68,9 @@ void MainWindow::loadSettings()
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
-        GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", false).toBool();
-        GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
-        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", false).toBool();
+        GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", true).toBool();
+        GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", true).toBool();
+        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", true).toBool();
 
         GlobalSettings::Placing_dontShowPropertiesBox = settings.value("editor-placing-no-propsbox", false).toBool();
 
@@ -82,32 +83,32 @@ void MainWindow::loadSettings()
 
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
-        ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
+        dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
         ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
-        ui->ItemProperties->setFloating(settings.value("item-props-box-float", true).toBool());
+        dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         ui->FindDock->setFloating(settings.value("level-search-float", true).toBool());
         //ui->WorldToolBox->setFloating(settings.value("world-item-box-float", false).toBool());
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
-        ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
+        dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
         ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
         ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
-        ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
+        dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
         ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
-        ui->ItemProperties->restoreGeometry(settings.value("item-props-box-geometry", ui->ItemProperties->saveGeometry()).toByteArray());
+        dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         ui->FindDock->restoreGeometry(settings.value("level-search-geometry", ui->FindDock->saveGeometry()).toByteArray());
         ui->WorldToolBox->restoreGeometry(settings.value("world-item-box-geometry", ui->WorldToolBox->saveGeometry()).toByteArray());
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
 
-        ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
+        dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
         ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
 
@@ -116,7 +117,8 @@ void MainWindow::loadSettings()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         if(!continueLoad)
         { //Hide all unitialized dock widgets
@@ -148,7 +150,7 @@ void MainWindow::loadSettings()
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
@@ -172,26 +174,26 @@ void MainWindow::saveSettings()
     settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
     settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
 
-    settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
+    settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
     settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
-    settings.setValue("item-props-box-float", ui->ItemProperties->isFloating());
+    settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
     settings.setValue("level-search-float", ui->FindDock->isFloating());
 
     settings.setValue("world-item-box-float", ui->WorldToolBox->isFloating());
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
-    settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
+    settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
     settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
     settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
 
-    settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
+    settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
     settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
     settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
-    settings.setValue("item-props-box-geometry", ui->ItemProperties->saveGeometry());
+    settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
     settings.setValue("level-search-geometry", ui->FindDock->saveGeometry());
 
     settings.setValue("world-item-box-geometry", ui->WorldToolBox->saveGeometry());
@@ -199,7 +201,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
     settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
 
-    settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
+    settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
     settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
     settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
 
@@ -320,8 +322,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
-        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
-
+        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         applyTheme(GlobalSettings::currentTheme.isEmpty() ?
                        ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )

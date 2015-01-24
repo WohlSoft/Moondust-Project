@@ -19,6 +19,7 @@
 #include <file_formats/file_formats.h>
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -130,7 +131,7 @@ void MainWindow::OpenFile(QString FilePath)
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             updateMenus(true);
             SetCurrentLevelSection(0);
-            setDoorsToolbox();
+            dock_LvlWarpProps->init();
             setLayersBox();
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);

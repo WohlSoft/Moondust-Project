@@ -36,8 +36,9 @@ public:
     ~EngineClient();
 
     void sendLevelData(LevelData _data);
-    void sendCommand(QString command);
+    bool sendCommand(QString command);
     void OpenConnection();
+    void closeConnection();
     bool isConnected();
 
 protected:
@@ -53,11 +54,15 @@ signals:
 private slots:
     void slotOnData(QString data);
     void displayError(QLocalSocket::LocalSocketError socketError);
+    void icomingData(QString in);
 
 private:
     QLocalSocket* engine;
     bool _connected;
+    bool _busy;
     bool readyToSendLvlx;
+    QString _buffer;
+    QString _buffer_out;
 };
 
 #endif // ENGINE_CLIENT_H

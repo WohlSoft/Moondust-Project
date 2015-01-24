@@ -19,6 +19,7 @@
 #include <common_features/logger.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/graphics_funcs.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -275,7 +276,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
-                MainWinConnect::pMainWin->setDoorData(-2);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else
             if(selected==AllowNPC)
@@ -301,7 +302,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
-                MainWinConnect::pMainWin->setDoorData(-2);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else
             if(selected==Locked)
@@ -327,7 +328,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_LOCKED, QVariant(Locked->isChecked()));
-                MainWinConnect::pMainWin->setDoorData(-2);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else
             if(selected==remove)
@@ -337,7 +338,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(selected==props)
             {
-                MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
+                MainWinConnect::pMainWin->dock_LvlWarpProps->SwitchToDoor(doorData.array_id);
             }
             else
             if(selected==newLayer)
@@ -355,7 +356,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //FOUND!!!
                         scene->setLayerToSelected(lItem->data().toString());
                         scene->applyLayersVisible();
-                        MainWinConnect::pMainWin->setDoorData(-2);
+                        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
                         break;
                     }//Find selected layer's item
                 }

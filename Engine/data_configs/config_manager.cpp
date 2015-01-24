@@ -146,7 +146,7 @@ bool ConfigManager::loadBasics()
         dirs.gworld= data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
         dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcommon = data_dir + mainset.value("graphics-common", "data-custom").toString() + "/";
+        dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
 
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
@@ -256,6 +256,14 @@ bool ConfigManager::loadBasics()
         LoadingScreen.bg_color_g = engineset.value("bg-color-g", 0).toInt();
         LoadingScreen.bg_color_b = engineset.value("bg-color-b", 0).toInt();
         LoadingScreen.backgroundImg = engineset.value("background", "").toString();
+        if(!LoadingScreen.backgroundImg.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+LoadingScreen.backgroundImg).isNull())
+                LoadingScreen.backgroundImg = dirs.gcommon+LoadingScreen.backgroundImg;
+            else
+                LoadingScreen.backgroundImg = "";
+        }
+
         LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
         LoadScreenImages = engineset.value("additional-images", 0).toInt();
     engineset.endGroup();
@@ -268,11 +276,22 @@ bool ConfigManager::loadBasics()
         LoadingScreenAdditionalImage img;
 
         img.imgFile = engineset.value("image", "").toString();
+
+        if(!img.imgFile.isEmpty())
+        {
+            if(!QImage(dirs.gcommon+img.imgFile).isNull())
+                img.imgFile = dirs.gcommon+img.imgFile;
+            else
+                img.imgFile = "";
+        }
+
         img.animated = engineset.value("animated", false).toBool();
         if(img.animated)
-            img.frames = engineset.value("animated", 1).toInt();
+            img.frames = engineset.value("frames", 1).toInt();
         else
             img.frames = 1;
+        if(img.frames<=0) img.frames = 1;
+
         img.x =  engineset.value("pos-x", 1).toInt();
         img.y =  engineset.value("pos-y", 1).toInt();
         LoadingScreen.AdditionalImages.push_back(img);

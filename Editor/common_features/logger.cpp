@@ -17,6 +17,7 @@
  */
 
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include <QApplication>
 #include <QSettings>
@@ -36,12 +37,16 @@ void LogWriter::LoadLogSettings()
     DebugLogFile="PGE_Editor_log.txt";
     logLevel = QtDebugMsg;
 
-    QString mainIniFile = ApplicationPath + "/" + "pge_editor.ini";
+    QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
 
+    QDir defLogDir(AppPathManager::userAppDir()+"/logs");
+    if(!defLogDir.exists())
+        if(!defLogDir.mkpath(AppPathManager::userAppDir()+"/logs"))
+            defLogDir.setPath(AppPathManager::userAppDir());
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", ApplicationPath+"/"+DebugLogFile).toString();
+        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+DebugLogFile).toString();
         enabled = true;
         switch( logSettings.value("log-level", "3").toInt() )
         {
@@ -111,11 +116,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
     switch (type)
     {
         case QtDebugMsg:
-            if(logLevel==QtFatalMsg) return;
+            if(logLevel==QtWarningMsg) return;
         case QtWarningMsg:
             if(logLevel==QtCriticalMsg) return;
         case QtCriticalMsg:
-            if(logLevel==QtWarningMsg) return;
+            if(logLevel==QtFatalMsg) return;
         case QtFatalMsg:
             break;
     }
@@ -189,10 +194,12 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
-void WriteToLog(QtMsgType type, QString msg)
+void WriteToLog(QtMsgType type, QString msg, bool noConsole)
 {
     LogWriter::WriteToLog(type, msg);
 
+    if(noConsole)
+        return;
     if(!DevConsole::isConsoleShown())
         return;
 

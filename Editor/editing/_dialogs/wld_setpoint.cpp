@@ -34,7 +34,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     mapPointIsNull=true;
     currentMusic = 0;
     isUntitled = true;
-    latest_export_path = ApplicationPath;
+    latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
     updateTimer=NULL;

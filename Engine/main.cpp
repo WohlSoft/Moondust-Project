@@ -29,6 +29,7 @@
 
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
+#include "common_features/logger.h"
 
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
@@ -44,7 +45,10 @@
 #include "gui/pge_msgbox.h"
 #include "networking/intproc.h"
 #include "graphics/graphics.h"
+
 #include "scenes/scene_level.h"
+#include "scenes/scene_title.h"
+#include "scenes/scene_intro.h"
 
 #include <Box2D/Box2D.h>
 
@@ -64,15 +68,25 @@ int main(int argc, char *argv[])
 
     ///Generating application path
 
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
+    //Init system paths
+    AppPathManager::initAppPath();
 
-    #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    QString osX_bundle = QCoreApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    #endif
+    foreach(QString arg, a.arguments())
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
+
+            QApplication::quit();
+            QApplication::exit();
+
+            return 0;
+        }
+    }
+
+    //Init log writer
+    LoadLogSettings();
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
@@ -176,6 +190,63 @@ int main(int argc, char *argv[])
     {}
 
 
+if(!fileToPpen.isEmpty())
+{
+    if(
+       (fileToPpen.endsWith(".lvl", Qt::CaseInsensitive))
+            ||
+       (fileToPpen.endsWith(".lvlx", Qt::CaseInsensitive)))
+
+    goto PlayLevel;
+}
+
+if(interprocessing) goto PlayLevel;
+
+TitleScreeen:
+{
+    TitleScene *ttl = new TitleScene;
+    ttl->setWaitTime(10000);
+
+    ttl->init();
+    ttl->setFade(25, 0.0f, 0.02f);
+    int ret = ttl->exec();
+    delete ttl;
+    if(ret==-1) goto ExitFromApplication;
+
+    goto MainMenu;
+}
+
+CreditsScreeen:
+{
+
+    goto MainMenu;
+}
+
+GameOverScreen:
+{
+
+    goto MainMenu;
+}
+
+MainMenu:
+{
+    IntroScene * iScene = new IntroScene();
+    iScene->setFade(25, 0.0f, 0.05f);
+    int answer = iScene->exec();
+    delete iScene;
+    if(answer<0) goto ExitFromApplication;
+    goto PlayLevel;
+}
+
+
+PlayWorldMap:
+{
+
+}
+
+
+PlayLevel:
+{
     bool playAgain = true;
     int entranceID = 0;
     while(playAgain)
@@ -197,7 +268,7 @@ int main(int argc, char *argv[])
                 if(interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
-                    if(!sceneResult)
+                    if((!sceneResult) && (!lScene->doExit))
                     {
                         SDL_Delay(50);
                         PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")
@@ -268,9 +339,13 @@ int main(int argc, char *argv[])
             }
 
             ConfigManager::unloadLevelConfigs();
-
             delete lScene;
+
+            if(interprocessing)
+                goto ExitFromApplication;
     }
+}
+ExitFromApplication:
 
     if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();

@@ -33,6 +33,8 @@ private slots:
 
 protected:
     void closeEvent ( QCloseEvent * event);
+    void focusInEvent(QFocusEvent *);
+    void focusOutEvent(QFocusEvent *);
 
 private:
     static DevConsole *currentDevConsole;

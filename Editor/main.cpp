@@ -16,11 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QSharedMemory>
-#include <QSystemSemaphore>
-#include <QDesktopWidget>
-#include <iostream>
-#include <stdlib.h>
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
@@ -31,70 +26,67 @@
 #include <common_features/logger.h>
 #include <common_features/proxystyle.h>
 #include <common_features/app_path.h>
+#include <common_features/installer.h>
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
 #include <SingleApplication/singleapplication.h>
 
 #include "mainwindow.h"
 
-QString ApplicationPath;
-QString ApplicationPath_x;
-
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
     QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
-
     QApplication *a = new QApplication(argc, argv);
-
-
 
     SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
     {
-        std::cout << "Editor already runned!\n";
+        QTextStream(stdout) << "Editor already runned!\n";
         return 0;
     }
 
+    a->setStyle(new PGE_ProxyStyle);
 
+    QFont fnt = a->font();
+    fnt.setPointSize(8);
+    a->setFont(fnt);
 
+    //Init system paths
+    AppPathManager::initAppPath();
 
+    foreach(QString arg, a->arguments())
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
 
-    ApplicationPath = QApplication::applicationDirPath();
-    ApplicationPath_x = QApplication::applicationDirPath();
+            Installer::moveFromAppToUser();
+            Installer::associateFiles();
 
-    #ifdef __APPLE__
-    //Application path relative bundle folder of application
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    #endif
+            QApplication::quit();
+            QApplication::exit();
+            delete a;
+            delete as;
+            return 0;
+        }
+    }
 
-    /*
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    QString test="/home/vasya/pge/"+osX_bundle;
-    qDebug() << test << " <- before";
-    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
-        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
-    qDebug() << test << " <- after";
-    */
-
+    //Init themes engine
     Themes::init();
 
+    //Init SDL Audio subsystem
     SDL_Init(SDL_INIT_AUDIO);
 
-    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
-
+    //Init log writer
     LoadLogSettings();
 
-    // ////////////////////////////////////////////////////
-    a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
     int ret=0;
-    QRect screenSize;
-
+    //Init Main Window class
     MainWindow *w = new MainWindow;
     if(!w->continueLoad)
     {
@@ -102,23 +94,26 @@ int main(int argc, char *argv[])
         goto QuitFromEditor;
     }
 
-    screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
-    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-                                       QSize(screenSize.width()-100,\
-                                             screenSize.height()-100), screenSize));
-
     a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
 
-    w->showNormal();
-    w->activateWindow();
+    w->show();
+    w->setWindowState(w->windowState()|Qt::WindowActive);
     w->raise();
+    QApplication::setActiveWindow(w);
 
+    //Open files which opened by command line
     w->openFilesByArgs(a->arguments());
 
+    //Set acception of external file openings
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
+#ifdef Q_OS_WIN
+    w->initWindowsThumbnail();
+#endif
+
+    //Run main loop
     ret=a->exec();
 
 QuitFromEditor:

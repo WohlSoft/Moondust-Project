@@ -22,6 +22,7 @@
 
 #include <defines.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/lvl_item_properties.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -39,11 +40,11 @@ void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
             {
                 if(checked)
                 {
-                    ui->ItemProperties->show();
-                    ui->ItemProperties->raise();
+                    dock_LvlItemProps->show();
+                    dock_LvlItemProps->raise();
                 }
                 else
-                    ui->ItemProperties->hide();
+                    dock_LvlItemProps->hide();
                 break;
             }
         }
@@ -72,7 +73,7 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
     resetEditmodeButtons();
     ui->actionSetFirstPlayer->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if((activeChildWindow()==1))
     {
@@ -86,7 +87,7 @@ void MainWindow::on_actionSetSecondPlayer_triggered()
     resetEditmodeButtons();
     ui->actionSetSecondPlayer->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if((activeChildWindow()==1))
     {
@@ -100,7 +101,7 @@ void MainWindow::on_actionDrawWater_triggered()
     resetEditmodeButtons();
     ui->actionDrawWater->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if((activeChildWindow()==1))
     {
@@ -113,7 +114,7 @@ void MainWindow::on_actionDrawSand_triggered()
     resetEditmodeButtons();
     ui->actionDrawSand->setChecked(1);
 
-    ui->ItemProperties->hide();
+    dock_LvlItemProps->hide();
 
     if((activeChildWindow()==1))
     {
@@ -182,12 +183,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    activeLvlEditWin()->scene->setItemPlacer(0, itemID);
 
                    //Open block properties toolbox for define placing properties
-                   LvlItemProps(0,LvlPlacingItems::blockSet,
-                                             FileFormats::dummyLvlBgo(),
-                                             FileFormats::dummyLvlNpc(), true);
+                   dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet, true);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        ui->ItemProperties->hide();
+                        dock_LvlItemProps->hide();
 
                    break;
                }
@@ -198,12 +197,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    activeLvlEditWin()->scene->setItemPlacer(1, itemID );
 
-                   LvlItemProps(1,FileFormats::dummyLvlBlock(),
-                                             LvlPlacingItems::bgoSet,
-                                             FileFormats::dummyLvlNpc(), true);
+                   dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet, true);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        ui->ItemProperties->hide();
+                        dock_LvlItemProps->hide();
 
                    break;
                }
@@ -217,12 +214,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
-                   LvlItemProps(2,FileFormats::dummyLvlBlock(),
-                                             FileFormats::dummyLvlBgo(),
-                                             LvlPlacingItems::npcSet, true);
+                   dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet, true);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
-                        ui->ItemProperties->hide();
+                        dock_LvlItemProps->hide();
 
                    break;
                }

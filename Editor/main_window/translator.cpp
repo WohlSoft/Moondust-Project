@@ -24,6 +24,16 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <main_window/dock/toolboxes.h>
+
+#include <ui_lvl_item_properties.h>
+#include <ui_tileset_item_box.h>
+#include <ui_lvl_warp_props.h>
+
+#include <ui_leveledit.h>
+#include <ui_world_edit.h>
+#include <ui_npcedit.h>
+
 void MainWindow::setDefLang()
 {
     /*
@@ -34,7 +44,7 @@ void MainWindow::setDefLang()
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
-    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -132,17 +142,17 @@ void MainWindow::slotLanguageChanged(QAction* action)
         // load the language depending on the action content
         GlobalSettings::locale = m_currLang;
 
-        lockTilesetBox=true;
+        dock_TilesetBox->lockTilesetBox=true;
 
-        int doorType = ui->WarpType->currentIndex(); //backup combobox's index
-        int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
+        int doorType = dock_LvlWarpProps->ui->WarpType->currentIndex(); //backup combobox's index
+        int npcGenType = dock_LvlItemProps->ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
 
         loadLanguage(action->data().toString());
 
-        ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
-        ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
+        dock_LvlWarpProps->ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
+        dock_LvlItemProps->ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
 
-        lockTilesetBox=false;
+        dock_TilesetBox->lockTilesetBox=false;
 
         setLvlItemBoxes();
         setLevelSectionData();
@@ -153,6 +163,32 @@ void MainWindow::slotLanguageChanged(QAction* action)
         setTileSetBox();
 
         DevConsole::retranslate();
+
+        //Retranslate each opened sub-window / tab
+        QList<QMdiSubWindow*> subWS = ui->centralWidget->subWindowList();
+        foreach(QMdiSubWindow* w, subWS)
+        {
+            if(QString(w->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+            {
+                QString backup = qobject_cast<LevelEdit*>(w->widget())->windowTitle();
+                qobject_cast<LevelEdit*>(w->widget())->ui->retranslateUi(qobject_cast<LevelEdit*>(w->widget()));
+                qobject_cast<LevelEdit*>(w->widget())->setWindowTitle(backup);
+            }
+            else
+            if(QString(w->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+            {
+                QString backup = qobject_cast<WorldEdit*>(w->widget())->windowTitle();
+                qobject_cast<WorldEdit*>(w->widget())->ui->retranslateUi(qobject_cast<WorldEdit*>(w->widget()));
+                qobject_cast<WorldEdit*>(w->widget())->setWindowTitle(backup);
+            }
+            else
+            if(QString(w->widget()->metaObject()->className())==NPC_EDIT_CLASS)
+            {
+                QString backup = qobject_cast<NpcEdit*>(w->widget())->windowTitle();
+                qobject_cast<NpcEdit*>(w->widget())->ui->retranslateUi(qobject_cast<NpcEdit*>(w->widget()));
+                qobject_cast<NpcEdit*>(w->widget())->setWindowTitle(backup);
+            }
+        }
     }
 }
 
@@ -194,7 +230,17 @@ void MainWindow::loadLanguage(const QString& rLanguage)
 
         if(ok)
         {
+            //Retranslate UI of Main Window
             ui->retranslateUi(this);
+
+            //Retranslate dock widgets
+            if(dock_TilesetBox)
+                dock_TilesetBox->ui->retranslateUi(dock_TilesetBox);
+            if(dock_LvlItemProps)
+                dock_LvlItemProps->ui->retranslateUi(dock_LvlItemProps);
+            if(dock_LvlWarpProps)
+                dock_LvlWarpProps->ui->retranslateUi(dock_LvlWarpProps);
+
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
         else
@@ -211,30 +257,4 @@ void MainWindow::loadLanguage(const QString& rLanguage)
     }
 }
 
-/*
-void MainWindow::changeEvent(QEvent* event)
-{
-    if(NULL != event)
-    {
-        switch(event->type())
-        {
-        // this event is send if a translator is loaded
-        case QEvent::LanguageChange:
-            ui->retranslateUi(this);
-            break;
-        // this event is send, if the system, language changes
-        case QEvent::LocaleChange:
-            {
-                QString locale = QLocale::system().name();
-                locale.truncate(locale.lastIndexOf('_'));
-                loadLanguage(locale);
-            }
-            break;
-        default:
-            break;
-        }
-    }
-
-    QMainWindow::changeEvent(event);
-}*/
 

@@ -102,8 +102,10 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
     using namespace lvl_file_io;
     bool makeCustomFolder = false;
 
-    if(savOptionsDialog){
-        SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+    if(savOptionsDialog)
+    {
+        SavingNotificationDialog* sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
+        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit* lvlNameBox = new QLineEdit();
@@ -111,7 +113,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
         mkDirCustom->setText(QString(""));
         sav->addUserItem(tr("Level title: "),lvlNameBox);
         sav->addUserItem(tr("Make custom folder"), mkDirCustom);
-        sav->setAdjustSize(400,150);
+        sav->setAdjustSize(400,120);
         lvlNameBox->setText(LvlData.LevelName);
         if(sav->exec() == QDialog::Accepted){
             LvlData.LevelName = lvlNameBox->text();
@@ -488,13 +490,14 @@ bool LevelEdit::maybeSave()
 {
     if (LvlData.modified)
     {
-        SavingNotificationDialog* sav = new SavingNotificationDialog(true);
+        SavingNotificationDialog* sav = new SavingNotificationDialog(true, SavingNotificationDialog::D_WARN, this);
+        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
         QLineEdit* lvlNameBox = new QLineEdit();
         sav->addUserItem(tr("Level title: "),lvlNameBox);
-        sav->setAdjustSize(400,150);
+        sav->setAdjustSize(400,130);
         lvlNameBox->setText(LvlData.LevelName);
         if(sav->exec() == QDialog::Accepted){
             LvlData.LevelName = lvlNameBox->text();
