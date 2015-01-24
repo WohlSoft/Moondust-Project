@@ -239,6 +239,7 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionAdditional_Settings->setEnabled( (WinType==1) );
 
+    ui->menuScript->setEnabled( WinType == 1 );
     ui->actionCompile_To->setEnabled( false );
     ui->menuSwitch_Compiler->setEnabled( false );
     if(WinType==1){
