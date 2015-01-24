@@ -33,6 +33,7 @@ public:
     IntroScene();
     void update();
     void render();
+    void renderMouse();
     int exec();
     PGE_Menu menu;
     bool doExit;
@@ -58,6 +59,8 @@ public:
     };
 
 private:
+    QPoint mousePos;
+    bool offscreen;
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
     QMap<CurrentMenu, menustate> menustates;

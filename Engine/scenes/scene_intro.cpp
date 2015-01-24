@@ -27,6 +27,9 @@
 IntroScene::IntroScene()
 {
     doExit=false;
+    offscreen=false;
+    mousePos.setX(-300);
+    mousePos.setY(-300);
 }
 
 void IntroScene::update()
@@ -107,6 +110,20 @@ void IntroScene::render()
     Scene::render();
 }
 
+void IntroScene::renderMouse()
+{
+    int posX=mousePos.x();
+    int posY=mousePos.y();
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( 0.f, 1.f, 0.f, 1.0f);
+    glBegin( GL_QUADS );
+        glVertex2f( posX, posY);
+        glVertex2f( posX+10, posY);
+        glVertex2f( posX+10, posY+10);
+        glVertex2f( posX, posY+10);
+    glEnd();
+}
+
 int IntroScene::exec()
 {
     int ret=0;
@@ -129,8 +146,6 @@ int IntroScene::exec()
         //UPDATE Events
         start_render=SDL_GetTicks();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
 
         if(doExit)
         {
@@ -146,7 +161,7 @@ int IntroScene::exec()
             {
                 case SDL_QUIT:
                     {
-                        return -1;
+                        return ANSWER_EXIT;
                     }   // End work of program
                 break;
 
@@ -178,12 +193,45 @@ int IntroScene::exec()
                         break;
                     }
                 break;
-
                 case SDL_KEYUP:
                 break;
+                case SDL_MOUSEMOTION:
+                    mousePos.setX(event.motion.x);
+                    mousePos.setY(event.motion.y);
+                    menu.setMouseHoverPos(mousePos.x(), mousePos.y());
+                break;
+                case SDL_MOUSEBUTTONDOWN:
+                    switch(event.button.button)
+                    {
+                        case SDL_BUTTON_LEFT:
+                            menu.setMouseClickPos(event.button.x, event.button.y);
+                        break;
+                        case SDL_BUTTON_RIGHT:
+                            menu.rejectItem();
+                        break;
+                        default:
+                        break;
+                    }
+                break;
+                case SDL_MOUSEWHEEL:
+                    if(event.wheel.y>0)
+                        menu.scrollUp();
+                    else
+                        menu.scrollDown();
                 default: break;
             }
         }
+        int mouseX=0;
+        int mouseY=0;
+        SDL_PumpEvents();
+        SDL_GetMouseState(&mouseX, &mouseY);
+        mousePos.setX(mouseX);
+        mousePos.setY(mouseY);
+
+
+        renderMouse();
+        glFlush();
+        SDL_GL_SwapWindow(PGE_Window::window);
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {
@@ -283,8 +331,7 @@ int IntroScene::exec()
                     default:
                         if(menuChain.size()>0)
                         {
-                            setMenu((CurrentMenu)menuChain.last());
-                            menuChain.pop();
+                            setMenu((CurrentMenu)menuChain.pop());
                             menu.reset();
                         }
                         break;

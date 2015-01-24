@@ -61,9 +61,16 @@ public:
 
     void selectUp();   //!< move selection cursor up
     void selectDown(); //!< move selection cursor down
+    void scrollUp();   //!< Scroll by mousewheel
+    void scrollDown(); //!< Scroll by mousewheel
     void acceptItem(); //!< Accept currently selected item
     void rejectItem(); //!< Reject menu
     void resetState(); //!< Reset state after acception or rejection
+    void setMouseHoverPos(int x, int y);/*!< Set hovering mouse position.
+                                          Will be selected item which under mouse*/
+
+    void setMouseClickPos(int x, int y);
+    int findItem(int x, int y);
 
     void reset();   //!< Reset menu to initial state
 

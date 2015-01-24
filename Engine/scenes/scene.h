@@ -41,6 +41,7 @@ public:
     virtual ~Scene();
     virtual void update();
     virtual void render();
+    virtual void renderMouse();
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
