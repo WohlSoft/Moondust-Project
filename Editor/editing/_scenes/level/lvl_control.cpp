@@ -286,3 +286,28 @@ void LvlScene::openProps()
     QGraphicsScene::selectionChanged();
 }
 
+
+
+QPoint LvlScene::getViewportPos()
+{
+    QPoint vpPos(0,0,0,0);
+    if(_viewPort)
+    {
+        vpPos.setX(this->_viewPort->horizontalScrollBar()->value());
+        vpPos.setY(this->_viewPort->verticalScrollBar()->value());
+    }
+    return vpPos;
+}
+
+QRect LvlScene::getViewportRect()
+{
+    QRect vpRect(0,0,0,0);
+    if(_viewPort)
+    {
+        vpRect.setLeft(this->_viewPort->horizontalScrollBar()->value());
+        vpRect.setTop(this->_viewPort->verticalScrollBar()->value());
+        vpRect.setWidth(_viewPort->viewport()->width());
+        vpRect.setHeight(_viewPort->viewport()->height());
+    }
+    return vpRect;
+}
