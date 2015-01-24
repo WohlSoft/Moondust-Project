@@ -714,11 +714,11 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
         hc=0;
         for(i=0; i< ( (w-2*x) / x); i++ )
         {
-            szblock.drawPixmap(x+hc, h-y+dY, x, y-dY, srcimg.copy(x, srcimg.width()-y+dY, x, y-dY) );
+            szblock.drawPixmap(x+hc, h-y+dY, x, y-dY, srcimg.copy(x, srcimg.height()-y+dY, x, y-dY) );
                 hc+=x;
         }
             fLnt = (w-2*x)%x;
-            if( fLnt != 0) szblock.drawPixmap(x+hc, h-y+dY, fLnt, y-dY, srcimg.copy(x, srcimg.width()-y+dY, fLnt, y-dY) );
+            if( fLnt != 0) szblock.drawPixmap(x+hc, h-y+dY, fLnt, y-dY, srcimg.copy(x, srcimg.height()-y+dY, fLnt, y-dY) );
     }
 
     //R Draw right border
