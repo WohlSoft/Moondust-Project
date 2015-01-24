@@ -30,7 +30,7 @@ PGE_Menu::PGE_Menu()
     arrowDownViz=false;
     _EndSelection=false;
     _accept=false;
-    menuRect = QRect(250,348, 400, 30);
+    menuRect = QRect(250,348, 300, 30);
 }
 
 PGE_Menu::~PGE_Menu()
@@ -146,27 +146,6 @@ void PGE_Menu::sort()
 bool PGE_Menu::namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2)
 {
     return (QString::compare(d1.title, d2.title, Qt::CaseInsensitive)>0); // sort by title
-}
-
-void PGE_Menu::render()
-{
-    for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
-    {
-        if(i==_currentItem)
-        {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( 1.f, 1.f, 0.f, 1.0f);
-            glBegin( GL_QUADS );
-                glVertex2f( menuRect.x()-20+0, menuRect.y()+0 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+10, menuRect.y()+0 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+10, menuRect.y()+10 + j*menuRect.height());
-                glVertex2f( menuRect.x()-20+0, menuRect.y()+10 + j*menuRect.height());
-            glEnd();
-        }
-        FontManager::SDL_string_render2D(menuRect.x(),
-                                        menuRect.y() + j*menuRect.height(),
-                                        &_items[i].textTexture);
-    }
 }
 
 bool PGE_Menu::isSelected()
@@ -298,6 +277,59 @@ QRect PGE_Menu::rect()
     return menuRect;
 }
 
+void PGE_Menu::render()
+{
+    //Show scrollers
+    if(_items.size()>_itemsOnScreen)
+    {
+        if(_offset > 0)
+        {
+            glDisable(GL_TEXTURE_2D);
+            glColor4f( 0.f, 1.f, 0.f, 1.0f);
+            int posX = menuRect.x()+menuRect.width()/2;
+            int posY = menuRect.y()-20;
+            glBegin( GL_QUADS );
+                glVertex2f( posX, posY);
+                glVertex2f( posX+10, posY);
+                glVertex2f( posX+10, posY+10);
+                glVertex2f( posX, posY+10);
+            glEnd();
+        }
+
+        if(_offset< (_items.size()-_itemsOnScreen))
+        {
+            glDisable(GL_TEXTURE_2D);
+            glColor4f( 0.f, 1.f, 0.f, 1.0f);
+            int posX = menuRect.x()+menuRect.width()/2;
+            int posY = menuRect.y()+menuRect.height()*_itemsOnScreen;
+            glBegin( GL_QUADS );
+                glVertex2f( posX, posY);
+                glVertex2f( posX+10, posY);
+                glVertex2f( posX+10, posY+10);
+                glVertex2f( posX, posY+10);
+            glEnd();
+        }
+    }
+
+    for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
+    {
+        if(i==_currentItem)
+        {
+            glDisable(GL_TEXTURE_2D);
+            glColor4f( 1.f, 1.f, 0.f, 1.0f);
+            glBegin( GL_QUADS );
+                glVertex2f( menuRect.x()-20+0, menuRect.y()+0 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+10, menuRect.y()+0 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+10, menuRect.y()+10 + j*menuRect.height());
+                glVertex2f( menuRect.x()-20+0, menuRect.y()+10 + j*menuRect.height());
+            glEnd();
+        }
+        FontManager::SDL_string_render2D(menuRect.x(),
+                                        menuRect.y() + j*menuRect.height(),
+                                        &_items[i].textTexture);
+    }
+}
+
 PGE_Menuitem::PGE_Menuitem()
 {
     this->title = "";
@@ -314,3 +346,5 @@ PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
     this->value = _it.value;
     this->textTexture = _it.textTexture;
 }
+
+
