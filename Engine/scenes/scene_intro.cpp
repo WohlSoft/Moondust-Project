@@ -215,11 +215,25 @@ int IntroScene::exec()
                                 ret = ANSWER_EXIT;
                                 doExit=true;
                             }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
+                            }
                         break;
                         case menu_options:
                             if(value=="tests")
                             {
                                 setMenu(menu_tests);
+                            }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
                             }
 
                         break;
@@ -261,8 +275,9 @@ int IntroScene::exec()
                             menu.reset();
                             setMenu(menu_main);
                         break;
+                        case menu_tests:
                             menu.reset();
-                            setMenu(menu_main);
+                            setMenu(menu_options);
                         case menu_playlevel:
                         break;
                     }
