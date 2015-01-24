@@ -29,16 +29,17 @@ void MainWindow::initWindowsThumbnail()
 
 
     pge_thumbbar->setIconicPixmapNotificationsEnabled(true);
-    connect(pge_thumbbar, SIGNAL(iconicThumbnailPixmapRequested()), this, SLOT(updateWindowsThumbnailPixmap()));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateWindowsThumbnailPixmap()));
+    connect(pge_thumbbar, SIGNAL(iconicThumbnailPixmapRequested()), this, SLOT(updateWindowsExtrasPixmap()));
+    connect(pge_thumbbar, SIGNAL(iconicLivePreviewPixmapRequested()), this, SLOT(updateWindowsExtrasPixmap()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateWindowsExtrasPixmap()));
 }
 
-void MainWindow::updateWindowsThumbnailPixmap()
+void MainWindow::updateWindowsExtrasPixmap()
 {
     QRect viewPort;
 
     if(!LastActiveSubWindow){
-        drawDefaultThumb();
+        drawWindowsDefaults();
         return;
     }
 
@@ -49,39 +50,54 @@ void MainWindow::updateWindowsThumbnailPixmap()
         WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
         viewPort = edit->scene->getViewportRect();
     }else{
-        drawDefaultThumb();
+        drawWindowsDefaults();
         return;
     }
 
-    QPixmap previewPixmap(viewPort.width(), viewPort.height());
-    QPainter previewPainter(&previewPixmap);
+    QPixmap thumbPixmap(viewPort.width(), viewPort.height());
+    QPixmap livePreviewPixmap(size());
+    QPainter thumbPainter(&thumbPixmap);
+    QPainter livePreviewPainter(&livePreviewPixmap);
 
     if(activeChildWindow(LastActiveSubWindow) == 1){
         LevelEdit* edit = qobject_cast<LevelEdit*>(LastActiveSubWindow->widget());
-        edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+        edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
+        edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
     }else if(activeChildWindow(LastActiveSubWindow) == 3){
         WorldEdit* edit = qobject_cast<WorldEdit*>(LastActiveSubWindow->widget());
-        edit->scene->render(&previewPainter, QRectF(0,0,viewPort.width(), viewPort.height()), QRectF(viewPort));
+        edit->scene->render(&thumbPainter, QRectF(0, 0, viewPort.width(), viewPort.height()), QRectF(viewPort));
+        edit->scene->render(&livePreviewPainter, QRectF(0, 0, livePreviewPixmap.width(), livePreviewPixmap.height()), QRectF((qreal)viewPort.x(), (qreal)viewPort.y(), (qreal)livePreviewPixmap.width(), (qreal)livePreviewPixmap.height()));
     }else{
-        drawDefaultThumb();
+        drawWindowsDefaults();
         return;
     }
 
 
 
     if(pge_thumbbar){
-        pge_thumbbar->setIconicThumbnailPixmap(previewPixmap);
+        pge_thumbbar->setIconicThumbnailPixmap(thumbPixmap);
+        pge_thumbbar->setIconicLivePreviewPixmap(livePreviewPixmap);
     }
 }
 
-void MainWindow::drawDefaultThumb()
+void MainWindow::drawWindowsDefaults()
 {
-    QPixmap defPixmap(400,300);
-    QPainter defThumbPainter(&defPixmap);
+    QPixmap defThumbPixmap(400,300);
+    QPixmap defLivePreviewPixmap(size());
+    QPainter defThumbPainter(&defThumbPixmap);
+    QPainter defLivePreviewPainter(&defLivePreviewPixmap);
+
     defThumbPainter.setFont(QFont("Monospace", 30));
-    defThumbPainter.fillRect(QRectF(defPixmap.rect()), QBrush(QColor(128,128,128), Qt::SolidPattern));
-    defThumbPainter.drawText(defPixmap.rect(), Qt::AlignCenter, tr("No file loaded!"));
-    pge_thumbbar->setIconicThumbnailPixmap(defPixmap);
+    defLivePreviewPainter.setFont(QFont("Monospace", 60));
+
+    defThumbPainter.fillRect(QRectF(defThumbPixmap.rect()), QBrush(QColor(128,128,128), Qt::SolidPattern));
+    defLivePreviewPainter.fillRect(QRectF(defLivePreviewPixmap.rect()), QBrush(QColor(128, 128, 128)));
+
+    defThumbPainter.drawText(defThumbPixmap.rect(), Qt::AlignCenter, tr("No file loaded!"));
+    defLivePreviewPainter.drawText(defLivePreviewPixmap.rect(), Qt::AlignCenter, tr("No file loaded!"));
+
+    pge_thumbbar->setIconicThumbnailPixmap(defThumbPixmap);
+    pge_thumbbar->setIconicLivePreviewPixmap(defLivePreviewPixmap);
 }
 
 
