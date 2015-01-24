@@ -523,8 +523,8 @@ public:
     public:
         void initWindowsThumbnail();
     public slots:
-        void updateWindowsThumbnailPixmap();
-        void drawDefaultThumb();
+        void updateWindowsExtrasPixmap();
+        void drawWindowsDefaults();
     private:
         QWinThumbnailToolBar* pge_thumbbar;
 // ////////////////////////////////////////////////////////
