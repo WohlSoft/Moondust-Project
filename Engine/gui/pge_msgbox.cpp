@@ -26,27 +26,35 @@
 #include "../scenes/scene_level.h"
 
 #include <QRect>
+#include <QFontMetrics>
 
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
 {
+    width=300;
+    height=230;
     message = "Message box works fine!";
-    type = msg_info;
-    switch(type)
-    {
-        case msg_info: bg_color = QColor(qRgb(0,0,0)); break;
-        case msg_warn: bg_color = QColor(qRgb(255,201,14)); break;
-        case msg_error: bg_color = QColor(qRgb(125,0,0)); break;
-        case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
-        default:  bg_color = QColor(qRgb(0,0,0)); break;
-    }
-    setBoxSize(200, 125, 20);
-    buildBox();
+    construct(message, type);
+    _sizeRect.setLeft(PGE_Window::Width/2-width-padding);
+    _sizeRect.setTop(PGE_Window::Height/3-height-padding);
+    _sizeRect.setRight(PGE_Window::Width/2 + width + padding);
+    _sizeRect.setBottom(PGE_Window::Height/3+height + padding);
 }
 
-PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type, QSizeF boxSize, float _padding)
+PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type, bool autosize, QSizeF boxSize, float _padding)
     : PGE_BoxBase(_parentScene)
+{
+    construct(msg,_type, autosize, boxSize, _padding);
+    _sizeRect.setLeft(PGE_Window::Width/2-width-padding);
+    _sizeRect.setTop(PGE_Window::Height/3-height-padding);
+    _sizeRect.setRight(PGE_Window::Width/2 + width + padding);
+    _sizeRect.setBottom(PGE_Window::Height/3+height + padding);
+}
+
+
+void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
+                                bool autosize, QSizeF boxSize, float _padding)
 {
     message = msg;
     type = _type;
@@ -58,17 +66,64 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type, QSizeF b
         case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
         default:  bg_color = QColor(qRgb(0,0,0)); break;
     }
+
+    if(autosize)
+    {
+        QFont fnt = FontManager::font();
+        QFontMetrics meter(fnt);
+        /****************Word wrap*********************/
+        int lastspace=0;
+        int count=1;
+        int maxWidth=0;
+        for(int x=0, i=0;i<message.size();i++, x++)
+        {
+            switch(message[i].toLatin1())
+            {
+                case '\t':
+                case ' ':
+                    lastspace=i;
+                    break;
+                case '\n':
+                    lastspace=0;
+                    if((maxWidth<x)&&(maxWidth<28)) maxWidth=x;
+                    x=0;count++;
+                    break;
+            }
+            if(x>=28)
+            {
+                maxWidth=x;
+                if(lastspace>0)
+                {
+                    message[lastspace]='\n';
+                    i=lastspace-1;
+                    lastspace=0;
+                }
+                else
+                {
+                    message.insert(i, QChar('\n'));
+                    x=0;count++;
+                }
+            }
+        }
+        if(count==1) maxWidth=message.length();
+        /****************Word wrap*end*****************/
+
+        boxSize.setWidth( (meter.width('X')-1)*maxWidth );
+        boxSize.setHeight((meter.height()-1)*count);
+    }
+
     setBoxSize(boxSize.width()/2, boxSize.height()/2, _padding);
     buildBox();
 }
 
+
 void PGE_MsgBox::buildBox()
 {
-
     textTexture = FontManager::TextToTexture(message,
                                              QRect(0,0, width*2, height*2),
-                                             Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap);
+                                             Qt::AlignLeft | Qt::AlignTop );
 }
+
 
 PGE_MsgBox::~PGE_MsgBox()
 {
@@ -123,10 +178,10 @@ void PGE_MsgBox::exec()
         glDisable(GL_TEXTURE_2D);
         glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding, PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding, PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding, PGE_Window::Height/2 + height*fader_opacity + padding);
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding, PGE_Window::Height/2 + height*fader_opacity + padding);
+            glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() - height*fader_opacity - padding);
+            glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() - height*fader_opacity - padding);
+            glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() + height*fader_opacity + padding);
+            glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() + height*fader_opacity + padding);
         glEnd();
 
         glFlush();
@@ -164,18 +219,14 @@ void PGE_MsgBox::exec()
         glDisable(GL_TEXTURE_2D);
         glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
-            glVertex2f( PGE_Window::Width/2 - width - padding,
-                        PGE_Window::Height/2 - height - padding);
-            glVertex2f( PGE_Window::Width/2 + width + padding,
-                        PGE_Window::Height/2 - height - padding);
-            glVertex2f( PGE_Window::Width/2 + width + padding,
-                        PGE_Window::Height/2 + height + padding);
-            glVertex2f( PGE_Window::Width/2 - width - padding,
-                        PGE_Window::Height/2 + height + padding);
+            glVertex2f( _sizeRect.left(), _sizeRect.top());
+            glVertex2f( _sizeRect.right(), _sizeRect.top());
+            glVertex2f( _sizeRect.right(), _sizeRect.bottom());
+            glVertex2f( _sizeRect.left(), _sizeRect.bottom());
         glEnd();
 
-        FontManager::SDL_string_render2D(PGE_Window::Width/2-width,
-                                         PGE_Window::Height/2-height,
+        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
+                                         _sizeRect.top()+padding,
                                          &textTexture);
 
         glFlush();
@@ -260,14 +311,14 @@ void PGE_MsgBox::exec()
         glDisable(GL_TEXTURE_2D);
         glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
-                        PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding,
-                        PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding,
-                        PGE_Window::Height/2 + height*fader_opacity + padding);
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
-                        PGE_Window::Height/2 + height*fader_opacity + padding);
+            glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
+                        _sizeRect.center().y() - height*fader_opacity - padding);
+            glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
+                        _sizeRect.center().y() - height*fader_opacity - padding);
+            glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
+                        _sizeRect.center().y() + height*fader_opacity + padding);
+            glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
+                        _sizeRect.center().y() + height*fader_opacity + padding);
         glEnd();
 
         glFlush();

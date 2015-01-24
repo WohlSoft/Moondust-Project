@@ -27,7 +27,7 @@
 #undef main
 
 #include <QString>
-#include <QSizeF>
+#include <QRect>
 #include <QColor>
 
 class PGE_MsgBox : public PGE_BoxBase
@@ -43,7 +43,7 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, QSizeF boxSize=QSizeF(400,250), float _padding=20);
+               msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(400,250), float _padding=20);
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
@@ -52,7 +52,10 @@ public:
     void buildBox();
 
 private:
+    void construct(QString msg="Message box is works!",
+                    msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(400,250), float _padding=20);
     msgType type;
+    QRect _sizeRect;
     QString message;
     GLuint textTexture;
     float width;
