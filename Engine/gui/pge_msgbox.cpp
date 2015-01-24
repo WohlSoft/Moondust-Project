@@ -198,24 +198,32 @@ void PGE_MsgBox::exec()
                 break;
 
                 case SDL_KEYDOWN: // If pressed key
-                  switch(event.key.keysym.sym)
-                  { // Check which
+                    switch(event.key.keysym.sym)
+                    { // Check which
                     case SDLK_ESCAPE: // ESC
                     case SDLK_RETURN:// Enter
                     case SDLK_KP_ENTER:
-                        {
-                            running=false;
-                        }
+                    {
+                        running=false;
+                    }
                     break;
                     case SDLK_t:
-                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    PGE_Window::SDL_ToggleFS(PGE_Window::window);
                     break;
                     case SDLK_F12:
-                        GlRenderer::makeShot();
+                    GlRenderer::makeShot();
                     break;
                     default:
-                      break;
-                  }
+                    break;
+                    }
+                break;
+                case SDL_MOUSEBUTTONDOWN:
+                    switch(event.button.button)
+                    {
+                        case SDL_BUTTON_LEFT:
+                        running=false;
+                        break;
+                    }
                 break;
                 default:
                   break;
