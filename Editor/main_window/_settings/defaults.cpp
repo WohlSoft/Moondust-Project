@@ -62,7 +62,9 @@ void MainWindow::setDefaults()
     dock_LvlWarpProps = NULL;
 
     LastActiveSubWindow = NULL;
+    #ifdef Q_OS_WIN
     pge_thumbbar = NULL;
+    #endif
 }
 
 void MainWindow::setUiDefults()
