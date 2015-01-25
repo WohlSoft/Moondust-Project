@@ -23,10 +23,7 @@
 #include <QList>
 #include <QRect>
 #include <QPoint>
-
-#undef main
-#include <SDL2/SDL_opengl.h>
-#undef main
+#include <common_features/pge_texture.h>
 
 class PGE_Menuitem
 {
@@ -110,6 +107,9 @@ private:
     QList<PGE_Menuitem > _items;
     bool namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2);
     void autoOffset();
+    PGE_Texture _selector;
+    PGE_Texture _scroll_up;
+    PGE_Texture _scroll_down;
 
 };
 
