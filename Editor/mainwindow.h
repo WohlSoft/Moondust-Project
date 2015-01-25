@@ -34,7 +34,9 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QSplashScreen>
+#ifdef Q_OS_WIN
 #include <QWinThumbnailToolBar>
+#endif
 
 #include <file_formats/lvl_filedata.h>
 #include <file_formats/wld_filedata.h>
