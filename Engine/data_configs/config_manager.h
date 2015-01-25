@@ -111,6 +111,25 @@ struct LoadingScreenData
 };
 
 
+struct MainCursors
+{
+    QString normal;
+    QString rubber;
+};
+
+struct MessageBoxSetup
+{
+    QString sprite;
+    int borderWidth;
+};
+
+struct MenuSetup
+{
+    QString selector;
+    QString scrollerUp;
+    QString scrollerDown;
+};
+
 ////////////////////Common items///////////////////////////
 struct obj_music
 {
@@ -153,6 +172,14 @@ public:
 
     //LoadingScreen
     static LoadingScreenData LoadingScreen;
+
+    //curors
+    static MainCursors cursors;
+
+    //MessageBox setup
+    static MessageBoxSetup message_box;
+    //Menu setup
+    static MenuSetup menus;
 
     //World map data
     static WorldMapData WorldMap;
@@ -236,6 +263,7 @@ public:
 
 
 private:
+    static void checkForImage(QString &imgPath, QString root);
     //special paths
     static QString imgFile, imgFileM;
     static QString tmpstr;

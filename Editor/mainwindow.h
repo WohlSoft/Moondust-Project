@@ -34,6 +34,9 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QSplashScreen>
+#ifdef Q_OS_WIN
+#include <QWinThumbnailToolBar>
+#endif
 
 #include <file_formats/lvl_filedata.h>
 #include <file_formats/wld_filedata.h>
@@ -87,6 +90,7 @@ public:
  * - Miltilanguage
  * - Recent Files
  * - Sub Windows
+ * -- Latest Active Window (See sub_windows.cpp for comments)
  * - Dock widgwets
  * - Editing features
  * - Clipboard
@@ -281,6 +285,7 @@ public:
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
         ///
         int activeChildWindow();
+        int activeChildWindow(QMdiSubWindow* wnd);
         LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
         NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
@@ -309,7 +314,17 @@ public:
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
         QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
+
+        // /////////////// Latest Active Window ///////////////////
+    public slots:
+        void recordSwitchedWindow(QMdiSubWindow * window);
+        void recordRemovedWindow(QObject* possibleDeletedWindow);
+    private:
+        QMdiSubWindow* LastActiveSubWindow;
+        // ////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////
+
+
 
 
 // ////////////////////Editing features////////////////////
@@ -519,8 +534,14 @@ public:
 // ////////////////// Windows Extras //////////////////////
     public:
         void initWindowsThumbnail();
+    public slots:
+        void updateWindowsExtrasPixmap();
+        void drawWindowsDefaults();
+    private:
+        QWinThumbnailToolBar* pge_thumbbar;
 // ////////////////////////////////////////////////////////
 #endif
+
 
 // ////////////////////////////////////////////////////////////////////////////////
 // ////////////////////////////Level Editing///////////////////////////////////////

@@ -450,6 +450,9 @@ int LevelScene::exec()
         {
             PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D",
                               PGE_MsgBox::msg_info);
+
+            if(!ConfigManager::message_box.sprite.isEmpty())
+                msgBox.loadTexture(ConfigManager::message_box.sprite);
             msgBox.exec();
             isPauseMenu=false;
         }

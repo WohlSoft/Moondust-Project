@@ -20,13 +20,38 @@
 #include <graphics/graphics.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
+#include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
 
 #include "scene_intro.h"
+#include <QtDebug>
 
 IntroScene::IntroScene()
 {
     doExit=false;
+    mousePos.setX(-300);
+    mousePos.setY(-300);
+    _cursorIsLoaded=false;
+
+    if(ConfigManager::cursors.normal.isEmpty())
+    {
+        _cursorIsLoaded=false;
+    }
+    else
+    {
+        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::cursors.normal);
+        _cursorIsLoaded=true;
+    }
+}
+
+IntroScene::~IntroScene()
+{
+    qDebug()<<"Destroy intro scene";\
+    if(_cursorIsLoaded)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &cursor.texture);
+    }
 }
 
 void IntroScene::update()
@@ -107,6 +132,40 @@ void IntroScene::render()
     Scene::render();
 }
 
+void IntroScene::renderMouse()
+{
+    int posX=mousePos.x();
+    int posY=mousePos.y();
+
+    if(_cursorIsLoaded)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBindTexture(GL_TEXTURE_2D, cursor.texture);
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0, 0 );
+            glVertex2f( posX, posY);
+            glTexCoord2f( 1, 0 );
+            glVertex2f( posX+cursor.w, posY);
+            glTexCoord2f( 1, 1 );
+            glVertex2f( posX+cursor.w, posY+cursor.h);
+            glTexCoord2f( 0, 1 );
+            glVertex2f( posX, posY+cursor.h);
+        glEnd();
+    }
+    else
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 1.f, 0.f, 1.0f);
+        glBegin( GL_QUADS );
+            glVertex2f( posX, posY);
+            glVertex2f( posX+10, posY);
+            glVertex2f( posX+10, posY+10);
+            glVertex2f( posX, posY+10);
+        glEnd();
+    }
+}
+
 int IntroScene::exec()
 {
     int ret=0;
@@ -116,36 +175,19 @@ int IntroScene::exec()
     float doUpdate_Render=0;
     bool doExit=false;
 
-    menu.clear();
-    menu.addMenuItem("game1p", "1 Player Game");
-    menu.addMenuItem("game2p", "2 Player Game");
-    menu.addMenuItem("gamebt", "Battle Game");
-    menu.addMenuItem("Options", "Options");
-    menu.addMenuItem("Exit", "Exit");
-    menu.addMenuItem("1", "Hi everybody!");
-    menu.addMenuItem("2", "Ich bin GLÜCKLICH!");
-    menu.addMenuItem("3", "Кое-что по-русски");
-    menu.addMenuItem("4", "Menuitem ⑨");
-    menu.addMenuItem("7", "Menuitem about money");
-    menu.addMenuItem("6", "Menuitem about crap");
-    menu.addMenuItem("8", "Menuitem about skunks");
-    menu.addMenuItem("9", "he-he-he");
-    menu.addMenuItem("9", "Is fantasy unlimited?");
-    menu.addMenuItem("10", "YES!");
+    menustates.clear();
+    menuChain.clear();
 
-    menu.setOffset(5);
-    menu.setCurrentItem(7);
+    for(int i=menuFirst; i<menuLast;i++)
+        menustates[(CurrentMenu)i] = menustate(0, 0);
 
-    menu.sort();
+    setMenu(menu_main);
 
     while(running)
     {
-
         //UPDATE Events
         start_render=SDL_GetTicks();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
 
         if(doExit)
         {
@@ -161,7 +203,7 @@ int IntroScene::exec()
             {
                 case SDL_QUIT:
                     {
-                        return -1;
+                        return ANSWER_EXIT;
                     }   // End work of program
                 break;
 
@@ -193,12 +235,45 @@ int IntroScene::exec()
                         break;
                     }
                 break;
-
                 case SDL_KEYUP:
                 break;
+                case SDL_MOUSEMOTION:
+                    mousePos.setX(event.motion.x);
+                    mousePos.setY(event.motion.y);
+                    menu.setMouseHoverPos(mousePos.x(), mousePos.y());
+                break;
+                case SDL_MOUSEBUTTONDOWN:
+                    switch(event.button.button)
+                    {
+                        case SDL_BUTTON_LEFT:
+                            menu.setMouseClickPos(event.button.x, event.button.y);
+                        break;
+                        case SDL_BUTTON_RIGHT:
+                            menu.rejectItem();
+                        break;
+                        default:
+                        break;
+                    }
+                break;
+                case SDL_MOUSEWHEEL:
+                    if(event.wheel.y>0)
+                        menu.scrollUp();
+                    else
+                        menu.scrollDown();
                 default: break;
             }
         }
+        int mouseX=0;
+        int mouseY=0;
+        SDL_PumpEvents();
+        SDL_GetMouseState(&mouseX, &mouseY);
+        mousePos.setX(mouseX);
+        mousePos.setY(mouseY);
+
+
+        renderMouse();
+        glFlush();
+        SDL_GL_SwapWindow(PGE_Window::window);
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {
@@ -212,22 +287,151 @@ int IntroScene::exec()
             {
                 if(menu.isAccepted())
                 {
-                    PGE_MsgBox msgBox(this, "Accepted menuitem: ["+menu.currentItem().title+"]",
-                                      PGE_MsgBox::msg_warn);
-                    msgBox.exec();
-                    ret=1;
+                    menustates[_currentMenu].first = menu.currentItemI();
+                    menustates[_currentMenu].second = menu.offset();
+
+                    QString value = menu.currentItem().value;
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            if(value=="Options")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_options);
+                            }
+                            else
+                            if(value=="Exit")
+                            {
+                                ret = ANSWER_EXIT;
+                                doExit=true;
+                            }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
+                            }
+                        break;
+                        case menu_options:
+                            if(value=="tests")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_tests);
+                            }
+                            else
+                            if(value=="dab")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_dummy_and_big);
+                            }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
+                            }
+
+                        break;
+                        case menu_tests:
+                            if(value=="credits")
+                            {
+                                ret = ANSWER_CREDITS;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="title")
+                            {
+                                ret = ANSWER_TITLE;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="gameover")
+                            {
+                                ret = ANSWER_GAMEOVER;
+                                doExit=true;
+                            }
+
+                        break;
+                        case menu_playlevel:
+
+                        break;
+                    default:
+                        break;
+
+                    }
                 }
                 else
                 {
-                    PGE_MsgBox msgBox(this, "Menu rejected",
-                                      PGE_MsgBox::msg_warn);
-                    msgBox.exec();
-                    ret=-1;
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            menu.reset();
+                            menu.setCurrentItem(4);
+                        break;
+                    default:
+                        if(menuChain.size()>0)
+                        {
+                            setMenu((CurrentMenu)menuChain.pop());
+                            menu.reset();
+                        }
+                        break;
+                    }
                 }
-                doExit=true;
             }
         }
     }
     menu.clear();
     return ret;
+}
+
+void IntroScene::setMenu(IntroScene::CurrentMenu _menu)
+{
+    if(_menu<menuFirst) return;
+    if(_menu>menuLast) return;
+
+    _currentMenu=_menu;
+    menu.clear();
+    switch(_menu)
+    {
+        case menu_main:
+            menu.addMenuItem("game1p", "1 Player Game");
+            menu.addMenuItem("game2p", "2 Player Game");
+            menu.addMenuItem("gamebt", "Battle Game");
+            menu.addMenuItem("Options", "Options");
+            menu.addMenuItem("Exit", "Exit");
+        break;
+            case menu_options:
+                menu.addMenuItem("tests", "Test of screens");
+                menu.addMenuItem("dab", "Dummy and big menu");
+            break;
+                case menu_tests:
+                    menu.addMenuItem("credits", "Credits");
+                    menu.addMenuItem("title", "Title screen");
+                    menu.addMenuItem("gameover", "Game over screen");
+                break;
+                case menu_dummy_and_big:
+                    menu.addMenuItem("1", "Item 1");
+                    menu.addMenuItem("2", "Item 2");
+                    menu.addMenuItem("3", "Item 3");
+                    menu.addMenuItem("4", "Кое-что по-русски");
+                    menu.addMenuItem("5", "Ich bin glücklich!");
+                    menu.addMenuItem("6", "¿Que se ocupas?");
+                    menu.addMenuItem("7", "Minä rakastan sinua!");
+                    menu.addMenuItem("8", "هذا هو اختبار صغير");
+                    menu.addMenuItem("9", "這是一個小測試!");
+                    menu.addMenuItem("10", "דאס איז אַ קליין פּרובירן");
+                    menu.addMenuItem("11", "આ નાના કસોટી છે");
+                    menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
+                break;
+        case menu_playlevel:
+            menu.addMenuItem("dummy", "Less menuitems");
+            menu.addMenuItem("dummy1", "he-he 1");
+        break;
+    default:
+        break;
+    }
+    menu.setCurrentItem(menustates[_menu].first);
+    menu.setOffset(menustates[_menu].second);
 }

@@ -464,7 +464,7 @@ public:
         void addPlaceHistory(WorldData placedItems);
         void addOverwriteHistory(WorldData removedItems, WorldData placedItems);
         void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
-        void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
+        void addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData);
         void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
         void addRotateHistory(WorldData rotatedItems, bool byClockwise);
         void addFlipHistory(WorldData flippedItems, bool vertical);
@@ -478,22 +478,6 @@ public:
         bool canUndo();
         bool canRedo();
         //Callback
-        void historyRedoMoveTile(CallbackData cbData, WorldTiles data);
-        void historyRedoMovePath(CallbackData cbData, WorldPaths data);
-        void historyRedoMoveScenery(CallbackData cbData, WorldScenery data);
-        void historyRedoMoveLevels(CallbackData cbData, WorldLevels data);
-        void historyRedoMoveMusic(CallbackData cbData, WorldMusic data);
-        void historyUndoMoveTile(CallbackData cbData, WorldTiles data);
-        void historyUndoMovePath(CallbackData cbData, WorldPaths data);
-        void historyUndoMoveScenery(CallbackData cbData, WorldScenery data);
-        void historyUndoMoveLevels(CallbackData cbData, WorldLevels data);
-        void historyUndoMoveMusic(CallbackData cbData, WorldMusic data);
-        //Callbackfunctions: Remove
-        void historyRemoveTiles(CallbackData cbData, WorldTiles data);
-        void historyRemovePath(CallbackData cbData, WorldPaths data);
-        void historyRemoveScenery(CallbackData cbData, WorldScenery data);
-        void historyRemoveLevels(CallbackData cbData, WorldLevels data);
-        void historyRemoveMusic(CallbackData cbData, WorldMusic data);
         //Callbackfunctions: Levels
         void historyUndoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
         void historyRedoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
