@@ -19,6 +19,8 @@
 #include "pge_menu.h"
 #include <graphics/window.h>
 #include <fontman/font_manager.h>
+#include <common_features/graphics_funcs.h>
+#include <data_configs/config_manager.h>
 
 PGE_Menu::PGE_Menu()
 {
@@ -31,11 +33,41 @@ PGE_Menu::PGE_Menu()
     _EndSelection=false;
     _accept=false;
     menuRect = QRect(260,380, 350, 30);
+
+    if(ConfigManager::menus.selector.isEmpty())
+        _selector.w=0;
+    else
+        _selector = GraphicsHelps::loadTexture(_selector, ConfigManager::menus.selector);
+
+    if(ConfigManager::menus.scrollerUp.isEmpty())
+        _scroll_up.w=0;
+    else
+        _scroll_up = GraphicsHelps::loadTexture(_scroll_up, ConfigManager::menus.scrollerUp);
+
+    if(ConfigManager::menus.scrollerDown.isEmpty())
+        _scroll_down.w=0;
+    else
+        _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::menus.scrollerDown);
 }
 
 PGE_Menu::~PGE_Menu()
 {
     clear();
+    if(_selector.w>0)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &_selector.texture );
+    }
+    if(_scroll_up.w>0)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &_scroll_up.texture );
+    }
+    if(_scroll_down.w>0)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &_scroll_down.texture );
+    }
 }
 
 void PGE_Menu::addMenuItem(QString value, QString title)
@@ -359,48 +391,121 @@ void PGE_Menu::render()
     {
         if(_offset > 0)
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( 0.f, 1.f, 0.f, 1.0f);
-            int posX = menuRect.x()+menuRect.width()/2;
-            int posY = menuRect.y()-20;
-            glBegin( GL_QUADS );
-                glVertex2f( posX, posY);
-                glVertex2f( posX+10, posY);
-                glVertex2f( posX+10, posY+10);
-                glVertex2f( posX, posY+10);
-            glEnd();
+            int w=10;
+            int h=10;
+            if(_scroll_up.w>0)
+            {
+                w=_scroll_up.w;
+                h=_scroll_up.h;
+            }
+            int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
+            int posY = menuRect.y()-w-20;
+            if(_scroll_up.w==0)
+            {
+                glDisable(GL_TEXTURE_2D);
+                glColor4f( 0.f, 1.f, 0.f, 1.0f);
+                glBegin( GL_QUADS );
+                    glVertex2f( posX, posY);
+                    glVertex2f( posX+w, posY);
+                    glVertex2f( posX+w, posY+h);
+                    glVertex2f( posX, posY+h);
+                glEnd();
+            }
+            else
+            {
+                glEnable(GL_TEXTURE_2D);
+                glColor4f( 1.f, 1.f, 1.f, 1.f);
+                glBindTexture(GL_TEXTURE_2D, _scroll_up.texture);
+                glBegin( GL_QUADS );
+                    glTexCoord2f( 0, 0 );
+                    glVertex2f( posX,             posY);
+                    glTexCoord2f( 1, 0 );
+                    glVertex2f( posX+_scroll_up.w, posY);
+                    glTexCoord2f( 1, 1 );
+                    glVertex2f( posX+_scroll_up.w, posY+_scroll_up.h);
+                    glTexCoord2f( 0, 1 );
+                    glVertex2f( posX,             posY+_scroll_up.h);
+                glEnd();
+            }
         }
 
         if(_offset< (_items.size()-_itemsOnScreen))
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( 0.f, 1.f, 0.f, 1.0f);
-            int posX = menuRect.x()+menuRect.width()/2;
+            int w=10;
+            int h=10;
+            if(_scroll_down.w>0)
+            {
+                w=_scroll_down.w;
+                h=_scroll_down.h;
+            }
+            int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
             int posY = menuRect.y()+menuRect.height()*_itemsOnScreen;
-            glBegin( GL_QUADS );
-                glVertex2f( posX, posY);
-                glVertex2f( posX+10, posY);
-                glVertex2f( posX+10, posY+10);
-                glVertex2f( posX, posY+10);
-            glEnd();
+            if(_scroll_down.w==0)
+            {
+                glDisable(GL_TEXTURE_2D);
+                glColor4f( 0.f, 1.f, 0.f, 1.0f);
+                glBegin( GL_QUADS );
+                    glVertex2f( posX, posY);
+                    glVertex2f( posX+w, posY);
+                    glVertex2f( posX+w, posY+h);
+                    glVertex2f( posX, posY+h);
+                glEnd();
+            }
+            else
+            {
+                glEnable(GL_TEXTURE_2D);
+                glColor4f( 1.f, 1.f, 1.f, 1.f);
+                glBindTexture(GL_TEXTURE_2D, _scroll_down.texture);
+                glBegin( GL_QUADS );
+                    glTexCoord2f( 0, 0 );
+                    glVertex2f( posX,             posY);
+                    glTexCoord2f( 1, 0 );
+                    glVertex2f( posX+_scroll_down.w, posY);
+                    glTexCoord2f( 1, 1 );
+                    glVertex2f( posX+_scroll_down.w, posY+_scroll_down.h);
+                    glTexCoord2f( 0, 1 );
+                    glVertex2f( posX,             posY+_scroll_down.h);
+                glEnd();
+            }
         }
     }
 
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
     {
         int xPos = menuRect.x();
+        int xPos_s = menuRect.x()-_selector.w-10;
         int yPos = menuRect.y()+ j*menuRect.height();
 
         if(i==_currentItem)
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( 1.f, 1.f, 0.f, 1.0f);
-            glBegin( GL_QUADS );
-                glVertex2f( xPos-20,      yPos + (menuRect.height()/2)-5 );
-                glVertex2f( xPos-20+10,   yPos + (menuRect.height()/2)-5 );
-                glVertex2f( xPos-20+10,10+yPos + (menuRect.height()/2)-5 );
-                glVertex2f( xPos-20,   10+yPos + (menuRect.height()/2)-5 );
-            glEnd();
+            if(_selector.w==0)
+            {
+                glDisable(GL_TEXTURE_2D);
+                glColor4f( 1.f, 1.f, 0.f, 1.0f);
+                glBegin( GL_QUADS );
+                    glVertex2f( xPos_s-10,                 yPos + (menuRect.height()/2)-5 );
+                    glVertex2f( xPos_s+10-10,              yPos + (menuRect.height()/2)-5 );
+                    glVertex2f( xPos_s+10-10,           10+yPos + (menuRect.height()/2)-5 );
+                    glVertex2f( xPos_s-10,              10+yPos + (menuRect.height()/2)-5 );
+                glEnd();
+            }
+            else
+            {
+                glEnable(GL_TEXTURE_2D);
+                glColor4f( 1.f, 1.f, 1.f, 1.f);
+                glBindTexture(GL_TEXTURE_2D, _selector.texture);
+                glBegin( GL_QUADS );
+                    int y_offset=(menuRect.height()/2)-(_selector.h/2);
+                    glTexCoord2f( 0, 0 );
+                    glVertex2f( xPos_s,             yPos+y_offset);
+                    glTexCoord2f( 1, 0 );
+                    glVertex2f( xPos_s+_selector.w, yPos+y_offset);
+                    glTexCoord2f( 1, 1 );
+                    glVertex2f( xPos_s+_selector.w, yPos+_selector.h+y_offset);
+                    glTexCoord2f( 0, 1 );
+                    glVertex2f( xPos_s,             yPos+_selector.h+y_offset);
+                glEnd();
+            }
         }
 
         FontManager::SDL_string_render2D(xPos,yPos,

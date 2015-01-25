@@ -48,6 +48,10 @@ LoadingScreenData ConfigManager::LoadingScreen;
 
 //Cursors data
 MainCursors ConfigManager::cursors;
+//MessageBox setup
+MessageBoxSetup ConfigManager::message_box;
+//Menu setup
+MenuSetup ConfigManager::menus;
 
 //World map settings
 WorldMapData ConfigManager::WorldMap;
@@ -95,6 +99,7 @@ void ConfigManager::setConfigPath(QString p)
 {
     config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
 }
+
 
 bool ConfigManager::loadBasics()
 {
@@ -204,30 +209,36 @@ bool ConfigManager::loadBasics()
             screen_type = SCR_Static;
 
         cursors.normal = engineset.value("cursor-image-normal", "").toString();
-        if(!cursors.normal.isEmpty())
-        {
-            if(!QImage(dirs.gcommon+cursors.normal).isNull())
-                cursors.normal=dirs.gcommon+cursors.normal;
-            else
-                cursors.normal.clear();
-        }
+        checkForImage(cursors.normal, dirs.gcommon);
 
         cursors.rubber = engineset.value("cursor-image-rubber", "").toString();
-        if(!cursors.rubber.isEmpty())
-        {
-            if(!QImage(dirs.gcommon+cursors.rubber).isNull())
-                cursors.rubber=dirs.gcommon+cursors.rubber;
-            else
-                cursors.rubber.clear();
-        }
+        checkForImage(cursors.rubber, dirs.gcommon);
     engineset.endGroup();
 
+
+    engineset.beginGroup("message-box");
+        message_box.sprite = engineset.value("image", "").toString();
+        checkForImage(message_box.sprite, dirs.gcommon);
+        message_box.borderWidth = (unsigned)engineset.value("border-width", 32).toInt();
+    engineset.endGroup();
+
+    engineset.beginGroup("menu");
+        menus.selector = engineset.value("selector", "").toString();
+        checkForImage(menus.selector, dirs.gcommon);
+
+        menus.scrollerUp = engineset.value("scroll-up", "").toString();
+        checkForImage(menus.scrollerUp, dirs.gcommon);
+
+        menus.scrollerDown = engineset.value("scroll-down", "").toString();
+        checkForImage(menus.scrollerDown, dirs.gcommon);
+    engineset.endGroup();
 
 
     ////// World map settings
 
     engineset.beginGroup("world-map");
         WorldMap.backgroundImg = engineset.value("background", "").toString();
+        checkForImage(WorldMap.backgroundImg, dirs.gcommon);
         WorldMap.viewport_x = engineset.value("viewport-x", "").toInt();
         WorldMap.viewport_y = engineset.value("viewport-y", "").toInt();
         WorldMap.viewport_w = engineset.value("viewport-w", "").toInt();
@@ -277,13 +288,7 @@ bool ConfigManager::loadBasics()
         LoadingScreen.bg_color_g = engineset.value("bg-color-g", 0).toInt();
         LoadingScreen.bg_color_b = engineset.value("bg-color-b", 0).toInt();
         LoadingScreen.backgroundImg = engineset.value("background", "").toString();
-        if(!LoadingScreen.backgroundImg.isEmpty())
-        {
-            if(!QImage(dirs.gcommon+LoadingScreen.backgroundImg).isNull())
-                LoadingScreen.backgroundImg = dirs.gcommon+LoadingScreen.backgroundImg;
-            else
-                LoadingScreen.backgroundImg = "";
-        }
+        checkForImage(LoadingScreen.backgroundImg, dirs.gcommon);
 
         LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
         LoadScreenImages = engineset.value("additional-images", 0).toInt();
@@ -297,14 +302,7 @@ bool ConfigManager::loadBasics()
         LoadingScreenAdditionalImage img;
 
         img.imgFile = engineset.value("image", "").toString();
-
-        if(!img.imgFile.isEmpty())
-        {
-            if(!QImage(dirs.gcommon+img.imgFile).isNull())
-                img.imgFile = dirs.gcommon+img.imgFile;
-            else
-                img.imgFile = "";
-        }
+        checkForImage(img.imgFile, dirs.gcommon);
 
         img.animated = engineset.value("animated", false).toBool();
         if(img.animated)
@@ -388,4 +386,17 @@ bool ConfigManager::unloadLevelConfigs()
 
     //level_textures.clear();
     return true;
+}
+
+
+
+void ConfigManager::checkForImage(QString &imgPath, QString root)
+{
+    if(!imgPath.isEmpty())
+    {
+        if(!QImage(root+imgPath).isNull())
+            imgPath = root+imgPath;
+        else
+            imgPath = "";
+    }
 }
