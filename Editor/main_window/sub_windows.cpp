@@ -38,7 +38,7 @@ NpcEdit *MainWindow::createNPCChild()
     npcWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
-                 520,640);
+                 1150,420);
 
     ui->centralWidget->updateGeometry();
 
