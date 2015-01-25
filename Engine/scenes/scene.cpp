@@ -65,6 +65,9 @@ void Scene::render()
     }
 }
 
+void Scene::renderMouse()
+{}
+
 int Scene::exec()
 {
     return 0;

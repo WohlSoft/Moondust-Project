@@ -1,0 +1,49 @@
+#ifndef HISTORYELEMENTMAINSETTING_H
+#define HISTORYELEMENTMAINSETTING_H
+
+#include "ihistoryelement.h"
+#include <file_formats/file_formats.h>
+#include <defines.h>
+
+class HistoryElementMainSetting : public QObject, public IHistoryElement
+{
+    Q_OBJECT
+
+    Q_INTERFACES(IHistoryElement)
+public:
+
+    explicit HistoryElementMainSetting(HistorySettings::WorldSettingSubType wldSubType, QObject *parent = 0);
+    explicit HistoryElementMainSetting(HistorySettings::LevelSettingSubType lvlSubType, QObject *parent = 0);
+    explicit HistoryElementMainSetting(HistorySettings::WorldSettingSubType wldSubType, QVariant extraData, QObject *parent = 0);
+    explicit HistoryElementMainSetting(HistorySettings::LevelSettingSubType lvlSubType, QVariant extraData, QObject *parent = 0);
+    virtual ~HistoryElementMainSetting();
+    virtual QString getHistoryName();
+    virtual void undo();
+    virtual void redo();
+
+
+    QVariant modData() const;
+    void setModData(const QVariant &modData);
+
+    HistorySettings::LevelSettingSubType modLevelSetting() const;
+    void setModLevelSetting(const HistorySettings::LevelSettingSubType &modLevelSetting);
+
+    HistorySettings::WorldSettingSubType modWorldSetting() const;
+    void setModWorldSetting(const HistorySettings::WorldSettingSubType &modWorldSetting);
+
+    void processWorldUndo();
+    void processWorldRedo();
+
+
+signals:
+
+public slots:
+
+private:
+    HistorySettings::WorldSettingSubType m_modWorldSetting;
+    HistorySettings::LevelSettingSubType m_modLevelSetting;
+    QVariant m_modData;
+
+};
+
+#endif // HISTORYELEMENTMAINSETTING_H

@@ -362,7 +362,8 @@ SOURCES += main.cpp\
     common_features/installer.cpp \
     main_window/dock/lvl_item_properties.cpp \
     main_window/windows_extras.cpp \
-    main_window/dock/lvl_warp_props.cpp
+    main_window/dock/lvl_warp_props.cpp \
+    editing/_components/history/historyelementmainsetting.cpp
     
 
 HEADERS  += defines.h \
@@ -506,7 +507,8 @@ HEADERS  += defines.h \
     main_window/dock/toolboxes_protos.h \
     common_features/installer.h \
     main_window/dock/lvl_item_properties.h \
-    main_window/dock/lvl_warp_props.h
+    main_window/dock/lvl_warp_props.h \
+    editing/_components/history/historyelementmainsetting.h
 
 
 FORMS    += \

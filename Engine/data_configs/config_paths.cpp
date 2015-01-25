@@ -82,4 +82,3 @@ QString ConfigManager::PathWorldSound()
     return dirs.sounds;
 }
 
-
