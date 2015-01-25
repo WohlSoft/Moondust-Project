@@ -25,6 +25,9 @@
 #include "items/item_tile.h"
 
 #include <editing/_components/history/historyelementmodification.h>
+#include <editing/_components/history/historyelementmainsetting.h>
+
+#include <defines.h>
 
 void WldScene::addRemoveHistory(WorldData removedItems)
 {
@@ -93,14 +96,15 @@ void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedI
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void WldScene::addChangeWorldSettingsHistory(WldScene::SettingSubType subtype, QVariant extraData)
+void WldScene::addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData)
 {
     cleanupRedoElements();
 
     HistoryOperation chLevelSettingsOperation;
-    chLevelSettingsOperation.type = HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD;
-    chLevelSettingsOperation.subtype = subtype;
-    chLevelSettingsOperation.extraData = extraData;
+    HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
+    modf->setScene(this);
+    chLevelSettingsOperation.newElement = QSharedPointer<IHistoryElement>(modf);
+
     operationList.push_back(chLevelSettingsOperation);
     historyIndex++;
 
@@ -168,34 +172,6 @@ void WldScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        QVariant extraData = lastOperation.extraData;
-
-        if(subtype == SETTING_HUB){
-            WldData->HubStyledWorld = !extraData.toBool();
-        }else if(subtype == SETTING_RESTARTAFTERFAIL){
-            WldData->restartlevel = !extraData.toBool();
-        }else if(subtype == SETTING_TOTALSTARS){
-            WldData->stars = extraData.toList()[0].toInt();
-        }else if(subtype == SETTING_INTROLEVEL){
-            WldData->IntroLevel_file = extraData.toList()[0].toString();
-        }else if(subtype == SETTING_CHARACTER){
-            int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
-            if(ind!=-1)
-                WldData->nocharacter[ind] = !extraData.toList()[1].toBool();
-        }else if(subtype == SETTING_WORLDTITLE){
-            WldData->EpisodeTitle = extraData.toList()[0].toString();
-            if(MainWinConnect::pMainWin->activeChildWindow()==3)
-                MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
-                            extraData.toList()[0].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : extraData.toList()[0].toString());
-        }
-
-        MainWinConnect::pMainWin->setCurrentWorldSettings();
-
-        break;
-    }
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM:
     {
         WorldData modifiedSourceData = lastOperation.data;
@@ -280,34 +256,6 @@ void WldScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        QVariant extraData = lastOperation.extraData;
-
-        if(subtype == SETTING_HUB){
-            WldData->HubStyledWorld = extraData.toBool();
-        }else if(subtype == SETTING_RESTARTAFTERFAIL){
-            WldData->restartlevel = extraData.toBool();
-        }else if(subtype == SETTING_TOTALSTARS){
-            WldData->stars = extraData.toList()[1].toInt();
-        }else if(subtype == SETTING_INTROLEVEL){
-            WldData->IntroLevel_file = extraData.toList()[1].toString();
-        }else if(subtype == SETTING_CHARACTER){
-            int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
-            if(ind!=-1)
-                WldData->nocharacter[ind] = extraData.toList()[1].toBool();
-        }else if(subtype == SETTING_WORLDTITLE){
-            WldData->EpisodeTitle = extraData.toList()[1].toString();
-            if(MainWinConnect::pMainWin->activeChildWindow()==3)
-                MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
-                            extraData.toList()[1].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : extraData.toList()[1].toString());
-        }
-
-        MainWinConnect::pMainWin->setCurrentWorldSettings();
-
-        break;
-    }
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM:
     {
         WorldData modifiedSourceData = lastOperation.data;
@@ -402,136 +350,6 @@ bool WldScene::canUndo()
 bool WldScene::canRedo()
 {
     return historyIndex < operationList.size();
-}
-
-void WldScene::historyRedoMoveTile(WldScene::CallbackData cbData, WorldTiles data)
-{
-    long diffX = data.x - cbData.x;
-    long diffY = data.y - cbData.y;
-
-    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
-    ((ItemTile *)(cbData.item))->tileData.x = (long)cbData.item->scenePos().x();
-    ((ItemTile *)(cbData.item))->tileData.y = (long)cbData.item->scenePos().y();
-    ((ItemTile *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyRedoMovePath(WldScene::CallbackData cbData, WorldPaths data)
-{
-    long diffX = data.x - cbData.x;
-    long diffY = data.y - cbData.y;
-
-    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
-    ((ItemPath *)(cbData.item))->pathData.x = (long)cbData.item->scenePos().x();
-    ((ItemPath *)(cbData.item))->pathData.y = (long)cbData.item->scenePos().y();
-    ((ItemPath *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyRedoMoveScenery(WldScene::CallbackData cbData, WorldScenery data)
-{
-    long diffX = data.x - cbData.x;
-    long diffY = data.y - cbData.y;
-
-    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
-    ((ItemScene *)(cbData.item))->sceneData.x = (long)cbData.item->scenePos().x();
-    ((ItemScene *)(cbData.item))->sceneData.y = (long)cbData.item->scenePos().y();
-    ((ItemScene *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyRedoMoveLevels(WldScene::CallbackData cbData, WorldLevels data)
-{
-    long diffX = data.x - cbData.x;
-    long diffY = data.y - cbData.y;
-
-    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
-    ((ItemLevel *)(cbData.item))->levelData.x = (long)cbData.item->scenePos().x();
-    ((ItemLevel *)(cbData.item))->levelData.y = (long)cbData.item->scenePos().y();
-    ((ItemLevel *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyRedoMoveMusic(WldScene::CallbackData cbData, WorldMusic data)
-{
-    long diffX = data.x - cbData.x;
-    long diffY = data.y - cbData.y;
-
-    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
-    ((ItemMusic *)(cbData.item))->musicData.x = (long)cbData.item->scenePos().x();
-    ((ItemMusic *)(cbData.item))->musicData.y = (long)cbData.item->scenePos().y();
-    ((ItemMusic *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyUndoMoveTile(WldScene::CallbackData cbData, WorldTiles data)
-{
-    cbData.item->setPos(QPointF(data.x,data.y));
-    ((ItemTile *)(cbData.item))->tileData.x = (long)cbData.item->scenePos().x();
-    ((ItemTile *)(cbData.item))->tileData.y = (long)cbData.item->scenePos().y();
-    ((ItemTile *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyUndoMovePath(WldScene::CallbackData cbData, WorldPaths data)
-{
-    cbData.item->setPos(QPointF(data.x,data.y));
-    ((ItemPath *)(cbData.item))->pathData.x = (long)cbData.item->scenePos().x();
-    ((ItemPath *)(cbData.item))->pathData.y = (long)cbData.item->scenePos().y();
-    ((ItemPath *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyUndoMoveScenery(WldScene::CallbackData cbData, WorldScenery data)
-{
-    cbData.item->setPos(QPointF(data.x,data.y));
-    ((ItemScene *)(cbData.item))->sceneData.x = (long)cbData.item->scenePos().x();
-    ((ItemScene *)(cbData.item))->sceneData.y = (long)cbData.item->scenePos().y();
-    ((ItemScene *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyUndoMoveLevels(WldScene::CallbackData cbData, WorldLevels data)
-{
-    cbData.item->setPos(QPointF(data.x,data.y));
-    ((ItemLevel *)(cbData.item))->levelData.x = (long)cbData.item->scenePos().x();
-    ((ItemLevel *)(cbData.item))->levelData.y = (long)cbData.item->scenePos().y();
-    ((ItemLevel *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyUndoMoveMusic(WldScene::CallbackData cbData, WorldMusic data)
-{
-    cbData.item->setPos(QPointF(data.x,data.y));
-    ((ItemMusic *)(cbData.item))->musicData.x = (long)cbData.item->scenePos().x();
-    ((ItemMusic *)(cbData.item))->musicData.y = (long)cbData.item->scenePos().y();
-    ((ItemMusic *)(cbData.item))->arrayApply();
-}
-
-void WldScene::historyRemoveTiles(WldScene::CallbackData cbData, WorldTiles /*data*/)
-{
-    ((ItemTile*)cbData.item)->removeFromArray();
-    removeItem(cbData.item);
-    delete cbData.item;
-}
-
-void WldScene::historyRemovePath(WldScene::CallbackData cbData, WorldPaths /*data*/)
-{
-    ((ItemPath*)cbData.item)->removeFromArray();
-    removeItem(cbData.item);
-    delete cbData.item;
-}
-
-void WldScene::historyRemoveScenery(WldScene::CallbackData cbData, WorldScenery /*data*/)
-{
-    ((ItemScene*)cbData.item)->removeFromArray();
-    removeItem(cbData.item);
-    delete cbData.item;
-}
-
-void WldScene::historyRemoveLevels(WldScene::CallbackData cbData, WorldLevels /*data*/)
-{
-    ((ItemLevel*)cbData.item)->removeFromArray();
-    removeItem(cbData.item);
-    delete cbData.item;
-}
-
-void WldScene::historyRemoveMusic(WldScene::CallbackData cbData, WorldMusic /*data*/)
-{
-    ((ItemMusic*)cbData.item)->removeFromArray();
-    removeItem(cbData.item);
-    delete cbData.item;
 }
 
 void WldScene::historyUndoSettingPathBackgroundLevel(WldScene::CallbackData cbData, WorldLevels data)

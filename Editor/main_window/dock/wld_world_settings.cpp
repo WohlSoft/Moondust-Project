@@ -113,7 +113,7 @@ void MainWindow::characterActivated(bool checked)
             return;
         QList<QVariant> chData;
         chData << WLD_CharacterCheckBoxes[ch] << checked;
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_CHARACTER, chData);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_CHARACTER, chData);
         activeWldEditWin()->WldData.nocharacter[ind] = checked;
     }
 }
@@ -136,25 +136,19 @@ void MainWindow::on_WLD_Title_editingFinished()
     {
         QList<QVariant> var;
         var << activeWldEditWin()->WldData.EpisodeTitle << ui->WLD_Title->text();
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_WORLDTITLE, var);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_WORLDTITLE, var);
         activeWldEditWin()->WldData.EpisodeTitle = ui->WLD_Title->text();
         activeWldEditWin()->WldData.modified = true;
         activeWldEditWin()->setWindowTitle(ui->WLD_Title->text() =="" ? activeWldEditWin()->userFriendlyCurrentFile() : ui->WLD_Title->text() );
     }
 }
 
-//void MainWindow::on_WLD_Title_textChanged(const QString &arg1)
-//{
-
-
-//}
-
 void MainWindow::on_WLD_NoWorldMap_clicked(bool checked)
 {
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_HUB, checked);
 
         ui->actionWLDDisableMap->setChecked(checked);
         activeWldEditWin()->WldData.HubStyledWorld = checked;
@@ -167,7 +161,7 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_HUB, checked);
 
         ui->WLD_NoWorldMap->setChecked(checked);
         activeWldEditWin()->WldData.HubStyledWorld = checked;
@@ -181,7 +175,7 @@ void MainWindow::on_WLD_RestartLevel_clicked(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_RESTARTAFTERFAIL, checked);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_RESTARTAFTERFAIL, checked);
 
         ui->actionWLDFailRestart->setChecked(checked);
         activeWldEditWin()->WldData.restartlevel = checked;
@@ -193,7 +187,7 @@ void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_RESTARTAFTERFAIL, checked);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_RESTARTAFTERFAIL, checked);
 
         ui->WLD_RestartLevel->setChecked(checked);
         activeWldEditWin()->WldData.restartlevel = checked;
@@ -225,7 +219,7 @@ void MainWindow::on_WLD_AutostartLvl_editingFinished()
     {
         QList<QVariant> var;
         var << activeWldEditWin()->WldData.IntroLevel_file << ui->WLD_AutostartLvl->text();
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_INTROLEVEL, var);
         activeWldEditWin()->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
         activeWldEditWin()->WldData.modified = true;
     }
@@ -263,7 +257,7 @@ void MainWindow::on_WLD_Stars_valueChanged(int arg1)
     {
         QList<QVariant> var;
         var << activeWldEditWin()->WldData.stars << arg1;
-        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_TOTALSTARS, var);
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(HistorySettings::SETTING_TOTALSTARS, var);
         activeWldEditWin()->WldData.stars = arg1;
         activeWldEditWin()->WldData.modified = true;
     }
