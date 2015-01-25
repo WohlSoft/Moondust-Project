@@ -1,10 +1,11 @@
-Editor 0.2.2.1
+Editor 0.2.3
 - Fixed group collision random crash
 - Fixed 'too large weight' crash
 - Added update checking
 - Better history manager
 - Added support of user specific settings and logs
 - Interprocess communication system is fixed for Linux and Windows systems!
+- Fixed freezing on reading some NPC.txts with mistakes
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
