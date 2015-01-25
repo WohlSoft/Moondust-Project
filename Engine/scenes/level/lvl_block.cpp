@@ -205,6 +205,9 @@ void LVL_Block::render(float camX, float camY)
         x2 = x<<1;
         y2 = y<<1;
 
+        int pWidth = texture.w-x2;//Width of center piece
+        int pHeight = texture.h-y2;//Height of center piece
+
         int fLnt = 0; // Free Lenght
         int fWdt = 0; // Free Width
 
@@ -214,16 +217,19 @@ void LVL_Block::render(float camX, float camY)
         if(w < x2) dX = (x2-w)>>1; else dX=0;
         if(h < y2) dY = (y2-h)>>1; else dY=0;
 
+        int totalW=((w-x2)/pWidth);
+        int totalH=((h-y2)/pHeight);
+
         //L Draw left border
         if(h > (y2))
         {
             hc=0;
-            for(i=0; i<((h-y2) / y); i++ )
+            for(i=0; i<totalH; i++ )
             {
-                drawPiece(blockG, QRectF(0, x+hc, x-dX, y), QRectF(0, y, x-dX, y));
-                hc+=x;
+                drawPiece(blockG, QRectF(0, x+hc, x-dX, pHeight), QRectF(0, y, x-dX, pHeight));
+                hc+=pHeight;
             }
-                fLnt = (h-y2)%y;
+                fLnt = (h-y2)%pHeight;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(0, x+hc, x-dX, fLnt), QRectF(0, y, x-dX, fLnt));
         }
@@ -232,12 +238,12 @@ void LVL_Block::render(float camX, float camY)
         if(w > (x2))
         {
             hc=0;
-            for(i=0; i<( (w-(x2)) / x); i++ )
+            for(i=0; i<totalW; i++ )
             {
-                drawPiece(blockG, QRectF(x+hc, 0, x, y-dY), QRectF(x, 0, x, y-dY));
-                    hc+=x;
+                drawPiece(blockG, QRectF(x+hc, 0, pWidth, y-dY), QRectF(x, 0, pWidth, y-dY));
+                    hc+=pWidth;
             }
-                fLnt = (w-(x2))%x;
+                fLnt = (w-(x2))%pWidth;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(x+hc, 0, fLnt, y-dY), QRectF(x, 0, fLnt, y-dY));
         }
@@ -246,12 +252,12 @@ void LVL_Block::render(float camX, float camY)
         if(w > (x2))
         {
             hc=0;
-            for(i=0; i< ( (w-(x2)) / x); i++ )
+            for(i=0; i<totalW; i++ )
             {
-                drawPiece(blockG, QRectF(x+hc, h-y+dY, x, y-dY), QRectF(x, texture.h-y+dY, x, y-dY));
-                    hc+=x;
+                drawPiece(blockG, QRectF(x+hc, h-y+dY, pWidth, y-dY), QRectF(x, texture.h-y+dY, pWidth, y-dY));
+                    hc+=pWidth;
             }
-                fLnt = (w-(x2))%x;
+                fLnt = (w-(x2))%pWidth;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(x+hc, h-y+dY, fLnt, y-dY), QRectF(x, texture.h-y+dY, fLnt, y-dY));
         }
@@ -260,46 +266,46 @@ void LVL_Block::render(float camX, float camY)
         if(h > (y2))
         {
             hc=0;
-            for(i=0; i<((h-(y2)) / y); i++ )
+            for(i=0; i<totalH; i++ )
             {
-                drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, y), QRectF(texture.w-x+dX, y, x-dX, y));
-                    hc+=x;
+                drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, pHeight), QRectF(texture.w-x+dX, y, x-dX, pHeight));
+                    hc+=pHeight;
             }
-                fLnt = (h-y2)%y;
+                fLnt = (h-y2)%pHeight;
                 if( fLnt != 0)
                     drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, fLnt), QRectF(texture.w-x+dX, y, x-dX, fLnt));
         }
 
 
         //C Draw center
-        if( w > (x2) && h > (y2))
+        if( (w > (x2)) && (h > (y2)))
         {
             hc=0;
             wc=0;
-            for(i=0; i<((h-y2) / y); i++ )
+            for(i=0; i< totalH; i++ )
             {
                 hc=0;
-                for(j=0; j<((w-x2) / x); j++ )
+                for(j=0; j< totalW; j++ )
                 {
-                    drawPiece(blockG, QRectF(x+hc, y+wc, x, y), QRectF(x, y, x, y));
-                    hc+=x;
+                    drawPiece(blockG, QRectF(x+hc, y+wc, pWidth, pHeight), QRectF(x, y, pWidth, pHeight));
+                    hc+=pWidth;
                 }
-                    fLnt = (w-x2)%x;
+                    fLnt = (w-x2)%pWidth;
                     if(fLnt != 0 )
-                        drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, y), QRectF(x, y, fLnt, y));
-                wc+=y;
+                        drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, pHeight), QRectF(x, y, fLnt, pHeight));
+                wc+=pHeight;
             }
 
-            fWdt = (h-y2)%y;
+            fWdt = (h-y2)%pHeight;
             if(fWdt !=0)
             {
                 hc=0;
-                for(j=0; j<((w-x2) / x); j++ )
+                for(j=0; j<totalW; j++ )
                 {
-                    drawPiece(blockG, QRectF(x+hc, y+wc, x, y), QRectF(x, y, x, y));
-                    hc+=x;
+                    drawPiece(blockG, QRectF(x+hc, y+wc, pWidth, fWdt), QRectF(x, y, pWidth, fWdt));
+                    hc+=pWidth;
                 }
-                    fLnt = (w-x2)%x;
+                    fLnt = (w-x2)%pWidth;
                     if(fLnt != 0 )
                         drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, fWdt), QRectF(x, y, fLnt, fWdt));
             }

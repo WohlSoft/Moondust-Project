@@ -670,6 +670,12 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     x = qRound(qreal(srcimg.width())/3);  // Width of one piece
     y = qRound(qreal(srcimg.height())/3); // Height of one piece
 
+    int x2 = x<<1; // 2*x
+    int y2 = y<<1; // 2*y
+
+    int pWidth = srcimg.width()-x2;//Width of center piece
+    int pHeight = srcimg.height()-y2;//Height of center piece
+
     img.fill(Qt::transparent);
     QPainter szblock(&img);
 
@@ -679,93 +685,94 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     int dX=0; //Draw Offset. This need for crop junk on small sizes
     int dY=0;
 
-    if(w < 2*x) dX = (2*x-w)/2; else dX=0;
-    if(h < 2*y) dY = (2*y-h)/2; else dY=0;
+    if(w < x2) dX = (x2-w)/2; else dX=0;
+    if(h < y2) dY = (y2-h)/2; else dY=0;
 
+    int totalW = ((w-x2) / x);
+    int totalH = ((h-y2) / y);
     //L Draw left border
-    if(h > 2*y)
+    if(h > y2)
     {
         hc=0;
-        for(i=0; i<((h-2*y) / y); i++ )
+        for(i=0; i< totalH; i++ )
         {
-            szblock.drawPixmap(0, x+hc, x-dX, y, srcimg.copy(0, y, x-dX, y));
-                hc+=x;
+            szblock.drawPixmap(0, x+hc, x-dX, pHeight, srcimg.copy(0, y, x-dX, pHeight));
+                hc+=pHeight;
         }
-            fLnt = (h-2*y)%y;
+            fLnt = (h-y2)%pHeight;
             if( fLnt != 0) szblock.drawPixmap(0, x+hc, x-dX, fLnt, srcimg.copy(0, y, x-dX, fLnt) );
     }
 
     //T Draw top border
-    if(w > 2*x)
+    if(w > x2)
     {
         hc=0;
-        for(i=0; i<( (w-2*x) / x); i++ )
+        for(i=0; i<totalW; i++ )
         {
-            szblock.drawPixmap(x+hc, 0, x, y-dY, srcimg.copy(x, 0, x, y-dY) );
-                hc+=x;
+            szblock.drawPixmap(x+hc, 0, pWidth, y-dY, srcimg.copy(x, 0, pWidth, y-dY) );
+                hc+=pWidth;
         }
-            fLnt = (w-2*x)%x;
+            fLnt = (w-x2)%pWidth;
             if( fLnt != 0) szblock.drawPixmap(x+hc, 0, fLnt, y-dY, srcimg.copy(x, 0, fLnt, y-dY) );
     }
 
     //B Draw bottom border
-    if(w > 2*x)
+    if(w > x2)
     {
         hc=0;
-        for(i=0; i< ( (w-2*x) / x); i++ )
+        for(i=0; i< totalW; i++ )
         {
-            szblock.drawPixmap(x+hc, h-y+dY, x, y-dY, srcimg.copy(x, srcimg.height()-y+dY, x, y-dY) );
-                hc+=x;
+            szblock.drawPixmap(x+hc, h-y+dY, pWidth, y-dY, srcimg.copy(x, srcimg.height()-y+dY, pWidth, y-dY) );
+                hc+=pWidth;
         }
-            fLnt = (w-2*x)%x;
+            fLnt = (w-x2)%pWidth;
             if( fLnt != 0) szblock.drawPixmap(x+hc, h-y+dY, fLnt, y-dY, srcimg.copy(x, srcimg.height()-y+dY, fLnt, y-dY) );
     }
 
     //R Draw right border
-    if(h > 2*y)
+    if(h > y2)
     {
         hc=0;
-        for(i=0; i<((h-2*y) / y); i++ )
+        for(i=0; i<totalH; i++ )
         {
-            szblock.drawPixmap(w-x+dX, y+hc, x-dX, y, srcimg.copy(srcimg.width()-x+dX, y, x-dX, y));
-                hc+=x;
+            szblock.drawPixmap(w-x+dX, y+hc, x-dX, pHeight, srcimg.copy(srcimg.width()-x+dX, y, x-dX, pHeight));
+                hc+=pHeight;
         }
-            fLnt = (h-2*y)%y;
+            fLnt = (h-y2)%pHeight;
             if( fLnt != 0) szblock.drawPixmap(w-x+dX, y+hc, x-dX, fLnt, srcimg.copy(srcimg.width()-x+dX, y, x-dX, fLnt));
     }
 
     //C Draw center
-    if( w > 2*x && h > 2*y)
+    if( w > x2 && h > y2)
     {
         hc=0;
         wc=0;
-        for(i=0; i<((h-2*y) / y); i++ )
+        for(i=0; i<totalH; i++ )
         {
             hc=0;
-            for(j=0; j<((w-2*x) / x); j++ )
+            for(j=0; j<totalW; j++ )
             {
-            szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(x, y, x, y));
-                hc+=x;
+            szblock.drawPixmap(x+hc, y+wc, pWidth, pHeight, srcimg.copy(x, y, pWidth, pHeight));
+                hc+=pWidth;
             }
-                fLnt = (w-2*x)%x;
-                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, y, srcimg.copy(x, y, fLnt, y));
+                fLnt = (w-x2)%pWidth;
+                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, pHeight, srcimg.copy(x, y, fLnt, pHeight));
             wc+=y;
         }
 
-        fWdt = (h-2*y)%y;
+        fWdt = (h-y2)%pHeight;
         if(fWdt !=0)
         {
             hc=0;
-            for(j=0; j<((w-2*x) / x); j++ )
+            for(j=0; j<totalW; j++ )
             {
-            szblock.drawPixmap(x+hc, y+wc, x, fWdt, srcimg.copy(x, y, x, fWdt));
-                hc+=x;
+            szblock.drawPixmap(x+hc, y+wc, pWidth, fWdt, srcimg.copy(x, y, pWidth, fWdt));
+                hc+=pWidth;
             }
-                fLnt = (w-2*x)%x;
+                fLnt = (w-x2)%pWidth;
                 if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, fWdt, srcimg.copy(x, y, fLnt, fWdt));
 
         }
-
     }
 
     //Draw corners
