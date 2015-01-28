@@ -95,11 +95,6 @@ macx: {
     INCLUDEPATH += ../_Libs/_builds/macos/include
 }
 
-win32: static: {
-    LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
-}
-
-
 USE_QMEDIAPLAYER: {
     QT += multimedia
 }
