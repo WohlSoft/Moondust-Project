@@ -5,26 +5,31 @@ CONFIG -= qt
 #CONFIG += static
 
 static:{
-DESTDIR = build_static
+DESTDIR = ../_builds/sdl2_mixer_mod
+TARGET = SDL2_mixer
 }else{
-DESTDIR = build_dynamic
+DESTDIR = ../_builds/sdl2_mixer_mod
+TARGET = SDL2_mixer
 }
 
-TARGET = SDL2_mixer
-
-DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MOD_MUSIC MID_MUSIC \
+DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MODPLUG_MUSIC MID_MUSIC \
 USE_TIMIDITY_MIDI USE_NATIVE_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES
 
 win32:{
+LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
-INCLUDEPATH += D:/MinGW/msys/1.0/build/SDL/include
-LIBS += -LD:/MinGW/msys/1.0/build/SDL/lib
+INCLUDEPATH += ../_builds/win32/include
+#LIBS += -LD:/MinGW/msys/1.0/build/SDL/lib
 }
-LIBS += -lSDL2 -lmikmod
+LIBS += -lSDL2
 win32:{
 LIBS += -lwinmm -lm -lwinmm
 }
-LIBS += -lvorbisfile -lvorbis -lFLAC -lmad -lm
+
+INCLUDEPATH += _deps/libmad
+LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad -lmodplug.dll -lflac -logg
+
+LIBS += -lm
 
 HEADERS += \
     begin_code.h \
@@ -82,7 +87,6 @@ HEADERS += \
 SOURCES += \
     dynamic_flac.c \
     dynamic_fluidsynth.c \
-    dynamic_mod.c \
     dynamic_modplug.c \
     dynamic_mp3.c \
     dynamic_ogg.c \
@@ -130,7 +134,8 @@ SOURCES += \
     snes_spc/SPC_Filter.cpp \
     music_spc.c \
     resample/mad_resample.c \
-    timidity/ctrlmode.c
+    timidity/ctrlmode.c \
+    dynamic_mod.c
 
 DISTFILES += \
     timidity/COPYING \
