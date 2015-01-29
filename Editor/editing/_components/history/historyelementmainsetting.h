@@ -22,15 +22,6 @@ public:
     virtual void redo();
 
 
-    QVariant modData() const;
-    void setModData(const QVariant &modData);
-
-    HistorySettings::LevelSettingSubType modLevelSetting() const;
-    void setModLevelSetting(const HistorySettings::LevelSettingSubType &modLevelSetting);
-
-    HistorySettings::WorldSettingSubType modWorldSetting() const;
-    void setModWorldSetting(const HistorySettings::WorldSettingSubType &modWorldSetting);
-
     void processWorldUndo();
     void processWorldRedo();
 

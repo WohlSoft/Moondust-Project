@@ -240,6 +240,7 @@ public:
         void applyArrayForItemGroup(QList<QGraphicsItem * >items);
         void applyArrayForItem(QGraphicsItem * item);
         void collectDataFromItem(WorldData& dataToStore, QGraphicsItem* item);
+        void collectDataFromItems(WorldData &dataToStore, QList<QGraphicsItem*> items);
         void placeAll(const WorldData &data);
 
         void returnItemBackGroup(QList<QGraphicsItem * >items);
@@ -258,8 +259,8 @@ public:
         void applyGridToEach(QList<QGraphicsItem *> items);
         void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
 
-        void flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recordHistory=true);
-        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool recordHistory=true);
+        void flipGroup(QList<QGraphicsItem *> items, bool vertical);
+        void rotateGroup(QList<QGraphicsItem *> items, bool byClockwise);
 
         enum rotateActions
         {
@@ -402,72 +403,14 @@ public:
 
     // //////////////////History Manager/////////////////////////
     public:
-        struct HistoryOperation{
-            enum HistoryType{
-                WORLDHISTORY_REMOVE = 0,               //Removed from map
-                WORLDHISTORY_PLACE,                    //Placed new
-                WORLDHISTORY_OVERWRITE,
-                WORLDHISTORY_MOVE,                     //moved
-                WORLDHISTORY_CHANGEDSETTINGSWORLD,
-                WORLDHISTORY_CHANGEDSETTINGSWORLDITEM,
-                WORLDHISTORY_ROTATE,
-                WORLDHISTORY_FLIP
-            };
-            HistoryType type;
-            //used most of Operations
-            WorldData data;
-            WorldData data_mod;
-            //subtype (if needed)
-            int subtype;
-            //misc
-            QVariant extraData;
-            //new System
-            QSharedPointer<IHistoryElement> newElement;
-        };
-        struct CallbackData{
-            QGraphicsItem* item;
-            HistoryOperation* hist;
-            //custom data
-            long x, y;
-        };
-
-        enum SettingSubType{
-            SETTING_HUB = 0,
-            SETTING_RESTARTAFTERFAIL,
-            SETTING_TOTALSTARS,
-            SETTING_INTROLEVEL,
-            SETTING_PATHBACKGROUND,
-            SETTING_BIGPATHBACKGROUND,
-            SETTING_ALWAYSVISIBLE,
-            SETTING_GAMESTARTPOINT,
-            SETTING_LEVELFILE,
-            SETTING_LEVELTITLE,
-            SETTING_DOORID,
-            SETTING_PATHBYTOP,
-            SETTING_PATHBYRIGHT,
-            SETTING_PATHBYBOTTOM,
-            SETTING_PATHBYLEFT,
-            SETTING_GOTOX,
-            SETTING_GOTOY,
-            SETTING_CHARACTER,
-            SETTING_WORLDTITLE
-        };
-
-        //typedefs
-        typedef void (WldScene::*callBackWorldTiles)(CallbackData, WorldTiles);
-        typedef void (WldScene::*callBackWorldPaths)(CallbackData, WorldPaths);
-        typedef void (WldScene::*callBackWorldScenery)(CallbackData, WorldScenery);
-        typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
-        typedef void (WldScene::*callBackWorldMusicbox)(CallbackData, WorldMusic);
-
         void addRemoveHistory(WorldData removedItems);
         void addPlaceHistory(WorldData placedItems);
         void addOverwriteHistory(WorldData removedItems, WorldData placedItems);
         void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
         void addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData);
-        void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
-        void addRotateHistory(WorldData rotatedItems, bool byClockwise);
-        void addFlipHistory(WorldData flippedItems, bool vertical);
+        void addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData);
+        void addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems);
+        void addFlipHistory(WorldData flippedItems, WorldData unflippedItems);
 
         //history modifiers
         void historyBack();
@@ -477,51 +420,9 @@ public:
         int getHistroyIndex();
         bool canUndo();
         bool canRedo();
-        //Callback
-        //Callbackfunctions: Levels
-        void historyUndoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
-        void historyUndoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
-        void historyRedoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
-
-        //miscellaneous
-        void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
-                              callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,
-                              callBackWorldScenery clbScenery, callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic,
-                              bool ignoreTiles = false,
-                              bool ignorePaths = false,
-                              bool ignoreScenery = false,
-                              bool ignoreLevels = false,
-                              bool ignoreMusicbox = false);
-
-        QList<QGraphicsItem*> findGraphicsItems(WorldData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
-        QString getHistoryText(HistoryOperation operation);
-        QString getHistorySettingText(SettingSubType subType);
     private:
         int historyIndex;
-        QList<HistoryOperation> operationList;
+        QList<QSharedPointer<IHistoryElement> > operationList;
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
