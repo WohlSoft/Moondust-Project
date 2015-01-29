@@ -194,7 +194,7 @@ void ItemLevel::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemLevel *)SelItem)->setPath( setPathBG->isChecked() );
                     }
                 }
-                scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
             }
             else
             if(selected==setBigPathBG)
@@ -209,7 +209,7 @@ void ItemLevel::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemLevel *)SelItem)->setbPath( setBigPathBG->isChecked() );
                     }
                 }
-                scene->addChangeSettingsHistory(selData, WldScene::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
             }
             else
             if(selected==setAlVis)
@@ -224,7 +224,7 @@ void ItemLevel::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
                     }
                 }
-                scene->addChangeSettingsHistory(selData, WldScene::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
             }
             else
             if(selected==cutTile)
