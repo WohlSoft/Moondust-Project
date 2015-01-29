@@ -66,33 +66,6 @@ void HistoryElementMainSetting::redo()
         processWorldRedo();
     }
 }
-QVariant HistoryElementMainSetting::modData() const
-{
-    return m_modData;
-}
-
-void HistoryElementMainSetting::setModData(const QVariant &modData)
-{
-    m_modData = modData;
-}
-HistorySettings::LevelSettingSubType HistoryElementMainSetting::modLevelSetting() const
-{
-    return m_modLevelSetting;
-}
-
-void HistoryElementMainSetting::setModLevelSetting(const HistorySettings::LevelSettingSubType &modLevelSetting)
-{
-    m_modLevelSetting = modLevelSetting;
-}
-HistorySettings::WorldSettingSubType HistoryElementMainSetting::modWorldSetting() const
-{
-    return m_modWorldSetting;
-}
-
-void HistoryElementMainSetting::setModWorldSetting(const HistorySettings::WorldSettingSubType &modWorldSetting)
-{
-    m_modWorldSetting = modWorldSetting;
-}
 
 void HistoryElementMainSetting::processWorldUndo()
 {
