@@ -57,6 +57,15 @@ using namespace std;
 
 
 LevelScene* lScene;
+enum Level_returnTo
+{
+    RETURN_TO_MAIN_MENU=0,
+    RETURN_TO_WORLDMAP,
+    RETURN_TO_GAMEOVER_SCREEN,
+    RETURN_TO_CREDITS_SCREEN,
+    RETURN_TO_EXIT
+};
+Level_returnTo end_level_jump=RETURN_TO_EXIT;
 
 int main(int argc, char *argv[])
 {
@@ -202,7 +211,7 @@ if(!fileToPpen.isEmpty())
 
 if(interprocessing) goto PlayLevel;
 
-LoadingScreeen:
+LoadingScreen:
 {
     LoadingScene *ttl = new LoadingScene;
     ttl->setWaitTime(15000);
@@ -216,7 +225,7 @@ LoadingScreeen:
     goto MainMenu;
 }
 
-CreditsScreeen:
+CreditsScreen:
 {
 
     goto MainMenu;
@@ -233,6 +242,8 @@ MainMenu:
     TitleScene * iScene = new TitleScene();
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
+    PlayLevelResult   res_level   = iScene->result_level;
+    //PlayEpisodeResult res_episode = iScene->result_episode;
     delete iScene;
 
     switch(answer)
@@ -240,11 +251,15 @@ MainMenu:
         case TitleScene::ANSWER_EXIT:
             goto ExitFromApplication;
         case TitleScene::ANSWER_CREDITS:
-            goto CreditsScreeen;
+            goto CreditsScreen;
         case TitleScene::ANSWER_LOADING:
-            goto LoadingScreeen;
+            goto LoadingScreen;
         case TitleScene::ANSWER_GAMEOVER:
             goto GameOverScreen;
+        case TitleScene::ANSWER_PLAYLEVEL:
+            end_level_jump=RETURN_TO_MAIN_MENU;
+            fileToPpen = res_level.levelfile;
+            goto PlayLevel;
         default:
             goto PlayWorldMap;
     }
@@ -256,6 +271,7 @@ MainMenu:
 PlayWorldMap:
 {
 
+    goto MainMenu;
 }
 
 
@@ -357,6 +373,20 @@ PlayLevel:
 
             if(interprocessing)
                 goto ExitFromApplication;
+    }
+
+    switch(end_level_jump)
+    {
+        case RETURN_TO_WORLDMAP:
+            goto PlayWorldMap;
+        case RETURN_TO_MAIN_MENU:
+            goto MainMenu;
+        case RETURN_TO_EXIT:
+            goto ExitFromApplication;
+        case RETURN_TO_GAMEOVER_SCREEN:
+            goto GameOverScreen;
+        case RETURN_TO_CREDITS_SCREEN:
+            goto CreditsScreen;
     }
 }
 ExitFromApplication:

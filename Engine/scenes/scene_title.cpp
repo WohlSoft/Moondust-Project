@@ -21,10 +21,12 @@
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
+#include <file_formats.h>
 #include <gui/pge_msgbox.h>
 
 #include "scene_title.h"
 #include <QtDebug>
+#include <QDir>
 
 TitleScene::TitleScene()
 {
@@ -378,6 +380,12 @@ int TitleScene::exec()
                     switch(_currentMenu)
                     {
                         case menu_main:
+                            if(value=="gamebt")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_playlevel);
+                            }
+                            else
                             if(value=="Options")
                             {
                                 menuChain.push(_currentMenu);
@@ -395,6 +403,19 @@ int TitleScene::exec()
                                                   PGE_MsgBox::msg_warn);
                                 msgBox.exec();
                                 menu.resetState();
+                            }
+                        break;
+                        case menu_playlevel:
+                            if(value=="nolevel")
+                            {
+                                //do nothing!
+                            }
+                            else
+                            {
+                                result_level.levelfile = value;
+                                ret = ANSWER_PLAYLEVEL;
+                                setFade(25, 1.0f, 0.09f);
+                                doExit=true;
                             }
                         break;
                         case menu_options:
@@ -436,9 +457,6 @@ int TitleScene::exec()
                                 ret = ANSWER_GAMEOVER;
                                 doExit=true;
                             }
-
-                        break;
-                        case menu_playlevel:
 
                         break;
                     default:
@@ -510,8 +528,29 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
                 break;
         case menu_playlevel:
-            menu.addMenuItem("dummy", "Less menuitems");
-            menu.addMenuItem("dummy1", "he-he 1");
+            {
+                //Build list of casual levels
+                QDir leveldir(ConfigManager::dirs.worlds);
+                QStringList filter;
+                filter<<"*.lvl" << "*.lvlx";
+                QStringList files = leveldir.entryList(filter);
+
+                if(files.isEmpty())
+                    menu.addMenuItem("nolevel", "<levels not found>");
+                else
+                {
+                    foreach(QString file, files)
+                    {
+                        LevelData level = FileFormats::OpenLevelFile(ConfigManager::dirs.worlds+file);
+                        if(level.ReadFileValid)
+                        {
+                            QString title = level.LevelName;
+                            menu.addMenuItem(ConfigManager::dirs.worlds+file, (title.isEmpty()?file:title));
+                        }
+                    }
+                    menu.sort();
+                }
+            }
         break;
     default:
         break;
