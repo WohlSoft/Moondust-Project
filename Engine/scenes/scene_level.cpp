@@ -223,9 +223,17 @@ void LevelScene::update(float step)
             exitLevelDelay -= lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
         else
         {
-            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-            if(fader_opacity>=1.0)
+            if(exitLevelCode==EXIT_Closed)
+            {
+                fader_opacity=1.0f;
                 isLevelContinues=false;
+            }
+            else
+            {
+                if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
+                if(fader_opacity>=1.0)
+                    isLevelContinues=false;
+            }
         }
     }
     else
@@ -410,7 +418,7 @@ int LevelScene::exec()
                   { // Check which
                     case SDLK_ESCAPE: // ESC
                             {
-                                setExiting(0, EXIT_Closed);
+                                setExiting(0, EXIT_MenuExit);
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
@@ -448,11 +456,11 @@ int LevelScene::exec()
 
         if(isPauseMenu)
         {
-            PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D",
+            PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D\n\nXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxx",
                               PGE_MsgBox::msg_info);
 
-            if(!ConfigManager::message_box.sprite.isEmpty())
-                msgBox.loadTexture(ConfigManager::message_box.sprite);
+            if(!ConfigManager::setup_message_box.sprite.isEmpty())
+                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
             msgBox.exec();
             isPauseMenu=false;
         }
@@ -526,6 +534,7 @@ void LevelScene::checkPlayers()
         setExiting(4000, EXIT_PlayerDeath);
     }
 }
+
 
 void LevelScene::setExiting(int delay, int reason)
 {

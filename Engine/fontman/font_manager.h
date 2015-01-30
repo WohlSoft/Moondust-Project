@@ -50,6 +50,7 @@ private:
     //static TTF_Font * defaultFont;
     static GLuint textTexture;
     static int fontID;
+    static bool double_pixled;
 
     static QFont defaultFont;
 };

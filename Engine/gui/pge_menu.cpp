@@ -34,20 +34,20 @@ PGE_Menu::PGE_Menu()
     _accept=false;
     menuRect = QRect(260,380, 350, 30);
 
-    if(ConfigManager::menus.selector.isEmpty())
+    if(ConfigManager::setup_menus.selector.isEmpty())
         _selector.w=0;
     else
-        _selector = GraphicsHelps::loadTexture(_selector, ConfigManager::menus.selector);
+        _selector = GraphicsHelps::loadTexture(_selector, ConfigManager::setup_menus.selector);
 
-    if(ConfigManager::menus.scrollerUp.isEmpty())
+    if(ConfigManager::setup_menus.scrollerUp.isEmpty())
         _scroll_up.w=0;
     else
-        _scroll_up = GraphicsHelps::loadTexture(_scroll_up, ConfigManager::menus.scrollerUp);
+        _scroll_up = GraphicsHelps::loadTexture(_scroll_up, ConfigManager::setup_menus.scrollerUp);
 
-    if(ConfigManager::menus.scrollerDown.isEmpty())
+    if(ConfigManager::setup_menus.scrollerDown.isEmpty())
         _scroll_down.w=0;
     else
-        _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::menus.scrollerDown);
+        _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::setup_menus.scrollerDown);
 }
 
 PGE_Menu::~PGE_Menu()
@@ -76,7 +76,7 @@ void PGE_Menu::addMenuItem(QString value, QString title)
     item.value = value;
     item.title = (title.isEmpty() ? value : title);
     item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, menuRect.width(), menuRect.height()),
+                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
                                                   Qt::AlignLeft | Qt::AlignVCenter, true );
     _items.push_back(item);
 }
@@ -399,7 +399,7 @@ void PGE_Menu::render()
                 h=_scroll_up.h;
             }
             int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()-w-20;
+            int posY = menuRect.y()-h-4;
             if(_scroll_up.w==0)
             {
                 glDisable(GL_TEXTURE_2D);
@@ -439,7 +439,7 @@ void PGE_Menu::render()
                 h=_scroll_down.h;
             }
             int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()+menuRect.height()*_itemsOnScreen;
+            int posY = menuRect.y()+menuRect.height()*_itemsOnScreen+4;
             if(_scroll_down.w==0)
             {
                 glDisable(GL_TEXTURE_2D);

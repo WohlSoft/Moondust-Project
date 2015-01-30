@@ -35,24 +35,24 @@ TitleScene::TitleScene()
     mousePos.setY(-300);
     _cursorIsLoaded=false;
 
-    glClearColor(float(ConfigManager::TitleScreen.backgroundColor.red())/255.0f,
-                 float(ConfigManager::TitleScreen.backgroundColor.green())/255.0f,
-                 float(ConfigManager::TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
+    glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
+                 float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
+                 float(ConfigManager::setup_TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
                 // Set background color from file
 
-    if(ConfigManager::cursors.normal.isEmpty())
+    if(ConfigManager::setup_cursors.normal.isEmpty())
     {
         _cursorIsLoaded=false;
     }
     else
     {
-        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::cursors.normal);
+        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::setup_cursors.normal);
         _cursorIsLoaded=true;
     }
 
-    if(!ConfigManager::TitleScreen.backgroundImg.isEmpty())
+    if(!ConfigManager::setup_TitleScreen.backgroundImg.isEmpty())
     {
-        background = GraphicsHelps::loadTexture(background, ConfigManager::TitleScreen.backgroundImg);
+        background = GraphicsHelps::loadTexture(background, ConfigManager::setup_TitleScreen.backgroundImg);
         _bgIsLoaded=true;
     }
     else
@@ -60,18 +60,18 @@ TitleScene::TitleScene()
 
     imgs.clear();
 
-    for(int i=0; i<ConfigManager::TitleScreen.AdditionalImages.size(); i++)
+    for(int i=0; i<ConfigManager::setup_TitleScreen.AdditionalImages.size(); i++)
     {
-        if(ConfigManager::TitleScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         TitleScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::TitleScreen.AdditionalImages[i].imgFile);
+        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile);
 
         //Using of X-Y as offsets if aligning is enabled
-        int x_offset=ConfigManager::TitleScreen.AdditionalImages[i].x;
-        int y_offset=ConfigManager::TitleScreen.AdditionalImages[i].y;
+        int x_offset=ConfigManager::setup_TitleScreen.AdditionalImages[i].x;
+        int y_offset=ConfigManager::setup_TitleScreen.AdditionalImages[i].y;
 
-        switch(ConfigManager::TitleScreen.AdditionalImages[i].align_to)
+        switch(ConfigManager::setup_TitleScreen.AdditionalImages[i].align_to)
         {
         case TitleScreenAdditionalImage::LEFT_ALIGN:
             img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
@@ -92,22 +92,22 @@ TitleScene::TitleScene()
             img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
             break;
         default:
-            img.x = ConfigManager::TitleScreen.AdditionalImages[i].x;
-            img.y = ConfigManager::TitleScreen.AdditionalImages[i].y;
+            img.x = ConfigManager::setup_TitleScreen.AdditionalImages[i].x;
+            img.y = ConfigManager::setup_TitleScreen.AdditionalImages[i].y;
             break;
         }
 
-        if(ConfigManager::TitleScreen.AdditionalImages[i].center_x)
+        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].center_x)
             img.x = (PGE_Window::Width/2)-(img.t.w/2) + x_offset;
 
-        if(ConfigManager::TitleScreen.AdditionalImages[i].center_y)
+        if(ConfigManager::setup_TitleScreen.AdditionalImages[i].center_y)
             img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
 
-        img.a.construct(ConfigManager::TitleScreen.AdditionalImages[i].animated,
-                        ConfigManager::TitleScreen.AdditionalImages[i].frames,
-                        ConfigManager::TitleScreen.AdditionalImages[i].framespeed);
+        img.a.construct(ConfigManager::setup_TitleScreen.AdditionalImages[i].animated,
+                        ConfigManager::setup_TitleScreen.AdditionalImages[i].frames,
+                        ConfigManager::setup_TitleScreen.AdditionalImages[i].framespeed);
 
-        img.frmH = (img.t.h / ConfigManager::TitleScreen.AdditionalImages[i].frames);
+        img.frmH = (img.t.h / ConfigManager::setup_TitleScreen.AdditionalImages[i].frames);
 
         imgs.push_back(img);
     }
@@ -380,6 +380,12 @@ int TitleScene::exec()
                     switch(_currentMenu)
                     {
                         case menu_main:
+                            if(value=="game1p")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_playepisode);
+                            }
+                            else
                             if(value=="gamebt")
                             {
                                 menuChain.push(_currentMenu);
@@ -399,9 +405,16 @@ int TitleScene::exec()
                             }
                             else
                             {
-                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                PGE_MsgBox msgBox(this, QString("Sorry, is not implemented yet..."),
                                                   PGE_MsgBox::msg_warn);
+                                fader_opacity=0.5;
                                 msgBox.exec();
+                                fader_opacity=0.0;
+                                menu.resetState();
+                            }
+                        break;
+                        case menu_playepisode:
+                            {
                                 menu.resetState();
                             }
                         break;
@@ -409,6 +422,7 @@ int TitleScene::exec()
                             if(value=="nolevel")
                             {
                                 //do nothing!
+                                menu.resetState();
                             }
                             else
                             {
@@ -459,6 +473,9 @@ int TitleScene::exec()
                             }
 
                         break;
+                        case menu_dummy_and_big:
+                            menu.resetState();
+                            break;
                     default:
                         break;
 
@@ -498,6 +515,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     switch(_menu)
     {
         case menu_main:
+            menu.setPos(260,380);
+            menu.setSize(300, 30);
+            menu.setItemsNumber(5);
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
             menu.addMenuItem("gamebt", "Battle Game");
@@ -505,15 +525,24 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.addMenuItem("Exit", "Exit");
         break;
             case menu_options:
+                menu.setPos(260,380);
+                menu.setSize(300, 30);
+                menu.setItemsNumber(5);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("dab", "Dummy and big menu");
             break;
                 case menu_tests:
+                    menu.setPos(260,380);
+                    menu.setSize(300, 30);
+                    menu.setItemsNumber(5);
                     menu.addMenuItem("credits", "Credits");
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
                 case menu_dummy_and_big:
+                    menu.setPos(260,300);
+                    menu.setSize(300, 30);
+                    menu.setItemsNumber(7);
                     menu.addMenuItem("1", "Item 1");
                     menu.addMenuItem("2", "Item 2");
                     menu.addMenuItem("3", "Item 3");
@@ -527,6 +556,43 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("11", "આ નાના કસોટી છે");
                     menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
                 break;
+        case menu_playepisode:
+            {
+                //Build list of episodes
+                QDir worlddir(ConfigManager::dirs.worlds);
+                QStringList filter;
+                filter << "*.wld" << "*.wldx";
+                QStringList files;
+                QStringList folders = worlddir.entryList(QDir::Dirs);
+
+                foreach(QString folder, folders)
+                {
+                    QString path = ConfigManager::dirs.worlds+folder;
+                    QDir episodedir(path);
+                    QStringList worlds = episodedir.entryList(filter);
+                    foreach(QString world, worlds)
+                    {
+                        files << ConfigManager::dirs.worlds+folder+"/"+world;
+                    }
+                }
+
+                if(files.isEmpty())
+                    menu.addMenuItem("noworlds", "<episodes not found>");
+                else
+                {
+                    foreach(QString file, files)
+                    {
+                        WorldData world = FileFormats::OpenWorldFile(file);
+                        if(world.ReadFileValid)
+                        {
+                            QString title = world.EpisodeTitle;
+                            menu.addMenuItem(file, (title.isEmpty()?QFileInfo(file).fileName():title));
+                        }
+                    }
+                    menu.sort();
+                }
+            }
+        break;
         case menu_playlevel:
             {
                 //Build list of casual levels

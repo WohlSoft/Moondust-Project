@@ -91,6 +91,16 @@ struct WorldMapData
     int portrait_y;
 };
 
+/**********Loading screen******************/
+struct FontsSetup
+{
+    bool double_pixled;
+    QString fontname;
+};
+
+/******************************************/
+
+/**********Loading screen******************/
 struct LoadingScreenAdditionalImage
 {
     QString imgFile;
@@ -100,14 +110,17 @@ struct LoadingScreenAdditionalImage
     int y;
 };
 
-struct LoadingScreenData
+struct LoadingScreenSetup
 {
     QString backgroundImg;
     QColor backgroundColor;
     int updateDelay;
     QVector<LoadingScreenAdditionalImage > AdditionalImages;
 };
+/******************************************/
 
+
+/************Title screen******************/
 struct TitleScreenAdditionalImage
 {
     enum align{
@@ -130,20 +143,22 @@ struct TitleScreenAdditionalImage
     bool center_y;
 };
 
-struct TitleScreenData
+struct TitleScreenSetup
 {
     QString backgroundImg;
     QColor backgroundColor;
     QVector<TitleScreenAdditionalImage > AdditionalImages;
 };
+/******************************************/
 
 
-
+/**************Cursors*********************/
 struct MainCursors
 {
     QString normal;
     QString rubber;
 };
+/******************************************/
 
 struct MessageBoxSetup
 {
@@ -199,22 +214,24 @@ public:
     };
     static screenType screen_type;
 
+    //Fonts
+    static FontsSetup setup_fonts;
+    //curors
+    static MainCursors setup_cursors;
+    //MessageBox setup
+    static MessageBoxSetup setup_message_box;
+    //Menu setup
+    static MenuSetup setup_menus;
+
+
     //LoadingScreen
-    static LoadingScreenData LoadingScreen;
+    static LoadingScreenSetup setup_LoadingScreen;
 
     //Title Screen
-    static TitleScreenData TitleScreen;
-
-    //curors
-    static MainCursors cursors;
-
-    //MessageBox setup
-    static MessageBoxSetup message_box;
-    //Menu setup
-    static MenuSetup menus;
+    static TitleScreenSetup setup_TitleScreen;
 
     //World map data
-    static WorldMapData WorldMap;
+    static WorldMapData setup_WorldMap;
 
 
     static unsigned long music_custom_id;
