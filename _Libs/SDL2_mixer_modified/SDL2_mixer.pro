@@ -27,9 +27,14 @@ LIBS += -lwinmm -lm -lwinmm
 }
 
 INCLUDEPATH += _deps/libmad
-LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad -lmodplug.dll -lflac -logg
+LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad
+win32:{
+LIBS +=-lmodplug.dll
+} else {
+LIBS +=-lmodplug
+}
 
-LIBS += -lm
+LIBS += -lFLAC -logg -lm
 
 HEADERS += \
     begin_code.h \
