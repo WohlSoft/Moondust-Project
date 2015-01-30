@@ -20,6 +20,7 @@
 
 #include "../common_features/app_path.h"
 #include "../common_features/graphics_funcs.h"
+#include <data_configs/config_manager.h>
 
 #include <QtDebug>
 #include <QFile>
@@ -40,6 +41,7 @@ GLuint FontManager::textTexture=0;
 
 int     FontManager::fontID;
 QFont FontManager::defaultFont;
+bool FontManager::double_pixled=false;
 
 void FontManager::init()
 {
@@ -54,15 +56,22 @@ void FontManager::init()
     //if(defaultFont==NULL)
     //    return;
 
-    fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
+    if(ConfigManager::setup_fonts.fontname.isEmpty())
+        fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
+    else
+        fontID = QFontDatabase::addApplicationFont(
+                                    ConfigManager::data_dir+"/"+
+                                    ConfigManager::setup_fonts.fontname);
 
-    QString family("Press Start 2P");
+    double_pixled = ConfigManager::setup_fonts.double_pixled;
+
+    QString family("Monospace");
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
-
     defaultFont.setFamily(family);//font.setWeight(14);
     defaultFont.setPointSize(12);
-
+    defaultFont.setStyleStrategy(QFont::PreferBitmap);
+    defaultFont.setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
 
     isInit = true;
@@ -119,19 +128,22 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
 {
     if(!isInit) return;
 
-    int off = (borders ? 10 : 0);
+    int off = (borders ? 4 : 0);
     QPainterPath path;
     QFontMetrics meter(font);
     QImage text_image = QImage(meter.width(text)+off, (off+meter.height())*text.split('\n').size(), QImage::Format_ARGB32);
     text_image.fill(Qt::transparent);
 
     QPainter x(&text_image);
-    x.setFont(font);
+    QFont font_i = font;
+    if(borders)
+        font_i.setPixelSize(font_i.pixelSize()-off);
+    x.setFont(font_i);
     x.setBrush(QBrush(color));
     x.setPen(QPen(QBrush(color), 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
     if(borders)
     {
-        path.addText(off, meter.height() + off, font, text);
+        path.addText(off, meter.height() + off, font_i, text);
         x.strokePath(path, QPen(QColor(Qt::black), 2));
         x.fillPath(path, QBrush(color));
     }
@@ -159,15 +171,16 @@ void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fo
 {
     if(!isInit) return;
 
+    QImage text_image;
     int off = (borders ? 4 : 0);
-    QPainterPath path;
 
-    QImage text_image = QImage(limitRect.size(), QImage::Format_ARGB32);
+    QPainterPath path;
+    text_image = QImage(limitRect.size(), QImage::Format_ARGB32);
     text_image.fill(Qt::transparent);
     QFont font_i = font;
     if(borders)
     {
-        font_i.setPointSize(10);
+        font_i.setPointSize(font_i.pointSize()-1);
     }
     QFontMetrics meter(font_i);
     QPainter x(&text_image);
@@ -183,6 +196,13 @@ void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fo
     else
         x.drawText(text_image.rect(), fontFlags, text);
     x.end();
+
+    if(double_pixled)
+    {
+        //Pixelizing
+        text_image = text_image.scaled(text_image.width()/2, text_image.height()/2);
+        text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
+    }
 
     text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
 

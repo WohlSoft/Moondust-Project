@@ -53,32 +53,32 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::init()
 {
-    glClearColor(float(ConfigManager::LoadingScreen.backgroundColor.red())/255.0f,
-                 float(ConfigManager::LoadingScreen.backgroundColor.green())/255.0f,
-                 float(ConfigManager::LoadingScreen.backgroundColor.blue())/255.0f, 1.0f);
+    glClearColor(float(ConfigManager::setup_LoadingScreen.backgroundColor.red())/255.0f,
+                 float(ConfigManager::setup_LoadingScreen.backgroundColor.green())/255.0f,
+                 float(ConfigManager::setup_LoadingScreen.backgroundColor.blue())/255.0f, 1.0f);
                 // Set background color from file
 
-    if(!ConfigManager::LoadingScreen.backgroundImg.isEmpty())
-        background = GraphicsHelps::loadTexture(background, ConfigManager::LoadingScreen.backgroundImg);
+    if(!ConfigManager::setup_LoadingScreen.backgroundImg.isEmpty())
+        background = GraphicsHelps::loadTexture(background, ConfigManager::setup_LoadingScreen.backgroundImg);
     else
         background = GraphicsHelps::loadTexture(background, ":/images/cat_splash.png");
 
     imgs.clear();
 
-    for(int i=0; i<ConfigManager::LoadingScreen.AdditionalImages.size(); i++)
+    for(int i=0; i<ConfigManager::setup_LoadingScreen.AdditionalImages.size(); i++)
     {
-        if(ConfigManager::LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         LoadingScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::LoadingScreen.AdditionalImages[i].imgFile);
+        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile);
 
-        img.x = ConfigManager::LoadingScreen.AdditionalImages[i].x;
-        img.y = ConfigManager::LoadingScreen.AdditionalImages[i].y;
-        img.a.construct(ConfigManager::LoadingScreen.AdditionalImages[i].animated,
-                        ConfigManager::LoadingScreen.AdditionalImages[i].frames,
-                        ConfigManager::LoadingScreen.updateDelay);
+        img.x = ConfigManager::setup_LoadingScreen.AdditionalImages[i].x;
+        img.y = ConfigManager::setup_LoadingScreen.AdditionalImages[i].y;
+        img.a.construct(ConfigManager::setup_LoadingScreen.AdditionalImages[i].animated,
+                        ConfigManager::setup_LoadingScreen.AdditionalImages[i].frames,
+                        ConfigManager::setup_LoadingScreen.updateDelay);
 
-        img.frmH = (img.t.h / ConfigManager::LoadingScreen.AdditionalImages[i].frames);
+        img.frmH = (img.t.h / ConfigManager::setup_LoadingScreen.AdditionalImages[i].frames);
 
         imgs.push_back(img);
     }

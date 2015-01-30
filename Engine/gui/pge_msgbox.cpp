@@ -113,7 +113,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         }
         /****************Word wrap*end*****************/
 
-        boxSize.setWidth( (meter.width('X')-1)*maxWidth );
+        boxSize.setWidth( (meter.width('X'))*maxWidth-meter.width('X') );
         boxSize.setHeight((meter.height()-1)*count);
     }
 
