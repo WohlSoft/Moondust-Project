@@ -77,7 +77,7 @@ void PGE_Menu::addMenuItem(QString value, QString title)
     item.title = (title.isEmpty() ? value : title);
     item.textTexture = FontManager::TextToTexture(item.title,
                                                   QRect(0,0, menuRect.width(), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter );
+                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     _items.push_back(item);
 }
 

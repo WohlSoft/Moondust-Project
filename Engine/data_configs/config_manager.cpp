@@ -46,6 +46,9 @@ ConfigManager::screenType ConfigManager::screen_type = ConfigManager::SCR_Static
 //Loading Screen setings
 LoadingScreenData ConfigManager::LoadingScreen;
 
+//Title Screen settings
+TitleScreenData ConfigManager::TitleScreen;
+
 //Cursors data
 MainCursors ConfigManager::cursors;
 //MessageBox setup
@@ -69,7 +72,6 @@ QVector<obj_sound > ConfigManager::main_sound;
 
 //Level config Data
 QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
-
 
 
 QVector<PGE_Texture > ConfigManager::world_textures;
@@ -284,9 +286,7 @@ bool ConfigManager::loadBasics()
 
     int LoadScreenImages=0;
     engineset.beginGroup("loading-scene");
-        LoadingScreen.bg_color_r = engineset.value("bg-color-r", 0).toInt();
-        LoadingScreen.bg_color_g = engineset.value("bg-color-g", 0).toInt();
-        LoadingScreen.bg_color_b = engineset.value("bg-color-b", 0).toInt();
+        LoadingScreen.backgroundColor.setNamedColor(engineset.value("bg-color", "#000000").toString());
         LoadingScreen.backgroundImg = engineset.value("background", "").toString();
         checkForImage(LoadingScreen.backgroundImg, dirs.gcommon);
 
@@ -314,6 +314,69 @@ bool ConfigManager::loadBasics()
         img.x =  engineset.value("pos-x", 1).toInt();
         img.y =  engineset.value("pos-y", 1).toInt();
         LoadingScreen.AdditionalImages.push_back(img);
+
+        engineset.endGroup();
+    }
+
+    ////////// Title screen (main menu) settings
+
+    int TitleScreenImages=0;
+    engineset.beginGroup("title-screen");
+        TitleScreen.backgroundImg = engineset.value("background", "").toString();
+        TitleScreen.backgroundColor.setNamedColor(engineset.value("bg-color", "#000000").toString());
+        checkForImage(TitleScreen.backgroundImg, dirs.gcommon);
+        TitleScreenImages = engineset.value("additional-images", 0).toInt();
+    engineset.endGroup();
+
+
+    TitleScreen.AdditionalImages.clear();
+    for(int i=1; i<=TitleScreenImages; i++)
+    {
+        engineset.beginGroup(QString("title-image-%1").arg(i));
+        TitleScreenAdditionalImage img;
+
+        img.imgFile = engineset.value("image", "").toString();
+        checkForImage(img.imgFile, dirs.gcommon);
+
+        img.animated = engineset.value("animated", false).toBool();
+        if(img.animated)
+        {
+            img.frames = engineset.value("frames", 1).toInt();
+            img.framespeed = engineset.value("framespeed", 128).toInt();
+        }
+        else
+        {
+            img.frames = 1;
+            img.framespeed = 128;
+        }
+        if(img.frames<=0) img.frames = 1;
+
+        img.x =  engineset.value("pos-x", 0).toInt();
+        img.y =  engineset.value("pos-y", 0).toInt();
+
+        img.center_x =  engineset.value("center-x", false).toBool();
+        img.center_y =  engineset.value("center-y", false).toBool();
+
+        QString align =   engineset.value("align", "none").toString();
+
+        if(align=="left")
+            img.align_to = TitleScreenAdditionalImage::LEFT_ALIGN;
+        else
+        if(align=="top")
+            img.align_to = TitleScreenAdditionalImage::TOP_ALIGN;
+        else
+        if(align=="right")
+            img.align_to = TitleScreenAdditionalImage::RIGHT_ALIGN;
+        else
+        if(align=="bottom")
+            img.align_to = TitleScreenAdditionalImage::BOTTOM_ALIGN;
+        else
+        if(align=="center")
+            img.align_to = TitleScreenAdditionalImage::CENTER_ALIGN;
+        else
+        img.align_to = TitleScreenAdditionalImage::NO_ALIGN;
+
+        TitleScreen.AdditionalImages.push_back(img);
 
         engineset.endGroup();
     }

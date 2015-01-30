@@ -102,13 +102,41 @@ struct LoadingScreenAdditionalImage
 
 struct LoadingScreenData
 {
-    int bg_color_r;
-    int bg_color_g;
-    int bg_color_b;
     QString backgroundImg;
+    QColor backgroundColor;
     int updateDelay;
     QVector<LoadingScreenAdditionalImage > AdditionalImages;
 };
+
+struct TitleScreenAdditionalImage
+{
+    enum align{
+        NO_ALIGN=0,
+        LEFT_ALIGN,
+        TOP_ALIGN,
+        RIGHT_ALIGN,
+        BOTTOM_ALIGN,
+        CENTER_ALIGN
+    };
+
+    QString imgFile;
+    bool animated;
+    int frames;
+    unsigned int framespeed;
+    align align_to;
+    int x;
+    int y;
+    bool center_x;
+    bool center_y;
+};
+
+struct TitleScreenData
+{
+    QString backgroundImg;
+    QColor backgroundColor;
+    QVector<TitleScreenAdditionalImage > AdditionalImages;
+};
+
 
 
 struct MainCursors
@@ -172,6 +200,9 @@ public:
 
     //LoadingScreen
     static LoadingScreenData LoadingScreen;
+
+    //Title Screen
+    static TitleScreenData TitleScreen;
 
     //curors
     static MainCursors cursors;

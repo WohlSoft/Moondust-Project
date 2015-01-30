@@ -16,20 +16,120 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "scene_title.h"
 #include <graphics/gl_renderer.h>
 #include <graphics/graphics.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
+#include <gui/pge_msgbox.h>
+
+#include "scene_title.h"
+#include <QtDebug>
 
 TitleScene::TitleScene()
 {
-    _waitTimer=5000;
+    doExit=false;
+    mousePos.setX(-300);
+    mousePos.setY(-300);
+    _cursorIsLoaded=false;
+
+    glClearColor(float(ConfigManager::TitleScreen.backgroundColor.red())/255.0f,
+                 float(ConfigManager::TitleScreen.backgroundColor.green())/255.0f,
+                 float(ConfigManager::TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
+                // Set background color from file
+
+    if(ConfigManager::cursors.normal.isEmpty())
+    {
+        _cursorIsLoaded=false;
+    }
+    else
+    {
+        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::cursors.normal);
+        _cursorIsLoaded=true;
+    }
+
+    if(!ConfigManager::TitleScreen.backgroundImg.isEmpty())
+    {
+        background = GraphicsHelps::loadTexture(background, ConfigManager::TitleScreen.backgroundImg);
+        _bgIsLoaded=true;
+    }
+    else
+        _bgIsLoaded=false;
+
+    imgs.clear();
+
+    for(int i=0; i<ConfigManager::TitleScreen.AdditionalImages.size(); i++)
+    {
+        if(ConfigManager::TitleScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
+
+        TitleScene_misc_img img;
+        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::TitleScreen.AdditionalImages[i].imgFile);
+
+        //Using of X-Y as offsets if aligning is enabled
+        int x_offset=ConfigManager::TitleScreen.AdditionalImages[i].x;
+        int y_offset=ConfigManager::TitleScreen.AdditionalImages[i].y;
+
+        switch(ConfigManager::TitleScreen.AdditionalImages[i].align_to)
+        {
+        case TitleScreenAdditionalImage::LEFT_ALIGN:
+            img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
+            break;
+        case TitleScreenAdditionalImage::TOP_ALIGN:
+            img.x = (PGE_Window::Width/2)-(img.t.w/2) + x_offset;
+            break;
+        case TitleScreenAdditionalImage::RIGHT_ALIGN:
+            img.x = PGE_Window::Width-img.t.w - x_offset;
+            img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
+            break;
+        case TitleScreenAdditionalImage::BOTTOM_ALIGN:
+            img.x = (PGE_Window::Width/2)-(img.t.w/2) + x_offset;
+            img.y = PGE_Window::Height-img.t.h - y_offset;
+            break;
+        case TitleScreenAdditionalImage::CENTER_ALIGN:
+            img.x = (PGE_Window::Width/2)-(img.t.w/2) + x_offset;
+            img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
+            break;
+        default:
+            img.x = ConfigManager::TitleScreen.AdditionalImages[i].x;
+            img.y = ConfigManager::TitleScreen.AdditionalImages[i].y;
+            break;
+        }
+
+        if(ConfigManager::TitleScreen.AdditionalImages[i].center_x)
+            img.x = (PGE_Window::Width/2)-(img.t.w/2) + x_offset;
+
+        if(ConfigManager::TitleScreen.AdditionalImages[i].center_y)
+            img.y = (PGE_Window::Height/2)-(img.t.h/2) + y_offset;
+
+        img.a.construct(ConfigManager::TitleScreen.AdditionalImages[i].animated,
+                        ConfigManager::TitleScreen.AdditionalImages[i].frames,
+                        ConfigManager::TitleScreen.AdditionalImages[i].framespeed);
+
+        img.frmH = (img.t.h / ConfigManager::TitleScreen.AdditionalImages[i].frames);
+
+        imgs.push_back(img);
+    }
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.start();
+    }
 }
 
 TitleScene::~TitleScene()
 {
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //Clear screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
+
+    if(_cursorIsLoaded)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &cursor.texture);
+    }
+
     glDisable(GL_TEXTURE_2D);
     glDeleteTextures( 1, &(background.texture) );
 
@@ -42,50 +142,9 @@ TitleScene::~TitleScene()
     imgs.clear();
 }
 
-void TitleScene::init()
+void TitleScene::update()
 {
-    if(!ConfigManager::LoadingScreen.backgroundImg.isEmpty())
-        background = GraphicsHelps::loadTexture(background, ConfigManager::LoadingScreen.backgroundImg);
-    else
-        background = GraphicsHelps::loadTexture(background, ":/images/cat_splash.png");
 
-    glClearColor(float(ConfigManager::LoadingScreen.bg_color_r)/255.0f,
-                 float(ConfigManager::LoadingScreen.bg_color_g)/255.0f,
-                 float(ConfigManager::LoadingScreen.bg_color_b)/255.0f, 1.0f);
-                // Set background color from file
-
-    imgs.clear();
-
-    for(int i=0; i<ConfigManager::LoadingScreen.AdditionalImages.size(); i++)
-    {
-        if(ConfigManager::LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
-
-        TitleScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::LoadingScreen.AdditionalImages[i].imgFile);
-
-        img.x = ConfigManager::LoadingScreen.AdditionalImages[i].x;
-        img.y = ConfigManager::LoadingScreen.AdditionalImages[i].y;
-        img.a.construct(ConfigManager::LoadingScreen.AdditionalImages[i].animated,
-                        ConfigManager::LoadingScreen.AdditionalImages[i].frames,
-                        ConfigManager::LoadingScreen.updateDelay);
-
-        img.frmH = (img.t.h / ConfigManager::LoadingScreen.AdditionalImages[i].frames);
-
-        imgs.push_back(img);
-    }
-
-    for(int i=0;i<imgs.size();i++)
-    {
-        imgs[i].a.start();
-    }
-}
-
-void TitleScene::setWaitTime(unsigned int time)
-{
-    if(time==0)
-        _waitTimer=5000;
-    else
-        _waitTimer=time;
 }
 
 void TitleScene::render()
@@ -94,39 +153,33 @@ void TitleScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 0.f, 1.0f);
-    glBegin( GL_QUADS );
-        glVertex2f( 0, 0);
-        glVertex2f( PGE_Window::Width, 0);
-        glVertex2f( PGE_Window::Width, PGE_Window::Height);
-        glVertex2f( 0, PGE_Window::Height);
-    glEnd();
+    if(_bgIsLoaded)
+    {
+        QRectF loadAniG = QRectF(PGE_Window::Width/2 - background.w/2,
+                               PGE_Window::Height/2 - background.h/2,
+                               background.w,
+                               background.h);
 
-    QRectF loadAniG = QRectF(PGE_Window::Width/2 - background.w/2,
-                           PGE_Window::Height/2 - background.h/2,
-                           background.w,
-                           background.h);
+        glEnable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
 
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBindTexture( GL_TEXTURE_2D, background.texture );
 
-    glBindTexture( GL_TEXTURE_2D, background.texture );
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0, 0 );
+            glVertex2f( loadAniG.left(), loadAniG.top());
 
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, 0 );
-        glVertex2f( loadAniG.left(), loadAniG.top());
+            glTexCoord2f( 1, 0 );
+            glVertex2f(  loadAniG.right(), loadAniG.top());
 
-        glTexCoord2f( 1, 0 );
-        glVertex2f(  loadAniG.right(), loadAniG.top());
+            glTexCoord2f( 1, 1 );
+            glVertex2f(  loadAniG.right(),  loadAniG.bottom());
 
-        glTexCoord2f( 1, 1 );
-        glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-        glTexCoord2f( 0, 1 );
-        glVertex2f( loadAniG.left(),  loadAniG.bottom());
-        glEnd();
-    glDisable(GL_TEXTURE_2D);
+            glTexCoord2f( 0, 1 );
+            glVertex2f( loadAniG.left(),  loadAniG.bottom());
+            glEnd();
+        glDisable(GL_TEXTURE_2D);
+    }
 
     for(int i=0;i<imgs.size();i++)
     {
@@ -157,26 +210,68 @@ void TitleScene::render()
         glDisable(GL_TEXTURE_2D);
     }
 
+
+    menu.render();
+
     Scene::render();
+}
+
+void TitleScene::renderMouse()
+{
+    int posX=mousePos.x();
+    int posY=mousePos.y();
+
+    if(_cursorIsLoaded)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBindTexture(GL_TEXTURE_2D, cursor.texture);
+        glBegin( GL_QUADS );
+            glTexCoord2f( 0, 0 );
+            glVertex2f( posX, posY);
+            glTexCoord2f( 1, 0 );
+            glVertex2f( posX+cursor.w, posY);
+            glTexCoord2f( 1, 1 );
+            glVertex2f( posX+cursor.w, posY+cursor.h);
+            glTexCoord2f( 0, 1 );
+            glVertex2f( posX, posY+cursor.h);
+        glEnd();
+    }
+    else
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 1.f, 0.f, 1.0f);
+        glBegin( GL_QUADS );
+            glVertex2f( posX, posY);
+            glVertex2f( posX+10, posY);
+            glVertex2f( posX+10, posY+10);
+            glVertex2f( posX, posY+10);
+        glEnd();
+    }
 }
 
 int TitleScene::exec()
 {
+    int ret=0;
     //Level scene's Loop
     Uint32 start_render;
     bool running = true;
     float doUpdate_Render=0;
     bool doExit=false;
 
-    Uint32 start_wait_timer=SDL_GetTicks();
+    menustates.clear();
+    menuChain.clear();
+
+    for(int i=menuFirst; i<menuLast;i++)
+        menustates[(CurrentMenu)i] = menustate(0, 0);
+
+    setMenu(menu_main);
+
     while(running)
     {
-
         //UPDATE Events
         start_render=SDL_GetTicks();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
 
         if(doExit)
         {
@@ -192,7 +287,7 @@ int TitleScene::exec()
             {
                 case SDL_QUIT:
                     {
-                        return -1;
+                        return ANSWER_EXIT;
                     }   // End work of program
                 break;
 
@@ -208,17 +303,61 @@ int TitleScene::exec()
                       case SDLK_F12:
                           GlRenderer::makeShot();
                       break;
+                      case SDLK_UP:
+                        menu.selectUp();
+                      break;
+                      case SDLK_DOWN:
+                        menu.selectDown();
+                      break;
+                      case SDLK_RETURN:
+                        menu.acceptItem();
+                      break;
+                      case SDLK_ESCAPE:
+                        menu.rejectItem();
+                      break;
                       default:
-                        doExit=true;
                         break;
                     }
                 break;
-
                 case SDL_KEYUP:
                 break;
+                case SDL_MOUSEMOTION:
+                    mousePos.setX(event.motion.x);
+                    mousePos.setY(event.motion.y);
+                    menu.setMouseHoverPos(mousePos.x(), mousePos.y());
+                break;
+                case SDL_MOUSEBUTTONDOWN:
+                    switch(event.button.button)
+                    {
+                        case SDL_BUTTON_LEFT:
+                            menu.setMouseClickPos(event.button.x, event.button.y);
+                        break;
+                        case SDL_BUTTON_RIGHT:
+                            menu.rejectItem();
+                        break;
+                        default:
+                        break;
+                    }
+                break;
+                case SDL_MOUSEWHEEL:
+                    if(event.wheel.y>0)
+                        menu.scrollUp();
+                    else
+                        menu.scrollDown();
                 default: break;
             }
         }
+        int mouseX=0;
+        int mouseY=0;
+        SDL_PumpEvents();
+        SDL_GetMouseState(&mouseX, &mouseY);
+        mousePos.setX(mouseX);
+        mousePos.setY(mouseY);
+
+
+        renderMouse();
+        glFlush();
+        SDL_GL_SwapWindow(PGE_Window::window);
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {
@@ -228,10 +367,155 @@ int TitleScene::exec()
 
         if(!doExit)
         {
-            if( (SDL_GetTicks()-start_wait_timer) > _waitTimer)
-                doExit=true;
-        }
+            if(menu.isSelected())
+            {
+                if(menu.isAccepted())
+                {
+                    menustates[_currentMenu].first = menu.currentItemI();
+                    menustates[_currentMenu].second = menu.offset();
 
+                    QString value = menu.currentItem().value;
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            if(value=="Options")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_options);
+                            }
+                            else
+                            if(value=="Exit")
+                            {
+                                ret = ANSWER_EXIT;
+                                doExit=true;
+                            }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
+                            }
+                        break;
+                        case menu_options:
+                            if(value=="tests")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_tests);
+                            }
+                            else
+                            if(value=="dab")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_dummy_and_big);
+                            }
+                            else
+                            {
+                                PGE_MsgBox msgBox(this, QString("Dummy"),
+                                                  PGE_MsgBox::msg_warn);
+                                msgBox.exec();
+                                menu.resetState();
+                            }
+
+                        break;
+                        case menu_tests:
+                            if(value=="credits")
+                            {
+                                ret = ANSWER_CREDITS;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="loading")
+                            {
+                                ret = ANSWER_LOADING;
+                                doExit=true;
+                            }
+                            else
+                            if(value=="gameover")
+                            {
+                                ret = ANSWER_GAMEOVER;
+                                doExit=true;
+                            }
+
+                        break;
+                        case menu_playlevel:
+
+                        break;
+                    default:
+                        break;
+
+                    }
+                }
+                else
+                {
+                    switch(_currentMenu)
+                    {
+                        case menu_main:
+                            menu.reset();
+                            menu.setCurrentItem(4);
+                        break;
+                    default:
+                        if(menuChain.size()>0)
+                        {
+                            setMenu((CurrentMenu)menuChain.pop());
+                            menu.reset();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
-    return 0;
+    menu.clear();
+    return ret;
+}
+
+void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
+{
+    if(_menu<menuFirst) return;
+    if(_menu>menuLast) return;
+
+    _currentMenu=_menu;
+    menu.clear();
+    switch(_menu)
+    {
+        case menu_main:
+            menu.addMenuItem("game1p", "1 Player Game");
+            menu.addMenuItem("game2p", "2 Player Game");
+            menu.addMenuItem("gamebt", "Battle Game");
+            menu.addMenuItem("Options", "Options");
+            menu.addMenuItem("Exit", "Exit");
+        break;
+            case menu_options:
+                menu.addMenuItem("tests", "Test of screens");
+                menu.addMenuItem("dab", "Dummy and big menu");
+            break;
+                case menu_tests:
+                    menu.addMenuItem("credits", "Credits");
+                    menu.addMenuItem("loading", "Loading screen");
+                    menu.addMenuItem("gameover", "Game over screen");
+                break;
+                case menu_dummy_and_big:
+                    menu.addMenuItem("1", "Item 1");
+                    menu.addMenuItem("2", "Item 2");
+                    menu.addMenuItem("3", "Item 3");
+                    menu.addMenuItem("4", "Кое-что по-русски");
+                    menu.addMenuItem("5", "Ich bin glücklich!");
+                    menu.addMenuItem("6", "¿Que se ocupas?");
+                    menu.addMenuItem("7", "Minä rakastan sinua!");
+                    menu.addMenuItem("8", "هذا هو اختبار صغير");
+                    menu.addMenuItem("9", "這是一個小測試!");
+                    menu.addMenuItem("10", "דאס איז אַ קליין פּרובירן");
+                    menu.addMenuItem("11", "આ નાના કસોટી છે");
+                    menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
+                break;
+        case menu_playlevel:
+            menu.addMenuItem("dummy", "Less menuitems");
+            menu.addMenuItem("dummy1", "he-he 1");
+        break;
+    default:
+        break;
+    }
+    menu.setCurrentItem(menustates[_menu].first);
+    menu.setOffset(menustates[_menu].second);
 }
