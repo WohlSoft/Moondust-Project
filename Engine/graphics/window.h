@@ -37,12 +37,14 @@ public:
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
     static bool uninit();
     static bool isReady();
+    static void setCursorVisibly(bool viz);
 
     static SDL_Window *window;
     static int SDL_ToggleFS(SDL_Window *win=NULL);
 
 private:
     static bool IsInit;
+    static bool showCursor;
     static SDL_bool IsFullScreen(SDL_Window *win);
 };
 
