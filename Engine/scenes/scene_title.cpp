@@ -269,6 +269,9 @@ int TitleScene::exec()
 
     setMenu(menu_main);
 
+    //Hide mouse cursor
+    PGE_Window::setCursorVisibly(false);
+
     while(running)
     {
         //UPDATE Events
@@ -408,7 +411,9 @@ int TitleScene::exec()
                                 PGE_MsgBox msgBox(this, QString("Sorry, is not implemented yet..."),
                                                   PGE_MsgBox::msg_warn);
                                 fader_opacity=0.5;
+                                PGE_Window::setCursorVisibly(true);
                                 msgBox.exec();
+                                PGE_Window::setCursorVisibly(false);
                                 fader_opacity=0.0;
                                 menu.resetState();
                             }
@@ -502,6 +507,9 @@ int TitleScene::exec()
         }
     }
     menu.clear();
+
+    //Show mouse cursor
+    PGE_Window::setCursorVisibly(true);
     return ret;
 }
 
