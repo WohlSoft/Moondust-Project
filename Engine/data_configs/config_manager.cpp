@@ -33,6 +33,7 @@ ConfigManager::ConfigManager()
 
 DataFolders      ConfigManager::dirs;
 QString          ConfigManager::config_dir;
+QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
 
 QStringList ConfigManager::errorsList;
@@ -100,6 +101,7 @@ QString ConfigManager::commonGPath;
 void ConfigManager::setConfigPath(QString p)
 {
     config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
+    config_id = p;
 }
 
 
@@ -147,7 +149,9 @@ bool ConfigManager::loadBasics()
         data_dir = (mainset.value("application-dir", false).toBool() ?
                         customAppPath + "/" : config_dir + "data/" );
 
-        dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
+        dirs.worlds = AppPathManager::userAppDir()+"/"+mainset.value("worlds", config_id+"_worlds").toString() + "/";
+        if(!QDir(dirs.worlds).exists())
+            QDir().mkpath(dirs.worlds);
 
         dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
         dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";

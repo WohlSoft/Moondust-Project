@@ -38,6 +38,18 @@ struct TitleScene_misc_img
     int frmH;
 };
 
+struct PlayLevelResult
+{
+    QString levelfile;
+};
+
+struct PlayEpisodeResult
+{
+    QString worldfile;
+    QString savefile;
+    int character;
+};
+
 class TitleScene : public Scene
 {
 public:
@@ -55,8 +67,11 @@ public:
         menu_main=0,
         menu_options,
         menu_playlevel,
+        menu_playepisode,
+        menu_playbattle,
+        menu_opensave,
         menu_tests,
-        menu_dummy_and_big,
+        menu_dummy_and_big,//leave it!
         //For fetching
         menuFirst=menu_main,
         menuLast=menu_dummy_and_big
@@ -65,10 +80,16 @@ public:
     enum menuAnswer
     {
         ANSWER_EXIT=0,
+        ANSWER_PLAYLEVEL,
+        ANSWER_PLAYEPISODE,
+        ANSWER_PLAYBATTLE,
         ANSWER_CREDITS,
         ANSWER_LOADING,
         ANSWER_GAMEOVER
     };
+
+    PlayEpisodeResult result_episode; //play episode
+    PlayLevelResult   result_level; //Play level/battle
 
 private:
     QPoint mousePos;

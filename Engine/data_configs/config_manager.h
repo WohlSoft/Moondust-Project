@@ -183,6 +183,7 @@ public:
     ConfigManager();
 
     static DataFolders dirs;
+    static QString config_id;
     static QString config_dir;
     static QString data_dir;
 
