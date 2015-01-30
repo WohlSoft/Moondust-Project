@@ -741,6 +741,18 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 #endif
         break;
 #endif
+#ifdef SPC_MUSIC
+    case MUS_SPC:
+        if (music->error) {
+            SDL_RWseek(src, start, RW_SEEK_SET);
+            music->type = MUS_SPC;
+            music->data.snes_spcmus = SPC_new_RW(src, freesrc);
+            if (music->data.snes_spcmus) {
+                music->error = 0;
+            }
+        }
+        break;
+#endif
 #if defined(MODPLUG_MUSIC) || defined(MOD_MUSIC)
     case MUS_MOD:
 #ifdef MODPLUG_MUSIC
@@ -765,20 +777,6 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 #endif
         break;
 #endif
-#ifdef SPC_MUSIC
-    case MUS_SPC:
-        if (music->error) {
-            SDL_RWseek(src, start, RW_SEEK_SET);
-            music->type = MUS_SPC;
-            music->data.snes_spcmus = SPC_new_RW(src, freesrc);
-            if (music->data.snes_spcmus) {
-                music->error = 0;
-            }
-        }
-#endif
-        break;
-
-
     default:
         Mix_SetError("Unrecognized music format");
         break;
