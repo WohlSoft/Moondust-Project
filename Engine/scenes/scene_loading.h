@@ -16,20 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_INTRO_H
-#define SCENE_INTRO_H
+#ifndef SCENE_TITLE_H
+#define SCENE_TITLE_H
 
-#include <QMap>
-#include <QPair>
-#include <QStack>
-#include "scene.h"
-#include <gui/pge_menu.h>
+#include <QVector>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
 
-typedef QPair<int, int > menustate;
+#include "scene.h"
 
-struct TitleScene_misc_img
+struct LoadingScene_misc_img
 {
     int x;
     int y;
@@ -38,51 +34,22 @@ struct TitleScene_misc_img
     int frmH;
 };
 
-class TitleScene : public Scene
+class LoadingScene : public Scene
 {
 public:
-    TitleScene();
-    ~TitleScene();
-    void update();
+    LoadingScene();
+    ~LoadingScene();
+    void init();
+
+    void setWaitTime(unsigned int time);
     void render();
-    void renderMouse();
     int exec();
-    PGE_Menu menu;
-    bool doExit;
-
-    enum CurrentMenu
-    {
-        menu_main=0,
-        menu_options,
-        menu_playlevel,
-        menu_tests,
-        menu_dummy_and_big,
-        //For fetching
-        menuFirst=menu_main,
-        menuLast=menu_dummy_and_big
-    };
-
-    enum menuAnswer
-    {
-        ANSWER_EXIT=0,
-        ANSWER_CREDITS,
-        ANSWER_LOADING,
-        ANSWER_GAMEOVER
-    };
 
 private:
-    QPoint mousePos;
-    CurrentMenu _currentMenu;
-    void setMenu(CurrentMenu _menu);
-    QMap<CurrentMenu, menustate> menustates;
-    QStack<int > menuChain;
+    unsigned int _waitTimer;
 
     PGE_Texture background;
-    bool _bgIsLoaded;
-    QVector<TitleScene_misc_img > imgs;
-
-    PGE_Texture cursor;
-    bool _cursorIsLoaded;
+    QVector<LoadingScene_misc_img > imgs;
 };
 
-#endif // SCENE_INTRO_H
+#endif // SCENE_TITLE_H

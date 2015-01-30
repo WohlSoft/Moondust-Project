@@ -47,8 +47,8 @@
 #include "graphics/graphics.h"
 
 #include "scenes/scene_level.h"
+#include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
-#include "scenes/scene_intro.h"
 
 #include <Box2D/Box2D.h>
 
@@ -202,10 +202,10 @@ if(!fileToPpen.isEmpty())
 
 if(interprocessing) goto PlayLevel;
 
-TitleScreeen:
+LoadingScreeen:
 {
-    TitleScene *ttl = new TitleScene;
-    ttl->setWaitTime(10000);
+    LoadingScene *ttl = new LoadingScene;
+    ttl->setWaitTime(15000);
 
     ttl->init();
     ttl->setFade(25, 0.0f, 0.02f);
@@ -230,21 +230,23 @@ GameOverScreen:
 
 MainMenu:
 {
-    IntroScene * iScene = new IntroScene();
+    TitleScene * iScene = new TitleScene();
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     delete iScene;
 
     switch(answer)
     {
-        case IntroScene::ANSWER_EXIT:
+        case TitleScene::ANSWER_EXIT:
             goto ExitFromApplication;
-        case IntroScene::ANSWER_CREDITS:
+        case TitleScene::ANSWER_CREDITS:
             goto CreditsScreeen;
-        case IntroScene::ANSWER_TITLE:
-            goto TitleScreeen;
-        case IntroScene::ANSWER_GAMEOVER:
+        case TitleScene::ANSWER_LOADING:
+            goto LoadingScreeen;
+        case TitleScene::ANSWER_GAMEOVER:
             goto GameOverScreen;
+        default:
+            goto PlayWorldMap;
     }
 
     goto PlayLevel;
