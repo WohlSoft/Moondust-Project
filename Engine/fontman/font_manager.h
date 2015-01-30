@@ -32,12 +32,12 @@ public:
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
-    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture);
+    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
     static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
-                                          QString &text, GLuint *texture);
+                                          QString &text, GLuint *texture, bool borders=false);
 
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
-    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags);
+    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
 
     static QFont font();
 
