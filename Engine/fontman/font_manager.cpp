@@ -137,7 +137,7 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
     QPainter x(&text_image);
     QFont font_i = font;
     if(borders)
-        font_i.setPixelSize(font_i.pixelSize()-off);
+        font_i.setPointSize(font_i.pointSize()-1);
     x.setFont(font_i);
     x.setBrush(QBrush(color));
     x.setPen(QPen(QBrush(color), 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
