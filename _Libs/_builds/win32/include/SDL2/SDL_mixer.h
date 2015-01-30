@@ -24,11 +24,11 @@
 #ifndef _SDL_MIXER_H
 #define _SDL_MIXER_H
 
-#include "SDL_stdinc.h"
-#include "SDL_rwops.h"
-#include "SDL_audio.h"
-#include "SDL_endian.h"
-#include "SDL_version.h"
+#include <SDL2/SDL_stdinc.h>
+#include <SDL2/SDL_rwops.h>
+#include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_endian.h>
+#include <SDL2/SDL_version.h>
 #include "begin_code.h"
 
 /* Set up for C function definitions, even when using C++ */
@@ -124,7 +124,8 @@ typedef enum {
     MUS_MP3,
     MUS_MP3_MAD,
     MUS_FLAC,
-    MUS_MODPLUG
+    MUS_MODPLUG,
+    MUS_SPC
 } Mix_MusicType;
 
 /* The internal format for a music chunk interpreted via mikmod */
@@ -207,8 +208,8 @@ extern DECLSPEC void SDLCALL Mix_SetPostMix(void (*mix_func)(void *udata, Uint8 
  */
 extern DECLSPEC void SDLCALL Mix_HookMusic(void (*mix_func)(void *udata, Uint8 *stream, int len), void *arg);
 
-/* Add your own callback when the music has finished playing.
-   This callback is only called if the music finishes naturally.
+/* Add your own callback for when the music has finished playing or when it is
+ * stopped from a call to Mix_HaltMusic.
  */
 extern DECLSPEC void SDLCALL Mix_HookMusicFinished(void (*music_finished)(void));
 
