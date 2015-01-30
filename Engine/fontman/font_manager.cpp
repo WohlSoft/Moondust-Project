@@ -115,19 +115,28 @@ void FontManager::quit()
 //    return temp_font;
 //}
 
-void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture)
+void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders)
 {
     if(!isInit) return;
 
+    int off = (borders ? 10 : 0);
+    QPainterPath path;
     QFontMetrics meter(font);
-    QImage text_image = QImage(meter.width(text), meter.height()*text.split('\n').size(), QImage::Format_ARGB32);
+    QImage text_image = QImage(meter.width(text)+off, (off+meter.height())*text.split('\n').size(), QImage::Format_ARGB32);
     text_image.fill(Qt::transparent);
 
     QPainter x(&text_image);
     x.setFont(font);
     x.setBrush(QBrush(color));
-    x.setPen(QPen(color));
-    x.drawText(text_image.rect(), text);
+    x.setPen(QPen(QBrush(color), 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+    if(borders)
+    {
+        path.addText(off, meter.height() + off, font, text);
+        x.strokePath(path, QPen(QColor(Qt::black), 2));
+        x.fillPath(path, QBrush(color));
+    }
+    else
+        x.drawText(text_image.rect(), text);
     x.end();
 
     text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
@@ -146,19 +155,33 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
-void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color, QString &text, GLuint *texture)
+void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color, QString &text, GLuint *texture, bool borders)
 {
     if(!isInit) return;
 
-    //QFontMetrics meter(font);
+    int off = (borders ? 4 : 0);
+    QPainterPath path;
+
     QImage text_image = QImage(limitRect.size(), QImage::Format_ARGB32);
     text_image.fill(Qt::transparent);
-
+    QFont font_i = font;
+    if(borders)
+    {
+        font_i.setPointSize(10);
+    }
+    QFontMetrics meter(font_i);
     QPainter x(&text_image);
-    x.setFont(font);
+    x.setFont(font_i);
     x.setBrush(QBrush(color));
     x.setPen(QPen(color));
-    x.drawText(text_image.rect(), fontFlags, text);
+    if(borders)
+    {
+        path.addText(off, meter.height()+off*2, font_i, text);
+        x.strokePath(path, QPen(QColor(Qt::black), off));
+        x.fillPath(path, QBrush(color));
+    }
+    else
+        x.drawText(text_image.rect(), fontFlags, text);
     x.end();
 
     text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
@@ -210,12 +233,12 @@ void FontManager::printText(QString text, int x, int y)
     glDeleteTextures(1, &textTexture );
 }
 
-GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags)
+GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders)
 {
     if(!isInit) return 0;
 
     GLuint fontTexture;
-    SDL_string_texture_create(defaultFont,rectangle, alignFlags, qRgba(255,255,255,255), text, &fontTexture);
+    SDL_string_texture_create(defaultFont,rectangle, alignFlags, qRgba(255,255,255,255), text, &fontTexture, borders);
     return fontTexture;
     //SDL_string_render2D(x, y, &textTexture );
     //glDisable(GL_TEXTURE_2D);
