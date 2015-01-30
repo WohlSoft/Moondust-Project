@@ -420,7 +420,21 @@ int TitleScene::exec()
                         break;
                         case menu_playepisode:
                             {
-                                menu.resetState();
+                                if(value=="noworlds")
+                                {
+                                    //do nothing!
+                                    menu.resetState();
+                                }
+                                else
+                                {
+                                    result_episode.worldfile = value;
+                                    result_episode.character = 0;
+                                    result_episode.savefile = "save1.savx";
+                                    ret = ANSWER_PLAYEPISODE;
+                                    setFade(21, 1.0f, 0.2f);
+                                    fader_opacity=0.1f;
+                                    doExit=true;
+                                }
                             }
                         break;
                         case menu_playlevel:
@@ -433,7 +447,8 @@ int TitleScene::exec()
                             {
                                 result_level.levelfile = value;
                                 ret = ANSWER_PLAYLEVEL;
-                                setFade(25, 1.0f, 0.09f);
+                                setFade(21, 1.0f, 0.2f);
+                                fader_opacity=0.1f;
                                 doExit=true;
                             }
                         break;
