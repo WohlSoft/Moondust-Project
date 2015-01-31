@@ -17,6 +17,8 @@
  */
 
 #include "file_formats.h"
+#include "file_strlist.h"
+#include "pge_x.h"
 
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
@@ -29,7 +31,9 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
 
     MetaData FileData;
+    #ifdef PGE_EDITOR
     FileData.script = new ScriptHolder();
+    #endif
 
     QString errorString;
 

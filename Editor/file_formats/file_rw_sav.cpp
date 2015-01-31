@@ -20,7 +20,9 @@
 #include <QDir>
 
 #include "file_formats.h"
-
+#include "file_strlist.h"
+#include "save_filedata.h"
+#include "smbx64.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************

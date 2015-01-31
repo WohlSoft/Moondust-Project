@@ -20,6 +20,8 @@
 #include <QDir>
 
 #include "file_formats.h"
+#include "file_strlist.h"
+#include "smbx64.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -68,6 +70,62 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     in.setCodec(QTextCodec::codecForLocale());
 
     return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+}
+
+LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
+{
+    LevelData FileData;
+    FileData = dummyLvlDataArray();
+
+    QFile inf(filePath);
+    if(!inf.open(QIODevice::ReadOnly|QIODevice::Text))
+    {
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    QString line;
+    int str_count=0;
+    int file_format=0;
+    QFileInfo in_1(filePath);
+    FileData.filename = in_1.baseName();
+    FileData.path = in_1.absoluteDir().absolutePath();
+    QTextStream in(&inf);
+    in.setAutoDetectUnicode(true);
+    in.setLocale(QLocale::system());
+    in.setCodec(QTextCodec::codecForLocale());
+    in.seek(0);
+
+    str_count++;line = in.readLine();   //Read first line
+    if( SMBX64::Int(line) ) //File format number
+        goto badfile;
+
+    else file_format=line.toInt();
+
+    if(file_format >= 17)
+    {
+        str_count++;line = in.readLine();   //Read second Line
+        if( SMBX64::Int(line) ) //File format number
+            goto badfile;
+        else FileData.stars=line.toInt();   //Number of stars
+    } else FileData.stars=0;
+
+    if(file_format >= 60)
+    {
+        str_count++;line = in.readLine();   //Read third line
+        if( SMBX64::qStr(line) ) //LevelTitle
+            goto badfile;
+        else FileData.LevelName = removeQuotes(line); //remove quotes
+    } else FileData.LevelName="";
+
+    FileData.CurSection=0;
+    FileData.playmusic=0;
+
+    FileData.ReadFileValid=true;
+
+    return FileData;
+badfile:
+    FileData.ReadFileValid=false;
+    return FileData;
 }
 
 LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool sielent)
