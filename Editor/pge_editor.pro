@@ -59,7 +59,15 @@ debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
-INSTALLS = translates
+
+sdlmodded.path = ../bin
+unix: {
+sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.so*
+}
+win32: {
+sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.dll
+}
+INSTALLS = translates sdlmodded
 
 TARGET = pge_editor
 TEMPLATE = app
@@ -69,21 +77,10 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
-macx: {
-    INCLUDEPATH += -F$$(HOME)/Library/Frameworks
-    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
-} else {
-    LIBS += -lSDL2 -lSDL2_mixer
-}
-win32: LIBS += -lSDL2main
-win32: LIBS += libversion
-win32: LIBS += -lDbghelp
-win32: LIBS += libwinmm
+QMAKE_CXXFLAGS += -static -static-libgcc
 
-#DEFINES += USE_QMEDIAPLAYER
-DEFINES += PGE_EDITOR
-
-INCLUDEPATH += . _includes
+LIBS+= -L../_Libs/_builds/sdl2_mixer_mod
+INCLUDEPATH += -../_Libs/SDL2_mixer_modified
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
@@ -94,6 +91,28 @@ macx: {
     LIBS += -L ../_Libs/_builds/macos/lib
     INCLUDEPATH += ../_Libs/_builds/macos/include
 }
+
+linux-g++: {
+    LIBS += -L ../_Libs/_builds/linux/lib
+    INCLUDEPATH += ../_Libs/_builds/linux/include
+}
+
+macx: {
+    INCLUDEPATH += -F$$(HOME)/Library/Frameworks
+    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+} else {
+    LIBS += -lSDL2 -lSDL2_mixer
+}
+
+win32: LIBS += -lSDL2main
+win32: LIBS += libversion
+win32: LIBS += -lDbghelp
+win32: LIBS += libwinmm
+
+#DEFINES += USE_QMEDIAPLAYER
+DEFINES += PGE_EDITOR
+
+INCLUDEPATH += . _includes
 
 USE_QMEDIAPLAYER: {
     QT += multimedia
