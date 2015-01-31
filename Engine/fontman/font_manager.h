@@ -23,6 +23,7 @@
 #include <SDL2/SDL_opengl.h>
 #include <QString>
 #include <QFont>
+#include <QMap>
 #include <QRgb>
 
 class FontManager
@@ -39,6 +40,9 @@ public:
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
     static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
 
+    static GLuint getChar1(QChar _x);
+    static GLuint getChar2(QChar _x);
+
     static QFont font();
 
     static void printText(QString text, int x, int y);
@@ -49,6 +53,8 @@ private:
     static bool isInit;
     //static TTF_Font * defaultFont;
     static GLuint textTexture;
+    static QMap<QChar, GLuint> fontTable_1;
+    static QMap<QChar, GLuint> fontTable_2;
     static int fontID;
     static bool double_pixled;
 
