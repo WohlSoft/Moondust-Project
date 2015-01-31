@@ -33,6 +33,7 @@ ConfigManager::ConfigManager()
 
 DataFolders      ConfigManager::dirs;
 QString          ConfigManager::config_dir;
+QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
 
 QStringList ConfigManager::errorsList;
@@ -43,18 +44,23 @@ unsigned int ConfigManager::screen_height=600;
 
 ConfigManager::screenType ConfigManager::screen_type = ConfigManager::SCR_Static;
 
-//Loading Screen setings
-LoadingScreenData ConfigManager::LoadingScreen;
-
+//Fonts
+FontsSetup ConfigManager::setup_fonts;
 //Cursors data
-MainCursors ConfigManager::cursors;
+MainCursors ConfigManager::setup_cursors;
 //MessageBox setup
-MessageBoxSetup ConfigManager::message_box;
+MessageBoxSetup ConfigManager::setup_message_box;
 //Menu setup
-MenuSetup ConfigManager::menus;
+MenuSetup ConfigManager::setup_menus;
+
+//Loading Screen setings
+LoadingScreenSetup ConfigManager::setup_LoadingScreen;
+
+//Title Screen settings
+TitleScreenSetup ConfigManager::setup_TitleScreen;
 
 //World map settings
-WorldMapData ConfigManager::WorldMap;
+WorldMapData ConfigManager::setup_WorldMap;
 
 QVector<PGE_Texture > ConfigManager::common_textures;
 
@@ -69,7 +75,6 @@ QVector<obj_sound > ConfigManager::main_sound;
 
 //Level config Data
 QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
-
 
 
 QVector<PGE_Texture > ConfigManager::world_textures;
@@ -98,6 +103,7 @@ QString ConfigManager::commonGPath;
 void ConfigManager::setConfigPath(QString p)
 {
     config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
+    config_id = p;
 }
 
 
@@ -142,10 +148,15 @@ bool ConfigManager::loadBasics()
     mainset.beginGroup("main");
         customAppPath = mainset.value("application-path", ApplicationPath).toString();
         customAppPath.replace('\\', '/');
-        data_dir = (mainset.value("application-dir", false).toBool() ?
-                        customAppPath + "/" : config_dir + "data/" );
+        bool appDir = mainset.value("application-dir", false).toBool();
+        data_dir = (appDir ? customAppPath + "/" : config_dir + "data/" );
 
-        dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
+        if(appDir)
+            dirs.worlds = customAppPath+"/"+mainset.value("worlds", config_id+"_worlds").toString() + "/";
+        else
+            dirs.worlds = AppPathManager::userAppDir()+"/"+mainset.value("worlds", config_id+"_worlds").toString() + "/";
+        if(!QDir(dirs.worlds).exists())
+            QDir().mkpath(dirs.worlds);
 
         dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
         dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
@@ -196,7 +207,10 @@ bool ConfigManager::loadBasics()
     QSettings engineset(engine_ini, QSettings::IniFormat);
     engineset.setIniCodec("UTF-8");
 
-
+    engineset.beginGroup("fonts");
+        setup_fonts.fontname = engineset.value("font-file", "").toString();
+        setup_fonts.double_pixled = engineset.value("double-pixled", false).toBool();
+    engineset.endGroup();
 
     engineset.beginGroup("common");
         screen_width = engineset.value("screen-width", 800).toInt();
@@ -208,74 +222,72 @@ bool ConfigManager::loadBasics()
         else
             screen_type = SCR_Static;
 
-        cursors.normal = engineset.value("cursor-image-normal", "").toString();
-        checkForImage(cursors.normal, dirs.gcommon);
+        setup_cursors.normal = engineset.value("cursor-image-normal", "").toString();
+        checkForImage(setup_cursors.normal, dirs.gcommon);
 
-        cursors.rubber = engineset.value("cursor-image-rubber", "").toString();
-        checkForImage(cursors.rubber, dirs.gcommon);
+        setup_cursors.rubber = engineset.value("cursor-image-rubber", "").toString();
+        checkForImage(setup_cursors.rubber, dirs.gcommon);
     engineset.endGroup();
 
-
     engineset.beginGroup("message-box");
-        message_box.sprite = engineset.value("image", "").toString();
-        checkForImage(message_box.sprite, dirs.gcommon);
-        message_box.borderWidth = (unsigned)engineset.value("border-width", 32).toInt();
+        setup_message_box.sprite = engineset.value("image", "").toString();
+        checkForImage(setup_message_box.sprite, dirs.gcommon);
+        setup_message_box.borderWidth = (unsigned)engineset.value("border-width", 32).toInt();
     engineset.endGroup();
 
     engineset.beginGroup("menu");
-        menus.selector = engineset.value("selector", "").toString();
-        checkForImage(menus.selector, dirs.gcommon);
+        setup_menus.selector = engineset.value("selector", "").toString();
+        checkForImage(setup_menus.selector, dirs.gcommon);
 
-        menus.scrollerUp = engineset.value("scroll-up", "").toString();
-        checkForImage(menus.scrollerUp, dirs.gcommon);
+        setup_menus.scrollerUp = engineset.value("scroll-up", "").toString();
+        checkForImage(setup_menus.scrollerUp, dirs.gcommon);
 
-        menus.scrollerDown = engineset.value("scroll-down", "").toString();
-        checkForImage(menus.scrollerDown, dirs.gcommon);
+        setup_menus.scrollerDown = engineset.value("scroll-down", "").toString();
+        checkForImage(setup_menus.scrollerDown, dirs.gcommon);
     engineset.endGroup();
-
 
     ////// World map settings
 
     engineset.beginGroup("world-map");
-        WorldMap.backgroundImg = engineset.value("background", "").toString();
-        checkForImage(WorldMap.backgroundImg, dirs.gcommon);
-        WorldMap.viewport_x = engineset.value("viewport-x", "").toInt();
-        WorldMap.viewport_y = engineset.value("viewport-y", "").toInt();
-        WorldMap.viewport_w = engineset.value("viewport-w", "").toInt();
-        WorldMap.viewport_h = engineset.value("viewport-h", "").toInt();
+        setup_WorldMap.backgroundImg = engineset.value("background", "").toString();
+        checkForImage(setup_WorldMap.backgroundImg, dirs.gcommon);
+        setup_WorldMap.viewport_x = engineset.value("viewport-x", "").toInt();
+        setup_WorldMap.viewport_y = engineset.value("viewport-y", "").toInt();
+        setup_WorldMap.viewport_w = engineset.value("viewport-w", "").toInt();
+        setup_WorldMap.viewport_h = engineset.value("viewport-h", "").toInt();
 
-        WorldMap.title_x = engineset.value("level-title-x", "").toInt();
-        WorldMap.title_y = engineset.value("level-title-y", "").toInt();
-        WorldMap.title_w = engineset.value("level-title-w", "").toInt();
+        setup_WorldMap.title_x = engineset.value("level-title-x", "").toInt();
+        setup_WorldMap.title_y = engineset.value("level-title-y", "").toInt();
+        setup_WorldMap.title_w = engineset.value("level-title-w", "").toInt();
 
         QString ttlAlign = engineset.value("level-title-align", "left").toString();
         if(ttlAlign=="center")
-            WorldMap.title_align = WorldMapData::align_center;
+            setup_WorldMap.title_align = WorldMapData::align_center;
         else
         if(ttlAlign=="right")
-            WorldMap.title_align = WorldMapData::align_right;
+            setup_WorldMap.title_align = WorldMapData::align_right;
         else
-            WorldMap.title_align = WorldMapData::align_left;
+            setup_WorldMap.title_align = WorldMapData::align_left;
 
-        WorldMap.points_en = engineset.value("points-counter", "").toBool();
-        WorldMap.points_x = engineset.value("points-counter-x", "").toInt();
-        WorldMap.points_y = engineset.value("points-counter-y", "").toInt();
+        setup_WorldMap.points_en = engineset.value("points-counter", "").toBool();
+        setup_WorldMap.points_x = engineset.value("points-counter-x", "").toInt();
+        setup_WorldMap.points_y = engineset.value("points-counter-y", "").toInt();
 
-        WorldMap.health_en = engineset.value("health-counter", "").toBool();
-        WorldMap.health_x = engineset.value("health-counter-x", "").toInt();
-        WorldMap.health_y = engineset.value("health-counter-y", "").toInt();
+        setup_WorldMap.health_en = engineset.value("health-counter", "").toBool();
+        setup_WorldMap.health_x = engineset.value("health-counter-x", "").toInt();
+        setup_WorldMap.health_y = engineset.value("health-counter-y", "").toInt();
 
-        WorldMap.star_en = engineset.value("star-counter", "").toBool();
-        WorldMap.star_x = engineset.value("star-counter-x", "").toInt();
-        WorldMap.star_y = engineset.value("star-counter-y", "").toInt();
+        setup_WorldMap.star_en = engineset.value("star-counter", "").toBool();
+        setup_WorldMap.star_x = engineset.value("star-counter-x", "").toInt();
+        setup_WorldMap.star_y = engineset.value("star-counter-y", "").toInt();
 
-        WorldMap.coin_en = engineset.value("coin-counter", "").toBool();
-        WorldMap.coin_x = engineset.value("coin-counter-x", "").toInt();
-        WorldMap.coin_y = engineset.value("coin-counter-y", "").toInt();
+        setup_WorldMap.coin_en = engineset.value("coin-counter", "").toBool();
+        setup_WorldMap.coin_x = engineset.value("coin-counter-x", "").toInt();
+        setup_WorldMap.coin_y = engineset.value("coin-counter-y", "").toInt();
 
-        WorldMap.portrait_en = engineset.value("portrait", "").toBool();
-        WorldMap.portrait_x = engineset.value("portrait-x", "").toInt();
-        WorldMap.portrait_y = engineset.value("portrait-y", "").toInt();
+        setup_WorldMap.portrait_en = engineset.value("portrait", "").toBool();
+        setup_WorldMap.portrait_x = engineset.value("portrait-x", "").toInt();
+        setup_WorldMap.portrait_y = engineset.value("portrait-y", "").toInt();
 
     engineset.endGroup();
 
@@ -284,18 +296,16 @@ bool ConfigManager::loadBasics()
 
     int LoadScreenImages=0;
     engineset.beginGroup("loading-scene");
-        LoadingScreen.bg_color_r = engineset.value("bg-color-r", 0).toInt();
-        LoadingScreen.bg_color_g = engineset.value("bg-color-g", 0).toInt();
-        LoadingScreen.bg_color_b = engineset.value("bg-color-b", 0).toInt();
-        LoadingScreen.backgroundImg = engineset.value("background", "").toString();
-        checkForImage(LoadingScreen.backgroundImg, dirs.gcommon);
+        setup_LoadingScreen.backgroundColor.setNamedColor(engineset.value("bg-color", "#000000").toString());
+        setup_LoadingScreen.backgroundImg = engineset.value("background", "").toString();
+        checkForImage(setup_LoadingScreen.backgroundImg, dirs.gcommon);
 
-        LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
+        setup_LoadingScreen.updateDelay = engineset.value("updating-time", 128).toInt();
         LoadScreenImages = engineset.value("additional-images", 0).toInt();
     engineset.endGroup();
 
 
-    LoadingScreen.AdditionalImages.clear();
+    setup_LoadingScreen.AdditionalImages.clear();
     for(int i=1; i<=LoadScreenImages; i++)
     {
         engineset.beginGroup(QString("loading-image-%1").arg(i));
@@ -313,7 +323,70 @@ bool ConfigManager::loadBasics()
 
         img.x =  engineset.value("pos-x", 1).toInt();
         img.y =  engineset.value("pos-y", 1).toInt();
-        LoadingScreen.AdditionalImages.push_back(img);
+        setup_LoadingScreen.AdditionalImages.push_back(img);
+
+        engineset.endGroup();
+    }
+
+    ////////// Title screen (main menu) settings
+
+    int TitleScreenImages=0;
+    engineset.beginGroup("title-screen");
+        setup_TitleScreen.backgroundImg = engineset.value("background", "").toString();
+        setup_TitleScreen.backgroundColor.setNamedColor(engineset.value("bg-color", "#000000").toString());
+        checkForImage(setup_TitleScreen.backgroundImg, dirs.gcommon);
+        TitleScreenImages = engineset.value("additional-images", 0).toInt();
+    engineset.endGroup();
+
+
+    setup_TitleScreen.AdditionalImages.clear();
+    for(int i=1; i<=TitleScreenImages; i++)
+    {
+        engineset.beginGroup(QString("title-image-%1").arg(i));
+        TitleScreenAdditionalImage img;
+
+        img.imgFile = engineset.value("image", "").toString();
+        checkForImage(img.imgFile, dirs.gcommon);
+
+        img.animated = engineset.value("animated", false).toBool();
+        if(img.animated)
+        {
+            img.frames = engineset.value("frames", 1).toInt();
+            img.framespeed = engineset.value("framespeed", 128).toInt();
+        }
+        else
+        {
+            img.frames = 1;
+            img.framespeed = 128;
+        }
+        if(img.frames<=0) img.frames = 1;
+
+        img.x =  engineset.value("pos-x", 0).toInt();
+        img.y =  engineset.value("pos-y", 0).toInt();
+
+        img.center_x =  engineset.value("center-x", false).toBool();
+        img.center_y =  engineset.value("center-y", false).toBool();
+
+        QString align =   engineset.value("align", "none").toString();
+
+        if(align=="left")
+            img.align_to = TitleScreenAdditionalImage::LEFT_ALIGN;
+        else
+        if(align=="top")
+            img.align_to = TitleScreenAdditionalImage::TOP_ALIGN;
+        else
+        if(align=="right")
+            img.align_to = TitleScreenAdditionalImage::RIGHT_ALIGN;
+        else
+        if(align=="bottom")
+            img.align_to = TitleScreenAdditionalImage::BOTTOM_ALIGN;
+        else
+        if(align=="center")
+            img.align_to = TitleScreenAdditionalImage::CENTER_ALIGN;
+        else
+        img.align_to = TitleScreenAdditionalImage::NO_ALIGN;
+
+        setup_TitleScreen.AdditionalImages.push_back(img);
 
         engineset.endGroup();
     }

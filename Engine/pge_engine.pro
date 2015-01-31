@@ -7,6 +7,8 @@
 QT += core gui opengl network
 #QT += widgets
 
+QMAKE_CXXFLAGS += -Wno-maybe-uninitialized
+
 DESTDIR = ../bin
 
 static: {
@@ -116,13 +118,11 @@ SOURCES += main.cpp \
     physics/phys_util.cpp \
     graphics/lvl_camera.cpp \
     graphics/graphics.cpp \
-    scenes/scene_title.cpp \
     scenes/scene_level.cpp \
     scenes/scene.cpp \
     scenes/scene_world.cpp \
     scenes/scene_credits.cpp \
     scenes/scene_gameover.cpp \
-    scenes/scene_intro.cpp \
     graphics/gl_renderer.cpp \
     graphics/window.cpp \
     graphics/graphics_lvl_backgrnd.cpp \
@@ -162,8 +162,10 @@ SOURCES += main.cpp \
     fontman/font_manager.cpp \
     networking/editor_pipe.cpp \
     networking/intproc.cpp \
-    scenes/intro/pge_menu.cpp \
-    common_features/logger.cpp
+    common_features/logger.cpp \
+    gui/pge_menu.cpp \
+    scenes/scene_loading.cpp \
+    scenes/scene_title.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -221,13 +223,11 @@ HEADERS  += \
     physics/phys_util.h \
     graphics/lvl_camera.h \
     graphics/graphics.h \
-    scenes/scene_title.h \
     scenes/scene_level.h \
     scenes/scene.h \
     scenes/scene_world.h \
     scenes/scene_credits.h \
     scenes/scene_gameover.h \
-    scenes/scene_intro.h \
     graphics/gl_renderer.h \
     graphics/window.h \
     controls/controllable_object.h \
@@ -265,9 +265,11 @@ HEADERS  += \
     fontman/font_manager.h \
     networking/editor_pipe.h \
     networking/intproc.h \
-    scenes/intro/pge_menu.h \
     common_features/logger.h \
-    common_features/logger_sets.h
+    common_features/logger_sets.h \
+    gui/pge_menu.h \
+    scenes/scene_loading.h \
+    scenes/scene_title.h
 
 FORMS    += \
     data_configs/select_config.ui

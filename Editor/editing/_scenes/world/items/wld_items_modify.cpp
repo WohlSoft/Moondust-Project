@@ -83,6 +83,13 @@ void WldScene::collectDataFromItem(WorldData &dataToStore, QGraphicsItem *item)
     }
 }
 
+void WldScene::collectDataFromItems(WorldData &dataToStore, QList<QGraphicsItem *> items)
+{
+    foreach (QGraphicsItem* item, items) {
+        collectDataFromItem(dataToStore, item);
+    }
+}
+
 
 void WldScene::returnItemBackGroup(QList<QGraphicsItem * >items)
 {

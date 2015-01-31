@@ -91,6 +91,16 @@ struct WorldMapData
     int portrait_y;
 };
 
+/**********Loading screen******************/
+struct FontsSetup
+{
+    bool double_pixled;
+    QString fontname;
+};
+
+/******************************************/
+
+/**********Loading screen******************/
 struct LoadingScreenAdditionalImage
 {
     QString imgFile;
@@ -100,22 +110,55 @@ struct LoadingScreenAdditionalImage
     int y;
 };
 
-struct LoadingScreenData
+struct LoadingScreenSetup
 {
-    int bg_color_r;
-    int bg_color_g;
-    int bg_color_b;
     QString backgroundImg;
+    QColor backgroundColor;
     int updateDelay;
     QVector<LoadingScreenAdditionalImage > AdditionalImages;
 };
+/******************************************/
 
 
+/************Title screen******************/
+struct TitleScreenAdditionalImage
+{
+    enum align{
+        NO_ALIGN=0,
+        LEFT_ALIGN,
+        TOP_ALIGN,
+        RIGHT_ALIGN,
+        BOTTOM_ALIGN,
+        CENTER_ALIGN
+    };
+
+    QString imgFile;
+    bool animated;
+    int frames;
+    unsigned int framespeed;
+    align align_to;
+    int x;
+    int y;
+    bool center_x;
+    bool center_y;
+};
+
+struct TitleScreenSetup
+{
+    QString backgroundImg;
+    QColor backgroundColor;
+    QVector<TitleScreenAdditionalImage > AdditionalImages;
+};
+/******************************************/
+
+
+/**************Cursors*********************/
 struct MainCursors
 {
     QString normal;
     QString rubber;
 };
+/******************************************/
 
 struct MessageBoxSetup
 {
@@ -155,6 +198,7 @@ public:
     ConfigManager();
 
     static DataFolders dirs;
+    static QString config_id;
     static QString config_dir;
     static QString data_dir;
 
@@ -170,19 +214,24 @@ public:
     };
     static screenType screen_type;
 
-    //LoadingScreen
-    static LoadingScreenData LoadingScreen;
-
+    //Fonts
+    static FontsSetup setup_fonts;
     //curors
-    static MainCursors cursors;
-
+    static MainCursors setup_cursors;
     //MessageBox setup
-    static MessageBoxSetup message_box;
+    static MessageBoxSetup setup_message_box;
     //Menu setup
-    static MenuSetup menus;
+    static MenuSetup setup_menus;
+
+
+    //LoadingScreen
+    static LoadingScreenSetup setup_LoadingScreen;
+
+    //Title Screen
+    static TitleScreenSetup setup_TitleScreen;
 
     //World map data
-    static WorldMapData WorldMap;
+    static WorldMapData setup_WorldMap;
 
 
     static unsigned long music_custom_id;

@@ -39,7 +39,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     //Read NPC.TXT File config
 
     str_count++;line = in.readLine(); // Read file line
-    while((!line.isNull()))
+    while(!line.isNull())
     {
 
        QString ln = line;
@@ -57,7 +57,10 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
            if(!IgnoreBad)
                goto badfile;
            else
+           {
+               str_count++;line = in.readLine();
                continue;
+           }
        }
 
        Params[0] = Params[0].replace(QString(" "), QString("")); //Delete spaces

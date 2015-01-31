@@ -39,6 +39,7 @@ QMediaPlayer * PGE_MusPlayer::musicPlayer=NULL;
 QMediaPlaylist * PGE_MusPlayer::playList=NULL;
 #endif
 
+
 void PGE_MusPlayer::MUS_stopMusic()
 {
     #ifdef USE_QMEDIAPLAYER
