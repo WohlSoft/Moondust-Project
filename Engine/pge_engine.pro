@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wno-maybe-uninitialized
+QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0
 
 DESTDIR = ../bin
 
