@@ -22,58 +22,23 @@ if [ ! -d SDL ]
 	mkdir SDL
 	fi
 
-
 cd SDL
 
-if [ ! -d SDL2-2.0.3 ]
+UnArch()
+{
+# $1 - archive name
+if [ ! -d $1 ]
 	then
-	tar -xvf ../SDL2-2.0.3.tar.gz
+	tar -xvf ../$1.tar.*z
 	fi
+}
 
-if [ ! -d SDL2_mixer-2.0.0 ]
-	then
-	tar -xvf ../SDL2_mixer-2.0.0.tar.gz
-	fi
+BuildSrc()
+{
+# $1 - dir name   #2 additional props
 
-if [ ! -d libogg-1.3.2 ]
-	then
-	tar -xvf ../libogg-1.3.2.tar.gz
-	fi
-
-if [ ! -d libvorbis-1.3.4 ]
-	then
-	tar -xvf ../libvorbis-1.3.4.tar.gz
-	fi
-
-if [ ! -d flac-1.3.0 ]
-	then
-	tar -xvf ../flac-1.3.0.tar.xz
-	fi
-
-if [ ! -d libmikmod-3.3.7 ]
-	then
-	tar -xvf ../libmikmod-3.3.7.tar.gz
-	fi
-
-if [ ! -d libmad-0.15.1b ]
-	then
-	tar -xvf ../libmad-0.15.1b.tar.gz
-	fi
-
-cp ../libmad-0.15.1b.patched_configure.txt .
-
-#if [ ! -d SDL2_ttf-2.0.12 ]
-#	then
-#	tar -xvf ../SDL2_ttf-2.0.12.tar.gz
-#	fi
-
-
-
-#############################Build libraries#####################
-
-###########SDL2###########
-cd SDL2-2.0.3
-./configure --prefix=$InstallTo
+cd $1
+./configure $2
 if [ $? -eq 0 ]
 then
   echo "[good]"
@@ -97,116 +62,44 @@ else
   errorofbuid
 fi
 cd ..
+}
+
+UnArch 'SDL2-2.0.3'
+UnArch 'SDL2_mixer-2.0.0'
+UnArch 'libogg-1.3.2'
+UnArch 'libvorbis-1.3.4'
+UnArch 'flac-1.3.0'
+UnArch 'libmikmod-3.3.7'
+UnArch 'libmodplug-0.8.8.5'
+UnArch 'libmad-0.15.1b'
+cp ../libmad-0.15.1b.patched_configure.txt .
+#UnArch "SDL2_ttf-2.0.12"
+
+#############################Build libraries#####################
+
+###########SDL2###########
+BuildSrc 'SDL2-2.0.3' '--prefix='$InstallTo
 
 #apply fix of SDL2 bug
 cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 
 
 ###########OGG###########
-cd libogg-1.3.2
-./configure --prefix=$InstallTo
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuid
-fi
+BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
-make
-
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuid
-fi
-
-make install
-
-if [ $? -eq 0 ]
-then
-  echo "[good]"
-else
-  errorofbuid
-fi
-
-cd ..
 
 ###########VORBIS###########
-cd libvorbis-1.3.4
-./configure --prefix=$InstallTo
-
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make install
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-cd ..
+BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
 
 ###########FLAC###########
-cd flac-1.3.0
-./configure --enable-static=yes --disable-xmms-plugin --prefix=$InstallTo
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make install
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-cd ..
+BuildSrc 'flac-1.3.0' '--disable-xmms-plugin --prefix='$InstallTo
+
 
 ###########MIKMOD###########
-cd libmikmod-3.3.7
-./configure --prefix=$InstallTo
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make install
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-cd ..
+BuildSrc 'libmikmod-3.3.7' '--prefix='$InstallTo
+
+###########MODPLUG###########
+BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
 
 ###########LibMAD###########
 cd libmad-0.15.1b
@@ -216,54 +109,12 @@ then
 	cp ../libmad-0.15.1b.patched_configure.txt ./configure
 	chmod u+x ./configure
 fi
-
-./configure --prefix=$InstallTo
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make install
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
 cd ..
+BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
 ###########SDL2_mixer###########
 cd SDL2_mixer-2.0.0
-./configure  --prefix=$InstallTo --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --disable-music-mod-modplug --enable-music-mod --enable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-make install
-	if [ $? -eq 0 ]
-	then
-	  echo "[good]"
-	else
-	  errorofbuid
-	fi
-cd ..
+BuildSrc 'SDL2_mixer-2.0.0' '--prefix=$InstallTo --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --enable-music-mod-modplug --enable-music-mod --disable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest'
 
 #=======================================================================
 echo Libraries installed into $InstallTo

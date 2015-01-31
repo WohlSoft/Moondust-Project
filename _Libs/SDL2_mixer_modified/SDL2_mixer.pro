@@ -19,14 +19,12 @@ win32:{
 LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
-#LIBS += -LD:/MinGW/msys/1.0/build/SDL/lib
 }
 LIBS += -lSDL2
 win32:{
 LIBS += -lwinmm -lm -lwinmm
 }
 
-INCLUDEPATH += _deps/libmad
 LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad
 win32:{
 LIBS +=-lmodplug.dll
