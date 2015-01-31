@@ -21,6 +21,7 @@
 #include <common_features/mainwinconnect.h>
 #include <main_window/global_settings.h>
 #include <file_formats/file_formats.h>
+#include <file_formats/smbx64.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>
@@ -122,9 +123,25 @@ bool NpcEdit::saveFile(const QString &fileName)
 
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
-    QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    out << FileFormats::WriteNPCTxtFile(NpcData);
+
+    QString raw = FileFormats::WriteNPCTxtFile(NpcData);
+    for(int i=0; i<raw.size(); i++)
+    {
+        if(raw[i]=='\n')
+        {
+            //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+            const char bytes[2] = {0x0D, 0x0A};
+            file.write((const char*)(&bytes), 2);
+        }
+        else
+        {
+            const char byte[1] = {raw[i].toLatin1()};
+            file.write((const char*)(&byte), 1);
+        }
+    }
+    file.close();
+
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 

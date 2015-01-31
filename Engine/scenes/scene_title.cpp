@@ -605,7 +605,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 {
                     foreach(QString file, files)
                     {
-                        WorldData world = FileFormats::OpenWorldFile(file);
+                        WorldData world = FileFormats::OpenWorldFileHeader(file);
                         if(world.ReadFileValid)
                         {
                             QString title = world.EpisodeTitle;
@@ -630,7 +630,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 {
                     foreach(QString file, files)
                     {
-                        LevelData level = FileFormats::OpenLevelFile(ConfigManager::dirs.worlds+file);
+                        LevelData level = FileFormats::OpenLevelFileHeader(ConfigManager::dirs.worlds+file);
                         if(level.ReadFileValid)
                         {
                             QString title = level.LevelName;

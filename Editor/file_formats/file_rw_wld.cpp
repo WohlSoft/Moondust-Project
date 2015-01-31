@@ -19,8 +19,12 @@
 #include <QFileInfo>
 #include <QDir>
 
-#include "wld_filedata.h"
 #include "file_formats.h"
+#include "wld_filedata.h"
+#include "file_strlist.h"
+#include "smbx64.h"
+
+#include <QtDebug>
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -98,6 +102,157 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
     in.setCodec(QTextCodec::codecForLocale());
 
     return ReadSMBX64WldFile( in.readAll(), inf.fileName() );
+}
+
+
+WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
+{
+    WorldData FileData;
+    FileData = dummyWldDataArray();
+
+    QFile inf(filePath);
+    if(!inf.open(QIODevice::ReadOnly|QIODevice::Text))
+    {
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    QString line;
+    int str_count=0;
+    int file_format=0;
+    QFileInfo in_1(filePath);
+    FileData.filename = in_1.baseName();
+    FileData.path = in_1.absoluteDir().absolutePath();
+
+    QTextStream in(&inf);
+    in.setAutoDetectUnicode(true);
+    in.setLocale(QLocale::system());
+    in.setCodec(QTextCodec::codecForLocale());
+    in.seek(0);
+
+    FileData.untitled = false;
+    FileData.modified = false;
+
+    //Enable strict mode for SMBX WLD file format
+    FileData.smbx64strict = true;
+
+    str_count++;line = in.readLine();   //Read first Line
+    if( SMBX64::Int(line) ) //File format number
+        goto badfile;
+    else file_format=line.toInt();
+
+    str_count++;line = in.readLine();
+    if( SMBX64::qStr(line) ) //Episode name
+        goto badfile;
+    else FileData.EpisodeTitle = removeQuotes(line);
+
+    if(file_format >= 55)
+    {
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Edisode without Mario
+            goto badfile;
+        else FileData.nocharacter1 = SMBX64::wBoolR(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Edisode without Luigi
+            goto badfile;
+        else FileData.nocharacter2 = SMBX64::wBoolR(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Edisode without Peach
+            goto badfile;
+        else FileData.nocharacter3 = SMBX64::wBoolR(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Edisode without Toad
+            goto badfile;
+        else FileData.nocharacter4 = SMBX64::wBoolR(line);
+
+        if(file_format >= 56)
+        {
+            str_count++;line = in.readLine();
+            if( SMBX64::wBool(line) ) //Edisode without Link
+                goto badfile;
+            else FileData.nocharacter5 = SMBX64::wBoolR(line);
+        }
+
+        //Convert into the bool array
+        FileData.nocharacter<<
+             FileData.nocharacter1<<
+             FileData.nocharacter2<<
+             FileData.nocharacter3<<
+             FileData.nocharacter4<<
+             FileData.nocharacter5;
+    }
+
+    if(file_format >= 3)
+    {
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Autostart level
+            goto badfile;
+        else FileData.IntroLevel_file = removeQuotes(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Don't use world map on this episode
+            goto badfile;
+        else FileData.HubStyledWorld = SMBX64::wBoolR(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::wBool(line) ) //Restart level on playable character's death
+            goto badfile;
+        else FileData.restartlevel = SMBX64::wBoolR(line);
+    }
+
+    if(file_format >= 20)
+    {
+        str_count++;line = in.readLine();
+        if( SMBX64::Int(line) ) //Stars number
+            goto badfile;
+        else FileData.stars = line.toInt();
+    }
+
+    if(file_format >= 17)
+    {
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Author 1
+            goto badfile;
+        else FileData.author1 = removeQuotes(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Author 2
+            goto badfile;
+        else FileData.author2 = removeQuotes(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Author 3
+            goto badfile;
+        else FileData.author3 = removeQuotes(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Author 4
+            goto badfile;
+        else FileData.author4 = removeQuotes(line);
+
+        str_count++;line = in.readLine();
+        if( SMBX64::qStr(line) ) //Author 5
+            goto badfile;
+        else FileData.author5 = removeQuotes(line);
+
+        FileData.authors.clear();
+        FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
+        FileData.authors += (FileData.author2.isEmpty())? "" : FileData.author2+"\n";
+        FileData.authors += (FileData.author3.isEmpty())? "" : FileData.author3+"\n";
+        FileData.authors += (FileData.author4.isEmpty())? "" : FileData.author4+"\n";
+        FileData.authors += (FileData.author5.isEmpty())? "" : FileData.author5;
+    }
+
+    FileData.ReadFileValid=true;
+    inf.close();
+    return FileData;
+badfile:
+    qDebug()<<"Wrong file"<<filePath<<"format"<<file_format<<"line: "<<str_count<< "data: "<<line;
+    inf.close();
+    FileData.ReadFileValid=false;
+    return FileData;
 }
 
 WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent)

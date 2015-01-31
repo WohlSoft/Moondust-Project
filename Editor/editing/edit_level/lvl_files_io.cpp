@@ -319,7 +319,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         LvlData.smbx64strict = true; //Enable SMBX64 standard strict mode
 
         QFile file(fileName);
-        if (!file.open(QFile::WriteOnly | QFile::Text))
+        if(!file.open(QFile::WriteOnly))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -328,8 +328,21 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
             return false;
         }
 
-        QTextStream out(&file);
-        out << FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
+        QString raw = FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
+        for(int i=0; i<raw.size(); i++)
+        {
+            if(raw[i]=='\n')
+            {
+                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+                const char bytes[2] = {0x0D, 0x0A};
+                file.write((const char*)(&bytes), 2);
+            }
+            else
+            {
+                const char byte[1] = {raw[i].toLatin1()};
+                file.write((const char*)(&byte), 1);
+            }
+        }
         file.close();
 
         //save additional meta data

@@ -289,9 +289,24 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                                  .arg(file.errorString()));
             return false;
         }
-        QTextStream out(&file);
         WldData.smbx64strict = true; //Enable SMBX64 standard strict mode
-        out << FileFormats::WriteSMBX64WldFile(WldData, file_format);
+
+
+        QString raw = FileFormats::WriteSMBX64WldFile(WldData, file_format);
+        for(int i=0; i<raw.size(); i++)
+        {
+            if(raw[i]=='\n')
+            {
+                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+                const char bytes[2] = {0x0D, 0x0A};
+                file.write((const char*)(&bytes), 2);
+            }
+            else
+            {
+                const char byte[1] = {raw[i].toLatin1()};
+                file.write((const char*)(&byte), 1);
+            }
+        }
         file.close();
 
         //save additional meta data

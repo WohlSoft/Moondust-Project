@@ -37,15 +37,15 @@ void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),GlobalSettings::openPath,
-        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT *.SAV)\n"
-        "All SMBX files (*.LVL *.WLD npc-*.TXT)\n"
-        "All PGE files (*.LVLX *.WLDX npc-*.TXT *.INI)\n"
-        "SMBX Level (*.LVL)\n"
-        "PGE Level (*.LVLX)\n"
-        "SMBX World (*.WLD)\n"
-        "PGE World (*.WLDX)\n"
-        "SMBX NPC Config (npc-*.TXT)\n"
-        "SMBX Game Save file (*.SAV)\n"
+        QString("All supported formats (*.lvlx *.wldx *.ini *.lvl *.wld npc-*.txt *.sav);;"
+        "All SMBX files (*.lvl *.wld npc-*.txt);;"
+        "All PGE files (*.lvlx *.wldx npc-*.txt *.ini);;"
+        "SMBX Level (*.lvl);;"
+        "PGE Level (*.lvlx);;"
+        "SMBX World (*.wldx);;"
+        "PGE World (*.wldx);;"
+        "SMBX NPC Config (npc-*.txt);;"
+        "SMBX Game Save file (*.sav);;"
         "All Files (*.*)"),0);
 
         if(fileName_DATA==NULL) return;
