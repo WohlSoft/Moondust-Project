@@ -348,7 +348,7 @@ void LevelScene::render()
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
         FontManager::printText(QString("Player J=%1 G=%2 F=%3")
                                .arg(debug_player_jumping)
@@ -358,7 +358,7 @@ void LevelScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(lastTicks), 10, 100, 10, qRgb(255,0,0));
+                                   .arg(lastTicks), 10, 140, 10, qRgb(255,0,0));
     }
 
     renderBlack:

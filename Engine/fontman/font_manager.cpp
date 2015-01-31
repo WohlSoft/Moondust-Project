@@ -38,6 +38,8 @@ bool FontManager::isInit=false;
 //TTF_Font * FontManager::defaultFont=NULL;
 
 GLuint FontManager::textTexture=0;
+QMap<QChar, GLuint> FontManager::fontTable_1;
+QMap<QChar, GLuint> FontManager::fontTable_2;
 
 int     FontManager::fontID;
 QFont FontManager::defaultFont;
@@ -78,7 +80,21 @@ void FontManager::init()
 }
 
 void FontManager::quit()
-{}
+{
+    //Clean font cache
+    while(!fontTable_1.isEmpty())
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &fontTable_1.first() );
+        fontTable_1.remove(fontTable_1.firstKey());
+    }
+    while(!fontTable_2.isEmpty())
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &fontTable_2.first() );
+        fontTable_2.remove(fontTable_2.firstKey());
+    }
+}
 
 //TTF_Font *FontManager::buildFont(QString _fontPath, GLint size)
 //{
@@ -247,10 +263,43 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
 void FontManager::printText(QString text, int x, int y)
 {
     if(!isInit) return;
-    SDL_string_texture_create(defaultFont, qRgba(255,255,255,255), text, &textTexture);
-    SDL_string_render2D(x, y, &textTexture );
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures(1, &textTexture );
+    int offsetX=0;
+    int offsetY=0;
+    int height=32;
+    int width=32;
+    foreach(QChar cx, text)
+    {
+        switch(cx.toLatin1())
+        {
+        case '\n':
+            offsetX=0;
+            offsetY+=height;
+            continue;
+        case '\t':
+            offsetX+=offsetX+offsetX%width;
+            continue;
+        }
+        GLint w;
+        GLint h;
+        GLuint charTex = getChar2(cx);
+
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, charTex);
+        glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
+        glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
+
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glBegin(GL_QUADS);
+            glTexCoord2f(0.0,1.0);glVertex3f(x+offsetX, y+offsetY, 0.0);
+            glTexCoord2f(0.0,0.0);glVertex3f(x+offsetX, y+h+offsetY, 0.0) ;
+            glTexCoord2f(1.0,0.0);glVertex3f(x+offsetX+w, y+h+offsetY, 0.0);
+            glTexCoord2f(1.0,1.0);glVertex3f(x+offsetX+w, y+offsetY, 0.0);
+        glEnd();
+        glDisable(GL_TEXTURE_2D);
+        width=w;
+        height=h;
+        offsetX+=w;
+    }
 }
 
 GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders)
@@ -264,6 +313,116 @@ GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags,
     //glDisable(GL_TEXTURE_2D);
     //glDeleteTextures(1, &textTexture );
 }
+
+GLuint FontManager::getChar1(QChar _x)
+{
+    if(fontTable_1.contains(_x))
+        return fontTable_1[_x];
+    else
+    {
+        if(!isInit) return 0;
+
+        QImage text_image;
+        QFont font_i = defaultFont;
+        QFontMetrics meter(font_i);
+        text_image = QImage(meter.width(_x), meter.height(), QImage::Format_ARGB32);
+        text_image.fill(Qt::transparent);
+        QPainter x(&text_image);
+        x.setFont(font_i);
+        x.setBrush(QBrush(Qt::white));
+        x.setPen(QPen(Qt::white));
+        x.drawText(text_image.rect(), Qt::AlignLeft, QString(_x));
+        x.end();
+
+        if(double_pixled)
+        {
+            //Pixelizing
+            text_image = text_image.scaled(text_image.width()/2, text_image.height()/2);
+            text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
+        }
+
+        text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+
+        GLuint texture;
+
+        glGenTextures(1, &texture);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        glTexImage2D(GL_TEXTURE_2D, 0,  4, text_image.width(), text_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, text_image.bits() );
+
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        fontTable_1[_x] = texture;
+
+        return fontTable_1[_x];
+    }
+}
+
+
+GLuint FontManager::getChar2(QChar _x)
+{
+    if(fontTable_2.contains(_x))
+        return fontTable_2[_x];
+    else
+    {
+        if(!isInit) return 0;
+
+        QImage text_image;
+        int off = 4;
+
+        QFont font_i = defaultFont;
+        font_i.setPointSize(font_i.pointSize());
+        QFontMetrics meter(defaultFont);
+
+        QPainterPath path;
+
+        text_image = QImage(meter.width(_x)+off, meter.height()+off*4, QImage::Format_ARGB32);
+        text_image.fill(Qt::transparent);
+
+        QPainter x(&text_image);
+        x.setFont(font_i);
+        x.setBrush(QBrush(Qt::white));
+        x.setPen(QPen(Qt::white));
+
+        path.addText(off, meter.height()+off, font_i, QString(_x));
+        x.strokePath(path, QPen(QColor(Qt::black), off));
+        x.fillPath(path, QBrush(Qt::white));
+        x.end();
+
+        if(double_pixled)
+        {
+            //Pixelizing
+            text_image = text_image.scaled(text_image.width()/2, text_image.height()/2);
+            text_image = text_image.scaled(text_image.width()*2, text_image.height()*2);
+        }
+
+        text_image = QGLWidget::convertToGLFormat(text_image);//.mirrored(false, true);
+
+        GLuint texture;
+
+        glGenTextures(1, &texture);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        glTexImage2D(GL_TEXTURE_2D, 0,  4, text_image.width(), text_image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, text_image.bits() );
+
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+        fontTable_2[_x] = texture;
+
+        return fontTable_2[_x];
+    }
+}
+
 
 QFont FontManager::font()
 {
