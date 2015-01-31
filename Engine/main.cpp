@@ -41,6 +41,7 @@
 #undef main
 
 #include <file_formats.h>
+#include <smbx64.h>
 #include "fontman/font_manager.h"
 #include "gui/pge_msgbox.h"
 #include "networking/intproc.h"

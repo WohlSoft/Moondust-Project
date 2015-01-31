@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "wld_filedata.h"
 #include "file_formats.h"
+#include "wld_filedata.h"
 
 WorldTiles FileFormats::dummyWldTile()
 {

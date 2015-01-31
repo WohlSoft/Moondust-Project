@@ -20,6 +20,9 @@
 #include <QDir>
 
 #include "file_formats.h"
+#include "file_strlist.h"
+#include "wld_filedata.h"
+#include "pge_x.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -31,6 +34,123 @@ WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
     in.setCodec("UTF-8");
 
     return ReadExtendedWldFile( in.readAll(), inf.fileName() );
+}
+
+WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
+{
+    WorldData FileData;
+    FileData = dummyWldDataArray();
+
+    QFile inf(filePath);
+    if(!inf.open(QIODevice::ReadOnly))
+    {
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    QString line;
+    int str_count=0;
+    bool valid=false;
+    QFileInfo in_1(filePath);
+    FileData.filename = in_1.baseName();
+    FileData.path = in_1.absoluteDir().absolutePath();
+    QTextStream in(&inf);
+    in.setCodec("UTF-8");
+
+    //Find level header part
+    do{
+    str_count++;line = in.readLine();
+    }while((line!="HEAD") && (!line.isNull()));
+
+    QStringList header;
+    str_count++;line = in.readLine();
+    bool closed=false;
+    while((line!="HEAD_END") && (!line.isNull()))
+    {
+        header.push_back(line);
+        str_count++;line = in.readLine();
+        if(line=="HEAD_END") closed=true;
+    }
+    if(!closed) goto badfile;
+
+    foreach(QString header_line, header)
+    {
+        QList<QStringList >data = PGEFile::splitDataLine(header_line, &valid);
+
+        for(int i=0;i<data.size();i++)
+        {
+            if(data[i].size()!=2) goto badfile;
+            if(data[i][0]=="TL") //Episode Title
+            {
+             if(PGEFile::IsQStr(data[i][1]))
+                 FileData.EpisodeTitle = PGEFile::X2STR(data[i][1]);
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="DC") //Disabled characters
+            {
+             if(PGEFile::IsBoolArray(data[i][1]))
+                 FileData.nocharacter = PGEFile::X2BollArr(data[i][1]);
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="IT") //Intro level
+            {
+             if(PGEFile::IsQStr(data[i][1]))
+                 FileData.IntroLevel_file = PGEFile::X2STR(data[i][1]);
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="HB") //Hub Styled
+            {
+             if(PGEFile::IsBool(data[i][1]))
+                 FileData.HubStyledWorld = (bool)data[i][1].toInt();
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="RL") //Restart level on fail
+            {
+             if(PGEFile::IsBool(data[i][1]))
+                 FileData.restartlevel = (bool)data[i][1].toInt();
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="SZ") //Starz number
+            {
+             if(PGEFile::IsIntU(data[i][1]))
+                 FileData.stars = data[i][1].toInt();
+             else
+                 goto badfile;
+            }
+            else
+            if(data[i][0]=="CD") //Credits list
+            {
+             if(PGEFile::IsQStr(data[i][1]))
+                 FileData.authors = PGEFile::X2STR(data[i][1]);
+             else
+                 goto badfile;
+            }
+        }
+    }
+
+    if(!closed)
+        goto badfile;
+
+    FileData.CurSection=0;
+    FileData.playmusic=0;
+
+    FileData.ReadFileValid=true;
+
+    inf.close();
+    return FileData;
+badfile:
+    inf.close();
+    FileData.ReadFileValid=false;
+    return FileData;
 }
 
 WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bool sielent)

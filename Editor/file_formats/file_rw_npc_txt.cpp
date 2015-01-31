@@ -17,6 +17,8 @@
  */
 
 #include "file_formats.h"
+#include "file_strlist.h"
+#include "smbx64.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************

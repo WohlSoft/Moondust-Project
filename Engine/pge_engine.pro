@@ -103,17 +103,6 @@ SOURCES += main.cpp \
     ../_Libs/Box2D/Dynamics/b2World.cpp \
     ../_Libs/Box2D/Dynamics/b2WorldCallbacks.cpp \
     ../_Libs/Box2D/Rope/b2Rope.cpp \
-    ../Editor/file_formats/file_formats.cpp \
-    ../Editor/file_formats/file_lvl.cpp \
-    ../Editor/file_formats/file_lvlx.cpp \
-    ../Editor/file_formats/file_npc_txt.cpp \
-    ../Editor/file_formats/file_wld.cpp \
-    ../Editor/file_formats/file_wldx.cpp \
-    ../Editor/file_formats/lvl_filedata.cpp \
-    ../Editor/file_formats/npc_filedata.cpp \
-    ../Editor/file_formats/pge_x.cpp \
-    ../Editor/file_formats/smbx64.cpp \
-    ../Editor/file_formats/wld_filedata.cpp \
     physics/base_object.cpp \
     physics/phys_util.cpp \
     graphics/lvl_camera.cpp \
@@ -165,7 +154,23 @@ SOURCES += main.cpp \
     common_features/logger.cpp \
     gui/pge_menu.cpp \
     scenes/scene_loading.cpp \
-    scenes/scene_title.cpp
+    scenes/scene_title.cpp \
+    ../Editor/file_formats/file_formats.cpp \
+    ../Editor/file_formats/file_rw_lvl.cpp \
+    ../Editor/file_formats/file_rw_lvlx.cpp \
+    ../Editor/file_formats/file_rw_meta.cpp \
+    ../Editor/file_formats/file_rw_npc_txt.cpp \
+    ../Editor/file_formats/file_rw_sav.cpp \
+    ../Editor/file_formats/file_rw_wld.cpp \
+    ../Editor/file_formats/file_rw_wldx.cpp \
+    ../Editor/file_formats/file_rwopen.cpp \
+    ../Editor/file_formats/file_strlist.cpp \
+    ../Editor/file_formats/lvl_filedata.cpp \
+    ../Editor/file_formats/npc_filedata.cpp \
+    ../Editor/file_formats/pge_x.cpp \
+    ../Editor/file_formats/save_filedata.cpp \
+    ../Editor/file_formats/smbx64.cpp \
+    ../Editor/file_formats/wld_filedata.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -215,10 +220,6 @@ HEADERS  += \
     ../_Libs/Box2D/Dynamics/b2World.h \
     ../_Libs/Box2D/Dynamics/b2WorldCallbacks.h \
     ../_Libs/Box2D/Rope/b2Rope.h \
-    ../Editor/file_formats/file_formats.h \
-    ../Editor/file_formats/lvl_filedata.h \
-    ../Editor/file_formats/npc_filedata.h \
-    ../Editor/file_formats/wld_filedata.h \
     physics/base_object.h \
     physics/phys_util.h \
     graphics/lvl_camera.h \
@@ -269,7 +270,16 @@ HEADERS  += \
     common_features/logger_sets.h \
     gui/pge_menu.h \
     scenes/scene_loading.h \
-    scenes/scene_title.h
+    scenes/scene_title.h \
+    ../Editor/file_formats/file_formats.h \
+    ../Editor/file_formats/file_strlist.h \
+    ../Editor/file_formats/lvl_filedata.h \
+    ../Editor/file_formats/meta_filedata.h \
+    ../Editor/file_formats/npc_filedata.h \
+    ../Editor/file_formats/pge_x.h \
+    ../Editor/file_formats/save_filedata.h \
+    ../Editor/file_formats/smbx64.h \
+    ../Editor/file_formats/wld_filedata.h
 
 FORMS    += \
     data_configs/select_config.ui

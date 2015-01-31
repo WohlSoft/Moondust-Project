@@ -216,18 +216,6 @@ SOURCES += main.cpp\
     editing/edit_world/wld_edit_control.cpp \
     editing/edit_world/wld_files_io.cpp \
     editing/edit_world/world_edit.cpp \
-    file_formats/file_formats.cpp \
-    file_formats/file_lvl.cpp \
-    file_formats/file_lvlx.cpp \
-    file_formats/file_meta.cpp \
-    file_formats/file_npc_txt.cpp \
-    file_formats/file_wld.cpp \
-    file_formats/file_wldx.cpp \
-    file_formats/lvl_filedata.cpp \
-    file_formats/npc_filedata.cpp \
-    file_formats/pge_x.cpp \
-    file_formats/smbx64.cpp \
-    file_formats/wld_filedata.cpp \
     main_window/events.cpp \
     main_window/global_settings.cpp \
     main_window/mainw_themes.cpp \
@@ -336,8 +324,6 @@ SOURCES += main.cpp\
     editing/_scenes/world/resizers/wld_resizers.cpp \
     editing/_scenes/world/resizers/wld_resizer_img_shoot.cpp \
     editing/_scenes/world/data_manager/wld_custom_gfx.cpp \
-    file_formats/file_sav.cpp \
-    file_formats/save_filedata.cpp \
     common_features/resizer/corner_grabber.cpp \
     data_configs/conf_rotation_tables.cpp \
     editing/_scenes/level/items/lvl_base_item.cpp \
@@ -359,8 +345,23 @@ SOURCES += main.cpp\
     main_window/windows_extras.cpp \
     main_window/dock/lvl_warp_props.cpp \
     editing/_components/history/historyelementmainsetting.cpp \
-    editing/_components/history/historyelementitemsetting.cpp
-    
+    editing/_components/history/historyelementitemsetting.cpp \
+    file_formats/file_formats.cpp \
+    file_formats/file_rw_lvl.cpp \
+    file_formats/file_rw_lvlx.cpp \
+    file_formats/file_rw_meta.cpp \
+    file_formats/file_rw_npc_txt.cpp \
+    file_formats/file_rw_sav.cpp \
+    file_formats/file_rw_wld.cpp \
+    file_formats/file_rw_wldx.cpp \
+    file_formats/file_rwopen.cpp \
+    file_formats/file_strlist.cpp \
+    file_formats/lvl_filedata.cpp \
+    file_formats/npc_filedata.cpp \
+    file_formats/pge_x.cpp \
+    file_formats/save_filedata.cpp \
+    file_formats/smbx64.cpp \
+    file_formats/wld_filedata.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -438,11 +439,6 @@ HEADERS  += defines.h \
     editing/edit_npc/npcedit.h \
     editing/edit_npc/npceditscene.h \
     editing/edit_world/world_edit.h \
-    file_formats/file_formats.h \
-    file_formats/lvl_filedata.h \
-    file_formats/meta_filedata.h \
-    file_formats/npc_filedata.h \
-    file_formats/wld_filedata.h \
     main_window/global_settings.h \
     main_window/about_dialog/aboutdialog.h \
     networking/engine_client.h \
@@ -486,7 +482,6 @@ HEADERS  += defines.h \
     editing/_scenes/world/items/item_point.h \
     editing/_scenes/world/items/item_scene.h \
     editing/_scenes/world/items/item_tile.h \
-    file_formats/save_filedata.h \
     data_configs/obj_rotation_table.h \
     editing/_scenes/level/items/lvl_base_item.h \
     editing/_scenes/world/items/wld_base_item.h \
@@ -505,7 +500,16 @@ HEADERS  += defines.h \
     main_window/dock/lvl_item_properties.h \
     main_window/dock/lvl_warp_props.h \
     editing/_components/history/historyelementmainsetting.h \
-    editing/_components/history/historyelementitemsetting.h
+    editing/_components/history/historyelementitemsetting.h \
+    file_formats/file_formats.h \
+    file_formats/file_strlist.h \
+    file_formats/lvl_filedata.h \
+    file_formats/meta_filedata.h \
+    file_formats/npc_filedata.h \
+    file_formats/pge_x.h \
+    file_formats/save_filedata.h \
+    file_formats/smbx64.h \
+    file_formats/wld_filedata.h
 
 
 FORMS    += \

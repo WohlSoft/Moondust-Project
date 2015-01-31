@@ -7,7 +7,9 @@
 
 class HistoryElementItemSetting : public QObject, public IHistoryElement
 {
+    Q_INTERFACES(IHistoryElement)
     Q_OBJECT
+
 public:
     explicit HistoryElementItemSetting(const WorldData &data, HistorySettings::WorldSettingSubType wldSubType, QVariant extraData, QObject *parent = 0);
     explicit HistoryElementItemSetting(const LevelData &data, HistorySettings::LevelSettingSubType lvlSubType, QVariant extraData, QObject *parent = 0);

@@ -21,6 +21,7 @@
 #endif
 
 #include "file_formats.h"
+#include "npc_filedata.h"
 
 NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
 {

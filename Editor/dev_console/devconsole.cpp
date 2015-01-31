@@ -26,7 +26,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/mainwinconnect.h>
-#include <file_formats/file_formats.h>
+#include <file_formats/pge_x.h>
 
 #include "devconsole.h"
 #include <ui_devconsole.h>
