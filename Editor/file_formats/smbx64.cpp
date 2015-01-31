@@ -16,7 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
+#include <QRegExp>
+#include "smbx64.h"
 
 namespace smbx64Format
 {

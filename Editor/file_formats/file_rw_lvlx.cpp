@@ -20,6 +20,9 @@
 #include <QDir>
 
 #include "file_formats.h"
+#include "file_strlist.h"
+#include "pge_x.h"
+
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
 #endif
@@ -33,6 +36,82 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     in.setCodec("UTF-8");
 
     return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
+}
+
+
+LevelData FileFormats::ReadExtendedLvlFileHeader(QString filePath)
+{
+    LevelData FileData;
+    FileData = dummyLvlDataArray();
+
+    QFile inf(filePath);
+    if(!inf.open(QIODevice::ReadOnly))
+    {
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    QString line;
+    int str_count=0;
+    bool valid=false;
+    QFileInfo in_1(filePath);
+    FileData.filename = in_1.baseName();
+    FileData.path = in_1.absoluteDir().absolutePath();
+    QTextStream in(&inf);
+    in.setCodec("UTF-8");
+
+    //Find level header part
+    do{
+    str_count++;line = in.readLine();
+    }while((line!="HEAD") && (!line.isNull()));
+
+    QStringList header;
+    str_count++;line = in.readLine();
+    bool closed=false;
+    while((line!="HEAD_END") && (!line.isNull()))
+    {
+        header.push_back(line);
+        str_count++;line = in.readLine();
+        if(line=="HEAD_END") closed=true;
+    }
+    if(!closed) goto badfile;
+
+    foreach(QString header_line, header)
+    {
+        QList<QStringList >data = PGEFile::splitDataLine(header_line, &valid);
+
+        for(int i=0;i<data.size();i++)
+        {
+            if(data[i].size()!=2) goto badfile;
+            if(data[i][0]=="TL") //Level Title
+            {
+                if(PGEFile::IsQStr(data[i][1]))
+                    FileData.LevelName = PGEFile::X2STR(data[i][1]);
+                else
+                    goto badfile;
+            }
+            else
+            if(data[i][0]=="SZ") //Starz number
+            {
+                if(PGEFile::IsIntU(data[i][1]))
+                    FileData.stars = data[i][1].toInt();
+                else
+                    goto badfile;
+            }
+        }
+    }
+
+    if(!closed)
+        goto badfile;
+
+    FileData.CurSection=0;
+    FileData.playmusic=0;
+
+    FileData.ReadFileValid=true;
+
+    return FileData;
+badfile:
+    FileData.ReadFileValid=false;
+    return FileData;
 }
 
 LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bool sielent)

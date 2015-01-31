@@ -16,7 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_formats.h"
+#include "pge_x.h"
+#include "file_strlist.h"
 
 namespace PGEExtendedFormat
 {
@@ -56,6 +57,13 @@ PGEFile::PGEFile(QString _rawData)
 {
     rawData = _rawData;
     _lastError = "";
+}
+
+QString PGEFile::removeQuotes(QString str)
+{
+    QString target = str.remove(0,1);
+    target = target.remove(target.size()-1,1);
+    return target;
 }
 
 void PGEFile::setRawData(QString _rawData)
@@ -454,7 +462,7 @@ QString PGEFile::X2STR(QString input)
 {
     return restoreStr(
                 decodeEscape(
-                    FileFormats::removeQuotes(input)
+                    removeQuotes(input)
                 )
             );
 }
