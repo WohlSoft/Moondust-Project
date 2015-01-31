@@ -77,13 +77,21 @@ int main(int argc, char *argv[])
     //Init themes engine
     Themes::init();
 
-    //Init SDL Audio subsystem
-    SDL_Init(SDL_INIT_AUDIO);
-
     //Init log writer
     LoadLogSettings();
 
     WriteToLog(QtDebugMsg, "--> Application started <--");
+
+    //Init SDL Audio subsystem
+    if(SDL_Init(SDL_INIT_AUDIO)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Error of loading SDL: %1").arg(SDL_GetError()));
+    }
+
+    if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
+    }
 
     int ret=0;
     //Init Main Window class

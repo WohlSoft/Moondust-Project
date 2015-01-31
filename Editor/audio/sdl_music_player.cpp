@@ -19,6 +19,7 @@
 #include <QtDebug>
 
 #include "sdl_music_player.h"
+#include <common_features/logger.h>
 
 // //////////////////////// Music Player //////////////////////////////////////
 
@@ -101,9 +102,16 @@ void PGE_MusPlayer::MUS_changeVolume(int vlm)
 void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
 {
     sRate=sampleRate;
-    Mix_CloseAudio();
-    Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096);
-    Mix_AllocateChannels(16);
+    qDebug() << "Set sample rate to:"<<sampleRate;
+    //Mix_CloseAudio();
+    if(Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Can't open audio: %1").arg(Mix_GetError()));
+    }
+    if(Mix_AllocateChannels(16)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Can't allocate channels: %1").arg(Mix_GetError()));
+    }
 }
 int PGE_MusPlayer::sampleRate()
 {
