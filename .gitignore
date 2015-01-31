@@ -15,6 +15,8 @@
 !_Libs/_builds/*/*/*.dll
 *.dylib
 !_Libs/_builds/*/*/*.dylib
+_Libs/_builds/linux/*
+_Libs/_builds/sdl2_mixer_mod/*
 
 # Qt-es
 
