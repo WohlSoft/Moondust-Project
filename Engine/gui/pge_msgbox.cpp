@@ -113,7 +113,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         }
         /****************Word wrap*end*****************/
 
-        boxSize.setWidth( (meter.width('X')-1)*maxWidth );
+        boxSize.setWidth( (meter.width('X'))*maxWidth-meter.width('X') );
         boxSize.setHeight((meter.height()-1)*count);
     }
 
@@ -205,7 +205,7 @@ void PGE_MsgBox::exec()
         else
         {
             glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
+            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
             glBegin( GL_QUADS );
                 glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() - height*fader_opacity - padding);
                 glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() - height*fader_opacity - padding);
@@ -356,7 +356,7 @@ void PGE_MsgBox::exec()
         else
         {
             glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
+            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
             glBegin( GL_QUADS );
                 glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
                             _sizeRect.center().y() - height*fader_opacity - padding);

@@ -23,6 +23,7 @@
 #include <SDL2/SDL_opengl.h>
 #include <QString>
 #include <QFont>
+#include <QMap>
 #include <QRgb>
 
 class FontManager
@@ -32,12 +33,15 @@ public:
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
-    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture);
+    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
     static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
-                                          QString &text, GLuint *texture);
+                                          QString &text, GLuint *texture, bool borders=false);
 
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
-    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags);
+    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
+
+    static GLuint getChar1(QChar _x);
+    static GLuint getChar2(QChar _x);
 
     static QFont font();
 
@@ -49,7 +53,10 @@ private:
     static bool isInit;
     //static TTF_Font * defaultFont;
     static GLuint textTexture;
+    static QMap<QChar, GLuint> fontTable_1;
+    static QMap<QChar, GLuint> fontTable_2;
     static int fontID;
+    static bool double_pixled;
 
     static QFont defaultFont;
 };

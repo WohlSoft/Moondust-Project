@@ -16,14 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_TITLE_H
-#define SCENE_TITLE_H
+#ifndef SCENE_INTRO_H
+#define SCENE_INTRO_H
 
-#include <QVector>
+#include <QMap>
+#include <QPair>
+#include <QStack>
+#include "scene.h"
+#include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
 
-#include "scene.h"
+typedef QPair<int, int > menustate;
 
 struct TitleScene_misc_img
 {
@@ -34,22 +38,72 @@ struct TitleScene_misc_img
     int frmH;
 };
 
+struct PlayLevelResult
+{
+    QString levelfile;
+};
+
+struct PlayEpisodeResult
+{
+    QString worldfile;
+    QString savefile;
+    int character;
+};
+
 class TitleScene : public Scene
 {
 public:
     TitleScene();
     ~TitleScene();
-    void init();
-
-    void setWaitTime(unsigned int time);
+    void update();
     void render();
+    void renderMouse();
     int exec();
+    PGE_Menu menu;
+    bool doExit;
+
+    enum CurrentMenu
+    {
+        menu_main=0,
+        menu_options,
+        menu_playlevel,
+        menu_playepisode,
+        menu_playbattle,
+        menu_opensave,
+        menu_tests,
+        menu_dummy_and_big,//leave it!
+        //For fetching
+        menuFirst=menu_main,
+        menuLast=menu_dummy_and_big
+    };
+
+    enum menuAnswer
+    {
+        ANSWER_EXIT=0,
+        ANSWER_PLAYLEVEL,
+        ANSWER_PLAYEPISODE,
+        ANSWER_PLAYBATTLE,
+        ANSWER_CREDITS,
+        ANSWER_LOADING,
+        ANSWER_GAMEOVER
+    };
+
+    PlayEpisodeResult result_episode; //play episode
+    PlayLevelResult   result_level; //Play level/battle
 
 private:
-    unsigned int _waitTimer;
+    QPoint mousePos;
+    CurrentMenu _currentMenu;
+    void setMenu(CurrentMenu _menu);
+    QMap<CurrentMenu, menustate> menustates;
+    QStack<int > menuChain;
 
     PGE_Texture background;
+    bool _bgIsLoaded;
     QVector<TitleScene_misc_img > imgs;
+
+    PGE_Texture cursor;
+    bool _cursorIsLoaded;
 };
 
-#endif // SCENE_TITLE_H
+#endif // SCENE_INTRO_H

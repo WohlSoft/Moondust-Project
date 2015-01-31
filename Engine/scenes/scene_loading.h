@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,34 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../pge_version.h" //Global Project version file
+#ifndef SCENE_TITLE_H
+#define SCENE_TITLE_H
 
-#ifndef EDITOR_VERSION_H
-#define EDITOR_VERSION_H
+#include <QVector>
+#include <common_features/pge_texture.h>
+#include <common_features/simple_animator.h>
 
-//Version of this program
-#define _LATEST_STABLE "0.2.2-rc"
+#include "scene.h"
 
-#define _FILE_VERSION "0.2.3.0"
-#define _FILE_RELEASE "-dev"
+struct LoadingScene_misc_img
+{
+    int x;
+    int y;
+    PGE_Texture t;
+    SimpleAnimator a;
+    int frmH;
+};
 
-#define _VF1 0
-#define _VF2 2
-#define _VF3 3
-#define _VF4 0
+class LoadingScene : public Scene
+{
+public:
+    LoadingScene();
+    ~LoadingScene();
+    void init();
 
+    void setWaitTime(unsigned int time);
+    void render();
+    int exec();
 
-#define _FILE_DESC "Platformer Game Engine - Editor"
+private:
+    unsigned int _waitTimer;
 
-#define _INTERNAL_NAME "pge_editor"
+    PGE_Texture background;
+    QVector<LoadingScene_misc_img > imgs;
+};
 
-#ifdef _WIN32
-	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
-#else
-	#define _ORIGINAL_NAME "pge_editor" // for any other platforms
-#endif
-
-//Uncomment this for enable detal logging
-//#define _DEBUG_
-
-#endif
+#endif // SCENE_TITLE_H

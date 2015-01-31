@@ -220,7 +220,7 @@ MODULE *MOD_new_RW(SDL_RWops *src, int freesrc)
     module->extspd  = 1;
     module->panflag = 1;
     module->wrap    = 0;
-    module->loop    = 0;
+    module->loop    = 1;
 #if 0 /* Don't set fade out by default - unfortunately there's no real way
 to query the status of the song or set trigger actions.  Hum. */
     module->fadeout = 1;

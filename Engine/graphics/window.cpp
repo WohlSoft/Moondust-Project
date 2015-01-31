@@ -34,6 +34,7 @@ bool PGE_Window::showDebugInfo=false;
 SDL_Window *PGE_Window::window;
 
 bool PGE_Window::IsInit=false;
+bool PGE_Window::showCursor=true;
 
 
 #include <QMessageBox>
@@ -104,6 +105,21 @@ bool PGE_Window::isReady()
     return IsInit;
 }
 
+void PGE_Window::setCursorVisibly(bool viz)
+{
+    showCursor=viz;
+    if(window!=NULL)
+    {
+        if(!IsFullScreen(window))
+        {
+            if(showCursor)
+                SDL_ShowCursor(SDL_ENABLE);
+            else
+                SDL_ShowCursor(SDL_DISABLE);
+        }
+    }
+}
+
 
 
 SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
@@ -126,7 +142,8 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     if (IsFullScreen(win))
     {
         //Show mouse cursor
-        SDL_ShowCursor(SDL_ENABLE);
+        if(showCursor)
+            SDL_ShowCursor(SDL_ENABLE);
 
         // Swith to WINDOWED mode
         if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)

@@ -109,6 +109,7 @@ public:
     bool isLevelContinues;
     enum exitLevelCodes
     {
+        EXIT_MenuExit=-3,
         EXIT_Error=-2,
         EXIT_PlayerDeath=-1,
         EXIT_Closed=0,
