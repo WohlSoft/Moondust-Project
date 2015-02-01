@@ -49,7 +49,9 @@ void MainWindow::on_actionReload_triggered()
         }
 
         if(activeLvlEditWin()->LvlData.modified){
-            save();
+            if(QMessageBox::information(this, tr("Save?"), tr("Do you want to save before reloading?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+                save();
+            }
         }
 
         //Open level file
@@ -126,7 +128,9 @@ void MainWindow::on_actionReload_triggered()
                         return;
         }
 
-        save();
+        if(QMessageBox::information(this, tr("Save?"), tr("Do you want to save before reloading?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+            save();
+        }
 
 
         if (!fileIn.open(QIODevice::ReadOnly)) {
@@ -172,7 +176,9 @@ void MainWindow::on_actionReload_triggered()
         }
 
         if(activeWldEditWin()->WldData.modified){
-            save();
+            if(QMessageBox::information(this, tr("Save?"), tr("Do you want to save before reloading?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+                save();
+            }
         }
 
         FileData = FileFormats::OpenWorldFile(filePath);
