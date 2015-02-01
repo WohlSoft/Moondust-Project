@@ -29,15 +29,29 @@ void MainWindow::updateMenus(bool force)
     if(!force)
     {
         //Don't update if window is not active
-        if(!this->isActiveWindow()) return;
+        //if(!this->isActiveWindow()) return;
+        if(this->isMinimized()) return;
          //Don't update if this is - same subWindow
+        qApp->setActiveWindow(this);
         if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
     }
+    else
+    {
+        if(ui->centralWidget->subWindowList().isEmpty())
+            LastActiveSubWindow=NULL;
+    }
+    qApp->setActiveWindow(this);
+
     LastActiveSubWindow=ui->centralWidget->activeSubWindow();
 
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
-    int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
+    LevelEdit *lvlWin = activeLvlEditWin(LastActiveSubWindow);
+    //NpcEdit *npcWin = activeNpcEditWin(LastActiveSubWindow);
+    WorldEdit *wldWin = activeWldEditWin(LastActiveSubWindow);
+
+
+    int WinType = activeChildWindow(LastActiveSubWindow); // 1 lvledit, 2 npcedit, 3 wldedit
     bool hasSWindow = (WinType != 0);
 
     ui->PlacingToolbar->setVisible(false);
@@ -235,9 +249,11 @@ void MainWindow::updateMenus(bool force)
     ui->menuScript->setEnabled( WinType == 1 );
     ui->actionCompile_To->setEnabled( false );
     ui->menuSwitch_Compiler->setEnabled( false );
-    if(WinType==1){
-        if(activeLvlEditWin()->LvlData.metaData.script){
-            Script::CompilerType ct = activeLvlEditWin()->LvlData.metaData.script->usingCompilerType();
+    if(WinType==1)
+    {
+        if(lvlWin->LvlData.metaData.script)
+        {
+            Script::CompilerType ct = lvlWin->LvlData.metaData.script->usingCompilerType();
             if(ct == Script::COMPILER_LUNALUA){
                 ui->actionCompile_To->setText(tr("Compile To: LunaLua"));
                 ui->actionCompile_To->setEnabled( true );
@@ -269,9 +285,9 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
-        if(activeLvlEditWin()->sceneCreated)
+        if(lvlWin->sceneCreated)
         {
-            if(activeLvlEditWin()->scene->pResizer==NULL)
+            if(lvlWin->scene->pResizer==NULL)
             {
                 ui->ResizeSection->setVisible(true);
                 ui->applyResize->setVisible(false);
@@ -279,7 +295,7 @@ void MainWindow::updateMenus(bool force)
             }
             else
             {
-                if(activeLvlEditWin()->scene->pResizer->type == 0)
+                if(lvlWin->scene->pResizer->type == 0)
                 {
                     ui->ResizeSection->setVisible(false);
                     ui->applyResize->setVisible(true);
@@ -288,7 +304,7 @@ void MainWindow::updateMenus(bool force)
             }
         }
 
-        zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
+        zoom->setText(QString::number(lvlWin->getZoom()));
 
         SetCurrentLevelSection(0, 1);
 
@@ -310,22 +326,23 @@ void MainWindow::updateMenus(bool force)
         ui->actionSelect->trigger();
 
 
-        if(activeLvlEditWin()->sceneCreated)
+        if(lvlWin->sceneCreated)
         {
-            ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
-            ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
-            ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
-            ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
-            ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+            LvlScene * scn = lvlWin->scene;
+            ui->actionLockBlocks->setChecked(scn->lock_block);
+            ui->actionLockBGO->setChecked(scn->lock_bgo);
+            ui->actionLockNPC->setChecked(scn->lock_npc);
+            ui->actionLockWaters->setChecked(scn->lock_water);
+            ui->actionLockDoors->setChecked(scn->lock_door);
 
-            ui->actionGridEn->setChecked(activeLvlEditWin()->scene->grid);
+            ui->actionGridEn->setChecked(scn->grid);
 
-            GlobalSettings::LvlOpts = activeLvlEditWin()->scene->opts;
+            GlobalSettings::LvlOpts = scn->opts;
 
-            ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
-            ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+            ui->actionUndo->setEnabled(scn->canUndo());
+            ui->actionRedo->setEnabled(scn->canRedo());
 
-            activeLvlEditWin()->scene->Debugger_updateItemList();
+            scn->Debugger_updateItemList();
         }
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -351,27 +368,28 @@ void MainWindow::updateMenus(bool force)
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 
-        if(activeWldEditWin()->sceneCreated)
+        if(wldWin->sceneCreated)
         {
+            WldScene *scn = wldWin->scene;
             WriteToLog(QtDebugMsg, "-> Get scene flags: locks");
-            ui->actionLockTiles->setChecked(activeWldEditWin()->scene->lock_tile);
-            ui->actionLockScenes->setChecked(activeWldEditWin()->scene->lock_scene);
-            ui->actionLockPaths->setChecked(activeWldEditWin()->scene->lock_path);
-            ui->actionLockLevels->setChecked(activeWldEditWin()->scene->lock_level);
-            ui->actionLockMusicBoxes->setChecked(activeWldEditWin()->scene->lock_musbox);
+            ui->actionLockTiles->setChecked(scn->lock_tile);
+            ui->actionLockScenes->setChecked(scn->lock_scene);
+            ui->actionLockPaths->setChecked(scn->lock_path);
+            ui->actionLockLevels->setChecked(scn->lock_level);
+            ui->actionLockMusicBoxes->setChecked(scn->lock_musbox);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
-            ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
+            ui->actionGridEn->setChecked(scn->grid);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
-            GlobalSettings::LvlOpts = activeWldEditWin()->scene->opts;
-            ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
-            ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
+            GlobalSettings::LvlOpts = scn->opts;
+            ui->actionUndo->setEnabled(scn->canUndo());
+            ui->actionRedo->setEnabled(scn->canRedo());
 
-            activeWldEditWin()->scene->Debugger_updateItemList();
+            scn->Debugger_updateItemList();
         }
 
-        zoom->setText(QString::number(activeWldEditWin()->getZoom()));
+        zoom->setText(QString::number(wldWin->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -390,6 +408,8 @@ void MainWindow::updateMenus(bool force)
 
     //Update debugger's custom counters
     on_DEBUG_RefreshCoutners_clicked();
+
+    qApp->setActiveWindow(this);
 }
 
 

@@ -47,7 +47,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
         child->show();
     }
     delete npcList;
-
+    updateMenus(true);
 }
 
 

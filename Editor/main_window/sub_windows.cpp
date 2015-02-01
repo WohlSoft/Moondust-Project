@@ -129,6 +129,9 @@ int MainWindow::activeChildWindow()
 
 int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 {
+    if(wnd==NULL)
+        return 0;
+
     if(QString(wnd->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         return 1;
     else
@@ -157,15 +160,19 @@ void MainWindow::recordRemovedWindow(QObject *possibleDeletedWindow)
         LastActiveSubWindow = 0;
 }
 
-
-
-
 NpcEdit *MainWindow::activeNpcEditWin()
 {
     if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
         return qobject_cast<NpcEdit *>(activeSubWindow->widget());
     return 0;
 }
+NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
+{
+    if (wnd)
+        return qobject_cast<NpcEdit *>(wnd->widget());
+    return 0;
+}
+
 
 LevelEdit *MainWindow::activeLvlEditWin()
 {
@@ -173,11 +180,24 @@ LevelEdit *MainWindow::activeLvlEditWin()
         return qobject_cast<LevelEdit *>(activeSubWindow->widget());
     return 0;
 }
+LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
+{
+    if(wnd)
+        return qobject_cast<LevelEdit *>(wnd->widget());
+    return 0;
+}
+
 
 WorldEdit *MainWindow::activeWldEditWin()
 {
     if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
         return qobject_cast<WorldEdit *>(activeSubWindow->widget());
+    return 0;
+}
+WorldEdit *MainWindow::activeWldEditWin(QMdiSubWindow *wnd)
+{
+    if(wnd)
+        return qobject_cast<WorldEdit *>(wnd->widget());
     return 0;
 }
 
