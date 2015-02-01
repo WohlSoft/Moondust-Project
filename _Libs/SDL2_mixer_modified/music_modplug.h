@@ -28,7 +28,7 @@
 #endif
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_audio.h>
-#include <SDL2/SDL_mixer.h>
+#include "SDL_mixer.h"
 
 typedef struct {
     ModPlugFile *file;

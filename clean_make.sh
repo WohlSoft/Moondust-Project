@@ -1,5 +1,7 @@
 #/bin/bash
 rm Makefile
+rm _Libs/SDL2_mixer_modified/Makefile
+rm _Libs/SDL2_mixer_modified/Makefile*
 rm Editor/Makefile
 rm Editor/Makefile*
 rm Engine/Makefile

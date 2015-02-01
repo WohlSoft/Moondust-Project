@@ -287,8 +287,11 @@ public:
         int activeChildWindow();
         int activeChildWindow(QMdiSubWindow* wnd);
         LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        LevelEdit   *activeLvlEditWin(QMdiSubWindow *wnd);
         NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
+        NpcEdit     *activeNpcEditWin(QMdiSubWindow *wnd);
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
+        WorldEdit   *activeWldEditWin(QMdiSubWindow *wnd);
         int subWins();              //!< Returns number of opened subwindows
 
     public slots:
@@ -1033,8 +1036,8 @@ private slots:
 
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
-    public:
-    public slots:
+public:
+public slots:
     protected:
     private slots:
 

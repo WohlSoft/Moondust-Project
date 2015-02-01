@@ -4,6 +4,29 @@ CONFIG -= qt
 #CONFIG += dll
 #CONFIG += static
 
+static: {
+release:OBJECTS_DIR = ../../bin/_build/sdl2mixermod/_release/.obj
+release:MOC_DIR     = ../../bin/_build/sdl2mixermod/_release/.moc
+release:RCC_DIR     = ../../bin/_build/sdl2mixermod/_release/.rcc
+release:UI_DIR      = ../../bin/_build/sdl2mixermod/_release/.ui
+
+debug:OBJECTS_DIR   = ../../bin/_build/sdl2mixermod/_debug/.obj
+debug:MOC_DIR       = ../../bin/_build/sdl2mixermod/_debug/.moc
+debug:RCC_DIR       = ../../bin/_build/sdl2mixermod/_debug/.rcc
+debug:UI_DIR        = ../../bin/_build/sdl2mixermod/_debug/.ui
+} else {
+release:OBJECTS_DIR = ../../bin/_build/_dynamic/sdl2mixermod/_release/.obj
+release:MOC_DIR     = ../../bin/_build/_dynamic/sdl2mixermod/_release/.moc
+release:RCC_DIR     = ../../bin/_build/_dynamic/sdl2mixermod/_release/.rcc
+release:UI_DIR      = ../../bin/_build/_dynamic/sdl2mixermod/_release/.ui
+
+debug:OBJECTS_DIR   = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.obj
+debug:MOC_DIR       = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.moc
+debug:RCC_DIR       = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.rcc
+debug:UI_DIR        = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.ui
+}
+
+
 static:{
 DESTDIR = ../_builds/sdl2_mixer_mod
 TARGET = SDL2_mixer
@@ -11,9 +34,6 @@ TARGET = SDL2_mixer
 DESTDIR = ../_builds/sdl2_mixer_mod
 TARGET = SDL2_mixer
 }
-
-DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MODPLUG_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI USE_NATIVE_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES
 
 win32:{
 LIBS += -L../_builds/win32/lib
@@ -23,6 +43,13 @@ INCLUDEPATH += ../_builds/win32/include
 LIBS += -lSDL2
 win32:{
 LIBS += -lwinmm -lm -lwinmm
+}
+
+DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MODPLUG_MUSIC MID_MUSIC \
+USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES
+
+macx||win32: {
+DEFINES += USE_NATIVE_MIDI
 }
 
 LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad
