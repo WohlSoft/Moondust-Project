@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0
+QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 
 DESTDIR = ../bin
 
@@ -41,6 +41,8 @@ CONFIG += static
 CONFIG += thread
 
 DEFINES += PGE_ENGINE
+
+unix: DEFINES += LUA_USE_MKSTEMP
 
 INCLUDEPATH += "../_Libs/" "../Editor/file_formats"
 
