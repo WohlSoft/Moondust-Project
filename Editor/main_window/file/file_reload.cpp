@@ -48,6 +48,10 @@ void MainWindow::on_actionReload_triggered()
                 return;
         }
 
+        if(activeLvlEditWin()->LvlData.modified){
+            save();
+        }
+
         //Open level file
         FileData = FileFormats::OpenLevelFile(filePath);
 
@@ -122,6 +126,9 @@ void MainWindow::on_actionReload_triggered()
                         return;
         }
 
+        save();
+
+
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
@@ -162,6 +169,10 @@ void MainWindow::on_actionReload_triggered()
             QMessageBox::critical(this, tr("File open error"),
             tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
                 return;
+        }
+
+        if(activeWldEditWin()->WldData.modified){
+            save();
         }
 
         FileData = FileFormats::OpenWorldFile(filePath);
