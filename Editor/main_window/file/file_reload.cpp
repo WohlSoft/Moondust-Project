@@ -48,8 +48,15 @@ void MainWindow::on_actionReload_triggered()
                 return;
         }
 
-        if(activeLvlEditWin()->LvlData.modified){
-            save();
+        if(activeLvlEditWin()->LvlData.modified)
+        {
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
         }
 
         //Open level file
@@ -126,8 +133,16 @@ void MainWindow::on_actionReload_triggered()
                         return;
         }
 
-        save();
-
+        if(activeNpcEditWin()->isModyfied)
+        {
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
+        }
 
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
@@ -172,7 +187,13 @@ void MainWindow::on_actionReload_triggered()
         }
 
         if(activeWldEditWin()->WldData.modified){
-            save();
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
         }
 
         FileData = FileFormats::OpenWorldFile(filePath);
