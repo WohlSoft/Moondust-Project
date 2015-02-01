@@ -29,18 +29,20 @@ void MainWindow::updateMenus(bool force)
     if(!force)
     {
         //Don't update if window is not active
-        //if(!this->isActiveWindow()) return;
         if(this->isMinimized()) return;
-         //Don't update if this is - same subWindow
-        qApp->setActiveWindow(this);
+
+        if(!this->isActiveWindow())
+            qApp->setActiveWindow(this);
+        this->update();
+        //Don't update if this is - same subWindow
         if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
     }
     else
     {
         if(ui->centralWidget->subWindowList().isEmpty())
             LastActiveSubWindow=NULL;
+        qApp->setActiveWindow(this);
     }
-    qApp->setActiveWindow(this);
 
     LastActiveSubWindow=ui->centralWidget->activeSubWindow();
 
