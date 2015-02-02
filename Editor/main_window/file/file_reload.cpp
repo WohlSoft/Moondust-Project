@@ -51,7 +51,7 @@ void MainWindow::on_actionReload_triggered()
         if(activeLvlEditWin()->LvlData.modified)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
             if((ret==QMessageBox::Cancel)||(ret==0))
                 return;
             else
@@ -136,7 +136,7 @@ void MainWindow::on_actionReload_triggered()
         if(activeNpcEditWin()->isModyfied)
         {
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
             if((ret==QMessageBox::Cancel)||(ret==0))
                 return;
             else
@@ -188,7 +188,7 @@ void MainWindow::on_actionReload_triggered()
 
         if(activeWldEditWin()->WldData.modified){
             QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
-            tr("Do you want to save a file before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
             if((ret==QMessageBox::Cancel)||(ret==0))
                 return;
             else
