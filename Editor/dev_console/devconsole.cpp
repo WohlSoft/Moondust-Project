@@ -436,6 +436,7 @@ void DevConsole::doPgeXTest(QStringList args)
 
 void DevConsole::doSMBXTest(QStringList args)
 {
+    Q_UNUSED(args)
 #ifdef Q_OS_WIN
     COPYDATASTRUCT* cds = new COPYDATASTRUCT;
     cds->cbData = 1;
@@ -444,9 +445,15 @@ void DevConsole::doSMBXTest(QStringList args)
 
     HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
     if(smbxWind){
-        SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)this->winId(), (LPARAM)cds);
-        SetForegroundWindow(smbxWind);
         log("Sent Message (Hopefully it worked)");
+        //Minimize console and PGE Editor
+        this->showMinimized();
+        MainWinConnect::pMainWin->showMinimized();
+        //Send command and restore window
+        SetForegroundWindow(smbxWind);
+        ShowWindow(smbxWind, SW_MAXIMIZE);
+        SetFocus(smbxWind);
+        SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)this->winId(), (LPARAM)cds);
     }else{
         log("Failed to find SMBX Window");
     }
