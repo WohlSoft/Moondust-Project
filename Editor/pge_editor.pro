@@ -78,6 +78,7 @@ CONFIG += static
 CONFIG += thread
 
 QMAKE_CXXFLAGS += -static -static-libgcc
+QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 LIBS+= -L../_Libs/_builds/sdl2_mixer_mod
 INCLUDEPATH += -../_Libs/SDL2_mixer_modified
