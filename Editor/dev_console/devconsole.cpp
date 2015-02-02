@@ -22,7 +22,6 @@
 #include <stdexcept>
 #ifdef Q_OS_WIN
 #include <QtWin>
-#include <windows.h>
 #endif
 
 #include <common_features/app_path.h>
@@ -436,29 +435,7 @@ void DevConsole::doPgeXTest(QStringList args)
 
 void DevConsole::doSMBXTest(QStringList args)
 {
-    Q_UNUSED(args)
-#ifdef Q_OS_WIN
-    COPYDATASTRUCT* cds = new COPYDATASTRUCT;
-    cds->cbData = 1;
-    cds->dwData = (ULONG_PTR)0xDEADC0DE;
-    cds->lpData = NULL;
-
-    HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
-    if(smbxWind){
-        log("Sent Message (Hopefully it worked)");
-        //Minimize console and PGE Editor
-        this->showMinimized();
-        MainWinConnect::pMainWin->showMinimized();
-        //Send command and restore window
-        SetForegroundWindow(smbxWind);
-        ShowWindow(smbxWind, SW_MAXIMIZE);
-        SetFocus(smbxWind);
-        SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)this->winId(), (LPARAM)cds);
-    }else{
-        log("Failed to find SMBX Window");
-    }
-#else
-    log("Requires Windows OS!");
-#endif
+    Q_UNUSED(args);
+    MainWinConnect::pMainWin->on_actionRunTestSMBX_triggered();
 }
 
