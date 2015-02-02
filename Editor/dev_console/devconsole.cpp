@@ -22,6 +22,7 @@
 #include <stdexcept>
 #ifdef Q_OS_WIN
 #include <QtWin>
+#include <windows.h>
 #endif
 
 #include <common_features/app_path.h>
@@ -249,6 +250,7 @@ void DevConsole::registerCommands()
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
+    registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
 }
 
 void DevConsole::doCommand()
@@ -430,5 +432,27 @@ void DevConsole::doPgeXTest(QStringList args)
 
     }
 
+}
+
+void DevConsole::doSMBXTest(QStringList args)
+{
+#ifdef Q_OS_WIN
+    COPYDATASTRUCT* cds = new COPYDATASTRUCT;
+    cds->cbData = 1;
+    cds->dwData = (ULONG_PTR)0xDEADC0DE;
+    cds->lpData = NULL;
+
+    HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
+    if(smbxWind){
+        SendMessageA(smbxWind, WM_COPYDATA, (WPARAM)this->winId(), (LPARAM)cds);
+        SetForegroundWindow(smbxWind);
+        log("Sent Message (Hopefully it worked)");
+    }else{
+        log("Failed to find SMBX Window");
+    }
+
+#else
+    log("Requires Windows OS!");
+#endif
 }
 
