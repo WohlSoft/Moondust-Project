@@ -19,6 +19,11 @@
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "smbx64.h"
+#ifdef PGE_EDITOR
+#include <QMessageBox>
+#include <QTranslator>
+#include <common_features/mainwinconnect.h>
+#endif
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -36,6 +41,9 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
 
+    QString errStr;
+    QString unknownLines;
+
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();
 
     //Read NPC.TXT File config
@@ -43,9 +51,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     str_count++;line = in.readLine(); // Read file line
     while(!line.isNull())
     {
-
        QString ln = line;
-       if(line.replace(QString(" "), QString(""))=="")
+       if(line.remove(' ')=="")
        {
            str_count++;line = in.readLine();
            continue;
@@ -57,22 +64,23 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        if(Params.count() != 2) // If string does not contain strings with "=" as separator
        {
            if(!IgnoreBad)
-               goto badfile;
-           else
            {
+               unknownLines += QString::number(str_count)+": "+line+" <wrong syntax!>\n";
                str_count++;line = in.readLine();
                continue;
            }
        }
 
-       Params[0] = Params[0].replace(QString(" "), QString("")); //Delete spaces
+       Params[0] = Params[0].simplified();
+       Params[0].remove(' '); //Delete spaces
 
        if(Params[0]=="gfxoffsetx")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
@@ -83,10 +91,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxoffsety")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
@@ -98,10 +107,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="width")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -112,10 +122,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="height")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -127,10 +138,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxwidth")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -141,10 +153,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxheight")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -155,10 +168,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="score")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -169,38 +183,41 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="playerblock")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-              FileData.playerblock=(bool)Params[1].toInt();
-              FileData.en_playerblock=true;
+               FileData.playerblock=(bool)Params[1].toInt();
+               FileData.en_playerblock=true;
            }
         }
        else
        if(Params[0]=="playerblocktop")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-              FileData.playerblocktop=(bool)Params[1].toInt();
-              FileData.en_playerblocktop=true;
+               FileData.playerblocktop=(bool)Params[1].toInt();
+               FileData.en_playerblocktop=true;
            }
         }
        else
        if(Params[0]=="npcblock")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -211,24 +228,26 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="npcblocktop")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-              FileData.npcblocktop=(bool)Params[1].toInt();
-              FileData.en_npcblocktop=true;
+               FileData.npcblocktop=(bool)Params[1].toInt();
+               FileData.en_npcblocktop=true;
            }
         }
        else
        if(Params[0]=="grabside")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-             if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -239,10 +258,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabtop")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if (!IgnoreBad)goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -253,10 +273,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="jumphurt")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -267,10 +288,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nohurt")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -281,10 +303,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noblockcollision")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -295,10 +318,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="cliffturn")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -309,10 +333,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noyoshi")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -323,10 +348,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="foreground")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -337,10 +363,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="speed")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::sFloat(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be signed floating point number!>\n";
            }
            else
            {
@@ -351,10 +378,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nofireball")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -365,10 +393,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nogravity")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -379,10 +408,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="frames")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -393,10 +423,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framespeed")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
@@ -407,10 +438,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framestyle")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::Int(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be from 0 to 3!>\n";
            }
            else
            {
@@ -421,10 +453,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noiceball")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              if(!IgnoreBad) goto badfile;
+              unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -435,10 +468,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -449,10 +483,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noshell")
         {
-           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           Params[1] = Params[1].simplified();
+           Params[1].remove(' '); //Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               if(!IgnoreBad) goto badfile;
+               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
@@ -471,20 +506,35 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         }
        else
        {
-              if(!IgnoreBad) goto badfile;
+              //errStr = "Unknown value";
+              //if(!IgnoreBad) goto badfile;
+           //Store unknown value into warning
+           unknownLines += QString::number(str_count)+": "+line+"\n";
        }
 
     str_count++;line = in.readLine();
     }
 
+    #ifdef PGE_EDITOR
+    if(!IgnoreBad)
+    {
+        if(!unknownLines.isEmpty())
+        QMessageBox::warning(MainWinConnect::pMainWin, QTranslator::tr("Unknown values are presented"),
+                             QTranslator::tr("Your file have an unknown values which will be removed\n"
+                                             " when you will save file")+QString("\n====================================\n%1").arg(unknownLines),
+                             QMessageBox::Ok);
+    }
+    #endif
+
+
     FileData.ReadFileValid=true;
     return FileData;
 
-
-    badfile:    //If file format not corrects
-    BadFileMsg(inf.fileName(), str_count, line+"\n"+Params[0]);
-    FileData.ReadFileValid=false;
-    return FileData;
+//No more need
+    //badfile:    //If file format not corrects
+    //BadFileMsg(inf.fileName(), str_count, line+"\n"+Params[0]+"\nReason: "+errStr);
+    //FileData.ReadFileValid=false;
+    //return FileData;
 }
 
 
