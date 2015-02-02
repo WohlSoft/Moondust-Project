@@ -146,21 +146,6 @@ void MainWindow::on_action_testSettings_triggered()
 }
 
 
-#ifdef Q_OS_WIN
-static HRESULT _C2W(const char * pszChar, wchar_t **ppszwChar)
-{
-    HRESULT hr = S_OK;
-    Q_UNUSED(hr);
-    unsigned int iRetVal = 0;
-    iRetVal = MultiByteToWideChar(CP_ACP,0,pszChar,-1,NULL,0);
-    if(iRetVal == 0){(*ppszwChar) = NULL; return E_FAIL;}
-    *ppszwChar = (wchar_t *) new wchar_t[iRetVal];
-    if((*ppszwChar) == NULL) return E_FAIL;
-    iRetVal = MultiByteToWideChar(CP_ACP,0,pszChar,-1,*ppszwChar,iRetVal);
-    return iRetVal;
-}
-#endif
-
 void MainWindow::on_actionRunTestSMBX_triggered()
 {
  #ifdef Q_OS_WIN
@@ -183,6 +168,8 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         if(smbxWind)
         {
             QString fullPathToLevel= activeLvlEditWin()->curFile;
+            fullPathToLevel.replace('/', '\\');
+
             if(activeLvlEditWin()->isModified)
             {
                 QMessageBox::StandardButton ret = QMessageBox::question(this,
@@ -201,7 +188,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             //Connect to Shared memory and send data
             TCHAR szName[]=TEXT("Global\\LunaDLL_LevelFileName_834727238");
             HANDLE hMapFile;
-            LPCTSTR pBuf;
+            wchar_t *pBuf;
             hMapFile = OpenFileMapping(
                                FILE_MAP_ALL_ACCESS,   // read/write access
                                FALSE,                 // do not inherit the name
@@ -234,11 +221,11 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 return;
             }
 
-            pBuf = (LPTSTR) MapViewOfFile(hMapFile,   // handle to map object
+            pBuf = (wchar_t*)MapViewOfFile(hMapFile,   // handle to map object
                                     FILE_MAP_ALL_ACCESS, // read/write permission
                                     0,
                                     0,
-                                    15360);
+                                    15360 );
 
             if(pBuf == NULL)
             {
@@ -249,13 +236,24 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 return;
             }
 
-            TCHAR *wc = NULL;
-            _C2W(fullPathToLevel.toLocal8Bit().data(),&wc);
+            if(fullPathToLevel.size()*sizeof(wchar_t) > 15360)
+            {
+                QMessageBox::warning(this, tr("Error"),
+                tr("Too long path: ").arg(fullPathToLevel),
+                QMessageBox::Ok);
+                UnmapViewOfFile(pBuf);
+                CloseHandle(hMapFile);
+                return;
+            }
 
-            CopyMemory((PVOID)pBuf, wc, fullPathToLevel.toUtf8().size());
+            qDebug()<< "Attempt to start testing of " << fullPathToLevel << "via SMBX";
+
+            std::wstring str = fullPathToLevel.toStdWString();
+            ZeroMemory((PVOID)pBuf, 15360);
+            CopyMemory((PVOID)pBuf, str.c_str(), str.size()*sizeof(wchar_t));
+
             UnmapViewOfFile(pBuf);
             CloseHandle(hMapFile);
-            free(wc);
             /****************Write file path into shared memory****end*******************/
 
 
