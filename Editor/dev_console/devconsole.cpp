@@ -457,7 +457,6 @@ void DevConsole::doSMBXTest(QStringList args)
     }else{
         log("Failed to find SMBX Window");
     }
-
 #else
     log("Requires Windows OS!");
 #endif
