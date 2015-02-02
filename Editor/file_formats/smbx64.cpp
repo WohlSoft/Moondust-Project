@@ -21,7 +21,7 @@
 
 namespace smbx64Format
 {
-    QRegExp isint = QRegExp("\\d+");     //Check "Is Numeric"
+    QRegExp isint = QRegExp("^\\d+$");     //Check "Is Numeric"
     QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
     QRegExp issfloat = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
     QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");

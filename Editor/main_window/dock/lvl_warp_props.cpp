@@ -60,7 +60,7 @@ void LvlWarpBox::construct(MainWindow *ParentMW)
     ui->setupUi(this);
     setVisible(false);
     mw = ParentMW;
-
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     lockWarpSetSettings = false;
 }
 
