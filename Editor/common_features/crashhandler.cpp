@@ -70,7 +70,7 @@ QString CrashHandler::getStacktrace()
         strings = backtrace_symbols(array, size);
 
         QString bkTrace("");
-        for(int j = 0; j < size; j++)
+        for(unsigned int j = 0; j < (unsigned)size; j++)
              bkTrace += QString(strings[j])+"\n";
         return bkTrace;
     #else
