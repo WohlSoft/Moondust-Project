@@ -286,7 +286,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         }
     }
 #else
-    log("Requires Windows OS!");
+    DevConsole::log("Requires Windows OS!");
 #endif
 
 }
