@@ -64,7 +64,7 @@ void LvlWarpBox::construct(MainWindow *ParentMW)
     lockWarpSetSettings = false;
 }
 
-void LvlWarpBox::on_DoorsToolbox_visibilityChanged(bool visible)
+void LvlWarpBox::on_LvlWarpBox_visibilityChanged(bool visible)
 {
     mw->ui->actionWarpsAndDoors->setChecked(visible);
 }

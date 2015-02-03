@@ -33,7 +33,7 @@ public slots:
     void removeItemFromWarpList(int index);
 
 private slots:
-    void on_DoorsToolbox_visibilityChanged(bool visible);
+    void on_LvlWarpBox_visibilityChanged(bool visible);
 
     void on_WarpList_currentIndexChanged(int index); //Door list
     void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
