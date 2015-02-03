@@ -160,6 +160,30 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             return;
         }
 
+        QString fullPathToLevel= activeLvlEditWin()->curFile;
+
+        if(!activeLvlEditWin()->LvlData.smbx64strict)
+        {
+            QMessageBox::StandardButton ret=QMessageBox::warning(this, tr("Incompatible file format"),
+            tr("To take able to test level in the SMBX, file should be saved into SMBX64 format!\n"
+               "Will be created a temporary file. Do you want to continue?"),
+            QMessageBox::Yes|QMessageBox::Abort);
+
+            if(ret==QMessageBox::Abort)
+                return;
+
+            //Double point will be unique and will don't overwrite your lvl file, but will use same custom folder
+            QString newPath = activeLvlEditWin()->LvlData.path+"/"+activeLvlEditWin()->LvlData.filename+"..lvl";
+            if(!activeLvlEditWin()->saveSMBX64LVL(newPath, true))
+            {
+                QMessageBox::warning(this, tr("Error"),
+                tr("Fail to create temp file %1").arg(newPath),
+                QMessageBox::Ok);
+                return;
+            }
+            fullPathToLevel = newPath;
+        }
+
         COPYDATASTRUCT* cds = new COPYDATASTRUCT;
         cds->cbData = 1;
         cds->dwData = (ULONG_PTR)0xDEADC0DE;
@@ -168,10 +192,9 @@ void MainWindow::on_actionRunTestSMBX_triggered()
         HWND smbxWind = FindWindowA("ThunderRT6MDIForm", NULL);
         if(smbxWind)
         {
-            QString fullPathToLevel= activeLvlEditWin()->curFile;
             fullPathToLevel.replace('/', '\\');
 
-            if(activeLvlEditWin()->isModified)
+            if(activeLvlEditWin()->LvlData.modified)
             {
                 QMessageBox::StandardButton ret = QMessageBox::question(this,
                         tr("SMBX Level test"),
