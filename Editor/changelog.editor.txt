@@ -8,6 +8,7 @@ Editor 0.2.3
 - Fixed freezing on reading some NPC.txts with mistakes
 - Added ability to save progress on file reload
 - Added more soft parsing of NPC.txt files. Instead of rejecting, you will be warnered about wrong values but file will be loaded!
+- Added more smart reloading of files
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
