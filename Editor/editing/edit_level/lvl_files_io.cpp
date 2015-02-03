@@ -22,6 +22,7 @@
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 #include <common_features/util.h>
+#include <script/scriptholder.h>
 #include <main_window/global_settings.h>
 #include <file_formats/file_formats.h>
 #include <audio/music_player.h>
@@ -212,181 +213,23 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
     // ////////////////////// Write SMBX64 LVL //////////////////////////////
     if(fileName.endsWith(".lvl", Qt::CaseInsensitive))
     {
-        //SMBX64 Standard check
-
-        isSMBX64limit=false;
-
-        int file_format=64;
-        if(choiceVersionID)
-        {
-            QApplication::restoreOverrideCursor();
-            bool ok=true;
-            file_format = QInputDialog::getInt(this, tr("SMBX file version"),
-                                  tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
-            if(!ok) return false;
-            QApplication::setOverrideCursor(Qt::WaitCursor);
-        }
-
-        //Blocks limit
-        if(LvlData.blocks.size()>16384)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 blocks\n"
-                "The maximum number of blocks is %2.\n\n"
-                "Please remove excess blocks from this level or save file into LVLX format.")
-             .arg(LvlData.blocks.size()).arg(16384), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //BGO limits
-        if(LvlData.bgo.size()>8000)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Background Objects\n"
-                "The maximum number of Background Objects is %2.\n\n"
-                "Please remove excess Background Objects from this level or save file into LVLX format.")
-             .arg(LvlData.bgo.size()).arg(8000), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //NPC limits
-        if(LvlData.npc.size()>5000)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Non-Playable Characters\n"
-                "The maximum number of Non-Playable Characters is %2.\n\n"
-                "Please remove excess Non-Playable Characters from this level or save file into LVLX format.")
-             .arg(LvlData.npc.size()).arg(5000), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Warps limits
-        if(LvlData.doors.size()>199)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Warps\n"
-                "The maximum number of Warps is %2.\n\n"
-                "Please remove excess Warps from this level or save file into LVLX format.")
-             .arg(LvlData.doors.size()).arg(199), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Physical Environment zones
-        if(LvlData.physez.size()>450)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Water Boxes\n"
-                "The maximum number of Water Boxes is %2.\n\n"
-                "Please remove excess Water Boxes from this level or save file into LVLX format.")
-             .arg(LvlData.physez.size()).arg(450), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Layers limits
-        if(LvlData.layers.size()>100)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Layers\n"
-                "The maximum number of Layers is %2.\n\n"
-                "Please remove excess Layers from this level or save file into LVLX format.")
-             .arg(LvlData.layers.size()).arg(100), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Events limits
-        if(LvlData.events.size()>100)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Events\n"
-                "The maximum number of Events is %2.\n\n"
-                "Please remove excess Events from this level or save file into LVLX format.")
-             .arg(LvlData.events.size()).arg(100), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-
-        if(isSMBX64limit)
-        {
-            QApplication::restoreOverrideCursor();
+        if(!saveSMBX64LVL(fileName, false))
             return false;
-        }
-
-        //set SMBX64 specified option to BGO
-        for(int q=0; q< LvlData.bgo.size(); q++)
-        {
-            if(LvlData.bgo[q].smbx64_sp < 0)
-            {
-                if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
-                    LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
-            }
-            else
-                LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
-            //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
-        }
         LvlData.smbx64strict = true; //Enable SMBX64 standard strict mode
-
-        QFile file(fileName);
-        if(!file.open(QFile::WriteOnly))
-        {
-            QMessageBox::warning(this, tr("File save error"),
-                                 tr("Cannot save file %1:\n%2.")
-                                 .arg(fileName)
-                                 .arg(file.errorString()));
-            return false;
-        }
-
-        QString raw = FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
-        for(int i=0; i<raw.size(); i++)
-        {
-            if(raw[i]=='\n')
-            {
-                //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
-                const char bytes[2] = {0x0D, 0x0A};
-                file.write((const char*)(&bytes), 2);
-            }
-            else
-            {
-                const char byte[1] = {raw[i].toLatin1()};
-                file.write((const char*)(&byte), 1);
-            }
-        }
-        file.close();
-
-        //save additional meta data
-        if(!LvlData.metaData.bookmarks.isEmpty())
-        {
-            file.setFileName(fileName+".meta");
-            if (!file.open(QFile::WriteOnly | QFile::Text))
-            {
-                QMessageBox::warning(this, tr("File save error"),
-                                     tr("Cannot save file %1:\n%2.")
-                                     .arg(fileName+".meta")
-                                     .arg(file.errorString()));
-                return false;
-            }
-            QTextStream out(&file);
-            out.setCodec("UTF-8");
-            out << FileFormats::WriteNonSMBX64MetaData(LvlData.metaData);
-            file.close();
-        }
-
-        GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
 
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     else if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
     {
-        LvlData.smbx64strict = false; //Disable strict mode
-
-        QFile file(fileName);
-        if (!file.open(QFile::WriteOnly | QFile::Text)) {
-            QMessageBox::warning(this, tr("File save error"),
-                                 tr("Cannot save file %1:\n%2.")
-                                 .arg(fileName)
-                                 .arg(file.errorString()));
+        if(!savePGEXLVL(fileName, false))
             return false;
-        }
-        QTextStream out(&file);
-        out.setCodec("UTF-8");
-        out << FileFormats::WriteExtendedLvlFile(LvlData);
-        file.close();
-        GlobalSettings::savePath = QFileInfo(fileName).path();
+        LvlData.smbx64strict = false; //Disable strict mode
     }
     // //////////////////////////////////////////////////////////////////////
+    GlobalSettings::savePath = QFileInfo(fileName).path();
+    LvlData.path = QFileInfo(fileName).path();
+    LvlData.filename = QFileInfo(fileName).baseName();
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
@@ -402,6 +245,191 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     return true;
 }
+
+bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
+{
+    using namespace lvl_file_io;
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        if(!silent)
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
+                             .arg(fileName)
+                             .arg(file.errorString()));
+        return false;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << FileFormats::WriteExtendedLvlFile(LvlData);
+    file.close();
+    return true;
+}
+
+bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
+{
+    using namespace lvl_file_io;
+
+    //SMBX64 Standard check
+    isSMBX64limit=false;
+
+    int file_format=64;
+    if(choiceVersionID)
+    {
+        QApplication::restoreOverrideCursor();
+        bool ok=true;
+        file_format = QInputDialog::getInt(this, tr("SMBX file version"),
+                              tr("Which version you wish to save? (from 0 to 64)"), 64, 0, 64, 1, &ok);
+        if(!ok) return false;
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+    }
+
+    //Blocks limit
+    if(LvlData.blocks.size()>16384)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 blocks\n"
+            "The maximum number of blocks is %2.\n\n"
+            "Please remove excess blocks from this level or save file into LVLX format.")
+         .arg(LvlData.blocks.size()).arg(16384), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //BGO limits
+    if(LvlData.bgo.size()>8000)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Background Objects\n"
+            "The maximum number of Background Objects is %2.\n\n"
+            "Please remove excess Background Objects from this level or save file into LVLX format.")
+         .arg(LvlData.bgo.size()).arg(8000), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //NPC limits
+    if(LvlData.npc.size()>5000)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Non-Playable Characters\n"
+            "The maximum number of Non-Playable Characters is %2.\n\n"
+            "Please remove excess Non-Playable Characters from this level or save file into LVLX format.")
+         .arg(LvlData.npc.size()).arg(5000), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //Warps limits
+    if(LvlData.doors.size()>199)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Warps\n"
+            "The maximum number of Warps is %2.\n\n"
+            "Please remove excess Warps from this level or save file into LVLX format.")
+         .arg(LvlData.doors.size()).arg(199), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //Physical Environment zones
+    if(LvlData.physez.size()>450)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Water Boxes\n"
+            "The maximum number of Water Boxes is %2.\n\n"
+            "Please remove excess Water Boxes from this level or save file into LVLX format.")
+         .arg(LvlData.physez.size()).arg(450), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //Layers limits
+    if(LvlData.layers.size()>100)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Layers\n"
+            "The maximum number of Layers is %2.\n\n"
+            "Please remove excess Layers from this level or save file into LVLX format.")
+         .arg(LvlData.layers.size()).arg(100), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+    //Events limits
+    if(LvlData.events.size()>100)
+    {
+        if(!silent)
+        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+         tr("SMBX64 standard isn't allow to save %1 Events\n"
+            "The maximum number of Events is %2.\n\n"
+            "Please remove excess Events from this level or save file into LVLX format.")
+         .arg(LvlData.events.size()).arg(100), QMessageBox::Ok);
+        isSMBX64limit=true;
+    }
+
+    if(isSMBX64limit)
+    {
+        if(!silent)
+        QApplication::restoreOverrideCursor();
+        return false;
+    }
+
+    //set SMBX64 specific option to BGO
+    for(int q=0; q< LvlData.bgo.size(); q++)
+    {
+        if(LvlData.bgo[q].smbx64_sp < 0)
+        {
+            if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
+                LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+        }
+        else
+            LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
+        //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
+    }
+
+    QFile file(fileName);
+    if(!file.open(QFile::WriteOnly))
+    {
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
+                             .arg(fileName)
+                             .arg(file.errorString()));
+        return false;
+    }
+
+    QString raw = FileFormats::WriteSMBX64LvlFile(LvlData, file_format);
+    for(int i=0; i<raw.size(); i++)
+    {
+        if(raw[i]=='\n')
+        {
+            //Force writing CRLF to prevent fakse damage of file on SMBX in Windows
+            const char bytes[2] = {0x0D, 0x0A};
+            file.write((const char*)(&bytes), 2);
+        }
+        else
+        {
+            const char byte[1] = {raw[i].toLatin1()};
+            file.write((const char*)(&byte), 1);
+        }
+    }
+    file.close();
+
+    //save additional meta data
+    if( (!LvlData.metaData.bookmarks.isEmpty())
+        ||((LvlData.metaData.script!=NULL)&&(!LvlData.metaData.script->events().isEmpty())) )
+    {
+        file.setFileName(fileName+".meta");
+        if (!file.open(QFile::WriteOnly | QFile::Text))
+        {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName+".meta")
+                                 .arg(file.errorString()));
+            return false;
+        }
+        QTextStream out(&file);
+        out.setCodec("UTF-8");
+        out << FileFormats::WriteNonSMBX64MetaData(LvlData.metaData);
+        file.close();
+    }
+    return true;
+}
+
+
 
 
 bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
