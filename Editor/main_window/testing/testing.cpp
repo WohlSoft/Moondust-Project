@@ -25,6 +25,7 @@
 #include <common_features/logger_sets.h>
 #include <main_window/global_settings.h>
 #include <dev_console/devconsole.h>
+#include <audio/sdl_music_player.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -261,7 +262,9 @@ void MainWindow::on_actionRunTestSMBX_triggered()
                 DevConsole::log("Sent Message (Hopefully it worked)");
 
             //Stop music playback in the PGE!
+            on_actionPlayMusic_triggered(false);
             setMusicButton(false);
+            PGE_MusPlayer::MUS_stopMusic();
 
             //Minimize PGE Editor
             this->showMinimized();
