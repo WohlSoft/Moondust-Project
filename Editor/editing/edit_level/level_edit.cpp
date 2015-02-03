@@ -56,10 +56,6 @@ LevelEdit::LevelEdit(QWidget *parent) :
     ui->graphicsView->horizontalScrollBar()->setTracking(true);
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);
     ui->graphicsView->verticalScrollBar()->setTracking(true);
-
-    //ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
 }
 
 
