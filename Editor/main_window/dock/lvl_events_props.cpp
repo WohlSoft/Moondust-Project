@@ -1812,6 +1812,7 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
     if(!QFileInfo::exists(sndPath)) return;
 
     PGE_Sounds::SND_PlaySnd(sndPath);
+    WriteToLog(QtDebugMsg, QString("Test Sound -> done!"));
 }
 
 
