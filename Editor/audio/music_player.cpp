@@ -241,7 +241,7 @@ void MainWindow::setMusic(bool checked=false)
         {
             if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
-                PGE_MusPlayer::MUS_stopMusic();
+                //PGE_MusPlayer::MUS_stopMusic();
                 WriteToLog(QtDebugMsg, QString("Set music player -> set MusicFile"));
                 PGE_MusPlayer::MUS_openFile( musicFilePath );
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));

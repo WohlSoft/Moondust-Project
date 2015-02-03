@@ -259,8 +259,13 @@ void MainWindow::on_actionRunTestSMBX_triggered()
 
             if(DevConsole::isConsoleShown())
                 DevConsole::log("Sent Message (Hopefully it worked)");
+
+            //Stop music playback in the PGE!
+            setMusicButton(false);
+
             //Minimize PGE Editor
             this->showMinimized();
+
             //Send command and restore window
             SetForegroundWindow(smbxWind);
             ShowWindow(smbxWind, SW_MAXIMIZE);

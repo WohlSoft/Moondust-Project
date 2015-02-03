@@ -111,6 +111,9 @@ win32: LIBS += -lDbghelp
 win32: LIBS += libwinmm
 
 #DEFINES += USE_QMEDIAPLAYER
+!android:{
+DEFINES += USE_SDL_MIXER
+}
 DEFINES += PGE_EDITOR
 
 INCLUDEPATH += . _includes

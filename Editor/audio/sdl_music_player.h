@@ -25,11 +25,11 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QUrl>
-#endif
-
+#elif USE_SDL_MIXER
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#endif
 
 class PGE_MusPlayer : public QObject
 {
@@ -49,14 +49,15 @@ public slots:
     void setVolume(int volume);
 
 private:
-    static Mix_Music *play_mus;
     #ifdef USE_QMEDIAPLAYER
-    static bool isMediaPlayer;
     static QMediaPlayer *musicPlayer;
     static QMediaPlaylist *playList;
+    #elif USE_SDL_MIXER
+    static Mix_Music *play_mus;
     #endif
     static int volume;
     static int sRate;
+    static QString current;
 };
 
 class PGE_Sounds : public QObject
@@ -68,11 +69,9 @@ public:
 private:
     #ifdef USE_QMEDIAPLAYER
     static QMediaPlayer *mp3Play;
-    #else
-    static Mix_Music *mp3_sound;
-    #endif
-    static bool isMp3;
+    #elif USE_SDL_MIXER
     static Mix_Chunk *sound;
+    #endif
     static QString current;
 };
 
