@@ -210,7 +210,7 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             /****************Write file path into shared memory**************************/
 
             //Connect to Shared memory and send data
-            TCHAR szName[]=TEXT("Global\\LunaDLL_LevelFileName_834727238");
+            TCHAR szName[]=TEXT("LunaDLL_LevelFileName_834727238");
             HANDLE hMapFile;
             wchar_t *pBuf;
             hMapFile = OpenFileMapping(
