@@ -275,7 +275,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemDoor *) SelItem)->arrayApply();
                     }
                 }
-                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
+                scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
                 MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else
@@ -301,7 +301,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemDoor *) SelItem)->arrayApply();
                     }
                 }
-                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
+                scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
                 MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else
@@ -327,7 +327,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemDoor *) SelItem)->arrayApply();
                     }
                 }
-                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_LOCKED, QVariant(Locked->isChecked()));
+                scene->addChangeSettingsHistory(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
                 MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
             }
             else

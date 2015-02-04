@@ -20,12 +20,14 @@ public:
 
 
     void processWorldUndo();
+    void processLevelUndo();
     void processWorldRedo();
-
+    void processLevelRedo();
 
 signals:
 
 public slots:
+    //for world
     void historyUndoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
     void historyRedoSettingPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
     void historyUndoSettingBigPathBackgroundLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
@@ -53,6 +55,61 @@ public slots:
     void historyUndoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
     void historyRedoSettingGotoYLevel(const WorldLevels &sourceLevel, QGraphicsItem* item);
 
+
+    void historyUndoSettingsInvisibleBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsInvisibleBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsSlipperyBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsSlipperyBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsFriendlyNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsFriendlyNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsBossNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsBossNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsNoMoveableNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsNoMoveableNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsMessageNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsMessageNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsDirectionNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsDirectionNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsChangeNPCBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsChangeNPCBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsChangeNPCNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsChangeNPCNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
+    void historyRedoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
+    void historyUndoSettingsNoYoshiDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsNoYoshiDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsAllowNPCDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsAllowNPCDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsLockedDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsLockedDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsActivateGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsActivateGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsTypeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsTypeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsDirectionGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsDirectionGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsTimeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsTimeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsAttachLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsAttachLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsDestroyedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsDestroyedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsHitedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsHitedEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsLayerEmptyEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyRedoSettingsLayerEmptyEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsLayerEmptyEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsLayerEmptyEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsActivateEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsActivateEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsDeathEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsDeathEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsTalkEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsTalkEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsSpecialDataNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyRedoSettingsSpecialDataNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void historyUndoSettingsSortingBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
+    void historyRedoSettingsSortingBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
 
 private:
     HistorySettings::WorldSettingSubType m_modWorldSetting;
