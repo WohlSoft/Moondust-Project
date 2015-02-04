@@ -33,6 +33,7 @@
 #include <editing/_components/history/historyelementmodification.h>
 #include <editing/_components/history/historyelementmainsetting.h>
 #include <editing/_components/history/historyelementitemsetting.h>
+#include <editing/_components/history/historyelementresizesection.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -142,21 +143,12 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
     cleanupRedoElements();
     HistoryOperation resizeOperation;
     resizeOperation.type = HistoryOperation::LEVELHISTORY_RESIZESECTION;
-    QList<QVariant> oldSizes;
-    QList<QVariant> newSizes;
-    QList<QVariant> package;
-    oldSizes.push_back(QVariant((qlonglong)oldLeft));
-    oldSizes.push_back(QVariant((qlonglong)oldTop));
-    oldSizes.push_back(QVariant((qlonglong)oldRight));
-    oldSizes.push_back(QVariant((qlonglong)oldBottom));
-    newSizes.push_back(QVariant((qlonglong)newLeft));
-    newSizes.push_back(QVariant((qlonglong)newTop));
-    newSizes.push_back(QVariant((qlonglong)newRight));
-    newSizes.push_back(QVariant((qlonglong)newBottom));
-    package.push_back(sectionID);
-    package.push_back(oldSizes);
-    package.push_back(newSizes);
-    resizeOperation.extraData = QVariant(package);
+    HistoryElementResizeSection *modf = new HistoryElementResizeSection(sectionID,
+                                                                        QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
+                                                                        QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
+    modf->setScene(this);
+    resizeOperation.newElement = QSharedPointer<IHistoryElement>(modf);
+
     operationList.push_back(resizeOperation);
     historyIndex++;
 
@@ -540,28 +532,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RESIZESECTION:
-    {
-        QList<QVariant> package = lastOperation.extraData.toList();
-        int sectionID = package[0].toInt();
-        QList<QVariant> oldSizes = package[1].toList();
-        long tarLeft = (long)oldSizes[0].toLongLong();
-        long tarTop = (long)oldSizes[1].toLongLong();
-        long tarRight = (long)oldSizes[2].toLongLong();
-        long tarBottom = (long)oldSizes[3].toLongLong();
-
-        LvlData->sections[sectionID].size_left = tarLeft;
-        LvlData->sections[sectionID].size_right = tarRight;
-        LvlData->sections[sectionID].size_top = tarTop;
-        LvlData->sections[sectionID].size_bottom = tarBottom;
-
-        ChangeSectionBG(LvlData->sections[sectionID].background, sectionID);
-        if(sectionID == LvlData->CurSection){
-            drawSpace();
-        }
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
     {
         LevelData modifiedSourceData = lastOperation.data;
@@ -1281,27 +1251,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RESIZESECTION:
-    {
-        QList<QVariant> package = lastOperation.extraData.toList();
-        int sectionID = package[0].toInt();
-        QList<QVariant> newSizes = package[2].toList();
-        long tarLeft = (long)newSizes[0].toLongLong();
-        long tarTop = (long)newSizes[1].toLongLong();
-        long tarRight = (long)newSizes[2].toLongLong();
-        long tarBottom = (long)newSizes[3].toLongLong();
-
-        LvlData->sections[sectionID].size_left = tarLeft;
-        LvlData->sections[sectionID].size_right = tarRight;
-        LvlData->sections[sectionID].size_top = tarTop;
-        LvlData->sections[sectionID].size_bottom = tarBottom;
-
-        ChangeSectionBG(LvlData->sections[sectionID].background, sectionID);
-        if(sectionID == LvlData->CurSection){
-            drawSpace();
-        }
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
     {
         LevelData modifiedSourceData = lastOperation.data;
