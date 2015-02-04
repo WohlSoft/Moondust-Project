@@ -69,6 +69,9 @@ void HistoryElementMainSetting::redo()
 
 void HistoryElementMainSetting::processWorldUndo()
 {
+    if(!m_scene)
+        return;
+
     WldScene* wldScene = 0;
     if(!(wldScene = qobject_cast<WldScene*>(m_scene)))
         return;
@@ -97,6 +100,9 @@ void HistoryElementMainSetting::processWorldUndo()
 
 void HistoryElementMainSetting::processLevelUndo()
 {
+    if(!m_scene)
+        return;
+
     LvlScene* lvlScene = 0;
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
@@ -112,6 +118,9 @@ void HistoryElementMainSetting::processLevelUndo()
 
 void HistoryElementMainSetting::processWorldRedo()
 {
+    if(!m_scene)
+        return;
+
     WldScene* wldScene = 0;
     if(!(wldScene = qobject_cast<WldScene*>(m_scene)))
         return;
@@ -140,6 +149,9 @@ void HistoryElementMainSetting::processWorldRedo()
 
 void HistoryElementMainSetting::processLevelRedo()
 {
+    if(!m_scene)
+        return;
+
     LvlScene* lvlScene = 0;
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;

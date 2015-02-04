@@ -599,7 +599,7 @@ public:
         void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
         void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
         void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
-        void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
+        void addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
         void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                      long newLeft, long newTop, long newRight, long newBottom);
         void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
@@ -634,104 +634,13 @@ public:
         int getHistroyIndex();
         bool canUndo();
         bool canRedo();
-        //Callbackfunctions: Move
-        void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
-        void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
-        void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoMoveWater(CallbackData cbData, LevelPhysEnv data);
-        void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        void historyRedoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
-        void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
-        void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
-        void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
-        void historyUndoMoveWater(CallbackData cbData, LevelPhysEnv data);
-        void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        void historyUndoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
+
         //Callbackfunctions: Remove
         void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
         void historyRemoveBGO(CallbackData cbData, LevelBGO data);
         void historyRemoveNPC(CallbackData cbData, LevelNPC data);
         void historyRemoveWater(CallbackData cbData, LevelPhysEnv data);
         void historyRemovePlayerPoint(CallbackData cbData, PlayerPoint data);
-        //Callbackfunctions: [Change Settings] Hide
-        void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
-        //Callbackfunctions: [Change Settings] Invisible
-        void historyUndoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
-        //Callbackfunctions: [Change Settings] Friendly
-        void historyUndoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Boss
-        void historyUndoSettingsBossNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsBossNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] NoMoveable
-        void historyUndoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Message
-        void historyUndoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Direction
-        void historyUndoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Included NPC
-        void historyUndoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
-        void historyUndoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Water Type
-        void historyUndoSettingsTypeWater(CallbackData cbData, LevelPhysEnv data);
-        void historyRedoSettingsTypeWater(CallbackData cbData, LevelPhysEnv data);
-        //Callbackfunctions: [Change Settings] No Yoshi
-        void historyUndoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        void historyRedoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        //Callbackfunctions: [Change Settings] Allow NPC
-        void historyUndoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        void historyRedoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        //Callbackfunctions: [Change Settings] Locked
-        void historyUndoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        void historyRedoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
-        //Callbackfunctions: [Change Settings] Activate Generator
-        void historyUndoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Generator Type
-        void historyUndoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Generator Direction
-        void historyUndoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Generator Time
-        void historyUndoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Attach Layer
-        void historyUndoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Destroyed Event
-        void historyUndoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
-        //Callbackfunctions: [Change Settings] Hited Event
-        void historyUndoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
-        //Callbackfunctions: [Change Settings] Layer Empty Event
-        void historyUndoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
-        void historyRedoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
-        void historyUndoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Activate Event
-        void historyUndoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Death Event
-        void historyUndoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Talk Event
-        void historyUndoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Talk Event
-        void historyUndoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
-        void historyRedoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
-        //Callbackfunctions: [Change Settings] Talk Event
-        void historyUndoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
-        void historyRedoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
         //Callbackfunctions: Change Layer
         void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
         void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
