@@ -31,6 +31,7 @@
 #include "items/item_playerpoint.h"
 
 #include <editing/_components/history/historyelementmodification.h>
+#include <editing/_components/history/historyelementmainsetting.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -464,14 +465,14 @@ void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingS
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addChangeLevelSettingsHistory(LvlScene::SettingSubType subtype, QVariant extraData)
+void LvlScene::addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     cleanupRedoElements();
 
     HistoryOperation chLevelSettingsOperation;
-    chLevelSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL;
-    chLevelSettingsOperation.subtype = subtype;
-    chLevelSettingsOperation.extraData = extraData;
+    HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
+    modf->setScene(this);
+    chLevelSettingsOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(chLevelSettingsOperation);
     historyIndex++;
 

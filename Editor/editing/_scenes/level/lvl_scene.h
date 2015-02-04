@@ -622,7 +622,7 @@ public:
         void addRemoveLayerAndSaveItemsHistory(LevelData modData);
         void addMergeLayer(LevelData mergedData, QString newLayerName);
         void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
-        void addChangeLevelSettingsHistory(SettingSubType subtype, QVariant extraData);
+        void addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubType subtype, QVariant extraData);
         void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
         void addRotateHistory(LevelData rotatedItems, bool byClockwise);
         void addFlipHistory(LevelData flippedItems, bool vertical);
