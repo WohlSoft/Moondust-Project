@@ -19,13 +19,16 @@
 #ifndef SMBX64_H
 #define SMBX64_H
 
+#include <QObject>
 #include <QString>
 
 //SMBX64 standard data
-class SMBX64
+class SMBX64 : public QObject
 {
+    Q_OBJECT
+
 public:
-    SMBX64() {}
+    inline SMBX64() {}
 
     // /////////////Validators///////////////
     //returns TRUE on wrong data
