@@ -112,10 +112,11 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
             {
                 if(!prgs->wasCanceled()) prgs->setValue(i);
             }
+            QString errStr;
 
             blockset.beginGroup( QString("block-%1").arg(i) );
 
-                sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
+                sblock.name =       blockset.value("name", QString("block %1").arg(i) ).toString();
 
                 if(sblock.name=="")
                 {
@@ -123,48 +124,36 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                     goto skipBLOCK;
                 }
 
-                sblock.group = blockset.value("group", "_NoGroup").toString();
-                sblock.category = blockset.value("category", "_Other").toString();
-                sblock.grid = blockset.value("grid", default_grid).toInt();
-                imgFile = blockset.value("image", "").toString();
+                sblock.group =      blockset.value("group", "_NoGroup").toString();
+                sblock.category =   blockset.value("category", "_Other").toString();
+                sblock.grid =       blockset.value("grid", default_grid).toInt();
 
-                sblock.image_n = imgFile;
-                if( (imgFile!="") )
+                sblock.image_n =           blockset.value("image", "").toString();
+                /***************Load image*******************/
+                GraphicsHelps::loadMaskedImage(blockPath,
+                   sblock.image_n, sblock.mask_n,
+                   sblock.image,   sblock.mask,
+                   errStr);
+
+                if(!errStr.isEmpty())
                 {
-                    tmp = imgFile.split(".", QString::SkipEmptyParts);
-                    if(tmp.size()==2)
-                        imgFileM = tmp[0] + "m." + tmp[1];
-                    else
-                        imgFileM = "";
-                    sblock.mask_n = imgFileM;
-                    mask = QPixmap();
-                    if(tmp.size()==2) mask = QPixmap(blockPath + imgFileM);
-                    sblock.mask = mask;
-                    sblock.image = GraphicsHelps::setAlphaMask(QPixmap(blockPath + imgFile), sblock.mask);
-                    if(sblock.image.isNull())
-                    {
-                        addError(QString("LoadConfig -> BLOCK-%1 Brocken image file").arg(i));
-                        goto skipBLOCK;
-                    }
-                }
-                else
-                {
-                    addError(QString("BLOCK-%1 Image filename isn't defined").arg(i));
+                    addError(QString("BLOCK-%1 %2").arg(i).arg(errStr));
                     goto skipBLOCK;
                 }
+                /***************Load image*end***************/
 
-                sblock.sizable = blockset.value("sizable", "0").toBool();
-                sblock.danger = blockset.value("danger", "0").toInt();
-                sblock.collision = blockset.value("collision", "1").toInt();
-                sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
-                sblock.phys_shape = blockset.value("fixture-type", "0").toInt();// Leaved for compatibility
-                sblock.phys_shape = blockset.value("shape-type", sblock.phys_shape).toInt();//new value-name
-                sblock.lava = blockset.value("lava", "0").toBool();
-                sblock.destroyable = blockset.value("destroyable", "0").toBool();
-                sblock.destroyable_by_bomb = blockset.value("destroyable-by-bomb", "0").toBool();
-                sblock.destroyable_by_fireball = blockset.value("destroyable-by-fireball", "0").toBool();
+                sblock.sizable =                blockset.value("sizable", "0").toBool();
+                sblock.danger =                 blockset.value("danger", "0").toInt();
+                sblock.collision =              blockset.value("collision", "1").toInt();
+                sblock.slopeslide =             blockset.value("slope-slide", "0").toBool();
+                sblock.phys_shape =             blockset.value("fixture-type", "0").toInt();// Leaved for compatibility
+                sblock.phys_shape =             blockset.value("shape-type", sblock.phys_shape).toInt();//new value-name
+                sblock.lava =                   blockset.value("lava", "0").toBool();
+                sblock.destroyable =            blockset.value("destroyable", "0").toBool();
+                sblock.destroyable_by_bomb =    blockset.value("destroyable-by-bomb", "0").toBool();
+                sblock.destroyable_by_fireball= blockset.value("destroyable-by-fireball", "0").toBool();
 
-                Temp01 = blockset.value("spawn-on-destroy", "0").toString();
+                Temp01 =     blockset.value("spawn-on-destroy", "0").toString();
                 if(Temp01!="0")
                 {
                     tmp =  Temp01.split("-", QString::SkipEmptyParts);
@@ -195,42 +184,47 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                     sblock.spawn_obj_id = 0;
                 }
 
-                sblock.effect= blockset.value("destroy-effect", "1").toInt();
+                sblock.effect=                  blockset.value("destroy-effect", "1").toInt();
 
-                sblock.bounce = blockset.value("bounce", "0").toBool();
-                sblock.hitable = blockset.value("hitable", "0").toBool();
-                sblock.transfororm_on_hit_into = blockset.value("transform-onhit-into", "2").toInt();
-                sblock.algorithm= blockset.value("algorithm", "2").toInt();
-                sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
-                sblock.animated = blockset.value("animated", "0").toBool();
-                sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
-                sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
-                sblock.frames = blockset.value("frames", "1").toInt();
-                sblock.framespeed = blockset.value("framespeed", "125").toInt();
+                sblock.bounce =                 blockset.value("bounce", "0").toBool();
+                sblock.hitable =                blockset.value("hitable", "0").toBool();
+                sblock.transfororm_on_hit_into= blockset.value("transform-onhit-into", "2").toInt();
+                sblock.algorithm =              blockset.value("algorithm", "2").toInt();
+                sblock.view =             (int)(blockset.value("view", "background").toString()=="foreground");
+                sblock.animated =               blockset.value("animated", "0").toBool();
+                sblock.animation_rev =          blockset.value("animation-reverse", "0").toBool(); //Reverse animation
+                sblock.animation_bid =          blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
+                sblock.frames =                 blockset.value("frames", "1").toInt();
+                sblock.framespeed =             blockset.value("framespeed", "125").toInt();
 
-                sblock.frame_h = (sblock.animated? qRound(qreal(sblock.image.height())/sblock.frames) : sblock.image.height());
+                sblock.frame_h =               (sblock.animated?
+                                                    qRound(
+                                                        qreal(sblock.image.height())
+                                                        /sblock.frames)
+                                                  : sblock.image.height());
 
-                sblock.display_frame = blockset.value("display-frame", "0").toInt();
+                sblock.display_frame =          blockset.value("display-frame", "0").toInt();
 
                 long iTmp;
-                iTmp = blockset.value("default-invisible", "-1").toInt();
-                sblock.default_invisible = (iTmp>=0);
-                sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+                iTmp =  blockset.value("default-invisible", "-1").toInt();
+                    sblock.default_invisible = (iTmp>=0);
+                    sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
 
                 iTmp = blockset.value("default-slippery", "-1").toInt();
-                sblock.default_slippery = (iTmp>=0);
-                sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+                    sblock.default_slippery = (iTmp>=0);
+                    sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
 
                 iTmp = blockset.value("default-npc-content", "-1").toInt();
-                sblock.default_content = (iTmp>=0);
-                sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
+                    sblock.default_content = (iTmp>=0);
+                    sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
 
                 sblock.id = i;
                 main_block.push_back(sblock);
 
-                //Add to Index
+                /************Add to Index***************/
                 if(i < (unsigned int)index_blocks.size())
                     index_blocks[i].i = i-1;
+                /************Add to Index***************/
 
             skipBLOCK:
             blockset.endGroup();
