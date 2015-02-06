@@ -60,6 +60,7 @@ NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
 }
 
 
+#if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
 {
     obj_npc merged;
@@ -177,4 +178,4 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
     return merged;
 }
-
+#endif
