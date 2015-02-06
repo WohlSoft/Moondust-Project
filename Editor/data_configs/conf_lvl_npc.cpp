@@ -183,24 +183,12 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         /****************Calculating of default frame height******************/
         switch(snpc.framestyle)
         {
-        case 0:
-            defGFX_h = (int)round(snpc.image.height() / snpc.frames);
-            break;
-        case 1:
-            defGFX_h = (int)round((snpc.image.height() / snpc.frames)/2 );
-            break;
-        case 2:
-            defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4);
-            break;
-        case 3:
-            defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4);
-            break;
-        case 4:
-            defGFX_h = (int)round((snpc.image.height()/snpc.frames)/8);
-            break;
-        default:
-            defGFX_h=0;
-            break;
+            case 0: defGFX_h = (int)round(snpc.image.height() / snpc.frames); break;
+            case 1: defGFX_h = (int)round((snpc.image.height() / snpc.frames)/2 ); break;
+            case 2: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
+            case 3: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4); break;
+            case 4: defGFX_h = (int)round((snpc.image.height()/snpc.frames)/8); break;
+            default:defGFX_h = 0; break;
         }
         /****************Calculating of default frame height**end*************/
 
@@ -211,8 +199,8 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         snpc.display_frame =        npcset.value("display-frame", "0").toInt();
         snpc.foreground =           npcset.value("foreground", "0").toBool();
         snpc.background =           npcset.value("background", "0").toBool();
-        snpc.ani_direct =           npcset.value("animation-direction", "0").toBool();
         snpc.ani_directed_direct =  npcset.value("animation-directed-direction", "0").toBool();
+        snpc.ani_direct =           npcset.value("animation-direction", "0").toBool();
         snpc.ani_bidir =            npcset.value("animation-bidirectional", "0").toBool();
 
         snpc.custom_animate =   npcset.value("custom-animation", "0").toBool();
@@ -252,6 +240,30 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         /*************Build custom animation settings**end**********/
 
 
+        /***************GRID And snap*********************************/
+        snpc.grid = npcset.value("grid", default_grid).toInt();
+        snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
+
+        /***************Calculate the grid offset********************/
+        if(((int)snpc.width>=(int)snpc.grid))
+            snpc.grid_offset_x = -1 * qRound( qreal((int)snpc.width % snpc.grid)/2 );
+        else
+            snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
+
+        if(snpc.grid_attach_style==1) snpc.grid_offset_x += 16;
+
+        snpc.grid_offset_y = -snpc.height % snpc.grid;
+        /***************Calculate the grid offset********************/
+
+            /*************Manual redefinition of the grid offset if not set******************/
+        snpc.grid_offset_x = npcset.value("grid-offset-x", snpc.grid_offset_x).toInt();
+        snpc.grid_offset_y = npcset.value("grid-offset-y", snpc.grid_offset_y).toInt();
+            /*************Manual redefinition of the grid offset if not set******************/
+        /***************GRID And snap***end***************************/
+
+
+
+
         snpc.special_option =   npcset.value("have-special", "0").toBool();
         snpc.special_name =     npcset.value("special-name", "Special option value").toString();
         snpc.special_type =     npcset.value("special-type", "1").toInt();
@@ -270,8 +282,9 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         snpc.special_spin_min = npcset.value("special-spin-min", "0").toInt();
         snpc.special_spin_max = npcset.value("special-spin-max", "1").toInt();
         snpc.special_spin_value_offset = npcset.value("special-spin-value-offset", "0").toInt();
-        snpc.special_option_2 = npcset.value("have-special-2", "0").toBool();
 
+
+        snpc.special_option_2 = npcset.value("have-special-2", "0").toBool();
         snpc.special_2_name = npcset.value("special-2-name", "Special option value").toString();;
 
         if(snpc.special_option_2)
@@ -332,45 +345,23 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         snpc.allow_lakitu = npcset.value("allow-lakitu", "0").toBool();
         snpc.allow_buried = npcset.value("allow-buried", "0").toBool();
 
-        /***************GRID And snap*********************************/
-        snpc.grid = npcset.value("grid", default_grid).toInt();
-        snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
-
-        /***************Calculate the grid offset********************/
-        if(((int)snpc.width>=(int)snpc.grid))
-            snpc.grid_offset_x = -1 * qRound( qreal((int)snpc.width % snpc.grid)/2 );
-        else
-            snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
-
-        if(snpc.grid_attach_style==1) snpc.grid_offset_x += 16;
-
-        snpc.grid_offset_y = -snpc.height % snpc.grid;
-        /***************Calculate the grid offset********************/
-
-        /*************Manual redefine of the grid offset if not set******************/
-        snpc.grid_offset_x = npcset.value("grid-offset-x", snpc.grid_offset_x).toInt();
-        snpc.grid_offset_y = npcset.value("grid-offset-y", snpc.grid_offset_y).toInt();
-        /*************Manual redefine of the grid offset if not set******************/
-        /***************GRID And snap***end***************************/
-
-
         //Events
-        snpc.deactivation = npcset.value("deactivate", "0").toBool();
-        snpc.kill_slide_slope = npcset.value("kill-slside", "0").toBool();
-        snpc.kill_slide_slope = npcset.value("kill-slside", "0").toBool();
-        snpc.kill_by_npc = npcset.value("kill-bynpc", "0").toBool();
-        snpc.kill_by_fireball = npcset.value("kill-fireball", "0").toBool();
-        snpc.freeze_by_iceball = npcset.value("kill-iceball", "0").toBool();
-        snpc.kill_hammer = npcset.value("kill-hammer", "0").toBool();
-        snpc.kill_tail = npcset.value("kill-tail", "0").toBool();
-        snpc.kill_by_spinjump = npcset.value("kill-spin", "0").toBool();
-        snpc.kill_by_statue = npcset.value("kill-statue", "0").toBool();
+        snpc.deactivation =         npcset.value("deactivate", "0").toBool();
+        snpc.kill_slide_slope =     npcset.value("kill-slside", "0").toBool();
+        snpc.kill_on_jump =         npcset.value("kill-onjump", "0").toBool();
+        snpc.kill_by_npc =          npcset.value("kill-bynpc", "0").toBool();
+        snpc.kill_by_fireball =     npcset.value("kill-fireball", "0").toBool();
+        snpc.freeze_by_iceball =    npcset.value("kill-iceball", "0").toBool();
+        snpc.kill_hammer =          npcset.value("kill-hammer", "0").toBool();
+        snpc.kill_tail =            npcset.value("kill-tail", "0").toBool();
+        snpc.kill_by_spinjump =     npcset.value("kill-spin", "0").toBool();
+        snpc.kill_by_statue =       npcset.value("kill-statue", "0").toBool();
         snpc.kill_by_mounted_item = npcset.value("kill-with-mounted", "0").toBool();
-        snpc.kill_on_eat = npcset.value("kill-on-eat", "0").toBool();
+        snpc.kill_on_eat =          npcset.value("kill-on-eat", "0").toBool();
         snpc.turn_on_cliff_detect = npcset.value("cliffturn", "0").toBool();
-        snpc.lava_protect = npcset.value("lava-protection", "0").toBool();
+        snpc.lava_protect =         npcset.value("lava-protection", "0").toBool();
 
-        snpc.is_star = npcset.value("is-star", "0").toBool();
+        snpc.is_star =              npcset.value("is-star", "0").toBool();
 
         //Editor specific flags
         long iTmp;
@@ -386,7 +377,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
             snpc.default_boss = (iTmp>=0);
             snpc.default_boss_value = (iTmp>=0) ? (bool)iTmp : false;
 
-        iTmp = npcset.value("default-special-value", "-1").toInt();
+        iTmp =      npcset.value("default-special-value", "-1").toInt();
             snpc.default_special = (iTmp>=0);
             snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
