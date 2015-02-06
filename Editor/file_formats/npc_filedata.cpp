@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_ENGINE
+#ifdef PGE_EDITOR
 #include <common_features/logger.h>
 #endif
 
@@ -158,7 +158,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
 
-    #ifndef PGE_ENGINE
+    #ifdef PGE_EDITOR
     WriteToLog(QtDebugMsg, QString("-------------------------------------"));
     WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));

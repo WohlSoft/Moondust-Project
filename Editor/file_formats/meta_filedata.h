@@ -25,7 +25,8 @@
 #include <script/scriptholder.h>
 #endif
 
-struct Bookmark{
+struct Bookmark
+{
     QString bookmarkName;
     qreal x;
     qreal y;
