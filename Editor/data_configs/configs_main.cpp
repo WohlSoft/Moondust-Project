@@ -85,9 +85,9 @@ void dataconfigs::loadBasics()
 
     int Animations=0;
     guiset.beginGroup("gui");
-        splash_logo = guiset.value("editor-splash", "").toString();
-        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
-        Animations =  guiset.value("animations", 0).toInt();
+        splash_logo =               guiset.value("editor-splash", "").toString();
+        ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
+        Animations     =            guiset.value("animations", 0).toInt();
     guiset.endGroup();
 
     guiset.beginGroup("main");
@@ -95,11 +95,6 @@ void dataconfigs::loadBasics()
                         ApplicationPath + "/" : config_dir + "data/" );
     guiset.endGroup();
 
-
-
-    //Default splash image
-    //if(splash_logo .isEmpty())
-        //splash_logo = ;//Themes::Image(Themes::splash)
     if(!splash_logo .isEmpty())
     {
         splash_logo = data_dir + splash_logo;
@@ -115,21 +110,19 @@ void dataconfigs::loadBasics()
         for(;Animations>0;Animations--)
         {
             guiset.beginGroup(QString("splash-animation-%1").arg(Animations));
-            QString img = guiset.value("image", "").toString();
-                if(img.isEmpty()) goto skip;
-                tempAni.img = QPixmap(data_dir + img);
-                if(tempAni.img.isNull()) goto skip;
-            tempAni.frames = guiset.value("frames", 1).toInt();
-            tempAni.speed = guiset.value("speed", 128).toInt();
-            tempAni.x = guiset.value("x", 0).toInt();
-            tempAni.y = guiset.value("y", 0).toInt();
+                QString img =   guiset.value("image", "").toString();
+                    if(img.isEmpty()) goto skip;
+                    tempAni.img = QPixmap(data_dir + img);
+                    if(tempAni.img.isNull()) goto skip;
+                tempAni.frames= guiset.value("frames", 1).toInt();
+                tempAni.speed = guiset.value("speed", 128).toInt();
+                tempAni.x =     guiset.value("x", 0).toInt();
+                tempAni.y =     guiset.value("y", 0).toInt();
 
-            animations.push_front(tempAni);
-
+                animations.push_front(tempAni);
             skip:
             guiset.endGroup();
         }
-
     }
 }
 
@@ -164,14 +157,14 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
         dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music = data_dir + mainset.value("music", "data/music").toString() + "/";
+        dirs.music = data_dir +  mainset.value("music", "data/music").toString() + "/";
         dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
 
         dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld= data_dir + mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = data_dir + mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.gworld= data_dir +  mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dir+mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
+        dirs.gcustom = data_dir+ mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
 
     ConfStatus::configPath = config_dir;
@@ -232,24 +225,6 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
     //////////////////////////////////////////////////////////////////////////////////
 
-
-    //QProgressDialog progress("Loading BackGround Data", "Abort", 0, total_data);
-
-    /*
-    if(!nobar)
-        {
-             progress.setWindowTitle("Loading config...");
-             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
-             progress.setFixedSize(progress.size());
-             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(),
-                    qApp->desktop()->availableGeometry()));
-             progress.setCancelButton(0);
-        ////////////////////////////////Preparing////////////////////////////////////////
-
-         progress.setLabelText("Loading BackGround Data");
-        }
-        else progress.close();
-    */
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
     loadLevelBackgrounds(prgs);
