@@ -12,8 +12,8 @@ rem SET packFull=%packFull% "%TESTDIR%\platforms"
 rem SET packFull=%packFull% "%TESTDIR%\mediaservice"
 rem SET packFull=%packFull% "%TESTDIR%\imageformats"
 rem SET packFull=%packFull% "%TESTDIR%\fix_music.bat"
-SET packFull=
-SET packFull=%packFull% "%TESTDIR%\pge_engine.exe"
+SET packEngineFull=
+SET packEngineFull=%packEngineFull% "%TESTDIR%\pge_engine.exe"
 
 rem PGE Additional Tools
 SET packTools=
@@ -41,7 +41,7 @@ del "%TESTDIR%\languages\editor_nl.qm"
 del "%TESTDIR%\languages\editor_pt.qm"
 del "%TESTDIR%\languages\editor_uk.qm"
 
-"%SEVENZIP%\7z" a -tzip %LabDir%\pge_engine_dev.zip %packFull%
+"%SEVENZIP%\7z" a -tzip %LabDir%\pge_engine_dev.zip %packEngineFull%
 
 echo copy updated archives to Google Drive
 copy %LabDir%\pge_engine_dev.zip "%G_DRIVE%\_laboratory\"
