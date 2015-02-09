@@ -99,8 +99,6 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                    sbg.type = 2;
                 else sbg.type = 0;
 
-//                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
-//                           .arg(i).arg(tmpstr).arg(sbg.type));
 
             sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
             tmpstr = bgset.value("repeat-v", "NR").toString();
@@ -131,17 +129,17 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                 goto skipBG;
             }
 
-            sbg.attached = (int)(bgset.value("attached", "bottom").toString()=="top");
-            sbg.editing_tiled = (bgset.value("tiled-in-editor", "0").toString()=="1");
+            sbg.attached =    (int)(bgset.value("attached", "bottom").toString()=="top");
+            sbg.editing_tiled =    (bgset.value("tiled-in-editor", "0").toString()=="1");
 
-            sbg.magic = (bgset.value("magic", "0").toString()=="1");
-            sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
-            sbg.magic_splits = bgset.value("magic-splits", "0").toString();
-            sbg.magic_speeds = bgset.value("magic-speeds", "0").toString();
+            sbg.magic =            (bgset.value("magic", "0").toString()=="1");
+            sbg.magic_strips =      bgset.value("magic-strips", "1").toInt();
+            sbg.magic_splits =      bgset.value("magic-splits", "0").toString();
+            sbg.magic_speeds =      bgset.value("magic-speeds", "0").toString();
 
-            sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
-            sbg.frames = bgset.value("frames", "1").toInt();
-            sbg.display_frame = bgset.value("display-frame", "0").toInt();
+            sbg.animated =         (bgset.value("animated", "0").toString()=="1");//animated
+            sbg.frames =            bgset.value("frames", "1").toInt();
+            sbg.display_frame =     bgset.value("display-frame", "0").toInt();
             //frames
 
             if(sbg.type==1)
@@ -151,7 +149,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                     sbg.second_image_n = imgFile;
                     if( (imgFile!="") )
                     {
-                        sbg.second_image = QPixmap(BGPath + imgFile);
+                        sbg.second_image = QPixmap(BGPath  + imgFile);
                     }
                     else
                     {
@@ -180,8 +178,11 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
             if(sbg.animated)
             {
-                sbg.image=sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
+                sbg.image = sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
             }
+
+
+
             sbg.id = i;
             main_bg.push_back(sbg);
 

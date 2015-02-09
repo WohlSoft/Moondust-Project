@@ -108,65 +108,52 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
         }
+        QString errStr;
 
         tileset.beginGroup( QString("tile-"+QString::number(i)) );
-            //stile.name = tileset.value("name", "").toString();
 
-            //   if(stile.name=="")
-            //   {
-            //       addError(QString("TILE-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            stile.group = tileset.value("group", "_NoGroup").toString();
-            stile.category = tileset.value("category", "_Other").toString();
+        stile.group = tileset.value("group", "_NoGroup").toString();
+        stile.category = tileset.value("category", "_Other").toString();
 
-            imgFile = tileset.value("image", "").toString();
-            stile.image_n = imgFile;
-            if( (imgFile!="") )
-            {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                stile.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(tilePath + imgFileM);
-                stile.mask = mask;
-                stile.image = GraphicsHelps::setAlphaMask(QPixmap(tilePath + imgFile), stile.mask);
-                if(stile.image.isNull())
-                {
-                    addError(QString("TILE-%1 Brocken image file").arg(i));
-                    goto skipTile;
-                }
-            }
-            else
-            {
-                addError(QString("TILE-%1 Image filename isn't defined").arg(i));
-                goto skipTile;
-            }
+        stile.image_n = tileset.value("image", "").toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(tilePath,
+           stile.image_n, stile.mask_n,
+           stile.image,   stile.mask,
+           errStr);
 
-            stile.grid = tileset.value("grid", default_grid).toInt();
+        if(!errStr.isEmpty())
+        {
+            addError(QString("TILE-%1 %2").arg(i).arg(errStr));
+            goto skipTile;
+        }
+        /***************Load image*end***************/
 
-            stile.animated = (tileset.value("animated", "0").toString()=="1");
-            stile.frames = tileset.value("frames", "1").toInt();
-            stile.framespeed = tileset.value("frame-speed", "125").toInt();
+        stile.grid =            tileset.value("grid", default_grid).toInt();
 
-            stile.frame_h = (stile.animated? qRound(qreal(stile.image.height())/stile.frames) : stile.image.height());
+        stile.animated =       (tileset.value("animated", "0").toString()=="1");
+        stile.frames =          tileset.value("frames", "1").toInt();
+        stile.framespeed =      tileset.value("frame-speed", "125").toInt();
 
-            stile.display_frame = tileset.value("display-frame", "0").toInt();
-            stile.row = tileset.value("row", "0").toInt();
-            stile.col = tileset.value("col", "0").toInt();
+        stile.frame_h = (stile.animated?
+                             qRound(
+                                 qreal(stile.image.height())/
+                                 stile.frames)
+                            : stile.image.height());
+
+        stile.display_frame =   tileset.value("display-frame", "0").toInt();
+        stile.row =             tileset.value("row", "0").toInt();
+        stile.col =             tileset.value("col", "0").toInt();
 
 
-            stile.id = i;
-            main_wtiles.push_back(stile);
-
-            //Add to Index
-            if(i <= (unsigned int)index_wtiles.size())
-            {
-                index_wtiles[i].i = i-1;
-            }
+        stile.id = i;
+        main_wtiles.push_back(stile);
+        /************Add to Index***************/
+        if(i <= (unsigned int)index_wtiles.size())
+        {
+            index_wtiles[i].i = i-1;
+        }
+        /************Add to Index***************/
 
         skipTile:
         tileset.endGroup();

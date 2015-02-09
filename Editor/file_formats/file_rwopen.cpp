@@ -18,6 +18,10 @@
 
 #include <QFileInfo>
 #include <QDir>
+#ifndef PGE_ENGINE
+#include <QMessageBox>
+#endif
+
 
 #include "file_formats.h"
 

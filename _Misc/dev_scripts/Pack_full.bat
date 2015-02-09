@@ -44,6 +44,10 @@ SET packConfig=%packConfig% "%TESTDIR%\configs\SMBX"
 SET packConfigLite=
 SET packConfigLite=%packConfigLite% "%TESTDIR%\lab\SMBX"
 
+rem Pack Engine
+SET packEngineFull=
+SET packEngineFull=%packEngineFull% "%TESTDIR%\pge_engine.exe"
+
 rem Remove undone languages
 del "%TESTDIR%\languages\editor_fr.qm"
 del "%TESTDIR%\languages\editor_ja.qm"
@@ -55,6 +59,9 @@ del "%TESTDIR%\languages\editor_pl.qm"
 
 rem Packing of editor data
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_editor_dev.zip %packFull%
+
+rem Packing of engine part
+"%SEVENZIP%\7z" a -tzip %LabDir%\pge_engine_dev.zip %packEngineFull%
 
 rem Packing of additional tools data
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_tools_dev.zip %packTools%
@@ -74,5 +81,6 @@ echo copy updated archives to Google Drive
 copy %LabDir%\pge_editor_dev.zip "%G_DRIVE%\_laboratory\"
 copy %LabDir%\pge_tools_dev.zip "%G_DRIVE%\_laboratory\"
 copy %LabDir%\pge_help_standalone.zip "%G_DRIVE%\_laboratory\"
+copy %LabDir%\pge_engine_dev.zip "%G_DRIVE%\_laboratory\"
 
 IF NOT '%1'=='nopause' pause

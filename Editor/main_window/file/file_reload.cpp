@@ -48,6 +48,17 @@ void MainWindow::on_actionReload_triggered()
                 return;
         }
 
+        if(activeLvlEditWin()->LvlData.modified)
+        {
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
+        }
+
         //Open level file
         FileData = FileFormats::OpenLevelFile(filePath);
 
@@ -81,24 +92,58 @@ void MainWindow::on_actionReload_triggered()
             }
         }
 
-        activeLvlEditWin()->close();
-        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
-        ui->centralWidget->activeSubWindow()->close();
+        //Remember last section ID and positions!
+        int lastSection=0;
+        QMap<int, QPair<long, long> > sectionPoss;
+        lastSection = activeLvlEditWin()->LvlData.CurSection;
+        SetCurrentLevelSection(lastSection);//Need to remember position of current section
+        for(int i=0; i<activeLvlEditWin()->LvlData.sections.size(); i++)
+        {
+            LevelSection sct = activeLvlEditWin()->LvlData.sections[i];
+            sectionPoss[sct.id]=QPair<long, long >(sct.PositionX, sct.PositionY);
+        }
 
-        LevelEdit *child = createLvlChild();
-        if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts))) {
+        activeLvlEditWin()->close();//Close old widget without closing of sub-window
+
+        //Get pointer to current sub-window
+        QMdiSubWindow *window = ui->centralWidget->activeSubWindow();
+
+        //Get geometry of current subwindow
+        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
+        //delete window->widget();
+        LevelEdit *chLvlWin = new LevelEdit(window);
+        connect(chLvlWin, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+        window->setWidget(chLvlWin);
+        GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(chLvlWin->getGraphicsView());
+        connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
+
+        //ui->centralWidget->activeSubWindow()->close();
+        LevelEdit *child = chLvlWin;//createLvlChild();
+        if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
+        {
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
             child->updateGeometry();
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             updateMenus(true);
-            SetCurrentLevelSection(0);
+
+            child->setFocus();
+            //Restore saved section positions
+            for(int i=0; i<child->LvlData.sections.size(); i++)
+            {
+                if(sectionPoss.contains(child->LvlData.sections[i].id))
+                {
+                    child->LvlData.sections[i].PositionX=sectionPoss[child->LvlData.sections[i].id].first;
+                    child->LvlData.sections[i].PositionY=sectionPoss[child->LvlData.sections[i].id].second;
+                }
+            }
+
+            SetCurrentLevelSection(lastSection);
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             LvlMusPlay::musicForceReset=true; //reset musics
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
-
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
@@ -122,6 +167,17 @@ void MainWindow::on_actionReload_triggered()
                         return;
         }
 
+        if(activeNpcEditWin()->isModyfied)
+        {
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
+        }
+
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
@@ -132,10 +188,13 @@ void MainWindow::on_actionReload_triggered()
         if( !FileData.ReadFileValid ) return;
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         activeNpcEditWin()->isModyfied = false;
-        //activeNpcEditWin()->close();
-        ui->centralWidget->activeSubWindow()->close();
+        activeNpcEditWin()->close();
+        //NpcEdit *child = createNPCChild();
 
-        NpcEdit *child = createNPCChild();
+        QMdiSubWindow *npcWindow = ui->centralWidget->activeSubWindow();
+        NpcEdit *child = new NpcEdit(&configs, npcWindow);
+        npcWindow->setWidget(child);
+
         if (child->loadFile(filePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
             child->show();
@@ -143,6 +202,7 @@ void MainWindow::on_actionReload_triggered()
             updateMenus(true);
         } else {
             child->close();
+            npcWindow->close();
         }
     }
     else
@@ -162,6 +222,16 @@ void MainWindow::on_actionReload_triggered()
             QMessageBox::critical(this, tr("File open error"),
             tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
                 return;
+        }
+
+        if(activeWldEditWin()->WldData.modified){
+            QMessageBox::StandardButton ret = QMessageBox::question(this, tr("Reload file and custom stuff"),
+            tr("Do you want to save before reload stuff?"), QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+            if((ret==QMessageBox::Cancel)||(ret==0))
+                return;
+            else
+              if(ret==QMessageBox::Yes)
+                save();
         }
 
         FileData = FileFormats::OpenWorldFile(filePath);
@@ -193,11 +263,19 @@ void MainWindow::on_actionReload_triggered()
             }
         }
 
-        activeWldEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
-        ui->centralWidget->activeSubWindow()->close();
+        QMdiSubWindow *worldWindow = ui->centralWidget->activeSubWindow();
+        long posX = activeWldEditWin()->scene->_viewPort->horizontalScrollBar()->value();
+        long posY = activeWldEditWin()->scene->_viewPort->verticalScrollBar()->value();
 
-        WorldEdit *child = createWldChild();
+        activeWldEditWin()->close();
+
+        WorldEdit *child = new WorldEdit(worldWindow);
+        connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+        worldWindow->setWidget(child);
+        GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+
+        connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
         if ( (bool)(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
@@ -210,12 +288,16 @@ void MainWindow::on_actionReload_triggered()
                 ui->WorldSettings->setVisible(true);
                 ui->WorldSettings->raise();
             }
+
+            child->scene->_viewPort->horizontalScrollBar()->setValue(posX);
+            child->scene->_viewPort->verticalScrollBar()->setValue(posY);
+
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {
             WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
             WriteToLog(QtDebugMsg, ">>Window showed");
-            if(activeChildWindow()==1) activeWldEditWin()->WldData.modified = false;
+            if(activeChildWindow()==3) activeWldEditWin()->WldData.modified = false;
             WriteToLog(QtDebugMsg, ">>Option set");
             ui->centralWidget->activeSubWindow()->close();
             WriteToLog(QtDebugMsg, ">>Windows closed");

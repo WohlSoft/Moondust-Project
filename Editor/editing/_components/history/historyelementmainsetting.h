@@ -23,7 +23,10 @@ public:
 
 
     void processWorldUndo();
+    void processLevelUndo();
+
     void processWorldRedo();
+    void processLevelRedo();
 
 
 signals:

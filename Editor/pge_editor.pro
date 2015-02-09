@@ -78,6 +78,7 @@ CONFIG += static
 CONFIG += thread
 
 QMAKE_CXXFLAGS += -static -static-libgcc
+QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 LIBS+= -L../_Libs/_builds/sdl2_mixer_mod
 INCLUDEPATH += -../_Libs/SDL2_mixer_modified
@@ -110,6 +111,9 @@ win32: LIBS += -lDbghelp
 win32: LIBS += libwinmm
 
 #DEFINES += USE_QMEDIAPLAYER
+!android:{
+DEFINES += USE_SDL_MIXER
+}
 DEFINES += PGE_EDITOR
 
 INCLUDEPATH += . _includes
@@ -380,7 +384,8 @@ SOURCES += main.cpp\
     file_formats/pge_x.cpp \
     file_formats/save_filedata.cpp \
     file_formats/smbx64.cpp \
-    file_formats/wld_filedata.cpp
+    file_formats/wld_filedata.cpp \
+    editing/_components/history/historyelementresizesection.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -528,7 +533,8 @@ HEADERS  += defines.h \
     file_formats/pge_x.h \
     file_formats/save_filedata.h \
     file_formats/smbx64.h \
-    file_formats/wld_filedata.h
+    file_formats/wld_filedata.h \
+    editing/_components/history/historyelementresizesection.h
 
 
 FORMS    += \

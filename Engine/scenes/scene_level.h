@@ -85,7 +85,7 @@ public:
 
     //Init 11 -> Init NPCs
 
-    void update(float step=10);
+    void update();
     void render();
     int exec();
 

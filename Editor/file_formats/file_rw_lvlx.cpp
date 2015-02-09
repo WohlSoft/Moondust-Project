@@ -26,6 +26,9 @@
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
 #endif
+#ifndef PGE_ENGINE
+#include <QMessageBox>
+#endif
 
 //*********************************************************
 //****************READ FILE FORMAT*************************

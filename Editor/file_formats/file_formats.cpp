@@ -25,10 +25,14 @@
 #ifdef PGE_EDITOR
 #include <common_features/themes.h>
 #endif
+#ifndef PGE_ENGINE
+#include <QMessageBox>
+#endif
+
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
-    #ifdef PGE_EDITOR
+    #ifndef PGE_ENGINE
     QMessageBox * box;
     box= new QMessageBox();
     box->setWindowTitle( QTranslator::tr("Bad File") );

@@ -16,10 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef USE_SDL_MIXER
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #undef main
+#endif
 #include <QFileInfo>
 #include <QDir>
 
@@ -82,6 +84,7 @@ int main(int argc, char *argv[])
 
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
+    #ifdef USE_SDL_MIXER
     //Init SDL Audio subsystem
     if(SDL_Init(SDL_INIT_AUDIO)<0)
     {
@@ -92,6 +95,7 @@ int main(int argc, char *argv[])
     {
         WriteToLog(QtWarningMsg, QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
     }
+    #endif
 
     int ret=0;
     //Init Main Window class
@@ -130,6 +134,8 @@ QuitFromEditor:
     delete a;
     delete as;
 
+    #ifdef USE_SDL_MIXER
     SDL_Quit();
+    #endif
     return ret;
 }

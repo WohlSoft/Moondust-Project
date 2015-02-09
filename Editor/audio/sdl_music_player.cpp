@@ -28,57 +28,52 @@ void PGE_MusPlayer::setVolume(int volume)
     MUS_changeVolume(volume);
 }
 
-
-Mix_Music *PGE_MusPlayer::play_mus = NULL;
-
-int PGE_MusPlayer::volume=100;
-int PGE_MusPlayer::sRate=44100;
-
 #ifdef USE_QMEDIAPLAYER
 bool PGE_MusPlayer::isMediaPlayer=false;
 QMediaPlayer * PGE_MusPlayer::musicPlayer=NULL;
 QMediaPlaylist * PGE_MusPlayer::playList=NULL;
+#elif USE_SDL_MIXER
+Mix_Music *PGE_MusPlayer::play_mus = NULL;
 #endif
+
+int PGE_MusPlayer::volume=100;
+int PGE_MusPlayer::sRate=44100;
+QString PGE_MusPlayer::current="";
+
 
 
 void PGE_MusPlayer::MUS_stopMusic()
 {
     #ifdef USE_QMEDIAPLAYER
-    if(isMediaPlayer)
         musicPlayer->stop();
-    else
-    #endif
+    #elif USE_SDL_MIXER
         Mix_HaltMusic();
+    #endif
 }
 
 void PGE_MusPlayer::MUS_playMusic()
 {
     #ifdef USE_QMEDIAPLAYER
-    if(isMediaPlayer)
-    {
         qDebug() << QString("Play Music (QMediaPlayer)");
         musicPlayer->play();
-    }
-    else
-    {
-    #endif
+    #elif USE_SDL_MIXER
         if(play_mus)
         {
             qDebug() << QString("Play Music (SDL2_mixer)");
-            if(Mix_PlayMusic(play_mus, -1)==-1)
+            if(Mix_PlayingMusic()==0)
             {
-                qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
-                // well, there's no music, but most games don't break without music...
+                if(Mix_PlayMusic(play_mus, -1)==-1)
+                {
+                    qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
+                    // well, there's no music, but most games don't break without music...
+                }
             }
-
             qDebug() << QString("Music is %1").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
         }
         else
         {
             qDebug() << QString("Play nothing: Mix_PlayMusic: %1").arg(Mix_GetError());
         }
-    #ifdef USE_QMEDIAPLAYER
-    }
     #endif
 }
 
@@ -87,21 +82,20 @@ void PGE_MusPlayer::MUS_changeVolume(int vlm)
     qDebug() << QString("Volume changed %1").arg(vlm);
     volume = vlm;
     #ifdef USE_QMEDIAPLAYER
-    if(isMediaPlayer)
-    {
-        if(volume>100) volume=100;
-        musicPlayer->setVolume(volume);
-    }
-    else
-    #endif
+        if(isMediaPlayer)
+        {
+            if(volume>100) volume=100;
+            musicPlayer->setVolume(volume);
+        }
+    #elif USE_SDL_MIXER
         Mix_VolumeMusic(volume);
-
-
+    #endif
 }
 
 void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
 {
     sRate=sampleRate;
+    #ifdef USE_SDL_MIXER
     qDebug() << "Set sample rate to:"<<sampleRate;
     //Mix_CloseAudio();
     if(Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096)<0)
@@ -112,7 +106,9 @@ void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
     {
         WriteToLog(QtWarningMsg, QString("Can't allocate channels: %1").arg(Mix_GetError()));
     }
+    #endif
 }
+
 int PGE_MusPlayer::sampleRate()
 {
     return sRate;
@@ -126,46 +122,42 @@ int PGE_MusPlayer::currentVolume()
 
 void PGE_MusPlayer::MUS_openFile(QString musFile)
 {
-    if(play_mus!=NULL)
+    if(current==musFile)
     {
-        Mix_FreeMusic(play_mus);
-        play_mus=NULL;
+        #ifdef USE_SDL_MIXER
+        if(Mix_PlayingMusic()==1)
+                return;
+        #endif
     }
 
     #ifdef USE_QMEDIAPLAYER
-    if(isMediaPlayer) if(musicPlayer!=NULL)
-    {
-        musicPlayer->stop();
-        delete musicPlayer;
-        delete playList;
-        isMediaPlayer=false;
-    }
-    #endif
-
-    #ifdef USE_QMEDIAPLAYER
-    //Play MP3-filed with QMediaPlayer
-    if(musFile.endsWith(".mp3", Qt::CaseInsensitive))
-    {
-        isMediaPlayer=true;
+        if(musicPlayer!=NULL)
+        {
+            musicPlayer->stop();
+            delete musicPlayer;
+            delete playList;
+            isMediaPlayer=false;
+        }
         musicPlayer = new QMediaPlayer();
         playList = new QMediaPlaylist();
         playList->clear();
         playList->addMedia(QUrl::fromLocalFile( musFile ));
         playList->setPlaybackMode(QMediaPlaylist::Loop);
         musicPlayer->setPlaylist(playList);
-    }
-    else
-    {
-        isMediaPlayer=false;
-    #endif
-
-        play_mus = Mix_LoadMUS( musFile.toUtf8() );
-        if(!play_mus) {
-            qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError());
+        current = musFile;
+    #elif USE_SDL_MIXER
+        if(play_mus!=NULL)
+        {
+            Mix_HaltMusic();
+            Mix_FreeMusic(play_mus);
+            play_mus=NULL;
         }
 
-        //Print memory address of pointer
-        //qDebug() << "Pointer is " << static_cast<void*>(&play_mus);
+        play_mus = Mix_LoadMUS( musFile.toUtf8() );
+        if(!play_mus)
+            qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError());
+        else
+            current = musFile;
 
         Mix_MusicType type=Mix_GetMusicType(play_mus);
         qDebug() << QString("Music type: %1").arg(
@@ -180,13 +172,8 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
                 "Unknown");
-    #ifdef USE_QMEDIAPLAYER
-    }
     #endif
 }
-
-
-
 
 // //////////////////////// Sound Player //////////////////////////////////////
 
@@ -194,80 +181,44 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 
 #ifdef USE_QMEDIAPLAYER
 QMediaPlayer * PGE_Sounds::mp3Play=NULL;
-#else
-Mix_Music *PGE_Sounds::mp3_sound = NULL;
-#endif
-bool PGE_Sounds::isMp3=false;
-
+#elif USE_SDL_MIXER
 Mix_Chunk *PGE_Sounds::sound = NULL;
+#endif
+
 QString PGE_Sounds::current = "";
 
 void PGE_Sounds::SND_PlaySnd(QString sndFile)
 {
     if(current!=sndFile)
     {
-        isMp3=false;
-        if(sound) { Mix_FreeChunk(sound); sound=NULL; }
         #ifdef USE_QMEDIAPLAYER
         if(mp3Play) { mp3Play->stop(); delete mp3Play; mp3Play=NULL; }
-        #else
-        if(mp3_sound) { Mix_FreeMusic(mp3_sound); mp3_sound=NULL; }
-        #endif
-
-        if(sndFile.endsWith(".mp3", Qt::CaseInsensitive))
-        {
-            isMp3=true;
-            #ifdef USE_QMEDIAPLAYER
-            mp3Play = new QMediaPlayer();
-            mp3Play->setMedia(QMediaContent(QUrl(sndFile)));
-            mp3Play->setVolume(100);
-            #else
-            mp3_sound = Mix_LoadMUS( sndFile.toUtf8() );
-            if(!mp3_sound)
-            {
-                qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(sndFile).arg(Mix_GetError());
-            }
-            #endif
-        }
+        #elif USE_SDL_MIXER
+        if(sound) { Mix_FreeChunk(sound); sound=NULL; }
+        sound = Mix_LoadWAV(sndFile.toUtf8() );
+        if(!sound)
+            qDebug() << QString("Mix_LoadWAV: %1").arg(SDL_GetError());
         else
-        {
-            sound = Mix_LoadWAV(sndFile.toUtf8() );
-            if(!sound) {
-                qDebug() << QString("Mix_LoadWAV: %s").arg(Mix_GetError());
-                // handle error
-            }
-        }
-
+            Mix_VolumeChunk(sound, MIX_MAX_VOLUME);
+        #endif
+        current = sndFile;
     }
 
-    if(isMp3)
+    #ifdef USE_QMEDIAPLAYER
+    qDebug() << QString("Play Sound (QMediaPlayer)");
+    if(!mp3Play)
     {
-        #ifdef USE_QMEDIAPLAYER
-        qDebug() << QString("Play Sound (QMediaPlayer)");
-        if(!mp3Play)
-        {
-            qDebug() << QString("QMediaPlayer is null");
-        }
-        else
-            mp3Play->play();
-        #else
-        if(mp3_sound)
-        {
-            qDebug() << QString("Play Sound (SDL2_mixer, LibMAD)");
-            if(Mix_PlayMusic(mp3_sound, 1)==-1)
-            {
-                qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
-            }
-        }
-        #endif
+        qDebug() << QString("QMediaPlayer is null");
     }
     else
+        mp3Play->play();
+    #elif USE_SDL_MIXER
+
+    WriteToLog(QtDebugMsg, QString("Play Sound (SDL2_mixer)"));
+    if(Mix_PlayChannel( -1, sound, 0 )==-1)
     {
-        qDebug() << QString("Play Sound (SDL2_mixer)");
-        if(Mix_PlayChannel( -1, sound, 0 )==-1)
-        {
-            qDebug() << QString("Mix_PlayChannel: %1").arg(Mix_GetError());
-        }
+        qDebug() << QString("Mix_PlayChannel: %1").arg(SDL_GetError());
     }
 
+    #endif
 }

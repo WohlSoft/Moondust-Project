@@ -35,7 +35,6 @@ struct saveCharacterState
     unsigned int health;
 };
 
-
 struct GamesaveData
 {
     bool ReadFileValid;

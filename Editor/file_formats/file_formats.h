@@ -19,25 +19,23 @@
 #ifndef FILE_FORMATS_H
 #define FILE_FORMATS_H
 
-#include <QRegExp>
 #include <QString>
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
-#ifndef PGE_ENGINE
-#include <QMessageBox>
-#endif
-
 #include "lvl_filedata.h"
 #include "npc_filedata.h"
 #include "wld_filedata.h"
 #include "save_filedata.h"
 
+#if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 #include "../data_configs/obj_npc.h"
+#endif
 
-
-class FileFormats
+class FileFormats: public QObject
 {
+    Q_OBJECT
+
 public:
     //File format read/write functions
 
@@ -114,8 +112,9 @@ public:
     static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
 
     static NPCConfigFile CreateEmpytNpcTXTArray();
+    #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
-
+    #endif
 
     //common
     static void BadFileMsg(QString fileName_DATA, int str_count, QString line);

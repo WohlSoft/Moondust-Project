@@ -323,7 +323,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_FRIENDLY, QVariant(fri->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(fri->isChecked()));
             }
             else
             if(selected==stat)
@@ -338,7 +338,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
             }
             else
                 if(selected==msg)
@@ -360,7 +360,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
                             }
                         }
-                        scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(msgBox->currentText));
+                        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox->currentText));
                     }
                     delete msgBox;
                 }
@@ -377,7 +377,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(boss->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BOSS, QVariant(boss->isChecked()));
             }
             else
             if(selected==setLeft)
@@ -391,7 +391,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->changeDirection(-1);
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(-1));
             }
             if(selected==setRand)
             {
@@ -404,7 +404,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->changeDirection(0);
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(0));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(0));
             }
             if(selected==setRight)
             {
@@ -417,7 +417,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemNPC *) SelItem)->changeDirection(1);
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(1));
             }
             else
             if(selected==remove)
