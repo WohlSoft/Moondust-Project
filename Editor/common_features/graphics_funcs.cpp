@@ -144,6 +144,51 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
     return target;
 }
 
+
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QPixmap &out_Mask, QString &out_errStr)
+{
+    if( in_imgName.isEmpty() )
+    {
+        out_errStr = "Image filename isn't defined";
+        return;
+    }
+
+    if(!QFile(rootDir+in_imgName).exists())
+    {
+        out_errStr="image file is not exist: "+rootDir+in_imgName;
+        return;
+    }
+
+    out_maskName=in_imgName;
+    int i = out_maskName.size()-1;
+    for( ;i>0; i--)
+    {
+        if(out_maskName[i]=='.')
+        {
+            out_maskName.insert(i, 'm');
+            break;
+        }
+    }
+
+    if(i==0)
+    {
+        out_maskName = "";
+        out_Mask = QPixmap();
+    }
+    else
+        out_Mask = QPixmap(rootDir + out_maskName);
+
+    out_Img = GraphicsHelps::setAlphaMask(QPixmap(rootDir+in_imgName), out_Mask);
+    if(out_Img.isNull())
+    {
+        out_errStr="Broken image file "+rootDir+in_imgName;
+        return;
+    }
+
+    out_errStr = "";
+}
+
+
 QImage GraphicsHelps::fromBMP(QString &file)
 {
     QImage errImg;

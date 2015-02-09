@@ -213,10 +213,8 @@ bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
 
-void LevelScene::update(float step)
+void LevelScene::update()
 {
-    if(step<=0) step=10.0f;
-
     if(doExit)
     {
         if(exitLevelDelay>=0)
@@ -240,7 +238,7 @@ void LevelScene::update(float step)
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
-        world->Step(1.0f / (float)PGE_Window::PhysStep, 5, 1);
+        world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
 
         //Update controllers
         keyboard1.sendControls();
@@ -300,6 +298,17 @@ void LevelScene::update(float step)
             cameras[i]->update();
     }
 
+
+    if(isPauseMenu)
+    {
+        PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D\n\nXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxx",
+                          PGE_MsgBox::msg_info);
+
+        if(!ConfigManager::setup_message_box.sprite.isEmpty())
+            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+        msgBox.exec();
+        isPauseMenu=false;
+    }
 }
 
 
@@ -372,33 +381,22 @@ void LevelScene::render()
 
 int LevelScene::exec()
 {
-    //Level scene's Loop
-    Uint32 start_render;
-    Uint32 start_physics;
     bool running = true;
-    int doUpdate_render=0;
-    float doUpdate_physics=0;
     isLevelContinues=true;
     doExit=false;
+
+
+    //Level scene's Loop
+ Uint32 start_render;
+ Uint32 stop_render;
+    int doUpdate_render=0;
+
+ Uint32 start_physics;
+ Uint32 stop_physics;
+  float doUpdate_physics=0;
+
     while(running)
     {
-
-        //UPDATE Events
-        if(doUpdate_render<=0)
-        {
-
-            start_render=SDL_GetTicks();
-
-            render();
-
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
-
-            if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
-                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
-        }
-        doUpdate_render-= 1000.0 / (float)PGE_Window::PhysStep;
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
@@ -454,24 +452,28 @@ int LevelScene::exec()
             }
         }
 
-        if(isPauseMenu)
-        {
-            PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D\n\nXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxx",
-                              PGE_MsgBox::msg_info);
-
-            if(!ConfigManager::setup_message_box.sprite.isEmpty())
-                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
-            msgBox.exec();
-            isPauseMenu=false;
-        }
-
         start_physics=SDL_GetTicks();
-        //Update physics
         update();
+        stop_physics=SDL_GetTicks();
 
-        if(1000.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_physics)
+        if(doUpdate_render<=0)
         {
-            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep-(SDL_GetTicks()-start_physics);
+
+            start_render = SDL_GetTicks();
+            render();
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
+            stop_render = SDL_GetTicks();
+
+            if(1000.0 / (float)PGE_Window::MaxFPS > stop_render-start_render)
+                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
+                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
+        }
+        doUpdate_render -= 1000.0/(float)PGE_Window::PhysStep;
+
+        if(1000.0 / (float)PGE_Window::PhysStep >stop_physics-start_physics)
+        {
+            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep - (stop_physics-start_physics);
             lastTicks = doUpdate_physics;
             SDL_Delay( doUpdate_physics );
         }
@@ -479,9 +481,7 @@ int LevelScene::exec()
         if(isExit())
             running = false;
 
-        //qApp->processEvents();
     }
-
     return exitLevelCode;
 }
 

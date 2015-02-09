@@ -23,6 +23,9 @@
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
 #endif
+#ifndef PGE_ENGINE
+#include <QMessageBox>
+#endif
 
 MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 {

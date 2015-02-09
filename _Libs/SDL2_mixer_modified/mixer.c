@@ -651,7 +651,7 @@ Mix_Chunk *Mix_LoadWAV_RW(SDL_RWops *src, int freesrc)
 			{
 				/* note: send a copy of the mixer spec */
 				wavespec = mixer;
-				loaded = Mix_LoadMP3_RW(src, freesrc, &wavespec,
+                loaded = Mix_LoadMP3_RW(src, freesrc, &wavespec,
 						(Uint8 **)&chunk->abuf, &chunk->alen);
 				break;
 			}

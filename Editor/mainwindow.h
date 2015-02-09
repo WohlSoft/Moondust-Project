@@ -1034,13 +1034,15 @@ private slots:
 
         void on_action_testSettings_triggered();
 
+    public slots:
+        void on_actionRunTestSMBX_triggered();
+
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
 public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

@@ -79,6 +79,8 @@ void LvlItemProperties::construct(MainWindow *ParentMW)
 
     LvlItemPropsLock=true;
 
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+
     blockPtr=-1;
     bgoPtr=-1;
     npcPtr=-1;
@@ -970,7 +972,7 @@ void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
                 ((ItemBlock*)item)->setInvisible(checked);
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_INVISIBLE, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(checked));
     }
 
 }
@@ -998,7 +1000,7 @@ void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
                 ((ItemBlock*)item)->setSlippery(checked);
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SLIPPERY, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(checked));
     }
 
 }
@@ -1083,7 +1085,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
                 }
             }
 
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
         }
 
     }
@@ -1156,9 +1158,9 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QStri
             }
         }
         if(ui->PROPS_BlkEventDestroy->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DESTROYED, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_DESTROYED, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DESTROYED, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_DESTROYED, QVariant(""));
         }
     }
 
@@ -1197,9 +1199,9 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString
             }
         }
         if(ui->PROPS_BlkEventHited->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_HITED, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_HITED, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_HITED, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_HITED, QVariant(""));
         }
     }
 
@@ -1238,9 +1240,9 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
             }
         }
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(""));
         }
     }
 
@@ -1386,7 +1388,7 @@ void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BGOSORTING, QVariant(arg1));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BGOSORTING, QVariant(arg1));
     }
 }
 
@@ -1424,7 +1426,7 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(-1));
     }
 
 }
@@ -1459,7 +1461,7 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(0));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(0));
     }
 }
 
@@ -1492,7 +1494,7 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DIRECTION, QVariant(1));
     }
 }
 
@@ -1522,7 +1524,7 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_FRIENDLY, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(checked));
     }
 
 }
@@ -1550,7 +1552,7 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_NOMOVEABLE, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_NOMOVEABLE, QVariant(checked));
     }
 
 }
@@ -1577,7 +1579,7 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
                 //break;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BOSS, QVariant(checked));
     }
 }
 
@@ -1630,7 +1632,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
                     ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
                 }
             }
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(msgBox->currentText));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox->currentText));
         }
 
         QString npcmsg = (msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText);
@@ -1707,7 +1709,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
                 ((ItemNPC*)item)->arrayApply();
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
     }
 
 }
@@ -1857,7 +1859,7 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
                     ((ItemNPC *)item)->setIncludedNPC(selected_npc);
                 }
             }
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
             LockItemProps=true;
             refreshSecondSpecialOption(contID, selected_npc, spcData2);
             LockItemProps=false;
@@ -1924,7 +1926,7 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
                 ((ItemNPC*)item)->arrayApply();
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(index));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(index));
     }
 }
 
@@ -2135,7 +2137,7 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
                 LvlItemPropsLock=false;
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENACTIVATE, QVariant(checked));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENACTIVATE, QVariant(checked));
     }
     ui->PROPS_NPCGenBox->setVisible( checked );
 
@@ -2168,7 +2170,7 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
                  );
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENTYPE, QVariant(index+1));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENTYPE, QVariant(index+1));
     }
 }
 
@@ -2195,7 +2197,7 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
                 ((ItemNPC*)item)->arrayApply();
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENTIME, QVariant(qRound(arg1*10)));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENTIME, QVariant(qRound(arg1*10)));
     }
 
 }
@@ -2225,7 +2227,7 @@ void LvlItemProperties::on_PROPS_NPCGenUp_clicked()
                  );
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(1));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENDIR, QVariant(1));
     }
 
 }
@@ -2255,7 +2257,7 @@ void LvlItemProperties::on_PROPS_NPCGenLeft_clicked()
                  );
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(2));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENDIR, QVariant(2));
     }
 }
 
@@ -2284,7 +2286,7 @@ void LvlItemProperties::on_PROPS_NPCGenDown_clicked()
                  );
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(3));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENDIR, QVariant(3));
     }
 }
 void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
@@ -2312,7 +2314,7 @@ void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
                  );
             }
         }
-        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(4));
+        mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_GENDIR, QVariant(4));
     }
 }
 
@@ -2380,11 +2382,11 @@ void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QStrin
         }
         if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
         {
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_ATTACHLAYER, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(arg1));
         }
         else
         {
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_ATTACHLAYER, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(""));
         }
     }
 
@@ -2421,9 +2423,9 @@ void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QStr
             }
         }
         if(ui->PROPS_NpcEventActivate->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_ACTIVATE, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_ACTIVATE, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(""));
         }
     }
 
@@ -2460,9 +2462,9 @@ void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString
             }
         }
         if(ui->PROPS_NpcEventDeath->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DEATH, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_DEATH, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DEATH, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_DEATH, QVariant(""));
         }
     }
 
@@ -2499,9 +2501,9 @@ void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString 
             }
         }
         if(ui->PROPS_NpcEventTalk->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_TALK, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_TALK, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_TALK, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_TALK, QVariant(""));
         }
     }
 
@@ -2539,9 +2541,9 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
             }
         }
         if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0){
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(arg1));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
         }else{
-            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(""));
+            mw->activeLvlEditWin()->scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(""));
         }
     }
 }

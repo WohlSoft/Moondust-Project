@@ -70,6 +70,7 @@ void TilesetItemBox::construct(MainWindow *ParentMW)
     setVisible(false);
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     lockTilesetBox=false;
 }

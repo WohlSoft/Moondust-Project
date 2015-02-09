@@ -50,6 +50,8 @@ public:
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);
+    bool saveSMBX64LVL(QString fileName, bool silent=false);//!< Saves a SMBX Level file format
+    bool savePGEXLVL(QString fileName, bool silent=false); //!< Saves a PGE Extended Level file format
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
 

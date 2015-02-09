@@ -60,11 +60,11 @@ void LvlWarpBox::construct(MainWindow *ParentMW)
     ui->setupUi(this);
     setVisible(false);
     mw = ParentMW;
-
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     lockWarpSetSettings = false;
 }
 
-void LvlWarpBox::on_DoorsToolbox_visibilityChanged(bool visible)
+void LvlWarpBox::on_LvlWarpBox_visibilityChanged(bool visible)
 {
     mw->ui->actionWarpsAndDoors->setChecked(visible);
 }

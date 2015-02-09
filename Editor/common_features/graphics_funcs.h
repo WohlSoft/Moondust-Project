@@ -29,6 +29,7 @@ public:
     static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
     static QImage setAlphaMask_VB(QImage image, QImage mask);
     static bool EnableVBEmulate;
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QPixmap &out_Mask, QString &out_errStr);
 
     static QImage fromBMP(QString& file);
     static QPixmap loadPixmap(QString file);

@@ -252,7 +252,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_INVISIBLE, QVariant(invis->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
             }
             else
             if(selected==slipp)
@@ -267,7 +267,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
                     }
                 }
-                scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SLIPPERY, QVariant(invis->isChecked()));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
             }
             else
             if(selected==resize)
@@ -305,7 +305,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
                         }
                     }
-                    scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
+                    scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
                 }
                 delete npcList;
             }

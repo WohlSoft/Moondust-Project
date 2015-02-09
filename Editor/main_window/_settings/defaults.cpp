@@ -88,7 +88,8 @@ void MainWindow::setUiDefults()
     //Define the default geometry for toolboxes
     dock_LvlWarpProps = new LvlWarpBox(this, this);
     dock_LvlWarpProps->setVisible(false);
-    addDockWidget(Qt::NoDockWidgetArea, dock_LvlWarpProps);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlWarpProps);
+    dock_LvlWarpProps->setFloating(true);
     dock_LvlWarpProps->setGeometry(
                 mwg.x()+mwg.width()-dock_LvlWarpProps->width()-GOffset,
                 mwg.y()+120,
@@ -117,7 +118,8 @@ void MainWindow::setUiDefults()
 
     dock_LvlItemProps = new LvlItemProperties(this,this);
     dock_LvlItemProps->setVisible(false);
-    addDockWidget(Qt::NoDockWidgetArea, dock_LvlItemProps);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlItemProps);
+    dock_LvlItemProps->setFloating(true);
     dock_LvlItemProps->setGeometry(
                 mwg.x()+mwg.width()-dock_LvlItemProps->width()-GOffset,
                 mwg.y()+120,
@@ -156,7 +158,8 @@ void MainWindow::setUiDefults()
 
     dock_TilesetBox = new TilesetItemBox(this, this);
     dock_TilesetBox->setVisible(false);
-    addDockWidget(Qt::NoDockWidgetArea, dock_TilesetBox);
+    addDockWidget(Qt::BottomDockWidgetArea, dock_TilesetBox);
+    dock_TilesetBox->setFloating(true);
     dock_TilesetBox->setGeometry(
                 dg.x()+GOffset,
                 dg.y()+dg.height()-600,
@@ -184,8 +187,10 @@ void MainWindow::setUiDefults()
     font.setWeight(8);
     ui->DEBUG_Items->setFont(font);
 
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-        this, SLOT(updateMenus()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
 
     windowMapper = new QSignalMapper(this);
 
@@ -241,6 +246,10 @@ void MainWindow::setUiDefults()
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
     ui->menuTest->setEnabled(false);
+    #ifndef Q_OS_WIN
+    //Hide a Microsoft Windows specific menuitem
+    ui->actionRunTestSMBX->setVisible(false);
+    #endif
     ui->LevelObjectToolbar->setVisible(false);
     ui->WorldObjectToolbar->setVisible(false);
 
@@ -427,8 +436,4 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_ContainsTitle, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
 
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus(bool)));
 }

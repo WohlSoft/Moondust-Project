@@ -4,6 +4,8 @@ CONFIG -= qt
 #CONFIG += dll
 #CONFIG += static
 
+QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+
 static: {
 release:OBJECTS_DIR = ../../bin/_build/sdl2mixermod/_release/.obj
 release:MOC_DIR     = ../../bin/_build/sdl2mixermod/_release/.moc

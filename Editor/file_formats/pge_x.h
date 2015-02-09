@@ -22,11 +22,14 @@
 #include <QPair>
 #include <QString>
 #include <QStringList>
+#include <QObject>
 
 typedef QPair<QString, QStringList> PGEXSct;
 
-class PGEFile
+class PGEFile: public QObject
 {
+    Q_OBJECT
+
 public:
     enum PGEX_Item_type
     {
@@ -55,8 +58,8 @@ public:
         QList<PGEX_Entry > subTree;
     };
 
-    PGEFile();
-    PGEFile(PGEFile &pgeFile);
+    PGEFile(QObject *parent=NULL);
+    PGEFile(PGEFile &pgeFile, QObject *parent=NULL);
     PGEFile(QString _rawData);
     void setRawData(QString _rawData);
     bool buildTreeFromRaw();

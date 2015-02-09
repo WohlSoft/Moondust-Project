@@ -36,7 +36,7 @@ void MainWindow::on_actionLevelProp_triggered()
             QList<QVariant> lvlsetData;
             lvlsetData.push_back(activeLvlEditWin()->LvlData.LevelName);
             lvlsetData.push_back(LevProps.LevelTitle);
-            activeLvlEditWin()->scene->addChangeLevelSettingsHistory(LvlScene::SETTING_LEVELNAME, QVariant(lvlsetData));
+            activeLvlEditWin()->scene->addChangeLevelSettingsHistory(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
             activeLvlEditWin()->LvlData.modified = true;
             activeLvlEditWin()->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );

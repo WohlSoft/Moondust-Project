@@ -247,7 +247,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemWater *)SelItem)->setType(0);
                     }
                 }
-                scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(true));
+                scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
             }
             else
             if(selected==setAsQuicksand)
@@ -261,7 +261,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         ((ItemWater *)SelItem)->setType(1);
                     }
                 }
-                scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
+                scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(false));
             }
             else
             if(selected==showRectangleValues)

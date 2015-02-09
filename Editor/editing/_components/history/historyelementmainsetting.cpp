@@ -46,7 +46,7 @@ void HistoryElementMainSetting::undo()
     if(!m_scene)
         return;
     if((lvlScene = qobject_cast<LvlScene*>(m_scene))){
-
+        processLevelUndo();
     }
     if((wldScene = qobject_cast<WldScene*>(m_scene))){
         processWorldUndo();
@@ -60,7 +60,7 @@ void HistoryElementMainSetting::redo()
     if(!m_scene)
         return;
     if((lvlScene = qobject_cast<LvlScene*>(m_scene))){
-
+        processLevelRedo();
     }
     if((wldScene = qobject_cast<WldScene*>(m_scene))){
         processWorldRedo();
@@ -69,6 +69,9 @@ void HistoryElementMainSetting::redo()
 
 void HistoryElementMainSetting::processWorldUndo()
 {
+    if(!m_scene)
+        return;
+
     WldScene* wldScene = 0;
     if(!(wldScene = qobject_cast<WldScene*>(m_scene)))
         return;
@@ -95,8 +98,29 @@ void HistoryElementMainSetting::processWorldUndo()
     MainWinConnect::pMainWin->setCurrentWorldSettings();
 }
 
+void HistoryElementMainSetting::processLevelUndo()
+{
+    if(!m_scene)
+        return;
+
+    LvlScene* lvlScene = 0;
+    if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
+        return;
+
+    if(m_modLevelSetting == HistorySettings::SETTING_LEVELNAME){
+        lvlScene->LvlData->LevelName = m_modData.toList()[0].toString();
+
+        MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( lvlScene->LvlData->LevelName.isEmpty() ?
+            MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : lvlScene->LvlData->LevelName );
+        MainWinConnect::pMainWin->updateWindowMenu();
+    }
+}
+
 void HistoryElementMainSetting::processWorldRedo()
 {
+    if(!m_scene)
+        return;
+
     WldScene* wldScene = 0;
     if(!(wldScene = qobject_cast<WldScene*>(m_scene)))
         return;
@@ -121,6 +145,23 @@ void HistoryElementMainSetting::processWorldRedo()
     }
 
     MainWinConnect::pMainWin->setCurrentWorldSettings();
+}
+
+void HistoryElementMainSetting::processLevelRedo()
+{
+    if(!m_scene)
+        return;
+
+    LvlScene* lvlScene = 0;
+    if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
+        return;
+
+    if(m_modLevelSetting == HistorySettings::SETTING_LEVELNAME){
+        lvlScene->LvlData->LevelName = m_modData.toList()[1].toString();
+        MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( lvlScene->LvlData->LevelName.isEmpty() ?
+            MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : lvlScene->LvlData->LevelName );
+        MainWinConnect::pMainWin->updateWindowMenu();
+    }
 }
 
 
