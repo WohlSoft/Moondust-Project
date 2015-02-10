@@ -385,7 +385,8 @@ SOURCES += main.cpp\
     file_formats/save_filedata.cpp \
     file_formats/smbx64.cpp \
     file_formats/wld_filedata.cpp \
-    editing/_components/history/historyelementresizesection.cpp
+    editing/_components/history/historyelementresizesection.cpp \
+    editing/_components/history/historyelementlayerchanged.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -534,7 +535,8 @@ HEADERS  += defines.h \
     file_formats/save_filedata.h \
     file_formats/smbx64.h \
     file_formats/wld_filedata.h \
-    editing/_components/history/historyelementresizesection.h
+    editing/_components/history/historyelementresizesection.h \
+    editing/_components/history/historyelementlayerchanged.h
 
 
 FORMS    += \

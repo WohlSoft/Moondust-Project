@@ -34,6 +34,7 @@
 #include <editing/_components/history/historyelementmainsetting.h>
 #include <editing/_components/history/historyelementitemsetting.h>
 #include <editing/_components/history/historyelementresizesection.h>
+#include <editing/_components/history/historyelementlayerchanged.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -142,7 +143,6 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
 {
     cleanupRedoElements();
     HistoryOperation resizeOperation;
-    resizeOperation.type = HistoryOperation::LEVELHISTORY_RESIZESECTION;
     HistoryElementResizeSection *modf = new HistoryElementResizeSection(sectionID,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
                                                                         QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
@@ -160,9 +160,9 @@ void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerNa
     cleanupRedoElements();
 
     HistoryOperation chLaOperation;
-    chLaOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDLAYER;
-    chLaOperation.extraData = QVariant(newLayerName);
-    chLaOperation.data = changedItems;
+    HistoryElementLayerChanged *modf = new HistoryElementLayerChanged(changedItems, newLayerName);
+    modf->setScene(this);
+    chLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(chLaOperation);
     historyIndex++;
 
@@ -532,14 +532,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
-    {
-        LevelData modifiedSourceData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
     {
         LevelData resizedBlock = lastOperation.data;
@@ -1251,14 +1243,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
-    {
-        LevelData modifiedSourceData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
     {
         LevelData resizedBlock = lastOperation.data;
