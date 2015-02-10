@@ -28,18 +28,20 @@ void MainWindow::on_actionLevelProp_triggered()
 {
     if(activeChildWindow()==1)
     {
-        LevelProps LevProps(activeLvlEditWin()->LvlData);
+        LevelEdit * e=activeLvlEditWin();
+        if(!e) return;
+        LevelProps LevProps(e->LvlData);
         LevProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         LevProps.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, LevProps.size(), qApp->desktop()->availableGeometry()));
         if(LevProps.exec()==QDialog::Accepted)
         {
             QList<QVariant> lvlsetData;
-            lvlsetData.push_back(activeLvlEditWin()->LvlData.LevelName);
+            lvlsetData.push_back(e->LvlData.LevelName);
             lvlsetData.push_back(LevProps.LevelTitle);
-            activeLvlEditWin()->scene->addChangeLevelSettingsHistory(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
-            activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
-            activeLvlEditWin()->LvlData.modified = true;
-            activeLvlEditWin()->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
+            e->scene->addChangeLevelSettingsHistory(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
+            e->LvlData.LevelName = LevProps.LevelTitle;
+            e->LvlData.modified = true;
+            e->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? e->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
             updateWindowMenu();
         }
     }

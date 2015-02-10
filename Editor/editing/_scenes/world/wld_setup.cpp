@@ -276,36 +276,46 @@ void WldScene::setLocked(int type, bool lock)
         case 1://Tile
             if((*it)->data(0).toString()=="TILE")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemTile *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemTile *)(*it))->isLocked ) ) );
+                ItemTile *gi= qgraphicsitem_cast<ItemTile*>(*it);
+                if(!gi)continue;
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
             }
             break;
         case 2://Scenery
             if((*it)->data(0).toString()=="SCENERY")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
+                ItemScene *gi= qgraphicsitem_cast<ItemScene*>(*it);
+                if(!gi)continue;
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemScene *)(*it))->isLocked ) ));
             }
             break;
         case 3://Paths
             if((*it)->data(0).toString()=="PATH")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemPath *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemPath *)(*it))->isLocked ) ) );
+                ItemPath *gi= qgraphicsitem_cast<ItemPath*>(*it);
+                if(!gi)continue;
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
             }
             break;
         case 4://Levels
             if((*it)->data(0).toString()=="LEVEL")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemLevel *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemLevel *)(*it))->isLocked ) ) );
+                ItemLevel *gi= qgraphicsitem_cast<ItemLevel*>(*it);
+                if(!gi)continue;
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
             }
             break;
         case 5://Musicboxes
             if((*it)->data(0).toString()=="MUSICBOX")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemMusic *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemMusic *)(*it))->isLocked ) ) );
+                ItemMusic *gi= qgraphicsitem_cast<ItemMusic*>(*it);
+                if(!gi)continue;
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked ) ) );
             }
             break;
         default: break;
