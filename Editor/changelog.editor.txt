@@ -10,6 +10,7 @@ Editor 0.2.3
 - Added more soft parsing of NPC.txt files. Instead of rejecting, you will be warnered about wrong values but file will be loaded!
 - Added more smart reloading of files
 - Added basic communication with LunaDLL to run test of current level in the opened SMBX Editor. This feature will work on Windows platform only. (LunaDLL with LUA v0.5.3-beta and higher is required in the SMBX)
+- Added "force-portable" settings to keep using of application directory instad of ~/.PGE_Project folder if you was installed editor by installer
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
