@@ -108,64 +108,48 @@ void dataconfigs::loadWorldPaths(QProgressDialog *prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
         }
+        QString errStr;
 
         pathset.beginGroup( QString("path-"+QString::number(i)) );
-            //sPath.name = pathset.value("name", "").toString();
 
-            //   if(sPath.name=="")
-            //   {
-            //       addError(QString("PATH-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            sPath.group = pathset.value("group", "_NoGroup").toString();
-            sPath.category = pathset.value("category", "_Other").toString();
+            sPath.group =       pathset.value("group", "_NoGroup").toString();
+            sPath.category =    pathset.value("category", "_Other").toString();
 
-            imgFile = pathset.value("image", "").toString();
-            sPath.image_n = imgFile;
-            if( (imgFile!="") )
+            sPath.image_n =     pathset.value("image", "").toString();
+            /***************Load image*******************/
+            GraphicsHelps::loadMaskedImage(pathPath,
+               sPath.image_n, sPath.mask_n,
+               sPath.image,   sPath.mask,
+               errStr);
+
+            if(!errStr.isEmpty())
             {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                sPath.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(pathPath + imgFileM);
-                sPath.mask = mask;
-                sPath.image = GraphicsHelps::setAlphaMask(QPixmap(pathPath + imgFile), sPath.mask);
-                if(sPath.image.isNull())
-                {
-                    addError(QString("PATH-%1 Brocken image file").arg(i));
-                    goto skipPath;
-                }
-
-            }
-            else
-            {
-                addError(QString("PATH-%1 Image filename isn't defined").arg(i));
+                addError(QString("PATH-%1 %2").arg(i).arg(errStr));
                 goto skipPath;
             }
+            /***************Load image*end***************/
 
-            sPath.grid = pathset.value("grid", default_grid).toInt();
+            sPath.grid =            pathset.value("grid", default_grid).toInt();
 
-            sPath.animated = (pathset.value("animated", "0").toString()=="1");
-            sPath.frames = pathset.value("frames", "1").toInt();
-            sPath.framespeed = pathset.value("frame-speed", "125").toInt();
+            sPath.animated =       (pathset.value("animated", "0").toString()=="1");
+            sPath.frames =          pathset.value("frames", "1").toInt();
+            sPath.framespeed =      pathset.value("frame-speed", "125").toInt();
 
             sPath.frame_h = (sPath.animated? qRound(qreal(sPath.image.height())/sPath.frames) : sPath.image.height());
 
-            sPath.display_frame = pathset.value("display-frame", "0").toInt();
-            sPath.row = pathset.value("row", "0").toInt();
-            sPath.col = pathset.value("col", "0").toInt();
+            sPath.display_frame=    pathset.value("display-frame", "0").toInt();
+            sPath.row =             pathset.value("row", "0").toInt();
+            sPath.col =             pathset.value("col", "0").toInt();
+
+
             sPath.id = i;
             main_wpaths.push_back(sPath);
-
-            //Add to Index
+            /************Add to Index***************/
             if(i <= (unsigned int)index_wpaths.size())
             {
                 index_wpaths[i].i = i-1;
             }
+            /************Add to Index***************/
 
         skipPath:
         pathset.endGroup();

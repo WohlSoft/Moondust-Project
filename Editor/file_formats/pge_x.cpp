@@ -39,14 +39,16 @@ namespace PGEExtendedFormat
 
 }
 
-PGEFile::PGEFile()
+PGEFile::PGEFile(QObject *parent)
+    : QObject(parent)
 {
     _lastError = "";
     rawData = "";
 }
 
 
-PGEFile::PGEFile(PGEFile &pgeFile)
+PGEFile::PGEFile(PGEFile &pgeFile, QObject *parent)
+    : QObject(parent)
 {
     rawData = pgeFile.rawData;
     rawDataTree = pgeFile.rawDataTree;
