@@ -100,7 +100,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                 else sbg.type = 0;
 
 
-            sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
+            sbg.repeat_h = qFabs(bgset.value("repeat-h", "2").toFloat());
             tmpstr = bgset.value("repeat-v", "NR").toString();
                 if(tmpstr=="NR")
                     sbg.repead_v = 0;
@@ -155,7 +155,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                     {
                         sbg.second_image = Themes::Image(Themes::dummy_bg);
                     }
-                    sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
+                    sbg.second_repeat_h = qFabs(bgset.value("second-repeat-h", "2").toFloat());
                     tmpstr = bgset.value("second-repeat-v", "NR").toString();
                         if(tmpstr=="NR")
                             sbg.second_repeat_v = 0;
