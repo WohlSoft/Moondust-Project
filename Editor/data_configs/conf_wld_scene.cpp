@@ -108,62 +108,50 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
         }
+        QString errStr;
 
         sceneset.beginGroup( QString("scenery-"+QString::number(i)) );
-            //sScene.name = sceneset.value("name", "").toString();
 
-            //   if(sScene.name=="")
-            //   {
-            //       addError(QString("SCENE-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            sScene.group = sceneset.value("group", "_NoGroup").toString();
-            sScene.category = sceneset.value("category", "_Other").toString();
+            sScene.group =         sceneset.value("group", "_NoGroup").toString();
+            sScene.category =      sceneset.value("category", "_Other").toString();
 
-            imgFile = sceneset.value("image", "").toString();
-            sScene.image_n = imgFile;
-            if( (imgFile!="") )
+            sScene.image_n =       sceneset.value("image", "").toString();
+            /***************Load image*******************/
+            GraphicsHelps::loadMaskedImage(scenePath,
+               sScene.image_n, sScene.mask_n,
+               sScene.image,   sScene.mask,
+               errStr);
+
+            if(!errStr.isEmpty())
             {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                sScene.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(scenePath + imgFileM);
-                sScene.mask = mask;
-                sScene.image = GraphicsHelps::setAlphaMask(QPixmap(scenePath + imgFile), sScene.mask);
-                if(sScene.image.isNull())
-                {
-                    addError(QString("SCENE-%1 Brocken image file").arg(i));
-                    goto skipScene;
-                }
-
-            }
-            else
-            {
-                addError(QString("TILE-%1 Image filename isn't defined").arg(i));
+                addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
                 goto skipScene;
             }
+            /***************Load image*end***************/
 
-            sScene.grid = sceneset.value("grid", qRound(qreal(default_grid)/2)).toInt();
+            sScene.grid =          sceneset.value("grid", qRound(qreal(default_grid)/2)).toInt();
 
-            sScene.animated = (sceneset.value("animated", "0").toString()=="1");
-            sScene.frames = sceneset.value("frames", "1").toInt();
-            sScene.framespeed = sceneset.value("frame-speed", "125").toInt();
+            sScene.animated =     (sceneset.value("animated", "0").toString()=="1");
+            sScene.frames =        sceneset.value("frames", "1").toInt();
+            sScene.framespeed =    sceneset.value("frame-speed", "125").toInt();
 
-            sScene.frame_h = (sScene.animated? qRound(qreal(sScene.image.height())/sScene.frames) : sScene.image.height());
+            sScene.frame_h =   (sScene.animated?
+                      qRound(qreal(sScene.image.height())/
+                                   sScene.frames)
+                                 : sScene.image.height());
 
             sScene.display_frame = sceneset.value("display-frame", "0").toInt();
+
+
+
             sScene.id = i;
             main_wscene.push_back(sScene);
-
-            //Add to Index
+            /************Add to Index***************/
             if(i <= (unsigned int)index_wscene.size())
             {
                 index_wscene[i].i = i-1;
             }
+            /************Add to Index***************/
 
         skipScene:
         sceneset.endGroup();

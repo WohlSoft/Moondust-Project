@@ -21,8 +21,10 @@
 
 #include <QStringList>
 
-class FileStringList
+class FileStringList:public QObject
 {
+    Q_OBJECT
+
 public:
     FileStringList();
 

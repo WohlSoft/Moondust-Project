@@ -131,61 +131,50 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             if(!prgs->wasCanceled()) prgs->setValue(i);
         }
 
+        QString errStr;
+
         levelset.beginGroup( QString("level-"+QString::number(i)) );
-            //slevel.name = tileset.value("name", "").toString();
 
-            //   if(slevel.name=="")
-            //   {
-            //       addError(QString("TILE-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            slevel.group = levelset.value("group", "_NoGroup").toString();
-            slevel.category = levelset.value("category", "_Other").toString();
+        slevel.group =      levelset.value("group", "_NoGroup").toString();
+        slevel.category =   levelset.value("category", "_Other").toString();
 
-            imgFile = levelset.value("image", "").toString();
-            slevel.image_n = imgFile;
-            if( (imgFile!="") )
-            {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                slevel.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(wlvlPath + imgFileM);
-                slevel.mask = mask;
-                slevel.image = GraphicsHelps::setAlphaMask(QPixmap(wlvlPath + imgFile), slevel.mask);
-                if(slevel.image.isNull())
-                {
-                    addError(QString("LEVEL-%1 Brocken image file").arg(i));
-                    goto skipLevel;
-                }
+        slevel.image_n =    levelset.value("image", "").toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(wlvlPath,
+           slevel.image_n, slevel.mask_n,
+           slevel.image,   slevel.mask,
+           errStr);
 
-            }
-            else
-            {
-                addError(QString("LEVEL-%1 Image filename isn't defined").arg(i));
-                goto skipLevel;
-            }
+        if(!errStr.isEmpty())
+        {
+            addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
+            goto skipLevel;
+        }
+        /***************Load image*end***************/
 
-            slevel.grid = levelset.value("grid", default_grid).toInt();
+        slevel.grid =       levelset.value("grid", default_grid).toInt();
 
-            slevel.animated = (levelset.value("animated", "0").toString()=="1");
-            slevel.frames = levelset.value("frames", "1").toInt();
-            slevel.framespeed = levelset.value("frame-speed", "125").toInt();
+        slevel.animated =  (levelset.value("animated", "0").toString()=="1");
+        slevel.frames =     levelset.value("frames", "1").toInt();
+        slevel.framespeed = levelset.value("frame-speed", "125").toInt();
 
-            slevel.frame_h = (slevel.animated? qRound(qreal(slevel.image.height())/slevel.frames) : slevel.image.height());
+        slevel.frame_h =   (slevel.animated?
+                                qRound(qreal(slevel.image.height())/
+                                             slevel.frames)
+                                    : slevel.image.height());
 
-            slevel.display_frame = levelset.value("display-frame", "0").toInt();
-            slevel.id = i;
-            main_wlevels.push_back(slevel);
+        slevel.display_frame = levelset.value("display-frame", "0").toInt();
 
-            //Add to Index
-            if(i <= (unsigned int)index_wlvl.size())
-            {
-                index_wlvl[i].i = i;
-            }
+
+        slevel.id = i;
+        main_wlevels.push_back(slevel);
+
+        /************Add to Index***************/
+        if(i <= (unsigned int)index_wlvl.size())
+        {
+            index_wlvl[i].i = i;
+        }
+        /************Add to Index***************/
 
         skipLevel:
         levelset.endGroup();
