@@ -42,6 +42,7 @@ class ItemWater : public QObject,
                   public LvlBaseItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     ItemWater(QGraphicsPolygonItem *parent=0);
     ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent=0);
