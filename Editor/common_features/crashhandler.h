@@ -37,6 +37,7 @@ public:
     static void crashByFlood();
     static void crashByUnhandledException();
     static void crashBySIGSERV(int signalid);
+    static void attemptCrashsave();
 
     //Crash Handlers end
 
