@@ -110,7 +110,7 @@ bool NpcEdit::saveAs()
     return saveFile(fileName);
 }
 
-bool NpcEdit::saveFile(const QString &fileName)
+bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -149,10 +149,10 @@ bool NpcEdit::saveFile(const QString &fileName)
 
     refreshImageFile();
     updatePreview();
-
-    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-    MainWinConnect::pMainWin->SyncRecentFiles();
-
+    if(addToRecent){
+        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+        MainWinConnect::pMainWin->SyncRecentFiles();
+    }
     return true;
 }
 

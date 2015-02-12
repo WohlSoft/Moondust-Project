@@ -50,7 +50,7 @@ public:
 
     bool save();
     bool saveAs();
-    bool saveFile(const QString &fileName);
+    bool saveFile(const QString &fileName, const bool addToRecent = true);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
 
