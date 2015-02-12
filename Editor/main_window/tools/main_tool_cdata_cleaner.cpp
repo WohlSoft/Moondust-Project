@@ -231,6 +231,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
             if(bossNPCs.isEmpty()) break;
         }
+
         //into included into blocks
         for(int q=0;q<box->LvlData.blocks.size();q++)
         {
