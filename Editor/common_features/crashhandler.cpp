@@ -168,7 +168,7 @@ void CrashHandler::attemptCrashsave()
 
             QString fName = lvledit->currentFile();
             if(lvledit->isUntitled){
-                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".lvl");
+                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".lvlx");
             }else{
                 fName = fName.section("/", -1);
             }
@@ -190,7 +190,7 @@ void CrashHandler::attemptCrashsave()
 
             QString fName = worldedit->currentFile();
             if(worldedit->isUntitled){
-                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".wld");
+                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".wldx");
             }else{
                 fName = fName = fName.section("/", -1);
             }
