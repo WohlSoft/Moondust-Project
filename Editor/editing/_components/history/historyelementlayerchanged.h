@@ -7,6 +7,7 @@
 class HistoryElementLayerChanged : public QObject, public IHistoryElement
 {
     Q_OBJECT
+    Q_INTERFACES(IHistoryElement)
 public:
     explicit HistoryElementLayerChanged(const LevelData &changedItems, const QString &newLayerName, QObject *parent = 0);
     virtual ~HistoryElementLayerChanged();
