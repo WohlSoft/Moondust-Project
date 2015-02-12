@@ -31,6 +31,7 @@
 #include "crashhandler.h"
 #include <ui_crashhandler.h>
 
+#include "common_features/mainwinconnect.h"
 
 QString CrashHandler::getStacktrace()
 {
@@ -94,6 +95,8 @@ CrashHandler::~CrashHandler()
 
 void CrashHandler::crashByFlood()
 {
+    attemptCrashsave();
+
     QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
                                         "To prevent this, try closing other uneccessary programs to free up more memory.");
 
@@ -110,6 +113,8 @@ void CrashHandler::crashByFlood()
 
 void CrashHandler::crashByUnhandledException()
 {
+    attemptCrashsave();
+
     std::exception_ptr unhandledException = std::current_exception();
     try{
         std::rethrow_exception(unhandledException);
@@ -132,6 +137,8 @@ void CrashHandler::crashByUnhandledException()
 
 void CrashHandler::crashBySIGSERV(int /*signalid*/)
 {
+    attemptCrashsave();
+
     QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n");
 
     if(DevConsole::isConsoleShown())
@@ -143,6 +150,54 @@ void CrashHandler::crashBySIGSERV(int /*signalid*/)
     crsh->exec();
 
     exit(EXIT_FAILURE);
+}
+
+void CrashHandler::attemptCrashsave()
+{
+    QDir crashSave = QDir::current();
+    crashSave.mkdir("__crashsave");
+    crashSave.cd("__crashsave");
+
+    int untitledCounter = 0;
+
+
+    QList<QMdiSubWindow*> listOfAllSubWindows = MainWinConnect::pMainWin->allEditWins();
+    foreach (QMdiSubWindow* subWin, listOfAllSubWindows) {
+        if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
+            LevelEdit* lvledit = MainWinConnect::pMainWin->activeLvlEditWin(subWin);
+
+            QString fName = lvledit->currentFile();
+            if(lvledit->isUntitled){
+                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".lvl");
+            }else{
+                fName = fName.section("/", -1);
+            }
+
+            lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
+        }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2){
+            NpcEdit* npcedit = MainWinConnect::pMainWin->activeNpcEditWin();
+
+            QString fName = npcedit->currentFile();
+            if(npcedit->isUntitled){
+                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".txt");
+            }else{
+                fName = fName = fName.section("/", -1);
+            }
+
+            npcedit->saveFile(crashSave.absoluteFilePath(fName), false);
+        }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){
+            WorldEdit* worldedit = MainWinConnect::pMainWin->activeWldEditWin();
+
+            QString fName = worldedit->currentFile();
+            if(worldedit->isUntitled){
+                fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".wld");
+            }else{
+                fName = fName = fName.section("/", -1);
+            }
+
+            worldedit->saveFile(crashSave.absoluteFilePath(fName), false);
+        }
+    }
 }
 
 void CrashHandler::initCrashHandlers()

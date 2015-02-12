@@ -286,13 +286,14 @@ public:
         ///
         int activeChildWindow();
         int activeChildWindow(QMdiSubWindow* wnd);
-        LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        LevelEdit   *activeLvlEditWin();                        //!< Active Window type 1
         LevelEdit   *activeLvlEditWin(QMdiSubWindow *wnd);
-        NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
+        NpcEdit     *activeNpcEditWin();                        //!< Active Window type 2
         NpcEdit     *activeNpcEditWin(QMdiSubWindow *wnd);
-        WorldEdit   *activeWldEditWin();    //!< Active Window type 3
+        WorldEdit   *activeWldEditWin();                        //!< Active Window type 3
         WorldEdit   *activeWldEditWin(QMdiSubWindow *wnd);
-        int subWins();              //!< Returns number of opened subwindows
+        int subWins();                                          //!< Returns number of opened subwindows
+        QList<QMdiSubWindow*> allEditWins();                    //!< Returns all opened subwindows
 
     public slots:
         LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow

@@ -256,6 +256,11 @@ int MainWindow::subWins()
     return ui->centralWidget->subWindowList().size();
 }
 
+QList<QMdiSubWindow *> MainWindow::allEditWins()
+{
+    return ui->centralWidget->subWindowList();
+}
+
 
 
 void MainWindow::SWCascade()
