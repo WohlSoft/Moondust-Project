@@ -216,6 +216,12 @@ QString NpcEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+void NpcEdit::makeCrashState()
+{
+    this->isUntitled = true;
+    this->isModyfied = true; //just in case
+}
+
 
 QString NpcEdit::strippedName(const QString &fullFileName)
 {

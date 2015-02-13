@@ -38,6 +38,7 @@ public:
     static void crashByUnhandledException();
     static void crashBySIGSERV(int signalid);
     static void attemptCrashsave();
+    static void checkCrashsaves();
 
     //Crash Handlers end
 

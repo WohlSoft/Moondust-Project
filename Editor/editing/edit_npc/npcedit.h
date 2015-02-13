@@ -53,6 +53,7 @@ public:
     bool saveFile(const QString &fileName, const bool addToRecent = true);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    void makeCrashState();
 
     QString curFile;
 
