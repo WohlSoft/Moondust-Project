@@ -72,8 +72,17 @@ void TilesetItemBox::construct(MainWindow *ParentMW)
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
+    this->setFocusPolicy(Qt::ClickFocus);
+
     lockTilesetBox=false;
 }
+
+void TilesetItemBox::focusInEvent(QFocusEvent *ev)
+{
+    ev->accept();
+    qApp->setActiveWindow(mw);
+}
+
 
 void TilesetItemBox::setParentMW(MainWindow *ParentMW)
 {

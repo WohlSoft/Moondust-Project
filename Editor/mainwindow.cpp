@@ -142,7 +142,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
     //Apply objects into tools
-    setLevelSectionData();
+    dock_LvlSectionProps->setLevelSectionData();
     setLvlItemBoxes();
     setWldItemBoxes();
     setSoundList();

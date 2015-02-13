@@ -92,7 +92,7 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionSection_Settings->setIcon(Themes::icon(Themes::section_settings));
     ui->actionWorld_settings->setIcon(Themes::icon(Themes::section_settings));
-    ui->LevelSectionSettings->setWindowIcon(Themes::icon(Themes::section_settings_16));
+    dock_LvlSectionProps->setWindowIcon(Themes::icon(Themes::section_settings_16));
 
     ui->actionWarpsAndDoors->setIcon(Themes::icon(Themes::doors));
     dock_LvlWarpProps->setWindowIcon(Themes::icon(Themes::doors));

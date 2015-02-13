@@ -64,6 +64,9 @@ public slots:
     void makeCurrentTileset();
     void makeAllTilesets();
 
+protected:
+    virtual void focusInEvent(QFocusEvent * ev);
+
 private:
     void construct(MainWindow *ParentMW);
     Ui::TilesetItemBox *ui;

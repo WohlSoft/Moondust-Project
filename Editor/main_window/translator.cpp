@@ -29,6 +29,7 @@
 #include <ui_lvl_item_properties.h>
 #include <ui_tileset_item_box.h>
 #include <ui_lvl_warp_props.h>
+#include <ui_lvl_sctc_props.h>
 
 #include <ui_leveledit.h>
 #include <ui_world_edit.h>
@@ -155,7 +156,7 @@ void MainWindow::slotLanguageChanged(QAction* action)
         dock_TilesetBox->lockTilesetBox=false;
 
         setLvlItemBoxes();
-        setLevelSectionData();
+        dock_LvlSectionProps->setLevelSectionData();
         setEventData(-1);
         setSoundList();
         WldLvlExitTypeListReset();
@@ -240,6 +241,8 @@ void MainWindow::loadLanguage(const QString& rLanguage)
                 dock_LvlItemProps->ui->retranslateUi(dock_LvlItemProps);
             if(dock_LvlWarpProps)
                 dock_LvlWarpProps->ui->retranslateUi(dock_LvlWarpProps);
+            if(dock_LvlSectionProps)
+                dock_LvlSectionProps->ui->retranslateUi(dock_LvlSectionProps);
 
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }

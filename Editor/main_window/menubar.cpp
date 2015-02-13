@@ -23,6 +23,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <ui_lvl_sctc_props.h>
 
 void MainWindow::updateMenus(bool force)
 {
@@ -92,7 +93,7 @@ void MainWindow::updateMenus(bool force)
     if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
     {
         GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
-        GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+        GlobalSettings::SectionToolBoxVis = dock_LvlSectionProps->isVisible();
 
         GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
         GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
@@ -105,7 +106,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
-        ui->LevelSectionSettings->setVisible( 0 );
+        dock_LvlSectionProps->setVisible( 0 );
         dock_LvlWarpProps->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
@@ -114,7 +115,7 @@ void MainWindow::updateMenus(bool force)
     if((GlobalSettings::lastWinType !=1) && (WinType==1))
     {
         ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
-        ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
+        dock_LvlSectionProps->setVisible( GlobalSettings::SectionToolBoxVis );
         dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
@@ -289,21 +290,9 @@ void MainWindow::updateMenus(bool force)
 
         if(lvlWin->sceneCreated)
         {
-            if(lvlWin->scene->pResizer==NULL)
-            {
-                ui->ResizeSection->setVisible(true);
-                ui->applyResize->setVisible(false);
-                ui->cancelResize->setVisible(false);
-            }
-            else
-            {
-                if(lvlWin->scene->pResizer->type == 0)
-                {
-                    ui->ResizeSection->setVisible(false);
-                    ui->applyResize->setVisible(true);
-                    ui->cancelResize->setVisible(true);
-                }
-            }
+            dock_LvlSectionProps->switchResizeMode(
+                 (lvlWin->scene->pResizer!=NULL)&&(lvlWin->scene->pResizer->type==0)
+                        );
         }
 
         zoom->setText(QString::number(lvlWin->getZoom()));
@@ -320,7 +309,7 @@ void MainWindow::updateMenus(bool force)
         updateBookmarkBoxByData();
 
 
-        setLevelSectionData();
+        dock_LvlSectionProps->setLevelSectionData();
 
         if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
         LvlMusPlay::musicType=LvlMusPlay::LevelMusic;

@@ -23,6 +23,8 @@
 
 #include "sdl_music_player.h"
 #include "music_player.h"
+#include <main_window/dock/lvl_sctc_props.h>
+#include <ui_lvl_sctc_props.h>
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId=0;
@@ -36,8 +38,8 @@ int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
     WriteToLog(QtDebugMsg, "Clicked play music button");
-    LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
-    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentData().toInt();
+    LvlMusPlay::currentCustomMusic = dock_LvlSectionProps->ui->LVLPropsMusicCustom->text();
+    LvlMusPlay::currentMusicId = dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt();
     setMusic(checked);
 }
 
@@ -61,8 +63,8 @@ void MainWindow::setMusic(bool checked=false)
     {
         if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)
         {
-            if( ( LvlMusPlay::currentMusicId == ui->LVLPropsMusicNumber->currentData().toInt() ) &&
-                    (LvlMusPlay::currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
+            if( ( LvlMusPlay::currentMusicId == dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt() ) &&
+                    (LvlMusPlay::currentCustomMusic == dock_LvlSectionProps->ui->LVLPropsMusicCustom->text()) &&
                     (LvlMusPlay::musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
         }
         else
@@ -164,10 +166,10 @@ void MainWindow::setMusic(bool checked=false)
 
     if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)
     {
-        silent = ((ui->LVLPropsMusicNumber->currentData().toInt() <= 0) // Music is sielent
+        silent = ((dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt() <= 0) // Music is sielent
                 ||
            //Mute, if music ID not exist
-          (ui->LVLPropsMusicNumber->currentData().toInt() > configs.main_music_lvl.size() ));
+          (dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt() > configs.main_music_lvl.size() ));
     }
     else
     if(LvlMusPlay::musicType==LvlMusPlay::WorldMusic)
@@ -187,7 +189,7 @@ void MainWindow::setMusic(bool checked=false)
     {
         if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)
         {
-            CurMusNum = ui->LVLPropsMusicNumber->currentData().toInt();
+            CurMusNum = dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt();
         }
         else
         {
@@ -201,7 +203,7 @@ void MainWindow::setMusic(bool checked=false)
             if(CurMusNum==configs.music_custom_id)
             {
                     WriteToLog(QtDebugMsg, QString("get Custom music path"));
-                musicFile = ui->LVLPropsMusicCustom->text();
+                musicFile = dock_LvlSectionProps->ui->LVLPropsMusicCustom->text();
                 musicFilePath = dirPath + "/" + musicFile;
             }
             else
@@ -265,8 +267,8 @@ void MainWindow::setMusic(bool checked=false)
 
     if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)
     {
-        LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
-        LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentData().toInt();
+        LvlMusPlay::currentCustomMusic = dock_LvlSectionProps->ui->LVLPropsMusicCustom->text();
+        LvlMusPlay::currentMusicId = dock_LvlSectionProps->ui->LVLPropsMusicNumber->currentData().toInt();
     }
     else
     if(LvlMusPlay::musicType==LvlMusPlay::WorldMusic)
