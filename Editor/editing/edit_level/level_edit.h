@@ -54,6 +54,7 @@ public:
     bool savePGEXLVL(QString fileName, bool silent=false); //!< Saves a PGE Extended Level file format
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    void makeCrashState();
 
     void setCurrentSection(int scId);
     void ResetPosition();
@@ -119,7 +120,6 @@ private:
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress);
 
-    bool isModified;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();

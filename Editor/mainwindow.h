@@ -191,7 +191,7 @@ public:
         /// \brief OpenFile - Open file in the editor
         /// \param FilePath - path to file
         ///
-        void OpenFile(QString FilePath);
+        void OpenFile(QString FilePath, bool addToRecentList = true);
 
         ///
         /// \brief on_actionReload_triggered - Reload/Reopen current file
