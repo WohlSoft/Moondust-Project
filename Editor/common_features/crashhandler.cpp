@@ -32,6 +32,7 @@
 #include <ui_crashhandler.h>
 
 #include "common_features/mainwinconnect.h"
+#include <common_features/app_path.h>
 
 QString CrashHandler::getStacktrace()
 {
@@ -154,7 +155,8 @@ void CrashHandler::crashBySIGSERV(int /*signalid*/)
 
 void CrashHandler::attemptCrashsave()
 {
-    QDir crashSave = QDir::current();
+    QDir crashSave;
+    crashSave.setCurrent(AppPathManager::userAppDir());
     crashSave.mkdir("__crashsave");
     crashSave.cd("__crashsave");
 
