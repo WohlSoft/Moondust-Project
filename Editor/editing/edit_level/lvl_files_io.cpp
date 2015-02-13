@@ -564,6 +564,13 @@ QString LevelEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+void LevelEdit::makeCrashState()
+{
+    this->isUntitled = true;
+    this->LvlData.modified = true;
+    this->LvlData.untitled = true;
+}
+
 void LevelEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)

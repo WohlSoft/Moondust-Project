@@ -17,6 +17,7 @@
  */
 
 #include <QDesktopServices>
+#include <QMessageBox>
 #ifdef _WIN32
     #include <windows.h>
     #include <dbghelp.h>
@@ -199,6 +200,34 @@ void CrashHandler::attemptCrashsave()
 
             worldedit->saveFile(crashSave.absoluteFilePath(fName), false);
         }
+    }
+}
+
+void CrashHandler::checkCrashsaves()
+{
+    QDir crashSave;
+    crashSave.setCurrent(AppPathManager::userAppDir());
+    if(crashSave.exists("__crashsave")){
+        crashSave.cd("__crashsave");
+        QStringList allCrashFiles = crashSave.entryList(QDir::Files | QDir::NoDotAndDotDot);
+        foreach(QString file, allCrashFiles){
+            QString fPath = crashSave.absoluteFilePath(file);
+            MainWinConnect::pMainWin->OpenFile(fPath, false);
+        }
+        QList<QMdiSubWindow*> listOfAllSubWindows = MainWinConnect::pMainWin->allEditWins();
+        foreach (QMdiSubWindow* subWin, listOfAllSubWindows) {
+            if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 1){
+                MainWinConnect::pMainWin->activeLvlEditWin()->makeCrashState();
+            }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2){
+                MainWinConnect::pMainWin->activeNpcEditWin()->makeCrashState();
+            }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 3){
+                MainWinConnect::pMainWin->activeWldEditWin()->makeCrashState();
+            }
+        }
+
+
+        crashSave.removeRecursively();
+        QMessageBox::information(MainWinConnect::pMainWin, tr("Crashsave"), tr("Since the last crash, the editor recorved some files.\nPlease save them first before doing anything else."), QMessageBox::Ok, QMessageBox::Ok);
     }
 }
 
