@@ -34,6 +34,8 @@ public slots:
 
     void switchResizeMode(bool mode);
 
+    void loadMusic();
+
 private slots:
     void on_LvlSectionProps_visibilityChanged(bool visible);
 

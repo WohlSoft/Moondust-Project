@@ -308,12 +308,8 @@ void MainWindow::updateMenus(bool force)
         setLayerLists();
         updateBookmarkBoxByData();
 
-
         dock_LvlSectionProps->setLevelSectionData();
-
-        if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
-        setMusic( ui->actionPlayMusic->isChecked() );
+        dock_LvlSectionProps->loadMusic();
         ui->actionSelect->trigger();
 
 
@@ -354,8 +350,7 @@ void MainWindow::updateMenus(bool force)
 
         WriteToLog(QtDebugMsg, "-> Music Player");
 
-        if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, wldWin->currentMusic, "");
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 

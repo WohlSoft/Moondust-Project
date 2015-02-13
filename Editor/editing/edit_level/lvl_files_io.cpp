@@ -584,12 +584,14 @@ void LevelEdit::closeEvent(QCloseEvent *event)
     if(maybeSave()) {
         stopAutoUpdateTimer();
 
-        if(MainWinConnect::pMainWin->subWins()<=1) //Stop music only if this subwindow - last
-        {
-            LvlMusPlay::musicForceReset = true;
-            MainWinConnect::pMainWin->setMusicButton(false);
-            MainWinConnect::pMainWin->setMusic(false);
-        }
+        LvlMusPlay::setNoMusic();
+        MainWinConnect::pMainWin->setMusic(false);
+//        if(MainWinConnect::pMainWin->subWins()<=1) //Stop music only if this subwindow - last
+//        {
+//            LvlMusPlay::musicForceReset = true;
+//            MainWinConnect::pMainWin->setMusicButton(false);
+//            MainWinConnect::pMainWin->setMusic(false);
+//        }
 
         scene->setMessageBoxItem(false);
         scene->clear();

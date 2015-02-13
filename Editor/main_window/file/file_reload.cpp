@@ -20,6 +20,7 @@
 #include <audio/music_player.h>
 #include <script/gui/additionalsettings.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/lvl_sctc_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -119,6 +120,8 @@ void MainWindow::on_actionReload_triggered()
 
         //ui->centralWidget->activeSubWindow()->close();
         LevelEdit *child = chLvlWin;//createLvlChild();
+        LvlMusPlay::setNoMusic();
+        setMusic(false);
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
         {
             child->show();
@@ -143,7 +146,7 @@ void MainWindow::on_actionReload_triggered()
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             LvlMusPlay::musicForceReset=true; //reset musics
-            on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
+            dock_LvlSectionProps->loadMusic();
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
