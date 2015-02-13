@@ -97,18 +97,28 @@ void MainWindow::setUiDefults()
                 dock_LvlWarpProps->height()
                 );
 
-    ui->LevelSectionSettings->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelSectionSettings->width()-GOffset,
+
+    dock_LvlSectionProps = new LvlSectionProps(this, this);
+    dock_LvlSectionProps->setVisible(false);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlSectionProps);
+    dock_LvlSectionProps->setGeometry(
+                mwg.x()+mwg.width()-dock_LvlSectionProps->width()-GOffset,
                 mwg.y()+120,
-                ui->LevelSectionSettings->width(),
-                ui->LevelSectionSettings->height()
+                dock_LvlSectionProps->width(),
+                dock_LvlSectionProps->height()
                 );
+
+    connect(this->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
+                   dock_LvlSectionProps, SLOT(switchResizeMode(bool)));
+
+
     ui->LevelLayers->setGeometry(
                 mwg.x()+mwg.width()-ui->LevelLayers->width()-GOffset,
                 mwg.y()+120,
                 ui->LevelLayers->width(),
                 ui->LevelLayers->height()
                 );
+
     ui->LevelEventsToolBox->setGeometry(
                 mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
                 mwg.y()+120,
@@ -208,8 +218,6 @@ void MainWindow::setUiDefults()
     ui->centralWidget->cascadeSubWindows();
 
     ui->ResizingToolbar->setVisible(false);
-        ui->applyResize->setVisible(false);
-        ui->cancelResize->setVisible(false);
 
     ui->PlacingToolbar->setVisible(false);
         ui->actionOverwriteMode->setVisible(false);
@@ -225,7 +233,7 @@ void MainWindow::setUiDefults()
     dock_LvlWarpProps->hide();
     ui->LevelLayers->hide();
     ui->LevelEventsToolBox->hide();
-    ui->LevelSectionSettings->hide();
+    dock_LvlSectionProps->hide();
 
     dock_LvlItemProps->hide();
     ui->FindDock->hide();

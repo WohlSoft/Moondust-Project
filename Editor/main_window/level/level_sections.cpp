@@ -21,10 +21,11 @@
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
+#include <ui_lvl_sctc_props.h>
 
 void MainWindow::SetCurrentLevelSection(int SctId, int open)
 {
-    lockSctSettingsProps=true;
+    dock_LvlSectionProps->lockSctSettingsProps=true;
 
     int SectionId = SctId;
     int WinType = activeChildWindow();
@@ -79,33 +80,33 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 
         WriteToLog(QtDebugMsg, "Set text label");
         //set data in Section Settings Widget
-        ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+        dock_LvlSectionProps->ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
 
         WriteToLog(QtDebugMsg, "Set ToolBar data");
-        ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].noback);
-        ui->LVLPropsOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
-        ui->LVLPropsUnderWater->setChecked(e->LvlData.sections[SectionId].underwater);
-        ui->LVLPropsLevelWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
+        dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].noback);
+        dock_LvlSectionProps->ui->LVLPropsOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
+        dock_LvlSectionProps->ui->LVLPropsUnderWater->setChecked(e->LvlData.sections[SectionId].underwater);
+        dock_LvlSectionProps->ui->LVLPropsLevelWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
 
         WriteToLog(QtDebugMsg, "Set text to custom music file");
-        ui->LVLPropsMusicCustom->setText(e->LvlData.sections[SectionId].music_file);
+        dock_LvlSectionProps->ui->LVLPropsMusicCustom->setText(e->LvlData.sections[SectionId].music_file);
 
         WriteToLog(QtDebugMsg, "Set standart Music index");
-        ui->LVLPropsMusicNumber->setCurrentIndex( e->LvlData.sections[SectionId].music_id );
+        dock_LvlSectionProps->ui->LVLPropsMusicNumber->setCurrentIndex( e->LvlData.sections[SectionId].music_id );
 
         WriteToLog(QtDebugMsg, "Set Custom music checkbox");
-        ui->LVLPropsMusicCustomEn->setChecked( (e->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+        dock_LvlSectionProps->ui->LVLPropsMusicCustomEn->setChecked( (e->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
         WriteToLog(QtDebugMsg, "Set background index");
-        if(e->LvlData.sections[SectionId].background < (unsigned int)ui->LVLPropsBackImage->count() )
-            ui->LVLPropsBackImage->setCurrentIndex( e->LvlData.sections[SectionId].background );
+        if(e->LvlData.sections[SectionId].background < (unsigned int)dock_LvlSectionProps->ui->LVLPropsBackImage->count() )
+            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( e->LvlData.sections[SectionId].background );
         else
-            ui->LVLPropsBackImage->setCurrentIndex( ui->LVLPropsBackImage->count()-1 );
+            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( dock_LvlSectionProps->ui->LVLPropsBackImage->count()-1 );
 
         setMusic( ui->actionPlayMusic->isChecked() );
     }
 
-    lockSctSettingsProps=false;
+    dock_LvlSectionProps->lockSctSettingsProps=false;
 }
 
 

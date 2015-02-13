@@ -5,6 +5,7 @@
 
 #include "lvl_item_properties.h"
 #include "lvl_warp_props.h"
+#include "lvl_sctc_props.h"
 
 #endif // DOCK_BOXES_H
 

@@ -84,7 +84,7 @@ void MainWindow::loadSettings()
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
         dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", true).toBool());
-        ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
+        dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", true).toBool());
         ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
         dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
@@ -98,7 +98,7 @@ void MainWindow::loadSettings()
         ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
-        ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
+        dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
         ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
@@ -175,7 +175,7 @@ void MainWindow::saveSettings()
     settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
 
     settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
-    settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
+    settings.setValue("level-section-set-float", dock_LvlSectionProps->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
     settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
     settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
@@ -190,7 +190,7 @@ void MainWindow::saveSettings()
     settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
-    settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
+    settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
     settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
     settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
     settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());

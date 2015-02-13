@@ -21,6 +21,7 @@
 #include <file_formats/file_formats.h>
 #include <audio/music_player.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_sctc_props.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -1156,7 +1157,7 @@ void LvlScene::historyBack()
             LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
         }
 
-        MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
         MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
         break;
     }
@@ -1827,7 +1828,7 @@ void LvlScene::historyForward()
         if(subtype == SETTING_SECCUSTOMMUSIC){
             LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
         }
-        MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
         MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 
         break;

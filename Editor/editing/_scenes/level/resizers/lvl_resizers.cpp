@@ -49,7 +49,7 @@ void LvlScene::applyResizers()
             break;
         case 0:
         default:
-            MainWinConnect::pMainWin->on_applyResize_clicked();
+            setSectionResizer(false, true);
         }
     }
 }
@@ -76,7 +76,6 @@ void LvlScene::resetResizers()
         case 0:
         default:
             setSectionResizer(false, false);
-            MainWinConnect::pMainWin->on_cancelResize_clicked();
         }
     }
 }

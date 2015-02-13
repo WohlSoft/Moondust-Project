@@ -21,6 +21,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <main_window/dock/lvl_sctc_props.h>
 
 
 void MainWindow::on_actionLoad_configs_triggered()
@@ -57,7 +58,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     setWldItemBoxes(false);
 
-    setLevelSectionData();
+    dock_LvlSectionProps->setLevelSectionData();
     setSoundList();
     clearFilter();
 

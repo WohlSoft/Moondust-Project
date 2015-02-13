@@ -76,6 +76,7 @@ class MainWindow : public QMainWindow
     friend class TilesetItemBox;
     friend class LvlItemProperties;
     friend class LvlWarpBox;
+    friend class LvlSectionProps;
     /************************Friend classes***************************/
 
 public:
@@ -404,9 +405,6 @@ public:
     public slots:
         void resizeToolbarVisible(bool vis);
 
-        void on_applyResize_clicked();
-        void on_cancelResize_clicked();
-
         void on_actionResizeApply_triggered();
         void on_actionResizeCancel_triggered();
 // ////////////////////////////////////////////////////////
@@ -563,7 +561,6 @@ public:
         //Switch section
         void SetCurrentLevelSection(int SctId, int open=0);
         void on_actionReset_position_triggered();
-        void on_ResizeSection_clicked();
 
     private slots:
         void on_actionGo_to_Section_triggered();
@@ -651,39 +648,22 @@ public:
 
 
 // ///////////////// Section Settings box /////////////////
+    public:
+        LvlSectionProps *dock_LvlSectionProps;
     public slots:
-        void setLevelSectionData();
-
-        void on_LVLPropsMusicCustom_editingFinished();
         void on_actionGridEn_triggered(bool checked);
-        void on_LVLPropsBackImage_currentIndexChanged(int index);
-
-
 
     private slots:
-        void on_LevelSectionSettings_visibilityChanged(bool visible);
         void on_actionSection_Settings_triggered(bool checked);
-
-        void on_LVLPropsLevelWarp_clicked(bool checked);
         void on_actionLevWarp_triggered(bool checked);
-
-        void on_LVLPropsOffScr_clicked(bool checked);
         void on_actionLevOffScr_triggered(bool checked);
-
-        void on_LVLPropsNoTBack_clicked(bool checked);
         void on_actionLevNoBack_triggered(bool checked);
-
-        void on_LVLPropsUnderWater_clicked(bool checked);
         void on_actionLevUnderW_triggered(bool checked);
 
         void on_actionAnimation_triggered(bool checked);
         void on_actionCollisions_triggered(bool checked);
 
         void on_actionVBAlphaEmulate_toggled(bool arg1);
-
-        void on_LVLPropsMusicNumber_currentIndexChanged(int index);
-        void on_LVLPropsMusicCustomEn_toggled(bool checked);
-        void on_LVLPropsMusicCustomBrowse_clicked();
 // ////////////////////////////////////////////////////////
 
 

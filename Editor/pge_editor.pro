@@ -55,7 +55,6 @@ debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
 }
 
-
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
@@ -573,7 +572,8 @@ FORMS    += \
     main_window/updater/check_updates.ui \
     main_window/dock/tileset_item_box.ui \
     main_window/dock/lvl_item_properties.ui \
-    main_window/dock/lvl_warp_props.ui
+    main_window/dock/lvl_warp_props.ui \
+    main_window/dock/lvl_sctc_props.ui
 
 
 

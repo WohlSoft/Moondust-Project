@@ -1521,535 +1521,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="LevelSectionSettings">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>246</width>
-     <height>360</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>246</width>
-     <height>360</height>
-    </size>
-   </property>
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>8</pointsize>
-     <weight>50</weight>
-     <italic>false</italic>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="windowIcon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
-   </property>
-   <property name="floating">
-    <bool>false</bool>
-   </property>
-   <property name="features">
-    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetFloatable</set>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
-   </property>
-   <property name="windowTitle">
-    <string>Section Settings</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="LevelSection">
-    <widget class="QGroupBox" name="LVLPropMusicGr">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>160</y>
-       <width>221</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>91</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>8</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Music</string>
-     </property>
-     <widget class="QComboBox" name="LVLPropsMusicNumber">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>131</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="focusPolicy">
-       <enum>Qt::WheelFocus</enum>
-      </property>
-      <property name="maxVisibleItems">
-       <number>50</number>
-      </property>
-      <item>
-       <property name="text">
-        <string notr="true">[Silence]</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QLabel" name="LVLPropCMusicLbl">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>46</y>
-        <width>191</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Music file:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="LVLPropsMusicCustom">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>171</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>20</y>
-        <width>61</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string comment="Flag of custom music on the level">Custom</string>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>60</y>
-        <width>31</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string notr="true">...</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="LVLPropSettingsGrp">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>219</width>
-       <height>121</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>121</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>8</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Section Settings</string>
-     </property>
-     <widget class="QCheckBox" name="LVLPropsLevelWarp">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>23</y>
-        <width>201</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="whatsThis">
-       <string>Leaving for the screen, the player enters the screen on the other side</string>
-      </property>
-      <property name="text">
-       <string comment="This must be translated as &quot;Connect left and right sides&quot;">Warp section</string>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="LVLPropsOffScr">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>46</y>
-        <width>201</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Off screen exit</string>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="LVLPropsNoTBack">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>69</y>
-        <width>201</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="LVLPropsUnderWater">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>92</y>
-        <width>201</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Underwater</string>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="LVLPropStyleGr">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>260</y>
-       <width>221</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>70</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>8</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Style</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="LVLPropBckrImg">
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Background image</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="LVLPropsBackImage">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::WheelFocus</enum>
-        </property>
-        <property name="maxVisibleItems">
-         <number>50</number>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">[No image]</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>91</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>8</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="title">
-      <string>Current Section</string>
-     </property>
-     <widget class="QLabel" name="label_9">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>51</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Section:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="LVLProp_CurSect">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>20</y>
-        <width>16</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string notr="true">0</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="ResizeSection">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>10</y>
-       <width>121</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>8</pointsize>
-       <weight>50</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Resize section</string>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="applyResize">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>10</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Apply</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="cancelResize">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>10</y>
-       <width>61</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
@@ -2299,8 +1770,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
-          <height>360</height>
+          <width>293</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2482,8 +1953,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>338</height>
+          <width>282</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2590,8 +2061,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>338</height>
+          <width>282</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2701,7 +2172,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>265</width>
           <height>461</height>
          </rect>
         </property>
@@ -2999,8 +2470,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>338</height>
+          <width>282</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3115,8 +2586,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>338</height>
+          <width>282</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3213,8 +2684,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>338</height>
+          <width>282</width>
+          <height>435</height>
          </rect>
         </property>
         <attribute name="label">
