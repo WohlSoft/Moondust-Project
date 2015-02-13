@@ -20,6 +20,7 @@
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_sctc_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -135,7 +136,8 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             setLayersBox();
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            LvlMusPlay::musicForceReset=true; //reset musics
+            //LvlMusPlay::musicForceReset=true; //reset musics
+            dock_LvlSectionProps->loadMusic();
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {

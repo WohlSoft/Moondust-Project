@@ -405,6 +405,20 @@ void LvlSectionProps::switchResizeMode(bool mode)
     ui->ResizeSection->setVisible(!mode);
 }
 
+void LvlSectionProps::loadMusic()
+{
+    if(mw->activeChildWindow()==1)
+    {
+        LevelEdit * edit = mw->activeLvlEditWin();
+        if(!edit) return;
+
+        LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
+                    edit->LvlData.sections[edit->LvlData.CurSection].music_id,
+                    edit->LvlData.sections[edit->LvlData.CurSection].music_file);
+    }
+    mw->setMusic(mw->ui->actionPlayMusic->isChecked());
+}
+
 
 void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 {
@@ -425,9 +439,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
         edit->LvlData.sections[edit->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
         if(ui->LVLPropsMusicNumber->hasFocus()) edit->LvlData.modified = true;
     }
-
-    WriteToLog(QtDebugMsg, "Call to Set Music if playing");
-    mw->setMusic(mw->ui->actionPlayMusic->isChecked());
+    loadMusic();
 }
 
 void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
@@ -500,5 +512,5 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
         edit->LvlData.sections[edit->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
     }
 
-    mw->setMusic( mw->ui->actionPlayMusic->isChecked() );
+    loadMusic();
 }

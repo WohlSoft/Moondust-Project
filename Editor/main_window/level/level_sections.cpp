@@ -103,7 +103,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
         else
             dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( dock_LvlSectionProps->ui->LVLPropsBackImage->count()-1 );
 
-        setMusic( ui->actionPlayMusic->isChecked() );
+        dock_LvlSectionProps->loadMusic();
     }
 
     dock_LvlSectionProps->lockSctSettingsProps=false;

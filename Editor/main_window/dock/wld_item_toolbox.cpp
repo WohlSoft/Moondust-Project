@@ -22,6 +22,7 @@
 #include <editing/_scenes/world/wld_item_placing.h>
 #include <data_configs/custom_data.h>
 #include <file_formats/file_formats.h>
+#include <audio/music_player.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -311,6 +312,7 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 
         //Play selected music
         activeWldEditWin()->currentMusic = item->data(3).toInt();
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, activeWldEditWin()->currentMusic, "");
         setMusic( ui->actionPlayMusic->isChecked() );
     }
 }
