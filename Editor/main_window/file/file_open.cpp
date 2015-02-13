@@ -53,7 +53,7 @@ void MainWindow::on_OpenFile_triggered()
         OpenFile(fileName_DATA);
 }
 
-void MainWindow::OpenFile(QString FilePath)
+void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 {
     if(!continueLoad) return;
     qApp->setActiveWindow(this);
@@ -312,6 +312,8 @@ void MainWindow::OpenFile(QString FilePath)
     }
 
     // Add to recent fileList
-    AddToRecentFiles(FilePath);
-    SyncRecentFiles();
+    if(addToRecentList){
+        AddToRecentFiles(FilePath);
+        SyncRecentFiles();
+    }
 }
