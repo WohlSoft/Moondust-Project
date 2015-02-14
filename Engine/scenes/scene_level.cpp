@@ -395,6 +395,9 @@ int LevelScene::exec()
  Uint32 stop_physics;
   float doUpdate_physics=0;
 
+  float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
+  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
+
     while(running)
     {
 
@@ -458,25 +461,31 @@ int LevelScene::exec()
 
         if(doUpdate_render<=0)
         {
-
             start_render = SDL_GetTicks();
             render();
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
 
-            if(1000.0 / (float)PGE_Window::MaxFPS > stop_render-start_render)
-                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
+            if( timeFPS > stop_render-start_render)
+                    doUpdate_render = timeFPS - (stop_render-start_render);
         }
-        doUpdate_render -= 1000.0/(float)PGE_Window::PhysStep;
+        doUpdate_render -= timeStep;
 
-        if(1000.0 / (float)PGE_Window::PhysStep >stop_physics-start_physics)
+        if(stop_render<start_render)
+            {stop_render=doUpdate_render; start_render=0;}
+
+        doUpdate_physics=1;
+        lastTicks=1;
+        if( timeStep > (stop_physics-start_physics)-(stop_render-start_render))
         {
-            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep - (stop_physics-start_physics);
+            doUpdate_physics = timeStep-(stop_physics-start_physics)-(stop_render-start_render);
             lastTicks = doUpdate_physics;
+            if(lastTicks==0) lastTicks=1;
             SDL_Delay( doUpdate_physics );
         }
+        stop_render=0;
+        start_render=0;
 
         if(isExit())
             running = false;
