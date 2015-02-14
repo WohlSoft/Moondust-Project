@@ -176,7 +176,7 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             if(selected==play)
             {
-                MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
+                scene->_edit->currentMusic = musicData.id;
                 LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
                 LvlMusPlay::updatePlayerState(true);
                 MainWinConnect::pMainWin->setMusicButton(true);

@@ -40,7 +40,7 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
         pResizer->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(WorldEdit::MODE_Resizing);
+        _edit->changeCursor(WorldEdit::MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
