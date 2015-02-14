@@ -45,6 +45,9 @@ public:
 
     static void setMusic(MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
+    static void updateMusic();
+    static void updatePlayerState(bool playing=true);
+    static void stopMusic();
 
 };
 

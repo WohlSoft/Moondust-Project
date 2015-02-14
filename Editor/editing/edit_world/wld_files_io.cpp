@@ -509,8 +509,7 @@ void WorldEdit::closeEvent(QCloseEvent *event)
     if(maybeSave()) {
         stopAutoUpdateTimer();
 
-        LvlMusPlay::setNoMusic();
-        MainWinConnect::pMainWin->setMusic(false);
+        LvlMusPlay::stopMusic();
 
         scene->setMessageBoxItem(false);
         scene->clear();

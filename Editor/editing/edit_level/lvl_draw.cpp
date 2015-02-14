@@ -39,7 +39,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
 
             progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->loadUserData(progress);
 
         if(progress.wasCanceled()) return false;
@@ -48,7 +48,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->makeSectionBG(progress);
 
         if(progress.wasCanceled()) return false;
@@ -57,7 +57,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setBGO(progress);
 
         if(progress.wasCanceled()) return false;
@@ -66,7 +66,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setBlocks(progress);
 
         if(progress.wasCanceled()) return false;
@@ -76,7 +76,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
 
     progress.setValue(progress.value()+1);
     progress.setValue(progress.value()+1);
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setNPC(progress);
 
         if(progress.wasCanceled()) return false;
@@ -85,7 +85,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("5/%1 Applying Water...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setWaters(progress);
 
         if(progress.wasCanceled()) return false;
@@ -94,7 +94,7 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
             progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
 
 
-    qApp->processEvents();
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setDoors(progress);
 
         if(progress.wasCanceled()) return false;

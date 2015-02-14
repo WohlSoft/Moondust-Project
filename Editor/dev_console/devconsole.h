@@ -54,6 +54,7 @@ private:
 
     void doHelp(QStringList args);
     void doTest(QStringList args);
+    void doPlayMusic(QStringList args);
     void doVersion(QStringList);
     void doQuit(QStringList);
     void doSavesettings(QStringList);

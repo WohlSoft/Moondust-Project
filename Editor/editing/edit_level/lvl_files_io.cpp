@@ -63,7 +63,7 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new LvlScene(ui->graphicsView, configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
     scene->opts = options;
 
     scene->InitSection(0);
@@ -473,7 +473,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new LvlScene(ui->graphicsView, configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
 
     scene->opts = options;
 
@@ -584,14 +584,7 @@ void LevelEdit::closeEvent(QCloseEvent *event)
     if(maybeSave()) {
         stopAutoUpdateTimer();
 
-        LvlMusPlay::setNoMusic();
-        MainWinConnect::pMainWin->setMusic(false);
-//        if(MainWinConnect::pMainWin->subWins()<=1) //Stop music only if this subwindow - last
-//        {
-//            LvlMusPlay::musicForceReset = true;
-//            MainWinConnect::pMainWin->setMusicButton(false);
-//            MainWinConnect::pMainWin->setMusic(false);
-//        }
+        LvlMusPlay::stopMusic();
 
         scene->setMessageBoxItem(false);
         scene->clear();
