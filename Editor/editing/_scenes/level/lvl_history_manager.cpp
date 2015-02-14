@@ -1158,6 +1158,7 @@ void LvlScene::historyBack()
         }
 
         MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
+        LvlMusPlay::updateMusic();
         MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
         break;
     }
@@ -1829,6 +1830,7 @@ void LvlScene::historyForward()
             LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
         }
         MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
+        LvlMusPlay::updateMusic();
         MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 
         break;
