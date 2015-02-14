@@ -46,7 +46,7 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     if(parent)
     {
-        if(parent->metaObject()->className()==QString("LevelEdit"));
+        if(strcmp(parent->metaObject()->className(), "LevelEdit")==0)
         {
             _edit = qobject_cast<LevelEdit*>(parent);
         }
