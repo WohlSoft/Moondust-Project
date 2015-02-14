@@ -83,3 +83,13 @@ CrashData::CrashData(CrashData &_cd)
     this->path = _cd.path;
 }
 
+void CrashData::reset()
+{
+    used=false;
+    untitled=false;
+    modifyed=false;
+    fullPath.clear();
+    filename.clear();
+    path.clear();
+}
+

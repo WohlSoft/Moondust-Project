@@ -38,6 +38,7 @@ public:
     explicit CrashData();
     CrashData(const CrashData &_cd);
     CrashData(CrashData &_cd);
+    void reset();
     bool used;
     bool untitled;
     bool modifyed;
