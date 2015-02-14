@@ -48,6 +48,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);
     ui->graphicsView->verticalScrollBar()->setTracking(true);
 
+    ui->graphicsView->setFocus();
 }
 
 WLD_SetPoint::~WLD_SetPoint()
