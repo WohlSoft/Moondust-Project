@@ -359,10 +359,8 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                  FileData.metaData.bookmarks.push_back(meta_bookmark);
              }
          }//meta bookmarks
-         ///////////////////////////////MetaDATA//End////////////////////////////////////////
-         /*
-         else ///////////////////TILES//////////////////////
-         if(pgeX_Data.dataTree[section].name=="TILES")
+         else
+         if(pgeX_Data.dataTree[section].name=="META_SYS_CRASH")
          {
              if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
              {
@@ -379,8 +377,8 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                              .arg(sdata);
                      goto badfile;
                  }
+
                  PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
-                 //defines here
 
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
@@ -391,12 +389,51 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                              .arg(v.marker)
                              .arg(v.value);
 
-                       //markers here
+                       FileData.metaData.crash.used=true;
+
+                       if(v.marker=="UT") //Untitled
+                       {
+                           if(PGEFile::IsBool(v.value))
+                               FileData.metaData.crash.untitled = (bool)v.value.toInt();
+                           else
+                               goto badfile;
+                       }
+                       else
+                       if(v.marker=="MD") //Modyfied
+                       {
+                           if(PGEFile::IsBool(v.value))
+                               FileData.metaData.crash.modifyed = (bool)v.value.toInt();
+                           else
+                               goto badfile;
+                       }
+                       else
+                       if(v.marker=="N") //Filename
+                       {
+                           if(PGEFile::IsQStr(v.value))
+                               FileData.metaData.crash.filename = PGEFile::X2STR(v.value);
+                           else
+                               goto badfile;
+                       }
+                       else
+                       if(v.marker=="P") //Path
+                       {
+                           if(PGEFile::IsQStr(v.value))
+                               FileData.metaData.crash.path = PGEFile::X2STR(v.value);
+                           else
+                               goto badfile;
+                       }
+                       else
+                       if(v.marker=="FP") //Full file Path
+                       {
+                           if(PGEFile::IsQStr(v.value))
+                               FileData.metaData.crash.fullPath = PGEFile::X2STR(v.value);
+                           else
+                               goto badfile;
+                       }
                  }
-                 //FileData.push()
              }
-         }//TILES
-         */
+         }//meta sys crash
+         ///////////////////////////////MetaDATA//End////////////////////////////////////////
          else ///////////////////TILES//////////////////////
          if(pgeX_Data.dataTree[section].name=="TILES")
          {
@@ -888,6 +925,19 @@ QString FileFormats::WriteExtendedWldFile(WorldData FileData)
             TextData += "\n";
         }
         TextData += "META_BOOKMARKS_END\n";
+    }
+
+    //Some System information
+    if(!FileData.metaData.crash.used)
+    {
+        TextData += "META_SYS_CRASH\n";
+            TextData += PGEFile::value("UT", PGEFile::BoolS(FileData.metaData.crash.untitled));
+            TextData += PGEFile::value("MD", PGEFile::BoolS(FileData.metaData.crash.modifyed));
+            TextData += PGEFile::value("N", PGEFile::qStrS(FileData.metaData.crash.filename));
+            TextData += PGEFile::value("P", PGEFile::qStrS(FileData.metaData.crash.path));
+            TextData += PGEFile::value("FP", PGEFile::qStrS(FileData.metaData.crash.fullPath));
+            TextData += "\n";
+        TextData += "META_SYS_CRASH_END\n";
     }
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
