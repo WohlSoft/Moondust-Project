@@ -218,7 +218,7 @@ void LevelScene::update()
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
+            exitLevelDelay -= (1000.0/(float)PGE_Window::PhysStep)-lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
         else
         {
             if(exitLevelCode==EXIT_Closed)
@@ -279,7 +279,7 @@ void LevelScene::update()
             }
             else
             {
-                delayToEnter-= lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
+                delayToEnter-= (1000.0/(float)PGE_Window::PhysStep)-lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
             }
         }
 
@@ -481,7 +481,6 @@ int LevelScene::exec()
         {
             doUpdate_physics = timeStep-(stop_physics-start_physics)-(stop_render-start_render);
             lastTicks = doUpdate_physics;
-            if(lastTicks==0) lastTicks=1;
             SDL_Delay( doUpdate_physics );
         }
         stop_render=0;
