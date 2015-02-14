@@ -139,7 +139,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
@@ -173,7 +173,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
@@ -208,7 +208,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
