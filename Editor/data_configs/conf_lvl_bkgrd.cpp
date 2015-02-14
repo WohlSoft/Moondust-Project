@@ -77,7 +77,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
     for(i=1; i<=bg_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

@@ -125,7 +125,7 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
 
     for(i=0; i<=levels_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

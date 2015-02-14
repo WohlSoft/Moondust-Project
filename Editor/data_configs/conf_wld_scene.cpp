@@ -103,7 +103,7 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
 
     for(i=1; i<=scenery_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);
