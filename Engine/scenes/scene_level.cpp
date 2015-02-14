@@ -212,13 +212,17 @@ Uint32 lastTicks=0;
 bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
+int  uTick = 1;
 
 void LevelScene::update()
 {
+    uTick = abs((1000.0/(float)PGE_Window::PhysStep)-lastTicks);
+    if(uTick<=0) uTick=1;
+
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= (1000.0/(float)PGE_Window::PhysStep)-lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
+            exitLevelDelay -= uTick;
         else
         {
             if(exitLevelCode==EXIT_Closed)
@@ -279,7 +283,7 @@ void LevelScene::update()
             }
             else
             {
-                delayToEnter-= (1000.0/(float)PGE_Window::PhysStep)-lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
+                delayToEnter-= uTick;
             }
         }
 
@@ -367,7 +371,7 @@ void LevelScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(lastTicks), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
     }
 
     renderBlack:
@@ -397,6 +401,8 @@ int LevelScene::exec()
 
   float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
+
+    uTick = 1;
 
     while(running)
     {
@@ -480,6 +486,7 @@ int LevelScene::exec()
         if( timeStep > (stop_physics-start_physics)-(stop_render-start_render))
         {
             doUpdate_physics = timeStep-(stop_physics-start_physics)-(stop_render-start_render);
+            if(doUpdate_physics<=0) doUpdate_physics=1;
             lastTicks = doUpdate_physics;
             SDL_Delay( doUpdate_physics );
         }
