@@ -44,6 +44,7 @@
 
 #include <editing/_components/history/ihistoryelement.h>
 
+class WorldEdit;
 
 class WldScene : public QGraphicsScene
 {
@@ -88,9 +89,10 @@ public:
 
     // ///////////////////Common////////////////////////
     public:
-        dataconfigs * pConfigs;       //!< Pointer to global configuration in the main window
-        WorldData  * WldData;         //!< Pointer to level data storage in the sub-window class
-        GraphicsWorkspace *_viewPort; //!< Pointer to parent graphics view
+        dataconfigs       * pConfigs;   //!< Pointer to global configuration in the main window
+        WorldData         * WldData;    //!< Pointer to level data storage in the sub-window class
+        GraphicsWorkspace *_viewPort;   //!< Pointer to parent graphics view
+        WorldEdit         *_edit;       //!< Pointer to parent edit sub-window;
 
         WorldData WldBuffer;    //!< Data buffer
 

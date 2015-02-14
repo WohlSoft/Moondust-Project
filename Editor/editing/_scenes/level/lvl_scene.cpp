@@ -52,8 +52,6 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
         }
     }
 
-    qDebug() << "Edit zone address is: "<< (int)(void*)_edit;
-
     //set Default Z Indexes
     Z_backImage = -1000; //Background
     //Background-2
