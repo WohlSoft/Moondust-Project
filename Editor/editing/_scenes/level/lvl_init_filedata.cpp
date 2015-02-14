@@ -91,10 +91,9 @@ void LvlScene::setNPC(QProgressDialog &progress)
     {
         //add NPC to scene
         placeNPC(LvlData->npc[i]);
-
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
-            //progress.setValue(progress.value()+1);
-        /*else*/ return;
+            return;
     }
 
 }

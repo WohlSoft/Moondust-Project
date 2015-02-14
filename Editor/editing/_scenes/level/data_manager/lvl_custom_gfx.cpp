@@ -91,8 +91,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         qDebug() << "Loaded custom rotation rules: " << count;
     }
 
-
-
     if(!progress.wasCanceled())
         progress.setLabelText(
                     tr("Search User Backgrounds %1")
@@ -143,6 +141,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBGs.push_back(uBG);
 
         total++;
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
         else*/ return;
@@ -244,7 +243,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
             #endif
-
+    qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     if(progress.wasCanceled())
         /*progress.setValue(progress.value()+1);
     else*/ return;
@@ -312,7 +311,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
             #endif
-
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
         else*/ return;
@@ -432,7 +431,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
              animates_NPC.push_back( aniNPC );
              index_npc[pConfigs->main_npc[i].id].ai = animates_NPC.size()-1;
 
-
+         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
          if(progress.wasCanceled())
              /*progress.setValue(progress.value()+1);
          else*/ return;
