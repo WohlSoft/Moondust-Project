@@ -47,11 +47,13 @@
 
 #include <editing/_components/history/ihistoryelement.h>
 
+class LevelEdit;
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
     friend class EditMode;
-    friend class leveledit;
+    friend class LevelEdit;
 public:
     LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
@@ -92,9 +94,10 @@ public:
 
     // ///////////////////Common////////////////////////
     public:
-        dataconfigs * pConfigs;       //!< Pointer to global configuration in the main window
-        LevelData  * LvlData;         //!< Pointer to level data storage in the sub-window class
+        dataconfigs       * pConfigs;       //!< Pointer to global configuration in the main window
+        LevelData         * LvlData;         //!< Pointer to level data storage in the sub-window class
         GraphicsWorkspace *_viewPort; //!< Pointer to parent graphics view
+        LevelEdit         *_edit;       //!< Pointer to parent edit sub-window;
 
         LevelData LvlBuffer;    //!< Data buffer
 
