@@ -59,3 +59,27 @@ QString FileFormats::removeQuotes(QString str)
     target = target.remove(target.size()-1,1);
     return target;
 }
+
+/***************************************************************************/
+CrashData::CrashData() : used(false),untitled(false), modifyed(false) {}
+
+CrashData::CrashData(const CrashData &_cd)
+{
+    this->used=_cd.used;
+    this->untitled=_cd.untitled;
+    this->modifyed=_cd.modifyed;
+    this->fullPath=_cd.fullPath;
+    this->filename=_cd.filename;
+    this->path = _cd.path;
+}
+
+CrashData::CrashData(CrashData &_cd)
+{
+    this->used=_cd.used;
+    this->untitled=_cd.untitled;
+    this->modifyed=_cd.modifyed;
+    this->fullPath=_cd.fullPath;
+    this->filename=_cd.filename;
+    this->path = _cd.path;
+}
+
