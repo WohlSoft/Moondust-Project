@@ -503,8 +503,10 @@ public:
 
 
 // ///////////////// Music Player ////////////////////////
+    public:
+        int musicVolume();
     public slots:
-        void setMusic(bool checked);
+        void setMusic(bool checked=false);
         void setMusicButton(bool checked);
         void on_actionPlayMusic_triggered(bool checked);
 

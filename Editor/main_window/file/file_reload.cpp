@@ -129,6 +129,7 @@ void MainWindow::on_actionReload_triggered()
             child->updateGeometry();
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
+            LvlMusPlay::musicForceReset=true; //reset musics
             updateMenus(true);
 
             child->setFocus();
@@ -145,8 +146,6 @@ void MainWindow::on_actionReload_triggered()
             SetCurrentLevelSection(lastSection);
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            LvlMusPlay::musicForceReset=true; //reset musics
-            dock_LvlSectionProps->loadMusic();
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();

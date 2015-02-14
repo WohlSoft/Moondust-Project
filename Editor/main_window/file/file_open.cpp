@@ -136,8 +136,6 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             setLayersBox();
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            //LvlMusPlay::musicForceReset=true; //reset musics
-            dock_LvlSectionProps->loadMusic();
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {

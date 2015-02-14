@@ -28,6 +28,8 @@
 #include <common_features/mainwinconnect.h>
 #include <file_formats/pge_x.h>
 
+#include <audio/music_player.h>
+
 #include "devconsole.h"
 #include <ui_devconsole.h>
 
@@ -250,6 +252,7 @@ void DevConsole::registerCommands()
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
     registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
+    registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
 }
 
 void DevConsole::doCommand()
@@ -265,7 +268,8 @@ void DevConsole::doCommand()
     QString baseCommand = cmdList[0];
     cmdList.pop_front();
 
-    if(commands.contains(baseCommand.toLower())){
+    if(commands.contains(baseCommand.toLower()))
+    {
         (this->*(commands[baseCommand].first))(cmdList);
     }
 }
@@ -282,6 +286,33 @@ void DevConsole::doTest(QStringList /*args*/)
 {
     log("-> All good!", ui->tabWidget->tabText(0));
 }
+
+void DevConsole::doPlayMusic(QStringList args)
+{
+    if(args.size()!=2)
+    {
+        log("-> Bad command syntax!");
+        return;
+    }
+    if(args[0]=="lvl")
+        LvlMusPlay::setMusic(LvlMusPlay::LevelMusic, args[1].toLong(), "");
+    else
+    if(args[0]=="wld")
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, args[1].toLong(), "");
+    else
+    if(args[0]=="spc")
+        LvlMusPlay::setMusic(LvlMusPlay::SpecialMusic, args[1].toLong(), "");
+    else
+    {
+        log("-> Unknown music type: (types are: lvl wld spc)!");
+        return;
+    }
+
+    MainWinConnect::pMainWin->setMusicButton(true);
+    MainWinConnect::pMainWin->setMusic(true);
+    log(QString("-> Music is playing: %1").arg(LvlMusPlay::currentMusicPath), ui->tabWidget->tabText(0));
+}
+
 
 void DevConsole::doMd5(QStringList args)
 {

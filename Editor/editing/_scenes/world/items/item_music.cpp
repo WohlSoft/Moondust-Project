@@ -18,6 +18,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
+#include <audio/music_player.h>
 
 #include "item_music.h"
 
@@ -176,19 +177,18 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(selected==play)
             {
                 MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
+                LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
+                LvlMusPlay::updatePlayerState(true);
                 MainWinConnect::pMainWin->setMusicButton(true);
-                MainWinConnect::pMainWin->on_actionPlayMusic_triggered(true);
             }
             else
             if(selected==cutTile)
             {
-                //scene->doCut = true ;
                 MainWinConnect::pMainWin->on_actionCut_triggered();
             }
             else
             if(selected==copyTile)
             {
-                //scene->doCopy = true ;
                 MainWinConnect::pMainWin->on_actionCopy_triggered();
             }
             else
