@@ -1777,7 +1777,7 @@ void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 
     int WinType = activeChildWindow();
 
-    if (WinType==1)
+    if(WinType==1)
     {
         LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
