@@ -32,6 +32,7 @@
 #include <common_features/logger.h>
 #include <common_features/themes.h>
 #include <file_formats/file_formats.h>
+#include <main_window/global_settings.h>
 
 #include "app_settings.h"
 #include <ui_app_settings.h>
@@ -83,7 +84,30 @@ AppSettings::~AppSettings()
 
 void AppSettings::applySettings()
 {
-    //set settings into GUI fields
+    /***********************Grab settings****************************/
+    autoPlayMusic = GlobalSettings::autoPlayMusic;
+    Animation = GlobalSettings::LvlOpts.animationEnabled;
+    Collisions = GlobalSettings::LvlOpts.collisionsEnabled;
+
+    AnimationItemLimit = GlobalSettings::animatorItemsLimit;
+
+    MainWindowView = GlobalSettings::MainWindowView;
+    LVLToolboxPos = GlobalSettings::LVLToolboxPos;
+    WLDToolboxPos = GlobalSettings::WLDToolboxPos;
+    TSTToolboxPos = GlobalSettings::TSTToolboxPos;
+
+    midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
+    midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
+    midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
+
+    placing_dont_show_props_box = GlobalSettings::Placing_dontShowPropertiesBox;
+
+    historyLimit = GlobalSettings::Placing_dontShowPropertiesBox;
+
+    selectedTheme = GlobalSettings::currentTheme;
+
+
+    /****************set settings into GUI fields********************/
     ui->autoPlayMusic->setChecked(autoPlayMusic);
     ui->Animations->setChecked(Animation);
     ui->itemsLisit->setValue(AnimationItemLimit);
@@ -99,6 +123,8 @@ void AppSettings::applySettings()
     ui->Editor_Mid_AllowDrag->setChecked(midmouse_allowDragMode);
 
     ui->Editor_placing_dontShowPropsBox->setChecked(placing_dont_show_props_box);
+
+    ui->historyLimit->setValue(historyLimit);
 
     if(logEnabled)
         switch(loglevel)
@@ -177,6 +203,8 @@ void AppSettings::on_buttonBox_accepted()
     midmouse_allowDragMode = ui->Editor_Mid_AllowDrag->isChecked();
 
     placing_dont_show_props_box = ui->Editor_placing_dontShowPropsBox->isChecked();
+
+    historyLimit = ui->historyLimit->value();
 
     if(ui->MView_SubWindows->isChecked())
         MainWindowView = QMdiArea::SubWindowView;

@@ -49,6 +49,8 @@ public:
 
     bool    placing_dont_show_props_box;
 
+    int     historyLimit;
+
     QMdiArea::ViewMode   MainWindowView;
     QTabWidget::TabPosition LVLToolboxPos;
     QTabWidget::TabPosition WLDToolboxPos;
