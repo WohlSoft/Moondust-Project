@@ -363,10 +363,11 @@ void LevelScene::render()
     {
         FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
-        FontManager::printText(QString("Player J=%1 G=%2 F=%3")
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
-                               .arg(debug_player_foots), 10,100);
+                               .arg(debug_player_foots)
+                               .arg(uTick), 10,100);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
