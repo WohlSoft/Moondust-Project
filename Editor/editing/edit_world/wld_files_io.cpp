@@ -371,8 +371,8 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 {
     QFile file(fileName);
     WldData = FileData;
-    bool modifystate;
-    bool untitledstate;
+    bool modifystate=false;
+    bool untitledstate=false;
     QString curFName=fileName;
     WldData.modified = false;
     WldData.untitled = false;
