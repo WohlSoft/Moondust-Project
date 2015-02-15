@@ -33,7 +33,7 @@
 void WldScene::addRemoveHistory(WorldData removedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(removedItems, WorldData());
     modf->setCustomHistoryName(tr("Remove"));
@@ -48,7 +48,7 @@ void WldScene::addRemoveHistory(WorldData removedItems)
 void WldScene::addPlaceHistory(WorldData placedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryElementModification* modf = new HistoryElementModification(WorldData(), placedItems);
     modf->setCustomHistoryName(tr("Place"));
@@ -62,7 +62,7 @@ void WldScene::addPlaceHistory(WorldData placedItems)
 
 void WldScene::addOverwriteHistory(WorldData removedItems, WorldData placedItems)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
     modf->setCustomHistoryName(tr("Place & Overwrite"));
@@ -76,7 +76,7 @@ void WldScene::addOverwriteHistory(WorldData removedItems, WorldData placedItems
 
 void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     //set first base
     HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
@@ -91,7 +91,7 @@ void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedI
 
 void WldScene::addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubType subtype, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
     modf->setScene(this);
@@ -104,7 +104,7 @@ void WldScene::addChangeWorldSettingsHistory(HistorySettings::WorldSettingSubTyp
 
 void WldScene::addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
     modf->setScene(this);
@@ -117,7 +117,7 @@ void WldScene::addChangeSettingsHistory(WorldData modifiedItems, HistorySettings
 
 void WldScene::addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unrotatedItems, rotatedItems);
     modf->setCustomHistoryName(tr("Rotate"));
@@ -131,7 +131,7 @@ void WldScene::addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems
 
 void WldScene::addFlipHistory(WorldData flippedItems, WorldData unflippedItems)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(unflippedItems, flippedItems);
     modf->setCustomHistoryName(tr("Flip"));
@@ -169,7 +169,7 @@ void WldScene::historyForward()
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(lastOperation->getHistoryName()));
 }
 
-void WldScene::cleanupRedoElements()
+void WldScene::updateHistoryBuffer()
 {
     if(canRedo())
     {
@@ -179,6 +179,12 @@ void WldScene::cleanupRedoElements()
             operationList.pop_back();
         }
     }
+
+    while(operationList.size() >= GlobalSettings::historyLimit){
+        operationList.pop_front();
+        historyIndex--;
+    }
+
 }
 
 int WldScene::getHistroyIndex()

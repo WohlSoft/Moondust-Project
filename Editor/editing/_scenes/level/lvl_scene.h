@@ -632,7 +632,7 @@ public:
         //history modifiers
         void historyBack();
         void historyForward();
-        void cleanupRedoElements();
+        void updateHistoryBuffer();
         //history information
         int getHistroyIndex();
         bool canUndo();

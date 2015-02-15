@@ -42,7 +42,7 @@
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryOperation rmOperation;
     HistoryElementModification* modf = new HistoryElementModification(removedItems, LevelData());
@@ -59,7 +59,7 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
 void LvlScene::addPlaceHistory(LevelData placedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryOperation plOperation;
     HistoryElementModification* modf = new HistoryElementModification(LevelData(), placedItems);
@@ -76,7 +76,7 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
 void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryOperation overwriteOperation;
     HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
@@ -92,7 +92,7 @@ void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems
 
 void LvlScene::addPlaceDoorHistory(LevelDoors door, bool isEntrance)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation plDoorOperation;
     HistoryElementPlaceDoor* modf = new HistoryElementPlaceDoor(door, isEntrance);
@@ -108,7 +108,7 @@ void LvlScene::addPlaceDoorHistory(LevelDoors door, bool isEntrance)
 void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems)
 {
     //add cleanup redo elements
-    cleanupRedoElements();
+    updateHistoryBuffer();
     //add new element
     HistoryOperation moveOperation;
     HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
@@ -124,7 +124,7 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
 
 void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation modOperation;
     HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
@@ -140,7 +140,7 @@ void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, HistorySettings
 void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                        long newLeft, long newTop, long newRight, long newBottom)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
     HistoryOperation resizeOperation;
     HistoryElementResizeSection *modf = new HistoryElementResizeSection(sectionID,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
@@ -156,7 +156,7 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
 
 void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerName)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chLaOperation;
     HistoryElementLayerChanged *modf = new HistoryElementLayerChanged(changedItems, newLayerName);
@@ -170,7 +170,7 @@ void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerNa
 
 void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation resizeBlOperation;
     HistoryElementResizeBlock *modf = new HistoryElementResizeBlock(bl,
@@ -186,7 +186,7 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
 
 void LvlScene::addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation resizeWtOperation;
     resizeWtOperation.type = HistoryOperation::LEVELHISTORY_RESIZEWATER;
@@ -215,7 +215,7 @@ void LvlScene::addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop,
 
 void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation addWpOperation;
     addWpOperation.type = HistoryOperation::LEVELHISTORY_ADDWARP;
@@ -232,7 +232,7 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
 
 void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rmWpOperation;
     rmWpOperation.type = HistoryOperation::LEVELHISTORY_REMOVEWARP;
@@ -247,7 +247,7 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
 
 void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chWpSettingsOperation;
     chWpSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP;
@@ -264,7 +264,7 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubTy
 
 void LvlScene::addAddEventHistory(int array_id, QString name)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation addEvOperation;
     addEvOperation.type = HistoryOperation::LEVELHISTORY_ADDEVENT;
@@ -280,7 +280,7 @@ void LvlScene::addAddEventHistory(int array_id, QString name)
 
 void LvlScene::addRemoveEventHistory(LevelEvents ev)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rmEvOperation;
     rmEvOperation.type = HistoryOperation::LEVELHISTORY_REMOVEEVENT;
@@ -293,7 +293,7 @@ void LvlScene::addRemoveEventHistory(LevelEvents ev)
 
 void LvlScene::addDuplicateEventHistory(LevelEvents newDuplicate)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation dupEvOperation;
     dupEvOperation.type = HistoryOperation::LEVELHISTORY_DULPICATEEVENT;
@@ -306,7 +306,7 @@ void LvlScene::addDuplicateEventHistory(LevelEvents newDuplicate)
 
 void LvlScene::addChangeEventSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chEvSettingsOperation;
     chEvSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT;
@@ -323,7 +323,7 @@ void LvlScene::addChangeEventSettingsHistory(int array_id, LvlScene::SettingSubT
 
 void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chNewLaOperation;
     chNewLaOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER;
@@ -338,7 +338,7 @@ void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers new
 
 void LvlScene::addAddLayerHistory(int array_id, QString name)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation addNewLaOperation;
     addNewLaOperation.type = HistoryOperation::LEVELHISTORY_ADDLAYER;
@@ -354,7 +354,7 @@ void LvlScene::addAddLayerHistory(int array_id, QString name)
 
 void LvlScene::addRemoveLayerHistory(LevelData modData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rmLaOperation;
     rmLaOperation.type = HistoryOperation::LEVELHISTORY_REMOVELAYER;
@@ -367,7 +367,7 @@ void LvlScene::addRemoveLayerHistory(LevelData modData)
 
 void LvlScene::addRenameEventHistory(int array_id, QString oldName, QString newName)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation renameEvOperation;
     renameEvOperation.type = HistoryOperation::LEVELHISTORY_RENAMEEVENT;
@@ -384,7 +384,7 @@ void LvlScene::addRenameEventHistory(int array_id, QString oldName, QString newN
 
 void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newName)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation renameLaOperation;
     renameLaOperation.type = HistoryOperation::LEVELHISTORY_RENAMELAYER;
@@ -401,7 +401,7 @@ void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newN
 
 void LvlScene::addRemoveLayerAndSaveItemsHistory(LevelData modData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rmLaAndSaveItemsOperation;
     rmLaAndSaveItemsOperation.type = HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE;
@@ -415,7 +415,7 @@ void LvlScene::addRemoveLayerAndSaveItemsHistory(LevelData modData)
 
 void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation mergeLaOperation;
     mergeLaOperation.type = HistoryOperation::LEVELHISTORY_MERGELAYER;
@@ -429,7 +429,7 @@ void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
 
 void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingSubType subtype, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chSecSettingsOperation;
     chSecSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION;
@@ -446,7 +446,7 @@ void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingS
 
 void LvlScene::addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation chLevelSettingsOperation;
     HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
@@ -460,7 +460,7 @@ void LvlScene::addChangeLevelSettingsHistory(HistorySettings::LevelSettingSubTyp
 
 void LvlScene::addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation plPlrPointOperation;
     plPlrPointOperation.type = HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT;
@@ -475,7 +475,7 @@ void LvlScene::addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos)
 
 void LvlScene::addRotateHistory(LevelData rotatedItems, bool byClockwise)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rotateOperation;
     rotateOperation.type = HistoryOperation::LEVELHISTORY_ROTATE;
@@ -489,7 +489,7 @@ void LvlScene::addRotateHistory(LevelData rotatedItems, bool byClockwise)
 
 void LvlScene::addFlipHistory(LevelData flippedItems, bool vertical)
 {
-    cleanupRedoElements();
+    updateHistoryBuffer();
 
     HistoryOperation rotateOperation;
     rotateOperation.type = HistoryOperation::LEVELHISTORY_FLIP;
@@ -1840,7 +1840,7 @@ int LvlScene::getHistroyIndex()
     return historyIndex;
 }
 
-void LvlScene::cleanupRedoElements()
+void LvlScene::updateHistoryBuffer()
 {
     if(canRedo())
     {
@@ -1849,6 +1849,11 @@ void LvlScene::cleanupRedoElements()
         {
             operationList.pop_back();
         }
+    }
+
+    while(operationList.size() >= GlobalSettings::historyLimit){
+        operationList.pop_front();
+        historyIndex--;
     }
 }
 
