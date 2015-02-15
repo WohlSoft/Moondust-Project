@@ -438,8 +438,11 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     LvlData = FileData;
     if(!LvlData.metaData.script)
         LvlData.metaData.script = new ScriptHolder;
+    bool modifystate = false;
+    bool untitledstate = false;
     LvlData.modified = false;
     LvlData.untitled = false;
+    QString curFName=fileName;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -448,7 +451,20 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         return false;
     }
     StartLvlData = LvlData; //Save current history for made reset
-    setCurrentFile(fileName);
+    setCurrentFile(curFName);
+
+    //Restore internal information after crash
+    if(LvlData.metaData.crash.used)
+    {
+        modifystate=LvlData.metaData.crash.modifyed;
+        untitledstate=LvlData.metaData.crash.untitled;
+        isUntitled = LvlData.metaData.crash.untitled;
+        LvlData.filename = LvlData.metaData.crash.filename;
+        LvlData.path = LvlData.metaData.crash.path;
+        curFName = LvlData.metaData.crash.fullPath;
+        setCurrentFile(LvlData.metaData.crash.fullPath);
+        LvlData.metaData.crash.reset();
+    }
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
@@ -512,9 +528,9 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    setCurrentFile(fileName);
-    LvlData.modified = false;
-    LvlData.untitled = false;
+    setCurrentFile(curFName);
+    LvlData.modified = modifystate;
+    LvlData.untitled = untitledstate;
 
     progress.deleteLater();
 
