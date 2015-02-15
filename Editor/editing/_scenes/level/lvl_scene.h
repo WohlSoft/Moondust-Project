@@ -600,7 +600,7 @@ public:
         void addRemoveHistory(LevelData removedItems);
         void addPlaceHistory(LevelData placedItems);
         void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
-        void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
+        void addPlaceDoorHistory(LevelDoors door, bool isEntrance);
         void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
         void addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
         void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
@@ -680,8 +680,6 @@ public:
 
         QList<QGraphicsItem*> findGraphicsItems(LevelData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
 
-        void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
-                              callBackLevelDoors clbDoors, bool isEntrance);
         //miscellaneous
         QString getHistoryText(HistoryOperation operation);
         QString getHistorySettingText(SettingSubType subType);

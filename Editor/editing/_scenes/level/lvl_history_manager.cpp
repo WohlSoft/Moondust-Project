@@ -37,6 +37,7 @@
 #include <editing/_components/history/historyelementresizesection.h>
 #include <editing/_components/history/historyelementlayerchanged.h>
 #include <editing/_components/history/historyelementresizeblock.h>
+#include <editing/_components/history/historyelementplacedoor.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -89,18 +90,14 @@ void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y)
+void LvlScene::addPlaceDoorHistory(LevelDoors door, bool isEntrance)
 {
     cleanupRedoElements();
 
     HistoryOperation plDoorOperation;
-    plDoorOperation.type = HistoryOperation::LEVELHISTORY_PLACEDOOR;
-    QList<QVariant> doorExtraData;
-    doorExtraData.push_back(array_id);
-    doorExtraData.push_back(isEntrance);
-    doorExtraData.push_back((qlonglong)x);
-    doorExtraData.push_back((qlonglong)y);
-    plDoorOperation.extraData = QVariant(doorExtraData);
+    HistoryElementPlaceDoor* modf = new HistoryElementPlaceDoor(door, isEntrance);
+    modf->setScene(this);
+    plDoorOperation.newElement = QSharedPointer<IHistoryElement>(modf);
 
     operationList.push_back(plDoorOperation);
     historyIndex++;
@@ -176,7 +173,6 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     cleanupRedoElements();
 
     HistoryOperation resizeBlOperation;
-    resizeBlOperation.type = HistoryOperation::LEVELHISTORY_RESIZEBLOCK;
     HistoryElementResizeBlock *modf = new HistoryElementResizeBlock(bl,
                                                                         QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
                                                                         QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
@@ -522,13 +518,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_PLACEDOOR:
-    {
-        CallbackData cbData;
-        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_ADDWARP:
     {
         WriteToLog(QtDebugMsg, "HistoryManager -> undo Door entry add");
@@ -1226,41 +1215,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_PLACEDOOR:
-    {
-        bool found = false;
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        LevelDoors door;
-
-        foreach(LevelDoors findDoor, LvlData->doors){
-            if(array_id == (int)findDoor.array_id){
-                door = findDoor;
-                found = true;
-                break;
-            }
-        }
-
-        if(!found)
-            return;
-
-        bool isEntrance = lastOperation.extraData.toList()[1].toBool();
-
-        if(isEntrance){
-            door.ix = (long)lastOperation.extraData.toList()[2].toLongLong();
-            door.iy = (long)lastOperation.extraData.toList()[3].toLongLong();
-            door.isSetIn = true;
-            placeDoorEnter(door, false, false);
-        }else{
-            door.ox = (long)lastOperation.extraData.toList()[2].toLongLong();
-            door.oy = (long)lastOperation.extraData.toList()[3].toLongLong();
-            door.isSetOut = true;
-            placeDoorExit(door, false, false);
-        }
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_ADDWARP:
     {
         int arrayid = lastOperation.extraData.toList()[0].toInt();
@@ -2799,36 +2753,6 @@ QList<QGraphicsItem *> LvlScene::findGraphicsItems(LevelData& toFind, ItemTypes:
         }
     }
     return returnItems;
-}
-
-void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operation, LvlScene::CallbackData customData, LvlScene::callBackLevelDoors clbDoors, bool isEntrance)
-{
-    CallbackData cbData = customData;
-    cbData.hist = operation;
-    foreach (QGraphicsItem* i, items())
-    {
-        if(i->data(ITEM_ARRAY_ID).toInt() == array_id){
-            if(isEntrance && i->data(ITEM_TYPE).toString()=="Door_enter"){
-                //(this->*clbDoors)(CallbackData, LevelDoors, bool)
-                //find DoorData
-                foreach(LevelDoors findDoor, LvlData->doors){
-                    if(array_id == (int)findDoor.array_id){
-                        cbData.item = i;
-                        (this->*clbDoors)(cbData, findDoor, true);
-                        break;
-                    }
-                }
-            }else if(!isEntrance && i->data(ITEM_TYPE).toString()=="Door_exit"){
-                foreach(LevelDoors findDoor, LvlData->doors){
-                    if(array_id == (int)findDoor.array_id){
-                        cbData.item = i;
-                        (this->*clbDoors)(cbData, findDoor, true);
-                        break;
-                    }
-                }
-            }
-        }
-    }
 }
 
 QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
