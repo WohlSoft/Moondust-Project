@@ -128,6 +128,10 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     haveSelected=(!selectedItems().isEmpty());
 }
 
+void LvlScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    mousePressEvent(mouseEvent);
+}
 
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
