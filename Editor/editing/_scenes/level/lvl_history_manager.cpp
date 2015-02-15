@@ -89,18 +89,19 @@ void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y)
+void LvlScene::addPlaceDoorHistory(LevelDoors door, bool isEntrance)
 {
     cleanupRedoElements();
 
     HistoryOperation plDoorOperation;
     plDoorOperation.type = HistoryOperation::LEVELHISTORY_PLACEDOOR;
-    QList<QVariant> doorExtraData;
-    doorExtraData.push_back(array_id);
-    doorExtraData.push_back(isEntrance);
-    doorExtraData.push_back((qlonglong)x);
-    doorExtraData.push_back((qlonglong)y);
-    plDoorOperation.extraData = QVariant(doorExtraData);
+
+    door.isSetIn = isEntrance;
+    door.isSetOut = !isEntrance;
+
+    LevelData data;
+    data.doors << door;
+    plDoorOperation.data = data;
 
     operationList.push_back(plDoorOperation);
     historyIndex++;
@@ -525,8 +526,8 @@ void LvlScene::historyBack()
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         CallbackData cbData;
-        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
-
+        //findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
+        findGraphicsItem(lastOperation.data, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRemoveDoors, 0, true, true, true, true, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_ADDWARP:
@@ -1229,11 +1230,11 @@ void LvlScene::historyForward()
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         bool found = false;
-        int array_id = lastOperation.extraData.toList()[0].toInt();
         LevelDoors door;
+        LevelDoors origDoor = lastOperation.data.doors[0];
 
         foreach(LevelDoors findDoor, LvlData->doors){
-            if(array_id == (int)findDoor.array_id){
+            if(origDoor.array_id == (int)findDoor.array_id){
                 door = findDoor;
                 found = true;
                 break;
@@ -1243,16 +1244,16 @@ void LvlScene::historyForward()
         if(!found)
             return;
 
-        bool isEntrance = lastOperation.extraData.toList()[1].toBool();
+        bool isEntrance = origDoor.isSetIn;
 
         if(isEntrance){
-            door.ix = (long)lastOperation.extraData.toList()[2].toLongLong();
-            door.iy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.ix = origDoor.ix;
+            door.iy = origDoor.iy;
             door.isSetIn = true;
             placeDoorEnter(door, false, false);
         }else{
-            door.ox = (long)lastOperation.extraData.toList()[2].toLongLong();
-            door.oy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.ox = origDoor.ox;
+            door.oy = origDoor.oy;
             door.isSetOut = true;
             placeDoorExit(door, false, false);
         }

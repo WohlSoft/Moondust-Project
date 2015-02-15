@@ -600,7 +600,7 @@ public:
         void addRemoveHistory(LevelData removedItems);
         void addPlaceHistory(LevelData placedItems);
         void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
-        void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
+        void addPlaceDoorHistory(LevelDoors door, bool isEntrance);
         void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
         void addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
         void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
