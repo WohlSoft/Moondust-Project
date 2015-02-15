@@ -36,4 +36,32 @@ protected:
 
 Q_DECLARE_INTERFACE(IHistoryElement, "IHistoryElement")
 
+
+/*
+ * Implementation:
+
+#include "ihistoryelement.h"
+#include <file_formats/file_formats.h>
+
+class {Name} : public QObject, public IHistoryElement
+{
+    Q_OBJECT
+    Q_INTERFACES(IHistoryElement)
+
+public:
+    explicit {Name}(const LevelData &oldData, const LevelData &newData, QObject *parent = 0);
+    virtual ~{Name}();
+    virtual QString getHistoryName();
+    virtual void undo();
+    virtual void redo();
+
+private:
+    LevelData m_oldLvlData;
+    LevelData m_newLvlData;
+};
+
+
+ *
+ */
+
 #endif // IHISTORYELEMENT_H

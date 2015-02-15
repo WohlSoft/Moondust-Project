@@ -36,6 +36,7 @@
 #include <editing/_components/history/historyelementitemsetting.h>
 #include <editing/_components/history/historyelementresizesection.h>
 #include <editing/_components/history/historyelementlayerchanged.h>
+#include <editing/_components/history/historyelementresizeblock.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -176,23 +177,11 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
 
     HistoryOperation resizeBlOperation;
     resizeBlOperation.type = HistoryOperation::LEVELHISTORY_RESIZEBLOCK;
-    LevelData blData;
-    blData.blocks.push_back(bl);
-    resizeBlOperation.data = blData;
-    QList<QVariant> oldSizes;
-    QList<QVariant> newSizes;
-    QList<QVariant> package;
-    oldSizes.push_back(QVariant((qlonglong)oldLeft));
-    oldSizes.push_back(QVariant((qlonglong)oldTop));
-    oldSizes.push_back(QVariant((qlonglong)oldRight));
-    oldSizes.push_back(QVariant((qlonglong)oldBottom));
-    newSizes.push_back(QVariant((qlonglong)newLeft));
-    newSizes.push_back(QVariant((qlonglong)newTop));
-    newSizes.push_back(QVariant((qlonglong)newRight));
-    newSizes.push_back(QVariant((qlonglong)newBottom));
-    package.push_back(oldSizes);
-    package.push_back(newSizes);
-    resizeBlOperation.extraData = QVariant(package);
+    HistoryElementResizeBlock *modf = new HistoryElementResizeBlock(bl,
+                                                                        QRect(QPoint(oldLeft, oldTop), QPoint(oldRight, oldBottom)),
+                                                                        QRect(QPoint(newLeft, newTop), QPoint(newRight, newBottom)));
+    modf->setScene(this);
+    resizeBlOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(resizeBlOperation);
     historyIndex++;
 
@@ -533,14 +522,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
-    {
-        LevelData resizedBlock = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         CallbackData cbData;
@@ -1245,14 +1226,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
-    {
-        LevelData resizedBlock = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         bool found = false;
@@ -2139,28 +2112,6 @@ void LvlScene::historyRedoChangeLayerDoor(LvlScene::CallbackData cbData, LevelDo
         }
     }
     targetItem->arrayApply();
-}
-
-void LvlScene::historyUndoResizeBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
-{
-    QList<QVariant> package = cbData.hist->extraData.toList();
-    QList<QVariant> oldSizes = package[0].toList();
-    long tarLeft = (long)oldSizes[0].toLongLong();
-    long tarTop = (long)oldSizes[1].toLongLong();
-    long tarRight = (long)oldSizes[2].toLongLong();
-    long tarBottom = (long)oldSizes[3].toLongLong();
-    ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
-}
-
-void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
-{
-    QList<QVariant> package = cbData.hist->extraData.toList();
-    QList<QVariant> oldSizes = package[1].toList();
-    long tarLeft = (long)oldSizes[0].toLongLong();
-    long tarTop = (long)oldSizes[1].toLongLong();
-    long tarRight = (long)oldSizes[2].toLongLong();
-    long tarBottom = (long)oldSizes[3].toLongLong();
-    ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
 void LvlScene::historyUndoResizeWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
