@@ -655,9 +655,6 @@ public:
         void historyRedoChangeLayerNPC(CallbackData cbData, LevelNPC data);
         void historyRedoChangeLayerWater(CallbackData cbData, LevelPhysEnv data);
         void historyRedoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
-        //Callbackfunctions: Change sizeable Block size
-        void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
-        void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
         //Callbackfunctions: Change sizeable Water size
         void historyUndoResizeWater(CallbackData cbData, LevelPhysEnv data);
         void historyRedoResizeWater(CallbackData cbData, LevelPhysEnv data);
