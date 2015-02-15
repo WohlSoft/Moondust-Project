@@ -124,6 +124,11 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     haveSelected=(!selectedItems().isEmpty());
 }
 
+void WldScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    mousePressEvent(mouseEvent);
+}
+
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(MouseMoveEventOnly)
