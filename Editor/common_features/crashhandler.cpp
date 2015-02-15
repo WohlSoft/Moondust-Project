@@ -173,8 +173,15 @@ void CrashHandler::attemptCrashsave()
             if(lvledit->isUntitled){
                 fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".lvlx");
             }else{
-                fName = fName.section("/", -1);
+                fName = fName.section("/", -1)+QString(".lvlx");
             }
+
+            lvledit->LvlData.metaData.crash.used=true;
+            lvledit->LvlData.metaData.crash.untitled = lvledit->LvlData.untitled;
+            lvledit->LvlData.metaData.crash.modifyed = lvledit->LvlData.modified;
+            lvledit->LvlData.metaData.crash.filename = lvledit->LvlData.filename;
+            lvledit->LvlData.metaData.crash.path     = lvledit->LvlData.path;
+            lvledit->LvlData.metaData.crash.fullPath = lvledit->curFile;
 
             lvledit->saveFile(crashSave.absoluteFilePath(fName), false);
         }else if(MainWinConnect::pMainWin->activeChildWindow(subWin) == 2){
@@ -195,8 +202,15 @@ void CrashHandler::attemptCrashsave()
             if(worldedit->isUntitled){
                 fName = QString("Untitled_Crash") + QString::number(untitledCounter++) + QString(".wldx");
             }else{
-                fName = fName = fName.section("/", -1);
+                fName = fName = fName.section("/", -1)+QString(".wldx");
             }
+
+            worldedit->WldData.metaData.crash.used=true;
+            worldedit->WldData.metaData.crash.untitled = worldedit->WldData.untitled;
+            worldedit->WldData.metaData.crash.modifyed = worldedit->WldData.modified;
+            worldedit->WldData.metaData.crash.filename = worldedit->WldData.filename;
+            worldedit->WldData.metaData.crash.path = worldedit->WldData.path;
+            worldedit->WldData.metaData.crash.fullPath = worldedit->curFile;
 
             worldedit->saveFile(crashSave.absoluteFilePath(fName), false);
         }
