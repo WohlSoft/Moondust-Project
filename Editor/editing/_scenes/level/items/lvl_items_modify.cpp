@@ -504,7 +504,7 @@ void LvlScene::placeItemUnderCursor()
                             door.oy = door.iy;
                         }
                         door.isSetIn=true;
-                        addPlaceDoorHistory(door.array_id, true, door.ix, door.iy);
+                        addPlaceDoorHistory(door, true);
                         placeDoorEnter(door, false, false);
                     }
                 }
@@ -520,7 +520,7 @@ void LvlScene::placeItemUnderCursor()
                             door.iy = door.oy;
                         }
                         door.isSetOut=true;
-                        addPlaceDoorHistory(door.array_id, false, door.ox, door.oy);
+                        addPlaceDoorHistory(door, false);
                         placeDoorExit(door, false, false);
                     }
                 }
