@@ -386,7 +386,8 @@ SOURCES += main.cpp\
     file_formats/wld_filedata.cpp \
     editing/_components/history/historyelementresizesection.cpp \
     editing/_components/history/historyelementlayerchanged.cpp \
-    editing/_components/history/historyelementresizeblock.cpp
+    editing/_components/history/historyelementresizeblock.cpp \
+    editing/_components/history/historyelementplacedoor.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -537,7 +538,8 @@ HEADERS  += defines.h \
     file_formats/wld_filedata.h \
     editing/_components/history/historyelementresizesection.h \
     editing/_components/history/historyelementlayerchanged.h \
-    editing/_components/history/historyelementresizeblock.h
+    editing/_components/history/historyelementresizeblock.h \
+    editing/_components/history/historyelementplacedoor.h
 
 
 FORMS    += \

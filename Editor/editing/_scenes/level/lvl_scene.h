@@ -680,8 +680,6 @@ public:
 
         QList<QGraphicsItem*> findGraphicsItems(LevelData& toFind, ItemTypes::itemTypesMultiSelectable findingFilter);
 
-        void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
-                              callBackLevelDoors clbDoors, bool isEntrance);
         //miscellaneous
         QString getHistoryText(HistoryOperation operation);
         QString getHistorySettingText(SettingSubType subType);
