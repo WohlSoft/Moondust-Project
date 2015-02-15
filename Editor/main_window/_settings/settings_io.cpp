@@ -21,6 +21,7 @@
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
 #include <common_features/themes.h>
+#include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/global_settings.h>
 #include <main_window/tools/app_settings.h>
@@ -66,13 +67,15 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
 
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
-        GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
+        GlobalSettings::musicVolume = settings.value("music-volume",128).toInt();
 
         GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", true).toBool();
         GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", true).toBool();
         GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", true).toBool();
 
         GlobalSettings::Placing_dontShowPropertiesBox = settings.value("editor-placing-no-propsbox", false).toBool();
+
+        GlobalSettings::historyLimit = settings.value("history-limit", 300).toInt();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
@@ -217,6 +220,8 @@ void MainWindow::saveSettings()
 
     settings.setValue("editor-placing-no-propsbox", GlobalSettings::Placing_dontShowPropertiesBox);
 
+    settings.setValue("history-limit", GlobalSettings::historyLimit);
+
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
     settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
@@ -271,27 +276,9 @@ void MainWindow::saveSettings()
 void MainWindow::on_actionApplication_settings_triggered()
 {
     AppSettings * appSettings = new AppSettings;
-    appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
-
-    appSettings->autoPlayMusic = GlobalSettings::autoPlayMusic;
-    appSettings->Animation = GlobalSettings::LvlOpts.animationEnabled;
-    appSettings->Collisions = GlobalSettings::LvlOpts.collisionsEnabled;
-
-    appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
-
-    appSettings->MainWindowView = GlobalSettings::MainWindowView;
-    appSettings->LVLToolboxPos = GlobalSettings::LVLToolboxPos;
-    appSettings->WLDToolboxPos = GlobalSettings::WLDToolboxPos;
-    appSettings->TSTToolboxPos = GlobalSettings::TSTToolboxPos;
-
-    appSettings->midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
-    appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
-    appSettings->midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
-
-    appSettings->placing_dont_show_props_box = GlobalSettings::Placing_dontShowPropertiesBox;
-
-    appSettings->selectedTheme = GlobalSettings::currentTheme;
+    util::DialogToCenter(appSettings, true);
+    //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
     appSettings->applySettings();
 
@@ -318,6 +305,8 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
 
         GlobalSettings::Placing_dontShowPropertiesBox = appSettings->placing_dont_show_props_box;
+
+        GlobalSettings::historyLimit = appSettings->historyLimit;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);

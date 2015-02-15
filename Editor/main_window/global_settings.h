@@ -73,6 +73,9 @@ public:
     //Placing mode flahs
     static bool Placing_dontShowPropertiesBox;
 
+    //Max Limit if history elements
+    static int historyLimit;
+
     //Last active file type state
     static int lastWinType;
 
