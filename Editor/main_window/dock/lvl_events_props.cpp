@@ -2045,7 +2045,10 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
         triggerData.push_back(ui->LVLEvent_TriggerEvent->currentText());
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_TRIACTIVATE, QVariant(triggerData));
 
-        edit->LvlData.events[i].trigger = ui->LVLEvent_TriggerEvent->currentText();
+        if(index==0)
+            edit->LvlData.events[i].trigger="";
+        else
+            edit->LvlData.events[i].trigger = ui->LVLEvent_TriggerEvent->currentText();
         edit->LvlData.modified=true;
     }
 
