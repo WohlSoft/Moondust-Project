@@ -1873,7 +1873,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
     }
 
     //Some System information
-    if(!FileData.metaData.crash.used)
+    if(FileData.metaData.crash.used)
     {
         TextData += "META_SYS_CRASH\n";
             TextData += PGEFile::value("UT", PGEFile::BoolS(FileData.metaData.crash.untitled));
