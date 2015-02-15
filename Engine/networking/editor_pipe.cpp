@@ -7,6 +7,7 @@
 #include <QApplication>
 
 #include "../common_features/app_path.h"
+#include <networking/intproc.h>
 
 /**
  * @brief EditorPipe::LocalServer
@@ -155,6 +156,8 @@ void EditorPipe::run()
  */
 void EditorPipe::exec()
 {
+    IntProc::state="Waiting of commands...";
+
     //loop:
     while(server->isListening())
     {
@@ -205,10 +208,10 @@ void EditorPipe::slotReadClientData()
 {
     QLocalSocket* client = (QLocalSocket*)sender();
     client->moveToThread(this);
-    QByteArray data = client->readAll();
+    QByteArray data = client->read(40960);
     QString acceptedData = QString::fromUtf8(data);
 
-    qDebug() << "IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
+    qDebug() << "--1--IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
 
     emit privateDataReceived(acceptedData, client);
 }
@@ -229,7 +232,8 @@ void EditorPipe::slotOnData(QString data, QLocalSocket *client)
         if(nc==2)
         {
             buffer.resize(buffer.size()-2);
-            qDebug() << "icomingData<-- ["<< (buffer.size()>30? QString(buffer).remove(30, buffer.size()-31) : buffer)<<"]";
+            qDebug() << "--2--icomingData<-- ["<< (buffer.size()>30? QString(buffer).remove(30, buffer.size()-31) : buffer)<<"]";
+            //qDebug() << "--2--icomingData<-- ["<< buffer<<"]";
             emit icomingData(buffer, client);
             buffer.clear();
         }
@@ -241,6 +245,7 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
     if(in=="PARSE_LVLX")
     {
         do_acceptLevelData=false;
+        IntProc::state="LVLX Accepted, do parsing of LVLX";
     }
 
     if(do_acceptLevelData)
@@ -257,7 +262,7 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         in.remove("SEND_LVLX: ");
         accepted_lvl_path = in;
         do_acceptLevelData=true;
-
+        IntProc::state="Accepted SEND_LVLX";
         qDebug() << "Send 'Ready'";
 
         QByteArray toClient = QString("READY\n\n").toUtf8();
@@ -266,10 +271,16 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         client->write(toClient.data(), toClient.length());
         qDebug() << "'Ready' written";
         if(client->waitForBytesWritten(1000))
+        {
             qDebug() << "'Ready' sent";
+            IntProc::state="Wait for LVLX data...";
+        }
         else
+        {
             qDebug() << "Fail to send 'Ready': "
                      << client->errorString();
+            IntProc::state="Fail to answer";
+        }
     }
     else
     if(in=="PARSE_LVLX")
@@ -277,6 +288,8 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         qDebug() << "do Parse LVLX: >>"<< in;
         do_parseLevelData=true;
         accepted_lvl = FileFormats::ReadExtendedLvlFile(accepted_lvl_raw, accepted_lvl_path);
+        IntProc::state="LVLX is valid: %1";
+        IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
         qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
         levelAccepted=true;
     }
