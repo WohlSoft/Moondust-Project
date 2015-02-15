@@ -2,6 +2,7 @@
 
 EditorPipe * IntProc::editor=NULL;
 bool IntProc::enabled=false;
+QString IntProc::state="";
 
 IntProc::IntProc(QObject *parent) :
     QObject(parent)

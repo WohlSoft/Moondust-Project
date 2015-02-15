@@ -12,6 +12,7 @@ public:
     static void init();
     static void quit();
     static bool isWorking();
+    static QString state;
 
     static EditorPipe * editor;
     static bool enabled;

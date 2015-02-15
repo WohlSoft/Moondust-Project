@@ -73,6 +73,11 @@ void EngineClient::sendLevelData(LevelData _data)
     rawData.append("\n");
     _buffer_out = rawData;
 
+//    QFile tmp(AppPathManager::userAppDir()+"/logs/tmp.lvlx");
+//    tmp.open(QFile::ReadWrite);
+//    QTextStream(&tmp)<<rawData;
+//    tmp.close();
+
     msleep(20);
     if(!sendCommand(sendLvlx))
     {
@@ -95,11 +100,29 @@ bool EngineClient::sendCommand(QString command)
     if(!engine->isOpen())
         return false;
 
-    QByteArray bytes;
-    bytes = command.toUtf8();
-    engine->write(bytes);
-    engine->flush();
-    engine->waitForBytesWritten(10000);
+    QElapsedTimer timeout;
+    timeout.start();
+    while(!command.isEmpty())
+    {
+        QByteArray bytes;
+        QString send;
+
+        if(command.size()>40960)
+        {
+            send = command.mid(0, 40960);
+            command.remove(0, 40960);
+        }
+        else
+        {
+            send = command;
+            command.clear();
+        }
+        bytes = send.toUtf8();
+        engine->write(bytes);
+        engine->flush();
+        engine->waitForBytesWritten(10000);
+        if(timeout.elapsed()>5000) break;
+    }
     return true;
 }
 
@@ -170,7 +193,6 @@ void EngineClient::run()
 
 void EngineClient::exec()
 {
-
       while(engine->isOpen() && !this->isFinished() && _connected)
       {
             if(engine->waitForReadyRead(1000))
@@ -255,7 +277,9 @@ void EngineClient::icomingData(QString in)
             this->closeConnection();
         }
 
-        if(sendCommand("PARSE_LVLX\n\n"))
+        msleep(50);
+
+        if(sendCommand("\n\nPARSE_LVLX\n\n"))
             WriteToLog(QtDebugMsg, "PARSE_LVLX command Sent", true);
         _buffer_out.clear();
     }
