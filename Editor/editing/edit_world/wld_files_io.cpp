@@ -371,7 +371,9 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 {
     QFile file(fileName);
     WldData = FileData;
-    setCurrentFile(fileName);
+    bool modifystate;
+    bool untitledstate;
+    QString curFName=fileName;
     WldData.modified = false;
     WldData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -381,6 +383,19 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
                              .arg(file.errorString()));
         return false;
     }
+    //Restore internal information after crash
+    if(WldData.metaData.crash.used)
+    {
+        modifystate=WldData.metaData.crash.modifyed;
+        untitledstate=WldData.metaData.crash.untitled;
+        isUntitled = WldData.metaData.crash.untitled;
+        WldData.filename = WldData.metaData.crash.filename;
+        WldData.path = WldData.metaData.crash.path;
+        curFName = WldData.metaData.crash.fullPath;
+        setCurrentFile(WldData.metaData.crash.fullPath);
+        WldData.metaData.crash.reset();
+    }
+    setCurrentFile(curFName);
     StartWldData = WldData; //Save current history for made reset
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
@@ -439,8 +454,8 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.modified = modifystate;
+    WldData.untitled = untitledstate;
 
     progress.deleteLater();
 
