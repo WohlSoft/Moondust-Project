@@ -148,6 +148,23 @@ void LVL_Block::init()
     //rectangle box
     default: //Rectangle box shape
         shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
+
+        if(!setup->sizable)
+        {
+            b2EdgeShape edgeShape;
+            edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(-posY_coefficient-0.1)),
+                           b2Vec2(PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(-posY_coefficient-0.1)) );
+
+            edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+            //edgeShape.m_vertex1.Set( PhysUtil::pix2met(posX_coefficient+0.5), PhysUtil::pix2met(posX_coefficient+0.5) );
+            //edgeShape.m_vertex2.Set( PhysUtil::pix2met(posX_coefficient+0.5), PhysUtil::pix2met(posX_coefficient+0.5) );
+            edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+            edgeShape.m_hasVertex0 = true;
+            edgeShape.m_hasVertex3 = true;
+
+            b2Fixture * block2 = physBody->CreateFixture(&edgeShape, 1.0f);
+            block2->SetFriction(data->slippery? 0.04f : 0.25f );
+        }
     }
 
     b2Fixture * block = physBody->CreateFixture(&shape, 1.0f);
@@ -162,7 +179,6 @@ void LVL_Block::init()
         block->SetSensor(true);
 
     block->SetFriction(data->slippery? 0.04f : 0.25f );
-
 }
 
 

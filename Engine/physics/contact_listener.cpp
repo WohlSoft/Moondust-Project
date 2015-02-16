@@ -125,7 +125,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        if((bodyChar->bottom()<=bodyBlock->top()) ||
+        if((bodyChar->bottom()<=bodyBlock->top()-0.1) ||
                 ((bodyChar->bottom() >= bodyBlock->top())&&
                 (bodyChar->bottom()<=bodyBlock->top()+2)))
         {
@@ -300,7 +300,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
 
         if(platformFixture)
         {
-            if(bodyChar->physBody->GetLinearVelocity().y>1 && bodyChar->bottom() < bodyBlock->top()+10)
+            if((bodyChar->physBody->GetLinearVelocity().y>1) && (bodyChar->bottom() < bodyBlock->top()+10))
             {
                 contact->SetEnabled(true);
                 dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(int)bodyBlock] = 1;
@@ -321,7 +321,8 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             }
         }
         else
-        {   //Collision with any-side
+        {
+            /***********************8Collision with any-side************************/
             if ( bodyA->type == PGE_Phys_Object::LVLBlock && bodyA->collide == PGE_Phys_Object::COLLISION_ANY )
             {
                 platformFixture = fixtureA;
@@ -351,9 +352,15 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                     dynamic_cast<LVL_Player *>(bodyChar)->kill(LVL_Player::DEAD_burn);
                 }
 
-                if((bodyChar->bottom()<=bodyBlock->top()) ||
-                        ((bodyChar->bottom() >= bodyBlock->top())&&
-                        (bodyChar->bottom()<=bodyBlock->top()+2)))
+                if(
+                    ( (bodyChar->bottom()<=bodyBlock->top()-0.1)
+                        ||
+                      (
+                            (bodyChar->bottom() >= bodyBlock->top())&&
+                         (bodyChar->bottom()<=bodyBlock->top()+2)
+                      )
+                      )
+                   )
                 {
                     dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(int)bodyBlock]=1;
                     dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
@@ -363,7 +370,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                 }
 
                 if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
-                        && bodyChar->physBody->GetLinearVelocity().y < -0.01 )
+                        && (bodyChar->physBody->GetLinearVelocity().y < -0.01) )
                 {
                     dynamic_cast<LVL_Player *>(bodyChar)->jumpForce=0;
 
@@ -400,7 +407,9 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         }
                     }
                     else
-                    if( bodyChar->bottom() > bodyBlock->top() && bodyChar->bottom() < bodyBlock->top()+2 )
+                    if( (bodyChar->bottom() > bodyBlock->top()) &&
+                            (bodyChar->bottom() < bodyBlock->top()+2)
+                           && (fabs(bodyChar->physBody->GetLinearVelocity().x)>0))
                     {
                         bodyChar->_player_moveup = true;
                         contact->SetEnabled(false);
