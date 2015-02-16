@@ -32,7 +32,7 @@ LVL_Player::LVL_Player()
 
     type = LVLPlayer;
 
-    force=1000.0f;
+    force=900.0f;
     hMaxSpeed=20.0f;
     hRunningMaxSpeed=38.0f;
     fallMaxSpeed=720.0f;
@@ -45,6 +45,10 @@ LVL_Player::LVL_Player()
     bumpDown=false;
     bumpUp=false;
     bumpVelocity=0.0f;
+
+    health=3;
+    doHarm=false;
+    doHarm_damage=0;
 
     foot_contacts=0;
     jumpForce=0;
@@ -61,6 +65,19 @@ LVL_Player::LVL_Player()
     wasTeleported = false;
     wasEntered = false;
     warpsTouched = 0;
+
+    isWarping=false;
+    warpDo=false;
+    warpDirect=0;
+    warpWaitTicks=0;
+
+    //floating
+    allowFloat=true;
+    isFloating=false;
+    timeToFloat=0;
+    maxFloatTime=1500;
+
+    gscale_Backup=0.f;
 }
 
 LVL_Player::~LVL_Player()
@@ -112,10 +129,7 @@ void LVL_Player::init()
     //qDebug() <<"Start position is " << posX() << posY();
 }
 
-
-float32 gscale_Backup=0.f;
-
-void LVL_Player::update()
+void LVL_Player::update(float ticks)
 {
     if(!physBody) return;
     if(!camera) return;
@@ -194,7 +208,7 @@ void LVL_Player::update()
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -20));
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -15));
         }
         else
         if(climbable_map.size()>0)
@@ -207,7 +221,7 @@ void LVL_Player::update()
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 20));
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 15));
         }
         else
         if(climbable_map.size()>0)
@@ -221,7 +235,7 @@ void LVL_Player::update()
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(20, physBody->GetLinearVelocity().y));
+            physBody->SetLinearVelocity(b2Vec2(15, physBody->GetLinearVelocity().y));
         }
         else
         {
@@ -235,7 +249,7 @@ void LVL_Player::update()
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(-20, physBody->GetLinearVelocity().y));
+            physBody->SetLinearVelocity(b2Vec2(-15, physBody->GetLinearVelocity().y));
         }
         else
         {
@@ -253,7 +267,15 @@ void LVL_Player::update()
             {
                 climbing=false;
                 jumpForce=20;
+                timeToFloat = maxFloatTime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
+            }
+            else
+            if((allowFloat)&&(timeToFloat>0))
+            {
+                isFloating=true;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
+                physBody->SetGravityScale(0);
             }
         }
         else
@@ -263,6 +285,19 @@ void LVL_Player::update()
                 jumpForce--;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
             }
+
+            if(isFloating)
+            {
+                timeToFloat -= ticks;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 3.5*sin(timeToFloat/60.0)) );
+                if(timeToFloat<=0)
+                {
+                    timeToFloat=0;
+                    isFloating=false;
+                    physBody->SetGravityScale((int)(!climbing));
+                }
+            }
+
         }
     }
     else
@@ -271,6 +306,15 @@ void LVL_Player::update()
         if(JumpPressed)
         {
             JumpPressed=false;
+            if(allowFloat)
+            {
+                if(isFloating)
+                {
+                    timeToFloat=0;
+                    isFloating=false;
+                    physBody->SetGravityScale((int)(!climbing));
+                }
+            }
         }
     }
 
@@ -510,6 +554,12 @@ void LVL_Player::kill(deathReason reason)
 {
     doKill=true;
     kill_reason=reason;
+}
+
+void LVL_Player::harm(int _damage)
+{
+    doHarm=true;
+    doHarm_damage=_damage;
 }
 
 void LVL_Player::bump(bool _up)

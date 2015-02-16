@@ -130,7 +130,9 @@ void PGEContactListener::BeginContact(b2Contact *contact)
                 (bodyChar->bottom()<=bodyBlock->top()+2)))
         {
             dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(int)bodyBlock] = 1;
-            dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts++;
+            dynamic_cast<LVL_Player *>(bodyChar)->onGround=(!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
+            if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
+                dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
         }
     }
 
@@ -301,8 +303,11 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if(bodyChar->physBody->GetLinearVelocity().y>1 && bodyChar->bottom() < bodyBlock->top()+10)
             {
                 contact->SetEnabled(true);
-                dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
                 dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(int)bodyBlock] = 1;
+                dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
+                        (!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
+                if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
+                    dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
                 /*if((bodyChar->bottom()<=bodyBlock->top()) ||
                         ((bodyChar->bottom() >= bodyBlock->top())&&
                         (bodyChar->bottom()<=bodyBlock->top()+2)))
@@ -351,7 +356,10 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         (bodyChar->bottom()<=bodyBlock->top()+2)))
                 {
                     dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(int)bodyBlock]=1;
-                    dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts++;
+                    dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
+                            (!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
+                    if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
+                        dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
                 }
 
                 if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
