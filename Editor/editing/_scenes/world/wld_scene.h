@@ -369,6 +369,7 @@ public:
         bool mouseMoved; //Mouse was moved with right mouseKey
 
         void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+        void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
         bool MousePressEventOnly;
         void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
         bool MouseMoveEventOnly;
