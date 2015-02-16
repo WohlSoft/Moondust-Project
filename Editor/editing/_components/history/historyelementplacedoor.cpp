@@ -4,7 +4,7 @@
 #include <editing/_scenes/level/items/item_door.h>
 
 #include <common_features/mainwinconnect.h>
-#include <main_window\dock\lvl_warp_props.h>
+#include <main_window/dock/lvl_warp_props.h>
 
 HistoryElementPlaceDoor::HistoryElementPlaceDoor(const LevelDoors &door, bool isEntrance, QObject *parent) :
     QObject(parent),
