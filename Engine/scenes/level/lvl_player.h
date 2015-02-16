@@ -35,7 +35,7 @@ class LVL_Player :
         LVL_Player();
         ~LVL_Player();
         void init();
-        void update();
+        void update(float ticks=1.0f);
 
         int playerID;
 
@@ -62,18 +62,21 @@ class LVL_Player :
         QMap<int, int > climbable_map;
         bool climbing;
 
-        bool doKill;
+        bool isLive;
         enum deathReason
         {
             DEAD_fall=0,
             DEAD_burn,
             DEAD_killed
         };
+        void kill(deathReason reason=DEAD_killed);
+        bool doKill;
         deathReason kill_reason;
 
-        bool isLive;
-
-        void kill(deathReason reason=DEAD_killed);
+        int health;
+        bool doHarm;
+        int doHarm_damage;
+        void harm(int _damage=1);
 
         bool contactedWithWarp;
         LVL_Warp * contactedWarp;
@@ -81,6 +84,18 @@ class LVL_Player :
         bool wasEntered;
         int warpsTouched;
 
+        float32 gscale_Backup;
+
+        bool   isWarping;
+        bool   warpDo;
+        int    warpDirect;
+        uint32 warpWaitTicks;
+
+        //floating
+        bool allowFloat;
+        bool isFloating;
+        float timeToFloat;
+        float maxFloatTime;
 
         PlayerPoint data;
 
