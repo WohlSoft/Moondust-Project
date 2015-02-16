@@ -11,6 +11,8 @@ Editor 0.2.3
 - Added more smart reloading of files
 - Added basic communication with LunaDLL to run test of current level in the opened SMBX Editor. This feature will work on Windows platform only. (LunaDLL with LUA v0.5.3-beta and higher is required in the SMBX)
 - Added "force-portable" settings to keep using of application directory instad of ~/.PGE_Project folder if you was installed editor by installer
+- Added crash autosave which will give chance to keep most of your progess even crash happened
+- Added history manager limit to prevent memory overflow.
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

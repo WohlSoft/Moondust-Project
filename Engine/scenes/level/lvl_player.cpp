@@ -33,12 +33,14 @@ LVL_Player::LVL_Player()
     type = LVLPlayer;
 
     force=1000.0f;
-    hMaxSpeed=24.0f;
-    hRunningMaxSpeed=48.0f;
+    hMaxSpeed=20.0f;
+    hRunningMaxSpeed=38.0f;
     fallMaxSpeed=720.0f;
 
     JumpPressed=false;
     onGround=true;
+
+    climbing=false;
 
     bumpDown=false;
     bumpUp=false;
@@ -48,6 +50,8 @@ LVL_Player::LVL_Player()
     jumpForce=0;
 
     isLive = true;
+    doKill = false;
+    kill_reason=DEAD_fall;
 
     curHMaxSpeed = hMaxSpeed;
     isRunning = false;
@@ -109,7 +113,7 @@ void LVL_Player::init()
 }
 
 
-
+float32 gscale_Backup=0.f;
 
 void LVL_Player::update()
 {
@@ -124,8 +128,40 @@ void LVL_Player::update()
         _player_moveup = false;
     }
 
-    if(physBody->GetLinearVelocity().y > 72)
-        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 72));
+    if(doKill)
+    {
+        doKill=false;
+        isLive = false;
+        physBody->SetActive(false);
+        LvlSceneP::s->checkPlayers();
+    }
+
+    if(climbing)
+    {
+        if(gscale_Backup != 1)
+        {
+            physBody->SetGravityScale(0);
+            gscale_Backup = 1;
+        }
+    }
+    else
+    {
+        if(gscale_Backup != 0.f)
+        {
+            physBody->SetGravityScale(1);
+            gscale_Backup = 0.f;
+        }
+    }
+
+    if(climbing)
+    {
+        physBody->SetLinearVelocity(b2Vec2(0, 0));
+    }
+    else
+    {
+        if(physBody->GetLinearVelocity().y > 72)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 72));
+    }
 
 
     //Running key
@@ -154,25 +190,70 @@ void LVL_Player::update()
     }
 
 
+    if(keys.up)
+    {
+        if(climbing)
+        {
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -20));
+        }
+        else
+        if(climbable_map.size()>0)
+        {
+            climbing=true;
+        }
+    }
+
+    if(keys.down)
+    {
+        if(climbing)
+        {
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 20));
+        }
+        else
+        if(climbable_map.size()>0)
+        {
+            climbing=true;
+        }
+    }
+
     //If left key is pressed
     if(keys.right)
+    {
+        if(climbing)
+        {
+            physBody->SetLinearVelocity(b2Vec2(20, physBody->GetLinearVelocity().y));
+        }
+        else
+        {
         if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
+        }
+    }
 
     //If right key is pressed
     if(keys.left)
-        if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
-            physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+    {
+        if(climbing)
+        {
+            physBody->SetLinearVelocity(b2Vec2(-20, physBody->GetLinearVelocity().y));
+        }
+        else
+        {
+            if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
+                physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+        }
+    }
 
     if( keys.jump )
     {
         if(!JumpPressed)
         {
             JumpPressed=true;
-            if(onGround || foot_contacts>0)
+            if(onGround || climbing)
             {
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
-                jumpForce=3;
+                climbing=false;
+                jumpForce=20;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
             }
         }
         else
@@ -180,7 +261,7 @@ void LVL_Player::update()
             if(jumpForce>0)
             {
                 jumpForce--;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
             }
         }
     }
@@ -197,7 +278,7 @@ void LVL_Player::update()
     //Return player to start position on fall down
     if( posY() > camera->limitBottom+height )
     {
-        kill();
+        kill(DEAD_fall);
     }
 
     if(bumpDown)
@@ -211,7 +292,7 @@ void LVL_Player::update()
         bumpUp=false;
         physBody->SetLinearVelocity(
                                 b2Vec2(physBody->GetLinearVelocity().x,
-                                (keys.jump?(-65.f-fabs(physBody->GetLinearVelocity().x/6))
+                                (keys.jump?(-75.f-fabs(physBody->GetLinearVelocity().x/6))
                                                                                     :-32.5f)
                                            )
                                     );
@@ -425,14 +506,10 @@ void LVL_Player::update()
                     posY() - PGE_Window::Height/2 + posY_coefficient );
 }
 
-void LVL_Player::kill()
+void LVL_Player::kill(deathReason reason)
 {
-
-    isLive = false;
-    physBody->SetActive(false);
-    LvlSceneP::s->checkPlayers();
-    //physBody->SetLinearVelocity(b2Vec2(0,0));
-    //teleport(data.x, data.y);
+    doKill=true;
+    kill_reason=reason;
 }
 
 void LVL_Player::bump(bool _up)

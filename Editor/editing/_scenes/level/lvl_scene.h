@@ -384,6 +384,7 @@ public:
 
         //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
         void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+        void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent);
         bool MousePressEventOnly;
         void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
         bool MouseMoveEventOnly;

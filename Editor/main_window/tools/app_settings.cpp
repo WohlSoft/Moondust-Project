@@ -102,7 +102,7 @@ void AppSettings::applySettings()
 
     placing_dont_show_props_box = GlobalSettings::Placing_dontShowPropertiesBox;
 
-    historyLimit = GlobalSettings::Placing_dontShowPropertiesBox;
+    historyLimit = GlobalSettings::historyLimit;
 
     selectedTheme = GlobalSettings::currentTheme;
 

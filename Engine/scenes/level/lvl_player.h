@@ -25,6 +25,7 @@
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
 #include <file_formats.h>
+#include <QMap>
 
 class LVL_Player :
         public PGE_Phys_Object,
@@ -55,11 +56,24 @@ class LVL_Player :
         void bump(bool _up=false);
 
         int foot_contacts;
+        QMap<int, int > foot_contacts_map;
         int jumpForce;
+
+        QMap<int, int > climbable_map;
+        bool climbing;
+
+        bool doKill;
+        enum deathReason
+        {
+            DEAD_fall=0,
+            DEAD_burn,
+            DEAD_killed
+        };
+        deathReason kill_reason;
 
         bool isLive;
 
-        void kill();
+        void kill(deathReason reason=DEAD_killed);
 
         bool contactedWithWarp;
         LVL_Warp * contactedWarp;
