@@ -49,6 +49,8 @@ SelectConfig::SelectConfig(QWidget *parent) :
         QString data_dir;
         QString splash_logo;
 
+        QString description;
+
         QString gui_ini = config_dir + "main.ini";
 
         if(!QFileInfo(gui_ini).exists()) continue; //Skip if it is not a config
@@ -64,6 +66,7 @@ SelectConfig::SelectConfig(QWidget *parent) :
             data_dir = (guiset.value("application-dir", "0").toBool() ?
                             ApplicationPath + "/" : config_dir + "data/" );
             configName = guiset.value("config_name", QDir(config_dir).dirName()).toString();
+            description = guiset.value("config_desc", config_dir).toString();
         guiset.endGroup();
 
         //Default splash image
@@ -80,8 +83,9 @@ SelectConfig::SelectConfig(QWidget *parent) :
 
         item = new QListWidgetItem( configName );
 
-        item->setIcon( QIcon( GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(70,40)) ) );
-        item->setData(3, c);
+        item->setIcon( QIcon( GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(200,114)) ) );
+        item->setData(Qt::ToolTipRole, description);
+        item->setData(Qt::UserRole, c);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->configList->addItem( item );
@@ -121,14 +125,14 @@ QString SelectConfig::isPreLoaded(QString openConfig)
 
 void SelectConfig::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
-    currentConfig = item->data(3).toString();
+    currentConfig = item->data(Qt::UserRole).toString();
     this->accept();
 }
 
 void SelectConfig::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
-    currentConfig = ui->configList->selectedItems().first()->data(3).toString();
+    currentConfig = ui->configList->selectedItems().first()->data(Qt::UserRole).toString();
     this->accept();
 }
 
