@@ -38,6 +38,8 @@
 #include <editing/_components/history/historyelementlayerchanged.h>
 #include <editing/_components/history/historyelementresizeblock.h>
 #include <editing/_components/history/historyelementplacedoor.h>
+#include <editing/_components/history/historyelementaddwarp.h>
+#include <editing/_components/history/historyelementremovewarp.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -218,12 +220,9 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
     updateHistoryBuffer();
 
     HistoryOperation addWpOperation;
-    addWpOperation.type = HistoryOperation::LEVELHISTORY_ADDWARP;
-    QList<QVariant> package;
-    package.push_back(array_id);
-    package.push_back(listindex);
-    package.push_back(doorindex);
-    addWpOperation.extraData = QVariant(package);
+    HistoryElementAddWarp* modf = new HistoryElementAddWarp(array_id, listindex, doorindex);
+    modf->setScene(this);
+    addWpOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(addWpOperation);
     historyIndex++;
 
@@ -235,10 +234,9 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     updateHistoryBuffer();
 
     HistoryOperation rmWpOperation;
-    rmWpOperation.type = HistoryOperation::LEVELHISTORY_REMOVEWARP;
-    LevelData data;
-    data.doors.push_back(removedDoor);
-    rmWpOperation.data = data;
+    HistoryElementRemoveWarp* modf = new HistoryElementRemoveWarp(removedDoor);
+    modf->setScene(this);
+    rmWpOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(rmWpOperation);
     historyIndex++;
 
@@ -518,97 +516,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDWARP:
-    {
-        WriteToLog(QtDebugMsg, "HistoryManager -> undo Door entry add");
-
-        int arrayidDoor = lastOperation.extraData.toList()[0].toInt();
-        int listindex = lastOperation.extraData.toList()[1].toInt();
-        doorPointsSync((unsigned int)arrayidDoor,true);
-
-        for(int i = 0; i < LvlData->doors.size(); i++)
-        {
-            if(LvlData->doors[i].array_id==(unsigned int)arrayidDoor)
-            {
-                LvlData->doors.remove(i);
-                break;
-            }
-        }
-
-        bool found = false;
-
-        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-
-        if((warplist->currentIndex()==listindex)&&(warplist->count()>2))
-        {
-            warplist->setCurrentIndex(warplist->currentIndex()-1);
-        }
-
-
-        WriteToLog(QtDebugMsg, "HistoryManager -> check index");
-
-        if(listindex < warplist->count()){
-            if(arrayidDoor == warplist->itemData(listindex).toInt()){
-                found = true;
-                warplist->removeItem(listindex);
-            }
-        }
-        WriteToLog(QtDebugMsg, QString("HistoryManager -> found = %1").arg(found));
-
-
-        if(!found)
-        {
-            found=false;
-            for(int i = 0; i < warplist->count(); i++)
-            {
-                if(arrayidDoor == warplist->itemData(i).toInt())
-                {
-                    warplist->removeItem(i);
-                    found=true;
-                    break;
-                }
-            }
-        }
-        WriteToLog(QtDebugMsg, QString("HistoryManager -> found and removed = %1").arg(found));
-
-
-        if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        //warplist->update();
-        //warplist->repaint();
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
-    {
-        LevelDoors removedDoor = lastOperation.data.doors[0];
-        LvlData->doors.insert(removedDoor.index, removedDoor);
-
-        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-        warplist->insertItem(removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
-                             .arg(removedDoor.array_id).arg(removedDoor.ix).arg(removedDoor.iy).arg(removedDoor.ox).arg(removedDoor.oy),
-                             removedDoor.array_id);
-        if(warplist->count() > (int)removedDoor.index)
-        {
-            warplist->setCurrentIndex( removedDoor.index );
-        }
-        else
-        {
-            warplist->setCurrentIndex( warplist->count()-1 );
-        }
-
-        if(removedDoor.isSetOut){
-            placeDoorExit(removedDoor);
-        }
-        if(removedDoor.isSetIn){
-            placeDoorEnter(removedDoor);
-        }
-
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
@@ -1215,62 +1122,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDWARP:
-    {
-        int arrayid = lastOperation.extraData.toList()[0].toInt();
-        int listindex = lastOperation.extraData.toList()[1].toInt();
-        int doorindex = lastOperation.extraData.toList()[2].toInt();
-
-        LevelDoors newDoor = FileFormats::dummyLvlDoor();
-        newDoor.array_id = arrayid;
-        newDoor.index = doorindex;
-
-        LvlData->doors.insert(doorindex, newDoor);
-        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-        warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
-                          .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
-                          newDoor.array_id);
-        if(warplist->count() < listindex)
-        {
-            warplist->setCurrentIndex( listindex );
-        }
-        else
-        {
-            warplist->setCurrentIndex( warplist->count()-1 );
-        }
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(true);
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
-    {
-        LevelDoors removedDoor = lastOperation.data.doors[0];
-        doorPointsSync( removedDoor.array_id, true);
-
-        for(int i=0;i<LvlData->doors.size();i++)
-        {
-            if(LvlData->doors[i].array_id==removedDoor.array_id)
-            {
-                LvlData->doors.remove(i);
-                break;
-            }
-        }
-
-        QComboBox* warplist = MainWinConnect::pMainWin->dock_LvlWarpProps->getWarpList();
-        for(int i = 0; i < warplist->count(); i++){
-            if((unsigned int)warplist->itemData(i).toInt() == removedDoor.array_id){
-                warplist->removeItem(i);
-                break;
-            }
-        }
-
-        if(warplist->count()<=0) MainWinConnect::pMainWin->dock_LvlWarpProps->setWarpRemoveButtonEnabled(false);
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
