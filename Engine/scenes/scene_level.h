@@ -205,6 +205,7 @@ public:
     QQueue<transformTask_block > block_transfors;
 
     QMap<int, QList<LVL_Block* > > switch_blocks;
+    void toggleSwitch(int switch_id);
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);

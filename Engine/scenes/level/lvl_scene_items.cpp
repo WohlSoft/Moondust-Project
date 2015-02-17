@@ -146,3 +146,18 @@ void LevelScene::destroyBlock(LVL_Block *_block)
     delete _block;
     _block = NULL;
 }
+
+
+
+void LevelScene::toggleSwitch(int switch_id)
+{
+    if(switch_blocks.contains(switch_id))
+    {
+        for(int x=0;x<switch_blocks[switch_id].size();x++)
+            switch_blocks[switch_id][x]->
+                    transformTo(
+                            switch_blocks[switch_id][x]->setup->switch_transform,
+                            2);
+    }
+}
+
