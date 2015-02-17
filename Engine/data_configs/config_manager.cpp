@@ -62,22 +62,22 @@ TitleScreenSetup ConfigManager::setup_TitleScreen;
 //World map settings
 WorldMapData ConfigManager::setup_WorldMap;
 
-QVector<PGE_Texture > ConfigManager::common_textures;
+QList<PGE_Texture > ConfigManager::common_textures;
 
 unsigned long ConfigManager::music_custom_id;
 unsigned long ConfigManager::music_w_custom_id;
-QVector<obj_music > ConfigManager::main_music_lvl;
-QVector<obj_music > ConfigManager::main_music_wld;
-QVector<obj_music > ConfigManager::main_music_spc;
+QList<obj_music > ConfigManager::main_music_lvl;
+QList<obj_music > ConfigManager::main_music_wld;
+QList<obj_music > ConfigManager::main_music_spc;
 
-QVector<obj_sound > ConfigManager::main_sound;
+QList<obj_sound > ConfigManager::main_sound;
 
 
 //Level config Data
-QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
+QList<PGE_Texture >   ConfigManager::level_textures; //Texture bank
 
 
-QVector<PGE_Texture > ConfigManager::world_textures;
+QList<PGE_Texture > ConfigManager::world_textures;
 
 
 QString ConfigManager::imgFile, ConfigManager::imgFileM;
