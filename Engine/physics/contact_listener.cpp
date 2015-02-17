@@ -22,6 +22,7 @@
 #include "../scenes/level/lvl_player.h"
 #include "../scenes/level/lvl_block.h"
 #include "../scenes/level/lvl_bgo.h"
+#include "../scenes/level/lvl_physenv.h"
 #include "../scenes/level/lvl_warp.h"
 
 #include <QtDebug>
@@ -74,6 +75,32 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=true;
         dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched++;
+    }
+
+    /***********************************PhysEnvironment & Player***********************************/
+    if ( bodyA->type == PGE_Phys_Object::LVLPhysEnv && bodyB->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( bodyB->type == PGE_Phys_Object::LVLPhysEnv && bodyA->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        dynamic_cast<LVL_Player *>(bodyChar)->environments_map[(int)bodyBlock]
+                = dynamic_cast<LVL_PhysEnv *>(bodyBlock)->env_type;
     }
 
     /***********************************BGO & Player***********************************/
@@ -192,6 +219,33 @@ void PGEContactListener::EndContact(b2Contact *contact)
         {
             dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=false;
             dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = NULL;
+        }
+    }
+    /***********************************Physical Environment zone & Player***********************************/
+    if ( (bodyA->type == PGE_Phys_Object::LVLPhysEnv) && (bodyB->type == PGE_Phys_Object::LVLPlayer) )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( (bodyB->type == PGE_Phys_Object::LVLPhysEnv) && (bodyA->type == PGE_Phys_Object::LVLPlayer) )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        if(dynamic_cast<LVL_Player *>(bodyChar)->environments_map.contains((int)bodyBlock))
+        {
+            dynamic_cast<LVL_Player *>(bodyChar)->environments_map.remove((int)bodyBlock);
         }
     }
 

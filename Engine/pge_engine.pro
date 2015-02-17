@@ -229,7 +229,8 @@ SOURCES += main.cpp \
     ../_Libs/oolua/lua/luac.c \
     ../_Libs/oolua/lua/lundump.c \
     ../_Libs/oolua/lua/lvm.c \
-    ../_Libs/oolua/lua/lzio.c
+    ../_Libs/oolua/lua/lzio.c \
+    scenes/level/lvl_physenv.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -419,7 +420,8 @@ HEADERS  += \
     ../_Libs/oolua/stack_get.h \
     ../_Libs/oolua/type_converters.h \
     ../_Libs/oolua/type_list.h \
-    ../_Libs/oolua/typelist_structs.h
+    ../_Libs/oolua/typelist_structs.h \
+    scenes/level/lvl_physenv.h
 
 FORMS    += \
     data_configs/select_config.ui

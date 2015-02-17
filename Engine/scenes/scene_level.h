@@ -27,6 +27,8 @@
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
 
+#include "level/lvl_physenv.h"
+
 #include "level/lvl_warp.h"
 
 
@@ -207,6 +209,8 @@ private:
     QVector<LVL_Block* > blocks;
     QVector<LVL_Bgo* > bgos;
     QVector<LVL_Warp* > warps;
+    QVector<LVL_PhysEnv* > physenvs;
+
 
     QVector<LVL_Background *> backgrounds;
 

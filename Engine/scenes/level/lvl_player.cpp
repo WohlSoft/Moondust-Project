@@ -42,6 +42,9 @@ LVL_Player::LVL_Player()
 
     climbing=false;
 
+    environment = LVL_PhysEnv::Env_Air;
+    last_environment = LVL_PhysEnv::Env_Air;
+
     bumpDown=false;
     bumpUp=false;
     bumpVelocity=0.0f;
@@ -178,6 +181,59 @@ void LVL_Player::update(float ticks)
     }
 
 
+    if(environments_map.isEmpty())
+    {
+        if(last_environment != (camera->section->underwater ?
+                                    LVL_PhysEnv::Env_Water :
+                                    LVL_PhysEnv::Env_Air) )
+        {
+            qDebug()<<"Exit from environment";
+            environment = camera->section->underwater ?
+                                            LVL_PhysEnv::Env_Water :
+                                                    LVL_PhysEnv::Env_Air ;
+        }
+    }
+    else
+    {
+        int newEnv = camera->section->underwater ? LVL_PhysEnv::Env_Water:LVL_PhysEnv::Env_Air;
+
+        foreach(int x, environments_map)
+        {
+            newEnv = x;
+        }
+
+        if(last_environment != newEnv)
+        {
+            qDebug()<<"Enter to environment" << newEnv;
+            environment = newEnv;
+        }
+    }
+
+
+    if( (last_environment==LVL_PhysEnv::Env_Air) && (environment==LVL_PhysEnv::Env_Water) )
+    {
+        last_environment=environment;
+        physBody->SetLinearVelocity(b2Vec2(0, 0));
+        physBody->SetGravityScale(0.2);
+    }
+    else
+    if( (last_environment==LVL_PhysEnv::Env_Water)&&(environment==LVL_PhysEnv::Env_Air) )
+    {
+        last_environment=environment;
+        physBody->SetGravityScale(1);
+    }
+
+    //if(environment==LVL_PhysEnv::Env_Water)
+    //    onGround=true;
+
+    if(onGround)
+    {
+        if(!isFloating)
+        {
+            timeToFloat=maxFloatTime;
+        }
+    }
+
     //Running key
     if(keys.run)
     {
@@ -260,6 +316,18 @@ void LVL_Player::update(float ticks)
 
     if( keys.jump )
     {
+        if(environment==LVL_PhysEnv::Env_Water)
+        {
+            if(!JumpPressed)
+            {
+                JumpPressed=true;
+                jumpForce=20;
+                timeToFloat = maxFloatTime;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physBody->GetLinearVelocity().y-20.0f));
+            }
+        }
+        else
+
         if(!JumpPressed)
         {
             JumpPressed=true;
@@ -297,7 +365,6 @@ void LVL_Player::update(float ticks)
                     physBody->SetGravityScale((int)(!climbing));
                 }
             }
-
         }
     }
     else

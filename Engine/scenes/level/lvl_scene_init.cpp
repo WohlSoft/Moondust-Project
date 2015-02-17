@@ -243,6 +243,21 @@ bool LevelScene::init()
         warps.push_back(warpP);
     }
 
+    qDebug()<<"Init Physical environments";
+    //BGO
+    for(int i=0; i<data.physez.size(); i++)
+    {
+        loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
+
+        LVL_PhysEnv * physesP;
+        physesP = new LVL_PhysEnv();
+        physesP->worldPtr = world;
+        physesP->data = data.physez[i];
+        physesP->init();
+        physenvs.push_back(physesP);
+    }
+
 
     qDebug() << "textures " << ConfigManager::level_textures.size();
 
