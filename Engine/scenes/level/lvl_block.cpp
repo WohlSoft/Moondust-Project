@@ -173,18 +173,23 @@ void LVL_Block::init()
 
     //rectangle box
     default: //Rectangle box shape
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
-
-        if(!setup->sizable)
         {
+            shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
             b2EdgeShape edgeShape;
             edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(-posY_coefficient-0.1)),
                            b2Vec2(PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(-posY_coefficient-0.1)) );
 
-            edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
-            //edgeShape.m_vertex1.Set( PhysUtil::pix2met(posX_coefficient+0.5), PhysUtil::pix2met(posX_coefficient+0.5) );
-            //edgeShape.m_vertex2.Set( PhysUtil::pix2met(posX_coefficient+0.5), PhysUtil::pix2met(posX_coefficient+0.5) );
-            edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+
+            if(collide!=COLLISION_TOP)
+            {
+                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+            }
+            else
+            {
+                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+            }
             edgeShape.m_hasVertex0 = true;
             edgeShape.m_hasVertex3 = true;
 
@@ -497,7 +502,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         //Coin!
         data.npc_id++;
         fadeOffset=0.f;
-        setFade(20, 1.0f, 0.2f);
+        setFade(25, 1.0f, 0.1f);
 
         if((!setup->bounce)&&(!setup->switch_Button))
         {
@@ -511,7 +516,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         //Coin!
         data.npc_id=0;
         fadeOffset=0.f;
-        setFade(20, 1.0f, 0.2f);
+        setFade(25, 1.0f, 0.1f);
         if((!setup->bounce)&&(!setup->switch_Button))
         {
             transformTo(setup->transfororm_on_hit_into, 2);
