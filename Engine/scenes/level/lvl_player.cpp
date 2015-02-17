@@ -32,10 +32,27 @@ LVL_Player::LVL_Player()
 
     type = LVLPlayer;
 
-    force=900.0f;
-    hMaxSpeed=20.0f;
-    hRunningMaxSpeed=38.0f;
-    fallMaxSpeed=720.0f;
+    physics[LVL_PhysEnv::Env_Air].make();
+    physics[LVL_PhysEnv::Env_Air].walk_force = 900.0f;
+    physics[LVL_PhysEnv::Env_Air].slippery_c = 3.0f;
+    physics[LVL_PhysEnv::Env_Air].velocity_jump = 37.0f;
+    physics[LVL_PhysEnv::Env_Air].velocity_climb = 15.0f;
+    physics[LVL_PhysEnv::Env_Air].MaxSpeed_walk = 20.0f;
+    physics[LVL_PhysEnv::Env_Air].MaxSpeed_run = 38.0f;
+    physics[LVL_PhysEnv::Env_Air].MaxSpeed_up = 74.0f;
+    physics[LVL_PhysEnv::Env_Air].MaxSpeed_down = 72.0f;
+
+
+    physics[LVL_PhysEnv::Env_Water].make();
+    physics[LVL_PhysEnv::Env_Water].walk_force = 300.0f;
+    physics[LVL_PhysEnv::Env_Water].slippery_c = 2.0f;
+    physics[LVL_PhysEnv::Env_Water].velocity_jump = 20.0f;
+    physics[LVL_PhysEnv::Env_Water].velocity_climb = 15.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_walk = 12.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_run = 22.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 38.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 38.0f;
+
 
     JumpPressed=false;
     onGround=true;
@@ -44,6 +61,8 @@ LVL_Player::LVL_Player()
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
+
+    collide = PGE_Phys_Object::COLLISION_ANY;
 
     bumpDown=false;
     bumpUp=false;
@@ -60,7 +79,7 @@ LVL_Player::LVL_Player()
     doKill = false;
     kill_reason=DEAD_fall;
 
-    curHMaxSpeed = hMaxSpeed;
+    curHMaxSpeed = physics[environment].MaxSpeed_walk;
     isRunning = false;
 
     contactedWithWarp = false;
@@ -176,8 +195,11 @@ void LVL_Player::update(float ticks)
     }
     else
     {
-        if(physBody->GetLinearVelocity().y > 72)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 72));
+        if(physBody->GetLinearVelocity().y > physics[environment].MaxSpeed_down)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physics[environment].MaxSpeed_down));
+        else
+        if(physBody->GetLinearVelocity().y < -physics[environment].MaxSpeed_up)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -physics[environment].MaxSpeed_up));
     }
 
 
@@ -215,12 +237,18 @@ void LVL_Player::update(float ticks)
         last_environment=environment;
         physBody->SetLinearVelocity(b2Vec2(0, 0));
         physBody->SetGravityScale(0.2);
+        curHMaxSpeed = isRunning ?
+                    physics[environment].MaxSpeed_run
+                  : physics[environment].MaxSpeed_walk;
     }
     else
     if( (last_environment==LVL_PhysEnv::Env_Water)&&(environment==LVL_PhysEnv::Env_Air) )
     {
         last_environment=environment;
         physBody->SetGravityScale(1);
+        curHMaxSpeed = isRunning ?
+                    physics[environment].MaxSpeed_run :
+                    physics[environment].MaxSpeed_walk;
     }
 
     //if(environment==LVL_PhysEnv::Env_Water)
@@ -239,7 +267,7 @@ void LVL_Player::update(float ticks)
     {
         if(!isRunning)
         {
-            curHMaxSpeed = hRunningMaxSpeed;
+            curHMaxSpeed = physics[environment].MaxSpeed_run;
             isRunning=true;
         }
     }
@@ -247,7 +275,7 @@ void LVL_Player::update(float ticks)
     {
         if(isRunning)
         {
-            curHMaxSpeed = hMaxSpeed;
+            curHMaxSpeed = physics[environment].MaxSpeed_walk;
             isRunning=false;
         }
     }
@@ -264,7 +292,8 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -15));
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                               -physics[environment].velocity_climb));
         }
         else
         if(climbable_map.size()>0)
@@ -277,7 +306,8 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 15));
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                               physics[environment].velocity_climb));
         }
         else
         if(climbable_map.size()>0)
@@ -286,12 +316,18 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    float32 force = foot_sl_contacts_map.isEmpty() ?
+                        physics[environment].walk_force
+                          : (physics[environment].walk_force/
+                             physics[environment].slippery_c);
+
     //If left key is pressed
     if(keys.right)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(15, physBody->GetLinearVelocity().y));
+            physBody->SetLinearVelocity(b2Vec2(physics[environment].velocity_climb,
+                                               physBody->GetLinearVelocity().y));
         }
         else
         {
@@ -305,7 +341,8 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(-15, physBody->GetLinearVelocity().y));
+            physBody->SetLinearVelocity(b2Vec2(-physics[environment].velocity_climb,
+                                               physBody->GetLinearVelocity().y));
         }
         else
         {
@@ -323,7 +360,9 @@ void LVL_Player::update(float ticks)
                 JumpPressed=true;
                 jumpForce=20;
                 timeToFloat = maxFloatTime;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physBody->GetLinearVelocity().y-20.0f));
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   physBody->GetLinearVelocity().y
+                                                  -physics[environment].velocity_jump));
             }
         }
         else
@@ -336,7 +375,9 @@ void LVL_Player::update(float ticks)
                 climbing=false;
                 jumpForce=20;
                 timeToFloat = maxFloatTime;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   -physics[environment].velocity_jump
+                                                   -fabs(physBody->GetLinearVelocity().x/6)));
             }
             else
             if((allowFloat)&&(timeToFloat>0))
@@ -351,13 +392,16 @@ void LVL_Player::update(float ticks)
             if(jumpForce>0)
             {
                 jumpForce--;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -37.0f-fabs(physBody->GetLinearVelocity().x/6)));
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   -physics[environment].velocity_jump
+                                                   -fabs(physBody->GetLinearVelocity().x/6)));
             }
 
             if(isFloating)
             {
                 timeToFloat -= ticks;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 3.5*sin(timeToFloat/60.0)) );
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   3.5*sin(timeToFloat/60.0)) );
                 if(timeToFloat<=0)
                 {
                     timeToFloat=0;
