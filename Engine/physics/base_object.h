@@ -97,7 +97,8 @@ public:
         LVLPlayer,
         LVLEffect,
         LVLWarp,
-        LVLSpecial
+        LVLSpecial,
+        LVLPhysEnv
     };
 
     virtual void update();

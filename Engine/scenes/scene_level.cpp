@@ -379,6 +379,15 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+    qDebug() << "Destroy Physical Environment zones";
+    while(!physenvs.isEmpty())
+    {
+        LVL_PhysEnv* tmp;
+        tmp = physenvs.first();
+        physenvs.pop_front();
+        if(tmp) delete tmp;
+    }
+
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
     world = NULL;

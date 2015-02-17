@@ -164,6 +164,10 @@ void LVL_Block::init()
 
             b2Fixture * block2 = physBody->CreateFixture(&edgeShape, 1.0f);
             block2->SetFriction(data->slippery? 0.04f : 0.25f );
+            if(setup->algorithm==3)
+            {
+                block2->SetSensor(true);
+            }
         }
     }
 

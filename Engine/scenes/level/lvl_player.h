@@ -62,6 +62,10 @@ class LVL_Player :
         QMap<int, int > climbable_map;
         bool climbing;
 
+        QMap<int, int > environments_map;
+        int environment;
+        int last_environment;
+
         bool isLive;
         enum deathReason
         {
