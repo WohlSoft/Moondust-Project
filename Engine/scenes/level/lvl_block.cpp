@@ -261,6 +261,12 @@ void LVL_Block::transformTo_x(long id)
         animated = ConfigManager::lvl_block_indexes[data.id].animated;
         animator_ID = ConfigManager::lvl_block_indexes[data.id].animator_ID;
     }
+
+    if(!setup->sizable)
+    {
+        data.w = texture.w;
+        data.h = (texture.h/setup->frames);
+    }
 }
 
 
@@ -478,8 +484,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 {
     hitDirection = _dir;
     isHidden=false;
+    data.invisible=false;
 
-    if(setup->destroyable)
+    if((setup->destroyable)&&(data.npc_id==0))
     {
         destroyed=true;
         return;
@@ -498,17 +505,22 @@ void LVL_Block::hit(LVL_Block::directions _dir)
                 transformTo(setup->transfororm_on_hit_into, 2);
         }
     }
+    else
+    if(data.npc_id>0)
+    {
+        //Coin!
+        data.npc_id=0;
+        fadeOffset=0.f;
+        setFade(20, 1.0f, 0.2f);
+        if((!setup->bounce)&&(!setup->switch_Button))
+        {
+            transformTo(setup->transfororm_on_hit_into, 2);
+        }
+    }
 
     if(setup->switch_Button)
     {
-        if(LvlSceneP::s->switch_blocks.contains(setup->switch_ID))
-        {
-            for(int x=0;x<LvlSceneP::s->switch_blocks[setup->switch_ID].size();x++)
-                LvlSceneP::s->switch_blocks[setup->switch_ID][x]->
-                        transformTo(
-                                LvlSceneP::s->switch_blocks[setup->switch_ID][x]->setup->switch_transform,
-                                2);
-        }
+        LvlSceneP::s->toggleSwitch(setup->switch_ID);
     }
 
     if(setup->hitable)

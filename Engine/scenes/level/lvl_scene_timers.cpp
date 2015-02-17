@@ -175,7 +175,6 @@ LevelData *LevelScene::levelData()
     return &data;
 }
 
-
 /**************************LoadAnimation**end**************************/
 
 
