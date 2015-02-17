@@ -33,7 +33,7 @@ public:
     ~LVL_Block();
     void init();
 
-    LevelBlock* data; //Local settings
+    LevelBlock data; //Local settings
     bool slippery;
 
     bool animated;
@@ -54,6 +54,14 @@ public:
         up,
         down
     };
+
+    int taskToTransform;
+    int taskToTransform_t;
+    void transformTo(long id, int type=0);
+    void transformTo_x(long id);
+    b2Fixture *f_block;
+    b2Fixture *f_edge;
+
 
     void hit(directions _dir=up);
     directions hitDirection;

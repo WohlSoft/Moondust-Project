@@ -48,6 +48,14 @@
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_timer.h>
 
+struct transformTask_block
+{
+    LVL_Block *block;
+    int id;
+    int type;
+};
+
+
 class LevelScene : public Scene
 {
 public:
@@ -146,32 +154,34 @@ public:
 
 
     /**************Z-Layers**************/
-    double Z_backImage; //Background
+    static double zCounter;
+
+    static double Z_backImage; //Background
 
     //Background-2
-    double Z_BGOBack2; // backround BGO
+    static double Z_BGOBack2; // backround BGO
 
-    double Z_blockSizable; // sizable blocks
+    static double Z_blockSizable; // sizable blocks
 
     //Background-1
-    double Z_BGOBack1; // backround BGO
+    static double Z_BGOBack1; // backround BGO
 
-    double Z_npcBack; // background NPC
-    double Z_Block; // standart block
-    double Z_npcStd; // standart NPC
-    double Z_Player; //player Point
+    static double Z_npcBack; // background NPC
+    static double Z_Block; // standart block
+    static double Z_npcStd; // standart NPC
+    static double Z_Player; //player Point
 
     //Foreground-1
-    double Z_BGOFore1; // foreground BGO
-    double Z_BlockFore; //LavaBlock
-    double Z_npcFore; // foreground NPC
+    static double Z_BGOFore1; // foreground BGO
+    static double Z_BlockFore; //LavaBlock
+    static double Z_npcFore; // foreground NPC
     //Foreground-2
-    double Z_BGOFore2; // foreground BGO
+    static double Z_BGOFore2; // foreground BGO
 
-    double Z_sys_PhysEnv;
-    double Z_sys_door;
-    double Z_sys_interspace1; // interSection space layer
-    double Z_sys_sctBorder; // section Border
+    static double Z_sys_PhysEnv;
+    static double Z_sys_door;
+    static double Z_sys_interspace1; // interSection space layer
+    static double Z_sys_sctBorder; // section Border
     /**************Z-Layers**************/
 
 
@@ -191,6 +201,10 @@ public:
 
     QVector<LVL_Background *> * bgList();
     LevelData *levelData();
+
+    QQueue<transformTask_block > block_transfors;
+
+    QMap<int, QList<LVL_Block* > > switch_blocks;
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);

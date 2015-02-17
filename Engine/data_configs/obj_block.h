@@ -54,14 +54,21 @@ struct obj_block
     bool destroyable;
     bool destroyable_by_bomb;
     bool destroyable_by_fireball;
+
     bool spawn; //split string by "-" in != "0"
         int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
         unsigned long spawn_obj_id;
+
     unsigned long effect;
     bool bounce;
     bool hitable;
     unsigned long transfororm_on_hit_into;
     unsigned long algorithm;
+
+    bool switch_Button;
+    bool switch_Block;
+    int  switch_ID;
+    int  switch_transform;
 
     unsigned int view;
     bool animated;

@@ -35,9 +35,6 @@
 
 
 
-
-
-
 #ifndef RENDER_H
 #define RENDER_H
 #include <Box2D/Box2D.h>
@@ -221,6 +218,36 @@ void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& cl)
 
 DebugDraw dbgDraw;
 
+/**************Z-Layers**************/
+double LevelScene::zCounter=0;
+
+double LevelScene::Z_backImage; //Background
+
+//Background-2
+double LevelScene::Z_BGOBack2; // backround BGO
+
+double LevelScene::Z_blockSizable; // sizable blocks
+
+//Background-1
+double LevelScene::Z_BGOBack1; // backround BGO
+
+double LevelScene::Z_npcBack; // background NPC
+double LevelScene::Z_Block; // standart block
+double LevelScene::Z_npcStd; // standart NPC
+double LevelScene::Z_Player; //player Point
+
+//Foreground-1
+double LevelScene::Z_BGOFore1; // foreground BGO
+double LevelScene::Z_BlockFore; //LavaBlock
+double LevelScene::Z_npcFore; // foreground NPC
+//Foreground-2
+double LevelScene::Z_BGOFore2; // foreground BGO
+
+double LevelScene::Z_sys_PhysEnv;
+double LevelScene::Z_sys_door;
+double LevelScene::Z_sys_interspace1; // interSection space layer
+double LevelScene::Z_sys_sctBorder; // section Border
+
 
 LevelScene::LevelScene()
     : Scene(Level)
@@ -312,6 +339,8 @@ LevelScene::~LevelScene()
     //stop animators
 
     //desroy animators
+
+    switch_blocks.clear();
 
     //destroy textures
     qDebug() << "clear textures";
@@ -441,6 +470,23 @@ void LevelScene::update()
     {
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
+
+        while(!block_transfors.isEmpty())
+        {
+            transformTask_block x = block_transfors.first();
+            if(ConfigManager::lvl_block_indexes.contains(x.id))
+                x.block->setup = &(ConfigManager::lvl_block_indexes[x.id]);
+            else
+            {
+                block_transfors.pop_front();
+                continue;
+            }
+            x.block->data.id = block_transfors.first().id;
+            x.block->transformTo_x(x.id);
+            x.block->init();
+
+            block_transfors.pop_front();
+        }
 
         //Update controllers
         keyboard1.sendControls();

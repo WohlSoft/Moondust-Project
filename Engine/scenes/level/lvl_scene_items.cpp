@@ -20,7 +20,7 @@
 #include "../../data_configs/config_manager.h"
 
 
-static double zCounter = 0;
+//static double zCounter = 0;
 
 
 
@@ -40,34 +40,10 @@ void LevelScene::placeBlock(LevelBlock blockData)
         return;
     }
 
-    if(block->setup->sizable)
-    {
-        block->z_index = Z_blockSizable +
-                ((double)blockData.y/(double)100000000000) + 1 -
-                ((double)blockData.w * (double)0.0000000000000001);
-    }
-    else
-    {
-
-        if(block->setup->view==1)
-            block->z_index = Z_BlockFore;
-        else
-            block->z_index = Z_Block;
-        zCounter += 0.0000000000001;
-        block->z_index += zCounter;
-    }
-
     block->worldPtr = world;
-    block->data = &(blockData);
-    long tID = ConfigManager::getBlockTexture(blockData.id);
-    if( tID >= 0 )
-    {
-        block->texId = ConfigManager::level_textures[tID].texture;
-        block->texture = ConfigManager::level_textures[tID];
-        block->animated = ConfigManager::lvl_block_indexes[blockData.id].animated;
-        block->animator_ID = ConfigManager::lvl_block_indexes[blockData.id].animator_ID;
-    }
+    block->data = blockData;
 
+    block->transformTo_x(blockData.id);
     block->init();
     blocks.push_back(block);
 

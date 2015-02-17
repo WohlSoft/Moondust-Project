@@ -286,6 +286,17 @@ bool LevelScene::init()
         return false;
     }
 
+    //Build switch blocks structure
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(blocks[i]->setup->switch_Block)
+        {
+            if(!switch_blocks.contains(blocks[i]->setup->switch_ID) )
+                switch_blocks[blocks[i]->setup->switch_ID].clear();
+            switch_blocks[blocks[i]->setup->switch_ID].push_back(blocks[i]);
+        }
+    }
+
     //start animation
     for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
         ConfigManager::Animator_Blocks[i].start();
