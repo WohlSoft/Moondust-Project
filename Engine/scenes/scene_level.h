@@ -73,6 +73,8 @@ public:
     bool setEntrance(int entr);
     bool isWarpEntrance;
     QPoint cameraStart;
+    bool   cameraStartDirected;
+    int    cameraStartDirection;
     LevelDoors startWarp;
     int NewPlayerID;
 

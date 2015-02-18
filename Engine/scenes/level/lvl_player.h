@@ -59,6 +59,7 @@ class LVL_Player :
         LVL_Player();
         ~LVL_Player();
         void init();
+        void initSize();
         void update(float ticks=1.0f);
 
         int playerID;

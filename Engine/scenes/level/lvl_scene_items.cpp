@@ -116,11 +116,6 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
 {
-    if(byWarp)
-    {
-        playerData.x = cameraStart.x();
-        playerData.y = cameraStart.y();
-    }
     //if(effect==0) //Simple Appear
     //if(effect==1) //Entered from pipe
     //if(effect==2) //Entered from door
@@ -129,9 +124,46 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
     player = new LVL_Player();
     player->camera = cameras.last();
     player->worldPtr = world;
-    player->setSize(playerData.w, playerData.h);
-    player->data = playerData;
     player->z_index = Z_Player;
+    player->data = playerData;
+
+    player->initSize();
+
+    if(byWarp)
+    {
+        if(cameraStartDirected)
+        {
+            switch(startWarp.odirect)
+            {
+                case 2://right
+                    cameraStart.setX(startWarp.ox);
+                    cameraStart.setY(startWarp.oy+32-player->height);
+                    break;
+                case 1://down
+                    cameraStart.setX(startWarp.ox+16-player->width/2);
+                    cameraStart.setY(startWarp.oy);
+                    break;
+                case 4://left
+                    cameraStart.setX(startWarp.ox+32-player->width);
+                    cameraStart.setY(startWarp.oy+32-player->height);
+                    break;
+                case 3://up
+                    cameraStart.setX(startWarp.ox+16-player->width/2);
+                    cameraStart.setY(startWarp.oy+32-player->height);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            cameraStart.setX(startWarp.ox+16-player->width/2);
+            cameraStart.setY(startWarp.oy+32-player->height);
+        }
+        player->data.x = cameraStart.x();
+        player->data.y = cameraStart.y();
+    }
+
     player->init();
     players.push_back(player);
 
