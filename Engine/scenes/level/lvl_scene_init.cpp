@@ -64,47 +64,14 @@ bool LevelScene::setEntrance(int entr)
 
                 startWarp = data.doors[i];
 
-                //cameraStart.setX(data.doors[i].ox);
-                //cameraStart.setY(data.doors[i].oy);
+                cameraStart.setX(startWarp.ox);
+                cameraStart.setY(startWarp.oy);
 
-                int playerW = 24;
-                int playerH = 54;
-
-                switch(startWarp.type)
-                {
-                case 0:
-                case 2:
-                    cameraStart.setX(startWarp.ox+16-playerW/2);
-                    cameraStart.setY(startWarp.oy+32-playerH);
-                    break;
-                case 1:
-                    switch(startWarp.odirect)
-                    {
-                        case 2://right
-                            cameraStart.setX(startWarp.ox);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        case 1://down
-                            cameraStart.setX(startWarp.ox+16-playerW/2);
-                            cameraStart.setY(startWarp.oy);
-                            break;
-                        case 4://left
-                            cameraStart.setX(startWarp.ox+32-playerW);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        case 3://up
-                            cameraStart.setX(startWarp.ox+16-playerW/2);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                }
+                cameraStartDirected = (startWarp.type==1);
+                cameraStartDirection = startWarp.odirect;
 
                 return true;
             }
-
         }
     }
 
