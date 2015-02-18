@@ -490,6 +490,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     hitDirection = _dir;
     isHidden=false;
     data.invisible=false;
+    bool doFade=false;
 
     if((setup->destroyable)&&(data.npc_id==0))
     {
@@ -501,9 +502,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     {
         //Coin!
         data.npc_id++;
-        fadeOffset=0.f;
-        setFade(25, 1.0f, 0.1f);
-
+        doFade=true;
         if((!setup->bounce)&&(!setup->switch_Button))
         {
             if(data.npc_id==0)
@@ -515,8 +514,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     {
         //Coin!
         data.npc_id=0;
-        fadeOffset=0.f;
-        setFade(25, 1.0f, 0.1f);
+        doFade=true;
         if((!setup->bounce)&&(!setup->switch_Button))
         {
             transformTo(setup->transfororm_on_hit_into, 2);
@@ -531,9 +529,13 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(setup->hitable)
     {
         transformTo(setup->spawn_obj_id, setup->spawn_obj);
+        doFade=true;
+    }
 
+    if(doFade)
+    {
         fadeOffset=0.f;
-        setFade(20, 1.0f, 0.2f);
+        setFade(20, 1.0f, 0.25f);
     }
 }
 
@@ -541,6 +543,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 /**************************Fader*******************************/
 void LVL_Block::setFade(int speed, float target, float step)
 {
+    if(fader_timer_id)
+        SDL_RemoveTimer(fader_timer_id);
+
     fade_step = fabs(step);
     targetOffset = target;
     fadeSpeed = speed;
