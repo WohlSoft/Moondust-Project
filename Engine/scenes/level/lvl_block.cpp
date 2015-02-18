@@ -79,6 +79,8 @@ void LVL_Block::init()
 
     collide = COLLISION_ANY;
 
+    slippery_surface = data.slippery;
+
     if((setup->sizable) || (setup->collision==2))
     {
         collide = COLLISION_TOP;
@@ -194,7 +196,7 @@ void LVL_Block::init()
             edgeShape.m_hasVertex3 = true;
 
             f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
-            f_edge->SetFriction(data.slippery? 0.04f : 0.25f );
+            f_edge->SetFriction(slippery_surface? 0.04f : 0.25f );
             if(setup->algorithm==3)
             {
                 f_edge->SetSensor(true);
@@ -214,7 +216,7 @@ void LVL_Block::init()
 
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
         f_block->SetSensor(true);
-    f_block->SetFriction(data.slippery? 0.04f : 0.25f );
+    f_block->SetFriction(slippery_surface? 0.04f : 0.25f );
 }
 
 
