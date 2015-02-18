@@ -35,23 +35,39 @@ LVL_Player::LVL_Player()
     physics[LVL_PhysEnv::Env_Air].make();
     physics[LVL_PhysEnv::Env_Air].walk_force = 900.0f;
     physics[LVL_PhysEnv::Env_Air].slippery_c = 3.0f;
+    physics[LVL_PhysEnv::Env_Air].gravity_scale = 1.0f;
     physics[LVL_PhysEnv::Env_Air].velocity_jump = 37.0f;
     physics[LVL_PhysEnv::Env_Air].velocity_climb = 15.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_walk = 20.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_run = 38.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_up = 74.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_down = 72.0f;
+    physics[LVL_PhysEnv::Env_Air].zero_speed_on_enter=false;
 
 
     physics[LVL_PhysEnv::Env_Water].make();
     physics[LVL_PhysEnv::Env_Water].walk_force = 300.0f;
     physics[LVL_PhysEnv::Env_Water].slippery_c = 2.0f;
+    physics[LVL_PhysEnv::Env_Water].gravity_scale = 0.2f;
     physics[LVL_PhysEnv::Env_Water].velocity_jump = 20.0f;
     physics[LVL_PhysEnv::Env_Water].velocity_climb = 15.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_walk = 12.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_run = 22.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 38.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 38.0f;
+    physics[LVL_PhysEnv::Env_Water].zero_speed_on_enter=true;
+
+    physics[LVL_PhysEnv::Env_Quicksand].make();
+    physics[LVL_PhysEnv::Env_Quicksand].walk_force = 100.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].slippery_c = 2.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 0.2f;
+    physics[LVL_PhysEnv::Env_Quicksand].velocity_jump = 20.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].velocity_climb = 15.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_walk = 1.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_run = 1.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_up = 74.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_down = 10.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].zero_speed_on_enter=true;
 
 
     JumpPressed=false;
@@ -189,6 +205,11 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if(environment==LVL_PhysEnv::Env_Quicksand)
+    {
+        physBody->SetLinearVelocity(b2Vec2(0, 0));
+    }
+
     if(climbing)
     {
         physBody->SetLinearVelocity(b2Vec2(0, 0));
@@ -232,27 +253,17 @@ void LVL_Player::update(float ticks)
     }
 
 
-    if( (last_environment==LVL_PhysEnv::Env_Air) && (environment==LVL_PhysEnv::Env_Water) )
+    if(last_environment!=environment)
     {
         last_environment=environment;
-        physBody->SetLinearVelocity(b2Vec2(0, 0));
-        physBody->SetGravityScale(0.2);
-        curHMaxSpeed = isRunning ?
-                    physics[environment].MaxSpeed_run
-                  : physics[environment].MaxSpeed_walk;
-    }
-    else
-    if( (last_environment==LVL_PhysEnv::Env_Water)&&(environment==LVL_PhysEnv::Env_Air) )
-    {
-        last_environment=environment;
-        physBody->SetGravityScale(1);
+        if(physics[environment].zero_speed_on_enter)
+            physBody->SetLinearVelocity(b2Vec2(0, 0));
+
+        physBody->SetGravityScale(physics[environment].gravity_scale);
         curHMaxSpeed = isRunning ?
                     physics[environment].MaxSpeed_run :
                     physics[environment].MaxSpeed_walk;
     }
-
-    //if(environment==LVL_PhysEnv::Env_Water)
-    //    onGround=true;
 
     if(onGround)
     {
@@ -353,7 +364,7 @@ void LVL_Player::update(float ticks)
 
     if( keys.jump )
     {
-        if(environment==LVL_PhysEnv::Env_Water)
+        if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
         {
             if(!JumpPressed)
             {
