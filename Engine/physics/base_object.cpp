@@ -29,6 +29,7 @@ PGE_Phys_Object::PGE_Phys_Object()
     z_index = 0.0d;
     isRectangle = true;
     _player_moveup = true;
+    slippery_surface = false;
     collide = COLLISION_ANY;
 }
 
