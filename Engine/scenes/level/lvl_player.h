@@ -29,7 +29,7 @@
 
 struct Plr_EnvironmentPhysics
 {
-    inline void make() {}
+    inline void make() {} //!< Dummy function
     float32 walk_force; //!< Move force
     float32 slippery_c; //!< Slippery coefficien
     float32 gravity_scale; //!< Gravity scale
@@ -40,6 +40,15 @@ struct Plr_EnvironmentPhysics
     float32 MaxSpeed_up; //!< Fly UP Max fall speed
     float32 MaxSpeed_down; //!< Max fall down speed
     bool    zero_speed_on_enter;
+};
+
+struct Plr_State
+{
+    inline void make() {} //!< Dummy function
+    int width;
+    int height;
+   bool duck_allow;
+    int duck_height;
 };
 
 class LVL_Player :
@@ -53,7 +62,14 @@ class LVL_Player :
         void update(float ticks=1.0f);
 
         int playerID;
+
+        QMap<int, Plr_State > states;
+        int stateID;
+
         QMap<int, Plr_EnvironmentPhysics > physics;
+        QMap<int, int > environments_map;
+        int environment;
+        int last_environment;
 
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
@@ -73,10 +89,6 @@ class LVL_Player :
 
         QMap<int, int > climbable_map;
         bool climbing;
-
-        QMap<int, int > environments_map;
-        int environment;
-        int last_environment;
 
         bool isLive;
         enum deathReason

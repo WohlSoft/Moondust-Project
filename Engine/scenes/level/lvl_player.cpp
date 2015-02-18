@@ -60,14 +60,22 @@ LVL_Player::LVL_Player()
     physics[LVL_PhysEnv::Env_Quicksand].make();
     physics[LVL_PhysEnv::Env_Quicksand].walk_force = 100.0f;
     physics[LVL_PhysEnv::Env_Quicksand].slippery_c = 2.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 0.2f;
-    physics[LVL_PhysEnv::Env_Quicksand].velocity_jump = 20.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 0.5f;
+    physics[LVL_PhysEnv::Env_Quicksand].velocity_jump = 35.0f;
     physics[LVL_PhysEnv::Env_Quicksand].velocity_climb = 15.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_walk = 1.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_run = 1.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_up = 74.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_down = 10.0f;
     physics[LVL_PhysEnv::Env_Quicksand].zero_speed_on_enter=true;
+
+    stateID=0;
+
+    states[stateID].make();
+    states[stateID].width=24;
+    states[stateID].height=60;
+    states[stateID].duck_allow  =true;
+    states[stateID].duck_height =30;
 
 
     JumpPressed=false;
@@ -134,7 +142,7 @@ void LVL_Player::init()
 {
     if(!worldPtr) return;
 
-    setSize(data.w, data.h);
+    setSize(states[stateID].width-states[stateID].width%2, states[stateID].height-states[stateID].height%2);
 
     playerID = data.id;
 
