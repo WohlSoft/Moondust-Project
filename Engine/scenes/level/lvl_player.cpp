@@ -150,8 +150,8 @@ void LVL_Player::init()
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met((float)data.x + posX_coefficient),
-                PhysUtil::pix2met((float)data.y + posY_coefficient)
+                PhysUtil::pix2met((float)(data.x-(data.w-posX_coefficient)) + posX_coefficient),
+                PhysUtil::pix2met((float)(data.y-(data.h-posY_coefficient)) + posY_coefficient)
             );
 
 //    bodyDef.position.Set(PhysUtil::pix2met((float)data.x + ((float)data.w/2)),
