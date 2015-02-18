@@ -141,18 +141,17 @@ LVL_Player::~LVL_Player()
 void LVL_Player::init()
 {
     if(!worldPtr) return;
-
-    setSize(states[stateID].width-states[stateID].width%2, states[stateID].height-states[stateID].height%2);
-
     playerID = data.id;
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met((float)(data.x-(data.w-posX_coefficient)) + posX_coefficient),
-                PhysUtil::pix2met((float)(data.y-(data.h-posY_coefficient)) + posY_coefficient)
+                PhysUtil::pix2met((float)data.x + posX_coefficient),
+                PhysUtil::pix2met((float)data.y + posY_coefficient)
             );
+    //PhysUtil::pix2met((float)(data.x-((data.w-posX_coefficient)/2)-1) + posX_coefficient),
+    //PhysUtil::pix2met((float)(data.y-(data.h-(height+2))-1) + posY_coefficient-0.1)
 
 //    bodyDef.position.Set(PhysUtil::pix2met((float)data.x + ((float)data.w/2)),
 //            PhysUtil::pix2met((float)data.y + ((float)data.w/2) ) );
@@ -173,6 +172,11 @@ void LVL_Player::init()
     physBody->CreateFixture(&fixtureDef);
 
     //qDebug() <<"Start position is " << posX() << posY();
+}
+
+void LVL_Player::initSize()
+{
+    setSize(states[stateID].width-states[stateID].width%2, states[stateID].height-states[stateID].height%2);
 }
 
 void LVL_Player::update(float ticks)

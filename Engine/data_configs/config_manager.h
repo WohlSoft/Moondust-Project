@@ -26,7 +26,7 @@
 #include "obj_block.h"
 #include "obj_bgo.h"
 #include "obj_bg.h"
-
+#include "obj_player.h"
 
 #include <QMap>
 #include <QSettings>
@@ -281,6 +281,13 @@ public:
     static CustomDirManager Dir_BG;
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
+
+
+
+    /********Playable characters*******/
+    static QMap<int, obj_player > playable_characters;
+    /********Playable characters*******/
+
 
 
     /***********Texture banks*************/

@@ -259,6 +259,8 @@ LevelScene::LevelScene()
 
     isInit=false;
     isWarpEntrance=false;
+    cameraStartDirected=false;
+    cameraStartDirection=0;
 
     isPauseMenu=false;
     isTimeStopped=false;
