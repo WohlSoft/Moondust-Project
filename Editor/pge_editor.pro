@@ -389,7 +389,8 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementresizeblock.cpp \
     editing/_components/history/historyelementplacedoor.cpp \
     editing/_components/history/historyelementaddwarp.cpp \
-    editing/_components/history/historyelementremovewarp.cpp
+    editing/_components/history/historyelementremovewarp.cpp \
+    editing/_components/history/historyelementsettingswarp.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -543,7 +544,8 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementresizeblock.h \
     editing/_components/history/historyelementplacedoor.h \
     editing/_components/history/historyelementaddwarp.h \
-    editing/_components/history/historyelementremovewarp.h
+    editing/_components/history/historyelementremovewarp.h \
+    editing/_components/history/historyelementsettingswarp.h
 
 
 FORMS    += \

@@ -40,6 +40,7 @@
 #include <editing/_components/history/historyelementplacedoor.h>
 #include <editing/_components/history/historyelementaddwarp.h>
 #include <editing/_components/history/historyelementremovewarp.h>
+#include <editing/_components/history/historyelementsettingswarp.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -243,17 +244,14 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
+void LvlScene::addChangeWarpSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryOperation chWpSettingsOperation;
-    chWpSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP;
-    chWpSettingsOperation.subtype = subtype;
-    QList<QVariant> package;
-    package.push_back(array_id);
-    package.push_back(extraData);
-    chWpSettingsOperation.extraData = QVariant(package);
+    HistoryElementSettingsWarp* modf = new HistoryElementSettingsWarp(array_id, subtype, extraData);
+    modf->setScene(this);
+    chWpSettingsOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(chWpSettingsOperation);
     historyIndex++;
 
@@ -516,85 +514,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        int index = -1;
-        QVariant extraData = lastOperation.extraData.toList()[1];
-        LevelDoors * doorp;
-        bool found = false;
-
-        for(int i = 0; i < LvlData->doors.size(); i++){
-            if(LvlData->doors[i].array_id == (unsigned int)array_id){
-                found = true;
-                doorp = LvlData->doors.data();
-                index = i;
-                break;
-            }
-        }
-
-        if(!found)
-            break;
-
-
-        if(subtype == SETTING_NOYOSHI){
-            doorp[index].novehicles = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_ALLOWNPC){
-            doorp[index].allownpc = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_LOCKED){
-            doorp[index].locked = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_WARPTYPE){
-            doorp[index].type = extraData.toList()[0].toInt();
-        }
-        else
-        if(subtype == SETTING_NEEDASTAR){
-            doorp[index].stars = extraData.toList()[0].toInt();
-        }
-        else
-        if(subtype == SETTING_ENTRDIR){
-            doorp[index].idirect = extraData.toList()[0].toInt();
-        }
-        else
-        if(subtype == SETTING_EXITDIR){
-            doorp[index].odirect = extraData.toList()[0].toInt();
-        }
-        else
-        if(subtype == SETTING_LEVELEXIT){
-            doorp[index].lvl_o = !extraData.toList()[0].toBool();
-            if(!doorp[index].lvl_o && !doorp[index].isSetOut && extraData.toList().size() >= 3){
-                doorp[index].ox = extraData.toList()[1].toInt();
-                doorp[index].oy = extraData.toList()[2].toInt();
-                doorp[index].isSetOut = true;
-                placeDoorExit(doorp[index]);
-            }
-        }
-        else
-        if(subtype == SETTING_LEVELENTR){
-            doorp[index].lvl_i = !extraData.toList()[0].toBool();
-            if(!doorp[index].lvl_i && !doorp[index].isSetIn && extraData.toList().size() >= 3){
-                doorp[index].ix = extraData.toList()[1].toInt();
-                doorp[index].iy = extraData.toList()[2].toInt();
-                doorp[index].isSetIn = true;
-                placeDoorEnter(doorp[index]);
-            }
-        }
-        else
-        if(subtype == SETTING_LEVELWARPTO){
-            doorp[index].warpto = extraData.toList()[0].toInt();
-        }
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-        doorPointsSync(array_id);
-
-        break;            
-    }
     case HistoryOperation::LEVELHISTORY_ADDEVENT:
     {
         int array_id = lastOperation.extraData.toList()[0].toInt();
@@ -1122,83 +1041,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        int index = -1;
-        QVariant extraData = lastOperation.extraData.toList()[1];
-        LevelDoors * doorp;
-        bool found = false;
-
-        for(int i = 0; i < LvlData->doors.size(); i++){
-            if(LvlData->doors[i].array_id == (unsigned int)array_id){
-                found = true;
-                doorp = LvlData->doors.data();
-                index = i;
-                break;
-            }
-        }
-
-        if(!found)
-            break;
-
-
-        if(subtype == SETTING_NOYOSHI){
-            doorp[index].novehicles = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_ALLOWNPC){
-            doorp[index].allownpc = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_LOCKED){
-            doorp[index].locked = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_WARPTYPE){
-            doorp[index].type = extraData.toList()[1].toInt();
-        }
-        else
-        if(subtype == SETTING_NEEDASTAR){
-            doorp[index].stars = extraData.toList()[1].toInt();
-        }
-        else
-        if(subtype == SETTING_ENTRDIR){
-            doorp[index].idirect = extraData.toList()[1].toInt();
-        }
-        else
-        if(subtype == SETTING_EXITDIR){
-            doorp[index].odirect = extraData.toList()[1].toInt();
-        }
-        else
-        if(subtype == SETTING_LEVELEXIT){
-            doorp[index].lvl_o = extraData.toList()[0].toBool();
-            if(!(((!doorp[index].lvl_o) && (!doorp[index].lvl_i)) || (doorp[index].lvl_i)))
-            {
-                doorp[index].ox = extraData.toList()[1].toInt();
-                doorp[index].oy = extraData.toList()[2].toInt();
-            }
-        }
-        else
-        if(subtype == SETTING_LEVELENTR){
-            doorp[index].lvl_i = extraData.toList()[0].toBool();
-            if(!(((!doorp[index].lvl_o) && (!doorp[index].lvl_i)) || ((doorp[index].lvl_o) && (!doorp[index].lvl_i))))
-            {
-                doorp[index].ix = extraData.toList()[1].toInt();
-                doorp[index].iy = extraData.toList()[2].toInt();
-            }
-        }
-        else
-        if(subtype == SETTING_LEVELWARPTO){
-            doorp[index].warpto = extraData.toList()[1].toInt();
-        }
-
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-        doorPointsSync(array_id);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_ADDEVENT:
     {
         int array_id = lastOperation.extraData.toList()[0].toInt();

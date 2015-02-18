@@ -509,7 +509,7 @@ void LvlWarpBox::on_WarpNoYoshi_clicked(bool checked)
                 edit->LvlData.doors[i].novehicles = checked; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_NOYOSHI, QVariant(checked));
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_NOYOSHI, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -527,7 +527,7 @@ void LvlWarpBox::on_WarpAllowNPC_clicked(bool checked)
                 edit->LvlData.doors[i].allownpc = checked; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_ALLOWNPC, QVariant(checked));
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ALLOWNPC, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
     }
@@ -547,7 +547,7 @@ void LvlWarpBox::on_WarpLock_clicked(bool checked)
                 edit->LvlData.doors[i].locked = checked; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_LOCKED, QVariant(checked));
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_LOCKED, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -577,7 +577,7 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
         ui->WarpEntranceGrp->setEnabled(  index==1 );
         ui->WarpExitGrp->setEnabled( index==1 );
 
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_WARPTYPE, QVariant(warpTypeData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_WARPTYPE, QVariant(warpTypeData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -601,7 +601,7 @@ void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
                 edit->LvlData.doors[i].stars = arg1; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_NEEDASTAR, QVariant(starData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_NEEDASTAR, QVariant(starData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
@@ -628,7 +628,7 @@ void LvlWarpBox::on_Entr_Down_clicked()
                 edit->LvlData.doors[i].idirect = 3; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
@@ -652,7 +652,7 @@ void LvlWarpBox::on_Entr_Right_clicked()
                 edit->LvlData.doors[i].idirect = 4; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -676,7 +676,7 @@ void LvlWarpBox::on_Entr_Up_clicked()
                 edit->LvlData.doors[i].idirect = 1; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -699,7 +699,7 @@ void LvlWarpBox::on_Entr_Left_clicked()
                 edit->LvlData.doors[i].idirect = 2; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -724,7 +724,7 @@ void LvlWarpBox::on_Exit_Up_clicked()
                 edit->LvlData.doors[i].odirect = 3; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -748,7 +748,7 @@ void LvlWarpBox::on_Exit_Left_clicked()
                 edit->LvlData.doors[i].odirect = 4; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -772,7 +772,7 @@ void LvlWarpBox::on_Exit_Down_clicked()
                 edit->LvlData.doors[i].odirect = 1; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -796,7 +796,7 @@ void LvlWarpBox::on_Exit_Right_clicked()
                 edit->LvlData.doors[i].odirect = 2; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -1025,7 +1025,7 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
         edit->LvlData.doors[i].isSetIn = iPlaced;
         edit->LvlData.doors[i].isSetOut = oPlaced;
 
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELEXIT, QVariant(extraData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_LEVELEXIT, QVariant(extraData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
@@ -1085,7 +1085,7 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
         edit->LvlData.doors[i].isSetIn = iPlaced;
         edit->LvlData.doors[i].isSetOut = oPlaced;
 
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELENTR, QVariant(extraData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_LEVELENTR, QVariant(extraData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
@@ -1151,7 +1151,7 @@ void LvlWarpBox::on_WarpToExitNu_valueChanged(int arg1)
                 edit->LvlData.doors[i].warpto = arg1; break;
             }
         }
-        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELWARPTO, QVariant(warpToData));
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), HistorySettings::SETTING_LEVELWARPTO, QVariant(warpToData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
