@@ -567,7 +567,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
                 item->setData(3, QString::number(NewEvent.array_id));
 
                 if(!cloneEvent)
-                    edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+                    edit->scene->addAddEventHistory(NewEvent);
                 else
                     edit->scene->addDuplicateEventHistory(NewEvent);
                 edit->LvlData.events.push_back(NewEvent);
@@ -702,7 +702,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
             item->setData(3, QString::number(NewEvent.array_id));
 
             if(!cloneEvent)
-                edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+                edit->scene->addAddEventHistory(NewEvent);
             else
                 edit->scene->addDuplicateEventHistory(NewEvent);
             edit->LvlData.events.push_back(NewEvent);
