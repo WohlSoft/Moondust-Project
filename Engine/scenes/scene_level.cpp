@@ -25,11 +25,12 @@
 
 #include "level/lvl_scene_ptr.h"
 
-#include "../data_configs/config_manager.h"
+#include <data_configs/config_manager.h>
 
-#include "../fontman/font_manager.h"
+#include <fontman/font_manager.h>
 
-#include "../gui/pge_msgbox.h"
+#include <gui/pge_msgbox.h>
+#include <networking/intproc.h>
 
 #include <QtDebug>
 
@@ -548,6 +549,15 @@ void LevelScene::update()
             cameras[i]->update();
     }
 
+    if(IntProc::enabled && IntProc::cmd_accepted)
+    {
+        PGE_MsgBox msgBox(this, IntProc::getCMD(),
+                          PGE_MsgBox::msg_info);
+
+        if(!ConfigManager::setup_message_box.sprite.isEmpty())
+            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+        msgBox.exec();
+    }
 
     if(isPauseMenu)
     {

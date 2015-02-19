@@ -294,6 +294,14 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         levelAccepted=true;
     }
     else
+    if(in.startsWith("CHEAT: ", Qt::CaseSensitive))
+    {
+        qDebug() << "Accepted cheat code";
+        in.remove("CHEAT: ");
+        IntProc::cmd = in;
+        IntProc::cmd_accepted=true;
+    }
+    else
     if(in=="PING")
     {
         qDebug() << "IN: >>"<< in;
