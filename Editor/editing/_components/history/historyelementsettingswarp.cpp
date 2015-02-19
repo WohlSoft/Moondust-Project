@@ -18,6 +18,7 @@ QString HistoryElementSettingsWarp::getHistoryName()
     if(qobject_cast<LvlScene*>(m_scene)){
         return HistorySettings::settingToString(m_subtype);
     }
+    return QString("<unknown>");
 }
 
 void HistoryElementSettingsWarp::undo()
