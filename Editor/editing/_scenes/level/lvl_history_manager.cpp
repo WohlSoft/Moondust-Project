@@ -41,6 +41,7 @@
 #include <editing/_components/history/historyelementaddwarp.h>
 #include <editing/_components/history/historyelementremovewarp.h>
 #include <editing/_components/history/historyelementsettingswarp.h>
+#include <editing/_components/history/historyelementmodifyevent.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -258,16 +259,14 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, HistorySettings::Level
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addAddEventHistory(int array_id, QString name)
+void LvlScene::addAddEventHistory(LevelEvents ev)
 {
     updateHistoryBuffer();
 
     HistoryOperation addEvOperation;
-    addEvOperation.type = HistoryOperation::LEVELHISTORY_ADDEVENT;
-    QList<QVariant> package;
-    package.push_back(array_id);
-    package.push_back(name);
-    addEvOperation.extraData = QVariant(package);
+    HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(ev, false);
+    modf->setScene(this);
+    addEvOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(addEvOperation);
     historyIndex++;
 
@@ -279,8 +278,9 @@ void LvlScene::addRemoveEventHistory(LevelEvents ev)
     updateHistoryBuffer();
 
     HistoryOperation rmEvOperation;
-    rmEvOperation.type = HistoryOperation::LEVELHISTORY_REMOVEEVENT;
-    rmEvOperation.data.events.push_back(ev);
+    HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(ev, true);
+    modf->setScene(this);
+    rmEvOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(rmEvOperation);
     historyIndex++;
 
@@ -292,8 +292,9 @@ void LvlScene::addDuplicateEventHistory(LevelEvents newDuplicate)
     updateHistoryBuffer();
 
     HistoryOperation dupEvOperation;
-    dupEvOperation.type = HistoryOperation::LEVELHISTORY_DULPICATEEVENT;
-    dupEvOperation.data.events.push_back(newDuplicate);
+    HistoryElementModifyEvent* modf = new HistoryElementModifyEvent(newDuplicate, false);
+    modf->setScene(this);
+    dupEvOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(dupEvOperation);
     historyIndex++;
 
@@ -514,70 +515,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDEVENT:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-
-        for (int i = 0; i < LvlData->events.size(); i++) {
-            if(LvlData->events[i].array_id == (unsigned int)array_id){
-                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == array_id){
-                        delete MainWinConnect::pMainWin->getEventList()->item(j);
-                    }
-                }
-                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
-                LvlData->events.remove(i);
-            }
-        }
-
-        MainWinConnect::pMainWin->EventListsSync();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVEEVENT:
-    {
-        LevelEvents rmEvents = lastOperation.data.events[0];
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        QListWidgetItem * item;
-        item = new QListWidgetItem;
-        item->setText(rmEvents.name);
-        item->setFlags(Qt::ItemIsEditable);
-        item->setFlags(item->flags() | Qt::ItemIsEnabled);
-        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-        item->setData(3, QString::number(rmEvents.array_id) );
-        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
-        LevelEvents NewEvent = rmEvents;
-
-
-        LvlData->events.push_back(NewEvent);
-        evList->addItem(item);
-
-        LvlData->modified = true;
-
-        MainWinConnect::pMainWin->EventListsSync();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT:
-    {
-        LevelEvents dupEvents = lastOperation.data.events[0];
-
-        for (int i = 0; i < LvlData->events.size(); i++) {
-            if(LvlData->events[i].array_id == (unsigned int)dupEvents.array_id){
-                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if((unsigned int)MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == dupEvents.array_id){
-                        delete MainWinConnect::pMainWin->getEventList()->item(j);
-                    }
-                }
-                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
-                LvlData->events.remove(i);
-            }
-        }
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
@@ -1041,80 +978,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDEVENT:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        QString name = lastOperation.extraData.toList()[1].toString();
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        QListWidgetItem * item;
-        item = new QListWidgetItem;
-        item->setText(name);
-        item->setFlags(Qt::ItemIsEditable);
-        item->setFlags(item->flags() | Qt::ItemIsEnabled);
-        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-        item->setData(3,  QString::number(array_id) );
-        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
-        LevelEvents NewEvent = FileFormats::dummyLvlEvent();
-        NewEvent.name = item->text();
-        NewEvent.array_id = array_id;
-
-
-        LvlData->events.push_back(NewEvent);
-        evList->addItem(item);
-
-        LvlData->modified = true;
-
-        MainWinConnect::pMainWin->EventListsSync();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVEEVENT:
-    {
-        LevelEvents rmEvents = lastOperation.data.events[0];
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        for (int i = 0; i < LvlData->events.size(); i++) {
-            if(LvlData->events[i].array_id == (unsigned int)rmEvents.array_id){
-                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
-                        delete MainWinConnect::pMainWin->getEventList()->item(j);
-                    }
-                }
-                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
-                LvlData->events.remove(i);
-            }
-        }
-
-        MainWinConnect::pMainWin->EventListsSync();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT:
-    {
-        LevelEvents dupEvents = lastOperation.data.events[0];
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        QListWidgetItem * item;
-        item = new QListWidgetItem;
-        item->setText(dupEvents.name);
-        item->setFlags(Qt::ItemIsEditable);
-        item->setFlags(item->flags() | Qt::ItemIsEnabled);
-        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-        item->setData(3, QString::number(dupEvents.array_id) );
-        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
-        LevelEvents NewEvent = dupEvents;
-
-        LvlData->events.push_back(NewEvent);
-        evList->addItem(item);
-
-        LvlData->modified = true;
-
-        MainWinConnect::pMainWin->EventListsSync();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
