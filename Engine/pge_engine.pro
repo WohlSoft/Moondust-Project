@@ -425,7 +425,8 @@ HEADERS  += \
     ../_Libs/oolua/typelist_structs.h \
     scenes/level/lvl_physenv.h \
     data_configs/obj_player.h \
-    scenes/level/lvl_player_def.h
+    scenes/level/lvl_player_def.h \
+    data_configs/obj_effect.h
 
 FORMS    += \
     data_configs/select_config.ui
