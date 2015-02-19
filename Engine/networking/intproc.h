@@ -13,6 +13,9 @@ public:
     static void quit();
     static bool isWorking();
     static QString state;
+    static    bool cmd_accepted;
+    static QString getCMD();
+    static QString cmd;
 
     static EditorPipe * editor;
     static bool enabled;

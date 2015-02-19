@@ -4,6 +4,9 @@ EditorPipe * IntProc::editor=NULL;
 bool IntProc::enabled=false;
 QString IntProc::state="";
 
+bool IntProc::cmd_accepted=false;
+QString IntProc::cmd="";
+
 IntProc::IntProc(QObject *parent) :
     QObject(parent)
 {
@@ -34,6 +37,14 @@ void IntProc::quit()
 bool IntProc::isWorking()
 {
     return (editor!=NULL);
+}
+
+QString IntProc::getCMD()
+{
+    cmd_accepted=false;
+    QString tmp=cmd;
+    cmd.clear();
+    return tmp;
 }
 
 bool IntProc::isEnabled()

@@ -65,6 +65,7 @@ private:
     void doSegmentationViolation(QStringList);
     void doPgeXTest(QStringList args);
     void doSMBXTest(QStringList args);
+    void doSendCheat(QStringList args);
 };
 
 #endif // DEVCONSOLE_H

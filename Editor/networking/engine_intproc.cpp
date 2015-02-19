@@ -77,6 +77,16 @@ bool IntEngine::isWorking()
     return isRuns;
 }
 
+bool IntEngine::sendCheat(QString _args)
+{
+    if(isWorking())
+    {
+        return engineSocket->sendCommand(QString("\n\nCHEAT: %1\n\n").arg(_args));
+    }
+    else
+        return false;
+}
+
 void IntEngine::setTestLvlBuffer(LevelData &buffer)
 {
     testBuffer = buffer;

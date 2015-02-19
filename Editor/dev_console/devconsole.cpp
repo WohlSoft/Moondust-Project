@@ -29,6 +29,7 @@
 #include <file_formats/pge_x.h>
 
 #include <audio/music_player.h>
+#include <networking/engine_intproc.h>
 
 #include "devconsole.h"
 #include <ui_devconsole.h>
@@ -253,6 +254,7 @@ void DevConsole::registerCommands()
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
     registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
+    registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
 }
 
 void DevConsole::doCommand()
@@ -468,5 +470,24 @@ void DevConsole::doSMBXTest(QStringList args)
 {
     Q_UNUSED(args);
     MainWinConnect::pMainWin->on_actionRunTestSMBX_triggered();
+}
+
+void DevConsole::doSendCheat(QStringList args)
+{
+    QString src;
+    foreach(QString s, args)
+        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+    if(src.isEmpty())
+    {
+        log(QString("-> Can't run engine command without arguments"), ui->tabWidget->tabText(0));
+        return;
+    }
+
+    if(IntEngine::sendCheat(src))
+        log(QString("-> command sent"), ui->tabWidget->tabText(0));
+    else
+        log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));
+
 }
 
