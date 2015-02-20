@@ -113,7 +113,7 @@ bool NpcEdit::saveAs()
 bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    if (!file.open(QFile::WriteOnly)) {
         QMessageBox::warning(this, tr("File save error"),
                              tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
