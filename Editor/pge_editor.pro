@@ -391,7 +391,8 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementaddwarp.cpp \
     editing/_components/history/historyelementremovewarp.cpp \
     editing/_components/history/historyelementsettingswarp.cpp \
-    editing/_components/history/historyelementmodifyevent.cpp
+    editing/_components/history/historyelementmodifyevent.cpp \
+    editing/_components/history/historyelementsettingsevent.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -547,7 +548,8 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementaddwarp.h \
     editing/_components/history/historyelementremovewarp.h \
     editing/_components/history/historyelementsettingswarp.h \
-    editing/_components/history/historyelementmodifyevent.h
+    editing/_components/history/historyelementmodifyevent.h \
+    editing/_components/history/historyelementsettingsevent.h
 
 
 FORMS    += \

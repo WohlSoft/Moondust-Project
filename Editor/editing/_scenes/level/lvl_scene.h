@@ -617,7 +617,7 @@ public:
         void addAddEventHistory(LevelEvents ev);
         void addRemoveEventHistory(LevelEvents ev);
         void addDuplicateEventHistory(LevelEvents newDuplicate);
-        void addChangeEventSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
+        void addChangeEventSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
         void addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer);
         void addAddLayerHistory(int array_id, QString name);
         void addRemoveLayerHistory(LevelData modData);
