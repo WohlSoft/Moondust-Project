@@ -82,7 +82,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 sizeData.push_back((qlonglong)r);
                 sizeData.push_back((qlonglong)b);
                 sizeData.push_back((qlonglong)l);
-                addChangeEventSettingsHistory(LvlData->events[eventID].array_id, LvlScene::SETTING_EV_SECSIZE, QVariant(sizeData));
+                addChangeEventSettingsHistory(LvlData->events[eventID].array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
 
                 LvlData->events[eventID].sets[LvlData->CurSection].position_left = l;
                 LvlData->events[eventID].sets[LvlData->CurSection].position_right = r;
