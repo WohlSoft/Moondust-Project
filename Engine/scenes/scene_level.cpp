@@ -739,7 +739,9 @@ int LevelScene::exec()
             stop_render = SDL_GetTicks();
 
             if( timeFPS > stop_render-start_render)
-                    doUpdate_render = timeFPS - (stop_render-start_render);
+                doUpdate_render = timeFPS - (stop_render-start_render);
+            else
+                doUpdate_render = 0;
         }
         doUpdate_render -= timeStep;
 
