@@ -46,6 +46,8 @@
 #include <editing/_components/history/historyelementchangednewlayer.h>
 #include <editing/_components/history/historyelementaddlayer.h>
 #include <editing/_components/history/historyelementremovelayer.h>
+#include <editing/_components/history/historyelementrenameevent.h>
+#include <editing/_components/history/historyelementrenamelayer.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -366,12 +368,9 @@ void LvlScene::addRenameEventHistory(int array_id, QString oldName, QString newN
     updateHistoryBuffer();
 
     HistoryOperation renameEvOperation;
-    renameEvOperation.type = HistoryOperation::LEVELHISTORY_RENAMEEVENT;
-    QList<QVariant> renameData;
-    renameData.push_back(array_id);
-    renameData.push_back(oldName);
-    renameData.push_back(newName);
-    renameEvOperation.extraData = QVariant(renameData);
+    HistoryElementRenameEvent* modf = new HistoryElementRenameEvent(array_id, oldName, newName);
+    modf->setScene(this);
+    renameEvOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(renameEvOperation);
     historyIndex++;
 
@@ -383,12 +382,9 @@ void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newN
     updateHistoryBuffer();
 
     HistoryOperation renameLaOperation;
-    renameLaOperation.type = HistoryOperation::LEVELHISTORY_RENAMELAYER;
-    QList<QVariant> renameData;
-    renameData.push_back(array_id);
-    renameData.push_back(oldName);
-    renameData.push_back(newName);
-    renameLaOperation.extraData = QVariant(renameData);
+    HistoryElementRenameLayer* modf = new HistoryElementRenameLayer(array_id, oldName, newName);
+    modf->setScene(this);
+    renameLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(renameLaOperation);
     historyIndex++;
 
@@ -514,45 +510,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RENAMEEVENT:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        QString oldName = lastOperation.extraData.toList()[1].toString();
-        QString newName = lastOperation.extraData.toList()[2].toString();
-
-        for(int i = 0; i < LvlData->events.size(); i++){
-            if(LvlData->events[i].array_id == (unsigned int)array_id){
-                LvlData->events[i].name = oldName;
-            }
-        }
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        MainWinConnect::pMainWin->ModifyEvent(newName, oldName);
-        MainWinConnect::pMainWin->setEventsBox();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_RENAMELAYER:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        QString oldName = lastOperation.extraData.toList()[1].toString();
-        QString newName = lastOperation.extraData.toList()[2].toString();
-
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == (unsigned int)array_id){
-                LvlData->layers[i].name = oldName;
-            }
-        }
-
-        //just in case
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->ModifyLayer(newName, oldName);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
     {
         LvlData->layers.push_back(lastOperation.data.layers[0]);
@@ -709,45 +666,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_RENAMEEVENT:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        QString oldName = lastOperation.extraData.toList()[1].toString();
-        QString newName = lastOperation.extraData.toList()[2].toString();
-
-        for(int i = 0; i < LvlData->events.size(); i++){
-            if(LvlData->events[i].array_id == (unsigned int)array_id){
-                LvlData->events[i].name = newName;
-            }
-        }
-
-        MainWinConnect::pMainWin->setEventToolsLocked(true);
-        MainWinConnect::pMainWin->ModifyEvent(oldName, newName);
-        MainWinConnect::pMainWin->setEventsBox();
-        MainWinConnect::pMainWin->setEventToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_RENAMELAYER:
-    {
-        int array_id = lastOperation.extraData.toList()[0].toInt();
-        QString oldName = lastOperation.extraData.toList()[1].toString();
-        QString newName = lastOperation.extraData.toList()[2].toString();
-
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == (unsigned int)array_id){
-                LvlData->layers[i].name = newName;
-            }
-        }
-
-        //just in case
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->ModifyLayer(oldName, newName);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
     {
         LevelData mvData = lastOperation.data;
