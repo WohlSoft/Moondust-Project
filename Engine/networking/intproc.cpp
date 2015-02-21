@@ -26,6 +26,8 @@ void IntProc::quit()
 {
     if(editor!=NULL)
     {
+        editor->isWorking=false;
+        editor->wait(4000);
         editor->terminate();
         delete editor;
         editor = NULL;
