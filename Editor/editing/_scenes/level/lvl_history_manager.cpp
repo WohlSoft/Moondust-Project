@@ -44,6 +44,8 @@
 #include <editing/_components/history/historyelementmodifyevent.h>
 #include <editing/_components/history/historyelementsettingsevent.h>
 #include <editing/_components/history/historyelementchangednewlayer.h>
+#include <editing/_components/history/historyelementaddlayer.h>
+#include <editing/_components/history/historyelementremovelayer.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -336,11 +338,9 @@ void LvlScene::addAddLayerHistory(int array_id, QString name)
     updateHistoryBuffer();
 
     HistoryOperation addNewLaOperation;
-    addNewLaOperation.type = HistoryOperation::LEVELHISTORY_ADDLAYER;
-    QList<QVariant> layerData;
-    layerData.push_back(array_id);
-    layerData.push_back(name);
-    addNewLaOperation.extraData = QVariant(layerData);
+    HistoryElementAddLayer* modf = new HistoryElementAddLayer(array_id, name);
+    modf->setScene(this);
+    addNewLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(addNewLaOperation);
     historyIndex++;
 
@@ -352,8 +352,9 @@ void LvlScene::addRemoveLayerHistory(LevelData modData)
     updateHistoryBuffer();
 
     HistoryOperation rmLaOperation;
-    rmLaOperation.type = HistoryOperation::LEVELHISTORY_REMOVELAYER;
-    rmLaOperation.data = modData;
+    HistoryElementRemoveLayer* modf = new HistoryElementRemoveLayer(modData);
+    modf->setScene(this);
+    rmLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(rmLaOperation);
     historyIndex++;
 
@@ -513,75 +514,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDLAYER:
-    {
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == (unsigned int)lastOperation.extraData.toList()[0].toInt()){
-                LvlData->layers.removeAt(i);
-            }
-        }
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVELAYER:
-    {
-        LvlData->layers.push_back(lastOperation.data.layers[0]);
-
-        foreach(LevelBlock b, lastOperation.data.blocks){
-            LvlData->blocks.push_back(b);
-            placeBlock(b);
-        }
-        foreach (LevelBGO b, lastOperation.data.bgo){
-            LvlData->bgo.push_back(b);
-            placeBGO(b);
-        }
-        foreach (LevelNPC n, lastOperation.data.npc){
-            LvlData->npc.push_back(n);
-            placeNPC(n);
-        }
-        foreach (LevelPhysEnv w, lastOperation.data.physez) {
-            LvlData->physez.push_back(w);
-            placeWater(w);
-        }
-
-        //merge doors
-        foreach (LevelDoors d, lastOperation.data.doors) {
-            for(int i = 0; i < LvlData->doors.size(); i++){
-                if(d.array_id == LvlData->doors[i].array_id){
-                    if(d.isSetIn&&!d.isSetOut){
-                        if(!LvlData->doors[i].isSetIn){
-                            LvlData->doors[i].isSetIn = true;
-                            LvlData->doors[i].ix = d.ix;
-                            LvlData->doors[i].iy = d.iy;
-                            placeDoorEnter(LvlData->doors[i]);
-                        }
-                    }
-                    else
-                    if(!d.isSetIn&&d.isSetOut){
-                        if(!LvlData->doors[i].isSetOut){
-                            LvlData->doors[i].isSetOut = true;
-                            LvlData->doors[i].ox = d.ox;
-                            LvlData->doors[i].oy = d.oy;
-                            placeDoorExit(LvlData->doors[i]);
-                        }
-                    }
-                }
-            }
-        }
-
-        CallbackData cbData;
-        findGraphicsItem(lastOperation.data, &lastOperation, cbData, &LvlScene::historyUpdateVisibleBlocks, &LvlScene::historyUpdateVisibleBGO, &LvlScene::historyUpdateVisibleNPC, &LvlScene::historyUpdateVisibleWater, &LvlScene::historyUpdateVisibleDoor, 0, false, false, false, false, false, true);
-
-        //just in case
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_RENAMEEVENT:
     {
         int array_id = lastOperation.extraData.toList()[0].toInt();
@@ -777,36 +709,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_ADDLAYER:
-    {
-        LevelLayers l;
-        l.array_id = lastOperation.extraData.toList()[0].toInt();
-        l.name = lastOperation.extraData.toList()[1].toString();
-        l.hidden = false;
-        LvlData->layers.push_back(l);
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
-    case HistoryOperation::LEVELHISTORY_REMOVELAYER:
-    {
-        LevelData deletedData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
-
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
-                LvlData->layers.removeAt(i);
-            }
-        }
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_RENAMEEVENT:
     {
         int array_id = lastOperation.extraData.toList()[0].toInt();

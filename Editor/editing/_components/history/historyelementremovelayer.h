@@ -16,6 +16,21 @@ public:
     virtual void undo();
     virtual void redo();
 
+
+
+public slots:
+    void removeBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void removeBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
+    void removeNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
+    void removePhysEnv(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
+    void removeDoor(const LevelDoors &sourceDoor, QGraphicsItem *item);
+    void historyUpdateVisibleBlocks(const LevelBlock &, QGraphicsItem *item);
+    void historyUpdateVisibleBGO(const LevelBGO &, QGraphicsItem *item);
+    void historyUpdateVisibleNPC(const LevelNPC &, QGraphicsItem *item);
+    void historyUpdateVisibleWater(const LevelPhysEnv &, QGraphicsItem *item);
+    void historyUpdateVisibleDoor(const LevelDoors &, QGraphicsItem *item);
+
+
 private:
     LevelData m_modData;
 };
