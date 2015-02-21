@@ -182,27 +182,34 @@ void LocalServer::onCMD(QString data)
             case 0:
             {
                 emit showUp();
+                MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
+                                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
+                                                          |Qt::WindowActive);
+                if(MainWinConnect::pMainWin->isMinimized())
+                {
+                    MainWinConnect::pMainWin->raise();
+                    MainWinConnect::pMainWin->activateWindow();
+                    MainWinConnect::pMainWin->showNormal();
+                }
                 qApp->setActiveWindow(MainWinConnect::pMainWin);
-                if(!MainWinConnect::pMainWin->isMaximized())
-                MainWinConnect::pMainWin->showNormal();
-                else
-                MainWinConnect::pMainWin->showMaximized();
-                MainWinConnect::pMainWin->raise();
                 break;
             }
             case 1:
             {
                 if(!IntEngine::isWorking())
                 {
-                    LevelData tmp = IntEngine::testBuffer;
-                    IntEngine::init(&tmp);
+                    IntEngine::init();
                 }
-                MainWinConnect::pMainWin->showMinimized();
-                IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
+
+                IntEngine::sendLevelBuffer();
+                //MainWinConnect::pMainWin->showMinimized();
+                //IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
                 break;
             }
             case 2:
             {
+                IntEngine::quit();
+
                 qDebug()<<"Set Window state";
                 MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
                                                          (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))

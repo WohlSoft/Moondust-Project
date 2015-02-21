@@ -20,6 +20,7 @@ public:
     EditorPipe();
     ~EditorPipe();
     void shut();
+    bool isWorking;
 
                                // SEND_LVLX: /some/path/to/level file\n\n
     QString accepted_lvl_path; // Send to client the "READY\n\n" before accent raw data
