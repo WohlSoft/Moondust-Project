@@ -43,6 +43,7 @@
 #include <editing/_components/history/historyelementsettingswarp.h>
 #include <editing/_components/history/historyelementmodifyevent.h>
 #include <editing/_components/history/historyelementsettingsevent.h>
+#include <editing/_components/history/historyelementchangednewlayer.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -321,10 +322,9 @@ void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers new
     updateHistoryBuffer();
 
     HistoryOperation chNewLaOperation;
-    chNewLaOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER;
-    chNewLaOperation.extraData = QVariant(newLayer.name);
-    changedItems.layers.push_back(newLayer);
-    chNewLaOperation.data = changedItems;
+    HistoryElementChangedNewLayer* modf = new HistoryElementChangedNewLayer(changedItems, newLayer);
+    modf->setScene(this);
+    chNewLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(chNewLaOperation);
     historyIndex++;
 
@@ -513,22 +513,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER:
-    {
-        LevelData modifiedSourceData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
-                LvlData->layers.removeAt(i);
-            }
-        }
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_ADDLAYER:
     {
         for(int i = 0; i < LvlData->layers.size(); i++){
@@ -710,7 +694,7 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
         break;
     }
-    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: //historyelementmainsetting
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
         QVariant extraData = lastOperation.extraData;
@@ -793,20 +777,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER:
-    {
-        LevelData modifiedSourceData = lastOperation.data;
-
-        LvlData->layers.push_back(modifiedSourceData.layers[0]);
-
-        CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_ADDLAYER:
     {
         LevelLayers l;
