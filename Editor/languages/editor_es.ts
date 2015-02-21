@@ -550,13 +550,14 @@ Puede tomar cualquier paquete aquí: %2</translation>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="230"/>
         <source>Crashsave</source>
-        <translation type="unfinished"></translation>
+        <translation>Crashsave</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="230"/>
         <source>Since the last crash, the editor recorved some files.
 Please save them first before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desde el último colapso, el editor recuperó algunos archivos.
+Por favor guárdelos antes de hacer algo más.</translation>
     </message>
 </context>
 <context>
@@ -564,22 +565,22 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="20"/>
         <source>Custom Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Contador personalizado</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add item ID&apos;s which will be in counter group</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor añada el ID del elemento que estará en el grupo</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
         <source>Item type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Name of counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del contador</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
@@ -610,7 +611,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="45"/>
@@ -635,7 +636,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="239"/>
         <source>Change item...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar objeto...</translation>
     </message>
 </context>
 <context>
@@ -718,12 +719,12 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="254"/>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>[TEP] ¡Intentar probar en SMBX!</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="255"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Args: {String array} validating the PGE-X string array</source>
@@ -814,7 +815,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_components/history/historyelementlayerchanged.cpp" line="25"/>
         <source>Change Layer</source>
-        <translation type="unfinished">Cambiar capa</translation>
+        <translation>Cambiar capa</translation>
     </message>
 </context>
 <context>
@@ -822,7 +823,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_components/history/historyelementmodification.cpp" line="34"/>
         <source>Simple Modification History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historial simple de modificaciones</translation>
     </message>
 </context>
 <context>
@@ -830,7 +831,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../editing/_components/history/historyelementresizesection.cpp" line="17"/>
         <source>Resize Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionar sección</translation>
     </message>
 </context>
 <context>
@@ -2178,7 +2179,7 @@ o elimínela con su respectiva opción.</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="401"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="203"/>
@@ -2199,7 +2200,7 @@ o elimínela con su respectiva opción.</translation>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1338"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1369"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>No reiniciar evento a &apos;nada&apos;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="295"/>
@@ -2289,7 +2290,7 @@ o elimínela con su respectiva opción.</translation>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
         <translation>Ésta es una clasificación de prioridad de matrices. Con ésta opción puedes hacer un OF como uno de primer plano. (si el valor es -1: será usado como predeterminado de la configuración global del OF).
-Ésta opción usada por un error de SMBX de su renderización. Para ésto pueda funcionar, necesitas ubicar cualquier objeto de primer plano. Ésta opción no será guardada en el archivo LVL, y necesita fijarlos secundarios y después recargar el archivo.</translation>
+Ésta opción usada por un error de renderización de SMBX. Para que esto pueda funcionar, necesitas ubicar cualquier objeto de primer plano. Ésta opción no será guardada en el archivo LVL, y necesita fijarlos secundarios y después recargar el archivo.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="631"/>
@@ -2406,7 +2407,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1106"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar como jefe</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="186"/>
@@ -2448,7 +2449,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="588"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1638"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[nada]</translation>
     </message>
 </context>
 <context>
@@ -2694,7 +2695,7 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="2928"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="2929"/>
@@ -3030,107 +3031,107 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="29"/>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="51"/>
         <source>Section Settings</source>
-        <translation type="unfinished">Opciones de Sección</translation>
+        <translation>Opciones de Sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="66"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation type="unfinished">Pasando de la pantalla, el jugador entra a la pantalla por el otro lado</translation>
+        <translation>Pasando de la pantalla, el jugador entra a la pantalla por el otro lado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="69"/>
         <source>Warp section</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished">Zona de sesgo</translation>
+        <translation>Zona de sesgo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="88"/>
         <source>Off screen exit</source>
-        <translation type="unfinished">Salida fuera de la pantalla</translation>
+        <translation>Salida fuera de la pantalla</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="107"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="unfinished">Sin retorno (deshabilitar movimiento a izquierda)</translation>
+        <translation>Sin retorno (deshabilitar movimiento a izquierda)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="126"/>
         <source>Underwater</source>
-        <translation type="unfinished">Bajo agua</translation>
+        <translation>Bajo agua</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="148"/>
         <source>Current Section</source>
-        <translation type="unfinished">Sección actual</translation>
+        <translation>Sección actual</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="176"/>
         <source>Section:</source>
-        <translation type="unfinished">Sección:</translation>
+        <translation>Sección:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="233"/>
         <source>Style</source>
-        <translation type="unfinished">Estilo</translation>
+        <translation>Estilo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="248"/>
         <source>Background image</source>
-        <translation type="unfinished">Imagen de fondo</translation>
+        <translation>Imagen de fondo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="309"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="331"/>
         <source>Resize section</source>
-        <translation type="unfinished">Redimensionar sección</translation>
+        <translation>Redimensionar sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="347"/>
         <source>Apply</source>
-        <translation type="unfinished">Aplicar</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="373"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="424"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished">Personalizado</translation>
+        <translation>Personalizado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="449"/>
         <source>Music file:</source>
-        <translation type="unfinished">Archivo de música:</translation>
+        <translation>Archivo de música:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="100"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="101"/>
         <source>[No image]</source>
-        <translation type="unfinished">[Sin imagen]</translation>
+        <translation>[Sin imagen]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="102"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="103"/>
         <source>[Silence]</source>
-        <translation type="unfinished">[Silencio]</translation>
+        <translation>[Silencio]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="482"/>
         <source>Please, save file</source>
-        <translation type="unfinished">Por favor, guarde el archivo</translation>
+        <translation>Por favor, guarde el archivo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="482"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished">Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
+        <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
 </context>
 <context>
@@ -5067,32 +5068,32 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="7066"/>
         <source>SMBX-like GUI</source>
-        <translation type="unfinished"></translation>
+        <translation>GUI estilo SMBX</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7071"/>
         <source>Run testing of saved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar prueba de archivo guardado</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7076"/>
         <source>Change log</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar log</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7081"/>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7090"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation type="unfinished"></translation>
+        <translation>Probar en SMBX (requiere LunaDLL)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7093"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -5363,12 +5364,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4983"/>
         <source>Custom counters</source>
-        <translation type="unfinished"></translation>
+        <translation>Contadores personalizados</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5009"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Refrescar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5047"/>
@@ -5706,14 +5707,14 @@ El archivo no existe.</translation>
         <location filename="../main_window/file/file_reload.cpp" line="174"/>
         <location filename="../main_window/file/file_reload.cpp" line="230"/>
         <source>Reload file and custom stuff</source>
-        <translation type="unfinished"></translation>
+        <translation>Recargar archivo y elementos personalizados</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="55"/>
         <location filename="../main_window/file/file_reload.cpp" line="175"/>
         <location filename="../main_window/file/file_reload.cpp" line="231"/>
         <source>Do you want to save before reload stuff?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Desea guardar antes de recargar?</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="67"/>
@@ -6119,7 +6120,7 @@ El archivo no existe.</translation>
     <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="344"/>
         <source>Counting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Contando...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="352"/>
@@ -6211,35 +6212,38 @@ Por favor, compruebe el directorio de la aplicación.</translation>
         <location filename="../main_window/testing/testing.cpp" line="62"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="unfinished"></translation>
+        <translation>El motor está ejecutando otro nivel.
+¿Desea abortar el proceso existente?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="122"/>
         <location filename="../main_window/testing/testing.cpp" line="157"/>
         <source>Save file first</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar primero</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="123"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para ejecutar pruebas, ¡primero guarde el archivo!
+Puede ejecutar sin guardar si usa la opción &quot;Ejecutar prueba&quot; del menú.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="158"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Para probar vía SMBX el archivo debe ser guardado!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="167"/>
         <source>Incompatible file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato incompatible</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="168"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Para probar el nivel en SMBX, el archivo debe ser guardado en el formato SMBX64!
+Será creado un archivo temporal. ¿Desea continuar?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="179"/>
@@ -6249,49 +6253,50 @@ Will be created a temporary file. Do you want to continue?</source>
         <location filename="../main_window/testing/testing.cpp" line="265"/>
         <location filename="../main_window/testing/testing.cpp" line="306"/>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="180"/>
         <source>Fail to create temp file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo crear archivo %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="200"/>
         <source>SMBX Level test</source>
-        <translation type="unfinished"></translation>
+        <translation>Prueba SMBX</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="201"/>
         <source>Do you wanna to save file before start testing?
 </source>
-        <translation type="unfinished"></translation>
+        <translation>¿Desea guardar el archivo antes de probar?
+</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="227"/>
         <source>SMBX with LunaDLL is not running!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡SMBX con LunaDLL no está ejecutándose!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="242"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo enviar la dirección en LunaDLL: (%1)</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="257"/>
         <source>Could not map view of file (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede mapear el archivo (%1).</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="266"/>
         <source>Too long path: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección muy larga: </translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="304"/>
         <location filename="../main_window/testing/testing.cpp" line="307"/>
         <source>Failed to find SMBX Window</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró la ventana de SMBX</translation>
     </message>
     <message>
         <source>Engine is already testing another level.
@@ -6366,7 +6371,7 @@ Las opciones estarán disponibles pronto.</translation>
         <location filename="../main_window/level/level_sections_mods.cpp" line="378"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="405"/>
         <source>Please select, how far items out of section should be rotated too (in pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccione cuántos objetos fuera de la sección deberían ser rotados (en píxeles)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="54"/>
@@ -6475,20 +6480,22 @@ Overwrite?</source>
         <location filename="../mainwindow.cpp" line="126"/>
         <location filename="../mainwindow.cpp" line="135"/>
         <source>Configuration error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error de configuración</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="127"/>
         <source>Configuration can&apos;t be loaded.
 See in PGE_Editor_log.txt for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>La configuración no puede ser cargada.
+Vea en PGE_Editor_log.txt para más información.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="136"/>
         <source>Configuration package is loaded with errors.
 Please open the Tools/Global Configuration/Configuration Status
 to get more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>El paquete de configuraciones se carga con errores.
+Por favor vea el Estado de Configuración para obtener más información.</translation>
     </message>
     <message>
         <location filename="../main_window/windows_extras.cpp" line="21"/>
@@ -6499,7 +6506,7 @@ to get more information.</source>
         <location filename="../main_window/windows_extras.cpp" line="96"/>
         <location filename="../main_window/windows_extras.cpp" line="97"/>
         <source>No file loaded!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se cargó nada!</translation>
     </message>
 </context>
 <context>
@@ -6696,7 +6703,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="302"/>
         <source>General</source>
-        <translation type="unfinished">General</translation>
+        <translation>General</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="458"/>
@@ -6964,454 +6971,454 @@ Razón: Violación de segmentación de señal [SIGSERV]
     <message>
         <location filename="../defines.h" line="148"/>
         <source>Slippery</source>
-        <translation type="unfinished">Resbaladizo</translation>
+        <translation>Resbaladizo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="149"/>
         <source>Friendly</source>
-        <translation type="unfinished">Amigable</translation>
+        <translation>Amigable</translation>
     </message>
     <message>
         <location filename="../defines.h" line="150"/>
         <source>Boss</source>
-        <translation type="unfinished">Jefe</translation>
+        <translation>Jefe</translation>
     </message>
     <message>
         <location filename="../defines.h" line="151"/>
         <source>Not Moveable</source>
-        <translation type="unfinished">No mover</translation>
+        <translation>No mover</translation>
     </message>
     <message>
         <location filename="../defines.h" line="152"/>
         <location filename="../defines.h" line="196"/>
         <source>Message</source>
-        <translation type="unfinished">Mensaje</translation>
+        <translation>Mensaje</translation>
     </message>
     <message>
         <location filename="../defines.h" line="153"/>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <location filename="../defines.h" line="154"/>
         <source>Included NPC</source>
-        <translation type="unfinished">Cambiar NPC incluído</translation>
+        <translation>Cambiar NPC incluído</translation>
     </message>
     <message>
         <location filename="../defines.h" line="155"/>
         <source>Water Type</source>
-        <translation type="unfinished">Tipo de ambiente</translation>
+        <translation>Tipo de ambiente</translation>
     </message>
     <message>
         <location filename="../defines.h" line="156"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../defines.h" line="157"/>
         <source>No Yoshi</source>
-        <translation type="unfinished"></translation>
+        <translation>No Yoshi</translation>
     </message>
     <message>
         <location filename="../defines.h" line="158"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar PNJ</translation>
     </message>
     <message>
         <location filename="../defines.h" line="159"/>
         <source>Locked</source>
-        <translation type="unfinished">Bloqueado</translation>
+        <translation>Bloqueado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="160"/>
         <source>Warp Type</source>
-        <translation type="unfinished">Tipo de traslado</translation>
+        <translation>Tipo de traslado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="161"/>
         <source>Need Stars</source>
-        <translation type="unfinished">Necesita estrellas</translation>
+        <translation>Necesita estrellas</translation>
     </message>
     <message>
         <location filename="../defines.h" line="162"/>
         <source>Entrance Direction</source>
-        <translation type="unfinished">Dirección de entrada</translation>
+        <translation>Dirección de entrada</translation>
     </message>
     <message>
         <location filename="../defines.h" line="163"/>
         <source>Exit Direction</source>
-        <translation type="unfinished">Dirección de salida</translation>
+        <translation>Dirección de salida</translation>
     </message>
     <message>
         <location filename="../defines.h" line="164"/>
         <source>Set Level Exit</source>
-        <translation type="unfinished">Fijar Salida del nivel</translation>
+        <translation>Fijar Salida del nivel</translation>
     </message>
     <message>
         <location filename="../defines.h" line="165"/>
         <source>Set Level Entrance</source>
-        <translation type="unfinished">Fijar entrada del nivel</translation>
+        <translation>Fijar entrada del nivel</translation>
     </message>
     <message>
         <location filename="../defines.h" line="166"/>
         <source>Level Warp To</source>
-        <translation type="unfinished">Trasladar a</translation>
+        <translation>Trasladar a</translation>
     </message>
     <message>
         <location filename="../defines.h" line="167"/>
         <source>Activate Generator</source>
-        <translation type="unfinished">Activar Generador</translation>
+        <translation>Activar Generador</translation>
     </message>
     <message>
         <location filename="../defines.h" line="168"/>
         <source>Generator Type</source>
-        <translation type="unfinished">Tipo de generador</translation>
+        <translation>Tipo de generador</translation>
     </message>
     <message>
         <location filename="../defines.h" line="169"/>
         <source>Generator Direction</source>
-        <translation type="unfinished">Dirección de generador</translation>
+        <translation>Dirección de generador</translation>
     </message>
     <message>
         <location filename="../defines.h" line="170"/>
         <source>Generator Time</source>
-        <translation type="unfinished">Tiempo de generador</translation>
+        <translation>Tiempo de generador</translation>
     </message>
     <message>
         <location filename="../defines.h" line="171"/>
         <source>Attach Layer</source>
-        <translation type="unfinished">Atajar Capa</translation>
+        <translation>Atajar Capa</translation>
     </message>
     <message>
         <location filename="../defines.h" line="172"/>
         <source>Event Block Destroyed</source>
-        <translation type="unfinished">Evento Bloque Destruído</translation>
+        <translation>Evento Bloque Destruído</translation>
     </message>
     <message>
         <location filename="../defines.h" line="173"/>
         <source>Event Block Hited</source>
-        <translation type="unfinished">Evento Bloque Golpeado</translation>
+        <translation>Evento Bloque Golpeado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="174"/>
         <source>Event Layer Empty</source>
-        <translation type="unfinished">Evento Capa Vacía</translation>
+        <translation>Evento Capa Vacía</translation>
     </message>
     <message>
         <location filename="../defines.h" line="175"/>
         <source>Event NPC Activate</source>
-        <translation type="unfinished">Evento PNJ Activado</translation>
+        <translation>Evento PNJ Activado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="176"/>
         <source>Event NPC Die</source>
-        <translation type="unfinished">Evento PNJ muerto</translation>
+        <translation>Evento PNJ muerto</translation>
     </message>
     <message>
         <location filename="../defines.h" line="177"/>
         <source>Event NPC Talk</source>
-        <translation type="unfinished">Evento Diálogo PNJ</translation>
+        <translation>Evento Diálogo PNJ</translation>
     </message>
     <message>
         <location filename="../defines.h" line="178"/>
         <source>NPC Special Data</source>
-        <translation type="unfinished">Datos especial de PNJ</translation>
+        <translation>Datos especial de PNJ</translation>
     </message>
     <message>
         <location filename="../defines.h" line="179"/>
         <source>Autostart</source>
-        <translation type="unfinished">Autoinicio</translation>
+        <translation>Autoinicio</translation>
     </message>
     <message>
         <location filename="../defines.h" line="180"/>
         <source>Layer Smoke Effect</source>
-        <translation type="unfinished">Efecto de humo</translation>
+        <translation>Efecto de humo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="181"/>
         <source>Add Hide Layer</source>
-        <translation type="unfinished">Añadir capa oculta</translation>
+        <translation>Añadir capa oculta</translation>
     </message>
     <message>
         <location filename="../defines.h" line="182"/>
         <source>Remove Hide Layer</source>
-        <translation type="unfinished">Remover capa oculta</translation>
+        <translation>Remover capa oculta</translation>
     </message>
     <message>
         <location filename="../defines.h" line="183"/>
         <source>Add Show Layer</source>
-        <translation type="unfinished">Añadir capa visible</translation>
+        <translation>Añadir capa visible</translation>
     </message>
     <message>
         <location filename="../defines.h" line="184"/>
         <source>Remove Show Layer</source>
-        <translation type="unfinished">Remover capa visible</translation>
+        <translation>Remover capa visible</translation>
     </message>
     <message>
         <location filename="../defines.h" line="185"/>
         <source>Add Toggle Layer</source>
-        <translation type="unfinished">Añadir capa intercambiable</translation>
+        <translation>Añadir capa intercambiable</translation>
     </message>
     <message>
         <location filename="../defines.h" line="186"/>
         <source>Remove Toggle Layer</source>
-        <translation type="unfinished">Remover capa intercambiable</translation>
+        <translation>Remover capa intercambiable</translation>
     </message>
     <message>
         <location filename="../defines.h" line="187"/>
         <source>Moving Layer</source>
-        <translation type="unfinished">Moviendo capa</translation>
+        <translation>Moviendo capa</translation>
     </message>
     <message>
         <location filename="../defines.h" line="188"/>
         <source>Layer Speed Horizontal</source>
-        <translation type="unfinished">Velocidad horizontal</translation>
+        <translation>Velocidad horizontal</translation>
     </message>
     <message>
         <location filename="../defines.h" line="189"/>
         <source>Layer Speed Vertical</source>
-        <translation type="unfinished">Velocidad vertical</translation>
+        <translation>Velocidad vertical</translation>
     </message>
     <message>
         <location filename="../defines.h" line="190"/>
         <source>Autoscroll Layer</source>
-        <translation type="unfinished">Autodesplazamiento</translation>
+        <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../defines.h" line="191"/>
         <source>Autoscroll Layer Speed Horizontal</source>
-        <translation type="unfinished">Velocidad de Autodesplazamiento Horizontal</translation>
+        <translation>Velocidad de Autodesplazamiento Horizontal</translation>
     </message>
     <message>
         <location filename="../defines.h" line="192"/>
         <source>Autoscroll Layer Speed Vertical</source>
-        <translation type="unfinished">Velocidad de Autodesplazamiento Vertical</translation>
+        <translation>Velocidad de Autodesplazamiento Vertical</translation>
     </message>
     <message>
         <location filename="../defines.h" line="193"/>
         <source>Section Size</source>
-        <translation type="unfinished">Tamaño de sección</translation>
+        <translation>Tamaño de sección</translation>
     </message>
     <message>
         <location filename="../defines.h" line="194"/>
         <source>Section Music</source>
-        <translation type="unfinished">Música de sección</translation>
+        <translation>Música de sección</translation>
     </message>
     <message>
         <location filename="../defines.h" line="195"/>
         <source>Section Background</source>
-        <translation type="unfinished">Fondo de sección</translation>
+        <translation>Fondo de sección</translation>
     </message>
     <message>
         <location filename="../defines.h" line="197"/>
         <source>Sound</source>
-        <translation type="unfinished">Sonido</translation>
+        <translation>Sonido</translation>
     </message>
     <message>
         <location filename="../defines.h" line="198"/>
         <source>End Game</source>
-        <translation type="unfinished">Fin del juego</translation>
+        <translation>Fin del juego</translation>
     </message>
     <message>
         <location filename="../defines.h" line="199"/>
         <source>Up Key Activate</source>
-        <translation type="unfinished">Activar Tecla Arriba</translation>
+        <translation>Activar Tecla Arriba</translation>
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
         <source>Down Key Activate</source>
-        <translation type="unfinished">Activar Tecla Abajo</translation>
+        <translation>Activar Tecla Abajo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="201"/>
         <source>Left Key Activate</source>
-        <translation type="unfinished">Activar Tecla Izquierda</translation>
+        <translation>Activar Tecla Izquierda</translation>
     </message>
     <message>
         <location filename="../defines.h" line="202"/>
         <source>Right Key Activate</source>
-        <translation type="unfinished">Activar Tecla Derecha</translation>
+        <translation>Activar Tecla Derecha</translation>
     </message>
     <message>
         <location filename="../defines.h" line="203"/>
         <source>Run Key Activate</source>
-        <translation type="unfinished">Activar Tecla de Corrida</translation>
+        <translation>Activar Tecla de Corrida</translation>
     </message>
     <message>
         <location filename="../defines.h" line="204"/>
         <source>Alt Run Key Activate</source>
-        <translation type="unfinished">Activar tecla de Corrida secundaria</translation>
+        <translation>Activar tecla de Corrida secundaria</translation>
     </message>
     <message>
         <location filename="../defines.h" line="205"/>
         <source>Jump Key Activate</source>
-        <translation type="unfinished">Activar Tecla de Salto</translation>
+        <translation>Activar Tecla de Salto</translation>
     </message>
     <message>
         <location filename="../defines.h" line="206"/>
         <source>Alt Jump Key Activate</source>
-        <translation type="unfinished">Activar Tecla de Salto secundario</translation>
+        <translation>Activar Tecla de Salto secundario</translation>
     </message>
     <message>
         <location filename="../defines.h" line="207"/>
         <source>Drop Key Activate</source>
-        <translation type="unfinished">Activar tecla de Soltado</translation>
+        <translation>Activar tecla de Soltado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="208"/>
         <source>Start Key Activate</source>
-        <translation type="unfinished">Activar Tecla de Inicio</translation>
+        <translation>Activar Tecla de Inicio</translation>
     </message>
     <message>
         <location filename="../defines.h" line="209"/>
         <source>Trigger Activate</source>
-        <translation type="unfinished">Activar función</translation>
+        <translation>Activar función</translation>
     </message>
     <message>
         <location filename="../defines.h" line="210"/>
         <source>Trigger Delay</source>
-        <translation type="unfinished">Retardar Función</translation>
+        <translation>Retardar Función</translation>
     </message>
     <message>
         <location filename="../defines.h" line="211"/>
         <source>Is Warp</source>
-        <translation type="unfinished">Es traslado</translation>
+        <translation>Es traslado</translation>
     </message>
     <message>
         <location filename="../defines.h" line="212"/>
         <source>No Back</source>
-        <translation type="unfinished">Sin Retorno</translation>
+        <translation>Sin Retorno</translation>
     </message>
     <message>
         <location filename="../defines.h" line="213"/>
         <source>Off Screen Exit</source>
-        <translation type="unfinished">Salida fuera de pantalla</translation>
+        <translation>Salida fuera de pantalla</translation>
     </message>
     <message>
         <location filename="../defines.h" line="214"/>
         <source>Underwater</source>
-        <translation type="unfinished">Bajo agua</translation>
+        <translation>Bajo agua</translation>
     </message>
     <message>
         <location filename="../defines.h" line="215"/>
         <source>Background Image</source>
-        <translation type="unfinished">Imagen de fondo</translation>
+        <translation>Imagen de fondo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="216"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../defines.h" line="217"/>
         <source>Custom Music</source>
-        <translation type="unfinished">Música propia</translation>
+        <translation>Música propia</translation>
     </message>
     <message>
         <location filename="../defines.h" line="218"/>
         <source>Level Name</source>
-        <translation type="unfinished">Nombre del nivel</translation>
+        <translation>Nombre del nivel</translation>
     </message>
     <message>
         <location filename="../defines.h" line="219"/>
         <source>BGO Sorting Priority</source>
-        <translation type="unfinished">Prioridad de OFs</translation>
+        <translation>Prioridad de OFs</translation>
     </message>
     <message>
         <location filename="../defines.h" line="221"/>
         <location filename="../defines.h" line="247"/>
         <source>Unknown</source>
-        <translation type="unfinished">Desconocido</translation>
+        <translation>Desconocido</translation>
     </message>
     <message>
         <location filename="../defines.h" line="228"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Siempre visible</translation>
+        <translation>Siempre visible</translation>
     </message>
     <message>
         <location filename="../defines.h" line="229"/>
         <source>Big Path Background</source>
-        <translation type="unfinished">Fondo de camino grande</translation>
+        <translation>Fondo de camino grande</translation>
     </message>
     <message>
         <location filename="../defines.h" line="230"/>
         <source>Character</source>
-        <translation type="unfinished">Personaje</translation>
+        <translation>Personaje</translation>
     </message>
     <message>
         <location filename="../defines.h" line="231"/>
         <source>Door ID</source>
-        <translation type="unfinished">ID de puerta</translation>
+        <translation>ID de puerta</translation>
     </message>
     <message>
         <location filename="../defines.h" line="232"/>
         <source>Game start point</source>
-        <translation type="unfinished">Punto de comienzo</translation>
+        <translation>Punto de comienzo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="233"/>
         <source>Goto X</source>
-        <translation type="unfinished">Ir a X</translation>
+        <translation>Ir a X</translation>
     </message>
     <message>
         <location filename="../defines.h" line="234"/>
         <source>Goto Y</source>
-        <translation type="unfinished">Ir a Y</translation>
+        <translation>Ir a Y</translation>
     </message>
     <message>
         <location filename="../defines.h" line="235"/>
         <source>Hub styled world</source>
-        <translation type="unfinished">Mundo con Hub</translation>
+        <translation>Mundo con Hub</translation>
     </message>
     <message>
         <location filename="../defines.h" line="236"/>
         <source>Intro Level</source>
-        <translation type="unfinished">Nivel de introducción</translation>
+        <translation>Nivel de introducción</translation>
     </message>
     <message>
         <location filename="../defines.h" line="237"/>
         <source>Level file</source>
-        <translation type="unfinished">Archivo de nivel</translation>
+        <translation>Archivo de nivel</translation>
     </message>
     <message>
         <location filename="../defines.h" line="238"/>
         <source>Level title</source>
-        <translation type="unfinished">Título del nivel</translation>
+        <translation>Título del nivel</translation>
     </message>
     <message>
         <location filename="../defines.h" line="239"/>
         <source>Path Background</source>
-        <translation type="unfinished">Fondo de camino</translation>
+        <translation>Fondo de camino</translation>
     </message>
     <message>
         <location filename="../defines.h" line="240"/>
         <source>Exit at bottom</source>
-        <translation type="unfinished">Salir abajo</translation>
+        <translation>Salir abajo</translation>
     </message>
     <message>
         <location filename="../defines.h" line="241"/>
         <source>Exit at left</source>
-        <translation type="unfinished">Salir a la izquierda</translation>
+        <translation>Salir a la izquierda</translation>
     </message>
     <message>
         <location filename="../defines.h" line="242"/>
         <source>Exit at right</source>
-        <translation type="unfinished">Salir a la derecha</translation>
+        <translation>Salir a la derecha</translation>
     </message>
     <message>
         <location filename="../defines.h" line="243"/>
         <source>Exit at top</source>
-        <translation type="unfinished">Salir arriba</translation>
+        <translation>Salir arriba</translation>
     </message>
     <message>
         <location filename="../defines.h" line="244"/>
         <source>Restart after fail</source>
-        <translation type="unfinished">Reiniciar luego de perder</translation>
+        <translation>Reiniciar luego de perder</translation>
     </message>
     <message>
         <location filename="../defines.h" line="245"/>
         <source>Total stars</source>
-        <translation type="unfinished">Total de estrellas</translation>
+        <translation>Total de estrellas</translation>
     </message>
 </context>
 <context>
@@ -7485,13 +7492,14 @@ File: %1
     <message>
         <location filename="../file_formats/file_rw_npc_txt.cpp" line="522"/>
         <source>Unknown values are presented</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores desconocidos están presentados</translation>
     </message>
     <message>
         <location filename="../file_formats/file_rw_npc_txt.cpp" line="523"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Su archivo tiene valores desconocidos que serán removidos
+cuando guarde su archivo</translation>
     </message>
 </context>
 <context>
@@ -7665,12 +7673,12 @@ Data may be corrupted!</source>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="369"/>
         <source>Tileset box editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de cajas de tilesets</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="372"/>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished"></translation>
+        <translation>No mostrar este mensaje otra vez.</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="374"/>
@@ -7682,7 +7690,14 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Bienvenido al editor de tilesets!
+
+Éste es un editor de tilesets globales.
+Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
+%1
+Por ej. Éstos funcionarán globalmente para éste pack de configuraciones y pueden ser usados en los grupos de tilesets.
+
+Si desea crear tilesets específicos para niveles/mapas con gráficos personalizados, por favor abra la &apos;Caja de tilesets&apos; y busque el botón &apos;Nuevo tileset&apos; en la pestaña &apos;Custom&apos;.</translation>
     </message>
 </context>
 <context>
@@ -7871,23 +7886,23 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="20"/>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="43"/>
         <source>Stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Versiones estables</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="56"/>
         <source>Check for latest stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones estables</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="69"/>
         <location filename="../main_window/updater/check_updates.ui" line="96"/>
         <source>Check automatically every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar automáticamente al iniciar</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="82"/>
@@ -7898,82 +7913,82 @@ Data may be corrupted!</source>
         <location filename="../main_window/updater/check_updates.ui" line="103"/>
         <location filename="../main_window/updater/check_updates.ui" line="158"/>
         <source>Click to check updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Click para buscar</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="119"/>
         <source>Check laboratory updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones del laboratorio</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="132"/>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquí puede obtener nuevas características y arreglos antes de la versión estable</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="151"/>
         <source>Laboratory builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Laboratorio</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="174"/>
         <source>Check stable updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones estables</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="181"/>
         <source>This is an update checker dialog. Here you can check available updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ésta es una ventana de actualización. Aquí puede buscar actualizaciones.</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="70"/>
         <location filename="../main_window/updater/check_updates.cpp" line="86"/>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscando...</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="244"/>
         <location filename="../main_window/updater/check_updates.cpp" line="261"/>
         <location filename="../main_window/updater/check_updates.cpp" line="340"/>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="245"/>
         <source>Check failed: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Búsqueda fallida: %1.</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="251"/>
         <location filename="../main_window/updater/check_updates.cpp" line="254"/>
         <source>Check failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda fallida!</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="262"/>
         <source>Redirect to %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Redireccionar a %1?</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="287"/>
         <location filename="../main_window/updater/check_updates.cpp" line="294"/>
         <source>You have a latest version!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Tiene la última versión!</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="290"/>
         <source>Available new update!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Nueva actualización disponible!</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="297"/>
         <source>Latest update is</source>
-        <translation type="unfinished"></translation>
+        <translation>La última actualización es</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="341"/>
         <source>One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uno o más errores de SSL ocurrieron: %1</translation>
     </message>
 </context>
 <context>
