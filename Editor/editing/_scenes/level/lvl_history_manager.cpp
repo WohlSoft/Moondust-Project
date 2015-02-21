@@ -48,6 +48,7 @@
 #include <editing/_components/history/historyelementremovelayer.h>
 #include <editing/_components/history/historyelementrenameevent.h>
 #include <editing/_components/history/historyelementrenamelayer.h>
+#include <editing/_components/history/historyelementremovelayerandsave.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -396,9 +397,9 @@ void LvlScene::addRemoveLayerAndSaveItemsHistory(LevelData modData)
     updateHistoryBuffer();
 
     HistoryOperation rmLaAndSaveItemsOperation;
-    rmLaAndSaveItemsOperation.type = HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE;
-    rmLaAndSaveItemsOperation.data = modData;
-    rmLaAndSaveItemsOperation.extraData = QVariant(QString("Default"));
+    HistoryElementRemoveLayerAndSave* modf = new HistoryElementRemoveLayerAndSave(modData);
+    modf->setScene(this);
+    rmLaAndSaveItemsOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(rmLaAndSaveItemsOperation);
     historyIndex++;
 
@@ -510,23 +511,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
-    {
-        LvlData->layers.push_back(lastOperation.data.layers[0]);
-        LevelData mvData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
-
-        //just in case
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_MERGELAYER:
     {
         LvlData->layers.push_back(lastOperation.data.layers[0]);
@@ -666,23 +650,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
-    {
-        LevelData mvData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
-
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
-                LvlData->layers.removeAt(i);
-            }
-        }
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_MERGELAYER:
     {
         LevelData mergeData = lastOperation.data;
