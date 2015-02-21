@@ -79,7 +79,7 @@ LVL_Player::LVL_Player()
 
 
     JumpPressed=false;
-    onGround=true;
+    onGround=false;
 
     climbing=false;
 
@@ -191,6 +191,8 @@ void LVL_Player::update(float ticks)
              physBody->GetPosition().y-0.2), 0.0f);
         _player_moveup = false;
     }
+
+    onGround = !foot_contacts_map.isEmpty();
 
     if(doKill)
     {
