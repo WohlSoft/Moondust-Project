@@ -40,7 +40,6 @@ public:
     void OpenConnection();
     void closeConnection();
     bool isConnected();
-
 protected:
     void run();
     void exec();
@@ -57,10 +56,13 @@ private slots:
     void icomingData(QString in);
 
 private:
+    static bool alreadyRequested;
+    friend class IntEngine;
     QLocalSocket* engine;
     bool _connected;
     bool _busy;
     bool readyToSendLvlx;
+    bool doSendData;
     QString _buffer;
     QString _buffer_out;
 };
