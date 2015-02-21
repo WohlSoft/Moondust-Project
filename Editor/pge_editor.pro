@@ -392,7 +392,16 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementremovewarp.cpp \
     editing/_components/history/historyelementsettingswarp.cpp \
     editing/_components/history/historyelementmodifyevent.cpp \
-    editing/_components/history/historyelementsettingsevent.cpp
+    editing/_components/history/historyelementsettingsevent.cpp \
+    editing/_components/history/historyelementchangednewlayer.cpp \
+    editing/_components/history/historyelementnewlayer.cpp \
+    editing/_components/history/historyelementremovelayer.cpp \
+    editing/_components/history/historyelementrenameevent.cpp \
+    editing/_components/history/historyelementrenamelayer.cpp \
+    editing/_components/history/historyelementmergelayer.cpp \
+    editing/_components/history/historyelementsettingssection.cpp \
+    editing/_components/history/historyelementreplaceplayerpoint.cpp \
+    editing/_components/history/historyelementresizewater.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -549,7 +558,16 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementremovewarp.h \
     editing/_components/history/historyelementsettingswarp.h \
     editing/_components/history/historyelementmodifyevent.h \
-    editing/_components/history/historyelementsettingsevent.h
+    editing/_components/history/historyelementsettingsevent.h \
+    editing/_components/history/historyelementchangednewlayer.h \
+    editing/_components/history/historyelementnewlayer.h \
+    editing/_components/history/historyelementremovelayer.h \
+    editing/_components/history/historyelementrenameevent.h \
+    editing/_components/history/historyelementrenamelayer.h \
+    editing/_components/history/historyelementmergelayer.h \
+    editing/_components/history/historyelementsettingssection.h \
+    editing/_components/history/historyelementreplaceplayerpoint.h \
+    editing/_components/history/historyelementresizewater.h
 
 
 FORMS    += \
