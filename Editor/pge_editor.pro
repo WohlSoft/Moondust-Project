@@ -402,7 +402,8 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementsettingssection.cpp \
     editing/_components/history/historyelementreplaceplayerpoint.cpp \
     editing/_components/history/historyelementresizewater.cpp \
-    editing/_components/history/historyelementaddlayer.cpp
+    editing/_components/history/historyelementaddlayer.cpp \
+    editing/_components/history/historyelementremovelayerandsave.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -569,7 +570,8 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementsettingssection.h \
     editing/_components/history/historyelementreplaceplayerpoint.h \
     editing/_components/history/historyelementresizewater.h \
-    editing/_components/history/historyelementaddlayer.h
+    editing/_components/history/historyelementaddlayer.h \
+    editing/_components/history/historyelementremovelayerandsave.h
 
 
 FORMS    += \
