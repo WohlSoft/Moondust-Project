@@ -31,12 +31,11 @@ IntEngine::IntEngine()
 IntEngine::~IntEngine()
 {}
 
-
 LevelData IntEngine::testBuffer;
 
-void IntEngine::init(LevelData *lvlData)
+void IntEngine::init()
 {
-    testBuffer = FileFormats::dummyLvlDataArray();
+    //testBuffer = FileFormats::dummyLvlDataArray();
 
     if(!IntEngine_protector)
     {
@@ -44,14 +43,18 @@ void IntEngine::init(LevelData *lvlData)
         connect(MainWinConnect::pMainWin, SIGNAL(destroyed()), IntEngine_protector, SLOT(destroyEngine()));
     }
 
-    if(lvlData)
-        testBuffer = (*lvlData);
+    //if(lvlData)
+    //    testBuffer = (*lvlData);
 
     qDebug() << "INIT Interprocessing...";
     if(!isWorking())
     {
-        qDebug() << "Installing new engine socket";
-        if(!engineSocket) engineSocket = new EngineClient();
+        if(!engineSocket)
+        {
+            qDebug() << "Installing new engine socket";
+            engineSocket = new EngineClient();
+            engineSocket->setParent(0);
+        }
         qDebug() << "Starting session";
         engineSocket->start();
         qDebug() << "done";
@@ -60,12 +63,17 @@ void IntEngine::init(LevelData *lvlData)
 
 void IntEngine::quit()
 {
+    testBuffer = FileFormats::dummyLvlDataArray();
+
     qDebug() << "isWorking check";
     if(isWorking())
     {
         qDebug() << "closeConnection call";
         engineSocket->closeConnection();
         qDebug() << "done";
+        engineSocket->exit(1000);
+        delete engineSocket;
+        engineSocket = NULL;
     }
 }
 
@@ -81,10 +89,18 @@ bool IntEngine::sendCheat(QString _args)
 {
     if(isWorking())
     {
-        return engineSocket->sendCommand(QString("\n\nCHEAT: %1\n\n").arg(_args));
+        return engineSocket->sendCommand(QString("CHEAT: %1\n\n").arg(_args));
     }
     else
         return false;
+}
+
+void IntEngine::sendLevelBuffer()
+{
+    if(isWorking())
+    {
+        engineSocket->doSendData=true;
+    }
 }
 
 void IntEngine::setTestLvlBuffer(LevelData &buffer)

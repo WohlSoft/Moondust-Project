@@ -71,21 +71,18 @@ void MainWindow::on_action_doTest_triggered()
     if(activeChildWindow()==1)
     {
         //if(activeLvlEditWin()->isUntitled) return;
+        LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return;
 
         QStringList args;
         args << "--debug";
         args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
         args << "--interprocessing";//activeLvlEditWin()->curFile;
 
+        IntEngine::setTestLvlBuffer(edit->LvlData);
+
         qDebug() << "Executing engine..." << command;
         QProcess::startDetached(command, args);
-
-        QElapsedTimer t; t.start();
-        while(t.elapsed()<500);
-
-        qDebug() << "Installing interprocessing...";
-        if(!IntEngine::isWorking()) IntEngine::init();
-        IntEngine::setTestLvlBuffer(activeLvlEditWin()->LvlData);
         qDebug() << "Started";
     }
     else
