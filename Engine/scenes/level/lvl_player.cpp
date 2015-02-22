@@ -47,15 +47,15 @@ LVL_Player::LVL_Player()
     physics[LVL_PhysEnv::Env_Air].slow_speed_x_on_enter=false;
 
     physics[LVL_PhysEnv::Env_Water].make();
-    physics[LVL_PhysEnv::Env_Water].walk_force = 300.0f;
+    physics[LVL_PhysEnv::Env_Water].walk_force = 600.0f;
     physics[LVL_PhysEnv::Env_Water].slippery_c = 2.0f;
-    physics[LVL_PhysEnv::Env_Water].gravity_scale = 0.2f;
-    physics[LVL_PhysEnv::Env_Water].velocity_jump = 20.0f;
+    physics[LVL_PhysEnv::Env_Water].gravity_scale = 0.3f;
+    physics[LVL_PhysEnv::Env_Water].velocity_jump = 40.0f;
     physics[LVL_PhysEnv::Env_Water].velocity_climb = 15.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_walk = 12.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_run = 22.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 38.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 38.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 32.0f;
+    physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 32.0f;
     physics[LVL_PhysEnv::Env_Water].damping = 2.0f;
     physics[LVL_PhysEnv::Env_Water].zero_speed_y_on_enter=true;
     physics[LVL_PhysEnv::Env_Water].slow_speed_x_on_enter=true;

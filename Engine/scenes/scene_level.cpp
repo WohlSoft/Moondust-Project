@@ -442,6 +442,9 @@ Uint32 lastTicks=0;
 bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
+int  debug_render_delay=0;
+int  debug_phys_delay=0;
+int  debug_event_delay=0;
 int  uTick = 1;
 
 void LevelScene::update()
@@ -625,12 +628,18 @@ void LevelScene::render()
                                .arg(debug_player_foots)
                                .arg(uTick), 10,100);
 
+        FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
+                               .arg(debug_event_delay, 3, 10, QChar('0'))
+                               .arg(debug_render_delay, 3, 10, QChar('0'))
+                               .arg(debug_phys_delay, 3, 10, QChar('0'))
+                               .arg(uTick), 10,120);
+
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTick), 10, 140, 10, qRgb(255,0,0));
 
-        world->DrawDebugData();
+        //world->DrawDebugData();
     }
 
     renderBlack:
@@ -668,13 +677,16 @@ int LevelScene::exec()
   Uint32 start_events;
   Uint32 stop_events;
 
-  float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
+  Uint32 start_common;
+
+  //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
 
     uTick = 1;
 
     while(running)
     {
+        start_common = SDL_GetTicks();
 
         start_events = SDL_GetTicks();
         SDL_Event event; //  Events of SDL
@@ -745,24 +757,24 @@ int LevelScene::exec()
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
-
-            if( timeFPS > (stop_render-start_render) )
-                doUpdate_render = 0;
-            else
-                doUpdate_render = abs(stop_render-start_render);
+            doUpdate_render = stop_render-start_render;
+            debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= timeStep;
 
         if(stop_render < start_render)
             {stop_render=0; start_render=0;}
 
-        doUpdate_physics=1;
+        doUpdate_physics = timeStep;
         lastTicks=1;
-        if( timeStep > (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events) )
+        if( timeStep > (timeStep-(start_common-SDL_GetTicks())) )
         {
-            doUpdate_physics = timeStep-((stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events));
+            doUpdate_physics = timeStep-(start_common-SDL_GetTicks());
             lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
+        debug_phys_delay=(stop_physics-start_physics);
+        debug_event_delay=(stop_events-start_events);
+
         if(doUpdate_physics>0)
             SDL_Delay( doUpdate_physics );
 
@@ -833,6 +845,3 @@ void LevelScene::setExiting(int delay, int reason)
     exitLevelCode = reason;
     doExit = true;
 }
-
-
-

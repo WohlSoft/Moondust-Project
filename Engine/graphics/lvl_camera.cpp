@@ -24,28 +24,20 @@
 PGE_LevelCamera::PGE_LevelCamera()
 {
     worldPtr = NULL;
-    sensor = NULL;
     section = 0;
     isWarp = false;
     RightOnly = false;
     ExitOffscreen = false;
     width=800;
     height=600;
+    offset_x=0;
+    offset_y=0;
     BackgroundID = 0;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
 {
-
     qDebug() << "Destroy camera";
-
-//    if(sensor && worldPtr)
-//    {
-//        worldPtr->DestroyBody(sensor);
-//        sensor->SetUserData(NULL);
-//        sensor = NULL;
-//    }
-
 }
 
 
@@ -63,26 +55,6 @@ void PGE_LevelCamera::init(float x, float y, float w, float h)
     pos_y = y;
     width = w;
     height = h;
-
-//    if(!sensor)
-//    {
-//        b2BodyDef bodyDef;
-//        bodyDef.type = b2_dynamicBody;
-//        bodyDef.position.Set(PhysUtil::pix2met(x + (w/2)),
-//                             PhysUtil::pix2met(y + (h/2) ) );
-//        bodyDef.fixedRotation = true;
-//        bodyDef.gravityScale = 0;
-//        sensor = worldPtr->CreateBody(&bodyDef);
-
-//        b2PolygonShape shape;
-//        shape.SetAsBox(PhysUtil::pix2met(w)/2, PhysUtil::pix2met(h)/2);
-//        b2FixtureDef fixtureDef;
-//        fixtureDef.shape = &shape;
-//        fixtureDef.isSensor = true;
-//        fixtureDef.density = 0.0f; fixtureDef.friction = 0.0f;
-//        sensor->CreateFixture(&fixtureDef);
-//    }
-
 }
 
 
@@ -144,7 +116,13 @@ void PGE_LevelCamera::setSize(int w, int h)
 //    shape->m_vertices[0].Set(-PhysUtil::pix2met(w)/2, -PhysUtil::pix2met(h)/2);
 //    shape->m_vertices[1].Set( PhysUtil::pix2met(w)/2, -PhysUtil::pix2met(h)/2);
 //    shape->m_vertices[2].Set( PhysUtil::pix2met(w)/2,  PhysUtil::pix2met(h)/2);
-//    shape->m_vertices[3].Set(-PhysUtil::pix2met(w)/2,  PhysUtil::pix2met(h)/2);
+    //    shape->m_vertices[3].Set(-PhysUtil::pix2met(w)/2,  PhysUtil::pix2met(h)/2);
+}
+
+void PGE_LevelCamera::setOffset(int x, int y)
+{
+    offset_x=x;
+    offset_y=y;
 }
 
 //subclass b2QueryCallback
@@ -196,7 +174,6 @@ void PGE_LevelCamera::update()
         }
     }
 
-
     //Sort array
     PGE_Phys_Object * tmp1;
     int total = objects_to_render.size();
@@ -205,24 +182,23 @@ void PGE_LevelCamera::update()
     long ymini;
     long sorted = 0;
 
+    while(sorted < objects_to_render.size())
+    {
+        ymin = objects_to_render[sorted]->z_index;
+        ymini = sorted;
 
-        while(sorted < objects_to_render.size())
+        for(i = sorted; i < total; i++)
         {
-            ymin = objects_to_render[sorted]->z_index;
-            ymini = sorted;
-
-            for(i = sorted; i < total; i++)
+            if( objects_to_render[i]->z_index < ymin )
             {
-                if( objects_to_render[i]->z_index < ymin )
-                {
-                    ymin = objects_to_render[i]->z_index; ymini = i;
-                }
+                ymin = objects_to_render[i]->z_index; ymini = i;
             }
-            tmp1 = objects_to_render[ymini];
-            objects_to_render[ymini] = objects_to_render[sorted];
-            objects_to_render[sorted] = tmp1;
-            sorted++;
         }
+        tmp1 = objects_to_render[ymini];
+        objects_to_render[ymini] = objects_to_render[sorted];
+        objects_to_render[sorted] = tmp1;
+        sorted++;
+    }
 
     //qDebug() << "VisibleItems" << objects_to_render.size()  << contacts;
 }
