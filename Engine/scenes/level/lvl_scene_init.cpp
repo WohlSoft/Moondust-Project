@@ -143,30 +143,37 @@ bool LevelScene::init()
     //quit from game if window was closed
     if(!isLevelContinues) return false;
 
-    //Init Cameras
-    PGE_LevelCamera* camera;
-    camera = new PGE_LevelCamera();
-    camera->setWorld(world);
-    camera->changeSection(data.sections[sID]);
-    camera->isWarp = data.sections[sID].IsWarp;
-    camera->section = &(data.sections[sID]);
 
-    camera->init(
-                    (float)cameraStart.x(),
-                    (float)cameraStart.y(),
-                    (float)PGE_Window::Width, (float)PGE_Window::Height
-                );
-    camera->setPos(cameraStart.x()-camera->w()/2 + 12,
-                   cameraStart.y()-camera->h()/2 + 27);
+    for(int i=0; i<numberOfPlayers; i++)
+    {
+        int x=cameraStart.x();
+        int y=cameraStart.y();
+        int width=PGE_Window::Width;
+        int height=PGE_Window::Height/numberOfPlayers;
 
-    cameras.push_back(camera);
+        //Init Cameras
+        PGE_LevelCamera* camera;
+        camera = new PGE_LevelCamera();
+        camera->setWorld(world);
+        camera->changeSection(data.sections[sID]);
+        camera->isWarp = data.sections[sID].IsWarp;
+        camera->section = &(data.sections[sID]);
+        camera->init(
+                        (float)x,
+                        (float)y,
+                        (float)width, (float)height
+                    );
+        camera->setPos(cameraStart.x()-camera->w()/2 + 12,
+                       cameraStart.y()-camera->h()/2 + 27);
+
+        cameras.push_back(camera);
+    }
 
     LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
-
-    if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
+    if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
     {
-        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
-        qDebug() << "Backgroubnd ID:" << camera->BackgroundID;
+        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID]);
+        qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
     }
     else
         CurrentBackground->setNone();
