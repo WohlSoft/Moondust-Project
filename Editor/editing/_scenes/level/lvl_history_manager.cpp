@@ -49,6 +49,7 @@
 #include <editing/_components/history/historyelementrenameevent.h>
 #include <editing/_components/history/historyelementrenamelayer.h>
 #include <editing/_components/history/historyelementremovelayerandsave.h>
+#include <editing/_components/history/historyelementmergelayer.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -411,9 +412,9 @@ void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
     updateHistoryBuffer();
 
     HistoryOperation mergeLaOperation;
-    mergeLaOperation.type = HistoryOperation::LEVELHISTORY_MERGELAYER;
-    mergeLaOperation.data = mergedData;
-    mergeLaOperation.extraData = QVariant(newLayerName);
+    HistoryElementMergeLayer* modf = new HistoryElementMergeLayer(mergedData, newLayerName);
+    modf->setScene(this);
+    mergeLaOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(mergeLaOperation);
     historyIndex++;
 
@@ -511,23 +512,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_MERGELAYER:
-    {
-        LvlData->layers.push_back(lastOperation.data.layers[0]);
-        LevelData mvData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
-
-        //just in case
-        MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
-
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
@@ -650,23 +634,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_MERGELAYER:
-    {
-        LevelData mergeData = lastOperation.data;
-
-        CallbackData cbData;
-        findGraphicsItem(mergeData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
-
-        for(int i = 0; i < LvlData->layers.size(); i++){
-            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
-                LvlData->layers.removeAt(i);
-            }
-        }
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
