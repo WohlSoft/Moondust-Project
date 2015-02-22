@@ -50,6 +50,7 @@
 #include <editing/_components/history/historyelementrenamelayer.h>
 #include <editing/_components/history/historyelementremovelayerandsave.h>
 #include <editing/_components/history/historyelementmergelayer.h>
+#include <editing/_components/history/historyelementsettingssection.h>
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -421,17 +422,14 @@ void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingSubType subtype, QVariant extraData)
+void LvlScene::addChangeSectionSettingsHistory(int sectionID, HistorySettings::LevelSettingSubType subtype, QVariant extraData)
 {
     updateHistoryBuffer();
 
     HistoryOperation chSecSettingsOperation;
-    chSecSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION;
-    chSecSettingsOperation.subtype = subtype;
-    QList<QVariant> package;
-    package.push_back(sectionID);
-    package.push_back(extraData);
-    chSecSettingsOperation.extraData = QVariant(package);
+    HistoryElementSettingsSection* modf = new HistoryElementSettingsSection(sectionID, subtype, extraData);
+    modf->setScene(this);
+    chSecSettingsOperation.newElement = QSharedPointer<IHistoryElement>(modf);
     operationList.push_back(chSecSettingsOperation);
     historyIndex++;
 
@@ -512,45 +510,6 @@ void LvlScene::historyBack()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        int sectionID = lastOperation.extraData.toList()[0].toInt();
-        QVariant extraData = lastOperation.extraData.toList()[1];
-
-        if(subtype == SETTING_SECISWARP){
-            LvlData->sections[sectionID].IsWarp = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECOFFSCREENEXIT){
-            LvlData->sections[sectionID].OffScreenEn = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECNOBACK){
-            LvlData->sections[sectionID].noback = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECUNDERWATER){
-            LvlData->sections[sectionID].underwater = !extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECBACKGROUNDIMG){
-            ChangeSectionBG(extraData.toList()[0].toInt(), sectionID);
-        }
-        else
-        if(subtype == SETTING_SECMUSIC){
-            LvlData->sections[sectionID].music_id = extraData.toList()[0].toInt();
-        }
-        else
-        if(subtype == SETTING_SECCUSTOMMUSIC){
-            LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
-        }
-
-        MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
-        LvlMusPlay::updateMusic();
-        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: //historyelementmainsetting
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
@@ -634,45 +593,6 @@ void LvlScene::historyForward()
 
     switch( lastOperation.type )
     {
-    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
-    {
-        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
-        int sectionID = lastOperation.extraData.toList()[0].toInt();
-        QVariant extraData = lastOperation.extraData.toList()[1];
-
-        if(subtype == SETTING_SECISWARP){
-            LvlData->sections[sectionID].IsWarp = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECOFFSCREENEXIT){
-            LvlData->sections[sectionID].OffScreenEn = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECNOBACK){
-            LvlData->sections[sectionID].noback = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECUNDERWATER){
-            LvlData->sections[sectionID].underwater = extraData.toBool();
-        }
-        else
-        if(subtype == SETTING_SECBACKGROUNDIMG){
-            ChangeSectionBG(extraData.toList()[1].toInt(), sectionID);
-        }
-        else
-        if(subtype == SETTING_SECMUSIC){
-            LvlData->sections[sectionID].music_id = extraData.toList()[1].toInt();
-        }
-        else
-        if(subtype == SETTING_SECCUSTOMMUSIC){
-            LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
-        }
-        MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
-        LvlMusPlay::updateMusic();
-        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
     {
         SettingSubType subtype = (SettingSubType)lastOperation.subtype;
