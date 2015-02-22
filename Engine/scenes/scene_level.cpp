@@ -446,7 +446,7 @@ int  uTick = 1;
 
 void LevelScene::update()
 {
-    uTick = abs((1000.0/(float)PGE_Window::PhysStep)-lastTicks);
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
     if(uTick<=0) uTick=1;
 
     if(doExit)
@@ -736,6 +736,8 @@ int LevelScene::exec()
         update();
         stop_physics=SDL_GetTicks();
 
+        stop_render=0;
+        start_render=0;
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
@@ -744,25 +746,25 @@ int LevelScene::exec()
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
 
-            if( timeFPS > stop_render-start_render)
-                doUpdate_render = timeFPS - (stop_render-start_render);
+            if( timeFPS>(stop_render-start_render) )
+                doUpdate_render = (int)round(timeFPS-(int)(stop_render-start_render));
             else
                 doUpdate_render = 0;
         }
         doUpdate_render -= timeStep;
-
         if(stop_render<start_render)
-            {stop_render=doUpdate_render; start_render=0;}
+            {stop_render=0; start_render=0;}
 
         doUpdate_physics=1;
         lastTicks=1;
-        if( timeStep > (stop_physics-start_physics)-(stop_render-start_render)-(stop_events-start_events))
+        if( timeStep > (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events) )
         {
-            doUpdate_physics = timeStep-(stop_physics-start_physics)-(stop_render-start_render)-(stop_events-start_events);
-            if(doUpdate_physics<=0) doUpdate_physics=1;
-            lastTicks = doUpdate_physics;
-            SDL_Delay( doUpdate_physics );
+            doUpdate_physics = timeStep-((stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events));
+            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
+        if(doUpdate_physics>0)
+            SDL_Delay( doUpdate_physics );
+
         stop_render=0;
         start_render=0;
 
