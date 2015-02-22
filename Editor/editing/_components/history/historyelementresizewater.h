@@ -16,6 +16,9 @@ public:
     virtual void undo();
     virtual void redo();
 
+public slots:
+    void historyUndoResizeWater(const LevelPhysEnv &orig, QGraphicsItem *item);
+    void historyRedoResizeWater(const LevelPhysEnv &orig, QGraphicsItem *item);
 private:
     LevelPhysEnv m_physEnv;
     QRect m_oldSize;

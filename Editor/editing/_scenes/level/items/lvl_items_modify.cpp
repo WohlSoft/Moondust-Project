@@ -199,6 +199,13 @@ void LvlScene::collectDataFromItem(LevelData &dataToStore, QGraphicsItem *item)
     }
 }
 
+void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem *> items)
+{
+    foreach (QGraphicsItem* item, items) {
+        collectDataFromItem(dataToStore, item);
+    }
+}
+
 void LvlScene::placeAll(const LevelData &data)
 {
     bool hasToUpdateDoorData = false;

@@ -223,7 +223,7 @@ void LvlSectionProps::on_LVLPropsLevelWarp_clicked(bool checked)
     {
         LevelEdit * edit = mw->activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECISWARP, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECISWARP, QVariant(checked));
         mw->ui->actionLevWarp->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].IsWarp = checked;
         edit->LvlData.modified = true;
@@ -236,7 +236,7 @@ void MainWindow::on_actionLevWarp_triggered(bool checked)
     {
         LevelEdit * edit = activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECISWARP, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECISWARP, QVariant(checked));
         dock_LvlSectionProps->ui->LVLPropsLevelWarp->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].IsWarp = checked;
         edit->LvlData.modified = true;
@@ -250,7 +250,7 @@ void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
     {
         LevelEdit * edit = mw->activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECOFFSCREENEXIT, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         mw->ui->actionLevOffScr->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn = checked;
         edit->LvlData.modified = true;
@@ -263,7 +263,7 @@ void MainWindow::on_actionLevOffScr_triggered(bool checked)
     {
         LevelEdit * edit = activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECOFFSCREENEXIT, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         dock_LvlSectionProps->ui->LVLPropsOffScr->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn = checked;
         edit->LvlData.modified = true;
@@ -278,7 +278,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
     {
         LevelEdit * edit = mw->activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECNOBACK, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         mw->ui->actionLevNoBack->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].noback = checked;
         edit->LvlData.modified = true;
@@ -291,7 +291,7 @@ void MainWindow::on_actionLevNoBack_triggered(bool checked)
     {
         LevelEdit * edit = activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECNOBACK, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].noback = checked;
         edit->LvlData.modified = true;
@@ -305,7 +305,7 @@ void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
     {
         LevelEdit * edit = mw->activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECUNDERWATER, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECUNDERWATER, QVariant(checked));
         mw->ui->actionLevUnderW->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].underwater = checked;
         edit->LvlData.modified = true;
@@ -318,7 +318,7 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
     {
         LevelEdit * edit = activeLvlEditWin();
         if(!edit) return;
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECUNDERWATER, QVariant(checked));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECUNDERWATER, QVariant(checked));
         dock_LvlSectionProps->ui->LVLPropsUnderWater->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].underwater = checked;
         edit->LvlData.modified = true;
@@ -391,7 +391,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
         QList<QVariant> backData;
         backData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].background);
         backData.push_back(ui->LVLPropsBackImage->currentData().toInt());
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECBACKGROUNDIMG, QVariant(backData));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECBACKGROUNDIMG, QVariant(backData));
         edit->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
         edit->LvlData.modified = true;
     }
@@ -435,7 +435,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
         QList<QVariant> musicData;
         musicData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].music_id);
         musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECMUSIC, QVariant(musicData));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECMUSIC, QVariant(musicData));
         edit->LvlData.sections[edit->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
         if(ui->LVLPropsMusicNumber->hasFocus()) edit->LvlData.modified = true;
     }
@@ -459,7 +459,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
                 QList<QVariant> musicData;
                 musicData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].music_id);
                 musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
-                edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECMUSIC, QVariant(musicData));
+                edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECMUSIC, QVariant(musicData));
                 edit->LvlData.sections[edit->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
                 edit->LvlData.modified = true;
             }
@@ -508,7 +508,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
         QList<QVariant> cusMusicData;
         cusMusicData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
         cusMusicData.push_back(arg1.simplified().remove('\"'));
-        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, LvlScene::SETTING_SECCUSTOMMUSIC, QVariant(cusMusicData));
+        edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECCUSTOMMUSIC, QVariant(cusMusicData));
         edit->LvlData.sections[edit->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
     }
 
