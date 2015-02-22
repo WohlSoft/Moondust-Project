@@ -16,6 +16,8 @@ public:
     virtual void undo();
     virtual void redo();
 
+public slots:
+    void historyRemovePlayerPoint(const PlayerPoint &plr, QGraphicsItem *item);
 private:
     PlayerPoint m_plr;
     QVariant m_oldPos;
