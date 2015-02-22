@@ -746,13 +746,14 @@ int LevelScene::exec()
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
 
-            if( timeFPS>(stop_render-start_render) )
-                doUpdate_render = (int)round(timeFPS-(int)(stop_render-start_render));
-            else
+            if( timeFPS > (stop_render-start_render) )
                 doUpdate_render = 0;
+            else
+                doUpdate_render = abs(stop_render-start_render);
         }
         doUpdate_render -= timeStep;
-        if(stop_render<start_render)
+
+        if(stop_render < start_render)
             {stop_render=0; start_render=0;}
 
         doUpdate_physics=1;
