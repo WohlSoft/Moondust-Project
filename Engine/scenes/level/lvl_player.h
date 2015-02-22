@@ -39,7 +39,9 @@ struct Plr_EnvironmentPhysics
     float32 MaxSpeed_run; //!< Max run speed
     float32 MaxSpeed_up; //!< Fly UP Max fall speed
     float32 MaxSpeed_down; //!< Max fall down speed
-    bool    zero_speed_on_enter;
+    float32 damping;
+    bool    zero_speed_y_on_enter;
+    bool    slow_speed_x_on_enter;
 };
 
 struct Plr_State

@@ -42,8 +42,9 @@ LVL_Player::LVL_Player()
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_run = 38.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_up = 74.0f;
     physics[LVL_PhysEnv::Env_Air].MaxSpeed_down = 72.0f;
-    physics[LVL_PhysEnv::Env_Air].zero_speed_on_enter=false;
-
+    physics[LVL_PhysEnv::Env_Air].damping = 0.0f;
+    physics[LVL_PhysEnv::Env_Air].zero_speed_y_on_enter=false;
+    physics[LVL_PhysEnv::Env_Air].slow_speed_x_on_enter=false;
 
     physics[LVL_PhysEnv::Env_Water].make();
     physics[LVL_PhysEnv::Env_Water].walk_force = 300.0f;
@@ -55,19 +56,23 @@ LVL_Player::LVL_Player()
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_run = 22.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 38.0f;
     physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 38.0f;
-    physics[LVL_PhysEnv::Env_Water].zero_speed_on_enter=true;
+    physics[LVL_PhysEnv::Env_Water].damping = 2.0f;
+    physics[LVL_PhysEnv::Env_Water].zero_speed_y_on_enter=true;
+    physics[LVL_PhysEnv::Env_Water].slow_speed_x_on_enter=true;
 
     physics[LVL_PhysEnv::Env_Quicksand].make();
     physics[LVL_PhysEnv::Env_Quicksand].walk_force = 100.0f;
     physics[LVL_PhysEnv::Env_Quicksand].slippery_c = 2.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 0.5f;
+    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 1.0f;
     physics[LVL_PhysEnv::Env_Quicksand].velocity_jump = 35.0f;
     physics[LVL_PhysEnv::Env_Quicksand].velocity_climb = 15.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_walk = 1.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_run = 1.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_up = 74.0f;
     physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_down = 10.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].zero_speed_on_enter=true;
+    physics[LVL_PhysEnv::Env_Quicksand].damping = 2.0f;
+    physics[LVL_PhysEnv::Env_Quicksand].zero_speed_y_on_enter=true;
+    physics[LVL_PhysEnv::Env_Quicksand].slow_speed_x_on_enter=true;
 
     stateID=0;
 
@@ -269,14 +274,20 @@ void LVL_Player::update(float ticks)
 
     if(last_environment!=environment)
     {
+        Plr_EnvironmentPhysics env = physics[environment];
         last_environment=environment;
-        if(physics[environment].zero_speed_on_enter)
-            physBody->SetLinearVelocity(b2Vec2(0, 0));
 
-        physBody->SetGravityScale(physics[environment].gravity_scale);
+        if(env.zero_speed_y_on_enter)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
+
+        if(env.slow_speed_x_on_enter)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x/2, physBody->GetLinearVelocity().y));
+
+        physBody->SetLinearDamping(env.damping);
+        physBody->SetGravityScale(env.gravity_scale);
         curHMaxSpeed = isRunning ?
-                    physics[environment].MaxSpeed_run :
-                    physics[environment].MaxSpeed_walk;
+                    env.MaxSpeed_run :
+                    env.MaxSpeed_walk;
     }
 
     if(onGround)
