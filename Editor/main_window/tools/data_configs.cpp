@@ -23,6 +23,7 @@
 #include <mainwindow.h>
 #include <main_window/dock/lvl_sctc_props.h>
 
+#include <main_window/dock/lvl_item_toolbox.h>
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
@@ -55,12 +56,12 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     if(!progress.wasCanceled())  progress.setValue(100);
 
-    setLvlItemBoxes(false); //Apply item boxes from reloaded configs
+    dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     setWldItemBoxes(false);
 
     dock_LvlSectionProps->setLevelSectionData();
     setSoundList();
-    clearFilter();
+    dock_LvlItemBox->clearFilter();
 
     //Set tools from loaded configs
     //setLevelSectionData();

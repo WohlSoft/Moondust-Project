@@ -118,7 +118,7 @@ void MainWindow::loadSettings()
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
-        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
 
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
@@ -309,7 +309,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::historyLimit = appSettings->historyLimit;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
-        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 

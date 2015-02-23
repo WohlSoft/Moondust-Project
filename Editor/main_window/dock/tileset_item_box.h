@@ -21,6 +21,7 @@
 
 #include <QDockWidget>
 #include <QTabWidget>
+#include "mwdock_base.h"
 
 #include <data_configs/obj_tilesets.h>
 
@@ -32,18 +33,18 @@ namespace Ui {
 class TilesetItemBox;
 }
 
-class TilesetItemBox : public QDockWidget
+class TilesetItemBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
     explicit TilesetItemBox(QWidget *parent = 0);
-    TilesetItemBox(MainWindow *ParentMW, QWidget *parent = 0);
-    void setParentMW(MainWindow *ParentMW);
     ~TilesetItemBox();
 
 public slots:
+    void re_translate();
+
     void setTileSetBox(bool force=false);
 
     void on_TilesetItemBox_visibilityChanged(bool visible);
@@ -68,10 +69,7 @@ protected:
     virtual void focusInEvent(QFocusEvent * ev);
 
 private:
-    void construct(MainWindow *ParentMW);
     Ui::TilesetItemBox *ui;
-    MainWindow *mw;
-
     bool lockTilesetBox;
 };
 

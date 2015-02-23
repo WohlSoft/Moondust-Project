@@ -143,7 +143,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     //Apply objects into tools
     dock_LvlSectionProps->setLevelSectionData();
-    setLvlItemBoxes();
+    dock_LvlItemBox->setLvlItemBoxes();
     setWldItemBoxes();
     setSoundList();
     WldLvlExitTypeListReset();

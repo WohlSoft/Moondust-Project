@@ -85,39 +85,21 @@ void MainWindow::setUiDefults()
                                              dg.height()-100), dg));
 
     int GOffset=240;
+    dock_LvlWarpProps    = new LvlWarpBox(this);
+    dock_LvlSectionProps = new LvlSectionProps(this);
+    dock_LvlItemProps    = new LvlItemProperties(this);
+    dock_LvlItemBox      = new LevelToolBox(this);
+    dock_TilesetBox      = new TilesetItemBox(this);
+
+
     //Define the default geometry for toolboxes
-    dock_LvlWarpProps = new LvlWarpBox(this, this);
-    dock_LvlWarpProps->setVisible(false);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlWarpProps);
-    dock_LvlWarpProps->setFloating(true);
-    dock_LvlWarpProps->setGeometry(
-                mwg.x()+mwg.width()-dock_LvlWarpProps->width()-GOffset,
-                mwg.y()+120,
-                dock_LvlWarpProps->width(),
-                dock_LvlWarpProps->height()
-                );
-
-
-    dock_LvlSectionProps = new LvlSectionProps(this, this);
-    dock_LvlSectionProps->setVisible(false);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlSectionProps);
-    dock_LvlSectionProps->setGeometry(
-                mwg.x()+mwg.width()-dock_LvlSectionProps->width()-GOffset,
-                mwg.y()+120,
-                dock_LvlSectionProps->width(),
-                dock_LvlSectionProps->height()
-                );
-
-    connect(this->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
-                   dock_LvlSectionProps, SLOT(switchResizeMode(bool)));
-
-
     ui->LevelLayers->setGeometry(
                 mwg.x()+mwg.width()-ui->LevelLayers->width()-GOffset,
                 mwg.y()+120,
                 ui->LevelLayers->width(),
                 ui->LevelLayers->height()
                 );
+
 
     ui->LevelEventsToolBox->setGeometry(
                 mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
@@ -126,16 +108,8 @@ void MainWindow::setUiDefults()
                 ui->LevelEventsToolBox->height()
                 );
 
-    dock_LvlItemProps = new LvlItemProperties(this,this);
-    dock_LvlItemProps->setVisible(false);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_LvlItemProps);
-    dock_LvlItemProps->setFloating(true);
-    dock_LvlItemProps->setGeometry(
-                mwg.x()+mwg.width()-dock_LvlItemProps->width()-GOffset,
-                mwg.y()+120,
-                dock_LvlItemProps->width(),
-                dock_LvlItemProps->height()
-                );
+
+
 
     ui->FindDock->setGeometry(
                 mwg.x()+mwg.width()-ui->FindDock->width()-GOffset,
@@ -165,17 +139,6 @@ void MainWindow::setUiDefults()
                 ui->WorldFindDock->height()
                 );
 
-
-    dock_TilesetBox = new TilesetItemBox(this, this);
-    dock_TilesetBox->setVisible(false);
-    addDockWidget(Qt::BottomDockWidgetArea, dock_TilesetBox);
-    dock_TilesetBox->setFloating(true);
-    dock_TilesetBox->setGeometry(
-                dg.x()+GOffset,
-                dg.y()+dg.height()-600,
-                800,
-                300
-                );
 
     ui->debuggerBox->setGeometry(
                 mwg.x()+mwg.width()-ui->debuggerBox->width()-GOffset,
@@ -226,8 +189,6 @@ void MainWindow::setUiDefults()
         ui->actionFill->setVisible(false);
         ui->actionFloodSectionOnly->setVisible(false);
         ui->actionFloodSectionOnly->setEnabled(false);
-
-    ui->LevelToolBox->hide();
 
 
     dock_LvlWarpProps->hide();
@@ -280,7 +241,7 @@ void MainWindow::setUiDefults()
     ui->centralWidget->cascadeSubWindows();
 
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
-    ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+    dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
     ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 

@@ -21,6 +21,7 @@
 #include <script/gui/additionalsettings.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_sctc_props.h>
+#include <main_window/dock/lvl_item_toolbox.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -307,7 +308,7 @@ void MainWindow::on_actionReload_triggered()
 
     }
 
-    clearFilter();
+    dock_LvlItemBox->clearFilter();
 }
 
 

@@ -77,6 +77,7 @@ class MainWindow : public QMainWindow
     friend class LvlItemProperties;
     friend class LvlWarpBox;
     friend class LvlSectionProps;
+    friend class LevelToolBox;
     /************************Friend classes***************************/
 
 public:
@@ -250,6 +251,8 @@ public:
         QTranslator     m_translatorQt; /**< contains the translations for qt */
         QString         m_currLang;     /**< contains the currently loaded language */
         QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+    signals:
+        void languageSwitched();
 // ///////////////////////////////////////////////////////////
 
 
@@ -600,42 +603,15 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////////Level Item toolbox /////////////////
+    public:
+        LevelToolBox *dock_LvlItemBox;
+
     // update data of the toolboxes
     public slots:
-        void setLvlItemBoxes(bool setGrp=false, bool setCat=false);
         void UpdateLvlCustomItems();
 
-        void updateFilters();
-        void clearFilter();
-
     private slots:
-        void on_LevelToolBox_visibilityChanged(bool visible);
         void on_actionLVLToolBox_triggered(bool checked);
-
-        void on_BlockUniform_clicked(bool checked);
-        void on_BGOUniform_clicked(bool checked);
-        void on_NPCUniform_clicked(bool checked);
-
-        void on_BlockGroupList_currentIndexChanged(const QString &arg1);
-        void on_BGOGroupList_currentIndexChanged(const QString &arg1);
-        void on_NPCGroupList_currentIndexChanged(const QString &arg1);
-
-        void on_BlockCatList_currentIndexChanged(const QString &arg1);
-        void on_BGOCatList_currentIndexChanged(const QString &arg1);
-        void on_NPCCatList_currentIndexChanged(const QString &arg1);
-
-        void on_BlockFilterField_textChanged(const QString &arg1);
-        void on_BGOFilterField_textChanged(const QString &arg1);
-        void on_NPCFilterField_textChanged(const QString &arg1);
-
-        void on_BlockFilterType_currentIndexChanged(int index);
-        void on_BGOFilterType_currentIndexChanged(int index);
-        void on_NPCFilterType_currentIndexChanged(int index);
-
-        //Item was clicked
-        void on_BlockItemsList_itemClicked(QListWidgetItem *item);
-        void on_BGOItemsList_itemClicked(QListWidgetItem *item);
-        void on_NPCItemsList_itemClicked(QListWidgetItem *item);
 
     private:
         QString cat_blocks; //!< Category
