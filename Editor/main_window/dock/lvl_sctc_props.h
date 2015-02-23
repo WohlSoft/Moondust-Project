@@ -2,6 +2,7 @@
 #define LVL_SCTC_PROPS_H
 
 #include <QDockWidget>
+#include "mwdock_base.h"
 
 class MainWindow;
 
@@ -9,19 +10,19 @@ namespace Ui {
 class LvlSectionProps;
 }
 
-class LvlSectionProps : public QDockWidget
+class LvlSectionProps : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
-    explicit LvlSectionProps(QWidget *parent = 0);
-    LvlSectionProps(MainWindow *ParentMW, QWidget *parent = 0);
+    explicit LvlSectionProps(QWidget *parent);
     ~LvlSectionProps();
     bool lockSctSettingsProps;
-    void setParentMW(MainWindow *ParentMW);
 
 public slots:
+    void re_translate();
+
     void setLevelSectionData();
 
     void on_ResizeSection_clicked();
@@ -53,8 +54,6 @@ protected:
 
 private:
     Ui::LvlSectionProps *ui;
-    void construct(MainWindow *ParentMW);
-    MainWindow *mw;
 };
 
 #endif // LVL_SCTC_PROPS_H

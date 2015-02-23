@@ -33,7 +33,7 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionNew->setIcon(Themes::icon(Themes::file_new));
     ui->actionNewLevel->setIcon(Themes::icon(Themes::level_16));
-    ui->LevelToolBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 
     ui->actionNewWorld_map->setIcon(Themes::icon(Themes::world_16));
     ui->WorldToolBox->setWindowIcon(Themes::icon(Themes::level_16));

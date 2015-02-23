@@ -249,7 +249,6 @@ SOURCES += main.cpp\
     main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
     main_window/dock/lvl_events_props.cpp \
-    main_window/dock/lvl_item_toolbox.cpp \
     main_window/dock/lvl_layers_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_search_toolbox.cpp \
@@ -403,7 +402,9 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementreplaceplayerpoint.cpp \
     editing/_components/history/historyelementresizewater.cpp \
     editing/_components/history/historyelementaddlayer.cpp \
-    editing/_components/history/historyelementremovelayerandsave.cpp
+    editing/_components/history/historyelementremovelayerandsave.cpp \
+    main_window/dock/lvl_item_toolbox.cpp \
+    main_window/dock/mwdock_base.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -571,7 +572,9 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementreplaceplayerpoint.h \
     editing/_components/history/historyelementresizewater.h \
     editing/_components/history/historyelementaddlayer.h \
-    editing/_components/history/historyelementremovelayerandsave.h
+    editing/_components/history/historyelementremovelayerandsave.h \
+    main_window/dock/lvl_item_toolbox.h \
+    main_window/dock/mwdock_base.h
 
 
 FORMS    += \
@@ -609,7 +612,8 @@ FORMS    += \
     main_window/dock/tileset_item_box.ui \
     main_window/dock/lvl_item_properties.ui \
     main_window/dock/lvl_warp_props.ui \
-    main_window/dock/lvl_sctc_props.ui
+    main_window/dock/lvl_sctc_props.ui \
+    main_window/dock/lvl_item_toolbox.ui
 
 
 

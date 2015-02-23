@@ -27,33 +27,9 @@
 
 LvlSectionProps::LvlSectionProps(QWidget *parent) :
     QDockWidget(parent),
+    MWDock_Base(parent),
     ui(new Ui::LvlSectionProps)
 {
-    construct(NULL);
-}
-
-LvlSectionProps::LvlSectionProps(MainWindow *ParentMW, QWidget *parent) :
-    QDockWidget(parent),
-    ui(new Ui::LvlSectionProps)
-{
-    construct(ParentMW);
-}
-
-LvlSectionProps::~LvlSectionProps()
-{
-    delete ui;
-}
-
-void LvlSectionProps::focusInEvent(QFocusEvent *ev)
-{
-    ev->accept();
-    qApp->setActiveWindow(mw);
-}
-
-void LvlSectionProps::construct(MainWindow *ParentMW)
-{
-    mw=NULL;
-    setParentMW(ParentMW);
     ui->setupUi(this);
     setVisible(false);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
@@ -61,17 +37,44 @@ void LvlSectionProps::construct(MainWindow *ParentMW)
     switchResizeMode(false);
 
     lockSctSettingsProps=false;
+
+    QRect mwg = mw()->geometry();
+    int GOffset=240;
+    mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setGeometry(
+                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.y()+120,
+                width(),
+                height()
+                );
+
+    connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
+                   this, SLOT(switchResizeMode(bool)));
 }
 
-void LvlSectionProps::setParentMW(MainWindow *ParentMW)
+
+LvlSectionProps::~LvlSectionProps()
 {
-    mw = ParentMW;
+    delete ui;
+}
+
+void LvlSectionProps::re_translate()
+{
+    ui->retranslateUi(this);
+}
+
+void LvlSectionProps::focusInEvent(QFocusEvent *ev)
+{
+    QDockWidget::focusInEvent(ev);
+    //ev->accept();
+    //qApp->setActiveWindow(mw());
 }
 
 // Level Section tool box show/hide
 void LvlSectionProps::on_LvlSectionProps_visibilityChanged(bool visible)
 {
-    mw->ui->actionSection_Settings->setChecked(visible);
+    mw()->ui->actionSection_Settings->setChecked(visible);
 }
 
 void MainWindow::on_actionSection_Settings_triggered(bool checked)
@@ -91,19 +94,19 @@ void LvlSectionProps::setLevelSectionData()
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
-    mw->ui->LVLEvent_SctMus_List->clear(); //Music list in events
-    mw->ui->LVLEvent_SctBg_List->clear();  //Background list in events
+    mw()->ui->LVLEvent_SctMus_List->clear(); //Music list in events
+    mw()->ui->LVLEvent_SctBg_List->clear();  //Background list in events
 
     QPixmap empty(100,70);
     empty.fill(QColor(Qt::black));
 
     ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), "0" );
-    mw->ui->LVLEvent_SctBg_List->addItem(QIcon(empty), tr("[No image]"), "0" );
+    mw()->ui->LVLEvent_SctBg_List->addItem(QIcon(empty), tr("[No image]"), "0" );
     ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
-    mw->ui->LVLEvent_SctMus_List->addItem( tr("[Silence]"), "0" );
+    mw()->ui->LVLEvent_SctMus_List->addItem( tr("[Silence]"), "0" );
 
     ui->LVLPropsBackImage->setIconSize(QSize(100,70));
-    mw->ui->LVLEvent_SctBg_List->setIconSize(QSize(100,70));
+    mw()->ui->LVLEvent_SctBg_List->setIconSize(QSize(100,70));
 
     QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
             QListView *listVw = qobject_cast<QListView*>(abVw);
@@ -113,7 +116,7 @@ void LvlSectionProps::setLevelSectionData()
                 listVw->setUniformItemSizes(true);
             }
 
-    abVw = mw->ui->LVLEvent_SctBg_List->view();
+    abVw = mw()->ui->LVLEvent_SctBg_List->view();
             listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
@@ -122,21 +125,21 @@ void LvlSectionProps::setLevelSectionData()
             }
 
 
-    for(i=0; i< mw->configs.main_bg.size();i++)
+    for(i=0; i< mw()->configs.main_bg.size();i++)
     {
         QPixmap bgThumb(100,70);
         bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb);
 
         QPixmap tmp;
-        tmp = mw->configs.main_bg[i].image.scaledToHeight(70);
+        tmp = mw()->configs.main_bg[i].image.scaledToHeight(70);
 
-        if (mw->activeChildWindow()==1)
+        if (mw()->activeChildWindow()==1)
         {
-            LevelEdit * edit = mw->activeLvlEditWin();
+            LevelEdit * edit = mw()->activeLvlEditWin();
             for(int q=0; q<edit->scene->uBGs.size();q++)
             {
-                if(edit->scene->uBGs[q].id==mw->configs.main_bg[i].id)
+                if(edit->scene->uBGs[q].id==mw()->configs.main_bg[i].id)
                 {
                     if(!edit->scene->uBGs[q].image.isNull())
                         tmp = edit->scene->uBGs[q].image.scaledToHeight(70);
@@ -160,20 +163,20 @@ void LvlSectionProps::setLevelSectionData()
         }
         xx.end();
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), mw->configs.main_bg[i].name, QString::number(mw->configs.main_bg[i].id));
-        mw->ui->LVLEvent_SctBg_List->addItem(QIcon(bgThumb), mw->configs.main_bg[i].name, QString::number(mw->configs.main_bg[i].id));
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
+        mw()->ui->LVLEvent_SctBg_List->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
     }
 
-    for(i=0; i< mw->configs.main_music_lvl.size();i++)
+    for(i=0; i< mw()->configs.main_music_lvl.size();i++)
     {
-        ui->LVLPropsMusicNumber->addItem(mw->configs.main_music_lvl[i].name, QString::number(mw->configs.main_music_lvl[i].id) );
-        mw->ui->LVLEvent_SctMus_List->addItem(mw->configs.main_music_lvl[i].name, QString::number(mw->configs.main_music_lvl[i].id) );
+        ui->LVLPropsMusicNumber->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
+        mw()->ui->LVLEvent_SctMus_List->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
     }
 
     //Set current data
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) {lockSctSettingsProps=false; return;}
         //edit->LvlData.sections[edit->LvlData.CurSection].background
         //edit->LvlData.sections[edit->LvlData.CurSection].music_id
@@ -198,15 +201,15 @@ void LvlSectionProps::setLevelSectionData()
         }
 
         ui->LVLPropsLevelWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
-        mw->ui->actionLevWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
+        mw()->ui->actionLevWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
         ui->LVLPropsOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
-        mw->ui->actionLevOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
+        mw()->ui->actionLevOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
         ui->LVLPropsNoTBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
-        mw->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
+        mw()->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
         ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
-        mw->ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
+        mw()->ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
         ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
-        ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw->configs.music_custom_id));
+        ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
     }
 
     lockSctSettingsProps=false;
@@ -219,12 +222,12 @@ void LvlSectionProps::setLevelSectionData()
 // Level Section Settings
 void LvlSectionProps::on_LVLPropsLevelWarp_clicked(bool checked)
 {
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECISWARP, QVariant(checked));
-        mw->ui->actionLevWarp->setChecked(checked);
+        mw()->ui->actionLevWarp->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].IsWarp = checked;
         edit->LvlData.modified = true;
     }
@@ -246,12 +249,12 @@ void MainWindow::on_actionLevWarp_triggered(bool checked)
 
 void LvlSectionProps::on_LVLPropsOffScr_clicked(bool checked)
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECOFFSCREENEXIT, QVariant(checked));
-        mw->ui->actionLevOffScr->setChecked(checked);
+        mw()->ui->actionLevOffScr->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn = checked;
         edit->LvlData.modified = true;
     }
@@ -274,12 +277,12 @@ void MainWindow::on_actionLevOffScr_triggered(bool checked)
 
 void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
-        mw->ui->actionLevNoBack->setChecked(checked);
+        mw()->ui->actionLevNoBack->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].noback = checked;
         edit->LvlData.modified = true;
     }
@@ -301,12 +304,12 @@ void MainWindow::on_actionLevNoBack_triggered(bool checked)
 
 void LvlSectionProps::on_LVLPropsUnderWater_clicked(bool checked)
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECUNDERWATER, QVariant(checked));
-        mw->ui->actionLevUnderW->setChecked(checked);
+        mw()->ui->actionLevUnderW->setChecked(checked);
         edit->LvlData.sections[edit->LvlData.CurSection].underwater = checked;
         edit->LvlData.modified = true;
     }
@@ -334,11 +337,11 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
 ///////////////////////////////////////Resize section/////////////////////////////////////
 void LvlSectionProps::on_ResizeSection_clicked()
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
-        qApp->setActiveWindow(mw);
+        qApp->setActiveWindow(mw());
         edit->setFocus();
         if(edit->scene->pResizer==NULL)
         {
@@ -349,21 +352,21 @@ void LvlSectionProps::on_ResizeSection_clicked()
 
 void LvlSectionProps::on_applyResize_clicked()
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
-        mw->on_actionResizeApply_triggered();
+        mw()->on_actionResizeApply_triggered();
     }
 }
 
 void LvlSectionProps::on_cancelResize_clicked()
 {
-    if (mw->activeChildWindow()==1)
+    if (mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
-        mw->on_actionResizeCancel_triggered();
+        mw()->on_actionResizeCancel_triggered();
     }
 }
 
@@ -373,7 +376,7 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
     if(lockSctSettingsProps) return;
 
-    if(mw->configs.main_bg.size()==0)
+    if(mw()->configs.main_bg.size()==0)
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));
         return;
@@ -383,9 +386,9 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     //{
     ui->LVLPropsBackImage->setEnabled(false);
     WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
         QList<QVariant> backData;
@@ -407,16 +410,16 @@ void LvlSectionProps::switchResizeMode(bool mode)
 
 void LvlSectionProps::loadMusic()
 {
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
         LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
                     edit->LvlData.sections[edit->LvlData.CurSection].music_id,
                     edit->LvlData.sections[edit->LvlData.CurSection].music_file);
     }
-    mw->setMusic(mw->ui->actionPlayMusic->isChecked());
+    mw()->setMusic(mw()->ui->actionPlayMusic->isChecked());
 }
 
 
@@ -425,11 +428,11 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(lockSctSettingsProps) return;
 
     unsigned int test = index;
-    ui->LVLPropsMusicCustomEn->setChecked(  test == mw->configs.music_custom_id );
+    ui->LVLPropsMusicCustomEn->setChecked(  test == mw()->configs.music_custom_id );
 
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
         QList<QVariant> musicData;
@@ -450,10 +453,10 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
     {
         if(checked)
         {
-            ui->LVLPropsMusicNumber->setCurrentIndex( mw->configs.music_custom_id );
-            if(mw->activeChildWindow()==1)
+            ui->LVLPropsMusicNumber->setCurrentIndex( mw()->configs.music_custom_id );
+            if(mw()->activeChildWindow()==1)
             {
-                LevelEdit * edit = mw->activeLvlEditWin();
+                LevelEdit * edit = mw()->activeLvlEditWin();
                 if(!edit) return;
 
                 QList<QVariant> musicData;
@@ -470,9 +473,9 @@ void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
 void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 {
     QString dirPath;
-    if(mw->activeChildWindow()!=1) return;
+    if(mw()->activeChildWindow()!=1) return;
 
-    LevelEdit * edit = mw->activeLvlEditWin();
+    LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
 
     dirPath = edit->LvlData.path;
@@ -499,9 +502,9 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 
-    if(mw->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
-        LevelEdit * edit = mw->activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
         QString arg1 = ui->LVLPropsMusicCustom->text();
 

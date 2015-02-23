@@ -20,6 +20,7 @@
 #define LVL_ITEM_PROPERTIES_H
 
 #include <QDockWidget>
+#include "mwdock_base.h"
 #include <file_formats/lvl_filedata.h>
 
 class MainWindow;
@@ -28,15 +29,13 @@ namespace Ui {
 class LvlItemProperties;
 }
 
-class LvlItemProperties : public QDockWidget
+class LvlItemProperties : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
-    explicit LvlItemProperties(QWidget *parent = 0);
-    LvlItemProperties(MainWindow *_mw, QWidget *parent = 0);
-    void setParentMW(MainWindow *ParentMW);
+    explicit LvlItemProperties(QWidget *parent);
     ~LvlItemProperties();
 
     long blockPtr;
@@ -46,6 +45,8 @@ public:
 
 
 public slots:
+    void re_translate();
+
     void LvlItemProps_updateLayer(QString lname);
     void OpenBlock(LevelBlock block, bool newItem=false);
     void OpenBGO(LevelBGO bgo, bool newItem=false);
@@ -127,8 +128,6 @@ private:
     QString NpcEventLayerEmpty;
 
     Ui::LvlItemProperties *ui;
-    void construct(MainWindow *ParentMW);
-    MainWindow *mw;
 };
 
 #endif // LVL_ITEM_PROPERTIES_H

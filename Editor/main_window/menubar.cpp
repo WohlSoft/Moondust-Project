@@ -91,7 +91,7 @@ void MainWindow::updateMenus(bool force)
 
     if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
     {
-        GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
+        GlobalSettings::LevelToolBoxVis = dock_LvlItemBox->isVisible();  //Save current visible status
         GlobalSettings::SectionToolBoxVis = dock_LvlSectionProps->isVisible();
 
         GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
@@ -104,7 +104,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
-        ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
+        dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
         dock_LvlSectionProps->setVisible( 0 );
         dock_LvlWarpProps->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
@@ -114,7 +114,7 @@ void MainWindow::updateMenus(bool force)
 
     if((GlobalSettings::lastWinType !=1) && (WinType==1))
     {
-        ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
+        dock_LvlItemBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
         dock_LvlSectionProps->setVisible( GlobalSettings::SectionToolBoxVis );
         dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
