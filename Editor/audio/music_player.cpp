@@ -70,6 +70,9 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
             root = mw->activeWldEditWin()->WldData.path+"/";
     }
 
+    //Force correction of Windows paths into UNIX style
+    cmus.replace('\\', '/');
+
     switch(mt)
     {
         case LevelMusic:
