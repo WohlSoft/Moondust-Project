@@ -92,7 +92,7 @@ void MainWindow::loadSettings()
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
         dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         ui->FindDock->setFloating(settings.value("level-search-float", true).toBool());
-        //ui->WorldToolBox->setFloating(settings.value("world-item-box-float", false).toBool());
+        //dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
@@ -106,7 +106,7 @@ void MainWindow::loadSettings()
         ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         ui->FindDock->restoreGeometry(settings.value("level-search-geometry", ui->FindDock->saveGeometry()).toByteArray());
-        ui->WorldToolBox->restoreGeometry(settings.value("world-item-box-geometry", ui->WorldToolBox->saveGeometry()).toByteArray());
+        dock_WldItemBox->restoreGeometry(settings.value("world-item-box-geometry", dock_WldItemBox->saveGeometry()).toByteArray());
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
@@ -119,7 +119,7 @@ void MainWindow::loadSettings()
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
-        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+        dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
 
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
@@ -184,7 +184,7 @@ void MainWindow::saveSettings()
     settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
     settings.setValue("level-search-float", ui->FindDock->isFloating());
 
-    settings.setValue("world-item-box-float", ui->WorldToolBox->isFloating());
+    settings.setValue("world-item-box-float", dock_WldItemBox->isFloating());
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
@@ -199,7 +199,7 @@ void MainWindow::saveSettings()
     settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
     settings.setValue("level-search-geometry", ui->FindDock->saveGeometry());
 
-    settings.setValue("world-item-box-geometry", ui->WorldToolBox->saveGeometry());
+    settings.setValue("world-item-box-geometry", dock_WldItemBox->saveGeometry());
     settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
     settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
@@ -310,7 +310,7 @@ void MainWindow::on_actionApplication_settings_triggered()
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
-        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+        dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
         applyTheme(GlobalSettings::currentTheme.isEmpty() ?

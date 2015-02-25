@@ -78,6 +78,7 @@ class MainWindow : public QMainWindow
     friend class LvlWarpBox;
     friend class LvlSectionProps;
     friend class LevelToolBox;
+    friend class WorldToolBox;
     /************************Friend classes***************************/
 
 public:
@@ -608,7 +609,7 @@ public:
 
     // update data of the toolboxes
     public slots:
-        void UpdateLvlCustomItems();
+        void UpdateCustomItems();
 
     private slots:
         void on_actionLVLToolBox_triggered(bool checked);
@@ -871,18 +872,12 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////////World Item toolbox /////////////////
-    public slots:
-        void setWldItemBoxes(bool setGrp=false, bool setCat=false);
+    public:
+        WorldToolBox * dock_WldItemBox;
 
     private slots:
-        void on_WorldToolBox_visibilityChanged(bool visible);
         void on_actionWLDToolBox_triggered(bool checked);
 
-        void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
-        void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
-        void on_WLD_PathsList_itemClicked(QTableWidgetItem *item);
-        void on_WLD_LevelList_itemClicked(QListWidgetItem *item);
-        void on_WLD_MusicList_itemClicked(QListWidgetItem *item);
 // ////////////////////////////////////////////////////////
 
 

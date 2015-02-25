@@ -6,5 +6,6 @@ class LvlItemProperties;
 class LvlWarpBox;
 class LvlSectionProps;
 class LevelToolBox;
+class WorldToolBox;
 
 #endif // TOOLBOXES_PROTOS_H
