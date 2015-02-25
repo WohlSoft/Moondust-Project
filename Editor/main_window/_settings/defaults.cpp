@@ -90,6 +90,7 @@ void MainWindow::setUiDefults()
     dock_LvlItemProps    = new LvlItemProperties(this);
     dock_LvlItemBox      = new LevelToolBox(this);
     dock_TilesetBox      = new TilesetItemBox(this);
+    dock_WldItemBox      = new WorldToolBox(this);
 
 
     //Define the default geometry for toolboxes
@@ -199,7 +200,7 @@ void MainWindow::setUiDefults()
     dock_LvlItemProps->hide();
     ui->FindDock->hide();
 
-    ui->WorldToolBox->hide();
+    dock_WldItemBox->hide();
     ui->WorldSettings->hide();
     ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
@@ -242,7 +243,7 @@ void MainWindow::setUiDefults()
 
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
-    ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+    dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
     muVol = new QSlider(Qt::Horizontal);

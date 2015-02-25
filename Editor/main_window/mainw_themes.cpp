@@ -36,7 +36,7 @@ void MainWindow::applyTheme(QString themeDir)
     dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 
     ui->actionNewWorld_map->setIcon(Themes::icon(Themes::world_16));
-    ui->WorldToolBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_WldItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 
     ui->actionNewNPC_config->setIcon(Themes::icon(Themes::npc_16));
 

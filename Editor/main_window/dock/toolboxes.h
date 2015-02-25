@@ -8,5 +8,7 @@
 #include "lvl_sctc_props.h"
 #include "lvl_item_toolbox.h"
 
+#include "wld_item_toolbox.h"
+
 #endif // DOCK_BOXES_H
 

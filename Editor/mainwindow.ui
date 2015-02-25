@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1470</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -600,333 +600,6 @@
    <addaction name="actionSection_20"/>
    <addaction name="actionSection_21"/>
   </widget>
-  <widget class="QDockWidget" name="WorldToolBox">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>200</width>
-     <height>200</height>
-    </size>
-   </property>
-   <property name="windowIcon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
-   </property>
-   <property name="windowTitle">
-    <string>World Map Toolbox</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QTabWidget" name="WorldToolBoxTabs">
-    <property name="tabPosition">
-     <enum>QTabWidget::North</enum>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="Tiles">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="accessibleName">
-      <string/>
-     </property>
-     <property name="widgetResizable" stdset="0">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Tiles</string>
-     </attribute>
-     <layout class="QGridLayout" name="TilesG" columnstretch="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QTableWidget" name="WLD_TilesList">
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>32</number>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>32</number>
-        </attribute>
-        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>32</number>
-        </attribute>
-        <attribute name="verticalHeaderHighlightSections">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderMinimumSectionSize">
-         <number>32</number>
-        </attribute>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="Scenery">
-     <property name="widgetResizable" stdset="0">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Scenery</string>
-     </attribute>
-     <layout class="QGridLayout" name="SceneryG" columnstretch="0" columnminimumwidth="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QListWidget" name="WLD_SceneList">
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="flow">
-         <enum>QListView::LeftToRight</enum>
-        </property>
-        <property name="resizeMode">
-         <enum>QListView::Adjust</enum>
-        </property>
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::IconMode</enum>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>true</bool>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="sortingEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="Paths">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="accessibleName">
-      <string/>
-     </property>
-     <property name="widgetResizable" stdset="0">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Paths</string>
-     </attribute>
-     <layout class="QGridLayout" name="PathsG" columnstretch="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QTableWidget" name="WLD_PathsList">
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderCascadingSectionResizes">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>32</number>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>32</number>
-        </attribute>
-        <attribute name="verticalHeaderHighlightSections">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderMinimumSectionSize">
-         <number>32</number>
-        </attribute>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="Level">
-     <property name="widgetResizable" stdset="0">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Levels</string>
-     </attribute>
-     <layout class="QGridLayout" name="LevelsG" columnstretch="0" columnminimumwidth="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QListWidget" name="WLD_LevelList">
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="resizeMode">
-         <enum>QListView::Adjust</enum>
-        </property>
-        <property name="layoutMode">
-         <enum>QListView::SinglePass</enum>
-        </property>
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::IconMode</enum>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>true</bool>
-        </property>
-        <property name="sortingEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="WldMusicBox">
-     <property name="widgetResizable" stdset="0">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Music Box</string>
-     </attribute>
-     <layout class="QGridLayout" name="MusicBoxG" columnstretch="0" columnminimumwidth="0">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QListWidget" name="WLD_MusicList">
-        <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
-        </property>
-        <property name="uniformItemSizes">
-         <bool>true</bool>
-        </property>
-        <property name="sortingEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
@@ -1176,8 +849,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>150</width>
-          <height>390</height>
+          <width>293</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1359,8 +1032,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>263</width>
-          <height>140</height>
+          <width>282</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1467,8 +1140,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>295</width>
-          <height>417</height>
+          <width>282</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1578,8 +1251,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>243</width>
-          <height>474</height>
+          <width>265</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1876,8 +1549,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>195</width>
-          <height>187</height>
+          <width>282</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1992,8 +1665,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>217</width>
-          <height>126</height>
+          <width>282</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2090,8 +1763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>111</width>
-          <height>86</height>
+          <width>282</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2246,7 +1919,7 @@
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>890</height>
+          <height>1208</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2473,8 +2146,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>173</height>
+          <width>300</width>
+          <height>927</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2622,8 +2295,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>359</height>
+          <width>300</width>
+          <height>927</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3219,8 +2892,8 @@
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Droid Sans Fallback'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -3444,7 +3117,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>812</height>
+          <height>1071</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3565,8 +3238,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>162</width>
-          <height>116</height>
+          <width>300</width>
+          <height>811</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3687,8 +3360,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>162</width>
-          <height>116</height>
+          <width>300</width>
+          <height>811</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3809,8 +3482,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>239</width>
-          <height>269</height>
+          <width>300</width>
+          <height>811</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4056,8 +3729,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>162</width>
-          <height>116</height>
+          <width>300</width>
+          <height>811</height>
          </rect>
         </property>
         <attribute name="label">

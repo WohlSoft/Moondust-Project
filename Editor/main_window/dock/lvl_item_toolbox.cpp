@@ -82,15 +82,6 @@ void LevelToolBox::on_LevelToolBox_visibilityChanged(bool visible)
 
 
 
-
-
-void MainWindow::UpdateLvlCustomItems()
-{
-    dock_LvlItemBox->setLvlItemBoxes(true, true);
-    setWldItemBoxes(true, true);
-}
-
-
 void LevelToolBox::setLvlItemBoxes(bool setGrp, bool setCat)
 {
     if((setGrp)&&(mw()->activeChildWindow()!=1)) return;

@@ -253,7 +253,6 @@ SOURCES += main.cpp\
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_search_toolbox.cpp \
     main_window/dock/wld_item_props.cpp \
-    main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_search_toolbox.cpp \
     main_window/dock/wld_world_settings.cpp \
     main_window/tools/main_tool_cdata_cleaner.cpp \
@@ -404,7 +403,8 @@ SOURCES += main.cpp\
     editing/_components/history/historyelementaddlayer.cpp \
     editing/_components/history/historyelementremovelayerandsave.cpp \
     main_window/dock/lvl_item_toolbox.cpp \
-    main_window/dock/mwdock_base.cpp
+    main_window/dock/mwdock_base.cpp \
+    main_window/dock/wld_item_toolbox.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -574,7 +574,8 @@ HEADERS  += defines.h \
     editing/_components/history/historyelementaddlayer.h \
     editing/_components/history/historyelementremovelayerandsave.h \
     main_window/dock/lvl_item_toolbox.h \
-    main_window/dock/mwdock_base.h
+    main_window/dock/mwdock_base.h \
+    main_window/dock/wld_item_toolbox.h
 
 
 FORMS    += \
@@ -613,7 +614,8 @@ FORMS    += \
     main_window/dock/lvl_item_properties.ui \
     main_window/dock/lvl_warp_props.ui \
     main_window/dock/lvl_sctc_props.ui \
-    main_window/dock/lvl_item_toolbox.ui
+    main_window/dock/lvl_item_toolbox.ui \
+    main_window/dock/wld_item_toolbox.ui
 
 
 
