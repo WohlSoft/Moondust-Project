@@ -64,7 +64,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
     QRect mwg = mw()->geometry();
     int GOffset=240;
-    mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     setFloating(true);
     setGeometry(

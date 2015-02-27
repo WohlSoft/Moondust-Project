@@ -91,6 +91,7 @@ void MainWindow::setUiDefults()
     dock_LvlItemBox      = new LevelToolBox(this);
     dock_TilesetBox      = new TilesetItemBox(this);
     dock_WldItemBox      = new WorldToolBox(this);
+    dock_WldItemProps    = new WLD_ItemProps(this);
 
 
     //Define the default geometry for toolboxes
@@ -119,12 +120,6 @@ void MainWindow::setUiDefults()
                 ui->FindDock->height()
                 );
 
-    ui->WLD_ItemProps->setGeometry(
-                mwg.x()+mwg.width()-ui->WLD_ItemProps->width()-GOffset,
-                mwg.y()+120,
-                ui->WLD_ItemProps->width(),
-                ui->WLD_ItemProps->height()
-                );
 
     ui->WorldSettings->setGeometry(
                 mwg.x()+mwg.width()-ui->WorldSettings->width()-GOffset-200,
@@ -192,20 +187,11 @@ void MainWindow::setUiDefults()
         ui->actionFloodSectionOnly->setEnabled(false);
 
 
-    dock_LvlWarpProps->hide();
     ui->LevelLayers->hide();
     ui->LevelEventsToolBox->hide();
-    dock_LvlSectionProps->hide();
-
-    dock_LvlItemProps->hide();
     ui->FindDock->hide();
-
-    dock_WldItemBox->hide();
     ui->WorldSettings->hide();
-    ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
-
-    dock_TilesetBox->hide();
     ui->debuggerBox->hide();
     ui->bookmarkBox->hide();
 

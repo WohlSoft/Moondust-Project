@@ -27,17 +27,52 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-bool wld_tools_lock=false;
+#include "wld_item_props.h"
+#include "ui_wld_item_props.h"
 
-
-void MainWindow::on_WLD_ItemProps_visibilityChanged(bool visible)
+WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::WLD_ItemProps)
 {
-    ui->action_Placing_ShowProperties->setChecked(visible);
+    ui->setupUi(this);
+    wld_tools_lock=false;
+    setVisible(false);
+
+    setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+
+    QRect mwg = mw()->geometry();
+    int GOffset=240;
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setFloating(true);
+    setGeometry(
+                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.y()+120,
+                width(),
+                height()
+                );
+}
+
+WLD_ItemProps::~WLD_ItemProps()
+{
+    delete ui;
+}
+
+void WLD_ItemProps::re_translate()
+{
+    ui->retranslateUi(this);
+    WldLvlExitTypeListReset();
+}
+
+void WLD_ItemProps::on_WLD_ItemProps_visibilityChanged(bool visible)
+{
+    mw()->ui->action_Placing_ShowProperties->setChecked(visible);
 }
 
 
 
-void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
+void WLD_ItemProps::WldItemProps(int Type, WorldLevels level, bool newItem)
 {
     wld_tools_lock=true;
 
@@ -107,47 +142,44 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
             }
             ui->WLD_PROPS_ExitBottom->setCurrentIndex( level.bottom_exit+1 );
 
-            ui->action_Placing_ShowProperties->setChecked(true);
-            ui->WLD_ItemProps->setVisible(true);
-            ui->WLD_ItemProps->show();
-            ui->WLD_ItemProps->raise();
-
+            mw()->ui->action_Placing_ShowProperties->setChecked(true);
+            setVisible(true);
+            show();
+            raise();
             wld_tools_lock=false;
-
-            ui->WLD_ItemProps->show();
 
             break;
         }
     case -1: //Nothing to edit
     default:
-        ui->WLD_ItemProps->hide();
-        ui->action_Placing_ShowProperties->setChecked(false);
+        hide();
+        mw()->ui->action_Placing_ShowProperties->setChecked(false);
     }
     wld_tools_lock=false;
 }
 
-void MainWindow::WldItemProps_hide()
+void WLD_ItemProps::WldItemProps_hide()
 {
-    ui->WLD_ItemProps->hide();
-    ui->action_Placing_ShowProperties->setChecked(false);
+    hide();
+    mw()->ui->action_Placing_ShowProperties->setChecked(false);
 }
 
 
-void MainWindow::WldLvlExitTypeListReset()
+void WLD_ItemProps::WldLvlExitTypeListReset()
 {
     QStringList LevelExitType;
     int backup_index;
 
     LevelExitType.push_back(tr("* - Any"));
     LevelExitType.push_back(tr("0 - None"));
-    LevelExitType.push_back(tr("1 - SMB3 Standard Exit"));
+    LevelExitType.push_back(tr("1 - Card Roulette Exit"));
     LevelExitType.push_back(tr("2 - SMB3 Boss Exit"));
     LevelExitType.push_back(tr("3 - Walked Offscreen"));
     LevelExitType.push_back(tr("4 - Secret Exit"));
-    LevelExitType.push_back(tr("5 - SMB2 Boss Exit"));
+    LevelExitType.push_back(tr("5 - Crystal Sphare Exit"));
     LevelExitType.push_back(tr("6 - Warp Exit"));
     LevelExitType.push_back(tr("7 - Star Exit"));
-    LevelExitType.push_back(tr("8 - SMW Exit"));
+    LevelExitType.push_back(tr("8 - Tape Exit"));
 
     wld_tools_lock=true;
 
@@ -176,12 +208,11 @@ void MainWindow::WldLvlExitTypeListReset()
     ui->WLD_PROPS_ExitBottom->setCurrentIndex(backup_index);
 
     wld_tools_lock=false;
-
 }
 
 
 //ITemProps
-void MainWindow::on_WLD_PROPS_PathBG_clicked(bool checked)
+void WLD_ItemProps::on_WLD_PROPS_PathBG_clicked(bool checked)
 {
     if(wld_tools_lock) return;
 
@@ -190,23 +221,25 @@ void MainWindow::on_WLD_PROPS_PathBG_clicked(bool checked)
         WldPlacingItems::LevelSet.pathbg = checked;
     }
     else
-    if (activeChildWindow()==3)
+    if(mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->setPath(checked);
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(checked));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(checked));
     }
 }
 
-void MainWindow::on_WLD_PROPS_BigPathBG_clicked(bool checked)
+void WLD_ItemProps::on_WLD_PROPS_BigPathBG_clicked(bool checked)
 {
     if(wld_tools_lock) return;
 
@@ -215,24 +248,26 @@ void MainWindow::on_WLD_PROPS_BigPathBG_clicked(bool checked)
         WldPlacingItems::LevelSet.bigpathbg = checked;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->setbPath(checked);
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(checked));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(checked));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
+void WLD_ItemProps::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
 {
     if(wld_tools_lock) return;
 
@@ -241,24 +276,26 @@ void MainWindow::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
         WldPlacingItems::LevelSet.alwaysVisible = checked;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->alwaysVisible(checked);
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(checked));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(checked));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_GameStart_clicked(bool checked)
+void WLD_ItemProps::on_WLD_PROPS_GameStart_clicked(bool checked)
 {
     if(wld_tools_lock) return;
 
@@ -267,25 +304,27 @@ void MainWindow::on_WLD_PROPS_GameStart_clicked(bool checked)
         WldPlacingItems::LevelSet.gamestart = checked;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.gamestart = checked;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GAMESTARTPOINT, QVariant(checked));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GAMESTARTPOINT, QVariant(checked));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
+void WLD_ItemProps::on_WLD_PROPS_LVLFile_editingFinished()
 {
     if(wld_tools_lock) return;
 
@@ -297,25 +336,27 @@ void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
         WldPlacingItems::LevelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.lvlfile = ui->WLD_PROPS_LVLFile->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_LVLTitle_editingFinished()
+void WLD_ItemProps::on_WLD_PROPS_LVLTitle_editingFinished()
 {
     if(wld_tools_lock) return;
 
@@ -327,24 +368,26 @@ void MainWindow::on_WLD_PROPS_LVLTitle_editingFinished()
         WldPlacingItems::LevelSet.title = ui->WLD_PROPS_LVLTitle->text();
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.title = ui->WLD_PROPS_LVLTitle->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELTITLE, QVariant(ui->WLD_PROPS_LVLTitle->text()));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_LEVELTITLE, QVariant(ui->WLD_PROPS_LVLTitle->text()));
     }
 }
 
-void MainWindow::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
+void WLD_ItemProps::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
 {
     if(wld_tools_lock) return;
 
@@ -353,32 +396,34 @@ void MainWindow::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
         WldPlacingItems::LevelSet.entertowarp = arg1;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.entertowarp = arg1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DOORID, QVariant(arg1));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_DOORID, QVariant(arg1));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
+void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
 {
     if(wld_tools_lock) return;
 
     QString dirPath;
-    if(activeChildWindow()==3)
+    if(mw()->activeChildWindow()==3)
     {
-        dirPath = activeWldEditWin()->WldData.path;
+        dirPath = mw()->activeWldEditWin()->WldData.path;
     }
     else
         return;
@@ -418,7 +463,7 @@ void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
 
 }
 
-void MainWindow::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
+void WLD_ItemProps::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
 {
     if(wld_tools_lock) return;
 
@@ -427,25 +472,26 @@ void MainWindow::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.top_exit = index-1;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.top_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYTOP, QVariant(index-1));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYTOP, QVariant(index-1));
     }
-
 }
 
-void MainWindow::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
+void WLD_ItemProps::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
 {
     if(wld_tools_lock) return;
 
@@ -454,25 +500,27 @@ void MainWindow::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.left_exit = index-1;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.left_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYLEFT, QVariant(index-1));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYLEFT, QVariant(index-1));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
+void WLD_ItemProps::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
 {
     if(wld_tools_lock) return;
 
@@ -481,25 +529,27 @@ void MainWindow::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.right_exit = index-1;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.right_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYRIGHT, QVariant(index-1));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYRIGHT, QVariant(index-1));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
+void WLD_ItemProps::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
 {
     if(wld_tools_lock) return;
 
@@ -508,27 +558,29 @@ void MainWindow::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
         WldPlacingItems::LevelSet.bottom_exit = index-1;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.bottom_exit = index-1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYBOTTOM, QVariant(index-1));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBYBOTTOM, QVariant(index-1));
     }
 
 
 }
 
 //void MainWindow::on_WLD_PROPS_GotoX_textEdited(const QString &arg1)
-void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
+void WLD_ItemProps::on_WLD_PROPS_GotoX_editingFinished()
 {
     if(wld_tools_lock) return;
 
@@ -540,26 +592,28 @@ void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
         WldPlacingItems::LevelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
     }
 
 }
 
 //void MainWindow::on_WLD_PROPS_GotoY_textEdited(const QString &arg1)
-void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
+void WLD_ItemProps::on_WLD_PROPS_GotoY_editingFinished()
 {
     if(wld_tools_lock) return;
 
@@ -571,24 +625,26 @@ void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
         WldPlacingItems::LevelSet.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        QList<QGraphicsItem *> items = edit->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(ITEM_TYPE).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
+        edit->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
     }
 }
 
-void MainWindow::WLD_returnPointToLevelProperties(QPoint p)
+void WLD_ItemProps::WLD_returnPointToLevelProperties(QPoint p)
 {
     ui->WLD_PROPS_GotoX->setText(QString::number(p.x()));
     ui->WLD_PROPS_GotoY->setText(QString::number(p.y()));
@@ -602,7 +658,7 @@ void MainWindow::WLD_returnPointToLevelProperties(QPoint p)
     ui->WLD_PROPS_GetPoint->setCheckable(false);
 }
 
-void MainWindow::on_WLD_PROPS_GetPoint_clicked()
+void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
 {
     if(wld_tools_lock) return;
 
@@ -612,45 +668,49 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
         return;
     }
     else
-    if (activeChildWindow()==3)
+    if (mw()->activeChildWindow()==3)
     {
         if(ui->WLD_PROPS_GetPoint->isCheckable())
         {
             ui->WLD_PROPS_GetPoint->setChecked(false);
             ui->WLD_PROPS_GetPoint->setCheckable(false);
 
-            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
+            mw()->activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
         }
         else
         {
+            WorldEdit * edit = mw()->activeWldEditWin();
+            if(!edit) return;
+
             ui->WLD_PROPS_GetPoint->setCheckable(true);
             ui->WLD_PROPS_GetPoint->setChecked(true);
 
             //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+            edit->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
 
             WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
 
             //WldPlacingItems::squarefillingMode = false;
-            ui->actionSquareFill->setChecked(false);
-            ui->actionSquareFill->setEnabled(false);
+            mw()->ui->actionSquareFill->setChecked(false);
+            mw()->ui->actionSquareFill->setEnabled(false);
 
             //WldPlacingItems::lineMode = false;
-            ui->actionLine->setChecked(false);
-            ui->actionLine->setEnabled(false);
+            mw()->ui->actionLine->setChecked(false);
+            mw()->ui->actionLine->setEnabled(false);
             if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
             {
-                activeWldEditWin()->scene->selectedPointNotUsed = true;
+                edit->scene->selectedPointNotUsed = true;
             }
             else
             {
-                activeWldEditWin()->scene->selectedPointNotUsed = false;
-                activeWldEditWin()->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
+                edit->scene->selectedPointNotUsed = false;
+                edit->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
             }
 
-            activeWldEditWin()->scene->setItemPlacer(5);
-            activeWldEditWin()->setFocus();
+            edit->scene->setItemPlacer(5);
+            edit->setFocus();
         }
     }
 
 }
+

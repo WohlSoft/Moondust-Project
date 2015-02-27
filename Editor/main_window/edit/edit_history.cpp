@@ -19,6 +19,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/wld_item_props.h>
 
 void MainWindow::refreshHistoryButtons()
 {
@@ -43,7 +44,7 @@ void MainWindow::refreshHistoryButtons()
 void MainWindow::on_actionUndo_triggered()
 {
     dock_LvlItemProps->hide();
-    ui->WLD_ItemProps->hide();
+    dock_WldItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call
@@ -63,7 +64,7 @@ void MainWindow::on_actionUndo_triggered()
 void MainWindow::on_actionRedo_triggered()
 {
     dock_LvlItemProps->hide();
-    ui->WLD_ItemProps->hide();
+    dock_WldItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call

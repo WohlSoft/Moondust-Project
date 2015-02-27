@@ -78,7 +78,9 @@ class MainWindow : public QMainWindow
     friend class LvlWarpBox;
     friend class LvlSectionProps;
     friend class LevelToolBox;
+
     friend class WorldToolBox;
+    friend class WLD_ItemProps;
     /************************Friend classes***************************/
 
 public:
@@ -854,6 +856,8 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////World Settings toolbox /////////////////
+    public slots:
+        void setCurrentWorldSettings();
     private slots:
         void on_actionWorld_settings_triggered(bool checked);
         void on_WorldSettings_visibilityChanged(bool visible);
@@ -877,41 +881,11 @@ public:
 
     private slots:
         void on_actionWLDToolBox_triggered(bool checked);
-
 // ////////////////////////////////////////////////////////
-
 
 // ///////////////World Item Properties box //////////////////
     public:
-        void WldItemProps(int Type, WorldLevels level, bool newItem=false);
-        void WldItemProps_hide();
-        long wlvlPtr;   //!< ArrayID of editing item
-
-    public slots:
-        void setCurrentWorldSettings();
-        void WldLvlExitTypeListReset();
-
-        // accept point from world map into a level properties
-        void WLD_returnPointToLevelProperties(QPoint p);
-
-    private slots:
-        void on_WLD_ItemProps_visibilityChanged(bool visible);
-
-        void on_WLD_PROPS_PathBG_clicked(bool checked);
-        void on_WLD_PROPS_BigPathBG_clicked(bool checked);
-        void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
-        void on_WLD_PROPS_GameStart_clicked(bool checked);
-        void on_WLD_PROPS_LVLFile_editingFinished();
-        void on_WLD_PROPS_LVLTitle_editingFinished();
-        void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
-        void on_WLD_PROPS_LVLBrowse_clicked();
-        void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
-        void on_WLD_PROPS_GotoX_editingFinished();
-        void on_WLD_PROPS_GotoY_editingFinished();
-        void on_WLD_PROPS_GetPoint_clicked();
+        WLD_ItemProps * dock_WldItemProps;
 // ///////////////////////////////////////////////////////////
 
 

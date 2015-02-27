@@ -18,6 +18,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <common_features/themes.h>
+#include <main_window/dock/wld_item_props.h>
 
 #include "../wld_scene.h"
 #include "../wld_item_placing.h"
@@ -111,7 +112,7 @@ void WLD_ModeSetPoint::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(!s->isSelectionDialog)
     {
-        MainWinConnect::pMainWin->WLD_returnPointToLevelProperties(s->selectedPoint);
+        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->selectedPoint);
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         s->openProps();
 
