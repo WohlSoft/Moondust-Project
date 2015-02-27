@@ -34,8 +34,8 @@ LevelToolBox::LevelToolBox(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::LevelToolBox)
 {
-    ui->setupUi(this);
     setVisible(false);
+    ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     allLabel = "[all]";

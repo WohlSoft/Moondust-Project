@@ -35,8 +35,8 @@ WorldToolBox::WorldToolBox(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::WorldToolBox)
 {
-    ui->setupUi(this);
     setVisible(false);
+    ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     allWLabel = "[all]";

@@ -35,9 +35,9 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::WLD_ItemProps)
 {
+    setVisible(false);
     ui->setupUi(this);
     wld_tools_lock=false;
-    setVisible(false);
 
     setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 

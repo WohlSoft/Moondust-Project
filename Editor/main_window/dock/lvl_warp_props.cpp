@@ -35,8 +35,8 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::LvlWarpBox)
 {
-    ui->setupUi(this);
     setVisible(false);
+    ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     lockWarpSetSettings = false;
 
