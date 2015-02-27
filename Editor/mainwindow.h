@@ -72,19 +72,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
-    /************************Friend classes***************************/
-    friend class TilesetItemBox;
-    friend class LvlItemProperties;
-    friend class LvlWarpBox;
-    friend class LvlSectionProps;
-    friend class LevelItemBox;
-    friend class LvlSearchBox;
-    friend class LvlLayersBox;
-
-    friend class WorldItemBox;
-    friend class WLD_ItemProps;
-    /************************Friend classes***************************/
-
+    MainWindowFriends
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
@@ -110,7 +98,6 @@ public:
  * - Configuration manager
  * - External tools
  * - Other Tools
- * - Search Boxes common
  * - Music Player
  * - Bookmarks
  * - Windows Extras
@@ -493,23 +480,6 @@ public:
 
 
 
-
-// /////////////Search Boxes common ///////////////////////
-    private:
-        enum currentSearch{
-            SEARCH_BLOCK = 1 << 0,
-            SEARCH_BGO = 1 << 1,
-            SEARCH_NPC = 1 << 2,
-            SEARCH_TILE = 1 << 3,
-            SEARCH_SCENERY = 1 << 4,
-            SEARCH_PATH = 1 << 5,
-            SEARCH_LEVEL = 1 << 6,
-            SEARCH_MUSICBOX = 1 << 7
-        };
-        int currentSearches;
-// ///////////////////////////////////////////////////////
-
-
 // ///////////////// Music Player ////////////////////////
     public:
         int musicVolume();
@@ -815,7 +785,11 @@ public:
     public slots:
         void setCurrentWorldSettings();
     private slots:
+        void on_actionWLDDisableMap_triggered(bool checked);
+        void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWorld_settings_triggered(bool checked);
+        void on_actionWLDProperties_triggered();
+
         void on_WorldSettings_visibilityChanged(bool visible);
 
         void on_WLD_Title_editingFinished();
@@ -846,54 +820,12 @@ public:
 
 
 // //////////////////// World Search box /////////////////////////
-    public slots:
-        void toggleNewWindowWLD(QMdiSubWindow *window);
-        void resetAllSearchFieldsWLD();
-        void resetAllSearchesWLD();
-        void selectLevelForSearch();
+    public:
+        WldSearchBox* dock_WldSearchBox;
 
-        void resetTileSearch();
-        void resetScenerySearch();
-        void resetPathSearch();
-        void resetLevelSearch();
-        void resetMusicSearch();
-
-private slots:
-        void on_actionWLDDisableMap_triggered(bool checked);
-        void on_actionWLDFailRestart_triggered(bool checked);
-        void on_actionWLDProperties_triggered();
-
+    private slots:
         void on_actionWLD_SearchBox_triggered(bool checked);
-        void on_WorldFindDock_visibilityChanged(bool visible);
-        void on_FindStartLevel_clicked();
-        void on_FindStartTile_clicked();
-        void on_FindStartScenery_clicked();
-        void on_FindStartPath_clicked();
-        void on_FindStartMusic_clicked();
 
-        void on_Find_Button_TypeLevel_clicked();
-        void on_Find_Button_TypeTile_clicked();
-        void on_Find_Button_TypeScenery_clicked();
-        void on_Find_Button_TypePath_clicked();
-        void on_Find_Button_TypeMusic_clicked();
-        void on_Find_Button_ResetLevel_clicked();
-        void on_Find_Button_ResetMusic_clicked();
-        void on_Find_Button_ResetPath_clicked();
-        void on_Find_Button_ResetScenery_clicked();
-        void on_Find_Button_ResetTile_clicked();
-
-    private:
-        WorldTiles curSearchTile;
-        WorldScenery curSearchScenery;
-        WorldPaths curSearchPath;
-        WorldLevels curSearchLevel;
-        WorldMusic curSearchMusic;
-
-        bool doSearchTile(WorldEdit *edit);
-        bool doSearchScenery(WorldEdit *edit);
-        bool doSearchPath(WorldEdit *edit);
-        bool doSearchLevel(WorldEdit* edit);
-        bool doSearchMusic(WorldEdit *edit);
 // ///////////////////////////////////////////////////////////////
 
 
