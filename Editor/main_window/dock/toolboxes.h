@@ -8,6 +8,7 @@
 #include "lvl_sctc_props.h"
 #include "lvl_item_toolbox.h"
 #include "lvl_search_box.h"
+#include "lvl_layers_box.h"
 
 #include "wld_item_toolbox.h"
 #include "wld_item_props.h"

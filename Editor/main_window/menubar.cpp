@@ -95,7 +95,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::SectionToolBoxVis = dock_LvlSectionProps->isVisible();
 
         GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
-        GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
+        GlobalSettings::LevelLayersBoxVis = dock_LvlLayers->isVisible();
         GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
         GlobalSettings::LevelSearchBoxVis = dock_LvlSearchBox->isVisible();
@@ -107,7 +107,7 @@ void MainWindow::updateMenus(bool force)
         dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
         dock_LvlSectionProps->setVisible( 0 );
         dock_LvlWarpProps->setVisible( 0 );
-        ui->LevelLayers->setVisible( 0 );
+        dock_LvlLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
         dock_LvlSearchBox->setVisible( 0 );
     }
@@ -117,7 +117,7 @@ void MainWindow::updateMenus(bool force)
         dock_LvlItemBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
         dock_LvlSectionProps->setVisible( GlobalSettings::SectionToolBoxVis );
         dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
-        ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
+        dock_LvlLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         dock_LvlSearchBox->setVisible(GlobalSettings::LevelSearchBoxVis);
 
@@ -298,7 +298,7 @@ void MainWindow::updateMenus(bool force)
         SetCurrentLevelSection(0, 1);
 
         dock_LvlWarpProps->init();
-        setLayersBox();
+        dock_LvlLayers->setLayersBox();
         setEventsBox();
 
         //Sync lists in properties windows

@@ -12,6 +12,8 @@
 #include <editing/_scenes/level/items/item_playerpoint.h>
 #include <editing/_scenes/level/items/item_water.h>
 
+#include <main_window/dock/lvl_layers_box.h>
+
 HistoryElementChangedNewLayer::HistoryElementChangedNewLayer(const LevelData &changedItems, LevelLayers &newLayer, QObject *parent) :
     QObject(parent),
     m_changedItems(changedItems),
@@ -58,9 +60,9 @@ void HistoryElementChangedNewLayer::undo()
             lvlScene->LvlData->layers.removeAt(i);
         }
     }
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 void HistoryElementChangedNewLayer::redo()
@@ -92,9 +94,9 @@ void HistoryElementChangedNewLayer::redo()
     searcher->find(modifiedSourceData, m_scene->items());
     delete searcher;
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 

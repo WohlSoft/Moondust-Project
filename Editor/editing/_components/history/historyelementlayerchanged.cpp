@@ -10,6 +10,7 @@
 
 #include <editing/_components/history/itemsearcher.h>
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 HistoryElementLayerChanged::HistoryElementLayerChanged(const LevelData &changedItems, const QString &newLayerName, QObject *parent) :
     QObject(parent),
@@ -48,9 +49,9 @@ void HistoryElementLayerChanged::undo()
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyUndoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
     levelSearcher.find(m_levelData, m_scene->items());
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 
 }
 
@@ -77,9 +78,9 @@ void HistoryElementLayerChanged::redo()
     connect(&levelSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyRedoChangeLayerWater(LevelPhysEnv,QGraphicsItem*)));
     levelSearcher.find(m_levelData, m_scene->items());
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 
 }
 

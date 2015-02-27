@@ -11,6 +11,7 @@
 #include <editing/_scenes/level/items/item_water.h>
 
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 HistoryElementRemoveLayerAndSave::HistoryElementRemoveLayerAndSave(LevelData modData, QObject *parent) :
     QObject(parent),
@@ -52,9 +53,9 @@ void HistoryElementRemoveLayerAndSave::undo()
     //just in case
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 void HistoryElementRemoveLayerAndSave::redo()
@@ -85,9 +86,9 @@ void HistoryElementRemoveLayerAndSave::redo()
             lvlScene->LvlData->layers.removeAt(i);
         }
     }
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 

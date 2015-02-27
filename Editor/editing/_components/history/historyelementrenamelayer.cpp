@@ -3,6 +3,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_layers_box.h>
 HistoryElementRenameLayer::HistoryElementRenameLayer(const int array_id, const QString oldName, const QString newName, QObject *parent) :
     QObject(parent),
     m_array_id(array_id),
@@ -36,10 +37,10 @@ void HistoryElementRenameLayer::undo()
     //just in case
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->ModifyLayer(m_newName, m_oldName);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->ModifyLayer(m_newName, m_oldName);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 void HistoryElementRenameLayer::redo()
@@ -60,8 +61,8 @@ void HistoryElementRenameLayer::redo()
     //just in case
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->ModifyLayer(m_oldName, m_newName);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->ModifyLayer(m_oldName, m_newName);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }

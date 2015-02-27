@@ -9,6 +9,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_layers_box.h>
 #include "itemsearcher.h"
 
 HistoryElementMergeLayer::HistoryElementMergeLayer(const LevelData &mergedData, const QString &newLayerName, QObject *parent) :
@@ -52,9 +53,9 @@ void HistoryElementMergeLayer::undo()
     //just in case
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 void HistoryElementMergeLayer::redo()
@@ -86,9 +87,9 @@ void HistoryElementMergeLayer::redo()
             lvlScene->LvlData->layers.removeAt(i);
         }
     }
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 

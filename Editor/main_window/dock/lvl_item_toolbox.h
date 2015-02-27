@@ -10,17 +10,17 @@ class QListWidgetItem;
 class MainWindow;
 
 namespace Ui {
-class LevelToolBox;
+class LevelItemBox;
 }
 
-class LevelToolBox : public QDockWidget, public MWDock_Base
+class LevelItemBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
-    explicit LevelToolBox(QWidget *parent = 0);
-    ~LevelToolBox();
+    explicit LevelItemBox(QWidget *parent = 0);
+    ~LevelItemBox();
     QTabWidget *tabWidget();
 
     // update data of the toolboxes
@@ -33,7 +33,7 @@ public slots:
     void clearFilter();
 
 private slots:
-    void on_LevelToolBox_visibilityChanged(bool visible);
+    void on_LevelItemBox_visibilityChanged(bool visible);
 
     void on_BlockUniform_clicked(bool checked);
     void on_BGOUniform_clicked(bool checked);
@@ -66,7 +66,7 @@ private:
     QString cat_npcs;
 
 private:
-    Ui::LevelToolBox *ui;
+    Ui::LevelItemBox *ui;
 
     QString allLabel;
     QString customLabel;

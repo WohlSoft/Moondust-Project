@@ -30,10 +30,10 @@
 #include "wld_item_toolbox.h"
 #include "ui_wld_item_toolbox.h"
 
-WorldToolBox::WorldToolBox(QWidget *parent) :
+WorldItemBox::WorldItemBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
-    ui(new Ui::WorldToolBox)
+    ui(new Ui::WorldItemBox)
 {
     setVisible(false);
     ui->setupUi(this);
@@ -53,24 +53,23 @@ WorldToolBox::WorldToolBox(QWidget *parent) :
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
 }
 
-WorldToolBox::~WorldToolBox()
+WorldItemBox::~WorldItemBox()
 {
     delete ui;
 }
 
-QTabWidget *WorldToolBox::tabWidget()
+QTabWidget *WorldItemBox::tabWidget()
 {
     return ui->WorldToolBoxTabs;
 }
 
-void WorldToolBox::re_translate()
+void WorldItemBox::re_translate()
 {
     ui->retranslateUi(this);
 }
 
-
 // World tool box show/hide
-void WorldToolBox::on_WorldToolBox_visibilityChanged(bool visible)
+void WorldItemBox::on_WorldItemBox_visibilityChanged(bool visible)
 {
     mw()->ui->actionWLDToolBox->setChecked(visible);
 }
@@ -83,7 +82,7 @@ void MainWindow::on_actionWLDToolBox_triggered(bool checked)
 
 
 
-void WorldToolBox::setWldItemBoxes(bool setGrp, bool setCat)
+void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 {
     if((setGrp)&&(mw()->activeChildWindow()!=3)) return;
     WorldEdit *edit = mw()->activeWldEditWin();
@@ -287,7 +286,7 @@ void WorldToolBox::setWldItemBoxes(bool setGrp, bool setCat)
 
 
 
-void WorldToolBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 {
     //placeTile
     if ((mw()->activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
@@ -297,7 +296,7 @@ void WorldToolBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 }
 
 
-void WorldToolBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 {
     //placeScenery
     if ((mw()->activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
@@ -306,7 +305,7 @@ void WorldToolBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
     }
 }
 
-void WorldToolBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
 {
     //placePath
     if ((mw()->activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
@@ -315,7 +314,7 @@ void WorldToolBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
     }
 }
 
-void WorldToolBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 {
     //placeLevel
     if ((mw()->activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
@@ -324,7 +323,7 @@ void WorldToolBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
     }
 }
 
-void WorldToolBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 {
     //placeLevel
     if ((mw()->activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))

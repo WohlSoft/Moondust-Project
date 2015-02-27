@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WorldToolBox</class>
- <widget class="QDockWidget" name="WorldToolBox">
+ <class>WorldItemBox</class>
+ <widget class="QDockWidget" name="WorldItemBox">
   <property name="enabled">
    <bool>true</bool>
   </property>

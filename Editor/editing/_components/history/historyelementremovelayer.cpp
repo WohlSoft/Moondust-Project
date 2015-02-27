@@ -8,6 +8,7 @@
 #include <editing/_scenes/level/items/item_water.h>
 
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_layers_box.h>
 #include "itemsearcher.h"
 
 HistoryElementRemoveLayer::HistoryElementRemoveLayer(LevelData modData, QObject *parent) :
@@ -51,9 +52,9 @@ void HistoryElementRemoveLayer::undo()
     searcher->find(m_modData, m_scene->items());
     delete searcher;
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 void HistoryElementRemoveLayer::redo()
@@ -86,9 +87,9 @@ void HistoryElementRemoveLayer::redo()
         }
     }
 
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 

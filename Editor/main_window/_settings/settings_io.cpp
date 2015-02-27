@@ -88,7 +88,7 @@ void MainWindow::loadSettings()
 
         dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", true).toBool());
         dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", true).toBool());
-        ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
+        dock_LvlLayers->setFloating(settings.value("level-layers-float", true).toBool());
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
         dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         dock_LvlSearchBox->setFloating(settings.value("level-search-float", true).toBool());
@@ -102,8 +102,8 @@ void MainWindow::loadSettings()
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
-        ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
-        ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
+        dock_LvlLayers->restoreGeometry(settings.value("level-layers-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
+        ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
         dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         dock_LvlSearchBox->restoreGeometry(settings.value("level-search-geometry", dock_LvlSearchBox->saveGeometry()).toByteArray());
         dock_WldItemBox->restoreGeometry(settings.value("world-item-box-geometry", dock_WldItemBox->saveGeometry()).toByteArray());
@@ -179,7 +179,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
     settings.setValue("level-section-set-float", dock_LvlSectionProps->isFloating());
-    settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
+    settings.setValue("level-layers-float", dock_LvlLayers->isFloating());
     settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
     settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
     settings.setValue("level-search-float", dock_LvlSearchBox->isFloating());
@@ -194,7 +194,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
     settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
-    settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
+    settings.setValue("level-layers-geometry", dock_LvlLayers->saveGeometry());
     settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
     settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
     settings.setValue("level-search-geometry", dock_LvlSearchBox->saveGeometry());

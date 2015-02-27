@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LevelToolBox</class>
- <widget class="QDockWidget" name="LevelToolBox">
+ <class>LevelItemBox</class>
+ <widget class="QDockWidget" name="LevelItemBox">
   <property name="geometry">
    <rect>
     <x>0</x>
