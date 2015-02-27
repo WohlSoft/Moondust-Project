@@ -477,6 +477,7 @@ public:
         void on_actionLazyFixTool_triggered();
         void on_actionGIFs2PNG_triggered();
         void on_actionPNG2GIFs_triggered();
+        void on_actionAudioCvt_triggered();
 // ////////////////////////////////////////////////////////
 
 

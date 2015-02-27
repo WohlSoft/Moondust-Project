@@ -24,6 +24,8 @@ QString GlobalSettings::openPath=".";
 QString GlobalSettings::savePath=".";
 QString GlobalSettings::savePath_npctxt=".";
 
+QString GlobalSettings::tools_sox_bin_path="/tools/sox/";
+
 LevelEditingSettings GlobalSettings::LvlOpts;
 
 bool GlobalSettings::autoPlayMusic=false;

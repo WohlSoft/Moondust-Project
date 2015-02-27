@@ -309,6 +309,7 @@
      <addaction name="actionLazyFixTool"/>
      <addaction name="actionGIFs2PNG"/>
      <addaction name="actionPNG2GIFs"/>
+     <addaction name="actionAudioCvt"/>
     </widget>
     <widget class="QMenu" name="menuCustom_data">
      <property name="title">
@@ -707,8 +708,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>139</width>
-          <height>360</height>
+          <width>293</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -890,8 +891,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
-          <height>121</height>
+          <width>282</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1109,8 +1110,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>282</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1407,8 +1408,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>282</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1523,8 +1524,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>282</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -1621,8 +1622,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>282</width>
+          <height>549</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2112,8 +2113,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>153</width>
-          <height>107</height>
+          <width>285</width>
+          <height>2965</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2234,8 +2235,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>153</width>
-          <height>107</height>
+          <width>285</width>
+          <height>2965</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2356,8 +2357,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>220</height>
+          <width>314</width>
+          <height>2965</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2603,8 +2604,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>153</width>
-          <height>107</height>
+          <width>285</width>
+          <height>2965</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5044,6 +5045,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionAudioCvt">
+   <property name="text">
+    <string>Convert Audio...</string>
    </property>
   </action>
  </widget>

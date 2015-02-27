@@ -22,6 +22,7 @@
 #include <tools/external_tools/lazyfixtool_gui.h>
 #include <tools/external_tools/gifs2png_gui.h>
 #include <tools/external_tools/png2gifs_gui.h>
+#include <tools/external_tools/audiocvt_sox_gui.h>
 #include <editing/_dialogs/npcdialog.h>
 #include <dev_console/devconsole.h>
 
@@ -109,6 +110,16 @@ void MainWindow::on_actionPNG2GIFs_triggered()
     util::DialogToCenter(pngToGifGUI, true);
     pngToGifGUI->show();
 }
+
+
+
+void MainWindow::on_actionAudioCvt_triggered()
+{
+    AudioCvt_Sox_gui sox_cvt(this);
+    util::DialogToCenter(&sox_cvt, true);
+    sox_cvt.exec();
+}
+
 
 
 
