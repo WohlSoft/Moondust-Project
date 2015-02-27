@@ -86,7 +86,7 @@ void MainWindow::updateMenus(bool force)
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 
     dock_LvlItemProps->setVisible(false);
-    ui->WLD_ItemProps->setVisible(false);
+    dock_WldItemProps->setVisible(false);
 
 
     if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )

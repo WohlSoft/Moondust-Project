@@ -150,7 +150,6 @@ void MainWindow::slotLanguageChanged(QAction* action)
         dock_LvlSectionProps->setLevelSectionData();
         setEventData(-1);
         setSoundList();
-        WldLvlExitTypeListReset();
         setCurrentWorldSettings();
         setTileSetBox();
 

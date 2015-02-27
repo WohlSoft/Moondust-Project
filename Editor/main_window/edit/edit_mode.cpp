@@ -19,6 +19,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/wld_item_props.h>
 
 /////////////////Switch edit mode////////////////////////////////////////////
 
@@ -59,7 +60,7 @@ void MainWindow::on_actionSelect_triggered()
     ui->actionSelect->setChecked(1);
 
     dock_LvlItemProps->hide();
-    ui->WLD_ItemProps->hide();
+    dock_WldItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {

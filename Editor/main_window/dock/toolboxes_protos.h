@@ -7,5 +7,6 @@ class LvlWarpBox;
 class LvlSectionProps;
 class LevelToolBox;
 class WorldToolBox;
+class WLD_ItemProps;
 
 #endif // TOOLBOXES_PROTOS_H
