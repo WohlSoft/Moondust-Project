@@ -45,6 +45,9 @@ public:
     static QString savePath_npctxt;
     static QString openPath;
 
+    //External tools
+    static QString tools_sox_bin_path;
+
     //Music player
     static bool autoPlayMusic;
     static int musicVolume;

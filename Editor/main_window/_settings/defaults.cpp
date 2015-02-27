@@ -42,6 +42,8 @@ void MainWindow::setDefaults()
     GlobalSettings::LvlOpts.collisionsEnabled = true;
     GlobalSettings::LvlOpts.semiTransparentPaths = false;
 
+    GlobalSettings::tools_sox_bin_path = ApplicationPath+GlobalSettings::tools_sox_bin_path;
+
     LvlEventBoxLock=false;
 
     askConfigAgain=false;

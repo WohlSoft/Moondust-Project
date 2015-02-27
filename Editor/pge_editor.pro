@@ -404,7 +404,8 @@ SOURCES += main.cpp\
     main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_item_props.cpp \
     main_window/dock/lvl_search_box.cpp \
-    main_window/dock/lvl_layers_box.cpp
+    main_window/dock/lvl_layers_box.cpp \
+    tools/external_tools/audiocvt_sox_gui.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -578,7 +579,8 @@ HEADERS  += defines.h \
     main_window/dock/wld_item_toolbox.h \
     main_window/dock/wld_item_props.h \
     main_window/dock/lvl_search_box.h \
-    main_window/dock/lvl_layers_box.h
+    main_window/dock/lvl_layers_box.h \
+    tools/external_tools/audiocvt_sox_gui.h
 
 
 FORMS    += \
@@ -621,7 +623,8 @@ FORMS    += \
     main_window/dock/wld_item_toolbox.ui \
     main_window/dock/wld_item_props.ui \
     main_window/dock/lvl_search_box.ui \
-    main_window/dock/lvl_layers_box.ui
+    main_window/dock/lvl_layers_box.ui \
+    tools/external_tools/audiocvt_sox_gui.ui
 
 
 

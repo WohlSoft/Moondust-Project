@@ -136,6 +136,10 @@ void MainWindow::loadSettings()
 
     settings.endGroup();
 
+    settings.beginGroup("ext-tools");
+        GlobalSettings::tools_sox_bin_path = settings.value("sox-bin-path", GlobalSettings::tools_sox_bin_path).toString();
+    settings.endGroup();
+
     settings.beginGroup("Recent");
         for(int i = 1; i<=10;i++){
             recentOpen.push_back(settings.value("recent"+QString::number(i),"<empty>").toString());
@@ -240,6 +244,10 @@ void MainWindow::saveSettings()
 
     settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
 
+    settings.endGroup();
+
+    settings.beginGroup("ext-tools");
+    settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
     settings.endGroup();
 
     settings.beginGroup("Recent");
