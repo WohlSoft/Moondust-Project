@@ -30,8 +30,8 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::LvlSectionProps)
 {
-    ui->setupUi(this);
     setVisible(false);
+    ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     switchResizeMode(false);

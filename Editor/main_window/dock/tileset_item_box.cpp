@@ -53,8 +53,8 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
     MWDock_Base(parent),
     ui(new Ui::TilesetItemBox)
 {
-    ui->setupUi(this);
     setVisible(false);
+    ui->setupUi(this);
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
