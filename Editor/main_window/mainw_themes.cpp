@@ -61,7 +61,7 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionWLD_SearchBox->setIcon(Themes::icon(Themes::search));
     ui->WorldFindDock->setWindowIcon(Themes::icon(Themes::search));
     ui->actionLVLSearchBox->setIcon(Themes::icon(Themes::search));
-    ui->FindDock->setWindowIcon(Themes::icon(Themes::search));
+    dock_LvlSearchBox->setWindowIcon(Themes::icon(Themes::search));
 
     ui->actionCopy->setIcon(Themes::icon(Themes::copy));
     ui->LVLEvents_duplicate->setIcon(Themes::icon(Themes::copy_16));

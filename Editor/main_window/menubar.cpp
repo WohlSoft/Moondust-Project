@@ -98,7 +98,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
         GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
-        GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
+        GlobalSettings::LevelSearchBoxVis = dock_LvlSearchBox->isVisible();
 
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
@@ -109,7 +109,7 @@ void MainWindow::updateMenus(bool force)
         dock_LvlWarpProps->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
-        ui->FindDock->setVisible( 0 );
+        dock_LvlSearchBox->setVisible( 0 );
     }
 
     if((GlobalSettings::lastWinType !=1) && (WinType==1))
@@ -119,7 +119,7 @@ void MainWindow::updateMenus(bool force)
         dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
-        ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
+        dock_LvlSearchBox->setVisible(GlobalSettings::LevelSearchBoxVis);
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);

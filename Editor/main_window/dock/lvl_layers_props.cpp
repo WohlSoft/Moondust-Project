@@ -26,8 +26,10 @@
 #include <common_features/util.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_search_box.h>
 #include <ui_lvl_item_properties.h>
 #include <ui_lvl_warp_props.h>
+#include <ui_lvl_search_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -73,9 +75,9 @@ void MainWindow::setLayerLists()
     dock_LvlWarpProps->lockWarpSetSettings=true;
 
     //save old entry from search!
-    QString curSearchLayerBlock = ui->Find_Combo_LayerBlock->currentText();
-    QString curSearchLayerBGO = ui->Find_Combo_LayerBGO->currentText();
-    QString curSearchLayerNPC = ui->Find_Combo_LayerNPC->currentText();
+    QString curSearchLayerBlock = dock_LvlSearchBox->ui->Find_Combo_LayerBlock->currentText();
+    QString curSearchLayerBGO = dock_LvlSearchBox->ui->Find_Combo_LayerBGO->currentText();
+    QString curSearchLayerNPC = dock_LvlSearchBox->ui->Find_Combo_LayerNPC->currentText();
 
     QString curWarpLayer = dock_LvlWarpProps->ui->WarpLayer->currentText();
 
@@ -90,9 +92,9 @@ void MainWindow::setLayerLists()
     dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
     ui->LVLEvent_LayerMov_List->clear();
     ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
-    ui->Find_Combo_LayerBlock->clear();
-    ui->Find_Combo_LayerBGO->clear();
-    ui->Find_Combo_LayerNPC->clear();
+    dock_LvlSearchBox->ui->Find_Combo_LayerBlock->clear();
+    dock_LvlSearchBox->ui->Find_Combo_LayerBGO->clear();
+    dock_LvlSearchBox->ui->Find_Combo_LayerNPC->clear();
 
     if (WinType==1)
     {
@@ -106,18 +108,18 @@ void MainWindow::setLayerLists()
             dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(layer.name);
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
             dock_LvlWarpProps->ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
-            ui->Find_Combo_LayerBlock->addItem(layer.name);
-            ui->Find_Combo_LayerBGO->addItem(layer.name);
-            ui->Find_Combo_LayerNPC->addItem(layer.name);
+            dock_LvlSearchBox->ui->Find_Combo_LayerBlock->addItem(layer.name);
+            dock_LvlSearchBox->ui->Find_Combo_LayerBGO->addItem(layer.name);
+            dock_LvlSearchBox->ui->Find_Combo_LayerNPC->addItem(layer.name);
         }
     }
 
     if(!curWarpLayer.isEmpty())
         dock_LvlWarpProps->ui->WarpLayer->setCurrentText(curWarpLayer);
 
-    ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
-    ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
-    ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
+    dock_LvlSearchBox->ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
+    dock_LvlSearchBox->ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
+    dock_LvlSearchBox->ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
     dock_LvlWarpProps->lockWarpSetSettings = false;
     dock_LvlItemProps->LvlItemPropsLock = false;
     LvlEventBoxLock = false;
