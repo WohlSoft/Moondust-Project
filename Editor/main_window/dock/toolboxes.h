@@ -12,6 +12,7 @@
 
 #include "wld_item_toolbox.h"
 #include "wld_item_props.h"
+#include "wld_search_box.h"
 
 #endif // DOCK_BOXES_H
 

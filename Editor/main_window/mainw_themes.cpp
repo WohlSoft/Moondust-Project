@@ -59,7 +59,7 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionAnimation->setIcon(Themes::icon(Themes::animation));
 
     ui->actionWLD_SearchBox->setIcon(Themes::icon(Themes::search));
-    ui->WorldFindDock->setWindowIcon(Themes::icon(Themes::search));
+    dock_WldSearchBox->setWindowIcon(Themes::icon(Themes::search));
     ui->actionLVLSearchBox->setIcon(Themes::icon(Themes::search));
     dock_LvlSearchBox->setWindowIcon(Themes::icon(Themes::search));
 
