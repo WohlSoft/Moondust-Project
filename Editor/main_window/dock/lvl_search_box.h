@@ -1,0 +1,68 @@
+#ifndef LVL_SEARCH_BOX_H
+#define LVL_SEARCH_BOX_H
+
+#include <QDockWidget>
+#include "mwdock_base.h"
+#include <file_formats/lvl_filedata.h>
+
+class MainWindow;
+class QMdiSubWindow;
+class LevelEdit;
+
+namespace Ui {
+class LvlSearchBox;
+}
+
+class LvlSearchBox : public QDockWidget, public MWDock_Base
+{
+    Q_OBJECT
+
+    friend class MainWindow;
+public:
+    explicit LvlSearchBox(QWidget *parent = 0);
+    ~LvlSearchBox();
+
+public slots:
+    void re_translate();
+    void resetAllSearches();
+    void toggleNewWindowLVL(QMdiSubWindow *window);
+    void resetBlockSearch();
+    void resetBGOSearch();
+    void resetNPCSearch();
+
+private slots:
+    void on_LvlSearchBox_visibilityChanged(bool visible);
+
+    void on_FindStartNPC_clicked();
+    void on_Find_Button_TypeBlock_clicked();
+    void on_Find_Button_TypeBGO_clicked();
+    void on_Find_Button_TypeNPC_clicked();
+    void on_Find_Button_ResetBlock_clicked();
+    void on_Find_Button_ResetBGO_clicked();
+    void on_Find_Button_ResetNPC_clicked();
+    void on_FindStartBlock_clicked();
+    void on_FindStartBGO_clicked();
+    void on_Find_Button_ContainsNPCBlock_clicked();
+
+private:
+    Ui::LvlSearchBox *ui;
+    bool lockReset;
+
+    void resetAllSearchFields();
+    LevelBlock curSearchBlock;
+    LevelBGO curSearchBGO;
+    LevelNPC curSearchNPC;
+
+    bool doSearchBlock(LevelEdit* edit);
+    bool doSearchBGO(LevelEdit* edit);
+    bool doSearchNPC(LevelEdit* edit);
+
+    enum currentSearch{
+        SEARCH_BLOCK = 1 << 0,
+        SEARCH_BGO = 1 << 1,
+        SEARCH_NPC = 1 << 2,
+    };
+    int currentSearches;
+};
+
+#endif // LVL_SEARCH_BOX_H

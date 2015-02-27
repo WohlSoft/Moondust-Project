@@ -26,7 +26,9 @@
 #include <file_formats/file_formats.h>
 #include <tools/math/blocksperseconddialog.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/lvl_search_box.h>
 #include <ui_lvl_item_properties.h>
+#include <ui_lvl_search_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -86,9 +88,9 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->LvlItemPropsLock=true;
     lockSetEventSettings=true;
 
-    QString curDestroyedBlock = ui->Find_Combo_EventDestoryedBlock->currentText();
-    QString curHitedBlock = ui->Find_Combo_EventHitedBlock->currentText();
-    QString curLayerEmptyBlock = ui->Find_Combo_EventLayerEmptyBlock->currentText();
+    QString curDestroyedBlock = dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->currentText();
+    QString curHitedBlock = dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->currentText();
+    QString curLayerEmptyBlock = dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->currentText();
 
     int WinType = activeChildWindow();
 
@@ -113,9 +115,9 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
     ui->LVLEvent_TriggerEvent->addItem(noEvent);
 
-    ui->Find_Combo_EventDestoryedBlock->clear();
-    ui->Find_Combo_EventHitedBlock->clear();
-    ui->Find_Combo_EventLayerEmptyBlock->clear();
+    dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->clear();
+    dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->clear();
+    dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->clear();
 
     if (WinType==1)
     {
@@ -131,16 +133,16 @@ void MainWindow::EventListsSync()
             dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
             ui->LVLEvent_TriggerEvent->addItem(event.name);
 
-            ui->Find_Combo_EventDestoryedBlock->addItem(event.name);
-            ui->Find_Combo_EventHitedBlock->addItem(event.name);
-            ui->Find_Combo_EventLayerEmptyBlock->addItem(event.name);
+            dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->addItem(event.name);
+            dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->addItem(event.name);
+            dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->addItem(event.name);
         }
     }
     //LvlItemPropsLock = false; - must be true always
 
-    ui->Find_Combo_EventDestoryedBlock->setCurrentText(curDestroyedBlock);
-    ui->Find_Combo_EventHitedBlock->setCurrentText(curHitedBlock);
-    ui->Find_Combo_EventLayerEmptyBlock->setCurrentText(curLayerEmptyBlock);
+    dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->setCurrentText(curDestroyedBlock);
+    dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->setCurrentText(curHitedBlock);
+    dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->setCurrentText(curLayerEmptyBlock);
 
     lockSetEventSettings=false;
 

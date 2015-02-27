@@ -6,6 +6,7 @@ class LvlItemProperties;
 class LvlWarpBox;
 class LvlSectionProps;
 class LevelToolBox;
+class LvlSearchBox;
 class WorldToolBox;
 class WLD_ItemProps;
 
