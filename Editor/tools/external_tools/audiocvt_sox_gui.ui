@@ -58,7 +58,7 @@
       <item>
        <widget class="QLineEdit" name="rate">
         <property name="text">
-         <string>44100</string>
+         <string notr="true">44100</string>
         </property>
        </widget>
       </item>
@@ -169,7 +169,7 @@
          </size>
         </property>
         <property name="text">
-         <string>+</string>
+         <string notr="true">+</string>
         </property>
        </widget>
       </item>
@@ -185,19 +185,11 @@
          </size>
         </property>
         <property name="text">
-         <string>-</string>
+         <string notr="true">-</string>
         </property>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="5" column="4" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Convert into to format
-(open necessary tab to choice target format)</string>
-     </property>
     </widget>
    </item>
    <item row="6" column="3" rowspan="2" colspan="3">
@@ -224,7 +216,7 @@
      </widget>
      <widget class="QWidget" name="to_mp3">
       <attribute name="title">
-       <string>MP3</string>
+       <string notr="true">MP3</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="1" column="0">
@@ -258,72 +250,72 @@
             </property>
             <item>
              <property name="text">
-              <string>32</string>
+              <string notr="true">32</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>40</string>
+              <string notr="true">40</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>48</string>
+              <string notr="true">48</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>56</string>
+              <string notr="true">56</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>64</string>
+              <string notr="true">64</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>80</string>
+              <string notr="true">80</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>96</string>
+              <string notr="true">96</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>112</string>
+              <string notr="true">112</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>128</string>
+              <string notr="true">128</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>160</string>
+              <string notr="true">160</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>192</string>
+              <string notr="true">192</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>224</string>
+              <string notr="true">224</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>256</string>
+              <string notr="true">256</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>320</string>
+              <string notr="true">320</string>
              </property>
             </item>
            </widget>
@@ -371,7 +363,7 @@
      </widget>
      <widget class="QWidget" name="to_flac">
       <attribute name="title">
-       <string>FLAC</string>
+       <string notr="true">FLAC</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
@@ -388,7 +380,7 @@
      </widget>
      <widget class="QWidget" name="to_ogg">
       <attribute name="title">
-       <string>OGG</string>
+       <string notr="true">OGG</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -483,7 +475,7 @@
      </widget>
      <widget class="QWidget" name="to_wav">
       <attribute name="title">
-       <string>WAV</string>
+       <string notr="true">WAV</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="0">
@@ -538,6 +530,14 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="5" column="3" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Convert into new format
+(open necessary tab to choice target format)</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
