@@ -77,10 +77,11 @@ class MainWindow : public QMainWindow
     friend class LvlItemProperties;
     friend class LvlWarpBox;
     friend class LvlSectionProps;
-    friend class LevelToolBox;
+    friend class LevelItemBox;
     friend class LvlSearchBox;
+    friend class LvlLayersBox;
 
-    friend class WorldToolBox;
+    friend class WorldItemBox;
     friend class WLD_ItemProps;
     /************************Friend classes***************************/
 
@@ -607,7 +608,7 @@ public:
 
 // ////////////////////Level Item toolbox /////////////////
     public:
-        LevelToolBox *dock_LvlItemBox;
+        LevelItemBox *dock_LvlItemBox;
 
     // update data of the toolboxes
     public slots:
@@ -650,37 +651,14 @@ public:
 
 
 // //////////////// Layers toolbox /////////////////////////
-    public slots:
-        void setLayersBox();
-        void setLayerLists();
-        void ModifyLayer(QString layerName, QString newLayerName);
-        void setLayerToolsLocked(bool locked);
+    public:
+        LvlLayersBox* dock_LvlLayers;
 
-        void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    public slots:
+        void setLayerLists();
 
     private slots:
-        void on_LevelLayers_visibilityChanged(bool visible);
         void on_actionLayersBox_triggered(bool checked);
-
-        void on_AddLayer_clicked();
-        void on_LvlLayerList_itemChanged(QListWidgetItem *item);
-
-        void on_RemoveLayer_clicked();
-        void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
-
-        void on_LvlLayerList_itemClicked(QListWidgetItem *item);
-        void on_LvlLayerList_itemSelectionChanged();
-
-    private:
-        void RemoveCurrentLayer(bool moveToDefault);
-        void RemoveLayerItems(QString layerName);
-        void RemoveLayerFromListAndData(QListWidgetItem * layerItem);
-        void ModifyLayer(QString layerName, bool visible);
-        void ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord = -1);
-
-        //Direct List Functions
-        void AddNewLayer(QString layerName, bool setEdited);
-        void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
 // ////////////////////////////////////////////////////////
 
 
@@ -854,7 +832,7 @@ public:
 
 // ////////////////////World Item toolbox /////////////////
     public:
-        WorldToolBox * dock_WldItemBox;
+        WorldItemBox * dock_WldItemBox;
 
     private slots:
         void on_actionWLDToolBox_triggered(bool checked);

@@ -249,7 +249,6 @@ SOURCES += main.cpp\
     main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
     main_window/dock/lvl_events_props.cpp \
-    main_window/dock/lvl_layers_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/wld_search_toolbox.cpp \
     main_window/dock/wld_world_settings.cpp \
@@ -404,7 +403,8 @@ SOURCES += main.cpp\
     main_window/dock/mwdock_base.cpp \
     main_window/dock/wld_item_toolbox.cpp \
     main_window/dock/wld_item_props.cpp \
-    main_window/dock/lvl_search_box.cpp
+    main_window/dock/lvl_search_box.cpp \
+    main_window/dock/lvl_layers_box.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -577,7 +577,8 @@ HEADERS  += defines.h \
     main_window/dock/mwdock_base.h \
     main_window/dock/wld_item_toolbox.h \
     main_window/dock/wld_item_props.h \
-    main_window/dock/lvl_search_box.h
+    main_window/dock/lvl_search_box.h \
+    main_window/dock/lvl_layers_box.h
 
 
 FORMS    += \
@@ -619,7 +620,8 @@ FORMS    += \
     main_window/dock/lvl_item_toolbox.ui \
     main_window/dock/wld_item_toolbox.ui \
     main_window/dock/wld_item_props.ui \
-    main_window/dock/lvl_search_box.ui
+    main_window/dock/lvl_search_box.ui \
+    main_window/dock/lvl_layers_box.ui
 
 
 

@@ -21,6 +21,7 @@
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -133,7 +134,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             updateMenus(true);
             SetCurrentLevelSection(0);
             dock_LvlWarpProps->init();
-            setLayersBox();
+            dock_LvlLayers->setLayersBox();
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());

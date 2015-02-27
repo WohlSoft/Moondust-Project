@@ -29,7 +29,7 @@
 
 #define NPC_Name(npcid) ((npcid!=0) ?\
     ((npcid<0)?QString("%1 Coins").arg(npcid*(-1)) : QString("NPC-%1").arg(npcid))\
-    :tr("[empty]"))
+    :QString("[empty]"))
 
 LvlSearchBox::LvlSearchBox(QWidget *parent) :
     QDockWidget(parent),

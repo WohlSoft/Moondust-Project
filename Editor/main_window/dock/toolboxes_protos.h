@@ -5,9 +5,10 @@ class TilesetItemBox;
 class LvlItemProperties;
 class LvlWarpBox;
 class LvlSectionProps;
-class LevelToolBox;
+class LevelItemBox;
 class LvlSearchBox;
-class WorldToolBox;
+class LvlLayersBox;
+class WorldItemBox;
 class WLD_ItemProps;
 
 #endif // TOOLBOXES_PROTOS_H

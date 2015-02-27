@@ -2,6 +2,7 @@
 
 #include <editing/_scenes/level/lvl_scene.h>
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 HistoryElementAddLayer::HistoryElementAddLayer(int array_id, QString name, QObject *parent) :
     QObject(parent),
@@ -31,9 +32,9 @@ void HistoryElementAddLayer::undo()
             lvlScene->LvlData->layers.removeAt(i);
         }
     }
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 
 }
 
@@ -51,9 +52,9 @@ void HistoryElementAddLayer::redo()
     l.name = m_name;
     l.hidden = false;
     lvlScene->LvlData->layers.push_back(l);
-    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->setLayersBox();
-    MainWinConnect::pMainWin->setLayerToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+    MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
 
 

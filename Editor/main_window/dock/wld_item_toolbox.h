@@ -28,17 +28,17 @@ class QTableWidgetItem;
 class QListWidgetItem;
 
 namespace Ui {
-class WorldToolBox;
+class WorldItemBox;
 }
 
-class WorldToolBox : public QDockWidget, public MWDock_Base
+class WorldItemBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
     friend class MainWindow;
 
 public:
-    explicit WorldToolBox(QWidget *parent = 0);
-    ~WorldToolBox();
+    explicit WorldItemBox(QWidget *parent = 0);
+    ~WorldItemBox();
     QTabWidget *tabWidget();
 
 public slots:
@@ -46,7 +46,7 @@ public slots:
     void setWldItemBoxes(bool setGrp=false, bool setCat=false);
 
 private slots:
-    void on_WorldToolBox_visibilityChanged(bool visible);
+    void on_WorldItemBox_visibilityChanged(bool visible);
 
     void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
     void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
@@ -55,7 +55,7 @@ private slots:
     void on_WLD_MusicList_itemClicked(QListWidgetItem *item);
 
 private:
-    Ui::WorldToolBox *ui;
+    Ui::WorldItemBox *ui;
 
     QString allWLabel;
     QString customWLabel;

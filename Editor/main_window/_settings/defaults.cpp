@@ -88,22 +88,16 @@ void MainWindow::setUiDefults()
     dock_LvlWarpProps    = new LvlWarpBox(this);
     dock_LvlSectionProps = new LvlSectionProps(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
-    dock_LvlItemBox      = new LevelToolBox(this);
+    dock_LvlItemBox      = new LevelItemBox(this);
     dock_LvlSearchBox    = new LvlSearchBox(this);
-    dock_TilesetBox      = new TilesetItemBox(this);
-    dock_WldItemBox      = new WorldToolBox(this);
+    dock_LvlLayers       = new LvlLayersBox(this);
+
+    dock_WldItemBox      = new WorldItemBox(this);
     dock_WldItemProps    = new WLD_ItemProps(this);
 
+    dock_TilesetBox      = new TilesetItemBox(this);
 
     //Define the default geometry for toolboxes
-    ui->LevelLayers->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelLayers->width()-GOffset,
-                mwg.y()+120,
-                ui->LevelLayers->width(),
-                ui->LevelLayers->height()
-                );
-
-
     ui->LevelEventsToolBox->setGeometry(
                 mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
                 mwg.y()+120,
@@ -156,8 +150,6 @@ void MainWindow::setUiDefults()
     connect(windowMapper, SIGNAL(mapped(QWidget*)),
         this, SLOT(setActiveSubWindow(QWidget*)));
 
-
-
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
     ui->actionExport_to_image_section->setVisible(false);
@@ -177,7 +169,6 @@ void MainWindow::setUiDefults()
         ui->actionFloodSectionOnly->setEnabled(false);
 
 
-    ui->LevelLayers->hide();
     ui->LevelEventsToolBox->hide();
     ui->WorldSettings->hide();
     ui->WorldFindDock->hide();
@@ -258,7 +249,6 @@ void MainWindow::setUiDefults()
     curSearchMusic.id = 0;
     curSearchMusic.index = 0;
 
-    connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
 

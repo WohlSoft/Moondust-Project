@@ -20,6 +20,7 @@
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <editing/edit_level/level_edit.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -299,9 +300,9 @@ void LvlScene::setLayerToSelected()
         nLayer.array_id = LvlData->layers_array_id;
         LvlData->layers.push_back(nLayer);
         //scene->SyncLayerList=true; //Refresh layer list
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
         MainWinConnect::pMainWin->setLayerLists();
         MainWinConnect::pMainWin->setEventData();
         setLayerToSelected(lName, true);

@@ -98,7 +98,7 @@ void MainWindow::applyTheme(QString themeDir)
     dock_LvlWarpProps->setWindowIcon(Themes::icon(Themes::doors));
 
     ui->actionLayersBox->setIcon(Themes::icon(Themes::layers));
-    ui->LevelLayers->setWindowIcon(Themes::icon(Themes::layers));
+    dock_LvlLayers->setWindowIcon(Themes::icon(Themes::layers));
 
     ui->actionLevelEvents->setIcon(Themes::icon(Themes::events));
     ui->LevelEventsToolBox->setWindowIcon(Themes::icon(Themes::events));
