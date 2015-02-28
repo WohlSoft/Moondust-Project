@@ -52,7 +52,7 @@ void MainWindow::applyTheme(QString themeDir)
     dock_TilesetBox->setWindowIcon(Themes::icon(Themes::tileset_box));
 
     ui->actionBookmarkBox->setIcon(Themes::icon(Themes::bookmarks));
-    ui->bookmarkBox->setWindowIcon(Themes::icon(Themes::bookmarks));
+    dock_BookmarksBox->setWindowIcon(Themes::icon(Themes::bookmarks));
 
     ui->actionPlayMusic->setIcon(Themes::icon(Themes::playmusic));
     ui->actionGridEn->setIcon(Themes::icon(Themes::grid_snap));

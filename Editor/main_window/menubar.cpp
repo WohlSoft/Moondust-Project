@@ -102,7 +102,7 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
 
         dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
         dock_LvlSectionProps->setVisible( 0 );
@@ -123,7 +123,7 @@ void MainWindow::updateMenus(bool force)
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
+        dock_BookmarksBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
@@ -133,7 +133,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldSearchBoxVis = dock_WldSearchBox->isVisible();
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
 
         dock_WldItemBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
@@ -148,17 +148,17 @@ void MainWindow::updateMenus(bool force)
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
+        dock_BookmarksBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
         dock_TilesetBox->setVisible( 0 );
         ui->debuggerBox->setVisible( 0 );
-        ui->bookmarkBox->setVisible( 0 );
+        dock_BookmarksBox->setVisible( 0 );
     }
 
 
@@ -304,7 +304,7 @@ void MainWindow::updateMenus(bool force)
         //Sync lists in properties windows
         EventListsSync();
         setLayerLists();
-        updateBookmarkBoxByData();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
         dock_LvlSectionProps->setLevelSectionData();
         ui->actionSelect->trigger();
@@ -342,7 +342,7 @@ void MainWindow::updateMenus(bool force)
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
         setCurrentWorldSettings();
-        updateBookmarkBoxByData();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
         ui->actionSelect->trigger();
 
