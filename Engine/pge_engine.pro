@@ -14,6 +14,8 @@ linux-g++:{
 DEFINES += LUA_USE_MKSTEMP
 }
 
+DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
+
 DESTDIR = ../bin
 
 static: {
@@ -176,26 +178,9 @@ SOURCES += main.cpp \
     ../Editor/file_formats/save_filedata.cpp \
     ../Editor/file_formats/smbx64.cpp \
     ../Editor/file_formats/wld_filedata.cpp \
-    ../_Libs/oolua/class_from_stack.cpp \
-    ../_Libs/oolua/oolua.cpp \
-    ../_Libs/oolua/oolua_check_result.cpp \
-    ../_Libs/oolua/oolua_chunk.cpp \
-    ../_Libs/oolua/oolua_error.cpp \
-    ../_Libs/oolua/oolua_exception.cpp \
-    ../_Libs/oolua/oolua_function.cpp \
-    ../_Libs/oolua/oolua_helpers.cpp \
-    ../_Libs/oolua/oolua_open.cpp \
-    ../_Libs/oolua/oolua_pull.cpp \
-    ../_Libs/oolua/oolua_push.cpp \
-    ../_Libs/oolua/oolua_ref.cpp \
-    ../_Libs/oolua/oolua_registration.cpp \
-    ../_Libs/oolua/oolua_script.cpp \
-    ../_Libs/oolua/oolua_stack_dump.cpp \
-    ../_Libs/oolua/oolua_string.cpp \
-    ../_Libs/oolua/oolua_table.cpp \
-    ../_Libs/oolua/proxy_storage.cpp \
-    ../_Libs/oolua/push_pointer_internal.cpp \
-    ../_Libs/oolua/stack_get.cpp \
+    scenes/level/lvl_physenv.cpp \
+    scenes/level/lvl_player_def.cpp \
+    data_configs/obj_player.cpp \
     ../_Libs/oolua/lua/lapi.c \
     ../_Libs/oolua/lua/lauxlib.c \
     ../_Libs/oolua/lua/lbaselib.c \
@@ -230,9 +215,26 @@ SOURCES += main.cpp \
     ../_Libs/oolua/lua/lundump.c \
     ../_Libs/oolua/lua/lvm.c \
     ../_Libs/oolua/lua/lzio.c \
-    scenes/level/lvl_physenv.cpp \
-    scenes/level/lvl_player_def.cpp \
-    data_configs/obj_player.cpp
+    ../_Libs/oolua/class_from_stack.cpp \
+    ../_Libs/oolua/oolua.cpp \
+    ../_Libs/oolua/oolua_check_result.cpp \
+    ../_Libs/oolua/oolua_chunk.cpp \
+    ../_Libs/oolua/oolua_error.cpp \
+    ../_Libs/oolua/oolua_exception.cpp \
+    ../_Libs/oolua/oolua_function.cpp \
+    ../_Libs/oolua/oolua_helpers.cpp \
+    ../_Libs/oolua/oolua_open.cpp \
+    ../_Libs/oolua/oolua_pull.cpp \
+    ../_Libs/oolua/oolua_push.cpp \
+    ../_Libs/oolua/oolua_ref.cpp \
+    ../_Libs/oolua/oolua_registration.cpp \
+    ../_Libs/oolua/oolua_script.cpp \
+    ../_Libs/oolua/oolua_stack_dump.cpp \
+    ../_Libs/oolua/oolua_string.cpp \
+    ../_Libs/oolua/oolua_table.cpp \
+    ../_Libs/oolua/proxy_storage.cpp \
+    ../_Libs/oolua/push_pointer_internal.cpp \
+    ../_Libs/oolua/stack_get.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -342,6 +344,10 @@ HEADERS  += \
     ../Editor/file_formats/save_filedata.h \
     ../Editor/file_formats/smbx64.h \
     ../Editor/file_formats/wld_filedata.h \
+    scenes/level/lvl_physenv.h \
+    data_configs/obj_player.h \
+    scenes/level/lvl_player_def.h \
+    data_configs/obj_effect.h \
     ../_Libs/oolua/lua/lapi.h \
     ../_Libs/oolua/lua/lauxlib.h \
     ../_Libs/oolua/lua/lcode.h \
@@ -372,8 +378,8 @@ HEADERS  += \
     ../_Libs/oolua/default_trait_caller.h \
     ../_Libs/oolua/dsl_va_args.h \
     ../_Libs/oolua/lua_includes.h \
-    ../_Libs/oolua/lvd_type_traits.h \
     ../_Libs/oolua/lvd_types.h \
+    ../_Libs/oolua/lvd_type_traits.h \
     ../_Libs/oolua/oolua.h \
     ../_Libs/oolua/oolua_boilerplate.h \
     ../_Libs/oolua/oolua_check_result.h \
@@ -422,11 +428,7 @@ HEADERS  += \
     ../_Libs/oolua/stack_get.h \
     ../_Libs/oolua/type_converters.h \
     ../_Libs/oolua/type_list.h \
-    ../_Libs/oolua/typelist_structs.h \
-    scenes/level/lvl_physenv.h \
-    data_configs/obj_player.h \
-    scenes/level/lvl_player_def.h \
-    data_configs/obj_effect.h
+    ../_Libs/oolua/typelist_structs.h
 
 FORMS    += \
     data_configs/select_config.ui
