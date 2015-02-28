@@ -26,7 +26,7 @@
 #include <vector>
 #include <file_formats.h>
 
-typedef QVector<PGE_Phys_Object *>  PGE_RenderList;
+typedef QList<PGE_Phys_Object *> PGE_RenderList;
 
 class PGE_LevelCamera
 {
@@ -43,6 +43,7 @@ public:
 
     void setPos(float x, float y);
     void setSize(int w, int h);
+    void setOffset(int x, int y);
     void update();
     void drawBackground();
 
@@ -70,6 +71,9 @@ public:
     int s_right;
     long BackgroundID;
 
+    int offset_x;
+    int offset_y;
+
     float pos_x;
     float pos_y;
 
@@ -91,7 +95,6 @@ private:
     int height;
 
     b2World * worldPtr;
-    b2Body* sensor;
 };
 
 #endif // LVL_CAMERA_H

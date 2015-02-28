@@ -23,6 +23,7 @@
 #include <defines.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/wld_item_props.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -57,11 +58,11 @@ void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
             {
                 if(checked)
                 {
-                    ui->WLD_ItemProps->show();
-                    ui->WLD_ItemProps->raise();
+                    dock_WldItemProps->show();
+                    dock_WldItemProps->raise();
                 }
                 else
-                    ui->WLD_ItemProps->hide();
+                    dock_WldItemProps->hide();
                 break;
             }
         }
@@ -279,19 +280,19 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 case ItemTypes::WLD_Tile:
                     {
                         activeWldEditWin()->scene->setItemPlacer(0, itemID);
-                        WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Scenery:
                     {
                         activeWldEditWin()->scene->setItemPlacer(1, itemID);
-                        WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Path:\
                     {
                         activeWldEditWin()->scene->setItemPlacer(2, itemID);
-                        WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Level:
@@ -300,10 +301,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                         ui->action_Placing_ShowProperties->setEnabled(true);
 
                         activeWldEditWin()->scene->setItemPlacer(3, itemID);
-                        WldItemProps(0, WldPlacingItems::LevelSet, true);
+                        dock_WldItemProps->WldItemProps(0, WldPlacingItems::LevelSet, true);
 
                         if(GlobalSettings::Placing_dontShowPropertiesBox)
-                             ui->WLD_ItemProps->hide();
+                             dock_WldItemProps->hide();
 
                         break;
                     }
@@ -313,7 +314,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                         ui->actionLine->setEnabled(false);
                         ui->actionFill->setEnabled(false);
                         activeWldEditWin()->scene->setItemPlacer(4, itemID);
-                        WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;
                     }
             }

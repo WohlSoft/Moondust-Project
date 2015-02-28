@@ -42,7 +42,6 @@ LevelEdit::LevelEdit(QWidget *parent) :
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-    isModified = false;
     latest_export_path = AppPathManager::userAppDir();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);

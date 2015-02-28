@@ -218,7 +218,9 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         return;
 
     //For history
-    LevelData rotatedData;
+    LevelData unflippedData;
+    collectDataFromItems(unflippedData, items);
+    LevelData flippedData;
 
     QRect zone = QRect(0,0,0,0);
     QRect itemZone = QRect(0,0,0,0);
@@ -303,11 +305,11 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         }
         applyArrayForItem(item);
         if(recordHistory)
-            collectDataFromItem(rotatedData, item);
+            collectDataFromItem(flippedData, item);
     }
 
     if(recordHistory){
-        addFlipHistory(rotatedData, vertical);
+        addFlipHistory(flippedData, unflippedData);
     }
 }
 
@@ -317,6 +319,8 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         return;
 
     //For history
+    LevelData unrotatedData;
+    collectDataFromItems(unrotatedData, items);
     LevelData rotatedData;
 
     //Calculate common width/height of group
@@ -456,7 +460,7 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
     }
 
     if(recordHistory){
-        addRotateHistory(rotatedData, byClockwise);
+        addRotateHistory(rotatedData, unrotatedData);
     }
 }
 

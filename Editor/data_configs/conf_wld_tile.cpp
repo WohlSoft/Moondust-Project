@@ -103,7 +103,7 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
 
     for(i=1; i<=tiles_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

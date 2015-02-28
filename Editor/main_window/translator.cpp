@@ -26,9 +26,11 @@
 
 #include <main_window/dock/toolboxes.h>
 
-#include <ui_lvl_item_properties.h>
-#include <ui_tileset_item_box.h>
-#include <ui_lvl_warp_props.h>
+//#include <ui_lvl_item_properties.h>
+//#include <ui_tileset_item_box.h>
+//#include <ui_lvl_warp_props.h>
+//#include <ui_lvl_sctc_props.h>
+//#include <ui_lvl_item_toolbox.h>
 
 #include <ui_leveledit.h>
 #include <ui_world_edit.h>
@@ -142,23 +144,12 @@ void MainWindow::slotLanguageChanged(QAction* action)
         // load the language depending on the action content
         GlobalSettings::locale = m_currLang;
 
-        dock_TilesetBox->lockTilesetBox=true;
-
-        int doorType = dock_LvlWarpProps->ui->WarpType->currentIndex(); //backup combobox's index
-        int npcGenType = dock_LvlItemProps->ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
-
         loadLanguage(action->data().toString());
 
-        dock_LvlWarpProps->ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
-        dock_LvlItemProps->ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
-
-        dock_TilesetBox->lockTilesetBox=false;
-
-        setLvlItemBoxes();
-        setLevelSectionData();
+        dock_LvlItemBox->setLvlItemBoxes();
+        dock_LvlSectionProps->setLevelSectionData();
         setEventData(-1);
         setSoundList();
-        WldLvlExitTypeListReset();
         setCurrentWorldSettings();
         setTileSetBox();
 
@@ -234,12 +225,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             ui->retranslateUi(this);
 
             //Retranslate dock widgets
-            if(dock_TilesetBox)
-                dock_TilesetBox->ui->retranslateUi(dock_TilesetBox);
-            if(dock_LvlItemProps)
-                dock_LvlItemProps->ui->retranslateUi(dock_LvlItemProps);
-            if(dock_LvlWarpProps)
-                dock_LvlWarpProps->ui->retranslateUi(dock_LvlWarpProps);
+            emit languageSwitched();
 
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
@@ -251,7 +237,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
         updateWindowMenu();
         langListSync();
 
-        clearFilter();
+        dock_LvlItemBox->clearFilter();
 
         ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName), 2000);
     }

@@ -26,7 +26,7 @@
 #include "obj_block.h"
 #include "obj_bgo.h"
 #include "obj_bg.h"
-
+#include "obj_player.h"
 
 #include <QMap>
 #include <QSettings>
@@ -203,7 +203,7 @@ public:
     static QString data_dir;
 
     //Common Data
-    static QVector<PGE_Texture > common_textures;
+    static QList<PGE_Texture > common_textures;
 
     static unsigned int screen_width;
     static unsigned int screen_height;
@@ -236,11 +236,11 @@ public:
 
     static unsigned long music_custom_id;
     static unsigned long music_w_custom_id;
-    static QVector<obj_music > main_music_lvl;
-    static QVector<obj_music > main_music_wld;
-    static QVector<obj_music > main_music_spc;
+    static QList<obj_music > main_music_lvl;
+    static QList<obj_music > main_music_wld;
+    static QList<obj_music > main_music_spc;
 
-    static QVector<obj_sound > main_sound;
+    static QList<obj_sound > main_sound;
 
 
     static void setConfigPath(QString p);
@@ -255,20 +255,20 @@ public:
     static bool loadLevelBlocks();
     static long getBlockTexture(long blockID);
     /*****************************/
-    static QVector<obj_block >     lvl_blocks;
+    static QList<obj_block >     lvl_blocks;
     static QMap<long, obj_block>   lvl_block_indexes;
     static CustomDirManager Dir_Blocks;
-    static QVector<SimpleAnimator > Animator_Blocks;
+    static QList<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
 
     /*****Level BGO************/
     static bool loadLevelBGO();
     static long getBgoTexture(long bgoID);
     /*****************************/
-    static QVector<obj_bgo >     lvl_bgo;
+    static QList<obj_bgo >     lvl_bgo;
     static QMap<long, obj_bgo>   lvl_bgo_indexes;
     static CustomDirManager Dir_BGO;
-    static QVector<SimpleAnimator > Animator_BGO;
+    static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
 
 
@@ -276,16 +276,23 @@ public:
     static bool loadLevelBackG();
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
-    static QVector<obj_BG >     lvl_bg;
+    static QList<obj_BG >     lvl_bg;
     static QMap<long, obj_BG>   lvl_bg_indexes;
     static CustomDirManager Dir_BG;
-    static QVector<SimpleAnimator > Animator_BG;
+    static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
 
 
+
+    /********Playable characters*******/
+    static QMap<int, obj_player > playable_characters;
+    /********Playable characters*******/
+
+
+
     /***********Texture banks*************/
-    static QVector<PGE_Texture > level_textures;
-    static QVector<PGE_Texture > world_textures;
+    static QList<PGE_Texture > level_textures;
+    static QList<PGE_Texture > world_textures;
     /***********Texture banks*************/
 
 

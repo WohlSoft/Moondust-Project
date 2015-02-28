@@ -63,7 +63,7 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new LvlScene(ui->graphicsView, configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
     scene->opts = options;
 
     scene->InitSection(0);
@@ -438,8 +438,11 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     LvlData = FileData;
     if(!LvlData.metaData.script)
         LvlData.metaData.script = new ScriptHolder;
+    bool modifystate = false;
+    bool untitledstate = false;
     LvlData.modified = false;
     LvlData.untitled = false;
+    QString curFName=fileName;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -448,7 +451,20 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         return false;
     }
     StartLvlData = LvlData; //Save current history for made reset
-    setCurrentFile(fileName);
+    setCurrentFile(curFName);
+
+    //Restore internal information after crash
+    if(LvlData.metaData.crash.used)
+    {
+        modifystate=LvlData.metaData.crash.modifyed;
+        untitledstate=LvlData.metaData.crash.untitled;
+        isUntitled = LvlData.metaData.crash.untitled;
+        LvlData.filename = LvlData.metaData.crash.filename;
+        LvlData.path = LvlData.metaData.crash.path;
+        curFName = LvlData.metaData.crash.fullPath;
+        setCurrentFile(LvlData.metaData.crash.fullPath);
+        LvlData.metaData.crash.reset();
+    }
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
@@ -473,7 +489,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new LvlScene(ui->graphicsView, configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
 
     scene->opts = options;
 
@@ -512,9 +528,9 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    setCurrentFile(fileName);
-    LvlData.modified = false;
-    LvlData.untitled = false;
+    setCurrentFile(curFName);
+    LvlData.modified = modifystate;
+    LvlData.untitled = untitledstate;
 
     progress.deleteLater();
 
@@ -564,6 +580,13 @@ QString LevelEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+void LevelEdit::makeCrashState()
+{
+    this->isUntitled = true;
+    this->LvlData.modified = true;
+    this->LvlData.untitled = true;
+}
+
 void LevelEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)
@@ -577,12 +600,7 @@ void LevelEdit::closeEvent(QCloseEvent *event)
     if(maybeSave()) {
         stopAutoUpdateTimer();
 
-        if(MainWinConnect::pMainWin->subWins()<=1) //Stop music only if this subwindow - last
-        {
-            LvlMusPlay::musicForceReset = true;
-            MainWinConnect::pMainWin->setMusicButton(false);
-            MainWinConnect::pMainWin->setMusic(false);
-        }
+        LvlMusPlay::stopMusic();
 
         scene->setMessageBoxItem(false);
         scene->clear();

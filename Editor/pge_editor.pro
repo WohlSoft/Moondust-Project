@@ -55,7 +55,6 @@ debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
 }
 
-
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
@@ -250,13 +249,7 @@ SOURCES += main.cpp\
     main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
     main_window/dock/lvl_events_props.cpp \
-    main_window/dock/lvl_item_toolbox.cpp \
-    main_window/dock/lvl_layers_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
-    main_window/dock/lvl_search_toolbox.cpp \
-    main_window/dock/wld_item_props.cpp \
-    main_window/dock/wld_item_toolbox.cpp \
-    main_window/dock/wld_search_toolbox.cpp \
     main_window/dock/wld_world_settings.cpp \
     main_window/tools/main_tool_cdata_cleaner.cpp \
     main_window/tools/main_tool_cdata_import.cpp \
@@ -385,7 +378,34 @@ SOURCES += main.cpp\
     file_formats/save_filedata.cpp \
     file_formats/smbx64.cpp \
     file_formats/wld_filedata.cpp \
-    editing/_components/history/historyelementresizesection.cpp
+    editing/_components/history/historyelementresizesection.cpp \
+    editing/_components/history/historyelementlayerchanged.cpp \
+    editing/_components/history/historyelementresizeblock.cpp \
+    editing/_components/history/historyelementplacedoor.cpp \
+    editing/_components/history/historyelementaddwarp.cpp \
+    editing/_components/history/historyelementremovewarp.cpp \
+    editing/_components/history/historyelementsettingswarp.cpp \
+    editing/_components/history/historyelementmodifyevent.cpp \
+    editing/_components/history/historyelementsettingsevent.cpp \
+    editing/_components/history/historyelementchangednewlayer.cpp \
+    editing/_components/history/historyelementnewlayer.cpp \
+    editing/_components/history/historyelementremovelayer.cpp \
+    editing/_components/history/historyelementrenameevent.cpp \
+    editing/_components/history/historyelementrenamelayer.cpp \
+    editing/_components/history/historyelementmergelayer.cpp \
+    editing/_components/history/historyelementsettingssection.cpp \
+    editing/_components/history/historyelementreplaceplayerpoint.cpp \
+    editing/_components/history/historyelementresizewater.cpp \
+    editing/_components/history/historyelementaddlayer.cpp \
+    editing/_components/history/historyelementremovelayerandsave.cpp \
+    main_window/dock/lvl_item_toolbox.cpp \
+    main_window/dock/mwdock_base.cpp \
+    main_window/dock/wld_item_toolbox.cpp \
+    main_window/dock/wld_item_props.cpp \
+    main_window/dock/lvl_search_box.cpp \
+    main_window/dock/lvl_layers_box.cpp \
+    tools/external_tools/audiocvt_sox_gui.cpp \
+    main_window/dock/wld_search_box.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -534,7 +554,34 @@ HEADERS  += defines.h \
     file_formats/save_filedata.h \
     file_formats/smbx64.h \
     file_formats/wld_filedata.h \
-    editing/_components/history/historyelementresizesection.h
+    editing/_components/history/historyelementresizesection.h \
+    editing/_components/history/historyelementlayerchanged.h \
+    editing/_components/history/historyelementresizeblock.h \
+    editing/_components/history/historyelementplacedoor.h \
+    editing/_components/history/historyelementaddwarp.h \
+    editing/_components/history/historyelementremovewarp.h \
+    editing/_components/history/historyelementsettingswarp.h \
+    editing/_components/history/historyelementmodifyevent.h \
+    editing/_components/history/historyelementsettingsevent.h \
+    editing/_components/history/historyelementchangednewlayer.h \
+    editing/_components/history/historyelementnewlayer.h \
+    editing/_components/history/historyelementremovelayer.h \
+    editing/_components/history/historyelementrenameevent.h \
+    editing/_components/history/historyelementrenamelayer.h \
+    editing/_components/history/historyelementmergelayer.h \
+    editing/_components/history/historyelementsettingssection.h \
+    editing/_components/history/historyelementreplaceplayerpoint.h \
+    editing/_components/history/historyelementresizewater.h \
+    editing/_components/history/historyelementaddlayer.h \
+    editing/_components/history/historyelementremovelayerandsave.h \
+    main_window/dock/lvl_item_toolbox.h \
+    main_window/dock/mwdock_base.h \
+    main_window/dock/wld_item_toolbox.h \
+    main_window/dock/wld_item_props.h \
+    main_window/dock/lvl_search_box.h \
+    main_window/dock/lvl_layers_box.h \
+    tools/external_tools/audiocvt_sox_gui.h \
+    main_window/dock/wld_search_box.h
 
 
 FORMS    += \
@@ -571,7 +618,15 @@ FORMS    += \
     main_window/updater/check_updates.ui \
     main_window/dock/tileset_item_box.ui \
     main_window/dock/lvl_item_properties.ui \
-    main_window/dock/lvl_warp_props.ui
+    main_window/dock/lvl_warp_props.ui \
+    main_window/dock/lvl_sctc_props.ui \
+    main_window/dock/lvl_item_toolbox.ui \
+    main_window/dock/wld_item_toolbox.ui \
+    main_window/dock/wld_item_props.ui \
+    main_window/dock/lvl_search_box.ui \
+    main_window/dock/lvl_layers_box.ui \
+    tools/external_tools/audiocvt_sox_gui.ui \
+    main_window/dock/wld_search_box.ui
 
 
 

@@ -32,11 +32,27 @@ struct Bookmark
     qreal y;
 };
 
+class CrashData
+{
+public:
+    explicit CrashData();
+    CrashData(const CrashData &_cd);
+    CrashData(CrashData &_cd);
+    void reset();
+    bool used;
+    bool untitled;
+    bool modifyed;
+    QString fullPath;
+    QString path;
+    QString filename;
+};
 
 struct MetaData
 {
     QVector<Bookmark> bookmarks;
 
+    //Crash backup of special data
+    CrashData crash;
     //For Editor application only
     #ifdef PGE_EDITOR
     //only for level

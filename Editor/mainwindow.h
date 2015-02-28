@@ -72,12 +72,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
-    /************************Friend classes***************************/
-    friend class TilesetItemBox;
-    friend class LvlItemProperties;
-    friend class LvlWarpBox;
-    /************************Friend classes***************************/
-
+    MainWindowFriends
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
@@ -103,7 +98,6 @@ public:
  * - Configuration manager
  * - External tools
  * - Other Tools
- * - Search Boxes common
  * - Music Player
  * - Bookmarks
  * - Windows Extras
@@ -190,7 +184,7 @@ public:
         /// \brief OpenFile - Open file in the editor
         /// \param FilePath - path to file
         ///
-        void OpenFile(QString FilePath);
+        void OpenFile(QString FilePath, bool addToRecentList = true);
 
         ///
         /// \brief on_actionReload_triggered - Reload/Reopen current file
@@ -249,6 +243,8 @@ public:
         QTranslator     m_translatorQt; /**< contains the translations for qt */
         QString         m_currLang;     /**< contains the currently loaded language */
         QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+    signals:
+        void languageSwitched();
 // ///////////////////////////////////////////////////////////
 
 
@@ -286,13 +282,14 @@ public:
         ///
         int activeChildWindow();
         int activeChildWindow(QMdiSubWindow* wnd);
-        LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        LevelEdit   *activeLvlEditWin();                        //!< Active Window type 1
         LevelEdit   *activeLvlEditWin(QMdiSubWindow *wnd);
-        NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
+        NpcEdit     *activeNpcEditWin();                        //!< Active Window type 2
         NpcEdit     *activeNpcEditWin(QMdiSubWindow *wnd);
-        WorldEdit   *activeWldEditWin();    //!< Active Window type 3
+        WorldEdit   *activeWldEditWin();                        //!< Active Window type 3
         WorldEdit   *activeWldEditWin(QMdiSubWindow *wnd);
-        int subWins();              //!< Returns number of opened subwindows
+        int subWins();                                          //!< Returns number of opened subwindows
+        QList<QMdiSubWindow*> allEditWins();                    //!< Returns all opened subwindows
 
     public slots:
         LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow
@@ -403,9 +400,6 @@ public:
     public slots:
         void resizeToolbarVisible(bool vis);
 
-        void on_applyResize_clicked();
-        void on_cancelResize_clicked();
-
         void on_actionResizeApply_triggered();
         void on_actionResizeCancel_triggered();
 // ////////////////////////////////////////////////////////
@@ -470,6 +464,7 @@ public:
         void on_actionLazyFixTool_triggered();
         void on_actionGIFs2PNG_triggered();
         void on_actionPNG2GIFs_triggered();
+        void on_actionAudioCvt_triggered();
 // ////////////////////////////////////////////////////////
 
 
@@ -485,27 +480,11 @@ public:
 
 
 
-
-// /////////////Search Boxes common ///////////////////////
-    private:
-        enum currentSearch{
-            SEARCH_BLOCK = 1 << 0,
-            SEARCH_BGO = 1 << 1,
-            SEARCH_NPC = 1 << 2,
-            SEARCH_TILE = 1 << 3,
-            SEARCH_SCENERY = 1 << 4,
-            SEARCH_PATH = 1 << 5,
-            SEARCH_LEVEL = 1 << 6,
-            SEARCH_MUSICBOX = 1 << 7
-        };
-        int currentSearches;
-        void resetAllSearchFields();
-// ///////////////////////////////////////////////////////
-
-
 // ///////////////// Music Player ////////////////////////
+    public:
+        int musicVolume();
     public slots:
-        void setMusic(bool checked);
+        void setMusic(bool checked=false);
         void setMusicButton(bool checked);
         void on_actionPlayMusic_triggered(bool checked);
 
@@ -562,7 +541,6 @@ public:
         //Switch section
         void SetCurrentLevelSection(int SctId, int open=0);
         void on_actionReset_position_triggered();
-        void on_ResizeSection_clicked();
 
     private slots:
         void on_actionGo_to_Section_triggered();
@@ -600,42 +578,15 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////////Level Item toolbox /////////////////
+    public:
+        LevelItemBox *dock_LvlItemBox;
+
     // update data of the toolboxes
     public slots:
-        void setLvlItemBoxes(bool setGrp=false, bool setCat=false);
-        void UpdateLvlCustomItems();
-
-        void updateFilters();
-        void clearFilter();
+        void UpdateCustomItems();
 
     private slots:
-        void on_LevelToolBox_visibilityChanged(bool visible);
         void on_actionLVLToolBox_triggered(bool checked);
-
-        void on_BlockUniform_clicked(bool checked);
-        void on_BGOUniform_clicked(bool checked);
-        void on_NPCUniform_clicked(bool checked);
-
-        void on_BlockGroupList_currentIndexChanged(const QString &arg1);
-        void on_BGOGroupList_currentIndexChanged(const QString &arg1);
-        void on_NPCGroupList_currentIndexChanged(const QString &arg1);
-
-        void on_BlockCatList_currentIndexChanged(const QString &arg1);
-        void on_BGOCatList_currentIndexChanged(const QString &arg1);
-        void on_NPCCatList_currentIndexChanged(const QString &arg1);
-
-        void on_BlockFilterField_textChanged(const QString &arg1);
-        void on_BGOFilterField_textChanged(const QString &arg1);
-        void on_NPCFilterField_textChanged(const QString &arg1);
-
-        void on_BlockFilterType_currentIndexChanged(int index);
-        void on_BGOFilterType_currentIndexChanged(int index);
-        void on_NPCFilterType_currentIndexChanged(int index);
-
-        //Item was clicked
-        void on_BlockItemsList_itemClicked(QListWidgetItem *item);
-        void on_BGOItemsList_itemClicked(QListWidgetItem *item);
-        void on_NPCItemsList_itemClicked(QListWidgetItem *item);
 
     private:
         QString cat_blocks; //!< Category
@@ -650,75 +601,35 @@ public:
 
 
 // ///////////////// Section Settings box /////////////////
+    public:
+        LvlSectionProps *dock_LvlSectionProps;
     public slots:
-        void setLevelSectionData();
-
-        void on_LVLPropsMusicCustom_editingFinished();
         void on_actionGridEn_triggered(bool checked);
-        void on_LVLPropsBackImage_currentIndexChanged(int index);
-
-
 
     private slots:
-        void on_LevelSectionSettings_visibilityChanged(bool visible);
         void on_actionSection_Settings_triggered(bool checked);
-
-        void on_LVLPropsLevelWarp_clicked(bool checked);
         void on_actionLevWarp_triggered(bool checked);
-
-        void on_LVLPropsOffScr_clicked(bool checked);
         void on_actionLevOffScr_triggered(bool checked);
-
-        void on_LVLPropsNoTBack_clicked(bool checked);
         void on_actionLevNoBack_triggered(bool checked);
-
-        void on_LVLPropsUnderWater_clicked(bool checked);
         void on_actionLevUnderW_triggered(bool checked);
 
         void on_actionAnimation_triggered(bool checked);
         void on_actionCollisions_triggered(bool checked);
 
         void on_actionVBAlphaEmulate_toggled(bool arg1);
-
-        void on_LVLPropsMusicNumber_currentIndexChanged(int index);
-        void on_LVLPropsMusicCustomEn_toggled(bool checked);
-        void on_LVLPropsMusicCustomBrowse_clicked();
 // ////////////////////////////////////////////////////////
 
 
 
 // //////////////// Layers toolbox /////////////////////////
-    public slots:
-        void setLayersBox();
-        void setLayerLists();
-        void ModifyLayer(QString layerName, QString newLayerName);
-        void setLayerToolsLocked(bool locked);
+    public:
+        LvlLayersBox* dock_LvlLayers;
 
-        void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    public slots:
+        void setLayerLists();
 
     private slots:
-        void on_LevelLayers_visibilityChanged(bool visible);
         void on_actionLayersBox_triggered(bool checked);
-
-        void on_AddLayer_clicked();
-        void on_LvlLayerList_itemChanged(QListWidgetItem *item);
-
-        void on_RemoveLayer_clicked();
-        void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
-
-        void on_LvlLayerList_itemClicked(QListWidgetItem *item);
-        void on_LvlLayerList_itemSelectionChanged();
-
-    private:
-        void RemoveCurrentLayer(bool moveToDefault);
-        void RemoveLayerItems(QString layerName);
-        void RemoveLayerFromListAndData(QListWidgetItem * layerItem);
-        void ModifyLayer(QString layerName, bool visible);
-        void ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord = -1);
-
-        //Direct List Functions
-        void AddNewLayer(QString layerName, bool setEdited);
-        void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
 // ////////////////////////////////////////////////////////
 
 
@@ -840,34 +751,11 @@ public:
 
 
 // //////////////////// Level Search box /////////////////////////
-    public slots:
-        void toggleNewWindowLVL(QMdiSubWindow *window);
-        void resetBlockSearch();
-        void resetBGOSearch();
-        void resetNPCSearch();
+    public:
+        LvlSearchBox * dock_LvlSearchBox;
 
     private slots:
         void on_actionLVLSearchBox_triggered(bool checked);
-        void on_FindDock_visibilityChanged(bool visible);
-
-        void on_FindStartNPC_clicked();
-        void on_Find_Button_TypeBlock_clicked();
-        void on_Find_Button_TypeBGO_clicked();
-        void on_Find_Button_TypeNPC_clicked();
-        void on_Find_Button_ResetBlock_clicked();
-        void on_Find_Button_ResetBGO_clicked();
-        void on_Find_Button_ResetNPC_clicked();
-        void on_FindStartBlock_clicked();
-        void on_FindStartBGO_clicked();
-        void on_Find_Button_ContainsNPCBlock_clicked();
-    private:
-        LevelBlock curSearchBlock;
-        LevelBGO curSearchBGO;
-        LevelNPC curSearchNPC;
-
-        bool doSearchBlock(LevelEdit* edit);
-        bool doSearchBGO(LevelEdit* edit);
-        bool doSearchNPC(LevelEdit* edit);
 // ///////////////////////////////////////////////////////////////
 
 
@@ -894,8 +782,14 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////World Settings toolbox /////////////////
+    public slots:
+        void setCurrentWorldSettings();
     private slots:
+        void on_actionWLDDisableMap_triggered(bool checked);
+        void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWorld_settings_triggered(bool checked);
+        void on_actionWLDProperties_triggered();
+
         void on_WorldSettings_visibilityChanged(bool visible);
 
         void on_WLD_Title_editingFinished();
@@ -912,105 +806,26 @@ public:
 // ////////////////////////////////////////////////////////
 
 // ////////////////////World Item toolbox /////////////////
-    public slots:
-        void setWldItemBoxes(bool setGrp=false, bool setCat=false);
+    public:
+        WorldItemBox * dock_WldItemBox;
 
     private slots:
-        void on_WorldToolBox_visibilityChanged(bool visible);
         void on_actionWLDToolBox_triggered(bool checked);
-
-        void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
-        void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
-        void on_WLD_PathsList_itemClicked(QTableWidgetItem *item);
-        void on_WLD_LevelList_itemClicked(QListWidgetItem *item);
-        void on_WLD_MusicList_itemClicked(QListWidgetItem *item);
 // ////////////////////////////////////////////////////////
-
 
 // ///////////////World Item Properties box //////////////////
     public:
-        void WldItemProps(int Type, WorldLevels level, bool newItem=false);
-        void WldItemProps_hide();
-        long wlvlPtr;   //!< ArrayID of editing item
-
-    public slots:
-        void setCurrentWorldSettings();
-        void WldLvlExitTypeListReset();
-
-        // accept point from world map into a level properties
-        void WLD_returnPointToLevelProperties(QPoint p);
-
-    private slots:
-        void on_WLD_ItemProps_visibilityChanged(bool visible);
-
-        void on_WLD_PROPS_PathBG_clicked(bool checked);
-        void on_WLD_PROPS_BigPathBG_clicked(bool checked);
-        void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
-        void on_WLD_PROPS_GameStart_clicked(bool checked);
-        void on_WLD_PROPS_LVLFile_editingFinished();
-        void on_WLD_PROPS_LVLTitle_editingFinished();
-        void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
-        void on_WLD_PROPS_LVLBrowse_clicked();
-        void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
-        void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
-        void on_WLD_PROPS_GotoX_editingFinished();
-        void on_WLD_PROPS_GotoY_editingFinished();
-        void on_WLD_PROPS_GetPoint_clicked();
+        WLD_ItemProps * dock_WldItemProps;
 // ///////////////////////////////////////////////////////////
 
 
 // //////////////////// World Search box /////////////////////////
-    public slots:
-        void toggleNewWindowWLD(QMdiSubWindow *window);
-        void resetAllSearches();
-        void resetAllSearchFieldsWLD();
-        void resetAllSearchesWLD();
-        void selectLevelForSearch();
+    public:
+        WldSearchBox* dock_WldSearchBox;
 
-        void resetTileSearch();
-        void resetScenerySearch();
-        void resetPathSearch();
-        void resetLevelSearch();
-        void resetMusicSearch();
-
-private slots:
-        void on_actionWLDDisableMap_triggered(bool checked);
-        void on_actionWLDFailRestart_triggered(bool checked);
-        void on_actionWLDProperties_triggered();
-
+    private slots:
         void on_actionWLD_SearchBox_triggered(bool checked);
-        void on_WorldFindDock_visibilityChanged(bool visible);
-        void on_FindStartLevel_clicked();
-        void on_FindStartTile_clicked();
-        void on_FindStartScenery_clicked();
-        void on_FindStartPath_clicked();
-        void on_FindStartMusic_clicked();
 
-        void on_Find_Button_TypeLevel_clicked();
-        void on_Find_Button_TypeTile_clicked();
-        void on_Find_Button_TypeScenery_clicked();
-        void on_Find_Button_TypePath_clicked();
-        void on_Find_Button_TypeMusic_clicked();
-        void on_Find_Button_ResetLevel_clicked();
-        void on_Find_Button_ResetMusic_clicked();
-        void on_Find_Button_ResetPath_clicked();
-        void on_Find_Button_ResetScenery_clicked();
-        void on_Find_Button_ResetTile_clicked();
-
-    private:
-        WorldTiles curSearchTile;
-        WorldScenery curSearchScenery;
-        WorldPaths curSearchPath;
-        WorldLevels curSearchLevel;
-        WorldMusic curSearchMusic;
-
-        bool doSearchTile(WorldEdit *edit);
-        bool doSearchScenery(WorldEdit *edit);
-        bool doSearchPath(WorldEdit *edit);
-        bool doSearchLevel(WorldEdit* edit);
-        bool doSearchMusic(WorldEdit *edit);
 // ///////////////////////////////////////////////////////////////
 
 

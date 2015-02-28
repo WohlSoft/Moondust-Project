@@ -22,63 +22,84 @@
 #include <editing/_scenes/world/wld_item_placing.h>
 #include <data_configs/custom_data.h>
 #include <file_formats/file_formats.h>
+#include <audio/music_player.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-QString allWLabel = "[all]";
-QString customWLabel = "[custom]";
+#include "wld_item_toolbox.h"
+#include "ui_wld_item_toolbox.h"
 
-bool lock_Wgrp=false;
-bool lock_Wcat=false;
+WorldItemBox::WorldItemBox(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::WorldItemBox)
+{
+    setVisible(false);
+    ui->setupUi(this);
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
+    allWLabel = "[all]";
+    customWLabel = "[custom]";
 
-//void MainWindow::UpdateWldCustomItems()
-//{
-//    if((ui->BlockCatList->currentText()==customLabel)||
-//       (ui->BGOCatList->currentText()==customLabel)||
-//       (ui->NPCCatList->currentText()==customLabel))
-//    {
-//        setItemBoxes(true);
-//    }
+    lock_Wgrp=false;
+    lock_Wcat=false;
 
-//}
+    grp_tiles = "";
+    grp_paths = "";
+    grp_scenes = "";
 
-static QString grp_tiles = "";
-static QString grp_paths = "";
-static QString grp_scenes = "";
+    mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+}
 
+WorldItemBox::~WorldItemBox()
+{
+    delete ui;
+}
+
+QTabWidget *WorldItemBox::tabWidget()
+{
+    return ui->WorldToolBoxTabs;
+}
+
+void WorldItemBox::re_translate()
+{
+    ui->retranslateUi(this);
+}
 
 // World tool box show/hide
-void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
+void WorldItemBox::on_WorldItemBox_visibilityChanged(bool visible)
 {
-        ui->actionWLDToolBox->setChecked(visible);
+    mw()->ui->actionWLDToolBox->setChecked(visible);
 }
 
 void MainWindow::on_actionWLDToolBox_triggered(bool checked)
 {
-    ui->WorldToolBox->setVisible(checked);
-    if(checked) ui->WorldToolBox->raise();
+    dock_WldItemBox->setVisible(checked);
+    if(checked) dock_WldItemBox->raise();
 }
 
 
 
-void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
+void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
 {
-    if((setGrp)&&(activeChildWindow()!=3)) return;
+    if((setGrp)&&(mw()->activeChildWindow()!=3)) return;
+    WorldEdit *edit = mw()->activeWldEditWin();
+    if(!edit) return;
 
     allWLabel    = MainWindow::tr("[all]");
     customWLabel = MainWindow::tr("[custom]");
 
-    ui->menuNew->setEnabled(false);
-    ui->actionNew->setEnabled(false);
+    mw()->ui->menuNew->setEnabled(false);
+    mw()->ui->actionNew->setEnabled(false);
 
     if(!setCat)
     {
         lock_Wcat=true;
-        cat_blocks = allWLabel;
-        cat_bgos = allWLabel;
-        cat_npcs = allWLabel;
+        mw()->cat_blocks = allWLabel;
+        mw()->cat_bgos = allWLabel;
+        mw()->cat_npcs = allWLabel;
         if(!setGrp)
         {
             lock_Wgrp=true;
@@ -114,7 +135,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     WriteToLog(QtDebugMsg, "WorldTools -> Table size");
     //get Table size
-    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
     {
         if(tableRows<tileItem.row+1) tableRows=tileItem.row+1;
         if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
@@ -126,7 +147,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
-    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    foreach(obj_w_tile tileItem, mw()->configs.main_wtiles )
     {
         tmpI = GraphicsHelps::squareImage(
                     Items::getItemGFX(ItemTypes::WLD_Tile, tileItem.id),
@@ -151,7 +172,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
-    foreach(obj_w_scenery sceneItem, configs.main_wscene)
+    foreach(obj_w_scenery sceneItem, mw()->configs.main_wscene)
     {
             tmpI = GraphicsHelps::squareImage(
                         Items::getItemGFX(ItemTypes::WLD_Scenery, sceneItem.id),
@@ -171,7 +192,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size");
     //get Table size
-    foreach(obj_w_path pathItem, configs.main_wpaths )
+    foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
     {
         if(tableRows<pathItem.row+1) tableRows=pathItem.row+1;
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
@@ -183,7 +204,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
     WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
-    foreach(obj_w_path pathItem, configs.main_wpaths )
+    foreach(obj_w_path pathItem, mw()->configs.main_wpaths )
     {
         tmpI = GraphicsHelps::squareImage(
                     Items::getItemGFX(ItemTypes::WLD_Path, pathItem.id),
@@ -208,10 +229,10 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     }
 
     WriteToLog(QtDebugMsg, "WorldTools -> List of levels");
-    foreach(obj_w_level levelItem, configs.main_wlevels)
+    foreach(obj_w_level levelItem, mw()->configs.main_wlevels)
     {
-            if((configs.marker_wlvl.path==levelItem.id)||
-               (configs.marker_wlvl.bigpath==levelItem.id))
+            if((mw()->configs.marker_wlvl.path==levelItem.id)||
+               (mw()->configs.marker_wlvl.bigpath==levelItem.id))
                 continue;
 
             tmpI = GraphicsHelps::squareImage(
@@ -236,7 +257,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->WLD_MusicList->addItem( item );
     };
-    foreach(obj_music musicItem, configs.main_music_wld)
+
+    foreach(obj_music musicItem, mw()->configs.main_music_wld)
     {
             item = new QListWidgetItem();
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
@@ -257,60 +279,61 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     //updateFilters();
 
-    ui->menuNew->setEnabled(true);
-    ui->actionNew->setEnabled(true);
+    mw()->ui->menuNew->setEnabled(true);
+    mw()->ui->actionNew->setEnabled(true);
     WriteToLog(QtDebugMsg, "WorldTools -> done");
 }
 
 
 
-void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 {
     //placeTile
-    if ((activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
+    if ((mw()->activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(3).toInt());
     }
 }
 
 
-void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 {
     //placeScenery
-    if ((activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
+    if ((mw()->activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(3).toInt());
     }
 }
 
-void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
+void WorldItemBox::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
 {
     //placePath
-    if ((activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
+    if ((mw()->activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::WLD_Path, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Path, item->data(3).toInt());
     }
 }
 
-void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 {
-
     //placeLevel
-    if ((activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
+    if ((mw()->activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::WLD_Level, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_Level, item->data(3).toInt());
     }
 }
 
-void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
+void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 {
     //placeLevel
-    if ((activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
+    if ((mw()->activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(3).toInt());
 
         //Play selected music
-        activeWldEditWin()->currentMusic = item->data(3).toInt();
-        setMusic( ui->actionPlayMusic->isChecked() );
+        mw()->activeWldEditWin()->currentMusic = item->data(3).toInt();
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, mw()->activeWldEditWin()->currentMusic, "");
+        mw()->setMusic();
     }
 }
+

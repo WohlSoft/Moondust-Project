@@ -31,9 +31,10 @@ class AppPathManager
         static QString settingsFile();
         static QString userAppDir();
         static void install();
+        static bool isPortable();
         static bool userDirIsAvailable();
 
-    private:
+private:
         static QString _settingsPath;
 };
 

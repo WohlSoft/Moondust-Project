@@ -20,6 +20,8 @@
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <main_window/dock/lvl_sctc_props.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -53,7 +55,7 @@ void MainWindow::on_OpenFile_triggered()
         OpenFile(fileName_DATA);
 }
 
-void MainWindow::OpenFile(QString FilePath)
+void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 {
     if(!continueLoad) return;
     qApp->setActiveWindow(this);
@@ -132,10 +134,9 @@ void MainWindow::OpenFile(QString FilePath)
             updateMenus(true);
             SetCurrentLevelSection(0);
             dock_LvlWarpProps->init();
-            setLayersBox();
+            dock_LvlLayers->setLayersBox();
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            LvlMusPlay::musicForceReset=true; //reset musics
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {
@@ -312,6 +313,8 @@ void MainWindow::OpenFile(QString FilePath)
     }
 
     // Add to recent fileList
-    AddToRecentFiles(FilePath);
-    SyncRecentFiles();
+    if(addToRecentList){
+        AddToRecentFiles(FilePath);
+        SyncRecentFiles();
+    }
 }

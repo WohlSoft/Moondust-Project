@@ -121,7 +121,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
     for(i=1; i<= npc_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

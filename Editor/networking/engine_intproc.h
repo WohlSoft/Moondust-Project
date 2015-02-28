@@ -30,14 +30,16 @@ class IntEngine: public QObject
 public:
     IntEngine();
     ~IntEngine();
-    static void init(LevelData *lvlData=NULL);
+    static void init();
 
     static void quit();
-
     static EngineClient * engineSocket;
     static bool isWorking();
+    static bool sendCheat(QString _args);
+    static void sendLevelBuffer();
 
     static void setTestLvlBuffer(LevelData &buffer);
+
     static LevelData testBuffer;
 private slots:
     void destroyEngine();

@@ -63,7 +63,7 @@ void MainWindow::on_actionNewLevel_triggered()
     SetCurrentLevelSection(0);
     on_actionSelect_triggered();
     dock_LvlWarpProps->init();
-    setLayersBox();
+    dock_LvlLayers->setLayersBox();
 
     if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
     LvlMusPlay::musicForceReset=true; //reset musics

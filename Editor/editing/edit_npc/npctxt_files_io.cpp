@@ -110,10 +110,10 @@ bool NpcEdit::saveAs()
     return saveFile(fileName);
 }
 
-bool NpcEdit::saveFile(const QString &fileName)
+bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+    if (!file.open(QFile::WriteOnly)) {
         QMessageBox::warning(this, tr("File save error"),
                              tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
@@ -149,10 +149,10 @@ bool NpcEdit::saveFile(const QString &fileName)
 
     refreshImageFile();
     updatePreview();
-
-    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-    MainWinConnect::pMainWin->SyncRecentFiles();
-
+    if(addToRecent){
+        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+        MainWinConnect::pMainWin->SyncRecentFiles();
+    }
     return true;
 }
 
@@ -214,6 +214,12 @@ void NpcEdit::setCurrentFile(const QString &fileName)
 QString NpcEdit::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
+}
+
+void NpcEdit::makeCrashState()
+{
+    this->isUntitled = true;
+    this->isModyfied = true; //just in case
 }
 
 

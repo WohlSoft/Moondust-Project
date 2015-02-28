@@ -65,7 +65,7 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new WldScene(ui->graphicsView, configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData, this);
     scene->opts = options;
 
     //scene->InitSection(0);
@@ -282,7 +282,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         }
 
         QFile file(fileName);
-        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        if (!file.open(QFile::WriteOnly))
+        {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
                                  .arg(fileName)
@@ -371,7 +372,9 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 {
     QFile file(fileName);
     WldData = FileData;
-    setCurrentFile(fileName);
+    bool modifystate=false;
+    bool untitledstate=false;
+    QString curFName=fileName;
     WldData.modified = false;
     WldData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -381,6 +384,19 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
                              .arg(file.errorString()));
         return false;
     }
+    //Restore internal information after crash
+    if(WldData.metaData.crash.used)
+    {
+        modifystate=WldData.metaData.crash.modifyed;
+        untitledstate=WldData.metaData.crash.untitled;
+        isUntitled = WldData.metaData.crash.untitled;
+        WldData.filename = WldData.metaData.crash.filename;
+        WldData.path = WldData.metaData.crash.path;
+        curFName = WldData.metaData.crash.fullPath;
+        setCurrentFile(WldData.metaData.crash.fullPath);
+        WldData.metaData.crash.reset();
+    }
+    setCurrentFile(curFName);
     StartWldData = WldData; //Save current history for made reset
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
@@ -406,7 +422,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(ui->graphicsView, configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData, this);
 
     scene->opts = options;
 
@@ -439,8 +455,8 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    WldData.modified = false;
-    WldData.untitled = false;
+    WldData.modified = modifystate;
+    WldData.untitled = untitledstate;
 
     progress.deleteLater();
 
@@ -489,6 +505,13 @@ QString WorldEdit::userFriendlyCurrentFile()
     return strippedName(curFile);
 }
 
+void WorldEdit::makeCrashState()
+{
+    this->isUntitled = true;
+    this->WldData.untitled = true;
+    this->WldData.modified = true;
+}
+
 void WorldEdit::closeEvent(QCloseEvent *event)
 {
     if(!sceneCreated)
@@ -501,9 +524,9 @@ void WorldEdit::closeEvent(QCloseEvent *event)
 
     if(maybeSave()) {
         stopAutoUpdateTimer();
-        //LvlMusPlay::musicForceReset = true;
-        //MainWinConnect::pMainWin->setMusicButton(false);
-        //MainWinConnect::pMainWin->setMusic(false);
+
+        LvlMusPlay::stopMusic();
+
         scene->setMessageBoxItem(false);
         scene->clear();
         WriteToLog(QtDebugMsg, "!<-Cleared->!");

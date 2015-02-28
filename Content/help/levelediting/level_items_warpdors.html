@@ -1,263 +1,252 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
 <meta content="en-us" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Platformer Game Engine - Editor &gt; Level editing &gt; Level items &gt; Warps and doors</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />
-</head>
 
+<title>Platformer Game Engine - Editor &gt; Level editing &gt; Level items &gt; Warps and doors</title><link rel="stylesheet" type="text/css" href="../style.css" /></head>
 <body>
-<p style="text-align: center">
+<p style="text-align: center;">
 <a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
-<h1 style="text-align: left">Level editing &gt; Level items &gt; Warps and doors</h1>
-<p style="text-align: left"><strong>Warps</strong> - is a 
-special units, which allow to player teleport from first warp point (Entrance) to 
-second (Exit). Player can teleport between difference places of one section, and 
-also player can teleport between sections. This is a one way for enter to 
-another section, but exclusion is some NPCs, what can generate warp to other 
+<h1 style="text-align: left;">Level editing &gt; Level items &gt; Warps and doors</h1>
+<p style="text-align: left;"><strong>Warps</strong> - are a 
+special units which giving to player ability to teleport from first warp point (Entrance) to 
+second (Exit). Player can teleport between difference places of single section, but 
+also player can teleport between different sections. This is a one way for enter to 
+another section, but exclusion is some NPCs which can spawn a warp to another 
 section.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Warps and Doors toolbox</em></p>
-<p style="text-align: center">
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;"><em>Warps and Doors toolbox</em></p>
+<p style="text-align: center;">
 <img alt="" src="../screenshots/LevelEditing/Warps/001_warpList.png" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">All warp entries displayed in special list:</p>
-<p style="text-align: left">Inside SMBX warps entries are hidden, and you can't 
-see. Inside PGE-Editor this is available:</p>
-<p style="text-align: center">
-<img alt="" height="346" src="../screenshots/LevelEditing/Warps/LevelGlobalWarpList.png" width="259" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Warp point context menu</em></p>
-<p style="text-align: center">
-<img alt="" height="221" src="../screenshots/LevelEditing/Warps/WarpContextMenu.png" width="184" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Warp_properties">Warp properties</a></h3>
-<p style="text-align: left">Warps have standard flags:</p>
-<p style="text-align: left"><strong>No Vehicles</strong> -&nbsp; (In SMBX this 
-option named as "No Yoshi") When you enter in this warp, playable character will 
-exit without his vehicle (Vehicle will be restored when player will end this 
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">All warp entries shown in the special list:</p>
+<p style="text-align: left;">In the SMBX all warps entries are hidden and you can't 
+see them. In the PGE-Editor is possible to get full list of warps:</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/LevelGlobalWarpList.png" height="346" width="259" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;"><em>Context menu of warp point</em></p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/WarpContextMenu.png" height="221" width="184" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Warp_properties">Warp properties</a></h3>
+<p style="text-align: left;">Warps have a standard flags:</p>
+<p style="text-align: left;"><strong>No Vehicles</strong> -&nbsp;(In SMBX this 
+option was named as "No Yoshi") When playable character will enter into this warp, he/she will 
+exit without&nbsp;vehicle (Vehicle will be returned back when player will exit from this 
 level).</p>
-<p style="text-align: left"><strong>Allow items</strong> - (In SMBX this option 
-named as "Allow NPC") With this flag, playable character can get carryed item 
-through this warp. Without this flags item will leaved nearly entrance of this 
+<p style="text-align: left;"><strong>Allow items</strong> - (In SMBX this option 
+was named as "Allow NPC") With this flag playable character can get carryed item 
+through this warp. Without this flags item will be leaven about entrance of this 
 warp.</p>
-<p style="text-align: left"><strong>Locked</strong> - With this flag warp will 
-be locked and for enter in them, player character must have a key.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Special flags:</p>
-<p style="text-align: left"><strong>Level entrance</strong> - this option allow 
-to place only one point. With this flag impossible to enter in this warp, and 
-this warp can be used only for enter into this level</p>
-<p style="text-align: left"><strong>Level exit</strong> - this option allow to 
-place only one point. When playable character enter into this warp, level will 
-be done.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Values and options:</p>
-<p style="text-align: left"><strong>Stars needed</strong> - This is limit for 
-star number. Player can enter in this warp only if he(she) collect necessary 
-number of stars.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>X and Y</strong> - This is a coordinated of 
-world map. If they defined, this warp will be as exit into the world map 
-coordinates.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Warp type</strong> - Defining of warp type: 
+<p style="text-align: left;"><strong>Locked</strong> - This flag will
+close door with a&nbsp;lock. To open this warp player should take a
+key. When key was applied, warp will be opened for entering.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">Special flags:</p>
+<p style="text-align: left;"><strong>Level entrance</strong> - this
+option allows to use&nbsp;alone point. With this flag impossible to
+enter in this warp, this warp can be used just for entrance into this
+level, for example, from world map or from another level with
+definition of target warp ID.</p>
+<p style="text-align: left;"><strong>Level exit</strong> -&nbsp;this option allows
+to use&nbsp;alone point. When playable character enter into this warp, level exiting will be caused.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">Values and options:</p>
+<p style="text-align: left;"><strong>Stars needed</strong> - This is a limit of 
+star number. Player can enter into this warp when&nbsp;he/she collect a definied number of stars.</p>
+<p style="text-align: left;"></p>
+<p style="text-align: left;"><strong>X and Y</strong> - This is an exit
+to world map with target coordinates. If coordinates are defined, this
+warp will be an exit into the world map with teleporting to target
+point by coordinates.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><strong>Warp type</strong> - Definition of the warp type: 
 Instant, Pipe or Door.</p>
-<p style="text-align: left"><strong>Pipe directions</strong> - This is a 
-directions of warp, which can be used only for "pipe" warp type.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Level file name</strong> - Here defining the 
-another level file for make warp to them.</p>
-<p style="text-align: left"><strong>Door #</strong> - (Inside SMBX this option 
-named "Warp to"). If value is 0 (Normal entrance), player will start defined 
-level from his(her) start point, else player will entered in level by selected 
-warp point. </p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><strong><a name="Warp_types">Warp types</a></strong></h3>
-<p style="text-align: left">The warps have a three types: Instant, Pipe and 
+<p style="text-align: left;"><strong>Pipe directions</strong> - This is a 
+directions of warp, which can be used&nbsp;for "pipe" warp type only.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><strong>Level file name</strong> - This is a definition of the entrance into 
+another level file to make a warp into them.</p>
+<p style="text-align: left;"><strong>Door #</strong> - (In the SMBX this option 
+was named as "Warp to"). If value is 0 (Normal entrance) player will start target 
+level from his(her) default start point, else player will entered into level by target 
+warp point by ID.</p><p style="text-align: left;"><span style="font-weight: bold;"></span></p><p style="text-align: left;"><span style="font-weight: bold;">Note:</span> If you was removed some warp entry(ies), to re-count warp ID's you should reload level (press F5 key)! </p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><strong><a name="Warp_types">Warp types</a></strong></h3>
+<p style="text-align: left;">The warps have a three types: Instant, Pipe and 
 Door.</p>
-<p style="text-align: center">
-<img alt="" height="82" src="../screenshots/LevelEditing/Warps/006_WarpTypes.png" width="104" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Instant</strong> - Player will be instantly 
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/006_WarpTypes.png" height="82" width="104" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><strong>Instant</strong> - Player will be instantly 
 teleported on any contact with entrance warp point.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="363" src="../screenshots/LevelEditing/Warps/008_Instants.png" width="478" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><strong>Door</strong> - Player can enter into this 
-warp only if contact with entrance warp point and will press up key.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="182" src="../screenshots/LevelEditing/Warps/007_Doors.png" width="402" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><strong>Pipe</strong> - The directional warp. For 
-enter in this warp need contact with entrance warp point and press the key equal 
-to defined direction. Player will be exited from other side wit defined exit 
-direction.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="502" src="../screenshots/LevelEditing/Warps/009_Pipes1.png" width="474" />
-<img alt="" height="210" src="../screenshots/LevelEditing/Warps/011_Pipes3.png" width="415" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="312" src="../screenshots/LevelEditing/Warps/010_Pipes2.png" width="481" /> </p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Create_the_warp">Create the warp entry</a></h3>
-<p style="text-align: left">Each warp have own entry. At first, you need to add 
-new warp entry in list:</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="65" src="../screenshots/LevelEditing/Warps/002_addWarp.png" width="266" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left">And now, you can place points or define warp options 
-first.</p>
-<p style="text-align: left">For place entrance or exit point, you need to press 
-the "Set Entrance"</p>
-<p style="text-align: center">
-<img alt="" height="169" src="../screenshots/LevelEditing/Warps/003_setEntrance.png" width="216" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><span style="text-decoration: underline">Note:</span> 
-If nearly checbox is checked - this point already placed, and you will jump to 
-placed point, if you press on point button.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">and "Set exit" buttons:</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="144" src="../screenshots/LevelEditing/Warps/004_setExit.png" width="250" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Placing the Exit warp point on the map</em></p>
-<p style="text-align: center">
-<img alt="" height="533" src="../screenshots/LevelEditing/Warps/005_setExit.png" width="710" />
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/008_Instants.png" height="363" width="478" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><strong>Door</strong> - Player can enter into this 
+warp only when it contacted with entrance point and when player will press up key.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/007_Doors.png" height="182" width="402" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><strong>Pipe</strong> - this is
+a&nbsp;directional warp. To enter into this warp player need to contact
+with entrance warp point and press the key equal to defined direction.
+Player will be exited from exit point with definied exit direction.</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/009_Pipes1.png" height="502" width="474" />
+<img alt="" src="../screenshots/LevelEditing/Warps/011_Pipes3.png" height="210" width="415" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/010_Pipes2.png" height="312" width="481" /> </p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Create_the_warp">Create the warp entry</a></h3>
+<p style="text-align: left;">Each warp have an own entry. At first you need to add a 
+new warp entry into the list:</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/002_addWarp.png" height="65" width="266" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;">And now, you can place points (or you can define warp options before).</p>
+<p style="text-align: left;">To place entrance or exit point,</p><p style="text-align: left;"></p><p style="text-align: center;">you should to press 
+the "Set Entrance" to place or jump to, if already placed, entrance point</p><p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/003_setEntrance.png" height="169" width="216" /></p><p style="text-align: center;"></p><p style="text-align: center;">and "Set Exit" to place or jump to, if already placed, exit point.</p><p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/004_setExit.png" height="144" width="250" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><span style="text-decoration: underline;">Note:</span> 
+If adjacent checbox is checked - this point is already placed, and you will jump to 
+placed point when you press a point button.</p>
+<p style="text-align: left;">&nbsp;</p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;"><em>Placing of the Exit warp point to the map</em></p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/005_setExit.png" height="533" width="710" />
 
 </p>
-<p style="text-align: left">
-<strong>Don't forget set warp settings!</strong></p>
-<p style="text-align: left">
+<p style="text-align: left;">
+<strong>Don't forget to set up warp settings!</strong></p>
+<p style="text-align: left;">
 &nbsp;</p>
-<p style="text-align: left">
-<span style="text-decoration: underline">Note:</span> the door must have both 
-already placed points, then warp entry will be marked as broken and will not be 
-saved in file.</p>
-<p style="text-align: left">
-Exclusion: You can have single-point warp entry only if you check the flags 
+
+<p style="text-align: left;">
+<span style="text-decoration: underline;">Note:</span> the warp entry must have both&nbsp;placed points or warp entry will be marked as broken and will not be 
+saved into the file. <span style="text-decoration: underline;">Exclusion:</span> You can have single-point warp entries when they are have one of those flags: 
 "Level Exit" or "Level entrance".</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Two-way_warp">Two-way warp</a></h3>
-<p style="text-align: left">For made the two-way warps, you must made second 
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Two-way_warp">Two-way warp</a></h3>
+<p style="text-align: left;">To make a&nbsp;two-way warps, you should make a second 
 warp entry with opposide point placements:</p>
-<p style="text-align: center">
-<img alt="" height="228" src="../screenshots/LevelEditing/Warps/012_two-way_doors.png" width="463" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: center">&nbsp;</p>
-<h3 style="text-align: left"><a name="Locked_warp">Locked warp</a></h3>
-<p style="text-align: left">Locked warp - is a warp, what possible to unlock 
-only if you have the key:</p>
-<p style="text-align: center">
-<img alt="" height="151" src="../screenshots/LevelEditing/Warps/018_locked_door.png" width="155" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">For made locked door, you need to set the flag 
-"Locked" into 'checked':</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="205" src="../screenshots/LevelEditing/Warps/019_Locked_door.png" width="475" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Star_limited_door">Star limited warp</a></h3>
-<p style="text-align: left">For enter into this warp, you must have a defined 
-number of stars.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Locked door</em></p>
-<p style="text-align: center">
-<img alt="" height="276" src="../screenshots/LevelEditing/Warps/020_Stared_door.png" width="178" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">For lock warp by stars number, you must set the 
-number of stars, what need for enter in this warp:&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="235" src="../screenshots/LevelEditing/Warps/021_Stared_door.png" width="389" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Level_entrance_and_exit">Level entrance 
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/012_two-way_doors.png" height="228" width="463" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: center;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Locked_warp">Locked warp</a></h3>
+<p style="text-align: left;">Locked warp - is a warp with closed entrance which possible to open with a key:</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/018_locked_door.png" height="151" width="155" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">To make a locked door, you need to set the&nbsp;"Locked" flag into the 'checked' state:</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/019_Locked_door.png" height="205" width="475" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Star_limited_door">Star limited warp</a></h3>
+<p style="text-align: left;">To enter into this warp you must have a specified number&nbsp;of the stars!</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;"><em>Locked door</em></p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/020_Stared_door.png" height="276" width="178" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">To lock warp entrance with stars, you must set a 
+number of stars which needed for ability to enter into this warp:</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/021_Stared_door.png" height="235" width="389" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Level_entrance_and_exit">Level entrance 
 and exit</a></h3>
-<p style="text-align: left">This is a special flags what allow to place only one 
+<p style="text-align: left;">There are a special flags which allowing to place alone 
 warp point.</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Level entrance</strong> - allows to place 
-only exit point. This warp can be used only for enter in level and haven't the 
-entrance point.</p>
-<p style="text-align: center">
-<img alt="" height="527" src="../screenshots/LevelEditing/Warps/014_entrance_to_level.png" width="361" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><strong>Level Exit</strong> - allows to place the 
-entrance point only. The level will be end when player will enter in this warp.</p>
-<p style="text-align: center">
-<img alt="" height="526" src="../screenshots/LevelEditing/Warps/013_Exit_from_level.png" width="396" /></p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Warp_to_another_level">Warp to another 
-level</a></h3>
-<p style="text-align: left">Player will be teleported in another level if 
-he(she) enter in this warp. </p>
-<p style="text-align: left">You must simply define the level filename in the 
-Level file field. Also, you can browse the level file and select necessary from 
-list</p>
-<p style="text-align: center">
-<img alt="" height="97" src="../screenshots/LevelEditing/Warps/016_target_warp_ID.png" width="229" /></p>
-<p style="text-align: left">The number of door will say, where player must be 
-entered. If value is a zero - player will be start level from his(her) start 
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><strong>Level entrance</strong> - allows
+to place alone exit point. Set this flag if you wish to use this warp
+as entrance into this level. With this flag warp will have no entrance
 point.</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center"><em>Level file list of same folder which contains 
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/014_entrance_to_level.png" height="527" width="361" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><strong>Level Exit</strong> - allows to place alone&nbsp;entrance point. The level will be exited when player will enter into this warp.</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/013_Exit_from_level.png" height="526" width="396" /></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Warp_to_another_level">Warp to another 
+level</a></h3>
+<p style="text-align: left;">Player will be entered into another level if 
+he(she) enter into this warp. </p>
+<p style="text-align: left;">You should simply define the level filename in the 
+Level file field. You also can browse the level file and select necessary file from 
+list</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/016_target_warp_ID.png" height="97" width="229" /></p>
+<p style="text-align: left;">The number of door will show: where player must be 
+entered. If value is a zero - player will&nbsp;start level from his(her) default start 
+point.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><em>Level file list of same folder which contains 
 editing level file</em></p>
-<p style="text-align: center">
-<img alt="" height="408" src="../screenshots/LevelEditing/Warps/015_warp_to_another_level.png" width="299" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Warp_to_world_map">Warp to world map</a></h3>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">You also can made exit into the world map. You must 
-simply define the world map coordinated for made exit into the world map:</p>
-<p style="text-align: left">You can press the "Set" and select target point on 
-the world map in the interactive mode!</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="65" src="../screenshots/LevelEditing/Warps/017_World_map_coordinates.png" width="231" /></p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/015_warp_to_another_level.png" height="408" width="299" /></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<h3 style="text-align: left;"><a name="Warp_to_world_map">Warp to world map</a></h3>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">You also can create the exit to&nbsp;specified coordinates of the world map. You need to 
+simply define the world map coordinates to make exit into the world map:</p>
+<p style="text-align: left;">You also can press the "Set" button and select target point on 
+the world map in&nbsp;interactive mode!</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">
+<img alt="" src="../screenshots/LevelEditing/Warps/017_World_map_coordinates.png" height="65" width="231" /></p>
 
 
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>World map point selection dialog</em></p>
-<p style="text-align: center">
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;"><em>World map point selection dialog</em></p>
+<p style="text-align: center;">
 <img alt="" src="../screenshots/WorldEditing/GotoWorldMap.png" /></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: left;"><a class="return_to_top" href="#">Return to top</a></p>
+<p style="text-align: left;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
 <hr />
 <p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
-<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
+<p style="text-align: center;">Copyright © 2014-2015 Platformer Game Engine by 
 Wohlstand project. All rights reserved.</p>
 
-</body>
-
-</html>
+</body></html>

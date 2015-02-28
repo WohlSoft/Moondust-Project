@@ -283,6 +283,81 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
                 FileData.metaData.bookmarks.push_back(meta_bookmark);
             }
         }//meta bookmarks
+
+        else
+        if(pgeX_Data.dataTree[section].name=="META_SYS_CRASH")
+        {
+            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            {
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                goto badfile;
+            }
+
+            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            {
+                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                {
+                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata);
+                    goto badfile;
+                }
+
+                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+
+                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                {
+                    PGEFile::PGEX_Val v = x.values[sval];
+                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(sdata)
+                            .arg(v.marker)
+                            .arg(v.value);
+
+                      FileData.metaData.crash.used=true;
+
+                      if(v.marker=="UT") //Untitled
+                      {
+                          if(PGEFile::IsBool(v.value))
+                              FileData.metaData.crash.untitled = (bool)v.value.toInt();
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="MD") //Modyfied
+                      {
+                          if(PGEFile::IsBool(v.value))
+                              FileData.metaData.crash.modifyed = (bool)v.value.toInt();
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="N") //Filename
+                      {
+                          if(PGEFile::IsQStr(v.value))
+                              FileData.metaData.crash.filename = PGEFile::X2STR(v.value);
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="P") //Path
+                      {
+                          if(PGEFile::IsQStr(v.value))
+                              FileData.metaData.crash.path = PGEFile::X2STR(v.value);
+                          else
+                              goto badfile;
+                      }
+                      else
+                      if(v.marker=="FP") //Full file Path
+                      {
+                          if(PGEFile::IsQStr(v.value))
+                              FileData.metaData.crash.fullPath = PGEFile::X2STR(v.value);
+                          else
+                              goto badfile;
+                      }
+                }
+            }
+        }//meta sys crash
         #ifdef PGE_EDITOR
         else
         if(pgeX_Data.dataTree[section].name=="META_SCRIPT_EVENTS")
@@ -1795,45 +1870,58 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += "\n";
         }
         TextData += "META_BOOKMARKS_END\n";
-
-        #ifdef PGE_EDITOR
-        if(FileData.metaData.script)
-        {
-            if(!FileData.metaData.script->events().isEmpty())
-            {
-                TextData += "META_SCRIPT_EVENTS\n";
-                foreach(EventCommand* x, FileData.metaData.script->events())
-                {
-                    TextData += "EVENT\n";
-                    TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
-                    TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
-                    TextData += "\n";
-
-                    if(x->basicCommands().size()>0)
-                    {
-                        TextData += "BASIC_COMMANDS\n";
-                        foreach(BasicCommand *y, x->basicCommands())
-                        {
-                            TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
-                            if(QString(y->metaObject()->className())=="MemoryCommand")
-                            {
-                                MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
-                                TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
-                                TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
-                                TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
-                                TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
-                            }
-                            TextData += "\n";
-                        }
-                        TextData += "BASIC_COMMANDS_END\n";
-                    }
-                    TextData += "EVENT_END\n";
-                }
-                TextData += "META_SCRIPT_EVENTS_END\n";
-            }
-        }
-        #endif
     }
+
+    //Some System information
+    if(FileData.metaData.crash.used)
+    {
+        TextData += "META_SYS_CRASH\n";
+            TextData += PGEFile::value("UT", PGEFile::BoolS(FileData.metaData.crash.untitled));
+            TextData += PGEFile::value("MD", PGEFile::BoolS(FileData.metaData.crash.modifyed));
+            TextData += PGEFile::value("N", PGEFile::qStrS(FileData.metaData.crash.filename));
+            TextData += PGEFile::value("P", PGEFile::qStrS(FileData.metaData.crash.path));
+            TextData += PGEFile::value("FP", PGEFile::qStrS(FileData.metaData.crash.fullPath));
+            TextData += "\n";
+        TextData += "META_SYS_CRASH_END\n";
+    }
+
+    #ifdef PGE_EDITOR
+    if(FileData.metaData.script)
+    {
+        if(!FileData.metaData.script->events().isEmpty())
+        {
+            TextData += "META_SCRIPT_EVENTS\n";
+            foreach(EventCommand* x, FileData.metaData.script->events())
+            {
+                TextData += "EVENT\n";
+                TextData += PGEFile::value("TL", PGEFile::qStrS( x->marker() ) );
+                TextData += PGEFile::value("ET", PGEFile::IntS( (int)x->eventType() ) );
+                TextData += "\n";
+
+                if(x->basicCommands().size()>0)
+                {
+                    TextData += "BASIC_COMMANDS\n";
+                    foreach(BasicCommand *y, x->basicCommands())
+                    {
+                        TextData += PGEFile::value("N", PGEFile::qStrS( y->marker() ) );
+                        if(QString(y->metaObject()->className())=="MemoryCommand")
+                        {
+                            MemoryCommand *z = dynamic_cast<MemoryCommand*>(y);
+                            TextData += PGEFile::value("CT", PGEFile::qStrS( "MEMORY" ) );
+                            TextData += PGEFile::value("HX", PGEFile::IntS( z->hexValue() ) );
+                            TextData += PGEFile::value("FT", PGEFile::IntS( (int)z->fieldType() ) );
+                            TextData += PGEFile::value("V", PGEFile::FloatS( z->getValue() ) );
+                        }
+                        TextData += "\n";
+                    }
+                    TextData += "BASIC_COMMANDS_END\n";
+                }
+                TextData += "EVENT_END\n";
+            }
+            TextData += "META_SCRIPT_EVENTS_END\n";
+        }
+    }
+    #endif
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
 

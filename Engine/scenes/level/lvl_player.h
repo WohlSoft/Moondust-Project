@@ -25,6 +25,33 @@
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
 #include <file_formats.h>
+#include <QMap>
+
+struct Plr_EnvironmentPhysics
+{
+    inline void make() {} //!< Dummy function
+    float32 walk_force; //!< Move force
+    float32 slippery_c; //!< Slippery coefficien
+    float32 gravity_scale; //!< Gravity scale
+    float32 velocity_jump; //!< Jump velocity
+    float32 velocity_climb; //!< Climbing velocity
+    float32 MaxSpeed_walk; //!< Max walk speed
+    float32 MaxSpeed_run; //!< Max run speed
+    float32 MaxSpeed_up; //!< Fly UP Max fall speed
+    float32 MaxSpeed_down; //!< Max fall down speed
+    float32 damping;
+    bool    zero_speed_y_on_enter;
+    bool    slow_speed_x_on_enter;
+};
+
+struct Plr_State
+{
+    inline void make() {} //!< Dummy function
+    int width;
+    int height;
+   bool duck_allow;
+    int duck_height;
+};
 
 class LVL_Player :
         public PGE_Phys_Object,
@@ -34,14 +61,18 @@ class LVL_Player :
         LVL_Player();
         ~LVL_Player();
         void init();
-        void update();
+        void initSize();
+        void update(float ticks=1.0f);
 
         int playerID;
 
-        float32 force; //!< Move force
-        float32 hMaxSpeed; //!< Max walk speed
-        float32 hRunningMaxSpeed; //!< Max run speed
-        float32 fallMaxSpeed; //!< Max fall speed
+        QMap<int, Plr_State > states;
+        int stateID;
+
+        QMap<int, Plr_EnvironmentPhysics > physics;
+        QMap<int, int > environments_map;
+        int environment;
+        int last_environment;
 
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
@@ -55,11 +86,28 @@ class LVL_Player :
         void bump(bool _up=false);
 
         int foot_contacts;
+        QMap<int, int > foot_contacts_map;   //!< staying on ground surfaces
+        QMap<int, int > foot_sl_contacts_map;//!< Slipery surfaces
         int jumpForce;
 
-        bool isLive;
+        QMap<int, int > climbable_map;
+        bool climbing;
 
-        void kill();
+        bool isLive;
+        enum deathReason
+        {
+            DEAD_fall=0,
+            DEAD_burn,
+            DEAD_killed
+        };
+        void kill(deathReason reason=DEAD_killed);
+        bool doKill;
+        deathReason kill_reason;
+
+        int health;
+        bool doHarm;
+        int doHarm_damage;
+        void harm(int _damage=1);
 
         bool contactedWithWarp;
         LVL_Warp * contactedWarp;
@@ -67,6 +115,18 @@ class LVL_Player :
         bool wasEntered;
         int warpsTouched;
 
+        float32 gscale_Backup;
+
+        bool   isWarping;
+        bool   warpDo;
+        int    warpDirect;
+        uint32 warpWaitTicks;
+
+        //floating
+        bool allowFloat;
+        bool isFloating;
+        float timeToFloat;
+        float maxFloatTime;
 
         PlayerPoint data;
 

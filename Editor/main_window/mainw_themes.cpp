@@ -33,10 +33,10 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionNew->setIcon(Themes::icon(Themes::file_new));
     ui->actionNewLevel->setIcon(Themes::icon(Themes::level_16));
-    ui->LevelToolBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 
     ui->actionNewWorld_map->setIcon(Themes::icon(Themes::world_16));
-    ui->WorldToolBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_WldItemBox->setWindowIcon(Themes::icon(Themes::level_16));
 
     ui->actionNewNPC_config->setIcon(Themes::icon(Themes::npc_16));
 
@@ -59,9 +59,9 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionAnimation->setIcon(Themes::icon(Themes::animation));
 
     ui->actionWLD_SearchBox->setIcon(Themes::icon(Themes::search));
-    ui->WorldFindDock->setWindowIcon(Themes::icon(Themes::search));
+    dock_WldSearchBox->setWindowIcon(Themes::icon(Themes::search));
     ui->actionLVLSearchBox->setIcon(Themes::icon(Themes::search));
-    ui->FindDock->setWindowIcon(Themes::icon(Themes::search));
+    dock_LvlSearchBox->setWindowIcon(Themes::icon(Themes::search));
 
     ui->actionCopy->setIcon(Themes::icon(Themes::copy));
     ui->LVLEvents_duplicate->setIcon(Themes::icon(Themes::copy_16));
@@ -92,13 +92,13 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionSection_Settings->setIcon(Themes::icon(Themes::section_settings));
     ui->actionWorld_settings->setIcon(Themes::icon(Themes::section_settings));
-    ui->LevelSectionSettings->setWindowIcon(Themes::icon(Themes::section_settings_16));
+    dock_LvlSectionProps->setWindowIcon(Themes::icon(Themes::section_settings_16));
 
     ui->actionWarpsAndDoors->setIcon(Themes::icon(Themes::doors));
     dock_LvlWarpProps->setWindowIcon(Themes::icon(Themes::doors));
 
     ui->actionLayersBox->setIcon(Themes::icon(Themes::layers));
-    ui->LevelLayers->setWindowIcon(Themes::icon(Themes::layers));
+    dock_LvlLayers->setWindowIcon(Themes::icon(Themes::layers));
 
     ui->actionLevelEvents->setIcon(Themes::icon(Themes::events));
     ui->LevelEventsToolBox->setWindowIcon(Themes::icon(Themes::events));

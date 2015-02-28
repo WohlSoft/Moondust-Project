@@ -286,7 +286,7 @@ int TitleScene::exec()
         }
 
         SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
+        while( SDL_PollEvent(&event) )
         {
             switch(event.type)
             {

@@ -22,6 +22,7 @@
 #include <common_features/grid.h>
 #include <file_formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
+#include <main_window/dock/wld_item_props.h>
 
 #include "wld_scene.h"
 #include "items/item_tile.h"
@@ -118,10 +119,15 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     { return; }
 
     if( ((EditingMode==MODE_Selecting) || (EditingMode==MODE_SelectingOnly)) && (EditingMode!=MODE_SetPoint))
-        MainWinConnect::pMainWin->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
     haveSelected=(!selectedItems().isEmpty());
+}
+
+void WldScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    mousePressEvent(mouseEvent);
 }
 
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -258,16 +264,16 @@ void WldScene::openProps()
     {
         if(items.first()->data(0).toString()=="LEVEL")
         {
-            MainWinConnect::pMainWin->WldItemProps(0,
+            MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps(0,
                           ((ItemLevel *)items.first())->levelData,
                           false);
         }
         else
-        MainWinConnect::pMainWin->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
     }
     else
     {
-        MainWinConnect::pMainWin->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
     }
 
     QGraphicsScene::selectionChanged();

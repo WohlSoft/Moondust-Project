@@ -24,7 +24,8 @@ void MainWindow::on_actionLockBlocks_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->setLocked(1, checked);
+        LevelEdit * e=activeLvlEditWin();
+        if(e) e->scene->setLocked(1, checked);
     }
 }
 
@@ -32,7 +33,8 @@ void MainWindow::on_actionLockBGO_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->setLocked(2, checked);
+        LevelEdit * e=activeLvlEditWin();
+        if(e) e->scene->setLocked(2, checked);
     }
 }
 
@@ -40,7 +42,8 @@ void MainWindow::on_actionLockNPC_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->setLocked(3, checked);
+        LevelEdit * e=activeLvlEditWin();
+        if(e) e->scene->setLocked(3, checked);
     }
 }
 
@@ -48,7 +51,8 @@ void MainWindow::on_actionLockWaters_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->setLocked(4, checked);
+        LevelEdit * e=activeLvlEditWin();
+        if(e) e->scene->setLocked(4, checked);
     }
 }
 
@@ -56,7 +60,8 @@ void MainWindow::on_actionLockDoors_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->setLocked(5, checked);
+        LevelEdit * e=activeLvlEditWin();
+        if(e) e->scene->setLocked(5, checked);
     }
 }
 // //////////////////////// Locks  End //////////////////////////////

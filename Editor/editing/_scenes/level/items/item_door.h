@@ -42,6 +42,7 @@ class ItemDoor : public QObject,
                  public LvlBaseItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     ItemDoor(QGraphicsRectItem *parent=0);
     ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent=0);

@@ -115,6 +115,9 @@ int main(int argc, char *argv[])
     w->raise();
     QApplication::setActiveWindow(w);
 
+    //Open files saved by Crashsave (if any)
+    CrashHandler::checkCrashsaves();
+
     //Open files which opened by command line
     w->openFilesByArgs(a->arguments());
 

@@ -103,7 +103,7 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
 
     for(i=1; i<=bgo_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

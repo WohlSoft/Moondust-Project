@@ -42,6 +42,7 @@ class ItemNPC : public QObject,
                 public LvlBaseItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent=0);
     ItemNPC(bool noScene=false, QGraphicsPixmapItem *parent=0);

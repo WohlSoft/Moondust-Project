@@ -31,6 +31,7 @@ class ItemPlayerPoint : public QObject,
                         public LvlBaseItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     explicit ItemPlayerPoint(QGraphicsItem *parent = 0);
     explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = 0);

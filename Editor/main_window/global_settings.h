@@ -45,6 +45,9 @@ public:
     static QString savePath_npctxt;
     static QString openPath;
 
+    //External tools
+    static QString tools_sox_bin_path;
+
     //Music player
     static bool autoPlayMusic;
     static int musicVolume;
@@ -72,6 +75,9 @@ public:
 
     //Placing mode flahs
     static bool Placing_dontShowPropertiesBox;
+
+    //Max Limit if history elements
+    static int historyLimit;
 
     //Last active file type state
     static int lastWinType;

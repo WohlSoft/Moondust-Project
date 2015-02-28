@@ -20,6 +20,7 @@
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
 #include <editing/edit_level/level_edit.h>
+#include <main_window/dock/lvl_layers_box.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -210,7 +211,6 @@ void LvlScene::applyLayersVisible()
 /////////////////////////////////////////////Locks////////////////////////////////
 void LvlScene::setLocked(int type, bool lock)
 {
-    QList<QGraphicsItem*> ItemList = items();
     // setLock
     switch(type)
     {
@@ -232,38 +232,47 @@ void LvlScene::setLocked(int type, bool lock)
     default: break;
     }
 
+    QList<QGraphicsItem*> ItemList = items();
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        if((*it)==NULL) continue;
+        if((*it)->data(ITEM_IS_ITEM).isNull()) continue;
+
         switch(type)
         {
         case 1://Block
             if((*it)->data(ITEM_TYPE).toString()=="Block")
             {
-                dynamic_cast<ItemBlock *>(*it)->setLocked(lock);
+                ItemBlock *item=qgraphicsitem_cast<ItemBlock *>(*it);
+                if(item) item->setLocked(lock);
             }
             break;
         case 2://BGO
             if((*it)->data(ITEM_TYPE).toString()=="BGO")
             {
-                dynamic_cast<ItemBGO *>(*it)->setLocked(lock);
+                ItemBGO *i=qgraphicsitem_cast<ItemBGO *>(*it);
+                if(i) i->setLocked(lock);
             }
             break;
         case 3://NPC
             if((*it)->data(ITEM_TYPE).toString()=="NPC")
             {
-                dynamic_cast<ItemNPC *>(*it)->setLocked(lock);
+                ItemNPC *i=qgraphicsitem_cast<ItemNPC *>(*it);
+                if(i) i->setLocked(lock);
             }
             break;
         case 4://Water
             if((*it)->data(ITEM_TYPE).toString()=="Water")
             {
-                dynamic_cast<ItemWater *>(*it)->setLocked(lock);
+                ItemWater *i=qgraphicsitem_cast<ItemWater *>(*it);
+                if(i) i->setLocked(lock);
             }
             break;
         case 5://Doors
             if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
             {
-                dynamic_cast<ItemDoor *>(*it)->setLocked(lock);
+                ItemDoor *i=qgraphicsitem_cast<ItemDoor *>(*it);
+                if(i) i->setLocked(lock);
             }
             break;
         default: break;
@@ -291,9 +300,9 @@ void LvlScene::setLayerToSelected()
         nLayer.array_id = LvlData->layers_array_id;
         LvlData->layers.push_back(nLayer);
         //scene->SyncLayerList=true; //Refresh layer list
-        MainWinConnect::pMainWin->setLayerToolsLocked(true);
-        MainWinConnect::pMainWin->setLayersBox();
-        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
+        MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
         MainWinConnect::pMainWin->setLayerLists();
         MainWinConnect::pMainWin->setEventData();
         setLayerToSelected(lName, true);

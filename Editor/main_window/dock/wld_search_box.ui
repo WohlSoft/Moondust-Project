@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WldSearchBox</class>
+ <widget class="QDockWidget" name="WldSearchBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>265</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>265</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../_resources/editor.qrc">
+    <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+  </property>
+  <property name="allowedAreas">
+   <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+  </property>
+  <property name="windowTitle">
+   <string>Search of items on the World Map</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents_5">
+   <layout class="QGridLayout" name="gridLayout_19">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QToolBox" name="FindToolboxWLD">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="tabSpacing">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="WLDFindTile">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>265</width>
+         <height>273</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Tile</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_21">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_75">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="line_23">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_74">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>207</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="Line" name="line_22">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_TypeTile">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_76">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="Find_Button_TypeTile">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="verticalSpacer_22">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>183</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0" colspan="4">
+         <widget class="QPushButton" name="Find_Button_ResetTile">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QPushButton" name="FindStartTile">
+          <property name="text">
+           <string>Search Tile</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="WLDFindScenery">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>153</width>
+         <height>107</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Scenery</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_24">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_72">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="line_21">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_71">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>207</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="Line" name="line_20">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_TypeScenery">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_73">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="Find_Button_TypeScenery">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="verticalSpacer_21">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>183</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0" colspan="4">
+         <widget class="QPushButton" name="Find_Button_ResetScenery">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QPushButton" name="FindStartScenery">
+          <property name="text">
+           <string>Search Scenery</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="WLDFindPath">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>153</width>
+         <height>107</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Path</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_23">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_69">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="line_19">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_68">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>207</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="Line" name="line_18">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_TypePath">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_70">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="Find_Button_TypePath">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="verticalSpacer_20">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>183</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0" colspan="4">
+         <widget class="QPushButton" name="Find_Button_ResetPath">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QPushButton" name="FindStartPath">
+          <property name="text">
+           <string>Search Path</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="WLDFindLevel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>231</width>
+         <height>220</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Level</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_20">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="8" column="1">
+         <widget class="QCheckBox" name="Find_Check_BigPathBackground"/>
+        </item>
+        <item row="11" column="1">
+         <widget class="QCheckBox" name="Find_Check_GameStartPoint"/>
+        </item>
+        <item row="10" column="1">
+         <widget class="QCheckBox" name="Find_Check_AlwaysVisible"/>
+        </item>
+        <item row="12" column="4">
+         <widget class="QLabel" name="label_80">
+          <property name="text">
+           <string>Level file</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="1">
+         <widget class="QCheckBox" name="Find_Check_ContainsTitle"/>
+        </item>
+        <item row="8" column="4">
+         <widget class="QLabel" name="label_77">
+          <property name="text">
+           <string>Big Path Background</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="4">
+         <widget class="QLabel" name="label_78">
+          <property name="text">
+           <string>Always Visible</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="4">
+         <widget class="QLabel" name="label_79">
+          <property name="text">
+           <string>Game start point</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QCheckBox" name="Find_Check_LevelFile"/>
+        </item>
+        <item row="13" column="4">
+         <widget class="QLabel" name="label_81">
+          <property name="text">
+           <string>Contains Title</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="5">
+         <widget class="QLineEdit" name="Find_Edit_LevelFile">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="label_62">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="Line" name="line_14">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="4">
+         <widget class="QLabel" name="label_63">
+          <property name="text">
+           <string>Path background</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_61">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="Find_Check_PathBackground">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="Find_Check_TypeLevel">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="4">
+         <widget class="QLabel" name="label_64">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="6">
+         <widget class="QPushButton" name="Find_Button_LevelFile">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>30</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="0" colspan="7">
+         <widget class="QPushButton" name="FindStartLevel">
+          <property name="text">
+           <string>Search Level</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0" colspan="7">
+         <widget class="QPushButton" name="Find_Button_ResetLevel">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="5" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_GameStartPointActive">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="5" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_AlwaysVisibleActive">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="5" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_BigPathBackgroundActive">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="5" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_PathBackgroundActive">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="5" colspan="2">
+         <widget class="QPushButton" name="Find_Button_TypeLevel">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" rowspan="4" colspan="7">
+         <widget class="Line" name="line_15">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5" colspan="2">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="14" column="0" colspan="7">
+         <spacer name="verticalSpacer_18">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="13" column="5" colspan="2">
+         <widget class="QLineEdit" name="Find_Edit_ContainsTitle">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="WLDFindMusic">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>153</width>
+         <height>107</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Music</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_22">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_66">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="Line" name="line_17">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_65">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>207</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="Line" name="line_16">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_TypeMusic">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_67">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="Find_Button_TypeMusic">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="verticalSpacer_19">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>183</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="0" colspan="4">
+         <widget class="QPushButton" name="Find_Button_ResetMusic">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="4">
+         <widget class="QPushButton" name="FindStartMusic">
+          <property name="text">
+           <string>Search Music</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../_resources/editor.qrc"/>
+ </resources>
+ <connections/>
+</ui>

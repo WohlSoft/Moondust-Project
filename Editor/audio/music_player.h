@@ -31,12 +31,23 @@ public:
     };
 
     static QString currentCustomMusic;
+
+    static QString currentMusicPath;
+    static QString lastMusicPath;
+
+
     static long currentMusicId;
     static bool musicButtonChecked;
     static bool musicForceReset;
     static long currentWldMusicId;
     static long currentSpcMusicId;
     static int musicType;
+
+    static void setMusic(MusicType mt, unsigned long id, QString cmus);
+    static void setNoMusic();
+    static void updateMusic();
+    static void updatePlayerState(bool playing=true);
+    static void stopMusic();
 
 };
 

@@ -54,6 +54,9 @@ void AppPathManager::initAppPath()
     qDebug() << test << " <- after";
     */
 
+    if(isPortable())
+        return;
+
     QSettings setup;
     bool userDir;
     userDir = setup.value("EnableUserDir", false).toBool();
@@ -109,6 +112,20 @@ void AppPathManager::install()
         QSettings setup;
         setup.setValue("EnableUserDir", true);
     }
+}
+
+bool AppPathManager::isPortable()
+{
+    if(_settingsPath.isNull())
+        _settingsPath = ApplicationPath;
+    if(!QFile(settingsFile()).exists()) return false;
+    bool forcePortable=false;
+    QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+    checkForPort.beginGroup("Main");
+        forcePortable= checkForPort.value("force-portable", false).toBool();
+    checkForPort.endGroup();
+
+    return forcePortable;
 }
 
 bool AppPathManager::userDirIsAvailable()

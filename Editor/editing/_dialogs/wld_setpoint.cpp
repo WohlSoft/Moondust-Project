@@ -48,6 +48,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     ui->graphicsView->verticalScrollBar()->setSingleStep(32);
     ui->graphicsView->verticalScrollBar()->setTracking(true);
 
+    ui->graphicsView->setFocus();
 }
 
 WLD_SetPoint::~WLD_SetPoint()
@@ -194,7 +195,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(ui->graphicsView, configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData, this);
 
     scene->opts = options;
     scene->isSelectionDialog = true;

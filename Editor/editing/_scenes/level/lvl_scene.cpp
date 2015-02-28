@@ -42,7 +42,15 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     pConfigs = &configs; // Pointer to Main Configs
     LvlData = &FileData; //Ad pointer to level data
     _viewPort = parentView;
+    _edit=NULL;
 
+    if(parent)
+    {
+        if(strcmp(parent->metaObject()->className(), "LevelEdit")==0)
+        {
+            _edit = qobject_cast<LevelEdit*>(parent);
+        }
+    }
 
     //set Default Z Indexes
     Z_backImage = -1000; //Background

@@ -193,6 +193,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         //Spiny
         bossNPCs << bossNPC(286, npcFile.arg(285).split('|') );
 
+        //Rex
+        bossNPCs << bossNPC(162, npcFile.arg(163).split('|') );
+
         //Magic potion
         bossNPCs << bossNPC(288, npcFile.arg(289).split('|') );
 
@@ -228,6 +231,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
 
             if(bossNPCs.isEmpty()) break;
         }
+
         //into included into blocks
         for(int q=0;q<box->LvlData.blocks.size();q++)
         {

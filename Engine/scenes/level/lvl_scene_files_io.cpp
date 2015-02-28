@@ -82,6 +82,8 @@ bool LevelScene::loadFileIP()
     if(!timeOut && !data.ReadFileValid)
         errorMsg += "Bad file format\n";
 
+    IntProc::state="Done. Starting game...";
+
     return data.ReadFileValid;
 }
 

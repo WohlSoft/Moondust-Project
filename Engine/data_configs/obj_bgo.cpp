@@ -20,10 +20,10 @@
 #include "../gui/pge_msgbox.h"
 
 /*****Level BGO************/
-QVector<obj_bgo >     ConfigManager::lvl_bgo;
+QList<obj_bgo >     ConfigManager::lvl_bgo;
 QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
 CustomDirManager ConfigManager::Dir_BGO;
-QVector<SimpleAnimator > ConfigManager::Animator_BGO;
+QList<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
 
 bool ConfigManager::loadLevelBGO()
@@ -113,8 +113,8 @@ bool ConfigManager::loadLevelBGO()
                 addError(QString("BGO-%1 Image filename isn't defined").arg(i));
                 goto skipBGO;
             }
-            sbgo.climbing = (bgoset.value("climbing", "0").toString()=="1");
-            sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
+            sbgo.climbing = (bgoset.value("climbing", 0).toBool());
+            sbgo.animated = (bgoset.value("animated", 0).toBool());
             sbgo.frames = bgoset.value("frames", "1").toInt();
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
 
