@@ -23,11 +23,11 @@ xcopy /Y /E /I %SOURCEDIR%\Content\calibrator %TARGETDIR%\Content\calibrator
 
 del /F /Q %TARGETDIR%\_Misc
 md %TARGETDIR%\_Misc
-xcopy /Y /E /I "%SOURCEDIR%\_Misc" %TARGETDIR%\_Misc
+xcopy /Y /E /I /H /C "%SOURCEDIR%\_Misc\*.*" %TARGETDIR%\_Misc
 
 del /F /Q %TARGETDIR%\_Libs\SDL2_mixer_modified
 md %TARGETDIR%\_Libs\SDL2_mixer_modified
-xcopy /Y /E /I "%SOURCEDIR%\_Libs\SDL2_mixer_modified" "%TARGETDIR%\_Libs\SDL2_mixer_modified"
+xcopy /Y /E /I /H /C "%SOURCEDIR%\_Libs\SDL2_mixer_modified\*.*" "%TARGETDIR%\_Libs\SDL2_mixer_modified"
 
 
 rem ============== GIFs2PNG ====================
