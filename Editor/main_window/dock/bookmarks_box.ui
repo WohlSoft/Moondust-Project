@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BookmarksBox</class>
+ <widget class="QDockWidget" name="BookmarksBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>255</width>
+    <height>256</height>
+   </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::CustomContextMenu</enum>
+  </property>
+  <property name="floating">
+   <bool>false</bool>
+  </property>
+  <property name="allowedAreas">
+   <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+  </property>
+  <property name="windowTitle">
+   <string>Position bookmarks</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents_7">
+   <layout class="QGridLayout" name="gridLayout_31">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="bookmarkRemove">
+      <property name="toolTip">
+       <string>Remove selected bookmark from list</string>
+      </property>
+      <property name="text">
+       <string>Remove</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="bookmarkAdd">
+      <property name="toolTip">
+       <string>Remember current screen position on the level map or on the world map
+and store bookmark.</string>
+      </property>
+      <property name="text">
+       <string>Add</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="bookmarkGoto">
+      <property name="toolTip">
+       <string>Scroll to remembered position in selected item back.
+You also can double-click to item to scroll to bookmarked position.</string>
+      </property>
+      <property name="text">
+       <string>Go To...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QListWidget" name="bookmarkList">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::InternalMove</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
