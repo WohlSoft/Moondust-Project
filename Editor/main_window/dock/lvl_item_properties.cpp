@@ -56,8 +56,6 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
     LvlItemPropsLock=true;
 
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-
     blockPtr=-1;
     bgoPtr=-1;
     npcPtr=-1;

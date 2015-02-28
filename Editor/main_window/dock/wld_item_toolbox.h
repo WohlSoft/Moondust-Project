@@ -35,10 +35,11 @@ class WorldItemBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
     friend class MainWindow;
-
-public:
+private:
     explicit WorldItemBox(QWidget *parent = 0);
     ~WorldItemBox();
+
+public:
     QTabWidget *tabWidget();
 
 public slots:

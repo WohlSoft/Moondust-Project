@@ -37,7 +37,6 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     lockWarpSetSettings = false;
 
     QRect mwg = mw()->geometry();
