@@ -39,8 +39,6 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     ui->setupUi(this);
     wld_tools_lock=false;
 
-    setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-
     QRect mwg = mw()->geometry();
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
@@ -668,49 +666,53 @@ void WLD_ItemProps::on_WLD_PROPS_GetPoint_clicked()
         return;
     }
     else
-    if (mw()->activeChildWindow()==3)
     {
-        if(ui->WLD_PROPS_GetPoint->isCheckable())
+        if (mw()->activeChildWindow(mw()->LastActiveSubWindow)==3)
         {
-            ui->WLD_PROPS_GetPoint->setChecked(false);
-            ui->WLD_PROPS_GetPoint->setCheckable(false);
-
-            mw()->activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
-        }
-        else
-        {
-            WorldEdit * edit = mw()->activeWldEditWin();
+            WorldEdit * edit = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
             if(!edit) return;
 
-            ui->WLD_PROPS_GetPoint->setCheckable(true);
-            ui->WLD_PROPS_GetPoint->setChecked(true);
-
-            //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-            edit->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
-
-            WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
-
-            //WldPlacingItems::squarefillingMode = false;
-            mw()->ui->actionSquareFill->setChecked(false);
-            mw()->ui->actionSquareFill->setEnabled(false);
-
-            //WldPlacingItems::lineMode = false;
-            mw()->ui->actionLine->setChecked(false);
-            mw()->ui->actionLine->setEnabled(false);
-            if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
+            if(ui->WLD_PROPS_GetPoint->isCheckable())
             {
-                edit->scene->selectedPointNotUsed = true;
+                ui->WLD_PROPS_GetPoint->setChecked(false);
+                ui->WLD_PROPS_GetPoint->setCheckable(false);
+
+                edit->scene->SwitchEditingMode(WldScene::MODE_Selecting);
             }
             else
             {
-                edit->scene->selectedPointNotUsed = false;
-                edit->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
-            }
+                WorldEdit * edit = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(!edit) return;
 
-            edit->scene->setItemPlacer(5);
-            edit->setFocus();
+                ui->WLD_PROPS_GetPoint->setCheckable(true);
+                ui->WLD_PROPS_GetPoint->setChecked(true);
+
+                //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
+                edit->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+
+                WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
+
+                //WldPlacingItems::squarefillingMode = false;
+                mw()->ui->actionSquareFill->setChecked(false);
+                mw()->ui->actionSquareFill->setEnabled(false);
+
+                //WldPlacingItems::lineMode = false;
+                mw()->ui->actionLine->setChecked(false);
+                mw()->ui->actionLine->setEnabled(false);
+                if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
+                {
+                    edit->scene->selectedPointNotUsed = true;
+                }
+                else
+                {
+                    edit->scene->selectedPointNotUsed = false;
+                    edit->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
+                }
+
+                edit->scene->setItemPlacer(5);
+                edit->setFocus();
+            }
         }
     }
-
 }
 

@@ -7,13 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>441</height>
+    <height>444</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
-    <height>416</height>
+    <height>444</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>320</width>
+    <height>524287</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -227,14 +233,17 @@
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>121</height>
+           <height>145</height>
           </size>
          </property>
          <property name="title">
           <string>Open path by exists:</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
          <layout class="QGridLayout" name="gridLayout_17">
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QComboBox" name="WLD_PROPS_ExitLeft">
             <property name="toolTip">
              <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Western (left) path by exit type</string>
@@ -250,7 +259,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="3" column="2">
            <widget class="QComboBox" name="WLD_PROPS_ExitRight">
             <property name="toolTip">
              <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Eastern (right) path by exit type</string>
@@ -266,14 +275,23 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_55">
-            <property name="text">
-             <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/images/warp_exit.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
+            <property name="toolTip">
+             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
+            </property>
+            <property name="maxVisibleItems">
+             <number>50</number>
+            </property>
+            <property name="insertPolicy">
+             <enum>QComboBox::InsertAtBottom</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QComboBox::AdjustToContents</enum>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" rowspan="2">
+          <item row="2" column="1">
            <widget class="QComboBox" name="WLD_PROPS_ExitTop">
             <property name="toolTip">
              <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Northern (upper) path by exit type</string>
@@ -290,18 +308,21 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
-            <property name="toolTip">
-             <string comment="Condition to open path by direction (like on compass) when level is completed with different exit ways">Open the Southern (lower) path by exit type</string>
+           <widget class="QLabel" name="label_55">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>34</height>
+             </size>
             </property>
-            <property name="maxVisibleItems">
-             <number>50</number>
+            <property name="pixmap">
+             <pixmap resource="../../_resources/editor.qrc">:/images/warp_exit.png</pixmap>
             </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::InsertAtBottom</enum>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToContents</enum>
+            <property name="indent">
+             <number>0</number>
             </property>
            </widget>
           </item>
