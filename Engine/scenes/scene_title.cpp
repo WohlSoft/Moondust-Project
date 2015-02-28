@@ -276,8 +276,6 @@ int TitleScene::exec()
     {
         //UPDATE Events
         start_render=SDL_GetTicks();
-        render();
-
         if(doExit)
         {
             if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
@@ -286,7 +284,8 @@ int TitleScene::exec()
         }
 
         SDL_Event event; //  Events of SDL
-        while( SDL_PollEvent(&event) )
+        SDL_PumpEvents();             //for mouse
+        while( SDL_PollEvent(&event) )//Common
         {
             switch(event.type)
             {
@@ -299,6 +298,9 @@ int TitleScene::exec()
                 case SDL_KEYDOWN: // If pressed key
                     switch(event.key.keysym.sym)
                     {
+                      case SDLK_x:
+                          qDebug()<<"Cu";
+                      break;
                       case SDLK_t:
                           PGE_Window::SDL_ToggleFS(PGE_Window::window);
                       break;
@@ -325,7 +327,7 @@ int TitleScene::exec()
                     }
                 break;
                 case SDL_KEYUP:
-                break;
+                    break;
                 case SDL_MOUSEMOTION:
                     mousePos.setX(event.motion.x);
                     mousePos.setY(event.motion.y);
@@ -354,19 +356,18 @@ int TitleScene::exec()
         }
         int mouseX=0;
         int mouseY=0;
-        SDL_PumpEvents();
         SDL_GetMouseState(&mouseX, &mouseY);
         mousePos.setX(mouseX);
         mousePos.setY(mouseY);
 
-
+        render();
         renderMouse();
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
+        if( (100.0 / (float)PGE_Window::PhysStep) >(SDL_GetTicks()-start_render))
         {
-            doUpdate_Render = 1000.0/100.0-(SDL_GetTicks()-start_render);
+            doUpdate_Render = (1000.0/100.0)-(SDL_GetTicks()-start_render);
             SDL_Delay( doUpdate_Render );
         }
 
