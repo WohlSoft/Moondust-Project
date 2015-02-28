@@ -99,6 +99,7 @@ void MainWindow::setUiDefults()
     dock_WldSearchBox    = new WldSearchBox(this);
 
     dock_TilesetBox      = new TilesetItemBox(this);
+    dock_BookmarksBox    = new BookmarksBox(this);
 
     //Define the default geometry for toolboxes
     ui->LevelEventsToolBox->setGeometry(
@@ -121,14 +122,6 @@ void MainWindow::setUiDefults()
                 mwg.y()+120,
                 ui->debuggerBox->width(),
                 ui->debuggerBox->height()
-                );
-
-
-    ui->bookmarkBox->setGeometry(
-                mwg.x()+mwg.width()-ui->bookmarkBox->width()-GOffset,
-                mwg.y()+120,
-                ui->bookmarkBox->width(),
-                ui->bookmarkBox->height()
                 );
 
     QFont font("Monospace");
@@ -166,12 +159,9 @@ void MainWindow::setUiDefults()
     ui->LevelEventsToolBox->hide();
     ui->WorldSettings->hide();
     ui->debuggerBox->hide();
-    ui->bookmarkBox->hide();
 
     ui->menuView->setEnabled(false);
-
     ui->menuWindow->setEnabled(true);
-
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
     ui->menuTest->setEnabled(false);
@@ -228,5 +218,4 @@ void MainWindow::setUiDefults()
     connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
 
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
-    connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
 }

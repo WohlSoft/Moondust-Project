@@ -494,21 +494,11 @@ public:
 
 
 // ///////////////////// Bookmarks ////////////////////////        
+    public:
+        BookmarksBox * dock_BookmarksBox;
+
     private slots:
         void on_actionBookmarkBox_triggered(bool checked);
-        void on_bookmarkBox_visibilityChanged(bool visible);
-        void on_bookmarkList_customContextMenuRequested(const QPoint &pos);
-        void DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow);
-        void on_bookmarkList_doubleClicked(const QModelIndex &index);
-    //Modificators:
-        void on_bookmarkAdd_clicked();
-        void on_bookmarkRemove_clicked();
-        void on_bookmarkList_itemChanged(QListWidgetItem *item);
-    //Go To...
-        void on_bookmarkGoto_clicked();
-    public:
-        void updateBookmarkBoxByList();
-        void updateBookmarkBoxByData();
 // ////////////////////////////////////////////////////////
 
 

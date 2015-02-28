@@ -16,10 +16,11 @@ class WLD_ItemProps : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit WLD_ItemProps(QWidget *parent = 0);
     ~WLD_ItemProps();
 
+public:
     void WldItemProps(int Type, WorldLevels level, bool newItem=false);
     void WldItemProps_hide();
     long wlvlPtr;   //!< ArrayID of editing item

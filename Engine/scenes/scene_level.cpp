@@ -671,13 +671,12 @@ int LevelScene::exec()
 
  Uint32 start_physics;
  Uint32 stop_physics;
-  float doUpdate_physics=0;
-
 
   Uint32 start_events;
   Uint32 stop_events;
 
   Uint32 start_common;
+     int wait_delay=0;
 
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
@@ -765,18 +764,18 @@ int LevelScene::exec()
         if(stop_render < start_render)
             {stop_render=0; start_render=0;}
 
-        doUpdate_physics = timeStep;
+        wait_delay=timeStep;
         lastTicks=1;
-        if( timeStep > (timeStep-(start_common-SDL_GetTicks())) )
+        if( timeStep > (timeStep-(SDL_GetTicks()-start_common)) )
         {
-            doUpdate_physics = timeStep-(start_common-SDL_GetTicks());
+            wait_delay = timeStep-(SDL_GetTicks()-start_common);
             lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
         debug_phys_delay=(stop_physics-start_physics);
         debug_event_delay=(stop_events-start_events);
 
-        if(doUpdate_physics>0)
-            SDL_Delay( doUpdate_physics );
+        if(wait_delay>0)
+            SDL_Delay( wait_delay );
 
         stop_render=0;
         start_render=0;

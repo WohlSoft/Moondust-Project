@@ -32,19 +32,33 @@ int PGE_Window::PhysStep=75;
 bool PGE_Window::showDebugInfo=false;
 
 SDL_Window *PGE_Window::window;
+SDL_GLContext PGE_Window::glcontext;
 
 bool PGE_Window::IsInit=false;
 bool PGE_Window::showCursor=true;
 
 
 #include <QMessageBox>
+#include <QtDebug>
+
+void PGE_Window::checkSDLError(int line)
+{
+    const char *error = SDL_GetError();
+    if (*error != '\0')
+    {
+        qDebug() << QString("SDL Error: %1").arg(error)
+        << ((line != -1)?
+            QString(" + line: %i").arg(line) : "");
+        SDL_ClearError();
+    }
+}
 
 
 bool PGE_Window::init(QString WindowTitle)
 {
     // Initalizing SDL
 
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
+    if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
     {
         QMessageBox::critical(NULL, "SDL Error",
             QString("Unable to init SDL!\n%1")
@@ -53,30 +67,20 @@ bool PGE_Window::init(QString WindowTitle)
         return false;
     }
 
-
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     //SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
     //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 
-    //int StencilSize;
-    //SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, StencilSize);
-    SDL_GL_SetSwapInterval(1);
-
-
-    // Creating window with QString title, with size 800x600 and placing to screen center
+    // Устанавливаем версию использованной OpenGL (2.1)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               Width, Height,
                               SDL_WINDOW_SHOWN /*| SDL_WINDOW_RESIZABLE*/ | SDL_WINDOW_OPENGL);
-
-    SDL_GLContext glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-
-    SDL_SetWindowIcon(window,
-                           GraphicsHelps::QImage_toSDLSurface(QImage(":/icon/cat_16.png")));
-
-    Q_UNUSED(glcontext);
+    checkSDLError();
 
     if(window == NULL)
     {
@@ -84,10 +88,17 @@ bool PGE_Window::init(QString WindowTitle)
         QMessageBox::critical(NULL, "SDL Error",
             QString("Unable to create window!\n%1")
             .arg( SDL_GetError() ), QMessageBox::Ok);
-
         return false;
     }
 
+    SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(QImage(":/icon/cat_16.png")));
+
+
+    glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    checkSDLError();
+
+    SDL_GL_SetSwapInterval(1);
+    checkSDLError();
     IsInit=true;
     return true;
 }
@@ -95,6 +106,8 @@ bool PGE_Window::init(QString WindowTitle)
 
 bool PGE_Window::uninit()
 {
+    SDL_GL_DeleteContext(glcontext);
+    SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;
     return true;

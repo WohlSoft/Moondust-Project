@@ -17,7 +17,7 @@ class LvlLayersBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LvlLayersBox(QWidget *parent = 0);
     ~LvlLayersBox();
 

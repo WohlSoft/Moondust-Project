@@ -15,9 +15,10 @@ class LvlSectionProps : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LvlSectionProps(QWidget *parent);
     ~LvlSectionProps();
+public:
     bool lockSctSettingsProps;
 
 public slots:
