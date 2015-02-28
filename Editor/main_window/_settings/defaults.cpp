@@ -161,9 +161,7 @@ void MainWindow::setUiDefults()
     ui->debuggerBox->hide();
 
     ui->menuView->setEnabled(false);
-
     ui->menuWindow->setEnabled(true);
-
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
     ui->menuTest->setEnabled(false);

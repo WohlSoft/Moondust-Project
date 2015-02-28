@@ -176,7 +176,6 @@ int main(int argc, char *argv[])
     //Load selected configuration pack
 
 
-
     ConfigManager::setConfigPath(configPath);
     if(!ConfigManager::loadBasics()) exit(1);
 
