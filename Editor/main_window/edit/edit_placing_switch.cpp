@@ -164,9 +164,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 ui->actionFill->setChecked(false);
                 ui->actionFill->setEnabled(true);
 
-
-                qApp->setActiveWindow(this);
-                activeLvlEditWin()->setFocus();
            default:;
        }
 
@@ -174,6 +171,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
        //Switch placing mode
        if(valid)
+       {
            switch(itemType)
            {
            case ItemTypes::LVL_Block:
@@ -223,6 +221,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    break;
                }
            }
+           qApp->setActiveWindow(this);
+           activeLvlEditWin()->setFocus();
+       }
     }
     else if(activeChildWindow()==3) // World editing window
     {
@@ -266,8 +267,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  ui->actionFill->setChecked(false);
                  ui->actionFill->setEnabled(true);
 
-                 qApp->setActiveWindow(this);
-                 activeWldEditWin()->setFocus();
             default:;
         }
 
@@ -275,6 +274,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
         //Switch placing mode
         if(valid)
+        {
             switch(itemType)
             {
                 case ItemTypes::WLD_Tile:
@@ -319,6 +319,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                     }
             }
 
+            qApp->setActiveWindow(this);
+            activeWldEditWin()->setFocus();
+        }
     }
 }
 

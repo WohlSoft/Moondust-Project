@@ -18,9 +18,10 @@ class LevelItemBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LevelItemBox(QWidget *parent = 0);
     ~LevelItemBox();
+public:
     QTabWidget *tabWidget();
 
     // update data of the toolboxes

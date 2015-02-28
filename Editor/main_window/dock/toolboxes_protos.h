@@ -2,6 +2,7 @@
 #define TOOLBOXES_PROTOS_H
 
 class TilesetItemBox;
+class BookmarksBox;
 
 class LvlItemProperties;
 class LvlWarpBox;
@@ -16,10 +17,12 @@ class WldSearchBox;
 
 #define MainWindowFriends \
     friend class TilesetItemBox;\
+    friend class BookmarksBox;\
+    \
+    friend class LevelItemBox;\
     friend class LvlItemProperties;\
     friend class LvlWarpBox;\
     friend class LvlSectionProps;\
-    friend class LevelItemBox;\
     friend class LvlSearchBox;\
     friend class LvlLayersBox;\
     \

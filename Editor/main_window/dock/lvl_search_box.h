@@ -18,7 +18,7 @@ class LvlSearchBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LvlSearchBox(QWidget *parent = 0);
     ~LvlSearchBox();
 

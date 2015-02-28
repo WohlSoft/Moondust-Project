@@ -32,7 +32,6 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     switchResizeMode(false);
 

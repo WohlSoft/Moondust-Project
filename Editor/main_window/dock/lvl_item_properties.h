@@ -34,10 +34,10 @@ class LvlItemProperties : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LvlItemProperties(QWidget *parent);
     ~LvlItemProperties();
-
+public:
     long blockPtr;
     long bgoPtr;
     long npcPtr;

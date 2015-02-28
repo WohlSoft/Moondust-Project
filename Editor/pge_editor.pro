@@ -246,7 +246,6 @@ SOURCES += main.cpp\
     main_window/tools_menu.cpp \
     main_window/translator.cpp \
     main_window/about_dialog/aboutdialog.cpp \
-    main_window/dock/bookmark_box.cpp \
     main_window/dock/debugger.cpp \
     main_window/dock/lvl_events_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
@@ -405,7 +404,8 @@ SOURCES += main.cpp\
     main_window/dock/lvl_search_box.cpp \
     main_window/dock/lvl_layers_box.cpp \
     tools/external_tools/audiocvt_sox_gui.cpp \
-    main_window/dock/wld_search_box.cpp
+    main_window/dock/wld_search_box.cpp \
+    main_window/dock/bookmarks_box.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -581,7 +581,8 @@ HEADERS  += defines.h \
     main_window/dock/lvl_search_box.h \
     main_window/dock/lvl_layers_box.h \
     tools/external_tools/audiocvt_sox_gui.h \
-    main_window/dock/wld_search_box.h
+    main_window/dock/wld_search_box.h \
+    main_window/dock/bookmarks_box.h
 
 
 FORMS    += \
@@ -626,7 +627,8 @@ FORMS    += \
     main_window/dock/lvl_search_box.ui \
     main_window/dock/lvl_layers_box.ui \
     tools/external_tools/audiocvt_sox_gui.ui \
-    main_window/dock/wld_search_box.ui
+    main_window/dock/wld_search_box.ui \
+    main_window/dock/bookmarks_box.ui
 
 
 

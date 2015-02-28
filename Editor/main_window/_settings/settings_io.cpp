@@ -98,7 +98,7 @@ void MainWindow::loadSettings()
         dock_WldSearchBox->setFloating(settings.value("world-search-float", true).toBool());
         dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
         ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
-        ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
+        dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
@@ -113,7 +113,7 @@ void MainWindow::loadSettings()
 
         dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
-        ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
+        dock_BookmarksBox->restoreGeometry(settings.value("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
@@ -194,7 +194,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-search-float", dock_WldSearchBox->isFloating());
     settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
     settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
-    settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
+    settings.setValue("bookmarks-box-float", dock_BookmarksBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
     settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
@@ -210,7 +210,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
     settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
-    settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
+    settings.setValue("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());

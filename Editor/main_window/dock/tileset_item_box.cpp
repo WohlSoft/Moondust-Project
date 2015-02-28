@@ -57,7 +57,6 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     this->setFocusPolicy(Qt::ClickFocus);
 
@@ -126,7 +125,6 @@ void TilesetItemBox::setTileSetBox(bool force)
     //QDir grpDir = configs.config_dir + "group_tilesets/";
     //QStringList entries;
     //entries = grpDir.entryList(filters, QDir::Files);
-
     foreach (SimpleTilesetGroup grp, mw()->configs.main_tilesets_grp) {
         prepareTilesetGroup(grp);
     }
