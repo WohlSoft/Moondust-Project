@@ -24,10 +24,12 @@ QString GlobalSettings::openPath=".";
 QString GlobalSettings::savePath=".";
 QString GlobalSettings::savePath_npctxt=".";
 
+QString GlobalSettings::tools_sox_bin_path="/tools/sox/";
+
 LevelEditingSettings GlobalSettings::LvlOpts;
 
 bool GlobalSettings::autoPlayMusic=false;
-int GlobalSettings::musicVolume=100;
+int GlobalSettings::musicVolume=128;
 
 bool GlobalSettings::LevelToolBoxVis=true;
 bool GlobalSettings::WorldToolBoxVis=true;
@@ -49,6 +51,8 @@ bool GlobalSettings::MidMouse_allowSwitchToPlace=true;
 bool GlobalSettings::MidMouse_allowSwitchToDrag=true;
 
 bool GlobalSettings::Placing_dontShowPropertiesBox=false;
+
+int  GlobalSettings::historyLimit=300;
 
 QString GlobalSettings::currentTheme="";
 

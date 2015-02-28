@@ -54,6 +54,7 @@ private:
 
     void doHelp(QStringList args);
     void doTest(QStringList args);
+    void doPlayMusic(QStringList args);
     void doVersion(QStringList);
     void doQuit(QStringList);
     void doSavesettings(QStringList);
@@ -64,6 +65,7 @@ private:
     void doSegmentationViolation(QStringList);
     void doPgeXTest(QStringList args);
     void doSMBXTest(QStringList args);
+    void doSendCheat(QStringList args);
 };
 
 #endif // DEVCONSOLE_H

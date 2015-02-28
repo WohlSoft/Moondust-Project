@@ -25,13 +25,230 @@
 
 #include "level/lvl_scene_ptr.h"
 
-#include "../data_configs/config_manager.h"
+#include <data_configs/config_manager.h>
 
-#include "../fontman/font_manager.h"
+#include <fontman/font_manager.h>
 
-#include "../gui/pge_msgbox.h"
+#include <gui/pge_msgbox.h>
+#include <networking/intproc.h>
 
 #include <QtDebug>
+
+
+
+#ifndef RENDER_H
+#define RENDER_H
+#include <Box2D/Box2D.h>
+struct b2AABB;
+// This class implements debug drawing callbacks that are invoked
+// inside b2World::Step.
+class DebugDraw : public b2Draw
+{
+public:
+DebugDraw() { c=NULL; }
+void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
+void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
+void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
+void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
+void DrawTransform(const b2Transform& xf);
+void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color);
+void DrawString(int x, int y, const char* string, ...);
+void DrawString(const b2Vec2& p, const char* string, ...);
+void DrawAABB(b2AABB* aabb, const b2Color& cl);
+PGE_LevelCamera *c;
+};
+#endif
+
+#include <stdio.h>
+#include <stdarg.h>
+
+void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+{
+    glDisable(GL_TEXTURE_2D);
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int32 i = 0; i < vertexCount; ++i)
+    {
+        glVertex2f(vertices[i].x*10 -c->posX(), vertices[i].y*10-c->posY());
+    }
+    glEnd();
+}
+void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+{
+    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
+    glBegin(GL_TRIANGLE_FAN);
+    for (int32 i = 0; i < vertexCount; ++i)
+    {
+        glVertex2f(vertices[i].x*10-c->posX(), vertices[i].y*10 - c->posY());
+    }
+    glEnd();
+    glDisable(GL_BLEND);
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int32 i = 0; i < vertexCount; ++i)
+    {
+        glVertex2f(vertices[i].x*10-c->posX(), vertices[i].y*10-c->posY());
+    }
+    glEnd();
+    glEnable(GL_BLEND);
+}
+void DebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
+{
+    const float32 k_segments = 16.0f;
+    const float32 k_increment = 2.0f * b2_pi / k_segments;
+    float32 theta = 0.0f;
+    glDisable(GL_TEXTURE_2D);
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int32 i = 0; i < k_segments; ++i)
+    {
+        b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
+        glVertex2f(v.x, v.y);
+        theta += k_increment;
+    }
+    glEnd();
+}
+void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
+{
+    const float32 k_segments = 16.0f;
+    const float32 k_increment = 2.0f * b2_pi / k_segments;
+    float32 theta = 0.0f;
+    glEnable(GL_BLEND);
+    glDisable(GL_TEXTURE_2D);
+    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
+    glBegin(GL_TRIANGLE_FAN);
+    for (int32 i = 0; i < k_segments; ++i)
+    {
+        b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
+        glVertex2f(v.x, v.y);
+        theta += k_increment;
+    }
+    glEnd();
+    glDisable(GL_BLEND);
+    theta = 0.0f;
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    for (int32 i = 0; i < k_segments; ++i)
+    {
+        b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
+        glVertex2f(v.x, v.y);
+        theta += k_increment;
+    }
+    glEnd();
+    b2Vec2 p = center + radius * axis;
+    glBegin(GL_LINES);
+    glVertex2f(center.x, center.y);
+    glVertex2f(p.x, p.y);
+    glEnd();
+}
+void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
+{
+    glDisable(GL_TEXTURE_2D);
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glBegin(GL_LINES);
+    glVertex2f(p1.x*10-c->posX(), p1.y*10-c->posY());
+    glVertex2f(p2.x*10-c->posX(), p2.y*10-c->posY());
+    glEnd();
+}
+void DebugDraw::DrawTransform(const b2Transform& xf)
+{
+    b2Vec2 p1 = xf.p, p2;
+    const float32 k_axisScale = 0.4f;
+    glDisable(GL_TEXTURE_2D);
+    glBegin(GL_LINES);
+    glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+    glVertex2f(p1.x*10-c->posX(), p1.y*10-c->posY());
+    p2 = p1 + k_axisScale * xf.q.GetXAxis();
+    glVertex2f(p2.x*10-c->posX(), p2.y*10-c->posY());
+    glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+    glVertex2f(p1.x*10-c->posX(), p1.y*10-c->posY());
+    p2 = p1 + k_axisScale * xf.q.GetYAxis();
+    glVertex2f(p2.x*10-c->posX(), p2.y*10-c->posY());
+    glEnd();
+}
+void DebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
+{
+    glDisable(GL_TEXTURE_2D);
+    glPointSize(size);
+    glBegin(GL_POINTS);
+    glColor4f(color.r, color.g, color.b, 1.0f);
+    glVertex2f(p.x*10-c->posX(), p.y*10-c->posY());
+    glEnd();
+    glPointSize(1.0f);
+}
+void DebugDraw::DrawString(int x, int y, const char *string, ...)
+{
+    char buffer[128];
+    va_list arg;
+    va_start(arg, string);
+    vsprintf(buffer, string, arg);
+    va_end(arg);
+    FontManager::printText(buffer, x*10-c->posX(), y*10-c->posY());
+    //imguiDrawText(x, h - y, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(230, 153, 153, 255));
+}
+
+void DebugDraw::DrawString(const b2Vec2& p, const char *string, ...)
+{
+    char buffer[128];
+    va_list arg;
+    va_start(arg, string);
+    vsprintf(buffer, string, arg);
+    va_end(arg);
+    FontManager::printText(buffer, (int)p.x*10-c->posX(), (int)p.y*10-c->posY());
+    //imguiDrawText((int)p.x, h - (int)p.y, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(230, 153, 153, 255));
+}
+
+void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& cl)
+{
+    glDisable(GL_TEXTURE_2D);
+    glColor4f(cl.r, cl.g, cl.b, 1.0f);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(aabb->lowerBound.x*10-c->posX(), aabb->lowerBound.y*10-c->posY());
+    glVertex2f(aabb->upperBound.x*10-c->posX(), aabb->lowerBound.y*10-c->posY());
+    glVertex2f(aabb->upperBound.x*10-c->posX(), aabb->upperBound.y*10-c->posY());
+    glVertex2f(aabb->lowerBound.x*10-c->posX(), aabb->upperBound.y*10-c->posY());
+    glEnd();
+}
+
+
+
+DebugDraw dbgDraw;
+
+/**************Z-Layers**************/
+double LevelScene::zCounter=0;
+
+double LevelScene::Z_backImage; //Background
+
+//Background-2
+double LevelScene::Z_BGOBack2; // backround BGO
+
+double LevelScene::Z_blockSizable; // sizable blocks
+
+//Background-1
+double LevelScene::Z_BGOBack1; // backround BGO
+
+double LevelScene::Z_npcBack; // background NPC
+double LevelScene::Z_Block; // standart block
+double LevelScene::Z_npcStd; // standart NPC
+double LevelScene::Z_Player; //player Point
+
+//Foreground-1
+double LevelScene::Z_BGOFore1; // foreground BGO
+double LevelScene::Z_BlockFore; //LavaBlock
+double LevelScene::Z_npcFore; // foreground NPC
+//Foreground-2
+double LevelScene::Z_BGOFore2; // foreground BGO
+
+double LevelScene::Z_sys_PhysEnv;
+double LevelScene::Z_sys_door;
+double LevelScene::Z_sys_interspace1; // interSection space layer
+double LevelScene::Z_sys_sctBorder; // section Border
+
 
 LevelScene::LevelScene()
     : Scene(Level)
@@ -43,6 +260,8 @@ LevelScene::LevelScene()
 
     isInit=false;
     isWarpEntrance=false;
+    cameraStartDirected=false;
+    cameraStartDirection=0;
 
     isPauseMenu=false;
     isTimeStopped=false;
@@ -124,6 +343,8 @@ LevelScene::~LevelScene()
 
     //desroy animators
 
+    switch_blocks.clear();
+
     //destroy textures
     qDebug() << "clear textures";
     while(!textures_bank.isEmpty())
@@ -190,6 +411,15 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+    qDebug() << "Destroy Physical Environment zones";
+    while(!physenvs.isEmpty())
+    {
+        LVL_PhysEnv* tmp;
+        tmp = physenvs.first();
+        physenvs.pop_front();
+        if(tmp) delete tmp;
+    }
+
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
     world = NULL;
@@ -212,13 +442,20 @@ Uint32 lastTicks=0;
 bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
+int  debug_render_delay=0;
+int  debug_phys_delay=0;
+int  debug_event_delay=0;
+int  uTick = 1;
 
 void LevelScene::update()
 {
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    if(uTick<=0) uTick=1;
+
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
+            exitLevelDelay -= uTick;
         else
         {
             if(exitLevelCode==EXIT_Closed)
@@ -240,6 +477,23 @@ void LevelScene::update()
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
 
+        while(!block_transfors.isEmpty())
+        {
+            transformTask_block x = block_transfors.first();
+            if(ConfigManager::lvl_block_indexes.contains(x.id))
+                x.block->setup = &(ConfigManager::lvl_block_indexes[x.id]);
+            else
+            {
+                block_transfors.pop_front();
+                continue;
+            }
+            x.block->data.id = block_transfors.first().id;
+            x.block->transformTo_x(x.id);
+            x.block->init();
+
+            block_transfors.pop_front();
+        }
+
         //Update controllers
         keyboard1.sendControls();
 
@@ -250,9 +504,9 @@ void LevelScene::update()
             {
                 debug_player_jumping=players[i]->JumpPressed;
                 debug_player_onground=players[i]->onGround;
-                debug_player_foots=players[i]->foot_contacts;
+                debug_player_foots=players[i]->foot_contacts_map.size();
             }
-            players[i]->update();
+            players[i]->update(uTick);
         }
 
         //Enter players via warp
@@ -279,7 +533,7 @@ void LevelScene::update()
             }
             else
             {
-                delayToEnter-= lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
+                delayToEnter-= uTick;
             }
         }
 
@@ -298,6 +552,15 @@ void LevelScene::update()
             cameras[i]->update();
     }
 
+    if(IntProc::enabled && IntProc::cmd_accepted)
+    {
+        PGE_MsgBox msgBox(this, IntProc::getCMD(),
+                          PGE_MsgBox::msg_info);
+
+        if(!ConfigManager::setup_message_box.sprite.isEmpty())
+            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+        msgBox.exec();
+    }
 
     if(isPauseMenu)
     {
@@ -359,15 +622,24 @@ void LevelScene::render()
     {
         FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
-        FontManager::printText(QString("Player J=%1 G=%2 F=%3")
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
-                               .arg(debug_player_foots), 10,100);
+                               .arg(debug_player_foots)
+                               .arg(uTick), 10,100);
+
+        FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
+                               .arg(debug_event_delay, 3, 10, QChar('0'))
+                               .arg(debug_render_delay, 3, 10, QChar('0'))
+                               .arg(debug_phys_delay, 3, 10, QChar('0'))
+                               .arg(uTick), 10,120);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(lastTicks), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
+
+        //world->DrawDebugData();
     }
 
     renderBlack:
@@ -386,6 +658,12 @@ int LevelScene::exec()
     doExit=false;
 
 
+    dbgDraw.c = cameras.first();
+
+    world->SetDebugDraw(&dbgDraw);
+
+    dbgDraw.SetFlags( dbgDraw.e_shapeBit | dbgDraw.e_jointBit );
+
     //Level scene's Loop
  Uint32 start_render;
  Uint32 stop_render;
@@ -395,9 +673,22 @@ int LevelScene::exec()
  Uint32 stop_physics;
   float doUpdate_physics=0;
 
+
+  Uint32 start_events;
+  Uint32 stop_events;
+
+  Uint32 start_common;
+
+  //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
+  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
+
+    uTick = 1;
+
     while(running)
     {
+        start_common = SDL_GetTicks();
 
+        start_events = SDL_GetTicks();
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
@@ -451,32 +742,44 @@ int LevelScene::exec()
                 break;
             }
         }
+        stop_events = SDL_GetTicks();
 
         start_physics=SDL_GetTicks();
         update();
         stop_physics=SDL_GetTicks();
 
+        stop_render=0;
+        start_render=0;
         if(doUpdate_render<=0)
         {
-
             start_render = SDL_GetTicks();
             render();
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
-
-            if(1000.0 / (float)PGE_Window::MaxFPS > stop_render-start_render)
-                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
+            doUpdate_render = stop_render-start_render;
+            debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= 1000.0/(float)PGE_Window::PhysStep;
+        doUpdate_render -= timeStep;
 
-        if(1000.0 / (float)PGE_Window::PhysStep >stop_physics-start_physics)
+        if(stop_render < start_render)
+            {stop_render=0; start_render=0;}
+
+        doUpdate_physics = timeStep;
+        lastTicks=1;
+        if( timeStep > (timeStep-(start_common-SDL_GetTicks())) )
         {
-            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep - (stop_physics-start_physics);
-            lastTicks = doUpdate_physics;
-            SDL_Delay( doUpdate_physics );
+            doUpdate_physics = timeStep-(start_common-SDL_GetTicks());
+            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
+        debug_phys_delay=(stop_physics-start_physics);
+        debug_event_delay=(stop_events-start_events);
+
+        if(doUpdate_physics>0)
+            SDL_Delay( doUpdate_physics );
+
+        stop_render=0;
+        start_render=0;
 
         if(isExit())
             running = false;
@@ -542,6 +845,3 @@ void LevelScene::setExiting(int delay, int reason)
     exitLevelCode = reason;
     doExit = true;
 }
-
-
-

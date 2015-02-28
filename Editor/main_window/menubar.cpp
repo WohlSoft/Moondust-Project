@@ -23,6 +23,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+#include <ui_lvl_sctc_props.h>
 
 void MainWindow::updateMenus(bool force)
 {
@@ -85,40 +86,40 @@ void MainWindow::updateMenus(bool force)
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 
     dock_LvlItemProps->setVisible(false);
-    ui->WLD_ItemProps->setVisible(false);
-
+    dock_WldItemProps->setVisible(false);
 
 
     if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
     {
-        GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
-        GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+        GlobalSettings::LevelToolBoxVis = dock_LvlItemBox->isVisible();  //Save current visible status
+        GlobalSettings::SectionToolBoxVis = dock_LvlSectionProps->isVisible();
 
         GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
-        GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
+        GlobalSettings::LevelLayersBoxVis = dock_LvlLayers->isVisible();
         GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
-        GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
+        GlobalSettings::LevelSearchBoxVis = dock_LvlSearchBox->isVisible();
 
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
-        ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
-        ui->LevelSectionSettings->setVisible( 0 );
+        dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
+        dock_LvlSectionProps->setVisible( 0 );
         dock_LvlWarpProps->setVisible( 0 );
-        ui->LevelLayers->setVisible( 0 );
+        dock_LvlLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
-        ui->FindDock->setVisible( 0 );
+        dock_LvlSearchBox->setVisible( 0 );
     }
+
     if((GlobalSettings::lastWinType !=1) && (WinType==1))
     {
-        ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
-        ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
+        dock_LvlItemBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
+        dock_LvlSectionProps->setVisible( GlobalSettings::SectionToolBoxVis );
         dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
-        ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
+        dock_LvlLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
-        ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
+        dock_LvlSearchBox->setVisible(GlobalSettings::LevelSearchBoxVis);
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
@@ -127,22 +128,23 @@ void MainWindow::updateMenus(bool force)
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
-        GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+        GlobalSettings::WorldToolBoxVis = dock_WldItemBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
-        GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
+        GlobalSettings::WorldSearchBoxVis = dock_WldSearchBox->isVisible();
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
-        ui->WorldToolBox->setVisible( 0 );
+        dock_WldItemBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
-        ui->WorldFindDock->setVisible( 0 );
+        dock_WldSearchBox->setVisible( 0 );
     }
+
     if((GlobalSettings::lastWinType !=3) && (WinType==3))
     {
-        ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
+        dock_WldItemBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
-        ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
+        dock_WldSearchBox->setVisible( GlobalSettings::WorldSearchBoxVis );
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
@@ -161,7 +163,6 @@ void MainWindow::updateMenus(bool force)
 
 
     GlobalSettings::lastWinType =   WinType;
-
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
@@ -251,6 +252,7 @@ void MainWindow::updateMenus(bool force)
     ui->menuScript->setEnabled( WinType == 1 );
     ui->actionCompile_To->setEnabled( false );
     ui->menuSwitch_Compiler->setEnabled( false );
+
     if(WinType==1)
     {
         if(lvlWin->LvlData.metaData.script)
@@ -271,16 +273,13 @@ void MainWindow::updateMenus(bool force)
             }
             ui->actionAutocode_Lunadll_Original_Language->setChecked(ct==Script::COMPILER_AUTOCODE);
             ui->actionLunaLua->setChecked(ct==Script::COMPILER_LUNALUA);
-        }else{
+        }
+        else
+        {
             ui->actionCompile_To->setText(tr("Compile To:"));
             ui->actionCompile_To->setEnabled( false );
         }
-    }
 
-
-
-    if(WinType==1)
-    {
         if( configs.check() )
         {
             WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
@@ -289,21 +288,9 @@ void MainWindow::updateMenus(bool force)
 
         if(lvlWin->sceneCreated)
         {
-            if(lvlWin->scene->pResizer==NULL)
-            {
-                ui->ResizeSection->setVisible(true);
-                ui->applyResize->setVisible(false);
-                ui->cancelResize->setVisible(false);
-            }
-            else
-            {
-                if(lvlWin->scene->pResizer->type == 0)
-                {
-                    ui->ResizeSection->setVisible(false);
-                    ui->applyResize->setVisible(true);
-                    ui->cancelResize->setVisible(true);
-                }
-            }
+            dock_LvlSectionProps->switchResizeMode(
+                 (lvlWin->scene->pResizer!=NULL)&&(lvlWin->scene->pResizer->type==0)
+                        );
         }
 
         zoom->setText(QString::number(lvlWin->getZoom()));
@@ -311,7 +298,7 @@ void MainWindow::updateMenus(bool force)
         SetCurrentLevelSection(0, 1);
 
         dock_LvlWarpProps->init();
-        setLayersBox();
+        dock_LvlLayers->setLayersBox();
         setEventsBox();
 
         //Sync lists in properties windows
@@ -319,14 +306,8 @@ void MainWindow::updateMenus(bool force)
         setLayerLists();
         updateBookmarkBoxByData();
 
-
-        setLevelSectionData();
-
-        if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
-        setMusic( ui->actionPlayMusic->isChecked() );
+        dock_LvlSectionProps->setLevelSectionData();
         ui->actionSelect->trigger();
-
 
         if(lvlWin->sceneCreated)
         {
@@ -363,11 +344,6 @@ void MainWindow::updateMenus(bool force)
         setCurrentWorldSettings();
         updateBookmarkBoxByData();
 
-        WriteToLog(QtDebugMsg, "-> Music Player");
-
-        if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
-        setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 
         if(wldWin->sceneCreated)
@@ -404,8 +380,11 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
+    WriteToLog(QtDebugMsg, "-> Music Player");
+    LvlMusPlay::updateMusic();
+
     setTileSetBox();
-    UpdateLvlCustomItems();
+    UpdateCustomItems();
     updateWindowMenu();
 
     //Update debugger's custom counters
@@ -415,24 +394,10 @@ void MainWindow::updateMenus(bool force)
 }
 
 
-//QList<QMenu * > menu_delete_list;
-//QList<QAction * > action_delete_list;
-
 void MainWindow::updateWindowMenu()
 {
     //Window menu
     ui->menuWindow->clear();
-
-//    while(!action_delete_list.isEmpty())
-//    {
-//        QAction *tmp = action_delete_list.first();
-//        action_delete_list.pop_back();
-//        if(tmp!=NULL) {
-//            WriteToLog(QtDebugMsg, QString("->>>>Removed trash!<<<<-"));
-//            WriteToLog(QtDebugMsg, QString(tmp->text()));
-//            delete tmp;
-//        }
-//    }
 
     QAction * SubView = ui->menuWindow->addAction(tr("Sub Windows"));
     connect(SubView, SIGNAL(triggered()), this, SLOT(setSubView()));
@@ -440,50 +405,35 @@ void MainWindow::updateWindowMenu()
     if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)
         SubView->setChecked(true);
 
-    //action_delete_list.push_back(SubView);
-
-
     QAction * TabView = ui->menuWindow->addAction(tr("Tab Windows"));
     connect(TabView, SIGNAL(triggered()), this, SLOT(setTabView()));
     TabView->setCheckable(true);
     if(GlobalSettings::MainWindowView==QMdiArea::TabbedView)
         TabView->setChecked(true);
 
-    //action_delete_list.push_back(TabView);
-
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
         closeC->setEnabled( !windows.isEmpty() );
 
-    //action_delete_list.push_back(closeC);
-
-
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * cascade = ui->menuWindow->addAction(tr("Cascade"));
         connect(cascade, SIGNAL(triggered()), this, SLOT( SWCascade() ) );
         cascade->setEnabled( !windows.isEmpty() );
-    //action_delete_list.push_back(cascade);
 
     QAction * tiledW = ui->menuWindow->addAction(tr("Tiled"));
         connect(tiledW, SIGNAL(triggered()), this, SLOT( SWTile() ) );
         tiledW->setEnabled( !windows.isEmpty() );
-    //action_delete_list.push_back(tiledW);
 
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
 
         empty->setVisible( windows.isEmpty() );
-    //action_delete_list.push_back(empty);
-
 
     for (int i = 0; i < windows.size(); ++i) {
         QString text;
@@ -491,7 +441,6 @@ void MainWindow::updateWindowMenu()
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
-        //action_delete_list.push_back(action);
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
@@ -499,3 +448,8 @@ void MainWindow::updateWindowMenu()
 }
 
 
+void MainWindow::UpdateCustomItems()
+{
+    dock_LvlItemBox->setLvlItemBoxes(true, true);
+    dock_WldItemBox->setWldItemBoxes(true, true);
+}

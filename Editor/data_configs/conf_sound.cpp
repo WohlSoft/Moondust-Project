@@ -81,7 +81,7 @@ void dataconfigs::loadSound(QProgressDialog *prgs)
     //Sound
     for(i=1; i<=sound_total; i++)
     {
-        qApp->processEvents();
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
         if(prgs)
         {
             if(!prgs->wasCanceled()) prgs->setValue(i);

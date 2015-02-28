@@ -45,6 +45,14 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     pConfigs = &configs; // Pointer to Main Configs
     WldData = &FileData; //Ad pointer to level data
     _viewPort = parentView;
+    _edit=NULL;
+    if(parent)
+    {
+        if(strcmp(parent->metaObject()->className(), "WorldEdit")==0)
+        {
+            _edit = qobject_cast<WorldEdit*>(parent);
+        }
+    }
 
     //Options
     opts.animationEnabled = true;

@@ -64,47 +64,14 @@ bool LevelScene::setEntrance(int entr)
 
                 startWarp = data.doors[i];
 
-                //cameraStart.setX(data.doors[i].ox);
-                //cameraStart.setY(data.doors[i].oy);
+                cameraStart.setX(startWarp.ox);
+                cameraStart.setY(startWarp.oy);
 
-                int playerW = 24;
-                int playerH = 54;
-
-                switch(startWarp.type)
-                {
-                case 0:
-                case 2:
-                    cameraStart.setX(startWarp.ox+16-playerW/2);
-                    cameraStart.setY(startWarp.oy+32-playerH);
-                    break;
-                case 1:
-                    switch(startWarp.odirect)
-                    {
-                        case 2://right
-                            cameraStart.setX(startWarp.ox);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        case 1://down
-                            cameraStart.setX(startWarp.ox+16-playerW/2);
-                            cameraStart.setY(startWarp.oy);
-                            break;
-                        case 4://left
-                            cameraStart.setX(startWarp.ox+32-playerW);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        case 3://up
-                            cameraStart.setX(startWarp.ox+16-playerW/2);
-                            cameraStart.setY(startWarp.oy+32-playerH);
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                }
+                cameraStartDirected = (startWarp.type==1);
+                cameraStartDirection = startWarp.odirect;
 
                 return true;
             }
-
         }
     }
 
@@ -176,30 +143,37 @@ bool LevelScene::init()
     //quit from game if window was closed
     if(!isLevelContinues) return false;
 
-    //Init Cameras
-    PGE_LevelCamera* camera;
-    camera = new PGE_LevelCamera();
-    camera->setWorld(world);
-    camera->changeSection(data.sections[sID]);
-    camera->isWarp = data.sections[sID].IsWarp;
-    camera->section = &(data.sections[sID]);
 
-    camera->init(
-                    (float)cameraStart.x(),
-                    (float)cameraStart.y(),
-                    (float)PGE_Window::Width, (float)PGE_Window::Height
-                );
-    camera->setPos(cameraStart.x()-camera->w()/2 + 12,
-                   cameraStart.y()-camera->h()/2 + 27);
+    for(int i=0; i<numberOfPlayers; i++)
+    {
+        int x=cameraStart.x();
+        int y=cameraStart.y();
+        int width=PGE_Window::Width;
+        int height=PGE_Window::Height/numberOfPlayers;
 
-    cameras.push_back(camera);
+        //Init Cameras
+        PGE_LevelCamera* camera;
+        camera = new PGE_LevelCamera();
+        camera->setWorld(world);
+        camera->changeSection(data.sections[sID]);
+        camera->isWarp = data.sections[sID].IsWarp;
+        camera->section = &(data.sections[sID]);
+        camera->init(
+                        (float)x,
+                        (float)y,
+                        (float)width, (float)height
+                    );
+        camera->setPos(cameraStart.x()-camera->w()/2 + 12,
+                       cameraStart.y()-camera->h()/2 + 27);
+
+        cameras.push_back(camera);
+    }
 
     LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
-
-    if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
+    if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
     {
-        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
-        qDebug() << "Backgroubnd ID:" << camera->BackgroundID;
+        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID]);
+        qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
     }
     else
         CurrentBackground->setNone();
@@ -243,6 +217,21 @@ bool LevelScene::init()
         warps.push_back(warpP);
     }
 
+    qDebug()<<"Init Physical environments";
+    //BGO
+    for(int i=0; i<data.physez.size(); i++)
+    {
+        loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
+
+        LVL_PhysEnv * physesP;
+        physesP = new LVL_PhysEnv();
+        physesP->worldPtr = world;
+        physesP->data = data.physez[i];
+        physesP->init();
+        physenvs.push_back(physesP);
+    }
+
 
     qDebug() << "textures " << ConfigManager::level_textures.size();
 
@@ -269,6 +258,17 @@ bool LevelScene::init()
     {
         qDebug()<<"No defined players!";
         return false;
+    }
+
+    //Build switch blocks structure
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(blocks[i]->setup->switch_Block)
+        {
+            if(!switch_blocks.contains(blocks[i]->setup->switch_ID) )
+                switch_blocks[blocks[i]->setup->switch_ID].clear();
+            switch_blocks[blocks[i]->setup->switch_ID].push_back(blocks[i]);
+        }
     }
 
     //start animation

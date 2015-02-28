@@ -7,20 +7,22 @@
 #include <QApplication>
 
 #include "../common_features/app_path.h"
+#include <networking/intproc.h>
 
 /**
  * @brief EditorPipe::LocalServer
  *  Constructor
  */
-EditorPipe::EditorPipe()
+
+EditorPipe::EditorPipe() : QThread(NULL)
 {
-    this->moveToThread(this);
     qDebug() << "Construct interprocess pipe";
     do_acceptLevelData=false;
     do_parseLevelData=false;
 
     accepted_lvl_raw="";
     accepted_lvl.ReadFileValid = false;
+    isWorking = false;
 
     levelAccepted=false;
     qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
@@ -120,21 +122,24 @@ void EditorPipe::run()
 {
     qDebug() << "Start server thread";
     server = new QLocalServer;
+    server->setParent(0);
 
     qDebug() << "set slots connections to QLocalServer server";
     QObject::connect(server, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
     QObject::connect(this, SIGNAL(privateDataReceived(QString, QLocalSocket*)), this, SLOT(slotOnData(QString, QLocalSocket*)));
 
 #ifdef Q_OS_UNIX
-  // Make sure the temp address file is deleted
-  QFile address(QString("/tmp/" LOCAL_SERVER_NAME));
-  if(address.exists()){
-    address.remove();
-  }
+    // Make sure the temp address file is deleted
+    QFile address(QString("/tmp/" LOCAL_SERVER_NAME));
+    if(address.exists())
+    {
+        address.remove();
+    }
 #endif
 
   QString serverName = QString(LOCAL_SERVER_NAME);
   server->listen(serverName);
+  isWorking=true;
   while(server->isListening() == false)
   {
     server->listen(serverName);
@@ -143,6 +148,7 @@ void EditorPipe::run()
   qDebug() << "Listen " << server->isListening() << serverName;
 
   exec();
+  isWorking=false;
 
   qDebug()<< "Server closed";
 }
@@ -155,8 +161,10 @@ void EditorPipe::run()
  */
 void EditorPipe::exec()
 {
+    IntProc::state="Waiting of commands...";
+
     //loop:
-    while(server->isListening())
+    while(server->isListening() && isWorking)
     {
         msleep(100);
         if(!server->waitForNewConnection(100))
@@ -181,6 +189,8 @@ void EditorPipe::exec()
             }
         }
     }
+
+    server->close();
 }
 
 
@@ -195,6 +205,7 @@ void EditorPipe::slotNewConnection()
 {
     qDebug() << "New connection!";
     clients.push_front(server->nextPendingConnection());
+    clients.last()->moveToThread(this);
 
     QObject::connect(clients.last(), SIGNAL(readyRead()), this, SLOT(slotReadClientData()));
 
@@ -207,8 +218,7 @@ void EditorPipe::slotReadClientData()
     client->moveToThread(this);
     QByteArray data = client->readAll();
     QString acceptedData = QString::fromUtf8(data);
-
-    qDebug() << "IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
+    qDebug() << "--1--IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
 
     emit privateDataReceived(acceptedData, client);
 }
@@ -221,7 +231,7 @@ void EditorPipe::slotOnData(QString data, QLocalSocket *client)
     {
         buffer.append(c);
 
-        if(c==QChar('\n'))
+        if(c==QChar(QChar::LineFeed))
             nc++;
         else
             nc=0;
@@ -229,7 +239,8 @@ void EditorPipe::slotOnData(QString data, QLocalSocket *client)
         if(nc==2)
         {
             buffer.resize(buffer.size()-2);
-            qDebug() << "icomingData<-- ["<< (buffer.size()>30? QString(buffer).remove(30, buffer.size()-31) : buffer)<<"]";
+            qDebug() << "--2--icomingData<-- ["<< (buffer.size()>30? QString(buffer).remove(30, buffer.size()-31) : buffer)<<"]";
+            //qDebug() << "--2--icomingData<-- ["<< buffer<<"]";
             emit icomingData(buffer, client);
             buffer.clear();
         }
@@ -238,16 +249,22 @@ void EditorPipe::slotOnData(QString data, QLocalSocket *client)
 
 void EditorPipe::icomingData(QString in, QLocalSocket *client)
 {
-    if(in=="PARSE_LVLX")
+    if((in=="PARSE_LVLX")||(in=="OPEN_TEMP_LVLX"))
     {
         do_acceptLevelData=false;
+        qDebug() << "LVLX accepting is done";
+        IntProc::state="LVLX Accepted, do parsing of LVLX";
     }
 
     if(do_acceptLevelData)
     {
         accepted_lvl_raw.append(in);
+        qDebug() << "append LVLX data";
         if(in.endsWith("\n\n"))
+        {
             do_acceptLevelData=false;
+            qDebug() << "LVLX accepting is done";
+        }
     }
     else
     if(in.startsWith("SEND_LVLX: ", Qt::CaseSensitive))
@@ -257,19 +274,28 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         in.remove("SEND_LVLX: ");
         accepted_lvl_path = in;
         do_acceptLevelData=true;
-
+        IntProc::state="Accepted SEND_LVLX";
         qDebug() << "Send 'Ready'";
 
         QByteArray toClient = QString("READY\n\n").toUtf8();
-        qDebug() << "OUT: <<"<< "READY\n\n";
+
         client->moveToThread(this);
+        qDebug() << "OUT: <<"<< "READY\n\n";
         client->write(toClient.data(), toClient.length());
+        //qDebug() << "flush";
+        //client->flush();
         qDebug() << "'Ready' written";
         if(client->waitForBytesWritten(1000))
+        {
             qDebug() << "'Ready' sent";
+            IntProc::state="Wait for LVLX data...";
+        }
         else
+        {
             qDebug() << "Fail to send 'Ready': "
                      << client->errorString();
+            IntProc::state="Fail to answer";
+        }
     }
     else
     if(in=="PARSE_LVLX")
@@ -277,8 +303,40 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         qDebug() << "do Parse LVLX: >>"<< in;
         do_parseLevelData=true;
         accepted_lvl = FileFormats::ReadExtendedLvlFile(accepted_lvl_raw, accepted_lvl_path);
+        IntProc::state="LVLX is valid: %1";
+        IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
         qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
         levelAccepted=true;
+    }
+    else
+    if(in=="OPEN_TEMP_LVLX")
+    {
+        qDebug() << "do Parse LVLX: >>"<< in;
+        do_parseLevelData=true;
+        QFile temp(accepted_lvl_raw.remove("\n"));
+        if(temp.open(QFile::ReadOnly|QFile::Text))
+        {
+            QTextStream x(&temp);
+            accepted_lvl = FileFormats::ReadExtendedLvlFile(x.readAll(), accepted_lvl_path);
+            IntProc::state="LVLX is valid: %1";
+            IntProc::state = IntProc::state.arg(accepted_lvl.ReadFileValid);
+            qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
+        }
+        else
+        {
+            qDebug()<<"ERROR: Can't open temp file";
+            accepted_lvl.ReadFileValid = false;
+        }
+        temp.remove();
+        levelAccepted=true;
+    }
+    else
+    if(in.startsWith("CHEAT: ", Qt::CaseSensitive))
+    {
+        qDebug() << "Accepted cheat code";
+        in.remove("CHEAT: ");
+        IntProc::cmd = in;
+        IntProc::cmd_accepted=true;
     }
     else
     if(in=="PING")
@@ -303,7 +361,7 @@ void EditorPipe::displayError(QLocalSocket::LocalSocketError socketError)
     switch (socketError)
     {
         default:
-            qDebug() << QString("The following error occurred: %1.")
+            qDebug() << QString("ENGINE: The following error occurred: %1.")
                                      .arg(server->errorString());
     }
 

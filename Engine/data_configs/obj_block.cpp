@@ -20,10 +20,10 @@
 #include "../gui/pge_msgbox.h"
 
 /*****Level blocks************/
-QVector<obj_block >     ConfigManager::lvl_blocks;
+QList<obj_block >     ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager ConfigManager::Dir_Blocks;
-QVector<SimpleAnimator > ConfigManager::Animator_Blocks;
+QList<SimpleAnimator > ConfigManager::Animator_Blocks;
 /*****Level blocks************/
 
 namespace loadLevelBlocks_fnc
@@ -171,7 +171,11 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.frames = blockset.value("frames", "1").toInt();
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
 
-                //sblock.frame_h = (sblock.animated? qRound(qreal(sblock.image.height())/sblock.frames) : sblock.image.height());
+                static int switchID=0;
+                sblock.switch_Button    = blockset.value("switch-button", false).toBool();
+                sblock.switch_Block     = blockset.value("switch-block", false).toBool();
+                sblock.switch_ID        = blockset.value("switch-id", switchID++).toInt();;
+                sblock.switch_transform = blockset.value("switch-transform", "1").toInt();;
 
                 sblock.display_frame = blockset.value("display-frame", "0").toInt();
 

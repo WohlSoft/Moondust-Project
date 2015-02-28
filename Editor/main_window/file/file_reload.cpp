@@ -20,6 +20,8 @@
 #include <audio/music_player.h>
 #include <script/gui/additionalsettings.h>
 #include <main_window/global_settings.h>
+#include <main_window/dock/lvl_sctc_props.h>
+#include <main_window/dock/lvl_item_toolbox.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -119,6 +121,8 @@ void MainWindow::on_actionReload_triggered()
 
         //ui->centralWidget->activeSubWindow()->close();
         LevelEdit *child = chLvlWin;//createLvlChild();
+        LvlMusPlay::setNoMusic();
+        setMusic(false);
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)))
         {
             child->show();
@@ -126,6 +130,7 @@ void MainWindow::on_actionReload_triggered()
             child->updateGeometry();
             child->ResetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
+            LvlMusPlay::musicForceReset=true; //reset musics
             updateMenus(true);
 
             child->setFocus();
@@ -142,8 +147,6 @@ void MainWindow::on_actionReload_triggered()
             SetCurrentLevelSection(lastSection);
 
             if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            LvlMusPlay::musicForceReset=true; //reset musics
-            on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
@@ -305,7 +308,7 @@ void MainWindow::on_actionReload_triggered()
 
     }
 
-    clearFilter();
+    dock_LvlItemBox->clearFilter();
 }
 
 

@@ -60,6 +60,7 @@ public:
 
     int collide;
 
+    bool slippery_surface;
     bool isRectangle;
     bool _player_moveup; //Protection from wrong collision
 
@@ -97,7 +98,8 @@ public:
         LVLPlayer,
         LVLEffect,
         LVLWarp,
-        LVLSpecial
+        LVLSpecial,
+        LVLPhysEnv
     };
 
     virtual void update();

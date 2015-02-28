@@ -2,6 +2,7 @@
 #define LVL_WARP_PROPS_H
 
 #include <QDockWidget>
+#include "mwdock_base.h"
 
 namespace Ui {
 class LvlWarpBox;
@@ -10,18 +11,17 @@ class LvlWarpBox;
 class MainWindow;
 class QComboBox;
 
-class LvlWarpBox : public QDockWidget
+class LvlWarpBox : public QDockWidget, public MWDock_Base
 {
     Q_OBJECT
 
     friend class MainWindow;
 public:
-    explicit LvlWarpBox(QWidget *parent = 0);
-    LvlWarpBox(MainWindow *_mw, QWidget *parent = 0);
-    void setParentMW(MainWindow *ParentMW);
+    explicit LvlWarpBox(QWidget *parent);
     ~LvlWarpBox();
 
 public slots:
+    void re_translate();
     void init();//void setDoorsToolbox();
 
 public slots:
@@ -74,8 +74,6 @@ private:
     bool lockWarpSetSettings;
 
     Ui::LvlWarpBox *ui;
-    void construct(MainWindow *ParentMW);
-    MainWindow *mw;
 };
 
 #endif // LVL_WARP_PROPS_H

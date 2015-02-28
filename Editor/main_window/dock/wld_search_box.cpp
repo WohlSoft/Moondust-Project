@@ -28,21 +28,118 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-bool lockResetWorld = false;
+#include "wld_search_box.h"
+#include "ui_wld_search_box.h"
+
+WldSearchBox::WldSearchBox(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::WldSearchBox)
+{
+    setVisible(false);
+    ui->setupUi(this);
+    lockResetWorld=false;
+
+    currentSearches = 0;
+
+    curSearchTile.id = 0;
+    curSearchTile.index = 0;
+
+    curSearchScenery.id = 0;
+    curSearchScenery.index = 0;
+
+    curSearchPath.id = 0;
+    curSearchPath.index = 0;
+
+    curSearchLevel.id = 0;
+    curSearchLevel.index = 0;
+
+    curSearchMusic.id = 0;
+    curSearchMusic.index = 0;
+
+    QRect mwg = mw()->geometry();
+    int GOffset=240;
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setFloating(true);
+    setGeometry(
+                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.y()+120,
+                width(),
+                height()
+                );
+
+    //enable & disable
+    connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeTile, SIGNAL(toggled(bool)), ui->Find_Button_TypeTile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeScenery, SIGNAL(toggled(bool)), ui->Find_Button_TypeScenery, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypePath, SIGNAL(toggled(bool)), ui->Find_Button_TypePath, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeMusic, SIGNAL(toggled(bool)), ui->Find_Button_TypeMusic, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_PathBackground, SIGNAL(toggled(bool)), ui->Find_Check_PathBackgroundActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_BigPathBackground, SIGNAL(toggled(bool)), ui->Find_Check_BigPathBackgroundActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_AlwaysVisible, SIGNAL(toggled(bool)), ui->Find_Check_AlwaysVisibleActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_GameStartPoint, SIGNAL(toggled(bool)), ui->Find_Check_GameStartPointActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LevelFile, SIGNAL(toggled(bool)), ui->Find_Edit_LevelFile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LevelFile, SIGNAL(toggled(bool)), ui->Find_Button_LevelFile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_ContainsTitle, SIGNAL(toggled(bool)), ui->Find_Edit_ContainsTitle, SLOT(setEnabled(bool)));
+
+    //reset if modify
+    connect(ui->Find_Button_TypeTile, SIGNAL(clicked()), this, SLOT(resetTileSearch()));
+    connect(ui->Find_Button_TypeScenery, SIGNAL(clicked()), this, SLOT(resetScenerySearch()));
+    connect(ui->Find_Button_TypePath, SIGNAL(clicked()), this, SLOT(resetPathSearch()));
+    connect(ui->Find_Button_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Button_TypeMusic, SIGNAL(clicked()), this, SLOT(resetMusicSearch()));
+    connect(ui->Find_Check_PathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_BigPathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_AlwaysVisibleActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_GameStartPointActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Edit_LevelFile, SIGNAL(textEdited(QString)), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Edit_ContainsTitle, SIGNAL(textEdited(QString)), this, SLOT(resetLevelSearch()));
+
+    //also checkboxes
+    connect(ui->Find_Check_TypeTile, SIGNAL(clicked()), this, SLOT(resetTileSearch()));
+    connect(ui->Find_Check_TypeScenery, SIGNAL(clicked()), this, SLOT(resetScenerySearch()));
+    connect(ui->Find_Check_TypePath, SIGNAL(clicked()), this, SLOT(resetPathSearch()));
+    connect(ui->Find_Check_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_TypeMusic, SIGNAL(clicked()), this, SLOT(resetMusicSearch()));
+    connect(ui->Find_Check_PathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_BigPathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_AlwaysVisible, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_GameStartPoint, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_LevelFile, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_ContainsTitle, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+
+    connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
+
+    connect(mw()->ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
+}
+
+WldSearchBox::~WldSearchBox()
+{
+    delete ui;
+}
+
+void WldSearchBox::re_translate()
+{
+    ui->retranslateUi(this);
+}
+
+
 
 
 void MainWindow::on_actionWLD_SearchBox_triggered(bool checked)
 {
-    ui->WorldFindDock->setVisible(checked);
-    if(checked)ui->WorldFindDock->raise();
+    dock_WldSearchBox->setVisible(checked);
+    if(checked)dock_WldSearchBox->raise();
 }
 
-void MainWindow::on_WorldFindDock_visibilityChanged(bool visible)
+void WldSearchBox::on_WldSearchBox_visibilityChanged(bool visible)
 {
-    ui->actionWLD_SearchBox->setChecked(visible);
+    mw()->ui->actionWLD_SearchBox->setChecked(visible);
 }
 
-void MainWindow::on_Find_Button_ResetLevel_clicked()
+void WldSearchBox::on_Find_Button_ResetLevel_clicked()
 {
     if(!(currentSearches & SEARCH_LEVEL)){
         ui->Find_Check_TypeLevel->setChecked(true);
@@ -68,7 +165,7 @@ void MainWindow::on_Find_Button_ResetLevel_clicked()
     }
 }
 
-void MainWindow::on_Find_Button_ResetMusic_clicked()
+void WldSearchBox::on_Find_Button_ResetMusic_clicked()
 {
     if(!(currentSearches & SEARCH_MUSICBOX)){
         ui->Find_Check_TypeMusic->setChecked(true);
@@ -82,7 +179,7 @@ void MainWindow::on_Find_Button_ResetMusic_clicked()
     }
 }
 
-void MainWindow::on_Find_Button_ResetPath_clicked()
+void WldSearchBox::on_Find_Button_ResetPath_clicked()
 {
     if(!(currentSearches & SEARCH_PATH)){
         ui->Find_Check_TypePath->setChecked(true);
@@ -96,7 +193,7 @@ void MainWindow::on_Find_Button_ResetPath_clicked()
     }
 }
 
-void MainWindow::on_Find_Button_ResetScenery_clicked()
+void WldSearchBox::on_Find_Button_ResetScenery_clicked()
 {
     if(!(currentSearches & SEARCH_SCENERY)){
         ui->Find_Check_TypeScenery->setChecked(true);
@@ -110,7 +207,7 @@ void MainWindow::on_Find_Button_ResetScenery_clicked()
     }
 }
 
-void MainWindow::on_Find_Button_ResetTile_clicked()
+void WldSearchBox::on_Find_Button_ResetTile_clicked()
 {
     if(!(currentSearches & SEARCH_TILE)){
         ui->Find_Check_TypeTile->setChecked(true);
@@ -124,9 +221,9 @@ void MainWindow::on_Find_Button_ResetTile_clicked()
     }
 }
 
-void MainWindow::on_Find_Button_TypeLevel_clicked()
+void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 {
-    ItemSelectDialog* selLevel = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
+    ItemSelectDialog* selLevel = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
     if(selLevel->exec()==QDialog::Accepted){
         int selected = selLevel->levelID;
         curSearchLevel.id = selected;
@@ -135,9 +232,9 @@ void MainWindow::on_Find_Button_TypeLevel_clicked()
     delete selLevel;
 }
 
-void MainWindow::on_Find_Button_TypeTile_clicked()
+void WldSearchBox::on_Find_Button_TypeTile_clicked()
 {
-    ItemSelectDialog* selTile = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_TILE,0,0,0,0,curSearchTile.id,0,0,0);
+    ItemSelectDialog* selTile = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_TILE,0,0,0,0,curSearchTile.id,0,0,0);
     if(selTile->exec()==QDialog::Accepted){
         int selected = selTile->tileID;
         curSearchTile.id = selected;
@@ -146,9 +243,9 @@ void MainWindow::on_Find_Button_TypeTile_clicked()
     delete selTile;
 }
 
-void MainWindow::on_Find_Button_TypeScenery_clicked()
+void WldSearchBox::on_Find_Button_TypeScenery_clicked()
 {
-    ItemSelectDialog* selScenery = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,curSearchScenery.id,0,0);
+    ItemSelectDialog* selScenery = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,curSearchScenery.id,0,0);
     if(selScenery->exec()==QDialog::Accepted){
         int selected = selScenery->sceneryID;
         curSearchScenery.id = selected;
@@ -157,9 +254,9 @@ void MainWindow::on_Find_Button_TypeScenery_clicked()
     delete selScenery;
 }
 
-void MainWindow::on_Find_Button_TypePath_clicked()
+void WldSearchBox::on_Find_Button_TypePath_clicked()
 {
-    ItemSelectDialog* selPath = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,curSearchPath.id,0);
+    ItemSelectDialog* selPath = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,curSearchPath.id,0);
     if(selPath->exec()==QDialog::Accepted){
         int selected = selPath->pathID;
         curSearchPath.id = selected;
@@ -168,15 +265,15 @@ void MainWindow::on_Find_Button_TypePath_clicked()
     delete selPath;
 }
 
-void MainWindow::on_Find_Button_TypeMusic_clicked()
+void WldSearchBox::on_Find_Button_TypeMusic_clicked()
 {
-    ItemSelectDialog* selMusic = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,curSearchMusic.id);
+    ItemSelectDialog* selMusic = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,curSearchMusic.id);
     if(selMusic->exec()==QDialog::Accepted){
         int selected = selMusic->musicID;
         curSearchMusic.id = selected;
-        int index = configs.getMusWldI(selected);
+        int index = mw()->configs.getMusWldI(selected);
         if(index!=-1){
-            ui->Find_Button_TypeMusic->setText(configs.main_music_wld[index].name);
+            ui->Find_Button_TypeMusic->setText(mw()->configs.main_music_wld[index].name);
         }else{
             ui->Find_Button_TypeMusic->setText(((selected>0)?QString("Music-%1").arg(selected):tr("[empty]")));
         }
@@ -185,14 +282,15 @@ void MainWindow::on_Find_Button_TypeMusic_clicked()
 }
 
 
-void MainWindow::on_FindStartLevel_clicked()
+void WldSearchBox::on_FindStartLevel_clicked()
 {
     if(!(currentSearches & SEARCH_LEVEL)){ //start search
-        if(activeChildWindow()==3){
+        if(mw()->activeChildWindow()==3){
             currentSearches |= SEARCH_LEVEL;
             ui->FindStartLevel->setText(tr("Next Level"));
             ui->Find_Button_ResetLevel->setText(tr("Stop Search"));
-            WorldEdit* edit = activeWldEditWin();
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchLevel(edit)){
                 currentSearches ^= SEARCH_LEVEL;
                 ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
@@ -201,8 +299,9 @@ void MainWindow::on_FindStartLevel_clicked()
             }
         }
     }else{ //middle in a search
-        if(activeChildWindow()==3){
-            WorldEdit* edit = activeWldEditWin();
+        if(mw()->activeChildWindow()==3){
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchLevel(edit)){
                 currentSearches ^= SEARCH_LEVEL;
                 ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
@@ -213,14 +312,15 @@ void MainWindow::on_FindStartLevel_clicked()
     }
 }
 
-void MainWindow::on_FindStartTile_clicked()
+void WldSearchBox::on_FindStartTile_clicked()
 {
     if(!(currentSearches & SEARCH_TILE)){ //start search
-        if(activeChildWindow()==3){
+        if(mw()->activeChildWindow()==3){
             currentSearches |= SEARCH_TILE;
             ui->FindStartTile->setText(tr("Next Tile"));
             ui->Find_Button_ResetTile->setText(tr("Stop Search"));
-            WorldEdit* edit = activeWldEditWin();
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchTile(edit)){
                 currentSearches ^= SEARCH_TILE;
                 ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
@@ -229,8 +329,9 @@ void MainWindow::on_FindStartTile_clicked()
             }
         }
     }else{ //middle in a search
-        if(activeChildWindow()==3){
-            WorldEdit* edit = activeWldEditWin();
+        if(mw()->activeChildWindow()==3){
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchTile(edit)){
                 currentSearches ^= SEARCH_TILE;
                 ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
@@ -241,14 +342,15 @@ void MainWindow::on_FindStartTile_clicked()
     }
 }
 
-void MainWindow::on_FindStartScenery_clicked()
+void WldSearchBox::on_FindStartScenery_clicked()
 {
     if(!(currentSearches & SEARCH_SCENERY)){ //start search
-        if(activeChildWindow()==3){
+        if(mw()->activeChildWindow()==3){
             currentSearches |= SEARCH_SCENERY;
             ui->FindStartScenery->setText(tr("Next Scenery"));
             ui->Find_Button_ResetScenery->setText(tr("Stop Search"));
-            WorldEdit* edit = activeWldEditWin();
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchScenery(edit)){
                 currentSearches ^= SEARCH_SCENERY;
                 ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
@@ -257,8 +359,10 @@ void MainWindow::on_FindStartScenery_clicked()
             }
         }
     }else{ //middle in a search
-        if(activeChildWindow()==3){
-            WorldEdit* edit = activeWldEditWin();
+        if(mw()->activeChildWindow()==3)
+        {
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchScenery(edit)){
                 currentSearches ^= SEARCH_SCENERY;
                 ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
@@ -269,14 +373,15 @@ void MainWindow::on_FindStartScenery_clicked()
     }
 }
 
-void MainWindow::on_FindStartPath_clicked()
+void WldSearchBox::on_FindStartPath_clicked()
 {
     if(!(currentSearches & SEARCH_PATH)){ //start search
-        if(activeChildWindow()==3){
+        if(mw()->activeChildWindow()==3){
             currentSearches |= SEARCH_PATH;
             ui->FindStartPath->setText(tr("Next Path"));
             ui->Find_Button_ResetPath->setText(tr("Stop Search"));
-            WorldEdit* edit = activeWldEditWin();
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchPath(edit)){
                 currentSearches ^= SEARCH_PATH;
                 ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
@@ -285,8 +390,9 @@ void MainWindow::on_FindStartPath_clicked()
             }
         }
     }else{ //middle in a search
-        if(activeChildWindow()==3){
-            WorldEdit* edit = activeWldEditWin();
+        if(mw()->activeChildWindow()==3){
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchPath(edit)){
                 currentSearches ^= SEARCH_PATH;
                 ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
@@ -297,14 +403,15 @@ void MainWindow::on_FindStartPath_clicked()
     }
 }
 
-void MainWindow::on_FindStartMusic_clicked()
+void WldSearchBox::on_FindStartMusic_clicked()
 {
     if(!(currentSearches & SEARCH_MUSICBOX)){ //start search
-        if(activeChildWindow()==3){
+        if(mw()->activeChildWindow()==3){
             currentSearches |= SEARCH_MUSICBOX;
             ui->FindStartMusic->setText(tr("Next Music"));
             ui->Find_Button_ResetMusic->setText(tr("Stop Search"));
-            WorldEdit* edit = activeWldEditWin();
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchMusic(edit)){
                 currentSearches ^= SEARCH_MUSICBOX;
                 ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
@@ -313,8 +420,9 @@ void MainWindow::on_FindStartMusic_clicked()
             }
         }
     }else{ //middle in a search
-        if(activeChildWindow()==3){
-            WorldEdit* edit = activeWldEditWin();
+        if(mw()->activeChildWindow()==3){
+            WorldEdit* edit = mw()->activeWldEditWin();
+            if(!edit) return;
             if(doSearchMusic(edit)){
                 currentSearches ^= SEARCH_MUSICBOX;
                 ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
@@ -325,12 +433,12 @@ void MainWindow::on_FindStartMusic_clicked()
     }
 }
 
-bool MainWindow::doSearchTile(WorldEdit *edit)
+bool WldSearchBox::doSearchTile(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchTile.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchTile.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="TILE"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="TILE"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeTile->isChecked()&&curSearchTile.id!=0&&toBeFound){
                     toBeFound = ((ItemTile*)gr[i])->tileData.id == (unsigned int)curSearchTile.id;
@@ -353,12 +461,12 @@ bool MainWindow::doSearchTile(WorldEdit *edit)
     return true;
 }
 
-bool MainWindow::doSearchScenery(WorldEdit *edit)
+bool WldSearchBox::doSearchScenery(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchScenery.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchScenery.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="SCENERY"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="SCENERY"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeScenery->isChecked()&&curSearchScenery.id!=0&&toBeFound){
                     toBeFound = ((ItemScene*)gr[i])->sceneData.id == (unsigned int)curSearchScenery.id;
@@ -381,12 +489,12 @@ bool MainWindow::doSearchScenery(WorldEdit *edit)
     return true;
 }
 
-bool MainWindow::doSearchPath(WorldEdit *edit)
+bool WldSearchBox::doSearchPath(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchPath.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchPath.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="PATH"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="PATH"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypePath->isChecked()&&curSearchPath.id!=0&&toBeFound){
                     toBeFound = ((ItemPath*)gr[i])->pathData.id == (unsigned int)curSearchPath.id;
@@ -409,12 +517,12 @@ bool MainWindow::doSearchPath(WorldEdit *edit)
     return true;
 }
 
-bool MainWindow::doSearchLevel(WorldEdit *edit)
+bool WldSearchBox::doSearchLevel(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchLevel.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchLevel.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="LEVEL"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="LEVEL"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeLevel->isChecked()&&curSearchLevel.id!=0&&toBeFound){
                     toBeFound = ((ItemLevel*)gr[i])->levelData.id == (unsigned int)curSearchLevel.id;
@@ -455,12 +563,13 @@ bool MainWindow::doSearchLevel(WorldEdit *edit)
     return true;
 }
 
-bool MainWindow::doSearchMusic(WorldEdit *edit)
+bool WldSearchBox::doSearchMusic(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchMusic.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchMusic.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="MUSICBOX"){
+            if(gr[i]->data(ITEM_TYPE).toString()=="MUSICBOX")
+            {
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeMusic->isChecked()&&curSearchMusic.id!=0&&toBeFound){
                     toBeFound = ((ItemMusic*)gr[i])->musicData.id == (unsigned int)curSearchMusic.id;
@@ -483,7 +592,7 @@ bool MainWindow::doSearchMusic(WorldEdit *edit)
     return true;
 }
 
-void MainWindow::resetAllSearchFieldsWLD()
+void WldSearchBox::resetAllSearchFieldsWLD()
 {
     resetAllSearchesWLD();
 
@@ -494,7 +603,7 @@ void MainWindow::resetAllSearchFieldsWLD()
     on_Find_Button_ResetMusic_clicked();
 }
 
-void MainWindow::resetAllSearchesWLD()
+void WldSearchBox::resetAllSearchesWLD()
 {
     resetTileSearch();
     resetScenerySearch();
@@ -503,7 +612,7 @@ void MainWindow::resetAllSearchesWLD()
     resetMusicSearch();
 }
 
-void MainWindow::resetTileSearch()
+void WldSearchBox::resetTileSearch()
 {
     if(lockResetWorld) return;
     lockResetWorld = true;
@@ -511,7 +620,7 @@ void MainWindow::resetTileSearch()
     lockResetWorld = false;
 }
 
-void MainWindow::resetScenerySearch()
+void WldSearchBox::resetScenerySearch()
 {
     if(lockResetWorld) return;
     lockResetWorld = true;
@@ -519,7 +628,7 @@ void MainWindow::resetScenerySearch()
     lockResetWorld = false;
 }
 
-void MainWindow::resetPathSearch()
+void WldSearchBox::resetPathSearch()
 {
     if(lockResetWorld) return;
     lockResetWorld = true;
@@ -527,7 +636,7 @@ void MainWindow::resetPathSearch()
     lockResetWorld = false;
 }
 
-void MainWindow::resetLevelSearch()
+void WldSearchBox::resetLevelSearch()
 {
     if(lockResetWorld) return;
     lockResetWorld = true;
@@ -535,7 +644,7 @@ void MainWindow::resetLevelSearch()
     lockResetWorld = false;
 }
 
-void MainWindow::resetMusicSearch()
+void WldSearchBox::resetMusicSearch()
 {
     if(lockResetWorld) return;
     lockResetWorld = true;
@@ -543,21 +652,24 @@ void MainWindow::resetMusicSearch()
     lockResetWorld = false;
 }
 
-void MainWindow::toggleNewWindowWLD(QMdiSubWindow */*window*/)
+void WldSearchBox::toggleNewWindowWLD(QMdiSubWindow */*window*/)
 {
     resetAllSearchesWLD();
 }
 
-void MainWindow::selectLevelForSearch(){
+void WldSearchBox::selectLevelForSearch()
+{
     QString dirPath;
-    if(activeChildWindow()==3)
+    if(mw()->activeChildWindow()==3)
     {
-        dirPath = activeWldEditWin()->WldData.path;
+        WorldEdit * edit = mw()->activeWldEditWin();
+        if(!edit) return;
+        dirPath = edit->WldData.path;
     }
     else
         return;
 
-    LevelFileList levelList(dirPath, ui->WLD_PROPS_LVLFile->text());
+    LevelFileList levelList(dirPath, ui->Find_Edit_LevelFile->text());
     if( levelList.exec() == QDialog::Accepted )
         ui->Find_Edit_LevelFile->setText(levelList.SelectedFile);
 }

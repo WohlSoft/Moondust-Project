@@ -21,19 +21,23 @@
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
+#include <ui_lvl_sctc_props.h>
 
 void MainWindow::SetCurrentLevelSection(int SctId, int open)
 {
-    lockSctSettingsProps=true;
+    dock_LvlSectionProps->lockSctSettingsProps=true;
 
     int SectionId = SctId;
     int WinType = activeChildWindow();
+    LevelEdit *e=NULL;
+    if(WinType==1)
+        e=activeLvlEditWin();
 
     WriteToLog(QtDebugMsg, "Set Current Section");
-    if ((open==1)&&(WinType==1)) // Only Set Checked section number without section select
+    if ((open==1)&&(e!=NULL)) // Only Set Checked section number without section select
     {
         WriteToLog(QtDebugMsg, "get Current Section");
-        SectionId = activeLvlEditWin()->LvlData.CurSection;
+        SectionId = e->LvlData.CurSection;
     }
 
     WriteToLog(QtDebugMsg, "Set checkbox to");
@@ -59,50 +63,50 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     ui->actionSection_20->setChecked( (SectionId==19) );
     ui->actionSection_21->setChecked( (SectionId==20) );
 
-    if ((WinType==1) && (open==0))
+    if ((e!=NULL) && (open==0))
     {
        WriteToLog(QtDebugMsg, "Call to setCurrentSection()");
-       activeLvlEditWin()->setCurrentSection(SectionId);
+       e->setCurrentSection(SectionId);
     }
 
-    if(WinType==1)
+    if(e!=NULL)
     {
         WriteToLog(QtDebugMsg, "Set Section Data in menu");
         //Set Section Data in menu
-        ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
-        ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
-        ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
-        ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+        ui->actionLevNoBack->setChecked(e->LvlData.sections[SectionId].noback);
+        ui->actionLevOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
+        ui->actionLevUnderW->setChecked(e->LvlData.sections[SectionId].underwater);
+        ui->actionLevWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
 
         WriteToLog(QtDebugMsg, "Set text label");
         //set data in Section Settings Widget
-        ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+        dock_LvlSectionProps->ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
 
         WriteToLog(QtDebugMsg, "Set ToolBar data");
-        ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
-        ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
-        ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
-        ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+        dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].noback);
+        dock_LvlSectionProps->ui->LVLPropsOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
+        dock_LvlSectionProps->ui->LVLPropsUnderWater->setChecked(e->LvlData.sections[SectionId].underwater);
+        dock_LvlSectionProps->ui->LVLPropsLevelWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
 
         WriteToLog(QtDebugMsg, "Set text to custom music file");
-        ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
+        dock_LvlSectionProps->ui->LVLPropsMusicCustom->setText(e->LvlData.sections[SectionId].music_file);
 
         WriteToLog(QtDebugMsg, "Set standart Music index");
-        ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+        dock_LvlSectionProps->ui->LVLPropsMusicNumber->setCurrentIndex( e->LvlData.sections[SectionId].music_id );
 
         WriteToLog(QtDebugMsg, "Set Custom music checkbox");
-        ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+        dock_LvlSectionProps->ui->LVLPropsMusicCustomEn->setChecked( (e->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
         WriteToLog(QtDebugMsg, "Set background index");
-        if(activeLvlEditWin()->LvlData.sections[SectionId].background < (unsigned int)ui->LVLPropsBackImage->count() )
-            ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
+        if(e->LvlData.sections[SectionId].background < (unsigned int)dock_LvlSectionProps->ui->LVLPropsBackImage->count() )
+            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( e->LvlData.sections[SectionId].background );
         else
-            ui->LVLPropsBackImage->setCurrentIndex( ui->LVLPropsBackImage->count()-1 );
+            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( dock_LvlSectionProps->ui->LVLPropsBackImage->count()-1 );
 
-        setMusic( ui->actionPlayMusic->isChecked() );
+        dock_LvlSectionProps->loadMusic();
     }
 
-    lockSctSettingsProps=false;
+    dock_LvlSectionProps->lockSctSettingsProps=false;
 }
 
 
@@ -110,12 +114,14 @@ void MainWindow::on_actionReset_position_triggered()
 {
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->ResetPosition();
+        LevelEdit *e=activeLvlEditWin();
+        if(e) e->ResetPosition();
     }
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->ResetPosition();
+        WorldEdit *e=activeWldEditWin();
+        if(e) e->ResetPosition();
     }
 }
 
@@ -126,6 +132,7 @@ void MainWindow::on_actionGo_to_Section_triggered()
     if(WinType==1)
     {
             LevelEdit* edit = activeLvlEditWin();
+            if(!edit) return;
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
@@ -140,6 +147,7 @@ bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
     if(activeChildWindow() == 1)
     {
         LevelEdit* edit = activeLvlEditWin();
+        if(!edit) return false;
         QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
         x = coor.x();
         y = coor.y();
@@ -148,6 +156,7 @@ bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
     else if(activeChildWindow() == 3)
     {
         WorldEdit* edit = activeWldEditWin();
+        if(!edit) return false;
         QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
         x = coor.x();
         y = coor.y();

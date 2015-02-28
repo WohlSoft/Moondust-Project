@@ -55,6 +55,7 @@ public:
     bool saveFile(const QString &fileName, const bool addToRecent = true);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    void makeCrashState();
 
     void setCurrentSection(int scId);
     void ResetPosition();

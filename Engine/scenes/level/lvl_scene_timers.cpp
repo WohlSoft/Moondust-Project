@@ -20,7 +20,8 @@
 #include "../../common_features/simple_animator.h"
 #include "../../common_features/graphics_funcs.h"
 
-#include "../../networking/intproc.h"
+#include <fontman/font_manager.h>
+#include <networking/intproc.h>
 
 
 /**************************LoadAnimation*******************************/
@@ -77,6 +78,10 @@ void LevelScene::drawLoader()
         glVertex2f( loadAniG.left(),  loadAniG.bottom());
         glEnd();
     glDisable(GL_TEXTURE_2D);
+
+    if(IntProc::isEnabled())
+        FontManager::printText(QString("%1")
+                               .arg(IntProc::state), 10,10);
 }
 
 
@@ -169,7 +174,6 @@ LevelData *LevelScene::levelData()
 {
     return &data;
 }
-
 
 /**************************LoadAnimation**end**************************/
 

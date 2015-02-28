@@ -142,11 +142,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
     //Apply objects into tools
-    setLevelSectionData();
-    setLvlItemBoxes();
-    setWldItemBoxes();
+    dock_LvlSectionProps->setLevelSectionData();
+    dock_LvlItemBox->setLvlItemBoxes();
+    dock_WldItemBox->setWldItemBoxes();
     setSoundList();
-    WldLvlExitTypeListReset();
+    dock_WldItemProps->WldLvlExitTypeListReset();
     dock_TilesetBox->setTileSetBox(true);
     LastActiveSubWindow = 0;
 }
@@ -204,5 +204,6 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
+
 
 

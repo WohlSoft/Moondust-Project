@@ -24,7 +24,9 @@
 LVL_Block::LVL_Block()
 {
     type = LVLBlock;
-    data = NULL;
+    f_block = NULL;
+    f_edge  = NULL;
+
     animated=false;
     sizable=false;
     animator_ID=0;
@@ -34,6 +36,14 @@ LVL_Block::LVL_Block()
 
     isHidden=false;
     destroyed=false;
+
+    fadeOffset=0;
+    targetOffset=0;
+    fade_step=0;
+    fadeSpeed=0;
+
+    taskToTransform=-1;
+    taskToTransform_t=0;
 }
 
 LVL_Block::~LVL_Block()
@@ -48,24 +58,28 @@ LVL_Block::~LVL_Block()
 
 //float LVL_Block::posX()
 //{
-//    return data->x;
+//    return data.x;
 //}
 
 //float LVL_Block::posY()
 //{
-//    return data->y;
+//    return data.y;
 //}
 
 void LVL_Block::init()
 {
     if(!worldPtr) return;
-    setSize(data->w, data->h);
+    setSize(data.w, data.h);
 
-    slippery = data->slippery;
+    slippery = data.slippery;
 
     sizable = setup->sizable;
 
-    isHidden = data->invisible;
+    isHidden = data.invisible;
+
+    collide = COLLISION_ANY;
+
+    slippery_surface = data.slippery;
 
     if((setup->sizable) || (setup->collision==2))
     {
@@ -77,13 +91,27 @@ void LVL_Block::init()
         collide = COLLISION_NONE;
     }
 
+    if(physBody==NULL)
+    {
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_staticBody;
+        bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
+            PhysUtil::pix2met(data.y + posY_coefficient ) );
+        bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
+        physBody = worldPtr->CreateBody(&bodyDef);
+    }
 
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-    bodyDef.position.Set( PhysUtil::pix2met( data->x+posX_coefficient ),
-        PhysUtil::pix2met(data->y + posY_coefficient ) );
-    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-    physBody = worldPtr->CreateBody(&bodyDef);
+    if(f_block!=NULL)
+    {
+        physBody->DestroyFixture(f_block);
+        f_block=NULL;
+    }
+
+    if(f_edge!=NULL)
+    {
+        physBody->DestroyFixture(f_edge);
+        f_edge=NULL;
+    }
 
     b2PolygonShape shape;
 
@@ -147,22 +175,105 @@ void LVL_Block::init()
 
     //rectangle box
     default: //Rectangle box shape
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
+        {
+            shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
+            b2EdgeShape edgeShape;
+            edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(-posY_coefficient-0.1)),
+                           b2Vec2(PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(-posY_coefficient-0.1)) );
+
+
+            if(collide!=COLLISION_TOP)
+            {
+                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
+            }
+            else
+            {
+                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+            }
+            edgeShape.m_hasVertex0 = true;
+            edgeShape.m_hasVertex3 = true;
+
+            f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
+            f_edge->SetFriction(slippery_surface? 0.04f : 0.25f );
+            if(setup->algorithm==3)
+            {
+                f_edge->SetSensor(true);
+            }
+            if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
+                f_edge->SetSensor(true);
+        }
     }
 
-    b2Fixture * block = physBody->CreateFixture(&shape, 1.0f);
+    f_block = physBody->CreateFixture(&shape, 1.0f);
 
     if(setup->algorithm==3)
         {
-            block->SetSensor(true);
+            f_block->SetSensor(true);
             ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
         }
 
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
-        block->SetSensor(true);
+        f_block->SetSensor(true);
+    f_block->SetFriction(slippery_surface? 0.04f : 0.25f );
+}
 
-    block->SetFriction(data->slippery? 0.04f : 0.25f );
 
+void LVL_Block::transformTo(long id, int type)
+{
+    if(id<=0) return;
+
+    if(type==2)//Other block
+    {
+        transformTask_block t;
+        t.block = this;
+        t.id=id;
+        t.type=type;
+
+        LvlSceneP::s->block_transfors.push_back(t);
+    }
+    if(type==1)//Other NPC
+    {
+        // :-P
+    }
+}
+
+void LVL_Block::transformTo_x(long id)
+{
+    data.id = id;
+
+    //LevelScene::zCounter;
+    if(setup->sizable)
+    {
+        z_index = LevelScene::Z_blockSizable +
+                ((double)data.y/(double)100000000000) + 1 -
+                ((double)data.w * (double)0.0000000000000001);
+    }
+    else
+    {
+
+        if(setup->view==1)
+            z_index = LevelScene::Z_BlockFore;
+        else
+            z_index = LevelScene::Z_Block;
+        LevelScene::zCounter += 0.0000000000001;
+        z_index += LevelScene::zCounter;
+    }
+    long tID = ConfigManager::getBlockTexture(data.id);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        animated = ConfigManager::lvl_block_indexes[data.id].animated;
+        animator_ID = ConfigManager::lvl_block_indexes[data.id].animator_ID;
+    }
+
+    if(!setup->sizable)
+    {
+        data.w = texture.w;
+        data.h = (texture.h/setup->frames);
+    }
 }
 
 
@@ -380,17 +491,53 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 {
     hitDirection = _dir;
     isHidden=false;
+    data.invisible=false;
+    bool doFade=false;
 
-    if(setup->destroyable)
+    if((setup->destroyable)&&(data.npc_id==0))
     {
         destroyed=true;
         return;
     }
 
+    if(data.npc_id<0)
+    {
+        //Coin!
+        data.npc_id++;
+        doFade=true;
+        if((!setup->bounce)&&(!setup->switch_Button))
+        {
+            if(data.npc_id==0)
+                transformTo(setup->transfororm_on_hit_into, 2);
+        }
+    }
+    else
+    if(data.npc_id>0)
+    {
+        //Coin!
+        data.npc_id=0;
+        doFade=true;
+        if((!setup->bounce)&&(!setup->switch_Button))
+        {
+            transformTo(setup->transfororm_on_hit_into, 2);
+        }
+    }
+
+    if(setup->switch_Button)
+    {
+        LvlSceneP::s->toggleSwitch(setup->switch_ID);
+    }
+
     if(setup->hitable)
     {
+        transformTo(setup->spawn_obj_id, setup->spawn_obj);
+        doFade=true;
+    }
+
+    if(doFade)
+    {
         fadeOffset=0.f;
-        setFade(20, 1.0f, 0.2f);
+        setFade(20, 1.0f, 0.25f);
     }
 }
 
@@ -398,6 +545,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 /**************************Fader*******************************/
 void LVL_Block::setFade(int speed, float target, float step)
 {
+    if(fader_timer_id)
+        SDL_RemoveTimer(fader_timer_id);
+
     fade_step = fabs(step);
     targetOffset = target;
     fadeSpeed = speed;
