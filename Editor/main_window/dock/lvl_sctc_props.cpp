@@ -50,6 +50,10 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
                    this, SLOT(switchResizeMode(bool)));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelSectionBoxVis,
+            &setVisible, &isVisible);
 }
 
 

@@ -15,6 +15,7 @@ class LvlLayersBox;
 class WorldItemBox;
 class WLD_ItemProps;
 class WldSearchBox;
+class DockVizibilityManager;
 
 #define MainWindowFriends \
     friend class TilesetItemBox;\

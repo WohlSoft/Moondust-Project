@@ -69,6 +69,10 @@ WldSearchBox::WldSearchBox(QWidget *parent) :
                 height()
                 );
 
+    mw()->docks_world.
+          addState(this, &GlobalSettings::WorldSearchBoxVis,
+            &setVisible, &isVisible);
+
     //enable & disable
     connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_TypeTile, SIGNAL(toggled(bool)), ui->Find_Button_TypeTile, SLOT(setEnabled(bool)));

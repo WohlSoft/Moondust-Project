@@ -53,15 +53,14 @@
 #include <tools/tilesets/tileset.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
 
+#include <main_window/dock/toolboxes_protos.h>
+#include <main_window/dock/_dock_vizman.h>
+
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
 QT_END_NAMESPACE
 
-
-/*************************Dock widgets***************************/
-#include <main_window/dock/toolboxes_protos.h>
-/*************************Dock widgets*end***********************/
 
 
 namespace Ui {
@@ -173,6 +172,10 @@ public:
         /// \brief setUiDefults Init UI settings of application on start
         ///
         void setUiDefults();
+
+        DockVizibilityManager docks_level; //!< Manager of level specific toolboxes
+        DockVizibilityManager docks_world; //!< Manager of world specific toolboxes
+        DockVizibilityManager docks_level_and_world; //!< Manager of level and world editors toolboxes
 
     public slots:
         void save();         //!< Save current file
