@@ -4,6 +4,7 @@
 //Common toolboxes
 #include "tileset_item_box.h"
 #include "bookmarks_box.h"
+#include "debugger.h"
 
 //Level specific toolboxes
 #include "lvl_item_properties.h"

@@ -100,6 +100,7 @@ void MainWindow::setUiDefults()
 
     dock_TilesetBox      = new TilesetItemBox(this);
     dock_BookmarksBox    = new BookmarksBox(this);
+    dock_DebuggerBox     = new DebuggerBox(this);
 
     //Define the default geometry for toolboxes
     ui->LevelEventsToolBox->setGeometry(
@@ -116,18 +117,6 @@ void MainWindow::setUiDefults()
                 ui->WorldSettings->width(),
                 ui->WorldSettings->height()
                 );
-
-    ui->debuggerBox->setGeometry(
-                mwg.x()+mwg.width()-ui->debuggerBox->width()-GOffset,
-                mwg.y()+120,
-                ui->debuggerBox->width(),
-                ui->debuggerBox->height()
-                );
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setWeight(8);
-    ui->DEBUG_Items->setFont(font);
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
@@ -158,7 +147,6 @@ void MainWindow::setUiDefults()
 
     ui->LevelEventsToolBox->hide();
     ui->WorldSettings->hide();
-    ui->debuggerBox->hide();
 
     ui->menuView->setEnabled(false);
     ui->menuWindow->setEnabled(true);

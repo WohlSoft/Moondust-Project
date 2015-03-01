@@ -88,6 +88,27 @@ void MainWindow::updateMenus(bool force)
     dock_LvlItemProps->setVisible(false);
     dock_WldItemProps->setVisible(false);
 
+    /*
+     *
+     * struct VisiblyState
+     * {
+     *       bool *setting;        //Pointer to setting
+     * (void *)(bool) setVisState; //Pointer to set visible function
+     * (bool *)() getVisState;     //Pointer to get visible function
+     * }
+     *
+     * if window != 1 but last window was 1
+     * I.e. switched FROM level window to window of another type
+     *
+     * set SETTING = VISIBLE_STATE()
+     * SET_VISIBLE_STATE(false)
+     *
+     * if last window wasn't 1 but window is 1
+     * I.e. switched TO level window from window of another type
+     *
+     * SET_VISIBLE_STATE(SETTING)
+     *
+    */
 
     if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
     {
@@ -101,7 +122,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::LevelSearchBoxVis = dock_LvlSearchBox->isVisible();
 
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::DebuggerBoxVis = dock_DebuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
 
         dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
@@ -122,7 +143,7 @@ void MainWindow::updateMenus(bool force)
         dock_LvlSearchBox->setVisible(GlobalSettings::LevelSearchBoxVis);
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        dock_DebuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         dock_BookmarksBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
@@ -132,7 +153,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         GlobalSettings::WorldSearchBoxVis = dock_WldSearchBox->isVisible();
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::DebuggerBoxVis = dock_DebuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
 
         dock_WldItemBox->setVisible( 0 );
@@ -147,17 +168,17 @@ void MainWindow::updateMenus(bool force)
         dock_WldSearchBox->setVisible( GlobalSettings::WorldSearchBoxVis );
 
         dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        dock_DebuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
         dock_BookmarksBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::DebuggerBoxVis = dock_DebuggerBox->isVisible();
         GlobalSettings::BookmarksBoxVis = dock_BookmarksBox->isVisible();
         dock_TilesetBox->setVisible( 0 );
-        ui->debuggerBox->setVisible( 0 );
+        dock_DebuggerBox->setVisible( 0 );
         dock_BookmarksBox->setVisible( 0 );
     }
 
@@ -388,7 +409,7 @@ void MainWindow::updateMenus(bool force)
     updateWindowMenu();
 
     //Update debugger's custom counters
-    on_DEBUG_RefreshCoutners_clicked();
+    dock_DebuggerBox->on_DEBUG_RefreshCoutners_clicked();
 
     qApp->setActiveWindow(this);
 }
