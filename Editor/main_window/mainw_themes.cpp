@@ -46,7 +46,7 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionReload->setIcon(Themes::icon(Themes::file_reload));
 
     ui->actionDebugger->setIcon(Themes::icon(Themes::debugger));
-    ui->debuggerBox->setWindowIcon(Themes::icon(Themes::debugger));
+    dock_DebuggerBox->setWindowIcon(Themes::icon(Themes::debugger));
 
     ui->actionTilesetBox->setIcon(Themes::icon(Themes::tileset_box));
     dock_TilesetBox->setWindowIcon(Themes::icon(Themes::tileset_box));

@@ -20,6 +20,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/debugger.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
 
@@ -143,7 +144,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
+    MainWinConnect::pMainWin->dock_DebuggerBox->setMousePos(mouseEvent->scenePos().toPoint());
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
@@ -251,7 +252,7 @@ void LvlScene::Debugger_updateItemList()
             .arg(LvlData->doors.size())
             .arg(LvlData->physez.size());
 
-    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
+    MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
 }
 
 

@@ -23,6 +23,7 @@
 #include <file_formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
 #include <main_window/dock/wld_item_props.h>
+#include <main_window/dock/debugger.h>
 
 #include "wld_scene.h"
 #include "items/item_tile.h"
@@ -139,7 +140,7 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
+    MainWinConnect::pMainWin->dock_DebuggerBox->setMousePos(mouseEvent->scenePos().toPoint());
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
@@ -252,7 +253,7 @@ void WldScene::Debugger_updateItemList()
             .arg(WldData->levels.size())
             .arg(WldData->music.size());
 
-    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
+    MainWinConnect::pMainWin->dock_DebuggerBox->setItemStat(itemList);
 }
 
 

@@ -3,6 +3,7 @@
 
 class TilesetItemBox;
 class BookmarksBox;
+class DebuggerBox;
 
 class LvlItemProperties;
 class LvlWarpBox;
@@ -18,6 +19,7 @@ class WldSearchBox;
 #define MainWindowFriends \
     friend class TilesetItemBox;\
     friend class BookmarksBox;\
+    friend class DebuggerBox;\
     \
     friend class LevelItemBox;\
     friend class LvlItemProperties;\
