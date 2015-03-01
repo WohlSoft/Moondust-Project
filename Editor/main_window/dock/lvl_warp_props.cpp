@@ -50,6 +50,10 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
                 width(),
                 height()
                 );
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelDoorsBoxVis,
+            &setVisible, &isVisible);
 }
 
 LvlWarpBox::~LvlWarpBox()

@@ -50,6 +50,10 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelItemBoxVis,
+            &setVisible, &isVisible);
 }
 
 LevelItemBox::~LevelItemBox()
