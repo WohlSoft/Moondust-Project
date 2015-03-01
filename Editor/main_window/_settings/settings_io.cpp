@@ -44,14 +44,14 @@ void MainWindow::loadSettings()
         GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
         GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
-        GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
-        GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+        GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", "true").toBool();
+        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", "false").toBool();
         GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
         GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
         GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
         GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
 
-        GlobalSettings::WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
+        GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", "true").toBool();
         GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
         GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
 
@@ -166,12 +166,12 @@ void MainWindow::saveSettings()
     settings.setValue("lastsavepath", GlobalSettings::savePath);
     settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-    settings.setValue("world-tb-visible", GlobalSettings::WorldToolBoxVis);
+    settings.setValue("world-tb-visible", GlobalSettings::WorldItemBoxVis);
     settings.setValue("world-props-visible", GlobalSettings::WorldSettingsToolboxVis);
     settings.setValue("world-search-visible", GlobalSettings::WorldSearchBoxVis);
 
-    settings.setValue("level-tb-visible", GlobalSettings::LevelToolBoxVis);
-    settings.setValue("section-tb-visible", GlobalSettings::SectionToolBoxVis);
+    settings.setValue("level-tb-visible", GlobalSettings::LevelItemBoxVis);
+    settings.setValue("section-tb-visible", GlobalSettings::LevelSectionBoxVis);
     settings.setValue("level-layers-vis", GlobalSettings::LevelLayersBoxVis);
     settings.setValue("level-events-vis", GlobalSettings::LevelEventsBoxVis);
     settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
