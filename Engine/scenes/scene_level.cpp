@@ -585,21 +585,20 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    long cam_x=0, cam_y=0;
+    //long cam_x=0, cam_y=0;
 
     if(!isInit) goto renderBlack;
 
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
-
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     foreach(PGE_LevelCamera* cam, cameras)
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
-        if(PGE_Window::showDebugInfo)
-        {
-            cam_x = cam->posX();
-            cam_y = cam->posY();
-        }
+//        if(PGE_Window::showDebugInfo)
+//        {
+//            cam_x = cam->posX();
+//            cam_y = cam->posY();
+//        }
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
@@ -616,11 +615,9 @@ void LevelScene::render()
         }
     }
 
-    //FontManager::printText("Hello world!\nПривет мир!", 10,10);
-
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
+        //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
         FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4")
                                .arg(debug_player_jumping)
@@ -641,11 +638,8 @@ void LevelScene::render()
 
         //world->DrawDebugData();
     }
-
     renderBlack:
-
     Scene::render();
-
     if(IsLoaderWorks) drawLoader();
 }
 
