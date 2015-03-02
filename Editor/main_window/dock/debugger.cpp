@@ -51,8 +51,7 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
                 );
 
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::DebuggerBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::DebuggerBoxVis);
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);

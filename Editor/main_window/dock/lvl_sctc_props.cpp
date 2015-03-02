@@ -52,8 +52,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
                    this, SLOT(switchResizeMode(bool)));
 
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelSectionBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::LevelSectionBoxVis);
 }
 
 

@@ -52,8 +52,7 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
 
     mw()->docks_level.
-          addState(this, &GlobalSettings::LevelItemBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::LevelItemBoxVis);
 }
 
 LevelItemBox::~LevelItemBox()

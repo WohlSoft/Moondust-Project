@@ -2,14 +2,12 @@
 #define DOCKVIZIBILITYMANAGER_H
 
 #include <QList>
-class QWidget;
+class QDockWidget;
 
 struct VisiblyState
 {
     bool *setting;             //Pointer to setting
-    void (QWidget::*setVisState)(bool); //Pointer to set visible function
-    bool (QWidget::*getVisState)() const;     //Pointer to get visible function
-    QWidget* parent;
+    QDockWidget* widget;
 };
 
 class DockVizibilityManager
@@ -17,7 +15,7 @@ class DockVizibilityManager
 public:
     DockVizibilityManager();
     ~DockVizibilityManager();
-    void addState(QWidget* parent, bool *setting, void (QWidget::*setVizFunc)(bool), bool (QWidget::*getVisFunc)() const);
+    void addState(QDockWidget* _widget, bool *setting);
     QList<VisiblyState > list();
     void hideAll();
     void showAll();
