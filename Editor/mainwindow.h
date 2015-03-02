@@ -762,26 +762,14 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////World Settings toolbox /////////////////
-    public slots:
-        void setCurrentWorldSettings();
+    public:
+        WorldSettingsBox* dock_WldSettingsBox;
+
     private slots:
         void on_actionWLDDisableMap_triggered(bool checked);
         void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWorld_settings_triggered(bool checked);
         void on_actionWLDProperties_triggered();
-
-        void on_WorldSettings_visibilityChanged(bool visible);
-
-        void on_WLD_Title_editingFinished();
-        void on_WLD_NoWorldMap_clicked(bool checked);
-        void on_WLD_RestartLevel_clicked(bool checked);
-        void on_WLD_AutostartLvl_editingFinished();
-        void on_WLD_AutostartLvlBrowse_clicked();
-        void on_WLD_Stars_valueChanged(int arg1);
-        void on_WLD_DoCountStars_clicked();
-        void on_WLD_Credirs_textChanged();
-        void characterActivated(bool checked);
-
         void on_actionSemi_transparent_paths_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 

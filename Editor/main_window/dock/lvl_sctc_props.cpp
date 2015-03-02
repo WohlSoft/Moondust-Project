@@ -64,6 +64,7 @@ LvlSectionProps::~LvlSectionProps()
 void LvlSectionProps::re_translate()
 {
     ui->retranslateUi(this);
+    setLevelSectionData();
 }
 
 void LvlSectionProps::focusInEvent(QFocusEvent *ev)

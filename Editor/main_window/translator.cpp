@@ -146,12 +146,8 @@ void MainWindow::slotLanguageChanged(QAction* action)
 
         loadLanguage(action->data().toString());
 
-        dock_LvlItemBox->setLvlItemBoxes();
-        dock_LvlSectionProps->setLevelSectionData();
         setEventData(-1);
         setSoundList();
-        setCurrentWorldSettings();
-        setTileSetBox();
 
         DevConsole::retranslate();
 

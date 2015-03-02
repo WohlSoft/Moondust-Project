@@ -67,8 +67,8 @@ QTabWidget *LevelItemBox::tabWidget()
 
 void LevelItemBox::re_translate()
 {
-    WriteToLog(QtDebugMsg, QString("LevelToolBox-> do retranslate!"));
     ui->retranslateUi(this);
+    setLvlItemBoxes();
 }
 
 void MainWindow::on_actionLVLToolBox_triggered(bool checked)

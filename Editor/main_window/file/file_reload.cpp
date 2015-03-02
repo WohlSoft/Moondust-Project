@@ -23,6 +23,8 @@
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_item_toolbox.h>
 
+#include <main_window/dock/wld_settings_box.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -285,11 +287,11 @@ void MainWindow::on_actionReload_triggered()
             child->updateGeometry();
             child->ResetPosition();
             updateMenus(true);
-            setCurrentWorldSettings();
+            dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
-                ui->WorldSettings->setVisible(true);
-                ui->WorldSettings->raise();
+                dock_WldSettingsBox->setVisible(true);
+                dock_WldSettingsBox->raise();
             }
 
             child->scene->_viewPort->horizontalScrollBar()->setValue(posX);

@@ -22,6 +22,7 @@
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_layers_box.h>
+#include <main_window/dock/wld_settings_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -185,11 +186,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->updateGeometry();
             child->ResetPosition();
             updateMenus(true);
-            setCurrentWorldSettings();
+            dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
-                ui->WorldSettings->setVisible(true);
-                ui->WorldSettings->raise();
+                dock_WldSettingsBox->setVisible(true);
+                dock_WldSettingsBox->raise();
             }
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {
