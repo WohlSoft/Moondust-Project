@@ -52,8 +52,7 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
 
     mw()->docks_world.
-          addState(this, &GlobalSettings::WorldItemBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::WorldItemBoxVis);
 }
 
 WorldItemBox::~WorldItemBox()

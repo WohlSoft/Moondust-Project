@@ -70,8 +70,7 @@ WldSearchBox::WldSearchBox(QWidget *parent) :
                 );
 
     mw()->docks_world.
-          addState(this, &GlobalSettings::WorldSearchBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::WorldSearchBoxVis);
 
     //enable & disable
     connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));

@@ -76,8 +76,7 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
                 );
 
     mw()->docks_level_and_world.
-          addState(this, &GlobalSettings::TilesetBoxVis,
-            &setVisible, &isVisible);
+          addState(this, &GlobalSettings::TilesetBoxVis);
 }
 
 

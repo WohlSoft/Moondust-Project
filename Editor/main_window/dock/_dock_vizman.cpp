@@ -1,5 +1,5 @@
 #include "_dock_vizman.h"
-#include <QWidget>
+#include <QDockWidget>
 
 DockVizibilityManager::DockVizibilityManager()
 {}
@@ -9,13 +9,11 @@ DockVizibilityManager::~DockVizibilityManager()
     stateList.clear();
 }
 
-void DockVizibilityManager::addState(QWidget* parent, bool *setting, void (QWidget::*setVizFunc)(bool), bool (QWidget::*getVisFunc)() const)
+void DockVizibilityManager::addState(QDockWidget* _widget, bool *setting)
 {
     VisiblyState _vState;
     _vState.setting = setting;
-    _vState.setVisState = setVizFunc;
-    _vState.getVisState = getVisFunc;
-    _vState.parent = parent;
+    _vState.widget = _widget;
     stateList.push_back(_vState);
 }
 
@@ -28,8 +26,8 @@ void DockVizibilityManager::hideAll()
 {
     foreach(VisiblyState s, stateList)
     {
-        *(s.setting) = (s.parent->*(s.getVisState))();
-        (s.parent->*(s.setVisState))(false);
+        *(s.setting) = s.widget->isVisible();
+        s.widget->setVisible(false);
     }
 }
 
@@ -37,7 +35,7 @@ void DockVizibilityManager::showAll()
 {
     foreach(VisiblyState s, stateList)
     {
-        (s.parent->*(s.setVisState))( *(s.setting) );
+        s.widget->setVisible( *(s.setting) );
     }
 }
 
