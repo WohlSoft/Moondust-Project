@@ -3,6 +3,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/wld_settings_box.h>
 
 HistoryElementMainSetting::HistoryElementMainSetting(HistorySettings::WorldSettingSubType wldSubType, QObject *parent) :
     QObject(parent),
@@ -95,7 +96,7 @@ void HistoryElementMainSetting::processWorldUndo()
                         m_modData.toList()[0].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[0].toString());
     }
 
-    MainWinConnect::pMainWin->setCurrentWorldSettings();
+    MainWinConnect::pMainWin->dock_WldSettingsBox->setCurrentWorldSettings();
 }
 
 void HistoryElementMainSetting::processLevelUndo()
@@ -144,7 +145,7 @@ void HistoryElementMainSetting::processWorldRedo()
                         m_modData.toList()[1].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : m_modData.toList()[1].toString());
     }
 
-    MainWinConnect::pMainWin->setCurrentWorldSettings();
+    MainWinConnect::pMainWin->dock_WldSettingsBox->setCurrentWorldSettings();
 }
 
 void HistoryElementMainSetting::processLevelRedo()

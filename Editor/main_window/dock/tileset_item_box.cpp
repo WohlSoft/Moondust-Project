@@ -98,6 +98,7 @@ void TilesetItemBox::re_translate()
     lockTilesetBox=true;
     ui->retranslateUi(this);
     lockTilesetBox=false;
+    setTileSetBox();
 }
 
 

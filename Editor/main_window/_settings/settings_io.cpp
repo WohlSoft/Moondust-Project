@@ -93,7 +93,7 @@ void MainWindow::loadSettings()
         dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         dock_LvlSearchBox->setFloating(settings.value("level-search-float", true).toBool());
         //dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
-        ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
+        dock_WldSettingsBox->setFloating(settings.value("world-settings-box-float", true).toBool());
         dock_WldItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         dock_WldSearchBox->setFloating(settings.value("world-search-float", true).toBool());
         dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
@@ -107,7 +107,7 @@ void MainWindow::loadSettings()
         dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         dock_LvlSearchBox->restoreGeometry(settings.value("level-search-geometry", dock_LvlSearchBox->saveGeometry()).toByteArray());
         dock_WldItemBox->restoreGeometry(settings.value("world-item-box-geometry", dock_WldItemBox->saveGeometry()).toByteArray());
-        ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
+        dock_WldSettingsBox->restoreGeometry(settings.value("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry()).toByteArray());
         dock_WldItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry()).toByteArray());
         dock_WldSearchBox->restoreGeometry(settings.value("world-search-geometry", dock_WldSearchBox->saveGeometry()).toByteArray());
 
@@ -189,7 +189,7 @@ void MainWindow::saveSettings()
     settings.setValue("level-search-float", dock_LvlSearchBox->isFloating());
 
     settings.setValue("world-item-box-float", dock_WldItemBox->isFloating());
-    settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
+    settings.setValue("world-settings-box-float", dock_WldSettingsBox->isFloating());
     settings.setValue("world-itemprops-box-float", dock_WldItemProps->isFloating());
     settings.setValue("world-search-float", dock_WldSearchBox->isFloating());
     settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
@@ -204,7 +204,7 @@ void MainWindow::saveSettings()
     settings.setValue("level-search-geometry", dock_LvlSearchBox->saveGeometry());
 
     settings.setValue("world-item-box-geometry", dock_WldItemBox->saveGeometry());
-    settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
+    settings.setValue("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry());
     settings.setValue("world-search-geometry", dock_WldSearchBox->saveGeometry());
 

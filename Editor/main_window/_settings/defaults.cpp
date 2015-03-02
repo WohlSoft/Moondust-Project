@@ -97,6 +97,7 @@ void MainWindow::setUiDefults()
     dock_WldItemBox      = new WorldItemBox(this);
     dock_WldItemProps    = new WLD_ItemProps(this);
     dock_WldSearchBox    = new WldSearchBox(this);
+    dock_WldSettingsBox  = new WorldSettingsBox(this);
 
     dock_TilesetBox      = new TilesetItemBox(this);
     dock_BookmarksBox    = new BookmarksBox(this);
@@ -108,14 +109,6 @@ void MainWindow::setUiDefults()
                 mwg.y()+120,
                 ui->LevelEventsToolBox->width(),
                 ui->LevelEventsToolBox->height()
-                );
-
-
-    ui->WorldSettings->setGeometry(
-                mwg.x()+mwg.width()-ui->WorldSettings->width()-GOffset-200,
-                mwg.y()+120,
-                ui->WorldSettings->width(),
-                ui->WorldSettings->height()
                 );
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
@@ -146,7 +139,7 @@ void MainWindow::setUiDefults()
 
 
     ui->LevelEventsToolBox->hide();
-    ui->WorldSettings->hide();
+
 
     ui->menuView->setEnabled(false);
     ui->menuWindow->setEnabled(true);

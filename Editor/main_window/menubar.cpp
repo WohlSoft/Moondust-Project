@@ -107,13 +107,10 @@ void MainWindow::updateMenus(bool force)
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
         docks_world.hideAll();
-        GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
-        ui->WorldSettings->setVisible( 0 );
     }
     if((GlobalSettings::lastWinType !=3) && (WinType==3))
     {
         docks_world.showAll();
-        ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
     }
 
     /***************World and Level specific toolboxes****************/
@@ -306,7 +303,7 @@ void MainWindow::updateMenus(bool force)
 
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
-        setCurrentWorldSettings();
+        dock_WldSettingsBox->setCurrentWorldSettings();
         dock_BookmarksBox->updateBookmarkBoxByData();
 
         ui->actionSelect->trigger();

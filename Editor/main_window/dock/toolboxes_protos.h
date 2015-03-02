@@ -1,6 +1,8 @@
 #ifndef TOOLBOXES_PROTOS_H
 #define TOOLBOXES_PROTOS_H
 
+class DockVizibilityManager;
+
 class TilesetItemBox;
 class BookmarksBox;
 class DebuggerBox;
@@ -12,10 +14,11 @@ class LevelItemBox;
 class LvlSearchBox;
 class LvlLayersBox;
 
+class WorldSettingsBox;
 class WorldItemBox;
 class WLD_ItemProps;
 class WldSearchBox;
-class DockVizibilityManager;
+
 
 #define MainWindowFriends \
     friend class TilesetItemBox;\
@@ -29,6 +32,7 @@ class DockVizibilityManager;
     friend class LvlSearchBox;\
     friend class LvlLayersBox;\
     \
+    friend class WorldSettingsBox;\
     friend class WorldItemBox;\
     friend class WLD_ItemProps;\
     friend class WldSearchBox;
