@@ -60,6 +60,11 @@ LvlWarpBox::~LvlWarpBox()
     delete ui;
 }
 
+QComboBox *LvlWarpBox::cbox_layer()
+{
+    return ui->WarpLayer;
+}
+
 void LvlWarpBox::re_translate()
 {
     lockWarpSetSettings=true;

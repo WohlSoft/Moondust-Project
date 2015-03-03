@@ -27,9 +27,7 @@
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_search_box.h>
-#include <ui_lvl_item_properties.h>
-#include <ui_lvl_warp_props.h>
-#include <ui_lvl_search_box.h>
+#include <main_window/dock/lvl_events_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -119,33 +117,37 @@ void LvlLayersBox::setLayersBox()
     }
 }
 
-void MainWindow::setLayerLists()
+void MainWindow::LayerListsSync()
 {
     dock_LvlItemProps->hide();
     dock_LvlItemProps->LvlItemPropsLock=true;
     dock_LvlWarpProps->lockWarpSetSettings=true;
 
     //save old entry from search!
-    QString curSearchLayerBlock = dock_LvlSearchBox->ui->Find_Combo_LayerBlock->currentText();
-    QString curSearchLayerBGO = dock_LvlSearchBox->ui->Find_Combo_LayerBGO->currentText();
-    QString curSearchLayerNPC = dock_LvlSearchBox->ui->Find_Combo_LayerNPC->currentText();
+    QString curSearchLayerBlock = dock_LvlSearchBox->cbox_layer_block()->currentText();
+    QString curSearchLayerBGO = dock_LvlSearchBox->cbox_layer_bgo()->currentText();
+    QString curSearchLayerNPC = dock_LvlSearchBox->cbox_layer_npc()->currentText();
 
-    QString curWarpLayer = dock_LvlWarpProps->ui->WarpLayer->currentText();
+    QString curWarpLayer = dock_LvlWarpProps->cbox_layer()->currentText();
 
     int WinType = activeChildWindow();
+
     dock_LvlItemProps->LvlItemPropsLock = true;
-    LvlEventBoxLock = true;
-    dock_LvlItemProps->ui->PROPS_BGOLayer->clear();
-    dock_LvlItemProps->ui->PROPS_NpcLayer->clear();
-    dock_LvlItemProps->ui->PROPS_BlockLayer->clear();
-    dock_LvlItemProps->ui->PROPS_NpcAttachLayer->clear();
-    dock_LvlWarpProps->ui->WarpLayer->clear();
-    dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
-    ui->LVLEvent_LayerMov_List->clear();
-    ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
-    dock_LvlSearchBox->ui->Find_Combo_LayerBlock->clear();
-    dock_LvlSearchBox->ui->Find_Combo_LayerBGO->clear();
-    dock_LvlSearchBox->ui->Find_Combo_LayerNPC->clear();
+    dock_LvlItemProps->cbox_layer_bgo()->clear();
+    dock_LvlItemProps->cbox_layer_npc()->clear();
+    dock_LvlItemProps->cbox_layer_block()->clear();
+    dock_LvlItemProps->cbox_layer_npc_att()->clear();
+    dock_LvlItemProps->cbox_layer_npc_att()->addItem(tr("[None]"));
+
+    dock_LvlWarpProps->cbox_layer()->clear();
+
+    dock_LvlEvents->LvlEventBoxLock = true;
+    dock_LvlEvents->cbox_layer_to_move()->clear();
+    dock_LvlEvents->cbox_layer_to_move()->addItem(tr("[None]"));
+
+    dock_LvlSearchBox->cbox_layer_block()->clear();
+    dock_LvlSearchBox->cbox_layer_bgo()->clear();
+    dock_LvlSearchBox->cbox_layer_npc()->clear();
 
     if (WinType==1)
     {
@@ -153,27 +155,27 @@ void MainWindow::setLayerLists()
         {
             if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
                 continue;
-            dock_LvlItemProps->ui->PROPS_BGOLayer->addItem(layer.name);
-            dock_LvlItemProps->ui->PROPS_NpcLayer->addItem(layer.name);
-            dock_LvlItemProps->ui->PROPS_BlockLayer->addItem(layer.name);
-            dock_LvlItemProps->ui->PROPS_NpcAttachLayer->addItem(layer.name);
-            ui->LVLEvent_LayerMov_List->addItem(layer.name);
-            dock_LvlWarpProps->ui->WarpLayer->addItem(layer.name, QVariant(layer.name));
-            dock_LvlSearchBox->ui->Find_Combo_LayerBlock->addItem(layer.name);
-            dock_LvlSearchBox->ui->Find_Combo_LayerBGO->addItem(layer.name);
-            dock_LvlSearchBox->ui->Find_Combo_LayerNPC->addItem(layer.name);
+            dock_LvlItemProps->cbox_layer_bgo()->addItem(layer.name);
+            dock_LvlItemProps->cbox_layer_npc()->addItem(layer.name);
+            dock_LvlItemProps->cbox_layer_block()->addItem(layer.name);
+            dock_LvlItemProps->cbox_layer_npc_att()->addItem(layer.name);
+
+            dock_LvlSearchBox->cbox_layer_block()->addItem(layer.name);
+            dock_LvlSearchBox->cbox_layer_bgo()->addItem(layer.name);
+            dock_LvlSearchBox->cbox_layer_npc()->addItem(layer.name);
+            dock_LvlEvents->cbox_layer_to_move()->addItem(layer.name);
+            dock_LvlWarpProps->cbox_layer()->addItem(layer.name, QVariant(layer.name));
         }
     }
-
     if(!curWarpLayer.isEmpty())
-        dock_LvlWarpProps->ui->WarpLayer->setCurrentText(curWarpLayer);
+        dock_LvlWarpProps->cbox_layer()->setCurrentText(curWarpLayer);
 
-    dock_LvlSearchBox->ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
-    dock_LvlSearchBox->ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
-    dock_LvlSearchBox->ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
+    dock_LvlSearchBox->cbox_layer_block()->setCurrentText(curSearchLayerBlock);
+    dock_LvlSearchBox->cbox_layer_bgo()->setCurrentText(curSearchLayerBGO);
+    dock_LvlSearchBox->cbox_layer_npc()->setCurrentText(curSearchLayerNPC);
     dock_LvlWarpProps->lockWarpSetSettings = false;
     dock_LvlItemProps->LvlItemPropsLock = false;
-    LvlEventBoxLock = false;
+    dock_LvlEvents->LvlEventBoxLock = false;
 }
 
 void LvlLayersBox::setLayerToolsLocked(bool locked)
@@ -211,7 +213,7 @@ void LvlLayersBox::RemoveCurrentLayer(bool moveToDefault)
         if(edit->LvlData.events[j].movelayer == selected[0]->text() ) edit->LvlData.events[j].movelayer = "";
     }
 
-    mw()->setEventsBox(); //Refresh events
+    mw()->dock_LvlEvents->setEventsBox(); //Refresh events
 
 
     if(moveToDefault)
@@ -328,7 +330,7 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
     }
     edit->scene->addRemoveLayerHistory(delData);
 
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
@@ -354,7 +356,7 @@ void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
             }
         }
     }
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
@@ -410,7 +412,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
             }
         }
     }
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
@@ -488,9 +490,9 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
         }
         if(edit->LvlData.events[j].movelayer == layerName ) edit->LvlData.events[j].movelayer = newLayerName;
     }
-    mw()->setEventsBox(); //Refresh events
+    mw()->dock_LvlEvents->setEventsBox(); //Refresh events
 
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord)
@@ -623,7 +625,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
         if(edit->LvlData.events[j].movelayer == layerName ) edit->LvlData.events[j].movelayer = newLayerName;
     }
     mw()->setEventsBox(); //Refresh events
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 
@@ -685,7 +687,7 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
             edit->LvlData.modified=true;
         }
     }
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
 void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
@@ -739,7 +741,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                         ModifyLayer(oldLayerName, newLayerName, visible, 1);
                         delete item;
                         edit->LvlData.layers.remove(i);
-                        mw()->setLayerLists();  //Sync comboboxes in properties
+                        mw()->LayerListsSync();  //Sync comboboxes in properties
                         setLayersBox();
                     lockLayerEdit=false;
                     return;
@@ -765,7 +767,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
     //Apply layer's name/visibly to all items
     ModifyLayer(oldLayerName, newLayerName, visible);
 
-    mw()->setLayerLists();  //Sync comboboxes in properties
+    mw()->LayerListsSync();  //Sync comboboxes in properties
     mw()->dock_LvlWarpProps->setDoorData(-2);
 }
 
@@ -790,7 +792,7 @@ void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceSt
         }
     }
 
-    mw()->setLayerLists(); //Sync comboboxes in properties
+    mw()->LayerListsSync(); //Sync comboboxes in properties
 }
 
 

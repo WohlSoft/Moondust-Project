@@ -78,6 +78,26 @@ LvlItemProperties::~LvlItemProperties()
     delete ui;
 }
 
+QComboBox *LvlItemProperties::cbox_layer_block()
+{
+    return ui->PROPS_BlockLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_bgo()
+{
+    return ui->PROPS_BGOLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_npc()
+{
+    return ui->PROPS_NpcLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_npc_att()
+{
+    return ui->PROPS_NpcAttachLayer;
+}
+
 void LvlItemProperties::re_translate()
 {
     LvlItemPropsLock=true;
@@ -145,7 +165,7 @@ void LvlItemProperties::CloseBox()
 
 void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
-    mw()->setLayerLists();
+    mw()->LayerListsSync();
     mw()->EventListsSync();
 
     ui->blockProp->setVisible(false);

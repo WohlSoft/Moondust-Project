@@ -24,6 +24,7 @@
 #include <file_formats/lvl_filedata.h>
 
 class MainWindow;
+class QComboBox;
 
 namespace Ui {
 class LvlItemProperties;
@@ -43,6 +44,10 @@ public:
     long npcPtr;
     bool LvlItemPropsLock;
 
+    QComboBox *cbox_layer_block();
+    QComboBox *cbox_layer_bgo();
+    QComboBox *cbox_layer_npc();
+    QComboBox *cbox_layer_npc_att();
 
 public slots:
     void re_translate();

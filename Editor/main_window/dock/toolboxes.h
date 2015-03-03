@@ -13,6 +13,7 @@
 #include "lvl_item_toolbox.h"
 #include "lvl_search_box.h"
 #include "lvl_layers_box.h"
+#include "lvl_events_box.h"
 
 //World map specific toolboxes
 #include "wld_settings_box.h"

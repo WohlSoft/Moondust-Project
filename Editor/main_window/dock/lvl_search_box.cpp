@@ -143,6 +143,21 @@ LvlSearchBox::~LvlSearchBox()
     delete ui;
 }
 
+QComboBox *LvlSearchBox::cbox_layer_block()
+{
+    return ui->Find_Combo_LayerBlock;
+}
+
+QComboBox *LvlSearchBox::cbox_layer_bgo()
+{
+    return ui->Find_Combo_LayerBGO;
+}
+
+QComboBox *LvlSearchBox::cbox_layer_npc()
+{
+    return ui->Find_Combo_LayerNPC;
+}
+
 void LvlSearchBox::re_translate()
 {
     ui->retranslateUi(this);

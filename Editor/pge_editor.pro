@@ -246,7 +246,6 @@ SOURCES += main.cpp\
     main_window/tools_menu.cpp \
     main_window/translator.cpp \
     main_window/about_dialog/aboutdialog.cpp \
-    main_window/dock/lvl_events_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/tools/main_tool_cdata_cleaner.cpp \
     main_window/tools/main_tool_cdata_import.cpp \
@@ -406,7 +405,8 @@ SOURCES += main.cpp\
     main_window/dock/bookmarks_box.cpp \
     main_window/dock/debugger.cpp \
     main_window/dock/_dock_vizman.cpp \
-    main_window/dock/wld_settings_box.cpp
+    main_window/dock/wld_settings_box.cpp \
+    main_window/dock/lvl_events_box.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -586,7 +586,8 @@ HEADERS  += defines.h \
     main_window/dock/bookmarks_box.h \
     main_window/dock/debugger.h \
     main_window/dock/_dock_vizman.h \
-    main_window/dock/wld_settings_box.h
+    main_window/dock/wld_settings_box.h \
+    main_window/dock/lvl_events_box.h
 
 
 FORMS    += \
@@ -634,7 +635,8 @@ FORMS    += \
     main_window/dock/wld_search_box.ui \
     main_window/dock/bookmarks_box.ui \
     main_window/dock/debugger.ui \
-    main_window/dock/wld_settings_box.ui
+    main_window/dock/wld_settings_box.ui \
+    main_window/dock/lvl_events_box.ui
 
 
 

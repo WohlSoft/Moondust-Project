@@ -13,6 +13,7 @@ class LvlSectionProps;
 class LevelItemBox;
 class LvlSearchBox;
 class LvlLayersBox;
+class LvlEventsBox;
 
 class WorldSettingsBox;
 class WorldItemBox;
@@ -31,6 +32,7 @@ class WldSearchBox;
     friend class LvlSectionProps;\
     friend class LvlSearchBox;\
     friend class LvlLayersBox;\
+    friend class LvlEventsBox;\
     \
     friend class WorldSettingsBox;\
     friend class WorldItemBox;\

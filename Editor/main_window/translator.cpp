@@ -146,9 +146,6 @@ void MainWindow::slotLanguageChanged(QAction* action)
 
         loadLanguage(action->data().toString());
 
-        setEventData(-1);
-        setSoundList();
-
         DevConsole::retranslate();
 
         //Retranslate each opened sub-window / tab
