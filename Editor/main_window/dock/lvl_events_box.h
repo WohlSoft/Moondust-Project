@@ -25,9 +25,12 @@ class LvlEventsBox : public QDockWidget, public MWDock_Base
 public:
     bool LvlEventBoxLock;
     QComboBox* cbox_layer_to_move();
+    QComboBox *cbox_event_trigger();
     QComboBox* cbox_sct_mus();
     QComboBox* cbox_sct_bg();
     QPushButton *button_event_dupe();
+
+    bool eventIsExist(QString evt);
 
 public slots:
     void re_translate();
@@ -40,7 +43,6 @@ public slots:
     void EventListsSync();
     void setEventsBox();
     void setEventData(long index=-1);
-
 
 public slots:
     void ModifyEvent(QString eventName, QString newEventName);

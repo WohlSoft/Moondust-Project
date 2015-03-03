@@ -27,8 +27,6 @@
 #include <tools/math/blocksperseconddialog.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_search_box.h>
-#include <ui_lvl_item_properties.h>
-#include <ui_lvl_search_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -83,6 +81,10 @@ QComboBox *LvlEventsBox::cbox_layer_to_move()
 {
     return ui->LVLEvent_LayerMov_List;
 }
+QComboBox *LvlEventsBox::cbox_event_trigger()
+{
+    return ui->LVLEvent_TriggerEvent;
+}
 
 QComboBox *LvlEventsBox::cbox_sct_mus()
 {
@@ -103,6 +105,7 @@ void LvlEventsBox::re_translate()
 {
     ui->retranslateUi(this);
 
+    EventListsSync();
     setEventData(-1);
     setSoundList();
 }
@@ -165,61 +168,76 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->LvlItemPropsLock=true;
     dock_LvlEvents->lockSetEventSettings=true;
 
-    QString curDestroyedBlock = dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->currentText();
-    QString curHitedBlock = dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->currentText();
-    QString curLayerEmptyBlock = dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->currentText();
+    QComboBox * _ip_block_d = dock_LvlItemProps->cbox_event_block_dest();
+    QComboBox * _ip_block_h = dock_LvlItemProps->cbox_event_block_hit();
+    QComboBox * _ip_block_l = dock_LvlItemProps->cbox_event_block_le();
+
+    QComboBox * _ip_npc_a = dock_LvlItemProps->cbox_event_npc_act();
+    QComboBox * _ip_npc_d = dock_LvlItemProps->cbox_event_npc_die();
+    QComboBox * _ip_npc_t = dock_LvlItemProps->cbox_event_npc_talk();
+    QComboBox * _ip_npc_l = dock_LvlItemProps->cbox_event_npc_le();
+
+    QComboBox * _sb_block_d = dock_LvlSearchBox->cbox_event_block_dest();
+    QComboBox * _sb_block_h = dock_LvlSearchBox->cbox_event_block_hit();
+    QComboBox * _sb_block_l = dock_LvlSearchBox->cbox_event_block_le();
+
+    QComboBox * _eb_trigger = dock_LvlEvents->cbox_event_trigger();
+
+    QString curDestroyedBlock  = _sb_block_d->currentText();
+    QString curHitedBlock      = _sb_block_h->currentText();
+    QString curLayerEmptyBlock = _sb_block_l->currentText();
 
     int WinType = activeChildWindow();
 
-    dock_LvlItemProps->ui->PROPS_BlkEventDestroy->clear();
-    dock_LvlItemProps->ui->PROPS_BlkEventHited->clear();
-    dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->clear();
+    _ip_block_d->clear();
+    _ip_block_h->clear();
+    _ip_block_l->clear();
 
-    dock_LvlItemProps->ui->PROPS_NpcEventActivate->clear();
-    dock_LvlItemProps->ui->PROPS_NpcEventDeath->clear();
-    dock_LvlItemProps->ui->PROPS_NpcEventTalk->clear();
-    dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->clear();
-    dock_LvlEvents->ui->LVLEvent_TriggerEvent->clear();
+    _ip_npc_a->clear();
+    _ip_npc_d->clear();
+    _ip_npc_t->clear();
+    _ip_npc_l->clear();
+    _eb_trigger->clear();
+
+    _sb_block_d->clear();
+    _sb_block_h->clear();
+    _sb_block_l->clear();
 
     QString noEvent = tr("[None]");
-    dock_LvlItemProps->ui->PROPS_BlkEventDestroy->addItem(noEvent);
-    dock_LvlItemProps->ui->PROPS_BlkEventHited->addItem(noEvent);
-    dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->addItem(noEvent);
+    _ip_block_d->addItem(noEvent);
+    _ip_block_h->addItem(noEvent);
+    _ip_block_l->addItem(noEvent);
 
-    dock_LvlItemProps->ui->PROPS_NpcEventActivate->addItem(noEvent);
-    dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(noEvent);
-    dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(noEvent);
-    dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
-    dock_LvlEvents->ui->LVLEvent_TriggerEvent->addItem(noEvent);
+    _ip_npc_a->addItem(noEvent);
+    _ip_npc_d->addItem(noEvent);
+    _ip_npc_t->addItem(noEvent);
+    _ip_npc_l->addItem(noEvent);
+    _eb_trigger->addItem(noEvent);
 
-    dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->clear();
-    dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->clear();
-    dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->clear();
 
     if (WinType==1)
     {
         foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
         {
-            dock_LvlItemProps->ui->PROPS_BlkEventDestroy->addItem(event.name);
-            dock_LvlItemProps->ui->PROPS_BlkEventHited->addItem(event.name);
-            dock_LvlItemProps->ui->PROPS_BlkEventLayerEmpty->addItem(event.name);
+            _ip_block_d->addItem(event.name);
+            _ip_block_h->addItem(event.name);
+            _ip_block_l->addItem(event.name);
 
-            dock_LvlItemProps->ui->PROPS_NpcEventActivate->addItem(event.name);
-            dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(event.name);
-            dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(event.name);
-            dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
-            dock_LvlEvents->ui->LVLEvent_TriggerEvent->addItem(event.name);
+            _ip_npc_a->addItem(event.name);
+            _ip_npc_d->addItem(event.name);
+            _ip_npc_t->addItem(event.name);
+            _ip_npc_l->addItem(event.name);
+            _eb_trigger->addItem(event.name);
 
-            dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->addItem(event.name);
-            dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->addItem(event.name);
-            dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->addItem(event.name);
+            _sb_block_d->addItem(event.name);
+            _sb_block_h->addItem(event.name);
+            _sb_block_l->addItem(event.name);
         }
     }
-    //LvlItemPropsLock = false; - must be true always
 
-    dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->setCurrentText(curDestroyedBlock);
-    dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->setCurrentText(curHitedBlock);
-    dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->setCurrentText(curLayerEmptyBlock);
+    _sb_block_d->setCurrentText(curDestroyedBlock);
+    _sb_block_h->setCurrentText(curHitedBlock);
+    _sb_block_l->setCurrentText(curLayerEmptyBlock);
 
     dock_LvlEvents->lockSetEventSettings=false;
 
@@ -395,6 +413,22 @@ void LvlEventsBox::setEventData(long index)
     }
     lockSetEventSettings=false;
 
+}
+
+bool LvlEventsBox::eventIsExist(QString evt)
+{
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return false;
+
+    for(int i=0; i<edit->LvlData.events.size(); i++)
+    {
+        if( edit->LvlData.events[i].name == evt )
+        {
+            return true;
+            break;
+        }
+    }
+    return false;
 }
 
 
@@ -610,17 +644,7 @@ void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
         if(item->data(3).toString()=="NewEvent")
         {
-            bool AlreadyExist=false;
-            foreach(LevelEvents event, edit->LvlData.events)
-            {
-                if( event.name==item->text() )
-                {
-                    AlreadyExist=true;
-                    break;
-                }
-            }
-
-            if(AlreadyExist)
+            if(eventIsExist(item->text()))
             {
                 delete item;
                 cloneEvent=false;//Reset state
@@ -752,17 +776,7 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
     }
     else
     {
-        bool AlreadyExist=false;
-        foreach(LevelEvents event, edit->LvlData.events)
-        {
-            if( event.name==item->text() )
-            {
-                AlreadyExist=true;
-                break;
-            }
-        }
-
-        if(AlreadyExist)
+        if(eventIsExist(item->text()))
         {
             delete item;
             lockSetEventSettings=false;

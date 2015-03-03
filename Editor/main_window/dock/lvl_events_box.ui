@@ -109,7 +109,7 @@
        <number>2</number>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="tabSpacing">
        <number>0</number>
@@ -119,8 +119,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>255</width>
+         <height>360</height>
         </rect>
        </property>
        <attribute name="label">
@@ -302,8 +302,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>272</width>
+         <height>215</height>
         </rect>
        </property>
        <attribute name="label">
@@ -410,8 +410,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>272</width>
+         <height>215</height>
         </rect>
        </property>
        <attribute name="label">
@@ -844,8 +844,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>188</width>
+         <height>159</height>
         </rect>
        </property>
        <attribute name="label">
@@ -960,8 +960,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>190</width>
+         <height>110</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1058,8 +1058,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>287</width>
-         <height>692</height>
+         <width>104</width>
+         <height>70</height>
         </rect>
        </property>
        <attribute name="label">
