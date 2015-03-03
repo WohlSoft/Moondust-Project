@@ -49,6 +49,15 @@ public:
     QComboBox *cbox_layer_npc();
     QComboBox *cbox_layer_npc_att();
 
+    QComboBox *cbox_event_block_dest();
+    QComboBox *cbox_event_block_hit();
+    QComboBox *cbox_event_block_le();
+
+    QComboBox *cbox_event_npc_act();
+    QComboBox *cbox_event_npc_die();
+    QComboBox *cbox_event_npc_talk();
+    QComboBox *cbox_event_npc_le();
+
 public slots:
     void re_translate();
 

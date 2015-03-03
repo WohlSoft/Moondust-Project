@@ -26,6 +26,10 @@ public:
     QComboBox *cbox_layer_bgo();
     QComboBox *cbox_layer_npc();
 
+    QComboBox *cbox_event_block_dest();
+    QComboBox *cbox_event_block_hit();
+    QComboBox *cbox_event_block_le();
+
 public slots:
     void re_translate();
     void resetAllSearches();
