@@ -33,37 +33,110 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-long currentEventArrayID=0;
-bool lockSetEventSettings=false;
+#include "lvl_events_box.h"
+#include "ui_lvl_events_box.h"
 
-bool lockEventSectionDataList=false;
-long curSectionField=0;
-
-bool cloneEvent=false;
-long cloneEventId=0;
-
-
-void MainWindow::on_LevelEventsToolBox_visibilityChanged(bool visible)
+LvlEventsBox::LvlEventsBox(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::LvlEventsBox)
 {
-    ui->actionLevelEvents->setChecked(visible);
+    setVisible(false);
+    ui->setupUi(this);
+
+    QRect mwg = mw()->geometry();
+    int GOffset=240;
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setFloating(true);
+    setGeometry(
+                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.y()+120,
+                width(),
+                height()
+                );
+
+    connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
+            this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelEventsBoxVis);
+
+    LvlEventBoxLock=false;
+
+    currentEventArrayID=0;
+    lockSetEventSettings=false;
+
+    lockEventSectionDataList=false;
+    curSectionField=0;
+
+    cloneEvent=false;
+    cloneEventId=0;
+}
+
+LvlEventsBox::~LvlEventsBox()
+{
+    delete ui;
+}
+
+QComboBox *LvlEventsBox::cbox_layer_to_move()
+{
+    return ui->LVLEvent_LayerMov_List;
+}
+
+QComboBox *LvlEventsBox::cbox_sct_mus()
+{
+    return ui->LVLEvent_SctMus_List;
+}
+
+QComboBox *LvlEventsBox::cbox_sct_bg()
+{
+    return ui->LVLEvent_SctBg_List;
+}
+
+QPushButton *LvlEventsBox::button_event_dupe()
+{
+    return ui->LVLEvents_duplicate;
+}
+
+void LvlEventsBox::re_translate()
+{
+    ui->retranslateUi(this);
+
+    setEventData(-1);
+    setSoundList();
+}
+
+
+
+void LvlEventsBox::on_LvlEventsBox_visibilityChanged(bool visible)
+{
+    mw()->ui->actionLevelEvents->setChecked(visible);
 }
 
 void MainWindow::on_actionLevelEvents_triggered(bool checked)
 {
-    ui->LevelEventsToolBox->setVisible(checked);
-    if(checked) ui->LevelEventsToolBox->raise();
+    dock_LvlEvents->setVisible(checked);
+    if(checked) dock_LvlEvents->raise();
 }
 
 void MainWindow::setEventsBox()
 {
-    int WinType = activeChildWindow();
+    dock_LvlEvents->setEventsBox();
+}
+
+void LvlEventsBox::setEventsBox()
+{
+    int WinType = mw()->activeChildWindow();
     QListWidgetItem * item;
 
     util::memclear(ui->LVLEvents_List);
 
     if (WinType==1)
     {
-        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+        foreach(LevelEvents event, edit->LvlData.events)
         {
             item = new QListWidgetItem;
             item->setText(event.name);
@@ -77,16 +150,20 @@ void MainWindow::setEventsBox()
             item->setData(3, QString::number( event.array_id ) );
             ui->LVLEvents_List->addItem( item );
         }
-
         on_LVLEvents_List_itemSelectionChanged();
     }
+}
+
+void LvlEventsBox::EventListsSync()
+{
+    mw()->EventListsSync();
 }
 
 void MainWindow::EventListsSync()
 {
     dock_LvlItemProps->hide();
     dock_LvlItemProps->LvlItemPropsLock=true;
-    lockSetEventSettings=true;
+    dock_LvlEvents->lockSetEventSettings=true;
 
     QString curDestroyedBlock = dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->currentText();
     QString curHitedBlock = dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->currentText();
@@ -102,7 +179,7 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->ui->PROPS_NpcEventDeath->clear();
     dock_LvlItemProps->ui->PROPS_NpcEventTalk->clear();
     dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->clear();
-    ui->LVLEvent_TriggerEvent->clear();
+    dock_LvlEvents->ui->LVLEvent_TriggerEvent->clear();
 
     QString noEvent = tr("[None]");
     dock_LvlItemProps->ui->PROPS_BlkEventDestroy->addItem(noEvent);
@@ -113,7 +190,7 @@ void MainWindow::EventListsSync()
     dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(noEvent);
     dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(noEvent);
     dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
-    ui->LVLEvent_TriggerEvent->addItem(noEvent);
+    dock_LvlEvents->ui->LVLEvent_TriggerEvent->addItem(noEvent);
 
     dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->clear();
     dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->clear();
@@ -131,7 +208,7 @@ void MainWindow::EventListsSync()
             dock_LvlItemProps->ui->PROPS_NpcEventDeath->addItem(event.name);
             dock_LvlItemProps->ui->PROPS_NpcEventTalk->addItem(event.name);
             dock_LvlItemProps->ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
-            ui->LVLEvent_TriggerEvent->addItem(event.name);
+            dock_LvlEvents->ui->LVLEvent_TriggerEvent->addItem(event.name);
 
             dock_LvlSearchBox->ui->Find_Combo_EventDestoryedBlock->addItem(event.name);
             dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->addItem(event.name);
@@ -144,20 +221,20 @@ void MainWindow::EventListsSync()
     dock_LvlSearchBox->ui->Find_Combo_EventHitedBlock->setCurrentText(curHitedBlock);
     dock_LvlSearchBox->ui->Find_Combo_EventLayerEmptyBlock->setCurrentText(curLayerEmptyBlock);
 
-    lockSetEventSettings=false;
+    dock_LvlEvents->lockSetEventSettings=false;
 
-    if(currentEventArrayID>0)
-        setEventData(currentEventArrayID);
+    if(dock_LvlEvents->currentEventArrayID>0)
+        dock_LvlEvents->setEventData(dock_LvlEvents->currentEventArrayID);
 }
 
-void MainWindow::setSoundList()
+void LvlEventsBox::setSoundList()
 {
     ui->LVLEvent_Cmn_PlaySnd->clear();
     ui->LVLEvent_Cmn_PlaySnd->addItem( tr("[Silence]"), "0" );
 
-    if(configs.check()) return;
+    if(mw()->configs.check()) return;
 
-    foreach(obj_sound snd, configs.main_sound )
+    foreach(obj_sound snd, mw()->configs.main_sound )
     {
         if(!snd.hidden)
             ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
@@ -165,7 +242,7 @@ void MainWindow::setSoundList()
 }
 
 
-void MainWindow::setEventData(long index)
+void LvlEventsBox::setEventData(long index)
 {
     lockSetEventSettings=true;
     long cIndex=index;
@@ -193,13 +270,14 @@ void MainWindow::setEventData(long index)
         }
 
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
 
-        if( (activeLvlEditWin()->LvlData.events.size() > 0) && (cIndex >= 0))
+        if( (edit->LvlData.events.size() > 0) && (cIndex >= 0))
         {
-            LevelEdit * edit = activeLvlEditWin();
             currentEventArrayID=cIndex;
             foreach(LevelEvents event, edit->LvlData.events)
             {
@@ -320,13 +398,15 @@ void MainWindow::setEventData(long index)
 }
 
 
-void MainWindow::eventSectionSettingsSync()
+void LvlEventsBox::eventSectionSettingsSync()
 {
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -426,13 +506,15 @@ void MainWindow::eventSectionSettingsSync()
     lockEventSectionDataList=false;
 }
 
-void MainWindow::eventLayerVisiblySyncList()
+void LvlEventsBox::eventLayerVisiblySyncList()
 {
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -504,7 +586,7 @@ void MainWindow::eventLayerVisiblySyncList()
     }
 }
 
-void MainWindow::on_LVLEvents_List_itemSelectionChanged()
+void LvlEventsBox::on_LVLEvents_List_itemSelectionChanged()
 {
     if(ui->LVLEvents_List->selectedItems().isEmpty())
     {
@@ -515,15 +597,17 @@ void MainWindow::on_LVLEvents_List_itemSelectionChanged()
 
 }
 
-void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
+void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     lockSetEventSettings=true;
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         if(item->data(3).toString()=="NewEvent")
         {
             bool AlreadyExist=false;
@@ -584,7 +668,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
             QString oldEventName = item->text();
 
             ModifyEventItem(item, oldEventName, eventName);
-            activeLvlEditWin()->LvlData.modified=true;
+            edit->LvlData.modified=true;
         }
 
     }//if WinType==1
@@ -592,34 +676,38 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
     lockSetEventSettings=false;
 }
 
-void MainWindow::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
+void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
 {
     lockSetEventSettings=true;
     WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
                " " + QString::number(sourceEnd) +
                " to " + QString::number(destinationRow));
 
-    int WinType = activeChildWindow();
-    if (WinType==1)
+    int WinType = mw()->activeChildWindow();
+    if(WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         LevelEvents buffer;
-        if(sourceStart<activeLvlEditWin()->LvlData.events.size())
+        if(sourceStart<edit->LvlData.events.size())
         {
-            buffer = activeLvlEditWin()->LvlData.events[sourceStart];
-            activeLvlEditWin()->LvlData.events.remove(sourceStart);
-            activeLvlEditWin()->LvlData.events.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
+            buffer = edit->LvlData.events[sourceStart];
+            edit->LvlData.events.remove(sourceStart);
+            edit->LvlData.events.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
         }
     }
     lockSetEventSettings=false;
     EventListsSync();  //Sync comboboxes in properties
 }
 
-
-long MainWindow::getEventArrayIndex()
+long LvlEventsBox::getEventArrayIndex()
 {
-    if(activeChildWindow()!=1) return -2;
+    if(mw()->activeChildWindow()!=1) return -2;
 
-    LevelEdit * edit = activeLvlEditWin();
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return -2;
+
     bool found=false;
     long i;
     for(i=0; i< edit->LvlData.events.size();i++)
@@ -637,11 +725,14 @@ long MainWindow::getEventArrayIndex()
 }
 
 
-void MainWindow::AddNewEvent(QString eventName, bool setEdited)
+void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
 {
     lockSetEventSettings=true;
 
-    if(activeChildWindow()!=1) return;
+    if(mw()->activeChildWindow()!=1) return;
+
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return;
 
     QListWidgetItem * item;
     item = new QListWidgetItem;
@@ -652,8 +743,6 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
     item->setData(3, QString("NewEvent") );
 
     ui->LVLEvents_List->addItem( item );
-
-    LevelEdit * edit = activeLvlEditWin();
 
     if(setEdited)
     {
@@ -716,11 +805,13 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
     EventListsSync();  //Sync comboboxes in properties
 }
 
-void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
+void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
 {
     lockSetEventSettings=true;
     //Find layer enrty in array and apply settings
-    LevelEdit * edit = activeLvlEditWin();
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return;
+
     for(int i=0; i < edit->LvlData.events.size(); i++)
     {
         if( edit->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
@@ -738,7 +829,7 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
                 return;
             }
 
-            activeLvlEditWin()->scene->addRenameEventHistory(edit->LvlData.events[i].array_id, oldEventName, newEventName);
+            edit->scene->addRenameEventHistory(edit->LvlData.events[i].array_id, oldEventName, newEventName);
 
             if(oldEventName!=newEventName)
             {
@@ -771,10 +862,12 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
     EventListsSync();  //Sync comboboxes in properties
 }
 
-void MainWindow::ModifyEvent(QString eventName, QString newEventName)
+void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
 {
     //Apply layer's name to all items
-    LevelEdit * edit = activeLvlEditWin();
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return;
+
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -814,28 +907,28 @@ void MainWindow::ModifyEvent(QString eventName, QString newEventName)
     }
 }
 
-QListWidget *MainWindow::getEventList()
+QListWidget *LvlEventsBox::getEventList()
 {
     return ui->LVLEvents_List;
 }
 
-void MainWindow::setEventToolsLocked(bool locked)
+void LvlEventsBox::setEventToolsLocked(bool locked)
 {
     lockSetEventSettings = locked;
 }
 
-void MainWindow::RemoveEvent(QString eventName)
+void LvlEventsBox::RemoveEvent(QString eventName)
 {
     if(eventName.isEmpty()) return;
     //dummy
 }
 
-void MainWindow::on_LVLEvents_add_clicked()
+void LvlEventsBox::on_LVLEvents_add_clicked()
 {
     AddNewEvent(tr("New Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
 }
 
-void MainWindow::on_LVLEvents_del_clicked()
+void LvlEventsBox::on_LVLEvents_del_clicked()
 {
     if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
 
@@ -843,18 +936,20 @@ void MainWindow::on_LVLEvents_del_clicked()
     if(ui->LVLEvents_List->selectedItems()[0]->text()=="P Switch - Start") return;
     if(ui->LVLEvents_List->selectedItems()[0]->text()=="P Switch - End") return;
 
-    int WinType = activeChildWindow();
-
+    int WinType = mw()->activeChildWindow();
     if (WinType==1)
     {
-        for(int i=0;i< activeLvlEditWin()->LvlData.events.size(); i++)
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
+        for(int i=0;i< edit->LvlData.events.size(); i++)
         {
-            if( activeLvlEditWin()->LvlData.events[i].array_id==
+            if( edit->LvlData.events[i].array_id==
                     (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(3).toInt() )
             {
-                activeLvlEditWin()->scene->addRemoveEventHistory(activeLvlEditWin()->LvlData.events[i]);
-                ModifyEvent(activeLvlEditWin()->LvlData.events[i].name, "");
-                activeLvlEditWin()->LvlData.events.remove(i);
+                edit->scene->addRemoveEventHistory(edit->LvlData.events[i]);
+                ModifyEvent(edit->LvlData.events[i].name, "");
+                edit->LvlData.events.remove(i);
                 delete ui->LVLEvents_List->selectedItems()[0];
                 break;
             }
@@ -863,7 +958,8 @@ void MainWindow::on_LVLEvents_del_clicked()
     EventListsSync();
 }
 
-void MainWindow::on_LVLEvents_duplicate_clicked()
+
+void LvlEventsBox::on_LVLEvents_duplicate_clicked()
 {
     if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
 
@@ -871,19 +967,21 @@ void MainWindow::on_LVLEvents_duplicate_clicked()
     cloneEventId=ui->LVLEvents_List->selectedItems()[0]->data(3).toInt();
 
     AddNewEvent(tr("Copyed Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
-
 }
 
 
-void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
+
+void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -899,15 +997,17 @@ void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
 
 
 
-void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -921,15 +1021,17 @@ void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 
 
 
-void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_HideAdd_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -944,15 +1046,17 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_HideDel_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -973,15 +1077,17 @@ void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
     }
 }
 
-void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_ShowAdd_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -995,15 +1101,17 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
     }
 }
 
-void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_ShowDel_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1025,15 +1133,17 @@ void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_TogAdd_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1047,15 +1157,17 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
     }
 }
 
-void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
+void LvlEventsBox::on_LVLEvent_Layer_TogDel_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1081,17 +1193,19 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 
 
 
-void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
     if(index<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1104,15 +1218,17 @@ void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
     }
 }
 
-void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
+void LvlEventsBox::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1126,15 +1242,17 @@ void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 
 }
 
-void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
+void LvlEventsBox::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1154,15 +1272,16 @@ void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 
 
 
-void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
+void LvlEventsBox::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1175,15 +1294,17 @@ void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
+void LvlEventsBox::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1197,15 +1318,17 @@ void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 
 }
 
-void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
+void LvlEventsBox::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1221,7 +1344,7 @@ void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 
 
 
-void MainWindow::on_LVLEvent_Sct_list_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_Sct_list_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
@@ -1229,16 +1352,17 @@ void MainWindow::on_LVLEvent_Sct_list_currentIndexChanged(int index)
     eventSectionSettingsSync();
 }
 
-void MainWindow::on_LVLEvent_SctSize_none_clicked()
+void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1274,16 +1398,18 @@ void MainWindow::on_LVLEvent_SctSize_none_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctSize_reset_clicked()
+void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1319,16 +1445,17 @@ void MainWindow::on_LVLEvent_SctSize_reset_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctSize_define_clicked()
+void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1364,17 +1491,18 @@ void MainWindow::on_LVLEvent_SctSize_define_clicked()
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
+void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1395,18 +1523,19 @@ void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
+void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1428,17 +1557,19 @@ void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 
 }
 
-void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
+void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1459,17 +1590,18 @@ void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
+void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1491,16 +1623,17 @@ void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 
 }
 
-void MainWindow::on_LVLEvent_SctSize_Set_clicked()
+void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         if(curSectionField!=edit->LvlData.CurSection)
         {
             QMessageBox::information(this, tr("Get section size"),
@@ -1512,31 +1645,32 @@ void MainWindow::on_LVLEvent_SctSize_Set_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        activeLvlEditWin()->setFocus();
-        if(activeLvlEditWin()->scene->pResizer==NULL)
+        edit->setFocus();
+        if(edit->scene->pResizer==NULL)
         {
-            activeLvlEditWin()->goTo(edit->LvlData.events[i].sets[curSectionField].position_left,
+            edit->goTo(edit->LvlData.events[i].sets[curSectionField].position_left,
                                      edit->LvlData.events[i].sets[curSectionField].position_top,
                                      false,
                                      QPoint(-10,-10));
-            activeLvlEditWin()->scene->setEventSctSizeResizer(i, true);
+            edit->scene->setEventSctSizeResizer(i, true);
         }
     }
 
 }
 
-void MainWindow::on_LVLEvent_SctMus_none_clicked()
+void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         ui->LVLEvent_SctMus_List->setEnabled(false);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1551,18 +1685,20 @@ void MainWindow::on_LVLEvent_SctMus_none_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctMus_reset_clicked()
+void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         ui->LVLEvent_SctMus_List->setEnabled(false);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1576,18 +1712,20 @@ void MainWindow::on_LVLEvent_SctMus_reset_clicked()
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctMus_define_clicked()
+void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         ui->LVLEvent_SctMus_List->setEnabled(true);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1601,18 +1739,19 @@ void MainWindow::on_LVLEvent_SctMus_define_clicked()
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
     if(index<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1626,18 +1765,20 @@ void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
     lockEventSectionDataList=false;
 }
 
-void MainWindow::on_LVLEvent_SctBg_none_clicked()
+void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         ui->LVLEvent_SctBg_List->setEnabled(false);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1652,18 +1793,20 @@ void MainWindow::on_LVLEvent_SctBg_none_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctBg_reset_clicked()
+void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         ui->LVLEvent_SctBg_List->setEnabled(false);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1678,18 +1821,20 @@ void MainWindow::on_LVLEvent_SctBg_reset_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctBg_define_clicked()
+void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         ui->LVLEvent_SctBg_List->setEnabled(true);
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1704,19 +1849,21 @@ void MainWindow::on_LVLEvent_SctBg_define_clicked()
 
 }
 
-void MainWindow::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
     if(index<0) return;
 
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         lockEventSectionDataList=true;
-        LevelEdit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1734,15 +1881,17 @@ void MainWindow::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 
 
 
-void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
+void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
 {
     if(currentEventArrayID<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1772,16 +1921,18 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
 }
 
 
-void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if(WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
         QList<QVariant> soundData;
@@ -1794,18 +1945,18 @@ void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
     }
 }
 
-void MainWindow::on_LVLEvent_playSnd_clicked()
+void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 {
     if(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt()==0) return;
 
-    QString sndPath = configs.dirs.sounds;
+    QString sndPath = mw()->configs.dirs.sounds;
     long i;
     bool found=false;
-    i = configs.getSndI( ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() );
+    i = mw()->configs.getSndI( ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() );
     if(i>=0)
     {
         found=true;
-        sndPath += configs.main_sound[i].file;
+        sndPath += mw()->configs.main_sound[i].file;
     }
 
     WriteToLog(QtDebugMsg, QString("Test Sound -> path-1 %1").arg(sndPath));
@@ -1819,16 +1970,18 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
 
 
 
-void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
         QList<QVariant> endData;
@@ -1844,16 +1997,18 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 
 
 
-void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Up_clicked(bool checked)
 {
 
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1864,15 +2019,17 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
 
 }
 
-void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Down_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1882,15 +2039,17 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Left_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1900,15 +2059,17 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Right_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1918,15 +2079,17 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Run_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1936,15 +2099,17 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_AltRun_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1954,15 +2119,17 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Jump_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1972,15 +2139,17 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_AltJump_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -1990,15 +2159,17 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Drop_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2008,15 +2179,17 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
     }
 }
 
-void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
+void LvlEventsBox::on_LVLEvent_Key_Start_clicked(bool checked)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2029,16 +2202,18 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
 
 
 
-void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
+void LvlEventsBox::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2056,15 +2231,17 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 
 }
 
-void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
+void LvlEventsBox::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 {
     if(lockSetEventSettings || LvlEventBoxLock) return;
 
-    int WinType = activeChildWindow();
+    int WinType = mw()->activeChildWindow();
 
     if (WinType==1)
     {
-        LevelEdit * edit = activeLvlEditWin();
+        LevelEdit * edit = mw()->activeLvlEditWin();
+        if(!edit) return;
+
         long i = getEventArrayIndex();
         if(i<0) return;
 
@@ -2080,7 +2257,7 @@ void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 }
 
 
-void MainWindow::on_bps_LayerMov_horSpeed_clicked()
+void LvlEventsBox::on_bps_LayerMov_horSpeed_clicked()
 {
     BlocksPerSecondDialog bps;
     if(!bps.exec())
@@ -2089,7 +2266,7 @@ void MainWindow::on_bps_LayerMov_horSpeed_clicked()
     ui->LVLEvent_LayerMov_spX->setValue(bps.result());
 }
 
-void MainWindow::on_bps_LayerMov_vertSpeed_clicked()
+void LvlEventsBox::on_bps_LayerMov_vertSpeed_clicked()
 {
     BlocksPerSecondDialog bps;
     if(!bps.exec())
@@ -2098,7 +2275,7 @@ void MainWindow::on_bps_LayerMov_vertSpeed_clicked()
     ui->LVLEvent_LayerMov_spY->setValue(bps.result());
 }
 
-void MainWindow::on_bps_Scroll_horSpeed_clicked()
+void LvlEventsBox::on_bps_Scroll_horSpeed_clicked()
 {
     BlocksPerSecondDialog bps;
     if(!bps.exec())
@@ -2107,7 +2284,7 @@ void MainWindow::on_bps_Scroll_horSpeed_clicked()
     ui->LVLEvent_Scroll_spX->setValue(bps.result());
 }
 
-void MainWindow::on_bps_Scroll_vertSpeed_clicked()
+void LvlEventsBox::on_bps_Scroll_vertSpeed_clicked()
 {
     BlocksPerSecondDialog bps;
     if(!bps.exec())

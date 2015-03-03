@@ -89,40 +89,19 @@ void MainWindow::updateMenus(bool force)
     dock_WldItemProps->setVisible(false);
 
     //Change visibility of toolboxes
-
     /***************Level specific toolboxes****************/
-    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
-    {
-        docks_level.hideAll();
-        GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
-        ui->LevelEventsToolBox->setVisible( 0 );
-    }
-    if((GlobalSettings::lastWinType !=1) && (WinType==1))
-    {
-        docks_level.showAll();
-        ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
-    }
+    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )   { docks_level.hideAll(); }
+    if((GlobalSettings::lastWinType !=1) && (WinType==1))       { docks_level.showAll(); }
 
     /***************World specific toolboxes****************/
-    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
-    {
-        docks_world.hideAll();
-    }
-    if((GlobalSettings::lastWinType !=3) && (WinType==3))
-    {
-        docks_world.showAll();
-    }
+    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )   { docks_world.hideAll(); }
+    if((GlobalSettings::lastWinType !=3) && (WinType==3))       { docks_world.showAll(); }
 
     /***************World and Level specific toolboxes****************/
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
-    {
-        docks_level_and_world.hideAll();
-    }
+    { docks_level_and_world.hideAll(); }
     if( (!(GlobalSettings::lastWinType==1))&&(!(GlobalSettings::lastWinType==3)) && (WinType == 1 || WinType == 3) )
-    {
-        docks_level_and_world.showAll();
-    }
-
+    { docks_level_and_world.showAll(); }
 
     GlobalSettings::lastWinType =   WinType;
 
@@ -261,11 +240,11 @@ void MainWindow::updateMenus(bool force)
 
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
-        setEventsBox();
+        dock_LvlEvents->setEventsBox();
 
         //Sync lists in properties windows
         EventListsSync();
-        setLayerLists();
+        LayerListsSync();
         dock_BookmarksBox->updateBookmarkBoxByData();
 
         dock_LvlSectionProps->setLevelSectionData();

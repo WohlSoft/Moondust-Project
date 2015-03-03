@@ -64,7 +64,7 @@ void MainWindow::applyTheme(QString themeDir)
     dock_LvlSearchBox->setWindowIcon(Themes::icon(Themes::search));
 
     ui->actionCopy->setIcon(Themes::icon(Themes::copy));
-    ui->LVLEvents_duplicate->setIcon(Themes::icon(Themes::copy_16));
+    dock_LvlEvents->button_event_dupe()->setIcon(Themes::icon(Themes::copy_16));
     ui->actionCut->setIcon(Themes::icon(Themes::cut));
     ui->actionPaste->setIcon(Themes::icon(Themes::paste));
 
@@ -101,7 +101,7 @@ void MainWindow::applyTheme(QString themeDir)
     dock_LvlLayers->setWindowIcon(Themes::icon(Themes::layers));
 
     ui->actionLevelEvents->setIcon(Themes::icon(Themes::events));
-    ui->LevelEventsToolBox->setWindowIcon(Themes::icon(Themes::events));
+    dock_LvlEvents->setWindowIcon(Themes::icon(Themes::events));
 
     ui->actionDrawWater->setIcon(Themes::icon(Themes::water));
     ui->actionDrawSand->setIcon(Themes::icon(Themes::quicksand));

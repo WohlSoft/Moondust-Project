@@ -22,6 +22,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <main_window/dock/lvl_sctc_props.h>
+#include <main_window/dock/lvl_events_box.h>
 
 #include <main_window/dock/lvl_item_toolbox.h>
 #include <main_window/dock/wld_item_toolbox.h>
@@ -61,7 +62,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     dock_WldItemBox->setWldItemBoxes(false);
 
     dock_LvlSectionProps->setLevelSectionData();
-    setSoundList();
+    dock_LvlEvents->setSoundList();
     dock_LvlItemBox->clearFilter();
 
     //Set tools from loaded configs

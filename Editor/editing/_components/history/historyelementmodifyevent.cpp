@@ -1,6 +1,7 @@
 #include "historyelementmodifyevent.h"
 
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_events_box.h>
 
 HistoryElementModifyEvent::HistoryElementModifyEvent(const LevelEvents &event, bool didRemove, QObject *parent) :
     QObject(parent),
@@ -46,21 +47,21 @@ void HistoryElementModifyEvent::doEventRemove()
 
     LevelEvents rmEvents = m_event;
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     for (int i = 0; i < lvlScene->LvlData->events.size(); i++) {
         if(lvlScene->LvlData->events[i].array_id == (unsigned int)rmEvents.array_id){
-            for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                if(MainWinConnect::pMainWin->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
-                    delete MainWinConnect::pMainWin->getEventList()->item(j);
+            for(int j = 0; j < MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->count(); j++){
+                if(MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j)->data(ITEM_BLOCK_IS_SIZABLE).toInt() == (int)rmEvents.array_id){
+                    delete MainWinConnect::pMainWin->dock_LvlEvents->getEventList()->item(j);
                 }
             }
-            MainWinConnect::pMainWin->ModifyEvent(lvlScene->LvlData->events[i].name, "");
+            MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(lvlScene->LvlData->events[i].name, "");
             lvlScene->LvlData->events.remove(i);
         }
     }
 
     MainWinConnect::pMainWin->EventListsSync();
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }
 
 void HistoryElementModifyEvent::doEventPlace()
@@ -74,7 +75,7 @@ void HistoryElementModifyEvent::doEventPlace()
 
     LevelEvents rmEvents = m_event;
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     QListWidgetItem * item;
     item = new QListWidgetItem;
     item->setText(rmEvents.name);
@@ -82,7 +83,7 @@ void HistoryElementModifyEvent::doEventPlace()
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
     item->setData(3, QString::number(rmEvents.array_id) );
-    QListWidget* evList = MainWinConnect::pMainWin->getEventList();
+    QListWidget* evList = MainWinConnect::pMainWin->dock_LvlEvents->getEventList();
     LevelEvents NewEvent = rmEvents;
 
 
@@ -92,5 +93,5 @@ void HistoryElementModifyEvent::doEventPlace()
     lvlScene->LvlData->modified = true;
 
     MainWinConnect::pMainWin->EventListsSync();
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }

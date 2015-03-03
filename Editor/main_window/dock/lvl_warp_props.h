@@ -20,6 +20,9 @@ private:
     explicit LvlWarpBox(QWidget *parent);
     ~LvlWarpBox();
 
+public:
+    QComboBox *cbox_layer();
+
 public slots:
     void re_translate();
     void init();//void setDoorsToolbox();
