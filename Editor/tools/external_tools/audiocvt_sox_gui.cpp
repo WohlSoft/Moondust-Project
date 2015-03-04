@@ -58,6 +58,7 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     }
 
     inWork=false;
+    isBackUp = false;
     madeJob=0;
 }
 
@@ -133,22 +134,50 @@ void AudioCvt_Sox_gui::start()
     nexStep(0, QProcess::NormalExit);
 }
 
-void AudioCvt_Sox_gui::stop()
+void AudioCvt_Sox_gui::stop(bool do_abort)
 {
     ui->start->setText(tr("Start"));
     ui->progress->setValue(0);
     ui->progress->setMaximum(10);
     setEnableControls(true);
-    if(converter.state()==QProcess::Running)
-        converter.terminate();
     current_musFileNew.clear();
     current_musFileOld.clear();
     filesToConvert.clear();
     inWork=false;
+
+    //Restore backUP
+    if(do_abort)
+    {
+        if(converter.state()==QProcess::Running)
+            converter.terminate();
+
+        if(isBackUp)
+        {
+            if(QFile(current_musFileOld).exists())
+            {
+                if(QFile(current_musFileNew).exists())
+                    QFile(current_musFileNew).remove();
+                QFile(current_musFileOld).rename(current_musFileNew);
+            }
+        }
+        else
+        {
+            if(QFile(current_musFileNew).exists())
+                QFile(current_musFileNew).remove();
+        }
+
+        PGE_MusPlayer::MUS_openFile( LvlMusPlay::currentMusicPath );
+        PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::MUS_playMusic();
+
+        QMessageBox::warning(this, tr("SoX error"), tr("Operation cancaled"));
+    }
 }
 
 void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
 {
+    if(!inWork) return;
+
     if(exitStatus==QProcess::CrashExit)
     {
         QMessageBox::warning(this, tr("SoX error"), tr("SoX was crashed"));
@@ -218,6 +247,7 @@ retry_queue:
     args.clear();
     hasWork=false;
     renameToBak=false;
+    isBackUp = false;
 
     converter.setProgram(ui->sox_bin_path->text());
 
@@ -314,7 +344,10 @@ retry_queue:
     }
 
     if(renameToBak)
+    {
         QFile(current_musFileNew).rename(current_musFileOld);
+        isBackUp=true;
+    }
 
     args << current_musFileNew;
     converter.setArguments(args);
@@ -392,7 +425,7 @@ void AudioCvt_Sox_gui::on_remove_clicked()
 void AudioCvt_Sox_gui::on_start_clicked()
 {
     if(inWork)
-        stop();
+        stop(true);
     else
         start();
 }

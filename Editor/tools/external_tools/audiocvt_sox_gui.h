@@ -19,7 +19,7 @@ public:
     ~AudioCvt_Sox_gui();
     void setEnableControls(bool en);
     void start();
-    void stop();
+    void stop(bool do_abort=false);
 
 private slots:
     void consoleMessage();
@@ -44,10 +44,12 @@ private:
     QString current_musFileOld;
     QString current_musFileNew;
     Ui::AudioCvt_Sox_gui *ui;
+    bool isBackUp;
 
     QString     curSectionMusic;
     QString     lastOutput;
     QStringList curLevelMusic;
+
     bool isLevel;
     LevelEdit *ledit;
 };
