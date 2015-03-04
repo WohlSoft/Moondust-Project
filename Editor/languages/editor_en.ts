@@ -323,9 +323,87 @@
         <translation type="obsolete">44100</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="119"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="21"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="135"/>
         <source>Start</source>
         <translation>Start</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <source>SoX error</source>
+        <translation>SoX error</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
+        <source>SoX binary path is not defined.
+Please set SoX path first</source>
+        <translation>SoX binary path is not defined.
+Please set SoX path first</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
+        <source>SoX binary path is wrong.
+Please set SoX path first</source>
+        <translation>SoX binary path is wrong.
+Please set SoX path first</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <source>Nothing to do</source>
+        <translation>Nothing to do</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
+        <source>No files to convert</source>
+        <translation>No files to convert</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
+        <source>SoX was crashed</source>
+        <translation>SoX was crashed</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <source>SoX returned non-zero code: %1
+%2</source>
+        <translation>SoX returned non-zero code: %1
+%2</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <source>All works completed</source>
+        <translation>All works completed</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <source>All files successfully converted!
+%1</source>
+        <translation>All files successfully converted!
+%1</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <source>Tasks are not defined. Nothing to do.</source>
+        <translation>Tasks are not defined. Nothing to do.</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="337"/>
+        <source>Open SoX binary path</source>
+        <translation>Open SoX binary path</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="349"/>
+        <source>Add file to convert</source>
+        <translation>Add file to convert</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
@@ -2730,290 +2808,290 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
         <translation>Classic Events</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="88"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="97"/>
         <source>Events list</source>
         <translation>Events list</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="127"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="136"/>
         <source>Layer visibly</source>
         <translation>Layer visibly</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="148"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="157"/>
         <source>Disable smoke effects</source>
         <translation>Disable smoke effects</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="213"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="222"/>
         <source>Show</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="239"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="248"/>
         <source>Toggle</source>
         <translation>Toggle</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="274"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="283"/>
         <source>Hide</source>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="310"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="319"/>
         <source>Layers movement</source>
         <translation>Layer movement</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="316"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="447"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="391"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="489"/>
         <source>Horisontal speed:</source>
         <translation>Horizontal speed:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="342"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="375"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="500"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="513"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="344"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="371"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="446"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="459"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="349"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="474"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="411"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="509"/>
         <source>Vertical speed:</source>
         <translation>Vertical speed:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="402"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="358"/>
         <source>Set moving layer</source>
         <translation>Set moving layer</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="418"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="427"/>
         <source>Autoscroll section</source>
         <translation>Autoscroll section</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="454"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="316"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="433"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="339"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="529"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="538"/>
         <source>Section settings</source>
         <translation>Section settings</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="541"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="550"/>
         <source>Current section:</source>
         <translation>Set settings for section:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="563"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="572"/>
         <source>Set size and position</source>
         <translation>Set size and position</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="569"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="707"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="765"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="578"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="719"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="780"/>
         <source>Don&apos;t change</source>
         <translation>Don&apos;t change</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="588"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="597"/>
         <source>Capture...</source>
         <translation>Capture...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="595"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="714"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="772"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="604"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="726"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="787"/>
         <source>Reset to default</source>
         <translation>Reset to default</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="608"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="956"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="617"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="990"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="624"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="633"/>
         <source>Top</source>
         <translation>Top</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="634"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="643"/>
         <source>Define new:</source>
         <translation>Define new:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="647"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="656"/>
         <source>Bottom</source>
         <translation>Bottom</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="663"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="984"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="672"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1018"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="701"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="713"/>
         <source>Set music</source>
         <translation>Change music</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="721"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="733"/>
         <source>Replace music to:</source>
         <translation>Change music to:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="759"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="774"/>
         <source>Set background</source>
         <translation>Change background</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="779"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="794"/>
         <source>Replace background to:</source>
         <translation>Change background to:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="827"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="861"/>
         <source>Common</source>
         <translation>Common</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="839"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="873"/>
         <source>Do end game:</source>
         <translation>Do end game:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="864"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
         <source>Play sound:</source>
         <translation>Play sound:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="877"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="911"/>
         <source>Test</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="897"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="931"/>
         <source>Display message:</source>
         <translation>Display message:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="908"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="942"/>
         <source>Nothing</source>
         <translation>Don&apos;t do</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="913"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="947"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Game end &quot;Bowser defeat&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="943"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="977"/>
         <source>Player Control hold keys</source>
         <translation>Hold player&apos;s control button</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="949"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="983"/>
         <source>Run</source>
         <translation>Run</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="963"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="997"/>
         <source>Down</source>
         <translation>Down</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="970"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1004"/>
         <source>Up</source>
         <translation>Up</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="977"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1011"/>
         <source>Drop</source>
         <translation>Drop</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="991"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1025"/>
         <source>Alt-run</source>
         <translation>Alt-run</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="998"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1032"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1005"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1039"/>
         <source>Jump</source>
         <translation>Jump</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1012"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1046"/>
         <source>Alt-jump</source>
         <translation>Alt-jump</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1041"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1075"/>
         <source>Trigger event</source>
         <translation>Trigger event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1057"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1091"/>
         <source>Delay</source>
         <translation>Delay</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1088"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1122"/>
         <source>Autostart event</source>
         <translation>Autostart event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1127"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1161"/>
         <source>Create copy of event</source>
         <translation>Create copy of event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="228"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="251"/>
         <source>[Silence]</source>
         <translation>[Silence]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="332"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1906"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="355"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1883"/>
         <source>[none]</source>
         <translation>[none]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="924"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="893"/>
         <source>New Event %1</source>
         <translation>New Event %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="965"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="938"/>
         <source>Copyed Event %1</source>
         <translation>Copied Event %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1635"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1612"/>
         <source>Get section size</source>
         <translation>Get section size</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1636"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1613"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>Please switch current section to %1 to capture data for this event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1895"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1872"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Please enter message
@@ -3191,14 +3269,14 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="652"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="783"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="502"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="536"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="676"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="871"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="507"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="541"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
@@ -3210,7 +3288,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="690"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="931"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="514"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="548"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
@@ -3271,44 +3349,44 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <translation>Set as Boss</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="207"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="241"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation>Block ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="272"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="344"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="497"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="306"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="378"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="531"/>
         <source>Position: [%1, %2]</source>
         <translation>Position: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="282"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1085"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="316"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1119"/>
         <source>%1 coins</source>
         <translation>%1 coin(s)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="283"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="596"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1086"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1826"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="317"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1120"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1860"/>
         <source>[empty]</source>
         <translation>[empty]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="339"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="373"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation>BGO ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="400"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="434"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation>NPC ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="609"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1659"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="643"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1693"/>
         <source>[none]</source>
         <translation>[none]</translation>
     </message>
@@ -3336,32 +3414,32 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <translation>Lock</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="724"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="720"/>
         <source>Layers merge</source>
         <translation>Layers merge</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="725"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="721"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Layer with name &apos;%1&apos; already exist, do you want to merge the layers?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="801"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="794"/>
         <source>New Layer %1</source>
         <translation>New Layer %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="916"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="874"/>
         <source>Rename layer</source>
         <translation>Rename layer</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="920"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="878"/>
         <source>Remove layer with items</source>
         <translation>Remove layer and items</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="921"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="879"/>
         <source>Remove layer and save items</source>
         <translation>Remove layer and keep items</translation>
     </message>
@@ -3856,15 +3934,15 @@ Physical env. zones:	 %6</translation>
         <location filename="../main_window/dock/lvl_search_box.ui" line="82"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="361"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="475"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="191"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="202"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="221"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="232"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="251"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="262"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="336"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="352"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="373"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="224"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="235"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="254"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="265"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="284"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="295"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="369"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="385"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="406"/>
         <source>Reset Search Fields</source>
         <translation>Reset Search Fields</translation>
     </message>
@@ -3897,12 +3975,12 @@ Physical env. zones:	 %6</translation>
         <location filename="../main_window/dock/lvl_search_box.ui" line="187"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="371"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="489"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="277"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="307"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="327"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="330"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="346"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="362"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="310"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="340"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="360"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="363"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="379"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="395"/>
         <source>[empty]</source>
         <translation>[empty]</translation>
     </message>
@@ -3920,9 +3998,9 @@ Physical env. zones:	 %6</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="180"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="192"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="203"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="337"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="225"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="236"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="370"/>
         <source>Search Block</source>
         <translation>Search Block</translation>
     </message>
@@ -3955,9 +4033,9 @@ Physical env. zones:	 %6</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="340"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="222"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="233"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="353"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="255"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="266"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="386"/>
         <source>Search BGO</source>
         <translation>Search Background object</translation>
     </message>
@@ -3973,9 +4051,9 @@ Physical env. zones:	 %6</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="482"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="252"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="263"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="374"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="285"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="296"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="407"/>
         <source>Search NPC</source>
         <translation>Search NPC</translation>
     </message>
@@ -4025,52 +4103,52 @@ Physical env. zones:	 %6</translation>
         <translation>Case Sensitive?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="186"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="219"/>
         <source>Next Block</source>
         <translation>Next Block</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="187"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="218"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="248"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="220"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="251"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="281"/>
         <source>Stop Search</source>
         <translation>Stop Search</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="193"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="204"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="223"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="234"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="253"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="264"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="226"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="237"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="256"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="267"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="286"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="297"/>
         <source>Search Complete</source>
         <translation>Search Complete</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="193"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="204"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="226"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="237"/>
         <source>Block search completed!</source>
         <translation>Block search completed!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="217"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="250"/>
         <source>Next BGO</source>
         <translation>Next BGO</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="223"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="234"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="256"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="267"/>
         <source>BGO search completed!</source>
         <translation>BGO search completed!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="247"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="280"/>
         <source>Next NPC</source>
         <translation>Next NPC</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="253"/>
-        <location filename="../main_window/dock/lvl_search_box.cpp" line="264"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="286"/>
+        <location filename="../main_window/dock/lvl_search_box.cpp" line="297"/>
         <source>NPC search completed!</source>
         <translation>NPC search completed!</translation>
     </message>
@@ -6796,9 +6874,9 @@ File not exist.</translation>
         <translation type="vanished">NPC ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="179"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="140"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="146"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="206"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="158"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="164"/>
         <source>[None]</source>
         <translation>[None]</translation>
     </message>
