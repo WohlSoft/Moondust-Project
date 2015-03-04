@@ -37,6 +37,7 @@ protected:
     void closeEvent( QCloseEvent * e );
 
 private:
+    bool formatSupports(QString file);
     bool inWork;
     int madeJob;
     QProcess converter;

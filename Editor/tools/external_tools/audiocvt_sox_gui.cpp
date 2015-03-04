@@ -39,11 +39,16 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
         {
             curSectionMusic = ledit->LvlData.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
             curSectionMusic.replace("\\", "/");
+            if(!formatSupports(curSectionMusic))
+                curSectionMusic.clear();
+
             for(int s=0;s<ledit->LvlData.sections.size(); s++)
             {
                 QString file = ledit->LvlData.path + "/" + ledit->LvlData.sections[s].music_file;
                 file.replace("\\", "/");
                 if(curLevelMusic.contains(file))//Don't add duplicate
+                    continue;
+                if(!formatSupports(file)) //Don't add unsupported formnats
                     continue;
                 if(QFileInfo(file).exists() && QFileInfo(file).isFile())//Don't add non-existing files
                     curLevelMusic << file;
@@ -65,6 +70,16 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 AudioCvt_Sox_gui::~AudioCvt_Sox_gui()
 {
     delete ui;
+}
+
+bool AudioCvt_Sox_gui::formatSupports(QString file)
+{
+    bool valud=false;
+    if(file.endsWith(".mp3", Qt::CaseInsensitive)) valud=true;
+    if(file.endsWith(".ogg", Qt::CaseInsensitive)) valud=true;
+    if(file.endsWith(".wav", Qt::CaseInsensitive)) valud=true;
+    if(file.endsWith(".flac", Qt::CaseInsensitive)) valud=true;
+    return valud;
 }
 
 void AudioCvt_Sox_gui::setEnableControls(bool en)
