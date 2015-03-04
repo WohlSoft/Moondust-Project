@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QProcess>
 
+class LevelEdit;
 namespace Ui {
 class AudioCvt_Sox_gui;
 }
@@ -48,6 +49,7 @@ private:
     QString     lastOutput;
     QStringList curLevelMusic;
     bool isLevel;
+    LevelEdit *ledit;
 };
 
 #endif // AUDIOCVT_SOX_GUI_H

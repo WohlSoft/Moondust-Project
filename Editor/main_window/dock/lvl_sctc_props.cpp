@@ -212,6 +212,7 @@ void LvlSectionProps::setLevelSectionData()
         mw()->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
         ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
         mw()->ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
+
         ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
     }
