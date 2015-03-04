@@ -144,6 +144,8 @@ private:
 
     bool cloneEvent;
     long cloneEventId;
+
+    int newEventCounter;
 };
 
 #endif // LVL_EVENTS_BOX_H
