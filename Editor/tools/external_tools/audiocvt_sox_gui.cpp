@@ -196,7 +196,7 @@ void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
     if(exitStatus==QProcess::CrashExit)
     {
         QMessageBox::warning(this, tr("SoX error"), tr("SoX was crashed"));
-        stop();
+        stop(true);
         return;
     }
 
@@ -204,7 +204,7 @@ void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
     {
         QMessageBox::warning(this, tr("SoX error"), tr("SoX returned non-zero code: %1\n%2").arg(retStatus)
                              .arg(lastOutput));
-        stop();
+        stop(true);
         return;
     }
     ui->progress->setValue(ui->progress->maximum()-filesToConvert.size());
@@ -386,7 +386,6 @@ retry_queue:
 
 void AudioCvt_Sox_gui::consoleMessage()
 {
-    DevConsole::show();
     QByteArray strdata = converter.readAllStandardOutput();
     lastOutput.append(strdata);
     lastOutput.append("\n");
@@ -395,7 +394,6 @@ void AudioCvt_Sox_gui::consoleMessage()
 
 void AudioCvt_Sox_gui::consoleMessageErr()
 {
-    DevConsole::show();
     QByteArray strdata = converter.readAllStandardError();
     lastOutput.append(strdata);
     lastOutput.append("\n");
