@@ -65,8 +65,17 @@
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOn</enum>
       </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="dragDropOverwriteMode">
+       <bool>false</bool>
+      </property>
       <property name="dragDropMode">
        <enum>QAbstractItemView::InternalMove</enum>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::TargetMoveAction</enum>
       </property>
       <property name="alternatingRowColors">
        <bool>false</bool>
@@ -302,8 +311,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>272</width>
-         <height>215</height>
+         <width>165</width>
+         <height>159</height>
         </rect>
        </property>
        <attribute name="label">
@@ -410,8 +419,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>272</width>
-         <height>215</height>
+         <width>165</width>
+         <height>140</height>
         </rect>
        </property>
        <attribute name="label">
@@ -521,7 +530,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>255</width>
+         <width>231</width>
          <height>511</height>
         </rect>
        </property>

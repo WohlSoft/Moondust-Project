@@ -85,6 +85,24 @@ void MainWindow::on_actionLayersBox_triggered(bool checked)
     if(checked) dock_LvlLayers->raise();
 }
 
+bool LvlLayersBox::layerIsExist(QString lr, int *index)
+{
+    LevelEdit * edit = mw()->activeLvlEditWin();
+    if(!edit) return false;
+
+    for(int i=0; i< edit->LvlData.layers.size();i++)
+    {
+        if( edit->LvlData.layers[i].name==lr )
+        {
+            if(index)
+                *index = i;
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
 void LvlLayersBox::setLayersBox()
 {
     int WinType = mw()->activeChildWindow();
@@ -149,7 +167,7 @@ void MainWindow::LayerListsSync()
     dock_LvlSearchBox->cbox_layer_bgo()->clear();
     dock_LvlSearchBox->cbox_layer_npc()->clear();
 
-    if (WinType==1)
+    if(WinType==1)
     {
         foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
         {
@@ -490,7 +508,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
         }
         if(edit->LvlData.events[j].movelayer == layerName ) edit->LvlData.events[j].movelayer = newLayerName;
     }
-    mw()->dock_LvlEvents->setEventsBox(); //Refresh events
+    mw()->dock_LvlEvents->setEventsBox();//Refresh events
 
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
@@ -628,12 +646,12 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-
-
 void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
 {
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
+
+    if(layerIsExist(layerName)) return;
 
     QListWidgetItem * item;
     item = new QListWidgetItem;
@@ -642,49 +660,28 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
     item->setCheckState( Qt::Checked );
-    item->setData(Qt::UserRole, QString("NewLayer") );
+
+    //Register layer in the leveldata structure
+    LevelLayers NewLayer;
+    NewLayer.name = item->text();
+    NewLayer.hidden = (item->checkState()==Qt::Unchecked );
+    edit->LvlData.layers_array_id++;
+    NewLayer.array_id = edit->LvlData.layers_array_id;
+    edit->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
+
+    item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
     ui->LvlLayerList->addItem( item );
+
+    edit->LvlData.layers.push_back(NewLayer);
+    edit->LvlData.modified=true;
 
     if(setEdited)
     {
-        on_LvlLayerList_itemChanged(item);
         if(item)
         {
             ui->LvlLayerList->setFocus();
             ui->LvlLayerList->scrollToItem( item );
             ui->LvlLayerList->editItem( item );
-        }
-    }
-    else
-    {
-        bool AlreadyExist=false;
-        foreach(LevelLayers layer, edit->LvlData.layers)
-        {
-            if( layer.name==item->text() )
-            {
-                AlreadyExist=true;
-                break;
-            }
-        }
-
-        if(AlreadyExist)
-        {
-            delete item;
-            return;
-        }
-        else
-        {
-            LevelLayers NewLayer;
-            NewLayer.name = item->text();
-            NewLayer.hidden = (item->checkState() == Qt::Unchecked );
-            edit->LvlData.layers_array_id++;
-            NewLayer.array_id = edit->LvlData.layers_array_id;
-            edit->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
-
-            item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
-
-            edit->LvlData.layers.push_back(NewLayer);
-            edit->LvlData.modified=true;
         }
     }
     mw()->LayerListsSync();  //Sync comboboxes in properties
@@ -695,6 +692,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
     //Find layer enrty in array and apply settings
     LevelEdit * edit = mw()->activeLvlEditWin();
     if(!edit) return;
+
     for(int i=0; i < edit->LvlData.layers.size(); i++)
     {
         if( edit->LvlData.layers[i].array_id==(unsigned int)item->data(Qt::UserRole).toInt() )
@@ -715,18 +713,14 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
             if(oldLayerName!=newLayerName)
             {
                 //Check for exists item equal to new item
-                for(l=0;l<edit->LvlData.layers.size();l++)
+                if(layerIsExist(newLayerName, &l))
                 {
-                    if(edit->LvlData.layers[l].name==newLayerName)
-                    {
-                        exist=true;
-                        QMessageBox::StandardButton reply;
-                        reply = QMessageBox::question(this, tr("Layers merge"),
-                        tr("Layer with name '%1' already exist, do you want to merge layers?").arg(newLayerName),
-                        QMessageBox::Yes|QMessageBox::No);
-                        if (reply == QMessageBox::Yes) { merge=true;}
-                        break;
-                    }
+                    exist=true;
+                    QMessageBox::StandardButton reply;
+                    reply = QMessageBox::question(this, tr("Layers merge"),
+                    tr("Layer with name '%1' already exist, do you want to merge layers?").arg(newLayerName),
+                    QMessageBox::Yes|QMessageBox::No);
+                    if(reply == QMessageBox::Yes) { merge=true; }
                 }
             }
 
@@ -759,14 +753,12 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                 edit->scene->addRenameLayerHistory(edit->LvlData.layers[i].array_id, oldLayerName, newLayerName);
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
+                //Apply layer's name/visibly to all items
+                ModifyLayer(oldLayerName, newLayerName, visible);
             }
-
             break;
         }
     }
-    //Apply layer's name/visibly to all items
-    ModifyLayer(oldLayerName, newLayerName, visible);
-
     mw()->LayerListsSync();  //Sync comboboxes in properties
     mw()->dock_LvlWarpProps->setDoorData(-2);
 }
@@ -798,7 +790,11 @@ void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceSt
 
 void LvlLayersBox::on_AddLayer_clicked()
 {
-    AddNewLayer(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ), true);
+    int NewCounter=1;
+    QString newName = tr("New Layer %1");
+    while(layerIsExist(newName.arg(NewCounter)))
+        NewCounter++;
+    AddNewLayer(newName.arg(NewCounter), true);
 }
 
 
@@ -847,52 +843,14 @@ void LvlLayersBox::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 
     if (WinType==1)
     {
-        if(item->data(Qt::UserRole).toString()=="NewLayer")
-        {
-            bool AlreadyExist=false;
-            foreach(LevelLayers layer, edit->LvlData.layers)
-            {
-                if( layer.name==item->text() )
-                {
-                    AlreadyExist=true;
-                    break;
-                }
-            }
+        QString layerName = item->text();
+        QString oldLayerName = item->text();
 
-            if(AlreadyExist)
-            {
-                delete item;
-                return;
-            }
-            else
-            {
-                LevelLayers NewLayer;
-                NewLayer.name = item->text();
-                NewLayer.hidden = (item->checkState() == Qt::Unchecked );
-                edit->LvlData.layers_array_id++;
-                NewLayer.array_id = edit->LvlData.layers_array_id;
-                edit->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
+        bool layerVisible = (item->checkState()==Qt::Checked);
+        ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
 
-                item->setData(Qt::UserRole, QString::number(NewLayer.array_id));
-
-                edit->LvlData.layers.push_back(NewLayer);
-                edit->LvlData.modified=true;
-            }
-
-        }//if(item->data(Qt::UserRole).toString()=="NewLayer")
-        else
-        {
-            QString layerName = item->text();
-            QString oldLayerName = item->text();
-            //unsigned int layerArId = (unsigned int)item->data(Qt::UserRole).toInt();
-            bool layerVisible = (item->checkState()==Qt::Checked);
-
-            ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
-
-            edit->LvlData.modified=true;
-        }
-
-    }//if WinType==1
+        edit->LvlData.modified=true;
+    }
 }
 
 

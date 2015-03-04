@@ -70,6 +70,7 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
 
     cloneEvent=false;
     cloneEventId=0;
+    newEventCounter=1;
 }
 
 LvlEventsBox::~LvlEventsBox()
@@ -111,7 +112,6 @@ void LvlEventsBox::re_translate()
 }
 
 
-
 void LvlEventsBox::on_LvlEventsBox_visibilityChanged(bool visible)
 {
     mw()->ui->actionLevelEvents->setChecked(visible);
@@ -150,7 +150,7 @@ void LvlEventsBox::setEventsBox()
             if((event.name!="Level - Start")&&(event.name!="P Switch - Start")&&(event.name!="P Switch - End"))
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-            item->setData(3, QString::number( event.array_id ) );
+            item->setData(Qt::UserRole, QString::number( event.array_id ) );
             ui->LVLEvents_List->addItem( item );
         }
         on_LVLEvents_List_itemSelectionChanged();
@@ -272,13 +272,13 @@ void LvlEventsBox::setEventData(long index)
     if(index==-2) //Refresh current event data
         {
         if(!ui->LVLEvents_List->selectedItems().isEmpty())
-            cIndex = ui->LVLEvents_List->currentItem()->data(3).toInt();
+            cIndex = ui->LVLEvents_List->currentItem()->data(Qt::UserRole).toInt();
         else
             {
                 cIndex = currentEventArrayID;
                 for(int q=0; q<ui->LVLEvents_List->count();q++) //Select if not selected
                 {
-                    if(ui->LVLEvents_List->item(q)->data(3).toInt()==cIndex)
+                    if(ui->LVLEvents_List->item(q)->data(Qt::UserRole).toInt()==cIndex)
                     {
                         ui->LVLEvents_List->item(q)->setSelected(true);
                         break;
@@ -566,7 +566,7 @@ void LvlEventsBox::eventLayerVisiblySyncList()
             item = new QListWidgetItem;
             item->setText(layer.name);
             item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            item->setData(3, QString::number( layer.array_id ) );
+            item->setData(Qt::UserRole, QString::number( layer.array_id ) );
             ui->LVLEvents_layerList->addItem( item );
         }
 
@@ -627,7 +627,7 @@ void LvlEventsBox::on_LVLEvents_List_itemSelectionChanged()
         setEventData(-1);
     }
     else
-        setEventData(ui->LVLEvents_List->currentItem()->data(3).toInt());
+        setEventData(ui->LVLEvents_List->currentItem()->data(Qt::UserRole).toInt());
 
 }
 
@@ -642,65 +642,17 @@ void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
-        if(item->data(3).toString()=="NewEvent")
-        {
-            if(eventIsExist(item->text()))
-            {
-                delete item;
-                cloneEvent=false;//Reset state
-                return;
-            }
-            else
-            {
-                LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+        QString eventName = item->text();
+        QString oldEventName = item->text();
 
-                if(cloneEvent)
-                {
-                    bool found=false;
-                    long i;
-                    for(i=0; i< edit->LvlData.events.size();i++)
-                    {
-                        if((unsigned long)cloneEventId==edit->LvlData.events[i].array_id)
-                        {
-                            found=true;
-                            break;
-                        }
-                    }
-                    if(found) NewEvent = edit->LvlData.events[i];
-
-                }
-
-                NewEvent.name = item->text();
-                edit->LvlData.events_array_id++;
-                NewEvent.array_id = edit->LvlData.events_array_id;
-
-                item->setData(3, QString::number(NewEvent.array_id));
-
-                if(!cloneEvent)
-                    edit->scene->addAddEventHistory(NewEvent);
-                else
-                    edit->scene->addDuplicateEventHistory(NewEvent);
-                edit->LvlData.events.push_back(NewEvent);
-                edit->LvlData.modified=true;
-                cloneEvent=false;//Reset state
-            }
-
-        }//if(item->data(3).toString()=="NewEvent")
-        else
-        {
-            QString eventName = item->text();
-            QString oldEventName = item->text();
-
-            ModifyEventItem(item, oldEventName, eventName);
-            edit->LvlData.modified=true;
-        }
-
+        ModifyEventItem(item, oldEventName, eventName);
+        edit->LvlData.modified=true;
     }//if WinType==1
     EventListsSync();
     lockSetEventSettings=false;
 }
 
-void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
+void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart, int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
 {
     lockSetEventSettings=true;
     WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
@@ -714,7 +666,7 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceSt
         if(!edit) return;
 
         LevelEvents buffer;
-        if(sourceStart<edit->LvlData.events.size())
+        if(sourceStart < edit->LvlData.events.size())
         {
             buffer = edit->LvlData.events[sourceStart];
             edit->LvlData.events.remove(sourceStart);
@@ -764,55 +716,53 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
     item->setFlags(Qt::ItemIsEditable);
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-    item->setData(3, QString("NewEvent") );
+    //item->setData(Qt::UserRole, QString("NewEvent") );
 
     ui->LVLEvents_List->addItem( item );
 
-    if(setEdited)
+    if(eventIsExist(item->text()))
     {
-        ui->LVLEvents_List->setFocus();
-        ui->LVLEvents_List->scrollToItem( item );
-        ui->LVLEvents_List->editItem( item );
+        delete item;
+        lockSetEventSettings=false;
+        cloneEvent=false;//Reset state
+        return;
     }
     else
     {
-        if(eventIsExist(item->text()))
+        LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+        if(cloneEvent)
         {
-            delete item;
-            lockSetEventSettings=false;
-            cloneEvent=false;//Reset state
-            return;
-        }
-        else
-        {
-            LevelEvents NewEvent = FileFormats::dummyLvlEvent();
-            if(cloneEvent)
+            bool found=false;
+            long i;
+            for(i=0; i< edit->LvlData.events.size();i++)
             {
-                bool found=false;
-                long i;
-                for(i=0; i< edit->LvlData.events.size();i++)
+                if((unsigned long)cloneEventId==edit->LvlData.events[i].array_id)
                 {
-                    if((unsigned long)cloneEventId==edit->LvlData.events[i].array_id)
-                    {
-                        found=true;
-                        break;
-                    }
+                    found=true;
+                    break;
                 }
-                if(found) NewEvent = edit->LvlData.events[i];
             }
+            if(found) NewEvent = edit->LvlData.events[i];
+        }
 
-            NewEvent.name = item->text();
-            edit->LvlData.events_array_id++;
-            NewEvent.array_id = edit->LvlData.events_array_id;
-            item->setData(3, QString::number(NewEvent.array_id));
+        NewEvent.name = item->text();
+        edit->LvlData.events_array_id++;
+        NewEvent.array_id = edit->LvlData.events_array_id;
+        item->setData(Qt::UserRole, QString::number(NewEvent.array_id));
 
-            if(!cloneEvent)
-                edit->scene->addAddEventHistory(NewEvent);
-            else
-                edit->scene->addDuplicateEventHistory(NewEvent);
-            edit->LvlData.events.push_back(NewEvent);
-            edit->LvlData.modified=true;
-            cloneEvent=false;//Reset state
+        if(!cloneEvent)
+            edit->scene->addAddEventHistory(NewEvent);
+        else
+            edit->scene->addDuplicateEventHistory(NewEvent);
+        edit->LvlData.events.push_back(NewEvent);
+        edit->LvlData.modified=true;
+        cloneEvent=false;//Reset state
+
+        if(setEdited)
+        {
+            ui->LVLEvents_List->setFocus();
+            ui->LVLEvents_List->scrollToItem( item );
+            ui->LVLEvents_List->editItem( item );
         }
     }
     lockSetEventSettings=false;
@@ -828,7 +778,7 @@ void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, 
 
     for(int i=0; i < edit->LvlData.events.size(); i++)
     {
-        if( edit->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
+        if( edit->LvlData.events[i].array_id==(unsigned int)item->data(Qt::UserRole).toInt() )
         {
             int l=0;
             bool exist=false;
@@ -939,7 +889,11 @@ void LvlEventsBox::RemoveEvent(QString eventName)
 
 void LvlEventsBox::on_LVLEvents_add_clicked()
 {
-    AddNewEvent(tr("New Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
+    newEventCounter=1;
+    QString newEventName = tr("New Event %1");
+    while(eventIsExist(newEventName.arg(newEventCounter)))
+        newEventCounter++;
+    AddNewEvent(newEventName.arg(newEventCounter), true);
 }
 
 void LvlEventsBox::on_LVLEvents_del_clicked()
@@ -959,7 +913,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
         for(int i=0;i< edit->LvlData.events.size(); i++)
         {
             if( edit->LvlData.events[i].array_id==
-                    (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(3).toInt() )
+                    (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(Qt::UserRole).toInt() )
             {
                 edit->scene->addRemoveEventHistory(edit->LvlData.events[i]);
                 ModifyEvent(edit->LvlData.events[i].name, "");
@@ -978,9 +932,14 @@ void LvlEventsBox::on_LVLEvents_duplicate_clicked()
     if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
 
     cloneEvent=true;
-    cloneEventId=ui->LVLEvents_List->selectedItems()[0]->data(3).toInt();
+    cloneEventId=ui->LVLEvents_List->selectedItems()[0]->data(Qt::UserRole).toInt();
 
-    AddNewEvent(tr("Copyed Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
+    newEventCounter=1;
+    QString copiedEventName = tr("Copyed Event %1");
+    while(eventIsExist(copiedEventName.arg(newEventCounter)))
+        newEventCounter++;
+
+    AddNewEvent(copiedEventName.arg( ui->LVLEvents_List->count()+1 ), true);
 }
 
 

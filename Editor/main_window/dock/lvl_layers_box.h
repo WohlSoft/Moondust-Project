@@ -17,9 +17,11 @@ class LvlLayersBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-private:
     explicit LvlLayersBox(QWidget *parent = 0);
     ~LvlLayersBox();
+
+public:
+    bool layerIsExist(QString lr, int *index=0);
 
 public slots:
     void re_translate();
