@@ -30,19 +30,22 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     connect(&converter, SIGNAL(readyReadStandardError()),this, SLOT(consoleMessageErr()) );
 
     isLevel = (MainWinConnect::pMainWin->activeChildWindow()==1);
+    ledit = NULL;
 
     if(isLevel)
     {
-        LevelEdit *edit = MainWinConnect::pMainWin->activeLvlEditWin();
-        if(edit)
+        ledit = MainWinConnect::pMainWin->activeLvlEditWin();
+        if(ledit)
         {
-            curSectionMusic = edit->LvlData.path + "/" + edit->LvlData.sections[edit->LvlData.CurSection].music_file;
+            curSectionMusic = ledit->LvlData.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
             curSectionMusic.replace("\\", "/");
-            for(int s=0;s<edit->LvlData.sections.size(); s++)
+            for(int s=0;s<ledit->LvlData.sections.size(); s++)
             {
-                QString file = edit->LvlData.path + "/" + edit->LvlData.sections[s].music_file;
+                QString file = ledit->LvlData.path + "/" + ledit->LvlData.sections[s].music_file;
                 file.replace("\\", "/");
-                if(QFileInfo(file).exists() && QFileInfo(file).isFile())
+                if(curLevelMusic.contains(file))//Don't add duplicate
+                    continue;
+                if(QFileInfo(file).exists() && QFileInfo(file).isFile())//Don't add non-existing files
                     curLevelMusic << file;
             }
         }
@@ -142,7 +145,6 @@ void AudioCvt_Sox_gui::stop()
     current_musFileOld.clear();
     filesToConvert.clear();
     inWork=false;
-    MainWinConnect::pMainWin->setMusic();
 }
 
 void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
@@ -168,6 +170,23 @@ void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
         {
             QFile(current_musFileOld).remove();
         }
+
+        if(ledit)
+        {
+            for(int x=0;x<ledit->LvlData.sections.size();x++)
+            {
+                QString mFile = ledit->LvlData.sections[x].music_file;
+                if(mFile.isEmpty()) continue;
+                mFile.replace("\\", "//");
+                if(current_musFileOld.endsWith(mFile, Qt::CaseInsensitive))
+                {
+                    QString newMusFile=current_musFileNew;
+                    newMusFile.remove(ledit->LvlData.path + "/");
+                    ledit->LvlData.sections[x].music_file = newMusFile;
+                    ledit->LvlData.modified=true;
+                }
+            }
+        }
     }
 
     QStringList args;
@@ -177,6 +196,16 @@ void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
 retry_queue:
     if(filesToConvert.isEmpty())
     {
+        if(ledit)
+        {
+            if(curSectionMusic == LvlMusPlay::currentMusicPath)
+                LvlMusPlay::currentMusicPath = ledit->LvlData.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
+        }
+
+        PGE_MusPlayer::MUS_openFile( LvlMusPlay::currentMusicPath );
+        PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::MUS_playMusic();
+
         QMessageBox::information(this, tr("All works completed"), tr("All files successfully converted!\n%1")
                                  .arg(lastOutput));
 
