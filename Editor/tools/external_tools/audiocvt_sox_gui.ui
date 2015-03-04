@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
+    <width>471</width>
     <height>501</height>
    </rect>
   </property>
@@ -47,7 +47,7 @@
     </widget>
    </item>
    <item row="6" column="0" colspan="3">
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="box_resample">
      <property name="title">
       <string>Resample to</string>
      </property>
@@ -116,7 +116,7 @@
    <item row="9" column="5">
     <widget class="QPushButton" name="start">
      <property name="text">
-      <string>Start</string>
+      <string notr="true">Start</string>
      </property>
     </widget>
    </item>
@@ -578,7 +578,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>groupBox_2</sender>
+   <sender>box_resample</sender>
    <signal>toggled(bool)</signal>
    <receiver>rate</receiver>
    <slot>setEnabled(bool)</slot>
