@@ -41,6 +41,7 @@ public:
 
     static void MUS_changeVolume(int vlm);
     static void MUS_openFile(QString musFile);
+    static void MUS_freeStream();
     static void setSampleRate(int sampleRate);
     static int sampleRate();
     static int currentVolume();
