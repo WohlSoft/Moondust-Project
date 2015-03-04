@@ -177,7 +177,7 @@ void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
             {
                 QString mFile = ledit->LvlData.sections[x].music_file;
                 if(mFile.isEmpty()) continue;
-                mFile.replace("\\", "//");
+                mFile.replace("\\", "/");
                 if(current_musFileOld.endsWith(mFile, Qt::CaseInsensitive))
                 {
                     QString newMusFile=current_musFileNew;
