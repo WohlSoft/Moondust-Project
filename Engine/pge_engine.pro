@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+#QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 DESTDIR = ../bin
@@ -42,19 +42,20 @@ CONFIG += thread
 CONFIG += static
 
 DEPENDPATH += "../_Libs/oolua/project"
+DEPENDPATH += "../_Libs/Box2D/project"
 
 DEFINES += PGE_ENGINE
 
 INCLUDEPATH += "../_Libs/" "../_common"
 
-LIBS += -L../_Libs/_builds/oolua
+LIBS += -L../_Libs/_builds/commonlibs
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
 }
 
-LIBS += -loolua -lSDL2
+LIBS += -loolua -lbox2d -lSDL2
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 unix:  LIBS += -glut -lGLU
@@ -62,52 +63,6 @@ unix:  LIBS += -glut -lGLU
 RC_FILE = _resources/engine.rc
 
 SOURCES += \
-    ../_Libs/Box2D/Collision/Shapes/b2ChainShape.cpp \
-    ../_Libs/Box2D/Collision/Shapes/b2CircleShape.cpp \
-    ../_Libs/Box2D/Collision/Shapes/b2EdgeShape.cpp \
-    ../_Libs/Box2D/Collision/Shapes/b2PolygonShape.cpp \
-    ../_Libs/Box2D/Collision/b2BroadPhase.cpp \
-    ../_Libs/Box2D/Collision/b2CollideCircle.cpp \
-    ../_Libs/Box2D/Collision/b2CollideEdge.cpp \
-    ../_Libs/Box2D/Collision/b2CollidePolygon.cpp \
-    ../_Libs/Box2D/Collision/b2Collision.cpp \
-    ../_Libs/Box2D/Collision/b2Distance.cpp \
-    ../_Libs/Box2D/Collision/b2DynamicTree.cpp \
-    ../_Libs/Box2D/Collision/b2TimeOfImpact.cpp \
-    ../_Libs/Box2D/Common/b2BlockAllocator.cpp \
-    ../_Libs/Box2D/Common/b2Draw.cpp \
-    ../_Libs/Box2D/Common/b2Math.cpp \
-    ../_Libs/Box2D/Common/b2Settings.cpp \
-    ../_Libs/Box2D/Common/b2StackAllocator.cpp \
-    ../_Libs/Box2D/Common/b2Timer.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2Contact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ContactSolver.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp \
-    ../_Libs/Box2D/Dynamics/Contacts/b2PolygonContact.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2DistanceJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2FrictionJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2GearJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2Joint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2MotorJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2MouseJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2PulleyJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2RopeJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2WeldJoint.cpp \
-    ../_Libs/Box2D/Dynamics/Joints/b2WheelJoint.cpp \
-    ../_Libs/Box2D/Dynamics/b2Body.cpp \
-    ../_Libs/Box2D/Dynamics/b2ContactManager.cpp \
-    ../_Libs/Box2D/Dynamics/b2Fixture.cpp \
-    ../_Libs/Box2D/Dynamics/b2Island.cpp \
-    ../_Libs/Box2D/Dynamics/b2World.cpp \
-    ../_Libs/Box2D/Dynamics/b2WorldCallbacks.cpp \
-    ../_Libs/Box2D/Rope/b2Rope.cpp \
     main.cpp \
     physics/base_object.cpp \
     physics/phys_util.cpp \
@@ -182,53 +137,6 @@ SOURCES += \
     data_configs/obj_player.cpp
 
 HEADERS  += \
-    ../_Libs/Box2D/Collision/Shapes/b2ChainShape.h \
-    ../_Libs/Box2D/Collision/Shapes/b2CircleShape.h \
-    ../_Libs/Box2D/Collision/Shapes/b2EdgeShape.h \
-    ../_Libs/Box2D/Collision/Shapes/b2PolygonShape.h \
-    ../_Libs/Box2D/Collision/Shapes/b2Shape.h \
-    ../_Libs/Box2D/Collision/b2BroadPhase.h \
-    ../_Libs/Box2D/Collision/b2Collision.h \
-    ../_Libs/Box2D/Collision/b2Distance.h \
-    ../_Libs/Box2D/Collision/b2DynamicTree.h \
-    ../_Libs/Box2D/Collision/b2TimeOfImpact.h \
-    ../_Libs/Box2D/Common/b2BlockAllocator.h \
-    ../_Libs/Box2D/Common/b2Draw.h \
-    ../_Libs/Box2D/Common/b2GrowableStack.h \
-    ../_Libs/Box2D/Common/b2Math.h \
-    ../_Libs/Box2D/Common/b2Settings.h \
-    ../_Libs/Box2D/Common/b2StackAllocator.h \
-    ../_Libs/Box2D/Common/b2Timer.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2CircleContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2Contact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2ContactSolver.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h \
-    ../_Libs/Box2D/Dynamics/Contacts/b2PolygonContact.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2DistanceJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2FrictionJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2GearJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2Joint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2MotorJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2MouseJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2PrismaticJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2PulleyJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2RevoluteJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2RopeJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2WeldJoint.h \
-    ../_Libs/Box2D/Dynamics/Joints/b2WheelJoint.h \
-    ../_Libs/Box2D/Dynamics/b2Body.h \
-    ../_Libs/Box2D/Dynamics/b2ContactManager.h \
-    ../_Libs/Box2D/Dynamics/b2Fixture.h \
-    ../_Libs/Box2D/Dynamics/b2Island.h \
-    ../_Libs/Box2D/Dynamics/b2TimeStep.h \
-    ../_Libs/Box2D/Dynamics/b2World.h \
-    ../_Libs/Box2D/Dynamics/b2WorldCallbacks.h \
-    ../_Libs/Box2D/Rope/b2Rope.h \
-    ../_Libs/Box2D/Box2D.h \
     physics/base_object.h \
     physics/phys_util.h \
     graphics/lvl_camera.h \
