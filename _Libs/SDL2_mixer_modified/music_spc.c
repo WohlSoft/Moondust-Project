@@ -188,6 +188,7 @@ struct MUSIC_SPC *SPC_new_RW(struct SDL_RWops *src, int freesrc)
     /* Make sure the mikmod library is loaded */
     if ( snes_spc==NULL )
     {
+        Mix_SetError("SNES_SPC: SPC Emulator is not loaded");
         return NULL;
     }
 
@@ -239,18 +240,49 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
 
     short buf[len];
     Uint8 dstt[len];
+    Uint8 left[len];
+    Uint8 right[len];
+    Uint8 left_new[len];
+    Uint8 right_new[len];
 
-    spc_play( snes_spc, len/2, buf);
-    spc_filter_run( spc_filter, buf, len/2 );
+    float ratio=(float)mixer.freq/(float)spc_sample_rate;
+    int old_len2 = len/ratio;
+    int old_len = old_len2/2;
+    int new_len = len/2;
 
+    spc_play( snes_spc, old_len, buf);
+    spc_filter_run( spc_filter, buf, old_len );
+
+    //Spliting channels
     int i,j;
-    for(i=0,j=0; i<len;i+=2,j++)
+    float q;
+    for(i=0; i<old_len;i++)
     {
         Sint8 t;
-            t=(buf[j])&0xff;
-        dstt[i]=t;
-            t=(((buf[j]) >> 8) & 0xff);
-        dstt[i+1]=t;
+            t=(buf[i])&0xff;
+        left[i]=t;
+            t=(((buf[i]) >> 8) & 0xff);
+        right[i]=t;
+    }
+
+    //Resample left
+    for(q=0.f; q<new_len; q+=1.f )
+    {
+        int oldSam = (int)round( q/ratio );
+        left_new[(int)q] = left[oldSam];
+    }
+    //Resample right
+    for(q=0.f; q<new_len; q+=1.f )
+    {
+        int oldSam = (int)round( q/ratio );
+        right_new[(int)q] = right[oldSam];
+    }
+
+    //Merge stereo
+    for(i=0, j=0; i<len; i+=2, j++)
+    {
+        dstt[i]=left_new[j];
+        dstt[i+1]=right_new[j];
     }
 
     if ( music_swap8 )
@@ -263,6 +295,7 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
             *dst++ ^= 0x80;
         }
     }
+
     if ( music_swap16 )
     {
         Uint8 *dst, tmp;
@@ -276,6 +309,10 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
             dst += 2;
         }
     }
+
+//    FILE * dummy = fopen("D:/PGE_TEST/spc_raw.raw", "ab");
+//    fwrite((char*)(&dstt), 1, len, dummy);
+//    fclose(dummy);
 
     if ( music->volume == MIX_MAX_VOLUME ) {
         SDL_memcpy(stream, &dstt, len);
