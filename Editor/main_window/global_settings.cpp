@@ -31,12 +31,12 @@ LevelEditingSettings GlobalSettings::LvlOpts;
 bool GlobalSettings::autoPlayMusic=false;
 int GlobalSettings::musicVolume=128;
 
-bool GlobalSettings::LevelToolBoxVis=true;
-bool GlobalSettings::WorldToolBoxVis=true;
+bool GlobalSettings::WorldItemBoxVis=true;
 bool GlobalSettings::WorldSettingsToolboxVis=false;
 bool GlobalSettings::WorldSearchBoxVis=false;
 
-bool GlobalSettings::SectionToolBoxVis=false;
+bool GlobalSettings::LevelItemBoxVis=true;
+bool GlobalSettings::LevelSectionBoxVis=false;
 bool GlobalSettings::LevelDoorsBoxVis=false;
 bool GlobalSettings::LevelLayersBoxVis=false;
 bool GlobalSettings::LevelEventsBoxVis=false;

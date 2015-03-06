@@ -86,7 +86,6 @@ public:
     glTexCoord2i( 0, AnimationPos+1/frames );
     glVertex2f( blockG.left(),  blockG.bottom());
     */
-
 public:
 
     enum types
@@ -105,5 +104,8 @@ public:
     virtual void update();
     virtual void render(float x, float y);
 };
+
+bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
+bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 
 #endif // BASE_OBJECT_H

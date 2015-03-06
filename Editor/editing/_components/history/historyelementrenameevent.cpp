@@ -2,6 +2,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_events_box.h>
 
 HistoryElementRenameEvent::HistoryElementRenameEvent(const int array_id, const QString &oldName, const QString &newName, QObject *parent) :
     QObject(parent),
@@ -33,10 +34,10 @@ void HistoryElementRenameEvent::undo()
         }
     }
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
-    MainWinConnect::pMainWin->ModifyEvent(m_newName, m_oldName);
-    MainWinConnect::pMainWin->setEventsBox();
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(m_newName, m_oldName);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventsBox();
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }
 
 void HistoryElementRenameEvent::redo()
@@ -55,8 +56,8 @@ void HistoryElementRenameEvent::redo()
         }
     }
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
-    MainWinConnect::pMainWin->ModifyEvent(m_oldName, m_newName);
-    MainWinConnect::pMainWin->setEventsBox();
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(m_oldName, m_newName);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventsBox();
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }

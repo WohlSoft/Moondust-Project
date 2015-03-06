@@ -22,6 +22,7 @@
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_layers_box.h>
+#include <main_window/dock/wld_settings_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -39,12 +40,12 @@ void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),GlobalSettings::openPath,
-        QString("All supported formats (*.lvlx *.wldx *.ini *.lvl *.wld npc-*.txt *.sav);;"
+        QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
         "All SMBX files (*.lvl *.wld npc-*.txt);;"
-        "All PGE files (*.lvlx *.wldx npc-*.txt *.ini);;"
+        "All PGE files (*.lvlx *.wldx npc-*.txt);;"
         "SMBX Level (*.lvl);;"
         "PGE Level (*.lvlx);;"
-        "SMBX World (*.wldx);;"
+        "SMBX World (*.wld);;"
         "PGE World (*.wldx);;"
         "SMBX NPC Config (npc-*.txt);;"
         "SMBX Game Save file (*.sav);;"
@@ -185,11 +186,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->updateGeometry();
             child->ResetPosition();
             updateMenus(true);
-            setCurrentWorldSettings();
+            dock_WldSettingsBox->setCurrentWorldSettings();
             if(FileData.HubStyledWorld)
             {
-                ui->WorldSettings->setVisible(true);
-                ui->WorldSettings->raise();
+                dock_WldSettingsBox->setVisible(true);
+                dock_WldSettingsBox->raise();
             }
             statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {

@@ -53,15 +53,14 @@
 #include <tools/tilesets/tileset.h>
 #include <tools/tilesets/tilesetgroupeditor.h>
 
+#include <main_window/dock/toolboxes_protos.h>
+#include <main_window/dock/_dock_vizman.h>
+
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
 QT_END_NAMESPACE
 
-
-/*************************Dock widgets***************************/
-#include <main_window/dock/toolboxes_protos.h>
-/*************************Dock widgets*end***********************/
 
 
 namespace Ui {
@@ -173,6 +172,10 @@ public:
         /// \brief setUiDefults Init UI settings of application on start
         ///
         void setUiDefults();
+
+        DockVizibilityManager docks_level; //!< Manager of level specific toolboxes
+        DockVizibilityManager docks_world; //!< Manager of world specific toolboxes
+        DockVizibilityManager docks_level_and_world; //!< Manager of level and world editors toolboxes
 
     public slots:
         void save();         //!< Save current file
@@ -419,24 +422,11 @@ public:
 
 
 // ////////////////////Debugger box////////////////////////
-    public slots:
-        void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
-        void Debugger_UpdateItemList(QString list);
-
-        void Debugger_loadCustomCounters();
-        void Debugger_saveCustomCounters();
+    public:
+        DebuggerBox* dock_DebuggerBox;
 
     private slots:
         void on_actionDebugger_triggered(bool checked);
-
-        void on_debuggerBox_visibilityChanged(bool visible);
-        void on_DEBUG_GotoPoint_clicked();
-
-        void on_DEBUG_AddCustomCounter_clicked();
-        void on_DEBUG_RefreshCoutners_clicked();
-
-        void on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item);
-        void on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos);
 // ////////////////////////////////////////////////////////
 
 
@@ -494,21 +484,11 @@ public:
 
 
 // ///////////////////// Bookmarks ////////////////////////        
+    public:
+        BookmarksBox * dock_BookmarksBox;
+
     private slots:
         void on_actionBookmarkBox_triggered(bool checked);
-        void on_bookmarkBox_visibilityChanged(bool visible);
-        void on_bookmarkList_customContextMenuRequested(const QPoint &pos);
-        void DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow);
-        void on_bookmarkList_doubleClicked(const QModelIndex &index);
-    //Modificators:
-        void on_bookmarkAdd_clicked();
-        void on_bookmarkRemove_clicked();
-        void on_bookmarkList_itemChanged(QListWidgetItem *item);
-    //Go To...
-        void on_bookmarkGoto_clicked();
-    public:
-        void updateBookmarkBoxByList();
-        void updateBookmarkBoxByData();
 // ////////////////////////////////////////////////////////
 
 
@@ -626,7 +606,7 @@ public:
         LvlLayersBox* dock_LvlLayers;
 
     public slots:
-        void setLayerLists();
+        void LayerListsSync();
 
     private slots:
         void on_actionLayersBox_triggered(bool checked);
@@ -634,107 +614,14 @@ public:
 
 
 // //////////////// Level Events toolbox //////////////////
+    public:
+        LvlEventsBox *dock_LvlEvents;
     public slots:
-        void eventSectionSettingsSync();
-        void setSoundList();
-
-        void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
-
         void EventListsSync();
         void setEventsBox();
-        void setEventData(long index=-1);
-    public:
-        bool LvlEventBoxLock;
-    public slots:
-        void ModifyEvent(QString eventName, QString newEventName);
-
-        QListWidget* getEventList();
-        void setEventToolsLocked(bool locked);
-        long getEventArrayIndex();
 
     private slots:
         void on_actionLevelEvents_triggered(bool checked);
-        void on_LevelEventsToolBox_visibilityChanged(bool visible);
-
-        void on_LVLEvents_List_itemSelectionChanged();
-        void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
-
-        void on_LVLEvent_Cmn_Msg_clicked();
-        void on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index);
-        void on_LVLEvent_playSnd_clicked();
-        void on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index);
-
-        void on_LVLEvents_add_clicked();
-        void on_LVLEvents_del_clicked();
-        void on_LVLEvents_duplicate_clicked();
-        void on_LVLEvent_AutoStart_clicked(bool checked);
-
-        void on_LVLEvent_disableSmokeEffect_clicked(bool checked);
-
-        void eventLayerVisiblySyncList();
-
-        void on_LVLEvent_Layer_HideAdd_clicked();
-        void on_LVLEvent_Layer_HideDel_clicked();
-
-        void on_LVLEvent_Layer_ShowAdd_clicked();
-        void on_LVLEvent_Layer_ShowDel_clicked();
-
-        void on_LVLEvent_Layer_TogAdd_clicked();
-        void on_LVLEvent_Layer_TogDel_clicked();
-
-        void on_LVLEvent_LayerMov_List_currentIndexChanged(int index);
-        void on_LVLEvent_LayerMov_spX_valueChanged(double arg1);
-        void on_LVLEvent_LayerMov_spY_valueChanged(double arg1);
-
-        void on_LVLEvent_Scroll_Sct_valueChanged(int arg1);
-        void on_LVLEvent_Scroll_spX_valueChanged(double arg1);
-        void on_LVLEvent_Scroll_spY_valueChanged(double arg1);
-
-        void on_LVLEvent_Sct_list_currentIndexChanged(int index);
-
-        void on_LVLEvent_SctSize_none_clicked();
-        void on_LVLEvent_SctSize_reset_clicked();
-        void on_LVLEvent_SctSize_define_clicked();
-        void on_LVLEvent_SctSize_left_textEdited(const QString &arg1);
-        void on_LVLEvent_SctSize_top_textEdited(const QString &arg1);
-        void on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1);
-        void on_LVLEvent_SctSize_right_textEdited(const QString &arg1);
-        void on_LVLEvent_SctSize_Set_clicked();
-
-        void on_LVLEvent_SctMus_none_clicked();
-        void on_LVLEvent_SctMus_reset_clicked();
-        void on_LVLEvent_SctMus_define_clicked();
-        void on_LVLEvent_SctMus_List_currentIndexChanged(int index);
-
-        void on_LVLEvent_SctBg_none_clicked();
-        void on_LVLEvent_SctBg_reset_clicked();
-        void on_LVLEvent_SctBg_define_clicked();
-        void on_LVLEvent_SctBg_List_currentIndexChanged(int index);
-
-        void on_LVLEvent_Key_Up_clicked(bool checked);
-        void on_LVLEvent_Key_Down_clicked(bool checked);
-        void on_LVLEvent_Key_Left_clicked(bool checked);
-        void on_LVLEvent_Key_Right_clicked(bool checked);
-        void on_LVLEvent_Key_Run_clicked(bool checked);
-        void on_LVLEvent_Key_AltRun_clicked(bool checked);
-        void on_LVLEvent_Key_Jump_clicked(bool checked);
-        void on_LVLEvent_Key_AltJump_clicked(bool checked);
-        void on_LVLEvent_Key_Drop_clicked(bool checked);
-        void on_LVLEvent_Key_Start_clicked(bool checked);
-
-        void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
-        void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
-
-        void on_bps_LayerMov_horSpeed_clicked();
-        void on_bps_LayerMov_vertSpeed_clicked();
-        void on_bps_Scroll_horSpeed_clicked();
-        void on_bps_Scroll_vertSpeed_clicked();
-
-    private:
-        void AddNewEvent(QString eventName, bool setEdited);
-        void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
-
-        void RemoveEvent(QString eventName);
 // ////////////////////////////////////////////////////////
 
 
@@ -782,26 +669,14 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 
 // ////////////////////World Settings toolbox /////////////////
-    public slots:
-        void setCurrentWorldSettings();
+    public:
+        WorldSettingsBox* dock_WldSettingsBox;
+
     private slots:
         void on_actionWLDDisableMap_triggered(bool checked);
         void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWorld_settings_triggered(bool checked);
         void on_actionWLDProperties_triggered();
-
-        void on_WorldSettings_visibilityChanged(bool visible);
-
-        void on_WLD_Title_editingFinished();
-        void on_WLD_NoWorldMap_clicked(bool checked);
-        void on_WLD_RestartLevel_clicked(bool checked);
-        void on_WLD_AutostartLvl_editingFinished();
-        void on_WLD_AutostartLvlBrowse_clicked();
-        void on_WLD_Stars_valueChanged(int arg1);
-        void on_WLD_DoCountStars_clicked();
-        void on_WLD_Credirs_textChanged();
-        void characterActivated(bool checked);
-
         void on_actionSemi_transparent_paths_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 

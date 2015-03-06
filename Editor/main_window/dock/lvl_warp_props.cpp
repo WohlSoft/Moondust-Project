@@ -37,7 +37,6 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
     lockWarpSetSettings = false;
 
     QRect mwg = mw()->geometry();
@@ -51,11 +50,19 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
                 width(),
                 height()
                 );
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelDoorsBoxVis);
 }
 
 LvlWarpBox::~LvlWarpBox()
 {
     delete ui;
+}
+
+QComboBox *LvlWarpBox::cbox_layer()
+{
+    return ui->WarpLayer;
 }
 
 void LvlWarpBox::re_translate()

@@ -18,7 +18,7 @@ class WldSearchBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit WldSearchBox(QWidget *parent = 0);
     ~WldSearchBox();
 

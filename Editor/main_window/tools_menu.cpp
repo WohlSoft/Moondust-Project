@@ -26,6 +26,8 @@
 #include <editing/_dialogs/npcdialog.h>
 #include <dev_console/devconsole.h>
 
+#include <main_window/dock/lvl_sctc_props.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -118,6 +120,9 @@ void MainWindow::on_actionAudioCvt_triggered()
     AudioCvt_Sox_gui sox_cvt(this);
     util::DialogToCenter(&sox_cvt, true);
     sox_cvt.exec();
+
+    if(activeChildWindow()==1)
+        dock_LvlSectionProps->setLevelSectionData();
 }
 
 

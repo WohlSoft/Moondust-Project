@@ -38,7 +38,7 @@ class TilesetItemBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit TilesetItemBox(QWidget *parent = 0);
     ~TilesetItemBox();
 

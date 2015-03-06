@@ -44,8 +44,6 @@ void MainWindow::setDefaults()
 
     GlobalSettings::tools_sox_bin_path = ApplicationPath+GlobalSettings::tools_sox_bin_path;
 
-    LvlEventBoxLock=false;
-
     askConfigAgain=false;
 
     LvlMusPlay::currentCustomMusic = "";
@@ -58,10 +56,6 @@ void MainWindow::setDefaults()
 
     WldBuffer=FileFormats::dummyWldDataArray();
     LvlBuffer=FileFormats::dummyLvlDataArray();
-
-    dock_TilesetBox = NULL;
-    dock_LvlItemProps = NULL;
-    dock_LvlWarpProps = NULL;
 
     LastActiveSubWindow = NULL;
     #ifdef Q_OS_WIN
@@ -79,62 +73,28 @@ void MainWindow::setUiDefults()
     #endif
 
     //MainWindow Geometry;
-    QRect mwg = this->geometry();
     QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
     //Init default geometry of main window
     setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                        QSize(dg.width()-100,
                                              dg.height()-100), dg));
 
-    int GOffset=240;
     dock_LvlWarpProps    = new LvlWarpBox(this);
     dock_LvlSectionProps = new LvlSectionProps(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_LvlSearchBox    = new LvlSearchBox(this);
     dock_LvlLayers       = new LvlLayersBox(this);
+    dock_LvlEvents       = new LvlEventsBox(this);
 
     dock_WldItemBox      = new WorldItemBox(this);
     dock_WldItemProps    = new WLD_ItemProps(this);
     dock_WldSearchBox    = new WldSearchBox(this);
+    dock_WldSettingsBox  = new WorldSettingsBox(this);
 
     dock_TilesetBox      = new TilesetItemBox(this);
-
-    //Define the default geometry for toolboxes
-    ui->LevelEventsToolBox->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
-                mwg.y()+120,
-                ui->LevelEventsToolBox->width(),
-                ui->LevelEventsToolBox->height()
-                );
-
-
-    ui->WorldSettings->setGeometry(
-                mwg.x()+mwg.width()-ui->WorldSettings->width()-GOffset-200,
-                mwg.y()+120,
-                ui->WorldSettings->width(),
-                ui->WorldSettings->height()
-                );
-
-    ui->debuggerBox->setGeometry(
-                mwg.x()+mwg.width()-ui->debuggerBox->width()-GOffset,
-                mwg.y()+120,
-                ui->debuggerBox->width(),
-                ui->debuggerBox->height()
-                );
-
-
-    ui->bookmarkBox->setGeometry(
-                mwg.x()+mwg.width()-ui->bookmarkBox->width()-GOffset,
-                mwg.y()+120,
-                ui->bookmarkBox->width(),
-                ui->bookmarkBox->height()
-                );
-
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-    font.setWeight(8);
-    ui->DEBUG_Items->setFont(font);
+    dock_BookmarksBox    = new BookmarksBox(this);
+    dock_DebuggerBox     = new DebuggerBox(this);
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
@@ -163,15 +123,9 @@ void MainWindow::setUiDefults()
         ui->actionFloodSectionOnly->setEnabled(false);
 
 
-    ui->LevelEventsToolBox->hide();
-    ui->WorldSettings->hide();
-    ui->debuggerBox->hide();
-    ui->bookmarkBox->hide();
 
     ui->menuView->setEnabled(false);
-
     ui->menuWindow->setEnabled(true);
-
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
     ui->menuTest->setEnabled(false);
@@ -205,6 +159,7 @@ void MainWindow::setUiDefults()
     dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
+    /*********************Music volume regulator*************************/
     muVol = new QSlider(Qt::Horizontal);
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
@@ -215,7 +170,10 @@ void MainWindow::setUiDefults()
     MusPlayer.setVolume(muVol->value());
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
+    connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
+    /*********************Music volume regulator*************************/
 
+    /*********************Zoom field*************************/
     zoom = new QLineEdit();
     zoom->setValidator(new QIntValidator(0,2001));
     zoom->setText("100");
@@ -224,9 +182,6 @@ void MainWindow::setUiDefults()
 
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
+    /*********************Zoom field*************************/
 
-    connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
-
-    connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
-    connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
 }

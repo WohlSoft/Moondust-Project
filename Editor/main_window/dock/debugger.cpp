@@ -26,23 +26,66 @@
 #include "../../mainwindow.h"
 #include <ui_mainwindow.h>
 
+#include "debugger.h"
+#include "ui_debugger.h"
 
-void MainWindow::on_debuggerBox_visibilityChanged(bool visible)
+DebuggerBox::DebuggerBox(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::DebuggerBox)
 {
-    ui->actionDebugger->setChecked(visible);
+    setVisible(false);
+    ui->setupUi(this);
+    isLoaded=false;
+
+    QRect mwg = mw()->geometry();
+    int GOffset=240;
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    setFloating(true);
+    setGeometry(
+                mwg.x()+mwg.width()-width()-GOffset,
+                mwg.y()+120,
+                width(),
+                height()
+                );
+
+    mw()->docks_level_and_world.
+          addState(this, &GlobalSettings::DebuggerBoxVis);
+
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setWeight(8);
+    ui->DEBUG_Items->setFont(font);
+
+}
+
+DebuggerBox::~DebuggerBox()
+{
+    delete ui;
+}
+
+void DebuggerBox::re_translate()
+{
+    ui->retranslateUi(this);
+}
+
+void DebuggerBox::on_DebuggerBox_visibilityChanged(bool visible)
+{
+    mw()->ui->actionDebugger->setChecked(visible);
     if(visible)
         on_DEBUG_RefreshCoutners_clicked();
 }
 
 void MainWindow::on_actionDebugger_triggered(bool checked)
 {
-    ui->debuggerBox->setVisible(checked);
-    if(checked) ui->debuggerBox->raise();
+    dock_DebuggerBox->setVisible(checked);
+    if(checked) dock_DebuggerBox->raise();
 }
 
-void MainWindow::Debugger_UpdateMousePosition(QPoint p, bool isOffScreen)
+void DebuggerBox::setMousePos(QPoint p, bool isOffScreen)
 {
-    if(!ui->actionDebugger->isVisible()) return; //SpeedUp
+    if(!mw()->ui->actionDebugger->isVisible()) return; //SpeedUp
 
     if(isOffScreen)
     {
@@ -56,29 +99,27 @@ void MainWindow::Debugger_UpdateMousePosition(QPoint p, bool isOffScreen)
     }
 }
 
-void MainWindow::Debugger_UpdateItemList(QString list)
+void DebuggerBox::setItemStat(QString list)
 {
-    if(!ui->actionDebugger->isVisible()) return; //SpeedUp
+    if(!mw()->ui->actionDebugger->isVisible()) return; //SpeedUp
 
     ui->DEBUG_Items->setText(list);
 }
 
-
-
-void MainWindow::on_DEBUG_GotoPoint_clicked()
+void DebuggerBox::on_DEBUG_GotoPoint_clicked()
 {
     if(ui->DEBUG_GotoX->text().isEmpty()) return;
     if(ui->DEBUG_GotoY->text().isEmpty()) return;
 
-    if(activeChildWindow()==1)
+    if(mw()->activeChildWindow(mw()->LastActiveSubWindow)==1)
     {
-        activeLvlEditWin()->goTo(
+        mw()->activeLvlEditWin(mw()->LastActiveSubWindow)->goTo(
                     ui->DEBUG_GotoX->text().toInt(),
                     ui->DEBUG_GotoY->text().toInt(), true, QPoint(0,0), true);
     }
-    else if(activeChildWindow()==3)
+    else if(mw()->activeChildWindow()==3)
     {
-        activeWldEditWin()->goTo(
+        mw()->activeWldEditWin(mw()->LastActiveSubWindow)->goTo(
                     ui->DEBUG_GotoX->text().toInt(),
                     ui->DEBUG_GotoY->text().toInt(), true, QPoint(0,0), true);
 
@@ -88,22 +129,13 @@ void MainWindow::on_DEBUG_GotoPoint_clicked()
     ui->DEBUG_GotoY->setText("");
 }
 
-namespace mainwindow_debugger_box
+void DebuggerBox::Debugger_loadCustomCounters()
 {
-    QVector<CustomCounter > customCounters;
-    bool isLoaded=false;
-}
-
-
-void MainWindow::Debugger_loadCustomCounters()
-{
-    using namespace mainwindow_debugger_box;
-
     QString userDFile=AppPathManager::userAppDir()+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
     QString debuggerFile = userDFile;
     if(!QFile(debuggerFile).exists())
     {
-        debuggerFile = configs.config_dir+"/counters.ini";
+        debuggerFile = mw()->configs.config_dir+"/counters.ini";
     }
     reload:
     QSettings cCounters(debuggerFile, QSettings::IniFormat);
@@ -118,7 +150,7 @@ void MainWindow::Debugger_loadCustomCounters()
         {
             if(debuggerFile==userDFile)
             {
-                debuggerFile = configs.config_dir+"/counters.ini";
+                debuggerFile = mw()->configs.config_dir+"/counters.ini";
                 goto reload;
             }
             else
@@ -154,9 +186,8 @@ void MainWindow::Debugger_loadCustomCounters()
 }
 
 
-void MainWindow::Debugger_saveCustomCounters()
+void DebuggerBox::Debugger_saveCustomCounters()
 {
-    using namespace mainwindow_debugger_box;
     if(!isLoaded) return;
 
     QString debuggerFile = AppPathManager::userAppDir()+"/"+util::filePath(ConfStatus::configName)+" counters.ini";
@@ -188,9 +219,8 @@ void MainWindow::Debugger_saveCustomCounters()
 }
 
 
-void MainWindow::on_DEBUG_AddCustomCounter_clicked()
+void DebuggerBox::on_DEBUG_AddCustomCounter_clicked()
 {
-    using namespace mainwindow_debugger_box;
     CustomCounterGUI customCounterGui;
     customCounterGui.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     customCounterGui.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, customCounterGui.size(), qApp->desktop()->availableGeometry()));
@@ -203,14 +233,13 @@ void MainWindow::on_DEBUG_AddCustomCounter_clicked()
 }
 
 
-void MainWindow::on_DEBUG_RefreshCoutners_clicked()
+void DebuggerBox::on_DEBUG_RefreshCoutners_clicked()
 {
-    using namespace mainwindow_debugger_box;
-    if(!ui->debuggerBox->isVisible()) return;
+    if(!isVisible()) return;
     if(!isLoaded)
         Debugger_loadCustomCounters();
 
-    int win = activeChildWindow();
+    int win = mw()->activeChildWindow(mw()->LastActiveSubWindow);
 
     qDebug() << "Size of custom conters array:" << customCounters.size();
     util::memclear(ui->DEBUG_CustomCountersList);
@@ -222,11 +251,12 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
         item->setData(Qt::UserRole, QVariant(i));
 
         int countItems=0;
-        if(activeChildWindow()==1)
+        if(mw()->activeChildWindow()==1)
         {
             if(customCounters[i].type==ItemTypes::LVL_NPC)
             {
-                LevelEdit * e = activeLvlEditWin();
+                LevelEdit * e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     //Deep search of NPC's
@@ -237,10 +267,10 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
                             //check as regular NPC
                             if(e->LvlData.npc[j].id==(unsigned)q) {countItems++; break;}
                             //check as NPC-Container
-                            int nI = configs.getNpcI(e->LvlData.npc[j].id);
+                            int nI = mw()->configs.getNpcI(e->LvlData.npc[j].id);
                             if(nI>=0)
                             {
-                                if(configs.main_npc[nI].container)
+                                if(mw()->configs.main_npc[nI].container)
                                     if(e->LvlData.npc[j].special_data==q) {countItems++; break;}
                             }
                         }
@@ -250,7 +280,7 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
                     {
                         foreach(long q, customCounters[i].items)
                         {
-                            if((unsigned)q==configs.marker_npc.coin_in_block) {
+                            if((unsigned)q==mw()->configs.marker_npc.coin_in_block) {
                                 if(e->LvlData.blocks[j].npc_id<0)
                                     { countItems+=e->LvlData.blocks[j].npc_id*-1; break;} }
                             else if(e->LvlData.blocks[j].npc_id==q) {countItems++; break;}
@@ -261,7 +291,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::LVL_Block)
             {
-                LevelEdit * e = activeLvlEditWin();
+                LevelEdit * e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->LvlData.blocks.size();j++)
@@ -274,7 +305,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::LVL_BGO)
             {
-                LevelEdit * e = activeLvlEditWin();
+                LevelEdit * e = mw()->activeLvlEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->LvlData.bgo.size();j++)
@@ -286,11 +318,12 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             }
         }
         else
-        if(activeChildWindow()==3)
+        if(mw()->activeChildWindow()==3)
         {
             if(customCounters[i].type==ItemTypes::WLD_Tile)
             {
-                WorldEdit * e = activeWldEditWin();
+                WorldEdit * e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(!e) return;
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->WldData.tiles.size();j++)
@@ -303,7 +336,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::WLD_Scenery)
             {
-                WorldEdit * e = activeWldEditWin();
+                WorldEdit * e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->WldData.scenery.size();j++)
@@ -316,7 +350,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::WLD_Path)
             {
-                WorldEdit * e = activeWldEditWin();
+                WorldEdit * e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->WldData.paths.size();j++)
@@ -329,7 +364,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::WLD_Level)
             {
-                WorldEdit * e = activeWldEditWin();
+                WorldEdit * e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->WldData.levels.size();j++)
@@ -342,7 +378,8 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             else
             if(customCounters[i].type==ItemTypes::WLD_MusicBox)
             {
-                WorldEdit * e = activeWldEditWin();
+                WorldEdit * e = mw()->activeWldEditWin(mw()->LastActiveSubWindow);
+                if(e)
                 if(!customCounters[i].items.isEmpty())
                 {
                     for(int j=0;j<e->WldData.music.size();j++)
@@ -354,7 +391,6 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
             }
 
         }
-
         item->setText(QString("%1\t%2").arg(countItems).arg(customCounters[i].name));
         ui->DEBUG_CustomCountersList->addItem(item);
     }
@@ -362,7 +398,7 @@ void MainWindow::on_DEBUG_RefreshCoutners_clicked()
 }
 
 
-void MainWindow::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
+void DebuggerBox::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
 {
     Q_UNUSED(item);
     int itemID = item->data(Qt::UserRole).toInt();
@@ -379,10 +415,8 @@ void MainWindow::on_DEBUG_CustomCountersList_itemClicked(QListWidgetItem *item)
 }
 
 
-void MainWindow::on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos)
+void DebuggerBox::on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos)
 {
-    using namespace mainwindow_debugger_box;
-
     if(ui->DEBUG_CustomCountersList->selectedItems().isEmpty()) return;
 
     QListWidgetItem *item = ui->DEBUG_CustomCountersList->selectedItems().first();

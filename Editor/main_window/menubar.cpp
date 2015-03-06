@@ -88,79 +88,20 @@ void MainWindow::updateMenus(bool force)
     dock_LvlItemProps->setVisible(false);
     dock_WldItemProps->setVisible(false);
 
+    //Change visibility of toolboxes
+    /***************Level specific toolboxes****************/
+    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )   { docks_level.hideAll(); }
+    if((GlobalSettings::lastWinType !=1) && (WinType==1))       { docks_level.showAll(); }
 
-    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
-    {
-        GlobalSettings::LevelToolBoxVis = dock_LvlItemBox->isVisible();  //Save current visible status
-        GlobalSettings::SectionToolBoxVis = dock_LvlSectionProps->isVisible();
+    /***************World specific toolboxes****************/
+    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )   { docks_world.hideAll(); }
+    if((GlobalSettings::lastWinType !=3) && (WinType==3))       { docks_world.showAll(); }
 
-        GlobalSettings::LevelDoorsBoxVis = dock_LvlWarpProps->isVisible();
-        GlobalSettings::LevelLayersBoxVis = dock_LvlLayers->isVisible();
-        GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
-
-        GlobalSettings::LevelSearchBoxVis = dock_LvlSearchBox->isVisible();
-
-        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
-
-        dock_LvlItemBox->setVisible( 0 ); //Hide level toolbars
-        dock_LvlSectionProps->setVisible( 0 );
-        dock_LvlWarpProps->setVisible( 0 );
-        dock_LvlLayers->setVisible( 0 );
-        ui->LevelEventsToolBox->setVisible( 0 );
-        dock_LvlSearchBox->setVisible( 0 );
-    }
-
-    if((GlobalSettings::lastWinType !=1) && (WinType==1))
-    {
-        dock_LvlItemBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
-        dock_LvlSectionProps->setVisible( GlobalSettings::SectionToolBoxVis );
-        dock_LvlWarpProps->setVisible( GlobalSettings::LevelDoorsBoxVis );
-        dock_LvlLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
-        ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
-        dock_LvlSearchBox->setVisible(GlobalSettings::LevelSearchBoxVis);
-
-        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
-    }
-
-    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
-    {
-        GlobalSettings::WorldToolBoxVis = dock_WldItemBox->isVisible(); //Save current visible status
-        GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
-        GlobalSettings::WorldSearchBoxVis = dock_WldSearchBox->isVisible();
-        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
-
-        dock_WldItemBox->setVisible( 0 );
-        ui->WorldSettings->setVisible( 0 );
-        dock_WldSearchBox->setVisible( 0 );
-    }
-
-    if((GlobalSettings::lastWinType !=3) && (WinType==3))
-    {
-        dock_WldItemBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
-        ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
-        dock_WldSearchBox->setVisible( GlobalSettings::WorldSearchBoxVis );
-
-        dock_TilesetBox->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
-    }
-
+    /***************World and Level specific toolboxes****************/
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
-    {
-        GlobalSettings::TilesetBoxVis = dock_TilesetBox->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
-        dock_TilesetBox->setVisible( 0 );
-        ui->debuggerBox->setVisible( 0 );
-        ui->bookmarkBox->setVisible( 0 );
-    }
-
+    { docks_level_and_world.hideAll(); }
+    if( (!(GlobalSettings::lastWinType==1))&&(!(GlobalSettings::lastWinType==3)) && (WinType == 1 || WinType == 3) )
+    { docks_level_and_world.showAll(); }
 
     GlobalSettings::lastWinType =   WinType;
 
@@ -299,12 +240,12 @@ void MainWindow::updateMenus(bool force)
 
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
-        setEventsBox();
+        dock_LvlEvents->setEventsBox();
 
         //Sync lists in properties windows
         EventListsSync();
-        setLayerLists();
-        updateBookmarkBoxByData();
+        LayerListsSync();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
         dock_LvlSectionProps->setLevelSectionData();
         ui->actionSelect->trigger();
@@ -341,8 +282,8 @@ void MainWindow::updateMenus(bool force)
 
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
-        setCurrentWorldSettings();
-        updateBookmarkBoxByData();
+        dock_WldSettingsBox->setCurrentWorldSettings();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
         ui->actionSelect->trigger();
 
@@ -388,7 +329,7 @@ void MainWindow::updateMenus(bool force)
     updateWindowMenu();
 
     //Update debugger's custom counters
-    on_DEBUG_RefreshCoutners_clicked();
+    dock_DebuggerBox->on_DEBUG_RefreshCoutners_clicked();
 
     qApp->setActiveWindow(this);
 }

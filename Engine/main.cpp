@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QElapsedTimer>
@@ -175,7 +174,6 @@ int main(int argc, char *argv[])
 
 
     //Load selected configuration pack
-
 
 
     ConfigManager::setConfigPath(configPath);
@@ -412,8 +410,8 @@ ExitFromApplication:
 
     if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();
-
     FontManager::quit();
+    a.quit();
 
     PGE_Window::uninit();
     return 0;

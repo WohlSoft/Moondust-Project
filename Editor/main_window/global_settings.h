@@ -53,14 +53,14 @@ public:
     static int musicVolume;
 
     //Toolboxes visibly states
-    static bool LevelToolBoxVis;
-    static bool SectionToolBoxVis;
+    static bool LevelItemBoxVis;
+    static bool LevelSectionBoxVis;
     static bool LevelDoorsBoxVis;
     static bool LevelLayersBoxVis;
     static bool LevelEventsBoxVis;
     static bool LevelSearchBoxVis;
 
-    static bool WorldToolBoxVis;
+    static bool WorldItemBoxVis;
     static bool WorldSettingsToolboxVis;
     static bool WorldSearchBoxVis;
 

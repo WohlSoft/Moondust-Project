@@ -24,6 +24,7 @@
 #include <file_formats/lvl_filedata.h>
 
 class MainWindow;
+class QComboBox;
 
 namespace Ui {
 class LvlItemProperties;
@@ -34,15 +35,28 @@ class LvlItemProperties : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
+private:
     explicit LvlItemProperties(QWidget *parent);
     ~LvlItemProperties();
-
+public:
     long blockPtr;
     long bgoPtr;
     long npcPtr;
     bool LvlItemPropsLock;
 
+    QComboBox *cbox_layer_block();
+    QComboBox *cbox_layer_bgo();
+    QComboBox *cbox_layer_npc();
+    QComboBox *cbox_layer_npc_att();
+
+    QComboBox *cbox_event_block_dest();
+    QComboBox *cbox_event_block_hit();
+    QComboBox *cbox_event_block_le();
+
+    QComboBox *cbox_event_npc_act();
+    QComboBox *cbox_event_npc_die();
+    QComboBox *cbox_event_npc_talk();
+    QComboBox *cbox_event_npc_le();
 
 public slots:
     void re_translate();
