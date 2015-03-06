@@ -17,7 +17,9 @@ linux-g++:{
 DEFINES += LUA_USE_MKSTEMP
 }
 
-DESTDIR = ../../_builds/oolua
+DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
+
+DESTDIR = ../../_builds/commonlibs
 
 SOURCES += \
     ../class_from_stack.cpp \
