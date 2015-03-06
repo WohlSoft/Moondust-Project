@@ -283,6 +283,10 @@ struct LevelData
     bool smbx64strict;
     QString filename;
     QString path;
+
+    //Useful functions
+    bool eventIsExist(QString title);
+    bool layerIsExist(QString title);
 };
 
 

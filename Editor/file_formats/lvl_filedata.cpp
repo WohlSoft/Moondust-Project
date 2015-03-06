@@ -363,3 +363,22 @@ return NewFileData;
 
 
 
+bool LevelData::eventIsExist(QString title)
+{
+    for(int i=0; i<events.size(); i++)
+    {
+        if( events[i].name == title )
+            return true;
+    }
+    return false;
+}
+
+bool LevelData::layerIsExist(QString title)
+{
+    for(int i=0; i<layers.size(); i++)
+    {
+        if( layers[i].name == title )
+            return true;
+    }
+    return false;
+}
