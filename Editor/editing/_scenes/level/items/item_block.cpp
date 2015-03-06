@@ -16,15 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QInputDialog>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
+#include <common_features/util.h>
+#include <file_formats/file_formats.h>
 
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
+#include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
 ItemBlock::ItemBlock(QGraphicsItem *parent)
@@ -188,6 +192,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
                 ItemMenu.addSeparator();
             QAction *transform = ItemMenu.addAction(tr("Transform into"));
+            QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
                 ItemMenu.addSeparator();
             QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
             QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
@@ -238,6 +243,59 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 delete blockList;
+            }
+            else
+            if(selected==makemsgevent)
+            {
+                QString eventName;
+                QString msgText;
+
+
+                if(blockData.event_hit.isEmpty())
+                {
+                    bool ok=false;
+                    typeEventAgain:
+                    eventName = QInputDialog::getText(scene->_edit, tr("Event name"),
+                                                      tr("Please enter the name of event:"),
+                                                      QLineEdit::Normal, QString(), &ok);
+                    if(eventName.isEmpty() && ok)
+                        goto typeEventAgain;
+                    if(ok)
+                    {
+                        ItemMsgBox msgBox("", tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
+                        util::DialogToCenter(&msgBox, true);
+                        if(msgBox.exec()==QDialog::Accepted)
+                        {
+                            msgText = msgBox.currentText;
+                            if(scene->LvlData->eventIsExist(eventName))
+                            {
+                                int count=0;
+                                while(scene->LvlData->eventIsExist(QString(eventName+" %1").arg(count)))
+                                    count++;
+
+                                eventName = QString(eventName+" %1").arg(count);
+                            }
+                            LevelEvents msgEvent = FileFormats::dummyLvlEvent();
+                            msgEvent.name = eventName;
+                            msgEvent.msg = msgText;
+                            msgEvent.array_id = ++scene->LvlData->events_array_id;
+                            scene->LvlData->events.push_back(msgEvent);
+                            blockData.event_hit = eventName;
+                            arrayApply();
+
+                            MainWinConnect::pMainWin->setEventsBox();
+                            MainWinConnect::pMainWin->EventListsSync();
+
+                            QMessageBox::information(scene->_edit, tr("Event has been created"),
+                                         tr("Message event has been created!"), QMessageBox::Ok);
+                        }
+                    }
+                }
+                else
+                    QMessageBox::warning(scene->_edit, tr("'Hit' event slot is busy"),
+                                 tr("Sorry, but 'Hit' event slot already busy with '%1' event.")
+                                         .arg(blockData.event_hit), QMessageBox::Ok);
+
             }
             else
             if(selected==invis)
