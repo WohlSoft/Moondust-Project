@@ -22,7 +22,7 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 #ifdef Q_OS_WIN
     ui->sox_bin_path->setText(ApplicationPath+"/tools/sox/sox.exe");
 #else
-    ui->sox_bin_path->setText(ApplicationPath+"/usr/bin/sox");
+    ui->sox_bin_path->setText("/usr/bin/sox");
 #endif
 
     connect(&converter, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(nexStep(int,QProcess::ExitStatus)));
