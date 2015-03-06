@@ -21,7 +21,7 @@
 
 #include <QPoint>
 
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 
 class WldPlacingItems
 {

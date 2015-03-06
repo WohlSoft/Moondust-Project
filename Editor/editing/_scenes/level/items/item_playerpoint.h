@@ -21,7 +21,7 @@
 
 #include <QGraphicsPixmapItem>
 
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 #include "../lvl_scene.h"
 #include "lvl_base_item.h"

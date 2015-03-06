@@ -22,7 +22,7 @@
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "../lvl_scene.h"
 #include "../items/item_block.h"

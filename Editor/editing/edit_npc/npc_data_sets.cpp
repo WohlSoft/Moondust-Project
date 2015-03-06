@@ -18,7 +18,7 @@
 
 #include <QtWidgets>
 
-#include <file_formats/npc_filedata.h>
+#include <PGE_File_Formats/npc_filedata.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>

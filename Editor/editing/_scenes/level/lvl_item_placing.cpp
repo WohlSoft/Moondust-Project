@@ -19,7 +19,7 @@
 #include <common_features/items.h>
 #include <common_features/themes.h>
 #include <editing/edit_level/level_edit.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"

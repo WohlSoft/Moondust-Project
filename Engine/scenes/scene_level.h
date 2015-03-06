@@ -40,7 +40,7 @@
 
 #include "../data_configs/custom_data.h"
 
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
 #include <QVector>

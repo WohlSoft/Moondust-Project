@@ -3,7 +3,7 @@
 
 #include <QDockWidget>
 #include "mwdock_base.h"
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 
 class MainWindow;
 class QMdiSubWindow;

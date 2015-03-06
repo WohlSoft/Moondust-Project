@@ -41,7 +41,7 @@ Q_DECLARE_INTERFACE(IHistoryElement, "IHistoryElement")
  * Implementation:
 
 #include "ihistoryelement.h"
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 class {Name} : public QObject, public IHistoryElement
 {

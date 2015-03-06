@@ -22,7 +22,7 @@
 #include "../../physics/base_object.h"
 #include "../../data_configs/obj_bgo.h"
 
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 class LVL_Warp : public PGE_Phys_Object
 {

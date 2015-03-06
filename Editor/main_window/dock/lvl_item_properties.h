@@ -21,7 +21,7 @@
 
 #include <QDockWidget>
 #include "mwdock_base.h"
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 class MainWindow;
 class QComboBox;

@@ -49,7 +49,7 @@ struct b2SeparationFunction
 		m_proxyA = proxyA;
 		m_proxyB = proxyB;
 		int32 count = cache->count;
-        b2Assert( (0 < count) && (count < 3));
+		b2Assert(0 < count && count < 3);
 
 		m_sweepA = sweepA;
 		m_sweepB = sweepB;

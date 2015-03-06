@@ -176,7 +176,7 @@ void b2PrismaticJoint::InitVelocityConstraints(const b2SolverData& data)
 
         float32 s1test;
         s1test = b2Cross(rA, m_perp);
-        if(s1test) s1test--;
+        s1test = s1test+0.0f;//dummy (to prevent warning)
 
 		float32 k11 = mA + mB + iA * m_s1 * m_s1 + iB * m_s2 * m_s2;
 		float32 k12 = iA * m_s1 + iB * m_s2;

@@ -39,8 +39,8 @@
 #include "graphics/gl_renderer.h"
 #undef main
 
-#include <file_formats.h>
-#include <smbx64.h>
+#include <PGE_File_Formats/file_formats.h>
+#include <PGE_File_Formats/smbx64.h>
 #include "fontman/font_manager.h"
 #include "gui/pge_msgbox.h"
 #include "networking/intproc.h"
@@ -51,6 +51,9 @@
 #include "scenes/scene_title.h"
 
 #include <Box2D/Box2D.h>
+
+//#include <oolua/oolua.h>
+//#include <QMessageBox>
 
 #include <iostream>
 using namespace std;
@@ -66,6 +69,13 @@ enum Level_returnTo
     RETURN_TO_EXIT
 };
 Level_returnTo end_level_jump=RETURN_TO_EXIT;
+
+
+//void say(const char* input)
+//{
+//    QMessageBox::information(NULL, "test", input);
+//}
+//OOLUA_CFUNC(say, l_say);
 
 int main(int argc, char *argv[])
 {
@@ -96,6 +106,12 @@ int main(int argc, char *argv[])
 
     //Init log writer
     LoadLogSettings();
+
+
+    //OOLUA::Script vm;
+    //OOLUA::set_global(vm.state(), "say", l_say);
+    //OOLUA::run_chunk(vm.state(),"say(\"Hello Lua\")");
+
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
@@ -137,7 +153,6 @@ int main(int argc, char *argv[])
             fileToPpen = param;
         }
     }
-
 
 
     ////Check & ask for configuration pack

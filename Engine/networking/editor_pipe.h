@@ -7,7 +7,7 @@
 #include <QLocalSocket>
 
 #include <QAbstractSocket>
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #define LOCAL_SERVER_NAME "PGEEngine42e3j"
 

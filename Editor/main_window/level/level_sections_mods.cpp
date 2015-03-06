@@ -17,7 +17,7 @@
  */
 
 #include <editing/edit_level/lvl_clone_section.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

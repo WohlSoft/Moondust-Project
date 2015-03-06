@@ -2,7 +2,7 @@
 #define HISTORYELEMENTRESIZEBLOCK_H
 
 #include "ihistoryelement.h"
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 class HistoryElementResizeBlock : public QObject, public IHistoryElement
 {
     Q_OBJECT

@@ -293,80 +293,86 @@
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="21"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="135"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="154"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="112"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="188"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="198"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="205"/>
         <source>SoX error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="112"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="376"/>
         <source>Nothing to do</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
         <source>No files to convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="140"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="188"/>
+        <source>Operation cancaled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="198"/>
         <source>SoX was crashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="205"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
         <source>All works completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
         <source>All files successfully converted!
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="376"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="337"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="412"/>
         <source>Open SoX binary path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="349"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="424"/>
         <source>Add file to convert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1317,62 +1323,108 @@ Please save them first before doing anything else.</source>
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="157"/>
         <source>Layer: </source>
         <translation>Шар: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="158"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="162"/>
         <source>Add to new layer...</source>
         <translation>Додати на новий шар...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="170"/>
         <source> [hidden]</source>
         <translation> [Прихований]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="176"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="180"/>
         <source>Invisible</source>
         <translation>Невидимий</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="184"/>
         <source>Slippery</source>
         <translation>Слизький</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
         <source>Resize</source>
         <translation>Змінити розмір</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="190"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="194"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="258"/>
+        <source>Event name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="259"/>
+        <source>Please enter the name of event:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <source>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <source>Hit message text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="289"/>
+        <source>Event has been created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="290"/>
+        <source>Message event has been created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="295"/>
+        <source>&apos;Hit&apos; event slot is busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="192"/>
         <source>Change included NPC...</source>
         <translation>Змінити вміст блока...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <source>Make message box...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
         <source>Copy</source>
         <translation>Копіювати</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="198"/>
         <source>Cut</source>
         <translation>Вирізати</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="200"/>
         <source>Remove</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1532,92 +1584,92 @@ Message limits: max line lenth is 27 characters</source>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
         <source>Layer: </source>
         <translation type="unfinished">Шар: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Додати на новий шар...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Edit NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>New NPC-Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="215"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="216"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="218"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="220"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="221"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="224"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="225"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="228"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="229"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="232"/>
         <source>Doesn&apos;t move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="234"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="235"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="236"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="237"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="240"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="242"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="243"/>
         <source>Copy</source>
         <translation type="unfinished">Копіювати</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="243"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="244"/>
         <source>Cut</source>
         <translation type="unfinished">Вирізати</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="245"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="246"/>
         <source>Remove</source>
         <translation type="unfinished">Видалити</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="247"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="248"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3612,12 +3664,12 @@ Physical env. zones:	%6
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="489"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="490"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="489"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="490"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>

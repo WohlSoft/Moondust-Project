@@ -115,7 +115,7 @@ DEFINES += USE_SDL_MIXER
 }
 DEFINES += PGE_EDITOR
 
-INCLUDEPATH += . _includes
+INCLUDEPATH += . _includes "../_Libs" "../_common"
 
 USE_QMEDIAPLAYER: {
     QT += multimedia
@@ -358,22 +358,6 @@ SOURCES += main.cpp\
     main_window/dock/lvl_warp_props.cpp \
     editing/_components/history/historyelementmainsetting.cpp \
     editing/_components/history/historyelementitemsetting.cpp \
-    file_formats/file_formats.cpp \
-    file_formats/file_rw_lvl.cpp \
-    file_formats/file_rw_lvlx.cpp \
-    file_formats/file_rw_meta.cpp \
-    file_formats/file_rw_npc_txt.cpp \
-    file_formats/file_rw_sav.cpp \
-    file_formats/file_rw_wld.cpp \
-    file_formats/file_rw_wldx.cpp \
-    file_formats/file_rwopen.cpp \
-    file_formats/file_strlist.cpp \
-    file_formats/lvl_filedata.cpp \
-    file_formats/npc_filedata.cpp \
-    file_formats/pge_x.cpp \
-    file_formats/save_filedata.cpp \
-    file_formats/smbx64.cpp \
-    file_formats/wld_filedata.cpp \
     editing/_components/history/historyelementresizesection.cpp \
     editing/_components/history/historyelementlayerchanged.cpp \
     editing/_components/history/historyelementresizeblock.cpp \
@@ -406,7 +390,23 @@ SOURCES += main.cpp\
     main_window/dock/debugger.cpp \
     main_window/dock/_dock_vizman.cpp \
     main_window/dock/wld_settings_box.cpp \
-    main_window/dock/lvl_events_box.cpp
+    main_window/dock/lvl_events_box.cpp \
+    ../_common/PGE_File_Formats/file_formats.cpp \
+    ../_common/PGE_File_Formats/file_rw_lvl.cpp \
+    ../_common/PGE_File_Formats/file_rw_lvlx.cpp \
+    ../_common/PGE_File_Formats/file_rw_meta.cpp \
+    ../_common/PGE_File_Formats/file_rw_npc_txt.cpp \
+    ../_common/PGE_File_Formats/file_rwopen.cpp \
+    ../_common/PGE_File_Formats/file_rw_sav.cpp \
+    ../_common/PGE_File_Formats/file_rw_wld.cpp \
+    ../_common/PGE_File_Formats/file_rw_wldx.cpp \
+    ../_common/PGE_File_Formats/file_strlist.cpp \
+    ../_common/PGE_File_Formats/lvl_filedata.cpp \
+    ../_common/PGE_File_Formats/npc_filedata.cpp \
+    ../_common/PGE_File_Formats/pge_x.cpp \
+    ../_common/PGE_File_Formats/save_filedata.cpp \
+    ../_common/PGE_File_Formats/smbx64.cpp \
+    ../_common/PGE_File_Formats/wld_filedata.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -546,15 +546,6 @@ HEADERS  += defines.h \
     main_window/dock/lvl_warp_props.h \
     editing/_components/history/historyelementmainsetting.h \
     editing/_components/history/historyelementitemsetting.h \
-    file_formats/file_formats.h \
-    file_formats/file_strlist.h \
-    file_formats/lvl_filedata.h \
-    file_formats/meta_filedata.h \
-    file_formats/npc_filedata.h \
-    file_formats/pge_x.h \
-    file_formats/save_filedata.h \
-    file_formats/smbx64.h \
-    file_formats/wld_filedata.h \
     editing/_components/history/historyelementresizesection.h \
     editing/_components/history/historyelementlayerchanged.h \
     editing/_components/history/historyelementresizeblock.h \
@@ -587,7 +578,16 @@ HEADERS  += defines.h \
     main_window/dock/debugger.h \
     main_window/dock/_dock_vizman.h \
     main_window/dock/wld_settings_box.h \
-    main_window/dock/lvl_events_box.h
+    main_window/dock/lvl_events_box.h \
+    ../_common/PGE_File_Formats/file_formats.h \
+    ../_common/PGE_File_Formats/file_strlist.h \
+    ../_common/PGE_File_Formats/lvl_filedata.h \
+    ../_common/PGE_File_Formats/meta_filedata.h \
+    ../_common/PGE_File_Formats/npc_filedata.h \
+    ../_common/PGE_File_Formats/pge_x.h \
+    ../_common/PGE_File_Formats/save_filedata.h \
+    ../_common/PGE_File_Formats/smbx64.h \
+    ../_common/PGE_File_Formats/wld_filedata.h
 
 
 FORMS    += \

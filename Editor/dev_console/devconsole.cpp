@@ -26,7 +26,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/mainwinconnect.h>
-#include <file_formats/pge_x.h>
+#include <PGE_File_Formats/pge_x.h>
 
 #include <audio/music_player.h>
 #include <networking/engine_intproc.h>

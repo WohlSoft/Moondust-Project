@@ -29,7 +29,7 @@
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>
 #include <audio/music_player.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "world_edit.h"
 #include <ui_world_edit.h>

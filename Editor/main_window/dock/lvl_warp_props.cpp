@@ -21,7 +21,7 @@
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/levelfilelist.h>
 #include <editing/_dialogs/wld_setpoint.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <main_window/dock/lvl_item_properties.h>
 
 #include <ui_mainwindow.h>

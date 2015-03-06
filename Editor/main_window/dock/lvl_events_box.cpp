@@ -23,7 +23,7 @@
 #include <editing/_scenes/level/items/item_water.h>
 #include <editing/_scenes/level/itemmsgbox.h>
 #include <audio/sdl_music_player.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <tools/math/blocksperseconddialog.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_search_box.h>

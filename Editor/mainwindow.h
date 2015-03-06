@@ -38,9 +38,9 @@
 #include <QWinThumbnailToolBar>
 #endif
 
-#include <file_formats/lvl_filedata.h>
-#include <file_formats/wld_filedata.h>
-#include <file_formats/npc_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
+#include <PGE_File_Formats/npc_filedata.h>
 
 #include <editing/edit_level/level_edit.h>
 #include <editing/edit_npc/npcedit.h>
