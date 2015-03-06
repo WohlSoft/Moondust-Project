@@ -1,4 +1,7 @@
 #/bin/bash
+set bak = ~+
+cd $PWD
+
 rm Makefile
 rm _Libs/SDL2_mixer_modified/Makefile
 rm _Libs/SDL2_mixer_modified/Makefile*
@@ -14,4 +17,7 @@ rm PNG2GIFs/Makefile
 rm PNG2GIFs/Makefile*
 rm PlayableCalibrator/Makefile
 rm PlayableCalibrator/Makefile*
+
+cd $bak
 read -n 1
+
