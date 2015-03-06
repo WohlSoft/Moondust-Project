@@ -22,7 +22,7 @@
 #include <QPixmap>
 #include <QBitmap>
 
-#include <file_formats/npc_filedata.h>
+#include <PGE_File_Formats/npc_filedata.h>
 #include <data_configs/obj_npc.h>
 
 struct UserIMGs

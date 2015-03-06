@@ -23,7 +23,7 @@
 #include <editing/_scenes/world/items/item_scene.h>
 #include <editing/_scenes/world/items/item_tile.h>
 #include <editing/_dialogs/levelfilelist.h>
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

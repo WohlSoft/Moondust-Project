@@ -2,7 +2,7 @@
 #define HISTORYELEMENTMODIFYEVENT_H
 
 #include "ihistoryelement.h"
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 class HistoryElementModifyEvent : public QObject, public IHistoryElement
 {

@@ -22,7 +22,7 @@
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/debugger.h>
 #include <editing/edit_level/level_edit.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "../../../defines.h"
 

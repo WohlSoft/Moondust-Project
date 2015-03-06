@@ -24,7 +24,7 @@
 #include <QMessageBox>
 
 #include <data_configs/data_configs.h>
-#include <file_formats/npc_filedata.h>
+#include <PGE_File_Formats/npc_filedata.h>
 
 #include <editing/_scenes/level/items/item_npc.h>
 

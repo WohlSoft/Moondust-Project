@@ -21,7 +21,7 @@
 
 #include <QDialog>
 
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 namespace Ui {
 class LevelProps;

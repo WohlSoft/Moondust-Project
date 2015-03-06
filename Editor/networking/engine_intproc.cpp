@@ -17,7 +17,7 @@
  */
 
 #include "engine_intproc.h"
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <common_features/mainwinconnect.h>
 
 EngineClient * IntEngine::engineSocket=NULL;

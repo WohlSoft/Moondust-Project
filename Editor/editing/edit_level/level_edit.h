@@ -24,7 +24,7 @@
 #include <QGraphicsScene>
 
 #include <data_configs/data_configs.h>
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 #include <editing/_scenes/level/lvl_scene.h>
 
 #define LEVEL_EDIT_CLASS "LevelEdit"

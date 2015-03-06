@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
 
 #include "wld_scene.h"

@@ -22,7 +22,7 @@
 #include <editing/_scenes/level/items/item_water.h>
 #include <editing/_scenes/level/items/item_door.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/lvl_warp_props.h>

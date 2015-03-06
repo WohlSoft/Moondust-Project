@@ -20,7 +20,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <common_features/grid.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <editing/edit_world/world_edit.h>
 #include <main_window/dock/wld_item_props.h>
 #include <main_window/dock/debugger.h>
