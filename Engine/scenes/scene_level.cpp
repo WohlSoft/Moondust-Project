@@ -585,21 +585,20 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    long cam_x=0, cam_y=0;
+    //long cam_x=0, cam_y=0;
 
     if(!isInit) goto renderBlack;
 
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
-
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     foreach(PGE_LevelCamera* cam, cameras)
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
-        if(PGE_Window::showDebugInfo)
-        {
-            cam_x = cam->posX();
-            cam_y = cam->posY();
-        }
+//        if(PGE_Window::showDebugInfo)
+//        {
+//            cam_x = cam->posX();
+//            cam_y = cam->posY();
+//        }
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
@@ -616,11 +615,9 @@ void LevelScene::render()
         }
     }
 
-    //FontManager::printText("Hello world!\nПривет мир!", 10,10);
-
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
+        //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
         FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4")
                                .arg(debug_player_jumping)
@@ -641,11 +638,8 @@ void LevelScene::render()
 
         //world->DrawDebugData();
     }
-
     renderBlack:
-
     Scene::render();
-
     if(IsLoaderWorks) drawLoader();
 }
 
@@ -671,13 +665,12 @@ int LevelScene::exec()
 
  Uint32 start_physics;
  Uint32 stop_physics;
-  float doUpdate_physics=0;
-
 
   Uint32 start_events;
   Uint32 stop_events;
 
   Uint32 start_common;
+     int wait_delay=0;
 
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
@@ -765,18 +758,18 @@ int LevelScene::exec()
         if(stop_render < start_render)
             {stop_render=0; start_render=0;}
 
-        doUpdate_physics = timeStep;
+        wait_delay=timeStep;
         lastTicks=1;
-        if( timeStep > (timeStep-(start_common-SDL_GetTicks())) )
+        if( timeStep > (timeStep-(SDL_GetTicks()-start_common)) )
         {
-            doUpdate_physics = timeStep-(start_common-SDL_GetTicks());
+            wait_delay = timeStep-(SDL_GetTicks()-start_common);
             lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
         debug_phys_delay=(stop_physics-start_physics);
         debug_event_delay=(stop_events-start_events);
 
-        if(doUpdate_physics>0)
-            SDL_Delay( doUpdate_physics );
+        if(wait_delay>0)
+            SDL_Delay( wait_delay );
 
         stop_render=0;
         start_render=0;

@@ -56,8 +56,6 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
     LvlItemPropsLock=true;
 
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
-
     blockPtr=-1;
     bgoPtr=-1;
     npcPtr=-1;
@@ -79,6 +77,60 @@ LvlItemProperties::~LvlItemProperties()
 {
     delete ui;
 }
+
+/******************Comobo boxes*********************************/
+QComboBox *LvlItemProperties::cbox_layer_block()
+{
+    return ui->PROPS_BlockLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_bgo()
+{
+    return ui->PROPS_BGOLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_npc()
+{
+    return ui->PROPS_NpcLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_layer_npc_att()
+{
+    return ui->PROPS_NpcAttachLayer;
+}
+
+QComboBox *LvlItemProperties::cbox_event_block_dest()
+{
+    return ui->PROPS_BlkEventDestroy;
+}
+
+QComboBox *LvlItemProperties::cbox_event_block_hit()
+{
+    return ui->PROPS_BlkEventHited;
+}
+
+QComboBox *LvlItemProperties::cbox_event_block_le()
+{
+    return ui->PROPS_BlkEventLayerEmpty;
+}
+
+QComboBox *LvlItemProperties::cbox_event_npc_act()
+{
+    return ui->PROPS_NpcEventActivate;
+}
+QComboBox *LvlItemProperties::cbox_event_npc_die()
+{
+    return ui->PROPS_NpcEventDeath;
+}
+QComboBox *LvlItemProperties::cbox_event_npc_talk()
+{
+    return ui->PROPS_NpcEventTalk;
+}
+QComboBox *LvlItemProperties::cbox_event_npc_le()
+{
+    return ui->PROPS_NpcEventEmptyLayer;
+}
+/******************Comobo boxes*********************************/
 
 void LvlItemProperties::re_translate()
 {
@@ -147,7 +199,7 @@ void LvlItemProperties::CloseBox()
 
 void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
-    mw()->setLayerLists();
+    mw()->LayerListsSync();
     mw()->EventListsSync();
 
     ui->blockProp->setVisible(false);

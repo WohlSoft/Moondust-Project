@@ -110,3 +110,11 @@ void PGE_Phys_Object::nextFrame() {}
 void PGE_Phys_Object::update() {}
 
 void PGE_Phys_Object::render(float x, float y) {Q_UNUSED(x); Q_UNUSED(y);}
+
+
+bool operator<(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
+{ return lhs.z_index>rhs.z_index; }
+
+
+bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
+{ return lhs.z_index<rhs.z_index; }

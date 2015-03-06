@@ -37,7 +37,6 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     allWLabel = "[all]";
     customWLabel = "[custom]";
@@ -51,6 +50,9 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+
+    mw()->docks_world.
+          addState(this, &GlobalSettings::WorldItemBoxVis);
 }
 
 WorldItemBox::~WorldItemBox()

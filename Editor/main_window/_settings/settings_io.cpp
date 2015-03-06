@@ -44,14 +44,14 @@ void MainWindow::loadSettings()
         GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
         GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
 
-        GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
-        GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+        GlobalSettings::LevelItemBoxVis = settings.value("level-tb-visible", "true").toBool();
+        GlobalSettings::LevelSectionBoxVis = settings.value("section-tb-visible", "false").toBool();
         GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
         GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
         GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
         GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
 
-        GlobalSettings::WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
+        GlobalSettings::WorldItemBoxVis = settings.value("world-tb-visible", "true").toBool();
         GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
         GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
 
@@ -89,31 +89,31 @@ void MainWindow::loadSettings()
         dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", true).toBool());
         dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", true).toBool());
         dock_LvlLayers->setFloating(settings.value("level-layers-float", true).toBool());
-        ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
+        dock_LvlEvents->setFloating(settings.value("level-events-float", true).toBool());
         dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
         dock_LvlSearchBox->setFloating(settings.value("level-search-float", true).toBool());
         //dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
-        ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
+        dock_WldSettingsBox->setFloating(settings.value("world-settings-box-float", true).toBool());
         dock_WldItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         dock_WldSearchBox->setFloating(settings.value("world-search-float", true).toBool());
         dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
-        ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
-        ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
+        dock_DebuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
+        dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());
         dock_LvlLayers->restoreGeometry(settings.value("level-layers-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
-        ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
+        dock_LvlEvents->restoreGeometry(settings.value("level-events-geometry", dock_LvlLayers->saveGeometry()).toByteArray());
         dock_LvlItemProps->restoreGeometry(settings.value("item-props-box-geometry", dock_LvlItemProps->saveGeometry()).toByteArray());
         dock_LvlSearchBox->restoreGeometry(settings.value("level-search-geometry", dock_LvlSearchBox->saveGeometry()).toByteArray());
         dock_WldItemBox->restoreGeometry(settings.value("world-item-box-geometry", dock_WldItemBox->saveGeometry()).toByteArray());
-        ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
+        dock_WldSettingsBox->restoreGeometry(settings.value("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry()).toByteArray());
         dock_WldItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry()).toByteArray());
         dock_WldSearchBox->restoreGeometry(settings.value("world-search-geometry", dock_WldSearchBox->saveGeometry()).toByteArray());
 
         dock_TilesetBox->restoreGeometry(settings.value("tileset-itembox-geometry", dock_TilesetBox->saveGeometry()).toByteArray());
-        ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
-        ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
+        dock_DebuggerBox->restoreGeometry(settings.value("debugger-box-geometry", dock_DebuggerBox->saveGeometry()).toByteArray());
+        dock_BookmarksBox->restoreGeometry(settings.value("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
@@ -166,12 +166,12 @@ void MainWindow::saveSettings()
     settings.setValue("lastsavepath", GlobalSettings::savePath);
     settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-    settings.setValue("world-tb-visible", GlobalSettings::WorldToolBoxVis);
+    settings.setValue("world-tb-visible", GlobalSettings::WorldItemBoxVis);
     settings.setValue("world-props-visible", GlobalSettings::WorldSettingsToolboxVis);
     settings.setValue("world-search-visible", GlobalSettings::WorldSearchBoxVis);
 
-    settings.setValue("level-tb-visible", GlobalSettings::LevelToolBoxVis);
-    settings.setValue("section-tb-visible", GlobalSettings::SectionToolBoxVis);
+    settings.setValue("level-tb-visible", GlobalSettings::LevelItemBoxVis);
+    settings.setValue("section-tb-visible", GlobalSettings::LevelSectionBoxVis);
     settings.setValue("level-layers-vis", GlobalSettings::LevelLayersBoxVis);
     settings.setValue("level-events-vis", GlobalSettings::LevelEventsBoxVis);
     settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
@@ -184,33 +184,33 @@ void MainWindow::saveSettings()
     settings.setValue("doors-tool-box-float", dock_LvlWarpProps->isFloating());
     settings.setValue("level-section-set-float", dock_LvlSectionProps->isFloating());
     settings.setValue("level-layers-float", dock_LvlLayers->isFloating());
-    settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
+    settings.setValue("level-events-float", dock_LvlEvents->isFloating());
     settings.setValue("item-props-box-float", dock_LvlItemProps->isFloating());
     settings.setValue("level-search-float", dock_LvlSearchBox->isFloating());
 
     settings.setValue("world-item-box-float", dock_WldItemBox->isFloating());
-    settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
+    settings.setValue("world-settings-box-float", dock_WldSettingsBox->isFloating());
     settings.setValue("world-itemprops-box-float", dock_WldItemProps->isFloating());
     settings.setValue("world-search-float", dock_WldSearchBox->isFloating());
     settings.setValue("tileset-box-float", dock_TilesetBox->isFloating());
-    settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
-    settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
+    settings.setValue("debugger-box-float", dock_DebuggerBox->isFloating());
+    settings.setValue("bookmarks-box-float", dock_BookmarksBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry());
     settings.setValue("level-section-set-geometry", dock_LvlSectionProps->saveGeometry());
     settings.setValue("level-layers-geometry", dock_LvlLayers->saveGeometry());
-    settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
+    settings.setValue("level-events-geometry", dock_LvlEvents->saveGeometry());
     settings.setValue("item-props-box-geometry", dock_LvlItemProps->saveGeometry());
     settings.setValue("level-search-geometry", dock_LvlSearchBox->saveGeometry());
 
     settings.setValue("world-item-box-geometry", dock_WldItemBox->saveGeometry());
-    settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
+    settings.setValue("world-settings-box-geometry", dock_WldSettingsBox->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", dock_WldItemProps->saveGeometry());
     settings.setValue("world-search-geometry", dock_WldSearchBox->saveGeometry());
 
     settings.setValue("tileset-itembox-geometry", dock_TilesetBox->saveGeometry());
-    settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
-    settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
+    settings.setValue("debugger-box-geometry", dock_DebuggerBox->saveGeometry());
+    settings.setValue("bookmarks-box-geometry", dock_BookmarksBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
@@ -276,7 +276,7 @@ void MainWindow::saveSettings()
     settings.endGroup();
 
     //Save settings of custom counters in the debugger
-    Debugger_saveCustomCounters();
+    dock_DebuggerBox->Debugger_saveCustomCounters();
 }
 
 

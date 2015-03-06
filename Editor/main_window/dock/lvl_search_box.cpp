@@ -51,6 +51,9 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
                 height()
                 );
 
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelSearchBoxVis);
+
     lockReset = false;
 
     curSearchBlock.id = 0;
@@ -139,6 +142,54 @@ LvlSearchBox::~LvlSearchBox()
 {
     delete ui;
 }
+
+/****************************Comboboxes***************************/
+QComboBox *LvlSearchBox::cbox_layer_block()
+{
+    return ui->Find_Combo_LayerBlock;
+}
+
+QComboBox *LvlSearchBox::cbox_layer_bgo()
+{
+    return ui->Find_Combo_LayerBGO;
+}
+
+QComboBox *LvlSearchBox::cbox_layer_npc()
+{
+    return ui->Find_Combo_LayerNPC;
+}
+QComboBox *LvlSearchBox::cbox_event_block_dest()
+{
+    return ui->Find_Combo_EventDestoryedBlock;
+}
+
+QComboBox *LvlSearchBox::cbox_event_block_hit()
+{
+    return ui->Find_Combo_EventHitedBlock;
+}
+
+QComboBox *LvlSearchBox::cbox_event_block_le()
+{
+    return ui->Find_Combo_EventLayerEmptyBlock;
+}
+
+//QComboBox *LvlSearchBox::cbox_event_npc_act()
+//{
+//    return ui->Find;
+//}
+//QComboBox *LvlSearchBox::cbox_event_npc_die()
+//{
+//    return ui->PROPS_NpcEventDeath;
+//}
+//QComboBox *LvlSearchBox::cbox_event_npc_talk()
+//{
+//    return ui->PROPS_NpcEventTalk;
+//}
+//QComboBox *LvlSearchBox::cbox_event_npc_nm()
+//{
+//    return ui->PROPS_NpcEventEmptyLayer;
+//}
+/****************************Comboboxes***************************/
 
 void LvlSearchBox::re_translate()
 {

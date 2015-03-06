@@ -18,6 +18,7 @@
 
 #include <audio/music_player.h>
 #include <editing/_dialogs/musicfilelist.h>
+#include <main_window/dock/lvl_events_box.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -32,7 +33,6 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
     switchResizeMode(false);
 
@@ -51,6 +51,9 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
                    this, SLOT(switchResizeMode(bool)));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelSectionBoxVis);
 }
 
 
@@ -62,6 +65,7 @@ LvlSectionProps::~LvlSectionProps()
 void LvlSectionProps::re_translate()
 {
     ui->retranslateUi(this);
+    setLevelSectionData();
 }
 
 void LvlSectionProps::focusInEvent(QFocusEvent *ev)
@@ -94,19 +98,19 @@ void LvlSectionProps::setLevelSectionData()
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
-    mw()->ui->LVLEvent_SctMus_List->clear(); //Music list in events
-    mw()->ui->LVLEvent_SctBg_List->clear();  //Background list in events
+    mw()->dock_LvlEvents->cbox_sct_mus()->clear(); //Music list in events
+    mw()->dock_LvlEvents->cbox_sct_bg()->clear();  //Background list in events
 
     QPixmap empty(100,70);
     empty.fill(QColor(Qt::black));
 
     ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), "0" );
-    mw()->ui->LVLEvent_SctBg_List->addItem(QIcon(empty), tr("[No image]"), "0" );
+    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), "0" );
     ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
-    mw()->ui->LVLEvent_SctMus_List->addItem( tr("[Silence]"), "0" );
+    mw()->dock_LvlEvents->cbox_sct_mus()->addItem( tr("[Silence]"), "0" );
 
     ui->LVLPropsBackImage->setIconSize(QSize(100,70));
-    mw()->ui->LVLEvent_SctBg_List->setIconSize(QSize(100,70));
+    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100,70));
 
     QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
             QListView *listVw = qobject_cast<QListView*>(abVw);
@@ -116,7 +120,7 @@ void LvlSectionProps::setLevelSectionData()
                 listVw->setUniformItemSizes(true);
             }
 
-    abVw = mw()->ui->LVLEvent_SctBg_List->view();
+    abVw = mw()->dock_LvlEvents->cbox_sct_bg()->view();
             listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
@@ -164,13 +168,13 @@ void LvlSectionProps::setLevelSectionData()
         xx.end();
 
         ui->LVLPropsBackImage->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
-        mw()->ui->LVLEvent_SctBg_List->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
+        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
     }
 
     for(i=0; i< mw()->configs.main_music_lvl.size();i++)
     {
         ui->LVLPropsMusicNumber->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
-        mw()->ui->LVLEvent_SctMus_List->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
+        mw()->dock_LvlEvents->cbox_sct_mus()->addItem(mw()->configs.main_music_lvl[i].name, QString::number(mw()->configs.main_music_lvl[i].id) );
     }
 
     //Set current data
@@ -208,6 +212,7 @@ void LvlSectionProps::setLevelSectionData()
         mw()->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
         ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
         mw()->ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
+
         ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
     }

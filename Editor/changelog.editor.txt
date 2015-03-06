@@ -13,6 +13,8 @@ Editor 0.2.3
 - Added "force-portable" settings to keep using of application directory instad of ~/.PGE_Project folder if you was installed editor by installer
 - Added crash autosave which will give chance to keep most of your progess even crash happened
 - Added history manager limit to prevent memory overflow.
+- Fixed a lots of bugs in the layers and events tool-boxes.
+- Fixed blinking of toolboxes on startup.
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

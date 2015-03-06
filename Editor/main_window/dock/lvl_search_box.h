@@ -8,6 +8,7 @@
 class MainWindow;
 class QMdiSubWindow;
 class LevelEdit;
+class QComboBox;
 
 namespace Ui {
 class LvlSearchBox;
@@ -18,9 +19,16 @@ class LvlSearchBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-public:
     explicit LvlSearchBox(QWidget *parent = 0);
     ~LvlSearchBox();
+public:
+    QComboBox *cbox_layer_block();
+    QComboBox *cbox_layer_bgo();
+    QComboBox *cbox_layer_npc();
+
+    QComboBox *cbox_event_block_dest();
+    QComboBox *cbox_event_block_hit();
+    QComboBox *cbox_event_block_le();
 
 public slots:
     void re_translate();

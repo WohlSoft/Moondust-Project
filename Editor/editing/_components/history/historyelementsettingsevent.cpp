@@ -1,5 +1,6 @@
 #include "historyelementsettingsevent.h"
 #include <common_features/mainwinconnect.h>
+#include <main_window/dock/lvl_events_box.h>
 
 
 HistoryElementSettingsEvent::HistoryElementSettingsEvent(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData, QObject* parent) :
@@ -45,7 +46,7 @@ void HistoryElementSettingsEvent::undo()
     if(!found)
         return;
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
         eventp[index].autostart = !extraData.toBool();
     }
@@ -203,8 +204,8 @@ void HistoryElementSettingsEvent::undo()
     }
 
 
-    MainWinConnect::pMainWin->setEventData(-2);
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventData(-2);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }
 
 void HistoryElementSettingsEvent::redo()
@@ -235,7 +236,7 @@ void HistoryElementSettingsEvent::redo()
     if(!found)
         return;
 
-    MainWinConnect::pMainWin->setEventToolsLocked(true);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
         eventp[index].autostart = extraData.toBool();
     }
@@ -393,6 +394,6 @@ void HistoryElementSettingsEvent::redo()
     }
 
 
-    MainWinConnect::pMainWin->setEventData(-2);
-    MainWinConnect::pMainWin->setEventToolsLocked(false);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventData(-2);
+    MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(false);
 }

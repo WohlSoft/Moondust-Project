@@ -141,8 +141,6 @@ void PGE_LevelCamera::update()
 {
     objects_to_render.clear();
 
-//    if(!sensor) return;
-
     CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
     b2AABB aabb;
     aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
@@ -151,12 +149,10 @@ void PGE_LevelCamera::update()
 
     int contacts = 0;
 
-    //for(b2ContactEdge* ce = sensor->GetContactList(); ce; ce = ce->next)
     for(int i=0; i<cb.foundBodies.size();i++)
     {
-        //        b2Contact* c = ce->contact;
         contacts++;
-         PGE_Phys_Object * visibleBody;
+        PGE_Phys_Object * visibleBody;
 
         visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
 
@@ -175,7 +171,6 @@ void PGE_LevelCamera::update()
     }
 
     //Sort array
-    PGE_Phys_Object * tmp1;
     int total = objects_to_render.size();
     long i;
     double ymin;
@@ -194,13 +189,9 @@ void PGE_LevelCamera::update()
                 ymin = objects_to_render[i]->z_index; ymini = i;
             }
         }
-        tmp1 = objects_to_render[ymini];
-        objects_to_render[ymini] = objects_to_render[sorted];
-        objects_to_render[sorted] = tmp1;
+        objects_to_render.swap(ymini, sorted);
         sorted++;
     }
-
-    //qDebug() << "VisibleItems" << objects_to_render.size()  << contacts;
 }
 
 

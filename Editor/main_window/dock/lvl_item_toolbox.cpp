@@ -50,6 +50,9 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelItemBoxVis);
 }
 
 LevelItemBox::~LevelItemBox()
@@ -64,8 +67,8 @@ QTabWidget *LevelItemBox::tabWidget()
 
 void LevelItemBox::re_translate()
 {
-    WriteToLog(QtDebugMsg, QString("LevelToolBox-> do retranslate!"));
     ui->retranslateUi(this);
+    setLvlItemBoxes();
 }
 
 void MainWindow::on_actionLVLToolBox_triggered(bool checked)

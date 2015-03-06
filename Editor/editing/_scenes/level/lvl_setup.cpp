@@ -21,6 +21,7 @@
 #include <main_window/global_settings.h>
 #include <editing/edit_level/level_edit.h>
 #include <main_window/dock/lvl_layers_box.h>
+#include <main_window/dock/lvl_events_box.h>
 
 #include "lvl_scene.h"
 #include "items/item_block.h"
@@ -303,8 +304,8 @@ void LvlScene::setLayerToSelected()
         MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
         MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
-        MainWinConnect::pMainWin->setLayerLists();
-        MainWinConnect::pMainWin->setEventData();
+        MainWinConnect::pMainWin->LayerListsSync();
+        MainWinConnect::pMainWin->dock_LvlEvents->setEventData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;

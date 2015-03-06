@@ -172,7 +172,14 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
                 "Unknown");
-    #endif
+#endif
+}
+
+void PGE_MusPlayer::MUS_freeStream()
+{
+    Mix_HaltMusic();
+    Mix_FreeMusic(play_mus);
+    play_mus=NULL;
 }
 
 // //////////////////////// Sound Player //////////////////////////////////////

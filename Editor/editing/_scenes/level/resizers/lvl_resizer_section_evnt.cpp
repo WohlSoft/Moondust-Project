@@ -23,6 +23,7 @@
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
 #include <file_formats/file_formats.h>
+#include <main_window/dock/lvl_events_box.h>
 
 #include "../lvl_scene.h"
 #include "../items/item_block.h"
@@ -94,7 +95,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();
                 LvlData->modified = true;
-                MainWinConnect::pMainWin->eventSectionSettingsSync();
+                MainWinConnect::pMainWin->dock_LvlEvents->eventSectionSettingsSync();
             }
             delete pResizer;
             pResizer = NULL;
