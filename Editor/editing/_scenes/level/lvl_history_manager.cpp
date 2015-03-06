@@ -18,7 +18,7 @@
 
 #include <common_features/logger.h>
 #include <common_features/mainwinconnect.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_sctc_props.h>

@@ -118,7 +118,5 @@ BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
 #=======================================================================
 echo Libraries installed into $InstallTo
-printf "\n\n=========BUILT!!===========\n\n"
-read -n 1
-exit 0
+
 

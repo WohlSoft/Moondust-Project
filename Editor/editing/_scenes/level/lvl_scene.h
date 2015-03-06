@@ -42,8 +42,8 @@
 #include <main_window/global_settings.h>
 #include <data_configs/data_configs.h>
 #include <data_configs/custom_data.h>
-#include <file_formats/lvl_filedata.h>
-#include <file_formats/npc_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
+#include <PGE_File_Formats/npc_filedata.h>
 
 #include <editing/_components/history/ihistoryelement.h>
 

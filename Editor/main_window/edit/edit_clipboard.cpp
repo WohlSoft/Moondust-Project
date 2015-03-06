@@ -18,7 +18,7 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 //Copy
 void MainWindow::on_actionCopy_triggered()

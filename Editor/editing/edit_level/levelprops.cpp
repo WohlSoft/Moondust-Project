@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 #include "levelprops.h"
 #include <ui_levelprops.h>

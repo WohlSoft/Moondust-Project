@@ -26,7 +26,7 @@
 #include <common_features/logger.h>
 #include <common_features/themes.h>
 #include <common_features/mainwinconnect.h>
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 
 #include "world_edit.h"
 #include <ui_world_edit.h>

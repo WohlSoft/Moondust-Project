@@ -21,7 +21,7 @@
 #include <common_features/graphics_funcs.h>
 #include <data_configs/custom_data.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

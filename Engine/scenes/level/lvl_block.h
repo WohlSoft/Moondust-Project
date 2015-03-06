@@ -22,7 +22,7 @@
 #include "../../physics/base_object.h"
 #include "../../data_configs/obj_block.h"
 
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <SDL2/SDL_timer.h>
 

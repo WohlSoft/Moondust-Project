@@ -31,7 +31,7 @@
 #include <QMenu>
 #include <math.h>
 
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 
 #include "../wld_scene.h"
 #include "wld_base_item.h"

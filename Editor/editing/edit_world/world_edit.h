@@ -25,7 +25,7 @@
 
 #include <data_configs/data_configs.h>
 #include <main_window/global_settings.h>
-#include <file_formats/wld_filedata.h>
+#include <PGE_File_Formats/wld_filedata.h>
 #include <editing/_scenes/world/wld_scene.h>
 
 #define WORLD_EDIT_CLASS "WorldEdit"

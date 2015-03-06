@@ -15,6 +15,8 @@ Editor 0.2.3
 - Added history manager limit to prevent memory overflow.
 - Fixed a lots of bugs in the layers and events tool-boxes.
 - Fixed blinking of toolboxes on startup.
+- Added SoX autio converter GUI to provide quick and easy audio files fixing toolset.
+- Added message box event creator for blocks context menu.
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

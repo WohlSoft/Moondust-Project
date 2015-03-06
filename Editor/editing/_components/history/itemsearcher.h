@@ -2,7 +2,7 @@
 #define ITEMSEARCHER_H
 
 #include <QObject>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <QGraphicsItem>
 #include <defines.h>
 

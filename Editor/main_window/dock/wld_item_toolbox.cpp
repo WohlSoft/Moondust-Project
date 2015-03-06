@@ -21,7 +21,7 @@
 #include <common_features/graphics_funcs.h>
 #include <editing/_scenes/world/wld_item_placing.h>
 #include <data_configs/custom_data.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 
 #include <ui_mainwindow.h>

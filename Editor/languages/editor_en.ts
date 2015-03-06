@@ -324,84 +324,90 @@
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="21"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="135"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="154"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="112"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="188"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="198"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="205"/>
         <source>SoX error</source>
         <translation>SoX error</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="87"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation>SoX binary path is not defined.
 Please set SoX path first</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="93"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="112"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation>SoX binary path is wrong.
 Please set SoX path first</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="376"/>
         <source>Nothing to do</source>
         <translation>Nothing to do</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="117"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
         <source>No files to convert</source>
         <translation>No files to convert</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="140"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="188"/>
+        <source>Operation cancaled</source>
+        <translation>Operation cancaled</translation>
+    </message>
+    <message>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="198"/>
         <source>SoX was crashed</source>
         <translation>SoX was crashed</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="159"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="205"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX returned non-zero code: %1
 %2</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
         <source>All works completed</source>
         <translation>All works completed</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
         <source>All files successfully converted!
 %1</source>
         <translation>All files successfully converted!
 %1</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="299"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="376"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>Tasks are not defined. Nothing to do.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="337"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="412"/>
         <source>Open SoX binary path</source>
         <translation>Open SoX binary path</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="349"/>
+        <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="424"/>
         <source>Add file to convert</source>
         <translation>Add file to convert</translation>
     </message>
@@ -1454,62 +1460,109 @@ Please save them first before doing anything else.</translation>
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="157"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="158"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="162"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="170"/>
         <source> [hidden]</source>
         <translation> [hidden]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="176"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="180"/>
         <source>Invisible</source>
         <translation>Invisible</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="180"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="184"/>
         <source>Slippery</source>
         <translation>Slippery</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
         <source>Resize</source>
         <translation>Resize</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="190"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="194"/>
         <source>Transform into</source>
         <translation>Transform into</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="188"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="258"/>
+        <source>Event name</source>
+        <translation>Event name</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="259"/>
+        <source>Please enter the name of event:</source>
+        <translation>Please enter the name of event:</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <source>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</source>
+        <translation>Please, enter message which will be shown
+Message limits: max line lenth is 27 characters</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <source>Hit message text</source>
+        <translation>Hit message text</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="289"/>
+        <source>Event has been created</source>
+        <translation>Event has been created</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="290"/>
+        <source>Message event has been created!</source>
+        <translation>Message event has been created!</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="295"/>
+        <source>&apos;Hit&apos; event slot is busy</source>
+        <translation>&apos;Hit&apos; event slot is busy</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <translation>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="192"/>
         <source>Change included NPC...</source>
         <translation>Change contained NPC...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <source>Make message box...</source>
+        <translation>Make message box...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="198"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="200"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -1680,57 +1733,57 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="181"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="187"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Edit NPC-Configuration</source>
         <translation>Edit NPC-Configuration</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="209"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>New NPC-Configuration</source>
         <translation>New NPC-Configuration</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="215"/>
         <source>Set %1</source>
         <translation>Set %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="216"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="218"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="220"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="221"/>
         <source>Random</source>
         <translation>Random</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="224"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="225"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="228"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="229"/>
         <source>Friendly</source>
         <translation>Friendly</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="232"/>
         <source>Doesn&apos;t move</source>
         <translation>Doesn&apos;t move</translation>
     </message>
@@ -1739,22 +1792,22 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Not movable</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="234"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="235"/>
         <source>Set message...</source>
         <translation>Set message...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="236"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="237"/>
         <source>Set as Boss</source>
         <translation>Set as Boss</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="240"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
         <source>Transform into</source>
         <translation>Transform into</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="247"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="248"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -1763,17 +1816,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Legacy boss</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="242"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="243"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="243"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="244"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="245"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="246"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -4256,12 +4309,12 @@ Physical env. zones:	 %6</translation>
         <translation>[Silence]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="489"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="490"/>
         <source>Please, save file</source>
         <translation>Please, save file</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="489"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="490"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Please save the file first if you want to select a custom music file.</translation>
     </message>

@@ -52,3 +52,9 @@ editor_*.qm
 
 #Temp files of LibreOffice
 .~lock.*
+
+#Paths config files in the root
+/_paths.bat
+/_paths.sh
+
+

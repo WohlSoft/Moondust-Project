@@ -24,7 +24,7 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #define ENGINE_SERVER_NAME "PGEEngine42e3j"
 

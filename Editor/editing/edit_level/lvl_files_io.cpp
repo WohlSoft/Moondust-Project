@@ -24,7 +24,7 @@
 #include <common_features/util.h>
 #include <script/scriptholder.h>
 #include <main_window/global_settings.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
