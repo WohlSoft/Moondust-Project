@@ -1190,7 +1190,7 @@ static void music_internal_volume(int volume)
         MOD_setvolume(music_playing->data.module, volume);
         break;
 #endif
-#ifdef MOD_MUSIC
+#ifdef SPC_MUSIC
         case MUS_SPC:
         SPC_setvolume(music_playing->data.snes_spcmus, volume);
         break;
@@ -1286,7 +1286,7 @@ static void music_internal_halt(void)
         MOD_stop(music_playing->data.module);
         break;
 #endif
-#ifdef MOD_MUSIC
+#ifdef SPC_MUSIC
         case MUS_SPC:
         SPC_stop(music_playing->data.snes_spcmus);
         break;
