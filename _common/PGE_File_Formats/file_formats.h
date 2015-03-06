@@ -29,7 +29,7 @@
 #include "save_filedata.h"
 
 #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
-#include "../data_configs/obj_npc.h"
+#include <data_configs/obj_npc.h>
 #endif
 
 class FileFormats: public QObject

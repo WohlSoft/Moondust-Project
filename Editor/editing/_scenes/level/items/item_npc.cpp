@@ -19,7 +19,7 @@
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 #include <editing/_dialogs/itemselectdialog.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 
 #include "item_block.h"

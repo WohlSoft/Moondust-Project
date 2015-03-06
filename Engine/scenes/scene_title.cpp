@@ -21,7 +21,7 @@
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <gui/pge_msgbox.h>
 
 #include "scene_title.h"

@@ -20,7 +20,7 @@
 #include <QtDebug>
 
 #include <common_features/util.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "lvl_clone_section.h"
 #include "ui_lvl_clone_section.h"

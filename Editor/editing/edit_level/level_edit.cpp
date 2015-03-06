@@ -29,7 +29,7 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <main_window/file/lvl_export_image.h>
 #include <tools/smart_import/smartimporter.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "level_edit.h"
 #include <ui_leveledit.h>

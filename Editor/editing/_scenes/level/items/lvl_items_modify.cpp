@@ -21,7 +21,7 @@
 #include <common_features/item_rectangles.h>
 #include <editing/edit_level/level_edit.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <main_window/dock/lvl_warp_props.h>
 
 #include "../lvl_scene.h"

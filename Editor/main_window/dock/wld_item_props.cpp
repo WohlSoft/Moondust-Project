@@ -20,7 +20,7 @@
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/world/items/item_level.h>
 #include <editing/_dialogs/levelfilelist.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <defines.h>
 

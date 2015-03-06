@@ -19,7 +19,7 @@
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
 #include <editing/edit_level/level_edit.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "lvl_scene.h"
 

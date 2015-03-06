@@ -31,7 +31,7 @@
 #include <common_features/logger_sets.h>
 #include <common_features/logger.h>
 #include <common_features/themes.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <main_window/global_settings.h>
 
 #include "app_settings.h"

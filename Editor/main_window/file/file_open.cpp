@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_warp_props.h>

@@ -19,7 +19,7 @@
 #include <QtWidgets>
 
 #include <common_features/mainwinconnect.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>

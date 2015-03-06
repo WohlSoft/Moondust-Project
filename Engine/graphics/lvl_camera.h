@@ -24,7 +24,7 @@
 #include "graphics.h"
 
 #include <vector>
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 typedef QList<PGE_Phys_Object *> PGE_RenderList;
 

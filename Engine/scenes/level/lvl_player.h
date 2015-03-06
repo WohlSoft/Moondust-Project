@@ -24,7 +24,7 @@
 
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
-#include <file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <QMap>
 
 struct Plr_EnvironmentPhysics

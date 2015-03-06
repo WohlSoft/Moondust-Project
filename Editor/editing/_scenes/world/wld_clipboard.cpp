@@ -17,7 +17,7 @@
  */
 
 #include <editing/edit_level/level_edit.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "wld_scene.h"
 #include "items/item_tile.h"

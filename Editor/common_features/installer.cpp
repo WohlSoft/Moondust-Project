@@ -22,7 +22,7 @@
 #include <QSettings>
 #include <QApplication>
 
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include "app_path.h"
 #include "installer.h"

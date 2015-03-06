@@ -10,12 +10,6 @@ QT += core gui opengl network
 QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-linux-g++:{
-DEFINES += LUA_USE_MKSTEMP
-}
-
-DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
-
 DESTDIR = ../bin
 
 static: {
@@ -43,27 +37,31 @@ debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
 TARGET = pge_engine
 TEMPLATE = app
 CONFIG += c++11
+CONFIG += thread
 
 CONFIG += static
-CONFIG += thread
+
+DEPENDPATH += "../_Libs/oolua/project"
 
 DEFINES += PGE_ENGINE
 
-INCLUDEPATH += "../_Libs/" "../Editor/file_formats"
+INCLUDEPATH += "../_Libs/" "../_common"
+
+LIBS += -L../_Libs/_builds/oolua
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
 }
 
-LIBS += -lSDL2
+LIBS += -loolua -lSDL2
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
-unix:  LIBS += -lglut -lGLU
+unix:  LIBS += -glut -lGLU
 
 RC_FILE = _resources/engine.rc
 
-SOURCES += main.cpp \
+SOURCES += \
     ../_Libs/Box2D/Collision/Shapes/b2ChainShape.cpp \
     ../_Libs/Box2D/Collision/Shapes/b2CircleShape.cpp \
     ../_Libs/Box2D/Collision/Shapes/b2EdgeShape.cpp \
@@ -110,6 +108,7 @@ SOURCES += main.cpp \
     ../_Libs/Box2D/Dynamics/b2World.cpp \
     ../_Libs/Box2D/Dynamics/b2WorldCallbacks.cpp \
     ../_Libs/Box2D/Rope/b2Rope.cpp \
+    main.cpp \
     physics/base_object.cpp \
     physics/phys_util.cpp \
     graphics/lvl_camera.cpp \
@@ -162,82 +161,27 @@ SOURCES += main.cpp \
     gui/pge_menu.cpp \
     scenes/scene_loading.cpp \
     scenes/scene_title.cpp \
-    ../Editor/file_formats/file_formats.cpp \
-    ../Editor/file_formats/file_rw_lvl.cpp \
-    ../Editor/file_formats/file_rw_lvlx.cpp \
-    ../Editor/file_formats/file_rw_meta.cpp \
-    ../Editor/file_formats/file_rw_npc_txt.cpp \
-    ../Editor/file_formats/file_rw_sav.cpp \
-    ../Editor/file_formats/file_rw_wld.cpp \
-    ../Editor/file_formats/file_rw_wldx.cpp \
-    ../Editor/file_formats/file_rwopen.cpp \
-    ../Editor/file_formats/file_strlist.cpp \
-    ../Editor/file_formats/lvl_filedata.cpp \
-    ../Editor/file_formats/npc_filedata.cpp \
-    ../Editor/file_formats/pge_x.cpp \
-    ../Editor/file_formats/save_filedata.cpp \
-    ../Editor/file_formats/smbx64.cpp \
-    ../Editor/file_formats/wld_filedata.cpp \
+    ../_common/PGE_File_Formats/file_formats.cpp \
+    ../_common/PGE_File_Formats/file_rw_lvl.cpp \
+    ../_common/PGE_File_Formats/file_rw_lvlx.cpp \
+    ../_common/PGE_File_Formats/file_rw_meta.cpp \
+    ../_common/PGE_File_Formats/file_rw_npc_txt.cpp \
+    ../_common/PGE_File_Formats/file_rw_sav.cpp \
+    ../_common/PGE_File_Formats/file_rw_wld.cpp \
+    ../_common/PGE_File_Formats/file_rw_wldx.cpp \
+    ../_common/PGE_File_Formats/file_rwopen.cpp \
+    ../_common/PGE_File_Formats/file_strlist.cpp \
+    ../_common/PGE_File_Formats/lvl_filedata.cpp \
+    ../_common/PGE_File_Formats/npc_filedata.cpp \
+    ../_common/PGE_File_Formats/pge_x.cpp \
+    ../_common/PGE_File_Formats/save_filedata.cpp \
+    ../_common/PGE_File_Formats/smbx64.cpp \
+    ../_common/PGE_File_Formats/wld_filedata.cpp \
     scenes/level/lvl_physenv.cpp \
     scenes/level/lvl_player_def.cpp \
-    data_configs/obj_player.cpp \
-    ../_Libs/oolua/lua/lapi.c \
-    ../_Libs/oolua/lua/lauxlib.c \
-    ../_Libs/oolua/lua/lbaselib.c \
-    ../_Libs/oolua/lua/lbitlib.c \
-    ../_Libs/oolua/lua/lcode.c \
-    ../_Libs/oolua/lua/lcorolib.c \
-    ../_Libs/oolua/lua/lctype.c \
-    ../_Libs/oolua/lua/ldblib.c \
-    ../_Libs/oolua/lua/ldebug.c \
-    ../_Libs/oolua/lua/ldo.c \
-    ../_Libs/oolua/lua/ldump.c \
-    ../_Libs/oolua/lua/lfunc.c \
-    ../_Libs/oolua/lua/lgc.c \
-    ../_Libs/oolua/lua/linit.c \
-    ../_Libs/oolua/lua/liolib.c \
-    ../_Libs/oolua/lua/llex.c \
-    ../_Libs/oolua/lua/lmathlib.c \
-    ../_Libs/oolua/lua/lmem.c \
-    ../_Libs/oolua/lua/loadlib.c \
-    ../_Libs/oolua/lua/lobject.c \
-    ../_Libs/oolua/lua/lopcodes.c \
-    ../_Libs/oolua/lua/loslib.c \
-    ../_Libs/oolua/lua/lparser.c \
-    ../_Libs/oolua/lua/lstate.c \
-    ../_Libs/oolua/lua/lstring.c \
-    ../_Libs/oolua/lua/lstrlib.c \
-    ../_Libs/oolua/lua/ltable.c \
-    ../_Libs/oolua/lua/ltablib.c \
-    ../_Libs/oolua/lua/ltm.c \
-    ../_Libs/oolua/lua/lua.c \
-    ../_Libs/oolua/lua/luac.c \
-    ../_Libs/oolua/lua/lundump.c \
-    ../_Libs/oolua/lua/lvm.c \
-    ../_Libs/oolua/lua/lzio.c \
-    ../_Libs/oolua/class_from_stack.cpp \
-    ../_Libs/oolua/oolua.cpp \
-    ../_Libs/oolua/oolua_check_result.cpp \
-    ../_Libs/oolua/oolua_chunk.cpp \
-    ../_Libs/oolua/oolua_error.cpp \
-    ../_Libs/oolua/oolua_exception.cpp \
-    ../_Libs/oolua/oolua_function.cpp \
-    ../_Libs/oolua/oolua_helpers.cpp \
-    ../_Libs/oolua/oolua_open.cpp \
-    ../_Libs/oolua/oolua_pull.cpp \
-    ../_Libs/oolua/oolua_push.cpp \
-    ../_Libs/oolua/oolua_ref.cpp \
-    ../_Libs/oolua/oolua_registration.cpp \
-    ../_Libs/oolua/oolua_script.cpp \
-    ../_Libs/oolua/oolua_stack_dump.cpp \
-    ../_Libs/oolua/oolua_string.cpp \
-    ../_Libs/oolua/oolua_table.cpp \
-    ../_Libs/oolua/proxy_storage.cpp \
-    ../_Libs/oolua/push_pointer_internal.cpp \
-    ../_Libs/oolua/stack_get.cpp
+    data_configs/obj_player.cpp
 
 HEADERS  += \
-    ../_Libs/Box2D/Box2D.h \
     ../_Libs/Box2D/Collision/Shapes/b2ChainShape.h \
     ../_Libs/Box2D/Collision/Shapes/b2CircleShape.h \
     ../_Libs/Box2D/Collision/Shapes/b2EdgeShape.h \
@@ -284,6 +228,7 @@ HEADERS  += \
     ../_Libs/Box2D/Dynamics/b2World.h \
     ../_Libs/Box2D/Dynamics/b2WorldCallbacks.h \
     ../_Libs/Box2D/Rope/b2Rope.h \
+    ../_Libs/Box2D/Box2D.h \
     physics/base_object.h \
     physics/phys_util.h \
     graphics/lvl_camera.h \
@@ -335,100 +280,20 @@ HEADERS  += \
     gui/pge_menu.h \
     scenes/scene_loading.h \
     scenes/scene_title.h \
-    ../Editor/file_formats/file_formats.h \
-    ../Editor/file_formats/file_strlist.h \
-    ../Editor/file_formats/lvl_filedata.h \
-    ../Editor/file_formats/meta_filedata.h \
-    ../Editor/file_formats/npc_filedata.h \
-    ../Editor/file_formats/pge_x.h \
-    ../Editor/file_formats/save_filedata.h \
-    ../Editor/file_formats/smbx64.h \
-    ../Editor/file_formats/wld_filedata.h \
+    ../_common/PGE_File_Formats/file_formats.h \
+    ../_common/PGE_File_Formats/file_strlist.h \
+    ../_common/PGE_File_Formats/lvl_filedata.h \
+    ../_common/PGE_File_Formats/meta_filedata.h \
+    ../_common/PGE_File_Formats/npc_filedata.h \
+    ../_common/PGE_File_Formats/pge_x.h \
+    ../_common/PGE_File_Formats/save_filedata.h \
+    ../_common/PGE_File_Formats/smbx64.h \
+    ../_common/PGE_File_Formats/wld_filedata.h \
     scenes/level/lvl_physenv.h \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
-    ../_Libs/oolua/lua/lapi.h \
-    ../_Libs/oolua/lua/lauxlib.h \
-    ../_Libs/oolua/lua/lcode.h \
-    ../_Libs/oolua/lua/lctype.h \
-    ../_Libs/oolua/lua/ldebug.h \
-    ../_Libs/oolua/lua/ldo.h \
-    ../_Libs/oolua/lua/lfunc.h \
-    ../_Libs/oolua/lua/lgc.h \
-    ../_Libs/oolua/lua/llex.h \
-    ../_Libs/oolua/lua/llimits.h \
-    ../_Libs/oolua/lua/lmem.h \
-    ../_Libs/oolua/lua/lobject.h \
-    ../_Libs/oolua/lua/lopcodes.h \
-    ../_Libs/oolua/lua/lparser.h \
-    ../_Libs/oolua/lua/lstate.h \
-    ../_Libs/oolua/lua/lstring.h \
-    ../_Libs/oolua/lua/ltable.h \
-    ../_Libs/oolua/lua/ltm.h \
-    ../_Libs/oolua/lua/lua.h \
-    ../_Libs/oolua/lua/lua.hpp \
-    ../_Libs/oolua/lua/luaconf.h \
-    ../_Libs/oolua/lua/lualib.h \
-    ../_Libs/oolua/lua/lundump.h \
-    ../_Libs/oolua/lua/lvm.h \
-    ../_Libs/oolua/lua/lzio.h \
-    ../_Libs/oolua/char_arrays.h \
-    ../_Libs/oolua/class_from_stack.h \
-    ../_Libs/oolua/default_trait_caller.h \
-    ../_Libs/oolua/dsl_va_args.h \
-    ../_Libs/oolua/lua_includes.h \
-    ../_Libs/oolua/lvd_types.h \
-    ../_Libs/oolua/lvd_type_traits.h \
-    ../_Libs/oolua/oolua.h \
-    ../_Libs/oolua/oolua_boilerplate.h \
-    ../_Libs/oolua/oolua_check_result.h \
-    ../_Libs/oolua/oolua_chunk.h \
-    ../_Libs/oolua/oolua_config.h \
-    ../_Libs/oolua/oolua_dsl.h \
-    ../_Libs/oolua/oolua_dsl_export.h \
-    ../_Libs/oolua/oolua_error.h \
-    ../_Libs/oolua/oolua_exception.h \
-    ../_Libs/oolua/oolua_function.h \
-    ../_Libs/oolua/oolua_helpers.h \
-    ../_Libs/oolua/oolua_open.h \
-    ../_Libs/oolua/oolua_pull.h \
-    ../_Libs/oolua/oolua_push.h \
-    ../_Libs/oolua/oolua_ref.h \
-    ../_Libs/oolua/oolua_registration.h \
-    ../_Libs/oolua/oolua_registration_fwd.h \
-    ../_Libs/oolua/oolua_script.h \
-    ../_Libs/oolua/oolua_stack.h \
-    ../_Libs/oolua/oolua_stack_dump.h \
-    ../_Libs/oolua/oolua_stack_fwd.h \
-    ../_Libs/oolua/oolua_string.h \
-    ../_Libs/oolua/oolua_table.h \
-    ../_Libs/oolua/oolua_traits.h \
-    ../_Libs/oolua/oolua_traits_fwd.h \
-    ../_Libs/oolua/oolua_version.h \
-    ../_Libs/oolua/platform_check.h \
-    ../_Libs/oolua/proxy_base_checker.h \
-    ../_Libs/oolua/proxy_caller.h \
-    ../_Libs/oolua/proxy_class.h \
-    ../_Libs/oolua/proxy_constructor.h \
-    ../_Libs/oolua/proxy_constructor_param_tester.h \
-    ../_Libs/oolua/proxy_function_dispatch.h \
-    ../_Libs/oolua/proxy_function_exports.h \
-    ../_Libs/oolua/proxy_member_function.h \
-    ../_Libs/oolua/proxy_none_member_function.h \
-    ../_Libs/oolua/proxy_operators.h \
-    ../_Libs/oolua/proxy_public_member.h \
-    ../_Libs/oolua/proxy_stack_helper.h \
-    ../_Libs/oolua/proxy_storage.h \
-    ../_Libs/oolua/proxy_tag_info.h \
-    ../_Libs/oolua/proxy_tags.h \
-    ../_Libs/oolua/proxy_test.h \
-    ../_Libs/oolua/proxy_userdata.h \
-    ../_Libs/oolua/push_pointer_internal.h \
-    ../_Libs/oolua/stack_get.h \
-    ../_Libs/oolua/type_converters.h \
-    ../_Libs/oolua/type_list.h \
-    ../_Libs/oolua/typelist_structs.h
+    data_configs/obj_npc.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -18,7 +18,7 @@
 
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_scenes/world/wld_item_placing.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <defines.h>
 #include <main_window/global_settings.h>

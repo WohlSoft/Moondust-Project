@@ -27,7 +27,7 @@
 #include <main_window/dock/toolboxes.h>
 #include <audio/music_player.h>
 #include <audio/sdl_music_player.h>
-#include <file_formats/file_formats.h>
+#include <PGE_File_Formats/file_formats.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

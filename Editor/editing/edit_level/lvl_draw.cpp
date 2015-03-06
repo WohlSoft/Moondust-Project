@@ -25,7 +25,7 @@
 
 #include <common_features/logger.h>
 #include <editing/_scenes/level/lvl_scene.h>
-#include <file_formats/lvl_filedata.h>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 #include "level_edit.h"
 #include <ui_leveledit.h>
