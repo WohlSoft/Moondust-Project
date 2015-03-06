@@ -1,8 +1,9 @@
 #/bin/bash
-bak= ~+
+bak=~+
 cd $PWD
 
-source "$PWD/_paths.sh"
+PrjPath=$PWD
+source "$PrjPath/_paths.sh"
 
 #=======================================================================
 errorofbuid()
@@ -21,16 +22,17 @@ checkState()
 	  errorofbuid
 	fi
 }
-
+	
 #=======================================================================
-# build translations of the editor
-cd Editor
-$LRelease *.pro
-checkState
-cd ..
+# build libraries
+cd "$PrjPath/_Libs/_sources"
+InstallTo=$(echo ~+/../_builds/linux)
+InstallTo=$(readlink -f $InstallTo)
+echo $InstallTo
+source ./___build_script.sh
 
-#=======================================================================
-# build all components
+cd "$PrjPath/_Libs"
+
 $QMake CONFIG+=release CONFIG-=debug
 checkState
 
@@ -43,8 +45,10 @@ checkState
 make install
 checkState
 
+cd ..
 #=======================================================================
 printf "\n\n=========BUILT!!===========\n\n"
 cd $bak
 read -n 1
 exit 0
+
