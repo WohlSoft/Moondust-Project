@@ -1,5 +1,8 @@
 @echo off
 
+IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" first!
+IF NOT EXIST _paths.bat goto error
+
 call _paths.bat
 
 PATH=%QtDir%;%MinGW%;%PATH%
@@ -31,3 +34,4 @@ echo =========ERROR!!===========
 echo.
 :quit
 pause
+

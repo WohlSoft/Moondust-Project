@@ -1,8 +1,6 @@
 #/bin/bash
-bak= ~+
+bak=~+
 cd $PWD
-
-source "$PWD/_paths.sh"
 
 #=======================================================================
 errorofbuid()
@@ -21,6 +19,15 @@ checkState()
 	  errorofbuid
 	fi
 }
+
+if [ -f "$PWD/_paths.sh" ]
+then
+	source "$PWD/_paths.sh"
+else
+	echo ""
+	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
+	errorofbuid
+fi
 
 #=======================================================================
 # build translations of the editor
@@ -48,3 +55,4 @@ printf "\n\n=========BUILT!!===========\n\n"
 cd $bak
 read -n 1
 exit 0
+

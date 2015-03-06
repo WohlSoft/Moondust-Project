@@ -2,9 +2,6 @@
 bak=~+
 cd $PWD
 
-PrjPath=$PWD
-source "$PrjPath/_paths.sh"
-
 #=======================================================================
 errorofbuid()
 {
@@ -22,6 +19,16 @@ checkState()
 	  errorofbuid
 	fi
 }
+
+PrjPath=$PWD
+if [ -f "$PWD/_paths.sh" ]
+then
+	source "$PWD/_paths.sh"
+else
+	echo ""
+	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
+	errorofbuid
+fi
 	
 #=======================================================================
 # build libraries
