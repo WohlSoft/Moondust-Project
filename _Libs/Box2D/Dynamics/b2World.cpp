@@ -132,7 +132,7 @@ void b2World::DestroyBody(b2Body* b)
 {
 	b2Assert(m_bodyCount > 0);
 	b2Assert(IsLocked() == false);
-    if(IsLocked())
+	if (IsLocked())
 	{
 		return;
 	}
