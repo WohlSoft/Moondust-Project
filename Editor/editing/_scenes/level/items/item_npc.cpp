@@ -20,6 +20,7 @@
 #include <common_features/logger.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <file_formats/file_formats.h>
+#include <common_features/util.h>
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -345,10 +346,9 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     LevelData selData;
 
-                    ItemMsgBox * msgBox = new ItemMsgBox(npcData.msg);
-                    msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                    msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
-                    if(msgBox->exec()==QDialog::Accepted)
+                    ItemMsgBox msgBox(npcData.msg);
+                    util::DialogToCenter(&msgBox, true);
+                    if(msgBox.exec()==QDialog::Accepted)
                     {
 
                         //apply to all selected items.
@@ -357,12 +357,12 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                             {
                                 selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
-                                ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
+                                ((ItemNPC *) SelItem)->setMsg( msgBox.currentText );
                             }
                         }
-                        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox->currentText));
+                        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox.currentText));
                     }
-                    delete msgBox;
+                    //delete msgBox;
                 }
                 else
             if(selected==boss)
