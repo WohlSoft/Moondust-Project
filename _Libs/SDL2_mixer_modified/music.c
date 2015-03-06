@@ -289,14 +289,14 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                 left = modplug_playAudio(music_playing->data.modplug, stream, len);
                 break;
 #endif
-#ifdef MOD_MUSIC
-            case MUS_MOD:
-                left = MOD_playAudio(music_playing->data.module, stream, len);
-                break;
-#endif
 #ifdef SPC_MUSIC
             case MUS_SPC:
                 left = SPC_playAudio(music_playing->data.snes_spcmus, stream, len);
+                break;
+#endif
+#ifdef MOD_MUSIC
+            case MUS_MOD:
+                left = MOD_playAudio(music_playing->data.module, stream, len);
                 break;
 #endif
 #ifdef MID_MUSIC
@@ -1469,7 +1469,7 @@ static int music_internal_playing()
         }
         break;
 #endif
-#ifdef MOD_MUSIC
+#ifdef SPC_MUSIC
         case MUS_SPC:
         if ( ! SPC_playing(music_playing->data.snes_spcmus) ) {
             playing = 0;
