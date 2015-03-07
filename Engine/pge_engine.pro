@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-#QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0 # -Wno-maybe-uninitialized -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 DESTDIR = ../bin
