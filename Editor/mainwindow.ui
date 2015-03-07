@@ -3,7 +3,7 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
-   <enum>Qt::NonModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -31,8 +31,11 @@
     <bold>false</bold>
    </font>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="focusPolicy">
-   <enum>Qt::NoFocus</enum>
+   <enum>Qt::WheelFocus</enum>
   </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
@@ -46,9 +49,6 @@
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
     <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
-  </property>
-  <property name="locale">
-   <locale language="English" country="UnitedStates"/>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Triangular</enum>
@@ -405,11 +405,11 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>0</height>
-    </size>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::WheelFocus</enum>
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
@@ -426,6 +426,9 @@
      <height>24</height>
     </size>
    </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -437,7 +440,11 @@
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizeGripEnabled">
+    <bool>true</bool>
+   </property>
+  </widget>
   <widget class="QToolBar" name="CommonEditBar">
    <property name="contextMenuPolicy">
     <enum>Qt::CustomContextMenu</enum>
@@ -1504,10 +1511,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
+     <normaloff>:/images/goto_left_bottom.png</normaloff>:/images/goto_left_bottom.png</iconset>
    </property>
    <property name="text">
-    <string>Reset position</string>
+    <string>Go to left-bottom of the section</string>
+   </property>
+   <property name="toolTip">
+    <string>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</string>
    </property>
   </action>
   <action name="actionGridEn">
@@ -2009,8 +2019,15 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/goto_left_top.png</normaloff>:/images/goto_left_top.png</iconset>
+   </property>
    <property name="text">
-    <string>Go to Section</string>
+    <string>Go to the left-top of the section</string>
+   </property>
+   <property name="toolTip">
+    <string>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</string>
    </property>
   </action>
   <action name="actionLevelEvents">
