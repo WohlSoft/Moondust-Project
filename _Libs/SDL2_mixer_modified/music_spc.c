@@ -29,6 +29,10 @@ static SPC_Filter* spc_filter=NULL;
 
 int spc_is_playing=-1;
 int spc_t_sample_rate=44100;
+
+short last_left=0;
+short last_right=0;
+
 //struct resample_state spc_resampler_state_l;
 //struct resample_state spc_resampler_state_r;
 
@@ -230,6 +234,21 @@ int SPC_playing(struct MUSIC_SPC *music)
         return spc_is_playing;
 }
 
+short CosineInterpolate(
+   short y1,short y2,
+   float mu)
+{
+   float mu2;
+   mu2 = (1 - cosf(mu*3.141592) )/2;
+   return( (short)(y1*(1-mu2)+y2*mu2) );
+}
+
+short LinearInterpolate(
+   short y1,short y2,
+   float mu)
+{
+   return( (short)((float)y1*(1.f-mu) + (float)y2*mu));
+}
 
 /* Play some of a stream previously started with SPC_play() */
 int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
@@ -240,14 +259,15 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
 
     short buf[len];
     Uint8 dstt[len];
-    Uint8 left[len];
-    Uint8 right[len];
-    Uint8 left_new[len];
-    Uint8 right_new[len];
+    short left[len];
+    short right[len];
+    short left_new[len];
+    short right_new[len];
 
     float ratio=(float)mixer.freq/(float)spc_sample_rate;
     int old_len2 = len/ratio;
     int old_len = old_len2/2;
+    int old_len_c = old_len2/2;
     int new_len = len/2;
 
     spc_play( snes_spc, old_len, buf);
@@ -255,71 +275,60 @@ int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
 
     //Spliting channels
     int i,j;
-    float q;
-    for(i=0; i<old_len;i++)
+    float p, q, r;
+    for(i=0, j=0; i<old_len_c; i++, j+=2)
     {
-        Sint8 t;
-            t=(buf[i])&0xff;
-        left[i]=t;
-            t=(((buf[i]) >> 8) & 0xff);
-        right[i]=t;
+        left[i] =buf[j];
+        right[i]=buf[j+1];
     }
 
     //Resample left
-    for(q=0.f; q<new_len; q+=1.f )
+    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
     {
-        int oldSam = (int)round( q/ratio );
+        int oldSam = (int)p;
         left_new[(int)q] = left[oldSam];
+        //left_new[(int)q] = CosineInterpolate(last_left, left[oldSam], r);
+        r+= 1/ratio;
+        if(r>=1)
+        {
+            last_left = left[oldSam];
+            p = roundf(q/ratio);
+            r=0.f;
+        }
     }
+    last_left = left[(int)p];
+
     //Resample right
-    for(q=0.f; q<new_len; q+=1.f )
+    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
     {
-        int oldSam = (int)round( q/ratio );
+        int oldSam = (int)p;
         right_new[(int)q] = right[oldSam];
+        //right_new[(int)q] = CosineInterpolate(last_right, right[oldSam], r);
+        r+= 1/ratio;
+        if(r>=1)
+        {
+            last_right = right[oldSam];
+            p = roundf(q/ratio);
+            r=0.f;
+        }
     }
+    last_right = right[(int)p];
 
     //Merge stereo
-    for(i=0, j=0; i<len; i+=2, j++)
+    for(i=0, j=0; j<new_len; i+=4, j++)
     {
-        dstt[i]=left_new[j];
-        dstt[i+1]=right_new[j];
+        dstt[i] = left_new[j]&0xff;
+        dstt[i+1]= (left_new[j]>>8)&0xff;
+        dstt[i+2] = right_new[j]&0xff;
+        dstt[i+3] = (right_new[j]>>8)&0xff;
     }
 
-    if ( music_swap8 )
+    if ( music->volume == MIX_MAX_VOLUME )
     {
-        Uint8 *dst;
-        int i;
-
-        dst = stream;
-        for ( i=len; i; --i ) {
-            *dst++ ^= 0x80;
-        }
-    }
-
-    if ( music_swap16 )
-    {
-        Uint8 *dst, tmp;
-        int i;
-
-        dst = stream;
-        for ( i=(len/2); i; --i ) {
-            tmp = dst[0];
-            dst[0] = dst[1];
-            dst[1] = tmp;
-            dst += 2;
-        }
-    }
-
-//    FILE * dummy = fopen("D:/PGE_TEST/spc_raw.raw", "ab");
-//    fwrite((char*)(&dstt), 1, len, dummy);
-//    fclose(dummy);
-
-    if ( music->volume == MIX_MAX_VOLUME ) {
         SDL_memcpy(stream, &dstt, len);
     } else {
         SDL_MixAudio(stream, dstt, len, music->volume);
     }
-
     return 0;
 }
 
