@@ -116,6 +116,7 @@ void LvlSectionProps::setLevelSectionData()
             QListView *listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
+                listVw->setDragEnabled(false);
                 listVw->setViewMode(QListView::IconMode);
                 listVw->setUniformItemSizes(true);
             }
@@ -124,6 +125,7 @@ void LvlSectionProps::setLevelSectionData()
             listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
+                listVw->setDragEnabled(false);
                 listVw->setViewMode(QListView::IconMode);
                 listVw->setUniformItemSizes(true);
             }
