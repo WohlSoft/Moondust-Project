@@ -40,6 +40,7 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     ui(new Ui::LvlEventsBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();

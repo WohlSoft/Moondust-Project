@@ -41,6 +41,7 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     ui(new Ui::LvlLayersBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();
