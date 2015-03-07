@@ -58,9 +58,10 @@ void MainWindow::setDefaults()
     LvlBuffer=FileFormats::dummyLvlDataArray();
 
     LastActiveSubWindow = NULL;
-    #ifdef Q_OS_WIN
+
+#ifdef Q_OS_WIN
     pge_thumbbar = NULL;
-    #endif
+#endif
 }
 
 void MainWindow::setUiDefults()
