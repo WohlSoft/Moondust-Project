@@ -60,16 +60,13 @@ DEFINES += USE_NATIVE_MIDI
 
 LIBS += -L../_builds/sdl2_mixer_mod
 
-LIBS += -static -lvorbisfile -static -lvorbis
-LIBS += -lmad
-
 win32:{
-    LIBS +=-lmodplug.dll -static-libgcc -static-libstdc++ -static -lpthread
+    LIBS += -lvorbisfile.dll -lvorbis.dll -lmodplug.dll -lFLAC.dll -logg.dll -static-libgcc -static-libstdc++ -static -lpthread
 } else {
-    LIBS +=-lmodplug
+    LIBS += -lvorbisfile -lvorbis -lmodplug -lFLAC -logg
 }
 
-LIBS += -static -lFLAC -static -logg -lm
+LIBS += -lmad -lm
 
 HEADERS += \
     begin_code.h \
