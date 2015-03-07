@@ -48,7 +48,7 @@ void DevConsole::init()
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
-    settings.beginGroup("DevConsole");
+    settings.beginGroup("dev-console");
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
     settings.endGroup();
 
@@ -212,7 +212,7 @@ void DevConsole::closeEvent(QCloseEvent *event)
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
-    settings.beginGroup("DevConsole");
+    settings.beginGroup("dev-console");
     settings.setValue("geometry", this->saveGeometry());
     settings.endGroup();
     event->accept();
