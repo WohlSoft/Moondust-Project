@@ -79,8 +79,17 @@ You also can double-click to item to scroll to bookmarked position.</string>
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="dragDropOverwriteMode">
+       <bool>false</bool>
+      </property>
       <property name="dragDropMode">
        <enum>QAbstractItemView::InternalMove</enum>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::TargetMoveAction</enum>
       </property>
       <property name="alternatingRowColors">
        <bool>true</bool>
