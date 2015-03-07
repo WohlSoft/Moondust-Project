@@ -57,7 +57,7 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if( (!s->isSelectionDialog) && (mouseEvent->buttons() & Qt::RightButton) )
+    if( (!s->isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton)!=0) )
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
@@ -107,17 +107,17 @@ void WLD_ModeSetPoint::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeSetPoint::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    Q_UNUSED(mouseEvent);
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(!s->isSelectionDialog)
     {
-        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->selectedPoint);
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->selectedPoint);
         s->openProps();
-
-        s->MousePressEventOnly = true;
-        s->mousePressEvent(mouseEvent);
+        //s->MouseReleaseEventOnly = true;
+        //s->mouseReleaseEvent(mouseEvent);
         dontCallEvent=true;
     }
 
