@@ -35,6 +35,7 @@ DebuggerBox::DebuggerBox(QWidget *parent) :
     ui(new Ui::DebuggerBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     isLoaded=false;
 

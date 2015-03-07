@@ -32,6 +32,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     ui(new Ui::LvlSectionProps)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     switchResizeMode(false);

@@ -36,6 +36,7 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     ui(new Ui::LvlWarpBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     lockWarpSetSettings = false;
 
