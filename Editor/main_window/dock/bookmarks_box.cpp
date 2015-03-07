@@ -31,6 +31,7 @@ BookmarksBox::BookmarksBox(QWidget *parent) :
     ui(new Ui::BookmarksBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();

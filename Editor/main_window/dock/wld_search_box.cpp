@@ -37,6 +37,7 @@ WldSearchBox::WldSearchBox(QWidget *parent) :
     ui(new Ui::WldSearchBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     lockResetWorld=false;
 

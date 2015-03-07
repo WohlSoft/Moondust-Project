@@ -148,12 +148,14 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         case QEvent::GraphicsSceneMouseRelease:
             {
                 corner->setMouseState(CornerGrabber::kMouseReleased);
+                corner->ungrabMouse();
             }
             break;
 
         case QEvent::GraphicsSceneMouseMove:
             {
-                corner->setMouseState(CornerGrabber::kMouseMoving );
+               if(corner->getMouseState()!=CornerGrabber::kMouseReleased)
+                  corner->setMouseState(CornerGrabber::kMouseMoving );
             }
             break;
 
@@ -165,6 +167,9 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
     if ( corner->getMouseState() == CornerGrabber::kMouseMoving )
     {
+        #ifdef _DEBUG_
+        qDebug() << "mouseMove state activated!";
+        #endif
 
         //Current XY (left-top corner)
         QPoint cXY = this->scenePos().toPoint();
@@ -174,8 +179,10 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         QPoint oXY = cXY; //BackUP
         QPoint oWH = cWH;
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("Resizer -> StartPos -> %1 %2 size %3x%4").arg(cXY.x()).arg(cXY.y()).arg(cWH.x()).arg(cWH.y()) );
         WriteToLog(QtDebugMsg, QString("Resizer -> mouse XY %1-%2 corner %3").arg(mevent->scenePos().x()).arg(mevent->scenePos().y()).arg(corner->getCorner()) );
+        #endif
 
         bool DeltaSize=false; //Size was changed
         bool DeltaPos=false;  //Position was changed
@@ -313,7 +320,9 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         _drawingWidth  =  _width;
         _drawingHeight =  _height;
 
+        #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("Resizer -> TargetPos %1x%2 size %3x%4").arg(cXY.x()).arg(cXY.y()).arg(cWH.x()).arg(cWH.y()));
+        #endif
 
         this->setPos( QPointF( cXY ) );
         this->setRect(0, 0, _width, _height);
@@ -548,7 +557,6 @@ QRectF ItemResizer::boundingRect() const
 {
     return QRectF(-10,-10,_width+20,_height+20);
 }
-
 
 void ItemResizer::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
 {

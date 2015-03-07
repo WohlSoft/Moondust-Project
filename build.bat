@@ -4,8 +4,8 @@ IF NOT EXIST _paths.bat echo _paths.bat is not exist! Run "generate_paths.bat" f
 IF NOT EXIST _paths.bat goto error
 
 call _paths.bat
-
-PATH=%QtDir%;%MinGW%;%PATH%
+set OldPATH=%PATH%
+PATH=%QtDir%;%MinGW%;%SystemRoot%\system32;%SystemRoot%;
 
 cd %CD%\Editor
 %QtDir%\lrelease.exe *.pro
@@ -33,5 +33,6 @@ echo.
 echo =========ERROR!!===========
 echo.
 :quit
+PATH=%OldPATH%
 pause
 

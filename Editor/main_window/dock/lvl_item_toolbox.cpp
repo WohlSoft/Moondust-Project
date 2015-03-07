@@ -35,6 +35,7 @@ LevelItemBox::LevelItemBox(QWidget *parent) :
     ui(new Ui::LevelItemBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
 
