@@ -134,7 +134,9 @@ SOURCES += \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
     scenes/level/lvl_physenv.cpp \
     scenes/level/lvl_player_def.cpp \
-    data_configs/obj_player.cpp
+    data_configs/obj_player.cpp \
+    scenes/level/lvl_z_constants.cpp \
+    physics/phys_debug_draw.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -201,7 +203,8 @@ HEADERS  += \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
-    data_configs/obj_npc.h
+    data_configs/obj_npc.h \
+    physics/phys_debug_draw.h
 
 FORMS    += \
     data_configs/select_config.ui
