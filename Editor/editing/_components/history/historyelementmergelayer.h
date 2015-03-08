@@ -23,12 +23,12 @@ public slots:
     void historyUndoChangeLayerBGO(const LevelBGO &sourceBGO, QGraphicsItem *item);
     void historyUndoChangeLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyUndoChangeLayerWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
-    void historyUndoChangeLayerDoor(const LevelDoors &sourceDoor, QGraphicsItem *item);
+    void historyUndoChangeLayerDoor(const LevelDoor &sourceDoor, QGraphicsItem *item);
     void historyRedoChangeLayerBlocks(const LevelBlock &, QGraphicsItem *item);
     void historyRedoChangeLayerBGO(const LevelBGO &, QGraphicsItem *item);
     void historyRedoChangeLayerNPC(const LevelNPC &, QGraphicsItem *item);
     void historyRedoChangeLayerWater(const LevelPhysEnv &, QGraphicsItem *item);
-    void historyRedoChangeLayerDoor(const LevelDoors &, QGraphicsItem *item);
+    void historyRedoChangeLayerDoor(const LevelDoor &, QGraphicsItem *item);
 private:
     LevelData m_mergedData;
     QString m_newLayerName;

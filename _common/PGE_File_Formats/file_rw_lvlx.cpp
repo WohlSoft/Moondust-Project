@@ -145,10 +145,10 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
     LevelBlock block;
     LevelBGO bgodata;
     LevelNPC npcdata;
-    LevelDoors door;
+    LevelDoor door;
     LevelPhysEnv physiczone;
-    LevelLayers layer;
-    LevelEvents event;
+    LevelLayer layer;
+    LevelSMBX64Event event;
 
     QString errorString;
 
@@ -2184,7 +2184,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "DOORS\n";
 
-        LevelDoors defDoor = dummyLvlDoor();
+        LevelDoor defDoor = dummyLvlDoor();
         for(i=0;i<FileData.doors.size();i++)
         {
             if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
@@ -2299,7 +2299,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             QStringList musicSets;
             addArray=false;
-            foreach(LevelEvents_Sets x, FileData.events[i].sets)
+            foreach(LevelEvent_Sets x, FileData.events[i].sets)
             {
                 musicSets.push_back(QString::number(x.music_id));
             }
@@ -2311,7 +2311,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             QStringList backSets;
             addArray=false;
-            foreach(LevelEvents_Sets x, FileData.events[i].sets)
+            foreach(LevelEvent_Sets x, FileData.events[i].sets)
             {
                 backSets.push_back(QString::number(x.background_id));
             }
@@ -2323,7 +2323,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
 
             QStringList sizeSets;
             addArray=false;
-            foreach(LevelEvents_Sets x, FileData.events[i].sets)
+            foreach(LevelEvent_Sets x, FileData.events[i].sets)
             {
                 sizeSets.push_back(QString::number(x.position_left)+","+QString::number(x.position_top)
                        +","+QString::number(x.position_bottom)+","+QString::number(x.position_right));

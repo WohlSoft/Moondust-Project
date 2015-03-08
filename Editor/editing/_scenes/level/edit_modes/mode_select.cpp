@@ -257,7 +257,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //Applay move into main array
                 //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                LevelDoors oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
                 oldDoorData.isSetIn = true;
                 oldDoorData.isSetOut = false;
                 historySourceBuffer.doors.push_back(oldDoorData);
@@ -271,7 +271,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 }
 
                 dynamic_cast<ItemDoor *>(*it)->arrayApply();
-                LevelDoors newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
                 newDoorData.isSetIn = true;
                 newDoorData.isSetOut = false;
                 historyBuffer.doors.push_back(newDoorData);
@@ -283,7 +283,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 //Applay move into main array
                 //historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
-                LevelDoors oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor oldDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
                 oldDoorData.isSetIn = false;
                 oldDoorData.isSetOut = true;
                 historySourceBuffer.doors.push_back(oldDoorData);
@@ -296,7 +296,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                     dynamic_cast<ItemDoor *>(*it)->doorData.iy = (long)(*it)->scenePos().y();
                 }
                 dynamic_cast<ItemDoor *>(*it)->arrayApply();
-                LevelDoors newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor newDoorData = dynamic_cast<ItemDoor *>(*it)->doorData;
                 newDoorData.isSetIn = false;
                 newDoorData.isSetOut = true;
                 historyBuffer.doors.push_back(newDoorData);

@@ -76,12 +76,12 @@ public slots:
     void historyRedoSettingsChangeNPCNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyUndoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
     void historyRedoSettingsTypeWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem *item);
-    void historyUndoSettingsNoYoshiDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
-    void historyRedoSettingsNoYoshiDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
-    void historyUndoSettingsAllowNPCDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
-    void historyRedoSettingsAllowNPCDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
-    void historyUndoSettingsLockedDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
-    void historyRedoSettingsLockedDoors(const LevelDoors &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsNoYoshiDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsNoYoshiDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsAllowNPCDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsAllowNPCDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsLockedDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsLockedDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyUndoSettingsActivateGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyRedoSettingsActivateGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyUndoSettingsTypeGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);

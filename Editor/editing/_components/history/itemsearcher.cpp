@@ -33,15 +33,15 @@ void ItemSearcher::setFindFilter(const ItemTypes::itemTypesMultiSelectable &find
 
 void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*> &allItems)
 {
-    QMap<int, LevelDoors> sortedEntranceDoors;
-    QMap<int, LevelDoors> sortedExitDoors;
+    QMap<int, LevelDoor> sortedEntranceDoors;
+    QMap<int, LevelDoor> sortedExitDoors;
     if(m_findFilter & ItemTypes::LVL_S_Door){
-        foreach (LevelDoors door, dataToFind.doors) {
+        foreach (LevelDoor door, dataToFind.doors) {
             if(door.isSetIn&&!door.isSetOut){
                 sortedEntranceDoors[door.array_id] = door;
             }
         }
-        foreach (LevelDoors door, dataToFind.doors) {
+        foreach (LevelDoor door, dataToFind.doors) {
             if(!door.isSetIn&&door.isSetOut){
                 sortedExitDoors[door.array_id] = door;
             }
@@ -261,7 +261,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
         {
             if(sortedEntranceDoors.size()!=0)
             {
-                QMap<int, LevelDoors>::iterator beginItem = sortedEntranceDoors.begin();
+                QMap<int, LevelDoor>::iterator beginItem = sortedEntranceDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
@@ -284,7 +284,7 @@ void ItemSearcher::find(const LevelData &dataToFind, const QList<QGraphicsItem*>
         {
             if(sortedExitDoors.size()!=0)
             {
-                QMap<int, LevelDoors>::iterator beginItem = sortedExitDoors.begin();
+                QMap<int, LevelDoor>::iterator beginItem = sortedExitDoors.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
                 if((unsigned int)item->data(ITEM_ARRAY_ID).toInt()>currentArrayId)
                 {
