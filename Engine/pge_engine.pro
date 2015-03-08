@@ -54,6 +54,14 @@ win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
 }
+macx: {
+    LIBS += -L ../_Libs/_builds/macos/lib
+    INCLUDEPATH += ../_Libs/_builds/macos/include
+}
+linux-g++: {
+    LIBS += -L ../_Libs/_builds/linux/lib
+    INCLUDEPATH += ../_Libs/_builds/linux/include
+}
 
 LIBS += -loolua -lbox2d -lSDL2
 win32: LIBS += -lSDL2main
