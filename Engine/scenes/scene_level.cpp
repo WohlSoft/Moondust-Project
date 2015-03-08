@@ -414,17 +414,17 @@ int LevelScene::exec()
     dbgDraw.SetFlags( dbgDraw.e_shapeBit | dbgDraw.e_jointBit );
 
     //Level scene's Loop
- Uint32 start_render;
- Uint32 stop_render;
+ Uint32 start_render=0;
+ Uint32 stop_render=0;
     int doUpdate_render=0;
 
- Uint32 start_physics;
- Uint32 stop_physics;
+ Uint32 start_physics=0;
+ Uint32 stop_physics=0;
 
-  Uint32 start_events;
-  Uint32 stop_events;
+  Uint32 start_events=0;
+  Uint32 stop_events=0;
 
-  Uint32 start_common;
+  Uint32 start_common=0;
      int wait_delay=0;
 
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
@@ -436,7 +436,11 @@ int LevelScene::exec()
     {
         start_common = SDL_GetTicks();
 
-        start_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo)
+        {
+            start_events = SDL_GetTicks();
+        }
+
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
@@ -490,17 +494,27 @@ int LevelScene::exec()
                 break;
             }
         }
-        stop_events = SDL_GetTicks();
 
-        start_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo)
+        {
+            stop_events = SDL_GetTicks();
+            start_physics=SDL_GetTicks();
+        }
+
+        /**********************Update physics and game progess***********************/
         update();
-        stop_physics=SDL_GetTicks();
+
+        if(PGE_Window::showDebugInfo)
+        {
+            stop_physics=SDL_GetTicks();
+        }
 
         stop_render=0;
         start_render=0;
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
+            /**********************Render everything***********************/
             render();
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
@@ -515,9 +529,9 @@ int LevelScene::exec()
 
         wait_delay=timeStep;
         lastTicks=1;
-        if( timeStep > (timeStep-(SDL_GetTicks()-start_common)) )
+        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
         {
-            wait_delay = timeStep-(SDL_GetTicks()-start_common);
+            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
             lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
         }
         debug_phys_delay=(stop_physics-start_physics);
