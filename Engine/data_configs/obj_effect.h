@@ -42,19 +42,11 @@ struct obj_effect
 
     QString name;
 
-    enum effectTypes
-    {
-        E_static=0,
-        E_dynamic
-    };
-    int type;
-    int appear_timeout;
-
     bool animated;
-    bool animation_rev; //Reverse animation
-    bool animation_bid; //Bidirectional animation
     unsigned int frames;
     int framespeed;
+    int framestyle;
+    int frame_h; //!< Captured frame height
 };
 
 #endif // OBJ_EFFECT_H
