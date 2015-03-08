@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wstrict-aliasing=0 # -Wno-maybe-uninitialized -Wno-unused-local-typedefs
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 DESTDIR = ../bin
@@ -145,7 +145,8 @@ SOURCES += \
     data_configs/obj_player.cpp \
     scenes/level/lvl_z_constants.cpp \
     physics/phys_debug_draw.cpp \
-    data_configs/obj_effect.cpp
+    data_configs/obj_effect.cpp \
+    scenes/level/gfx_effects.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -213,7 +214,8 @@ HEADERS  += \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
     data_configs/obj_npc.h \
-    physics/phys_debug_draw.h
+    physics/phys_debug_draw.h \
+    scenes/level/gfx_effects.h
 
 FORMS    += \
     data_configs/select_config.ui
