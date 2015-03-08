@@ -48,7 +48,7 @@ void HistoryElementRemoveLayer::undo()
     connect(searcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyUpdateVisibleBGO(LevelBGO,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyUpdateVisibleNPC(LevelNPC,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(historyUpdateVisibleWater(LevelPhysEnv,QGraphicsItem*)));
-    connect(searcher, SIGNAL(foundDoor(LevelDoors,QGraphicsItem*)), this, SLOT(historyUpdateVisibleDoor(LevelDoors,QGraphicsItem*)));
+    connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUpdateVisibleDoor(LevelDoor,QGraphicsItem*)));
     searcher->find(m_modData, m_scene->items());
     delete searcher;
 
@@ -77,7 +77,7 @@ void HistoryElementRemoveLayer::redo()
     connect(searcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(removeBGO(LevelBGO,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(removeNPC(LevelNPC,QGraphicsItem*)));
     connect(searcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(removePhysEnv(LevelPhysEnv,QGraphicsItem*)));
-    connect(searcher, SIGNAL(foundDoor(LevelDoors,QGraphicsItem*)), this, SLOT(removeDoor(LevelDoors,QGraphicsItem*)));
+    connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(removeDoor(LevelDoor,QGraphicsItem*)));
     searcher->find(m_modData, m_scene->items());
     delete searcher;
 
@@ -137,7 +137,7 @@ void HistoryElementRemoveLayer::removePhysEnv(const LevelPhysEnv &sourcePhysEnv,
     }
 }
 
-void HistoryElementRemoveLayer::removeDoor(const LevelDoors &sourceDoor, QGraphicsItem *item)
+void HistoryElementRemoveLayer::removeDoor(const LevelDoor &sourceDoor, QGraphicsItem *item)
 {
     Q_UNUSED(sourceDoor)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
@@ -169,7 +169,7 @@ void HistoryElementRemoveLayer::historyUpdateVisibleWater(const LevelPhysEnv &/*
     item->setVisible(!m_modData.layers[0].hidden);
 }
 
-void HistoryElementRemoveLayer::historyUpdateVisibleDoor(const LevelDoors &/*sourceDoor*/, QGraphicsItem *item)
+void HistoryElementRemoveLayer::historyUpdateVisibleDoor(const LevelDoor &/*sourceDoor*/, QGraphicsItem *item)
 {
     item->setVisible(!m_modData.layers[0].hidden);
 }

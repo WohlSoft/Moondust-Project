@@ -47,7 +47,7 @@ void HistoryElementAddLayer::redo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    LevelLayers l;
+    LevelLayer l;
     l.array_id = m_array_id;
     l.name = m_name;
     l.hidden = false;

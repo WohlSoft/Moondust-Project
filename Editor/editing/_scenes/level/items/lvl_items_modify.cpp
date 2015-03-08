@@ -241,11 +241,11 @@ void LvlScene::placeAll(const LevelData &data)
         placeWater(water);
     }
 
-    foreach (LevelDoors door, data.doors)
+    foreach (LevelDoor door, data.doors)
     {
-        LevelDoors originalDoor;
+        LevelDoor originalDoor;
         bool found = false;
-        foreach(LevelDoors findDoor, LvlData->doors){
+        foreach(LevelDoor findDoor, LvlData->doors){
             if(door.array_id == findDoor.array_id){
                 originalDoor = findDoor;
                 found = true;
@@ -495,7 +495,7 @@ void LvlScene::placeItemUnderCursor()
         else
         if(placingItem == PLC_Door)
         {
-            foreach(LevelDoors door, LvlData->doors)
+            foreach(LevelDoor door, LvlData->doors)
             {
              if(door.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
              {
@@ -665,7 +665,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
                 if((lock_door)|| (dynamic_cast<ItemDoor *>(*it)->isLocked) ) continue;
 
                 bool isEntrance = (objType=="Door_enter");
-                LevelDoors doorData = dynamic_cast<ItemDoor *>(*it)->doorData;
+                LevelDoor doorData = dynamic_cast<ItemDoor *>(*it)->doorData;
                 if(isEntrance){
                     doorData.isSetIn = true;
                     doorData.isSetOut = false;

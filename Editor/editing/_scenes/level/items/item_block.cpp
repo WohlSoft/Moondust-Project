@@ -162,7 +162,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
             LayerName->addSeparator()->deleteLater();;
 
-            foreach(LevelLayers layer, scene->LvlData->layers)
+            foreach(LevelLayer layer, scene->LvlData->layers)
             {
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -275,7 +275,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                                 eventName = QString(eventName+" %1").arg(count);
                             }
-                            LevelEvents msgEvent = FileFormats::dummyLvlEvent();
+                            LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
                             msgEvent.name = eventName;
                             msgEvent.msg = msgText;
                             msgEvent.array_id = ++scene->LvlData->events_array_id;
@@ -425,7 +425,7 @@ void ItemBlock::setInvisible(bool inv)
 
 void ItemBlock::setLayer(QString layer)
 {
-    foreach(LevelLayers lr, scene->LvlData->layers)
+    foreach(LevelLayer lr, scene->LvlData->layers)
     {
         if(lr.name==layer)
         {

@@ -140,7 +140,7 @@ void LvlEventsBox::setEventsBox()
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
-        foreach(LevelEvents event, edit->LvlData.events)
+        foreach(LevelSMBX64Event event, edit->LvlData.events)
         {
             item = new QListWidgetItem;
             item->setText(event.name);
@@ -218,7 +218,7 @@ void MainWindow::EventListsSync()
 
     if (WinType==1)
     {
-        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        foreach(LevelSMBX64Event event, activeLvlEditWin()->LvlData.events)
         {
             _ip_block_d->addItem(event.name);
             _ip_block_h->addItem(event.name);
@@ -298,7 +298,7 @@ void LvlEventsBox::setEventData(long index)
         if( (edit->LvlData.events.size() > 0) && (cIndex >= 0))
         {
             currentEventArrayID=cIndex;
-            foreach(LevelEvents event, edit->LvlData.events)
+            foreach(LevelSMBX64Event event, edit->LvlData.events)
             {
                 if(event.array_id == (unsigned int)cIndex)
                 {
@@ -553,7 +553,7 @@ void LvlEventsBox::eventLayerVisiblySyncList()
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        LevelEvents event = edit->LvlData.events[i];
+        LevelSMBX64Event event = edit->LvlData.events[i];
 
         util::memclear(ui->LVLEvents_layerList);
         util::memclear(ui->LVLEvent_Layer_HideList);
@@ -562,7 +562,7 @@ void LvlEventsBox::eventLayerVisiblySyncList()
 
         QListWidgetItem * item;
         //Total layers list
-        foreach(LevelLayers layer, edit->LvlData.layers)
+        foreach(LevelLayer layer, edit->LvlData.layers)
         {
             item = new QListWidgetItem;
             item->setText(layer.name);
@@ -666,7 +666,7 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceSt
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
 
-        LevelEvents buffer;
+        LevelSMBX64Event buffer;
         if(sourceStart < edit->LvlData.events.size())
         {
             buffer = edit->LvlData.events[sourceStart];
@@ -730,7 +730,7 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
     }
     else
     {
-        LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+        LevelSMBX64Event NewEvent = FileFormats::dummyLvlEvent();
         if(cloneEvent)
         {
             bool found=false;

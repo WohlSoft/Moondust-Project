@@ -51,7 +51,7 @@ private:
     void construct();
 public:
 
-    void setDoorData(LevelDoors inD, int doorDir, bool init=false);
+    void setDoorData(LevelDoor inD, int doorDir, bool init=false);
     void setScenePoint(LvlScene *theScene);
 
     void setLocked(bool lock);
@@ -74,7 +74,7 @@ public:
     int getGridSize();
     QPoint sourcePos();
 
-    LevelDoors doorData;
+    LevelDoor doorData;
 
     int gridSize;
     int gridOffsetX;

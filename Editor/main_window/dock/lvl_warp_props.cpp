@@ -94,7 +94,7 @@ void LvlWarpBox::init()
     if (WinType==1)
     {
         ui->WarpList->clear();
-        foreach(LevelDoors door, mw()->activeLvlEditWin()->LvlData.doors)
+        foreach(LevelDoor door, mw()->activeLvlEditWin()->LvlData.doors)
         {
             ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
            .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy),
@@ -141,7 +141,7 @@ void LvlWarpBox::setDoorData(long index)
     {
         if( (mw()->activeLvlEditWin()->LvlData.doors.size() > 0) && (cIndex < mw()->activeLvlEditWin()->LvlData.doors.size()) )
         {
-            foreach(LevelDoors door, mw()->activeLvlEditWin()->LvlData.doors)
+            foreach(LevelDoor door, mw()->activeLvlEditWin()->LvlData.doors)
             {
                 if(door.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
                 {
@@ -322,7 +322,7 @@ void LvlWarpBox::on_WarpAdd_clicked()
     if (WinType==1)
     {
         LevelEdit* edit = mw()->activeLvlEditWin();
-        LevelDoors newDoor = FileFormats::dummyLvlDoor();
+        LevelDoor newDoor = FileFormats::dummyLvlDoor();
         newDoor.array_id = edit->LvlData.doors_array_id++;
         newDoor.index = edit->LvlData.doors.size();
         edit->LvlData.doors.push_back(newDoor);

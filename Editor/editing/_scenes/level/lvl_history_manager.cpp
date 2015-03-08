@@ -98,7 +98,7 @@ void LvlScene::addOverwriteHistory(LevelData removedItems, LevelData placedItems
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addPlaceDoorHistory(LevelDoors door, bool isEntrance)
+void LvlScene::addPlaceDoorHistory(LevelDoor door, bool isEntrance)
 {
     updateHistoryBuffer();
 
@@ -206,7 +206,7 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
+void LvlScene::addRemoveWarpHistory(LevelDoor removedDoor)
 {
     updateHistoryBuffer();
 
@@ -230,7 +230,7 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, HistorySettings::Level
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addAddEventHistory(LevelEvents ev)
+void LvlScene::addAddEventHistory(LevelSMBX64Event ev)
 {
     updateHistoryBuffer();
 
@@ -242,7 +242,7 @@ void LvlScene::addAddEventHistory(LevelEvents ev)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveEventHistory(LevelEvents ev)
+void LvlScene::addRemoveEventHistory(LevelSMBX64Event ev)
 {
     updateHistoryBuffer();
 
@@ -254,7 +254,7 @@ void LvlScene::addRemoveEventHistory(LevelEvents ev)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addDuplicateEventHistory(LevelEvents newDuplicate)
+void LvlScene::addDuplicateEventHistory(LevelSMBX64Event newDuplicate)
 {
     updateHistoryBuffer();
 
@@ -278,7 +278,7 @@ void LvlScene::addChangeEventSettingsHistory(int array_id, HistorySettings::Leve
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer)
+void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayer newLayer)
 {
     updateHistoryBuffer();
 

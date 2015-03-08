@@ -75,7 +75,7 @@ public:
     QPoint cameraStart;
     bool   cameraStartDirected;
     int    cameraStartDirection;
-    LevelDoors startWarp;
+    LevelDoor startWarp;
     int NewPlayerID;
 
     //Init 3 -> load Configs

@@ -46,7 +46,7 @@ private slots:
     void processBGO(const LevelBGO &sourceBGO, QGraphicsItem* item);
     void processNPC(const LevelNPC &sourceNPC, QGraphicsItem* item);
     void processPhysEnv(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem* item);
-    void processDoor(const LevelDoors &sourceDoor, QGraphicsItem* item);
+    void processDoor(const LevelDoor &sourceDoor, QGraphicsItem* item);
     void processPlayerPoint(const PlayerPoint &sourcePayerPoint, QGraphicsItem* item);
 
     //Overworld
