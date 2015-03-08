@@ -144,7 +144,8 @@ SOURCES += \
     scenes/level/lvl_player_def.cpp \
     data_configs/obj_player.cpp \
     scenes/level/lvl_z_constants.cpp \
-    physics/phys_debug_draw.cpp
+    physics/phys_debug_draw.cpp \
+    data_configs/obj_effect.cpp
 
 HEADERS  += \
     physics/base_object.h \
