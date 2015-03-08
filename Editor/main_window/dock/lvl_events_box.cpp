@@ -105,11 +105,14 @@ QPushButton *LvlEventsBox::button_event_dupe()
 
 void LvlEventsBox::re_translate()
 {
+    LvlEventBoxLock=true;
+    lockSetEventSettings=true;
     ui->retranslateUi(this);
-
     EventListsSync();
     setEventData(-1);
     setSoundList();
+    lockSetEventSettings=false;
+    LvlEventBoxLock=false;
 }
 
 
@@ -248,6 +251,7 @@ void MainWindow::EventListsSync()
 
 void LvlEventsBox::setSoundList()
 {
+    lockSetEventSettings=true;
     ui->LVLEvent_Cmn_PlaySnd->clear();
     ui->LVLEvent_Cmn_PlaySnd->addItem( tr("[Silence]"), "0" );
 
@@ -258,6 +262,8 @@ void LvlEventsBox::setSoundList()
         if(!snd.hidden)
             ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
     }
+
+    lockSetEventSettings=false;
 }
 
 
