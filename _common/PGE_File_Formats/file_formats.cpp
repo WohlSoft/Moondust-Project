@@ -55,8 +55,13 @@ void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 
 QString FileFormats::removeQuotes(QString str)
 {
-    QString target = str.remove(0,1);
-    target = target.remove(target.size()-1,1);
+    QString target = str;
+    if(target.isEmpty())
+        return target;
+    if(target[0]==QChar('\"'))
+        target.remove(0,1);
+    if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
+        target.remove(target.size()-1,1);
     return target;
 }
 

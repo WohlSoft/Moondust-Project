@@ -165,12 +165,12 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
     LevelBlock blocks;
     LevelBGO bgodata;
     LevelNPC npcdata;
-    LevelDoors doors;
+    LevelDoor doors;
     LevelPhysEnv waters;
-    LevelLayers layers;
-    LevelEvents events;
-    LevelEvents_layers events_layers;
-    LevelEvents_Sets events_sets;
+    LevelLayer layers;
+    LevelSMBX64Event events;
+    LevelEvent_layers events_layers;
+    LevelEvent_Sets events_sets;
 
     //Add path data
     if(!filePath.isEmpty())
@@ -191,11 +191,24 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
                                                      else target=converted;
 
     //ValueTypes
-    #define strVar(target, line) parseLine( SMBX64::qStr(line), target, removeQuotes(line))
+    #define strVar(target, line) parseLine( SMBX64::qStr(line), target, SMBX64::StrToStr(line))
     #define UIntVar(target, line) parseLine( SMBX64::Int(line), target, line.toInt())
     #define SIntVar(target, line) parseLine( SMBX64::sInt(line), target, line.toInt())
     #define wBoolVar(target, line) parseLine( SMBX64::wBool(line), target, SMBX64::wBoolR(line))
     #define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, line.replace(QChar(','), QChar('.')).toFloat());
+
+    #define strVarMultiLine(target, line) {\
+    bool first=true;\
+    while( (first && (line.size()==1)&&(line=="\""))||(!line.endsWith('\"')))\
+    {\
+        first=false;\
+        line.append('\n');\
+        str_count++;line.append(in.readLine());\
+        if(line.endsWith('\"'))\
+            break;\
+    }\
+    strVar(target, line);\
+    }
 
     //Version comparison
     #define ge(v) file_format>=v
@@ -414,13 +427,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
          if(ge(5))
          {
              nextLine();
-             while(!line.endsWith('\"')) //Read multilined string
-             {
-                 line.append('\n');
-                 str_count++;line.append(in.readLine());
-             }
-
-             strVar(npcdata.msg, line); //Message
+             strVarMultiLine(npcdata.msg, line)//Message
          }
 
          if(ge(6))
@@ -564,12 +571,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
             if(ge(11))
             {
                 nextLine();
-                while(!line.endsWith('\"')) //Read multilined string
-                {
-                    line.append('\n');
-                    str_count++;line.append(in.readLine());
-                }
-                strVar(events.msg, line); //Event message
+                strVarMultiLine(events.msg, line)//Event message
             }
 
             if(ge(14)){ nextLine(); UIntVar(events.sound_id, line);}
@@ -655,7 +657,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
         //Add system layers if not exist
         bool def=false,desb=false,spawned=false;
 
-        foreach(LevelLayers lr, FileData.layers)
+        foreach(LevelLayer lr, FileData.layers)
         {
             if(lr.name=="Default") def=true;
             else
@@ -688,7 +690,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
         //P Switch - Start
         //P Switch - End
         bool lstart=false, pstart=false, pend=false;
-        foreach(LevelEvents ev, FileData.events)
+        foreach(LevelSMBX64Event ev, FileData.events)
         {
             if(ev.name=="Level - Start") lstart=true;
             else
@@ -1085,7 +1087,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         }
         TextData += "\"next\"\n";//Separator
 
-        LevelEvents_layers layerSet;
+        LevelEvent_layers layerSet;
         for(i=0; i<FileData.events.size(); i++)
         {
             TextData += SMBX64::qStrS(FileData.events[i].name);
