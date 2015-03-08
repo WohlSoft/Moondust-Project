@@ -45,6 +45,7 @@ LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
 }
 unix:{
+LIBS += -L../_builds/linux/lib
 INCLUDEPATH += ../_builds/linux/include
 }
 LIBS += -lSDL2
