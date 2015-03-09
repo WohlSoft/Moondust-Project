@@ -31,7 +31,7 @@ void HistoryElementSettingsEvent::undo()
     int array_id = m_array_id;
     int index = -1;
     QVariant extraData = m_modData;
-    LevelEvents * eventp;
+    LevelSMBX64Event * eventp;
     bool found = false;
 
     for(int i = 0; i < lvlScene->LvlData->events.size(); i++){
@@ -221,7 +221,7 @@ void HistoryElementSettingsEvent::redo()
     int array_id = m_array_id;
     int index = -1;
     QVariant extraData = m_modData;
-    LevelEvents * eventp;
+    LevelSMBX64Event * eventp;
     bool found = false;
 
     for(int i = 0; i < lvlScene->LvlData->events.size(); i++){

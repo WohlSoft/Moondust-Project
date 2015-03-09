@@ -36,6 +36,7 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     ui(new Ui::WLD_ItemProps)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     wld_tools_lock=false;
 

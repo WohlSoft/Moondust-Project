@@ -41,6 +41,7 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     ui(new Ui::LvlLayersBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();
@@ -116,7 +117,7 @@ void LvlLayersBox::setLayersBox()
 
     if(WinType==1)
     {
-        foreach(LevelLayers layer, edit->LvlData.layers)
+        foreach(LevelLayer layer, edit->LvlData.layers)
         {
             item = new QListWidgetItem;
             item->setText(layer.name);
@@ -169,7 +170,7 @@ void MainWindow::LayerListsSync()
 
     if(WinType==1)
     {
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        foreach(LevelLayer layer, activeLvlEditWin()->LvlData.layers)
         {
             if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
                 continue;
@@ -236,7 +237,7 @@ void LvlLayersBox::RemoveCurrentLayer(bool moveToDefault)
 
     if(moveToDefault)
     { //Find default layer visibly
-        foreach(LevelLayers layer, edit->LvlData.layers)
+        foreach(LevelLayer layer, edit->LvlData.layers)
         {
             if( layer.name=="Default" )
             {
@@ -322,14 +323,14 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
             if(((ItemDoor *)(*it))->doorData.layer==layerName)
             {
                 if(((*it)->data(0).toString()=="Door_enter")){
-                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     delData.doors.push_back(tData);
                 }
                 else
                 if(((*it)->data(0).toString()=="Door_exit")){
-                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
                     delData.doors.push_back(tData);
@@ -340,7 +341,7 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
             }
         }
     }
-    foreach (LevelLayers l, edit->LvlData.layers) {
+    foreach (LevelLayer l, edit->LvlData.layers) {
         if(l.name == layerName){
             delData.layers.push_back(l);
             break;
@@ -578,12 +579,12 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
             if(((ItemDoor *)(*it))->doorData.layer==layerName)
             {
                 if((*it)->data(ITEM_TYPE).toString()=="Door_enter"){
-                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = true;
                     tData.isSetOut = false;
                     modData.doors.push_back(tData);
                 }else if((*it)->data(ITEM_TYPE).toString()=="Door_exit"){
-                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    LevelDoor tData = ((ItemDoor *)(*it))->doorData;
                     tData.isSetIn = false;
                     tData.isSetOut = true;
                     modData.doors.push_back(tData);
@@ -662,7 +663,7 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
     item->setCheckState( Qt::Checked );
 
     //Register layer in the leveldata structure
-    LevelLayers NewLayer;
+    LevelLayer NewLayer;
     NewLayer.name = item->text();
     NewLayer.hidden = (item->checkState()==Qt::Unchecked );
     edit->LvlData.layers_array_id++;
@@ -775,7 +776,7 @@ void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceSt
     int WinType = mw()->activeChildWindow();
     if (WinType==1)
     {
-        LevelLayers buffer;
+        LevelLayer buffer;
         if(sourceStart<edit->LvlData.layers.size())
         {
             buffer = edit->LvlData.layers[sourceStart];

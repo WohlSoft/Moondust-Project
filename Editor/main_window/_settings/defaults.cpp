@@ -58,9 +58,10 @@ void MainWindow::setDefaults()
     LvlBuffer=FileFormats::dummyLvlDataArray();
 
     LastActiveSubWindow = NULL;
-    #ifdef Q_OS_WIN
+
+#ifdef Q_OS_WIN
     pge_thumbbar = NULL;
-    #endif
+#endif
 }
 
 void MainWindow::setUiDefults()
@@ -160,7 +161,7 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setTabsClosable(true);
 
     /*********************Music volume regulator*************************/
-    muVol = new QSlider(Qt::Horizontal);
+    muVol = new QSlider(Qt::Horizontal, ui->EditionToolBar);
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
@@ -174,10 +175,10 @@ void MainWindow::setUiDefults()
     /*********************Music volume regulator*************************/
 
     /*********************Zoom field*************************/
-    zoom = new QLineEdit();
-    zoom->setValidator(new QIntValidator(0,2001));
+    zoom = new QLineEdit(ui->LevelSectionsToolBar);
+    zoom->setValidator(new QIntValidator(0,2001, zoom));
     zoom->setText("100");
-    zoom->setMaximumWidth(50);
+    zoom->setMaximumWidth(24);
     zoom->setEnabled(false);
 
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);

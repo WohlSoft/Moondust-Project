@@ -120,7 +120,7 @@ void LvlScene::switchMode(QString title)
 
 void LvlScene::hideWarpsAndDoors(bool visible)
 {
-    QMap<QString, LevelLayers> localLayers;
+    QMap<QString, LevelLayer> localLayers;
     for(int i = 0; i < LvlData->layers.size(); ++i){
         localLayers[LvlData->layers[i].name] = LvlData->layers[i];
     }
@@ -149,7 +149,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="Block")
         {
             tmp = (*it);
-            foreach(LevelLayers layer, LvlData->layers)
+            foreach(LevelLayer layer, LvlData->layers)
             {
                 if( dynamic_cast<ItemBlock *>(tmp)->blockData.layer == layer.name)
                 {
@@ -161,7 +161,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="BGO")
         {
             tmp = (*it);
-            foreach(LevelLayers layer, LvlData->layers)
+            foreach(LevelLayer layer, LvlData->layers)
             {
                 if( dynamic_cast<ItemBGO *>(tmp)->bgoData.layer == layer.name)
                 {
@@ -173,7 +173,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="NPC")
         {
             tmp = (*it);
-            foreach(LevelLayers layer, LvlData->layers)
+            foreach(LevelLayer layer, LvlData->layers)
             {
                 if( dynamic_cast<ItemNPC *>(tmp)->npcData.layer == layer.name)
                 {
@@ -185,7 +185,7 @@ void LvlScene::applyLayersVisible()
         if((*it)->data(ITEM_TYPE)=="Water")
         {
             tmp = (*it);
-            foreach(LevelLayers layer, LvlData->layers)
+            foreach(LevelLayer layer, LvlData->layers)
             {
                 if( dynamic_cast<ItemWater *>(tmp)->waterData.layer == layer.name)
                 {
@@ -197,7 +197,7 @@ void LvlScene::applyLayersVisible()
         if(((*it)->data(ITEM_TYPE)=="Door_enter")||((*it)->data(ITEM_TYPE)=="Door_exit"))
         {
             tmp = (*it);
-            foreach(LevelLayers layer, LvlData->layers)
+            foreach(LevelLayer layer, LvlData->layers)
             {
                 if( dynamic_cast<ItemDoor *>(tmp)->doorData.layer == layer.name)
                 {
@@ -294,7 +294,7 @@ void LvlScene::setLayerToSelected()
         lName = layerBox->lName;
 
         //Store new layer into array
-        LevelLayers nLayer;
+        LevelLayer nLayer;
         nLayer.name = lName;
         nLayer.hidden = layerBox->lHidden;
         LvlData->layers_array_id++;
@@ -315,7 +315,7 @@ void LvlScene::setLayerToSelected()
 void LvlScene::setLayerToSelected(QString lName, bool isNew)
 {
     LevelData modData;
-    foreach(LevelLayers lr, LvlData->layers)
+    foreach(LevelLayer lr, LvlData->layers)
     { //Find layer's settings
         if(lr.name==lName)
         {
@@ -357,14 +357,14 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                         (SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                 {
                     if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
                         tDoor.isSetOut = true;
                         tDoor.isSetIn = false;
                         modData.doors.push_back(tDoor);
                     }
                     else
                     if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
                         tDoor.isSetOut = false;
                         tDoor.isSetIn = true;
                         modData.doors.push_back(tDoor);

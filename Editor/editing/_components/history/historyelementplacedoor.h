@@ -11,7 +11,7 @@ class HistoryElementPlaceDoor : public QObject, public IHistoryElement
     Q_INTERFACES(IHistoryElement)
 
 public:
-    explicit HistoryElementPlaceDoor(const LevelDoors &door, bool isEntrance, QObject *parent = 0);
+    explicit HistoryElementPlaceDoor(const LevelDoor &door, bool isEntrance, QObject *parent = 0);
     virtual ~HistoryElementPlaceDoor();
     virtual QString getHistoryName();
     virtual void undo();
@@ -20,9 +20,9 @@ public:
 
 
 public slots:
-    void historyRemoveDoors(const LevelDoors &door, QGraphicsItem *item);
+    void historyRemoveDoors(const LevelDoor &door, QGraphicsItem *item);
 private:
-    LevelDoors m_door;
+    LevelDoor m_door;
 };
 
 #endif // HISTORYELEMENTPLACEDOOR_H

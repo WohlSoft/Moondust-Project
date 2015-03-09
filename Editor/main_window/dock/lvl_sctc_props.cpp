@@ -32,6 +32,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
     ui(new Ui::LvlSectionProps)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     switchResizeMode(false);
@@ -92,6 +93,7 @@ void MainWindow::on_actionSection_Settings_triggered(bool checked)
 void LvlSectionProps::setLevelSectionData()
 {
     lockSctSettingsProps=true;
+    mw()->dock_LvlEvents->setEventToolsLocked(true);
 
     int i;
         WriteToLog(QtDebugMsg, QString("Set level Section Data"));
@@ -116,6 +118,7 @@ void LvlSectionProps::setLevelSectionData()
             QListView *listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
+                listVw->setDragEnabled(false);
                 listVw->setViewMode(QListView::IconMode);
                 listVw->setUniformItemSizes(true);
             }
@@ -124,6 +127,7 @@ void LvlSectionProps::setLevelSectionData()
             listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
+                listVw->setDragEnabled(false);
                 listVw->setViewMode(QListView::IconMode);
                 listVw->setUniformItemSizes(true);
             }
@@ -217,6 +221,7 @@ void LvlSectionProps::setLevelSectionData()
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
     }
 
+    mw()->dock_LvlEvents->setEventToolsLocked(false);
     lockSctSettingsProps=false;
 }
 

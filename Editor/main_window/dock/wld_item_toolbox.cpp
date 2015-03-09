@@ -36,6 +36,7 @@ WorldItemBox::WorldItemBox(QWidget *parent) :
     ui(new Ui::WorldItemBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     allWLabel = "[all]";

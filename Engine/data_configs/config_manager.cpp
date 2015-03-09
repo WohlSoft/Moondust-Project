@@ -416,36 +416,10 @@ bool ConfigManager::unloadLevelConfigs()
 
 
     /***************Clear animators*************/
-//    foreach(SimpleAnimator x, Animator_Blocks)
-//        x->stop();
     Animator_Blocks.clear();
-//    while(!Animator_Blocks.isEmpty())
-//    {
-//        SimpleAnimator * x = Animator_Blocks.first();
-//        Animator_Blocks.pop_front();
-//        delete x;
-//    }
-
-
-//    foreach(SimpleAnimator * x, Animator_BGO)
-//        x->stop();
     Animator_BGO.clear();
-//    while(!Animator_BGO.isEmpty())
-//    {
-//        SimpleAnimator * x = Animator_BGO.first();
-//        Animator_BGO.pop_front();
-//        delete x;
-//    }
-
-//    foreach(SimpleAnimator * x, Animator_BG)
-//        x->stop();
     Animator_BG.clear();
-//    while(!Animator_BG.isEmpty())
-//    {
-//        SimpleAnimator * x = Animator_BG.first();
-//        Animator_BG.pop_front();
-//        delete x;
-//    }
+    Animator_EFFECT.clear();
 
     /***************Clear settings*************/
     lvl_block_indexes.clear();
@@ -457,7 +431,9 @@ bool ConfigManager::unloadLevelConfigs()
     lvl_bg_indexes.clear();
     lvl_bg.clear();
 
-    //level_textures.clear();
+    lvl_effects_indexes.clear();
+    lvl_effects.clear();
+
     return true;
 }
 

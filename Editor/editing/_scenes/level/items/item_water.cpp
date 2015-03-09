@@ -170,7 +170,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LayerName->addSeparator()->deleteLater();
                 newLayer->deleteLater();
 
-            foreach(LevelLayers layer, scene->LvlData->layers)
+            foreach(LevelLayer layer, scene->LvlData->layers)
             {
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -328,7 +328,7 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 ///////////////////MainArray functions/////////////////////////////
 void ItemWater::setLayer(QString layer)
 {
-    foreach(LevelLayers lr, scene->LvlData->layers)
+    foreach(LevelLayer lr, scene->LvlData->layers)
     {
         if(lr.name==layer)
         {

@@ -6,7 +6,7 @@
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_warp_props.h>
 
-HistoryElementPlaceDoor::HistoryElementPlaceDoor(const LevelDoors &door, bool isEntrance, QObject *parent) :
+HistoryElementPlaceDoor::HistoryElementPlaceDoor(const LevelDoor &door, bool isEntrance, QObject *parent) :
     QObject(parent),
     m_door(door)
 {
@@ -36,7 +36,7 @@ void HistoryElementPlaceDoor::undo()
     LevelData data;
     data.doors << m_door;
 
-    connect(searcher, SIGNAL(foundDoor(LevelDoors,QGraphicsItem*)), this, SLOT(historyRemoveDoors(LevelDoors,QGraphicsItem*)));
+    connect(searcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRemoveDoors(LevelDoor,QGraphicsItem*)));
     searcher->find(data, m_scene->items());
     delete searcher;
 }
@@ -51,9 +51,9 @@ void HistoryElementPlaceDoor::redo()
         return;
 
     bool found = false;
-    LevelDoors door;
+    LevelDoor door;
 
-    foreach(LevelDoors findDoor, lvlScene->LvlData->doors){
+    foreach(LevelDoor findDoor, lvlScene->LvlData->doors){
         if(m_door.array_id == findDoor.array_id){
             door = findDoor;
             found = true;
@@ -82,7 +82,7 @@ void HistoryElementPlaceDoor::redo()
 
 }
 
-void HistoryElementPlaceDoor::historyRemoveDoors(const LevelDoors &/*door*/, QGraphicsItem* item)
+void HistoryElementPlaceDoor::historyRemoveDoors(const LevelDoor &/*door*/, QGraphicsItem* item)
 {
     ((ItemDoor *)item)->removeFromArray();
     if(item) delete (item);

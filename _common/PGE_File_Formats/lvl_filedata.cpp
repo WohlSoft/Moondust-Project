@@ -54,9 +54,9 @@ LevelNPC    FileFormats::dummyLvlNpc()
     return dummyNPC;
 }
 
-LevelDoors  FileFormats::dummyLvlDoor()
+LevelDoor  FileFormats::dummyLvlDoor()
 {
-    LevelDoors dummyDoor;
+    LevelDoor dummyDoor;
 
     dummyDoor.ix = 0;
     dummyDoor.iy = 0;
@@ -146,9 +146,9 @@ LevelPhysEnv FileFormats::dummyLvlPhysEnv()
     return dummyWater;
 }
 
-LevelEvents FileFormats::dummyLvlEvent()
+LevelSMBX64Event FileFormats::dummyLvlEvent()
 {
-    LevelEvents dummyEvent;
+    LevelSMBX64Event dummyEvent;
 
     dummyEvent.name="";
     dummyEvent.msg="";
@@ -175,7 +175,7 @@ LevelEvents FileFormats::dummyLvlEvent()
     dummyEvent.move_camera_y=0.0;
     dummyEvent.scroll_section=0;
 
-    LevelEvents_layers events_layers;
+    LevelEvent_layers events_layers;
     dummyEvent.layers.clear();
     for(int j=0; j< 21; j++)
     {
@@ -188,7 +188,7 @@ LevelEvents FileFormats::dummyLvlEvent()
     dummyEvent.layers_show.clear();
     dummyEvent.layers_toggle.clear();
 
-    LevelEvents_Sets events_sets;
+    LevelEvent_Sets events_sets;
     dummyEvent.sets.clear();
     for(int j=0; j< 21; j++)
     {
@@ -229,9 +229,9 @@ LevelSection FileFormats::dummyLvlSection()
     return dummySection;
 }
 
-LevelLayers FileFormats::dummyLvlLayer()
+LevelLayer FileFormats::dummyLvlLayer()
 {
-    LevelLayers dummyLayer;
+    LevelLayer dummyLayer;
     dummyLayer.array_id = 0;
     dummyLayer.name = "";
     dummyLayer.hidden = false;
@@ -313,7 +313,7 @@ LevelData FileFormats::dummyLvlDataArray()
         //Destroyed Blocks
         //Spawned NPCs
 
-    LevelLayers layers;
+    LevelLayer layers;
         layers.hidden = false;
         layers.locked = false;
         layers.name = "Default";
@@ -337,7 +337,7 @@ LevelData FileFormats::dummyLvlDataArray()
         //P Switch - Start
         //P Switch - End
 
-    LevelEvents events = dummyLvlEvent();
+    LevelSMBX64Event events = dummyLvlEvent();
 
         events.array_id = NewFileData.events_array_id;
         NewFileData.events_array_id++;

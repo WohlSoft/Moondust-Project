@@ -10,14 +10,14 @@ class HistoryElementRemoveWarp : public QObject, public IHistoryElement
     Q_INTERFACES(IHistoryElement)
 
 public:
-    explicit HistoryElementRemoveWarp(const LevelDoors &door, QObject *parent = 0);
+    explicit HistoryElementRemoveWarp(const LevelDoor &door, QObject *parent = 0);
     virtual ~HistoryElementRemoveWarp();
     virtual QString getHistoryName();
     virtual void undo();
     virtual void redo();
 
 private:
-    LevelDoors m_removedDoor;
+    LevelDoor m_removedDoor;
 };
 
 #endif // HISTORYELEMETNREMOVEWARP_H

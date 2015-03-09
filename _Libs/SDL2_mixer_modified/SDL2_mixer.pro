@@ -1,9 +1,11 @@
 TEMPLATE = lib
 CONFIG -= app_bundle
 CONFIG -= qt
-#CONFIG += dll
-#CONFIG += static
+CONFIG += dll
+CONFIG -= static
 
+QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-sign-compare
+QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 static: {
@@ -42,26 +44,52 @@ LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
 }
+unix:{
+LIBS += -L../_builds/linux/lib
+INCLUDEPATH += ../_builds/linux/include
+}
 LIBS += -lSDL2
+
 win32:{
 LIBS += -lwinmm -lm -lwinmm
 }
 
-DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MODPLUG_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES
+DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
+USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+DEFINES += MODPLUG_MUSIC
 
 macx||win32: {
 DEFINES += USE_NATIVE_MIDI
 }
 
-LIBS += -L../_builds/sdl2_mixer_mod -lvorbisfile -lvorbis -lmad
+LIBS += -L../_builds/sdl2_mixer_mod
+
 win32:{
-LIBS +=-lmodplug.dll
+    LIBS += -lvorbisfile.dll -lvorbis.dll -lmodplug.dll -lFLAC.dll -logg.dll -static-libgcc -static-libstdc++ -static -lpthread
 } else {
-LIBS +=-lmodplug
+    LIBS += -lvorbisfile -lvorbis -lmodplug -lFLAC -logg
 }
 
-LIBS += -lFLAC -logg -lm
+LIBS += -lmad -lm
+
+unix: {
+    SDL2MixerH.path =  ../_builds/linux/include/SDL2
+}
+win32: {
+    SDL2MixerH.path =  ../_builds/win32/include/SDL2
+}
+SDL2MixerH.files += SDL_mixer.h
+
+unix: {
+SDL2MixerSO.path = ../_builds/linux/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+}
+win32: {
+SDL2MixerSO.path = ../_builds/win32/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
+}
+INSTALLS = SDL2MixerH SDL2MixerSO
+
 
 HEADERS += \
     begin_code.h \

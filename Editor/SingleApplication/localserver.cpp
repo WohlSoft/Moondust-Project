@@ -209,23 +209,20 @@ void LocalServer::onCMD(QString data)
             case 2:
             {
                 IntEngine::quit();
-
-                qDebug()<<"Set Window state";
-                MainWinConnect::pMainWin->setWindowState((MainWinConnect::pMainWin->windowState()&
-                                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)))
-                                                          |Qt::WindowActive);
-                if(MainWinConnect::pMainWin->isMinimized())
-                {
-                    MainWinConnect::pMainWin->raise();
-                    MainWinConnect::pMainWin->activateWindow();
-                    MainWinConnect::pMainWin->showNormal();
-                }
-                qDebug()<<"Set active Window";
-                qApp->setActiveWindow(MainWinConnect::pMainWin);
-                qDebug()<<"Update menus";
-                MainWinConnect::pMainWin->updateMenus();
-                qDebug()<<"IntEngine::quit();";
-                IntEngine::quit();
+                //qDebug()<<"Set Window state";
+                //MainWinConnect::pMainWin->setWindowState(MainWinConnect::pMainWin->windowState()&
+                //                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)));
+                //if(MainWinConnect::pMainWin->isMinimized())
+                //{
+                //    MainWinConnect::pMainWin->raise();
+                //    MainWinConnect::pMainWin->showNormal();
+                //}
+                //qDebug()<<"Set active Window";
+                //qApp->setActiveWindow(MainWinConnect::pMainWin);
+                //qDebug()<<"Update menus";
+                //MainWinConnect::pMainWin->updateMenus();
+                //qDebug()<<"IntEngine::quit();";
+                //IntEngine::quit();
                 break;
             }
             default:
