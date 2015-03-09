@@ -25,7 +25,7 @@ signals:
     void foundBGO(const LevelBGO &sourceBGO, QGraphicsItem* item);
     void foundNPC(const LevelNPC &sourceNPC, QGraphicsItem* item);
     void foundPhysEnv(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem* item);
-    void foundDoor(const LevelDoors &sourceDoor, QGraphicsItem* item);
+    void foundDoor(const LevelDoor &sourceDoor, QGraphicsItem* item);
     void foundPlayerPoint(const PlayerPoint &sourcePayerPoint, QGraphicsItem* item);
 
     //Overworld

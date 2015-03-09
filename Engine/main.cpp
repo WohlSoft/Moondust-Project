@@ -52,8 +52,8 @@
 
 #include <Box2D/Box2D.h>
 
-//#include <oolua/oolua.h>
-//#include <QMessageBox>
+#include <oolua/oolua.h>
+#include <QMessageBox>
 
 #include <iostream>
 using namespace std;
@@ -71,11 +71,11 @@ enum Level_returnTo
 Level_returnTo end_level_jump=RETURN_TO_EXIT;
 
 
-//void say(const char* input)
-//{
-//    QMessageBox::information(NULL, "test", input);
-//}
-//OOLUA_CFUNC(say, l_say);
+void say(std::string input)
+{
+    QMessageBox::information(NULL, "Lua test", QString::fromStdString(input));
+}
+OOLUA_CFUNC(say, l_say);
 
 int main(int argc, char *argv[])
 {
@@ -106,12 +106,6 @@ int main(int argc, char *argv[])
 
     //Init log writer
     LoadLogSettings();
-
-
-    //OOLUA::Script vm;
-    //OOLUA::set_global(vm.state(), "say", l_say);
-    //OOLUA::run_chunk(vm.state(),"say(\"Hello Lua\")");
-
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
@@ -282,6 +276,9 @@ MainMenu:
 
 PlayWorldMap:
 {
+    OOLUA::Script vm;
+    OOLUA::set_global(vm.state(), "say", l_say);
+    OOLUA::run_chunk(vm.state(),"say(\"World map player comming soon!\")");
 
     goto MainMenu;
 }

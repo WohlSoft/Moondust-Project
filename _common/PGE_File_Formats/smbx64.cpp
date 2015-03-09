@@ -24,7 +24,7 @@ namespace smbx64Format
     QRegExp isint = QRegExp("^\\d+$");     //Check "Is Numeric"
     QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
     QRegExp issfloat = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
+    QRegExp qstr = QRegExp("^\"(?:[^\\\\]|\\\\.)*\"$");
     QRegExp boolwords = QRegExp("^(#TRUE#|#FALSE#)$");
     QRegExp booldeg = QRegExp("^(1|0)$");
 }
@@ -74,6 +74,20 @@ bool SMBX64::wBoolR(QString in)
 {
     using namespace smbx64Format;
     return ((in=="#TRUE#")?true:false);
+}
+
+QString SMBX64::StrToStr(QString in)
+{
+    QString target = in;
+    if(target.isEmpty())
+        return target;
+    if(target[0]==QChar('\"'))
+        target.remove(0,1);
+    if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
+        target.remove(target.size()-1,1);
+
+    target.replace("\"", "\'");//Correct damaged by SMBX line
+    return target;
 }
 
 

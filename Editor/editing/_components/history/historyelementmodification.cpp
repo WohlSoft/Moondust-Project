@@ -82,7 +82,7 @@ void HistoryElementModification::processReplacement(const LevelData &toRemoveDat
         connect(&lvlSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(processBGO(LevelBGO,QGraphicsItem*)));
         connect(&lvlSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(processNPC(LevelNPC,QGraphicsItem*)));
         connect(&lvlSearcher, SIGNAL(foundPhysEnv(LevelPhysEnv,QGraphicsItem*)), this, SLOT(processPhysEnv(LevelPhysEnv,QGraphicsItem*)));
-        connect(&lvlSearcher, SIGNAL(foundDoor(LevelDoors,QGraphicsItem*)), this, SLOT(processDoor(LevelDoors,QGraphicsItem*)));
+        connect(&lvlSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(processDoor(LevelDoor,QGraphicsItem*)));
         connect(&lvlSearcher, SIGNAL(foundPlayerPoint(PlayerPoint,QGraphicsItem*)), this, SLOT(processPlayerPoint(PlayerPoint,QGraphicsItem*)));
 
         lvlSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
@@ -208,7 +208,7 @@ void HistoryElementModification::processPhysEnv(const LevelPhysEnv &sourcePhysEn
     }
 }
 
-void HistoryElementModification::processDoor(const LevelDoors &sourceDoor, QGraphicsItem *item)
+void HistoryElementModification::processDoor(const LevelDoor &sourceDoor, QGraphicsItem *item)
 {
     Q_UNUSED(sourceDoor)
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);

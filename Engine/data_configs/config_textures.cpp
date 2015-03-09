@@ -201,6 +201,81 @@ long  ConfigManager::getBgoTexture(long bgoID)
 
 
 
+long ConfigManager::getEffectTexture(long effectID)
+{
+    if(!lvl_effects_indexes.contains(effectID))
+    {
+        return -1;
+    }
+
+    if(lvl_effects_indexes[effectID].isInit)
+    {
+
+        if(lvl_effects_indexes[effectID].textureArrayId < level_textures.size())
+            return lvl_effects_indexes[effectID].textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_EFFECT.getCustomFile(lvl_effects_indexes[effectID].image_n);
+        QString maskFile = Dir_EFFECT.getCustomFile(lvl_effects_indexes[effectID].mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = level_textures.size();
+
+        lvl_effects_indexes[effectID].textureArrayId = id;
+
+        level_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( level_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        lvl_effects_indexes[effectID].image = &(level_textures[id]);
+        lvl_effects_indexes[effectID].textureID = level_textures[id].texture;
+        lvl_effects_indexes[effectID].isInit = true;
+
+        //Also, load and init animator
+        if(lvl_effects_indexes[effectID].animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            lvl_effects_indexes[effectID].frame_h =
+                    (int)round(double(level_textures[id].h)
+                               /double(lvl_effects_indexes[effectID].frames));
+
+            //store animated texture value back
+            level_textures[id].h = lvl_effects_indexes[effectID].frame_h;
+
+            SimpleAnimator animator(
+                            true,
+                            lvl_effects_indexes[effectID].frames,
+                            lvl_effects_indexes[effectID].framespeed,
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_EFFECT.push_back(animator);
+            lvl_effects_indexes[effectID].animator_ID = Animator_EFFECT.size()-1;
+        }
+
+        return id;
+    }
+}
+
 
 
 

@@ -118,6 +118,8 @@
         <file>images/lock_closed.png</file>
         <file>warn.png</file>
         <file>question.png</file>
+        <file>images/goto_left_bottom.png</file>
+        <file>images/goto_left_top.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

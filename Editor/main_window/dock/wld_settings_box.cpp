@@ -32,6 +32,7 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     ui(new Ui::WorldSettingsBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     world_settings_lock_fields=false;

@@ -39,6 +39,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     ui(new Ui::LvlItemProperties)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     npcSpecSpinOffset=0;
     npcSpecSpinOffset_2=0;

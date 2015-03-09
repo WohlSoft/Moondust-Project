@@ -3,7 +3,7 @@
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_events_box.h>
 
-HistoryElementModifyEvent::HistoryElementModifyEvent(const LevelEvents &event, bool didRemove, QObject *parent) :
+HistoryElementModifyEvent::HistoryElementModifyEvent(const LevelSMBX64Event &event, bool didRemove, QObject *parent) :
     QObject(parent),
     m_event(event),
     m_didRemove(didRemove)
@@ -45,7 +45,7 @@ void HistoryElementModifyEvent::doEventRemove()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    LevelEvents rmEvents = m_event;
+    LevelSMBX64Event rmEvents = m_event;
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     for (int i = 0; i < lvlScene->LvlData->events.size(); i++) {
@@ -73,7 +73,7 @@ void HistoryElementModifyEvent::doEventPlace()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    LevelEvents rmEvents = m_event;
+    LevelSMBX64Event rmEvents = m_event;
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     QListWidgetItem * item;
@@ -84,7 +84,7 @@ void HistoryElementModifyEvent::doEventPlace()
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
     item->setData(3, QString::number(rmEvents.array_id) );
     QListWidget* evList = MainWinConnect::pMainWin->dock_LvlEvents->getEventList();
-    LevelEvents NewEvent = rmEvents;
+    LevelSMBX64Event NewEvent = rmEvents;
 
 
     lvlScene->LvlData->events.push_back(NewEvent);

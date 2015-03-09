@@ -54,6 +54,7 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
     ui(new Ui::TilesetItemBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
     connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
     ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
@@ -142,7 +143,9 @@ void TilesetItemBox::on_tilesetGroup_currentIndexChanged(int index)
 {
     if(!mw()) return;
     Q_UNUSED(index);
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> change combobox's index");
+    #endif
     if(lockTilesetBox) return;
     makeCurrentTileset();
 }
@@ -244,7 +247,9 @@ void TilesetItemBox::editSelectedTileset()
 
 QScrollArea* TilesetItemBox::getFrameTilesetOfTab(QWidget* catTab)
 {
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> find QScroll Area");
+    #endif
 
     QList<QScrollArea*> framechildren = catTab->findChildren<QScrollArea*>();
     foreach(QScrollArea* f, framechildren){
@@ -259,15 +264,18 @@ QScrollArea* TilesetItemBox::getFrameTilesetOfTab(QWidget* catTab)
 
 QComboBox* TilesetItemBox::getGroupComboboxOfTab(QWidget* catTab)
 {
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> findCombobox");
+    #endif
     QComboBox* comboxes = catTab->findChild<QComboBox*>();
     return comboxes;
 }
 
 QWidget* TilesetItemBox::findTabWidget(const QString &categoryItem)
 {
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "TilesetBox -> find Tab");
-
+    #endif
     QTabWidget* cat = ui->TileSetsCategories;
     for(int i = 0; i < cat->count(); ++i){
         if(cat->tabText(i) == categoryItem){
@@ -575,7 +583,9 @@ void TilesetItemBox::makeAllTilesets()
     using namespace pge_tilesetbox;
     QTabWidget* cat = ui->TileSetsCategories;
 
+    #ifdef _DEBUG_
     DevConsole::log(QString("index %1 count %2").arg(current).arg(cat->count()), "Debug");
+    #endif
 
     for(int i=0; i< cat->count(); i++)
         makeSelectedTileset(i);
@@ -583,5 +593,7 @@ void TilesetItemBox::makeAllTilesets()
     if(cat->count() > current)
         cat->setCurrentIndex(current);
 
+    #ifdef _DEBUG_
     DevConsole::log(QString("index %1 count %2").arg(current).arg(cat->count()), "Debug");
+    #endif
 }

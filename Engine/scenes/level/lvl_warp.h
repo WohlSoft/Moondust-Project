@@ -31,7 +31,7 @@ public:
     ~LVL_Warp();
     void init();
 
-    LevelDoors data; //Local settings
+    LevelDoor data; //Local settings
 };
 
 #endif // LVL_WARP_H

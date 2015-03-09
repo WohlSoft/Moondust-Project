@@ -229,9 +229,9 @@ public:
         void placeWater(LevelPhysEnv &water, bool toGrid=false);
         void placePlayerPoint(PlayerPoint plr, bool init=false);
 
-        void placeDoor(LevelDoors &door, bool toGrid=false);
-        void placeDoorEnter(LevelDoors &door, bool toGrid=false, bool init=false);
-        void placeDoorExit(LevelDoors &door, bool toGrid=false, bool init=false);
+        void placeDoor(LevelDoor &door, bool toGrid=false);
+        void placeDoorEnter(LevelDoor &door, bool toGrid=false, bool init=false);
+        void placeDoorExit(LevelDoor &door, bool toGrid=false, bool init=false);
 
 
     // ///////////////////Item Locks////////////////////////////
@@ -468,7 +468,7 @@ public:
         void addRemoveHistory(LevelData removedItems);
         void addPlaceHistory(LevelData placedItems);
         void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
-        void addPlaceDoorHistory(LevelDoors door, bool isEntrance);
+        void addPlaceDoorHistory(LevelDoor door, bool isEntrance);
         void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
         void addChangeSettingsHistory(LevelData modifiedItems, HistorySettings::LevelSettingSubType subType, QVariant extraData);
         void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
@@ -479,13 +479,13 @@ public:
         void addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                    long newLeft, long newTop, long newRight, long newBottom);
         void addAddWarpHistory(int array_id, int listindex, int doorindex);
-        void addRemoveWarpHistory(LevelDoors removedDoor);
+        void addRemoveWarpHistory(LevelDoor removedDoor);
         void addChangeWarpSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addAddEventHistory(LevelEvents ev);
-        void addRemoveEventHistory(LevelEvents ev);
-        void addDuplicateEventHistory(LevelEvents newDuplicate);
+        void addAddEventHistory(LevelSMBX64Event ev);
+        void addRemoveEventHistory(LevelSMBX64Event ev);
+        void addDuplicateEventHistory(LevelSMBX64Event newDuplicate);
         void addChangeEventSettingsHistory(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
-        void addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer);
+        void addChangedNewLayerHistory(LevelData changedItems, LevelLayer newLayer);
         void addAddLayerHistory(int array_id, QString name);
         void addRemoveLayerHistory(LevelData modData);
         void addRenameEventHistory(int array_id, QString oldName, QString newName);

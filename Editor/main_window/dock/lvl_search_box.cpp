@@ -37,6 +37,7 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     ui(new Ui::LvlSearchBox)
 {
     setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
 
     QRect mwg = mw()->geometry();

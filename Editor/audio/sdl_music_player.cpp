@@ -171,6 +171,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
                 type==MUS_MP3?"MUS_MP3":
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
+                type==MUS_SPC?"MUS_SPC":
                 "Unknown");
 #endif
 }

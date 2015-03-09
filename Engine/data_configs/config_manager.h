@@ -27,6 +27,7 @@
 #include "obj_bgo.h"
 #include "obj_bg.h"
 #include "obj_player.h"
+#include "obj_effect.h"
 
 #include <QMap>
 #include <QSettings>
@@ -282,6 +283,17 @@ public:
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
 
+
+
+    /*****Level Effects************/
+    static bool loadLevelEffects();
+    static long getEffectTexture(long effectID);
+    /*****************************/
+    static QList<obj_effect >    lvl_effects;
+    static QMap<long, obj_effect>   lvl_effects_indexes;
+    static CustomDirManager Dir_EFFECT;
+    static QList<SimpleAnimator > Animator_EFFECT;
+    /*****Level Effects************/
 
 
     /********Playable characters*******/
