@@ -383,8 +383,7 @@ void LevelScene::render()
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
                                .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0'))
-                               .arg(uTick), 10,120);
+                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,120);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
