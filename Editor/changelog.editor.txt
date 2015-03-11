@@ -17,6 +17,7 @@ Editor 0.2.3
 - Fixed blinking of toolboxes on startup.
 - Added SoX autio converter GUI to provide quick and easy audio files fixing toolset.
 - Added message box event creator for blocks context menu.
+- Fixed bug of events toolbox when changing language.
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
