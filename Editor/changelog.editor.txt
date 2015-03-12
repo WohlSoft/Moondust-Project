@@ -1,4 +1,4 @@
-Editor 0.2.3
+Editor 0.3.0
 - Fixed group collision random crash
 - Fixed 'too large weight' crash
 - Added update checking
