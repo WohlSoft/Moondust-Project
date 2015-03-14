@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>251</width>
-    <height>505</height>
+    <width>275</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>251</width>
-    <height>505</height>
+    <width>275</width>
+    <height>635</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>524287</height>
    </size>
   </property>
   <property name="font">
@@ -351,6 +357,12 @@
        </property>
        <item>
         <widget class="QGroupBox" name="WarpEntranceGrp">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>111</height>
+          </size>
+         </property>
          <property name="title">
           <string>Entrance</string>
          </property>
@@ -546,10 +558,13 @@
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>0</width>
+              <height>22</height>
              </size>
             </property>
            </spacer>
@@ -559,10 +574,13 @@
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>0</width>
+              <height>22</height>
              </size>
             </property>
            </spacer>
@@ -574,6 +592,12 @@
         <widget class="QGroupBox" name="WarpExitGrp">
          <property name="enabled">
           <bool>true</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>111</height>
+          </size>
          </property>
          <property name="title">
           <string>Exit</string>
@@ -711,10 +735,13 @@
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>0</width>
+              <height>22</height>
              </size>
             </property>
            </spacer>
@@ -724,10 +751,13 @@
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>0</width>
+              <height>22</height>
              </size>
             </property>
            </spacer>
@@ -851,6 +881,9 @@
         <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Minimum</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1000,11 +1033,8 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
       </property>
      </spacer>
     </item>
