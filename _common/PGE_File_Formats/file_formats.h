@@ -63,12 +63,12 @@ public:
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
-    static LevelDoors dummyLvlDoor();
+    static LevelDoor dummyLvlDoor();
     static LevelBlock dummyLvlBlock();
     static LevelBGO dummyLvlBgo();
     static LevelPhysEnv dummyLvlPhysEnv();
-    static LevelLayers dummyLvlLayer();
-    static LevelEvents dummyLvlEvent();
+    static LevelLayer dummyLvlLayer();
+    static LevelSMBX64Event dummyLvlEvent();
     static PlayerPoint dummyLvlPlayerPoint(int id=0);
     static LevelSection dummyLvlSection();
 

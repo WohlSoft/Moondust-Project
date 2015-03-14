@@ -214,9 +214,9 @@ void MainWindow::applyTheme(QString themeDir)
     section21.addPixmap(Themes::Image(Themes::section_21_default), QIcon::Normal, QIcon::Off);
     ui->actionSection_21->setIcon(section21);
 
-    ui->actionReset_position->setIcon(Themes::icon(Themes::section_reset_pos));
 
-
+    ui->actionReset_position->setIcon(Themes::icon(Themes::section_goto_left_bottom));
+    ui->actionGo_to_Section->setIcon(Themes::icon(Themes::section_goto_left_top));
 
 
 

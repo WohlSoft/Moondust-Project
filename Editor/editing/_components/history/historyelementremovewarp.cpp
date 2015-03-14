@@ -4,7 +4,7 @@
 #include <main_window/dock/lvl_warp_props.h>
 
 
-HistoryElementRemoveWarp::HistoryElementRemoveWarp(const LevelDoors &door, QObject *parent) :
+HistoryElementRemoveWarp::HistoryElementRemoveWarp(const LevelDoor &door, QObject *parent) :
     QObject(parent),
     m_removedDoor(door)
 {}

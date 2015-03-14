@@ -94,7 +94,7 @@ void HistoryElementAddWarp::redo()
     if(!(lvlScene = qobject_cast<LvlScene*>(m_scene)))
         return;
 
-    LevelDoors newDoor = FileFormats::dummyLvlDoor();
+    LevelDoor newDoor = FileFormats::dummyLvlDoor();
     newDoor.array_id = m_array_id;
     newDoor.index = m_doorindex;
 

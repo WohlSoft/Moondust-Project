@@ -134,7 +134,7 @@ struct LevelNPC
     bool is_star;
 };
 
-struct LevelDoors
+struct LevelDoor
 {
     long ix;    //Entrance x
     long iy;    //Entrance y
@@ -180,7 +180,7 @@ struct LevelPhysEnv
     unsigned int index;
 };
 
-struct LevelLayers
+struct LevelLayer
 {
     QString name;
     bool hidden;
@@ -190,14 +190,14 @@ struct LevelLayers
     unsigned int array_id;
 };
 
-struct LevelEvents_layers
+struct LevelEvent_layers
 {
     QString hide;
     QString show;
     QString toggle;
 };
 
-struct LevelEvents_Sets
+struct LevelEvent_Sets
 {
     long music_id;
     long background_id;
@@ -207,20 +207,20 @@ struct LevelEvents_Sets
     long position_right;
 };
 
-struct LevelEvents
+struct LevelSMBX64Event
 {
     QString name;
     QString msg;
     long sound_id;
     long end_game;
-    QVector<LevelEvents_layers > layers;
+    QVector<LevelEvent_layers > layers;
 
     bool nosmoke;
     QStringList layers_hide;
     QStringList layers_show;
     QStringList layers_toggle;
 
-    QVector<LevelEvents_Sets > sets;
+    QVector<LevelEvent_Sets > sets;
     QString trigger;
     long trigger_timer;
 
@@ -263,13 +263,13 @@ struct LevelData
     unsigned int bgo_array_id;   //latest array_id
     QVector<LevelNPC > npc;                //NPCs
     unsigned int npc_array_id;   //latest array_id
-    QVector<LevelDoors > doors;            //Warps and Doors
+    QVector<LevelDoor > doors;            //Warps and Doors
     unsigned int doors_array_id;   //latest array_id
     QVector<LevelPhysEnv > physez;            //Physical Environment zones
     unsigned int physenv_array_id;   //latest array_id
-    QVector<LevelLayers > layers;          //Layers
+    QVector<LevelLayer > layers;          //Layers
     unsigned int layers_array_id;   //latest array_id
-    QVector<LevelEvents > events;          //Events
+    QVector<LevelSMBX64Event > events;          //Events
     unsigned int events_array_id;   //latest array_id
 
     //meta:

@@ -20,12 +20,12 @@ public slots:
     void historyUndoChangeLayerBGO(const LevelBGO &sourceBGO, QGraphicsItem* item);
     void historyUndoChangeLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem* item);
     void historyUndoChangeLayerWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem* item);
-    void historyUndoChangeLayerDoor(const LevelDoors &sourceDoor, QGraphicsItem* item);
+    void historyUndoChangeLayerDoor(const LevelDoor &sourceDoor, QGraphicsItem* item);
     void historyRedoChangeLayerBlocks(const LevelBlock &sourceBlock, QGraphicsItem* item);
     void historyRedoChangeLayerBGO(const LevelBGO &sourceBGO, QGraphicsItem* item);
     void historyRedoChangeLayerNPC(const LevelNPC &sourceNPC, QGraphicsItem* item);
     void historyRedoChangeLayerWater(const LevelPhysEnv &sourcePhysEnv, QGraphicsItem* item);
-    void historyRedoChangeLayerDoor(const LevelDoors &sourceDoor, QGraphicsItem* item);
+    void historyRedoChangeLayerDoor(const LevelDoor &sourceDoor, QGraphicsItem* item);
 
 signals:
 

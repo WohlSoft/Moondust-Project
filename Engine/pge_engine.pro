@@ -7,7 +7,7 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wstrict-aliasing=0 # -Wno-maybe-uninitialized -Wno-unused-local-typedefs
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 DESTDIR = ../bin
@@ -53,6 +53,14 @@ LIBS += -L../_Libs/_builds/commonlibs
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
+}
+macx: {
+    LIBS += -L ../_Libs/_builds/macos/lib
+    INCLUDEPATH += ../_Libs/_builds/macos/include
+}
+linux-g++: {
+    LIBS += -L ../_Libs/_builds/linux/lib
+    INCLUDEPATH += ../_Libs/_builds/linux/include
 }
 
 LIBS += -loolua -lbox2d -lSDL2
@@ -134,7 +142,11 @@ SOURCES += \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
     scenes/level/lvl_physenv.cpp \
     scenes/level/lvl_player_def.cpp \
-    data_configs/obj_player.cpp
+    data_configs/obj_player.cpp \
+    scenes/level/lvl_z_constants.cpp \
+    physics/phys_debug_draw.cpp \
+    data_configs/obj_effect.cpp \
+    scenes/level/gfx_effects.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -201,7 +213,9 @@ HEADERS  += \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
-    data_configs/obj_npc.h
+    data_configs/obj_npc.h \
+    physics/phys_debug_draw.h \
+    scenes/level/gfx_effects.h
 
 FORMS    += \
     data_configs/select_config.ui

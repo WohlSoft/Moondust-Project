@@ -49,7 +49,7 @@ void ToNewLayerBox::on_buttonBox_clicked(QAbstractButton *button)
         lHidden = ui->hide->isChecked();
 
         bool AlreadyExist=false;
-        foreach(LevelLayers layer, LvlData->layers)
+        foreach(LevelLayer layer, LvlData->layers)
         {
             if( layer.name==lName )
             {
