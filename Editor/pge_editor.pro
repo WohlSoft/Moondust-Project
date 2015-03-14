@@ -59,6 +59,14 @@ translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
 
+#DEFINES += USE_QMEDIAPLAYER
+!android:{
+DEFINES += USE_SDL_MIXER
+}
+DEFINES += PGE_EDITOR
+
+INSTALLS = translates
+contains(DEFINES, USE_SDL_MIXER):{
 sdlmodded.path = ../bin
 unix: {
 sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.so*
@@ -66,7 +74,9 @@ sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.so*
 win32: {
 sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.dll
 }
-INSTALLS = translates sdlmodded
+INSTALLS += sdlmodded
+}
+
 
 TARGET = pge_editor
 TEMPLATE = app
@@ -99,25 +109,21 @@ linux-g++: {
 
 macx: {
     INCLUDEPATH += -F$$(HOME)/Library/Frameworks
-    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
 } else {
-    LIBS += -lSDL2 -lSDL2_mixer
+contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 
+contains(DEFINES, USE_SDL_MIXER):{
 win32: LIBS += -lSDL2main
+}
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
 win32: LIBS += libwinmm
 
-#DEFINES += USE_QMEDIAPLAYER
-!android:{
-DEFINES += USE_SDL_MIXER
-}
-DEFINES += PGE_EDITOR
-
 INCLUDEPATH += . _includes "../_Libs" "../_common"
 
-USE_QMEDIAPLAYER: {
+contains(DEFINES, USE_QMEDIAPLAYER): {
     QT += multimedia
 }
 else
@@ -729,3 +735,14 @@ OTHER_FILES += \
     images/world16.png \
     _resources/mushroom.icns \
     _resources/mushroom.hqx
+
+DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
