@@ -38,6 +38,15 @@ void MainWindow::loadSettings()
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
+#ifdef Q_OS_WIN
+#define FloatDocks true
+#define FloatDocks_inv false
+#else
+#define FloatDocks false
+#define FloatDocks_inv true
+#endif
+
+
     settings.beginGroup("Main");
         //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
         GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
@@ -86,19 +95,19 @@ void MainWindow::loadSettings()
 
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
-        dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", true).toBool());
-        dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", true).toBool());
-        dock_LvlLayers->setFloating(settings.value("level-layers-float", true).toBool());
-        dock_LvlEvents->setFloating(settings.value("level-events-float", true).toBool());
-        dock_LvlItemProps->setFloating(settings.value("item-props-box-float", true).toBool());
-        dock_LvlSearchBox->setFloating(settings.value("level-search-float", true).toBool());
-        //dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
-        dock_WldSettingsBox->setFloating(settings.value("world-settings-box-float", true).toBool());
-        dock_WldItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
-        dock_WldSearchBox->setFloating(settings.value("world-search-float", true).toBool());
-        dock_TilesetBox->setFloating(settings.value("tileset-box-float", true).toBool());
-        dock_DebuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
-        dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
+        dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", FloatDocks).toBool());
+        dock_LvlSectionProps->setFloating(settings.value("level-section-set-float", FloatDocks).toBool());
+        dock_LvlLayers->setFloating(settings.value("level-layers-float", FloatDocks).toBool());
+        dock_LvlEvents->setFloating(settings.value("level-events-float", FloatDocks).toBool());
+        dock_LvlItemProps->setFloating(settings.value("item-props-box-float", FloatDocks).toBool());
+        dock_LvlSearchBox->setFloating(settings.value("level-search-float", FloatDocks).toBool());
+        dock_WldItemBox->setFloating(settings.value("world-item-box-float", false).toBool());
+        dock_WldSettingsBox->setFloating(settings.value("world-settings-box-float", FloatDocks).toBool());
+        dock_WldItemProps->setFloating(settings.value("world-itemprops-box-float", FloatDocks).toBool());
+        dock_WldSearchBox->setFloating(settings.value("world-search-float", FloatDocks).toBool());
+        dock_TilesetBox->setFloating(settings.value("tileset-box-float", FloatDocks).toBool());
+        dock_DebuggerBox->setFloating(settings.value("debugger-box-float", FloatDocks).toBool());
+        dock_BookmarksBox->setFloating(settings.value("bookmarks-box-float", FloatDocks).toBool());
 
         dock_LvlWarpProps->restoreGeometry(settings.value("doors-tool-box-geometry", dock_LvlWarpProps->saveGeometry()).toByteArray());
         dock_LvlSectionProps->restoreGeometry(settings.value("level-section-set-geometry", dock_LvlSectionProps->saveGeometry()).toByteArray());

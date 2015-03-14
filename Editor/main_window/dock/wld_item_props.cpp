@@ -44,7 +44,9 @@ WLD_ItemProps::WLD_ItemProps(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    #ifdef Q_OS_WIN
     setFloating(true);
+    #endif
     setGeometry(
                 mwg.x()+mwg.width()-width()-GOffset,
                 mwg.y()+120,

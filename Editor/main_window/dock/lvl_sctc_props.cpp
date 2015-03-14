@@ -41,7 +41,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     QRect mwg = mw()->geometry();
     int GOffset=240;
-    mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
+    mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
     setGeometry(
                 mwg.x()+mwg.width()-width()-GOffset,
@@ -111,15 +111,23 @@ void LvlSectionProps::setLevelSectionData()
     ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
     mw()->dock_LvlEvents->cbox_sct_mus()->addItem( tr("[Silence]"), "0" );
 
-    ui->LVLPropsBackImage->setIconSize(QSize(100,70));
-    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100,70));
+#ifdef Q_OS_WIN
+#define BkgIconHeight 70
+#else
+#define BkgIconHeight 25
+#endif
+
+    ui->LVLPropsBackImage->setIconSize(QSize(100,BkgIconHeight));
+    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100,BkgIconHeight));
 
     QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
             QListView *listVw = qobject_cast<QListView*>(abVw);
             if (listVw) {
                 listVw->setSpacing(2);
                 listVw->setDragEnabled(false);
+                #ifdef Q_OS_WIN
                 listVw->setViewMode(QListView::IconMode);
+                #endif
                 listVw->setUniformItemSizes(true);
             }
 
@@ -128,16 +136,19 @@ void LvlSectionProps::setLevelSectionData()
             if (listVw) {
                 listVw->setSpacing(2);
                 listVw->setDragEnabled(false);
+                #ifdef Q_OS_WIN
                 listVw->setViewMode(QListView::IconMode);
+                #endif
                 listVw->setUniformItemSizes(true);
             }
 
 
     for(i=0; i< mw()->configs.main_bg.size();i++)
     {
-        QPixmap bgThumb(100,70);
+        QPixmap bgThumb(100,BkgIconHeight);
         bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb);
+        bool isCustom=false;
 
         QPixmap tmp;
         tmp = mw()->configs.main_bg[i].image.scaledToHeight(70);
@@ -151,6 +162,7 @@ void LvlSectionProps::setLevelSectionData()
                 {
                     if(!edit->scene->uBGs[q].image.isNull())
                         tmp = edit->scene->uBGs[q].image.scaledToHeight(70);
+                    isCustom=true;
                     break;
                 }
             }
@@ -171,7 +183,11 @@ void LvlSectionProps::setLevelSectionData()
         }
         xx.end();
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
+        #ifndef Q_OS_WIN
+        bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
+        #endif
+
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
         mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
     }
 
