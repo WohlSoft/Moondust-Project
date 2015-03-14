@@ -25,13 +25,13 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="floating">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="features">
    <set>QDockWidget::AllDockWidgetFeatures</set>
   </property>
   <property name="allowedAreas">
-   <set>Qt::NoDockWidgetArea</set>
+   <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
    <string>Item Properties</string>
@@ -66,8 +66,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>280</width>
-         <height>1358</height>
+         <width>283</width>
+         <height>1619</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">

@@ -68,7 +68,9 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
 
     mw()->addDockWidget(Qt::BottomDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    #ifdef Q_OS_WIN
     setFloating(true);
+    #endif
     setGeometry(
                 dg.x()+GOffset,
                 dg.y()+dg.height()-600,
