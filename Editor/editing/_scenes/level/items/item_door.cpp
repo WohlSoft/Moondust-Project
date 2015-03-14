@@ -159,7 +159,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LayerName->addSeparator()->deleteLater();;
                 newLayer->deleteLater();
 
-            foreach(LevelLayers layer, scene->LvlData->layers)
+            foreach(LevelLayer layer, scene->LvlData->layers)
             {
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
@@ -261,12 +261,12 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
                         if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
                         }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
                             modDoors.doors.push_back(door);
@@ -287,12 +287,12 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
                         if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
                         }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
                             modDoors.doors.push_back(door);
@@ -313,12 +313,12 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")||(SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
                     {
                         if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = true;
                             door.isSetIn = false;
                             modDoors.doors.push_back(door);
                         }else if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            LevelDoor door = ((ItemDoor *) SelItem)->doorData;
                             door.isSetOut = false;
                             door.isSetIn = true;
                             modDoors.doors.push_back(door);
@@ -375,7 +375,7 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 ///////////////////MainArray functions/////////////////////////////
 void ItemDoor::setLayer(QString layer)
 {
-    foreach(LevelLayers lr, scene->LvlData->layers)
+    foreach(LevelLayer lr, scene->LvlData->layers)
     {
         if(lr.name==layer)
         {
@@ -506,7 +506,7 @@ QPoint ItemDoor::sourcePos()
 }
 
 
-void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
+void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
 {
     doorData = inD;
     direction = doorDir;

@@ -41,6 +41,8 @@ public:
 
     //Convert from string to internal data
     static bool wBoolR(QString in);
+    //Convert from SMBX64 string to internal
+    static QString StrToStr(QString in);
 
     //SMBX64 parameter string generators
     static QString IntS(long input);

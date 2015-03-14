@@ -20,6 +20,16 @@ checkState()
 	fi
 }
 
+buildLibs()
+{
+# build libraries
+cd "$PrjPath/_Libs/_sources"
+InstallTo=$(echo ~+/../_builds/linux)
+InstallTo=$(readlink -f $InstallTo)
+echo $InstallTo
+source ./___build_script.sh
+}
+
 PrjPath=$PWD
 if [ -f "$PWD/_paths.sh" ]
 then
@@ -31,12 +41,13 @@ else
 fi
 	
 #=======================================================================
-# build libraries
-cd "$PrjPath/_Libs/_sources"
-InstallTo=$(echo ~+/../_builds/linux)
-InstallTo=$(readlink -f $InstallTo)
-echo $InstallTo
-source ./___build_script.sh
+
+if [ $1 = "no-libs" ]; then
+	echo "Building of tag.gz libraries skiped"
+	echo "Building SDL2_mixer, OOLua and Box2D..."
+else
+	buildLibs
+fi
 
 cd "$PrjPath/_Libs"
 

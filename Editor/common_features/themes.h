@@ -97,7 +97,8 @@ public:
         draw_player1,
         draw_player2,
 
-        section_reset_pos
+        section_goto_left_bottom,
+        section_goto_left_top
     };
 
     enum Images

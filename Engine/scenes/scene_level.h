@@ -75,7 +75,7 @@ public:
     QPoint cameraStart;
     bool   cameraStartDirected;
     int    cameraStartDirection;
-    LevelDoors startWarp;
+    LevelDoor startWarp;
     int NewPlayerID;
 
     //Init 3 -> load Configs
@@ -158,32 +158,32 @@ public:
     /**************Z-Layers**************/
     static double zCounter;
 
-    static double Z_backImage; //Background
+    static const double Z_backImage; //Background
 
     //Background-2
-    static double Z_BGOBack2; // backround BGO
+    static const double Z_BGOBack2; // backround BGO
 
-    static double Z_blockSizable; // sizable blocks
+    static const double Z_blockSizable; // sizable blocks
 
     //Background-1
-    static double Z_BGOBack1; // backround BGO
+    static const double Z_BGOBack1; // backround BGO
 
-    static double Z_npcBack; // background NPC
-    static double Z_Block; // standart block
-    static double Z_npcStd; // standart NPC
-    static double Z_Player; //player Point
+    static const double Z_npcBack; // background NPC
+    static const double Z_Block; // standart block
+    static const double Z_npcStd; // standart NPC
+    static const double Z_Player; //player Point
 
     //Foreground-1
-    static double Z_BGOFore1; // foreground BGO
-    static double Z_BlockFore; //LavaBlock
-    static double Z_npcFore; // foreground NPC
+    static const double Z_BGOFore1; // foreground BGO
+    static const double Z_BlockFore; //LavaBlock
+    static const double Z_npcFore; // foreground NPC
     //Foreground-2
-    static double Z_BGOFore2; // foreground BGO
+    static const double Z_BGOFore2; // foreground BGO
 
-    static double Z_sys_PhysEnv;
-    static double Z_sys_door;
-    static double Z_sys_interspace1; // interSection space layer
-    static double Z_sys_sctBorder; // section Border
+    static const double Z_sys_PhysEnv;
+    static const double Z_sys_door;
+    static const double Z_sys_interspace1; // interSection space layer
+    static const double Z_sys_sctBorder; // section Border
     /**************Z-Layers**************/
 
 

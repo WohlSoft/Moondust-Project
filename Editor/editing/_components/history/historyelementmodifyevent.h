@@ -10,7 +10,7 @@ class HistoryElementModifyEvent : public QObject, public IHistoryElement
     Q_INTERFACES(IHistoryElement)
 
 public:
-    explicit HistoryElementModifyEvent(const LevelEvents &event, bool didRemove, QObject *parent = 0);
+    explicit HistoryElementModifyEvent(const LevelSMBX64Event &event, bool didRemove, QObject *parent = 0);
     virtual ~HistoryElementModifyEvent();
     virtual QString getHistoryName();
     virtual void undo();
@@ -20,7 +20,7 @@ public:
     void doEventPlace();
 
 private:
-    LevelEvents m_event;
+    LevelSMBX64Event m_event;
     bool m_didRemove;
 };
 

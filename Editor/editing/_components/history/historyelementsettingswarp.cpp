@@ -34,7 +34,7 @@ void HistoryElementSettingsWarp::undo()
     int array_id = m_array_id;
     int index = -1;
     QVariant extraData = m_modData;
-    LevelDoors * doorp;
+    LevelDoor * doorp;
     bool found = false;
 
     for(int i = 0; i < lvlScene->LvlData->doors.size(); i++){
@@ -120,7 +120,7 @@ void HistoryElementSettingsWarp::redo()
     int array_id = m_array_id;
     int index = -1;
     QVariant extraData = m_modData;
-    LevelDoors * doorp;
+    LevelDoor * doorp;
     bool found = false;
 
     for(int i = 0; i < lvlScene->LvlData->doors.size(); i++){

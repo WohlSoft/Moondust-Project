@@ -44,6 +44,10 @@ LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
 }
+unix:{
+LIBS += -L../_builds/linux/lib
+INCLUDEPATH += ../_builds/linux/include
+}
 LIBS += -lSDL2
 
 win32:{
@@ -67,6 +71,25 @@ win32:{
 }
 
 LIBS += -lmad -lm
+
+unix: {
+    SDL2MixerH.path =  ../_builds/linux/include/SDL2
+}
+win32: {
+    SDL2MixerH.path =  ../_builds/win32/include/SDL2
+}
+SDL2MixerH.files += SDL_mixer.h
+
+unix: {
+SDL2MixerSO.path = ../_builds/linux/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+}
+win32: {
+SDL2MixerSO.path = ../_builds/win32/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
+}
+INSTALLS = SDL2MixerH SDL2MixerSO
+
 
 HEADERS += \
     begin_code.h \

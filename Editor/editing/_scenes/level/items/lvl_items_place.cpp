@@ -194,7 +194,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 
 
-void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
+void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 {
     if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
     {
@@ -216,7 +216,7 @@ void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
 
 
 
-void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
+void LvlScene::placeDoorEnter(LevelDoor &door, bool toGrid, bool init)
 {
     ItemDoor * doorItemEntrance;
 
@@ -241,7 +241,7 @@ void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
 
 
 
-void LvlScene::placeDoorExit(LevelDoors &door, bool toGrid, bool init)
+void LvlScene::placeDoorExit(LevelDoor &door, bool toGrid, bool init)
 {
 
     ItemDoor * doorItemExit;

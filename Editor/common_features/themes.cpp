@@ -148,8 +148,8 @@ void Themes::init()
     images_map[section_21_selected]= QPixmap(":/sections/sections/21.png");
     images_map[section_21_default] = QPixmap(":/sections/sections/21_n.png");
 
-    icons_map[section_reset_pos] = QIcon(":/images/reset_pos.png");
-
+    icons_map[section_goto_left_bottom] = QIcon(":/images/goto_left_bottom.png");
+    icons_map[section_goto_left_top] = QIcon(":/images/goto_left_top.png");
 
     images_map[blocks_free] = QPixmap(":/locks/block_op.png");
     images_map[blocks_locked] = QPixmap(":/locks/block_cl.png");
@@ -432,7 +432,9 @@ void Themes::loadTheme(QString themeDir)
         loadImage(guiset,"section-20-default", section_20_default );
         loadImage(guiset,"section-21-selected", section_21_selected );
         loadImage(guiset,"section-21-default", section_21_default );
-        loadIcon(guiset,"section-reset-pos", section_reset_pos );
+        loadIcon(guiset,"section-reset-pos", section_goto_left_bottom );
+        loadIcon(guiset,"section-goto-left-bottom", section_goto_left_bottom );
+        loadIcon(guiset,"section-goto-left-top", section_goto_left_top );
     guiset.endGroup();
 
     guiset.beginGroup("locks-level");
