@@ -29,6 +29,12 @@ QString ApplicationPath_x;
 
 QString AppPathManager::_settingsPath;
 
+#ifndef __ANDROID__
+#define UserDirName "/.PGE_Project"
+#else
+#define UserDirName "/PGE_Project"
+#endif
+
 void AppPathManager::initAppPath()
 {
     QApplication::setOrganizationName(_COMPANY);
@@ -43,6 +49,11 @@ void AppPathManager::initAppPath()
     QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
     if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
         ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    #elif __ANDROID__
+    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)+"/PGE Project Data";
+    QDir appPath(ApplicationPath);
+    if(!appPath.exists())
+        appPath.mkpath(ApplicationPath);
     #endif
 
     /*
@@ -64,12 +75,16 @@ void AppPathManager::initAppPath()
 
     if(userDir)
     {
+        #ifndef __ANDROID__
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        #else
+        QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+        #endif
         if(!path.isEmpty())
         {
-            QDir appDir(path+"/.PGE_Project");
+            QDir appDir(path+UserDirName);
             if(!appDir.exists())
-                if(!appDir.mkpath(path+"/.PGE_Project"))
+                if(!appDir.mkpath(path+UserDirName))
                     goto defaultSettingsPath;
 
             _settingsPath = appDir.absolutePath();
@@ -101,12 +116,16 @@ QString AppPathManager::userAppDir()
 
 void AppPathManager::install()
 {
+    #ifndef __ANDROID__
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    #else
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    #endif
     if(!path.isEmpty())
     {
-        QDir appDir(path+"/.PGE_Project");
+        QDir appDir(path+UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path+"/.PGE_Project"))
+            if(!appDir.mkpath(path+UserDirName))
                 return;
 
         QSettings setup;

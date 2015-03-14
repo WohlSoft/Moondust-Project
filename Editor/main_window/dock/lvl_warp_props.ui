@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>275</width>
-    <height>635</height>
+    <height>570</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>275</width>
-    <height>635</height>
+    <height>570</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -117,6 +117,18 @@
           </item>
           <item>
            <widget class="QComboBox" name="WarpLayer">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="maxVisibleItems">
              <number>50</number>
             </property>
@@ -237,10 +249,29 @@
            <number>0</number>
           </property>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="WarpNeedAStars"/>
+           <widget class="QSpinBox" name="WarpNeedAStars">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item row="2" column="0">
            <widget class="QComboBox" name="WarpType">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
+            </property>
             <property name="maxVisibleItems">
              <number>20</number>
             </property>
@@ -1035,6 +1066,12 @@
       </property>
       <property name="sizeType">
        <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
       </property>
      </spacer>
     </item>
