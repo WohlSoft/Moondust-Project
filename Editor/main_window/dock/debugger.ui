@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>280</width>
-    <height>400</height>
+    <height>415</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -27,7 +27,7 @@
     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
   </property>
   <property name="allowedAreas">
-   <set>Qt::NoDockWidgetArea</set>
+   <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
    <string>Debugger</string>
