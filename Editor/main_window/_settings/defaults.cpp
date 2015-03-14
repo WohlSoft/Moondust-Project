@@ -80,15 +80,16 @@ void MainWindow::setUiDefults()
                                        QSize(dg.width()-100,
                                              dg.height()-100), dg));
 
+    dock_LvlItemBox      = new LevelItemBox(this);
+    dock_WldItemBox      = new WorldItemBox(this);
+
     dock_LvlWarpProps    = new LvlWarpBox(this);
     dock_LvlSectionProps = new LvlSectionProps(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
-    dock_LvlItemBox      = new LevelItemBox(this);
     dock_LvlSearchBox    = new LvlSearchBox(this);
     dock_LvlLayers       = new LvlLayersBox(this);
     dock_LvlEvents       = new LvlEventsBox(this);
 
-    dock_WldItemBox      = new WorldItemBox(this);
     dock_WldItemProps    = new WLD_ItemProps(this);
     dock_WldSearchBox    = new WldSearchBox(this);
     dock_WldSettingsBox  = new WorldSettingsBox(this);
@@ -96,6 +97,18 @@ void MainWindow::setUiDefults()
     dock_TilesetBox      = new TilesetItemBox(this);
     dock_BookmarksBox    = new BookmarksBox(this);
     dock_DebuggerBox     = new DebuggerBox(this);
+
+    #ifndef Q_OS_WIN
+    tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
+    tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
+    tabifyDockWidget(dock_LvlItemProps, dock_LvlSearchBox);
+    tabifyDockWidget(dock_LvlSearchBox, dock_LvlLayers);
+    tabifyDockWidget(dock_LvlLayers, dock_LvlEvents);
+    tabifyDockWidget(dock_LvlEvents, dock_WldItemProps);
+    tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
+    tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
+    tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
+    #endif
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
@@ -122,6 +135,11 @@ void MainWindow::setUiDefults()
         ui->actionFill->setVisible(false);
         ui->actionFloodSectionOnly->setVisible(false);
         ui->actionFloodSectionOnly->setEnabled(false);
+
+#ifndef Q_OS_WIN
+     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
+     addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
+#endif
 
 
 
