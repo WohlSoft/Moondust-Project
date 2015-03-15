@@ -109,7 +109,11 @@ MainWindow::MainWindow(QMdiArea *parent) :
     }
     splash.startAnimations();
 
+    #ifndef Q_OS_ANDROID
     splash.show();
+    #else
+    splash.showFullScreen();
+    #endif
     /*********************Splash Screen**********************/
 
     loadSettings();

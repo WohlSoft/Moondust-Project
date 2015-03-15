@@ -30,6 +30,7 @@
 #include "config_manager.h"
 #include <ui_config_manager.h>
 
+#include <_includes/GlobalDefines>
 
 #include <QPainter>
 #include <QAbstractItemDelegate>
@@ -124,12 +125,12 @@ void ListDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & opti
 
     //TITLE
     r = option.rect.adjusted(imageSpace, 0, -10, -30);
-    painter->setFont( QFont( "Lucida Grande", 10, QFont::Bold ) );
+    painter->setFont( QFont( "Lucida Grande", PGEDefaultFontSize+2, QFont::Bold ) );
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignBottom|Qt::AlignLeft, title, &r);
 
     //DESCRIPTION
     r = option.rect.adjusted(imageSpace, 30, -10, 30);
-    painter->setFont( QFont( "Lucida Grande", 8, QFont::Normal ) );
+    painter->setFont( QFont( "Lucida Grande", PGEDefaultFontSize, QFont::Normal ) );
     painter->drawText(r.left(), r.top(), r.width(), r.height(), Qt::AlignLeft, description, &r);
 }
 
