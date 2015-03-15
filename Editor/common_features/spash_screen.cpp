@@ -4,6 +4,11 @@
 #ifdef Q_OS_ANDROID
 #include <QPixmap>
 #include <QDesktopWidget>
+#define RatioWidth *width_ratio
+#define RatioHeight *height_ratio
+#else
+#define RatioWidth
+#define RatioHeight
 #endif
 
 EditorSpashScreen::EditorSpashScreen()
@@ -35,10 +40,10 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     for(int i=0; i<animations.size(); i++)
     {
         QRect x;
-        x.setX(animations[i].first.x()*width_ratio);
-        x.setY(animations[i].first.y()*height_ratio);
-        x.setWidth(animations[i].second.image().width()*width_ratio);
-        x.setHeight(animations[i].second.image().height()*height_ratio);
+        x.setX(animations[i].first.x() RatioWidth);
+        x.setY(animations[i].first.y() RatioHeight);
+        x.setWidth(animations[i].second.image().width() RatioWidth);
+        x.setHeight(animations[i].second.image().height() RatioHeight);
         painter->drawPixmap(x, animations[i].second.image());
     }
 }
