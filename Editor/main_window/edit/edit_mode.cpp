@@ -127,6 +127,6 @@ void MainWindow::on_actionHandScroll_triggered()
     else
     if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
     {
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
+       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_HandScroll);
     }
 }
