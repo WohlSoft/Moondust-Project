@@ -4,6 +4,12 @@
 #include <QString>
 #include <QObject>
 
+#ifdef Q_OS_ANDROID
+#define PGEDefaultFontSize 16
+#else
+#define PGEDefaultFontSize 8
+#endif
+
 class ItemTypes
 {
 public:

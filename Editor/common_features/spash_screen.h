@@ -30,6 +30,8 @@ private:
     void construct();
     QVector<SplashPiece > animations;
     qreal opacity;
+    qreal width_ratio;
+    qreal height_ratio;
     QTimer scaler;
     QPixmap buffer;
     QPixmap tmp;

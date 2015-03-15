@@ -31,7 +31,9 @@ QT += winextras
 QT -= winextras
 }
 
+!android:{
 DESTDIR = ../bin
+}
 
 static: {
 release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
@@ -55,9 +57,9 @@ debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
 }
 
-translates.path = ../bin/languages
-translates.files += languages/*.qm
-translates.files += languages/*.png
+translates.path = $$PWD/../bin/languages
+translates.files += $$PWD/languages/*.qm
+translates.files += $$PWD/languages/*.png
 
 #DEFINES += USE_QMEDIAPLAYER
 !android:{
@@ -67,12 +69,12 @@ DEFINES += PGE_EDITOR
 
 INSTALLS = translates
 contains(DEFINES, USE_SDL_MIXER):{
-sdlmodded.path = ../bin
+sdlmodded.path = $$PWD/../bin
 unix: {
-sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.so*
+sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
-sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.dll
+sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
 }
 INSTALLS += sdlmodded
 }
@@ -89,22 +91,22 @@ CONFIG += thread
 QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-LIBS+= -L../_Libs/_builds/sdl2_mixer_mod
-INCLUDEPATH += -../_Libs/SDL2_mixer_modified
+LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
+INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 
 win32: {
-    LIBS += -L../_Libs/_builds/win32/lib
-    INCLUDEPATH += ../_Libs/_builds/win32/include
+    LIBS += -L$$PWD/../_Libs/_builds/win32/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
 }
 
 macx: {
-    LIBS += -L ../_Libs/_builds/macos/lib
-    INCLUDEPATH += ../_Libs/_builds/macos/include
+    LIBS += -L $$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
 }
 
 linux-g++: {
-    LIBS += -L ../_Libs/_builds/linux/lib
-    INCLUDEPATH += ../_Libs/_builds/linux/include
+    LIBS += -L $$PWD/../_Libs/_builds/linux/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
 }
 
 macx: {
@@ -121,7 +123,7 @@ win32: LIBS += libversion
 win32: LIBS += -lDbghelp
 win32: LIBS += libwinmm
 
-INCLUDEPATH += . _includes "../_Libs" "../_common"
+INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 contains(DEFINES, USE_QMEDIAPLAYER): {
     QT += multimedia
