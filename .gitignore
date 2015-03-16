@@ -31,6 +31,8 @@ Makefile.*
 *-build-*
 *build-*
 /bin
+/Editor/android-build
+/Editor/android-libpge_editor.so*
 
 #compiled translation
 editor_*.qm

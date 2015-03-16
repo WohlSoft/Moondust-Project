@@ -31,42 +31,78 @@ QT += winextras
 QT -= winextras
 }
 
-DESTDIR = ../bin
-
-static: {
-release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
-release:MOC_DIR     = ../bin/_build/editor/_release/.moc
-release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
-release:UI_DIR      = ../bin/_build/editor/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+android:{
+DESTDIR = $$PWD/../bin/_android
 } else {
-release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
-release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
-release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
-release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+DESTDIR = $$PWD/../bin
 }
 
-translates.path = ../bin/languages
-translates.files += languages/*.qm
-translates.files += languages/*.png
+android:{
+    release:OBJECTS_DIR = ../bin/_build/_android/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_android/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_android/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_android/editor/_release/.ui
+    debug:OBJECTS_DIR   = ../bin/_build/_android/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_android/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_android/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_android/editor/_debug/.ui
 
-sdlmodded.path = ../bin
-unix: {
-sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.so*
+    LANGUAGES_TARGET=/assets/languages
+
+} else {
+    static: {
+    release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/editor/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+    } else {
+    release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+    }
+
+    LANGUAGES_TARGET=$$PWD/../bin/languages
 }
-win32: {
-sdlmodded.files += ../_Libs/_builds/sdl2_mixer_mod/*.dll
+
+translates.path = $$LANGUAGES_TARGET
+translates.files += $$PWD/languages/*.qm
+translates.files += $$PWD/languages/*.png
+
+#DEFINES += USE_QMEDIAPLAYER
+!android:{
+DEFINES += USE_SDL_MIXER
 }
-INSTALLS = translates sdlmodded
+DEFINES += PGE_EDITOR
+
+INSTALLS = translates
+contains(DEFINES, USE_SDL_MIXER):{
+    sdlmodded.path = $$PWD/../bin
+    unix: {
+        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.so*
+    }
+    win32: {
+        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
+    }
+    INSTALLS += sdlmodded
+}
+
+android:{
+    themes.path = /assets/themes
+    themes.files = $$PWD/../Content/themes/*
+    INSTALLS += themes
+}
+
 
 TARGET = pge_editor
 TEMPLATE = app
@@ -79,45 +115,41 @@ CONFIG += thread
 QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-LIBS+= -L../_Libs/_builds/sdl2_mixer_mod
-INCLUDEPATH += -../_Libs/SDL2_mixer_modified
+LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
+INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 
 win32: {
-    LIBS += -L../_Libs/_builds/win32/lib
-    INCLUDEPATH += ../_Libs/_builds/win32/include
+    LIBS += -L$$PWD/../_Libs/_builds/win32/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
 }
 
 macx: {
-    LIBS += -L ../_Libs/_builds/macos/lib
-    INCLUDEPATH += ../_Libs/_builds/macos/include
+    LIBS += -L $$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
 }
 
 linux-g++: {
-    LIBS += -L ../_Libs/_builds/linux/lib
-    INCLUDEPATH += ../_Libs/_builds/linux/include
+    LIBS += -L $$PWD/../_Libs/_builds/linux/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
 }
 
 macx: {
     INCLUDEPATH += -F$$(HOME)/Library/Frameworks
-    LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
 } else {
-    LIBS += -lSDL2 -lSDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 
-win32: LIBS += -lSDL2main
+contains(DEFINES, USE_SDL_MIXER):{
+    win32: LIBS += -lSDL2main
+}
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
 win32: LIBS += libwinmm
 
-#DEFINES += USE_QMEDIAPLAYER
-!android:{
-DEFINES += USE_SDL_MIXER
-}
-DEFINES += PGE_EDITOR
+INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
-INCLUDEPATH += . _includes "../_Libs" "../_common"
-
-USE_QMEDIAPLAYER: {
+contains(DEFINES, USE_QMEDIAPLAYER): {
     QT += multimedia
 }
 else
@@ -406,7 +438,8 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/pge_x.cpp \
     ../_common/PGE_File_Formats/save_filedata.cpp \
     ../_common/PGE_File_Formats/smbx64.cpp \
-    ../_common/PGE_File_Formats/wld_filedata.cpp
+    ../_common/PGE_File_Formats/wld_filedata.cpp \
+    common_features/dir_copy.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -587,7 +620,8 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/pge_x.h \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
-    ../_common/PGE_File_Formats/wld_filedata.h
+    ../_common/PGE_File_Formats/wld_filedata.h \
+    common_features/dir_copy.h
 
 
 FORMS    += \
@@ -729,3 +763,14 @@ OTHER_FILES += \
     images/world16.png \
     _resources/mushroom.icns \
     _resources/mushroom.hqx
+
+DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

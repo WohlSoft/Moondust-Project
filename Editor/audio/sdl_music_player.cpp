@@ -178,9 +178,11 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 
 void PGE_MusPlayer::MUS_freeStream()
 {
+    #ifdef USE_SDL_MIXER
     Mix_HaltMusic();
     Mix_FreeMusic(play_mus);
     play_mus=NULL;
+    #endif
 }
 
 // //////////////////////// Sound Player //////////////////////////////////////

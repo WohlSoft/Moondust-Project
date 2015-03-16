@@ -1,8 +1,21 @@
 #include "spash_screen.h"
+#include <QApplication>
+#include <QImage>
+#ifdef Q_OS_ANDROID
+#include <QPixmap>
+#include <QDesktopWidget>
+#define RatioWidth *width_ratio
+#define RatioHeight *height_ratio
+#else
+#define RatioWidth
+#define RatioHeight
+#endif
 
 EditorSpashScreen::EditorSpashScreen()
 {
     opacity=1;
+    width_ratio=1.0;
+    height_ratio=1.0;
     construct();
 }
 
@@ -27,9 +40,10 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     for(int i=0; i<animations.size(); i++)
     {
         QRect x;
-        x.setX(animations[i].first.x());
-        x.setY(animations[i].first.y());
-        x.setSize(animations[i].second.image().size());
+        x.setX(animations[i].first.x() RatioWidth);
+        x.setY(animations[i].first.y() RatioHeight);
+        x.setWidth(animations[i].second.image().width() RatioWidth);
+        x.setHeight(animations[i].second.image().height() RatioHeight);
         painter->drawPixmap(x, animations[i].second.image());
     }
 }
@@ -40,6 +54,13 @@ void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int 
 
     SplashPiece ani;
     ani.first = p;
+//    #ifdef Q_OS_ANDROID
+//    ani.first.setX(p.x());
+//    ani.first.setY(p.y()*height_ratio);
+//    QSize oldSize = pixmap.size();
+//    QPixmap newImg= pixmap.scaled(oldSize.width()*width_ratio, oldSize.height()*height_ratio, Qt::KeepAspectRatio);
+//    pixmap=newImg;
+//    #endif
     ani.second.setSettings(pixmap, true, frames, speed);
     animations.push_back(ani);
 }
@@ -69,6 +90,18 @@ void EditorSpashScreen::opacityUP()
 void EditorSpashScreen::construct()
 {
     buffer=this->pixmap();
+
+    #ifdef Q_OS_ANDROID
+    QDesktopWidget* desktopWidget = qApp->desktop();
+    QRect screenGeometry = desktopWidget->screenGeometry();
+    int screenWidth = screenGeometry.width();
+    int screenHeight = screenGeometry.height();
+    qreal oldHeight = buffer.height();
+    qreal oldWidth = buffer.width();
+    buffer = buffer.scaled(screenWidth, screenHeight, Qt::KeepAspectRatio);
+    height_ratio = qreal(buffer.height()) / oldHeight;
+    width_ratio =  qreal(buffer.width()) / oldWidth;
+    #endif
 
     QPixmap t = QPixmap(buffer.width(), buffer.height());
     t.fill(Qt::transparent);

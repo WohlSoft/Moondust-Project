@@ -98,6 +98,8 @@ void MainWindow::setUiDefults()
     dock_BookmarksBox    = new BookmarksBox(this);
     dock_DebuggerBox     = new DebuggerBox(this);
 
+    tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
+
     #ifndef Q_OS_WIN
     tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
     tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
@@ -108,6 +110,25 @@ void MainWindow::setUiDefults()
     tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
     tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
     tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
+
+    #define DisableFloatFeature(dock) dock->setFeatures(dock->features()&(~QDockWidget::DockWidgetFloatable));
+    DisableFloatFeature(dock_LvlItemBox);
+    DisableFloatFeature(dock_WldItemBox);
+
+    DisableFloatFeature(dock_LvlWarpProps);
+    DisableFloatFeature(dock_LvlSectionProps);
+    DisableFloatFeature(dock_LvlItemProps);
+    DisableFloatFeature(dock_LvlSearchBox);
+    DisableFloatFeature(dock_LvlLayers);
+    DisableFloatFeature(dock_LvlWarpProps);
+    DisableFloatFeature(dock_WldItemProps);
+    DisableFloatFeature(dock_WldSearchBox);
+    DisableFloatFeature(dock_WldSettingsBox);
+    DisableFloatFeature(dock_DebuggerBox);
+    #ifdef Q_OS_ANDROID
+    DisableFloatFeature(dock_TilesetBox);
+    DisableFloatFeature(dock_BookmarksBox);
+    #endif
     #endif
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
@@ -183,6 +204,9 @@ void MainWindow::setUiDefults()
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
+    #ifndef MIX_MAX_VOLUME
+    #define MIX_MAX_VOLUME 128
+    #endif
     muVol->setMaximum(MIX_MAX_VOLUME);
     muVol->setValue(GlobalSettings::musicVolume);
 
