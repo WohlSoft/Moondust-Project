@@ -1,12 +1,12 @@
 #ifndef DIRCOPIER_H
 #define DIRCOPIER_H
 
+#include <QString>
 
-class DirCopier
+class DirCopy
 {
 public:
-    DirCopier();
-    ~DirCopier();
+    static void copy(const QString &sourceFolder, const QString &destFolder);
 };
 
 #endif // DIRCOPIER_H
