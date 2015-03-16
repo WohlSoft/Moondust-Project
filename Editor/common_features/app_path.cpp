@@ -21,8 +21,10 @@
 #include <QStandardPaths>
 #include <QDir>
 
+#include "dir_copy.h"
 #include "app_path.h"
 #include "../version.h"
+
 
 QString ApplicationPath;
 QString ApplicationPath_x;
@@ -54,6 +56,20 @@ void AppPathManager::initAppPath()
     QDir appPath(ApplicationPath);
     if(!appPath.exists())
         appPath.mkpath(ApplicationPath);
+
+    QDir languagesFolder(ApplicationPath+"/languages");
+    if(!languagesFolder.exists())
+    {
+        languagesFolder.mkpath(ApplicationPath+"/languages");
+        DirCopy::copy("assets:/languages", languagesFolder.absolutePath());
+    }
+
+    QDir themesFolder(ApplicationPath+"/themes");
+    if(!themesFolder.exists())
+    {
+        themesFolder.mkpath(ApplicationPath+"/themes");
+        DirCopy::copy("assets:/themes", themesFolder.absolutePath());
+    }
     #endif
 
     /*

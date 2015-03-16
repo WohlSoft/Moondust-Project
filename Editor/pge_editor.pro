@@ -31,33 +31,51 @@ QT += winextras
 QT -= winextras
 }
 
-!android:{
-DESTDIR = ../bin
-}
-
-static: {
-release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
-release:MOC_DIR     = ../bin/_build/editor/_release/.moc
-release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
-release:UI_DIR      = ../bin/_build/editor/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+android:{
+DESTDIR = $$PWD/../bin/_android
 } else {
-release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
-release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
-release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
-release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+DESTDIR = $$PWD/../bin
 }
 
-translates.path = $$PWD/../bin/languages
+android:{
+    release:OBJECTS_DIR = ../bin/_build/_android/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_android/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_android/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_android/editor/_release/.ui
+    debug:OBJECTS_DIR   = ../bin/_build/_android/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_android/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_android/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_android/editor/_debug/.ui
+
+    LANGUAGES_TARGET=/assets/languages
+
+} else {
+    static: {
+    release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/editor/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+    } else {
+    release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+    }
+
+    LANGUAGES_TARGET=$$PWD/../bin/languages
+}
+
+translates.path = $$LANGUAGES_TARGET
 translates.files += $$PWD/languages/*.qm
 translates.files += $$PWD/languages/*.png
 
@@ -69,14 +87,20 @@ DEFINES += PGE_EDITOR
 
 INSTALLS = translates
 contains(DEFINES, USE_SDL_MIXER):{
-sdlmodded.path = $$PWD/../bin
-unix: {
-sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.so*
+    sdlmodded.path = $$PWD/../bin
+    unix: {
+        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.so*
+    }
+    win32: {
+        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
+    }
+    INSTALLS += sdlmodded
 }
-win32: {
-sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
-}
-INSTALLS += sdlmodded
+
+android:{
+    themes.path = /assets/themes
+    themes.files = $$PWD/../Content/themes/*
+    INSTALLS += themes
 }
 
 
@@ -111,13 +135,13 @@ linux-g++: {
 
 macx: {
     INCLUDEPATH += -F$$(HOME)/Library/Frameworks
-contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
 } else {
-contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 
 contains(DEFINES, USE_SDL_MIXER):{
-win32: LIBS += -lSDL2main
+    win32: LIBS += -lSDL2main
 }
 win32: LIBS += libversion
 win32: LIBS += -lDbghelp
@@ -414,7 +438,8 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/pge_x.cpp \
     ../_common/PGE_File_Formats/save_filedata.cpp \
     ../_common/PGE_File_Formats/smbx64.cpp \
-    ../_common/PGE_File_Formats/wld_filedata.cpp
+    ../_common/PGE_File_Formats/wld_filedata.cpp \
+    common_features/dir_copy.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -595,7 +620,8 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/pge_x.h \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
-    ../_common/PGE_File_Formats/wld_filedata.h
+    ../_common/PGE_File_Formats/wld_filedata.h \
+    common_features/dir_copy.h
 
 
 FORMS    += \
