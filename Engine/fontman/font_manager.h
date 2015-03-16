@@ -58,7 +58,7 @@ private:
     static int fontID;
     static bool double_pixled;
 
-    static QFont defaultFont;
+    static QFont *defaultFont;
 };
 
 #endif // FONT_MANAGER_H
