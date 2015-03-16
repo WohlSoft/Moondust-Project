@@ -12,7 +12,19 @@ if [ ! -d "$DeployDir" ]; then
 	mkdir "$DeployDir/$PgePrjSD"
 fi
 
+$CurDir/upx-linux-x64 pge_editor
+$CurDir/upx-linux-x64 PNG2GIFs
+$CurDir/upx-linux-x64 GIFs2PNG
+$CurDir/upx-linux-x64 LazyFixTool
+$CurDir/upx-linux-x64 pge_calibrator
+$CurDir/upx-linux-x64 pge_engine
 cp pge_editor "$DeployDir/$PgePrjSD"
+cp GIFs2PNG "$DeployDir/$PgePrjSD"
+cp PNG2GIFs "$DeployDir/$PgePrjSD"
+cp LazyFixTool "$DeployDir/$PgePrjSD"
+cp pge_calibrator "$DeployDir/$PgePrjSD"
+cp pge_engine "$DeployDir/$PgePrjSD"
+
 cp -a *.so* "$DeployDir/$PgePrjSD"
 cp -r ./languages "$DeployDir/$PgePrjSD"
 cp -r ./themes "$DeployDir/$PgePrjSD"
