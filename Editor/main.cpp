@@ -52,7 +52,8 @@ int main(int argc, char *argv[])
     a->setStyle(new PGE_ProxyStyle);
 
     QFont fnt = a->font();
-    fnt.setPointSize(8);
+
+    fnt.setPointSize(PGEDefaultFontSize);
     a->setFont(fnt);
 
     //Init system paths
@@ -110,9 +111,13 @@ int main(int argc, char *argv[])
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
 
+    #ifndef Q_OS_ANDROID
     w->show();
     w->setWindowState(w->windowState()|Qt::WindowActive);
     w->raise();
+    #else
+    w->showFullScreen();
+    #endif
     QApplication::setActiveWindow(w);
 
     //Open files saved by Crashsave (if any)

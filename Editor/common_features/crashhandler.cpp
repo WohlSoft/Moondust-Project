@@ -21,7 +21,7 @@
 #ifdef _WIN32
     #include <windows.h>
     #include <dbghelp.h>
-#elif __linux__
+#elif (__linux__ && !(__ANDROID__))
     #include <execinfo.h>
     #include <unistd.h>
 #endif
@@ -63,7 +63,7 @@ QString CrashHandler::getStacktrace()
             bkTrace += buf;
         }
         return bkTrace;
-    #elif __linux__
+    #elif (__linux__ && !(__ANDROID__))
         void *array[400];
         size_t size;
 

@@ -42,7 +42,7 @@ QMap<QChar, GLuint> FontManager::fontTable_1;
 QMap<QChar, GLuint> FontManager::fontTable_2;
 
 int     FontManager::fontID;
-QFont FontManager::defaultFont;
+QFont *FontManager::defaultFont=NULL;
 bool FontManager::double_pixled=false;
 
 void FontManager::init()
@@ -57,6 +57,8 @@ void FontManager::init()
     //defaultFont = buildFont(ApplicationPath + "/fonts/PressStart2P.ttf", 14);
     //if(defaultFont==NULL)
     //    return;
+    if(!defaultFont)
+        defaultFont = new QFont();
 
     if(ConfigManager::setup_fonts.fontname.isEmpty())
         fontID = QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
@@ -70,10 +72,10 @@ void FontManager::init()
     QString family("Monospace");
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
-    defaultFont.setFamily(family);//font.setWeight(14);
-    defaultFont.setPointSize(12);
-    defaultFont.setStyleStrategy(QFont::PreferBitmap);
-    defaultFont.setLetterSpacing(QFont::AbsoluteSpacing, 1);
+    defaultFont->setFamily(family);//font.setWeight(14);
+    defaultFont->setPointSize(12);
+    defaultFont->setStyleStrategy(QFont::PreferBitmap);
+    defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
 
     isInit = true;
@@ -94,6 +96,9 @@ void FontManager::quit()
         glDeleteTextures(1, &fontTable_2.first() );
         fontTable_2.remove(fontTable_2.firstKey());
     }
+
+    if(defaultFont)
+        delete defaultFont;
 }
 
 //TTF_Font *FontManager::buildFont(QString _fontPath, GLint size)
@@ -307,7 +312,7 @@ GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags,
     if(!isInit) return 0;
 
     GLuint fontTexture;
-    SDL_string_texture_create(defaultFont,rectangle, alignFlags, qRgba(255,255,255,255), text, &fontTexture, borders);
+    SDL_string_texture_create(*defaultFont,rectangle, alignFlags, qRgba(255,255,255,255), text, &fontTexture, borders);
     return fontTexture;
     //SDL_string_render2D(x, y, &textTexture );
     //glDisable(GL_TEXTURE_2D);
@@ -323,7 +328,7 @@ GLuint FontManager::getChar1(QChar _x)
         if(!isInit) return 0;
 
         QImage text_image;
-        QFont font_i = defaultFont;
+        QFont font_i = *defaultFont;
         QFontMetrics meter(font_i);
         text_image = QImage(meter.width(_x), meter.height(), QImage::Format_ARGB32);
         text_image.fill(Qt::transparent);
@@ -375,9 +380,9 @@ GLuint FontManager::getChar2(QChar _x)
         QImage text_image;
         int off = 4;
 
-        QFont font_i = defaultFont;
+        QFont font_i = *defaultFont;
         font_i.setPointSize(font_i.pointSize());
-        QFontMetrics meter(defaultFont);
+        QFontMetrics meter(*defaultFont);
 
         QPainterPath path;
 
@@ -426,7 +431,7 @@ GLuint FontManager::getChar2(QChar _x)
 
 QFont FontManager::font()
 {
-    return defaultFont;
+    return *defaultFont;
 }
 
 void FontManager::printText(QString text, int x, int y, int pointSize, QRgb color)
