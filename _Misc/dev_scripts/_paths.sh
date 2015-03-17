@@ -5,6 +5,7 @@ SOURCEDIR=~+/../..
 #SET SEVENZIP=C:\Program Files\7-Zip
 GHREPO=/home/vitaly/_git_repos/PGE-Project
 
+SiteRootNFS='/_server/172.16.0.10/WebHosting/engine.wohlnet.ru'
 SiteRoot='//172.16.0.10/engine.wohlnet.ru$'
 PubDir='/docs/docs/_sources/devel'
 LabDir='/docs/docs/_laboratory'

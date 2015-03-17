@@ -7,6 +7,9 @@ cd $SOURCEDIR/bin
 
 DeployDir="$SOURCEDIR/bin/_linux_deploy"
 PgePrjSD="PGE_Project"
+TarGzArName="pge-editor-dev-linux-mint.tar.gz"
+
+
 if [ ! -d "$DeployDir" ]; then
 	mkdir "$DeployDir"
 	mkdir "$DeployDir/$PgePrjSD"
@@ -28,27 +31,35 @@ cp pge_engine "$DeployDir/$PgePrjSD"
 cp -a *.so* "$DeployDir/$PgePrjSD"
 cp -r ./languages "$DeployDir/$PgePrjSD"
 cp -r ./themes "$DeployDir/$PgePrjSD"
-rm "$DeployDir/$PgePrjSD/themes/*.zip"
 if [ ! -d "$DeployDir/$PgePrjSD/help" ]; then
 	mkdir "$DeployDir/$PgePrjSD/help"
 	echo "<html><head><meta http-equiv=\"refresh\" content=\"0; url=http://help.engine.wohlnet.ru/manual_editor.html\"/></head><body></body></html>" > "$DeployDir/$PgePrjSD/help/manual_editor.htm"
 fi
+cp -r ./calibrator "$DeployDir/$PgePrjSD"
+cp $SOURCEDIR/Content/readmes/*.txt "$DeployDir/$PgePrjSD"
 cp "$SOURCEDIR/Editor/changelog.editor.txt" "$DeployDir/$PgePrjSD"
 cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 
+rm $DeployDir/$PgePrjSD/themes/*.zip
+
 cd $DeployDir
-tar -zcvf "./pge-editor-dev-linux-mint.tar.gz" $PgePrjSD
+if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
+tar -zcvf ./$TarGzArName $PgePrjSD
 
-echo -n "Type samba password: "
-TempPasswd=""
-read TempPasswd
+#NFS [ Network File System != Need For Speed, BUT, Need For Speed Up our network channel! ]
+echo "Copying data..."
+cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SiteRootNFS/$LabDir/pge_editor_dev.apk
+cp $DeployDir/pge-editor-dev-linux-mint.tar.gz $SiteRootNFS/$LabDir/pge-editor-dev-linux-mint.tar.gz
 
-echo "Copying android build..."
-
-cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SOURCEDIR/Editor/android-build/bin/pge_editor_dev.apk
-smbclient $SiteRoot $TempPasswd -u vitaly -c "cd $LabDir; \
-lcd $SOURCEDIR/Editor/android-build/bin/; prompt; recurse; mput pge_editor_dev.apk; \
-lcd $DeployDir; prompt; recurse; mput pge-editor-dev-linux-mint.tar.gz; exit;"
+#SAMBA
+#echo -n "Type samba password: "
+#TempPasswd=""
+#read TempPasswd
+#echo "Copying data..."
+#cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SOURCEDIR/Editor/android-build/bin/pge_editor_dev.apk
+#smbclient $SiteRoot $TempPasswd -u vitaly -c "cd $LabDir; \
+#lcd $SOURCEDIR/Editor/android-build/bin/; prompt; recurse; mput pge_editor_dev.apk; \
+#lcd $DeployDir; recurse; mput pge-editor-dev-linux-mint.tar.gz; exit;"
 
 echo ""
 echo ""
@@ -56,3 +67,4 @@ echo "All done!"
 echo ""
 cd $CurDir
 read -n 1
+
