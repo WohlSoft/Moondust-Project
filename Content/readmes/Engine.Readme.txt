@@ -1,0 +1,43 @@
+This is a little test of developing engine part.
+
+What's need to run level play:
+==============================================
+Preparing:
+==============================================
+1) Download & unpack PGE Editor (need a libraries)
+2) Install any 'full' configuration package into editor
+==============================================
+Launching:
+==============================================
+3) Drag any SMBX LVL file or PGE LVLX file and drop them into engine .exe file
+   (like you drop file into folder icon) to run engine with opening of dropped file.
+----------------------------------------------
+4) from 0.0.4 engine have a main menu.
+You can copy your levels into worlds folder or into %UserProfile%\.PGE_Project\worlds
+or into ~/.PGE_Project/worlds folder and you can play than levels from "Battle game" menu
+==============================================
+
+You should be up to date with any configuration packages,
+there are in dev-state: I fixing old mistakes, misses, adding new important features which
+should be presented in your ini files of each config pack. Else you may get wrongs and more bugs
+because wrong config settings.
+
+==============================================
+Controlls:
+==============================================
+Arrows:
+--------------------
+left-right - walk
+Up/Down - enter into door/pipe
+--------------------
+Z - jump
+X - run
+
+T - Toggle fullscreen mode
+
+F3 - show/hide debug info
+F12 - capture screenshot
+
+Enter - pause/resume game, show dummy message box
+
+Esc - close engine application
