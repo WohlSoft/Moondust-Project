@@ -2,6 +2,16 @@
 bak=~+
 cd $PWD
 
+OurOS="linux"
+
+if [ "$OSTYPE" == "darwin"* ]; then
+ OurOS="macos"
+elif [ "$OSTYPE" == "linux-gnu" ]; then
+ OurOS="linux"
+elif [ "$OSTYPE" == "freebsd"* ]; then
+ OurOS="freebsd"
+fi
+
 #=======================================================================
 errorofbuid()
 {
@@ -24,7 +34,7 @@ buildLibs()
 {
 # build libraries
 cd "$PrjPath/_Libs/_sources"
-InstallTo=$(echo ~+/../_builds/linux)
+InstallTo=$(echo ~+/../_builds/$OurOS)
 InstallTo=$(readlink -f $InstallTo)
 echo $InstallTo
 source ./___build_script.sh
