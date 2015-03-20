@@ -16,7 +16,11 @@
 *.dylib
 !_Libs/_builds/*/*/*.dylib
 _Libs/_builds/linux/*
+!_Libs/_builds/macos/*
 _Libs/_builds/sdl2_mixer_mod/*
+
+#Mac OS's junk
+.DS_Store
 
 # Qt-es
 
