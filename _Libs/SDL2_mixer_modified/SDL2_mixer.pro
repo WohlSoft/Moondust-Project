@@ -48,7 +48,12 @@ unix:{
 LIBS += -L../_builds/linux/lib
 INCLUDEPATH += ../_builds/linux/include
 }
+macx:{
+LIBS += -F../_builds/macos/frameworks -framework SDL2
+INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
+} else {
 LIBS += -lSDL2
+}
 
 win32:{
 LIBS += -lwinmm -lm -lwinmm

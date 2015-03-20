@@ -78,7 +78,7 @@ cp ../libmad-0.15.1b.patched_configure.txt .
 #############################Build libraries#####################
 
 ###########SDL2###########
-BuildSrc 'SDL2-2.0.3' '--prefix='$InstallTo
+BuildSrc 'SDL2-2.0.3' $SDL_ARGS'--prefix='$InstallTo
 
 #apply fix of SDL2 bug
 cp ../SDL_platform.h $InstallTo/include/SDL_platform.h

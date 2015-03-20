@@ -2,6 +2,17 @@
 bak=~+
 cd $PWD
 
+OurOS="linux_defaut"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+ OurOS="macos"
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+ OurOS="linux"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+ OurOS="freebsd"
+fi
+
+echo $OurOS
+
 #=======================================================================
 errorofbuid()
 {
@@ -24,8 +35,14 @@ buildLibs()
 {
 # build libraries
 cd "$PrjPath/_Libs/_sources"
-InstallTo=$(echo ~+/../_builds/linux)
-InstallTo=$(readlink -f $InstallTo)
+InstallTo=$(echo ~+/../_builds/$OurOS)
+
+if [[ "$OurOS" == "macos" ]]; then
+   InstallTo=$(readlink $InstallTo)
+else
+   InstallTo=$(readlink -f $InstallTo)
+fi
+
 echo $InstallTo
 source ./___build_script.sh
 }
@@ -42,7 +59,7 @@ fi
 	
 #=======================================================================
 
-if [ $1 = "no-libs" ]; then
+if [[ "$1" == "no-libs" ]]; then
 	echo "Building of tag.gz libraries skiped"
 	echo "Building SDL2_mixer, OOLua and Box2D..."
 else
