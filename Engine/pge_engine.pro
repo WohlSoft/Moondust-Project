@@ -10,28 +10,43 @@ QT += core gui opengl network
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-DESTDIR = ../bin
-
-static: {
-release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
-release:MOC_DIR     = ../bin/_build/engine/_release/.moc
-release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
-release:UI_DIR      = ../bin/_build/engine/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+android:{
+DESTDIR = $$PWD/../bin/_android
 } else {
-release:OBJECTS_DIR = ../bin/_build/_dynamic/engine/_release/.obj
-release:MOC_DIR     = ../bin/_build/_dynamic/engine/_release/.moc
-release:RCC_DIR     = ../bin/_build/_dynamic/engine/_release/.rcc
-release:UI_DIR      = ../bin/_build/_dynamic/engine/_release/.ui
+DESTDIR = $$PWD/../bin
+}
 
-debug:OBJECTS_DIR   = ../bin/_build/_dynamic/engine/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/_dynamic/engine/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/_dynamic/engine/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
+android:{
+    release:OBJECTS_DIR = ../bin/_build/_android/engine/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_android/engine/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_android/engine/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_android/engine/_release/.ui
+    debug:OBJECTS_DIR   = ../bin/_build/_android/engine/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_android/engine/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_android/engine/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_android/engine/_debug/.ui
+} else {
+    static: {
+    release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
+    release:MOC_DIR     = ../bin/_build/engine/_release/.moc
+    release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
+    release:UI_DIR      = ../bin/_build/engine/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+    } else {
+    release:OBJECTS_DIR = ../bin/_build/_dynamic/engine/_release/.obj
+    release:MOC_DIR     = ../bin/_build/_dynamic/engine/_release/.moc
+    release:RCC_DIR     = ../bin/_build/_dynamic/engine/_release/.rcc
+    release:UI_DIR      = ../bin/_build/_dynamic/engine/_release/.ui
+
+    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/engine/_debug/.obj
+    debug:MOC_DIR       = ../bin/_build/_dynamic/engine/_debug/.moc
+    debug:RCC_DIR       = ../bin/_build/_dynamic/engine/_debug/.rcc
+    debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
+    }
 }
 
 TARGET = pge_engine
@@ -53,20 +68,18 @@ LIBS += -L../_Libs/_builds/commonlibs
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
+    LIBS += -loolua -lbox2d -lSDL2 -lSDL2main libversion
 }
 macx: {
-    LIBS += -L ../_Libs/_builds/macos/lib
-    INCLUDEPATH += ../_Libs/_builds/macos/include
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2
+    LIBS += -loolua -lbox2d -lSDL2
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
     INCLUDEPATH += ../_Libs/_builds/linux/include
+    LIBS += -loolua -lbox2d -lSDL2 -lglut -lGLU
 }
-
-LIBS += -loolua -lbox2d -lSDL2
-win32: LIBS += -lSDL2main
-win32: LIBS += libversion
-unix:  LIBS += -glut -lGLU
 
 RC_FILE = _resources/engine.rc
 

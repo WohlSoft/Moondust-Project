@@ -86,6 +86,7 @@ DEFINES += USE_SDL_MIXER
 DEFINES += PGE_EDITOR
 
 INSTALLS = translates
+
 contains(DEFINES, USE_SDL_MIXER):{
     sdlmodded.path = $$PWD/../bin
     unix: {
@@ -121,31 +122,25 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 win32: {
     LIBS += -L$$PWD/../_Libs/_builds/win32/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
-}
-
-macx: {
-    LIBS += -L $$PWD/../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
+    contains(DEFINES, USE_SDL_MIXER):{
+        LIBS += -lSDL2 -lSDL2_mixer
+        LIBS += -lSDL2main
+    }
+    LIBS += libversion -lDbghelp libwinmm
 }
 
 linux-g++: {
     LIBS += -L $$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
-}
-
-macx: {
-    INCLUDEPATH += -F$$(HOME)/Library/Frameworks
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$(HOME)/Library/Frameworks -framework SDL2 -framework SDL2_mixer
-} else {
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 
-contains(DEFINES, USE_SDL_MIXER):{
-    win32: LIBS += -lSDL2main
+macx: {
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
+    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -framework SDL2 -framework SDL2_mixer
 }
-win32: LIBS += libversion
-win32: LIBS += -lDbghelp
-win32: LIBS += libwinmm
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
