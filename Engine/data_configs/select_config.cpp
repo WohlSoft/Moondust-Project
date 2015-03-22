@@ -82,8 +82,10 @@ SelectConfig::SelectConfig(QWidget *parent) :
         }
 
         item = new QListWidgetItem( configName );
-
-        item->setIcon( QIcon( GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(200,114)) ) );
+        QPixmap iconImg(200,114);
+        iconImg.fill(QColor(Qt::white));
+        iconImg = GraphicsHelps::squareImage(QPixmap(splash_logo), QSize(200,114));
+        item->setIcon( QIcon( iconImg ) );
         item->setData(Qt::ToolTipRole, description);
         item->setData(Qt::UserRole, c);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
