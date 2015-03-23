@@ -35,6 +35,7 @@ Makefile.*
 *-build-*
 *build-*
 /bin
+/Editor/app_process
 /Editor/android-build
 /Editor/android-libpge_editor.so*
 
@@ -54,6 +55,7 @@ editor_*.qm
 
 #unpacked libraries sources
 /_Libs/_sources/SDL/*
+/_Libs/_sources/SDL_android/*
 !/_Libs/_sources
 
 #Temp files of LibreOffice

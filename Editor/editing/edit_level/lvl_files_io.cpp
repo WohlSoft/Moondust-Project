@@ -166,6 +166,21 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
         if(selectedFilter==fileSMBXany)
             choiceVersionID=true;
 
+        if((selectedFilter==fileSMBXany)||(selectedFilter==fileSMBX64))
+        {
+            if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
+                fileName.remove(fileName.size()-1, 1);
+            if(!fileName.endsWith(".lvl", Qt::CaseInsensitive))
+                fileName.append(".lvl");
+        }
+        else if(selectedFilter==filePGEX)
+        {
+            if(fileName.endsWith(".lvl", Qt::CaseInsensitive))
+                fileName.append("x");
+            if(!fileName.endsWith(".lvlx", Qt::CaseInsensitive))
+                fileName.append(".lvlx");
+        }
+
         if( (!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)) )
         {
             QMessageBox::warning(this, tr("Extension is not set"),
@@ -364,8 +379,17 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
     if(isSMBX64limit)
     {
         if(!silent)
-        QApplication::restoreOverrideCursor();
-        return false;
+        {
+            if(QMessageBox::question(this, tr("The SMBX64 limit has been exceeded"),
+             tr("Do you want to save file anyway?\nExciting of SMBX64 limits may crash SMBX with 'overflow' error.\n\nInstalled LunaLUA partially extends than limits."), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No)
+            {
+                if(!silent)
+                    QApplication::restoreOverrideCursor();
+                return false;
+            }
+            else
+                isSMBX64limit=false;
+        }
     }
 
     //set SMBX64 specific option to BGO

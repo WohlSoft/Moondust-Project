@@ -12,7 +12,11 @@ CONFIG -= qt
 DEFINES += LIBBox2D
 
 QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+!android:{
 DESTDIR = ../../_builds/commonlibs
+} else {
+DESTDIR = ../../_builds/android/lib
+}
 
 INCLUDEPATH += ../../
 
