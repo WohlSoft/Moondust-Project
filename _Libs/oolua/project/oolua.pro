@@ -19,7 +19,11 @@ DEFINES += LUA_USE_MKSTEMP
 
 DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
 
+!android:{
 DESTDIR = ../../_builds/commonlibs
+} else {
+DESTDIR = ../../_builds/android/lib
+}
 
 SOURCES += \
     ../class_from_stack.cpp \
