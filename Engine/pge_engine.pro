@@ -65,6 +65,11 @@ INCLUDEPATH += "../_Libs/" "../_common"
 
 LIBS += -L../_Libs/_builds/commonlibs
 
+android: {
+    LIBS += -L../_Libs/_builds/android/lib
+    INCLUDEPATH += ../_Libs/_builds/android/include
+    LIBS += -loolua -lbox2d -lSDL2 -lglut -lGLU
+}
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
@@ -235,3 +240,14 @@ FORMS    += \
 
 RESOURCES += \
     _resources/engine.qrc
+
+DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
