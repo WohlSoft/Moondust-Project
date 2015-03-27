@@ -19,6 +19,7 @@
 #include <QString>
 #include <QFile>
 #include <QDir>
+#include <QTextStream>
 #include <QSettings>
 #include <QApplication>
 
@@ -127,28 +128,58 @@ bool Installer::associateFiles()
         system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
      */
     success=false; // remove this when associator was created
+    #elif defined Q_OS_ANDROID
+    //Is not supported yet :P
+    success=false;
     #else
 
         // Here need correctly associate too
-      /*
-        // this is a little silly due to all the system commands below anyway - just use mkdir -p ?  Does have the advantage of the alert I guess
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime/packages");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
-        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/applications");
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars-mimeinfo.xml "+QDir::home().absolutePath()+"/.local/share/mime/packages").toLocal8Bit().constData())==0;
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
-        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hwengine.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
-        if (success) success = system(("update-mime-database "+QDir::home().absolutePath()+"/.local/share/mime").toLocal8Bit().constData())==0;
+        if (success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/mime/packages");
+        if (success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/applications");
+        if (success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/icons");
+
+        QFile tmp; Q_UNUSED(tmp);
+        #define XcopyFile(src, target) tmp.setFileName(target); if(tmp.exists()) tmp.remove();\
+                                       QFile::copy(src, target);
+
+        XcopyFile(":/_files/_files/pge-project-mimeinfo.xml", QDir::home().absolutePath()+"/.local/share/mime/packages/pge-project-mimeinfo.xml");
+
+        #define IconSize(Size) \
+        XcopyFile(":/_files/_files/file_lvl/file_lvl_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png");\
+        XcopyFile(":/_files/_files/file_lvlx/file_lvlx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png");\
+        XcopyFile(":/_files/_files/file_wld/file_wld_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png");\
+        XcopyFile(":/_files/_files/file_wldx/file_wldx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png");\
+        XcopyFile(":/images/cat_builder/cat_builder_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png");\
+        if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png x-application-smbx64-level").toLocal8Bit().constData())==0;\
+        if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png x-application-smbx64-world").toLocal8Bit().constData())==0;\
+        if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png x-application-pgex-level").toLocal8Bit().constData())==0;\
+        if (success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png x-application-pgex-world").toLocal8Bit().constData())==0;\
+        if (success) success = system( QString("xdg-icon-resource install --context apps --novendor --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png PgeEditor").toLocal8Bit().constData())==0;
+
+        IconSize("16");
+        IconSize("32");
+        IconSize("48");
+        IconSize("256");
+
+        QFile shortcut(":/_files/_files/pge_editor.desktop");
+        if (success) success = shortcut.open(QFile::ReadOnly|QFile::Text);
+        if (success)
+        {
+            QTextStream shtct(&shortcut);
+            QString shortcut_text=shtct.readAll();
+            QFile saveAs(QDir::home().absolutePath()+"/.local/share/applications/pge_editor.desktop");
+
+            if (success) success = saveAs.open(QFile::WriteOnly|QFile::Text);
+            if (success) QTextStream(&saveAs)<<shortcut_text.arg(ApplicationPath_x);
+        }
+
         if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-level")==0;
         if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-world")==0;
-        // hack to add user's settings to hwengine. might be better at this point to read in the file, append it, and write it out to its new home.  This assumes no spaces in the data dir path
-        if (success) success = system(("sed -i 's|^\\(Exec=.*\\) \\(%f\\)|\\1 \\2 |' "+QDir::home().absolutePath()+"/.local/share/applications/pge_editor.desktop").toLocal8Bit().constData())==0;
-      */
-    success=false; // remove this when associator was created
+        if (success) success = system("xdg-mime default pge_editor.desktop application/x-pgex-level")==0;
+        if (success) success = system("xdg-mime default pge_editor.desktop application/x-pgex-world")==0;
+        if (success) success = system( QString("update-desktop-database "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
+        if (success) success = system( QString("update-mime-database "+QDir::home().absolutePath()+"/.local/share/mime").toLocal8Bit().constData())==0;
+
     #endif
     return success;
 }
