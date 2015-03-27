@@ -191,4 +191,24 @@
         <file>arrows/red_right.png</file>
         <file>arrows/red_up.png</file>
     </qresource>
+    <qresource prefix="/_files">
+        <file>_files/pge-project-mimeinfo.xml</file>
+        <file>_files/file_lvl/file_lvl_16.png</file>
+        <file>_files/file_lvl/file_lvl_32.png</file>
+        <file>_files/file_lvl/file_lvl_48.png</file>
+        <file>_files/file_lvl/file_lvl_256.png</file>
+        <file>_files/file_lvlx/file_lvlx_16.png</file>
+        <file>_files/file_lvlx/file_lvlx_32.png</file>
+        <file>_files/file_lvlx/file_lvlx_48.png</file>
+        <file>_files/file_lvlx/file_lvlx_256.png</file>
+        <file>_files/file_wld/file_wld_16.png</file>
+        <file>_files/file_wld/file_wld_32.png</file>
+        <file>_files/file_wld/file_wld_48.png</file>
+        <file>_files/file_wld/file_wld_256.png</file>
+        <file>_files/file_wldx/file_wldx_16.png</file>
+        <file>_files/file_wldx/file_wldx_32.png</file>
+        <file>_files/file_wldx/file_wldx_48.png</file>
+        <file>_files/file_wldx/file_wldx_256.png</file>
+        <file>_files/pge_editor.desktop</file>
+    </qresource>
 </RCC>

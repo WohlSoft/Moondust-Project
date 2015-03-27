@@ -18,6 +18,8 @@ Editor 0.3.0
 - Added SoX autio converter GUI to provide quick and easy audio files fixing toolset.
 - Added message box event creator for blocks context menu.
 - Fixed bug of events toolbox when changing language.
+- Added soft refusing of file saving into LVL/WLD on excite of the SMBX64 limits
+- Added working file association for Linux
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
