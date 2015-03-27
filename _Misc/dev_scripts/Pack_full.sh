@@ -51,6 +51,10 @@ echo "Copying data..."
 cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SiteRootNFS/$LabDir/pge_editor_dev.apk
 cp $DeployDir/pge-editor-dev-linux-mint.tar.gz $SiteRootNFS/$LabDir/pge-editor-dev-linux-mint.tar.gz
 
+echo "Uploading everything to the GNA"
+cd "$SiteRootNFS/$LabDir"
+sh $SiteRootNFS/$LabDir/send_to_gna.sh
+
 #SAMBA
 #echo -n "Type samba password: "
 #TempPasswd=""
