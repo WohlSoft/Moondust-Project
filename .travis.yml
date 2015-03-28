@@ -10,6 +10,6 @@ before_install:
 - sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
-- bash build_deps.sh
+- bash build_deps.sh no-pause
 script:
-- bash build.sh
+- bash build.sh no-pause
