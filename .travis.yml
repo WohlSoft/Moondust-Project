@@ -1,6 +1,6 @@
-language: cpp
+language: c
 compiler:
-- g++
+- gcc
 - clang
 env:
 # Default build. Release.
@@ -9,7 +9,8 @@ before_install:
 - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 - sudo apt-get update -qq
 - sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev
-- sh generate_paths_travis.sh
+- chmod u+x generate_paths_travis.sh
+- ./generate_paths_travis.sh
 - ./build_deps.sh
 script:
 - ./build.sh
