@@ -1,7 +1,6 @@
-language: c
+language: cpp
 compiler:
-- gcc
-- clang
+- g++
 env:
 # Default build. Release.
 - BUILD_ARGS=""
