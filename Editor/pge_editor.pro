@@ -131,7 +131,7 @@ win32: {
     message("pge_editor build platform is win32")
 }
 
-linux-g++||unix:!macx: {
+linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
