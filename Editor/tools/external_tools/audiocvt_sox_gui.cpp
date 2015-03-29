@@ -25,7 +25,7 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     ui->sox_bin_path->setText("/usr/bin/sox");
 #endif
 
-    connect(&converter, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(nexStep(int,QProcess::ExitStatus)));
+    connect(&converter, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(nextStep(int,QProcess::ExitStatus)));
     connect(&converter, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
     connect(&converter, SIGNAL(readyReadStandardError()),this, SLOT(consoleMessageErr()) );
 
@@ -74,12 +74,12 @@ AudioCvt_Sox_gui::~AudioCvt_Sox_gui()
 
 bool AudioCvt_Sox_gui::formatSupports(QString file)
 {
-    bool valud=false;
-    if(file.endsWith(".mp3", Qt::CaseInsensitive)) valud=true;
-    if(file.endsWith(".ogg", Qt::CaseInsensitive)) valud=true;
-    if(file.endsWith(".wav", Qt::CaseInsensitive)) valud=true;
-    if(file.endsWith(".flac", Qt::CaseInsensitive)) valud=true;
-    return valud;
+    bool valid=false;
+    if(file.endsWith(".mp3", Qt::CaseInsensitive)) valid=true;
+    if(file.endsWith(".ogg", Qt::CaseInsensitive)) valid=true;
+    if(file.endsWith(".wav", Qt::CaseInsensitive)) valid=true;
+    if(file.endsWith(".flac", Qt::CaseInsensitive)) valid=true;
+    return valid;
 }
 
 void AudioCvt_Sox_gui::setEnableControls(bool en)
@@ -146,7 +146,7 @@ void AudioCvt_Sox_gui::start()
     inWork=true;
     madeJob=0;
     PGE_MusPlayer::MUS_freeStream();
-    nexStep(0, QProcess::NormalExit);
+    nextStep(0, QProcess::NormalExit);
 }
 
 void AudioCvt_Sox_gui::stop(bool do_abort)
@@ -189,7 +189,7 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
     }
 }
 
-void AudioCvt_Sox_gui::nexStep(int retStatus, QProcess::ExitStatus exitStatus)
+void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 {
     if(!inWork) return;
 
