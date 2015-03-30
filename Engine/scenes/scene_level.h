@@ -78,24 +78,7 @@ public:
     LevelDoor startWarp;
     int NewPlayerID;
 
-    //Init 3 -> load Configs
     bool loadConfigs();
-
-    //Init 4 -> build animators
-
-    //Init 5 -> Init sections
-
-    //Init 6 -> InitPhysics
-
-    //Init 7 -> InitCameras
-
-    //Init 8 -> Init Players
-
-    //Init 9 -> Init blocks
-
-    //Init 10 -> Init BGOs
-
-    //Init 11 -> Init NPCs
 
     void update();
     void render();

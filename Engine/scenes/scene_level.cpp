@@ -101,7 +101,7 @@ LevelScene::~LevelScene()
     switch_blocks.clear();
 
     //destroy textures
-    qDebug() << "clear textures";
+    qDebug() << "clear level textures";
     while(!textures_bank.isEmpty())
     {
         glDisable(GL_TEXTURE_2D);
@@ -401,7 +401,6 @@ void LevelScene::render()
 
 int LevelScene::exec()
 {
-    bool running = true;
     isLevelContinues=true;
     doExit=false;
 
@@ -431,6 +430,7 @@ int LevelScene::exec()
 
     uTick = 1;
 
+    bool running = true;
     while(running)
     {
         start_common = SDL_GetTicks();

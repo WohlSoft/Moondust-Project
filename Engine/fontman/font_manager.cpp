@@ -307,6 +307,24 @@ void FontManager::printText(QString text, int x, int y)
     }
 }
 
+void FontManager::printText(QString text, int x, int y, int pointSize, QRgb color)
+{
+    if(!isInit) return;
+
+    QString(family);
+
+    if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
+            family = QFontDatabase::applicationFontFamilies(fontID).at(0);
+
+    QFont font(family);//font.setWeight(14);
+    font.setPointSize(pointSize);
+
+    SDL_string_texture_create(font, color, text, &textTexture);
+    SDL_string_render2D(x, y, &textTexture );
+    glDisable(GL_TEXTURE_2D);
+    glDeleteTextures(1, &textTexture );
+}
+
 GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders)
 {
     if(!isInit) return 0;
@@ -432,23 +450,5 @@ GLuint FontManager::getChar2(QChar _x)
 QFont FontManager::font()
 {
     return *defaultFont;
-}
-
-void FontManager::printText(QString text, int x, int y, int pointSize, QRgb color)
-{
-    if(!isInit) return;
-
-    QString(family);
-
-    if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
-            family = QFontDatabase::applicationFontFamilies(fontID).at(0);
-
-    QFont font(family);//font.setWeight(14);
-    font.setPointSize(pointSize);
-
-    SDL_string_texture_create(font, color, text, &textTexture);
-    SDL_string_render2D(x, y, &textTexture );
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures(1, &textTexture );
 }
 
