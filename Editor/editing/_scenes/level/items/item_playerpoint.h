@@ -55,6 +55,8 @@ public:
 
     PlayerPoint pointData;
 
+    void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
+
 protected:
     bool mouseLeft;
     bool mouseMid;

@@ -143,266 +143,290 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_block)&&(!scene->DrawMode)&&(!isLocked))
         {
-            scene->contextMenuOpened=true;
-
-            //Remove selection from non-block items
-            if(!this->isSelected())
-            {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(true);
-            QMenu ItemMenu;
-            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
-
-            QAction *setLayer;
-            QList<QAction *> layerItems;
-
-            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator()->deleteLater();;
-
-            foreach(LevelLayer layer, scene->LvlData->layers)
-            {
-                //Skip system layers
-                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
-
-                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?tr(" [hidden]"):"") );
-                setLayer->setData(layer.name);
-                setLayer->setCheckable(true);
-                setLayer->setEnabled(true);
-                setLayer->setChecked( layer.name==blockData.layer );
-                layerItems.push_back(setLayer);
-            }
-
-                ItemMenu.addSeparator();
-
-            QAction *invis = ItemMenu.addAction(tr("Invisible"));
-                invis->setCheckable(1);
-                invis->setChecked( blockData.invisible );
-
-            QAction *slipp = ItemMenu.addAction(tr("Slippery"));
-                slipp->setCheckable(1);
-                slipp->setChecked( blockData.slippery );
-
-            QAction *resize = ItemMenu.addAction(tr("Resize"));
-                resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
-
-                ItemMenu.addSeparator();
-            QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
-                ItemMenu.addSeparator();
-            QAction *transform = ItemMenu.addAction(tr("Transform into"));
-            QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
-                ItemMenu.addSeparator();
-            QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
-            QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
-                ItemMenu.addSeparator();
-            QAction *remove = ItemMenu.addAction( tr("Remove") );
-                ItemMenu.addSeparator();
-            QAction *props = ItemMenu.addAction(tr("Properties..."));
-
-     QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                #ifdef _DEBUG_
-                    WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                #endif
-                return;
-            }
-            //mouseEvent->accept();
-
-            //WriteToLog(QtDebugMsg, QString("Block ContextMenu");
-
-            if(selected==cutBlock)
-            {
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-            }
-            else
-            if(selected==copyBlock)
-            {
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-            }
-            else
-            if(selected==transform)
-            {
-                int transformTO;
-                ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
-                blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-                blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
-                if(blockList->exec()==QDialog::Accepted)
-                {
-                    transformTO = blockList->blockID;
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                        {
-                            ((ItemBlock *) SelItem)->transformTo(transformTO);
-                        }
-                    }
-                }
-                delete blockList;
-            }
-            else
-            if(selected==makemsgevent)
-            {
-                QString eventName;
-                QString msgText;
-
-
-                if(blockData.event_hit.isEmpty())
-                {
-                    bool ok=false;
-                    typeEventAgain:
-                    eventName = QInputDialog::getText(scene->_edit, tr("Event name"),
-                                                      tr("Please enter the name of event:"),
-                                                      QLineEdit::Normal, QString(), &ok);
-                    if(eventName.isEmpty() && ok)
-                        goto typeEventAgain;
-                    if(ok)
-                    {
-                        ItemMsgBox msgBox("", tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
-                        util::DialogToCenter(&msgBox, true);
-                        if(msgBox.exec()==QDialog::Accepted)
-                        {
-                            msgText = msgBox.currentText;
-                            if(scene->LvlData->eventIsExist(eventName))
-                            {
-                                int count=0;
-                                while(scene->LvlData->eventIsExist(QString(eventName+" %1").arg(count)))
-                                    count++;
-
-                                eventName = QString(eventName+" %1").arg(count);
-                            }
-                            LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
-                            msgEvent.name = eventName;
-                            msgEvent.msg = msgText;
-                            msgEvent.array_id = ++scene->LvlData->events_array_id;
-                            scene->LvlData->events.push_back(msgEvent);
-                            blockData.event_hit = eventName;
-                            arrayApply();
-
-                            MainWinConnect::pMainWin->setEventsBox();
-                            MainWinConnect::pMainWin->EventListsSync();
-
-                            QMessageBox::information(scene->_edit, tr("Event has been created"),
-                                         tr("Message event has been created!"), QMessageBox::Ok);
-                        }
-                    }
-                }
-                else
-                    QMessageBox::warning(scene->_edit, tr("'Hit' event slot is busy"),
-                                 tr("Sorry, but 'Hit' event slot already busy with '%1' event.")
-                                         .arg(blockData.event_hit), QMessageBox::Ok);
-
-            }
-            else
-            if(selected==invis)
-            {
-                //apply to all selected items.
-                LevelData selData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                    {
-                        selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
-                        ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
-                    }
-                }
-                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
-            }
-            else
-            if(selected==slipp)
-            {
-                //apply to all selected items.
-                LevelData selData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                    {
-                        selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
-                        ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
-                    }
-                }
-                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
-            }
-            else
-            if(selected==resize)
-            {
-                scene->setBlockResizer(this, true);
-            }
-            else
-            if(selected==chNPC)
-            {
-                LevelData selData;
-                ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
-                                                           ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                           (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id)
-                                                                  );
-                npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-                if(npcList->exec()==QDialog::Accepted)
-                {
-                    //apply to all selected items.
-                    int selected_npc=0;
-                    if(npcList->npcID!=0){
-                        if(npcList->isCoin)
-                            selected_npc = npcList->npcID * -1;
-                        else
-                            selected_npc = npcList->npcID;
-                    }
-
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                        {
-                            //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
-                            //((ItemBlock *) SelItem)->arrayApply();
-                            selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
-                            ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
-                        }
-                    }
-                    scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
-                }
-                delete npcList;
-            }
-            else
-            if(selected==remove)
-            {
-                //scene->contextMenuOpened = false;
-                scene->removeSelectedLvlItems();
-            }
-            else
-            if(selected==props)
-            {
-                scene->openProps();
-            }
-            else
-            if(selected==newLayer)
-            {
-                scene->setLayerToSelected();
-            }
-            else
-            {
-                //Fetch layers menu
-                foreach(QAction * lItem, layerItems)
-                {
-                    if(selected==lItem)
-                    {
-                        //FOUND!!!
-                        scene->setLayerToSelected(lItem->data().toString());
-                        break;
-                    }//Find selected layer's item
-                }
-            }
+            contextMenu(mouseEvent);
         }
     }
 }
 
-void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
 {
-    QGraphicsItem::contextMenuEvent(event);
+    scene->contextMenuOpened=true;
+
+    //Remove selection from non-block items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(true);
+    QMenu ItemMenu;
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
+
+    QAction *setLayer;
+    QList<QAction *> layerItems;
+
+    QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+    LayerName->addSeparator()->deleteLater();;
+
+    foreach(LevelLayer layer, scene->LvlData->layers)
+    {
+        //Skip system layers
+        if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?tr(" [hidden]"):"") );
+        setLayer->setData(layer.name);
+        setLayer->setCheckable(true);
+        setLayer->setEnabled(true);
+        setLayer->setChecked( layer.name==blockData.layer );
+        layerItems.push_back(setLayer);
+    }
+
+        ItemMenu.addSeparator();
+
+    QAction *invis = ItemMenu.addAction(tr("Invisible"));
+        invis->setCheckable(1);
+        invis->setChecked( blockData.invisible );
+
+    QAction *slipp = ItemMenu.addAction(tr("Slippery"));
+        slipp->setCheckable(1);
+        slipp->setChecked( blockData.slippery );
+
+    QAction *resize = ItemMenu.addAction(tr("Resize"));
+        resize->setVisible( (this->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") );
+
+        ItemMenu.addSeparator();
+    QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
+        ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
+    QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
+        ItemMenu.addSeparator();
+    QAction *copyBlock = ItemMenu.addAction( tr("Copy") );
+    QAction *cutBlock = ItemMenu.addAction( tr("Cut") );
+        ItemMenu.addSeparator();
+    QAction *remove = ItemMenu.addAction( tr("Remove") );
+        ItemMenu.addSeparator();
+    QAction *props = ItemMenu.addAction(tr("Properties..."));
+
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        #ifdef _DEBUG_
+            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        #endif
+        return;
+    }
+    //mouseEvent->accept();
+
+    //WriteToLog(QtDebugMsg, QString("Block ContextMenu");
+
+    if(selected==cutBlock)
+    {
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+    }
+    else
+    if(selected==copyBlock)
+    {
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==transform)
+    {
+        int transformTO;
+        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        if(blockList->exec()==QDialog::Accepted)
+        {
+            transformTO = blockList->blockID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                {
+                    ((ItemBlock *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete blockList;
+    }
+    else
+    if(selected==transform_all)
+    {
+        int transformTO;
+        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
+        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        if(blockList->exec()==QDialog::Accepted)
+        {
+            transformTO = blockList->blockID;
+            unsigned long oldID = blockData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                {
+                    if(((ItemBlock *) SelItem)->blockData.id==oldID)
+                        ((ItemBlock *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete blockList;
+    }
+    else
+    if(selected==makemsgevent)
+    {
+        QString eventName;
+        QString msgText;
+
+
+        if(blockData.event_hit.isEmpty())
+        {
+            bool ok=false;
+            typeEventAgain:
+            eventName = QInputDialog::getText(scene->_edit, tr("Event name"),
+                                              tr("Please enter the name of event:"),
+                                              QLineEdit::Normal, QString(), &ok);
+            if(eventName.isEmpty() && ok)
+                goto typeEventAgain;
+            if(ok)
+            {
+                ItemMsgBox msgBox("", tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
+                util::DialogToCenter(&msgBox, true);
+                if(msgBox.exec()==QDialog::Accepted)
+                {
+                    msgText = msgBox.currentText;
+                    if(scene->LvlData->eventIsExist(eventName))
+                    {
+                        int count=0;
+                        while(scene->LvlData->eventIsExist(QString(eventName+" %1").arg(count)))
+                            count++;
+
+                        eventName = QString(eventName+" %1").arg(count);
+                    }
+                    LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
+                    msgEvent.name = eventName;
+                    msgEvent.msg = msgText;
+                    msgEvent.array_id = ++scene->LvlData->events_array_id;
+                    scene->LvlData->events.push_back(msgEvent);
+                    blockData.event_hit = eventName;
+                    arrayApply();
+
+                    MainWinConnect::pMainWin->setEventsBox();
+                    MainWinConnect::pMainWin->EventListsSync();
+
+                    QMessageBox::information(scene->_edit, tr("Event has been created"),
+                                 tr("Message event has been created!"), QMessageBox::Ok);
+                }
+            }
+        }
+        else
+            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is busy"),
+                         tr("Sorry, but 'Hit' event slot already busy with '%1' event.")
+                                 .arg(blockData.event_hit), QMessageBox::Ok);
+
+    }
+    else
+    if(selected==invis)
+    {
+        //apply to all selected items.
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="Block")
+            {
+                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
+            }
+        }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_INVISIBLE, QVariant(invis->isChecked()));
+    }
+    else
+    if(selected==slipp)
+    {
+        //apply to all selected items.
+        LevelData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="Block")
+            {
+                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
+            }
+        }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_SLIPPERY, QVariant(invis->isChecked()));
+    }
+    else
+    if(selected==resize)
+    {
+        scene->setBlockResizer(this, true);
+    }
+    else
+    if(selected==chNPC)
+    {
+        LevelData selData;
+        ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
+                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                   (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id)
+                                                          );
+        npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+        if(npcList->exec()==QDialog::Accepted)
+        {
+            //apply to all selected items.
+            int selected_npc=0;
+            if(npcList->npcID!=0){
+                if(npcList->isCoin)
+                    selected_npc = npcList->npcID * -1;
+                else
+                    selected_npc = npcList->npcID;
+            }
+
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                {
+                    //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
+                    //((ItemBlock *) SelItem)->arrayApply();
+                    selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                    ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                }
+            }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_CHANGENPC, QVariant(selected_npc));
+        }
+        delete npcList;
+    }
+    else
+    if(selected==remove)
+    {
+        //scene->contextMenuOpened = false;
+        scene->removeSelectedLvlItems();
+    }
+    else
+    if(selected==props)
+    {
+        scene->openProps();
+    }
+    else
+    if(selected==newLayer)
+    {
+        scene->setLayerToSelected();
+    }
+    else
+    {
+        //Fetch layers menu
+        foreach(QAction * lItem, layerItems)
+        {
+            if(selected==lItem)
+            {
+                //FOUND!!!
+                scene->setLayerToSelected(lItem->data().toString());
+                break;
+            }//Find selected layer's item
+        }
+    }
 }
 
 void ItemBlock::setSlippery(bool slip)

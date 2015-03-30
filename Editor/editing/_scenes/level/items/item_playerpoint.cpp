@@ -114,85 +114,89 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     if((callContext)&&(!scene->contextMenuOpened))
     {
-        if(!scene->DrawMode)
-        {
-            scene->contextMenuOpened = true; //bug protector
-        }
+        contextMenu(mouseEvent);
+    }
+}
 
-        //Remove selection from non-block items
-        if(!this->isSelected())
-        {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
-
-        this->setSelected(1);
-        ItemMenu.clear();
-
-        bool isLvlx = !scene->LvlData->smbx64strict;
-
-        QMenu * chDir = ItemMenu.addMenu(
-                    tr("Set %1").arg(tr("Direction")) );
-        chDir->deleteLater();
-        chDir->setEnabled(isLvlx);
-
-        QAction *setLeft = chDir->addAction( tr("Left"));
-            setLeft->setCheckable(true);
-            setLeft->setChecked(pointData.direction==-1);
-            setLeft->deleteLater();
-
-        QAction *setRight = chDir->addAction( tr("Right") );
-            setRight->setCheckable(true);
-            setRight->setChecked(pointData.direction==1);
-            setRight->deleteLater();
-
-        ItemMenu.addSeparator()->deleteLater();
-
-        QAction * remove = ItemMenu.addAction(tr("Remove"));
-        remove->deleteLater();
-
-        QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-                if(!selected)
-                {
-                    WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                    return;
-                }
-
-                if(selected==remove)
-                {
-                    scene->removeSelectedLvlItems();
-                }
-                else
-                if(selected==setLeft)
-                {
-                    //LevelData selData;
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
-                        {
-                            //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
-                            dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(-1);
-                        }
-                    }
-                    //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
-                }
-                else
-                if(selected==setRight)
-                {
-                    //LevelData selData;
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
-                        {
-                            //selData.npc.push_back(((ItemPlayerPoint *) SelItem)->npcData);
-                            dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(1);
-                        }
-                    }
-                    //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
-                }
+void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    if(!scene->DrawMode)
+    {
+        scene->contextMenuOpened = true; //bug protector
     }
 
+    //Remove selection from non-block items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(1);
+    ItemMenu.clear();
+
+    bool isLvlx = !scene->LvlData->smbx64strict;
+
+    QMenu * chDir = ItemMenu.addMenu(
+                tr("Set %1").arg(tr("Direction")) );
+    chDir->deleteLater();
+    chDir->setEnabled(isLvlx);
+
+    QAction *setLeft = chDir->addAction( tr("Left"));
+        setLeft->setCheckable(true);
+        setLeft->setChecked(pointData.direction==-1);
+        setLeft->deleteLater();
+
+    QAction *setRight = chDir->addAction( tr("Right") );
+        setRight->setCheckable(true);
+        setRight->setChecked(pointData.direction==1);
+        setRight->deleteLater();
+
+    ItemMenu.addSeparator()->deleteLater();
+
+    QAction * remove = ItemMenu.addAction(tr("Remove"));
+    remove->deleteLater();
+
+    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+            if(!selected)
+            {
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                return;
+            }
+
+            if(selected==remove)
+            {
+                scene->removeSelectedLvlItems();
+            }
+            else
+            if(selected==setLeft)
+            {
+                //LevelData selData;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
+                    {
+                        //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                        dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(-1);
+                    }
+                }
+                //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
+            }
+            else
+            if(selected==setRight)
+            {
+                //LevelData selData;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
+                    {
+                        //selData.npc.push_back(((ItemPlayerPoint *) SelItem)->npcData);
+                        dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(1);
+                    }
+                }
+                //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
+            }
 }
 
 

@@ -89,11 +89,12 @@ public:
     //Locks
     bool isLocked;
 
+    void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
+
 protected:
     bool mouseLeft;
     bool mouseMid;
     bool mouseRight;
-    virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
 

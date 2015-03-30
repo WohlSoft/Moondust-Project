@@ -128,136 +128,135 @@ void ItemLevel::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_level)&&(!scene->DrawMode)&&(!isLocked))
         {
-            //Remove selection from non-bgo items
-            if(!this->isSelected())
-            {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(1);
-            QMenu ItemMenu;
-
-            QAction *LvlTitle = ItemMenu.addAction(QString("[%1]").arg(levelData.title));
-                LvlTitle->setEnabled(false);
-                LvlTitle->setVisible(!levelData.title.isEmpty());
-
-            QAction *openLvl = ItemMenu.addAction(tr("Open target file: %1").arg(levelData.lvlfile));
-                openLvl->setVisible( (!levelData.lvlfile.isEmpty()) && (QFile(scene->WldData->path + "/" + levelData.lvlfile).exists()) );
-                ItemMenu.addSeparator();
-
-            QAction *setPathBG = ItemMenu.addAction(tr("Path background"));
-                setPathBG->setCheckable(true);
-                setPathBG->setChecked(levelData.pathbg);
-
-            QAction *setBigPathBG = ItemMenu.addAction(tr("Big Path background"));
-                setBigPathBG->setCheckable(true);
-                setBigPathBG->setChecked(levelData.bigpathbg);
-
-            QAction *setAlVis = ItemMenu.addAction(tr("Always Visible"));
-                setAlVis->setCheckable(true);
-                setAlVis->setChecked(levelData.alwaysVisible);
-                ItemMenu.addSeparator();
-            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
-            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
-                ItemMenu.addSeparator();
-            QAction *remove = ItemMenu.addAction(tr("Remove"));
-                ItemMenu.addSeparator();
-            QAction *props = ItemMenu.addAction(tr("Properties..."));
-
-            scene->contextMenuOpened = true; //bug protector
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                #endif
-                return;
-            }
-
-            if(selected==openLvl)
-            {
-                MainWinConnect::pMainWin->OpenFile(scene->WldData->path + "/" + levelData.lvlfile);
-                scene->contextMenuOpened = false;
-            }
-            else
-            if(selected==setPathBG)
-            {
-                scene->contextMenuOpened = false;
-                WorldData selData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(0).toString()=="LEVEL")
-                    {
-                        selData.levels << ((ItemLevel *)SelItem)->levelData;
-                        ((ItemLevel *)SelItem)->setPath( setPathBG->isChecked() );
-                    }
-                }
-                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
-            }
-            else
-            if(selected==setBigPathBG)
-            {
-                scene->contextMenuOpened = false;
-                WorldData selData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(0).toString()=="LEVEL")
-                    {
-                        selData.levels << ((ItemLevel *)SelItem)->levelData;
-                        ((ItemLevel *)SelItem)->setbPath( setBigPathBG->isChecked() );
-                    }
-                }
-                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
-            }
-            else
-            if(selected==setAlVis)
-            {
-                scene->contextMenuOpened = false;
-                WorldData selData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(0).toString()=="LEVEL")
-                    {
-                        selData.levels << ((ItemLevel *)SelItem)->levelData;
-                        ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
-                    }
-                }
-                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
-            }
-            else
-            if(selected==cutTile)
-            {
-                //scene->doCut = true ;
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-                scene->contextMenuOpened = false;
-            }
-            else
-            if(selected==copyTile)
-            {
-                //scene->doCopy = true ;
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-                scene->contextMenuOpened = false;
-            }
-            else
-            if(selected==remove)
-            {
-                scene->removeSelectedWldItems();
-            }
-            else
-            if(selected==props)
-            {
-                scene->openProps();
-            }
+            contextMenu(mouseEvent);
         }
     }
 }
 
-void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    //Remove selection from non-bgo items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
 
-    QGraphicsItem::contextMenuEvent(event);
+    this->setSelected(1);
+    QMenu ItemMenu;
+
+    QAction *LvlTitle = ItemMenu.addAction(QString("[%1]").arg(levelData.title));
+        LvlTitle->setEnabled(false);
+        LvlTitle->setVisible(!levelData.title.isEmpty());
+
+    QAction *openLvl = ItemMenu.addAction(tr("Open target file: %1").arg(levelData.lvlfile));
+        openLvl->setVisible( (!levelData.lvlfile.isEmpty()) && (QFile(scene->WldData->path + "/" + levelData.lvlfile).exists()) );
+        ItemMenu.addSeparator();
+
+    QAction *setPathBG = ItemMenu.addAction(tr("Path background"));
+        setPathBG->setCheckable(true);
+        setPathBG->setChecked(levelData.pathbg);
+
+    QAction *setBigPathBG = ItemMenu.addAction(tr("Big Path background"));
+        setBigPathBG->setCheckable(true);
+        setBigPathBG->setChecked(levelData.bigpathbg);
+
+    QAction *setAlVis = ItemMenu.addAction(tr("Always Visible"));
+        setAlVis->setCheckable(true);
+        setAlVis->setChecked(levelData.alwaysVisible);
+        ItemMenu.addSeparator();
+    QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+    QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+        ItemMenu.addSeparator();
+    QAction *remove = ItemMenu.addAction(tr("Remove"));
+        ItemMenu.addSeparator();
+    QAction *props = ItemMenu.addAction(tr("Properties..."));
+
+    scene->contextMenuOpened = true; //bug protector
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        #endif
+        return;
+    }
+
+    if(selected==openLvl)
+    {
+        MainWinConnect::pMainWin->OpenFile(scene->WldData->path + "/" + levelData.lvlfile);
+        scene->contextMenuOpened = false;
+    }
+    else
+    if(selected==setPathBG)
+    {
+        scene->contextMenuOpened = false;
+        WorldData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(0).toString()=="LEVEL")
+            {
+                selData.levels << ((ItemLevel *)SelItem)->levelData;
+                ((ItemLevel *)SelItem)->setPath( setPathBG->isChecked() );
+            }
+        }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
+    }
+    else
+    if(selected==setBigPathBG)
+    {
+        scene->contextMenuOpened = false;
+        WorldData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(0).toString()=="LEVEL")
+            {
+                selData.levels << ((ItemLevel *)SelItem)->levelData;
+                ((ItemLevel *)SelItem)->setbPath( setBigPathBG->isChecked() );
+            }
+        }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
+    }
+    else
+    if(selected==setAlVis)
+    {
+        scene->contextMenuOpened = false;
+        WorldData selData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(0).toString()=="LEVEL")
+            {
+                selData.levels << ((ItemLevel *)SelItem)->levelData;
+                ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
+            }
+        }
+        scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
+    }
+    else
+    if(selected==cutTile)
+    {
+        //scene->doCut = true ;
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+        scene->contextMenuOpened = false;
+    }
+    else
+    if(selected==copyTile)
+    {
+        //scene->doCopy = true ;
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+        scene->contextMenuOpened = false;
+    }
+    else
+    if(selected==remove)
+    {
+        scene->removeSelectedWldItems();
+    }
+    else
+    if(selected==props)
+    {
+        scene->openProps();
+    }
 }
 
 
