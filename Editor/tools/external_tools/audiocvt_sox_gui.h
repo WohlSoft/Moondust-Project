@@ -25,7 +25,7 @@ private slots:
     void consoleMessage();
     void consoleMessageErr();
 
-    void nexStep(int retStatus, QProcess::ExitStatus exitStatus);
+    void nextStep(int retStatus, QProcess::ExitStatus exitStatus);
     void on_browse_clicked();
 
     void on_add_clicked();
