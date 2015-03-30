@@ -47,6 +47,7 @@
 #include "graphics/graphics.h"
 
 #include "scenes/scene_level.h"
+#include "scenes/scene_world.h"
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
 
@@ -109,6 +110,10 @@ int main(int argc, char *argv[])
 
     QString configPath="";
     QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
+    PlayEpisodeResult episode;
+    episode.character=0;
+    episode.savefile="save1.savx";
+    episode.worldfile="";
     bool debugMode=false; //enable debug mode
     bool interprocessing=false; //enable interprocessing
 
@@ -249,6 +254,7 @@ MainMenu:
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
+    PlayEpisodeResult res_episode = iScene->result_episode;
     //PlayEpisodeResult res_episode = iScene->result_episode;
     delete iScene;
 
@@ -266,6 +272,9 @@ MainMenu:
             end_level_jump=RETURN_TO_MAIN_MENU;
             fileToPpen = res_level.levelfile;
             goto PlayLevel;
+        case TitleScene::ANSWER_PLAYEPISODE:
+            episode = res_episode;
+            goto PlayWorldMap;
         default:
             goto PlayWorldMap;
     }
@@ -276,9 +285,47 @@ MainMenu:
 
 PlayWorldMap:
 {
+    int ExitCode=0;
+
+    WorldScene *wScene;
+    wScene = new WorldScene();
+    bool sceneResult=true;
+
+    wScene->init();
+
+    if(episode.worldfile.isEmpty())
+    {
+        sceneResult = false;
+        PGE_MsgBox msgBox(NULL, QString("No opened files"),
+                          PGE_MsgBox::msg_warn);
+        msgBox.exec();
+    }
+    else
+    {
+        sceneResult = wScene->loadFile(episode.worldfile);
+        if(!sceneResult)
+        {
+            SDL_Delay(50);
+            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n"
+                                            "%1")
+                              .arg(wScene->getLastError()),
+                              PGE_MsgBox::msg_error);
+            msgBox.exec();
+        }
+    }
+
+    if(sceneResult)
+        wScene->setFade(25, 0.0f, 0.05f);
+
+    if(sceneResult)
+        ExitCode = wScene->exec();
+
+    /*
     OOLUA::Script vm;
     OOLUA::set_global(vm.state(), "say", l_say);
     OOLUA::run_chunk(vm.state(),"say(\"World map player comming soon!\")");
+    */
+    delete wScene;
 
     goto MainMenu;
 }

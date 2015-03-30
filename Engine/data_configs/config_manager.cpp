@@ -253,8 +253,8 @@ bool ConfigManager::loadBasics()
         checkForImage(setup_WorldMap.backgroundImg, dirs.gcommon);
         setup_WorldMap.viewport_x = engineset.value("viewport-x", "").toInt();
         setup_WorldMap.viewport_y = engineset.value("viewport-y", "").toInt();
-        setup_WorldMap.viewport_w = engineset.value("viewport-w", "").toInt();
-        setup_WorldMap.viewport_h = engineset.value("viewport-h", "").toInt();
+        setup_WorldMap.viewport_w = engineset.value("viewport-width", "").toInt();
+        setup_WorldMap.viewport_h = engineset.value("viewport-height", "").toInt();
 
         setup_WorldMap.title_x = engineset.value("level-title-x", "").toInt();
         setup_WorldMap.title_y = engineset.value("level-title-y", "").toInt();
