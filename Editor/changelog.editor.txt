@@ -21,6 +21,7 @@ Editor 0.3.0
 - Added soft refusing of file saving into LVL/WLD on excite of the SMBX64 limits
 - Added working file association for Linux
 - Fixed crash on attempt to undo while resizing mode in process and when resizing was applied
+- Added "Transform all Item-ID into" context menu feature which works like "swap blocks" in the SMBX.
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
