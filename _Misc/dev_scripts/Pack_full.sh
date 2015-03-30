@@ -2,6 +2,13 @@
 source ./_paths.sh
 CurDir=~+
 
+cd $SOURCEDIR/Editor
+source $SOURCEDIR/_paths.sh
+
+$LRelease pge_editor.pro
+cp languages/*.qm $SOURCEDIR/bin/languages
+cp languages/*.png $SOURCEDIR/bin/languages
+
 echo "Preparing Linux deploy..."
 cd $SOURCEDIR/bin
 
