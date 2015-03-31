@@ -69,6 +69,11 @@ WorldScene::WorldScene()
 
 WorldScene::~WorldScene()
 {
+    if(backgroundTex.w>0)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(backgroundTex.texture) );
+    }
     //destroy textures
     qDebug() << "clear world textures";
     while(!textures_bank.isEmpty())
