@@ -43,6 +43,19 @@ Platform Game Engine!</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QPushButton" name="config_packs">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>300</y>
+       <width>361</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Manage Configuration packages</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="configpacks">
     <attribute name="title">
@@ -211,14 +224,14 @@ Platform Game Engine!</string>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="show_license">
         <property name="text">
          <string>Show license</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="show_credits">
         <property name="text">
          <string>Show credits</string>
         </property>
