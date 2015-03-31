@@ -291,8 +291,6 @@ PlayWorldMap:
     wScene = new WorldScene();
     bool sceneResult=true;
 
-    wScene->init();
-
     if(episode.worldfile.isEmpty())
     {
         sceneResult = false;
@@ -313,6 +311,9 @@ PlayWorldMap:
             msgBox.exec();
         }
     }
+
+    if(sceneResult)
+        sceneResult = wScene->init();
 
     if(sceneResult)
         wScene->setFade(25, 0.0f, 0.05f);

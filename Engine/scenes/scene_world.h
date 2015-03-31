@@ -69,8 +69,8 @@ public:
 
     QRect viewportRect;
 
-    long posX;
-    long posY;
+    double posX;
+    double posY;
     QString currentMusicFile;
 
     QString levelTitle;
