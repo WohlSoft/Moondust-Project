@@ -389,7 +389,6 @@ void LevelScene::render()
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTick), 10, 140, 10, qRgb(255,0,0));
-
         //world->DrawDebugData();
     }
     renderBlack:
