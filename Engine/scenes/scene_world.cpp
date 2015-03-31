@@ -83,6 +83,20 @@ WorldScene::~WorldScene()
 bool WorldScene::init()
 {
     isInit=true;
+
+    //Detect gamestart and set position on them
+    for(long i=0; i<data.levels.size(); i++)
+    {
+        if(data.levels[i].gamestart)
+        {
+            posX=data.levels[i].x;
+            posY=data.levels[i].y;
+            break;
+        }
+    }
+
+
+
     return true;
 }
 
@@ -110,6 +124,15 @@ void WorldScene::update()
             }
         }
     }
+
+    if(keyboard1.keys.left)
+        posX-=4;
+    if(keyboard1.keys.right)
+        posX+=4;
+    if(keyboard1.keys.up)
+        posY-=4;
+    if(keyboard1.keys.down)
+        posY+=4;
 
     if(isPauseMenu)
     {
@@ -144,7 +167,7 @@ void WorldScene::render()
             glTexCoord2f( 1, 0 );
             glVertex2f( backgroundTex.w, 0);
             glTexCoord2f( 1, 1 );
-            glVertex2f( posX+backgroundTex.w, backgroundTex.h);
+            glVertex2f( backgroundTex.w, backgroundTex.h);
             glTexCoord2f( 0, 1 );
             glVertex2f( 0,             backgroundTex.h);
         glEnd();
