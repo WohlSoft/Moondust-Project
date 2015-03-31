@@ -571,6 +571,12 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
                 goto badfile;
             else lvlitem.bigpathbg = SMBX64::wBoolR(line);
         }
+        else
+        {
+            if(lvlitem.id==1)
+                lvlitem.gamestart=true;
+        }
+
 
         lvlitem.array_id = FileData.level_array_id;
         FileData.level_array_id++;
