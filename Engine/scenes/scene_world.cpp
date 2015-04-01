@@ -24,6 +24,134 @@
 #include <common_features/graphics_funcs.h>
 #include <gui/pge_msgbox.h>
 
+#include <QHash>
+#include <unordered_map>
+
+template<class T >
+class TileBox
+{
+public:
+    TileBox()
+    {
+        gridSize=32;
+        gridSize_h=16;
+    }
+
+    TileBox(unsigned long size)
+    {
+        gridSize=size;
+        gridSize_h=size/2;
+    }
+
+    ~TileBox()
+    {
+        clean();
+    }
+
+    void addNode(long X, long Y, long W, long H, T* item)
+    {
+        for(long i=X; i<X+W; i+=gridSize)
+        {
+            for(long j=Y; j<Y+H; j+=gridSize)
+            {
+                QPoint t = applyGrid(i,j);
+                map[t.x()][t.y()].push_back(item);
+            }
+        }
+    }
+
+    QList<T* > query(long Left, long Top, long Right, long Bottom)
+    {
+        QList<T* > list;
+        for(long i=Left-gridSize; i<Right+gridSize; i+=gridSize)
+        {
+            for(long j=Top-gridSize; j<Bottom+gridSize; j+=gridSize)
+            {
+                QPoint t = applyGrid(i,j);
+                long listI = t.x();
+                long listJ = t.y();
+
+                const typename std::unordered_map<long, std::unordered_map<long, QList<T* > > >::const_iterator got = map.find(listI);
+                if(got != map.end())
+                {
+                    const typename std::unordered_map<long, QList<T* > >::const_iterator got2 = map[listI].find(listJ);
+                    if(got2 != map[listI].end())
+                        list.append(map[listI][listJ]);
+                }
+            }
+        }
+        return list;
+    }
+
+    void clean()
+    {
+        map.clear();
+    }
+
+    QPoint applyGrid(long x, long y)
+    {
+        QPoint source;
+        source.setX(x);
+        source.setY(y);
+        int gridX, gridY;
+        if(gridSize>0)
+        { //ATTACH TO GRID
+
+            if((int)source.x()<0)
+            {
+                gridX=((int)source.x()+abs((int)source.x()) % gridSize)+gridSize;
+            }
+            else
+            {
+                gridX=((int)source.x()-(int)source.x() % gridSize);
+            }
+
+            if((int)source.y()<0)
+            {
+                gridY = ((int)source.y() + abs((int)source.y()) % gridSize)+gridSize;
+            }
+            else
+            {
+                gridY = ((int)source.y() - (int)source.y() % gridSize);
+            }
+
+            return QPoint(gridX, gridY);
+        }
+        else
+            return source;
+    }
+
+    std::unordered_map<long, std::unordered_map<long, QList<T* > > > map;
+    long gridSize;
+    long gridSize_h;
+};
+
+class WorldNode
+{
+public:
+    WorldNode()
+    {
+        x=0;
+        y=0;
+        w=32;
+        h=32;
+        r=0.f;
+        g=0.f;
+        b=1.f;
+    }
+    long x;
+    long y;
+    long w;
+    long h;
+    float r;
+    float g;
+    float b;
+};
+
+TileBox<WorldNode > worldMap;
+QList<WorldNode > wldItems;
+QList<WorldNode * > toRender;
+
 WorldScene::WorldScene()
 {
     exitWorldCode=EXIT_error;
@@ -69,6 +197,10 @@ WorldScene::WorldScene()
 
 WorldScene::~WorldScene()
 {
+    worldMap.clean();
+    wldItems.clear();
+    toRender.clear();
+
     if(backgroundTex.w>0)
     {
         glDisable(GL_TEXTURE_2D);
@@ -100,7 +232,68 @@ bool WorldScene::init()
         }
     }
 
+    for(int i=0; i<data.tiles.size(); i++)
+    {
+        WorldNode path;
+        path.x = data.tiles[i].x;
+        path.y = data.tiles[i].y;
+        path.r=1.f;
+        path.g=1.f;
+        path.b=0.f;
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
 
+
+    for(int i=0; i<data.paths.size(); i++)
+    {
+        WorldNode path;
+        path.x = data.paths[i].x;
+        path.y = data.paths[i].y;
+        path.r=0.f;
+        path.g=0.f;
+        path.b=1.f;
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
+
+    for(int i=0; i<data.scenery.size(); i++)
+    {
+        WorldNode path;
+        path.x = data.scenery[i].x;
+        path.y = data.scenery[i].y;
+        path.w = 16;
+        path.h = 16;
+        path.r=1.f;
+        path.g=0.f;
+        path.b=1.f;
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
+
+    for(int i=0; i<data.levels.size(); i++)
+    {
+        WorldNode path;
+        path.x = data.levels[i].x;
+        path.y = data.levels[i].y;
+        path.r=1.f;
+        path.g=0.f;
+        path.b=0.f;
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
+
+    for(int i=0; i<data.music.size(); i++)
+    {
+        WorldNode path;
+        path.x = data.music[i].x;
+        path.y = data.music[i].y;
+        path.r=0.5f;
+        path.g=0.5f;
+        path.b=1.f;
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
 
     return true;
 }
@@ -138,6 +331,8 @@ void WorldScene::update()
         posY-=4;
     if(keyboard1.keys.down)
         posY+=4;
+
+    toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2));
 
     if(isPauseMenu)
     {
@@ -187,6 +382,31 @@ void WorldScene::render()
         glVertex2f( viewportRect.right()+1, viewportRect.bottom()+1);
         glVertex2f( viewportRect.left(), viewportRect.bottom()+1);
     glEnd();
+
+    {
+        //Set small viewport
+        glViewport( viewportRect.left(), PGE_Window::Height-(viewportRect.bottom()+1), viewportRect.width(), viewportRect.height());
+        double renderX = posX-(viewportRect.width()/2);
+        double renderY = posY-(viewportRect.height()/2);
+        double ratioX = double(PGE_Window::Width)/double(viewportRect.width());
+        double ratioY = double(PGE_Window::Height)/double(viewportRect.height());
+
+        //Render items
+        foreach(WorldNode * it, toRender)
+        {
+            glDisable(GL_TEXTURE_2D);
+            glColor4f( it->r, it->g, it->b, 1.0f);
+            glBegin( GL_QUADS );
+                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y)-renderY));
+                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y)-renderY));
+                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y+it->h)-renderY));
+                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y+it->h)-renderY));
+            glEnd();
+        }
+
+        //Restore viewport
+        glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+    }
 
     if(common_setup.points_en)
     {
