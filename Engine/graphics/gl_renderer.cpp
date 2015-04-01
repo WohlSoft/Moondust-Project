@@ -41,12 +41,11 @@ bool GlRenderer::init()
         return false;
 
     // Initializing OpenGL
-    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
-
     glMatrixMode( GL_PROJECTION );
     glPushMatrix();
     glLoadIdentity();
 
+    //glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
     glOrtho( 0.0, PGE_Window::Width, PGE_Window::Height, 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
@@ -68,7 +67,6 @@ bool GlRenderer::init()
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     glDepthFunc(GL_NEVER);// Ignore depth values (Z) to cause drawing bottom to top
-
 
 
     //Check for error
