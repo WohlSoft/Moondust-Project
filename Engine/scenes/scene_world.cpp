@@ -27,7 +27,43 @@
 #include <QHash>
 #include <unordered_map>
 
-template<class T >
+class WorldNode
+{
+public:
+    WorldNode()
+    {
+        x=0;
+        y=0;
+        w=32;
+        h=32;
+        r=0.f;
+        g=0.f;
+        b=1.f;
+        Z=0.0;
+    }
+
+    WorldNode(const WorldNode &xx)
+    {
+        x=xx.x;
+        y=xx.y;
+        w=xx.w;
+        h=xx.h;
+        r=xx.r;
+        g=xx.g;
+        b=xx.b;
+        Z=xx.Z;
+    }
+
+    long x;
+    long y;
+    long w;
+    long h;
+    float r;
+    float g;
+    float b;
+    double Z;
+};
+
 class TileBox
 {
 public:
@@ -48,7 +84,7 @@ public:
         clean();
     }
 
-    void addNode(long X, long Y, long W, long H, T* item)
+    void addNode(long X, long Y, long W, long H, WorldNode* item)
     {
         for(long i=X; i<X+W; i+=gridSize)
         {
@@ -60,26 +96,53 @@ public:
         }
     }
 
-    QList<T* > query(long Left, long Top, long Right, long Bottom)
+    QList<WorldNode* > query(long Left, long Top, long Right, long Bottom, bool z_sort=false)
     {
-        QList<T* > list;
-        for(long i=Left-gridSize; i<Right+gridSize; i+=gridSize)
+        QList<WorldNode * > list;
+        for(long i=Left-gridSize; i<Right+gridSize*2; i+=gridSize)
         {
-            for(long j=Top-gridSize; j<Bottom+gridSize; j+=gridSize)
+            for(long j=Top-gridSize; j<Bottom+gridSize*2; j+=gridSize)
             {
                 QPoint t = applyGrid(i,j);
                 long listI = t.x();
                 long listJ = t.y();
 
-                const typename std::unordered_map<long, std::unordered_map<long, QList<T* > > >::const_iterator got = map.find(listI);
+                const typename std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > >::const_iterator got = map.find(listI);
                 if(got != map.end())
                 {
-                    const typename std::unordered_map<long, QList<T* > >::const_iterator got2 = map[listI].find(listJ);
+                    const typename std::unordered_map<long, QList<WorldNode* > >::const_iterator got2 = map[listI].find(listJ);
                     if(got2 != map[listI].end())
                         list.append(map[listI][listJ]);
                 }
             }
         }
+
+        if(z_sort)
+        {
+            //Sort array
+            int total = list.size();
+            long i;
+            double ymin;
+            long ymini;
+            long sorted = 0;
+
+            while(sorted < list.size())
+            {
+                ymin = list[sorted]->Z;
+                ymini = sorted;
+
+                for(i = sorted; i < total; i++)
+                {
+                    if( list[i]->Z < ymin )
+                    {
+                        ymin = list[i]->Z; ymini = i;
+                    }
+                }
+                list.swap(ymini, sorted);
+                sorted++;
+            }
+        }
+
         return list;
     }
 
@@ -99,7 +162,7 @@ public:
 
             if((int)source.x()<0)
             {
-                gridX=((int)source.x()+abs((int)source.x()) % gridSize)+gridSize;
+                gridX=(int)source.x()+(abs((int)source.x())%gridSize)+gridSize;
             }
             else
             {
@@ -108,7 +171,7 @@ public:
 
             if((int)source.y()<0)
             {
-                gridY = ((int)source.y() + abs((int)source.y()) % gridSize)+gridSize;
+                gridY = (int)source.y()+(abs((int)source.y()) % gridSize)+gridSize;
             }
             else
             {
@@ -121,34 +184,14 @@ public:
             return source;
     }
 
-    std::unordered_map<long, std::unordered_map<long, QList<T* > > > map;
+    std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > > map;
     long gridSize;
     long gridSize_h;
 };
 
-class WorldNode
-{
-public:
-    WorldNode()
-    {
-        x=0;
-        y=0;
-        w=32;
-        h=32;
-        r=0.f;
-        g=0.f;
-        b=1.f;
-    }
-    long x;
-    long y;
-    long w;
-    long h;
-    float r;
-    float g;
-    float b;
-};
 
-TileBox<WorldNode > worldMap;
+
+TileBox worldMap;
 QList<WorldNode > wldItems;
 QList<WorldNode * > toRender;
 
@@ -240,6 +283,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=1.f;
         path.b=0.f;
+        path.Z=0.0+(double(data.tiles[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -253,6 +297,7 @@ bool WorldScene::init()
         path.r=0.f;
         path.g=0.f;
         path.b=1.f;
+        path.Z=20.0+(double(data.paths[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -267,6 +312,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=0.f;
         path.b=1.f;
+        path.Z=10.0+(double(data.scenery[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -279,6 +325,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=0.f;
         path.b=0.f;
+        path.Z=30.0+(double(data.levels[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -291,6 +338,7 @@ bool WorldScene::init()
         path.r=0.5f;
         path.g=0.5f;
         path.b=1.f;
+        path.Z=-10.0;
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -332,7 +380,7 @@ void WorldScene::update()
     if(keyboard1.keys.down)
         posY+=4;
 
-    toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2));
+    toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
 
     if(isPauseMenu)
     {
@@ -373,9 +421,9 @@ void WorldScene::render()
         glEnd();
     }
 
-    //Dummy "Viewport" zone probe
+    //Viewport zone black background
     glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 1.f, 0.f, 1.0f);
+    glColor4f( 0.f, 0.f, 0.f, 1.0f);
     glBegin( GL_QUADS );
         glVertex2f( viewportRect.left(), viewportRect.top());
         glVertex2f( viewportRect.right()+1, viewportRect.top());
@@ -386,8 +434,8 @@ void WorldScene::render()
     {
         //Set small viewport
         glViewport( viewportRect.left(), PGE_Window::Height-(viewportRect.bottom()+1), viewportRect.width(), viewportRect.height());
-        double renderX = posX-(viewportRect.width()/2);
-        double renderY = posY-(viewportRect.height()/2);
+        double renderX = posX+16-(viewportRect.width()/2);
+        double renderY = posY+16-(viewportRect.height()/2);
         double ratioX = double(PGE_Window::Width)/double(viewportRect.width());
         double ratioY = double(PGE_Window::Height)/double(viewportRect.height());
 
@@ -403,6 +451,15 @@ void WorldScene::render()
                 glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y+it->h)-renderY));
             glEnd();
         }
+
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 1.f, 1.f, 1.f, 1.0f);
+        glBegin( GL_QUADS );
+            glVertex2f( ratioX*(posX-renderX),       ratioY*(posY-renderY));
+            glVertex2f( ratioX*((posX+32)-renderX), ratioY*(posY-renderY));
+            glVertex2f( ratioX*((posX+32)-renderX), ratioY*((posY+32)-renderY));
+            glVertex2f( ratioX*(posX-renderX),       ratioY*((posY+32)-renderY));
+        glEnd();
 
         //Restore viewport
         glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
