@@ -346,6 +346,8 @@ bool WorldScene::init()
     return true;
 }
 
+int dir=0;
+
 void WorldScene::update()
 {
     uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
@@ -371,14 +373,38 @@ void WorldScene::update()
         }
     }
 
-    if(keyboard1.keys.left)
-        posX-=4;
-    if(keyboard1.keys.right)
-        posX+=4;
-    if(keyboard1.keys.up)
-        posY-=4;
-    if(keyboard1.keys.down)
-        posY+=4;
+    if(dir==0)
+    {
+        if(keyboard1.keys.left)
+            dir=1;
+        if(keyboard1.keys.right)
+            dir=2;
+        if(keyboard1.keys.up)
+            dir=3;
+        if(keyboard1.keys.down)
+            dir=4;
+    }
+
+    switch(dir)
+    {
+        case 1://left
+            posX-=2;
+            if(int(posX)%32==0) dir=0;
+            break;
+        case 2://right
+            posX+=2;
+            if(int(posX)%32==0) dir=0;
+            break;
+        case 3://up
+            posY-=2;
+            if(int(posY)%32==0) dir=0;
+            break;
+        case 4://down
+            posY+=2;
+            if(int(posY)%32==0) dir=0;
+            break;
+    }
+
 
     toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
 
