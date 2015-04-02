@@ -202,6 +202,7 @@ public:
     static QString config_id;
     static QString config_dir;
     static QString data_dir;
+    static int default_grid;
 
     //Common Data
     static QList<PGE_Texture > common_textures;
