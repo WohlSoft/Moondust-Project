@@ -35,6 +35,8 @@ DataFolders      ConfigManager::dirs;
 QString          ConfigManager::config_dir;
 QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
+int              ConfigManager::default_grid=32;
+
 
 QStringList ConfigManager::errorsList;
 
@@ -168,6 +170,10 @@ bool ConfigManager::loadBasics()
         dirs.gcommon = config_dir + "data/" + mainset.value("graphics-common", "data-custom").toString() + "/";
 
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
+    mainset.endGroup();
+
+    mainset.beginGroup("graphics");
+        default_grid = mainset.value("default-grid", 32).toInt();
     mainset.endGroup();
 
     if( mainset.status() != QSettings::NoError )

@@ -23,6 +23,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <gui/pge_msgbox.h>
+#include <data_configs/config_manager.h>
 
 #include <QHash>
 #include <unordered_map>
@@ -384,24 +385,46 @@ void WorldScene::update()
         if(keyboard1.keys.down)
             dir=4;
     }
+    else
+    {
+        switch(dir)
+        {
+        case 1://left
+            if(keyboard1.keys.right)
+                dir=2;
+            break;
+        case 2://right
+            if(keyboard1.keys.left)
+                dir=1;
+            break;
+        case 3://up
+            if(keyboard1.keys.down)
+                dir=4;
+            break;
+        case 4://down
+            if(keyboard1.keys.down)
+                dir=4;
+            break;
+        }
+    }
 
     switch(dir)
     {
         case 1://left
             posX-=2;
-            if(int(posX)%32==0) dir=0;
+            if(int(posX)%ConfigManager::default_grid==0) dir=0;
             break;
         case 2://right
             posX+=2;
-            if(int(posX)%32==0) dir=0;
+            if(int(posX)%ConfigManager::default_grid==0) dir=0;
             break;
         case 3://up
             posY-=2;
-            if(int(posY)%32==0) dir=0;
+            if(int(posY)%ConfigManager::default_grid==0) dir=0;
             break;
         case 4://down
             posY+=2;
-            if(int(posY)%32==0) dir=0;
+            if(int(posY)%ConfigManager::default_grid==0) dir=0;
             break;
     }
 
@@ -660,7 +683,7 @@ int WorldScene::exec()
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
             stop_render = SDL_GetTicks();
-            doUpdate_render = stop_render-start_render-timeStep;
+            doUpdate_render = stop_render-start_render;//-timeStep;
             debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= timeStep;
