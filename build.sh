@@ -53,6 +53,6 @@ checkState
 #=======================================================================
 printf "\n\n=========BUILT!!===========\n\n"
 cd $bak
-read -n 1
+if [[ $1 != "no-pause" ]]; then read -n 1; fi
 exit 0
 

@@ -35,6 +35,8 @@ DataFolders      ConfigManager::dirs;
 QString          ConfigManager::config_dir;
 QString          ConfigManager::config_id="dummy";
 QString          ConfigManager::data_dir;
+int              ConfigManager::default_grid=32;
+
 
 QStringList ConfigManager::errorsList;
 
@@ -170,6 +172,10 @@ bool ConfigManager::loadBasics()
         dirs.gcustom = data_dir + mainset.value("custom-data", "data-custom").toString() + "/";
     mainset.endGroup();
 
+    mainset.beginGroup("graphics");
+        default_grid = mainset.value("default-grid", 32).toInt();
+    mainset.endGroup();
+
     if( mainset.status() != QSettings::NoError )
     {
         QMessageBox::critical(NULL, "Config error",
@@ -253,8 +259,8 @@ bool ConfigManager::loadBasics()
         checkForImage(setup_WorldMap.backgroundImg, dirs.gcommon);
         setup_WorldMap.viewport_x = engineset.value("viewport-x", "").toInt();
         setup_WorldMap.viewport_y = engineset.value("viewport-y", "").toInt();
-        setup_WorldMap.viewport_w = engineset.value("viewport-w", "").toInt();
-        setup_WorldMap.viewport_h = engineset.value("viewport-h", "").toInt();
+        setup_WorldMap.viewport_w = engineset.value("viewport-width", "").toInt();
+        setup_WorldMap.viewport_h = engineset.value("viewport-height", "").toInt();
 
         setup_WorldMap.title_x = engineset.value("level-title-x", "").toInt();
         setup_WorldMap.title_y = engineset.value("level-title-y", "").toInt();

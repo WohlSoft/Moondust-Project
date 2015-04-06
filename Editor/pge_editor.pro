@@ -102,6 +102,7 @@ android:{
     themes.path = /assets/themes
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
+    message("pge_editor build platform is android")
 }
 
 
@@ -127,12 +128,14 @@ win32: {
         LIBS += -lSDL2main
     }
     LIBS += libversion -lDbghelp libwinmm
+    message("pge_editor build platform is win32")
 }
 
-linux-g++: {
-    LIBS += -L $$PWD/../_Libs/_builds/linux/lib
+linux-g++||unix:!macx:!android: {
+    LIBS += -L$$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+    message("pge_editor build platform is linux-gcc")
 }
 
 macx: {
@@ -140,6 +143,7 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     LIBS += -F../_builds/macos/frameworks -framework SDL2
     contains(DEFINES, USE_SDL_MIXER): LIBS += -framework SDL2 -framework SDL2_mixer
+    message("pge_editor build platform is macx")
 }
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
