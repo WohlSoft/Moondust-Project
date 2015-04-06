@@ -148,182 +148,181 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_water)&&(!isLocked))
         {
-            scene->contextMenuOpened = true; //bug protector
-
-            //Remove selection from non-bgo items
-            if(!this->isSelected())
-            {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(1);
-            QMenu ItemMenu;
-
-            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
-            LayerName->deleteLater();
-
-            QAction *setLayer;
-            QList<QAction *> layerItems;
-
-            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-                LayerName->addSeparator()->deleteLater();
-                newLayer->deleteLater();
-
-            foreach(LevelLayer layer, scene->LvlData->layers)
-            {
-                //Skip system layers
-                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
-
-                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
-                setLayer->setData(layer.name);
-                setLayer->setCheckable(true);
-                setLayer->setEnabled(true);
-                setLayer->setChecked( layer.name==waterData.layer );
-                setLayer->deleteLater();
-                layerItems.push_back(setLayer);
-            }
-
-            ItemMenu.addSeparator();
-
-            QMenu * WaterType = ItemMenu.addMenu(tr("Environment type"));
-                WaterType->deleteLater();
-
-            QAction *setAsWater = WaterType->addAction(tr("Water"));
-                setAsWater->setCheckable(true);
-                setAsWater->setChecked(!waterData.quicksand);
-                setAsWater->deleteLater();
-
-            QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
-                setAsQuicksand->setCheckable(true);
-                setAsQuicksand->setChecked(waterData.quicksand);
-                setAsQuicksand->deleteLater();
-
-
-            QAction *showRectangleValues = ItemMenu.addAction(tr("Show zone range data"));
-                showRectangleValues->deleteLater();
-
-            QAction *resize = ItemMenu.addAction(tr("Resize"));
-                resize->deleteLater();
-
-            ItemMenu.addSeparator()->deleteLater();
-            QAction *copyWater = ItemMenu.addAction(tr("Copy"));
-                copyWater->deleteLater();
-            QAction *cutWater = ItemMenu.addAction(tr("Cut"));
-                cutWater->deleteLater();
-
-            ItemMenu.addSeparator()->deleteLater();
-            QAction *remove = ItemMenu.addAction(tr("Remove"));
-                remove->deleteLater();
-
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                return;
-            }
-
-            if(selected==cutWater)
-            {
-                //scene->doCut = true ;
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-            }
-            else
-            if(selected==copyWater)
-            {
-                //scene->doCopy = true ;
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-            }
-            else
-            if(selected==setAsWater)
-            {
-                LevelData modData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Water")
-                    {
-                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
-                        ((ItemWater *)SelItem)->setType(0);
-                    }
-                }
-                scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
-            }
-            else
-            if(selected==setAsQuicksand)
-            {
-                LevelData modData;
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Water")
-                    {
-                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
-                        ((ItemWater *)SelItem)->setType(1);
-                    }
-                }
-                scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(false));
-            }
-            else
-            if(selected==showRectangleValues)
-            {
-                QInputDialog rectangle;
-                rectangle.setInputMode(QInputDialog::TextInput);
-                rectangle.setOption(QInputDialog::NoButtons, true);
-                rectangle.setWindowTitle(tr("Physical environment range"));
-                rectangle.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-                      QSize(400, 150), qApp->desktop()->availableGeometry()));
-                rectangle.setLabelText(tr("Rectangle X(left), Y(top), Width, Height, Right, Bottom"));
-                rectangle.setTextEchoMode(QLineEdit::Normal);
-                rectangle.setTextValue(
-                                    QString("X=%1; Y=%2; W=%3; H=%4; Right: %5; Bottom %6;")
-                                       .arg(waterData.x)
-                                       .arg(waterData.y)
-                                       .arg(waterData.w)
-                                       .arg(waterData.h)
-                                       .arg(waterData.x+waterData.w)
-                                       .arg(waterData.y+waterData.h)
-                                       );
-                rectangle.exec();
-
-            }
-            else
-            if(selected==resize)
-            {
-                scene->setPhysEnvResizer(this, true);
-            }
-            else
-            if(selected==remove)
-            {
-                scene->removeSelectedLvlItems();
-            }
-            else
-            if(selected==newLayer)
-            {
-                scene->setLayerToSelected();
-            }
-            else
-            {
-                //Fetch layers menu
-                foreach(QAction * lItem, layerItems)
-                {
-                    if(selected==lItem)
-                    {
-                        //FOUND!!!
-                        scene->setLayerToSelected(lItem->data().toString());
-                        break;
-                    }//Find selected layer's item
-                }
-            }
+            contextMenu(mouseEvent);
         }
     }
 
 }
 
-void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemWater::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    QGraphicsPolygonItem::contextMenuEvent(event);
-}
+    scene->contextMenuOpened = true; //bug protector
 
+    //Remove selection from non-bgo items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(1);
+    QMenu ItemMenu;
+
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
+    LayerName->deleteLater();
+
+    QAction *setLayer;
+    QList<QAction *> layerItems;
+
+    QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+        LayerName->addSeparator()->deleteLater();
+        newLayer->deleteLater();
+
+    foreach(LevelLayer layer, scene->LvlData->layers)
+    {
+        //Skip system layers
+        if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
+        setLayer->setData(layer.name);
+        setLayer->setCheckable(true);
+        setLayer->setEnabled(true);
+        setLayer->setChecked( layer.name==waterData.layer );
+        setLayer->deleteLater();
+        layerItems.push_back(setLayer);
+    }
+
+    ItemMenu.addSeparator();
+
+    QMenu * WaterType = ItemMenu.addMenu(tr("Environment type"));
+        WaterType->deleteLater();
+
+    QAction *setAsWater = WaterType->addAction(tr("Water"));
+        setAsWater->setCheckable(true);
+        setAsWater->setChecked(!waterData.quicksand);
+        setAsWater->deleteLater();
+
+    QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
+        setAsQuicksand->setCheckable(true);
+        setAsQuicksand->setChecked(waterData.quicksand);
+        setAsQuicksand->deleteLater();
+
+
+    QAction *showRectangleValues = ItemMenu.addAction(tr("Show zone range data"));
+        showRectangleValues->deleteLater();
+
+    QAction *resize = ItemMenu.addAction(tr("Resize"));
+        resize->deleteLater();
+
+    ItemMenu.addSeparator()->deleteLater();
+    QAction *copyWater = ItemMenu.addAction(tr("Copy"));
+        copyWater->deleteLater();
+    QAction *cutWater = ItemMenu.addAction(tr("Cut"));
+        cutWater->deleteLater();
+
+    ItemMenu.addSeparator()->deleteLater();
+    QAction *remove = ItemMenu.addAction(tr("Remove"));
+        remove->deleteLater();
+
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        return;
+    }
+
+    if(selected==cutWater)
+    {
+        //scene->doCut = true ;
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+    }
+    else
+    if(selected==copyWater)
+    {
+        //scene->doCopy = true ;
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==setAsWater)
+    {
+        LevelData modData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="Water")
+            {
+                modData.physez.push_back(((ItemWater *)SelItem)->waterData);
+                ((ItemWater *)SelItem)->setType(0);
+            }
+        }
+        scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(true));
+    }
+    else
+    if(selected==setAsQuicksand)
+    {
+        LevelData modData;
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="Water")
+            {
+                modData.physez.push_back(((ItemWater *)SelItem)->waterData);
+                ((ItemWater *)SelItem)->setType(1);
+            }
+        }
+        scene->addChangeSettingsHistory(modData, HistorySettings::SETTING_WATERTYPE, QVariant(false));
+    }
+    else
+    if(selected==showRectangleValues)
+    {
+        QInputDialog rectangle;
+        rectangle.setInputMode(QInputDialog::TextInput);
+        rectangle.setOption(QInputDialog::NoButtons, true);
+        rectangle.setWindowTitle(tr("Physical environment range"));
+        rectangle.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+              QSize(400, 150), qApp->desktop()->availableGeometry()));
+        rectangle.setLabelText(tr("Rectangle X(left), Y(top), Width, Height, Right, Bottom"));
+        rectangle.setTextEchoMode(QLineEdit::Normal);
+        rectangle.setTextValue(
+                            QString("X=%1; Y=%2; W=%3; H=%4; Right: %5; Bottom %6;")
+                               .arg(waterData.x)
+                               .arg(waterData.y)
+                               .arg(waterData.w)
+                               .arg(waterData.h)
+                               .arg(waterData.x+waterData.w)
+                               .arg(waterData.y+waterData.h)
+                               );
+        rectangle.exec();
+
+    }
+    else
+    if(selected==resize)
+    {
+        scene->setPhysEnvResizer(this, true);
+    }
+    else
+    if(selected==remove)
+    {
+        scene->removeSelectedLvlItems();
+    }
+    else
+    if(selected==newLayer)
+    {
+        scene->setLayerToSelected();
+    }
+    else
+    {
+        //Fetch layers menu
+        foreach(QAction * lItem, layerItems)
+        {
+            if(selected==lItem)
+            {
+                //FOUND!!!
+                scene->setLayerToSelected(lItem->data().toString());
+                break;
+            }//Find selected layer's item
+        }
+    }
+}
 
 ///////////////////MainArray functions/////////////////////////////
 void ItemWater::setLayer(QString layer)

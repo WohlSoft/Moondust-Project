@@ -428,6 +428,12 @@ void LvlScene::addFlipHistory(LevelData flippedItems, LevelData unflippedItems)
 
 void LvlScene::historyBack()
 {
+    if(EditingMode==MODE_Resizing) //Don't switch history while resizing in process
+    {
+        resetResizers();
+        return;
+    }
+
     historyIndex--;
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 
@@ -442,6 +448,11 @@ void LvlScene::historyBack()
 
 void LvlScene::historyForward()
 {
+    if(EditingMode==MODE_Resizing) //Don't switch history action while resizing in process
+    {
+        resetResizers();
+        return;
+    }
 
     QSharedPointer<IHistoryElement> lastOperation = operationList[historyIndex];
 

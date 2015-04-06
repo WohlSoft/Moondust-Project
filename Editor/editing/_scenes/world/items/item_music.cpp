@@ -137,73 +137,73 @@ void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_musbox)&&(!scene->DrawMode)&&(!isLocked))
         {
-            scene->contextMenuOpened = true;
-            //Remove selection from non-bgo items
-            if(!this->isSelected())
-            {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(true);
-            QMenu ItemMenu;
-
-            if(!musicTitle.isEmpty())
-            {
-                QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
-                title->setEnabled(false);
-            }else if(musicData.id==0)
-            {
-                QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
-                title->setEnabled(false);
-            }
-            QAction *play = ItemMenu.addAction(tr("Play this"));
-                ItemMenu.addSeparator();
-            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
-            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
-                ItemMenu.addSeparator();
-            QAction *remove = ItemMenu.addAction(tr("Remove"));
-
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                #endif
-                return;
-            }
-
-            if(selected==play)
-            {
-                scene->_edit->currentMusic = musicData.id;
-                LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
-                LvlMusPlay::updatePlayerState(true);
-                MainWinConnect::pMainWin->setMusicButton(true);
-            }
-            else
-            if(selected==cutTile)
-            {
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-            }
-            else
-            if(selected==copyTile)
-            {
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-            }
-            else
-            if(selected==remove)
-            {
-                scene->removeSelectedWldItems();
-            }
+            contextMenu(mouseEvent);
         }
 
     }
 }
 
-void ItemMusic::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    QGraphicsItem::contextMenuEvent(event);
+    scene->contextMenuOpened = true;
+    //Remove selection from non-bgo items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(true);
+    QMenu ItemMenu;
+
+    if(!musicTitle.isEmpty())
+    {
+        QAction *title = ItemMenu.addAction(QString("[%1]").arg(musicTitle));
+        title->setEnabled(false);
+    }else if(musicData.id==0)
+    {
+        QAction *title = ItemMenu.addAction(QString("[%1]").arg(tr("<Silence>")));
+        title->setEnabled(false);
+    }
+    QAction *play = ItemMenu.addAction(tr("Play this"));
+        ItemMenu.addSeparator();
+    QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+    QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+        ItemMenu.addSeparator();
+    QAction *remove = ItemMenu.addAction(tr("Remove"));
+
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        #endif
+        return;
+    }
+
+    if(selected==play)
+    {
+        scene->_edit->currentMusic = musicData.id;
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
+        LvlMusPlay::updatePlayerState(true);
+        MainWinConnect::pMainWin->setMusicButton(true);
+    }
+    else
+    if(selected==cutTile)
+    {
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+    }
+    else
+    if(selected==copyTile)
+    {
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==remove)
+    {
+        scene->removeSelectedWldItems();
+    }
 }
 
 

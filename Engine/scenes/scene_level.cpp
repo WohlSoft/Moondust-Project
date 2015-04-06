@@ -101,7 +101,7 @@ LevelScene::~LevelScene()
     switch_blocks.clear();
 
     //destroy textures
-    qDebug() << "clear textures";
+    qDebug() << "clear level textures";
     while(!textures_bank.isEmpty())
     {
         glDisable(GL_TEXTURE_2D);
@@ -389,7 +389,6 @@ void LevelScene::render()
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTick), 10, 140, 10, qRgb(255,0,0));
-
         //world->DrawDebugData();
     }
     renderBlack:
@@ -401,7 +400,6 @@ void LevelScene::render()
 
 int LevelScene::exec()
 {
-    bool running = true;
     isLevelContinues=true;
     doExit=false;
 
@@ -431,6 +429,7 @@ int LevelScene::exec()
 
     uTick = 1;
 
+    bool running = true;
     while(running)
     {
         start_common = SDL_GetTicks();

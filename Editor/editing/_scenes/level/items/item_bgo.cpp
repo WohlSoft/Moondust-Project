@@ -138,228 +138,251 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_bgo)&&(!scene->DrawMode)&&(!isLocked))
         {
-            scene->contextMenuOpened=true;
-            //Remove selection from non-bgo items
-            if(!this->isSelected())
+            contextMenu(mouseEvent);
+        }
+    }
+}
+
+
+void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    scene->contextMenuOpened=true;
+    //Remove selection from non-bgo items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(1);
+    QMenu ItemMenu;
+
+    QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
+
+    QAction *setLayer;
+    QList<QAction *> layerItems;
+
+    QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+        LayerName->addSeparator();
+
+    foreach(LevelLayer layer, scene->LvlData->layers)
+    {
+        //Skip system layers
+        if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+        setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
+        setLayer->setData(layer.name);
+        setLayer->setCheckable(true);
+        setLayer->setEnabled(true);
+        setLayer->setChecked( layer.name==bgoData.layer );
+        layerItems.push_back(setLayer);
+    }
+    ItemMenu.addSeparator();
+
+    bool isLvlx = !scene->LvlData->smbx64strict;
+
+    QAction *ZOffset = ItemMenu.addAction(tr("Change Z-Offset..."));
+        ZOffset->setEnabled(isLvlx);
+    QMenu *ZMode = ItemMenu.addMenu(tr("Z-Layer"));
+        ZMode->setEnabled(isLvlx);
+
+    QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
+        ZMode_bg2->setCheckable(true);
+        ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
+    QAction *ZMode_bg1 = ZMode->addAction(tr("Background"));
+        ZMode_bg1->setCheckable(true);
+        ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
+    QAction *ZMode_def = ZMode->addAction(tr("Default"));
+        ZMode_def->setCheckable(true);
+        ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
+    QAction *ZMode_fg1 = ZMode->addAction(tr("Foreground"));
+        ZMode_fg1->setCheckable(true);
+        ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
+    QAction *ZMode_fg2 = ZMode->addAction(tr("Foreground-2"));
+        ZMode_fg2->setCheckable(true);
+        ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
+        ItemMenu.addSeparator();
+
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BGO-%1").arg(bgoData.id));
+        ItemMenu.addSeparator();
+
+    QAction *copyBGO = ItemMenu.addAction(tr("Copy"));
+    copyBGO->deleteLater();
+    QAction *cutBGO = ItemMenu.addAction(tr("Cut"));
+    cutBGO->deleteLater();
+    ItemMenu.addSeparator()->deleteLater();
+    QAction *remove = ItemMenu.addAction(tr("Remove"));
+    remove->deleteLater();
+    ItemMenu.addSeparator()->deleteLater();
+    QAction *props = ItemMenu.addAction(tr("Properties..."));
+    props->deleteLater();
+
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        #endif
+        return;
+    }
+
+    if(selected==cutBGO)
+    {
+        //scene->doCut = true ;
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+    }
+    else
+    if(selected==copyBGO)
+    {
+        //scene->doCopy = true ;
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==remove)
+    {
+        scene->removeSelectedLvlItems();
+    }
+    else
+        if(selected==ZMode_bg2)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(1);
-            QMenu ItemMenu;
-
-            QMenu * LayerName = ItemMenu.addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
-
-            QAction *setLayer;
-            QList<QAction *> layerItems;
-
-            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-                LayerName->addSeparator();
-
-            foreach(LevelLayer layer, scene->LvlData->layers)
-            {
-                //Skip system layers
-                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
-
-                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
-                setLayer->setData(layer.name);
-                setLayer->setCheckable(true);
-                setLayer->setEnabled(true);
-                setLayer->setChecked( layer.name==bgoData.layer );
-                layerItems.push_back(setLayer);
-            }
-            ItemMenu.addSeparator();
-
-            bool isLvlx = !scene->LvlData->smbx64strict;
-
-            QAction *ZOffset = ItemMenu.addAction(tr("Change Z-Offset..."));
-                ZOffset->setEnabled(isLvlx);
-            QMenu *ZMode = ItemMenu.addMenu(tr("Z-Layer"));
-                ZMode->setEnabled(isLvlx);
-
-            QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
-                ZMode_bg2->setCheckable(true);
-                ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
-            QAction *ZMode_bg1 = ZMode->addAction(tr("Background"));
-                ZMode_bg1->setCheckable(true);
-                ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
-            QAction *ZMode_def = ZMode->addAction(tr("Default"));
-                ZMode_def->setCheckable(true);
-                ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
-            QAction *ZMode_fg1 = ZMode->addAction(tr("Foreground"));
-                ZMode_fg1->setCheckable(true);
-                ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
-            QAction *ZMode_fg2 = ZMode->addAction(tr("Foreground-2"));
-                ZMode_fg2->setCheckable(true);
-                ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
-                ItemMenu.addSeparator();
-
-            QAction *transform = ItemMenu.addAction(tr("Transform into"));
-                ItemMenu.addSeparator();
-
-            QAction *copyBGO = ItemMenu.addAction(tr("Copy"));
-            copyBGO->deleteLater();
-            QAction *cutBGO = ItemMenu.addAction(tr("Cut"));
-            cutBGO->deleteLater();
-            ItemMenu.addSeparator()->deleteLater();
-            QAction *remove = ItemMenu.addAction(tr("Remove"));
-            remove->deleteLater();
-            ItemMenu.addSeparator()->deleteLater();
-            QAction *props = ItemMenu.addAction(tr("Properties..."));
-            props->deleteLater();
-
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                #endif
-                return;
-            }
-
-            if(selected==cutBGO)
-            {
-                //scene->doCut = true ;
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-            }
-            else
-            if(selected==copyBGO)
-            {
-                //scene->doCopy = true ;
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-            }
-            else
-            if(selected==remove)
-            {
-                scene->removeSelectedLvlItems();
-            }
-            else
-                if(selected==ZMode_bg2)
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                        }
-                    }
-                }
-                else
-                if(selected==ZMode_bg1)
-                {
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                        }
-                    }
-                }
-                else
-                if(selected==ZMode_def)
-                {
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                        }
-                    }
-                }
-                else
-                if(selected==ZMode_fg1)
-                {
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                        }
-                    }
-                }
-                else
-                if(selected==ZMode_fg2)
-                {
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
-                        }
-                    }
-                }
-            else
-            if(selected==ZOffset)
-            {
-                bool ok;
-                qreal newzOffset = QInputDialog::getDouble(nullptr, tr("Z-Offset"),
-                                                           tr("Please enter the Z-value offset:"),
-                                                           bgoData.z_offset,
-                                                           -500, 500,7, &ok);
-                if(ok)
-                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                {
-                    if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                    {
-                        ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
-                    }
-                }
-            }
-            else
-            if(selected==transform)
-            {
-                int transformTO;
-                ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
-                blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
-                blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
-                if(blockList->exec()==QDialog::Accepted)
-                {
-                    transformTO = blockList->bgoID;
-                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                    {
-                        if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                        {
-                            ((ItemBGO *) SelItem)->transformTo(transformTO);
-                        }
-                    }
-                }
-                delete blockList;
-            }
-            else
-            if(selected==props)
-            {
-                scene->openProps();
-            }
-            else
-            if(selected==newLayer)
-            {
-                scene->setLayerToSelected();
-            }
-            else
-            {
-                //Fetch layers menu
-                foreach(QAction * lItem, layerItems)
-                {
-                    if(selected==lItem)
-                    {
-                        //FOUND!!!
-                        scene->setLayerToSelected(lItem->data().toString());
-                        break;
-                    }//Find selected layer's item
+                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
         }
-
+        else
+        if(selected==ZMode_bg1)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                }
+            }
+        }
+        else
+        if(selected==ZMode_def)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                }
+            }
+        }
+        else
+        if(selected==ZMode_fg1)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                }
+            }
+        }
+        else
+        if(selected==ZMode_fg2)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                }
+            }
+        }
+    else
+    if(selected==ZOffset)
+    {
+        bool ok;
+        qreal newzOffset = QInputDialog::getDouble(nullptr, tr("Z-Offset"),
+                                                   tr("Please enter the Z-value offset:"),
+                                                   bgoData.z_offset,
+                                                   -500, 500,7, &ok);
+        if(ok)
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+            {
+                ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
+            }
+        }
     }
-
-}
-
-void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
-{
-    QGraphicsItem::contextMenuEvent(event);
+    else
+    if(selected==transform)
+    {
+        int transformTO;
+        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        if(blockList->exec()==QDialog::Accepted)
+        {
+            transformTO = blockList->bgoID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    ((ItemBGO *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete blockList;
+    }
+    else
+    if(selected==transform_all)
+    {
+        int transformTO;
+        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
+        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
+        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        if(blockList->exec()==QDialog::Accepted)
+        {
+            transformTO = blockList->bgoID;
+            unsigned long oldID = bgoData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    if(((ItemBGO *) SelItem)->bgoData.id==oldID)
+                        ((ItemBGO *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete blockList;
+    }
+    else
+    if(selected==props)
+    {
+        scene->openProps();
+    }
+    else
+    if(selected==newLayer)
+    {
+        scene->setLayerToSelected();
+    }
+    else
+    {
+        //Fetch layers menu
+        foreach(QAction * lItem, layerItems)
+        {
+            if(selected==lItem)
+            {
+                //FOUND!!!
+                scene->setLayerToSelected(lItem->data().toString());
+                break;
+            }//Find selected layer's item
+        }
+    }
 }
 
 

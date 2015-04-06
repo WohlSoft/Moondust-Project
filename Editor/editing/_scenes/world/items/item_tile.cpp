@@ -124,54 +124,53 @@ void ItemTile::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if((!scene->lock_tile)&&(!scene->DrawMode)&&(!isLocked))
         {
-            scene->contextMenuOpened = true; //bug protector
-            //Remove selection from non-bgo items
-            if(!this->isSelected())
-            {
-                scene->clearSelection();
-                this->setSelected(true);
-            }
-
-            this->setSelected(this);
-            QMenu ItemMenu;
-
-            QAction *copyTile = ItemMenu.addAction(tr("Copy"));
-            QAction *cutTile = ItemMenu.addAction(tr("Cut"));
-                ItemMenu.addSeparator();
-            QAction *remove = ItemMenu.addAction(tr("Remove"));
-
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
-
-            if(!selected)
-            {
-                #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-                #endif
-                return;
-            }
-
-            if(selected==cutTile)
-            {
-                MainWinConnect::pMainWin->on_actionCut_triggered();
-            }
-            else
-            if(selected==copyTile)
-            {
-                MainWinConnect::pMainWin->on_actionCopy_triggered();
-            }
-            else
-            if(selected==remove)
-            {
-               scene->removeSelectedWldItems();
-            }
+            contextMenu(mouseEvent);
         }
-
     }
 }
 
-void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    QGraphicsItem::contextMenuEvent(event);
+    scene->contextMenuOpened = true; //bug protector
+    //Remove selection from non-bgo items
+    if(!this->isSelected())
+    {
+        scene->clearSelection();
+        this->setSelected(true);
+    }
+
+    this->setSelected(this);
+    QMenu ItemMenu;
+
+    QAction *copyTile = ItemMenu.addAction(tr("Copy"));
+    QAction *cutTile = ItemMenu.addAction(tr("Cut"));
+        ItemMenu.addSeparator();
+    QAction *remove = ItemMenu.addAction(tr("Remove"));
+
+QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+
+    if(!selected)
+    {
+        #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+        #endif
+        return;
+    }
+
+    if(selected==cutTile)
+    {
+        MainWinConnect::pMainWin->on_actionCut_triggered();
+    }
+    else
+    if(selected==copyTile)
+    {
+        MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==remove)
+    {
+       scene->removeSelectedWldItems();
+    }
 }
 
 
