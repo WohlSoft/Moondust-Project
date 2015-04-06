@@ -97,6 +97,24 @@ public:
         }
     }
 
+    QList<WorldNode* > query(long X, long Y)
+    {
+        QList<WorldNode * > list;
+
+        QPoint t = applyGrid(X,Y);
+        long listI = t.x();
+        long listJ = t.y();
+
+        const typename std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > >::const_iterator got = map.find(listI);
+        if(got != map.end())
+        {
+            const typename std::unordered_map<long, QList<WorldNode* > >::const_iterator got2 = map[listI].find(listJ);
+            if(got2 != map[listI].end())
+                list.append(map[listI][listJ]);
+        }
+        return list;
+    }
+
     QList<WorldNode* > query(long Left, long Top, long Right, long Bottom, bool z_sort=false)
     {
         QList<WorldNode * > list;
