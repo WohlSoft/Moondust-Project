@@ -6,6 +6,7 @@ EpisodeState::EpisodeState()
     episodeIsStarted=false;
     replay_on_fail=false;
     game_state = FileFormats::dummySaveDataArray();
+    gameType=Testing;
 }
 
 EpisodeState::~EpisodeState()
