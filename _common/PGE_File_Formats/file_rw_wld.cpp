@@ -32,6 +32,7 @@
 
 WorldData FileFormats::ReadWorldFile(QFile &inf)
 {
+    errorString.clear();
     QByteArray data;
 
     typedef QPair<QByteArray, QString > magicFileFormat;
@@ -107,6 +108,7 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
 
 WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
 {
+    errorString.clear();
     WorldData FileData;
     FileData = dummyWldDataArray();
 
