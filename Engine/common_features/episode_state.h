@@ -48,6 +48,14 @@ public:
 
     QString LevelFile;
     QString LevelPath;
+    int gameType;
+    enum gameTypes
+    {
+        Testing=0,
+        Episode=1,
+        Battle,
+        Race
+    };
 
     bool replay_on_fail;
 };
