@@ -49,6 +49,8 @@ struct GamesaveData
     long worldPosX; //!< Last world map position X
     long worldPosY; //!< Last world map position Y
 
+    long last_hub_warp; //!< Last entered/exited warp Array-ID on the HUB-based episodes.
+
     unsigned int musicID; //!< Current world music ID
     QString musicFile;    //!< Current world music file (custom music)
 

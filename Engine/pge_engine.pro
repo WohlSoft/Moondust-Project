@@ -164,7 +164,8 @@ SOURCES += \
     scenes/level/lvl_z_constants.cpp \
     physics/phys_debug_draw.cpp \
     data_configs/obj_effect.cpp \
-    scenes/level/gfx_effects.cpp
+    scenes/level/gfx_effects.cpp \
+    common_features/episode_state.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -233,7 +234,8 @@ HEADERS  += \
     data_configs/obj_effect.h \
     data_configs/obj_npc.h \
     physics/phys_debug_draw.h \
-    scenes/level/gfx_effects.h
+    scenes/level/gfx_effects.h \
+    common_features/episode_state.h
 
 FORMS    += \
     data_configs/select_config.ui

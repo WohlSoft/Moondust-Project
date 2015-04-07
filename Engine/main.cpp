@@ -29,6 +29,7 @@
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 #include "common_features/logger.h"
+#include "common_features/episode_state.h"
 
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
@@ -403,7 +404,7 @@ PlayLevel:
 
             switch(ExitCode)
             {
-            case LevelScene::EXIT_Warp:
+            case LvlExit::EXIT_Warp:
                 {
                     fileToPpen = lScene->toAnotherLevel();
                     entranceID = lScene->toAnotherEntrance();
@@ -422,13 +423,13 @@ PlayLevel:
                     }
                 }
                 break;
-            case LevelScene::EXIT_Closed:
+            case LvlExit::EXIT_Closed:
                 {
                     end_level_jump=RETURN_TO_EXIT;
                     playAgain = false;
                 }
                 break;
-            case LevelScene::EXIT_MenuExit:
+            case LvlExit::EXIT_MenuExit:
                 {
                     if(!debugMode)
                         end_level_jump=RETURN_TO_MAIN_MENU;
@@ -437,7 +438,7 @@ PlayLevel:
                     playAgain = false;
                 }
                 break;
-            case LevelScene::EXIT_PlayerDeath:
+            case LvlExit::EXIT_PlayerDeath:
                 {
                 }
                 break;

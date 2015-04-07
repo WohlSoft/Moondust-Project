@@ -26,6 +26,7 @@
 #include <controls/controller_keyboard.h>
 #include <PGE_File_Formats/wld_filedata.h>
 #include <common_features/pge_texture.h>
+#include <common_features/episode_state.h>
 #include <data_configs/config_manager.h>
 
 class WorldScene : public Scene
@@ -37,14 +38,6 @@ public:
     bool init();
     bool isInit;
 
-    enum ExitWorldCodes
-    {
-        EXIT_close=-2,
-        EXIT_error=-1,
-        EXIT_exitWithSave,
-        EXIT_exitNoSave,
-        EXIT_beginLevel=0
-    };
     int exitWorldDelay;
     int exitWorldCode;
     QString targetLevel;
@@ -89,6 +82,13 @@ public:
     int  debug_phys_delay;
     int  debug_event_delay;
     int  uTick;
+
+    int dir;
+    bool ignore_paths;
+    bool allow_left;
+    bool allow_up;
+    bool allow_right;
+    bool allow_down;
 
     void checkState();
 private:
