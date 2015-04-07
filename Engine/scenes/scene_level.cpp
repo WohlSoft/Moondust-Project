@@ -59,7 +59,7 @@ LevelScene::LevelScene()
 
     doExit = false;
     exitLevelDelay=3000;
-    exitLevelCode = EXIT_Closed;
+    exitLevelCode = LvlExit::EXIT_Closed;
     warpToLevelFile = "";
     warpToArrayID = 0;
     NewPlayerID = 1;
@@ -213,7 +213,7 @@ void LevelScene::update()
             exitLevelDelay -= uTick;
         else
         {
-            if(exitLevelCode==EXIT_Closed)
+            if(exitLevelCode==LvlExit::EXIT_Closed)
             {
                 fader_opacity=1.0f;
                 isLevelContinues=false;
@@ -448,7 +448,7 @@ int LevelScene::exec()
                 case SDL_QUIT:
                     {
                         if(doExit) break;
-                        setExiting(0, EXIT_Closed);
+                        setExiting(0, LvlExit::EXIT_Closed);
                     }   // End work of program
                 break;
 
@@ -457,7 +457,7 @@ int LevelScene::exec()
                   { // Check which
                     case SDLK_ESCAPE: // ESC
                             {
-                                setExiting(0, EXIT_MenuExit);
+                                setExiting(0, LvlExit::EXIT_MenuExit);
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
@@ -594,7 +594,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
-        setExiting(4000, EXIT_PlayerDeath);
+        setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }
 

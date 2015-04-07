@@ -44,7 +44,7 @@ bool LevelScene::setEntrance(int entr)
 
         if(!found)
         {
-            exitLevelCode = EXIT_Error;
+            exitLevelCode = LvlExit::EXIT_Error;
 
             PGE_MsgBox msgBox(NULL, "ERROR:\nCan't start level without player's start point.\nPlease set a player's start point and start level again.",
                               PGE_MsgBox::msg_error);
@@ -82,7 +82,7 @@ bool LevelScene::setEntrance(int entr)
     msgBox.exec();
 
     //Error, sections is not found
-    exitLevelCode = EXIT_Error;
+    exitLevelCode = LvlExit::EXIT_Error;
     return false;
 }
 
@@ -110,7 +110,7 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
     ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
 
-    if(!success) exitLevelCode = EXIT_Error;
+    if(!success) exitLevelCode = LvlExit::EXIT_Error;
 
     return success;
 }

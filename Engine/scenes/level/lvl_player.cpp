@@ -523,7 +523,7 @@ void LVL_Player::update(float ticks)
 
             if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
             {
-                LvlSceneP::s->setExiting(1000, LevelScene::EXIT_OffScreen);
+                LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
             }
         }
         else
@@ -757,7 +757,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
                 LvlSceneP::s->levelData()->path+"/"+levelFile;
         LvlSceneP::s->warpToArrayID = targetWarp;
     }
-    LvlSceneP::s->setExiting(2000, LevelScene::EXIT_Warp);
+    LvlSceneP::s->setExiting(2000, LvlExit::EXIT_Warp);
 }
 
 

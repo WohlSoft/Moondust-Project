@@ -77,6 +77,123 @@ public:
     double Z;
 };
 
+class WldTileItem: public WorldNode
+{
+public:
+    WldTileItem(WorldTiles _data): WorldNode()
+    {
+        data = _data;
+        x=data.x;
+        y=data.y;
+        Z=0.0+(double(data.array_id)*0.0000001);
+        type=tile;
+    }
+    WldTileItem(const WldTileItem &x): WorldNode(x)
+    {
+        data = x.data;
+        type=tile;
+    }
+    ~WldTileItem()
+    {}
+
+    WorldTiles data;
+};
+
+class WldSceneryItem: public WorldNode
+{
+public:
+    WldSceneryItem(WorldScenery _data): WorldNode()
+    {
+        data = _data;
+        x=data.x;
+        y=data.y;
+        w = 16;
+        h = 16;
+        Z=10.0+(double(data.array_id)*0.0000001);
+        vizible=true;
+        type=scenery;
+    }
+    WldSceneryItem(const WldSceneryItem &x): WorldNode(x)
+    {
+        data = x.data;
+        vizible=x.vizible;
+        type=scenery;
+    }
+    ~WldSceneryItem()
+    {}
+    WorldScenery data;
+    bool vizible;
+};
+
+class WldPathItem: public WorldNode
+{
+public:
+    WldPathItem(WorldPaths _data): WorldNode()
+    {
+        data = _data;
+        x=data.x;
+        y=data.y;
+        Z=20.0+(double(data.array_id)*0.0000001);
+        vizible=true;
+        type=path;
+    }
+    WldPathItem(const WldPathItem &x): WorldNode(x)
+    {
+        data = x.data;
+        vizible=x.vizible;
+        type=path;
+    }
+    ~WldPathItem()
+    {}
+    WorldPaths data;
+    bool vizible;
+};
+
+class WldLevelItem: public WorldNode
+{
+public:
+    WldLevelItem(WorldLevels _data): WorldNode()
+    {
+        data = _data;
+        x=data.x;
+        y=data.y;
+        Z=30.0+(double(data.array_id)*0.0000001);
+        vizible=true;
+        type=level;
+    }
+    WldLevelItem(const WldLevelItem &x): WorldNode(x)
+    {
+        data = x.data;
+        vizible=x.vizible;
+        type=level;
+    }
+    ~WldLevelItem()
+    {}
+    WorldLevels data;
+    bool vizible;
+};
+
+class WldMusicBoxItem: public WorldNode
+{
+public:
+    WldMusicBoxItem(WorldMusic _data): WorldNode()
+    {
+        data = _data;
+        x=data.x;
+        y=data.y;
+        Z=-10.0;
+        type=musicbox;
+    }
+    WldMusicBoxItem(const WldMusicBoxItem &x): WorldNode(x)
+    {
+        data = x.data;
+        type=musicbox;
+    }
+    ~WldMusicBoxItem()
+    {}
+    WorldMusic data;
+};
+
 class TileBox
 {
 public:
@@ -228,7 +345,7 @@ QList<WorldNode * > toRender;
 
 WorldScene::WorldScene()
 {
-    exitWorldCode=EXIT_error;
+    exitWorldCode=WldExit::EXIT_error;
     exitWorldDelay=2000;
     worldIsContinues=true;
     doExit=false;
@@ -265,6 +382,13 @@ WorldScene::WorldScene()
     health = 3;
     points = 0;
     stars  = 0;
+
+    dir=0;
+    ignore_paths=false;
+    allow_left=false;
+    allow_up=false;
+    allow_right=false;
+    allow_down=false;
 
     data = FileFormats::dummyWldDataArray();
 }
@@ -308,73 +432,50 @@ bool WorldScene::init()
 
     for(int i=0; i<data.tiles.size(); i++)
     {
-        WorldNode path;
-        path.x = data.tiles[i].x;
-        path.y = data.tiles[i].y;
+        WldTileItem path = WldTileItem(data.tiles[i]);
         path.r=1.f;
         path.g=1.f;
         path.b=0.f;
-        path.type=WorldNode::tile;
-        path.Z=0.0+(double(data.tiles[i].array_id)*0.0000001);
-        wldItems << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
-    }
-
-
-    for(int i=0; i<data.paths.size(); i++)
-    {
-        WorldNode path;
-        path.x = data.paths[i].x;
-        path.y = data.paths[i].y;
-        path.r=0.f;
-        path.g=0.f;
-        path.b=1.f;
-        path.type=WorldNode::path;
-        path.Z=20.0+(double(data.paths[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
 
     for(int i=0; i<data.scenery.size(); i++)
     {
-        WorldNode path;
-        path.x = data.scenery[i].x;
-        path.y = data.scenery[i].y;
-        path.w = 16;
-        path.h = 16;
+        WldSceneryItem path = WldSceneryItem(data.scenery[i]);
         path.r=1.f;
         path.g=0.f;
         path.b=1.f;
-        path.type=WorldNode::scenery;
-        path.Z=10.0+(double(data.scenery[i].array_id)*0.0000001);
+        wldItems << path;
+        worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
+    }
+
+    for(int i=0; i<data.paths.size(); i++)
+    {
+        WldPathItem path = WldPathItem(data.paths[i]);
+        path.r=0.f;
+        path.g=0.f;
+        path.b=1.f;
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
 
     for(int i=0; i<data.levels.size(); i++)
     {
-        WorldNode path;
-        path.x = data.levels[i].x;
-        path.y = data.levels[i].y;
+        WldLevelItem path = WldLevelItem(data.levels[i]);
         path.r=1.f;
         path.g=0.f;
         path.b=0.f;
-        path.type=WorldNode::level;
-        path.Z=30.0+(double(data.levels[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
     {
-        WorldNode path;
-        path.x = data.music[i].x;
-        path.y = data.music[i].y;
+        WldMusicBoxItem path = WldMusicBoxItem(data.music[i]);
         path.r=0.5f;
         path.g=0.5f;
         path.b=1.f;
-        path.type=WorldNode::musicbox;
-        path.Z=-10.0;
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
@@ -383,13 +484,6 @@ bool WorldScene::init()
 
     return true;
 }
-
-int dir=0;
-bool ignore_paths=false;
-bool allow_left=false;
-bool allow_up=false;
-bool allow_right=false;
-bool allow_down=false;
 
 void WorldScene::update()
 {
@@ -402,7 +496,7 @@ void WorldScene::update()
             exitWorldDelay -= uTick;
         else
         {
-            if(exitWorldCode==EXIT_close)
+            if(exitWorldCode==WldExit::EXIT_close)
             {
                 fader_opacity=1.0f;
                 worldIsContinues=false;
@@ -415,73 +509,75 @@ void WorldScene::update()
             }
         }
     }
-
-    if(dir==0)
-    {
-        if(keyboard1.keys.left && (allow_left || ignore_paths))
-            dir=1;
-        if(keyboard1.keys.right && (allow_right || ignore_paths))
-            dir=2;
-        if(keyboard1.keys.up && (allow_up || ignore_paths))
-            dir=3;
-        if(keyboard1.keys.down && (allow_down || ignore_paths))
-            dir=4;
-    }
     else
     {
+        if(dir==0)
+        {
+            if(keyboard1.keys.left && (allow_left || ignore_paths))
+                dir=1;
+            if(keyboard1.keys.right && (allow_right || ignore_paths))
+                dir=2;
+            if(keyboard1.keys.up && (allow_up || ignore_paths))
+                dir=3;
+            if(keyboard1.keys.down && (allow_down || ignore_paths))
+                dir=4;
+        }
+        else
+        {
+            switch(dir)
+            {
+            case 1://left
+                if(keyboard1.keys.right)
+                    dir=2;
+                break;
+            case 2://right
+                if(keyboard1.keys.left)
+                    dir=1;
+                break;
+            case 3://up
+                if(keyboard1.keys.down)
+                    dir=4;
+                break;
+            case 4://down
+                if(keyboard1.keys.down)
+                    dir=4;
+                break;
+            }
+        }
+
         switch(dir)
         {
-        case 1://left
-            if(keyboard1.keys.right)
-                dir=2;
-            break;
-        case 2://right
-            if(keyboard1.keys.left)
-                dir=1;
-            break;
-        case 3://up
-            if(keyboard1.keys.down)
-                dir=4;
-            break;
-        case 4://down
-            if(keyboard1.keys.down)
-                dir=4;
-            break;
+            case 1://left
+                posX-=2;
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
+                break;
+            case 2://right
+                posX+=2;
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
+                break;
+            case 3://up
+                posY-=2;
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
+                break;
+            case 4://down
+                posY+=2;
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
+                break;
         }
-    }
-
-    switch(dir)
-    {
-        case 1://left
-            posX-=2;
-            if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
-            break;
-        case 2://right
-            posX+=2;
-            if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
-            break;
-        case 3://up
-            posY-=2;
-            if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
-            break;
-        case 4://down
-            posY+=2;
-            if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
-            break;
-    }
 
 
-    toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
+        toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
 
-    if(isPauseMenu)
-    {
-        PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dumym world map. I think, it works fine!",
-                          PGE_MsgBox::msg_info);
+        if(isPauseMenu)
+        {
+            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dumym world map. I think, it works fine!",
+                              PGE_MsgBox::msg_info);
 
-        if(!ConfigManager::setup_message_box.sprite.isEmpty())
-            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
-        msgBox.exec();
-        isPauseMenu=false;
+            if(!ConfigManager::setup_message_box.sprite.isEmpty())
+                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+            msgBox.exec();
+            isPauseMenu=false;
+        }
     }
 
     Scene::update();
@@ -664,8 +760,7 @@ int WorldScene::exec()
     worldIsContinues=true;
     doExit=false;
 
-    //Greeeeeeeeeeeeeeeeen! :D
-    glClearColor(0.0, 1.0, 0.0, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 1.0f);
 
     //World scene's Loop
  Uint32 start_render=0;
@@ -702,7 +797,7 @@ int WorldScene::exec()
                 case SDL_QUIT:
                     {
                         if(doExit) break;
-                        setExiting(0, EXIT_close);
+                        setExiting(0, WldExit::EXIT_close);
                     }   // End work of program
                 break;
 
@@ -711,7 +806,7 @@ int WorldScene::exec()
                   { // Check which
                     case SDLK_ESCAPE: // ESC
                             {
-                                setExiting(0, EXIT_exitNoSave);
+                                setExiting(0, WldExit::EXIT_exitNoSave);
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
