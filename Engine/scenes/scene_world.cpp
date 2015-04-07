@@ -31,6 +31,16 @@
 class WorldNode
 {
 public:
+    enum nodeType
+    {
+        unknown=0,
+        tile,
+        scenery,
+        path,
+        level,
+        musicbox
+    };
+
     WorldNode()
     {
         x=0;
@@ -41,6 +51,7 @@ public:
         g=0.f;
         b=1.f;
         Z=0.0;
+        type=unknown;
     }
 
     WorldNode(const WorldNode &xx)
@@ -53,8 +64,9 @@ public:
         g=xx.g;
         b=xx.b;
         Z=xx.Z;
+        type=xx.type;
     }
-
+    int type;
     long x;
     long y;
     long w;
@@ -181,7 +193,7 @@ public:
 
             if((int)source.x()<0)
             {
-                gridX=(int)source.x()+(abs((int)source.x())%gridSize)+gridSize;
+                gridX=(int)source.x()+1+(abs((int)source.x()+1)%gridSize)-gridSize;
             }
             else
             {
@@ -190,7 +202,7 @@ public:
 
             if((int)source.y()<0)
             {
-                gridY = (int)source.y()+(abs((int)source.y()) % gridSize)+gridSize;
+                gridY = (int)source.y()+1+(abs((int)source.y()+1) % gridSize)-gridSize;
             }
             else
             {
@@ -302,6 +314,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=1.f;
         path.b=0.f;
+        path.type=WorldNode::tile;
         path.Z=0.0+(double(data.tiles[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
@@ -316,6 +329,7 @@ bool WorldScene::init()
         path.r=0.f;
         path.g=0.f;
         path.b=1.f;
+        path.type=WorldNode::path;
         path.Z=20.0+(double(data.paths[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
@@ -331,6 +345,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=0.f;
         path.b=1.f;
+        path.type=WorldNode::scenery;
         path.Z=10.0+(double(data.scenery[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
@@ -344,6 +359,7 @@ bool WorldScene::init()
         path.r=1.f;
         path.g=0.f;
         path.b=0.f;
+        path.type=WorldNode::level;
         path.Z=30.0+(double(data.levels[i].array_id)*0.0000001);
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
@@ -357,15 +373,23 @@ bool WorldScene::init()
         path.r=0.5f;
         path.g=0.5f;
         path.b=1.f;
+        path.type=WorldNode::musicbox;
         path.Z=-10.0;
         wldItems << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wldItems.last()));
     }
 
+    checkState();
+
     return true;
 }
 
 int dir=0;
+bool ignore_paths=false;
+bool allow_left=false;
+bool allow_up=false;
+bool allow_right=false;
+bool allow_down=false;
 
 void WorldScene::update()
 {
@@ -394,13 +418,13 @@ void WorldScene::update()
 
     if(dir==0)
     {
-        if(keyboard1.keys.left)
+        if(keyboard1.keys.left && (allow_left || ignore_paths))
             dir=1;
-        if(keyboard1.keys.right)
+        if(keyboard1.keys.right && (allow_right || ignore_paths))
             dir=2;
-        if(keyboard1.keys.up)
+        if(keyboard1.keys.up && (allow_up || ignore_paths))
             dir=3;
-        if(keyboard1.keys.down)
+        if(keyboard1.keys.down && (allow_down || ignore_paths))
             dir=4;
     }
     else
@@ -430,19 +454,19 @@ void WorldScene::update()
     {
         case 1://left
             posX-=2;
-            if(int(posX)%ConfigManager::default_grid==0) dir=0;
+            if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
             break;
         case 2://right
             posX+=2;
-            if(int(posX)%ConfigManager::default_grid==0) dir=0;
+            if(int(posX)%ConfigManager::default_grid==0) {dir=0; checkState();}
             break;
         case 3://up
             posY-=2;
-            if(int(posY)%ConfigManager::default_grid==0) dir=0;
+            if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
             break;
         case 4://down
             posY+=2;
-            if(int(posY)%ConfigManager::default_grid==0) dir=0;
+            if(int(posY)%ConfigManager::default_grid==0) {dir=0; checkState();}
             break;
     }
 
@@ -461,6 +485,45 @@ void WorldScene::update()
     }
 
     Scene::update();
+}
+
+void fetchSideNodes(bool &side, QList<WorldNode* > &nodes)
+{
+    side=false;
+    foreach (WorldNode* x, nodes)
+    {
+        if(x->type==WorldNode::path)
+        {
+            side=true; break;
+        }
+
+        if(x->type==WorldNode::level)
+        {
+            side=true; break;
+        }
+    }
+}
+
+void WorldScene::checkState()
+{
+    QList<WorldNode* > nodes;
+
+    //left
+    nodes=worldMap.query(posX+worldMap.gridSize_h-worldMap.gridSize,    posY+worldMap.gridSize_h);
+    fetchSideNodes(allow_left, nodes);
+
+    //Right
+    nodes=worldMap.query(posX+worldMap.gridSize_h+worldMap.gridSize,    posY+worldMap.gridSize_h);
+    fetchSideNodes(allow_right, nodes);
+
+
+    //Top
+    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h-worldMap.gridSize);
+    fetchSideNodes(allow_up, nodes);
+
+    //Bottom
+    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h+worldMap.gridSize);
+    fetchSideNodes(allow_down, nodes);
 }
 
 void WorldScene::render()
@@ -566,6 +629,13 @@ void WorldScene::render()
                            .arg(posX)
                            .arg(posY), 300,10);
 
+    {
+    QPoint grid = worldMap.applyGrid(posX, posY);
+    FontManager::printText(QString("TILE X=%1 Y=%2")
+                           .arg(grid.x())
+                           .arg(grid.y()), 300,45);
+    }
+
 
     if(PGE_Window::showDebugInfo)
     {
@@ -652,6 +722,9 @@ int WorldScene::exec()
                     break;
                     case SDLK_t:
                         PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    case SDLK_i:
+                        ignore_paths= !ignore_paths;
                     break;
                     case SDLK_F3:
                         PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

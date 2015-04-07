@@ -90,6 +90,7 @@ public:
     int  debug_event_delay;
     int  uTick;
 
+    void checkState();
 private:
     QString errorMsg;
     WorldMapData common_setup;
