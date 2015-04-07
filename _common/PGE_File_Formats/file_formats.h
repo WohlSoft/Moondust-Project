@@ -119,6 +119,8 @@ public:
     //common
     static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
     static QString removeQuotes(QString str); // Remove quotes from begin and end
+
+    static QString errorString; //!< String which contains info about last happened error
 };
 
 #endif // FILE_FORMATS_H

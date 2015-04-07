@@ -28,6 +28,7 @@
 //*********************************************************
 LevelData FileFormats::ReadLevelFile(QFile &inf)
 {
+    errorString.clear();
     QByteArray data;
 
     data = inf.read(7);
@@ -74,6 +75,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
 LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
 {
+    errorString.clear();
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
@@ -134,6 +136,7 @@ badfile:
 
 LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool sielent)
 {
+    errorString.clear();
     FileStringList in;
     in.addData( RawData );
 

@@ -29,6 +29,7 @@
 //*********************************************************
 GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
 {
+    errorString.clear();
     FileStringList in;
     in.addData( RawData );
 
