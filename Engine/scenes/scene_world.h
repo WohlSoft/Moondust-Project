@@ -71,6 +71,9 @@ public:
     long stars;
     long points;
     long coins;
+    bool jumpToXY;
+    QPoint jumpTo;
+
 
     int i;
     int delayToEnter;
@@ -90,8 +93,12 @@ public:
     bool allow_right;
     bool allow_down;
 
-    void checkState();
+    void updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
+    void updateCenter();
+    void setGameState(EpisodeState *_state);
+
 private:
+    EpisodeState *gameState;
     QString errorMsg;
     WorldMapData common_setup;
 

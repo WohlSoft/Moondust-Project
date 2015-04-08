@@ -60,8 +60,10 @@ LevelScene::LevelScene()
     doExit = false;
     exitLevelDelay=3000;
     exitLevelCode = LvlExit::EXIT_Closed;
+    lastWarpID=0;
     warpToLevelFile = "";
     warpToArrayID = 0;
+    warpToWorld=false;
     NewPlayerID = 1;
     /**************************/
 
@@ -576,6 +578,11 @@ QString LevelScene::toAnotherLevel()
 int LevelScene::toAnotherEntrance()
 {
     return warpToArrayID;
+}
+
+QPoint LevelScene::toWorldXY()
+{
+    return warpToWorldXY;
 }
 
 int LevelScene::exitType()

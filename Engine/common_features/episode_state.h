@@ -29,8 +29,8 @@ public:
     {
         EXIT_close=-2,
         EXIT_error=-1,
-        EXIT_exitWithSave,
-        EXIT_exitNoSave,
+        EXIT_exitWithSave=1,
+        EXIT_exitNoSave=2,
         EXIT_beginLevel=0
     };
 };
@@ -40,14 +40,19 @@ class EpisodeState
 public:
     EpisodeState();
     ~EpisodeState();
+    void reset();//!< Sets initial state of episode
     bool episodeIsStarted;
+    bool isEpisode;
+    bool isHubLevel;
     GamesaveData game_state;
 
     QString WorldFile;
     QString WorldPath;
 
     QString LevelFile;
+    QString LevelFile_hub;
     QString LevelPath;
+        int LevelTargetWarp;
     int gameType;
     enum gameTypes
     {
@@ -56,7 +61,6 @@ public:
         Battle,
         Race
     };
-
     bool replay_on_fail;
 };
 
