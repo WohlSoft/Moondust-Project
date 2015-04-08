@@ -112,9 +112,14 @@ public:
 
     QString toAnotherLevel();
     QString warpToLevelFile;
+    long lastWarpID;
 
     int toAnotherEntrance();
     int warpToArrayID;
+
+    QPoint toWorldXY();
+    bool warpToWorld;
+    QPoint warpToWorldXY;
 
     int exitLevelDelay;
     int exitLevelCode;

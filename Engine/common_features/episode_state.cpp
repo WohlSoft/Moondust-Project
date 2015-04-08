@@ -3,14 +3,21 @@
 
 EpisodeState::EpisodeState()
 {
-    episodeIsStarted=false;
-    replay_on_fail=false;
-    game_state = FileFormats::dummySaveDataArray();
-    gameType=Testing;
+    reset();
 }
 
 EpisodeState::~EpisodeState()
-{
+{}
 
+void EpisodeState::reset()
+{
+    episodeIsStarted=false;
+    isEpisode=false;
+    isHubLevel=false;
+    LevelFile_hub.clear();
+    replay_on_fail=false;
+    game_state = FileFormats::dummySaveDataArray();
+    gameType=Testing;
+    LevelTargetWarp=0;
 }
 

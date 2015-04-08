@@ -133,7 +133,7 @@ class LVL_Player :
         PGE_LevelCamera * camera;
 
         void teleport(float x, float y);
-        void exitFromLevel(QString levelFile, int targetWarp);
+        void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         void render(float camX, float camY);
 };

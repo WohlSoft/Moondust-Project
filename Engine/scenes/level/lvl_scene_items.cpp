@@ -186,10 +186,14 @@ void LevelScene::toggleSwitch(int switch_id)
     if(switch_blocks.contains(switch_id))
     {
         for(int x=0;x<switch_blocks[switch_id].size();x++)
-            switch_blocks[switch_id][x]->
+        {
+            if((switch_blocks[switch_id][x]->setup->switch_Block)&&
+                    (switch_blocks[switch_id][x]->setup->switch_ID==switch_id))
+                switch_blocks[switch_id][x]->
                     transformTo(
                             switch_blocks[switch_id][x]->setup->switch_transform,
                             2);
+        }
     }
 }
 

@@ -611,9 +611,11 @@ void LVL_Player::update(float ticks)
                         if(doTeleport)
                         {
 
-                            if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
+                            if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()))
                             {
-                                exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
+                                LvlSceneP::s->lastWarpID=contactedWarp->data.array_id;
+                                exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto
+                                              ,contactedWarp->data.world_x, contactedWarp->data.world_y);
                             }
                             else
                             {
@@ -656,7 +658,9 @@ void LVL_Player::update(float ticks)
                     {
                         if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
                         {
-                            exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
+                            LvlSceneP::s->lastWarpID=contactedWarp->data.array_id;
+                            exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto
+                                          ,contactedWarp->data.world_x, contactedWarp->data.world_y);
                         }
                         else
                         {
@@ -747,7 +751,7 @@ void LVL_Player::teleport(float x, float y)
     }
 }
 
-void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
+void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long wY)
 {
     isLive = false;
     //physBody->SetActive(false);
@@ -756,6 +760,15 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
         LvlSceneP::s->warpToLevelFile =
                 LvlSceneP::s->levelData()->path+"/"+levelFile;
         LvlSceneP::s->warpToArrayID = targetWarp;
+    }
+    else
+    {
+        if((wX != -1)&&( wY != -1))
+        {
+            LvlSceneP::s->warpToWorld=true;
+            LvlSceneP::s->warpToWorldXY.setX(wX);
+            LvlSceneP::s->warpToWorldXY.setY(wY);
+        }
     }
     LvlSceneP::s->setExiting(2000, LvlExit::EXIT_Warp);
 }
