@@ -992,7 +992,7 @@ int WorldScene::exec()
                         break;
                     case SDLK_RETURN:// Enter
                         {
-                            if(doExit) break;
+                            if( doExit || lock_controls) break;
                             isPauseMenu = true;
                         }
                     break;
@@ -1006,7 +1006,7 @@ int WorldScene::exec()
                         PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
                     break;
                     case SDLK_z:
-                          if(gameState)
+                          if((!lock_controls) && (gameState))
                           {
                               if(!gameState->LevelFile.isEmpty())
                               {
