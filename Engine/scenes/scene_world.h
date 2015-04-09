@@ -71,8 +71,10 @@ public:
     long stars;
     long points;
     long coins;
-    bool jumpToXY;
-    QPoint jumpTo;
+
+    void jump();
+    bool jumpTo;
+    QPoint jumpToXY;
 
 
     int i;
@@ -87,6 +89,7 @@ public:
     int  uTick;
 
     int dir;
+    bool lock_controls;
     bool ignore_paths;
     bool allow_left;
     bool allow_up;

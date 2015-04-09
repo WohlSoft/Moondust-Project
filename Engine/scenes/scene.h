@@ -46,6 +46,8 @@ public:
     TypeOfScene type();
 
     /**************Fader**************/
+    bool isOpacityFadding();
+    bool fadeRunned;
     float fader_opacity;
     float target_opacity;
     float fade_step;
