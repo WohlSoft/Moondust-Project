@@ -434,6 +434,9 @@ PlayLevel:
             if(sceneResult)
                 ExitCode = lScene->exec();
 
+            if(!sceneResult)
+                ExitCode = LvlExit::EXIT_Error;
+
             switch(ExitCode)
             {
             case LvlExit::EXIT_Warp:
@@ -499,6 +502,16 @@ PlayLevel:
                 {
                     playAgain = _game_state.replay_on_fail;
                 }
+                break;
+            case LvlExit::EXIT_Error:
+                if(!_game_state.isEpisode)
+                {
+                    if(!debugMode)
+                        end_level_jump=RETURN_TO_WORLDMAP;
+                    else
+                        end_level_jump=RETURN_TO_EXIT;
+                }
+                playAgain = false;
                 break;
             default:
                 playAgain = false;
