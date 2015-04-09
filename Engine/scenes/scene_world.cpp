@@ -23,6 +23,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/event_queue.h>
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
 
@@ -348,12 +349,15 @@ QList<WldSceneryItem >  wld_sceneries;
 QList<WldPathItem >     wld_paths;
 QList<WldLevelItem >    wld_levels;
 QList<WldMusicBoxItem > wld_musicboxes;
+EventQueue<WorldScene > wld_events;
 
 QList<WorldNode > wldItems;
 QList<WorldNode * > toRender;
 
 WorldScene::WorldScene()
 {
+    wld_events.abort();
+
     exitWorldCode=WldExit::EXIT_error;
     exitWorldDelay=2000;
     worldIsContinues=true;
@@ -394,9 +398,10 @@ WorldScene::WorldScene()
     points = 0;
     stars  = 0;
 
-    jumpToXY=false;
+    jumpTo=false;
 
     dir=0;
+    lock_controls=false;
     ignore_paths=false;
     allow_left=false;
     allow_up=false;
@@ -408,6 +413,7 @@ WorldScene::WorldScene()
 
 WorldScene::~WorldScene()
 {
+    wld_events.abort();
     worldMap.clean();
     wldItems.clear();
     toRender.clear();
@@ -582,6 +588,7 @@ bool WorldScene::init()
 void WorldScene::update()
 {
     uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    float move_speed = 2;
     if(uTick<=0) uTick=1;
 
     if(doExit)
@@ -605,18 +612,27 @@ void WorldScene::update()
     }
     else
     {
+        wld_events.processEvents(uTick);
+
         if(dir==0)
         {
-            if(keyboard1.keys.left && (allow_left || ignore_paths))
-                dir=1;
-            if(keyboard1.keys.right && (allow_right || ignore_paths))
-                dir=2;
-            if(keyboard1.keys.up && (allow_up || ignore_paths))
-                dir=3;
-            if(keyboard1.keys.down && (allow_down || ignore_paths))
-                dir=4;
-
-            if(dir!=0) levelTitle.clear();
+            if(!lock_controls)
+            {
+                if(keyboard1.keys.left && (allow_left || ignore_paths))
+                    dir=1;
+                if(keyboard1.keys.right && (allow_right || ignore_paths))
+                    dir=2;
+                if(keyboard1.keys.up && (allow_up || ignore_paths))
+                    dir=3;
+                if(keyboard1.keys.down && (allow_down || ignore_paths))
+                    dir=4;
+            }
+            if(dir!=0)
+            {
+                levelTitle.clear();
+                gameState->LevelFile.clear();
+                jumpTo=false;
+            }
         }
         else
         {
@@ -644,19 +660,19 @@ void WorldScene::update()
         switch(dir)
         {
             case 1://left
-                posX-=2;
+                posX-=move_speed;
                 if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
                 break;
             case 2://right
-                posX+=2;
+                posX+=move_speed;
                 if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
                 break;
             case 3://up
-                posY-=2;
+                posY-=move_speed;
                 if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
                 break;
             case 4://down
-                posY+=2;
+                posY+=move_speed;
                 if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
                 break;
         }
@@ -727,7 +743,7 @@ void WorldScene::updateCenter()
     }
 
     levelTitle.clear();
-    jumpToXY=false;
+    jumpTo=false;
 
     QList<WorldNode* > nodes;
     nodes=worldMap.query(posX+worldMap.gridSize_h, posY+worldMap.gridSize_h);
@@ -769,9 +785,9 @@ void WorldScene::updateCenter()
                 {
                     if( (y->data.gotox!=-1)&&(y->data.gotoy!=-1))
                     {
-                        jumpTo.setX(y->data.gotox);
-                        jumpTo.setY(y->data.gotoy);
-                        jumpToXY=true;
+                        jumpToXY.setX(y->data.gotox);
+                        jumpToXY.setY(y->data.gotoy);
+                        jumpTo=true;
                     }
                 }
             }
@@ -998,6 +1014,27 @@ int WorldScene::exec()
                                   gameState->game_state.worldPosY=posY;
                                   setExiting(0, WldExit::EXIT_beginLevel);
                               }
+                              else if(jumpTo)
+                              {
+                                  //Create events
+                                  EventQueueEntry<WorldScene >event1;
+                                  event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                                  wld_events.events.push_back(event1);
+
+                                  EventQueueEntry<WorldScene >event2;
+                                  event2.makeCallerT(this, &WorldScene::jump, 100);
+                                  wld_events.events.push_back(event2);
+
+                                  EventQueueEntry<WorldScene >event3;
+                                  event3.makeCaller([this]()->void{
+                                                        this->setFade(25, 0.0, 0.08);
+                                                        this->lock_controls=false;
+                                                    }, 0);
+                                  wld_events.events.push_back(event3);
+
+                                  this->lock_controls=true;
+                                  this->setFade(25, 1.0f, 0.08);
+                              }
                           }
                     break;
                     case SDLK_F12:
@@ -1107,4 +1144,17 @@ bool WorldScene::loadFile(QString filePath)
 QString WorldScene::getLastError()
 {
     return errorMsg;
+}
+
+void WorldScene::jump()
+{
+    posX = jumpToXY.x();
+    posY = jumpToXY.y();
+    if(gameState)
+    {
+        gameState->game_state.worldPosX = posX;
+        gameState->game_state.worldPosY = posY;
+    }
+    updateAvailablePaths();
+    updateCenter();
 }

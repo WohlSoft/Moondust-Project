@@ -2,6 +2,7 @@
 #define EPISODESTATE_H
 
 #include <PGE_File_Formats/save_filedata.h>
+
 class LvlExit
 {
 public:

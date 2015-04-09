@@ -14,6 +14,7 @@ void EpisodeState::reset()
     episodeIsStarted=false;
     isEpisode=false;
     isHubLevel=false;
+
     LevelFile_hub.clear();
     replay_on_fail=false;
     game_state = FileFormats::dummySaveDataArray();
