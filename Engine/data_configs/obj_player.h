@@ -48,11 +48,18 @@ struct obj_player
         //QPixmap mask;
 
     /*   OpenGL    */
+        //for levels
     bool isInit;
     PGE_Texture *image;
     GLuint textureID;
     long textureArrayId;
     long animator_ID;
+        //for world map
+    bool isInit_wld;
+    PGE_Texture *image_wld;
+    GLuint textureID_wld;
+    long textureArrayId_wld;
+    long animator_ID_wld;
     /*   OpenGL    */
 
     QString name;
