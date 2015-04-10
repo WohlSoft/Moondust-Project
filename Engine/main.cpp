@@ -346,11 +346,6 @@ PlayWorldMap:
             break;
     }
 
-    /*
-    OOLUA::Script vm;
-    OOLUA::set_global(vm.state(), "say", l_say);
-    OOLUA::run_chunk(vm.state(),"say(\"World map player comming soon!\")");
-    */
     delete wScene;
 
     goto MainMenu;

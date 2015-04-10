@@ -252,6 +252,7 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
-    android/gradlew.bat
+    android/gradlew.bat \
+    unused_thungs.txt
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
