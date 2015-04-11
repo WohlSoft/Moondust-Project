@@ -131,6 +131,10 @@ struct obj_player
     int matrix_width;
     int matrix_height;
 
+    //Size of one frame (will be calculated automatically!)
+    int frame_width;
+    int frame_height;
+
     /*   OpenGL    */
         //for world map
     bool isInit_wld;
