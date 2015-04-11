@@ -23,12 +23,13 @@
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
 #endif
-#ifndef PGE_ENGINE
+#ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
 
 MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 {
+    errorString.clear();
     int str_count=0;        //Line Counter
     QString line;           //Current Line data
 
@@ -37,9 +38,6 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
     #ifdef PGE_EDITOR
     FileData.script = new ScriptHolder();
     #endif
-
-    QString errorString;
-
     ///////////////////////////////////////Begin file///////////////////////////////////////
     PGEFile pgeX_Data(RawData);
     if( !pgeX_Data.buildTreeFromRaw() )
@@ -52,7 +50,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
     {
         if(pgeX_Data.dataTree[section].name=="JOKES")
         {
-            #ifndef PGE_ENGINE
+            #ifdef PGE_FILES_USE_MESSAGEBOXES
             if(!pgeX_Data.dataTree[section].data.isEmpty())
                 if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                     QMessageBox::information(nullptr, "Jokes",

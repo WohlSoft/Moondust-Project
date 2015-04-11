@@ -47,6 +47,7 @@ private slots:
     void on_Idle_clicked();
     void on_Run_clicked();
     void on_Jump_clicked();
+    void on_fall_clicked();
     void on_Spin_clicked();
     void on_Sliding_clicked();
     void on_Climbing_clicked();
@@ -76,6 +77,8 @@ private slots:
     void on_SlopeSlide_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
+
+    void on_SwimUp_clicked();
 
 private:
     Ui::Animate *ui;

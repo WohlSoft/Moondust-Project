@@ -113,8 +113,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         }
         /****************Word wrap*end*****************/
 
-        boxSize.setWidth( (meter.width('X'))*maxWidth );
-        boxSize.setHeight((meter.height()-1)*count);
+        boxSize = meter.size(Qt::TextExpandTabs, message);
     }
 
     setBoxSize(boxSize.width()/2, boxSize.height()/2, _padding);

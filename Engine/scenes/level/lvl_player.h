@@ -24,34 +24,9 @@
 
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
+#include <data_configs/obj_player.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <QMap>
-
-struct Plr_EnvironmentPhysics
-{
-    inline void make() {} //!< Dummy function
-    float32 walk_force; //!< Move force
-    float32 slippery_c; //!< Slippery coefficien
-    float32 gravity_scale; //!< Gravity scale
-    float32 velocity_jump; //!< Jump velocity
-    float32 velocity_climb; //!< Climbing velocity
-    float32 MaxSpeed_walk; //!< Max walk speed
-    float32 MaxSpeed_run; //!< Max run speed
-    float32 MaxSpeed_up; //!< Fly UP Max fall speed
-    float32 MaxSpeed_down; //!< Max fall down speed
-    float32 damping;
-    bool    zero_speed_y_on_enter;
-    bool    slow_speed_x_on_enter;
-};
-
-struct Plr_State
-{
-    inline void make() {} //!< Dummy function
-    int width;
-    int height;
-   bool duck_allow;
-    int duck_height;
-};
 
 class LVL_Player :
         public PGE_Phys_Object,
@@ -66,11 +41,11 @@ class LVL_Player :
 
         int playerID;
 
-        QMap<int, Plr_State > states;
+        QHash<int, obj_player_state > states;
         int stateID;
 
-        QMap<int, Plr_EnvironmentPhysics > physics;
-        QMap<int, int > environments_map;
+        QHash<int, obj_player_physics > physics;
+        QHash<int, int > environments_map;
         int environment;
         int last_environment;
 
@@ -86,11 +61,11 @@ class LVL_Player :
         void bump(bool _up=false);
 
         int foot_contacts;
-        QMap<int, int > foot_contacts_map;   //!< staying on ground surfaces
-        QMap<int, int > foot_sl_contacts_map;//!< Slipery surfaces
+        QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
+        QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
         int jumpForce;
 
-        QMap<int, int > climbable_map;
+        QHash<int, int > climbable_map;
         bool climbing;
 
         bool isLive;
@@ -133,7 +108,7 @@ class LVL_Player :
         PGE_LevelCamera * camera;
 
         void teleport(float x, float y);
-        void exitFromLevel(QString levelFile, int targetWarp);
+        void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         void render(float camX, float camY);
 };

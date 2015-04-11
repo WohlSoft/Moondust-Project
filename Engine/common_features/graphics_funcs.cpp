@@ -311,3 +311,36 @@ void GraphicsHelps::putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         break;
     }
 }
+
+
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr)
+{
+    if( in_imgName.isEmpty() )
+    {
+        out_errStr = "Image filename isn't defined";
+        return;
+    }
+
+    if(!QFile(rootDir+in_imgName).exists())
+    {
+        out_errStr="image file is not exist: "+rootDir+in_imgName;
+        return;
+    }
+
+    out_maskName=in_imgName;
+    int i = out_maskName.size()-1;
+    for( ;i>0; i--)
+    {
+        if(out_maskName[i]=='.')
+        {
+            out_maskName.insert(i, 'm');
+            break;
+        }
+    }
+
+    if(i==0)
+    {
+        out_maskName = "";
+    }
+    out_errStr = "";
+}

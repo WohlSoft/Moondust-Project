@@ -31,6 +31,7 @@
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 {
+    errorString.clear();
     int str_count=0;        //Line Counter
     //int i;                  //counters
     QString line;           //Current Line data
@@ -41,7 +42,6 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
 
-    QString errStr;
     QString unknownLines;
 
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();

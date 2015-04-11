@@ -29,3 +29,4 @@ calibrator_cnfs.files  = Content/calibrator/*
 
 INSTALLS += configs helps themes calibrator_cnfs
 
+#CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb

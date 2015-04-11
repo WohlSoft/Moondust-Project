@@ -18,7 +18,7 @@
 
 #include <QFileInfo>
 #include <QDir>
-#ifndef PGE_ENGINE
+#ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
 
@@ -28,12 +28,13 @@
 
 LevelData FileFormats::OpenLevelFile(QString filePath)
 {
+    errorString.clear();
     QFile file(filePath);
     LevelData data;
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        #ifndef PGE_ENGINE
+        #ifdef PGE_FILES_USE_MESSAGEBOXES
         QMessageBox::critical(NULL, QTranslator::tr("File open error"),
                 QTranslator::tr("Can't open the file."), QMessageBox::Ok);
         #endif
@@ -63,6 +64,7 @@ LevelData FileFormats::OpenLevelFile(QString filePath)
 
 LevelData FileFormats::OpenLevelFileHeader(QString filePath)
 {
+    errorString.clear();
     LevelData data;
     QFileInfo in_1(filePath);
 
@@ -87,12 +89,13 @@ LevelData FileFormats::OpenLevelFileHeader(QString filePath)
 
 WorldData FileFormats::OpenWorldFile(QString filePath)
 {
+    errorString.clear();
     QFile file(filePath);
     WorldData data;
 
     if (!file.open(QIODevice::ReadOnly))
     {
-        #ifndef PGE_ENGINE
+        #ifdef PGE_FILES_USE_MESSAGEBOXES
         QMessageBox::critical(NULL, QTranslator::tr("File open error"),
                 QTranslator::tr("Can't open the file."), QMessageBox::Ok);
         data.ReadFileValid = false;
@@ -122,6 +125,7 @@ WorldData FileFormats::OpenWorldFile(QString filePath)
 
 WorldData FileFormats::OpenWorldFileHeader(QString filePath)
 {
+    errorString.clear();
     WorldData data;
     QFileInfo in_1(filePath);
 

@@ -129,6 +129,12 @@ void Animate::on_Jump_clicked()
     aniFindSet();
 }
 
+void Animate::on_fall_clicked()
+{
+    aniStyle="JumpFall";
+    aniFindSet();
+}
+
 void Animate::on_Spin_clicked()
 {
     aniStyle="SpinJump";
@@ -213,13 +219,17 @@ void Animate::on_Swin_clicked()
     aniFindSet();
 }
 
+void Animate::on_SwimUp_clicked()
+{
+    aniStyle="SwimUp";
+    aniFindSet();
+}
+
 void Animate::on_TanookiStatue_clicked()
 {
     aniStyle="TanookiStatue";
     aniFindSet();
 }
-
-
 
 void Animate::on_RideOnYoshi_clicked()
 {

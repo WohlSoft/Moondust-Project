@@ -26,7 +26,7 @@
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
 #endif
-#ifndef PGE_ENGINE
+#ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
 
@@ -44,6 +44,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 
 LevelData FileFormats::ReadExtendedLvlFileHeader(QString filePath)
 {
+    errorString.clear();
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
@@ -119,6 +120,7 @@ badfile:
 
 LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bool sielent)
 {
+    errorString.clear();
     FileStringList in;
     in.addData( RawData );
 
@@ -150,8 +152,6 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
     LevelLayer layer;
     LevelSMBX64Event event;
 
-    QString errorString;
-
     ///////////////////////////////////////Begin file///////////////////////////////////////
     PGEFile pgeX_Data(RawData);
     if( !pgeX_Data.buildTreeFromRaw() )
@@ -165,7 +165,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
         ///////////////////JOKES//////////////////////
         if(pgeX_Data.dataTree[section].name=="JOKES")
         {
-            #ifndef PGE_ENGINE
+            #ifdef PGE_FILES_USE_MESSAGEBOXES
             if(!pgeX_Data.dataTree[section].data.isEmpty())
                 if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                     QMessageBox::information(nullptr, "Jokes",

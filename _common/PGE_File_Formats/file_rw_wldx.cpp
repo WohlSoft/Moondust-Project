@@ -24,7 +24,7 @@
 #include "wld_filedata.h"
 #include "pge_x.h"
 
-#ifndef PGE_ENGINE
+#ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
 
@@ -42,6 +42,7 @@ WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
 
 WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
 {
+    errorString.clear();
     WorldData FileData;
     FileData = dummyWldDataArray();
 
@@ -159,6 +160,7 @@ badfile:
 
 WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bool sielent)
 {
+     errorString.clear();
      FileStringList in;
      in.addData( RawData );
 
@@ -184,9 +186,6 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
      WorldMusic musicbox;
      WorldLevels lvlitem;
 
-
-     QString errorString;
-
      ///////////////////////////////////////Begin file///////////////////////////////////////
      PGEFile pgeX_Data(RawData);
      if( !pgeX_Data.buildTreeFromRaw() )
@@ -200,7 +199,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          ///////////////////JOKES//////////////////////
          if(pgeX_Data.dataTree[section].name=="JOKES")
          {
-             #ifndef PGE_ENGINE
+             #ifdef PGE_FILES_USE_MESSAGEBOXES
              if(!pgeX_Data.dataTree[section].data.isEmpty())
                  if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                      QMessageBox::information(nullptr, "Jokes",

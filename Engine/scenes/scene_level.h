@@ -23,7 +23,13 @@
 #include "../graphics/graphics.h"
 
 #include "../common_features/pge_texture.h"
+
+#include <common_features/episode_state.h>
+#include <common_features/event_queue.h>
+
 #include "level/lvl_player.h"
+#include "level/lvl_player_def.h"
+
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
 
@@ -78,6 +84,8 @@ public:
     LevelDoor startWarp;
     int NewPlayerID;
 
+    QList<LVL_PlayerDef > player_defs;
+
     bool loadConfigs();
 
     void update();
@@ -102,22 +110,6 @@ public:
 
     /****************Level Running State*****************/
     bool isLevelContinues;
-    enum exitLevelCodes
-    {
-        EXIT_MenuExit=-3,
-        EXIT_Error=-2,
-        EXIT_PlayerDeath=-1,
-        EXIT_Closed=0,
-        EXIT_Card=1,
-        EXIT_Ball=2,
-        EXIT_OffScreen=3,
-        EXIT_Key=4,
-        EXIT_Crystal=5,
-        EXIT_Warp=6,
-        EXIT_Star=7,
-        EXIT_Tape=8
-    };
-
     bool doExit;
 
     void checkPlayers();
@@ -125,9 +117,14 @@ public:
 
     QString toAnotherLevel();
     QString warpToLevelFile;
+    long lastWarpID;
 
     int toAnotherEntrance();
     int warpToArrayID;
+
+    QPoint toWorldXY();
+    bool warpToWorld;
+    QPoint warpToWorldXY;
 
     int exitLevelDelay;
     int exitLevelCode;
@@ -200,9 +197,14 @@ public:
     /*********************Item placing**********************/
 
     void destroyBlock(LVL_Block * _block);
+    void setGameState(EpisodeState *_gameState);
 
 private:
     LevelData data;
+
+    EpisodeState *gameState;
+
+    EventQueue<LevelScene > system_events;
 
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;

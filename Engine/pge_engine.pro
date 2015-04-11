@@ -164,7 +164,10 @@ SOURCES += \
     scenes/level/lvl_z_constants.cpp \
     physics/phys_debug_draw.cpp \
     data_configs/obj_effect.cpp \
-    scenes/level/gfx_effects.cpp
+    scenes/level/gfx_effects.cpp \
+    common_features/episode_state.cpp \
+    common_features/event_queue.cpp \
+    common_features/matrix_animator.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -233,7 +236,10 @@ HEADERS  += \
     data_configs/obj_effect.h \
     data_configs/obj_npc.h \
     physics/phys_debug_draw.h \
-    scenes/level/gfx_effects.h
+    scenes/level/gfx_effects.h \
+    common_features/episode_state.h \
+    common_features/event_queue.h \
+    common_features/matrix_animator.h
 
 FORMS    += \
     data_configs/select_config.ui
@@ -248,6 +254,7 @@ DISTFILES += \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
-    android/gradlew.bat
+    android/gradlew.bat \
+    unused_thungs.txt
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

@@ -109,6 +109,7 @@ void CalibrationMain::loadConfig(QString fileName)
     getSpriteAniData(conf, "Idle");
     getSpriteAniData(conf, "Run");
     getSpriteAniData(conf, "JumpFloat");
+    getSpriteAniData(conf, "JumpFall");
     getSpriteAniData(conf, "SpinJump");
     getSpriteAniData(conf, "Sliding");
     getSpriteAniData(conf, "Climbing");
@@ -123,6 +124,7 @@ void CalibrationMain::loadConfig(QString fileName)
     getSpriteAniData(conf, "RacoonFly");
     getSpriteAniData(conf, "RacoonTail");
     getSpriteAniData(conf, "Swim");
+    getSpriteAniData(conf, "SwimUp");
     getSpriteAniData(conf, "OnYoshi");
     getSpriteAniData(conf, "OnYoshiSit");
     getSpriteAniData(conf, "PipeUpDown");
