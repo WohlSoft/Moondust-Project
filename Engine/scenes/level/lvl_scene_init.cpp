@@ -106,6 +106,19 @@ bool LevelScene::setEntrance(int entr)
                     }
                 }
 
+                EventQueueEntry<LevelScene >event3;
+                event3.makeCaller([this]()->void{
+                                      PlayerPoint newPoint;
+                                      newPoint.id = data.players.first().id;
+                                      newPoint.x=cameraStart.x();
+                                      newPoint.y=cameraStart.y();
+                                      newPoint.w = this->player_defs.first().width();
+                                      newPoint.h = this->player_defs.first().height();
+                                      newPoint.direction=1;
+                                      this->addPlayer(newPoint, true);
+                                      isWarpEntrance=false;
+                                  }, 1000);
+                system_events.events.push_back(event3);
                 return true;
             }
         }
@@ -145,6 +158,7 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
     ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
 
     if(!success) exitLevelCode = LvlExit::EXIT_Error;
 
