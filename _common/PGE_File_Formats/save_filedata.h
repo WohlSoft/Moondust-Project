@@ -57,6 +57,7 @@ struct GamesaveData
     bool gameCompleted;   //!< Is episode was completed in last time
 
     QVector<saveCharacterState > characterStates;
+    QList<int > currentCharacter;
 
     //Visible state of world map items
     QVector<visibleItem > visibleLevels;

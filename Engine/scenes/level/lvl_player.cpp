@@ -32,56 +32,10 @@ LVL_Player::LVL_Player()
 
     type = LVLPlayer;
 
-    physics[LVL_PhysEnv::Env_Air].make();
-    physics[LVL_PhysEnv::Env_Air].walk_force = 900.0f;
-    physics[LVL_PhysEnv::Env_Air].slippery_c = 3.0f;
-    physics[LVL_PhysEnv::Env_Air].gravity_scale = 1.0f;
-    physics[LVL_PhysEnv::Env_Air].velocity_jump = 37.0f;
-    physics[LVL_PhysEnv::Env_Air].velocity_climb = 15.0f;
-    physics[LVL_PhysEnv::Env_Air].MaxSpeed_walk = 20.0f;
-    physics[LVL_PhysEnv::Env_Air].MaxSpeed_run = 38.0f;
-    physics[LVL_PhysEnv::Env_Air].MaxSpeed_up = 74.0f;
-    physics[LVL_PhysEnv::Env_Air].MaxSpeed_down = 72.0f;
-    physics[LVL_PhysEnv::Env_Air].damping = 0.0f;
-    physics[LVL_PhysEnv::Env_Air].zero_speed_y_on_enter=false;
-    physics[LVL_PhysEnv::Env_Air].slow_speed_x_on_enter=false;
+    physics = ConfigManager::playable_characters[1].phys_default;
 
-    physics[LVL_PhysEnv::Env_Water].make();
-    physics[LVL_PhysEnv::Env_Water].walk_force = 600.0f;
-    physics[LVL_PhysEnv::Env_Water].slippery_c = 2.0f;
-    physics[LVL_PhysEnv::Env_Water].gravity_scale = 0.3f;
-    physics[LVL_PhysEnv::Env_Water].velocity_jump = 40.0f;
-    physics[LVL_PhysEnv::Env_Water].velocity_climb = 15.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_walk = 12.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_run = 22.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_up = 32.0f;
-    physics[LVL_PhysEnv::Env_Water].MaxSpeed_down = 32.0f;
-    physics[LVL_PhysEnv::Env_Water].damping = 2.0f;
-    physics[LVL_PhysEnv::Env_Water].zero_speed_y_on_enter=true;
-    physics[LVL_PhysEnv::Env_Water].slow_speed_x_on_enter=true;
-
-    physics[LVL_PhysEnv::Env_Quicksand].make();
-    physics[LVL_PhysEnv::Env_Quicksand].walk_force = 100.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].slippery_c = 2.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].gravity_scale = 1.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].velocity_jump = 35.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].velocity_climb = 15.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_walk = 1.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_run = 1.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_up = 74.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].MaxSpeed_down = 10.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].damping = 2.0f;
-    physics[LVL_PhysEnv::Env_Quicksand].zero_speed_y_on_enter=true;
-    physics[LVL_PhysEnv::Env_Quicksand].slow_speed_x_on_enter=true;
-
-    stateID=0;
-
-    states[stateID].make();
-    states[stateID].width=24;
-    states[stateID].height=60;
-    states[stateID].duck_allow  =true;
-    states[stateID].duck_height =30;
-
+    stateID=1;
+    states = ConfigManager::playable_characters[1].states;
 
     JumpPressed=false;
     onGround=false;
@@ -274,7 +228,7 @@ void LVL_Player::update(float ticks)
 
     if(last_environment!=environment)
     {
-        Plr_EnvironmentPhysics env = physics[environment];
+        obj_player_physics env = physics[environment];
         last_environment=environment;
 
         if(env.zero_speed_y_on_enter)

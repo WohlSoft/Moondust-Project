@@ -85,6 +85,8 @@ LevelScene::LevelScene()
     /*********Fader*************/
 
     errorMsg = "";
+
+    gameState = NULL;
 }
 
 LevelScene::~LevelScene()
@@ -276,8 +278,8 @@ void LevelScene::update()
                     newPoint.id = NewPlayerID;
                     newPoint.x=0;
                     newPoint.y=0;
-                    newPoint.w=24;
-                    newPoint.h=54;
+                    newPoint.w = player_defs.first().width();
+                    newPoint.h = player_defs.first().height();
                     newPoint.direction=1;
 
                 addPlayer(newPoint, true);
@@ -611,4 +613,10 @@ void LevelScene::setExiting(int delay, int reason)
     exitLevelDelay = delay;
     exitLevelCode = reason;
     doExit = true;
+}
+
+
+void LevelScene::setGameState(EpisodeState *_gameState)
+{
+    gameState = _gameState;
 }

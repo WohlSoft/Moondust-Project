@@ -22,6 +22,7 @@
 #include "../common_features/app_path.h"
 #include "../common_features/pge_texture.h"
 #include "../common_features/simple_animator.h"
+#include "../common_features/matrix_animator.h"
 
 #include "obj_block.h"
 #include "obj_bgo.h"
@@ -298,7 +299,12 @@ public:
 
 
     /********Playable characters*******/
-    static QMap<int, obj_player > playable_characters;
+    static QHash<int, obj_player > playable_characters;
+    static CustomDirManager Dir_PlayerWld;
+    static CustomDirManager Dir_PlayerLvl;
+    static QList<SimpleAnimator > Animator_PlayersWld;
+    static QList<MatrixAnimator > Animator_PlayersLvl;
+    static bool loadPlayableCharacters();
     /********Playable characters*******/
 
 
@@ -344,6 +350,8 @@ private:
     static QString blockPath;
     static QString npcPath;
     static QString effectPath;
+    static QString playerLvlPath;
+    static QString playerWldPath;
 
     static QString tilePath;
     static QString scenePath;

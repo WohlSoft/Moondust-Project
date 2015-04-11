@@ -27,6 +27,8 @@
 #include <common_features/episode_state.h>
 
 #include "level/lvl_player.h"
+#include "level/lvl_player_def.h"
+
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
 
@@ -80,6 +82,8 @@ public:
     int    cameraStartDirection;
     LevelDoor startWarp;
     int NewPlayerID;
+
+    QList<LVL_PlayerDef > player_defs;
 
     bool loadConfigs();
 
@@ -192,9 +196,12 @@ public:
     /*********************Item placing**********************/
 
     void destroyBlock(LVL_Block * _block);
+    void setGameState(EpisodeState *_gameState);
 
 private:
     LevelData data;
+
+    EpisodeState *gameState;
 
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;

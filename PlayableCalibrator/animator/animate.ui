@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>515</height>
+    <width>572</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,35 +24,35 @@
       <string>Animation</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="14" column="0">
+      <item row="15" column="0">
        <widget class="QRadioButton" name="RacoonFly">
         <property name="text">
          <string>Racoon fly</string>
         </property>
        </widget>
       </item>
-      <item row="12" column="0">
+      <item row="13" column="0">
        <widget class="QRadioButton" name="RacoonRun">
         <property name="text">
          <string>Racoon run</string>
         </property>
        </widget>
       </item>
-      <item row="13" column="0">
+      <item row="14" column="0">
        <widget class="QRadioButton" name="RacoonFloat">
         <property name="text">
          <string>Racoon float</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QRadioButton" name="Spin">
         <property name="text">
          <string>Spin jump</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="8" column="0">
        <widget class="QRadioButton" name="SitDown">
         <property name="text">
          <string>Crouch/Duck</string>
@@ -66,21 +66,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QRadioButton" name="RideOnYoshiSit_2">
-        <property name="text">
-         <string>Pipe up/down</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QRadioButton" name="RideOnYoshiSit">
-        <property name="text">
-         <string>Ride on Yoshi (sit)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0">
+      <item row="11" column="0">
        <widget class="QRadioButton" name="GrabJump">
         <property name="text">
          <string>Grab jump</string>
@@ -90,32 +76,25 @@
       <item row="2" column="0">
        <widget class="QRadioButton" name="Jump">
         <property name="text">
-         <string>Jump/float</string>
+         <string>Jump up</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
-       <widget class="QRadioButton" name="Hurted">
-        <property name="text">
-         <string>Hurt</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0">
+      <item row="9" column="0">
        <widget class="QRadioButton" name="Dig">
         <property name="text">
          <string>Dig</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
+      <item row="8" column="1">
        <widget class="QRadioButton" name="DownSword">
         <property name="text">
          <string>Down+Sword attack</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
+      <item row="10" column="0">
        <widget class="QRadioButton" name="GrabRun">
         <property name="text">
          <string>Grab run</string>
@@ -132,87 +111,122 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="RideOnYoshi">
-        <property name="text">
-         <string>Ride on Yoshi</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="0">
+      <item row="12" column="0">
        <widget class="QRadioButton" name="GrabSit">
         <property name="text">
          <string>Grab sit down</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QRadioButton" name="Sliding">
         <property name="text">
          <string>Sliding</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="7" column="1">
        <widget class="QRadioButton" name="JumpSwordDown">
         <property name="text">
          <string>Jump - sword down</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="7" column="0">
        <widget class="QRadioButton" name="Fire">
         <property name="text">
          <string>Fire</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QRadioButton" name="JumpSwordUp">
         <property name="text">
          <string>Jump - sword up</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QRadioButton" name="Climbing">
         <property name="text">
          <string>Climbing</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="QRadioButton" name="SwordAttak">
         <property name="text">
          <string>Sword attack</string>
         </property>
        </widget>
       </item>
-      <item row="15" column="0">
+      <item row="16" column="0">
        <widget class="QRadioButton" name="RacoonTail">
         <property name="text">
          <string>Racoon tail</string>
         </property>
        </widget>
       </item>
-      <item row="16" column="0">
+      <item row="17" column="0">
        <widget class="QRadioButton" name="Swin">
         <property name="text">
          <string>Swim</string>
         </property>
        </widget>
       </item>
-      <item row="17" column="0">
+      <item row="4" column="1">
+       <widget class="QRadioButton" name="SlopeSlide">
+        <property name="text">
+         <string>Slope-Slide</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QRadioButton" name="Hurted">
+        <property name="text">
+         <string>Hurt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="fall">
+        <property name="text">
+         <string>Fall down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QRadioButton" name="RideOnYoshiSit_2">
+        <property name="text">
+         <string>Pipe up/down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QRadioButton" name="RideOnYoshiSit">
+        <property name="text">
+         <string>Ride on Yoshi (sit)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="RideOnYoshi">
+        <property name="text">
+         <string>Ride on Yoshi</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
        <widget class="QRadioButton" name="TanookiStatue">
         <property name="text">
          <string>Tanooki statue</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QRadioButton" name="SlopeSlide">
+      <item row="18" column="0">
+       <widget class="QRadioButton" name="SwimUp">
         <property name="text">
-         <string>Slope-Slide</string>
+         <string>Swim Up</string>
         </property>
        </widget>
       </item>
@@ -323,6 +337,7 @@
   <tabstop>Idle</tabstop>
   <tabstop>Run</tabstop>
   <tabstop>Jump</tabstop>
+  <tabstop>fall</tabstop>
   <tabstop>Spin</tabstop>
   <tabstop>Sliding</tabstop>
   <tabstop>Climbing</tabstop>
@@ -337,12 +352,18 @@
   <tabstop>RacoonFly</tabstop>
   <tabstop>RacoonTail</tabstop>
   <tabstop>Swin</tabstop>
+  <tabstop>SwimUp</tabstop>
   <tabstop>TanookiStatue</tabstop>
+  <tabstop>RideOnYoshi</tabstop>
+  <tabstop>RideOnYoshiSit</tabstop>
+  <tabstop>RideOnYoshiSit_2</tabstop>
+  <tabstop>SlopeSlide</tabstop>
   <tabstop>SwordAttak</tabstop>
   <tabstop>JumpSwordUp</tabstop>
   <tabstop>JumpSwordDown</tabstop>
   <tabstop>DownSword</tabstop>
   <tabstop>Hurted</tabstop>
+  <tabstop>FrameSpeed</tabstop>
   <tabstop>AnimateView</tabstop>
  </tabstops>
  <resources>

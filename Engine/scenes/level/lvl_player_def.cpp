@@ -60,7 +60,7 @@ int LVL_PlayerDef::height()
 int LVL_PlayerDef::heightDuck()
 {
     if(_characterID>=0)
-        return ConfigManager::playable_characters[_characterID].states[_currentState].height_duck;
+        return ConfigManager::playable_characters[_characterID].states[_currentState].duck_height;
     else
         return -1;
 }

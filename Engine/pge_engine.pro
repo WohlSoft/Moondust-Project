@@ -166,7 +166,8 @@ SOURCES += \
     data_configs/obj_effect.cpp \
     scenes/level/gfx_effects.cpp \
     common_features/episode_state.cpp \
-    common_features/event_queue.cpp
+    common_features/event_queue.cpp \
+    common_features/matrix_animator.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -237,7 +238,8 @@ HEADERS  += \
     physics/phys_debug_draw.h \
     scenes/level/gfx_effects.h \
     common_features/episode_state.h \
-    common_features/event_queue.h
+    common_features/event_queue.h \
+    common_features/matrix_animator.h
 
 FORMS    += \
     data_configs/select_config.ui

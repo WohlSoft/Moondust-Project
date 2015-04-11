@@ -369,6 +369,8 @@ PlayLevel:
         int ExitCode=0;
             lScene = new LevelScene();
 
+            lScene->setGameState(&_game_state);
+
             lScene->setLoaderAnimation(62);
             lScene->drawLoader();
             glFlush();
