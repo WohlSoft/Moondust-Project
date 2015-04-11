@@ -92,7 +92,6 @@ SOURCES += \
     main.cpp \
     physics/base_object.cpp \
     physics/phys_util.cpp \
-    graphics/lvl_camera.cpp \
     graphics/graphics.cpp \
     scenes/scene_level.cpp \
     scenes/scene.cpp \
@@ -101,7 +100,6 @@ SOURCES += \
     scenes/scene_gameover.cpp \
     graphics/gl_renderer.cpp \
     graphics/window.cpp \
-    graphics/graphics_lvl_backgrnd.cpp \
     controls/controllable_object.cpp \
     controls/controller.cpp \
     scenes/level/lvl_player.cpp \
@@ -167,12 +165,13 @@ SOURCES += \
     scenes/level/gfx_effects.cpp \
     common_features/episode_state.cpp \
     common_features/event_queue.cpp \
-    common_features/matrix_animator.cpp
+    common_features/matrix_animator.cpp \
+    scenes/level/lvl_backgrnd.cpp \
+    scenes/level/lvl_camera.cpp
 
 HEADERS  += \
     physics/base_object.h \
     physics/phys_util.h \
-    graphics/lvl_camera.h \
     graphics/graphics.h \
     scenes/scene_level.h \
     scenes/scene.h \
@@ -203,7 +202,6 @@ HEADERS  += \
     data_configs/obj_bgo.h \
     scenes/level/lvl_bgo.h \
     data_configs/obj_bg.h \
-    graphics/graphics_lvl_backgrnd.h \
     version.h \
     physics/contact_listener.h \
     scenes/level/lvl_warp.h \
@@ -239,7 +237,9 @@ HEADERS  += \
     scenes/level/gfx_effects.h \
     common_features/episode_state.h \
     common_features/event_queue.h \
-    common_features/matrix_animator.h
+    common_features/matrix_animator.h \
+    scenes/level/lvl_backgrnd.h \
+    scenes/level/lvl_camera.h
 
 FORMS    += \
     data_configs/select_config.ui

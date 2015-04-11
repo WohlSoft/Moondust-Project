@@ -19,7 +19,7 @@
 #ifndef LVL_PLAYER_H
 #define LVL_PLAYER_H
 
-#include "../../graphics/lvl_camera.h"
+#include "lvl_camera.h"
 #include "lvl_warp.h"
 
 #include "../../physics/base_object.h"

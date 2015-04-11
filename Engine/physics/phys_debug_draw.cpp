@@ -4,7 +4,7 @@
 #include "phys_debug_draw.h"
 #undef main
 #include <SDL2/SDL_opengl.h>
-#include <graphics/lvl_camera.h>
+#include <scenes/level/lvl_camera.h>
 #include <fontman/font_manager.h>
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)

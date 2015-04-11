@@ -16,11 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../data_configs/config_manager.h"
-#include "graphics.h"
-#include "../graphics/window.h"
+#include <data_configs/config_manager.h>
+#include <graphics/graphics.h>
+#include <graphics/window.h>
 
-#include "graphics_lvl_backgrnd.h"
+#include "lvl_backgrnd.h"
 
 #include <QtDebug>
 

@@ -19,8 +19,8 @@
 #ifndef GRAPHICS_LVL_BACKGRND_H
 #define GRAPHICS_LVL_BACKGRND_H
 
-#include "../data_configs/obj_bg.h"
-#include "../common_features/pge_texture.h"
+#include <data_configs/obj_bg.h>
+#include <common_features/pge_texture.h>
 #include "lvl_camera.h"
 
 

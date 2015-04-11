@@ -20,8 +20,8 @@
 #define LVL_CAMERA_H
 
 #include <Box2D/Box2D.h>
-#include "../physics/base_object.h"
-#include "graphics.h"
+#include <physics/base_object.h>
+#include <graphics/graphics.h>
 
 #include <vector>
 #include <PGE_File_Formats/file_formats.h>
