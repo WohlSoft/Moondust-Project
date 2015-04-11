@@ -36,9 +36,7 @@
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
-
-
-#include "../graphics/graphics_lvl_backgrnd.h"
+#include "level/lvl_backgrnd.h"
 
 #include "../graphics/window.h"
 

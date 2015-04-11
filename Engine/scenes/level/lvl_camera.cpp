@@ -17,7 +17,7 @@
  */
 
 #include "lvl_camera.h"
-#include "window.h"
+#include <graphics/window.h>
 
 #include <QtDebug>
 
