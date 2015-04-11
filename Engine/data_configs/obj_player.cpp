@@ -25,8 +25,6 @@
 QHash<int, obj_player > ConfigManager::playable_characters;
 CustomDirManager ConfigManager::Dir_PlayerWld;
 CustomDirManager ConfigManager::Dir_PlayerLvl;
-QList<SimpleAnimator > ConfigManager::Animator_PlayersWld;
-QList<MatrixAnimator > ConfigManager::Animator_PlayersLvl;
 /*****Playable Characters************/
 
 void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString grp)
@@ -106,6 +104,11 @@ bool ConfigManager::loadPlayableCharacters()
             splayer.image_wld = NULL;
             splayer.textureArrayId_wld= 0;
             splayer.animator_ID_wld = 0;
+
+            //Default size of frame is 100x100
+            splayer.frame_width=100;
+            splayer.frame_height=100;
+
             int total_states=0;
 
             playerset.beginGroup( QString("character-%1").arg(i) );

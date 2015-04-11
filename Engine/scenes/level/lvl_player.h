@@ -25,6 +25,7 @@
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
 #include <data_configs/obj_player.h>
+#include <common_features/matrix_animator.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <QMap>
 
@@ -111,6 +112,9 @@ class LVL_Player :
         void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         void render(float camX, float camY);
+        MatrixAnimator animator;
+        int frameW;
+        int frameH;
 };
 
 #endif // LVL_PLAYER_H

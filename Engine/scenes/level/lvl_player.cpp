@@ -37,6 +37,13 @@ LVL_Player::LVL_Player()
     stateID=1;
     states = ConfigManager::playable_characters[1].states;
 
+    long tID = ConfigManager::getLvlPlayerTexture(1, 1);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+    }
+
     JumpPressed=false;
     onGround=false;
 
@@ -83,6 +90,9 @@ LVL_Player::LVL_Player()
     maxFloatTime=1500;
 
     gscale_Backup=0.f;
+
+    frameW=100;
+    frameH=100;
 }
 
 LVL_Player::~LVL_Player()
@@ -142,6 +152,8 @@ void LVL_Player::update(float ticks)
 {
     if(!physBody) return;
     if(!camera) return;
+
+    animator.tickAnimation(ticks);
 
     if(_player_moveup)
     {
@@ -740,18 +752,28 @@ void LVL_Player::render(float camX, float camY)
                             posY()
                             -camY,
 
-                            width,
-                            height
+                            frameW,
+                            frameH
                          );
-//        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
+    QRectF tPos = QRectF(5.0/10.0, 0.0/10.0, 1.0/10.0, 1.0/10.0);
 
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 1.f, 1.f);
+    glEnable(GL_TEXTURE_2D);
+    glColor4f( 1.f, 1.f, 1.f, 1.f);
+    glBindTexture( GL_TEXTURE_2D, texId );
     glBegin( GL_QUADS );
+        glTexCoord2f( tPos.left(), tPos.top() );
         glVertex2f( player.left(), player.top());
+
+        glTexCoord2f( tPos.right(), tPos.top() );
         glVertex2f( player.right(), player.top());
+
+        glTexCoord2f( tPos.right(), tPos.bottom() );
         glVertex2f( player.right(),  player.bottom());
+
+        glTexCoord2f( tPos.left(), tPos.bottom() );
         glVertex2f( player.left(),  player.bottom());
     glEnd();
+    glDisable(GL_TEXTURE_2D);
+
 }
 
