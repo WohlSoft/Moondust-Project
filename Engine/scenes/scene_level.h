@@ -25,6 +25,7 @@
 #include "../common_features/pge_texture.h"
 
 #include <common_features/episode_state.h>
+#include <common_features/event_queue.h>
 
 #include "level/lvl_player.h"
 #include "level/lvl_player_def.h"
@@ -202,6 +203,8 @@ private:
     LevelData data;
 
     EpisodeState *gameState;
+
+    EventQueue<LevelScene > system_events;
 
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;

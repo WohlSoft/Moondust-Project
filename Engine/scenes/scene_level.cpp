@@ -233,6 +233,8 @@ void LevelScene::update()
     else
     if(!isPauseMenu) //Update physics is not pause menu
     {
+        system_events.processEvents(uTick);
+
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
 
@@ -267,35 +269,6 @@ void LevelScene::update()
             }
             players[i]->update(uTick);
         }
-
-        //Enter players via warp
-        if(isWarpEntrance)
-        {
-            if(delayToEnter<=0)
-            {
-                PlayerPoint newPoint;
-
-                    newPoint.id = NewPlayerID;
-                    newPoint.x=0;
-                    newPoint.y=0;
-                    newPoint.w = player_defs.first().width();
-                    newPoint.h = player_defs.first().height();
-                    newPoint.direction=1;
-
-                addPlayer(newPoint, true);
-
-                    NewPlayerID++;
-                    numberOfPlayers--;
-                    delayToEnter = 1000;
-                    if(numberOfPlayers<=0)
-                        isWarpEntrance = false;
-            }
-            else
-            {
-                delayToEnter-= uTick;
-            }
-        }
-
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
