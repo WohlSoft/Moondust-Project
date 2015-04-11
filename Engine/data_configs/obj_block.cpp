@@ -18,23 +18,18 @@
 
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
+#include <common_features/graphics_funcs.h>
 
 /*****Level blocks************/
-QList<obj_block >     ConfigManager::lvl_blocks;
+QList<obj_block >       ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
-CustomDirManager ConfigManager::Dir_Blocks;
-QList<SimpleAnimator > ConfigManager::Animator_Blocks;
+CustomDirManager        ConfigManager::Dir_Blocks;
+QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
 /*****Level blocks************/
-
-namespace loadLevelBlocks_fnc
-{
-    static QString Temp01="";
-}
 
 bool ConfigManager::loadLevelBlocks()
 {
-    using namespace loadLevelBlocks_fnc;
-
+    QString Temp01="";
     unsigned int i;
 
     obj_block sblock;
@@ -99,20 +94,11 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.category = blockset.value("category", "_Other").toString();
                 //sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
-
+                GraphicsHelps::loadMaskedImage(blockPath, imgFile, sblock.mask_n, Temp01);
                 sblock.image_n = imgFile;
-                if( (imgFile!="") )
+                if( imgFile=="" )
                 {
-                    tmp = imgFile.split(".", QString::SkipEmptyParts);
-                    if(tmp.size()==2)
-                        imgFileM = tmp[0] + "m." + tmp[1];
-                    else
-                        imgFileM = "";
-                    sblock.mask_n = imgFileM;
-                }
-                else
-                {
-                    addError(QString("BLOCK-%1 Image filename isn't defined").arg(i));
+                    addError(QString("BLOCK-%1 Image filename isn't defined.\n%2").arg(i).arg(Temp01));
                     goto skipBLOCK;
                 }
 

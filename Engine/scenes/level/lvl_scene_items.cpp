@@ -180,7 +180,6 @@ void LevelScene::destroyBlock(LVL_Block *_block)
 }
 
 
-
 void LevelScene::toggleSwitch(int switch_id)
 {
     if(switch_blocks.contains(switch_id))

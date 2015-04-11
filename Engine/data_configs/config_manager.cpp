@@ -92,6 +92,8 @@ QString ConfigManager::BGPath;
 QString ConfigManager::blockPath;
 QString ConfigManager::npcPath;
 QString ConfigManager::effectPath;
+QString ConfigManager::playerLvlPath;
+QString ConfigManager::playerWldPath;
 
 QString ConfigManager::tilePath;
 QString ConfigManager::scenePath;
@@ -191,6 +193,8 @@ bool ConfigManager::loadBasics()
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
     effectPath= dirs.glevel +  "effect/";
+    playerLvlPath = dirs.gplayble;
+    playerWldPath = dirs.gworld + "player/";
 
     tilePath =  dirs.gworld +  "tile/";
     scenePath = dirs.gworld +  "scene/";
@@ -397,12 +401,19 @@ bool ConfigManager::loadBasics()
         engineset.endGroup();
     }
 
+    /********Payable characters config should be loaded always!*******/
+    if(!loadPlayableCharacters())
+        return false;
+
+
+
     return true;
 }
 
 void ConfigManager::addError(QString bug, QtMsgType level)
 {
     Q_UNUSED(level);
+    qWarning() << bug;
     errorsList<<bug;
 }
 

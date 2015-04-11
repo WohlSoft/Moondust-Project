@@ -63,6 +63,7 @@ GamesaveData FileFormats::dummySaveDataArray()
     newData.smbx64strict = false;
     newData.filename = "";
     newData.path = "";
+    newData.currentCharacter.push_back(1);
 
     return newData;
 }

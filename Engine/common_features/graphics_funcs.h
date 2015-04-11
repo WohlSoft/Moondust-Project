@@ -45,6 +45,7 @@ public:
     static void flipVertically(SDL_Surface *&image);
     static Uint32 getpixel(SDL_Surface *surface, int x, int y);
     static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr);
 };
 
 #endif // GRAPHICS_FUNCS_H
