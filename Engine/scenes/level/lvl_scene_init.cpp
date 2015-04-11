@@ -27,6 +27,18 @@
 
 bool LevelScene::setEntrance(int entr)
 {
+    player_defs.clear();
+
+    foreach(int xxx, gameState->game_state.currentCharacter)
+    {
+        LVL_PlayerDef def;
+        def.setCharacterID(xxx);
+        if(gameState->game_state.characterStates.size()-1 > xxx-1)
+            def.setState(gameState->game_state.characterStates[xxx].state+1);
+        else
+            def.setState(1);
+        player_defs.push_back(def);
+    }
 
     if(entr<=0)
     {
@@ -36,15 +48,15 @@ bool LevelScene::setEntrance(int entr)
         {
             if(data.players[i].w==0 && data.players[i].h==0)
                 continue; //Skip empty points
-            cameraStart.setX(data.players[i].x);
-            cameraStart.setY(data.players[i].y);
+            cameraStart.setX( data.players[i].x+(data.players[i].w/2)-(player_defs.first().width()/2) );
+            cameraStart.setY( data.players[i].y+data.players[i].w-player_defs.first().height() );
             found=true;
             break;
         }
 
         if(!found)
         {
-            exitLevelCode = EXIT_Error;
+            exitLevelCode = LvlExit::EXIT_Error;
 
             PGE_MsgBox msgBox(NULL, "ERROR:\nCan't start level without player's start point.\nPlease set a player's start point and start level again.",
                               PGE_MsgBox::msg_error);
@@ -64,12 +76,49 @@ bool LevelScene::setEntrance(int entr)
 
                 startWarp = data.doors[i];
 
-                cameraStart.setX(startWarp.ox);
-                cameraStart.setY(startWarp.oy);
+                cameraStart.setX( startWarp.ox+16-(player_defs.first().width()/2) );
+                cameraStart.setY( startWarp.oy+32-player_defs.first().height() );
 
                 cameraStartDirected = (startWarp.type==1);
                 cameraStartDirection = startWarp.odirect;
+                if(cameraStartDirected)
+                {
+                    switch(startWarp.odirect)
+                    {
+                        case 2://right
+                            cameraStart.setX(startWarp.ox);
+                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
+                            break;
+                        case 1://down
+                            cameraStart.setX(startWarp.ox+16-player_defs.first().width()/2);
+                            cameraStart.setY(startWarp.oy);
+                            break;
+                        case 4://left
+                            cameraStart.setX(startWarp.ox+32-player_defs.first().width());
+                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
+                            break;
+                        case 3://up
+                            cameraStart.setX(startWarp.ox+16-player_defs.first().width()/2);
+                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
+                            break;
+                        default:
+                            break;
+                    }
+                }
 
+                EventQueueEntry<LevelScene >event3;
+                event3.makeCaller([this]()->void{
+                                      PlayerPoint newPoint;
+                                      newPoint.id = data.players.first().id;
+                                      newPoint.x=cameraStart.x();
+                                      newPoint.y=cameraStart.y();
+                                      newPoint.w = this->player_defs.first().width();
+                                      newPoint.h = this->player_defs.first().height();
+                                      newPoint.direction=1;
+                                      this->addPlayer(newPoint, true);
+                                      isWarpEntrance=false;
+                                  }, 1000);
+                system_events.events.push_back(event3);
                 return true;
             }
         }
@@ -82,7 +131,7 @@ bool LevelScene::setEntrance(int entr)
     msgBox.exec();
 
     //Error, sections is not found
-    exitLevelCode = EXIT_Error;
+    exitLevelCode = LvlExit::EXIT_Error;
     return false;
 }
 
@@ -109,8 +158,9 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
     ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
 
-    if(!success) exitLevelCode = EXIT_Error;
+    if(!success) exitLevelCode = LvlExit::EXIT_Error;
 
     return success;
 }
@@ -146,7 +196,6 @@ bool LevelScene::init()
     //quit from game if window was closed
     if(!isLevelContinues) return false;
 
-
     for(int i=0; i<numberOfPlayers; i++)
     {
         int x=cameraStart.x();
@@ -166,8 +215,8 @@ bool LevelScene::init()
                         (float)y,
                         (float)width, (float)height
                     );
-        camera->setPos(cameraStart.x()-camera->w()/2 + 12,
-                       cameraStart.y()-camera->h()/2 + 27);
+        camera->setPos(cameraStart.x()-camera->w()/2 + player_defs.first().width()/2,
+                       cameraStart.y()-camera->h()/2 + player_defs.first().height()/2);
 
         cameras.push_back(camera);
     }

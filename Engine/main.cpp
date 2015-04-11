@@ -29,6 +29,7 @@
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 #include "common_features/logger.h"
+#include "common_features/episode_state.h"
 
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
     LoadLogSettings();
 
     QString configPath="";
-    QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
+    QString fileToOpen = "";//ApplicationPath+"/physics.lvl";
     PlayEpisodeResult episode;
     episode.character=0;
     episode.savefile="save1.savx";
@@ -149,7 +150,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            fileToPpen = param;
+            fileToOpen = param;
         }
     }
 
@@ -209,15 +210,20 @@ int main(int argc, char *argv[])
     while ( SDL_PollEvent(&event) )
     {}
 
+    EpisodeState _game_state;
 
-if(!fileToPpen.isEmpty())
+if(!fileToOpen.isEmpty())
 {
-    if(
-       (fileToPpen.endsWith(".lvl", Qt::CaseInsensitive))
-            ||
-       (fileToPpen.endsWith(".lvlx", Qt::CaseInsensitive)))
+    _game_state.reset();
 
-    goto PlayLevel;
+    if(
+       (fileToOpen.endsWith(".lvl", Qt::CaseInsensitive))
+            ||
+       (fileToOpen.endsWith(".lvlx", Qt::CaseInsensitive)))
+    {
+        _game_state.LevelFile = fileToOpen;
+        goto PlayLevel;
+    }
 }
 
 if(interprocessing) goto PlayLevel;
@@ -250,12 +256,12 @@ GameOverScreen:
 
 MainMenu:
 {
+    _game_state.reset();
     TitleScene * iScene = new TitleScene();
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
     PlayEpisodeResult res_episode = iScene->result_episode;
-    //PlayEpisodeResult res_episode = iScene->result_episode;
     delete iScene;
 
     switch(answer)
@@ -270,9 +276,12 @@ MainMenu:
             goto GameOverScreen;
         case TitleScene::ANSWER_PLAYLEVEL:
             end_level_jump=RETURN_TO_MAIN_MENU;
-            fileToPpen = res_level.levelfile;
+            _game_state.isEpisode=false;
+            _game_state.LevelFile = res_level.levelfile;
             goto PlayLevel;
         case TitleScene::ANSWER_PLAYEPISODE:
+            end_level_jump=RETURN_TO_WORLDMAP;
+            _game_state.isEpisode=true;
             episode = res_episode;
             goto PlayWorldMap;
         default:
@@ -301,10 +310,11 @@ PlayWorldMap:
     else
     {
         sceneResult = wScene->loadFile(episode.worldfile);
+        wScene->setGameState(&_game_state); //Load game state to the world map
         if(!sceneResult)
         {
             SDL_Delay(50);
-            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n"
+            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start world map\n\n"
                                             "%1")
                               .arg(wScene->getLastError()),
                               PGE_MsgBox::msg_error);
@@ -321,11 +331,21 @@ PlayWorldMap:
     if(sceneResult)
         ExitCode = wScene->exec();
 
-    /*
-    OOLUA::Script vm;
-    OOLUA::set_global(vm.state(), "say", l_say);
-    OOLUA::run_chunk(vm.state(),"say(\"World map player comming soon!\")");
-    */
+    switch(ExitCode)
+    {
+        case WldExit::EXIT_beginLevel:
+            goto PlayLevel;
+            break;
+        case WldExit::EXIT_close:
+            break;
+        case WldExit::EXIT_error:
+            break;
+        case WldExit::EXIT_exitNoSave:
+            break;
+        case WldExit::EXIT_exitWithSave:
+            break;
+    }
+
     delete wScene;
 
     goto MainMenu;
@@ -338,8 +358,18 @@ PlayLevel:
     int entranceID = 0;
     while(playAgain)
     {
+        entranceID = _game_state.LevelTargetWarp;
+
+        if(_game_state.LevelFile_hub==_game_state.LevelFile)
+        {
+                _game_state.isHubLevel=true;
+                entranceID = _game_state.game_state.last_hub_warp;
+        }
+
         int ExitCode=0;
             lScene = new LevelScene();
+
+            lScene->setGameState(&_game_state);
 
             lScene->setLoaderAnimation(62);
             lScene->drawLoader();
@@ -350,7 +380,7 @@ PlayLevel:
 
             bool sceneResult=true;
 
-            if(fileToPpen.isEmpty())
+            if(_game_state.LevelFile.isEmpty())
             {
                 if(interprocessing && IntProc::isEnabled())
                 {
@@ -374,7 +404,7 @@ PlayLevel:
             }
             else
             {
-                sceneResult = lScene->loadFile(fileToPpen);
+                sceneResult = lScene->loadFile(_game_state.LevelFile);
                 if(!sceneResult)
                 {
                     SDL_Delay(50);
@@ -401,45 +431,84 @@ PlayLevel:
             if(sceneResult)
                 ExitCode = lScene->exec();
 
+            if(!sceneResult)
+                ExitCode = LvlExit::EXIT_Error;
+
             switch(ExitCode)
             {
-            case LevelScene::EXIT_Warp:
+            case LvlExit::EXIT_Warp:
                 {
-                    fileToPpen = lScene->toAnotherLevel();
-                    entranceID = lScene->toAnotherEntrance();
-                    if(fileToPpen.isEmpty()) playAgain = false;
+                   if(lScene->warpToWorld)
+                   {
+                       _game_state.game_state.worldPosX = lScene->toWorldXY().x();
+                       _game_state.game_state.worldPosY = lScene->toWorldXY().y();
+                       _game_state.LevelFile.clear();
+                       entranceID = 0;
+                   }
+                   else
+                   {
+                       _game_state.LevelFile = lScene->toAnotherLevel();
+                       _game_state.LevelTargetWarp = lScene->toAnotherEntrance();
+                       entranceID = _game_state.LevelTargetWarp;
 
-                    if(debugMode)
-                    {
-                        if(!fileToPpen.isEmpty())
-                        {
-                            PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
-                                          .arg(fileToPpen).arg(entranceID),
-                                          PGE_MsgBox::msg_warn);
-                            msgBox.exec();
-                        }
-                        playAgain = false;
-                    }
+                       if(_game_state.isHubLevel)
+                       {
+                           _game_state.isHubLevel=false;
+                           _game_state.game_state.last_hub_warp = lScene->lastWarpID;
+                       }
+                   }
+
+
+                   if(_game_state.LevelFile.isEmpty()) playAgain = false;
+
+
+                   if(debugMode)
+                   {
+                       if(!fileToOpen.isEmpty())
+                       {
+                           PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                                         .arg(fileToOpen).arg(entranceID),
+                                         PGE_MsgBox::msg_warn);
+                           msgBox.exec();
+                       }
+                       playAgain = false;
+                   }
                 }
                 break;
-            case LevelScene::EXIT_Closed:
+            case LvlExit::EXIT_Closed:
                 {
                     end_level_jump=RETURN_TO_EXIT;
                     playAgain = false;
                 }
                 break;
-            case LevelScene::EXIT_MenuExit:
+            case LvlExit::EXIT_MenuExit:
                 {
-                    if(!debugMode)
+                    if(!_game_state.isEpisode)
+                    {
+                        if(!debugMode)
+                            end_level_jump=RETURN_TO_MAIN_MENU;
+                        else
+                            end_level_jump=RETURN_TO_EXIT;
+                    }
+                    if(_game_state.isHubLevel)
                         end_level_jump=RETURN_TO_MAIN_MENU;
-                    else
-                        end_level_jump=RETURN_TO_EXIT;
                     playAgain = false;
                 }
                 break;
-            case LevelScene::EXIT_PlayerDeath:
+            case LvlExit::EXIT_PlayerDeath:
                 {
+                    playAgain = _game_state.replay_on_fail;
                 }
+                break;
+            case LvlExit::EXIT_Error:
+                if(!_game_state.isEpisode)
+                {
+                    if(!debugMode)
+                        end_level_jump=RETURN_TO_WORLDMAP;
+                    else
+                        end_level_jump=RETURN_TO_EXIT;
+                }
+                playAgain = false;
                 break;
             default:
                 playAgain = false;

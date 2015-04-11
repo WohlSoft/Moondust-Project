@@ -49,6 +49,8 @@ GamesaveData FileFormats::dummySaveDataArray()
     newData.points = 0;
     newData.totalStars = 0;
 
+    newData.last_hub_warp = 0;
+
     newData.musicID = 0;
     newData.musicFile = "";
 
@@ -61,6 +63,7 @@ GamesaveData FileFormats::dummySaveDataArray()
     newData.smbx64strict = false;
     newData.filename = "";
     newData.path = "";
+    newData.currentCharacter.push_back(1);
 
     return newData;
 }

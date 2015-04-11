@@ -18,6 +18,7 @@
 
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
+#include <common_features/graphics_funcs.h>
 
 /*****Level BGO************/
 QList<obj_bgo >     ConfigManager::lvl_bgo;
@@ -98,20 +99,15 @@ bool ConfigManager::loadLevelBGO()
             sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
             sbgo.zOffset = bgoset.value("z-offset", "0").toInt();
             imgFile = bgoset.value("image", "").toString();
-            sbgo.image_n = imgFile;
-            if( (imgFile!="") )
             {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                sbgo.mask_n = imgFileM;
-            }
-            else
-            {
-                addError(QString("BGO-%1 Image filename isn't defined").arg(i));
-                goto skipBGO;
+                QString err;
+                GraphicsHelps::loadMaskedImage(bgoPath, imgFile, sbgo.mask_n, err);
+                sbgo.image_n = imgFile;
+                if( imgFile=="" )
+                {
+                    addError(QString("BGO-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
+                    goto skipBGO;
+                }
             }
             sbgo.climbing = (bgoset.value("climbing", 0).toBool());
             sbgo.animated = (bgoset.value("animated", 0).toBool());

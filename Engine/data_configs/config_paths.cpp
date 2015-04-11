@@ -43,6 +43,11 @@ QString ConfigManager::PathLevelEffect()
     return effectPath;
 }
 
+QString ConfigManager::PathLevelPlayable()
+{
+    return playerLvlPath;
+}
+
 
 
 QString ConfigManager::PathCommonGFX()
@@ -70,6 +75,11 @@ QString ConfigManager::PathWorldPaths()
 QString ConfigManager::PathWorldLevels()
 {
     return wlvlPath;
+}
+
+QString ConfigManager::PathWorldPlayable()
+{
+    return playerWldPath;
 }
 
 QString ConfigManager::PathWorldMusic()

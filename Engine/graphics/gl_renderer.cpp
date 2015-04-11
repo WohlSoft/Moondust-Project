@@ -42,16 +42,16 @@ bool GlRenderer::init()
 
     // Initializing OpenGL
     glMatrixMode( GL_PROJECTION );
-    glPushMatrix();
+    //glPushMatrix();
     glLoadIdentity();
 
-    //glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+    glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
     glOrtho( 0.0, PGE_Window::Width, PGE_Window::Height, 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
     glMatrixMode( GL_MODELVIEW );
-    glPushMatrix();
-    glLoadIdentity();
+    //glPushMatrix();
+    //glLoadIdentity();
 
     //Initialize clear color
     glClearColor( 0.f, 0.f, 0.f, 1.f );

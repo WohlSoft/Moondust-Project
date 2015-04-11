@@ -59,9 +59,11 @@ LevelScene::LevelScene()
 
     doExit = false;
     exitLevelDelay=3000;
-    exitLevelCode = EXIT_Closed;
+    exitLevelCode = LvlExit::EXIT_Closed;
+    lastWarpID=0;
     warpToLevelFile = "";
     warpToArrayID = 0;
+    warpToWorld=false;
     NewPlayerID = 1;
     /**************************/
 
@@ -83,6 +85,8 @@ LevelScene::LevelScene()
     /*********Fader*************/
 
     errorMsg = "";
+
+    gameState = NULL;
 }
 
 LevelScene::~LevelScene()
@@ -213,7 +217,7 @@ void LevelScene::update()
             exitLevelDelay -= uTick;
         else
         {
-            if(exitLevelCode==EXIT_Closed)
+            if(exitLevelCode==LvlExit::EXIT_Closed)
             {
                 fader_opacity=1.0f;
                 isLevelContinues=false;
@@ -229,6 +233,8 @@ void LevelScene::update()
     else
     if(!isPauseMenu) //Update physics is not pause menu
     {
+        system_events.processEvents(uTick);
+
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
 
@@ -263,35 +269,6 @@ void LevelScene::update()
             }
             players[i]->update(uTick);
         }
-
-        //Enter players via warp
-        if(isWarpEntrance)
-        {
-            if(delayToEnter<=0)
-            {
-                PlayerPoint newPoint;
-
-                    newPoint.id = NewPlayerID;
-                    newPoint.x=0;
-                    newPoint.y=0;
-                    newPoint.w=24;
-                    newPoint.h=54;
-                    newPoint.direction=1;
-
-                addPlayer(newPoint, true);
-
-                    NewPlayerID++;
-                    numberOfPlayers--;
-                    delayToEnter = 1000;
-                    if(numberOfPlayers<=0)
-                        isWarpEntrance = false;
-            }
-            else
-            {
-                delayToEnter-= uTick;
-            }
-        }
-
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
@@ -448,7 +425,7 @@ int LevelScene::exec()
                 case SDL_QUIT:
                     {
                         if(doExit) break;
-                        setExiting(0, EXIT_Closed);
+                        setExiting(0, LvlExit::EXIT_Closed);
                     }   // End work of program
                 break;
 
@@ -457,7 +434,7 @@ int LevelScene::exec()
                   { // Check which
                     case SDLK_ESCAPE: // ESC
                             {
-                                setExiting(0, EXIT_MenuExit);
+                                setExiting(0, LvlExit::EXIT_MenuExit);
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
@@ -578,6 +555,11 @@ int LevelScene::toAnotherEntrance()
     return warpToArrayID;
 }
 
+QPoint LevelScene::toWorldXY()
+{
+    return warpToWorldXY;
+}
+
 int LevelScene::exitType()
 {
     return exitLevelCode;
@@ -594,7 +576,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
-        setExiting(4000, EXIT_PlayerDeath);
+        setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }
 
@@ -604,4 +586,10 @@ void LevelScene::setExiting(int delay, int reason)
     exitLevelDelay = delay;
     exitLevelCode = reason;
     doExit = true;
+}
+
+
+void LevelScene::setGameState(EpisodeState *_gameState)
+{
+    gameState = _gameState;
 }

@@ -28,6 +28,7 @@ Scene::Scene()
     target_opacity=1.0f;
     fade_step=0.0f;
     fadeSpeed=25;
+    fadeRunned=false;
     /*********Fader*************/
 }
 
@@ -78,13 +79,18 @@ Scene::TypeOfScene Scene::type()
     return sceneType;
 }
 
-
 /**************************Fader*******************************/
+bool Scene::isOpacityFadding()
+{
+    return fadeRunned;
+}
+
 void Scene::setFade(int speed, float target, float step)
 {
     fade_step = fabs(step);
     target_opacity = target;
     fadeSpeed = speed;
+    fadeRunned=true;
     fader_timer_id = SDL_AddTimer(speed, &Scene::nextOpacity, this);
 }
 
@@ -104,7 +110,10 @@ void Scene::fadeStep()
         fader_opacity-=fade_step;
 
     if(fader_opacity>=1.0 || fader_opacity<=0.0)
+    {
         SDL_RemoveTimer(fader_timer_id);
+        fadeRunned=false;
+    }
     else
         fader_timer_id = SDL_AddTimer(fadeSpeed, &Scene::nextOpacity, this);
 }

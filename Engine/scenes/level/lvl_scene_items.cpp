@@ -131,35 +131,6 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
 
     if(byWarp)
     {
-        if(cameraStartDirected)
-        {
-            switch(startWarp.odirect)
-            {
-                case 2://right
-                    cameraStart.setX(startWarp.ox);
-                    cameraStart.setY(startWarp.oy+32-player->height);
-                    break;
-                case 1://down
-                    cameraStart.setX(startWarp.ox+16-player->width/2);
-                    cameraStart.setY(startWarp.oy);
-                    break;
-                case 4://left
-                    cameraStart.setX(startWarp.ox+32-player->width);
-                    cameraStart.setY(startWarp.oy+32-player->height);
-                    break;
-                case 3://up
-                    cameraStart.setX(startWarp.ox+16-player->width/2);
-                    cameraStart.setY(startWarp.oy+32-player->height);
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            cameraStart.setX(startWarp.ox+16-player->width/2);
-            cameraStart.setY(startWarp.oy+32-player->height);
-        }
         player->data.x = cameraStart.x();
         player->data.y = cameraStart.y();
     }
@@ -180,16 +151,19 @@ void LevelScene::destroyBlock(LVL_Block *_block)
 }
 
 
-
 void LevelScene::toggleSwitch(int switch_id)
 {
     if(switch_blocks.contains(switch_id))
     {
         for(int x=0;x<switch_blocks[switch_id].size();x++)
-            switch_blocks[switch_id][x]->
+        {
+            if((switch_blocks[switch_id][x]->setup->switch_Block)&&
+                    (switch_blocks[switch_id][x]->setup->switch_ID==switch_id))
+                switch_blocks[switch_id][x]->
                     transformTo(
                             switch_blocks[switch_id][x]->setup->switch_transform,
                             2);
+        }
     }
 }
 

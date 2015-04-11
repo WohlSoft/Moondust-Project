@@ -55,7 +55,9 @@ tar -zcvf ./$TarGzArName $PgePrjSD
 
 #NFS [ Network File System != Need For Speed, BUT, Need For Speed Up our network channel! ]
 echo "Copying data..."
-cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SiteRootNFS/$LabDir/pge_editor_dev.apk
+if [ "$1" != "no-android" ]; then
+	cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SiteRootNFS/$LabDir/pge_editor_dev.apk
+fi
 cp $DeployDir/pge-editor-dev-linux-mint.tar.gz $SiteRootNFS/$LabDir/pge-editor-dev-linux-mint.tar.gz
 
 echo "Uploading everything to the GNA"

@@ -25,14 +25,15 @@
 #ifdef PGE_EDITOR
 #include <common_features/themes.h>
 #endif
-#ifndef PGE_ENGINE
+#ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
 
+QString FileFormats::errorString="";
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
-    #ifndef PGE_ENGINE
+    #ifdef PGE_FILES_USE_MESSAGEBOXES
     QMessageBox * box;
     box= new QMessageBox();
     box->setWindowTitle( QTranslator::tr("Bad File") );
@@ -45,11 +46,10 @@ void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
     box->setStandardButtons(QMessageBox::Ok);
     box->setIcon(QMessageBox::Warning);
     box->exec();
-    #else
-    Q_UNUSED(fileName_DATA);
-    Q_UNUSED(str_count);
-    Q_UNUSED(line);
     #endif
+    errorString = QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+                           +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
+                            +QTranslator::tr("Line Data: %1").arg(line));
 }
 
 

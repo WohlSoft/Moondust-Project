@@ -83,7 +83,7 @@ translates.files += $$PWD/languages/*.png
 !android:{
 DEFINES += USE_SDL_MIXER
 }
-DEFINES += PGE_EDITOR
+DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES
 
 INSTALLS = translates
 
