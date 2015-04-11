@@ -314,7 +314,7 @@ PlayWorldMap:
         if(!sceneResult)
         {
             SDL_Delay(50);
-            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n"
+            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start world map\n\n"
                                             "%1")
                               .arg(wScene->getLastError()),
                               PGE_MsgBox::msg_error);

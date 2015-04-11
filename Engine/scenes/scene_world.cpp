@@ -902,21 +902,19 @@ void WorldScene::render()
                                common_setup.star_y);
     }
 
-
-    FontManager::printText(QString("X=%1 Y=%2")
-                           .arg(posX)
-                           .arg(posY), 300,10);
-
-    {
-    QPoint grid = worldMap.applyGrid(posX, posY);
-    FontManager::printText(QString("TILE X=%1 Y=%2")
-                           .arg(grid.x())
-                           .arg(grid.y()), 300,45);
-    }
-
-
     if(PGE_Window::showDebugInfo)
     {
+        FontManager::printText(QString("X=%1 Y=%2")
+                               .arg(posX)
+                               .arg(posY), 300,10);
+
+        {
+        QPoint grid = worldMap.applyGrid(posX, posY);
+        FontManager::printText(QString("TILE X=%1 Y=%2")
+                               .arg(grid.x())
+                               .arg(grid.y()), 300,45);
+        }
+
         FontManager::printText(QString("Player J=%1 G=%2,%5 F=%3; TICK-SUB: %4")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
@@ -934,6 +932,7 @@ void WorldScene::render()
                                    .arg(exitWorldDelay)
                                    .arg(uTick), 10, 140, 10, qRgb(255,0,0));
     }
+
     renderBlack:
     Scene::render();
 }

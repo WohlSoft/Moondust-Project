@@ -430,13 +430,12 @@ bool ConfigManager::unloadLevelConfigs()
         level_textures.pop_back();
     }
 
-
-
     /***************Clear animators*************/
     Animator_Blocks.clear();
     Animator_BGO.clear();
     Animator_BG.clear();
     Animator_EFFECT.clear();
+    Animator_PlayersLvl.clear();
 
     /***************Clear settings*************/
     lvl_block_indexes.clear();
