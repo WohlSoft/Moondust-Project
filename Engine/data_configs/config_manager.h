@@ -325,6 +325,7 @@ public:
     static QString PathLevelBlock();
     static QString PathLevelNPC();
     static QString PathLevelEffect();
+    static QString PathLevelPlayable();
 
     static QString PathCommonGFX();
 
@@ -332,6 +333,7 @@ public:
     static QString PathWorldScenery();
     static QString PathWorldPaths();
     static QString PathWorldLevels();
+    static QString PathWorldPlayable();
 
     static QString PathWorldMusic();
     static QString PathWorldSound();
