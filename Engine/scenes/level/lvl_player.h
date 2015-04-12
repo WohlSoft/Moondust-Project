@@ -42,11 +42,16 @@ class LVL_Player :
 
         int playerID;
 
+        obj_player setup;
+
         QHash<int, obj_player_state > states;
         int stateID;
+        obj_player_state state_cur;
 
         QHash<int, obj_player_physics > physics;
         QHash<int, int > environments_map;
+
+        obj_player_physics physics_cur;
         int environment;
         int last_environment;
 
@@ -93,7 +98,7 @@ class LVL_Player :
         bool wasEntered;
         int warpsTouched;
 
-        float32 gscale_Backup;
+        float32 gscale_Backup; //!< BackUP of last gravity scale
 
         bool   isWarping;
         bool   warpDo;
