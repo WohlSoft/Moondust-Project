@@ -118,6 +118,8 @@ class LVL_Player :
         int frameW;
         int frameH;
 private:
+        bool isLocked;
+        bool isInited;
         void refreshAnimation();
 };
 
