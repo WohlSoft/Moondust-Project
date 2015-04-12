@@ -29,6 +29,8 @@ LVL_Player::LVL_Player()
     camera = NULL;
     worldPtr = NULL;
     playerID = 0;
+    isLocked = true;
+    isInited = false;
 
     direction = 1;
 
@@ -148,7 +150,9 @@ void LVL_Player::init()
     fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
     physBody->CreateFixture(&fixtureDef);
 
+    animator.tickAnimation(1);
     //qDebug() <<"Start position is " << posX() << posY();
+    isLocked=false;
 }
 
 void LVL_Player::initSize()
@@ -158,6 +162,7 @@ void LVL_Player::initSize()
 
 void LVL_Player::update(float ticks)
 {
+    if(isLocked) return;
     if(!physBody) return;
     if(!camera) return;
 
@@ -324,10 +329,12 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    float32 force = foot_sl_contacts_map.isEmpty() ?
-                        physics[environment].walk_force
-                          : (physics[environment].walk_force/
-                             physics[environment].slippery_c);
+    slippery_surface = !foot_sl_contacts_map.isEmpty();
+
+    float32 force = slippery_surface ?
+                           (physics[environment].walk_force/
+                            physics[environment].slippery_c) :
+                            physics[environment].walk_force;
 
     if(keys.left) direction=-1;
     if(keys.right) direction=1;
@@ -678,8 +685,16 @@ void LVL_Player::update(float ticks)
                 wasTeleported = false;
         }
     }
-    camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
-                    posY() - PGE_Window::Height/2 + posY_coefficient );
+
+    if(!isInited)
+    {
+        isInited=true;
+        animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+        animator.tickAnimation(64);
+    }
+    else
+        camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
+                        posY() - PGE_Window::Height/2 + posY_coefficient );
 }
 
 
@@ -728,9 +743,9 @@ void LVL_Player::refreshAnimation()
             if(!busy)
             {
                 float velX = physBody->GetLinearVelocity().x;
-                if(velX>0.0)
+                if( ((!slippery_surface)&&(velX>0.0))||((slippery_surface)&&(keys.right)&&(velX>0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
-                else if(velX<0.0)
+                else if( ((!slippery_surface)&& (velX<0.0))||((slippery_surface)&&(keys.left)&&(velX<0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*4)<100?-velX*4:100)));
                 else
                     animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
@@ -815,8 +830,8 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 
 void LVL_Player::render(float camX, float camY)
 {
-
     if(!isLive) return;
+    if(!isInited) return;
 
     QRectF tPos = animator.curFrame();
     QPointF Ofs = animator.curOffset();
