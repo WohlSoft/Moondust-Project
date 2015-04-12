@@ -53,6 +53,8 @@ class LVL_Player :
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
 
+        int direction;
+
         bool JumpPressed;
         bool onGround;
 
@@ -115,6 +117,8 @@ class LVL_Player :
         MatrixAnimator animator;
         int frameW;
         int frameH;
+private:
+        void refreshAnimation();
 };
 
 #endif // LVL_PLAYER_H

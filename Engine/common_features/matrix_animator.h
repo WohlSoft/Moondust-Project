@@ -22,6 +22,8 @@
 #include <QList>
 #include <QHash>
 #include <QRectF>
+#include <QSizeF>
+#include <QPointF>
 
 #include "player_calibration.h"
 
@@ -36,6 +38,41 @@ struct MatrixAnimatorFrame
 class MatrixAnimator
 {
 public:
+
+    enum MatrixAninates
+    {
+        Nothing=-1,
+        Idle=0,
+        Run,
+        JumpFloat,
+        JumpFall,
+        SpinJump,
+        Sliding,
+        Climbing,
+        Fire,
+        SitDown,
+        Dig,
+        GrabRun,
+        GrabJump,
+        GrabSitDown,
+        RacoonRun,
+        RacoonFloat,
+        RacoonFly,
+        RacoonTail,
+        Swim,
+        SwimUp,
+        OnYoshi,
+        OnYoshiSit,
+        PipeUpDown,
+        SlopeSlide,
+        TanookiStatue,
+        SwordAttak,
+        JumpSwordUp,
+        JumpSwordDown,
+        DownSwordAttak,
+        Hurted,
+    };
+
     MatrixAnimator();
     MatrixAnimator(int _width, int _height);
     MatrixAnimator(const MatrixAnimator &a);
@@ -45,10 +82,11 @@ public:
     void setSize(int _width, int _height);
     void tickAnimation(int frametime);
     QRectF curFrame();
+    QPointF curOffset();
 
     void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(QString aniName, int direction, int speed=-1);
-    void switchAnimation(QString aniName, int direction, int speed=-1);
+    void playOnce(MatrixAninates aniName, int _direction, int speed=-1);
+    void switchAnimation(MatrixAninates aniName, int _direction, int speed=-1);
 
 private:
     void nextFrame();
@@ -56,20 +94,27 @@ private:
 
     float width; //!< width of frame matrix
     float height; //!< height of frame matrix
-    float width_f; //!< width of one frame;
-    float height_f; //!< height of one frame;
+    float width_f; //!< width of one frame; (from 0 to 1)
+    float height_f; //!< height of one frame; (from 0 to 1)
     int delay_wait; //!< Delay between next frame will be switched
     int framespeed; //!< delay between frames
+    int framespeed_once; //!< delay between frames for "once" mode
     int curFrameI; //!< index of current frame
     QRectF curRect;
+    QPointF curOffsets;
     typedef QList<MatrixAnimatorFrame > AniSequence;
 
     int direction;
     bool once;
-    QString backup_sequance;
+    MatrixAninates backup_sequance;
+    MatrixAninates current_sequance;
     AniSequence sequence;//!< Current frame sequance
-    QHash<QString, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
-    QHash<QString, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
+    QHash<MatrixAninates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
+    QHash<MatrixAninates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
+
+    void buildEnums();
+    MatrixAninates toEnum(QString aniName);
+    QHash<QString, MatrixAninates > StrToEnum;
 };
 
 #endif // MATRIXANIMATOR_H
