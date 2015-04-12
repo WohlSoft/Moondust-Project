@@ -71,6 +71,9 @@ void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
 
 void MatrixAnimator::setFrameSpeed(int speed)
 {
+    if(framespeed==speed) return;
+    if(speed<=0) framespeed=1;
+    delay_wait = ((framespeed-speed)<1) ? delay_wait : delay_wait-(framespeed-speed);
     framespeed=abs(speed);
 }
 
@@ -84,13 +87,11 @@ void MatrixAnimator::setSize(int _width, int _height)
 
 void MatrixAnimator::tickAnimation(int frametime)
 {
-    check_frame:
     delay_wait-=abs(frametime);
-        if(delay_wait<=0)
+        while(delay_wait<=0)
         {
             nextFrame();
-            delay_wait = framespeed+delay_wait;
-            goto check_frame;
+            delay_wait+=framespeed;
         }
 }
 
@@ -103,8 +104,11 @@ void MatrixAnimator::nextFrame()
     }
     curFrameI++;
     if(curFrameI>(sequence.size()-1))
+    {
         curFrameI=0;
-
+        if(once)
+            switchAnimation(backup_sequance, direction, framespeed);
+    }
     buildRect();
 }
 
@@ -116,10 +120,13 @@ void MatrixAnimator::buildRect()
     }
     else
     {
-        curRect.setLeft(sequence[curFrameI].x+sequence[curFrameI].offset_x);
-        curRect.setTop(sequence[curFrameI].y+sequence[curFrameI].offset_y);
-        curRect.setRight(sequence[curFrameI].x+sequence[curFrameI].offset_x+width_f);
-        curRect.setBottom(sequence[curFrameI].x+sequence[curFrameI].offset_x+height_f);
+        curRect.setLeft(sequence[curFrameI].x);
+        curRect.setTop(sequence[curFrameI].y);
+        curRect.setRight(sequence[curFrameI].x+width_f);
+        curRect.setBottom(sequence[curFrameI].y+height_f);
+
+        curOffsets.setX(sequence[curFrameI].offset_x);
+        curOffsets.setY(sequence[curFrameI].offset_y);
     }
 }
 
@@ -132,18 +139,143 @@ QRectF MatrixAnimator::curFrame()
     return curRect;
 }
 
+QPointF MatrixAnimator::curOffset()
+{
+    if(sequence.isEmpty())
+    {
+        return QPointF(0.0, 0.0);
+    }
+    return curOffsets;
+}
+
 void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 {
-    Q_UNUSED(calibration);
+    s_bank_left.clear();
+    s_bank_right.clear();
+
+    for(int i=0; i<calibration.AniFrames.set.size(); i++)
+    {
+        MatrixAnimator::MatrixAninates seq = toEnum(calibration.AniFrames.set[i].name);
+        for(int j=0; j<calibration.AniFrames.set[i].L.size();j++)
+        {
+            float x = calibration.AniFrames.set[i].L[j].x;
+            float y = calibration.AniFrames.set[i].L[j].y;
+
+            if(x>(calibration.framesX.size()-1)) continue;
+            if(y>(calibration.framesX[x].size()-1)) continue;
+
+            MatrixAnimatorFrame frame;
+            frame.x = x/width;
+            frame.y = y/width;
+            frame.offset_x = calibration.framesX[x][y].offsetX;
+            frame.offset_y = calibration.framesX[x][y].offsetY;
+            s_bank_left[seq].push_back(frame);
+        }
+        for(int j=0; j<calibration.AniFrames.set[i].R.size();j++)
+        {
+            float x = calibration.AniFrames.set[i].R[j].x;
+            float y = calibration.AniFrames.set[i].R[j].y;
+
+            if(x>(calibration.framesX.size()-1)) continue;
+            if(y>(calibration.framesX[x].size()-1)) continue;
+
+            MatrixAnimatorFrame frame;
+            frame.x = x/width;
+            frame.y = y/width;
+            frame.offset_x = calibration.framesX[x][y].offsetX;
+            frame.offset_y = calibration.framesX[x][y].offsetY;
+            s_bank_right[seq].push_back(frame);
+        }
+    }
 }
 
-void MatrixAnimator::playOnce(QString aniName, int direction, int speed)
+void MatrixAnimator::playOnce(MatrixAninates aniName, int _direction, int speed)
 {
-
+    if(_direction<0)
+    {//left
+        if(!s_bank_left.contains(aniName)) return;
+        sequence = s_bank_left[aniName];
+    }
+    else
+    {//right
+        if(!s_bank_right.contains(aniName)) return;
+        sequence = s_bank_right[aniName];
+    }
+    once=true;
+    framespeed_once = speed;
+    direction = _direction;
+    curFrameI = 0;
+    backup_sequance = current_sequance;
+    current_sequance = aniName;
+    buildRect();
 }
 
-void MatrixAnimator::switchAnimation(QString aniName, int direction, int speed)
+void MatrixAnimator::switchAnimation(MatrixAninates aniName, int _direction, int speed)
 {
+    if((current_sequance==aniName)&&(direction==_direction))
+    {
+        setFrameSpeed(speed);
+        return;
+    }
 
+    if(_direction<0)
+    {//left
+        if(!s_bank_left.contains(aniName)) return;
+        sequence = s_bank_left[aniName];
+    }
+    else
+    {//right
+        if(!s_bank_right.contains(aniName)) return;
+        sequence = s_bank_right[aniName];
+    }
+    setFrameSpeed(speed);
+    direction = _direction;
+    curFrameI = 0;
+    current_sequance = aniName;
+    once=false;
+    buildRect();
 }
 
+
+void MatrixAnimator::buildEnums()
+{
+    StrToEnum["Idle"]=              MatrixAninates::Idle;
+    StrToEnum["Run"]=               MatrixAninates::Run;
+    StrToEnum["JumpFloat"]=         MatrixAninates::JumpFloat;
+    StrToEnum["JumpFall"]=          MatrixAninates::JumpFall;
+    StrToEnum["SpinJump"]=          MatrixAninates::SpinJump;
+    StrToEnum["Sliding"]=           MatrixAninates::Sliding;
+    StrToEnum["Climbing"]=          MatrixAninates::Climbing;
+    StrToEnum["Fire"]=              MatrixAninates::Fire;
+    StrToEnum["SitDown"]=           MatrixAninates::SitDown;
+    StrToEnum["Dig"]=               MatrixAninates::Dig;
+    StrToEnum["GrabRun"]=           MatrixAninates::GrabRun;
+    StrToEnum["GrabJump"]=          MatrixAninates::GrabJump;
+    StrToEnum["GrabSitDown"]=       MatrixAninates::GrabSitDown;
+    StrToEnum["RacoonRun"]=         MatrixAninates::RacoonRun;
+    StrToEnum["RacoonFloat"]=       MatrixAninates::RacoonFloat;
+    StrToEnum["RacoonFly"]=         MatrixAninates::RacoonFly;
+    StrToEnum["RacoonTail"]=        MatrixAninates::RacoonTail;
+    StrToEnum["Swim"]=              MatrixAninates::Swim;
+    StrToEnum["SwimUp"]=            MatrixAninates::SwimUp;
+    StrToEnum["OnYoshi"]=           MatrixAninates::OnYoshi;
+    StrToEnum["OnYoshiSit"]=        MatrixAninates::OnYoshiSit;
+    StrToEnum["PipeUpDown"]=        MatrixAninates::PipeUpDown;
+    StrToEnum["SlopeSlide"]=        MatrixAninates::SlopeSlide;
+    StrToEnum["TanookiStatue"]=     MatrixAninates::TanookiStatue;
+    StrToEnum["SwordAttak"]=        MatrixAninates::SwordAttak;
+    StrToEnum["JumpSwordUp"]=       MatrixAninates::JumpSwordUp;
+    StrToEnum["JumpSwordDown"]=     MatrixAninates::JumpSwordDown;
+    StrToEnum["DownSwordAttak"]=    MatrixAninates::DownSwordAttak;
+    StrToEnum["Hurted"]=            MatrixAninates::Hurted;
+}
+
+MatrixAnimator::MatrixAninates MatrixAnimator::toEnum(QString aniName)
+{
+    if(StrToEnum.isEmpty())
+        buildEnums();
+    if(StrToEnum.contains(aniName))
+        return StrToEnum[aniName];
+    else
+        return MatrixAninates::Nothing;
+}

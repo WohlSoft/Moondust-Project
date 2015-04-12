@@ -30,19 +30,27 @@ LVL_Player::LVL_Player()
     worldPtr = NULL;
     playerID = 0;
 
+    direction = 1;
+
     type = LVLPlayer;
 
-    physics = ConfigManager::playable_characters[1].phys_default;
+    int CharacterID = 1;
+    physics = ConfigManager::playable_characters[CharacterID].phys_default;
 
     stateID=1;
-    states = ConfigManager::playable_characters[1].states;
+    states =   ConfigManager::playable_characters[CharacterID].states;
 
-    long tID = ConfigManager::getLvlPlayerTexture(1, 1);
+    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
     if( tID >= 0 )
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
     }
+
+    animator.setSize(ConfigManager::playable_characters[CharacterID].matrix_width,
+                     ConfigManager::playable_characters[CharacterID].matrix_height);
+    animator.installAnimationSet(states[stateID].sprite_setup);
+    animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
 
     JumpPressed=false;
     onGround=false;
@@ -152,8 +160,6 @@ void LVL_Player::update(float ticks)
 {
     if(!physBody) return;
     if(!camera) return;
-
-    animator.tickAnimation(ticks);
 
     if(_player_moveup)
     {
@@ -323,6 +329,9 @@ void LVL_Player::update(float ticks)
                           : (physics[environment].walk_force/
                              physics[environment].slippery_c);
 
+    if(keys.left) direction=-1;
+    if(keys.right) direction=1;
+
     //If left key is pressed
     if(keys.right)
     {
@@ -431,6 +440,8 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    refreshAnimation();
+    animator.tickAnimation(ticks);
 
     //Return player to start position on fall down
     if( posY() > camera->limitBottom+height )
@@ -662,9 +673,54 @@ void LVL_Player::update(float ticks)
                 wasTeleported = false;
         }
     }
-
     camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
                     posY() - PGE_Window::Height/2 + posY_coefficient );
+}
+
+
+void LVL_Player::refreshAnimation()
+{
+    /**********************************Animation switcher**********************************/
+        if(!onGround)
+        {
+            if(physBody->GetLinearVelocity().y<0)
+                animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+            else
+                animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
+        }
+        else
+        {
+            bool busy=false;
+
+            if((physBody->GetLinearVelocity().x>0)!=(direction>0))
+                if(keys.right)
+                {
+                    animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                    busy=true;
+                }
+
+            if(!busy)
+            {
+                if((physBody->GetLinearVelocity().x<0)!=(direction<0))
+                    if(keys.left)
+                    {
+                        animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                        busy=true;
+                    }
+            }
+
+            if(!busy)
+            {
+                float velX = physBody->GetLinearVelocity().x;
+                if(velX>0.0)
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
+                else if(velX<0.0)
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*4)<100?-velX*4:100)));
+                else
+                    animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+            }
+        }
+    /**********************************Animation switcher**********************************/
 }
 
 void LVL_Player::kill(deathReason reason)
@@ -746,16 +802,18 @@ void LVL_Player::render(float camX, float camY)
 
     if(!isLive) return;
 
-    QRectF player = QRectF( posX()
-                            -camX,
+    QRectF tPos = animator.curFrame();
+    QPointF Ofs = animator.curOffset();
 
-                            posY()
+    QRectF player = QRectF( posX()
+                            -camX-Ofs.x(),
+
+                            posY()-Ofs.y()
                             -camY,
 
                             frameW,
                             frameH
                          );
-    QRectF tPos = QRectF(5.0/10.0, 0.0/10.0, 1.0/10.0, 1.0/10.0);
 
     glEnable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
