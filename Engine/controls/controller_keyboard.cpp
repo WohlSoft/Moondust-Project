@@ -21,66 +21,23 @@
 KeyboardController::KeyboardController()
 {}
 
-void KeyboardController::update(SDL_Event &event)
+void KeyboardController::update()
 {
-    switch(event.type)
-    {
-        case SDL_KEYDOWN: // If pressed key
-          switch(event.key.keysym.sym)
-          {
-            case SDLK_z:
-                keys.jump=true;
-            break;
+    SDL_PumpEvents();
 
-            case SDLK_x:
-                keys.run=true;
-            break;
+    const Uint8* state = SDL_GetKeyboardState(NULL);
 
-            case SDLK_RIGHT:
-                keys.right=true;
-            break;
+    keys.jump=state[SDL_SCANCODE_Z];
+    keys.alt_jump=state[SDL_SCANCODE_S];
 
-            case SDLK_UP:
-                keys.up=true;
-            break;
+    keys.run=state[SDL_SCANCODE_X];
+    keys.alt_run=state[SDL_SCANCODE_D];
 
-            case SDLK_LEFT:
-                keys.left=true;
-            break;
+    keys.right=state[SDL_SCANCODE_RIGHT];
+    keys.up=state[SDL_SCANCODE_UP];
+    keys.down=state[SDL_SCANCODE_DOWN];
+    keys.left=state[SDL_SCANCODE_LEFT];
 
-            case SDLK_DOWN:
-              keys.down=true;
-            break;
-          }
-        break;
-
-        case SDL_KEYUP:
-            switch(event.key.keysym.sym)
-            {
-                case SDLK_z:
-                    keys.jump=false;
-                break;
-
-                case SDLK_x:
-                    keys.run=false;
-                break;
-
-                case SDLK_RIGHT:
-                    keys.right=false;
-                    break;
-
-                case SDLK_UP:
-                    keys.up=false;
-                break;
-
-                case SDLK_LEFT:
-                    keys.left=false;
-                    break;
-
-                case SDLK_DOWN:
-                    keys.down=false;
-                break;
-            }
-        break;
-    }
+    keys.drop=state[SDL_SCANCODE_LSHIFT];
+    keys.start=state[SDL_SCANCODE_RETURN];
 }

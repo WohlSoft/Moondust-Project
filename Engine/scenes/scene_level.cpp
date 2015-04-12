@@ -416,10 +416,11 @@ int LevelScene::exec()
             start_events = SDL_GetTicks();
         }
 
+        keyboard1.update();
+
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
-            keyboard1.update(event);
             switch(event.type)
             {
                 case SDL_QUIT:

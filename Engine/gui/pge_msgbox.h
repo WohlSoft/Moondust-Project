@@ -62,6 +62,7 @@ private:
     float height;
     float padding;
     QColor bg_color;
+    void updateControllers();
 };
 
 #endif // PGE_MSGBOX_H
