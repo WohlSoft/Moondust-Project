@@ -72,7 +72,7 @@ void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
 void MatrixAnimator::setFrameSpeed(int speed)
 {
     if(framespeed==speed) return;
-    if(speed<=0) framespeed=1;
+    if(speed<=0) framespeed=-1;//Stop animation if <=0
     delay_wait = ((framespeed-speed)<1) ? delay_wait : delay_wait-(framespeed-speed);
     framespeed=abs(speed);
 }
@@ -87,6 +87,8 @@ void MatrixAnimator::setSize(int _width, int _height)
 
 void MatrixAnimator::tickAnimation(int frametime)
 {
+    if(framespeed<1) return; //Idling animation
+
     delay_wait-=abs(frametime);
         while(delay_wait<=0)
         {
