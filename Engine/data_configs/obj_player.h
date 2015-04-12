@@ -19,62 +19,13 @@
 #ifndef OBJ_PLAYER_H
 #define OBJ_PLAYER_H
 
-#include "../graphics/graphics.h"
+#include <graphics/graphics.h>
+#include <common_features/player_calibration.h>
 
 #include <QString>
 #include <QPixmap>
 #include <QMap>
 #include <QList>
-class QSettings;
-
-/**********************Player's calibration**********************/
-struct AniFrame
-{
-    int x;
-    int y;
-};
-
-struct AniFrameSet
-{
-    QVector<AniFrame > L;
-    QVector<AniFrame > R;
-    QString name;
-};
-
-struct FrameSets
-{
-    QVector<AniFrameSet > set;
-};
-
-struct frameOpts
-{
-    unsigned int H;
-    unsigned int W;
-    int offsetX;
-    int offsetY;
-    bool used;
-    bool isDuck;
-    bool isRightDir;
-    bool showGrabItem;
-};
-
-struct obj_player_calibration
-{
-    int frameWidth;
-    int frameHeight;
-    int frameHeightDuck;
-    int frameGrabOffsetX;
-    int frameGrabOffsetY;
-    int frameOverTopGrab;
-    QList<QList<frameOpts > > framesX; //!< Collision boxes settings
-    FrameSets AniFrames;               //!< Animation settings
-    void init(int x, int y);
-    bool load(QString fileName);
-private:
-    void getSpriteAniData(QSettings &set, QString name);
-};
-/**********************Player's calibration**********************/
-
 
 /****************Definition of playable character state*******************/
 struct obj_player_physics
