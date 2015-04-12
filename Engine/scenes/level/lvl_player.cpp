@@ -368,6 +368,12 @@ void LVL_Player::update(float ticks)
         {
             if(!JumpPressed)
             {
+                if(environment==LVL_PhysEnv::Env_Water)
+                    animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                else
+                if(environment==LVL_PhysEnv::Env_Quicksand)
+                    animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
+
                 JumpPressed=true;
                 jumpForce=20;
                 timeToFloat = maxFloatTime;
@@ -377,7 +383,6 @@ void LVL_Player::update(float ticks)
             }
         }
         else
-
         if(!JumpPressed)
         {
             JumpPressed=true;
@@ -683,10 +688,21 @@ void LVL_Player::refreshAnimation()
     /**********************************Animation switcher**********************************/
         if(!onGround)
         {
-            if(physBody->GetLinearVelocity().y<0)
-                animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+            if(environment==LVL_PhysEnv::Env_Water)
+            {
+                animator.switchAnimation(MatrixAnimator::Swim, direction, 86);
+            }
+            else if(environment==LVL_PhysEnv::Env_Quicksand)
+            {
+                animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+            }
             else
-                animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
+            {
+                if(physBody->GetLinearVelocity().y<0)
+                    animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+                else
+                    animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
+            }
         }
         else
         {

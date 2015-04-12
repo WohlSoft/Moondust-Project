@@ -107,7 +107,10 @@ void MatrixAnimator::nextFrame()
     {
         curFrameI=0;
         if(once)
+        {
+            once=false;
             switchAnimation(backup_sequance, direction, framespeed);
+        }
     }
     buildRect();
 }
@@ -191,6 +194,12 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 
 void MatrixAnimator::playOnce(MatrixAninates aniName, int _direction, int speed)
 {
+    if(once)
+    {
+        if(current_sequance==aniName)
+            return;
+    }
+
     if(_direction<0)
     {//left
         if(!s_bank_left.contains(aniName)) return;
@@ -212,6 +221,15 @@ void MatrixAnimator::playOnce(MatrixAninates aniName, int _direction, int speed)
 
 void MatrixAnimator::switchAnimation(MatrixAninates aniName, int _direction, int speed)
 {
+    if(once)
+    {
+        if(backup_sequance==aniName)
+        {
+            setFrameSpeed(speed);
+            return;
+        }
+    }
+    else
     if((current_sequance==aniName)&&(direction==_direction))
     {
         setFrameSpeed(speed);
