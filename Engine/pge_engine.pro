@@ -167,7 +167,8 @@ SOURCES += \
     common_features/event_queue.cpp \
     common_features/matrix_animator.cpp \
     scenes/level/lvl_backgrnd.cpp \
-    scenes/level/lvl_camera.cpp
+    scenes/level/lvl_camera.cpp \
+    common_features/player_calibration.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -239,7 +240,8 @@ HEADERS  += \
     common_features/event_queue.h \
     common_features/matrix_animator.h \
     scenes/level/lvl_backgrnd.h \
-    scenes/level/lvl_camera.h
+    scenes/level/lvl_camera.h \
+    common_features/player_calibration.h
 
 FORMS    += \
     data_configs/select_config.ui
