@@ -701,6 +701,14 @@ void LVL_Player::update(float ticks)
 void LVL_Player::refreshAnimation()
 {
     /**********************************Animation switcher**********************************/
+        if(climbing)
+        {
+            if((physBody->GetLinearVelocity().y<0.0)||(physBody->GetLinearVelocity().x!=0.0))
+                animator.switchAnimation(MatrixAnimator::Climbing, direction, 128);
+            else
+                animator.switchAnimation(MatrixAnimator::Climbing, direction, -1);
+        }
+        else
         if(!onGround)
         {
             if(environment==LVL_PhysEnv::Env_Water)
