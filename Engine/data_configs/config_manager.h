@@ -299,12 +299,14 @@ public:
 
 
     /********Playable characters*******/
+    static long getLvlPlayerTexture(long playerID, int stateID);
+    static void resetPlayableTexuresState(); //!< Sets all 'isInit' state to false for all textures for level textutes
+    static void resetPlayableTexuresStateWld(); //!< Same but for world map player images
+    static bool loadPlayableCharacters();
+    /*****************************/
     static QHash<int, obj_player > playable_characters;
     static CustomDirManager Dir_PlayerWld;
     static CustomDirManager Dir_PlayerLvl;
-    static QList<SimpleAnimator > Animator_PlayersWld;
-    static QList<MatrixAnimator > Animator_PlayersLvl;
-    static bool loadPlayableCharacters();
     /********Playable characters*******/
 
 
@@ -337,7 +339,6 @@ public:
 
     static QString PathWorldMusic();
     static QString PathWorldSound();
-
 
 private:
     static void checkForImage(QString &imgPath, QString root);
