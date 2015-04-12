@@ -1,9 +1,29 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "matrix_animator.h"
 
 MatrixAnimator::MatrixAnimator()
 {
     framespeed=128;
     delay_wait=framespeed;
+    direction=1;
+    once=false;
     buildRect();
 }
 
@@ -15,6 +35,8 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     height_f = 1.0f/height;
     framespeed=128;
     delay_wait=framespeed;
+    direction=1;
+    once=false;
     buildRect();
 }
 
@@ -28,6 +50,11 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     delay_wait=a.delay_wait;
     curFrameI=a.curFrameI;
     sequence=a.sequence;
+    direction=a.direction;
+    once=a.once;
+    backup_sequance=a.backup_sequance;
+    s_bank_left = a.s_bank_left;
+    s_bank_right = a.s_bank_right;
     buildRect();
 }
 
@@ -103,5 +130,20 @@ QRectF MatrixAnimator::curFrame()
         return QRectF(0.0, 0.0, 1.0, 1.0);
     }
     return curRect;
+}
+
+void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
+{
+    Q_UNUSED(calibration);
+}
+
+void MatrixAnimator::playOnce(QString aniName, int direction, int speed)
+{
+
+}
+
+void MatrixAnimator::switchAnimation(QString aniName, int direction, int speed)
+{
+
 }
 
