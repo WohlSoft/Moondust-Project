@@ -873,7 +873,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             if(npcID!=0)
             {
                 npcID+=1000;
-                if(file_format<18)
+                if(file_format<=64)
                 {
                     long xnpcID = npcID;
                     //Convert NPC-ID value from SMBX64 to SMBX1/2

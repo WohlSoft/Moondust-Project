@@ -141,19 +141,11 @@ void MatrixAnimator::buildRect()
 
 QRectF MatrixAnimator::curFrame()
 {
-    if(sequence.isEmpty())
-    {
-        return QRectF(0.0, 0.0, 1.0, 1.0);
-    }
     return curRect;
 }
 
 QPointF MatrixAnimator::curOffset()
 {
-    if(sequence.isEmpty())
-    {
-        return QPointF(0.0, 0.0);
-    }
     return curOffsets;
 }
 

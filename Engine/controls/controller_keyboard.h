@@ -26,7 +26,7 @@ class KeyboardController : public Controller
 {
 public:
     KeyboardController();
-    void update(SDL_Event &event);
+    void update();
 
 };
 
