@@ -66,3 +66,5 @@ editor_*.qm
 /_paths.sh
 
 
+#Notepad++ Backup files
+*.bak
