@@ -72,7 +72,11 @@ void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
 void MatrixAnimator::setFrameSpeed(int speed)
 {
     if(framespeed==speed) return;
-    if(speed<=0) framespeed=-1;//Stop animation if <=0
+    if(speed<=0)
+    {
+        framespeed=-1;//Stop animation if <=0
+        return;
+    }
     delay_wait = ((framespeed-speed)<1) ? delay_wait : delay_wait-(framespeed-speed);
     framespeed=abs(speed);
 }
