@@ -56,14 +56,15 @@ CONFIG += thread
 
 CONFIG += static
 
-DEPENDPATH += "../_Libs/oolua/project"
-DEPENDPATH += "../_Libs/Box2D/project"
+DEPENDPATH += "$$PWD/../_Libs/oolua/project"
+DEPENDPATH += "$$PWD/../_Libs/Box2D/project"
+
+INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
+INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
+LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
+LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 
 DEFINES += PGE_ENGINE
-
-INCLUDEPATH += "../_Libs/" "../_common"
-
-LIBS += -L../_Libs/_builds/commonlibs
 
 android: {
     LIBS += -L../_Libs/_builds/android/lib
@@ -73,17 +74,18 @@ android: {
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
-    LIBS += -loolua -lbox2d -lSDL2 -lSDL2main libversion
+    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
+    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2 -framework SDL2_mixer
     LIBS += -loolua -lbox2d -lSDL2
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
     INCLUDEPATH += ../_Libs/_builds/linux/include
-    LIBS += -loolua -lbox2d -lSDL2 -lglut -lGLU
+    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
 RC_FILE = _resources/engine.rc
@@ -168,7 +170,8 @@ SOURCES += \
     common_features/matrix_animator.cpp \
     scenes/level/lvl_backgrnd.cpp \
     scenes/level/lvl_camera.cpp \
-    common_features/player_calibration.cpp
+    common_features/player_calibration.cpp \
+    audio/SdlMusPlayer.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -241,7 +244,8 @@ HEADERS  += \
     common_features/matrix_animator.h \
     scenes/level/lvl_backgrnd.h \
     scenes/level/lvl_camera.h \
-    common_features/player_calibration.h
+    common_features/player_calibration.h \
+    audio/SdlMusPlayer.h
 
 FORMS    += \
     data_configs/select_config.ui
