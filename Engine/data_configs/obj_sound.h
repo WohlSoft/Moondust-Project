@@ -12,6 +12,7 @@ struct obj_sound
     QString name;
     QString file;
     QString absPath;
+    int channel;
     bool hidden;
 };
 
