@@ -224,6 +224,19 @@ if(!fileToOpen.isEmpty())
         _game_state.LevelFile = fileToOpen;
         goto PlayLevel;
     }
+    else
+    if(
+       (fileToOpen.endsWith(".wld", Qt::CaseInsensitive))
+            ||
+       (fileToOpen.endsWith(".wldx", Qt::CaseInsensitive)))
+    {
+        episode.character=1;
+        episode.savefile="save1.savx";
+        episode.worldfile=fileToOpen;
+        _game_state.isEpisode = true;
+        _game_state.WorldFile = fileToOpen;
+        goto PlayWorldMap;
+    }
 }
 
 if(interprocessing) goto PlayLevel;
@@ -303,9 +316,7 @@ PlayWorldMap:
     if(episode.worldfile.isEmpty())
     {
         sceneResult = false;
-        PGE_MsgBox msgBox(NULL, QString("No opened files"),
-                          PGE_MsgBox::msg_warn);
-        msgBox.exec();
+        PGE_MsgBox::warn("No opened files");
     }
     else
     {
@@ -314,11 +325,9 @@ PlayWorldMap:
         if(!sceneResult)
         {
             SDL_Delay(50);
-            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start world map\n\n"
+            PGE_MsgBox::error(QString("ERROR:\nFail to start world map\n\n"
                                             "%1")
-                              .arg(wScene->getLastError()),
-                              PGE_MsgBox::msg_error);
-            msgBox.exec();
+                              .arg(wScene->getLastError()));
         }
     }
 
@@ -330,6 +339,19 @@ PlayWorldMap:
 
     if(sceneResult)
         ExitCode = wScene->exec();
+
+    if(debugMode)
+    {
+        if(ExitCode==WldExit::EXIT_beginLevel)
+        {
+            PGE_MsgBox::warn(QString("Start level\n%1")
+                          .arg(_game_state.LevelFile));
+            delete wScene;
+            goto PlayWorldMap;
+        }
+        else
+            goto ExitFromApplication;
+    }
 
     switch(ExitCode)
     {
@@ -466,10 +488,8 @@ PlayLevel:
                    {
                        if(!fileToOpen.isEmpty())
                        {
-                           PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
-                                         .arg(fileToOpen).arg(entranceID),
-                                         PGE_MsgBox::msg_warn);
-                           msgBox.exec();
+                           PGE_MsgBox::warn(QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                                         .arg(fileToOpen).arg(entranceID));
                        }
                        playAgain = false;
                    }
