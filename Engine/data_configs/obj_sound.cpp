@@ -12,6 +12,7 @@ obj_sound::obj_sound()
 {
     id=0;
     hidden=false;
+    channel=-1;
 }
 
 bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
@@ -21,6 +22,8 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     obj_sound sound;
 
     unsigned long sound_total=0;
+    int cur_channel=0;
+    bool reserveChannel=false;
 
     QString sound_ini = iniFile;
     if(!QFile::exists(sound_ini))
@@ -86,6 +89,13 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipSoundFile;
             }
+
+            reserveChannel = soundset.value("single-channel", "0").toBool();
+            if(reserveChannel)
+                sound.channel = cur_channel++;
+            else
+                if(isCustom && main_sound.contains(i))
+                    sound.channel = main_sound[i].channel;
 
             sound.id = i;
             main_sound[i] = sound;

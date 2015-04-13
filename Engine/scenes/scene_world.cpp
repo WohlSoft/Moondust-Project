@@ -18,6 +18,7 @@
 
 #include "scene_world.h"
 #include <audio/SdlMusPlayer.h>
+#include <audio/pge_audio.h>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 #include <fontman/font_manager.h>
@@ -1026,6 +1027,7 @@ int WorldScene::exec()
                               {
                                   gameState->game_state.worldPosX=posX;
                                   gameState->game_state.worldPosY=posY;
+                                  PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
                                   stopMusic(true, 300);
                                   setExiting(0, WldExit::EXIT_beginLevel);
                               }
@@ -1048,6 +1050,7 @@ int WorldScene::exec()
                                   wld_events.events.push_back(event3);
 
                                   this->lock_controls=true;
+                                  PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
                                   this->setFade(25, 1.0f, 0.08);
                               }
                           }
