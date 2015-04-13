@@ -171,7 +171,14 @@ SOURCES += \
     scenes/level/lvl_backgrnd.cpp \
     scenes/level/lvl_camera.cpp \
     common_features/player_calibration.cpp \
-    audio/SdlMusPlayer.cpp
+    audio/SdlMusPlayer.cpp \
+    data_configs/config_engine.cpp \
+    data_configs/setup_wld_scene.cpp \
+    data_configs/setup_load_screen.cpp \
+    data_configs/setup_title_screen.cpp \
+    data_configs/obj_music.cpp \
+    data_configs/obj_sound.cpp \
+    audio/pge_audio.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -245,7 +252,14 @@ HEADERS  += \
     scenes/level/lvl_backgrnd.h \
     scenes/level/lvl_camera.h \
     common_features/player_calibration.h \
-    audio/SdlMusPlayer.h
+    audio/SdlMusPlayer.h \
+    data_configs/setup_wld_scene.h \
+    data_configs/setup_load_screen.h \
+    data_configs/setup_title_screen.h \
+    data_configs/obj_music.h \
+    data_configs/obj_sound.h \
+    audio/pge_audio.h \
+    data_configs/obj_sound_roles.h
 
 FORMS    += \
     data_configs/select_config.ui

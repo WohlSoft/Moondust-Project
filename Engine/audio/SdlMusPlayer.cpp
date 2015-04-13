@@ -3,22 +3,8 @@
 #include "SdlMusPlayer.h"
 #include <gui/pge_msgbox.h>
 
-/***********************************PGE_SDL_Manager********************************************/
-bool PGE_SDL_Manager::isInit=false;
-
-void PGE_SDL_Manager::initSDL()
-{
-	if(!isInit)
-	{
-		isInit=true;
-		PGE_MusPlayer::setSampleRate(44100);
-		PGE_MusPlayer::MUS_changeVolume(80);
-	}
-}
-
-
-
 /***********************************PGE_MusPlayer********************************************/
+bool PGE_MusPlayer::isLoaded=false;
 Mix_Music *PGE_MusPlayer::play_mus = NULL;
 QString PGE_MusPlayer::currentTrack="";
 int PGE_MusPlayer::volume=100;
@@ -29,9 +15,42 @@ Uint64 PGE_MusPlayer::sCount = 0;
 Uint64 PGE_MusPlayer::musSCount = 0;
 SDL_mutex* PGE_MusPlayer::sampleCountMutex = NULL;
 
+
+
+
+int PGE_MusPlayer::initAudio(int sampleRate, int allocateChannels, int bufferSize)
+{
+    int ret=0;
+    sRate=sampleRate;
+    if(isLoaded) Mix_CloseAudio();
+    ret = Mix_OpenAudio(sRate, AUDIO_S16, 2, bufferSize);
+    if(ret==-1) return ret;
+    Mix_AllocateChannels(allocateChannels);
+
+    // Reset the audio sample count and set the post mix callback
+    if (sampleCountMutex == NULL)
+    {
+        sampleCountMutex = SDL_CreateMutex();
+    }
+    // Reset music sample count
+    if (SDL_LockMutex(sampleCountMutex) == 0)
+    {
+        sCount = 0;
+        musSCount = 0;
+        Mix_SetPostMix(postMixCallback, NULL);
+        SDL_UnlockMutex(sampleCountMutex);
+    }
+    isLoaded = true;
+    return ret;
+}
+
+
+
+
 void PGE_MusPlayer::MUS_playMusic()
 {
-	if(!PGE_SDL_Manager::isInit) return;
+    if(!isLoaded) return;
+
 	if(play_mus)
 	{
 		if (Mix_PlayingMusic() == 0)
@@ -59,8 +78,7 @@ void PGE_MusPlayer::MUS_playMusic()
 
 void  PGE_MusPlayer::MUS_playMusicFadeIn(int ms)
 {
-	if(!PGE_SDL_Manager::isInit) return;
-
+    if(!isLoaded) return;
 	if(play_mus)
     {
 		if(Mix_PausedMusic()==0)
@@ -90,19 +108,19 @@ void  PGE_MusPlayer::MUS_playMusicFadeIn(int ms)
 
 void PGE_MusPlayer::MUS_pauseMusic()
 {
-	if(!PGE_SDL_Manager::isInit) return;
+    if(!isLoaded) return;
     Mix_PauseMusic();
 }
 
 void PGE_MusPlayer::MUS_stopMusic()
 {
-	if(!PGE_SDL_Manager::isInit) return;
+    if(!isLoaded) return;
     Mix_HaltMusic();
 }
 
 void PGE_MusPlayer::MUS_stopMusicFadeOut(int ms)
 {
-	if(!PGE_SDL_Manager::isInit) return;
+    if(!isLoaded) return;
 	if(Mix_FadingMusic()!=MIX_FADING_OUT)
 		Mix_FadeOutMusic(ms);
 }
@@ -110,43 +128,25 @@ void PGE_MusPlayer::MUS_stopMusicFadeOut(int ms)
 
 void PGE_MusPlayer::MUS_changeVolume(int vlm)
 {
+    if(!isLoaded) return;
     volume = vlm;
     Mix_VolumeMusic(volume);
 }
 
 bool PGE_MusPlayer::MUS_IsPlaying()
 {
+    if(!isLoaded) return false;
     return (Mix_PlayingMusic()==1);
 }
 bool PGE_MusPlayer::MUS_IsPaused()
 {
+    if(!isLoaded) return false;
     return (Mix_PausedMusic()==1);
 }
 bool PGE_MusPlayer::MUS_IsFading()
 {
+    if(!isLoaded) return false;
     return (Mix_FadingMusic()==1);
-}
-
-void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
-{
-    sRate=sampleRate;
-    Mix_CloseAudio();
-    Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096);
-	Mix_AllocateChannels(32);
-
-	// Reset the audio sample count and set the post mix callback
-	if (sampleCountMutex == NULL)
-	{
-		sampleCountMutex = SDL_CreateMutex();
-	}
-	// Reset music sample count
-	if (SDL_LockMutex(sampleCountMutex) == 0)
-	{
-		sCount = 0;
-		musSCount = 0;
-		Mix_SetPostMix(postMixCallback, NULL);
-		SDL_UnlockMutex(sampleCountMutex);
-	}
 }
 
 int PGE_MusPlayer::sampleRate()
@@ -162,6 +162,8 @@ int PGE_MusPlayer::currentVolume()
 
 void PGE_MusPlayer::MUS_openFile(QString musFile)
 {
+    if(!isLoaded) return;
+
     if(currentTrack==musFile)
 	{
 		if(Mix_PlayingMusic()==1)
@@ -197,6 +199,8 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
 
 void PGE_MusPlayer::postMixCallback(void *udata, Uint8 *stream, int len)
 {
+    if(!isLoaded) return;
+
     Q_UNUSED(udata);
     Q_UNUSED(stream);
 	if (SDL_LockMutex(sampleCountMutex) == 0)
@@ -215,6 +219,7 @@ void PGE_MusPlayer::postMixCallback(void *udata, Uint8 *stream, int len)
 
 Uint64 PGE_MusPlayer::sampleCount()
 {
+    if(!isLoaded) return 0;
     Uint64 ret = 0;
 
 	// Make sure we don't have a race condition with the callback
@@ -229,6 +234,7 @@ Uint64 PGE_MusPlayer::sampleCount()
 
 Uint64 PGE_MusPlayer::MUS_sampleCount()
 {
+    if(!isLoaded) return 0;
     Uint64 ret = 0;
 
 	// Make sure we don't have a race condition with the callback
