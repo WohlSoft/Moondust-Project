@@ -130,6 +130,25 @@ void MainWindow::on_action_doSafeTest_triggered()
 
         QProcess::startDetached(command, args);
     }
+    else
+    if(activeChildWindow()==3)
+    {
+        if(activeWldEditWin()->isUntitled)
+        {
+            QMessageBox::warning(this, tr("Save file first"),
+            tr("To run testing of saved file, please save them into disk first!\n"
+               "You can run testing without saving of file if you will use \"Run testing\" menu item."),
+            QMessageBox::Ok);
+            return;
+        }
+
+        QStringList args;
+        args << "--debug";
+        args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
+        args << activeWldEditWin()->curFile;
+
+        QProcess::startDetached(command, args);
+    }
 }
 
 

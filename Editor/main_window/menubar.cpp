@@ -80,7 +80,12 @@ void MainWindow::updateMenus(bool force)
     ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
-    ui->menuTest->setEnabled( (WinType==1) );
+    ui->menuTest->setEnabled( (WinType==1)||(WinType==3) );
+    ui->action_doTest->setEnabled( (WinType==1) );
+    ui->action_doSafeTest->setEnabled( (WinType==1) || (WinType==3) );
+    #ifdef Q_OS_WIN
+    ui->actionRunTestSMBX->setEnabled( (WinType==1) );
+    #endif
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
