@@ -2,7 +2,7 @@
 #define PACKET_H
 
 #include <QObject>
-#include <QString>
+#include <QByteArray>
 
 class Packet : public QObject
 {
@@ -12,8 +12,11 @@ public:
 
     virtual void executePacket();
 
-    virtual void unserializePacket();
-    virtual QString serializePacket();
+    virtual void unserializePacket(QByteArray* data);
+    virtual QByteArray serializePacket();
+
+    virtual bool isClientPacket(){ return true; }
+    virtual bool isServerPacket(){ return true; }
 
 
 signals:

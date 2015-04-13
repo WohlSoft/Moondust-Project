@@ -9,7 +9,7 @@ Packet::Packet(QObject *parent) :
 void Packet::executePacket()
 {}
 
-QString Packet::serializePacket()
+QByteArray Packet::serializePacket()
 {
     return "";
 }
