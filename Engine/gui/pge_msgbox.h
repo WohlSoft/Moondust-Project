@@ -36,6 +36,7 @@ public:
     enum msgType
     {
         msg_info=0,
+        msg_info_light,
         msg_warn,
         msg_error,
         msg_fatal
@@ -50,6 +51,15 @@ public:
     void exec();
 
     void buildBox(bool centered=false);
+
+    static void info(QString msg);
+    //static void info(std::string msg);
+    static void warn(QString msg);
+    //static void warn(std::string msg);
+    static void error(QString msg);
+    //static void error(std::string msg);
+    static void fatal(QString msg);
+    //static void fatal(std::string msg);
 
 private:
     void construct(QString msg="Message box is works!",
