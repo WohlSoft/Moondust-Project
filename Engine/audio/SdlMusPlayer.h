@@ -11,18 +11,11 @@
 #include <QHash>
 #include <QString>
 
-
-class PGE_SDL_Manager
-{
-public:
-	static bool isInit;
-	static void initSDL();
-};
-
-
 class PGE_MusPlayer
 {
 public:
+    static int initAudio(int sampleRate=44100, int allocateChannels=32, int bufferSize=4096);
+
     static QString currentTrack;
     static void MUS_playMusic();
 	static void MUS_playMusicFadeIn(int ms);
@@ -32,7 +25,7 @@ public:
 
     static void MUS_changeVolume(int vlm);
     static void MUS_openFile(QString musFile);
-    static void setSampleRate(int sampleRate);
+
     static int sampleRate();
     static int currentVolume();
 
@@ -43,6 +36,7 @@ public:
     static Uint64 sampleCount();
     static Uint64 MUS_sampleCount();
 private:
+    static bool isLoaded;
     static Mix_Music *play_mus;
     static int volume;
     static int sRate;

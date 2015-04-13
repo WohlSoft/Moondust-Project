@@ -17,6 +17,7 @@
  */
 
 #include "scene_world.h"
+#include <audio/SdlMusPlayer.h>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 #include <fontman/font_manager.h>
@@ -413,6 +414,7 @@ WorldScene::WorldScene()
 
 WorldScene::~WorldScene()
 {
+    PGE_MusPlayer::MUS_stopMusic();
     wld_events.abort();
     worldMap.clean();
     wldItems.clear();
@@ -528,7 +530,7 @@ bool WorldScene::init()
 
     if(doExit) return true;
 
-    isInit=true;
+
     for(int i=0; i<data.tiles.size(); i++)
     {
         WldTileItem path(data.tiles[i]);
@@ -581,6 +583,10 @@ bool WorldScene::init()
 
     updateAvailablePaths();
     updateCenter();
+
+    if(gameState)
+        playMusic(gameState->game_state.musicID, true, 200);
+    isInit=true;
 
     return true;
 }
@@ -749,6 +755,19 @@ void WorldScene::updateCenter()
     nodes=worldMap.query(posX+worldMap.gridSize_h, posY+worldMap.gridSize_h);
     foreach (WorldNode* x, nodes)
     {
+        if(x->type==WorldNode::musicbox)
+        {
+            WldMusicBoxItem *y = dynamic_cast<WldMusicBoxItem*>(x);
+            if(y)
+            {
+                if(isInit)
+                    playMusic(y->data.id);
+                else
+                if(gameState)
+                    gameState->game_state.musicID = y->data.id;
+            }
+        }
+
         if(x->type==WorldNode::level)
         {
             WldLevelItem *y = dynamic_cast<WldLevelItem*>(x);
@@ -795,11 +814,6 @@ void WorldScene::updateCenter()
             {
                 levelTitle = "!!!FAIL!!!";
             }
-        }
-
-        if(x->type==WorldNode::musicbox)
-        {
-            //Switch world music here!
         }
     }
 }
@@ -1012,6 +1026,7 @@ int WorldScene::exec()
                               {
                                   gameState->game_state.worldPosX=posX;
                                   gameState->game_state.worldPosY=posY;
+                                  stopMusic(true, 300);
                                   setExiting(0, WldExit::EXIT_beginLevel);
                               }
                               else if(jumpTo)
@@ -1158,3 +1173,28 @@ void WorldScene::jump()
     updateAvailablePaths();
     updateCenter();
 }
+
+
+
+void WorldScene::stopMusic(bool fade, int fadeLen)
+{
+    if(fade)
+        PGE_MusPlayer::MUS_stopMusicFadeOut(fadeLen);
+    else
+        PGE_MusPlayer::MUS_stopMusic();
+}
+
+void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
+{
+    QString musPath = ConfigManager::getWldMusic(musicID);
+    if(musPath.isEmpty()) return;
+
+    PGE_MusPlayer::MUS_openFile(musPath);
+    if(fade)
+        PGE_MusPlayer::MUS_playMusicFadeIn(fadeLen);
+    else
+        PGE_MusPlayer::MUS_playMusic();
+    if(gameState)
+        gameState->game_state.musicID = musicID;
+}
+

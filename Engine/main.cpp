@@ -40,6 +40,8 @@
 #include "graphics/gl_renderer.h"
 #undef main
 
+#include <audio/SdlMusPlayer.h>
+
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/smbx64.h>
 #include "fontman/font_manager.h"
@@ -196,6 +198,15 @@ int main(int argc, char *argv[])
 
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+
+    if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
+    {
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to load audio sub-system!\n%1")
+                .arg( Mix_GetError() ), QMessageBox::Ok);
+        exit(1);
+    }
+    PGE_MusPlayer::MUS_changeVolume(100);
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
