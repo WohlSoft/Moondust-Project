@@ -20,6 +20,7 @@
 #include "../../data_configs/config_manager.h"
 
 #include "lvl_scene_ptr.h"
+#include <audio/pge_audio.h>
 
 LVL_Block::LVL_Block()
 {
@@ -494,8 +495,11 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     data.invisible=false;
     bool doFade=false;
 
+    PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+
     if((setup->destroyable)&&(data.npc_id==0))
     {
+        PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         destroyed=true;
         return;
     }
@@ -503,6 +507,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(data.npc_id<0)
     {
         //Coin!
+        PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin);
         data.npc_id++;
         doFade=true;
         if((!setup->bounce)&&(!setup->switch_Button))
@@ -514,7 +519,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     else
     if(data.npc_id>0)
     {
-        //Coin!
+        //NPC!
+        PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
         data.npc_id=0;
         doFade=true;
         if((!setup->bounce)&&(!setup->switch_Button))
@@ -525,6 +531,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(setup->switch_Button)
     {
+        PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
         LvlSceneP::s->toggleSwitch(setup->switch_ID);
     }
 
