@@ -14,10 +14,12 @@ CONFIG += staticlib
 CONFIG += c++11
 
 SOURCES += \
-    packet.cpp \
     pgeconnection.cpp \
     pgeclient.cpp \
-    pgeserver.cpp
+    pgeserver.cpp \
+    pgeserver_p.cpp \
+    packet/packet.cpp \
+    packet/predefined/packethandshake.cpp
 
 HEADERS += \
     packet.h \
@@ -25,7 +27,9 @@ HEADERS += \
     pgeconnection.h \
     pgeclient.h \
     pgeserver.h \
-    pgeconnecteduser.h
+    pgeconnecteduser.h \
+    packet/packet.h \
+    packet/predefined/packethandshake.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

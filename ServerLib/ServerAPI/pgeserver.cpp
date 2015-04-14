@@ -12,30 +12,6 @@ PGEServer::PGEServer(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets, Q
     init();
 }
 
-void PGEServer::init()
-{
-    m_server.moveToThread(this);
-    m_server.listen(QHostAddress::Any, PGENetworkPort);
-    connect(&m_server, SIGNAL(newConnection()), this, SLOT(server_incomingConnection()));
-}
-
-void PGEServer::server_incomingConnection()
-{
-    QTcpSocket* incomingSocket = m_server.nextPendingConnection();
-    m_unindentifiedSockets << incomingSocket;
-
-    connect(incomingSocket, SIGNAL(readyRead()), this, SLOT(socket_receivePacket()));
-}
-
-void PGEServer::socket_receivePacket()
-{
-    //Here to check:
-    // 1. Incoming handshake packet for indetifiy
-    // 2. Normal packets of already connected users
-
-    // Here to create PGEConnectedUser
-}
-
 
 void PGEServer::dispatchPacket(Packet *packet)
 {
@@ -63,7 +39,7 @@ void PGEServer::dispatchPacketToUser(PGEConnectedUser *user, Packet *packet)
     //Now write the packet stream
     QDataStream packetData(user->socket);
     //First write the packet-ID
-    packetData.writeBytes(reinterpret_cast<const char*>(&packetType), sizeof(PGEPackets));
+    packetData.writeBytes(reinterpret_cast<const char*>(&packetType), sizeof(decltype(packetType)));
 
     //Now write the actual packet data
     QByteArray serializePacket = packet->serializePacket();
@@ -71,7 +47,7 @@ void PGEServer::dispatchPacketToUser(PGEConnectedUser *user, Packet *packet)
     //First write the length of the packet
     int sizeOfData = serializePacket.length();
     packetData.writeBytes(reinterpret_cast<const char*>(&sizeOfData), sizeof(decltype(sizeOfData)));
-    //The write the acutal data
+    //Then write the acutal data
     packetData.writeBytes(serializePacket.data(), serializePacket.length());
 }
 

@@ -1,8 +1,8 @@
 #ifndef PGESERVER_H
 #define PGESERVER_H
 
-#include "pgeconnection.h"
-#include "pgeconnecteduser.h"
+#include <pgeconnection.h>
+#include <pgeconnecteduser.h>
 
 class PGEServer : public PGEConnection
 {
@@ -18,11 +18,16 @@ public slots:
     virtual void dispatchPacket(Packet * packet) Q_DECL_OVERRIDE Q_DECL_FINAL;
     void dispatchPacketToUser(PGEConnectedUser* user, Packet * packet);
 
+signals:
+    void userConnected(PGEConnectedUser* user);
+    void userDisconnected(PGEConnectedUser* user);
+    void receivedData();
+
 private slots:
     void server_incomingConnection();
 
-    void socket_disconnect();
     void socket_receivePacket();
+    void socket_disconnect();
 
 private:
     void init();

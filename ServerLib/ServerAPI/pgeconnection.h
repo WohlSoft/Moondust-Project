@@ -2,9 +2,11 @@
 #define PGESOCKET_H
 
 
+#include <pgesocketdefines.h>
+#include <packet/packet.h>
+#include <packet/predefined/packethandshake.h>
+
 #include <QObject>
-#include "pgesocketdefines.h"
-#include "packet.h"
 #include <QMap>
 #include <QThread>
 
@@ -44,6 +46,7 @@ public slots:
 
 protected:
     QList<QSharedPointer<Packet> > m_packets;
+    QMap<PGEPackets, const QMetaObject*> m_registeredPackets;
 
     PGEPackets getPacketTypeByMetaObject(const QMetaObject *packetObject);
 
@@ -51,7 +54,7 @@ protected:
 private:
     void init();
 
-    QMap<PGEPackets, QMetaObject*> m_registeredPackets;
+
 };
 
 #endif // PGESOCKET_H

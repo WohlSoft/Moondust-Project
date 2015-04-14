@@ -9,7 +9,13 @@ Packet::Packet(QObject *parent) :
 void Packet::executePacket()
 {}
 
+
 QByteArray Packet::serializePacket()
 {
     return "";
+}
+
+void Packet::unserializePacket(const QByteArray &data)
+{
+    Q_UNUSED(data);
 }
