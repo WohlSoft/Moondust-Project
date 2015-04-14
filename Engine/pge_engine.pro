@@ -8,7 +8,7 @@ QT += core gui opengl network
 #QT += widgets
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+!macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 android:{
 DESTDIR = $$PWD/../bin/_android
@@ -77,6 +77,8 @@ win32: {
     LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
+    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2 -framework SDL2_mixer
