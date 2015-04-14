@@ -122,6 +122,9 @@ class LVL_Player :
         MatrixAnimator animator;
         int frameW;
         int frameH;
+        bool locked();
+        void setLocked(bool lock);
+
 private:
         bool isLocked;
         bool isInited;

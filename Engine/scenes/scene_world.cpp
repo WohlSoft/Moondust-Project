@@ -409,6 +409,7 @@ WorldScene::WorldScene()
     allow_up=false;
     allow_right=false;
     allow_down=false;
+    _playStopSnd=false;
 
     data = FileFormats::dummyWldDataArray();
 }
@@ -636,10 +637,13 @@ void WorldScene::update()
             }
             if(dir!=0)
             {
+                _playStopSnd=false;
                 levelTitle.clear();
                 gameState->LevelFile.clear();
                 jumpTo=false;
             }
+
+            if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
         }
         else
         {
@@ -668,19 +672,19 @@ void WorldScene::update()
         {
             case 1://left
                 posX-=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 2://right
                 posX+=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 3://up
                 posY-=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 4://down
                 posY+=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
         }
 

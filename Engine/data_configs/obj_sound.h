@@ -4,6 +4,16 @@
 #include <QString>
 
 #include "obj_sound_roles.h"
+struct Mix_Chunk;
+
+struct obj_sound_index
+{
+    obj_sound_index();
+    Mix_Chunk *chunk;
+    int channel;
+    void play(); //!< play sound
+};
+
 
 struct obj_sound
 {
