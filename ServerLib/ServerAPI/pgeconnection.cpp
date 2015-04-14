@@ -4,19 +4,22 @@
 
 PGEConnection::PGEConnection(QObject *parent) :
     QThread(parent)
-{}
+{
+    init();
+}
 
 
 PGEConnection::PGEConnection(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets, QObject *parent) :
     QThread(parent)
 {
+    init();
     registerPackets(toRegisterPackets);
 }
 
 
 void PGEConnection::init()
 {
-    //Here the init code
+    m_registeredPackets[PGEPackets::PACKET_HANDSHAKE] = &PacketHandshake::staticMetaObject;
 }
 
 void PGEConnection::registerPackets(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets)
@@ -32,9 +35,12 @@ void PGEConnection::registerPacket(QMetaObject *packetMetaObject, PGEPackets pac
         qWarning() << "Tried to register base packet class!";
         return;
     }
-
     if(packetType == PGEPackets::PACKET_UNDEFINED){
         qWarning() << "Tried to register PACKET_UNDEFINED";
+        return;
+    }
+    if(packetType == PGEPackets::PACKET_HANDSHAKE){
+        qWarning() << "Tried to register PACKET_HANDSHAKE";
         return;
     }
 
@@ -55,7 +61,8 @@ void PGEConnection::execAllPacket()
 
 PGEPackets PGEConnection::getPacketTypeByMetaObject(const QMetaObject *packetObject)
 {
-    for(QMap<PGEPackets, QMetaObject *>::const_iterator it  = m_registeredPackets.begin(); it != m_registeredPackets.end(); ++it){
+    //I would rather use decltype(m_registeredPackets), but QtCreator says no: https://bugreports.qt.io/browse/QTCREATORBUG-13726
+    for(QMap<PGEPackets, const QMetaObject *>::const_iterator it  = m_registeredPackets.cbegin(); it != m_registeredPackets.cend(); ++it){
         if(it.value() == packetObject)
             return it.key();
     }

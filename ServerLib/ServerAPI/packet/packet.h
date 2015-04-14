@@ -12,7 +12,7 @@ public:
 
     virtual void executePacket();
 
-    virtual void unserializePacket(QByteArray* data);
+    virtual void unserializePacket(const QByteArray& data);
     virtual QByteArray serializePacket();
 
     virtual bool isClientPacket(){ return true; }

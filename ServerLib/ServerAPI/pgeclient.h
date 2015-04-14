@@ -1,7 +1,7 @@
 #ifndef PGECLIENT_H
 #define PGECLIENT_H
 
-#include "pgeconnection.h"
+#include <pgeconnection.h>
 
 class PGEClient : public PGEConnection
 {
