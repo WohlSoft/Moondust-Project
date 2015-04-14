@@ -4,9 +4,15 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <gui/pge_msgbox.h>
+#include <SDL2/SDL_mixer.h>
+#include <QVector>
+#include <common_features/logger.h>
+#include <QtDebug>
 
 QHash<int, obj_sound > ConfigManager::main_sound;
 QHash<obj_sound_role::roles, long > ConfigManager::main_sound_table;
+
+QVector<obj_sound_index > ConfigManager::main_sfx_index;
 
 obj_sound::obj_sound()
 {
@@ -14,6 +20,66 @@ obj_sound::obj_sound()
     hidden=false;
     channel=-1;
 }
+
+obj_sound_index::obj_sound_index()
+{
+    chunk=NULL;
+    channel=-1;
+}
+
+void obj_sound_index::play()
+{
+    if(chunk)
+        Mix_PlayChannel(channel, chunk, 0);
+    else
+        qDebug() << "obj_sound_index::play() Null chunk!";
+}
+
+void ConfigManager::buildSoundIndex()
+{
+    clearSoundIndex();
+
+    unsigned long max=0;
+    int reserve_chans=0;
+    //find maximal value
+    for(QHash<int, obj_sound >::iterator it=main_sound.begin(); it!=main_sound.end(); it++)
+    {
+        if((*it).id>max)
+            max=(*it).id;
+    }
+
+    //build array table
+    for(unsigned int i=1; i<=max;i++)
+    {
+        obj_sound_index sound;
+        if(main_sound.contains(i))
+        {
+            obj_sound snd = main_sound[i];
+            sound.chunk = Mix_LoadWAV(snd.absPath.toUtf8());
+            if(!sound.chunk)
+                qDebug() <<"Fail to load sound-"<<i<<":"<<Mix_GetError();
+            else
+                reserve_chans += (snd.channel>=0?1:0);
+            sound.channel = snd.channel;
+        }
+        main_sfx_index.push_back(sound);
+    }
+
+    qDebug() << "Reserved audio channels: "<< Mix_ReserveChannels(reserve_chans);
+    qDebug() << "SFX Index entries: " << main_sfx_index.size();
+}
+
+void ConfigManager::clearSoundIndex()
+{
+    Mix_ReserveChannels(0);
+    while(!main_sfx_index.isEmpty())
+    {
+        if(main_sfx_index.last().chunk)
+            Mix_FreeChunk(main_sfx_index.last().chunk);
+        main_sfx_index.pop_back();
+    }
+}
+
 
 bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
 {
@@ -96,6 +162,7 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
             else
                 if(isCustom && main_sound.contains(i))
                     sound.channel = main_sound[i].channel;
+                else sound.channel=-1;
 
             sound.id = i;
             main_sound[i] = sound;
@@ -196,7 +263,6 @@ bool ConfigManager::loadSoundRolesTable()
     return true;
 }
 
-
 QString ConfigManager::getSound(unsigned long sndID)
 {
     if(main_sound.contains(sndID))
@@ -212,3 +278,4 @@ long ConfigManager::getSoundByRole(obj_sound_role::roles role)
     else
         return 0;
 }
+

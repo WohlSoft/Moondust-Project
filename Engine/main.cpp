@@ -196,9 +196,15 @@ int main(int argc, char *argv[])
     ConfigManager::setConfigPath(configPath);
     if(!ConfigManager::loadBasics()) exit(1);
 
-    //Init Window
-    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
-
+    // Initalizing SDL
+    if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+    {
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to init SDL!\n%1")
+            .arg( SDL_GetError() ), QMessageBox::Ok);
+            //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
+        exit(1);
+    }
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
         QMessageBox::critical(NULL, "SDL Error",
@@ -208,18 +214,22 @@ int main(int argc, char *argv[])
     }
     PGE_MusPlayer::MUS_changeVolume(100);
 
+    ConfigManager::buildSoundIndex(); //Load all sound effects into memory
+
+
+    //Init Window
+    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) ){}
+
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
     //Init font manager
     FontManager::init();
-
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
-
-    SDL_Event event; //  Events of SDL
-    while ( SDL_PollEvent(&event) )
-    {}
 
     EpisodeState _game_state;
 
@@ -568,6 +578,7 @@ PlayLevel:
 }
 ExitFromApplication:
 
+    ConfigManager::unluadAll();
     if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();
     FontManager::quit();
