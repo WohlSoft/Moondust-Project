@@ -68,3 +68,5 @@ editor_*.qm
 
 #Notepad++ Backup files
 *.bak
+
+.qmake.stash
