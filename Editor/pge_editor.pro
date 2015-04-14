@@ -115,7 +115,7 @@ CONFIG += static
 CONFIG += thread
 
 QMAKE_CXXFLAGS += -static -static-libgcc
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+!macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
@@ -139,6 +139,8 @@ linux-g++||unix:!macx:!android: {
 }
 
 macx: {
+    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     LIBS += -F../_builds/macos/frameworks -framework SDL2
