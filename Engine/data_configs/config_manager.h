@@ -157,6 +157,9 @@ public:
 
     static QHash<int, obj_sound > main_sound;
     static QHash<obj_sound_role::roles, long > main_sound_table;
+    static void buildSoundIndex();
+    static void clearSoundIndex();
+    static QVector<obj_sound_index > main_sfx_index;
     /********Music and sounds*******/
 
 
@@ -164,6 +167,7 @@ public:
     //Load settings
     static bool loadBasics();
     static bool unloadLevelConfigs();
+    static void unluadAll();
 
 
     //Level config Data

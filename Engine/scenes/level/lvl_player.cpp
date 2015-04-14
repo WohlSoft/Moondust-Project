@@ -17,8 +17,10 @@
  */
 
 #include "lvl_player.h"
-#include "../../graphics/window.h"
-#include "../../data_configs/config_manager.h"
+
+#include <graphics/window.h>
+#include <data_configs/config_manager.h>
+#include <audio/pge_audio.h>
 
 #include "lvl_scene_ptr.h"
 
@@ -187,6 +189,7 @@ void LVL_Player::update(float ticks)
         isLive = false;
         physBody->SetActive(false);
         LvlSceneP::s->checkPlayers();
+        return;
     }
 
     if(climbing)
@@ -377,15 +380,27 @@ void LVL_Player::update(float ticks)
 
     if( keys.jump )
     {
+        if(!JumpPressed)
+        {
+            if(environment!=LVL_PhysEnv::Env_Water)
+                { if(onGround) PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
+            else
+                PGE_Audio::playSound(72);//temporary!
+        }
+
         if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
         {
             if(!JumpPressed)
             {
                 if(environment==LVL_PhysEnv::Env_Water)
+                {
                     animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                }
                 else
                 if(environment==LVL_PhysEnv::Env_Quicksand)
+                {
                     animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
+                }
 
                 JumpPressed=true;
                 jumpForce=20;
@@ -703,7 +718,7 @@ void LVL_Player::update(float ticks)
                         posY() - PGE_Window::Height/2 + posY_coefficient );
 }
 
-
+Uint32 slideTicks=0;
 void LVL_Player::refreshAnimation()
 {
     /**********************************Animation switcher**********************************/
@@ -740,6 +755,11 @@ void LVL_Player::refreshAnimation()
             if((physBody->GetLinearVelocity().x>0)!=(direction>0))
                 if(keys.right)
                 {
+                    if(SDL_GetTicks()-slideTicks>100)
+                    {
+                        PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
+                        slideTicks=SDL_GetTicks();
+                    }
                     animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
                     busy=true;
                 }
@@ -749,6 +769,11 @@ void LVL_Player::refreshAnimation()
                 if((physBody->GetLinearVelocity().x<0)!=(direction<0))
                     if(keys.left)
                     {
+                        if(SDL_GetTicks()-slideTicks>100)
+                        {
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
+                            slideTicks=SDL_GetTicks();
+                        }
                         animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
                         busy=true;
                     }
@@ -878,5 +903,17 @@ void LVL_Player::render(float camX, float camY)
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
+}
+
+bool LVL_Player::locked()
+{
+    return isLocked;
+}
+
+void LVL_Player::setLocked(bool lock)
+{
+    isLocked=lock;
+    if(physBody)
+        physBody->SetActive(!lock);
 }
 

@@ -240,6 +240,13 @@ bool ConfigManager::unloadLevelConfigs()
     return true;
 }
 
+void ConfigManager::unluadAll()
+{
+    unloadLevelConfigs();
+    clearSoundIndex();
+    playable_characters.clear();
+}
+
 
 
 void ConfigManager::checkForImage(QString &imgPath, QString root)

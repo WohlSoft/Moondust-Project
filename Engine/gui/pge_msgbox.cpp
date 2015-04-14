@@ -29,6 +29,7 @@
 #include <QFontMetrics>
 #include <QMessageBox>
 #include <common_features/app_path.h>
+#include <audio/pge_audio.h>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
@@ -168,6 +169,8 @@ void PGE_MsgBox::exec()
 
     while ( SDL_PollEvent(&event) ) {}
     updateControllers();
+
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
 
     setFade(20, 1.0f, 0.09f);
 

@@ -56,17 +56,6 @@ void PGE_Window::checkSDLError(int line)
 
 bool PGE_Window::init(QString WindowTitle)
 {
-    // Initalizing SDL
-
-    if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
-    {
-        QMessageBox::critical(NULL, "SDL Error",
-            QString("Unable to init SDL!\n%1")
-            .arg( SDL_GetError() ), QMessageBox::Ok);
-            //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
-        return false;
-    }
-
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
