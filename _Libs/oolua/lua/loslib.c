@@ -54,7 +54,7 @@
 #elif !defined(lua_tmpnam)
 
 #define LUA_TMPNAMBUFSIZE	L_tmpnam
-#define lua_tmpnam(b,e)		{ e = (mktemp(b) == NULL); }
+#define lua_tmpnam(b,e)		{ e = (tmpnam(b) == NULL); }
 
 #endif
 
