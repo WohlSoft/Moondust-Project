@@ -7,7 +7,8 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0
+!macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
