@@ -24,11 +24,18 @@
 #include "../common_features/simple_animator.h"
 #include "../common_features/matrix_animator.h"
 
+#include "setup_load_screen.h"
+#include "setup_wld_scene.h"
+#include "setup_title_screen.h"
+
 #include "obj_block.h"
 #include "obj_bgo.h"
 #include "obj_bg.h"
 #include "obj_player.h"
 #include "obj_effect.h"
+
+#include "obj_sound.h"
+#include "obj_music.h"
 
 #include <QMap>
 #include <QSettings>
@@ -53,103 +60,11 @@ struct DataFolders
     QString gcustom;
 };
 
-
-struct WorldMapData
-{
-    QString backgroundImg;
-    int viewport_x; //World map view port
-    int viewport_y;
-    int viewport_w;
-    int viewport_h;
-    enum titleAlign{
-        align_left=0,
-        align_center,
-        align_right
-    };
-
-    int title_x; //Title of level
-    int title_y;
-    int title_w; //max width of title
-    titleAlign title_align;
-
-    bool points_en;
-    int points_x;
-    int points_y;
-
-    bool health_en;
-    int health_x;
-    int health_y;
-
-    bool star_en;
-    int star_x;
-    int star_y;
-
-    bool coin_en;
-    int coin_x;
-    int coin_y;
-
-    bool portrait_en;
-    int portrait_x;
-    int portrait_y;
-};
-
-/**********Loading screen******************/
+/*****************Fonts********************/
 struct FontsSetup
 {
     bool double_pixled;
     QString fontname;
-};
-
-/******************************************/
-
-/**********Loading screen******************/
-struct LoadingScreenAdditionalImage
-{
-    QString imgFile;
-    bool animated;
-    int frames;
-    int x;
-    int y;
-};
-
-struct LoadingScreenSetup
-{
-    QString backgroundImg;
-    QColor backgroundColor;
-    int updateDelay;
-    QVector<LoadingScreenAdditionalImage > AdditionalImages;
-};
-/******************************************/
-
-
-/************Title screen******************/
-struct TitleScreenAdditionalImage
-{
-    enum align{
-        NO_ALIGN=0,
-        LEFT_ALIGN,
-        TOP_ALIGN,
-        RIGHT_ALIGN,
-        BOTTOM_ALIGN,
-        CENTER_ALIGN
-    };
-
-    QString imgFile;
-    bool animated;
-    int frames;
-    unsigned int framespeed;
-    align align_to;
-    int x;
-    int y;
-    bool center_x;
-    bool center_y;
-};
-
-struct TitleScreenSetup
-{
-    QString backgroundImg;
-    QColor backgroundColor;
-    QVector<TitleScreenAdditionalImage > AdditionalImages;
 };
 /******************************************/
 
@@ -176,23 +91,6 @@ struct MenuSetup
 };
 
 ////////////////////Common items///////////////////////////
-struct obj_music
-{
-    unsigned long id;
-    QString name;
-    QString file;
-};
-
-struct obj_sound
-{
-    unsigned long id;
-    QString name;
-    QString file;
-    bool hidden;
-};
-
-
-
 
 class ConfigManager
 {
@@ -228,28 +126,48 @@ public:
 
 
     //LoadingScreen
+    friend struct LoadingScreenSetup;
     static LoadingScreenSetup setup_LoadingScreen;
 
     //Title Screen
+    friend struct TitleScreenSetup;
     static TitleScreenSetup setup_TitleScreen;
 
     //World map data
-    static WorldMapData setup_WorldMap;
+    friend struct WorldMapSetup;
+    static WorldMapSetup setup_WorldMap;
 
+
+    /********Music and sounds*******/
+    static bool loadMusic(QString rootPath, QString iniFile, bool isCustom=false);
+    static QString getWldMusic(unsigned long musicID, QString customMusic="");
+    static QString getLvlMusic(unsigned long musicID, QString customMusic="");
+    static QString getSpecialMusic(unsigned long musicID);
 
     static unsigned long music_custom_id;
     static unsigned long music_w_custom_id;
-    static QList<obj_music > main_music_lvl;
-    static QList<obj_music > main_music_wld;
-    static QList<obj_music > main_music_spc;
+    static QHash<int, obj_music> main_music_lvl;
+    static QHash<int, obj_music> main_music_wld;
+    static QHash<int, obj_music> main_music_spc;
 
-    static QList<obj_sound > main_sound;
+    static bool loadSound(QString rootPath, QString iniFile, bool isCustom=false);
+    static QString getSound(unsigned long sndID);
+    static long getSoundByRole(obj_sound_role::roles role);
+    static bool loadSoundRolesTable();
+
+    static QHash<int, obj_sound > main_sound;
+    static QHash<obj_sound_role::roles, long > main_sound_table;
+    static void buildSoundIndex();
+    static void clearSoundIndex();
+    static QVector<obj_sound_index > main_sfx_index;
+    /********Music and sounds*******/
 
 
     static void setConfigPath(QString p);
     //Load settings
     static bool loadBasics();
     static bool unloadLevelConfigs();
+    static void unluadAll();
 
 
     //Level config Data
@@ -299,22 +217,20 @@ public:
 
 
     /********Playable characters*******/
+    static long getLvlPlayerTexture(long playerID, int stateID);
+    static void resetPlayableTexuresState();        //!< Sets all 'isInit' state to false for all textures for level textutes
+    static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
+    static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
+    /*****************************/
     static QHash<int, obj_player > playable_characters;
     static CustomDirManager Dir_PlayerWld;
     static CustomDirManager Dir_PlayerLvl;
-    static QList<SimpleAnimator > Animator_PlayersWld;
-    static QList<MatrixAnimator > Animator_PlayersLvl;
-    static bool loadPlayableCharacters();
     /********Playable characters*******/
-
-
 
     /***********Texture banks*************/
     static QList<PGE_Texture > level_textures;
     static QList<PGE_Texture > world_textures;
     /***********Texture banks*************/
-
-
 
     static void addError(QString bug, QtMsgType level=QtWarningMsg);
 
@@ -338,9 +254,9 @@ public:
     static QString PathWorldMusic();
     static QString PathWorldSound();
 
-
 private:
     static void checkForImage(QString &imgPath, QString root);
+
     //special paths
     static QString imgFile, imgFileM;
     static QString tmpstr;
@@ -362,7 +278,8 @@ private:
 
     static QString commonGPath;
 
-
+    static void refreshPaths();
+    static bool loadEngineSettings(); //!< Load engine.ini file
 };
 
 

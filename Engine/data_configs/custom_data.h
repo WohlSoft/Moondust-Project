@@ -34,7 +34,7 @@ public:
     /// \param name Target file name which need to found
     /// \return empty string if not exist
     ///
-    QString getCustomFile(QString name);
+    QString getCustomFile(QString name, bool *isDefault=0);
     void setCustomDirs(QString path, QString name, QString stuffPath);
 
 private:

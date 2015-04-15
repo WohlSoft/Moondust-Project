@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,13 @@
 #ifndef LVL_PLAYER_H
 #define LVL_PLAYER_H
 
-#include "../../graphics/lvl_camera.h"
+#include "lvl_camera.h"
 #include "lvl_warp.h"
 
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
 #include <data_configs/obj_player.h>
+#include <common_features/matrix_animator.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <QMap>
 
@@ -37,20 +38,27 @@ class LVL_Player :
         ~LVL_Player();
         void init();
         void initSize();
-        void update(float ticks=1.0f);
-
+        void update(float ticks);
+        void update();
         int playerID;
+
+        obj_player setup;
 
         QHash<int, obj_player_state > states;
         int stateID;
+        obj_player_state state_cur;
 
         QHash<int, obj_player_physics > physics;
         QHash<int, int > environments_map;
+
+        obj_player_physics physics_cur;
         int environment;
         int last_environment;
 
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
+
+        int direction;
 
         bool JumpPressed;
         bool onGround;
@@ -90,7 +98,7 @@ class LVL_Player :
         bool wasEntered;
         int warpsTouched;
 
-        float32 gscale_Backup;
+        float32 gscale_Backup; //!< BackUP of last gravity scale
 
         bool   isWarping;
         bool   warpDo;
@@ -111,6 +119,16 @@ class LVL_Player :
         void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         void render(float camX, float camY);
+        MatrixAnimator animator;
+        int frameW;
+        int frameH;
+        bool locked();
+        void setLocked(bool lock);
+
+private:
+        bool isLocked;
+        bool isInited;
+        void refreshAnimation();
 };
 
 #endif // LVL_PLAYER_H

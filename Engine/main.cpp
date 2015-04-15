@@ -40,6 +40,8 @@
 #include "graphics/gl_renderer.h"
 #undef main
 
+#include <audio/SdlMusPlayer.h>
+
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/smbx64.h>
 #include "fontman/font_manager.h"
@@ -194,21 +196,40 @@ int main(int argc, char *argv[])
     ConfigManager::setConfigPath(configPath);
     if(!ConfigManager::loadBasics()) exit(1);
 
+    // Initalizing SDL
+    if ( SDL_Init(SDL_INIT_EVERYTHING) < 0 )
+    {
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to init SDL!\n%1")
+            .arg( SDL_GetError() ), QMessageBox::Ok);
+            //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
+        exit(1);
+    }
+    if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
+    {
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to load audio sub-system!\n%1")
+                .arg( Mix_GetError() ), QMessageBox::Ok);
+        exit(1);
+    }
+    PGE_MusPlayer::MUS_changeVolume(100);
+
+    ConfigManager::buildSoundIndex(); //Load all sound effects into memory
+
+
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) ){}
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
     //Init font manager
     FontManager::init();
-
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
-
-    SDL_Event event; //  Events of SDL
-    while ( SDL_PollEvent(&event) )
-    {}
 
     EpisodeState _game_state;
 
@@ -223,6 +244,19 @@ if(!fileToOpen.isEmpty())
     {
         _game_state.LevelFile = fileToOpen;
         goto PlayLevel;
+    }
+    else
+    if(
+       (fileToOpen.endsWith(".wld", Qt::CaseInsensitive))
+            ||
+       (fileToOpen.endsWith(".wldx", Qt::CaseInsensitive)))
+    {
+        episode.character=1;
+        episode.savefile="save1.savx";
+        episode.worldfile=fileToOpen;
+        _game_state.isEpisode = true;
+        _game_state.WorldFile = fileToOpen;
+        goto PlayWorldMap;
     }
 }
 
@@ -303,9 +337,7 @@ PlayWorldMap:
     if(episode.worldfile.isEmpty())
     {
         sceneResult = false;
-        PGE_MsgBox msgBox(NULL, QString("No opened files"),
-                          PGE_MsgBox::msg_warn);
-        msgBox.exec();
+        PGE_MsgBox::warn("No opened files");
     }
     else
     {
@@ -314,11 +346,9 @@ PlayWorldMap:
         if(!sceneResult)
         {
             SDL_Delay(50);
-            PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start world map\n\n"
+            PGE_MsgBox::error(QString("ERROR:\nFail to start world map\n\n"
                                             "%1")
-                              .arg(wScene->getLastError()),
-                              PGE_MsgBox::msg_error);
-            msgBox.exec();
+                              .arg(wScene->getLastError()));
         }
     }
 
@@ -330,6 +360,19 @@ PlayWorldMap:
 
     if(sceneResult)
         ExitCode = wScene->exec();
+
+    if(debugMode)
+    {
+        if(ExitCode==WldExit::EXIT_beginLevel)
+        {
+            PGE_MsgBox::warn(QString("Start level\n%1")
+                          .arg(_game_state.LevelFile));
+            delete wScene;
+            goto PlayWorldMap;
+        }
+        else
+            goto ExitFromApplication;
+    }
 
     switch(ExitCode)
     {
@@ -466,10 +509,8 @@ PlayLevel:
                    {
                        if(!fileToOpen.isEmpty())
                        {
-                           PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
-                                         .arg(fileToOpen).arg(entranceID),
-                                         PGE_MsgBox::msg_warn);
-                           msgBox.exec();
+                           PGE_MsgBox::warn(QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                                         .arg(fileToOpen).arg(entranceID));
                        }
                        playAgain = false;
                    }
@@ -537,6 +578,7 @@ PlayLevel:
 }
 ExitFromApplication:
 
+    ConfigManager::unluadAll();
     if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();
     FontManager::quit();

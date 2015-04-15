@@ -24,7 +24,7 @@
 
 #include <SDL2/SDL_config.h>
 
-#if __MACOSX__
+#if __MACOSX__ && USE_NATIVE_MIDI
 
 #include <CoreServices/CoreServices.h>      /* ComponentDescription */
 #include <AudioUnit/AudioUnit.h>
@@ -32,7 +32,7 @@
 #include <AvailabilityMacros.h>
 
 #include "../SDL_mixer.h"
-#include "SDL_endian.h"
+#include <SDL2/SDL_endian.h>
 #include "native_midi.h"
 
 /* Native Midi song */

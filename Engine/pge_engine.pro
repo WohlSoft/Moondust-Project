@@ -7,8 +7,10 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0
+!macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+!macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 android:{
 DESTDIR = $$PWD/../bin/_android
@@ -56,14 +58,15 @@ CONFIG += thread
 
 CONFIG += static
 
-DEPENDPATH += "../_Libs/oolua/project"
-DEPENDPATH += "../_Libs/Box2D/project"
+DEPENDPATH += "$$PWD/../_Libs/oolua/project"
+DEPENDPATH += "$$PWD/../_Libs/Box2D/project"
+
+INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
+INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
+LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
+LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 
 DEFINES += PGE_ENGINE
-
-INCLUDEPATH += "../_Libs/" "../_common"
-
-LIBS += -L../_Libs/_builds/commonlibs
 
 android: {
     LIBS += -L../_Libs/_builds/android/lib
@@ -73,17 +76,20 @@ android: {
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
-    LIBS += -loolua -lbox2d -lSDL2 -lSDL2main libversion
+    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
+    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2
-    LIBS += -loolua -lbox2d -lSDL2
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
+    LIBS += -loolua -lbox2d
+    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
     INCLUDEPATH += ../_Libs/_builds/linux/include
-    LIBS += -loolua -lbox2d -lSDL2 -lglut -lGLU
+    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
 RC_FILE = _resources/engine.rc
@@ -92,7 +98,6 @@ SOURCES += \
     main.cpp \
     physics/base_object.cpp \
     physics/phys_util.cpp \
-    graphics/lvl_camera.cpp \
     graphics/graphics.cpp \
     scenes/scene_level.cpp \
     scenes/scene.cpp \
@@ -101,7 +106,6 @@ SOURCES += \
     scenes/scene_gameover.cpp \
     graphics/gl_renderer.cpp \
     graphics/window.cpp \
-    graphics/graphics_lvl_backgrnd.cpp \
     controls/controllable_object.cpp \
     controls/controller.cpp \
     scenes/level/lvl_player.cpp \
@@ -167,12 +171,22 @@ SOURCES += \
     scenes/level/gfx_effects.cpp \
     common_features/episode_state.cpp \
     common_features/event_queue.cpp \
-    common_features/matrix_animator.cpp
+    common_features/matrix_animator.cpp \
+    scenes/level/lvl_backgrnd.cpp \
+    scenes/level/lvl_camera.cpp \
+    common_features/player_calibration.cpp \
+    audio/SdlMusPlayer.cpp \
+    data_configs/config_engine.cpp \
+    data_configs/setup_wld_scene.cpp \
+    data_configs/setup_load_screen.cpp \
+    data_configs/setup_title_screen.cpp \
+    data_configs/obj_music.cpp \
+    data_configs/obj_sound.cpp \
+    audio/pge_audio.cpp
 
 HEADERS  += \
     physics/base_object.h \
     physics/phys_util.h \
-    graphics/lvl_camera.h \
     graphics/graphics.h \
     scenes/scene_level.h \
     scenes/scene.h \
@@ -203,7 +217,6 @@ HEADERS  += \
     data_configs/obj_bgo.h \
     scenes/level/lvl_bgo.h \
     data_configs/obj_bg.h \
-    graphics/graphics_lvl_backgrnd.h \
     version.h \
     physics/contact_listener.h \
     scenes/level/lvl_warp.h \
@@ -239,7 +252,18 @@ HEADERS  += \
     scenes/level/gfx_effects.h \
     common_features/episode_state.h \
     common_features/event_queue.h \
-    common_features/matrix_animator.h
+    common_features/matrix_animator.h \
+    scenes/level/lvl_backgrnd.h \
+    scenes/level/lvl_camera.h \
+    common_features/player_calibration.h \
+    audio/SdlMusPlayer.h \
+    data_configs/setup_wld_scene.h \
+    data_configs/setup_load_screen.h \
+    data_configs/setup_title_screen.h \
+    data_configs/obj_music.h \
+    data_configs/obj_sound.h \
+    audio/pge_audio.h \
+    data_configs/obj_sound_roles.h
 
 FORMS    += \
     data_configs/select_config.ui

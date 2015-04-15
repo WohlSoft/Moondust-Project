@@ -28,8 +28,10 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
+!macx: {
 QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+}
 
 android:{
     release:OBJECTS_DIR = ../bin/_build/_android/manager/_release/.obj

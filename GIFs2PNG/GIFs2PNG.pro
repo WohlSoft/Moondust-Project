@@ -48,6 +48,7 @@ debug:RCC_DIR       = ../bin/_build/_dynamic/gif2png/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/_dynamic/gif2png/_debug/.ui
 }
 
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 DEFINES += QT_NO_TRANSLATION
 
@@ -55,6 +56,7 @@ TARGET = GIFs2PNG
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
+CONFIG   -= import_plugins
 
 TEMPLATE = app
 

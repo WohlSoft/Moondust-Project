@@ -66,8 +66,6 @@ private:
     bool bidirectional;
     bool reverce;
 
-    int frameCurrent;
-
     bool isEnabled;
     SDL_TimerID timer_id;
 

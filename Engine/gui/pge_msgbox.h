@@ -36,6 +36,7 @@ public:
     enum msgType
     {
         msg_info=0,
+        msg_info_light,
         msg_warn,
         msg_error,
         msg_fatal
@@ -51,6 +52,15 @@ public:
 
     void buildBox(bool centered=false);
 
+    static void info(QString msg);
+    //static void info(std::string msg);
+    static void warn(QString msg);
+    //static void warn(std::string msg);
+    static void error(QString msg);
+    //static void error(std::string msg);
+    static void fatal(QString msg);
+    //static void fatal(std::string msg);
+
 private:
     void construct(QString msg="Message box is works!",
                     msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(0,0), QPoint pos=QPoint(-1,-1), float _padding=20, QString texture="");
@@ -62,6 +72,7 @@ private:
     float height;
     float padding;
     QColor bg_color;
+    void updateControllers();
 };
 
 #endif // PGE_MSGBOX_H

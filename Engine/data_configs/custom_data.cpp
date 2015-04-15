@@ -27,26 +27,32 @@ CustomDirManager::CustomDirManager(QString path, QString name, QString stuffPath
     setCustomDirs(path, name, stuffPath);
 }
 
-QString CustomDirManager::getCustomFile(QString name)
+QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
 {
     QString target="";
     if((QFile::exists(dirCustom) ) &&
             (QFile::exists(dirCustom+"/" + name)) )
     {
         target = dirCustom+"/"+name;
+        if(isDefault) *isDefault = false;
     }
     else
     if(QFile::exists(dirEpisode + "/" + name) )
     {
         target = dirEpisode + "/" + name;
+        if(isDefault) *isDefault = false;
     }
+//    else
+//    if(QFile::exists(mainStuffFullPath + "/" + name) )
+//    {
+//        target = mainStuffFullPath + name;
+//        if(isDefault) *isDefault = true;
+//    }
     else
-    if(QFile::exists(mainStuffFullPath + "/" + name) )
     {
         target = mainStuffFullPath + name;
+        if(isDefault) *isDefault = true;
     }
-    else
-        target = mainStuffFullPath + name;
 
     return target;
 }
