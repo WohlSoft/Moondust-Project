@@ -100,12 +100,6 @@ contains(DEFINES, USE_SDL_MIXER):{
         sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dylib
     }
     INSTALLS += sdlmodded
-    macx:{
-        SdlFramework.path = $$PWD/../bin/pge_editor.app/Contents/Frameworks
-        SdlFramework.files += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework
-        SdlFramework.files += $$PWD/../_Libs/_builds/macos/lib/*.dylib
-        INSTALLS += SdlFramework
-    }
 }
 
 android:{
@@ -158,6 +152,7 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     message("pge_editor build platform is macx")
+    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"

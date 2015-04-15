@@ -81,9 +81,9 @@ macx: {
     LIBS += -L$$PWD/../_Libs/_builds/macos/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     LIBS += -loolua -lbox2d
+    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
