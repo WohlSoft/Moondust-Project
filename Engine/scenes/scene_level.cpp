@@ -31,6 +31,7 @@
 
 #include <gui/pge_msgbox.h>
 #include <networking/intproc.h>
+#include <audio/pge_audio.h>
 
 #include <QtDebug>
 
@@ -416,10 +417,11 @@ int LevelScene::exec()
             start_events = SDL_GetTicks();
         }
 
+        keyboard1.update();
+
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
-            keyboard1.update(event);
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -568,10 +570,34 @@ int LevelScene::exitType()
 void LevelScene::checkPlayers()
 {
     bool haveLivePlayers=false;
+
     for(int i=0; i<players.size(); i++)
     {
         if(players[i]->isLive)
             haveLivePlayers = true;
+    }
+
+    for(int i=0; i<players.size(); i++)
+    {
+        if((!players[i]->isLive) && (!players[i]->locked()))
+        {
+            switch(players[i]->kill_reason)
+            {
+            case LVL_Player::deathReason::DEAD_burn:
+                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
+                if(!haveLivePlayers)
+                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                break;
+            case LVL_Player::deathReason::DEAD_fall:
+            case LVL_Player::deathReason::DEAD_killed:
+                if(haveLivePlayers)
+                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
+                else
+                    PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                break;
+            }
+            players[i]->setLocked(true);
+        }
     }
 
     if(!haveLivePlayers)

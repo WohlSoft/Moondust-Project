@@ -6,7 +6,10 @@ CONFIG -= static
 
 QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-sign-compare
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+!macx:{
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+}
 
 static: {
 release:OBJECTS_DIR = ../../bin/_build/sdl2mixermod/_release/.obj
@@ -49,6 +52,8 @@ LIBS += -L../_builds/linux/lib
 INCLUDEPATH += ../_builds/linux/include
 }
 macx:{
+LIBS += -L../_builds/macos/lib
+INCLUDEPATH += ../_builds/macos/include
 LIBS += -F../_builds/macos/frameworks -framework SDL2
 INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
 } else {
@@ -63,8 +68,10 @@ DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
 USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
-macx||win32: {
+win32: {
 DEFINES += USE_NATIVE_MIDI
+} else {
+DEFINES -= USE_NATIVE_MIDI
 }
 
 LIBS += -L../_builds/sdl2_mixer_mod
@@ -83,15 +90,22 @@ unix: {
 win32: {
     SDL2MixerH.path =  ../_builds/win32/include/SDL2
 }
+macx: {
+    SDL2MixerH.path =  ../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
+}
 SDL2MixerH.files += SDL_mixer.h
 
-unix: {
+!macx&unix: {
 SDL2MixerSO.path = ../_builds/linux/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
 SDL2MixerSO.path = ../_builds/win32/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
+}
+macx: {
+SDL2MixerSO.path = ../_builds/macos/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
 

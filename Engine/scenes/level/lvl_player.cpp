@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
  */
 
 #include "lvl_player.h"
-#include "../../graphics/window.h"
-#include "../../data_configs/config_manager.h"
+
+#include <graphics/window.h>
+#include <data_configs/config_manager.h>
+#include <audio/pge_audio.h>
 
 #include "lvl_scene_ptr.h"
 
@@ -29,21 +31,52 @@ LVL_Player::LVL_Player()
     camera = NULL;
     worldPtr = NULL;
     playerID = 0;
+    isLocked = true;
+    isInited = false;
+
+    direction = 1;
 
     type = LVLPlayer;
 
-    physics = ConfigManager::playable_characters[1].phys_default;
+    frameW=100;
+    frameH=100;
 
+    int CharacterID = 1;
     stateID=1;
-    states = ConfigManager::playable_characters[1].states;
+
+    setup = ConfigManager::playable_characters[CharacterID];
+    physics = setup.phys_default;
+    states =   ConfigManager::playable_characters[CharacterID].states;
+    state_cur = states[stateID];
+    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
+        frameH = ConfigManager::level_textures[tID].h / setup.matrix_height;
+    }
+
+    animator.setSize(setup.matrix_width, setup.matrix_height);
+    animator.installAnimationSet(state_cur.sprite_setup);
+    animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
+
+    environment = LVL_PhysEnv::Env_Air;
+    last_environment = LVL_PhysEnv::Env_Air;
+    physics_cur = physics[environment];
+
+    //floating
+    allowFloat=state_cur.allow_floating;
+    maxFloatTime=state_cur.floating_max_time; //!< Max time to float
+
+    isFloating=false;                         //!< Is character currently floating in air
+    timeToFloat=0;                            //!< Milliseconds to float
+
 
     JumpPressed=false;
     onGround=false;
 
     climbing=false;
-
-    environment = LVL_PhysEnv::Env_Air;
-    last_environment = LVL_PhysEnv::Env_Air;
 
     collide = PGE_Phys_Object::COLLISION_ANY;
 
@@ -62,7 +95,7 @@ LVL_Player::LVL_Player()
     doKill = false;
     kill_reason=DEAD_fall;
 
-    curHMaxSpeed = physics[environment].MaxSpeed_walk;
+    curHMaxSpeed = physics_cur.MaxSpeed_walk;
     isRunning = false;
 
     contactedWithWarp = false;
@@ -76,13 +109,7 @@ LVL_Player::LVL_Player()
     warpDirect=0;
     warpWaitTicks=0;
 
-    //floating
-    allowFloat=true;
-    isFloating=false;
-    timeToFloat=0;
-    maxFloatTime=1500;
-
-    gscale_Backup=0.f;
+    gscale_Backup=0.f;//!< BackUP of last gravity scale
 }
 
 LVL_Player::~LVL_Player()
@@ -130,7 +157,9 @@ void LVL_Player::init()
     fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
     physBody->CreateFixture(&fixtureDef);
 
+    animator.tickAnimation(1);
     //qDebug() <<"Start position is " << posX() << posY();
+    isLocked=false;
 }
 
 void LVL_Player::initSize()
@@ -140,6 +169,7 @@ void LVL_Player::initSize()
 
 void LVL_Player::update(float ticks)
 {
+    if(isLocked) return;
     if(!physBody) return;
     if(!camera) return;
 
@@ -159,6 +189,7 @@ void LVL_Player::update(float ticks)
         isLive = false;
         physBody->SetActive(false);
         LvlSceneP::s->checkPlayers();
+        return;
     }
 
     if(climbing)
@@ -189,11 +220,11 @@ void LVL_Player::update(float ticks)
     }
     else
     {
-        if(physBody->GetLinearVelocity().y > physics[environment].MaxSpeed_down)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physics[environment].MaxSpeed_down));
+        if(physBody->GetLinearVelocity().y > physics_cur.MaxSpeed_down)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physics_cur.MaxSpeed_down));
         else
-        if(physBody->GetLinearVelocity().y < -physics[environment].MaxSpeed_up)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -physics[environment].MaxSpeed_up));
+        if(physBody->GetLinearVelocity().y < -physics_cur.MaxSpeed_up)
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -physics_cur.MaxSpeed_up));
     }
 
 
@@ -228,20 +259,21 @@ void LVL_Player::update(float ticks)
 
     if(last_environment!=environment)
     {
-        obj_player_physics env = physics[environment];
+        physics_cur = physics[environment];
+
         last_environment=environment;
 
-        if(env.zero_speed_y_on_enter)
+        if(physics_cur.zero_speed_y_on_enter)
             physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
 
-        if(env.slow_speed_x_on_enter)
+        if(physics_cur.slow_speed_x_on_enter)
             physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x/2, physBody->GetLinearVelocity().y));
 
-        physBody->SetLinearDamping(env.damping);
-        physBody->SetGravityScale(env.gravity_scale);
+        physBody->SetLinearDamping(physics_cur.damping);
+        physBody->SetGravityScale(physics_cur.gravity_scale);
         curHMaxSpeed = isRunning ?
-                    env.MaxSpeed_run :
-                    env.MaxSpeed_walk;
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk;
     }
 
     if(onGround)
@@ -257,7 +289,7 @@ void LVL_Player::update(float ticks)
     {
         if(!isRunning)
         {
-            curHMaxSpeed = physics[environment].MaxSpeed_run;
+            curHMaxSpeed = physics_cur.MaxSpeed_run;
             isRunning=true;
         }
     }
@@ -265,7 +297,7 @@ void LVL_Player::update(float ticks)
     {
         if(isRunning)
         {
-            curHMaxSpeed = physics[environment].MaxSpeed_walk;
+            curHMaxSpeed = physics_cur.MaxSpeed_walk;
             isRunning=false;
         }
     }
@@ -283,7 +315,7 @@ void LVL_Player::update(float ticks)
         if(climbing)
         {
             physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                               -physics[environment].velocity_climb));
+                                               -physics_cur.velocity_climb));
         }
         else
         if(climbable_map.size()>0)
@@ -297,7 +329,7 @@ void LVL_Player::update(float ticks)
         if(climbing)
         {
             physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                               physics[environment].velocity_climb));
+                                               physics_cur.velocity_climb));
         }
         else
         if(climbable_map.size()>0)
@@ -306,17 +338,22 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    float32 force = foot_sl_contacts_map.isEmpty() ?
-                        physics[environment].walk_force
-                          : (physics[environment].walk_force/
-                             physics[environment].slippery_c);
+    slippery_surface = !foot_sl_contacts_map.isEmpty();
+
+    float32 force = slippery_surface ?
+                           (physics_cur.walk_force/
+                            physics_cur.slippery_c) :
+                            physics_cur.walk_force;
+
+    if(keys.left) direction=-1;
+    if(keys.right) direction=1;
 
     //If left key is pressed
     if(keys.right)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physics[environment].velocity_climb,
+            physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
                                                physBody->GetLinearVelocity().y));
         }
         else
@@ -331,7 +368,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(-physics[environment].velocity_climb,
+            physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
                                                physBody->GetLinearVelocity().y));
         }
         else
@@ -343,20 +380,37 @@ void LVL_Player::update(float ticks)
 
     if( keys.jump )
     {
+        if(!JumpPressed)
+        {
+            if(environment!=LVL_PhysEnv::Env_Water)
+                { if(onGround) PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
+            else
+                PGE_Audio::playSound(72);//temporary!
+        }
+
         if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
         {
             if(!JumpPressed)
             {
+                if(environment==LVL_PhysEnv::Env_Water)
+                {
+                    animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                }
+                else
+                if(environment==LVL_PhysEnv::Env_Quicksand)
+                {
+                    animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
+                }
+
                 JumpPressed=true;
                 jumpForce=20;
                 timeToFloat = maxFloatTime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    physBody->GetLinearVelocity().y
-                                                  -physics[environment].velocity_jump));
+                                                  -physics_cur.velocity_jump));
             }
         }
         else
-
         if(!JumpPressed)
         {
             JumpPressed=true;
@@ -366,7 +420,7 @@ void LVL_Player::update(float ticks)
                 jumpForce=20;
                 timeToFloat = maxFloatTime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   -physics[environment].velocity_jump
+                                                   -physics_cur.velocity_jump
                                                    -fabs(physBody->GetLinearVelocity().x/6)));
             }
             else
@@ -383,7 +437,7 @@ void LVL_Player::update(float ticks)
             {
                 jumpForce--;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   -physics[environment].velocity_jump
+                                                   -physics_cur.velocity_jump
                                                    -fabs(physBody->GetLinearVelocity().x/6)));
             }
 
@@ -419,6 +473,8 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    refreshAnimation();
+    animator.tickAnimation(ticks);
 
     //Return player to start position on fall down
     if( posY() > camera->limitBottom+height )
@@ -651,8 +707,95 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
-                    posY() - PGE_Window::Height/2 + posY_coefficient );
+    if(!isInited)
+    {
+        isInited=true;
+        animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+        animator.tickAnimation(64);
+    }
+    else
+        camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
+                        posY() - PGE_Window::Height/2 + posY_coefficient );
+}
+
+void LVL_Player::update()
+{
+    update(1.0);
+}
+
+Uint32 slideTicks=0;
+void LVL_Player::refreshAnimation()
+{
+    /**********************************Animation switcher**********************************/
+        if(climbing)
+        {
+            if((physBody->GetLinearVelocity().y<0.0)||(physBody->GetLinearVelocity().x!=0.0))
+                animator.switchAnimation(MatrixAnimator::Climbing, direction, 128);
+            else
+                animator.switchAnimation(MatrixAnimator::Climbing, direction, -1);
+        }
+        else
+        if(!onGround)
+        {
+            if(environment==LVL_PhysEnv::Env_Water)
+            {
+                animator.switchAnimation(MatrixAnimator::Swim, direction, 86);
+            }
+            else if(environment==LVL_PhysEnv::Env_Quicksand)
+            {
+                animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+            }
+            else
+            {
+                if(physBody->GetLinearVelocity().y<0)
+                    animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+                else
+                    animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
+            }
+        }
+        else
+        {
+            bool busy=false;
+
+            if((physBody->GetLinearVelocity().x>0)!=(direction>0))
+                if(keys.right)
+                {
+                    if(SDL_GetTicks()-slideTicks>100)
+                    {
+                        PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
+                        slideTicks=SDL_GetTicks();
+                    }
+                    animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                    busy=true;
+                }
+
+            if(!busy)
+            {
+                if((physBody->GetLinearVelocity().x<0)!=(direction<0))
+                    if(keys.left)
+                    {
+                        if(SDL_GetTicks()-slideTicks>100)
+                        {
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
+                            slideTicks=SDL_GetTicks();
+                        }
+                        animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                        busy=true;
+                    }
+            }
+
+            if(!busy)
+            {
+                float velX = physBody->GetLinearVelocity().x;
+                if( ((!slippery_surface)&&(velX>0.0))||((slippery_surface)&&(keys.right)&&(velX>0.0)) )
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
+                else if( ((!slippery_surface)&& (velX<0.0))||((slippery_surface)&&(keys.left)&&(velX<0.0)) )
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*4)<100?-velX*4:100)));
+                else
+                    animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+            }
+        }
+    /**********************************Animation switcher**********************************/
 }
 
 void LVL_Player::kill(deathReason reason)
@@ -731,27 +874,51 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 
 void LVL_Player::render(float camX, float camY)
 {
-
     if(!isLive) return;
+    if(!isInited) return;
+
+    QRectF tPos = animator.curFrame();
+    QPointF Ofs = animator.curOffset();
 
     QRectF player = QRectF( posX()
-                            -camX,
+                            -camX-Ofs.x(),
 
-                            posY()
+                            posY()-Ofs.y()
                             -camY,
 
-                            width,
-                            height
+                            frameW,
+                            frameH
                          );
-//        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
 
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 1.f, 1.f);
+    glEnable(GL_TEXTURE_2D);
+    glColor4f( 1.f, 1.f, 1.f, 1.f);
+    glBindTexture( GL_TEXTURE_2D, texId );
     glBegin( GL_QUADS );
+        glTexCoord2f( tPos.left(), tPos.top() );
         glVertex2f( player.left(), player.top());
+
+        glTexCoord2f( tPos.right(), tPos.top() );
         glVertex2f( player.right(), player.top());
+
+        glTexCoord2f( tPos.right(), tPos.bottom() );
         glVertex2f( player.right(),  player.bottom());
+
+        glTexCoord2f( tPos.left(), tPos.bottom() );
         glVertex2f( player.left(),  player.bottom());
     glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+}
+
+bool LVL_Player::locked()
+{
+    return isLocked;
+}
+
+void LVL_Player::setLocked(bool lock)
+{
+    isLocked=lock;
+    if(physBody)
+        physBody->SetActive(!lock);
 }
 

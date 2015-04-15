@@ -17,7 +17,7 @@
  */
 
 #include "config_manager.h"
-#include "../gui/pge_msgbox.h"
+#include <gui/pge_msgbox.h>
 #include <common_features/graphics_funcs.h>
 
 /*****Level blocks************/
@@ -41,9 +41,7 @@ bool ConfigManager::loadLevelBlocks()
     if(!QFile::exists(block_ini))
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini: file does not exist"),
-                          PGE_MsgBox::msg_fatal);
-        msgBox.exec();
+        PGE_MsgBox::fatal(QString("ERROR LOADING lvl_blocks.ini: file does not exist"));
         return false;
     }
 
@@ -63,9 +61,7 @@ bool ConfigManager::loadLevelBlocks()
     if(block_total==0)
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
-        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"),
-                          PGE_MsgBox::msg_fatal);
-        msgBox.exec();
+        PGE_MsgBox::fatal(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"));
 
         return false;
     }
@@ -191,11 +187,8 @@ bool ConfigManager::loadLevelBlocks()
           {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
 
-            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i),
-                              PGE_MsgBox::msg_error);
-            msgBox.exec();
-
-             break;
+            PGE_MsgBox::error(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            break;
           }
        }
 

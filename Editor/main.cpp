@@ -42,6 +42,12 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
     QApplication *a = new QApplication(argc, argv);
 
+#ifdef Q_OS_MAC
+    QDir dir(QApplication::applicationDirPath());
+    dir.cdUp();
+    QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
+#endif
+
     SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
     {

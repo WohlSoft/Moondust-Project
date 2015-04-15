@@ -48,13 +48,10 @@ QString ConfigManager::PathLevelPlayable()
     return playerLvlPath;
 }
 
-
-
 QString ConfigManager::PathCommonGFX()
 {
     return commonGPath;
 }
-
 
 
 QString ConfigManager::PathWorldTiles()
@@ -92,3 +89,21 @@ QString ConfigManager::PathWorldSound()
     return dirs.sounds;
 }
 
+
+void ConfigManager::refreshPaths()
+{
+    bgoPath =   dirs.glevel +  "background/";
+    BGPath =    dirs.glevel +  "background2/";
+    blockPath = dirs.glevel +  "block/";
+    npcPath =   dirs.glevel +  "npc/";
+    effectPath= dirs.glevel +  "effect/";
+    playerLvlPath = dirs.gplayble;
+    playerWldPath = dirs.gworld + "player/";
+
+    tilePath =  dirs.gworld +  "tile/";
+    scenePath = dirs.gworld +  "scene/";
+    pathPath =  dirs.gworld +  "path/";
+    wlvlPath =  dirs.gworld +  "level/";
+
+    commonGPath = dirs.gcommon + "/";
+}

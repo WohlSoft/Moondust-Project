@@ -22,6 +22,7 @@
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
+#include <audio/pge_audio.h>
 
 #include <QtDebug>
 
@@ -167,6 +168,8 @@ int LoadingScene::exec()
     bool running = true;
     float doUpdate_Render=0;
     bool doExit=false;
+
+    PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
 
     Uint32 start_wait_timer=SDL_GetTicks();
     while(running)

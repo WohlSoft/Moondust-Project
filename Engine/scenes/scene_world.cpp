@@ -17,6 +17,8 @@
  */
 
 #include "scene_world.h"
+#include <audio/SdlMusPlayer.h>
+#include <audio/pge_audio.h>
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 #include <fontman/font_manager.h>
@@ -407,12 +409,14 @@ WorldScene::WorldScene()
     allow_up=false;
     allow_right=false;
     allow_down=false;
+    _playStopSnd=false;
 
     data = FileFormats::dummyWldDataArray();
 }
 
 WorldScene::~WorldScene()
 {
+    PGE_MusPlayer::MUS_stopMusic();
     wld_events.abort();
     worldMap.clean();
     wldItems.clear();
@@ -528,7 +532,7 @@ bool WorldScene::init()
 
     if(doExit) return true;
 
-    isInit=true;
+
     for(int i=0; i<data.tiles.size(); i++)
     {
         WldTileItem path(data.tiles[i]);
@@ -582,6 +586,10 @@ bool WorldScene::init()
     updateAvailablePaths();
     updateCenter();
 
+    if(gameState)
+        playMusic(gameState->game_state.musicID, true, 200);
+    isInit=true;
+
     return true;
 }
 
@@ -629,10 +637,13 @@ void WorldScene::update()
             }
             if(dir!=0)
             {
+                _playStopSnd=false;
                 levelTitle.clear();
                 gameState->LevelFile.clear();
                 jumpTo=false;
             }
+
+            if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
         }
         else
         {
@@ -661,19 +672,19 @@ void WorldScene::update()
         {
             case 1://left
                 posX-=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 2://right
                 posX+=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 3://up
                 posY-=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
             case 4://down
                 posY+=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; updateAvailablePaths(); updateCenter();}
+                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
                 break;
         }
 
@@ -749,6 +760,19 @@ void WorldScene::updateCenter()
     nodes=worldMap.query(posX+worldMap.gridSize_h, posY+worldMap.gridSize_h);
     foreach (WorldNode* x, nodes)
     {
+        if(x->type==WorldNode::musicbox)
+        {
+            WldMusicBoxItem *y = dynamic_cast<WldMusicBoxItem*>(x);
+            if(y)
+            {
+                if(isInit)
+                    playMusic(y->data.id);
+                else
+                if(gameState)
+                    gameState->game_state.musicID = y->data.id;
+            }
+        }
+
         if(x->type==WorldNode::level)
         {
             WldLevelItem *y = dynamic_cast<WldLevelItem*>(x);
@@ -795,11 +819,6 @@ void WorldScene::updateCenter()
             {
                 levelTitle = "!!!FAIL!!!";
             }
-        }
-
-        if(x->type==WorldNode::musicbox)
-        {
-            //Switch world music here!
         }
     }
 }
@@ -968,10 +987,11 @@ int WorldScene::exec()
             start_events = SDL_GetTicks();
         }
 
+        keyboard1.update();
+
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
-            keyboard1.update(event);
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -1011,6 +1031,8 @@ int WorldScene::exec()
                               {
                                   gameState->game_state.worldPosX=posX;
                                   gameState->game_state.worldPosY=posY;
+                                  PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                                  stopMusic(true, 300);
                                   setExiting(0, WldExit::EXIT_beginLevel);
                               }
                               else if(jumpTo)
@@ -1032,6 +1054,7 @@ int WorldScene::exec()
                                   wld_events.events.push_back(event3);
 
                                   this->lock_controls=true;
+                                  PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
                                   this->setFade(25, 1.0f, 0.08);
                               }
                           }
@@ -1157,3 +1180,28 @@ void WorldScene::jump()
     updateAvailablePaths();
     updateCenter();
 }
+
+
+
+void WorldScene::stopMusic(bool fade, int fadeLen)
+{
+    if(fade)
+        PGE_MusPlayer::MUS_stopMusicFadeOut(fadeLen);
+    else
+        PGE_MusPlayer::MUS_stopMusic();
+}
+
+void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
+{
+    QString musPath = ConfigManager::getWldMusic(musicID);
+    if(musPath.isEmpty()) return;
+
+    PGE_MusPlayer::MUS_openFile(musPath);
+    if(fade)
+        PGE_MusPlayer::MUS_playMusicFadeIn(fadeLen);
+    else
+        PGE_MusPlayer::MUS_playMusic();
+    if(gameState)
+        gameState->game_state.musicID = musicID;
+}
+

@@ -27,7 +27,9 @@
 
 #include <QRect>
 #include <QFontMetrics>
+#include <QMessageBox>
 #include <common_features/app_path.h>
+#include <audio/pge_audio.h>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
@@ -60,6 +62,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     switch(type)
     {
         case msg_info: bg_color = QColor(qRgb(0,0,0)); break;
+        case msg_info_light: bg_color = QColor(qRgb(0,0,125)); break;
         case msg_warn: bg_color = QColor(qRgb(255,201,14)); break;
         case msg_error: bg_color = QColor(qRgb(125,0,0)); break;
         case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
@@ -135,14 +138,12 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     }
 }
 
-
 void PGE_MsgBox::buildBox(bool centered)
 {
     textTexture = FontManager::TextToTexture(message,
                                              QRect(0,0, width*2, height*2),
                                              (centered ? Qt::AlignCenter:Qt::AlignLeft) | Qt::AlignTop );
 }
-
 
 PGE_MsgBox::~PGE_MsgBox()
 {
@@ -166,20 +167,10 @@ void PGE_MsgBox::exec()
 
     SDL_Event event; //  Events of SDL
 
-    while ( SDL_PollEvent(&event) )
-    {
-        if(parentScene!=NULL)
-        {
-            if(parentScene->type()==Scene::Level)
-                dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
-        }
-    }
+    while ( SDL_PollEvent(&event) ) {}
+    updateControllers();
 
-    if(parentScene!=NULL)
-    {
-        if(parentScene->type()==Scene::Level)
-            dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
-    }
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
 
     setFade(20, 1.0f, 0.09f);
 
@@ -216,20 +207,8 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) )
-        {
-            if(parentScene!=NULL)
-            {
-                if(parentScene->type()==Scene::Level)
-                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
-            }
-        }
-
-        if(parentScene!=NULL)
-        {
-            if(parentScene->type()==Scene::Level)
-                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
-        }
+        while ( SDL_PollEvent(&event) ) {}
+        updateControllers();
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
@@ -269,14 +248,9 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
+        updateControllers();
         while ( SDL_PollEvent(&event) )
         {
-            if(parentScene!=NULL)
-            {
-                if(parentScene->type()==Scene::Level)
-                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
-            }
-
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -316,11 +290,6 @@ void PGE_MsgBox::exec()
                 default:
                   break;
             }
-        }
-        if(parentScene!=NULL)
-        {
-            if(parentScene->type()==Scene::Level)
-                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
         }
 
         if(1000.0 / 75.0 > SDL_GetTicks() - start_render)
@@ -371,19 +340,8 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) )
-        {
-            if(parentScene!=NULL)
-            {
-                if(parentScene->type()==Scene::Level)
-                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
-            }
-        }
-        if(parentScene!=NULL)
-        {
-            if(parentScene->type()==Scene::Level)
-                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
-        }
+        while ( SDL_PollEvent(&event) ) {}
+        updateControllers();
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
@@ -391,3 +349,97 @@ void PGE_MsgBox::exec()
     }
 
 }
+
+
+void PGE_MsgBox::updateControllers()
+{
+    if(parentScene!=NULL)
+    {
+        if(parentScene->type()==Scene::Level)
+        {
+            LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
+            if(s)
+            {
+                s->keyboard1.update();
+                s->keyboard1.sendControls();
+            }
+        }
+    }
+}
+
+
+
+void PGE_MsgBox::info(QString msg)
+{
+    if(GlRenderer::ready())
+    {
+        PGE_MsgBox msgBox(NULL, msg,
+                          PGE_MsgBox::msg_info_light);
+        msgBox.exec();
+    }
+    else
+    {
+        QMessageBox::information(NULL, QTranslator::tr("Information"), msg, QMessageBox::Ok);
+    }
+}
+//void PGE_MsgBox::info(std::string msg)
+//{
+//    PGE_MsgBox::info(QString::fromStdString(msg));
+//}
+
+void PGE_MsgBox::warn(QString msg)
+{
+    if(GlRenderer::ready())
+    {
+        PGE_MsgBox msgBox(NULL, msg,
+                          PGE_MsgBox::msg_warn);
+        msgBox.exec();
+    }
+    else
+    {
+        QMessageBox::warning(NULL, QTranslator::tr("Warning"), msg, QMessageBox::Ok);
+    }
+}
+//void PGE_MsgBox::warn(std::string msg)
+//{
+//    PGE_MsgBox::warn(QString::fromStdString(msg));
+//}
+
+
+void PGE_MsgBox::error(QString msg)
+{
+    if(GlRenderer::ready())
+    {
+        PGE_MsgBox msgBox(NULL, msg,
+                          PGE_MsgBox::msg_error);
+        msgBox.exec();
+    }
+    else
+    {
+        QMessageBox::critical(NULL, QTranslator::tr("Error"), msg, QMessageBox::Ok);
+    }
+}
+//void PGE_MsgBox::error(std::string msg)
+//{
+//    PGE_MsgBox::error(QString::fromStdString(msg));
+//}
+
+
+void PGE_MsgBox::fatal(QString msg)
+{
+    if(GlRenderer::ready())
+    {
+        PGE_MsgBox msgBox(NULL, msg,
+                          PGE_MsgBox::msg_fatal);
+        msgBox.exec();
+    }
+    else
+    {
+        QMessageBox::critical(NULL, QTranslator::tr("Fatal"), msg, QMessageBox::Ok);
+    }
+}
+//void PGE_MsgBox::fatal(std::string msg)
+//{
+//    PGE_MsgBox::fatal(QString::fromStdString(msg));
+//}
+

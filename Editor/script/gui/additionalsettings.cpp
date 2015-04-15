@@ -354,3 +354,9 @@ void AdditionalSettings::loadValuesByScriptHolder(QList<SimpleAdditionalSetting>
 
     }
 }
+
+
+AdditionalSettings::SimpleAdditionalSetting::SimpleAdditionalSetting()
+{
+    controlType=-1;
+}

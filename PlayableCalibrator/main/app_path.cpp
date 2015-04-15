@@ -40,9 +40,7 @@ void AppPathManager::initAppPath()
 
     #ifdef __APPLE__
     //Application path relative bundle folder of application
-    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
-    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
-        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    ApplicationPath = QFileInfo(ApplicationPath_x+"../../..").absoluteDir().absolutePath();
     #endif
 
     /*

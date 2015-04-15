@@ -78,6 +78,7 @@ cp ../libmad-0.15.1b.patched_configure.txt .
 #############################Build libraries#####################
 
 ###########SDL2###########
+echo "=======SDL2========="
 BuildSrc 'SDL2-2.0.3' $SDL_ARGS'--prefix='$InstallTo
 
 #apply fix of SDL2 bug
@@ -85,23 +86,29 @@ cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 
 
 ###########OGG###########
+echo "=========OGG==========="
 BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
 
 ###########VORBIS###########
+echo "============VORBIS=========="
 BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
 
 ###########FLAC###########
+echo "==========FLAC========="
 BuildSrc 'flac-1.3.0' '--disable-xmms-plugin --prefix='$InstallTo
 
 
 ###########MIKMOD###########
+echo "=============MIKMOD=========="
 BuildSrc 'libmikmod-3.3.7' '--prefix='$InstallTo
 
 ###########MODPLUG###########
+echo "==========MODPLUG=========="
 BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
 
 ###########LibMAD###########
+echo "==========LibMAD============"
 cd libmad-0.15.1b
 if [ ! -f ./configure_before_patch ]
 then

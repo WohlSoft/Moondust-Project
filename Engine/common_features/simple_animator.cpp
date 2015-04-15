@@ -51,7 +51,7 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
 
     isEnabled=false;
 
-    pos1 = 0.0d;
+    pos1 = 0.0;
     pos2 = 1.0f;
 
     bidirectional = bid;
@@ -104,7 +104,7 @@ AniPos SimpleAnimator::image(double frame)
     if((frame<0)||(frame>=framesQ))
         return AniPos(pos1, pos2);
     else
-        return AniPos(frame/framesQ, frame/framesQ + 1.0d/framesQ);
+        return AniPos(frame/framesQ, frame/framesQ + 1.0/framesQ);
 }
 
 //Animation process
@@ -150,7 +150,7 @@ void SimpleAnimator::nextFrame()
     }
 
     pos1 = CurrentFrame/framesQ;
-    pos2 = CurrentFrame/framesQ + 1.0d/framesQ;
+    pos2 = CurrentFrame/framesQ + 1.0/framesQ;
 
     if(isEnabled)
         timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
@@ -167,7 +167,7 @@ void SimpleAnimator::setFrame(int y)
     CurrentFrame = y;
 
     pos1 = CurrentFrame/framesQ;
-    pos2 = CurrentFrame/framesQ + 1.0d/framesQ;
+    pos2 = CurrentFrame/framesQ + 1.0/framesQ;
 }
 
 void SimpleAnimator::setFrames(int first, int last)
