@@ -5,9 +5,11 @@
 #include <QObject>
 
 #ifdef Q_OS_ANDROID
-#define PGEDefaultFontSize 16
+    #define PGEDefaultFontSize 16
+#elif __APPLE__
+    #define PGEDefaultFontSize 14
 #else
-#define PGEDefaultFontSize 8
+    #define PGEDefaultFontSize 8
 #endif
 
 class ItemTypes
