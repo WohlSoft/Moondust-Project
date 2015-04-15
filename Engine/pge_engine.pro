@@ -8,6 +8,7 @@ QT += core gui opengl network
 #QT += widgets
 
 QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 android:{
@@ -81,8 +82,8 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
-    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2 -framework SDL2_mixer
-    LIBS += -loolua -lbox2d -lSDL2
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
+    LIBS += -loolua -lbox2d
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib

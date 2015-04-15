@@ -95,7 +95,17 @@ contains(DEFINES, USE_SDL_MIXER):{
     win32: {
         sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
     }
+    macx: {
+        sdlmodded.path = $$PWD/../bin/pge_editor.app/Contents/Frameworks
+        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dylib
+    }
     INSTALLS += sdlmodded
+    macx:{
+        SdlFramework.path = $$PWD/../bin/pge_editor.app/Contents/Frameworks
+        SdlFramework.files += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework
+        SdlFramework.files += $$PWD/../_Libs/_builds/macos/lib/*.dylib
+        INSTALLS += SdlFramework
+    }
 }
 
 android:{
@@ -114,8 +124,11 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+!macx: {
 QMAKE_CXXFLAGS += -static -static-libgcc
-!macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+}
 
 LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
@@ -143,8 +156,7 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
-    LIBS += -F../_builds/macos/frameworks -framework SDL2
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -framework SDL2 -framework SDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     message("pge_editor build platform is macx")
 }
 

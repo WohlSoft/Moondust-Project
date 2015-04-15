@@ -48,6 +48,7 @@ debug:RCC_DIR       = ../bin/_build/_dynamic/gif2png/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/_dynamic/gif2png/_debug/.ui
 }
 
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 DEFINES += QT_NO_TRANSLATION
 

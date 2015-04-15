@@ -260,7 +260,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
     }
 
     if(lt(8))
-        for(i=i;i<21;i++) { section = dummyLvlSection(); section.id=i;
+        for(;i<21;i++) { section = dummyLvlSection(); section.id=i;
                             FileData.sections.push_back(section); }
 
 

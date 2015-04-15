@@ -53,6 +53,8 @@ CONFIG += static
 
 RC_FILE = _resourses/caltool.rc
 
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+
 QMAKE_CFLAGS += -Wno-sign-compare
 
 SOURCES += main.cpp\
