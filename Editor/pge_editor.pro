@@ -96,7 +96,7 @@ contains(DEFINES, USE_SDL_MIXER):{
         sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
     }
     macx: {
-        sdlmodded.path = $$PWD/../bin/pge_editor.app/Contents/Frameworks
+        sdlmodded.path = $$PWD/../bin/_Libs
         sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dylib
     }
     INSTALLS += sdlmodded
