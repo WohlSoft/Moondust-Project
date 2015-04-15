@@ -52,6 +52,7 @@ TARGET = LazyFixTool
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
+CONFIG   -= import_plugins
 
 TEMPLATE = app
 
