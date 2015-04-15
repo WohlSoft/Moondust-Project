@@ -57,6 +57,8 @@ TEMPLATE = app
 
 #QMAKE_CFLAGS += -Wno-sign-compare
 
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+
 RC_FILE = _resources/lazyfix_tool.rc
 
 SOURCES += \

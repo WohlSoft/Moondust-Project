@@ -6,6 +6,7 @@ CONFIG -= static
 
 QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-sign-compare
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx:{
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
@@ -89,15 +90,22 @@ unix: {
 win32: {
     SDL2MixerH.path =  ../_builds/win32/include/SDL2
 }
+macx: {
+    SDL2MixerH.path =  ../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
+}
 SDL2MixerH.files += SDL_mixer.h
 
-unix: {
+!macx&unix: {
 SDL2MixerSO.path = ../_builds/linux/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
 SDL2MixerSO.path = ../_builds/win32/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
+}
+macx: {
+SDL2MixerSO.path = ../_builds/macos/lib
+SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
 

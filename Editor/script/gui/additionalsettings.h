@@ -20,6 +20,7 @@ public:
 
 
     struct SimpleAdditionalSetting{
+        SimpleAdditionalSetting();
         //Setting
         QVariant defaultValue;
         QString category;

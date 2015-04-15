@@ -8,14 +8,17 @@ TARGET = oolua
 TEMPLATE = lib
 CONFIG += staticlib
 CONFIG -= qt
+CONFIG += C++11
 
 DEFINES += LIBOOLUA
 
 QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
-linux-g++:{
+macx||linux-g++:{
 DEFINES += LUA_USE_MKSTEMP
 }
+macx: DEFINES += OOLUA_USE_EXCEPTIONS=1 OOLUA_STORE_LAST_ERROR=0 MAC_BUILD
 
 DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
 
