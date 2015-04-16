@@ -31,9 +31,9 @@ android:{
     ARCH=android_arm
 } else {
     !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x64
-    } else {
     ARCH=x32
+    } else {
+    ARCH=x64
     }
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
