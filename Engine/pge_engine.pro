@@ -19,37 +19,26 @@ DESTDIR = $$PWD/../bin
 }
 
 android:{
-    release:OBJECTS_DIR = ../bin/_build/_android/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_android/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_android/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_android/engine/_release/.ui
-    debug:OBJECTS_DIR   = ../bin/_build/_android/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_android/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_android/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_android/engine/_debug/.ui
+    ARCH=android_arm
 } else {
-    static: {
-    release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/engine/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
     } else {
-    release:OBJECTS_DIR = ../bin/_build/_dynamic/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_dynamic/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_dynamic/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_dynamic/engine/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_dynamic/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_dynamic/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
+    ARCH=x64
     }
 }
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 
 TARGET = pge_engine
 TEMPLATE = app
