@@ -1,5 +1,6 @@
-Platform Game Engine by Wohlstand [![Build Status][master]][repo]
+Platform Game Engine by Wohlstand
 ===========
+[![Build Status][master]][repo]
 
 a free platform for game making
 
