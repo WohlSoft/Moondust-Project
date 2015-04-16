@@ -1,8 +1,7 @@
 os:
 - osx
 
-language:
-- cpp
+language: cpp
 
 compiler:
 - clang++
@@ -17,10 +16,9 @@ env:
 
 before_install:
 - brew install qt5
-install:
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
 - bash build_deps.sh no-pause
-
+install: true
 script:
 - bash build.sh no-pause
