@@ -1,15 +1,25 @@
-language: cpp
+# Mac OS X (https://github.com/travis-ci-tester/toolchain-table)
+
+language:
+- cpp
+
 compiler:
-- g++
+- clang++
+
 env:
 # Default build. Release.
 - BUILD_ARGS=""
+#before_install:
+#- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+#- sudo apt-get update -qq
+#- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev qttools5-dev-tools
+
 before_install:
-- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-- sudo apt-get update -qq
-- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev qttools5-dev-tools
+- brew install qt5
+install:
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
 - bash build_deps.sh no-pause
+
 script:
 - bash build.sh no-pause
