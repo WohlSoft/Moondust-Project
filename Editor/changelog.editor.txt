@@ -22,6 +22,9 @@ Editor 0.3.0
 - Added working file association for Linux
 - Fixed crash on attempt to undo while resizing mode in process and when resizing was applied
 - Added "Transform all Item-ID into" context menu feature which works like "swap blocks" in the SMBX.
+- Fixed crash on wrong log path, added log rotation on each start-up of editor like made in the engine.
+- If configuration package is failed, config status window will pop-up automatically
+- Added testing of world maps!
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

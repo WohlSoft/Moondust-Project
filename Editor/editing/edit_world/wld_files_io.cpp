@@ -34,7 +34,7 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
+bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 {
     static int sequenceNumber = 1;
 
@@ -52,17 +52,8 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
-
-        QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot create world file:\nbecause object configurations are not loaded\n."
-                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
-
-        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
-
         this->close();
-
-        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
-        return;
+        return false;
     }
 
     scene = new WldScene(ui->graphicsView, configs, WldData, this);
@@ -81,6 +72,7 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     if(options.animationEnabled) scene->startAnimation();
     setAutoUpdateTimer(31);
+    return true;
 }
 
 namespace wld_file_io
@@ -427,17 +419,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
-
-        QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot open level world %1:\nbecause object configurations are not loaded\n."
-                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
-                             .arg(fileName));
-
-        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
-
         this->close();
-
-        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
         return false;
     }
 
