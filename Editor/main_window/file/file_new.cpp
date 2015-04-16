@@ -34,6 +34,17 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionNewNPC_config_triggered()
 {
+    //Check if data configs are valid
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
+                             tr("Cannot create NPC config file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+        //Show configuration status window
+        on_actionCurConfig_triggered();
+        return;
+    }
+
     //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC);
     npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
@@ -54,43 +65,65 @@ void MainWindow::on_actionNewNPC_config_triggered()
 
 void MainWindow::on_actionNewLevel_triggered()
 {
-    LevelEdit *child = createLvlChild();
-    child->newFile(configs, GlobalSettings::LvlOpts);
-    child->show();
-    child->updateGeometry();
-    child->ResetPosition();
-    updateMenus(true);
-    SetCurrentLevelSection(0);
-    on_actionSelect_triggered();
-    dock_LvlWarpProps->init();
-    dock_LvlLayers->setLayersBox();
+    //Check if data configs are valid
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
+                             tr("Cannot create level file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+        //Show configuration status window
+        on_actionCurConfig_triggered();
+        return;
+    }
 
-    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-    LvlMusPlay::musicForceReset=true; //reset musics
-    on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
+    LevelEdit *child = createLvlChild();
+    if(child->newFile(configs, GlobalSettings::LvlOpts))
+    {
+        child->show();
+        child->updateGeometry();
+        child->ResetPosition();
+        updateMenus(true);
+        SetCurrentLevelSection(0);
+        on_actionSelect_triggered();
+        dock_LvlWarpProps->init();
+        dock_LvlLayers->setLayersBox();
+
+        if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+        LvlMusPlay::musicForceReset=true; //reset musics
+        on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
+    } else {
+        child->show();
+        if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
+        ui->centralWidget->activeSubWindow()->close();
+    }
 }
 
 
 void MainWindow::on_actionNewWorld_map_triggered()
 {
-    //QMessageBox::information(this, "Comming soon", "World map editor in this version is not implemented", QMessageBox::Ok);
+    //Check if data configs are valid
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
+                             tr("Cannot create world map file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+        //Show configuration status window
+        on_actionCurConfig_triggered();
+        return;
+    }
+
     WorldEdit *child = createWldChild();
-    WriteToLog(QtDebugMsg, "-> Init new file");
-    child->newFile(configs, GlobalSettings::LvlOpts);
-    WriteToLog(QtDebugMsg, "-> show subwindow");
-    child->show();
-    child->updateGeometry();
-    child->ResetPosition();
-    WriteToLog(QtDebugMsg, "-> call to update menus");
-    updateMenus(true);
-
-    WriteToLog(QtDebugMsg, "-> select action trigger");
-    on_actionSelect_triggered();
-
-    WriteToLog(QtDebugMsg, "-> done");
-
-    //    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-    //    LvlMusPlay::musicForceReset=true; //reset musics
-    //    on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
+    if(child->newFile(configs, GlobalSettings::LvlOpts))
+    {
+        child->show();
+        child->updateGeometry();
+        child->ResetPosition();
+        updateMenus(true);
+        on_actionSelect_triggered();
+    } else {
+        child->show();
+        if(activeChildWindow()==3) activeWldEditWin()->WldData.modified = false;
+        ui->centralWidget->activeSubWindow()->close();
+    }
 }
 

@@ -38,6 +38,17 @@ void MainWindow::openFilesByArgs(QStringList args)
 
 void MainWindow::on_OpenFile_triggered()
 {
+    //Check if data configs are valid
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
+                             tr("Editor cannot open files:\nConfiguration package is loaded with errors.").arg(ConfStatus::configPath));
+        //Show configuration status window
+        on_actionCurConfig_triggered();
+        return;
+    }
+
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),GlobalSettings::openPath,
         QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
@@ -61,6 +72,17 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     if(!continueLoad) return;
     qApp->setActiveWindow(this);
 
+    //Check if data configs are valid
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+        QMessageBox::warning(this, tr("Configuration is loaded with errors"),
+                             tr("Cannot open file:\nConfiguration package loaded with errors.").arg(ConfStatus::configPath));
+        //Show configuration status window
+        on_actionCurConfig_triggered();
+        return;
+    }
+
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
@@ -68,8 +90,8 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             }
 
     QFile file(FilePath);
-
-    if (!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly))
+    {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
         return;
@@ -143,9 +165,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         } else {
             WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
-            WriteToLog(QtDebugMsg, ">>Window showed");
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-            WriteToLog(QtDebugMsg, ">> Option seted");
             ui->centralWidget->activeSubWindow()->close();
             WriteToLog(QtDebugMsg, ">>Windows closed");
         }
