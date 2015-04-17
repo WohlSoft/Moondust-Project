@@ -53,6 +53,10 @@ TARGET = pge_calibrator
 TEMPLATE = app
 CONFIG += static
 
+macx {
+    ICON = _resourses/calibrator.icns
+}
+
 RC_FILE = _resourses/caltool.rc
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
