@@ -16,11 +16,6 @@
     <height>483</height>
    </size>
   </property>
-  <property name="font">
-   <font>
-    <pointsize>8</pointsize>
-   </font>
-  </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
   </property>
@@ -66,8 +61,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>283</width>
-         <height>1619</height>
+         <width>282</width>
+         <height>1549</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -190,14 +185,6 @@
                <width>0</width>
                <height>17</height>
               </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Liberation Sans</family>
-               <pointsize>9</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
              </property>
              <property name="text">
               <string>Block contents:</string>
@@ -403,6 +390,26 @@
             </widget>
            </item>
           </layout>
+          <zorder>PROPS_BlkEventHited</zorder>
+          <zorder>PROPS_blockPos</zorder>
+          <zorder>line</zorder>
+          <zorder>PROPS_BlockIncludes</zorder>
+          <zorder>PROPS_BlkEventDestroy</zorder>
+          <zorder>PROPS_BlkEventLayerEmpty</zorder>
+          <zorder>PROPS_BlkSlippery</zorder>
+          <zorder>label_10</zorder>
+          <zorder>BlockEventDestroy</zorder>
+          <zorder>PROPS_BlkEventDestroyedLock</zorder>
+          <zorder>PROPS_BlkEventLEmptyLock</zorder>
+          <zorder>PROPS_BlkEventHitLock</zorder>
+          <zorder>label</zorder>
+          <zorder>BlockHitedLabel</zorder>
+          <zorder>BlockLayerEmpty</zorder>
+          <zorder>PROPS_BlockID</zorder>
+          <zorder>PROPS_BlockLayer</zorder>
+          <zorder>BlockLayerLabel</zorder>
+          <zorder>PROPS_BlockInvis</zorder>
+          <zorder>PROPS_BlockResize</zorder>
          </widget>
         </item>
         <item>

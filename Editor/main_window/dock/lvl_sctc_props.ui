@@ -6,20 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
+    <width>299</width>
     <height>472</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>260</width>
+    <width>299</width>
     <height>472</height>
    </size>
-  </property>
-  <property name="font">
-   <font>
-    <pointsize>8</pointsize>
-   </font>
   </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
@@ -44,30 +39,12 @@
         <height>121</height>
        </size>
       </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
       <property name="title">
        <string>Section Settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QCheckBox" name="LVLPropsLevelWarp">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="whatsThis">
           <string>Leaving for the screen, the player enters the screen on the other side</string>
          </property>
@@ -81,15 +58,6 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="LVLPropsOffScr">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string>Off screen exit</string>
          </property>
@@ -100,15 +68,6 @@
        </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="LVLPropsNoTBack">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
          </property>
@@ -119,15 +78,6 @@
        </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="LVLPropsUnderWater">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string>Underwater</string>
          </property>
@@ -141,15 +91,6 @@
     </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox_5">
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
       <property name="title">
        <string>Current Section</string>
       </property>
@@ -169,15 +110,6 @@
        </item>
        <item>
         <widget class="QLabel" name="label_9">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string>Section:</string>
          </property>
@@ -188,15 +120,6 @@
        </item>
        <item>
         <widget class="QLabel" name="LVLProp_CurSect">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string notr="true">0</string>
          </property>
@@ -226,30 +149,12 @@
         <height>70</height>
        </size>
       </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
       <property name="title">
        <string>Style</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="LVLPropBckrImg">
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string>Background image</string>
          </property>
@@ -262,15 +167,6 @@
            <width>0</width>
            <height>80</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
          </property>
          <property name="focusPolicy">
           <enum>Qt::WheelFocus</enum>
@@ -376,15 +272,6 @@
         <height>99</height>
        </size>
       </property>
-      <property name="font">
-       <font>
-        <family>Liberation Sans</family>
-        <pointsize>8</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-       </font>
-      </property>
       <property name="title">
        <string>Music</string>
       </property>
@@ -396,15 +283,6 @@
            <width>0</width>
            <height>20</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
          </property>
          <property name="focusPolicy">
           <enum>Qt::WheelFocus</enum>
@@ -427,15 +305,6 @@
            <height>16</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
          <property name="text">
           <string comment="Flag of custom music on the level">Custom</string>
          </property>
@@ -451,15 +320,6 @@
            <width>0</width>
            <height>12</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Liberation Sans</family>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
          </property>
          <property name="text">
           <string>Music file:</string>
