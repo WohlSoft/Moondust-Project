@@ -292,6 +292,8 @@ void MainWindow::saveSettings()
 //Application settings
 void MainWindow::on_actionApplication_settings_triggered()
 {
+    if(!continueLoad) return;
+
     AppSettings * appSettings = new AppSettings;
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
