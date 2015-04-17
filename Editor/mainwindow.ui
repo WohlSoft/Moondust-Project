@@ -53,6 +53,9 @@
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
   </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
   <widget class="QMdiArea" name="centralWidget">
    <property name="contextMenuPolicy">
     <enum>Qt::NoContextMenu</enum>
