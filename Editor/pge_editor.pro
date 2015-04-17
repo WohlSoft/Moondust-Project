@@ -667,7 +667,7 @@ FORMS    += \
 RC_FILE = _resources/pge_editor.rc
 
 macx {
-    ICON = _resources/mushroom.icns
+    ICON = _resources/cat_builder.icns
 }
 
 RESOURCES += \
