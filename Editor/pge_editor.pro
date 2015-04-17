@@ -38,42 +38,28 @@ DESTDIR = $$PWD/../bin
 }
 
 android:{
-    release:OBJECTS_DIR = ../bin/_build/_android/editor/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_android/editor/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_android/editor/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_android/editor/_release/.ui
-    debug:OBJECTS_DIR   = ../bin/_build/_android/editor/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_android/editor/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_android/editor/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_android/editor/_debug/.ui
-
     LANGUAGES_TARGET=/assets/languages
-
+    ARCH=android_arm
 } else {
-    static: {
-    release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
-    release:MOC_DIR     = ../bin/_build/editor/_release/.moc
-    release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
-    release:UI_DIR      = ../bin/_build/editor/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
     } else {
-    release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+    ARCH=x64
     }
-
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 
 translates.path = $$LANGUAGES_TARGET
 translates.files += $$PWD/languages/*.qm
@@ -106,7 +92,6 @@ android:{
     themes.path = /assets/themes
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
-    message("pge_editor build platform is android")
 }
 
 
@@ -135,14 +120,12 @@ win32: {
         LIBS += -lSDL2main
     }
     LIBS += libversion -lDbghelp libwinmm
-    message("pge_editor build platform is win32")
 }
 
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
-    message("pge_editor build platform is linux-gcc")
 }
 
 macx: {
@@ -151,7 +134,6 @@ macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
-    message("pge_editor build platform is macx")
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 
