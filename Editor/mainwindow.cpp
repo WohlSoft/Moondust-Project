@@ -45,6 +45,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setUiDefults(); //Apply default UI settings
 
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(false);
+#endif
+
     //Create empty config directory if not exists
     if(!QDir(ApplicationPath + "/" +  "configs").exists())
         QDir().mkdir(ApplicationPath + "/" +  "configs");
@@ -146,6 +150,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(true);
+#endif
+
     //Apply objects into tools
     dock_LvlSectionProps->setLevelSectionData();
     dock_LvlItemBox->setLvlItemBoxes();
@@ -208,6 +216,4 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
-
 
