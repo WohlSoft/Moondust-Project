@@ -56,6 +56,7 @@ void LogWriter::LoadLogSettings()
         DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
         if(!QFileInfo(DebugLogFile).absoluteDir().exists())
             DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
+        DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath()+"/"+logFileName;
 
         enabled = true;
         switch( logSettings.value("log-level", "3").toInt() )
