@@ -1,21 +1,27 @@
 os:
-- osx
+- linux
 
 language: cpp
 
 compiler:
-- clang++
+- g++
 
 env:
 # Default build. Release.
 - BUILD_ARGS=""
 #before_install:
+mkdir ~/Qt
+wget http://engine.wohlnet.ru/docs/Software/QtBuilts/qt-5.4.1-static-linux-mint.tar.gz -O ~/Qt
+Bak=~+
+cd ~/Qt
+tar -xvf qt-5.4.1-static-linux-mint.tar.gz
+cd $Bak
+PATH=$PATH:~/Qt/Qt-5.4_static/bin:~/Qt/Qt-5.4_static/lib
 #- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 #- sudo apt-get update -qq
 #- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev qttools5-dev-tools
-
+#- brew install qt5
 before_install:
-- brew install qt5
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
 - bash build_deps.sh no-pause
