@@ -5,6 +5,7 @@
 #include <pgesocketdefines.h>
 #include <packet/packet.h>
 #include <packet/predefined/packethandshake.h>
+#include <packet/base/handshake/packethandshakeaccepted.h>
 
 #include <QObject>
 #include <QMap>
@@ -31,6 +32,8 @@ public:
     //This is the constructor + registerPackets in one go
     explicit PGEConnection(const QMap<PGEPackets, QMetaObject*> &toRegisterPackets, QObject *parent = 0);
 
+    ~PGEConnection();
+
     //Here you can register your packets
     void registerPackets(const QMap<PGEPackets, QMetaObject*> &toRegisterPackets);
     void registerPacket(QMetaObject* packetMetaObject, PGEPackets packetType);
@@ -42,7 +45,7 @@ public slots:
     virtual void dispatchPacket(Packet * packet) = 0;
 
     //Must be synced with the GUI-Thread
-    void execAllPacket();
+    Q_INVOKABLE void execAllPacket();
 
 protected:
     QList<QSharedPointer<Packet> > m_packets;

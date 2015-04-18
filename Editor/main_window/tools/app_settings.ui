@@ -6,23 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
+    <width>450</width>
     <height>450</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>386</width>
+    <width>450</width>
     <height>450</height>
    </size>
-  </property>
-  <property name="font">
-   <font>
-    <family>Liberation Sans</family>
-    <pointsize>8</pointsize>
-    <weight>75</weight>
-    <bold>true</bold>
-   </font>
   </property>
   <property name="windowTitle">
    <string>Settings</string>

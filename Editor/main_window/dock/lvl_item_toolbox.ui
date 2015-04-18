@@ -30,6 +30,9 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
+   <property name="documentMode">
+    <bool>true</bool>
+   </property>
    <widget class="QWidget" name="Blocks">
     <attribute name="title">
      <string>Blocks</string>
@@ -185,16 +188,6 @@
          <width>15</width>
          <height>16777215</height>
         </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Liberation Sans</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-         <kerning>false</kerning>
-        </font>
        </property>
        <property name="toolTip">
         <string>Uniform icon size</string>
