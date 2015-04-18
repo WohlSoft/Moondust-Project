@@ -26,7 +26,7 @@ PGE_Phys_Object::PGE_Phys_Object()
     posY_coefficient = 0.0f;
     width = 0.0f;
     height = 0.0f;
-    z_index = 0.0d;
+    z_index = 0.0;
     isRectangle = true;
     _player_moveup = true;
     slippery_surface = false;

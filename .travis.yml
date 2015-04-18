@@ -1,15 +1,28 @@
+os:
+- linux
+
 language: cpp
+
 compiler:
 - g++
+
 env:
 # Default build. Release.
-- BUILD_ARGS=""
+- PATH=/home/travis/Qt/Qt-5.4_static/bin:/home/travis/Qt/Qt-5.4_static/lib:$PATH
 before_install:
-- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-- sudo apt-get update -qq
-- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev qttools5-dev-tools
+- mkdir /home/travis/Qt
+- wget https://www.dropbox.com/s/n6qkqd4g1zx9zbo/qt-5.4.1-static-linux-mint.tar.gz?dl=0 -O /home/travis/Qt/qt-5.4.1-static-linux-mint.tar.gz
+- Bak=~+
+- cd /home/travis/Qt
+- tar -xvf qt-5.4.1-static-linux-mint.tar.gz
+- cd $Bak
+#- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+#- sudo apt-get update -qq
+#- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev libx11-xcb-dev libglu1-mesa-dev libxrender-dev qttools5-dev-tools
+#- brew install qt5
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
 - bash build_deps.sh no-pause
+install: true
 script:
 - bash build.sh no-pause

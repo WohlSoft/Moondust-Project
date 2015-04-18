@@ -718,6 +718,11 @@ void LVL_Player::update(float ticks)
                         posY() - PGE_Window::Height/2 + posY_coefficient );
 }
 
+void LVL_Player::update()
+{
+    update(1.0);
+}
+
 Uint32 slideTicks=0;
 void LVL_Player::refreshAnimation()
 {

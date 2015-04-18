@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>284</width>
-    <height>618</height>
+    <height>568</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>284</width>
-    <height>477</height>
+    <height>482</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -29,7 +29,7 @@
    <string>Classic Events</string>
   </property>
   <widget class="QWidget" name="LevelEventsWidget">
-   <layout class="QGridLayout" name="gridLayout_7" columnstretch="0,100">
+   <layout class="QGridLayout" name="gridLayout_7" columnstretch="0,85">
     <property name="sizeConstraint">
      <enum>QLayout::SetMinimumSize</enum>
     </property>
@@ -45,8 +45,11 @@
     <property name="bottomMargin">
      <number>5</number>
     </property>
-    <property name="spacing">
-     <number>0</number>
+    <property name="horizontalSpacing">
+     <number>9</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>12</number>
     </property>
     <item row="1" column="1" rowspan="4">
      <widget class="QListWidget" name="LVLEvents_List">
@@ -127,9 +130,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>255</width>
-         <height>360</height>
+         <y>-217</y>
+         <width>252</width>
+         <height>388</height>
         </rect>
        </property>
        <attribute name="label">
@@ -163,11 +166,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -176,11 +182,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -189,11 +198,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -202,11 +214,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -228,11 +243,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -260,11 +278,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -311,8 +332,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>165</width>
-         <height>159</height>
+         <width>252</width>
+         <height>214</height>
         </rect>
        </property>
        <attribute name="label">
@@ -419,8 +440,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>165</width>
-         <height>140</height>
+         <width>252</width>
+         <height>194</height>
         </rect>
        </property>
        <attribute name="label">
@@ -530,8 +551,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>231</width>
-         <height>511</height>
+         <width>268</width>
+         <height>514</height>
         </rect>
        </property>
        <attribute name="label">
@@ -853,8 +874,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>188</width>
-         <height>159</height>
+         <width>252</width>
+         <height>208</height>
         </rect>
        </property>
        <attribute name="label">
@@ -969,8 +990,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>190</width>
-         <height>110</height>
+         <width>267</width>
+         <height>132</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1067,8 +1088,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>104</width>
-         <height>70</height>
+         <width>267</width>
+         <height>119</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1128,7 +1149,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="text">
@@ -1141,7 +1162,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="text">
@@ -1154,7 +1175,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="toolTip">

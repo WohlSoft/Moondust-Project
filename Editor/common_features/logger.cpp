@@ -22,6 +22,7 @@
 #include <QApplication>
 #include <QSettings>
 #include <QtDebug>
+#include <QDate>
 
 #include <dev_console/devconsole.h>
 
@@ -34,7 +35,13 @@ bool        LogWriter::enabled;
 
 void LogWriter::LoadLogSettings()
 {
-    DebugLogFile="PGE_Editor_log.txt";
+    QString logFileName = QString("PGE_Editor_log_%1-%2-%3_%4-%5-%6.txt")
+            .arg(QDate().currentDate().year())
+            .arg(QDate().currentDate().month())
+            .arg(QDate().currentDate().day())
+            .arg(QTime().currentTime().hour())
+            .arg(QTime().currentTime().minute())
+            .arg(QTime().currentTime().second());
     logLevel = QtDebugMsg;
 
     QString mainIniFile = AppPathManager::settingsFile();
@@ -46,7 +53,11 @@ void LogWriter::LoadLogSettings()
             defLogDir.setPath(AppPathManager::userAppDir());
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+DebugLogFile).toString();
+        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
+        if(!QFileInfo(DebugLogFile).absoluteDir().exists())
+            DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
+        DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath()+"/"+logFileName;
+
         enabled = true;
         switch( logSettings.value("log-level", "3").toInt() )
         {

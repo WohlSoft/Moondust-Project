@@ -1,19 +1,13 @@
 call _paths.bat
 
-del %SOURCEDIR%\bin\_build\editor\_release\.obj\aboutdialog.o
-del %SOURCEDIR%\bin\_build\editor\_release\.obj\pge_editor_res.o
-del %SOURCEDIR%\bin\_build\_dynamic\editor\_release\.obj\aboutdialog.o
-del %SOURCEDIR%\bin\_build\_dynamic\editor\_release\.obj\pge_editor_res.o
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (aboutdialog.o) do if exist "%%~ff" del /q "%%~ff" && echo "%%~ff deleted!"
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (pge_editor_res.o) do if exist "%%~ff" del /q "%%~ff" && echo "deleted!"
 
-del %SOURCEDIR%\bin\_build\engine\_release\.obj\qrc_engine.o
-del %SOURCEDIR%\bin\_build\engine\_release\.obj\engine_res.o
-del %SOURCEDIR%\bin\_build\_dynamic\engine\_release\.obj\qrc_engine.o
-del %SOURCEDIR%\bin\_build\_dynamic\engine\_release\.obj\engine_res.o
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (qrc_engine.o) do if exist "%%~ff" del /q "%%~ff" && echo "deleted!"
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (engine_res.o) do if exist "%%~ff" del /q "%%~ff" && echo "deleted!"
 
-del %SOURCEDIR%\bin\_build\calibrator\_release\.obj\caltool_res.o
-del %SOURCEDIR%\bin\_build\calibrator\_release\.obj\qrc_images.o
-del %SOURCEDIR%\bin\_build\_dynamic\calibrator\_release\.obj\caltool_res.o
-del %SOURCEDIR%\bin\_build\_dynamic\calibrator\_release\.obj\qrc_images.o
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (caltool_res.o) do if exist "%%~ff" del /q "%%~ff" && echo "deleted!"
+for /R %SOURCEDIR%\bin\_build_x32 %%f in (qrc_images.o) do if exist "%%~ff" del /q "%%~ff" && echo "deleted!"
 
 echo Removed all objects which contains version numbers
 pause
