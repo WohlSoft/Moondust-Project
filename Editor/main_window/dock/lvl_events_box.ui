@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>284</width>
-    <height>618</height>
+    <width>350</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>284</width>
-    <height>477</height>
+    <height>482</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -29,7 +29,7 @@
    <string>Classic Events</string>
   </property>
   <widget class="QWidget" name="LevelEventsWidget">
-   <layout class="QGridLayout" name="gridLayout_7" columnstretch="0,100">
+   <layout class="QGridLayout" name="gridLayout_7" columnstretch="0,85">
     <property name="sizeConstraint">
      <enum>QLayout::SetMinimumSize</enum>
     </property>
@@ -45,8 +45,11 @@
     <property name="bottomMargin">
      <number>5</number>
     </property>
-    <property name="spacing">
-     <number>0</number>
+    <property name="horizontalSpacing">
+     <number>9</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>12</number>
     </property>
     <item row="1" column="1" rowspan="4">
      <widget class="QListWidget" name="LVLEvents_List">
@@ -128,8 +131,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>255</width>
-         <height>360</height>
+         <width>318</width>
+         <height>388</height>
         </rect>
        </property>
        <attribute name="label">
@@ -163,11 +166,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -176,11 +182,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -189,11 +198,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -202,11 +214,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -228,11 +243,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -260,11 +278,14 @@
           <property name="maximumSize">
            <size>
             <width>25</width>
-            <height>16777215</height>
+            <height>25</height>
            </size>
           </property>
           <property name="text">
            <string notr="true">+</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -311,8 +332,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>165</width>
-         <height>159</height>
+         <width>333</width>
+         <height>229</height>
         </rect>
        </property>
        <attribute name="label">
@@ -419,8 +440,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>165</width>
-         <height>140</height>
+         <width>333</width>
+         <height>219</height>
         </rect>
        </property>
        <attribute name="label">
@@ -530,8 +551,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>231</width>
-         <height>511</height>
+         <width>318</width>
+         <height>523</height>
         </rect>
        </property>
        <attribute name="label">
@@ -559,7 +580,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>114</height>
+            <height>123</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -574,6 +595,12 @@
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
             <widget class="QRadioButton" name="LVLEvent_SctSize_none">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>22</height>
+              </size>
+             </property>
              <property name="text">
               <string>Don't change</string>
              </property>
@@ -600,6 +627,12 @@
            </item>
            <item row="1" column="0">
             <widget class="QRadioButton" name="LVLEvent_SctSize_reset">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>22</height>
+              </size>
+             </property>
              <property name="text">
               <string>Reset to default</string>
              </property>
@@ -607,6 +640,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="LVLEvent_SctSize_left">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>18</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>40</width>
@@ -623,6 +662,12 @@
            </item>
            <item row="1" column="2">
             <widget class="QLineEdit" name="LVLEvent_SctSize_top">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>18</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>40</width>
@@ -639,6 +684,12 @@
            </item>
            <item row="2" column="0">
             <widget class="QRadioButton" name="LVLEvent_SctSize_define">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
+             </property>
              <property name="text">
               <string>Define new:</string>
              </property>
@@ -646,6 +697,12 @@
            </item>
            <item row="2" column="1">
             <widget class="QLineEdit" name="LVLEvent_SctSize_bottom">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>18</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>40</width>
@@ -662,6 +719,12 @@
            </item>
            <item row="2" column="2">
             <widget class="QLineEdit" name="LVLEvent_SctSize_right">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>18</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>40</width>
@@ -715,6 +778,12 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QRadioButton" name="LVLEvent_SctMus_none">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>Don't change</string>
              </property>
@@ -722,6 +791,12 @@
            </item>
            <item>
             <widget class="QRadioButton" name="LVLEvent_SctMus_reset">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>Reset to default</string>
              </property>
@@ -729,13 +804,26 @@
            </item>
            <item>
             <widget class="QRadioButton" name="LVLEvent_SctMus_define">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
              <property name="text">
               <string>Replace music to:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="LVLEvent_SctMus_List"/>
+            <widget class="QComboBox" name="LVLEvent_SctMus_List">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_7">
@@ -853,8 +941,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>188</width>
-         <height>159</height>
+         <width>333</width>
+         <height>226</height>
         </rect>
        </property>
        <attribute name="label">
@@ -969,8 +1057,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>190</width>
-         <height>110</height>
+         <width>333</width>
+         <height>203</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1067,8 +1155,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>104</width>
-         <height>70</height>
+         <width>333</width>
+         <height>203</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1128,7 +1216,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="text">
@@ -1141,7 +1229,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="text">
@@ -1154,7 +1242,7 @@
       <property name="maximumSize">
        <size>
         <width>25</width>
-        <height>16777215</height>
+        <height>25</height>
        </size>
       </property>
       <property name="toolTip">

@@ -10,6 +10,7 @@ enum class PGEUserLevel {
 
 struct PGEConnectedUser {
     QString Username;
+    qlonglong PGENetworkVersion;
     PGEUserLevel permissionLevel;
     QTcpSocket* socket;
 };

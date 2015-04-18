@@ -21,16 +21,16 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
+    <width>211</width>
     <height>200</height>
    </size>
   </property>
-  <property name="windowIcon">
+   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
+   <string notr="true"></string>
   </property>
   <property name="allowedAreas">
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -44,6 +44,9 @@
    </property>
    <property name="currentIndex">
     <number>0</number>
+   </property>
+   <property name="documentMode">
+    <bool>true</bool>
    </property>
    <widget class="QWidget" name="Tiles">
     <property name="toolTip">

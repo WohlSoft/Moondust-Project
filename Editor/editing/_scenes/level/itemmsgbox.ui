@@ -6,17 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>264</height>
+    <width>444</width>
+    <height>266</height>
    </rect>
-  </property>
-  <property name="font">
-   <font>
-    <family>Liberation Sans</family>
-    <pointsize>8</pointsize>
-    <weight>50</weight>
-    <bold>false</bold>
-   </font>
   </property>
   <property name="windowTitle">
    <string>Set message box</string>

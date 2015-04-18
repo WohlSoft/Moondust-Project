@@ -11,7 +11,8 @@ extern const quint16 PGENetworkPort = 64100;
 //These are the packets which should be implemented on server side and client side
 enum class PGEPackets{
     PACKET_UNDEFINED,
-    PACKET_HANDSHAKE
+    PACKET_HANDSHAKE,
+    PACKET_HANDSHAKE_ACCEPTED
 };
 
 

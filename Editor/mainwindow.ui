@@ -22,12 +22,6 @@
     <height>81</height>
    </size>
   </property>
-  <property name="font">
-   <font>
-    <weight>50</weight>
-    <bold>false</bold>
-   </font>
-  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -52,6 +46,9 @@
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks</set>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
   </property>
   <widget class="QMdiArea" name="centralWidget">
    <property name="contextMenuPolicy">
@@ -103,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -663,6 +660,9 @@
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
   </action>
   <action name="actionNewLevel">
    <property name="icon">
@@ -763,7 +763,7 @@
     <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
-    <enum>QAction::NoRole</enum>
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionContents">
@@ -2011,6 +2011,9 @@
    <property name="shortcut">
     <string notr="true"/>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="actionGo_to_Section">
    <property name="enabled">
@@ -2381,7 +2384,13 @@
   </action>
   <action name="action_testSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>Testing settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Testing settings</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionFill">

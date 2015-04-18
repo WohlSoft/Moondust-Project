@@ -81,6 +81,10 @@ linux-g++: {
     LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
+macx {
+    ICON = _resources/cat.icns
+}
+
 RC_FILE = _resources/engine.rc
 
 SOURCES += \

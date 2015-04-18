@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
-    <height>256</height>
+    <width>258</width>
+    <height>281</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -34,13 +34,19 @@
      <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
     <property name="spacing">
      <number>0</number>
     </property>
     <item row="1" column="1">
      <widget class="QPushButton" name="bookmarkRemove">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>34</height>
+       </size>
+      </property>
       <property name="toolTip">
        <string>Remove selected bookmark from list</string>
       </property>
@@ -51,6 +57,12 @@
     </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="bookmarkAdd">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>34</height>
+       </size>
+      </property>
       <property name="toolTip">
        <string>Remember current screen position on the level map or on the world map
 and store bookmark.</string>
@@ -62,6 +74,12 @@ and store bookmark.</string>
     </item>
     <item row="1" column="2">
      <widget class="QPushButton" name="bookmarkGoto">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>34</height>
+       </size>
+      </property>
       <property name="toolTip">
        <string>Scroll to remembered position in selected item back.
 You also can double-click to item to scroll to bookmarked position.</string>
