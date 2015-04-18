@@ -12,7 +12,7 @@ class MainServerWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    static MainServerWindow* INSTANCE = 0;
+    static MainServerWindow* INSTANCE;
     explicit MainServerWindow(QWidget *parent = 0);
     ~MainServerWindow();
 
