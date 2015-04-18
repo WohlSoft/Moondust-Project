@@ -44,7 +44,7 @@ unix {
 OTHER_FILES += \
     PacketInfo.txt
     
-DESTDIR = $$PWD/../../bin
+DESTDIR = $$PWD/../../_Libs/_builds/commonlibs
     
 android:{
     ARCH=android_arm
