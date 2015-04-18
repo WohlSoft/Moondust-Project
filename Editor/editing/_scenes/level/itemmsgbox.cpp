@@ -37,7 +37,7 @@ ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *pare
         this->setWindowTitle(title);
 
 #ifdef Q_OS_MACX
-    ui->msgTextBox->setFont(QFont("Press Start 2P", 22));
+    ui->msgTextBox->setFont(QFont("Press Start 2P", 32));
 #else
     ui->msgTextBox->setFont(QFont("Press Start 2P", 11));
 #endif
