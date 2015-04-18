@@ -1,4 +1,7 @@
 #include "pgeserver.h"
+#include <utils/pgewriterutils.h>
+#include <utils/pgemiscutils.h>
+#include <QApplication>
 
 PGEServer::PGEServer(QObject *parent) :
     PGEConnection(parent)
@@ -12,6 +15,20 @@ PGEServer::PGEServer(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets, Q
     init();
 }
 
+PGEServer::~PGEServer()
+{
+    foreach(PGEConnectedUser* user, m_connectedUser){
+        user->socket->disconnectFromHost();
+    }
+    qDeleteAll(m_connectedUser);
+
+    foreach(QTcpSocket* socket, m_unindentifiedSockets){
+        socket->disconnectFromHost();
+    }
+    m_server->close();
+    m_server->deleteLater();
+}
+
 
 void PGEServer::dispatchPacket(Packet *packet)
 {
@@ -22,8 +39,10 @@ void PGEServer::dispatchPacket(Packet *packet)
 
 void PGEServer::dispatchPacketToUser(PGEConnectedUser *user, Packet *packet)
 {
+    warnIfQAppNotRunning();
+
     //First check for errors
-    if(!m_server.isListening()){
+    if(!m_server->isListening()){
         qWarning() << "Tried to sent a packet, without listening!";
         return;
     }
@@ -44,11 +63,15 @@ void PGEServer::dispatchPacketToUser(PGEConnectedUser *user, Packet *packet)
     //Now write the actual packet data
     QByteArray serializePacket = packet->serializePacket();
 
-    //First write the length of the packet
-    int sizeOfData = serializePacket.length();
-    packetData.writeBytes(reinterpret_cast<const char*>(&sizeOfData), sizeof(decltype(sizeOfData)));
-    //Then write the acutal data
-    packetData.writeBytes(serializePacket.data(), serializePacket.length());
+    //Write the data:
+    // 1. the length of the data
+    // 2. the actual data
+    writeStreamData(packetData, serializePacket);
+
+    //Be sure that the events get dispatched.
+    qApp->processEvents();
+
+    delete packet;
 }
 
 

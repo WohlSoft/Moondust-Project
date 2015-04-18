@@ -16,10 +16,14 @@ PGEConnection::PGEConnection(const QMap<PGEPackets, QMetaObject *> &toRegisterPa
     registerPackets(toRegisterPackets);
 }
 
+PGEConnection::~PGEConnection()
+{}
+
 
 void PGEConnection::init()
 {
     m_registeredPackets[PGEPackets::PACKET_HANDSHAKE] = &PacketHandshake::staticMetaObject;
+    m_registeredPackets[PGEPackets::PACKET_HANDSHAKE_ACCEPTED] = &PacketHandshakeAccepted::staticMetaObject;
 }
 
 void PGEConnection::registerPackets(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets)
