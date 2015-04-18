@@ -21,6 +21,8 @@
 #ifdef Q_OS_WIN
 #include <QtWin>
 #endif
+#include <QFile>
+#include <QTextStream>
 
 #include "../../version.h"
 
@@ -55,6 +57,17 @@ aboutDialog::aboutDialog(QWidget *parent) :
                         .arg(QString("Build date: <u>%2</u>")
                              .arg(_DATE_OF_BUILD))
                         );
+
+    QFile mFile(":/credits.html");
+    if(!mFile.open(QFile::ReadOnly | QFile::Text)){
+        return;
+    }
+
+    QTextStream in(&mFile);
+    in.setCodec("UTF-8");
+    QString mText = in.readAll();
+    ui->About2->setText(mText);
+    mFile.close();
 }
 
 aboutDialog::~aboutDialog()
