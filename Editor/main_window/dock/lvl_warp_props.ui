@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>291</width>
-    <height>648</height>
+    <height>668</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>291</width>
-    <height>648</height>
+    <height>668</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -272,6 +272,9 @@
             </property>
             <property name="sizeAdjustPolicy">
              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+            </property>
+            <property name="minimumContentsLength">
+             <number>10</number>
             </property>
             <property name="frame">
              <bool>false</bool>
@@ -993,9 +996,9 @@
       <property name="lineWidth">
        <number>0</number>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="90,5,5">
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,25,25">
        <property name="spacing">
-        <number>0</number>
+        <number>12</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -1027,6 +1030,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="WarpAdd">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>24</width>
@@ -1040,6 +1049,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="WarpRemove">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>24</width>
