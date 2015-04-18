@@ -25,21 +25,12 @@
     <height>200</height>
    </size>
   </property>
-  <property name="font">
-   <font>
-    <family>Liberation Sans</family>
-    <pointsize>8</pointsize>
-    <weight>50</weight>
-    <italic>false</italic>
-    <bold>false</bold>
-   </font>
-  </property>
-  <property name="windowIcon">
+   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
+   <string notr="true"></string>
   </property>
   <property name="allowedAreas">
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -48,15 +39,6 @@
    <string>World Map Toolbox</string>
   </property>
   <widget class="QTabWidget" name="WorldToolBoxTabs">
-   <property name="font">
-    <font>
-     <family>Liberation Sans</family>
-     <pointsize>8</pointsize>
-     <weight>50</weight>
-     <italic>false</italic>
-     <bold>false</bold>
-    </font>
-   </property>
    <property name="tabPosition">
     <enum>QTabWidget::North</enum>
    </property>
@@ -97,15 +79,6 @@
      </property>
      <item row="0" column="0">
       <widget class="QTableWidget" name="WLD_TilesList">
-       <property name="font">
-        <font>
-         <family>Liberation Sans</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
        <property name="selectionMode">
         <enum>QAbstractItemView::SingleSelection</enum>
        </property>
