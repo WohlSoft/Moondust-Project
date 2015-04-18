@@ -2,6 +2,9 @@
 #include "ui_mainserverwindow.h"
 
 #include <stdexcept>
+#include <packet/packet.h>
+
+MainServerWindow* MainServerWindow::INSTANCE = 0;
 
 MainServerWindow::MainServerWindow(QWidget *parent) :
     QMainWindow(parent),

@@ -4,7 +4,7 @@
 #include <qlogging.h>
 #include <QApplication>
 
-static inline bool isQAppRunning(){(qobject_cast<QApplication*>(QCoreApplication::instance())!=0);}
+static inline bool isQAppRunning(){return (qobject_cast<QApplication*>(QCoreApplication::instance())!=0);}
 
 static inline void warnIfQAppNotRunning(){
     if(!isQAppRunning())
