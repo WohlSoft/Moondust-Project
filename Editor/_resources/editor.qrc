@@ -119,6 +119,9 @@
         <file>question.png</file>
         <file>images/goto_left_bottom.png</file>
         <file>images/goto_left_top.png</file>
+        <file>images/cat_builder/cat_builder_256_logo.png</file>
+        <file>images/cat_builder/cat_builder_128_logo.png</file>
+        <file>credits.html</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
