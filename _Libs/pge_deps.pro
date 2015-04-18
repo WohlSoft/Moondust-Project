@@ -4,7 +4,7 @@ SUBDIRS = SDL2MixerModded OOLua Box2D PGEServerAPI
 SDL2MixerModded.file = SDL2_mixer_modified/SDL2_mixer.pro
 OOLua.file = oolua/project/oolua.pro
 Box2D.file = Box2D/project/box2d.pro
-PGEServerAPI = ../ServerLib/ServerAPI/ServerAPI.pro
+PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 
 deplibs.path = bin
 linux-g++: {
