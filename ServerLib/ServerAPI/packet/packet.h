@@ -15,9 +15,6 @@ public:
     virtual void unserializePacket(const QByteArray& data);
     virtual QByteArray serializePacket();
 
-    virtual bool isClientPacket(){ return true; }
-    virtual bool isServerPacket(){ return true; }
-
 
 signals:
 
