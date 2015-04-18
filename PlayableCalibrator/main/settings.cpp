@@ -244,5 +244,5 @@ void CalibrationMain::saveConfig(QString fileName)
 
     setSpriteAniData(conf);
 
-    QMessageBox::information(this, tr("Saved"), tr("Configuration saved in file\n")+ini_sprite);
+    QMessageBox::information(this, "Saved", "Configuration saved in file\n"+ini_sprite);
 }

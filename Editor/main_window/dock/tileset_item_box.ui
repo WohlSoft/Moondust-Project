@@ -50,6 +50,9 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <property name="documentMode">
+       <bool>true</bool>
+      </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string notr="true">Category</string>
@@ -161,8 +164,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>28</height>
+             <width>78</width>
+             <height>16</height>
             </rect>
            </property>
           </widget>

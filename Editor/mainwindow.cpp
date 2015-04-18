@@ -21,6 +21,7 @@
 #include <common_features/spash_screen.h>
 #include <data_configs/config_manager.h>
 #include <main_window/dock/toolboxes.h>
+#include <common_features/logger_sets.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -43,6 +44,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setDefLang();
 
     setUiDefults(); //Apply default UI settings
+
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(false);
+#endif
 
     //Create empty config directory if not exists
     if(!QDir(ApplicationPath + "/" +  "configs").exists())
@@ -128,7 +133,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     if(!ok)
     {
         QMessageBox::critical(this, tr("Configuration error"),
-                              tr("Configuration can't be loaded.\nSee in PGE_Editor_log.txt for more information."), QMessageBox::Ok);
+                              tr("Configuration can't be loaded.\nSee in %1 for more information.").arg(LogWriter::DebugLogFile), QMessageBox::Ok);
         WriteToLog(QtFatalMsg, "<Error, application closed>");
         continueLoad = false;
         return;
@@ -137,13 +142,17 @@ MainWindow::MainWindow(QMdiArea *parent) :
     if(configs.check())
     {
         QMessageBox::warning(this, tr("Configuration error"),
-            tr("Configuration package is loaded with errors.\nPlease open the Tools/Global Configuration/Configuration Status\n"
-               "to get more information."), QMessageBox::Ok);
+            tr("Configuration package is loaded with errors."), QMessageBox::Ok);
+        on_actionCurConfig_triggered();
     }
 
     continueLoad = true;
 
     applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
+
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(true);
+#endif
 
     //Apply objects into tools
     dock_LvlSectionProps->setLevelSectionData();
@@ -207,6 +216,4 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
-
 

@@ -28,46 +28,34 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
+!macx: {
 QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+}
 
 android:{
-    release:OBJECTS_DIR = ../bin/_build/_android/manager/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_android/manager/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_android/manager/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_android/manager/_release/.ui
-    debug:OBJECTS_DIR   = ../bin/_build/_android/manager/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_android/manager/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_android/manager/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_android/manager/_debug/.ui
-
     LANGUAGES_TARGET=/assets/languages
-
+    ARCH=android_arm
 } else {
-    static: {
-    release:OBJECTS_DIR = ../bin/_build/manager/_release/.obj
-    release:MOC_DIR     = ../bin/_build/manager/_release/.moc
-    release:RCC_DIR     = ../bin/_build/manager/_release/.rcc
-    release:UI_DIR      = ../bin/_build/manager/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/manager/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/manager/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/manager/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/manager/_debug/.ui
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
     } else {
-    release:OBJECTS_DIR = ../bin/_build/_dynamic/manager/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_dynamic/manager/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_dynamic/manager/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_dynamic/manager/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/manager/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_dynamic/manager/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_dynamic/manager/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_dynamic/manager/_debug/.ui
+    ARCH=x64
     }
-
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 

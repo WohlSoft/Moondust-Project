@@ -25,33 +25,41 @@ QT       += gui widgets
 
 DESTDIR = ../bin
 
-static: {
-release:OBJECTS_DIR = ../bin/_build/calibrator/_release/.obj
-release:MOC_DIR     = ../bin/_build/calibrator/_release/.moc
-release:RCC_DIR     = ../bin/_build/calibrator/_release/.rcc
-release:UI_DIR      = ../bin/_build/calibrator/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/calibrator/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/calibrator/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/calibrator/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/calibrator/_debug/.ui
+android:{
+    LANGUAGES_TARGET=/assets/languages
+    ARCH=android_arm
 } else {
-release:OBJECTS_DIR = ../bin/_build/_dynamic/calibrator/_release/.obj
-release:MOC_DIR     = ../bin/_build/_dynamic/calibrator/_release/.moc
-release:RCC_DIR     = ../bin/_build/_dynamic/calibrator/_release/.rcc
-release:UI_DIR      = ../bin/_build/_dynamic/calibrator/_release/.ui
-
-debug:OBJECTS_DIR   = ../bin/_build/_dynamic/calibrator/_debug/.obj
-debug:MOC_DIR       = ../bin/_build/_dynamic/calibrator/_debug/.moc
-debug:RCC_DIR       = ../bin/_build/_dynamic/calibrator/_debug/.rcc
-debug:UI_DIR        = ../bin/_build/_dynamic/calibrator/_debug/.ui
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
+    } else {
+    ARCH=x64
+    }
+    LANGUAGES_TARGET=$$PWD/../bin/languages
 }
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 
 TARGET = pge_calibrator
 TEMPLATE = app
 CONFIG += static
 
+macx {
+    ICON = _resourses/calibrator.icns
+}
+
 RC_FILE = _resourses/caltool.rc
+
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 QMAKE_CFLAGS += -Wno-sign-compare
 

@@ -38,8 +38,8 @@ class LVL_Player :
         ~LVL_Player();
         void init();
         void initSize();
-        void update(float ticks=1.0f);
-
+        void update(float ticks);
+        void update();
         int playerID;
 
         obj_player setup;

@@ -6,5 +6,6 @@
         <file>images/NoAni.png</file>
         <file>images/open.png</file>
         <file>images/save.png</file>
+        <file>calibrator.icns</file>
     </qresource>
 </RCC>

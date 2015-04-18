@@ -33,7 +33,7 @@ bool        LogWriter::enabled;
 
 void LogWriter::LoadLogSettings()
 {
-    DebugLogFile=QString("PGE_Engine_log_%1-%2-%3_%4-%5-%6.txt")
+    QString logFileName = QString("PGE_Engine_log_%1-%2-%3_%4-%5-%6.txt")
             .arg(QDate().currentDate().year())
             .arg(QDate().currentDate().month())
             .arg(QDate().currentDate().day())
@@ -51,7 +51,10 @@ void LogWriter::LoadLogSettings()
             defLogDir.setPath(AppPathManager::userAppDir());
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+DebugLogFile).toString();
+        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
+        if(!QFileInfo(DebugLogFile).absoluteDir().exists())
+            DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
+
         enabled = true;
         switch( logSettings.value("log-level", "4").toInt() )
         {

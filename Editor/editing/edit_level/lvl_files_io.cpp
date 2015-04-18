@@ -32,7 +32,7 @@
 #include "level_edit.h"
 #include <ui_leveledit.h>
 
-void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
+bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 {
     static int sequenceNumber = 1;
 
@@ -50,17 +50,8 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
-
-        QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot create level file:\nbecause object configurations are not loaded\n."
-                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
-
-        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
-
         this->close();
-
-        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
-        return;
+        return false;
     }
 
     scene = new LvlScene(ui->graphicsView, configs, LvlData, this);
@@ -80,6 +71,7 @@ void LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     if(options.animationEnabled) scene->startAnimation();
     setAutoUpdateTimer(31);
+    return true;
 }
 
 namespace lvl_file_io
@@ -496,17 +488,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
-
-        QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot open level file %1:\nbecause object configurations are not loaded\n."
-                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
-                             .arg(fileName));
-
-        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
-
         this->close();
-
-        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
         return false;
     }
 

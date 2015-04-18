@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>5</number>
     </property>
     <property name="spacing">
      <number>0</number>

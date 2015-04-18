@@ -7,8 +7,10 @@
 QT += core gui opengl network
 #QT += widgets
 
-QMAKE_CXXFLAGS += -Wstrict-aliasing=0 -Wno-unused-local-typedefs
-QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
+QMAKE_CXXFLAGS += -Wstrict-aliasing=0
+!macx: QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+!macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 android:{
 DESTDIR = $$PWD/../bin/_android
@@ -17,37 +19,26 @@ DESTDIR = $$PWD/../bin
 }
 
 android:{
-    release:OBJECTS_DIR = ../bin/_build/_android/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_android/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_android/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_android/engine/_release/.ui
-    debug:OBJECTS_DIR   = ../bin/_build/_android/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_android/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_android/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_android/engine/_debug/.ui
+    ARCH=android_arm
 } else {
-    static: {
-    release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/engine/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
     } else {
-    release:OBJECTS_DIR = ../bin/_build/_dynamic/engine/_release/.obj
-    release:MOC_DIR     = ../bin/_build/_dynamic/engine/_release/.moc
-    release:RCC_DIR     = ../bin/_build/_dynamic/engine/_release/.rcc
-    release:UI_DIR      = ../bin/_build/_dynamic/engine/_release/.ui
-
-    debug:OBJECTS_DIR   = ../bin/_build/_dynamic/engine/_debug/.obj
-    debug:MOC_DIR       = ../bin/_build/_dynamic/engine/_debug/.moc
-    debug:RCC_DIR       = ../bin/_build/_dynamic/engine/_debug/.rcc
-    debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
+    ARCH=x64
     }
 }
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 
 TARGET = pge_engine
 TEMPLATE = app
@@ -77,15 +68,21 @@ win32: {
     LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
+    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
-    LIBS += -F$$PWD/../_builds/macos/frameworks -framework SDL2 -framework SDL2_mixer
-    LIBS += -loolua -lbox2d -lSDL2
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
+    LIBS += -loolua -lbox2d
+    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
     INCLUDEPATH += ../_Libs/_builds/linux/include
     LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lglut -lGLU
+}
+
+macx {
+    ICON = _resources/cat.icns
 }
 
 RC_FILE = _resources/engine.rc

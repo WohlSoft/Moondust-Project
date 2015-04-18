@@ -111,7 +111,7 @@ PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QStrin
         sourceImage = setAlphaMask(sourceImage, maskImage);
     }
 
-    sourceImage.convertToFormat(QImage::Format_ARGB32);
+    sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
     QRgb upperColor = sourceImage.pixel(0,0);
     target.ColorUpper.r = float(qRed(upperColor))/255.0f;
     target.ColorUpper.g = float(qGreen(upperColor))/255.0f;

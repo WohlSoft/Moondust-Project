@@ -12,6 +12,8 @@ CONFIG -= qt
 DEFINES += LIBBox2D
 
 QMAKE_CXXFLAGS += -Wno-maybe-uninitialized -Wstrict-aliasing=0 -Wno-unused-local-typedefs
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
+
 !android:{
 DESTDIR = ../../_builds/commonlibs
 } else {

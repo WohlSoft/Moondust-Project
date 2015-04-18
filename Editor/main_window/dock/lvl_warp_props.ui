@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>275</width>
-    <height>570</height>
+    <width>291</width>
+    <height>648</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>275</width>
-    <height>570</height>
+    <width>291</width>
+    <height>648</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -21,11 +21,6 @@
     <width>300</width>
     <height>524287</height>
    </size>
-  </property>
-  <property name="font">
-   <font>
-    <pointsize>8</pointsize>
-   </font>
   </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
