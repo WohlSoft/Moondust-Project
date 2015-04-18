@@ -3,9 +3,9 @@ cd $PWD
 echo "#===============================================================================================" > _paths.sh
 echo "#=================PLEASE SET UP THE ABLSOLUTE PATHS TO QMAKE AND TO LRELEASE====================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
-echo "QMake=\"~/Qt/Qt-5.4_static/bin/qmake\"; #" >> _paths.sh
+echo "QMake=\"/home/travis/Qt/Qt-5.4_static/bin/qmake\"; #" >> _paths.sh
 echo "" >> _paths.sh
-echo "LRelease=\"~/Qt/Qt-5.4_static/bin/lrelease\"; #" >> _paths.sh
+echo "LRelease=\"/home/travis/Qt/Qt-5.4_static/bin/lrelease\"; #" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
