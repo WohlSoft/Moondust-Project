@@ -189,16 +189,6 @@
          <height>16777215</height>
         </size>
        </property>
-       <property name="font">
-        <font>
-         <family>Liberation Sans</family>
-         <pointsize>8</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-         <kerning>false</kerning>
-        </font>
-       </property>
        <property name="toolTip">
         <string>Uniform icon size</string>
        </property>
