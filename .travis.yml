@@ -8,12 +8,12 @@ compiler:
 
 env:
 # Default build. Release.
-- PATH=~/Qt/Qt-5.4_static/bin:~/Qt/Qt-5.4_static/lib:$PATH
+- PATH=/home/travis/Qt/Qt-5.4_static/bin:/home/travis/Qt/Qt-5.4_static/lib:$PATH
 before_install:
-- mkdir ~/Qt
+- mkdir /home/travis/Qt
 - wget https://www.dropbox.com/s/n6qkqd4g1zx9zbo/qt-5.4.1-static-linux-mint.tar.gz?dl=0 -O ~/Qt/qt-5.4.1-static-linux-mint.tar.gz
 - Bak=~+
-- cd ~/Qt
+- cd /home/travis/Qt
 - tar -xvf qt-5.4.1-static-linux-mint.tar.gz
 - cd $Bak
 #- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
