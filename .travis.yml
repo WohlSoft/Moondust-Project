@@ -11,7 +11,7 @@ env:
 - PATH=$PATH:~/Qt/Qt-5.4_static/bin:~/Qt/Qt-5.4_static/lib
 before_install:
 - mkdir ~/Qt
-- wget http://engine.wohlnet.ru/docs/Software/QtBuilts/qt-5.4.1-static-linux-mint.tar.gz -O ~/Qt
+- wget http://engine.wohlnet.ru/docs/Software/QtBuilts/qt-5.4.1-static-linux-mint.tar.gz -O ~/Qt/qt-5.4.1-static-linux-mint.tar.gz
 - Bak=~+
 - cd ~/Qt
 - tar -xvf qt-5.4.1-static-linux-mint.tar.gz
