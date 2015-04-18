@@ -15,7 +15,7 @@ cd $SOURCEDIR/bin
 DeployDir="$SOURCEDIR/bin/_macosx_deploy"
 PgePrjSD_dmg="pge_prject"
 PgePrjSD="pge_prject/PGE Project"
-TarGzArName="pge-editor-dev-macosx.dmg"
+TarGzArName="pge-project-dev-macosx.dmg"
 
 if [ ! -d "$DeployDir" ]; then
         mkdir "$DeployDir"
@@ -63,23 +63,6 @@ fi
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
 "$CurDir/create-dmg.sh" --volname "PGE Project" --window-size 800 600 --app-drop-link 450 320 "$DeployDir/$TarGzArName" "$DeployDir/$PgePrjSD_dmg"
-#tar -zcvf ./$TarGzArName "$PgePrjSD"
-
-#cp $DeployDir/$TarGzArName $SiteRootNFS/$LabDir/pge-editor-dev-linux-mint.tar.gz
-
-#echo "Uploading everything to the GNA"
-#cd "$SiteRootNFS/$LabDir"
-#sh $SiteRootNFS/$LabDir/send_to_gna.sh
-
-#SAMBA
-#echo -n "Type samba password: "
-#TempPasswd=""
-#read TempPasswd
-#echo "Copying data..."
-#cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SOURCEDIR/Editor/android-build/bin/pge_editor_dev.apk
-#smbclient $SiteRoot $TempPasswd -u vitaly -c "cd $LabDir; \
-#lcd $SOURCEDIR/Editor/android-build/bin/; prompt; recurse; mput pge_editor_dev.apk; \
-#lcd $DeployDir; recurse; mput pge-editor-dev-linux-mint.tar.gz; exit;"
 
 echo ""
 echo ""
