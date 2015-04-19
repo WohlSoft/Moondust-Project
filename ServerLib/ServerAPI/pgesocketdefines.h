@@ -5,8 +5,8 @@
 
 //This is the network ID.
 //For every change you should increment it.
-extern const qlonglong PGENetworkVersion = 0;
-extern const quint16 PGENetworkPort = 64100;
+static const qlonglong PGENetworkVersion = 0;
+static const quint16 PGENetworkPort = 64100;
 
 //These are the packets which should be implemented on server side and client side
 enum class PGEPackets{
