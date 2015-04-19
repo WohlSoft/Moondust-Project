@@ -14,8 +14,12 @@ TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += c++11
 
+DEFINES += LIBPGEServerAPI
 
 DESTDIR = $$PWD/../../_Libs/_builds/commonlibs
+
+target.path += $$PWD/../../_Libs/_builds/commonlibs
+INSTALLS += target
 
 android:{
     ARCH=android_arm
