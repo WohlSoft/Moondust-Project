@@ -7,11 +7,8 @@
 
 void PGEServer::init()
 {
-    m_server = new QTcpServer();
-    m_server->moveToThread(this);
-    m_server->listen(QHostAddress::Any, PGENetworkPort);
-    connect(m_server, SIGNAL(newConnection()), this, SLOT(server_incomingConnection()));
-    connect(m_server, SIGNAL(acceptError(QAbstractSocket::SocketError)), this, SLOT(serversocket_reportError(QAbstractSocket::SocketError)));
+    qDebug() << "Starting Server Thread...";
+    this->start();
 }
 
 void PGEServer::server_incomingConnection()
@@ -181,6 +178,19 @@ void PGEServer::socket_disconnect()
         }
     }
 }
+
+void PGEServer::run()
+{
+    qDebug() << "Starting server...";
+    m_server = new QTcpServer();
+    m_server->moveToThread(this);
+    m_server->listen(QHostAddress::Any, PGENetworkPort);
+    qDebug() << "Server is now running at port " << PGENetworkPort;
+    connect(m_server, SIGNAL(newConnection()), this, SLOT(server_incomingConnection()));
+    connect(m_server, SIGNAL(acceptError(QAbstractSocket::SocketError)), this, SLOT(serversocket_reportError(QAbstractSocket::SocketError)));
+    (void) exec();
+}
+
 
 PGEConnectedUser *PGEServer::getPGEUserBySocket(QTcpSocket *socket)
 {

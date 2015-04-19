@@ -11,8 +11,6 @@ public:
     explicit PGEServer(QObject *parent = 0);
     explicit PGEServer(const QMap<PGEPackets, QMetaObject*> &toRegisterPackets, QObject *parent = 0);
     ~PGEServer();
-signals:
-
 public slots:
     //On Server-Side this function is broadcasting
     virtual void dispatchPacket(Packet * packet) Q_DECL_OVERRIDE Q_DECL_FINAL;
@@ -22,6 +20,9 @@ signals:
     void userConnected(PGEConnectedUser* user);
     void userDisconnected(PGEConnectedUser* user);
     void receivedData();
+
+protected:
+    virtual void run();
 
 private slots:
     void server_incomingConnection();
