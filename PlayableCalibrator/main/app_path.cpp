@@ -29,10 +29,10 @@ QString ApplicationPath_x;
 
 QString AppPathManager::_settingsPath;
 
-#ifndef __ANDROID__
-#define UserDirName "/.PGE_Project"
+#if __ANDROID__ || __APPLE__
+#define UserDirName "/PGE Project"
 #else
-#define UserDirName "/PGE_Project"
+#define UserDirName "/.PGE_Project"
 #endif
 
 void AppPathManager::initAppPath()
@@ -71,7 +71,11 @@ void AppPathManager::initAppPath()
 
     if(userDir)
     {
+        #if __ANDROID__||__APPLE__
+        QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+        #else
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        #endif
         if(!path.isEmpty())
         {
             QDir appDir(path+UserDirName);
@@ -108,7 +112,11 @@ QString AppPathManager::userAppDir()
 
 void AppPathManager::install()
 {
+    #if __ANDROID__||__APPLE__
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    #else
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    #endif
     if(!path.isEmpty())
     {
         QDir appDir(path+UserDirName);
