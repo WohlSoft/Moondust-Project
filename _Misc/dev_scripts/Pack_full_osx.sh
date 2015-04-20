@@ -60,6 +60,11 @@ if [ -f "$DeployDir/$PgePrjSD/themes/*.zip" ]; then
 rm "$DeployDir/$PgePrjSD/themes/*.zip"
 fi
 
+if [ -f "$DeployDir/$PgePrjSD/Data directory" ]; then
+    rm "$DeployDir/$PgePrjSD/Data directory"
+fi
+ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
+
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
 "$CurDir/create-dmg.sh" --volname "PGE Project" --window-size 800 600 --app-drop-link 450 320 "$DeployDir/$TarGzArName" "$DeployDir/$PgePrjSD_dmg"
