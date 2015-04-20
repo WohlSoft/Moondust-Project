@@ -39,17 +39,57 @@ function relocateLibraryInCurrentApp() {
   install_name_tool -change $1$2 @executable_path/../../../_Libs/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH
 }
 
-echo "Installing libs for $TARGET_APP..."
+function relocateLibraryInCurrentLib() {
+  echo $1$2
+  install_name_tool -change $1$2 @loader_path/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH
+}
 
+fetchPathsForApp()
+{
 FILES=$SCRIPTPATH"/../_Libs/_builds/macos/lib/*.dylib"
 for f in $FILES
 do
-  filename="${f##*/}"
-  #echo "Processing $filename file..."
-  relocateLibraryInCurrentApp "" $filename #note the space
+filename="${f##*/}"
+#echo "Processing $filename file..."
+relocateLibraryInCurrentApp "" $filename #note the space
 done
+}
 
+fetchPathsForLib()
+{
+FILES=$SCRIPTPATH"/../bin/_Libs/*.dylib"
+for f in $FILES
+do
+filename="${f##*/}"
+#echo "Processing $filename file..."
+relocateLibraryInCurrentLib "/lib/" $filename #note the space
+relocateLibraryInCurrentLib "/Users/*/Wohlstand/PGE-Project/_Libs/_builds/macos/lib/" $filename #note the space
+done
+}
+
+echo "Installing libs for $TARGET_APP..."
+fetchPathsForApp # Fetch for executable
 relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the space
+
+EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.0.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.0.0.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libvorbis.0.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libvorbisenc.2.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libFLAC.8.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libFLAC++.6.dylib"
+fetchPathsForLib #fetch for our dylib
+EXECUTABLE_PATH="_Libs/libFLAC++.6.dylib"
+fetchPathsForLib #fetch for our dylib
+
 
 cd $bak
 #if [[ $1 != "no-pause" ]]; then read -n 1; fi

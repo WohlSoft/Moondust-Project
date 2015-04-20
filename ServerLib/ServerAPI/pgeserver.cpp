@@ -17,16 +17,20 @@ PGEServer::PGEServer(const QMap<PGEPackets, QMetaObject *> &toRegisterPackets, Q
 
 PGEServer::~PGEServer()
 {
+    //We don't have to delete the sockets, as the server is already doing it.
     foreach(PGEConnectedUser* user, m_connectedUser){
         user->socket->disconnectFromHost();
+        user->socket->flush();
     }
     qDeleteAll(m_connectedUser);
 
     foreach(QTcpSocket* socket, m_unindentifiedSockets){
         socket->disconnectFromHost();
+        socket->flush();
     }
+
     m_server->close();
-    m_server->deleteLater();
+    delete m_server;
 }
 
 
@@ -73,6 +77,7 @@ void PGEServer::dispatchPacketToUser(PGEConnectedUser *user, Packet *packet)
 
     delete packet;
 }
+
 
 
 
