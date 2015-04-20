@@ -29,6 +29,12 @@ QString ApplicationPath_x;
 
 QString AppPathManager::_settingsPath;
 
+#ifndef __ANDROID__
+#define UserDirName "/.PGE_Project"
+#else
+#define UserDirName "/PGE_Project"
+#endif
+
 void AppPathManager::initAppPath()
 {
     QApplication::setOrganizationName(_COMPANY);
@@ -57,16 +63,20 @@ void AppPathManager::initAppPath()
 
     QSettings setup;
     bool userDir;
+    #if __ANDROID__ || __APPLE__
+    userDir = true;
+    #else
     userDir = setup.value("EnableUserDir", false).toBool();
+    #endif
 
     if(userDir)
     {
         QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
         if(!path.isEmpty())
         {
-            QDir appDir(path+"/.PGE_Project");
+            QDir appDir(path+UserDirName);
             if(!appDir.exists())
-                if(!appDir.mkpath(path+"/.PGE_Project"))
+                if(!appDir.mkpath(path+UserDirName))
                     goto defaultSettingsPath;
 
             _settingsPath = appDir.absolutePath();
@@ -101,9 +111,9 @@ void AppPathManager::install()
     QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     if(!path.isEmpty())
     {
-        QDir appDir(path+"/.PGE_Project");
+        QDir appDir(path+UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path+"/.PGE_Project"))
+            if(!appDir.mkpath(path+UserDirName))
                 return;
 
         QSettings setup;

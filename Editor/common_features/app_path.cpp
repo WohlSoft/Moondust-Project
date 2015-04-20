@@ -84,7 +84,11 @@ void AppPathManager::initAppPath()
 
     QSettings setup;
     bool userDir;
+    #if __ANDROID__ || __APPLE__
+    userDir = true;
+    #else
     userDir = setup.value("EnableUserDir", false).toBool();
+    #endif
 //openUserDir:
 
     if(userDir)
