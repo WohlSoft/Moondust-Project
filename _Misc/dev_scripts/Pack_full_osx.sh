@@ -23,9 +23,6 @@ fi
 if [ ! -d "$DeployDir/$PgePrjSD" ]; then
         mkdir -p "$DeployDir/$PgePrjSD"
 fi
-if [ ! -d "$DeployDir/$PgePrjSD/configs" ]; then
-        mkdir "$DeployDir/$PgePrjSD/configs"
-fi
 
 #$CurDir/upx-linux-x64 pge_editor
 #$CurDir/upx-linux-x64 PNG2GIFs
