@@ -37,6 +37,7 @@ public:
     explicit SelectConfig(QWidget *parent = 0);
     ~SelectConfig();
     QString currentConfig;
+    QString currentConfigPath;
     QString themePack;
     QString isPreLoaded(QString openConfig="");
 
