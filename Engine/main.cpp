@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
 
 
     //Create empty config directory if not exists
-    if(!QDir(ApplicationPath + "/" +  "configs").exists())
-        QDir().mkdir(ApplicationPath + "/" +  "configs");
+    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
+        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
 
     // Config manager
     SelectConfig *cmanager = new SelectConfig();
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
         //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
         {
-            configPath = cmanager->currentConfig;
+            configPath = cmanager->currentConfigPath;
         }
         else
         {

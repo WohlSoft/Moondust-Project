@@ -89,8 +89,8 @@ QString ConfigManager::commonGPath;
 
 void ConfigManager::setConfigPath(QString p)
 {
-    config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
-    config_id = p;
+    config_dir = p + "/";
+    config_id = QDir(p).dirName();
 }
 
 
