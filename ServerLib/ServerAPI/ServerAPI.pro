@@ -18,9 +18,6 @@ DEFINES += LIBPGEServerAPI
 
 DESTDIR = $$PWD/../../_Libs/_builds/commonlibs
 
-target.path += $$PWD/../../_Libs/_builds/commonlibs
-INSTALLS += target
-
 android:{
     ARCH=android_arm
 } else {
@@ -64,10 +61,6 @@ HEADERS += \
     utils/pgewriterutils.h \
     utils/pgemiscutils.h \
     packet/base/handshake/packethandshakeaccepted.h
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
 
 OTHER_FILES += \
     PacketInfo.txt
