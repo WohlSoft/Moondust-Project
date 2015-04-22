@@ -21,7 +21,7 @@ echo "QT_HOST_DATA=/home/travis/Qt/Qt-5.4_static" >> _paths.sh
 /home/travis/Qt/Qt-5.4_static/bin/qmake -set QT_HOST_DATA /home/travis/Qt/Qt-5.4_static
 #    QT_INSTALL_CONFIGURATION - location for Qt settings. Not applicable on Windows
 echo "QT_INSTALL_CONFIGURATION=/home/travis/Qt/Qt-5.4_static/bin" >> _paths.sh
-cp $PWD/_Libs/qmake.conf /home/travis/Qt/Qt-5.4_static/bin
+cp $PWD/_Libs/qmake.conf /home/travis/Qt/Qt-5.4_static/mkspecs/linux-g++
 
 echo "export QMAKESPEC QT_INSTALL_CONFIGURATION QT_INSTALL_PREFIX" >> _paths.sh
 
