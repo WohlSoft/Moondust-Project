@@ -78,6 +78,25 @@ private:
 };
 
 
+class PGE_IntMenuItem : public PGE_Menuitem
+{
+public:
+    PGE_IntMenuItem();
+    PGE_IntMenuItem(const PGE_IntMenuItem &it);
+    ~PGE_IntMenuItem();
+    void left();
+    void right();
+    void render(int x, int y);
+
+private:
+    int *intvalue;
+    int min;
+    int max;
+    bool allowRotation;
+    friend class PGE_Menu;
+};
+
+
 class PGE_Menu
 {
 public:
@@ -85,7 +104,9 @@ public:
     ~PGE_Menu();
 
     void addMenuItem(QString value, QString title="");
+
     void addBoolMenuItem(bool *flag, QString value, QString title="");
+    void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false);
 
     void clear(); //!< Clean all menuitems
 
@@ -128,6 +149,7 @@ public:
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(QSize s);      //!< Sets size of menu box
 
+
 private:
     QRect menuRect;
 
@@ -140,6 +162,7 @@ private:
     bool _EndSelection;
     bool _accept;
     QList<PGE_BoolMenuItem > _items_bool;
+    QList<PGE_IntMenuItem > _items_int;
     QList<PGE_Menuitem > _items_normal;
 
     QList<PGE_Menuitem *> _items;
