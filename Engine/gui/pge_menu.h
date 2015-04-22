@@ -29,7 +29,7 @@ class PGE_Menuitem
 {
 public:
     PGE_Menuitem();
-    ~PGE_Menuitem();
+    virtual ~PGE_Menuitem();
     PGE_Menuitem(const PGE_Menuitem &_it);
     PGE_Menuitem operator=(const PGE_Menuitem &_it)
     {
@@ -39,12 +39,44 @@ public:
         return *this;
     }
 
+    virtual void left();
+    virtual void right();
+    virtual void toggle();
+
+    virtual void render(int x, int y);
+
     QString title;
     QString value;
+    enum itemType{
+        ITEM_Normal=0,
+        ITEM_Bool,
+        ITEM_Int,
+        ITEM_StrList
+    };
+
+    itemType type;
+
 private:
     GLuint textTexture;
     friend class PGE_Menu;
 };
+
+class PGE_BoolMenuItem : public PGE_Menuitem
+{
+public:
+    PGE_BoolMenuItem();
+    PGE_BoolMenuItem(const PGE_BoolMenuItem &it);
+    ~PGE_BoolMenuItem();
+    void left();
+    void right();
+    void render(int x, int y);
+    void toggle();
+
+private:
+    bool *flag;
+    friend class PGE_Menu;
+};
+
 
 class PGE_Menu
 {
@@ -53,6 +85,7 @@ public:
     ~PGE_Menu();
 
     void addMenuItem(QString value, QString title="");
+    void addBoolMenuItem(bool *flag, QString value, QString title="");
 
     void clear(); //!< Clean all menuitems
 
@@ -60,6 +93,8 @@ public:
     void selectDown(); //!< move selection cursor down
     void scrollUp();   //!< Scroll by mousewheel
     void scrollDown(); //!< Scroll by mousewheel
+    void selectLeft(); //!< switch to left  (for lists)
+    void selectRight();//!< switch to right (for lists)
     void acceptItem(); //!< Accept currently selected item
     void rejectItem(); //!< Reject menu
     void resetState(); //!< Reset state after acception or rejection
@@ -104,8 +139,11 @@ private:
     bool arrowDownViz;
     bool _EndSelection;
     bool _accept;
-    QList<PGE_Menuitem > _items;
-    bool namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2);
+    QList<PGE_BoolMenuItem > _items_bool;
+    QList<PGE_Menuitem > _items_normal;
+
+    QList<PGE_Menuitem *> _items;
+    bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();
     PGE_Texture _selector;
     PGE_Texture _scroll_up;

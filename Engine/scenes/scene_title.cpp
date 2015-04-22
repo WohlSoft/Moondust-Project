@@ -316,6 +316,12 @@ int TitleScene::exec()
                       case SDLK_DOWN:
                         menu.selectDown();
                       break;
+                      case SDLK_LEFT:
+                        menu.selectLeft();
+                      break;
+                      case SDLK_RIGHT:
+                        menu.selectRight();
+                      break;
                       case SDLK_RETURN:
                         menu.acceptItem();
                       break;
@@ -554,6 +560,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setItemsNumber(5);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("dab", "Dummy and big menu");
+                menu.addBoolMenuItem(&PGE_Window::showDebugInfo, "dbg_flag", "Show debug info");
             break;
                 case menu_tests:
                     menu.setPos(260,380);
