@@ -561,6 +561,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("dab", "Dummy and big menu");
                 menu.addBoolMenuItem(&PGE_Window::showDebugInfo, "dbg_flag", "Show debug info");
+                menu.addIntMenuItem(&PGE_Window::PhysStep, 65, 80, "phys_step", "Physics step");
             break;
                 case menu_tests:
                     menu.setPos(260,380);

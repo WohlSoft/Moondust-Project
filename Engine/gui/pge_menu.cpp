@@ -96,6 +96,23 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
     _items.push_back( &_items_bool.last() );
 }
 
+void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate)
+{
+    PGE_IntMenuItem item;
+    item.intvalue = intvalue;
+    item.value = value;
+    item.min=min;
+    item.max=max;
+    item.allowRotation=rotate;
+    item.title = (title.isEmpty() ? "unknown integer" : title);
+    item.textTexture = FontManager::TextToTexture(item.title,
+                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    _items_int.push_back(item);
+    _items.push_back( &_items_int.last() );
+}
+
+
 void PGE_Menu::clear()
 {
     for(int i=0;i<_items.size();i++)
@@ -106,6 +123,7 @@ void PGE_Menu::clear()
     _items.clear();
     _items_normal.clear();
     _items_bool.clear();
+    _items_int.clear();
     reset();
 }
 
@@ -580,7 +598,7 @@ void PGE_Menuitem::render(int x, int y)
 }
 
 
-
+/**************************Bool menu item************************************/
 PGE_BoolMenuItem::PGE_BoolMenuItem() : PGE_Menuitem()
 {
     flag=NULL;
@@ -615,4 +633,51 @@ void PGE_BoolMenuItem::toggle()
 {
     if(flag)
         *flag=!(*flag);
+}
+
+
+
+/**************************Integer menu item************************************/
+
+PGE_IntMenuItem::PGE_IntMenuItem() : PGE_Menuitem()
+{
+    intvalue=NULL;
+    type=ITEM_Int;
+    min=0;
+    max=0;
+    allowRotation=false;
+}
+
+PGE_IntMenuItem::PGE_IntMenuItem(const PGE_IntMenuItem &it) : PGE_Menuitem(it)
+{
+    this->intvalue = it.intvalue;
+    this->min = it.min;
+    this->max = it.max;
+    this->allowRotation = it.allowRotation;
+}
+
+PGE_IntMenuItem::~PGE_IntMenuItem()
+{}
+
+void PGE_IntMenuItem::left()
+{
+    if(!intvalue) return;
+    (*intvalue)--;
+    if((*intvalue)<min)
+        *intvalue=allowRotation?max:min;
+}
+
+void PGE_IntMenuItem::right()
+{
+    if(!intvalue) return;
+    (*intvalue)++;
+    if((*intvalue)>max)
+        *intvalue=allowRotation?min:max;
+}
+
+void PGE_IntMenuItem::render(int x, int y)
+{
+    PGE_Menuitem::render(x, y);
+    if(intvalue)
+        FontManager::printText(QString::number(*intvalue), x+350, y);
 }
