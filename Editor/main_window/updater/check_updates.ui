@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
-    <height>348</height>
+    <width>504</width>
+    <height>317</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,7 +23,10 @@
    <iconset resource="../../_resources/editor.qrc">
     <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
    <property name="leftMargin">
     <number>9</number>
    </property>
@@ -39,16 +42,6 @@
    <property name="spacing">
     <number>9</number>
    </property>
-   <item row="8" column="0">
-    <widget class="QLabel" name="updatesStable">
-     <property name="text">
-      <string>Click to check updates</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="0" colspan="4">
     <widget class="QLabel" name="label_3">
      <property name="minimumSize">
@@ -85,16 +78,6 @@
      </property>
      <property name="text">
       <string>Laboratory builds</string>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="0">
-    <widget class="QLabel" name="updatesAlpha">
-     <property name="text">
-      <string>Click to check updates</string>
-     </property>
-     <property name="openExternalLinks">
-      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -159,8 +142,20 @@
    </item>
    <item row="2" column="0" colspan="4">
     <widget class="QLabel" name="label">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>45</height>
+      </size>
+     </property>
      <property name="text">
       <string>This is an update checker dialog. Here you can check available updates.</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::PlainText</enum>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -197,20 +192,27 @@
      </property>
     </widget>
    </item>
-   <item row="13" column="0">
-    <widget class="QPushButton" name="CheckAlpha">
-     <property name="minimumSize">
-      <size>
-       <width>185</width>
-       <height>23</height>
-      </size>
-     </property>
+   <item row="14" column="0" colspan="4">
+    <widget class="QLabel" name="updatesAlpha">
      <property name="text">
-      <string>Check laboratory updates</string>
+      <string>Click to check updates</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0" colspan="4">
+    <widget class="QLabel" name="updatesStable">
+     <property name="text">
+      <string>Click to check updates</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="4">
     <widget class="QPushButton" name="CheckStable">
      <property name="minimumSize">
       <size>
@@ -220,6 +222,19 @@
      </property>
      <property name="text">
       <string>Check stable updates</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0" colspan="4">
+    <widget class="QPushButton" name="CheckAlpha">
+     <property name="minimumSize">
+      <size>
+       <width>185</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Check laboratory updates</string>
      </property>
     </widget>
    </item>
