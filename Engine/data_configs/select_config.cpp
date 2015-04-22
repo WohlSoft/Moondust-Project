@@ -38,13 +38,42 @@ SelectConfig::SelectConfig(QWidget *parent) :
     currentConfig = "";
     themePack = "";
 
+    typedef QPair<QString, QString > configPackPair;
+    QList<configPackPair > config_paths;
+
     QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
+
     QStringList configs = configDir.entryList(QDir::AllDirs);
 
     foreach(QString c, configs)
     {
         QString config_dir = configPath+c+"/";
+        configPackPair path;
+        path.first = c;//Full path
+        path.second = config_dir;//name of config dir
+        config_paths<<path;
+    }
+
+    if(AppPathManager::userDirIsAvailable())
+    {
+        QString configPath_user = AppPathManager::userAppDir()+"/configs/";//!< User additional folder
+        QDir configUserDir(configPath_user);
+        configs=configUserDir.entryList(QDir::AllDirs);
+        foreach(QString c, configs)
+        {
+            QString config_dir = configPath_user+c+"/";
+            configPackPair path;
+            path.first = c;//Full path
+            path.second = config_dir;//name of config dir
+            config_paths<<path;
+        }
+    }
+
+    foreach(configPackPair confD, config_paths)
+    {
+        QString c=confD.first;
+        QString config_dir=confD.second;
         QString configName;
         QString data_dir;
         QString splash_logo;
@@ -88,6 +117,7 @@ SelectConfig::SelectConfig(QWidget *parent) :
         item->setIcon( QIcon( iconImg ) );
         item->setData(Qt::ToolTipRole, description);
         item->setData(Qt::UserRole, c);
+        item->setData(Qt::UserRole+4, config_dir);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->configList->addItem( item );
@@ -109,18 +139,22 @@ QString SelectConfig::isPreLoaded(QString openConfig)
 {
     QString configPath = openConfig;
 
-    //check exists of config in list
-    foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
-    {
-        if(configPath.isEmpty())
-        {
-            currentConfig = ""; break;
-        }
-        if(it->data(3).toString()==configPath)
-        {
-            currentConfig = configPath; break;
-        }
-    }
+    if(QFileInfo(openConfig+"/main.ini").exists())
+        currentConfig=configPath;
+//    //check exists of config in list
+//    foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+//    {
+//        if(configPath.isEmpty())
+//        {
+//            currentConfig = ""; break;
+//        }
+//        if(it->data(Qt::UserRole+4).toString()==configPath)
+//        {
+//            currentConfig = it->data(Qt::UserRole).toString();
+//            currentConfigPath = it->data(Qt::UserRole+4).toString();
+//            break;
+//        }
+//    }
 
     return currentConfig;
 }
@@ -128,6 +162,7 @@ QString SelectConfig::isPreLoaded(QString openConfig)
 void SelectConfig::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     currentConfig = item->data(Qt::UserRole).toString();
+    currentConfigPath = item->data(Qt::UserRole+4).toString();
     this->accept();
 }
 
@@ -135,6 +170,7 @@ void SelectConfig::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
     currentConfig = ui->configList->selectedItems().first()->data(Qt::UserRole).toString();
+    currentConfigPath = ui->configList->selectedItems().first()->data(Qt::UserRole+4).toString();
     this->accept();
 }
 

@@ -50,8 +50,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
 #endif
 
     //Create empty config directory if not exists
-    if(!QDir(ApplicationPath + "/" +  "configs").exists())
-        QDir().mkdir(ApplicationPath + "/" +  "configs");
+    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
+        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
 
 
     // Config manager
@@ -60,6 +60,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
+    currentConfigDir = configPath;
+
     askConfigAgain = cmanager->askAgain;
 
     QString tPack = cmanager->themePack;
@@ -69,7 +71,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
         //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
         {
-            configPath = cmanager->currentConfig;
+            configPath = cmanager->currentConfigPath;
         }
         else
         {
@@ -81,8 +83,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     }
     //continueLoad = true;
     askConfigAgain = cmanager->askAgain;
-
-    currentConfigDir = configPath;
+    currentConfigDir = cmanager->currentConfigPath;
 
     delete cmanager;
 

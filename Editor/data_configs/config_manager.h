@@ -36,6 +36,7 @@ public:
     explicit ConfigManager(QWidget *parent = 0);
     ~ConfigManager();
     QString currentConfig;
+    QString currentConfigPath;
     QString themePack;
     QString isPreLoaded();
     void setAskAgain(bool _x);

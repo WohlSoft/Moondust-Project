@@ -40,7 +40,7 @@ function relocateLibraryInCurrentApp() {
 }
 
 function relocateLibraryInCurrentLib() {
-  echo $1$2
+  #echo $1$2
   install_name_tool -change $1$2 @loader_path/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH
 }
 
@@ -58,12 +58,13 @@ done
 fetchPathsForLib()
 {
 FILES=$SCRIPTPATH"/../bin/_Libs/*.dylib"
+SCRP=$(realpath $SCRIPTPATH"/../_Libs/_builds/macos/lib/")
 for f in $FILES
 do
 filename="${f##*/}"
 #echo "Processing $filename file..."
 relocateLibraryInCurrentLib "/lib/" $filename #note the space
-relocateLibraryInCurrentLib "/Users/*/Wohlstand/PGE-Project/_Libs/_builds/macos/lib/" $filename #note the space
+relocateLibraryInCurrentLib $SCRP $filename #note the space
 done
 }
 
