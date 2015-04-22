@@ -84,6 +84,6 @@ cd ..
 #=======================================================================
 printf "\n\n=========BUILT!!===========\n\n"
 cd $bak
-if [[ $1 != "no-pause" ]]; then read -n 1; fi
+# if [[ $1 != "no-pause" ]]; then read -n 1; fi
 exit 0
 

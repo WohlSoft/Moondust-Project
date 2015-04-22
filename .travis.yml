@@ -22,7 +22,7 @@ before_install:
 #- brew install qt5
 - chmod u+x generate_paths_travis.sh
 - bash generate_paths_travis.sh
-- bash build_deps.sh no-pause
+- bash build_deps.sh no-libs
 install: true
 script:
 - bash build.sh no-pause
