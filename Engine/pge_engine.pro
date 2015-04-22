@@ -175,7 +175,8 @@ SOURCES += \
     data_configs/setup_title_screen.cpp \
     data_configs/obj_music.cpp \
     data_configs/obj_sound.cpp \
-    audio/pge_audio.cpp
+    audio/pge_audio.cpp \
+    settings/global_settings.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -256,7 +257,8 @@ HEADERS  += \
     data_configs/obj_music.h \
     data_configs/obj_sound.h \
     audio/pge_audio.h \
-    data_configs/obj_sound_roles.h
+    data_configs/obj_sound_roles.h \
+    settings/global_settings.h
 
 FORMS    += \
     data_configs/select_config.ui
