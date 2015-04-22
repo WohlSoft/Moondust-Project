@@ -74,7 +74,7 @@ void dataconfigs::addError(QString bug, QtMsgType level)
 
 void dataconfigs::setConfigPath(QString p)
 {
-    config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
+    config_dir = p;
 }
 
 void dataconfigs::loadBasics()

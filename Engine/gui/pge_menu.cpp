@@ -74,21 +74,56 @@ void PGE_Menu::addMenuItem(QString value, QString title)
 {
     PGE_Menuitem item;
     item.value = value;
+    item.type=PGE_Menuitem::ITEM_Normal;
     item.title = (title.isEmpty() ? value : title);
     item.textTexture = FontManager::TextToTexture(item.title,
                                                   QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
                                                   Qt::AlignLeft | Qt::AlignVCenter, true );
-    _items.push_back(item);
+    _items_normal.push_back(item);
+    _items.push_back( &_items_normal.last() );
 }
+
+void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
+{
+    PGE_BoolMenuItem item;
+    item.flag = flag;
+    item.value = value;
+    item.title = (title.isEmpty() ? "unknown flag" : title);
+    item.textTexture = FontManager::TextToTexture(item.title,
+                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    _items_bool.push_back(item);
+    _items.push_back( &_items_bool.last() );
+}
+
+void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate)
+{
+    PGE_IntMenuItem item;
+    item.intvalue = intvalue;
+    item.value = value;
+    item.min=min;
+    item.max=max;
+    item.allowRotation=rotate;
+    item.title = (title.isEmpty() ? "unknown integer" : title);
+    item.textTexture = FontManager::TextToTexture(item.title,
+                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    _items_int.push_back(item);
+    _items.push_back( &_items_int.last() );
+}
+
 
 void PGE_Menu::clear()
 {
     for(int i=0;i<_items.size();i++)
     {
         glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &_items[i].textTexture );
+        glDeleteTextures(1, &_items[i]->textTexture );
     }
     _items.clear();
+    _items_normal.clear();
+    _items_bool.clear();
+    _items_int.clear();
     reset();
 }
 
@@ -151,10 +186,31 @@ void PGE_Menu::scrollDown()
     }
 }
 
+void PGE_Menu::selectLeft()
+{
+    if(_items.size()>0)
+        _items[_currentItem]->left();
+}
+
+void PGE_Menu::selectRight()
+{
+    if(_items.size()>0)
+        _items[_currentItem]->right();
+}
+
 void PGE_Menu::acceptItem()
 {
-    _EndSelection=true;
-    _accept=true;
+    if(_items.size()<=0) return;
+
+    if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Bool)
+    {
+        _items[_currentItem]->toggle();
+    }
+    else
+    {
+        _EndSelection=true;
+        _accept=true;
+    }
 }
 
 void PGE_Menu::rejectItem()
@@ -196,9 +252,9 @@ void PGE_Menu::sort()
     autoOffset();
 }
 
-bool PGE_Menu::namefileLessThan(const PGE_Menuitem &d1, const PGE_Menuitem &d2)
+bool PGE_Menu::namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
 {
-    return (QString::compare(d1.title, d2.title, Qt::CaseInsensitive)>0); // sort by title
+    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)>0); // sort by title
 }
 
 bool PGE_Menu::isSelected()
@@ -266,7 +322,7 @@ int PGE_Menu::findItem(int x, int y)
 const PGE_Menuitem PGE_Menu::currentItem()
 {
     if(_items.size()>0)
-        return _items[_currentItem];
+        return *_items[_currentItem];
     else
     {
         PGE_Menuitem dummy;
@@ -508,8 +564,7 @@ void PGE_Menu::render()
             }
         }
 
-        FontManager::SDL_string_render2D(xPos,yPos,
-                                        &_items[i].textTexture);
+        _items[i]->render(xPos, yPos);
     }
 }
 
@@ -528,6 +583,101 @@ PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
     this->title = _it.title;
     this->value = _it.value;
     this->textTexture = _it.textTexture;
+    this->type = _it.type;
+}
+
+void PGE_Menuitem::left() {}
+
+void PGE_Menuitem::right() {}
+
+void PGE_Menuitem::toggle() {}
+
+void PGE_Menuitem::render(int x, int y)
+{
+    FontManager::SDL_string_render2D(x,y, &textTexture);
 }
 
 
+/**************************Bool menu item************************************/
+PGE_BoolMenuItem::PGE_BoolMenuItem() : PGE_Menuitem()
+{
+    flag=NULL;
+    type=ITEM_Bool;
+}
+
+PGE_BoolMenuItem::PGE_BoolMenuItem(const PGE_BoolMenuItem &it) : PGE_Menuitem(it)
+{
+    this->flag = it.flag;
+}
+
+PGE_BoolMenuItem::~PGE_BoolMenuItem() {}
+
+void PGE_BoolMenuItem::left()
+{
+    toggle();
+}
+
+void PGE_BoolMenuItem::right()
+{
+    toggle();
+}
+
+void PGE_BoolMenuItem::render(int x, int y)
+{
+    PGE_Menuitem::render(x, y);
+    if(flag)
+        FontManager::printText((*flag)?"ON":"OFF", x+350, y);
+}
+
+void PGE_BoolMenuItem::toggle()
+{
+    if(flag)
+        *flag=!(*flag);
+}
+
+
+
+/**************************Integer menu item************************************/
+
+PGE_IntMenuItem::PGE_IntMenuItem() : PGE_Menuitem()
+{
+    intvalue=NULL;
+    type=ITEM_Int;
+    min=0;
+    max=0;
+    allowRotation=false;
+}
+
+PGE_IntMenuItem::PGE_IntMenuItem(const PGE_IntMenuItem &it) : PGE_Menuitem(it)
+{
+    this->intvalue = it.intvalue;
+    this->min = it.min;
+    this->max = it.max;
+    this->allowRotation = it.allowRotation;
+}
+
+PGE_IntMenuItem::~PGE_IntMenuItem()
+{}
+
+void PGE_IntMenuItem::left()
+{
+    if(!intvalue) return;
+    (*intvalue)--;
+    if((*intvalue)<min)
+        *intvalue=allowRotation?max:min;
+}
+
+void PGE_IntMenuItem::right()
+{
+    if(!intvalue) return;
+    (*intvalue)++;
+    if((*intvalue)>max)
+        *intvalue=allowRotation?min:max;
+}
+
+void PGE_IntMenuItem::render(int x, int y)
+{
+    PGE_Menuitem::render(x, y);
+    if(intvalue)
+        FontManager::printText(QString::number(*intvalue), x+350, y);
+}

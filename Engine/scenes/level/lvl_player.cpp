@@ -204,7 +204,7 @@ void LVL_Player::update(float ticks)
     {
         if(gscale_Backup != 0.f)
         {
-            physBody->SetGravityScale(1);
+            physBody->SetGravityScale(physics_cur.gravity_scale);
             gscale_Backup = 0.f;
         }
     }
@@ -274,6 +274,8 @@ void LVL_Player::update(float ticks)
         curHMaxSpeed = isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk;
+
+        isFloating=false;//< Reset floating on re-entering into another physical envirinment
     }
 
     if(onGround)
@@ -321,6 +323,7 @@ void LVL_Player::update(float ticks)
         if(climbable_map.size()>0)
         {
             climbing=true;
+            isFloating=false;//!< Reset floating on climbing start
         }
     }
 
@@ -335,6 +338,7 @@ void LVL_Player::update(float ticks)
         if(climbable_map.size()>0)
         {
             climbing=true;
+            isFloating=false;//!< Reset floating on climbing start
         }
     }
 
@@ -383,7 +387,8 @@ void LVL_Player::update(float ticks)
         if(!JumpPressed)
         {
             if(environment!=LVL_PhysEnv::Env_Water)
-                { if(onGround) PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
+                { if(onGround || (environment==LVL_PhysEnv::Env_Quicksand))
+                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
             else
                 PGE_Audio::playSound(72);//temporary!
         }
@@ -450,7 +455,7 @@ void LVL_Player::update(float ticks)
                 {
                     timeToFloat=0;
                     isFloating=false;
-                    physBody->SetGravityScale((int)(!climbing));
+                    physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }
         }
@@ -467,7 +472,7 @@ void LVL_Player::update(float ticks)
                 {
                     timeToFloat=0;
                     isFloating=false;
-                    physBody->SetGravityScale((int)(!climbing));
+                    physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }
         }
@@ -757,7 +762,7 @@ void LVL_Player::refreshAnimation()
         {
             bool busy=false;
 
-            if((physBody->GetLinearVelocity().x>0)!=(direction>0))
+            if((physBody->GetLinearVelocity().x<-1)&&(direction>0))
                 if(keys.right)
                 {
                     if(SDL_GetTicks()-slideTicks>100)
@@ -771,7 +776,7 @@ void LVL_Player::refreshAnimation()
 
             if(!busy)
             {
-                if((physBody->GetLinearVelocity().x<0)!=(direction<0))
+                if((physBody->GetLinearVelocity().x>1)&&(direction<0))
                     if(keys.left)
                     {
                         if(SDL_GetTicks()-slideTicks>100)

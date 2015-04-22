@@ -23,9 +23,6 @@ fi
 if [ ! -d "$DeployDir/$PgePrjSD" ]; then
         mkdir -p "$DeployDir/$PgePrjSD"
 fi
-if [ ! -d "$DeployDir/$PgePrjSD/configs" ]; then
-        mkdir "$DeployDir/$PgePrjSD/configs"
-fi
 
 #$CurDir/upx-linux-x64 pge_editor
 #$CurDir/upx-linux-x64 PNG2GIFs
@@ -59,6 +56,11 @@ cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 if [ -f "$DeployDir/$PgePrjSD/themes/*.zip" ]; then
 rm "$DeployDir/$PgePrjSD/themes/*.zip"
 fi
+
+if [ -f "$DeployDir/$PgePrjSD/Data directory" ]; then
+    rm "$DeployDir/$PgePrjSD/Data directory"
+fi
+ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data directory"
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi

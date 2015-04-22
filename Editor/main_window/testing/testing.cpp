@@ -76,7 +76,7 @@ void MainWindow::on_action_doTest_triggered()
 
         QStringList args;
         args << "--debug";
-        args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
+        args << "--config=\""+configs.config_dir+"\"";
         args << "--interprocessing";//activeLvlEditWin()->curFile;
 
         IntEngine::setTestLvlBuffer(edit->LvlData);
@@ -125,7 +125,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 
         QStringList args;
         args << "--debug";
-        args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
+        args << "--config=\""+configs.config_dir+"\"";
         args << activeLvlEditWin()->curFile;
 
         QProcess::startDetached(command, args);
@@ -144,7 +144,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 
         QStringList args;
         args << "--debug";
-        args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
+        args << "--config=\""+configs.config_dir+"\"";
         args << activeWldEditWin()->curFile;
 
         QProcess::startDetached(command, args);

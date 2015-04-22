@@ -25,6 +25,7 @@ Editor 0.3.0
 - Fixed crash on wrong log path, added log rotation on each start-up of editor like made in the engine.
 - If configuration package is failed, config status window will pop-up automatically
 - Added testing of world maps!
+- Added ability to install config pack into %UserProfile%\.PGE_Project, ~/.PGE_Project or ~/Library/Application Support/PGE Project folder
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

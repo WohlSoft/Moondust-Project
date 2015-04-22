@@ -184,20 +184,39 @@ ConfigManager::ConfigManager(QWidget *parent) :
     themePack = "";
     askAgain = false;
 
-    QString configPath(ApplicationPath+"/configs/");
-    QDir configDir(configPath);
-    QStringList configs = configDir.entryList(QDir::AllDirs);
-
     typedef QPair<QString, QString > configPackPair;
     QList<configPackPair > config_paths;
 
+    QString configPath;
+    QString configPath_user;
+
+    QStringList configs;
+
+    configPath=(ApplicationPath+"/configs/");//!< Stuff PGE config dir
+    QDir configDir(configPath);
+    configs=configDir.entryList(QDir::AllDirs);
     foreach(QString c, configs)
     {
         QString config_dir = configPath+c+"/";
         configPackPair path;
-        path.first = c;
-        path.second = config_dir;
+        path.first = c;//Full path
+        path.second = config_dir;//name of config dir
         config_paths<<path;
+    }
+
+    if(AppPathManager::userDirIsAvailable())
+    {
+        configPath_user = AppPathManager::userAppDir()+"/configs/";//!< User additional folder
+        QDir configUserDir(configPath_user);
+        configs=configUserDir.entryList(QDir::AllDirs);
+        foreach(QString c, configs)
+        {
+            QString config_dir = configPath_user+c+"/";
+            configPackPair path;
+            path.first = c;//Full path
+            path.second = config_dir;//name of config dir
+            config_paths<<path;
+        }
     }
 
     ui->configList->setItemDelegate(new ListDelegate(ui->configList));
@@ -249,6 +268,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
         item->setData(3, c);
         item->setData(Qt::UserRole + 1, configDesc);
         item->setData(Qt::UserRole + 2, smbx_compatible);
+        item->setData(Qt::UserRole + 4, config_dir);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
         ui->configList->addItem( item);
     }
@@ -263,7 +283,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
                     tr("Available configuration packages are not found!<br>\n"
                        "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
                        "You can take any configuration package here:<br>%2")
-                    .arg(ApplicationPath+"/configs")
+                    .arg(AppPathManager::userAppDir()+"/configs")
                     .arg("<a href=\"http://engine.wohlnet.ru/config_packs.php\">"
                          "http://engine.wohlnet.ru/config_packs.php"
                          "</a>")
@@ -309,9 +329,12 @@ QString ConfigManager::isPreLoaded()
         {
             currentConfig = ""; break;
         }
-        if(it->data(3).toString()==configPath)
+
+        //If full config pack path is same
+        if(it->data(Qt::UserRole+4).toString()==configPath)
         {
-            currentConfig = configPath;
+            currentConfig = it->data(3).toString();
+            currentConfigPath = it->data(Qt::UserRole+4).toString();
             it->setSelected(true);
             ui->configList->scrollToItem(it);
             break;
@@ -320,7 +343,7 @@ QString ConfigManager::isPreLoaded()
 
     ui->AskAgain->setChecked(askAgain);
 
-    return currentConfig;
+    return currentConfigPath;
 }
 
 void ConfigManager::setAskAgain(bool _x)
@@ -332,6 +355,7 @@ void ConfigManager::setAskAgain(bool _x)
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     currentConfig = item->data(3).toString();
+    currentConfigPath = item->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
     this->accept();
 }
@@ -340,6 +364,7 @@ void ConfigManager::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
+    currentConfigPath = ui->configList->selectedItems().first()->data(Qt::UserRole+4).toString();
     askAgain = ui->AskAgain->isChecked();
     this->accept();
 }
