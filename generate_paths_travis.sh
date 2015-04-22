@@ -25,7 +25,7 @@ cp $PWD/_Libs/qt.conf /home/travis/Qt/Qt-5.4_static/bin
 /home/travis/Qt/Qt-5.4_static/bin/qmake -query
 echo "export QMAKESPEC QT_INSTALL_CONFIGURATION QT_INSTALL_PREFIX" >> _paths.sh
 
-echo "QMake=\"/home/travis/Qt/Qt-5.4_static/bin/qmake\"; #" >> _paths.sh
+echo "QMake=\"/home/travis/Qt/Qt-5.4_static/bin/qmake QTPLUGIN.platforms=qxcb\"; #" >> _paths.sh
 echo "" >> _paths.sh
 echo "LRelease=\"/home/travis/Qt/Qt-5.4_static/bin/lrelease\"; #" >> _paths.sh
 echo "#===============================================================================================" >> _paths.sh
