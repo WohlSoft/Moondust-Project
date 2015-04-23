@@ -21,6 +21,7 @@
 #include <fontman/font_manager.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
+#include <audio/pge_audio.h>
 
 PGE_Menu::PGE_Menu()
 {
@@ -129,6 +130,8 @@ void PGE_Menu::clear()
 
 void PGE_Menu::selectUp()
 {
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuScroll);
+
     _currentItem--;
     _line--;
 
@@ -149,6 +152,8 @@ void PGE_Menu::selectUp()
 
 void PGE_Menu::selectDown()
 {
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuScroll);
+
     _currentItem++;
     _line++;
     if(_line > _itemsOnScreen-1)
@@ -206,8 +211,11 @@ void PGE_Menu::acceptItem()
     {
         _items[_currentItem]->toggle();
     }
+    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Int)
+    {}
     else
     {
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
         _EndSelection=true;
         _accept=true;
     }
@@ -215,6 +223,7 @@ void PGE_Menu::acceptItem()
 
 void PGE_Menu::rejectItem()
 {
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
     _EndSelection=true;
     _accept=false;
 }
@@ -288,6 +297,8 @@ void PGE_Menu::setMouseHoverPos(int x, int y)
 {
     int item = findItem(x,y);
     if(item<0) return;
+    if(_currentItem!=item)
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuScroll);
     setCurrentItem(item);
 }
 

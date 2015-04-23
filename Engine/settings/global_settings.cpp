@@ -20,3 +20,13 @@ void GlobalSettings::save()
 
 }
 
+void GlobalSettings::resetDefaults()
+{
+
+}
+
+void GlobalSettings::apply()
+{
+
+}
+

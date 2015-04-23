@@ -9,6 +9,8 @@ public:
     ~GlobalSettings();
     void load();
     void save();
+    void resetDefaults();
+    void apply();
 };
 
 #endif // GLOBALSETTINGS_H
