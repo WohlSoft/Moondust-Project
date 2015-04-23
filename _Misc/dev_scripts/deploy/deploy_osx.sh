@@ -1,4 +1,6 @@
 #!/bin/bash
+InitDir=~+
+cd ..
 source ./_paths.sh
 CurDir=~+
 
@@ -55,6 +57,7 @@ cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 
 if [ -f "$DeployDir/$PgePrjSD/themes/*.zip" ]; then
 rm "$DeployDir/$PgePrjSD/themes/*.zip"
+rm $DeployDir/$PgePrjSD/themes/pge_default/*.zip
 fi
 
 if [ -f "$DeployDir/$PgePrjSD/Data directory" ]; then
@@ -78,5 +81,5 @@ echo ""
 echo ""
 echo "All done!"
 echo ""
-cd $CurDir
+cd $InitDir
 read -n 1

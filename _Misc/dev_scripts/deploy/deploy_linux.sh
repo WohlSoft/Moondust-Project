@@ -1,4 +1,6 @@
 #!/bin/bash
+InitDir=~+
+cd ..
 source ./_paths.sh
 CurDir=~+
 
@@ -48,6 +50,7 @@ cp "$SOURCEDIR/Editor/changelog.editor.txt" "$DeployDir/$PgePrjSD"
 cp "$SOURCEDIR/LICENSE" "$DeployDir/$PgePrjSD/license.txt"
 
 rm $DeployDir/$PgePrjSD/themes/*.zip
+rm $DeployDir/$PgePrjSD/themes/pge_default/*.zip
 
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
@@ -64,6 +67,6 @@ mv ./$TarGzArName "$SOURCEDIR/bin/_packed/$TarGzArName"
 echo ""
 echo "All done!"
 echo ""
-cd $CurDir
+cd $InitDir
 read -n 1
 
