@@ -207,6 +207,7 @@ bool LevelScene::init()
         PGE_LevelCamera* camera;
         camera = new PGE_LevelCamera();
         camera->setWorld(world);
+        camera->setMusicRoot(data.path);
         camera->changeSection(data.sections[sID]);
         camera->isWarp = data.sections[sID].IsWarp;
         camera->section = &(data.sections[sID]);

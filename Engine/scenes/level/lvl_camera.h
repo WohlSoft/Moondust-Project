@@ -77,6 +77,8 @@ public:
     float pos_x;
     float pos_y;
 
+    void setMusicRoot(QString dir);
+
     /**************Fader**************/
     float fader_opacity;
     float target_opacity;
@@ -93,6 +95,7 @@ private:
 
     int width;
     int height;
+    QString musicRootDir;
 
     b2World * worldPtr;
 };
