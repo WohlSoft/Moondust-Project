@@ -240,7 +240,7 @@ void PGE_LevelCamera::changeSection(LevelSection &sct)
     RightOnly = section->noback;
     ExitOffscreen = section->OffScreenEn;
 
-    QString musFile = ConfigManager::getLvlMusic(section->music_id, musicRootDir+section->music_file);
+    QString musFile = ConfigManager::getLvlMusic(section->music_id, musicRootDir+section->music_file.replace('\\', '/'));
     if(!musFile.isEmpty())
     {
         PGE_MusPlayer::MUS_openFile(musFile);
