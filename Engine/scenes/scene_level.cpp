@@ -32,6 +32,7 @@
 #include <gui/pge_msgbox.h>
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
+#include <audio/SdlMusPlayer.h>
 
 #include <QtDebug>
 
@@ -225,7 +226,12 @@ void LevelScene::update()
             }
             else
             {
-                if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
+                if(fader_opacity<=0.0f)
+                {
+                    if(PGE_MusPlayer::MUS_IsPlaying())
+                        PGE_MusPlayer::MUS_stopMusicFadeOut(500);
+                    setFade(25, 1.0f, 0.02f);
+                }
                 if(fader_opacity>=1.0)
                     isLevelContinues=false;
             }
@@ -602,6 +608,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
+        PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }
