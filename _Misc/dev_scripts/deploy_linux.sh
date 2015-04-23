@@ -14,7 +14,7 @@ cd $SOURCEDIR/bin
 
 DeployDir="$SOURCEDIR/bin/_linux_deploy"
 PgePrjSD="PGE_Project"
-TarGzArName="pge-editor-dev-linux-mint.tar.gz"
+TarGzArName="pge-project-dev-linux-mint.tar.gz"
 
 
 if [ ! -d "$DeployDir" ]; then
@@ -53,28 +53,14 @@ cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
 tar -zcvf ./$TarGzArName $PgePrjSD
 
-#NFS [ Network File System != Need For Speed, BUT, Need For Speed Up our network channel! ]
-echo "Copying data..."
-if [ "$1" != "no-android" ]; then
-	cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SiteRootNFS/$LabDir/pge_editor_dev.apk
+if [ ! -d "$SOURCEDIR/bin/_packed" ]; then
+	mkdir "$SOURCEDIR/bin/_packed";
 fi
-cp $DeployDir/pge-editor-dev-linux-mint.tar.gz $SiteRootNFS/$LabDir/pge-editor-dev-linux-mint.tar.gz
+if [ -f "$SOURCEDIR/bin/_packed/$TarGzArName" ]; then
+	rm "$SOURCEDIR/bin/_packed/$TarGzArName";
+fi
+mv ./$TarGzArName "$SOURCEDIR/bin/_packed/$TarGzArName"
 
-echo "Uploading everything to the GNA"
-cd "$SiteRootNFS/$LabDir"
-sh $SiteRootNFS/$LabDir/send_to_gna.sh
-
-#SAMBA
-#echo -n "Type samba password: "
-#TempPasswd=""
-#read TempPasswd
-#echo "Copying data..."
-#cp $SOURCEDIR/Editor/android-build/bin/QtApp-release-signed.apk $SOURCEDIR/Editor/android-build/bin/pge_editor_dev.apk
-#smbclient $SiteRoot $TempPasswd -u vitaly -c "cd $LabDir; \
-#lcd $SOURCEDIR/Editor/android-build/bin/; prompt; recurse; mput pge_editor_dev.apk; \
-#lcd $DeployDir; recurse; mput pge-editor-dev-linux-mint.tar.gz; exit;"
-
-echo ""
 echo ""
 echo "All done!"
 echo ""

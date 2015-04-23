@@ -13,8 +13,8 @@ echo "Preparing Mac OS X deploy..."
 cd $SOURCEDIR/bin
 
 DeployDir="$SOURCEDIR/bin/_macosx_deploy"
-PgePrjSD_dmg="pge_prject"
-PgePrjSD="pge_prject/PGE Project"
+PgePrjSD_dmg="pge_project"
+PgePrjSD="pge_project/PGE Project"
 TarGzArName="pge-project-dev-macosx.dmg"
 
 if [ ! -d "$DeployDir" ]; then
@@ -65,6 +65,14 @@ ln -s ~/Library/Application\ Support/PGE\ Project "$DeployDir/$PgePrjSD/Data dir
 cd $DeployDir
 if [ -f ./$TarGzArName ]; then rm -f ./$TarGzArName; fi
 "$CurDir/create-dmg.sh" --volname "PGE Project" --window-size 800 600 --app-drop-link 450 320 "$DeployDir/$TarGzArName" "$DeployDir/$PgePrjSD_dmg"
+
+if [ ! -d "$SOURCEDIR/bin/_packed" ]; then
+	mkdir "$SOURCEDIR/bin/_packed";
+fi
+if [ -f "$SOURCEDIR/bin/_packed/$TarGzArName" ]; then
+	rm "$SOURCEDIR/bin/_packed/$TarGzArName";
+fi
+mv "$DeployDir/$TarGzArName" "$SOURCEDIR/bin/_packed/$TarGzArName"
 
 echo ""
 echo ""
