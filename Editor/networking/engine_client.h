@@ -78,6 +78,7 @@ public:
     void OpenConnection();
     void closeConnection();
     bool isConnected();
+    bool isWorking();
 protected:
     void run();
     void exec();
@@ -100,6 +101,7 @@ private:
     friend class IntEngine;
     bool _connected;
     bool _busy;
+    bool working;
     bool readyToSendLvlx;
     bool doSendData;
     QString _buffer;

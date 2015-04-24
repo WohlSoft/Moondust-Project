@@ -190,6 +190,7 @@ EngineClient::EngineClient() : QThread(NULL)
     readyToSendLvlx = false;
     _connected = false;
     _busy = false;
+    working=false;
     doSendData = false;
 }
 
@@ -200,7 +201,14 @@ EngineClient::EngineClient() : QThread(NULL)
 EngineClient::~EngineClient()
 {
     if(ipClient)
+    {
+        disconnect(this, SIGNAL(sendMessage(QString)), ipClient, SLOT(sendMessage(QString)));
+        disconnect(ipClient, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+        disconnect(this, SIGNAL(closed()), ipClient, SLOT(doClose()));
+        disconnect(this, SIGNAL(open()), ipClient, SLOT(doOpen()));
+        disconnect(ipClient, SIGNAL(closeThread()), this, SLOT(connectionLost()));
         delete ipClient;
+    }
     ipClient=NULL;
 }
 
@@ -270,7 +278,6 @@ bool EngineClient::sendCommand(QString command)
             send = command;
             command.clear();
         }
-
         emit sendMessage(send);
         if(timeout.elapsed()>5000) break;
     }
@@ -320,9 +327,15 @@ bool EngineClient::isConnected()
     return _connected;
 }
 
+bool EngineClient::isWorking()
+{
+    return working;
+}
+
 
 void EngineClient::run()
 {
+    working=true;
     //Set default values
     readyToSendLvlx = false;
     _busy = false;
@@ -333,6 +346,7 @@ void EngineClient::run()
     exec();
     emit closed();
     _connected=false;
+    working=false;
 }
 
 void EngineClient::exec()
@@ -344,7 +358,6 @@ void EngineClient::exec()
             doSendData=false;
             sendLevelData(IntEngine::testBuffer);
         }
-        //WriteToLog(QtDebugMsg, "EDITOR: sleep", true);
         msleep(100);
     }
     WriteToLog(QtDebugMsg, "EDITOR: Connection with engine was finished", true);
