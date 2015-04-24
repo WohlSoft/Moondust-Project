@@ -11,6 +11,11 @@ public:
     void save();
     void resetDefaults();
     void apply();
+
+    bool debugMode;
+    bool interprocessing;
 };
+
+extern GlobalSettings AppSettings;
 
 #endif // GLOBALSETTINGS_H

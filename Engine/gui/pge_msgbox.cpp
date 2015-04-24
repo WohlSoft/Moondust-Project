@@ -30,6 +30,7 @@
 #include <QMessageBox>
 #include <common_features/app_path.h>
 #include <audio/pge_audio.h>
+#include <settings/global_settings.h>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
@@ -247,6 +248,9 @@ void PGE_MsgBox::exec()
 
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
+
+        if(AppSettings.interprocessing)
+            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 
         updateControllers();
         while ( SDL_PollEvent(&event) )

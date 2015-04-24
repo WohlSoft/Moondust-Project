@@ -494,6 +494,8 @@ void DevConsole::doSendCheat(QStringList args)
         return;
     }
 
+    src.replace('\n', ' ');
+
     if(IntEngine::sendCheat(src))
         log(QString("-> command sent"), ui->tabWidget->tabText(0));
     else
