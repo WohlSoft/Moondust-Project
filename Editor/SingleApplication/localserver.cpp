@@ -200,29 +200,17 @@ void LocalServer::onCMD(QString data)
                 {
                     IntEngine::init();
                 }
-
                 IntEngine::sendLevelBuffer();
                 //MainWinConnect::pMainWin->showMinimized();
                 //IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
                 break;
             }
             case 2:
-            {
-                IntEngine::quit();
-                //qDebug()<<"Set Window state";
-                //MainWinConnect::pMainWin->setWindowState(MainWinConnect::pMainWin->windowState()&
-                //                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)));
-                //if(MainWinConnect::pMainWin->isMinimized())
-                //{
-                //    MainWinConnect::pMainWin->raise();
-                //    MainWinConnect::pMainWin->showNormal();
-                //}
-                //qDebug()<<"Set active Window";
-                //qApp->setActiveWindow(MainWinConnect::pMainWin);
-                //qDebug()<<"Update menus";
-                //MainWinConnect::pMainWin->updateMenus();
-                //qDebug()<<"IntEngine::quit();";
-                //IntEngine::quit();
+            {                
+                if(IntEngine::isWorking())
+                {
+                    IntEngine::quit();
+                }
                 break;
             }
             default:

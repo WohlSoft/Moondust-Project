@@ -426,7 +426,7 @@ int LevelScene::exec()
         }
 
         if(AppSettings.interprocessing)
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+            qApp->processEvents();
 
         keyboard1.update();
 
