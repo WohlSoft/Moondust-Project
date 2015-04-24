@@ -230,5 +230,14 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
         qDebug() << QString("Mix_PlayChannel: %1").arg(SDL_GetError());
     }
 
-    #endif
+#endif
+}
+
+void PGE_Sounds::freeBuffer()
+{
+    if(sound)
+    {
+        Mix_FreeChunk(sound);
+        sound=NULL;
+    }
 }

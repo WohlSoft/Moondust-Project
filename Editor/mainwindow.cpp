@@ -167,7 +167,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
 
