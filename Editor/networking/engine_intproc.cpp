@@ -68,11 +68,13 @@ void IntEngine::quit()
     qDebug() << "isWorking check";
     if(isWorking())
     {
-        qDebug() << "closeConnection call";
-        engineSocket->closeConnection();
-        qDebug() << "done";
+        while(engineSocket->isConnected());
+        qDebug() << "exit";
         engineSocket->exit(1000);
+        engineSocket->terminate();
+        qDebug() << "delete";
         delete engineSocket;
+        qDebug() << "done!";
         engineSocket = NULL;
     }
 }

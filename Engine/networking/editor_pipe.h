@@ -3,7 +3,8 @@
 
 #include <QThread>
 #include <QVector>
-#include <QLocalServer>
+#include <QTcpServer>
+#include <QTcpSocket>
 #include <QLocalSocket>
 
 #include <QAbstractSocket>
@@ -12,6 +13,30 @@
 #define LOCAL_SERVER_NAME "PGEEngine42e3j"
 
 //Q_DECLARE_METATYPE(QAbstractSocket::SocketState)
+
+class IntProcServer  : public QTcpServer
+{
+    Q_OBJECT
+public:
+    explicit IntProcServer();
+    ~IntProcServer();
+public slots:
+    void writeMessage(QString msg);
+    void stateChanged(QAbstractSocket::SocketState stat);
+signals:
+    void messageIn(QString msg);
+
+protected slots:
+    void readData();
+    void handleNewConnection();
+    void clientDisconnected();
+    void displayError(QAbstractSocket::SocketError socketError);
+
+private:
+    QTcpSocket *clientConnection;
+};
+
+
 
 class EditorPipe : public QThread
 {
@@ -39,22 +64,19 @@ protected:
     void exec();
 
 signals:
-    void dataReceived(QString data);
-    void privateDataReceived(QString data, QLocalSocket *client);
-    void showUp();
+    void sendMessage(QString msg);
+    //void dataReceived(QString data);
+    //void privateDataReceived(QString data, QTcpSocket *client);
+    //void showUp();
     void openFile(QString path);
 
 private slots:
-    void slotNewConnection();
-    void slotReadClientData();
-    void slotOnData(QString data, QLocalSocket *client);
-    void icomingData(QString in, QLocalSocket *client);
-    void displayError(QLocalSocket::LocalSocketError socketError);
+    void slotOnData(QString data);
+    void icomingData(QString in);
 
 private:
+    bool lastMsgSuccess;
     QString buffer;
-    QLocalServer* server;
-    QVector<QLocalSocket*> clients;
 };
 
 #endif // EDITOR_PIPE_H

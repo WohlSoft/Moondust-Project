@@ -38,6 +38,8 @@
 
 #include <physics/phys_debug_draw.h>
 
+#include <settings/global_settings.h>
+
 DebugDraw dbgDraw;
 
 LevelScene::LevelScene()
@@ -422,6 +424,9 @@ int LevelScene::exec()
         {
             start_events = SDL_GetTicks();
         }
+
+        if(AppSettings.interprocessing)
+            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 
         keyboard1.update();
 

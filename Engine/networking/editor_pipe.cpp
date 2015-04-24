@@ -9,6 +9,75 @@
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
 
+
+IntProcServer::IntProcServer()
+{
+    clientConnection=NULL;
+    connect(this, SIGNAL(newConnection()), this, SLOT(handleNewConnection()));
+}
+
+IntProcServer::~IntProcServer()
+{}
+
+void IntProcServer::writeMessage(QString msg)
+{
+    if (!clientConnection)
+        return;
+    clientConnection->write(msg.toUtf8());
+    clientConnection->waitForBytesWritten(1000);
+}
+
+void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
+{
+    switch(stat)
+    {
+        case QAbstractSocket::UnconnectedState: qDebug()<<"The socket is not connected.";break;
+        case QAbstractSocket::HostLookupState: qDebug()<<"The socket is performing a host name lookup.";break;
+        case QAbstractSocket::ConnectingState: qDebug()<<"The socket has started establishing a connection.";break;
+        case QAbstractSocket::ConnectedState: qDebug()<<"A connection is established.";break;
+        case QAbstractSocket::BoundState: qDebug()<<"The socket is bound to an address and port.";break;
+        case QAbstractSocket::ClosingState: qDebug()<<"The socket is about to close (data may still be waiting to be written).";break;
+        case QAbstractSocket::ListeningState: qDebug()<<"[For internal]";break;
+    }
+}
+
+void IntProcServer::readData()
+{
+    QObject * object = QObject::sender(); // далее и ниже до цикла идет преобразования "отправителя сигнала" в сокет, дабы извлечь данные
+    if (!object)
+        return;
+    QTcpSocket * socket = static_cast<QTcpSocket *>(object);
+    QByteArray arr =  socket->readAll();
+    emit messageIn(QString::fromUtf8(arr));
+}
+
+void IntProcServer::handleNewConnection()
+{
+    if(clientConnection) return;
+    clientConnection = nextPendingConnection();
+    connect(clientConnection, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
+    connect(clientConnection, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(clientConnection, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(stateChanged(QAbstractSocket::SocketState)));
+}
+
+void IntProcServer::clientDisconnected()
+{
+    clientConnection->deleteLater();
+}
+
+void IntProcServer::displayError(QTcpSocket::SocketError socketError)
+{
+    switch (socketError)
+    {
+        default:
+            qDebug() << QString("ENGINE: The following error occurred: %1.")
+                                     .arg(errorString());
+    }
+}
+
+IntProcServer *ipServer=NULL;
+
+
 /**
  * @brief EditorPipe::LocalServer
  *  Constructor
@@ -16,6 +85,17 @@
 
 EditorPipe::EditorPipe() : QThread(NULL)
 {
+    if(!ipServer)
+        ipServer = new IntProcServer();
+    ipServer->listen(QHostAddress::LocalHost, 58486);
+
+    while(ipServer->isListening() == false)
+    {
+      ipServer->listen(QHostAddress::LocalHost);
+      msleep(100);
+    }
+    qDebug() << "Listen " << ipServer->isListening() << "localhost:58486";
+
     qDebug() << "Construct interprocess pipe";
     do_acceptLevelData=false;
     do_parseLevelData=false;
@@ -23,9 +103,12 @@ EditorPipe::EditorPipe() : QThread(NULL)
     accepted_lvl_raw="";
     accepted_lvl.ReadFileValid = false;
     isWorking = false;
+    lastMsgSuccess=true;
 
     levelAccepted=false;
-    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
+
+    connect(ipServer, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+    connect(this, SIGNAL(sendMessage(QString)), ipServer, SLOT(writeMessage(QString)));
 }
 
 
@@ -35,39 +118,12 @@ EditorPipe::EditorPipe() : QThread(NULL)
  */
 EditorPipe::~EditorPipe()
 {
-    for(int i = 0; i < clients.size(); ++i)
-    {
-        if(clients[i])
-        {
-            clients[i]->write(QString("BYE\n\n").toUtf8());
-            clients[i]->waitForBytesWritten(1000);
-            clients[i]->disconnectFromServer();
-            clients[i]->close();
-            QLocalSocket *pop=clients[i];
-            clients.remove(i);
-            delete pop;
-        }
-    }
-    server->close();
-    delete server;
-    this->wait(1000);
+    if(ipServer)
+        delete ipServer;
 }
 
 void EditorPipe::shut()
 {
-    for(int i = 0; i < clients.size(); ++i)
-    {
-        if(clients[i])
-        {
-            clients[i]->write(QString("BYE\n\n").toUtf8());
-            clients[i]->waitForBytesWritten(1000);
-            clients[i]->disconnectFromServer();
-            clients[i]->close();
-            QLocalSocket *pop=clients[i];
-            clients.remove(i);
-            delete pop;
-        }
-    }
     sendToEditor("CMD:ENGINE_CLOSED");
 }
 
@@ -78,12 +134,9 @@ bool EditorPipe::levelIsLoad()
     return state;
 }
 
-
-
 bool EditorPipe::sendToEditor(QString command)
 {
     QLocalSocket socket;
-
     // Attempt to connect to the LocalServer
     socket.connectToServer("PGEEditor335jh3c3n8g7");
 
@@ -121,32 +174,7 @@ bool EditorPipe::sendToEditor(QString command)
 void EditorPipe::run()
 {
     qDebug() << "Start server thread";
-    server = new QLocalServer;
-    server->setParent(0);
-
-    qDebug() << "set slots connections to QLocalServer server";
-    QObject::connect(server, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
-    QObject::connect(this, SIGNAL(privateDataReceived(QString, QLocalSocket*)), this, SLOT(slotOnData(QString, QLocalSocket*)));
-
-#ifdef Q_OS_UNIX
-    // Make sure the temp address file is deleted
-    QFile address(QString("/tmp/" LOCAL_SERVER_NAME));
-    if(address.exists())
-    {
-        address.remove();
-    }
-#endif
-
-  QString serverName = QString(LOCAL_SERVER_NAME);
-  server->listen(serverName);
   isWorking=true;
-  while(server->isListening() == false)
-  {
-    server->listen(serverName);
-    msleep(100);
-  }
-  qDebug() << "Listen " << server->isListening() << serverName;
-
   exec();
   isWorking=false;
 
@@ -162,36 +190,22 @@ void EditorPipe::run()
 void EditorPipe::exec()
 {
     IntProc::state="Waiting of commands...";
-
-    //loop:
-    while(server->isListening() && isWorking)
+    while(isWorking)
     {
         msleep(100);
-        if(!server->waitForNewConnection(100))
-        {
-            QString msg = server->errorString();
-            if(!msg.isEmpty())
-            qDebug() << "exec()" << msg;
-        }
-
-
-        for(int i = 0; i < clients.size(); ++i)
-        {
-            clients[i]->waitForReadyRead(1000);
-            if(!clients[i]->isOpen())
-            {
-                QLocalSocket *tmp=clients[i];
-                clients.remove(i);
-                tmp->disconnectFromServer();
-                tmp->close();
-                delete tmp;
-                continue;
-            }
-        }
     }
-
-    server->close();
 }
+
+
+
+//void EditorPipe::slotSendMessage(QString msg)
+//{
+//    qDebug() << "OUT: <<"<< msg+"\\n\\n";
+//    QTcpSocket *client = clients.first();
+//    QByteArray toClient = QString(msg+"\n\n").toUtf8();
+//    client->write(toClient.data(), toClient.length());
+//    lastMsgSuccess=client->waitForBytesWritten(1000);
+//}
 
 
 
@@ -201,30 +215,30 @@ void EditorPipe::exec()
  * -------
  */
 
-void EditorPipe::slotNewConnection()
-{
-    qDebug() << "New connection!";
-    clients.push_front(server->nextPendingConnection());
-    clients.last()->moveToThread(this);
+//void EditorPipe::slotNewConnection()
+//{
+//    qDebug() << "New connection!";
+//    clients.push_front(server->nextPendingConnection());
+//    clients.last()->moveToThread(this);
 
-    QObject::connect(clients.last(), SIGNAL(readyRead()), this, SLOT(slotReadClientData()));
+//    QObject::connect(clients.last(), SIGNAL(readyRead()), this, SLOT(slotReadClientData()));
 
-    qDebug() << clients.size();
-}
+//    qDebug() << clients.size();
+//}
 
-void EditorPipe::slotReadClientData()
-{
-    QLocalSocket* client = (QLocalSocket*)sender();
-    client->moveToThread(this);
-    QByteArray data = client->readAll();
-    QString acceptedData = QString::fromUtf8(data);
-    qDebug() << "--1--IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
+//void EditorPipe::slotReadClientData()
+//{
+//    QTcpSocket* client = (QTcpSocket*)sender();
+//    client->moveToThread(this);
+//    QByteArray data = client->readAll();
+//    QString acceptedData = QString::fromUtf8(data);
+//    qDebug() << "--1--IN: >>"<< (acceptedData.size()>30 ? QString(acceptedData).remove(30, acceptedData.size()-31) : acceptedData);
 
-    emit privateDataReceived(acceptedData, client);
-}
+//    emit privateDataReceived(acceptedData, client);
+//}
 
 
-void EditorPipe::slotOnData(QString data, QLocalSocket *client)
+void EditorPipe::slotOnData(QString data)
 {
     unsigned int nc=0;
     foreach(QChar c, data)
@@ -241,13 +255,13 @@ void EditorPipe::slotOnData(QString data, QLocalSocket *client)
             buffer.resize(buffer.size()-2);
             qDebug() << "--2--icomingData<-- ["<< (buffer.size()>30? QString(buffer).remove(30, buffer.size()-31) : buffer)<<"]";
             //qDebug() << "--2--icomingData<-- ["<< buffer<<"]";
-            emit icomingData(buffer, client);
+            emit icomingData(buffer);
             buffer.clear();
         }
     }
 }
 
-void EditorPipe::icomingData(QString in, QLocalSocket *client)
+void EditorPipe::icomingData(QString in)
 {
     if((in=="PARSE_LVLX")||(in=="OPEN_TEMP_LVLX"))
     {
@@ -276,16 +290,10 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         do_acceptLevelData=true;
         IntProc::state="Accepted SEND_LVLX";
         qDebug() << "Send 'Ready'";
+        sendMessage("READY\n\n");
 
-        QByteArray toClient = QString("READY\n\n").toUtf8();
-
-        client->moveToThread(this);
-        qDebug() << "OUT: <<"<< "READY\n\n";
-        client->write(toClient.data(), toClient.length());
-        //qDebug() << "flush";
-        //client->flush();
         qDebug() << "'Ready' written";
-        if(client->waitForBytesWritten(1000))
+        if(lastMsgSuccess)
         {
             qDebug() << "'Ready' sent";
             IntProc::state="Wait for LVLX data...";
@@ -293,7 +301,7 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
         else
         {
             qDebug() << "Fail to send 'Ready': "
-                     << client->errorString();
+                     << ipServer->errorString();
             IntProc::state="Fail to answer";
         }
     }
@@ -342,27 +350,15 @@ void EditorPipe::icomingData(QString in, QLocalSocket *client)
     if(in=="PING")
     {
         qDebug() << "IN: >>"<< in;
-        QByteArray toClient = QString("PONG\n\n").toUtf8();
-        qDebug() << "OUT: <<"<< "PONG\n\n";
-        client->write(toClient.data(), toClient.length());
-        if(client->waitForBytesWritten(1000))
+        sendMessage("PONG\n\n");
+        if(lastMsgSuccess)
             qDebug() << "sent";
         else
             qDebug() << "error"
-                     << client->errorString();
+                     << ipServer->errorString();
 
         qDebug()<< "Ping-Pong!";
     }
 }
 
 
-void EditorPipe::displayError(QLocalSocket::LocalSocketError socketError)
-{
-    switch (socketError)
-    {
-        default:
-            qDebug() << QString("ENGINE: The following error occurred: %1.")
-                                     .arg(server->errorString());
-    }
-
-}
