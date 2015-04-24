@@ -250,7 +250,7 @@ void PGE_MsgBox::exec()
         SDL_GL_SwapWindow(PGE_Window::window);
 
         if(AppSettings.interprocessing)
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+            qApp->processEvents();
 
         updateControllers();
         while ( SDL_PollEvent(&event) )

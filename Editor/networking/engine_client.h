@@ -41,8 +41,8 @@ public:
     QString errString();
     bool isOpen();
     void close();
-    bool opeIsOk();
-
+    bool openIsSuccess();
+    bool isBusy();
 signals:
     void messageIn(QString msg);
     void closeThread();
@@ -58,7 +58,8 @@ private slots:
     void displayError(QAbstractSocket::SocketError socketError);
 
 private:
-    bool ok;
+    bool opened;
+    bool busy;
     QTcpSocket *socket;
 };
 

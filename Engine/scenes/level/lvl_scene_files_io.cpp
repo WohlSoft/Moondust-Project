@@ -66,7 +66,6 @@ bool LevelScene::loadFileIP()
         loaderStep();
         //Abort loading process and exit from game if window was closed
         if(!isLevelContinues) return false;
-
         qApp->processEvents();
         if(time.elapsed()>10000)
         {

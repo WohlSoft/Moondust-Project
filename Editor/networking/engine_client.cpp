@@ -31,7 +31,8 @@ IpsEngineClient::IpsEngineClient(QObject *parent) :
     QObject(parent)
 {
     socket=NULL;
-    ok=false;
+    opened=false;
+    busy=false;
 }
 
 IpsEngineClient::~IpsEngineClient()
@@ -42,8 +43,8 @@ IpsEngineClient::~IpsEngineClient()
 bool IpsEngineClient::doConnect()
 {
     if(!socket) socket = new QTcpSocket(this);
-    ok=false;
-
+    opened=false;
+    busy=true;
     connect(socket, SIGNAL(connected()),this, SLOT(connected()));
     connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
@@ -59,8 +60,10 @@ bool IpsEngineClient::doConnect()
     if(!socket->waitForConnected(10000))
     {
         qDebug() << "Error: " << socket->errorString();
+        busy=false;
         return false;
     }
+    busy=false;
     return true;
 }
 
@@ -87,12 +90,17 @@ void IpsEngineClient::close()
         socket->disconnectFromHost();
         socket->close();
     }
-    ok=false;
+    opened=false;
 }
 
-bool IpsEngineClient::opeIsOk()
+bool IpsEngineClient::openIsSuccess()
 {
-    return ok;
+    return opened;
+}
+
+bool IpsEngineClient::isBusy()
+{
+    return busy;
 }
 
 void IpsEngineClient::doClose()
@@ -102,7 +110,7 @@ void IpsEngineClient::doClose()
 
 void IpsEngineClient::doOpen()
 {
-    ok=doConnect();
+    opened=doConnect();
 }
 
 
@@ -286,7 +294,10 @@ void EngineClient::OpenConnection()
 
     WriteToLog(QtDebugMsg, "Wait for connection", true);
     emit open();
-    if(ipClient->opeIsOk())
+
+    while(ipClient->isBusy());//!< wait for connection
+
+    if(ipClient->openIsSuccess())
     {
         WriteToLog(QtDebugMsg, "Connected", true);
     }
