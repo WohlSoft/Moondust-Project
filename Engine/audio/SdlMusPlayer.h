@@ -35,6 +35,8 @@ public:
 
     static Uint64 sampleCount();
     static Uint64 MUS_sampleCount();
+
+    static void freeStream();
 private:
     static bool isLoaded;
     static Mix_Music *play_mus;

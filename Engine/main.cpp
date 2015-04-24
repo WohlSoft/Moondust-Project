@@ -582,11 +582,13 @@ ExitFromApplication:
 
     ConfigManager::unluadAll();
     if(IntProc::isEnabled()) IntProc::editor->shut();
+    PGE_MusPlayer::freeStream();
+    PGE_Sounds::clearSoundBuffer();
+    Mix_CloseAudio();
     IntProc::quit();
     FontManager::quit();
-    a.quit();
-
     PGE_Window::uninit();
+    a.quit();
     return 0;
 }
 
