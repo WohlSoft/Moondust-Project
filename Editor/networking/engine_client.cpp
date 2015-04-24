@@ -37,19 +37,30 @@ IpsEngineClient::IpsEngineClient(QObject *parent) :
 
 IpsEngineClient::~IpsEngineClient()
 {
-    if(socket) delete socket;
+    if(socket)
+    {
+        disconnect(socket, SIGNAL(connected()),this, SLOT(connected()));
+        disconnect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+        disconnect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+        disconnect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+        disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+        delete socket;
+    }
 }
 
 bool IpsEngineClient::doConnect()
 {
-    if(!socket) socket = new QTcpSocket(this);
+    if(!socket)
+    {
+        socket = new QTcpSocket(this);
+        connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+        connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+        connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+        connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+        connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+    }
     opened=false;
     busy=true;
-    connect(socket, SIGNAL(connected()),this, SLOT(connected()));
-    connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
-    connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
-    connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
 
     qDebug() << "connecting...";
 
@@ -180,13 +191,15 @@ bool EngineClient::alreadyRequested=false;
 
 EngineClient::EngineClient() : QThread(NULL)
 {
-    if(!ipClient) ipClient = new IpsEngineClient();
-    connect(this, SIGNAL(sendMessage(QString)), ipClient, SLOT(sendMessage(QString)));
-    connect(ipClient, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
-    connect(this, SIGNAL(closed()), ipClient, SLOT(doClose()));
-    connect(this, SIGNAL(open()), ipClient, SLOT(doOpen()));
-    connect(ipClient, SIGNAL(closeThread()), this, SLOT(connectionLost()));
-
+    if(!ipClient)
+    {
+        ipClient = new IpsEngineClient();
+        connect(this, SIGNAL(sendMessage(QString)), ipClient, SLOT(sendMessage(QString)));
+        connect(ipClient, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+        connect(this, SIGNAL(closed()), ipClient, SLOT(doClose()));
+        connect(this, SIGNAL(open()), ipClient, SLOT(doOpen()));
+        connect(ipClient, SIGNAL(closeThread()), this, SLOT(connectionLost()));
+    }
     readyToSendLvlx = false;
     _connected = false;
     _busy = false;
