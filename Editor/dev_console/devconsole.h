@@ -24,6 +24,8 @@ public:
 
     void registerCommands();
     void retranslateP();
+public slots:
+    void logMessage(QString text, QString chan);
 
 private slots:
     void on_button_clearAllLogs_clicked();
