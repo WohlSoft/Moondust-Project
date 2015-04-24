@@ -66,6 +66,7 @@ class PGE_Sounds : public QObject
     Q_OBJECT
 public:
     static void SND_PlaySnd(QString sndFile);
+    static void freeBuffer();
 
 private:
     #ifdef USE_QMEDIAPLAYER
