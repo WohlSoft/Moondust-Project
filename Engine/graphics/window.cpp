@@ -98,6 +98,13 @@ bool PGE_Window::init(QString WindowTitle)
 
 bool PGE_Window::uninit()
 {
+    // Swith to WINDOWED mode
+    if (SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
+    {
+        qDebug() << "Setting windowed failed : "<<SDL_GetError();
+        return -1;
+    }
+
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -153,7 +160,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
         // Swith to WINDOWED mode
         if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
         {
-            std::cout<<"Setting windowed failed : "<<SDL_GetError()<<std::endl;
+            qDebug() <<"Setting windowed failed : "<<SDL_GetError();
             return -1;
         }
         return 0;
@@ -163,7 +170,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     if (SDL_SetWindowFullscreen(win, SDL_TRUE) < 0)
     {
         //Hide mouse cursor in full screen mdoe
-        std::cout<<"Setting fullscreen failed : "<<SDL_GetError()<<std::endl;
+        qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
         return -1;
     }
     SDL_ShowCursor(SDL_DISABLE);

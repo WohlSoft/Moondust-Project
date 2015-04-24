@@ -244,7 +244,14 @@ Uint64 PGE_MusPlayer::MUS_sampleCount()
 		SDL_UnlockMutex(sampleCountMutex);
 	}
 
-	return ret;
+    return ret;
+}
+
+void PGE_MusPlayer::freeStream()
+{
+    if(play_mus)
+        Mix_FreeMusic(play_mus);
+    play_mus=NULL;
 }
 
 
