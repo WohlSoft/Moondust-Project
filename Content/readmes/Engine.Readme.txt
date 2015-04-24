@@ -35,9 +35,13 @@ X - run
 
 T - Toggle fullscreen mode
 
-F3 - show/hide debug info
-F12 - capture screenshot
+F3 - enable/disable printinf of debug information
+F12 - take screenshot (will be saved in the 'screenshots' folder which will be in PGE folder or in the %UserProfile%\.PGE_Project).
+Screenshots will be written into PNG format and will have timedate based filename.
+
+i - disable/enable walkable zone limit on the world map (you will have able to walk anywhere)
 
 Enter - pause/resume game, show dummy message box
 
-Esc - close engine application
+Esc - Exit from level [you will return to world map or into main hub level], or exit from episode [if you on the world map or in the main hub level]
+
