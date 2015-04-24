@@ -76,6 +76,7 @@ SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\tools"
 
 SET PGEEngine=
 SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\pge_engine.exe"
+SET PGEEngine=%PGEEngine% "%DeployDir%\%PgePrjSD%\Engine.Readme.txt"
 
 SET PGETools=
 SET PGETools=%PGETools% "%DeployDir%\%PgePrjSD%\GIFs2PNG.exe"
