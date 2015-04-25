@@ -461,5 +461,5 @@ ID:1;X:128;Y:160;LT:"Here game was started!";SP:1;
 ID:32;X:320;Y:160;LT:"Z-Layers awesome!";LF:"level1.lvlx";BP:1;
 ID:17;X:448;Y:-64;LT:"Warp to other island";WX:160;WY:-64;AV:1;BG:1;
 ID:17;X:160;Y:-64;LT:"Return back?";WX:448;WY:-64;AV:1;BG:1;
-ID:11;X:448;Y:-224;LT:"Storming of big fortress";LF:"fortress.lvlx";EI:16;BG:1;
+ID:11;X:448;Y:-224;LT:"Fortress";LF:"fortress.lvlx";BG:1;
 LEVELS_END
