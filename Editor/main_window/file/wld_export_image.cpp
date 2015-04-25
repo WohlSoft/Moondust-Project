@@ -169,14 +169,11 @@ void WorldEdit::ExportingReady() //slot
 }
 
 
-
-
-bool WldSaveImage_lock=false;
-
 WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool proportion, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WldSaveImage)
 {
+    WldSaveImage_lock=false;
     getRect = sourceRect;
     imageSize = targetSize;
     saveProportion = proportion;
