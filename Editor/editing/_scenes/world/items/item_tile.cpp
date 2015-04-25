@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 
@@ -145,6 +147,9 @@ void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("TILE-%1").arg(tileData.id));
+        ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
 
 QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
@@ -165,6 +170,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==copyTile)
     {
         MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==transform)
+    {
+        int transformTO;
+        ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
+        tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
+        util::DialogToCenter(tileList, true);
+        if(tileList->exec()==QDialog::Accepted)
+        {
+            transformTO = tileList->tileID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="TILE")
+                {
+                    ((ItemTile *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete tileList;
+    }
+    else
+    if(selected==transform_all)
+    {
+        int transformTO;
+        ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
+        tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
+        util::DialogToCenter(tileList, true);
+        if(tileList->exec()==QDialog::Accepted)
+        {
+            transformTO = tileList->tileID;
+            unsigned long oldID = tileData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="TILE")
+                {
+                    if(((ItemTile *) SelItem)->tileData.id==oldID)
+                        ((ItemTile *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete tileList;
     }
     else
     if(selected==remove)
