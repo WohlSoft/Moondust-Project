@@ -100,7 +100,7 @@ SDL2MixerSO.path = ../_builds/linux/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
-SDL2MixerSO.path = ../_builds/win32/lib
+SDL2MixerSO.path = ../_builds/win32/bin
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
 }
 macx: {
