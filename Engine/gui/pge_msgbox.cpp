@@ -249,9 +249,10 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
+        #ifndef __APPLE__
         if(AppSettings.interprocessing)
             qApp->processEvents();
-
+        #endif
         updateControllers();
         while ( SDL_PollEvent(&event) )
         {
