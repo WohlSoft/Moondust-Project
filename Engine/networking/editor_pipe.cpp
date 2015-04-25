@@ -6,6 +6,8 @@
 #include <QElapsedTimer>
 #include <QApplication>
 
+#include <QUdpSocket>
+
 #include "../common_features/app_path.h"
 #include <networking/intproc.h>
 
@@ -136,9 +138,9 @@ bool EditorPipe::levelIsLoad()
 
 bool EditorPipe::sendToEditor(QString command)
 {
-    QLocalSocket socket;
+    QUdpSocket socket;
     // Attempt to connect to the LocalServer
-    socket.connectToServer("PGEEditor335jh3c3n8g7");
+    socket.connectToHost(QHostAddress::LocalHost, 58487);
 
     if(socket.waitForConnected(100))
     {
@@ -149,8 +151,7 @@ bool EditorPipe::sendToEditor(QString command)
         socket.write(bytes);
         socket.waitForBytesWritten(10000);
         socket.flush();
-        QThread::msleep(100);
-        socket.disconnectFromServer();
+        socket.disconnectFromHost();
         qDebug() << "Bytes sent: " <<command;
         return true;
     }

@@ -26,7 +26,6 @@
 #include "engine_intproc.h"
 #include "engine_client.h"
 
-
 IpsEngineClient::IpsEngineClient(QObject *parent) :
     QObject(parent)
 {
