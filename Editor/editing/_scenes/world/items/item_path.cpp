@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
 #include <common_features/logger.h>
 #include <common_features/mainwinconnect.h>
 
@@ -148,6 +150,9 @@ void ItemPath::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("PATH-%1").arg(pathData.id));
+        ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
 
 QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
@@ -168,6 +173,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==copyTile)
     {
         MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==transform)
+    {
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_PATH);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->pathID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="PATH")
+                {
+                    ((ItemPath *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete itemList;
+    }
+    else
+    if(selected==transform_all)
+    {
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_PATH);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->pathID;
+            unsigned long oldID = pathData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="PATH")
+                {
+                    if(((ItemPath *) SelItem)->pathData.id==oldID)
+                        ((ItemPath *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete itemList;
     }
     else
     if(selected==remove)

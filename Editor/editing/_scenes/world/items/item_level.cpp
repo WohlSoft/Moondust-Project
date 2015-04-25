@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
 #include <common_features/logger.h>
 #include <common_features/mainwinconnect.h>
 
@@ -168,6 +170,9 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("LEVEL-%1").arg(levelData.id));
+        ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
         ItemMenu.addSeparator();
     QAction *props = ItemMenu.addAction(tr("Properties..."));
@@ -246,6 +251,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         //scene->doCopy = true ;
         MainWinConnect::pMainWin->on_actionCopy_triggered();
         scene->contextMenuOpened = false;
+    }
+    else
+    if(selected==transform)
+    {
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->levelID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+                {
+                    ((ItemLevel *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete itemList;
+    }
+    else
+    if(selected==transform_all)
+    {
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->levelID;
+            unsigned long oldID = levelData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+                {
+                    if(((ItemLevel *) SelItem)->levelData.id==oldID)
+                        ((ItemLevel *) SelItem)->transformTo(transformTO);
+                }
+            }
+        }
+        delete itemList;
     }
     else
     if(selected==remove)
