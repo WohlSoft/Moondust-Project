@@ -122,12 +122,21 @@ bool Installer::associateFiles()
     #elif defined __APPLE__
         // only useful when other apps have taken precedence over our file extensions and you want to reset it
     //Need write correct strings for allow associations for Mac OS:
-    /*
-        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>lvl</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
-        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>wld</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
-        system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
-     */
-    success=false; // remove this when associator was created
+
+        QString x=QString("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict>"
+               "<key>LSHandlerContentTag</key><string>%1</string>"
+               "<key>LSHandlerContentTagClass</key><string>public.filename-extension</string>"
+               "<key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string>"
+               "</dict>'");
+
+        int ret=system(x.arg("lvl").toStdString().c_str());
+        ret+=system(x.arg("lvlx").toStdString().c_str());
+        ret+=system(x.arg("wld").toStdString().c_str());
+        ret+=system(x.arg("wldx").toStdString().c_str());
+
+        ret+=system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
+
+        success=(ret==0); // remove this when associator was created
     #elif defined Q_OS_ANDROID
     //Is not supported yet :P
     success=false;
