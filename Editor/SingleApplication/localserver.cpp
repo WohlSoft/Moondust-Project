@@ -190,8 +190,10 @@ void LocalServer::onCMD(QString data)
     commands << "ENGINE_CLOSED";
     commands << "Is editor running?";
 
-    if(MainWinConnect::pMainWin->continueLoad)
-        switch(commands.indexOf(data))
+    int cmdID = commands.indexOf(data);
+
+    if((cmdID==3) || (MainWinConnect::pMainWin->continueLoad))
+        switch(cmdID)
         {
             case 0:
             {
@@ -220,7 +222,7 @@ void LocalServer::onCMD(QString data)
                 break;
             }
             case 2:
-            {                
+            {
                 if(IntEngine::isWorking())
                 {
                     IntEngine::quit();
