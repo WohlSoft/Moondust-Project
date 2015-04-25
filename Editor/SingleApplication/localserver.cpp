@@ -85,7 +85,10 @@ LocalServer::LocalServer()
     ipServer = new IntProcServer();
     connect(ipServer, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
     connect(this, SIGNAL(privateDataReceived(QString)), this, SLOT(slotOnData(QString)));
-    ipServer->bind(QHostAddress::LocalHost, 58487);
+    if(!ipServer->bind(QHostAddress::LocalHost, 58487,  QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress))
+    {
+        qWarning() << ipServer->errorString();
+    }
 }
 
 
