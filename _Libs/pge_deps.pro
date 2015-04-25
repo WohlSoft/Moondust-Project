@@ -8,12 +8,23 @@ Box2D.file = Box2D/project/box2d.pro
 
 deplibs.path = bin
 linux-g++: {
-deplibs.files += _Libs/_builds/linux/lib/*.so*
-deplibs.files += _Libs/_builds/sdl2_mixer_mod/*.so*
+deplibs.files += $$PWD/_builds/linux/lib/*.so*
+deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
-deplibs.files += _Libs/_builds/win32/bin/*.dll
-deplibs.files += _Libs/_builds/sdl2_mixer_mod/*.dll
+deplibs.files += $$PWD/_builds/win32/bin/*.dll
+deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.dll
+}
+macx: {
+deplibs.files += $$PWD/_builds/macos/lib/*.dylib
+deplibs.files += $$PWD/_builds/macos/frameworks/*
+deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.dylib
+}
+
+!macx: {
+deplibs.path = $$PWD/../bin
+} else {
+deplibs.path = $$PWD/../bin/_Libs
 }
 
 INSTALLS += deplibs
