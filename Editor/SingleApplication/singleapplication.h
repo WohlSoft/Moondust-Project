@@ -2,7 +2,7 @@
 #define APPLICATION_H
 
 #include <QObject>
-#include <QLocalSocket>
+#include <QUdpSocket>
 
 #include "localserver.h"
 
@@ -21,6 +21,7 @@ public slots:
 
 signals:
   void showUp();
+  void stopServer();
   void openFile(QString path);
   void acceptedCommand(QString cmd);
 
@@ -30,7 +31,7 @@ private slots:
   void slotAcceptedCommand(QString cmd);
   
 private:
-  QLocalSocket* socket;
+  QUdpSocket* socket;
   LocalServer* server;
   bool _shouldContinue;
 
