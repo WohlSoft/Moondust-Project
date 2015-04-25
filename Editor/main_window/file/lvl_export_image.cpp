@@ -36,6 +36,7 @@ void LevelEdit::ExportToImage_fn()
     if(!sceneCreated) return;
     if(!scene) return;
 
+    scene->resetResizers();
     scene->setScreenshotSelector();
 }
 
@@ -46,6 +47,7 @@ void LevelEdit::ExportToImage_fn_piece()
     if(!sceneCreated) return;
     if(!scene) return;
 
+    scene->resetResizers();
     MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     qreal zoom=1.0;
