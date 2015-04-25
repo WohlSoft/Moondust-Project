@@ -33,7 +33,7 @@ SingleApplication::SingleApplication(int argc, char *argv[])
 
   socket = new QUdpSocket();
   QUdpSocket acceptor;
-  acceptor.bind(QHostAddress::LocalHost, 58488);
+  acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
   // Attempt to connect to the LocalServer
   socket->connectToHost(QHostAddress::LocalHost, 58487);
