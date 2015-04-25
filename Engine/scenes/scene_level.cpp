@@ -425,8 +425,10 @@ int LevelScene::exec()
             start_events = SDL_GetTicks();
         }
 
+        #ifndef __APPLE__
         if(AppSettings.interprocessing)
             qApp->processEvents();
+        #endif
 
         keyboard1.update();
 
