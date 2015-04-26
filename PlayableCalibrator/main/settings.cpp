@@ -20,6 +20,7 @@
 #include <QPixmap>
 #include <QtDebug>
 #include <QSettings>
+#include <QFileDialog>
 
 #include "calibrationmain.h"
 #include "ui_calibrationmain.h"
@@ -116,6 +117,7 @@ void CalibrationMain::loadConfig(QString fileName)
     getSpriteAniData(conf, "Fire");
     getSpriteAniData(conf, "SitDown");
     getSpriteAniData(conf, "Dig");
+    getSpriteAniData(conf, "GrabIdle");
     getSpriteAniData(conf, "GrabRun");
     getSpriteAniData(conf, "GrabJump");
     getSpriteAniData(conf, "GrabSitDown");
@@ -128,6 +130,7 @@ void CalibrationMain::loadConfig(QString fileName)
     getSpriteAniData(conf, "OnYoshi");
     getSpriteAniData(conf, "OnYoshiSit");
     getSpriteAniData(conf, "PipeUpDown");
+    getSpriteAniData(conf, "PipeUpDownRear");
     getSpriteAniData(conf, "SlopeSlide");
     getSpriteAniData(conf, "TanookiStatue");
     getSpriteAniData(conf, "SwordAttak");
@@ -201,12 +204,19 @@ void CalibrationMain::setSpriteAniData(QSettings &set)
 }
 
 
-void CalibrationMain::saveConfig(QString fileName)
+void CalibrationMain::saveConfig(QString fileName, bool customPath)
 {
     createDirs();
     QFileInfo ourFile(fileName);
     QString ini_sprite;
     ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
+
+    if(customPath)
+    {
+        ini_sprite = QFileDialog::getSaveFileName(this, "Save calibration settings", ini_sprite, "*.ini");
+        if(ini_sprite.isEmpty()) return;
+    }
+
     //ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;

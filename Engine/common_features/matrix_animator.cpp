@@ -265,6 +265,7 @@ void MatrixAnimator::buildEnums()
     StrToEnum["Fire"]=              MatrixAninates::Fire;
     StrToEnum["SitDown"]=           MatrixAninates::SitDown;
     StrToEnum["Dig"]=               MatrixAninates::Dig;
+    StrToEnum["GrabIdle"]=          MatrixAninates::GrabIdle;
     StrToEnum["GrabRun"]=           MatrixAninates::GrabRun;
     StrToEnum["GrabJump"]=          MatrixAninates::GrabJump;
     StrToEnum["GrabSitDown"]=       MatrixAninates::GrabSitDown;
@@ -277,6 +278,7 @@ void MatrixAnimator::buildEnums()
     StrToEnum["OnYoshi"]=           MatrixAninates::OnYoshi;
     StrToEnum["OnYoshiSit"]=        MatrixAninates::OnYoshiSit;
     StrToEnum["PipeUpDown"]=        MatrixAninates::PipeUpDown;
+    StrToEnum["PipeUpDownRear"]=    MatrixAninates::PipeUpDownRear;
     StrToEnum["SlopeSlide"]=        MatrixAninates::SlopeSlide;
     StrToEnum["TanookiStatue"]=     MatrixAninates::TanookiStatue;
     StrToEnum["SwordAttak"]=        MatrixAninates::SwordAttak;

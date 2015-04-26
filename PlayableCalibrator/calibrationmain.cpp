@@ -20,6 +20,7 @@
 #include <QPixmap>
 //#include <QtDebug>
 #include <QSettings>
+#include <QMenu>
 
 #include "calibrationmain.h"
 #include <ui_calibrationmain.h>
@@ -248,7 +249,14 @@ void CalibrationMain::on_AboutButton_clicked()
 
 void CalibrationMain::on_SaveConfigButton_clicked()
 {
-    saveConfig(currentFile);
+    QMenu menu;
+    QAction * qsave = menu.addAction("Save in the same folder with image file");
+    QAction * saveas = menu.addAction("Save into custom place...");
+    QAction *answer=menu.exec( mapToGlobal(ui->SaveConfigButton->pos()) );
+    if(answer==qsave)
+        saveConfig(currentFile);
+    else if(answer==saveas)
+        saveConfig(currentFile, true);
 }
 
 
