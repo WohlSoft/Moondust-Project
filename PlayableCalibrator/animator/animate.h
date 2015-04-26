@@ -54,6 +54,7 @@ private slots:
     void on_Fire_clicked();
     void on_SitDown_clicked();
     void on_Dig_clicked();
+    void on_GrabIdle_clicked();
     void on_GrabRun_clicked();
     void on_GrabJump_clicked();
     void on_GrabSit_clicked();
@@ -61,7 +62,8 @@ private slots:
     void on_RacoonFloat_clicked();
     void on_RacoonFly_clicked();
     void on_RacoonTail_clicked();
-    void on_Swin_clicked();
+    void on_Swim_clicked();
+    void on_SwimUp_clicked();
     void on_TanookiStatue_clicked();
     void on_SwordAttak_clicked();
     void on_JumpSwordUp_clicked();
@@ -73,12 +75,11 @@ private slots:
     void on_directRight_clicked();
     void on_RideOnYoshi_clicked();
     void on_RideOnYoshiSit_clicked();
-    void on_RideOnYoshiSit_2_clicked();
+    void on_PipeUpDown_clicked();
+    void on_PipeUpDownRear_clicked();
     void on_SlopeSlide_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
-
-    void on_SwimUp_clicked();
 
 private:
     Ui::Animate *ui;
