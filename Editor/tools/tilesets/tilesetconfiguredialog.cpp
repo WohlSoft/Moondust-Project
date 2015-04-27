@@ -46,6 +46,8 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
 
     ui->customOnly->setVisible(mode!=GFX_Staff);
     ui->specific->setVisible(mode!=GFX_Staff);
+    ui->specific->setChecked(mode!=GFX_Staff);
+    ui->delete_me->setVisible(false);
 
     ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,32,3,3, scn)));
 
@@ -76,11 +78,19 @@ TilesetConfigureDialog::~TilesetConfigureDialog()
     delete ui;
 }
 
-void TilesetConfigureDialog::on_pushButton_clicked()
+void TilesetConfigureDialog::on_clearTileset_clicked()
 {
-    m_tileset->clear();
-    lastFileName="";
-    ui->TilesetName->setText("");
+    int x=QMessageBox::question(this, tr("Clean tileset editor"),
+                          tr("Do you want to clean tileset editor to create a new tileset?"),
+                          QMessageBox::Yes|QMessageBox::No);
+    if(x==QMessageBox::Yes)
+    {
+        m_tileset->clear();
+        lastFileName="";
+        lastFullPath="";
+        ui->TilesetName->setText("");
+        ui->delete_me->setVisible(false);
+    }
 }
 
 //void TilesetConfigureDialog::setUpItems(int type)
@@ -281,6 +291,9 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     if(!target.exists()) target.mkpath(savePath);
 
     tileset::SaveSimpleTileset( savePath + fileName, m_tileset->toSimpleTileset());
+
+    lastFullPath = QFileInfo(savePath + fileName).absoluteFilePath();
+    ui->delete_me->setVisible(true);
 }
 
 void TilesetConfigureDialog::on_OpenTileset_clicked()
@@ -314,6 +327,9 @@ void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
         return;
 
     lastFileName = QFileInfo(filePath).baseName();
+    lastFullPath = QFileInfo(filePath).absoluteFilePath();
+
+    ui->delete_me->setVisible(false);
 
     SimpleTileset simple;
     if(!tileset::OpenSimpleTileset(filePath,simple)){
@@ -328,6 +344,7 @@ void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
     }
 
     ui->specific->setChecked(isCustom);
+    ui->delete_me->setVisible(true);
 }
 
 void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, bool isCustom){
@@ -338,8 +355,10 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
     setUpItems(tileset.type);
     m_tileset->loadSimpleTileset(tileset);
     lastFileName = QString(tileset.fileName).remove(".tileset.ini");
+    lastFullPath = QFileInfo(tileset.fileName).absoluteFilePath();
 
     ui->specific->setChecked(isCustom);
+    ui->delete_me->setVisible(true);
 }
 
 
@@ -384,4 +403,18 @@ void TilesetConfigureDialog::showNotify()
     }
     cCounters.setValue("tileset-editor-greeting",showNotice);
     cCounters.endGroup();
+}
+
+void TilesetConfigureDialog::on_delete_me_clicked()
+{\
+    int x=QMessageBox::question(this, tr("Remove tileset"),
+                          tr("Do you want to remove this tileset?"),
+                          QMessageBox::Yes|QMessageBox::No);
+
+    if(x==QMessageBox::Yes)
+    {
+        QFile(lastFullPath).remove();
+        QMessageBox::information(this, tr("Tileset removed"), tr("Tileset has been removed!"), QMessageBox::Ok);
+        this->close();
+    }
 }
