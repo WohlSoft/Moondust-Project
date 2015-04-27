@@ -355,7 +355,21 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
     setUpItems(tileset.type);
     m_tileset->loadSimpleTileset(tileset);
     lastFileName = QString(tileset.fileName).remove(".tileset.ini");
-    lastFullPath = QFileInfo(tileset.fileName).absoluteFilePath();
+
+    switch(mode)
+    {
+        case GFX_Level:
+            lastFullPath = dynamic_cast<LvlScene *>(scn)->LvlData->path+
+                    (isCustom? "/"+dynamic_cast<LvlScene *>(scn)->LvlData->filename :"")+"/";
+            break;
+        case GFX_World:
+            lastFullPath = dynamic_cast<WldScene *>(scn)->WldData->path+
+                    (isCustom? "/"+dynamic_cast<WldScene *>(scn)->WldData->filename :"")+"/";
+            break;
+        default:
+            lastFullPath = m_conf->config_dir + "tilesets/";
+    }
+    lastFullPath.append(tileset.fileName);
 
     ui->specific->setChecked(isCustom);
     ui->delete_me->setVisible(true);
