@@ -1377,19 +1377,19 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
     else
     if (mw()->activeChildWindow()==1)
     {
-        //LevelData selData;
+        LevelData selData;
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                //selData.bgo.push_back(((ItemBGO*)item)->bgoData);
+                selData.bgo.push_back(((ItemBGO*)item)->bgoData);
                 ((ItemBGO*)item)->setZMode(zMode, ((ItemBGO*)item)->bgoData.z_offset);
                 //((ItemBGO*)item)->arrayApply();
                 //break;
             }
         }
-        //mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BGOSORTING, QVariant(arg1));
+        mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(zMode));
     }
 
 
@@ -1407,19 +1407,19 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
     else
     if (mw()->activeChildWindow()==1)
     {
-        //LevelData selData;
+        LevelData selData;
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(ITEM_TYPE).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
-                //selData.bgo.push_back(((ItemBGO*)item)->bgoData);
+                selData.bgo.push_back(((ItemBGO*)item)->bgoData);
                 ((ItemBGO*)item)->setZMode( ((ItemBGO*)item)->bgoData.z_mode, arg1);
                 //((ItemBGO*)item)->arrayApply();
                 //break;
             }
         }
-        //mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BGOSORTING, QVariant(arg1));
+        mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(arg1));
     }
 }
 

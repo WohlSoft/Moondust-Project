@@ -497,6 +497,7 @@ public:
         void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
         void addRotateHistory(LevelData rotatedItems, LevelData unrotatedItems);
         void addFlipHistory(LevelData flippedItems, LevelData unflippedItems);
+        void addTransformHistory(LevelData transformedItems, LevelData sourceItems);
         //history modifiers
         void historyBack();
         void historyForward();

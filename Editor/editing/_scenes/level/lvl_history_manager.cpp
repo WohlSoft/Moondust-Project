@@ -426,6 +426,20 @@ void LvlScene::addFlipHistory(LevelData flippedItems, LevelData unflippedItems)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addTransformHistory(LevelData transformedItems, LevelData sourceItems)
+{
+    updateHistoryBuffer();
+
+    HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
+    modf->setCustomHistoryName(tr("Transform"));
+    modf->setScene(this);
+
+    operationList.push_back(QSharedPointer<IHistoryElement>(modf));
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     if(EditingMode==MODE_Resizing) //Don't switch history while resizing in process

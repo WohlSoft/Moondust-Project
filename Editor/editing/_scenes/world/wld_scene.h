@@ -414,6 +414,7 @@ public:
         void addChangeSettingsHistory(WorldData modifiedItems, HistorySettings::WorldSettingSubType subType, QVariant extraData);
         void addRotateHistory(WorldData rotatedItems, WorldData unrotatedItems);
         void addFlipHistory(WorldData flippedItems, WorldData unflippedItems);
+        void addTransformHistory(WorldData transformedItems, WorldData sourceItems);
 
         //history modifiers
         void historyBack();
