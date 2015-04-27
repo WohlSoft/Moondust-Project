@@ -132,6 +132,16 @@ void HistoryElementItemSetting::processLevelUndo()
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyUndoSettingsSlipperyBlock(LevelBlock,QGraphicsItem*)));
     }
     else
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_LAYER){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyUndoSettingsZLayerBgo(LevelBGO,QGraphicsItem*)));
+    }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_OFFSET){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyUndoSettingsZOffsetBgo(LevelBGO,QGraphicsItem*)));
+    }
+    else
     if(m_modLevelSetting == HistorySettings::SETTING_FRIENDLY){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_NPC);
         connect(&levelSearcher, SIGNAL(foundNPC(LevelNPC,QGraphicsItem*)), this, SLOT(historyUndoSettingsFriendlyNPC(LevelNPC,QGraphicsItem*)));
@@ -311,6 +321,16 @@ void HistoryElementItemSetting::processLevelRedo()
     if(m_modLevelSetting == HistorySettings::SETTING_SLIPPERY){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Block);
         connect(&levelSearcher, SIGNAL(foundBlock(LevelBlock,QGraphicsItem*)), this, SLOT(historyRedoSettingsSlipperyBlock(LevelBlock,QGraphicsItem*)));
+    }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_LAYER){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsZLayerBgo(LevelBGO,QGraphicsItem*)));
+    }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_Z_OFFSET){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_BGO);
+        connect(&levelSearcher, SIGNAL(foundBGO(LevelBGO,QGraphicsItem*)), this, SLOT(historyRedoSettingsZOffsetBgo(LevelBGO,QGraphicsItem*)));
     }
     else
     if(m_modLevelSetting == HistorySettings::SETTING_FRIENDLY){
@@ -603,6 +623,38 @@ void HistoryElementItemSetting::historyRedoSettingsSlipperyBlock(const LevelBloc
 {
     ((ItemBlock*)item)->setSlippery(m_modData.toBool());
 }
+
+
+
+
+
+
+
+void HistoryElementItemSetting::historyUndoSettingsZLayerBgo(const LevelBGO &sourceBgo, QGraphicsItem *item)
+{
+    ((ItemBGO*)item)->setZMode(sourceBgo.z_mode, ((ItemBGO*)item)->bgoData.z_offset);
+}
+
+void HistoryElementItemSetting::historyRedoSettingsZLayerBgo(const LevelBGO &/*sourceBgo*/, QGraphicsItem *item)
+{
+    ((ItemBGO*)item)->setZMode(m_modData.toInt(), ((ItemBGO*)item)->bgoData.z_offset);
+}
+
+void HistoryElementItemSetting::historyUndoSettingsZOffsetBgo(const LevelBGO &sourceBgo, QGraphicsItem *item)
+{
+    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->bgoData.z_mode, sourceBgo.z_offset);
+}
+
+void HistoryElementItemSetting::historyRedoSettingsZOffsetBgo(const LevelBGO &/*sourceBgo*/, QGraphicsItem *item)
+{
+    ((ItemBGO*)item)->setZMode(((ItemBGO*)item)->bgoData.z_mode, m_modData.toReal());
+}
+
+
+
+
+
+
 
 void HistoryElementItemSetting::historyUndoSettingsFriendlyNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {

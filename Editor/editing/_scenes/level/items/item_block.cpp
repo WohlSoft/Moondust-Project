@@ -234,11 +234,13 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        util::DialogToCenter(blockList, true);
         if(blockList->exec()==QDialog::Accepted)
         {
             transformTO = blockList->blockID;
@@ -246,20 +248,27 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
+                    HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                     ((ItemBlock *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                 }
             }
         }
         delete blockList;
+
+        if(!HistoryNewData.blocks.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        util::DialogToCenter(blockList, true);
         if(blockList->exec()==QDialog::Accepted)
         {
             transformTO = blockList->blockID;
@@ -269,11 +278,18 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
                     if(((ItemBlock *) SelItem)->blockData.id==oldID)
+                    {
+                        HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                         ((ItemBlock *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                    }
                 }
             }
         }
         delete blockList;
+
+        if(!HistoryNewData.blocks.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==makemsgevent)
