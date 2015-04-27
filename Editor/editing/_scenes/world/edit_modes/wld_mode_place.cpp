@@ -34,7 +34,7 @@ WLD_ModePlace::~WLD_ModePlace()
 void WLD_ModePlace::set()
 {
     if(!scene) return;
-    WldScene *s = dynamic_cast<WldScene *>(scene);
+    WldScene *s = qobject_cast<WldScene *>(scene);
 
     s->clearSelection();
     s->resetResizers();
@@ -55,7 +55,7 @@ void WLD_ModePlace::set()
 void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
-    WldScene *s = dynamic_cast<WldScene *>(scene);
+    WldScene *s = qobject_cast<WldScene *>(scene);
 
     if( mouseEvent->buttons() & Qt::RightButton )
     {
@@ -91,7 +91,7 @@ void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 void WLD_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
-    WldScene *s = dynamic_cast<WldScene *>(scene);
+    WldScene *s = qobject_cast<WldScene *>(scene);
 
     s->clearSelection();
 
@@ -126,7 +126,7 @@ void WLD_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
     if(!scene) return;
-    WldScene *s = dynamic_cast<WldScene *>(scene);
+    WldScene *s = qobject_cast<WldScene *>(scene);
 
     if(!s->overwritedItems.tiles.isEmpty()||
         !s->overwritedItems.scenery.isEmpty()||
