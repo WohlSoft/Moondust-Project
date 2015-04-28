@@ -180,41 +180,41 @@ void WldScene::placeItemUnderCursor()
         while( (xxx=itemCollidesWith(cursor)) != NULL )
         {
             bool removed=false;
-            if(xxx->data(0).toString()=="TILE")
+            if(xxx->data(ITEM_TYPE).toString()=="TILE")
             {
-                if(xxx->data(2).toLongLong()>last_tile_arrayID) break;
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_tile_arrayID) break;
                 overwritedItems.tiles.push_back( ((ItemTile *)xxx)->tileData );
                 ((ItemTile *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
             else
-            if(xxx->data(0).toString()=="SCENERY")
+            if(xxx->data(ITEM_TYPE).toString()=="SCENERY")
             {
-                if(xxx->data(2).toLongLong()>last_scene_arrayID) break;
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_scene_arrayID) break;
                 overwritedItems.scenery.push_back( ((ItemScene *)xxx)->sceneData );
                 ((ItemScene *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
             else
-            if(xxx->data(0).toString()=="PATH")
+            if(xxx->data(ITEM_TYPE).toString()=="PATH")
             {
-                if(xxx->data(2).toLongLong()>last_path_arrayID) break;
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_path_arrayID) break;
                 overwritedItems.paths.push_back( ((ItemPath *)xxx)->pathData );
                 ((ItemPath *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
             else
-            if(xxx->data(0).toString()=="LEVEL")
+            if(xxx->data(ITEM_TYPE).toString()=="LEVEL")
             {
-                if(xxx->data(2).toLongLong()>last_level_arrayID) break;
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_level_arrayID) break;
                 overwritedItems.levels.push_back( ((ItemLevel *)xxx)->levelData );
                 ((ItemLevel *)xxx)->removeFromArray();
                 delete xxx; removed=true;
             }
             else
-            if(xxx->data(0).toString()=="MUSICBOX")
+            if(xxx->data(ITEM_TYPE).toString()=="MUSICBOX")
             {
-                if(xxx->data(2).toLongLong()>last_musicbox_arrayID) break;
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>last_musicbox_arrayID) break;
                 overwritedItems.music.push_back( ((ItemMusic *)xxx)->musicData );
                 ((ItemMusic *)xxx)->removeFromArray();
                 delete xxx; removed=true;
@@ -362,7 +362,7 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
 
     for (QList<QGraphicsItem*>::iterator it = items.begin(); it != items.end(); it++)
     {
-            objType=(*it)->data(0).toString();
+            objType=(*it)->data(ITEM_TYPE).toString();
 
             if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
 
