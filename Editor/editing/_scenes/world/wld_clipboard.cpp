@@ -101,7 +101,8 @@ WorldData WldScene::copy(bool cut)
         if(cut)
         {
             WldData->modified = true;
-            //addRemoveHistory(copyData);
+            addRemoveHistory(copyData);
+            Debugger_updateItemList();
         }
     }
 
