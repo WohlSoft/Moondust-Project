@@ -1,146 +1,191 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-<meta content="en-us" http-equiv="Content-Language" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Platformer Game Engine - Editor &gt; Level editing &gt; Level items &gt; blocks</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />
+  <meta content="en-us" http-equiv="Content-Language" />
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Platformer Game Engine - Editor &gt; Level editing &gt; Level items
+  &gt; blocks</title>
+  <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 
 <body>
-<p style="text-align: center">
-<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
+<p style="text-align: center"><a title="Contents"
+href="../manual_editor.html"><img alt="Editor splash"
+src="../images/splash_editor.png" /></a></p>
+
 <h1 style="text-align: left">Level editing &gt; Level items &gt; blocks</h1>
-<p style="text-align: left"><strong>Blocks</strong> - the 
-a solid objects which are tiles with his shape and size. The main construction 
-material of which level consists. The majority of blocks 
-interacts from players on whom it can stand about which the player can hit which 
-can be a limiting wall. There are blocks the touch to which hurt to the game 
-character, and some are capable to kill instantly not only it, but also to 
-destroy other objects which have touched them. There are special blocks with own 
-algorithm of interaction with the player. For example: switch, switching wall, 
-what changing his state frol lock to unlock and back; switches between player 
-characters and character limit blocks, what allows walk throught them only for 
-one of characters, for other characters theese blocks working as normal, etc. As 
-there is a special type of blocks which can have any size. This is a Sizable 
-blocks.</p>
-<p style="text-align: left">&nbsp;</p>
+
+<p style="text-align: left"><strong>Blocks</strong> - the a solid objects which
+are tiles with his shape and size. The main construction material of which
+level consists. The majority of blocks interacts from players on whom it can
+stand about which the player can hit which can be a limiting wall. There are
+blocks the touch to which hurt to the game character, and some are capable to
+kill instantly not only it, but also to destroy other objects which have
+touched them. There are special blocks with own algorithm of interaction with
+the player. For example: switch, switching wall, what changing his state frol
+lock to unlock and back; switches between player characters and character limit
+blocks, what allows walk throught them only for one of characters, for other
+characters theese blocks working as normal, etc. As there is a special type of
+blocks which can have any size. This is a Sizable blocks.</p>
+
+<p style="text-align: left"> </p>
+
 <p style="text-align: center"><em>Placing of blocks</em></p>
-<p style="text-align: center">
-<img alt="" height="527" src="../screenshots/LevelEditing/Items/place_blocks.png" width="766" /></p>
-<p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: center">
-<span style="font-weight: normal"><em>Block context menu</em></span></h3>
-<p style="text-align: center">
-<img alt="" src="../screenshots/LevelEditing/Items/BlockContext.png" /></p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-<a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">
-&nbsp;</p>
-<h3 style="text-align: left">
-<strong><a name="Block_Properties">Block Properties</a></strong></h3>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-Each block have flags:</p>
-<p style="text-align: left">
-<strong>Invisible</strong> - The block will be invisible and will appear only on 
-hit it. This flag useful for place some secret bonuses or make one way holes.</p>
-<p style="text-align: left">
-<strong>Slippery</strong> - The block's top surface will be slippery.</p>
-<p style="text-align: left">
-<strong>Contained NPC</strong> - NPC which will appear from block when player hit it.</p>
-<p style="text-align: left">
-Block can contain the some number of coins, or one of NPC.</p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: left">
-<strong>Layer </strong>- here was defined the layer which is owner of this block. 
-All items at first are a members of the "Default" layer.</p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-<em>Each block have the event slots:</em></p>
-<p style="text-align: left">
-<strong>Destroyed</strong> - this slot activating if block was be breaked, 
-crashed, destroyed, etc.</p>
-<p style="text-align: left">
-<strong>Hit</strong> - This slot activating if blocks was be hit, kicked, beated 
-from side or bottom.</p>
-<p style="text-align: left">
-<strong>Layer is empty</strong> - (In SMBX this slot was&nbsp; called as "<span style="text-decoration: underline">No 
-more objects in layer</span>") this slot activating when was activated the 
-"destroyed" slot and when layer which owner of this block is haven't other 
-objects.</p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: center">
-<em>Block Properties toolbox</em></p>
-<p style="text-align: center">
-<img alt="" src="../screenshots/LevelEditing/Items/Props_Block.png" /></p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: left">
-<a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">
-&nbsp;</p>
-<h3 style="text-align: left">
-<strong><a name="Sizable_blocks">Sizable blocks</a></strong></h3>
-<p style="text-align: left">
-This is a special block type which can have any sizes. Unlike standard blocks, 
-this block placing by rectangle drawing and it's size is defining by size of rectangle 
-when you release mouse key:</p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: center">
-<em>Drawing of sizable blocks</em></p>
-<p style="text-align: center">
-<img alt="" src="../screenshots/LevelEditing/Items/DrawSizableBlock.png" /></p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-This blocks can be resized. Unlike standard blocks, these blocks displaying in 
-the low background layer and displaying always under BGO (but some BGO in the 
-exception can be shown under sizable blocks).</p>
-<p style="text-align: left">
-&nbsp;</p>
-<p style="text-align: left">
-To start resizing, you should open the "Resize" context menu item 
-and you will see a blue rectangle which a "sizer". Move corner 
-dots or sides to define new size of block. When you done resizing press the ENTER key 
-to accept new 
-size, and then block will have a new size. If you will press the ESC key you 
-will cancel 
-resizing and block will keep current it's size.</p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: center">
-<em>Resizing of sisable blocks</em></p>
-<p style="text-align: center">
-<img alt="" src="../screenshots/LevelEditing/Items/ResizeBlock2.png" /></p>
-<p style="text-align: center">
-&nbsp;</p>
-<p style="text-align: left">
-<a class="return_to_top" href="#">Return to top</a></p>
-<p style="text-align: left">&nbsp;</p>
 
+<p style="text-align: center"><img alt="" height="527"
+src="../screenshots/LevelEditing/Items/place_blocks.png" width="766" /></p>
 
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
+<p style="text-align: left"> </p>
+
+<h3 style="text-align: center"><span style="font-weight: normal"><em>Block
+context menu</em></span></h3>
+
+<p style="text-align: center"><img alt=""
+src="../screenshots/LevelEditing/Items/BlockContext.png" /></p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"><a class="return_to_top" href="#">Return to
+top</a></p>
+
+<p style="text-align: left"> </p>
+
+<h3 style="text-align: left"><strong><a name="Block_Properties">Block
+Properties</a></strong></h3>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left">Each block have flags:</p>
+
+<p style="text-align: left"><strong>Invisible</strong> - The block will be
+invisible and will appear only on hit it. This flag useful for place some
+secret bonuses or make one way holes.</p>
+
+<p style="text-align: left"><strong>Slippery</strong> - The block's top surface
+will be slippery.</p>
+
+<p style="text-align: left"><strong>Contained NPC</strong> - NPC which will
+appear from block when player hit it.</p>
+
+<p style="text-align: left">Block can contain the some number of coins, or one
+of NPC.</p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: left"><strong>Layer </strong>- here was defined the layer
+which is owner of this block. All items at first are a members of the "Default"
+layer.</p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"><em>Each block have the event slots:</em></p>
+
+<p style="text-align: left"><strong>Destroyed</strong> - this slot activating
+if block was be breaked, crashed, destroyed, etc.</p>
+
+<p style="text-align: left"><strong>Hit</strong> - This slot activating if
+blocks was be hit, kicked, beated from side or bottom.</p>
+
+<p style="text-align: left"><strong>Layer is empty</strong> - (In SMBX this
+slot was  called as "<span style="text-decoration: underline">No more objects
+in layer</span>") this slot activating when was activated the "destroyed" slot
+and when layer which owner of this block is haven't other objects.</p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: center"><em>Block Properties toolbox</em></p>
+
+<p style="text-align: center"><img alt=""
+src="../screenshots/LevelEditing/Items/Props_Block.png" /></p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: left"><a class="return_to_top" href="#">Return to
+top</a></p>
+
+<p style="text-align: left"> </p>
+
+<h3 style="text-align: left"><strong><a name="Sizable_blocks">Sizable
+blocks</a></strong></h3>
+
+<p style="text-align: left">This is a special block type which can have any
+sizes. Unlike standard blocks, this block placing by rectangle drawing and it's
+size is defining by size of rectangle when you release mouse key:</p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: center"><em>Drawing of sizable blocks</em></p>
+
+<p style="text-align: center"><img alt=""
+src="../screenshots/LevelEditing/Items/DrawSizableBlock.png" /></p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left">This blocks can be resized. Unlike standard blocks,
+these blocks displaying in the low background layer and displaying always under
+BGO (but some BGO in the exception can be shown under sizable blocks).</p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left">To start resizing, you should open the "Resize"
+context menu item and you will see a blue rectangle which a "sizer". Move
+corner dots or sides to define new size of block. When you done resizing press
+the ENTER key to accept new size, and then block will have a new size. If you
+will press the ESC key you will cancel resizing and block will keep current
+it's size.</p>
+
+<p></p>
+
+<p><strong>Note</strong>: If you wish to get more features of resizer box
+(green net which defined new size of section), click inside of them by right
+mouse button. The context menu has actions:</p>
+<ul>
+  <li><strong>Cut top here</strong> - moves top boundary of box to current
+    mouse position</li>
+  <li><strong>Cut left here</strong> - moves left boundary of box to current
+    mouse position</li>
+  <li><strong>Cut right here</strong> - moves right boundary of box to current
+    mouse position</li>
+  <li><strong>Cut bottom here</strong> - moves bottom boundary of box to
+    current mouse position</li>
+  <li><strong>Don't snap to grid</strong> - disables grid snapping on moving of
+    box boundaries</li>
+  <li><strong>Disable minimal size limit</strong> - gives ability to set size
+    less than minimally available size</li>
+</ul>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: center"><em>Resizing of sisable blocks</em></p>
+
+<p style="text-align: center"><img alt=""
+src="../screenshots/LevelEditing/Items/ResizeBlock2.png" /></p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: left"><a class="return_to_top" href="#">Return to
+top</a></p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: center"> </p>
 <hr />
-<p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
-<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
+
+<p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p>
+<br />
+
+
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by
 Wohlstand project. All rights reserved.</p>
-
 </body>
-
 </html>
