@@ -322,13 +322,19 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
                         eventName = QString(eventName+" %1").arg(count);
                     }
-                    LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
-                    msgEvent.name = eventName;
-                    msgEvent.msg = msgText;
-                    msgEvent.array_id = ++scene->LvlData->events_array_id;
+
+                        LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
+                        msgEvent.name = eventName;
+                        msgEvent.msg = msgText;
+                        msgEvent.array_id = ++scene->LvlData->events_array_id;
                     scene->LvlData->events.push_back(msgEvent);
+                        LevelData historyOldData;
+                        historyOldData.blocks.push_back(blockData);
                     blockData.event_hit = eventName;
                     arrayApply();
+
+                    scene->addAddEventHistory(msgEvent);
+                    scene->addChangeSettingsHistory(historyOldData, HistorySettings::SETTING_EV_HITED, QVariant(eventName));
 
                     MainWinConnect::pMainWin->setEventsBox();
                     MainWinConnect::pMainWin->EventListsSync();
