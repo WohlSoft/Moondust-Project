@@ -26,6 +26,8 @@ Editor 0.3.0
 - If configuration package is failed, config status window will pop-up automatically
 - Added testing of world maps!
 - Added ability to install config pack into %UserProfile%\.PGE_Project, ~/.PGE_Project or ~/Library/Application Support/PGE Project folder
+- Added "delete tileset" button to provide built-in removing of junk tilesets
+- Fixed bug with music boxed placing undo history action
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager
