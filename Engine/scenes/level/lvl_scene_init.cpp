@@ -262,6 +262,9 @@ bool LevelScene::init()
         loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
 
+        //Don't put contactable points for "level entrance" points
+        if(data.doors[i].lvl_i) continue;
+
         LVL_Warp * warpP;
         warpP = new LVL_Warp();
         warpP->worldPtr = world;
