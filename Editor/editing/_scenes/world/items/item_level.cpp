@@ -255,6 +255,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
@@ -266,15 +268,21 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
                 {
+                    HistoryOldData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
                     ((ItemLevel *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
                 }
             }
         }
         delete itemList;
+        if(!HistoryNewData.levels.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
@@ -288,11 +296,17 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
                 {
                     if(((ItemLevel *) SelItem)->levelData.id==oldID)
+                    {
+                        HistoryOldData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
                         ((ItemLevel *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
+                    }
                 }
             }
         }
         delete itemList;
+        if(!HistoryNewData.levels.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==remove)
@@ -338,7 +352,7 @@ void ItemLevel::transformTo(long target_id)
         return;//Don't transform, target item is not found
 
     levelData.id = target_id;
-    setLevelData(levelData, &mergedSet, &animator);
+    setLevelData(levelData, &mergedSet, &animator, &pathID, &bPathID);
     arrayApply();
 
     if(!scene->opts.animationEnabled)

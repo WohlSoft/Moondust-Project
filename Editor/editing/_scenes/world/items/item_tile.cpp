@@ -174,6 +174,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
         tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
@@ -185,15 +187,21 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="TILE")
                 {
+                    HistoryOldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
                     ((ItemTile *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
                 }
             }
         }
         delete tileList;
+        if(!HistoryNewData.tiles.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
         tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
@@ -207,11 +215,17 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="TILE")
                 {
                     if(((ItemTile *) SelItem)->tileData.id==oldID)
+                    {
+                        HistoryOldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
                         ((ItemTile *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
+                    }
                 }
             }
         }
         delete tileList;
+        if(!HistoryNewData.tiles.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==remove)

@@ -176,6 +176,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_SCENERY);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
@@ -187,15 +189,21 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="SCENERY")
                 {
+                    HistoryOldData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
                     ((ItemScene *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
                 }
             }
         }
         delete itemList;
+        if(!HistoryNewData.scenery.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
         int transformTO;
         ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_SCENERY);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
@@ -209,11 +217,17 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="SCENERY")
                 {
                     if(((ItemScene *) SelItem)->sceneData.id==oldID)
+                    {
+                        HistoryOldData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
                         ((ItemScene *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
+                    }
                 }
             }
         }
         delete itemList;
+        if(!HistoryNewData.scenery.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==remove)
