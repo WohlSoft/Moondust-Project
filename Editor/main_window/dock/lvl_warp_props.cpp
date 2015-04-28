@@ -492,15 +492,18 @@ void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
     if (WinType==1)
     {
         LevelEdit* edit = mw()->activeLvlEditWin();
-
+        QList<QVariant> dirData;
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors[i].layer = arg1; break;
+                dirData.push_back(edit->LvlData.doors[i].layer);
+                dirData.push_back(arg1);
+                edit->LvlData.doors[i].layer = arg1;
+                break;
             }
         }
-        //edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_LAYER, QVariant(arg1));
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), HistorySettings::SETTING_LAYER, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
         edit->scene->applyLayersVisible();
     }
