@@ -703,7 +703,7 @@ You can take any configuration package here:&lt;br&gt;%2</source>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="98"/>
         <source>Level NPCs (%1/%2)</source>
-        <translation>Уровень: нИПы (%1/%2)</translation>
+        <translation>Уровень: НИПы (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="110"/>
@@ -877,7 +877,7 @@ Please save them first before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="38"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="44"/>
@@ -1710,12 +1710,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="215"/>
         <source>Edit NPC-Configuration</source>
-        <translation>Править конфигурацию нИП</translation>
+        <translation>Править конфигурацию НИП</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>New NPC-Configuration</source>
-        <translation>Новая конфигурация нИП</translation>
+        <translation>Новая конфигурация НИП</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="222"/>
@@ -1991,7 +1991,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="204"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="291"/>
@@ -2026,7 +2026,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="126"/>
         <source>NPC from List</source>
-        <translation>нИП из списка</translation>
+        <translation>НИП из списка</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="127"/>
@@ -2264,7 +2264,7 @@ Please, check the application directory.</source>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="75"/>
         <source>4/%1 Applying NPCs...</source>
-        <translation>4/%1 Применение нИП...</translation>
+        <translation>4/%1 Применение НИП...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="85"/>
@@ -2607,7 +2607,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="402"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
 </context>
 <context>
@@ -3295,7 +3295,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="638"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="908"/>
@@ -3382,7 +3382,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1099"/>
         <source>Contains of current NPC-Container</source>
-        <translation>Содержимое конейнера нИП</translation>
+        <translation>Содержимое конейнера НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1318"/>
@@ -3443,7 +3443,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="439"/>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation>ID нИП: %1, ID массива: %2</translation>
+        <translation>ID НИП: %1, ID массива: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="648"/>
@@ -3526,7 +3526,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="326"/>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="338"/>
         <source>Search User NPCs %1</source>
-        <translation>Поиск польз. нИП %1</translation>
+        <translation>Поиск польз. НИП %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="448"/>
@@ -4108,7 +4108,7 @@ Physical env. zones:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="438"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="482"/>
@@ -4116,7 +4116,7 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="299"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="410"/>
         <source>Search NPC</source>
-        <translation>Найти нИП</translation>
+        <translation>Найти НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="551"/>
@@ -4205,13 +4205,13 @@ Physical env. zones:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="283"/>
         <source>Next NPC</source>
-        <translation>Следующий нИП</translation>
+        <translation>Следующий НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="289"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="300"/>
         <source>NPC search completed!</source>
-        <translation>Поиск нИП завершён!</translation>
+        <translation>Поиск НИП завершён!</translation>
     </message>
     <message>
         <source>%1 coins</source>
@@ -4354,7 +4354,7 @@ Physical env. zones:	%6
         <location filename="../main_window/dock/lvl_warp_props.ui" line="172"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation>Рраз. нИП</translation>
+        <translation>Рраз. НИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="179"/>
@@ -5059,7 +5059,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="691"/>
         <source>NPC config...</source>
-        <translation>Конфигуркция нИП...</translation>
+        <translation>Конфигуркция НИП...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="703"/>
@@ -6486,7 +6486,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="1571"/>
         <source>Lock all NPC</source>
-        <translation>Блокировка всех нИП</translation>
+        <translation>Блокировка всех НИП</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1584"/>
@@ -6881,7 +6881,7 @@ Configuration package loaded with errors.</source>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="233"/>
         <source>NPC Config loaded</source>
-        <translation>Настройка нИП загружена</translation>
+        <translation>Настройка НИП загружена</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="323"/>
@@ -6989,13 +6989,13 @@ Configuration package loaded with errors.</source>
         <location filename="../main_window/file/file_new.cpp" line="42"/>
         <source>Cannot create NPC config file:
 Configuration package loaded with errors.</source>
-        <translation>Невозможно создать файл конфигурации нИП:
+        <translation>Невозможно создать файл конфигурации НИП:
 Конфигурационный пакет загружен с ошибками.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="53"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation>Создать новый файл конфигурации нИП</translation>
+        <translation>Создать новый файл конфигурации НИП</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="73"/>
@@ -7045,7 +7045,7 @@ Configuration package loaded with errors.</source>
     <message>
         <location filename="../main_window/edit/edit_clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 НИП, %4 физических зон скопировано в буфер обмена</translation>
     </message>
     <message>
         <location filename="../main_window/edit/edit_clipboard.cpp" line="47"/>
@@ -7055,7 +7055,7 @@ Configuration package loaded with errors.</source>
     <message>
         <location filename="../main_window/edit/edit_clipboard.cpp" line="65"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 НИП, %4 физических зон скопировано в буфер обмена</translation>
     </message>
     <message>
         <location filename="../main_window/edit/edit_clipboard.cpp" line="77"/>
@@ -7574,7 +7574,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="14"/>
         <source>NPC Select dialog</source>
-        <translation>Выбор нИП</translation>
+        <translation>Выбор НИП</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="114"/>
@@ -7594,7 +7594,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="144"/>
         <source>NPC from list</source>
-        <translation>Из списка нИП</translation>
+        <translation>Из списка НИП</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="172"/>
@@ -7614,7 +7614,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="107"/>
         <source>Please, select NPC from list</source>
-        <translation>Пожалуйста, выберите нИП из списка</translation>
+        <translation>Пожалуйста, выберите НИП из списка</translation>
     </message>
 </context>
 <context>
@@ -7622,7 +7622,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="37"/>
         <source>NPC Configuration edit</source>
-        <translation>Редактирование настройки нИП</translation>
+        <translation>Редактирование настройки НИП</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="315"/>
@@ -7674,12 +7674,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="237"/>
         <source>NPC collision top</source>
-        <translation>нИПы можгут стоять сверху</translation>
+        <translation>НИПы можгут стоять сверху</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="223"/>
         <source>NPC collision</source>
-        <translation>Столкновения с нИП</translation>
+        <translation>Столкновения с НИП</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="265"/>
@@ -7814,7 +7814,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="847"/>
         <source>Don&apos;t kill by other NPC&apos;s</source>
-        <translation>Неуязвим к другим нИП</translation>
+        <translation>Неуязвим к другим НИП</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npcedit.ui" line="876"/>
@@ -7851,7 +7851,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="106"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
-        <translation>Пользовательская настройка нИП SMBX (npc-*.txt)</translation>
+        <translation>Пользовательская настройка НИП SMBX (npc-*.txt)</translation>
     </message>
     <message>
         <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="117"/>
@@ -7898,7 +7898,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../data_configs/conf_lvl_npc.cpp" line="96"/>
         <source>Loading NPCs...</source>
-        <translation>Загружаются нИПы...</translation>
+        <translation>Загружаются НИПы...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_music.cpp" line="117"/>
@@ -8126,22 +8126,22 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="183"/>
         <source>Event NPC Activate</source>
-        <translation>Событие: нИП Активизировался</translation>
+        <translation>Событие: НИП Активизировался</translation>
     </message>
     <message>
         <location filename="../defines.h" line="184"/>
         <source>Event NPC Die</source>
-        <translation>Событие: нИП Умер</translation>
+        <translation>Событие: НИП Умер</translation>
     </message>
     <message>
         <location filename="../defines.h" line="185"/>
         <source>Event NPC Talk</source>
-        <translation>Событие: Разговор нИП</translation>
+        <translation>Событие: Разговор с НИП</translation>
     </message>
     <message>
         <location filename="../defines.h" line="186"/>
         <source>NPC Special Data</source>
-        <translation>Экстра-данные нИП</translation>
+        <translation>Экстра-данные НИП</translation>
     </message>
     <message>
         <location filename="../defines.h" line="187"/>
@@ -8618,7 +8618,7 @@ File: %1
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="66"/>
         <source>NPC</source>
-        <translation>иНП</translation>
+        <translation>НИП</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="71"/>
