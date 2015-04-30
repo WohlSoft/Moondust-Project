@@ -1452,12 +1452,12 @@ Please save them first before doing anything else.</translation>
         <translation>Properties...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="306"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="321"/>
         <source>Z-Offset</source>
         <translation>Z-Offset</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="307"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="322"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Please enter the Z-value offset:</translation>
     </message>
@@ -1505,44 +1505,44 @@ Please save them first before doing anything else.</translation>
         <translation>Transform all %1 into</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="289"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event name</source>
         <translation>Event name</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="290"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Please enter the name of event:</source>
         <translation>Please enter the name of event:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Hit message text</source>
         <translation>Hit message text</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="342"/>
         <source>Event has been created</source>
         <translation>Event has been created</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="343"/>
         <source>Message event has been created!</source>
         <translation>Message event has been created!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="326"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
         <source>&apos;Hit&apos; event slot is busy</source>
         <translation>&apos;Hit&apos; event slot is busy</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
         <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
         <translation>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</translation>
     </message>
@@ -3598,12 +3598,12 @@ You will see &apos;ghosties&apos; or other dummy images instead of your custom g
 Please, reconvert your images to the valid format and try to reload this level.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="445"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="459"/>
         <source>Undone: %1</source>
         <translation>Undone action: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="465"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="479"/>
         <source>Redone: %1</source>
         <translation>Redone action: %1</translation>
     </message>
@@ -3626,6 +3626,11 @@ Please, reconvert your images to the valid format and try to reload this level.<
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="120"/>
         <source>Move</source>
         <translation>Move</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="434"/>
+        <source>Transform</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Changed Setting [%1]</source>
@@ -4534,12 +4539,12 @@ Physical env. zones:	 %6</translation>
         <translation>Door #</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="908"/>
         <source>World map files not found</source>
         <translation>World map files not found</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="909"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -4548,24 +4553,24 @@ Please, put this level file with a world map, or create new world map in the sam
 File path: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="917"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="920"/>
         <source>Select world map file</source>
         <translation>Select world map file</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="918"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="921"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Found more than one world map files.
 Please, select necessary world map in a list:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="929"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="932"/>
         <source>File open error</source>
         <translation>File open error</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="930"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="933"/>
         <source>Can&apos;t open the file.</source>
         <translation>Can&apos;t open the file!.</translation>
     </message>
@@ -8008,454 +8013,469 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../defines.h" line="156"/>
+        <location filename="../defines.h" line="158"/>
+        <source>Invizible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="159"/>
         <source>Slippery</source>
         <translation>Slippery</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="157"/>
+        <location filename="../defines.h" line="160"/>
+        <source>Z-Layer</source>
+        <translation type="unfinished">Z-Layer</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="161"/>
+        <source>Z-Offset</source>
+        <translation type="unfinished">Z-Offset</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="162"/>
         <source>Friendly</source>
         <translation>Friendly</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="158"/>
+        <location filename="../defines.h" line="163"/>
         <source>Boss</source>
         <translation>Boss</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="159"/>
+        <location filename="../defines.h" line="164"/>
         <source>Not Moveable</source>
         <translation>Not movable</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="160"/>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="165"/>
+        <location filename="../defines.h" line="209"/>
         <source>Message</source>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="161"/>
+        <location filename="../defines.h" line="166"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="162"/>
+        <location filename="../defines.h" line="167"/>
         <source>Included NPC</source>
         <translation>Change contained NPC</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="163"/>
+        <location filename="../defines.h" line="168"/>
         <source>Water Type</source>
         <translation>Environment type</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="164"/>
+        <location filename="../defines.h" line="169"/>
         <source>Layer</source>
         <translation>Layer</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="165"/>
+        <location filename="../defines.h" line="170"/>
         <source>No Yoshi</source>
         <translation>Deny vehicles</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="166"/>
+        <location filename="../defines.h" line="171"/>
         <source>Allow NPC</source>
         <translation>Allow items</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="167"/>
+        <location filename="../defines.h" line="172"/>
         <source>Locked</source>
         <translation>Locked</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="168"/>
+        <location filename="../defines.h" line="173"/>
         <source>Warp Type</source>
         <translation>Warp Type</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="169"/>
+        <location filename="../defines.h" line="174"/>
         <source>Need Stars</source>
         <translation>Need Stars</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="170"/>
+        <location filename="../defines.h" line="175"/>
         <source>Entrance Direction</source>
         <translation>Entrance Direction</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="171"/>
+        <location filename="../defines.h" line="176"/>
         <source>Exit Direction</source>
         <translation>Exit Direction</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="172"/>
+        <location filename="../defines.h" line="177"/>
         <source>Set Level Exit</source>
         <translation>Set Level Exit</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="173"/>
+        <location filename="../defines.h" line="178"/>
         <source>Set Level Entrance</source>
         <translation>Set Level Entrance</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="174"/>
+        <location filename="../defines.h" line="179"/>
         <source>Level Warp To</source>
         <translation>Warp to another level</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="175"/>
+        <location filename="../defines.h" line="180"/>
         <source>Activate Generator</source>
         <translation>Activate Generator</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="176"/>
+        <location filename="../defines.h" line="181"/>
         <source>Generator Type</source>
         <translation>Generator Type</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="177"/>
+        <location filename="../defines.h" line="182"/>
         <source>Generator Direction</source>
         <translation>Generator Direction</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="178"/>
+        <location filename="../defines.h" line="183"/>
         <source>Generator Time</source>
         <translation>Generator Time</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="179"/>
+        <location filename="../defines.h" line="184"/>
         <source>Attach Layer</source>
         <translation>Attach Layer</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="185"/>
         <source>Event Block Destroyed</source>
         <translation>Event: Block destroyed</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="186"/>
         <source>Event Block Hited</source>
         <translation>Event: Block hit</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="187"/>
         <source>Event Layer Empty</source>
         <translation>Event: Layer empty</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="188"/>
         <source>Event NPC Activate</source>
         <translation>Event: NPC Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="189"/>
         <source>Event NPC Die</source>
         <translation>Event: NPC Death</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="190"/>
         <source>Event NPC Talk</source>
         <translation>Event: NPC Talk</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="191"/>
         <source>NPC Special Data</source>
         <translation>NPC Extra Data</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="192"/>
         <source>Autostart</source>
         <translation>Autostart</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="193"/>
         <source>Layer Smoke Effect</source>
         <translation>Layer Smoke Effect</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="194"/>
         <source>Add Hide Layer</source>
         <translation>Add Layer into hide list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="195"/>
         <source>Remove Hide Layer</source>
         <translation>Remove Layer from hide list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="196"/>
         <source>Add Show Layer</source>
         <translation>Add Layer into show list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="197"/>
         <source>Remove Show Layer</source>
         <translation>Remove Layer from show list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="198"/>
         <source>Add Toggle Layer</source>
         <translation>Add Layer into Toggle list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="199"/>
         <source>Remove Toggle Layer</source>
         <translation>Remove Layer from Toggle list</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="200"/>
         <source>Moving Layer</source>
         <translation>Moving Layer</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="201"/>
         <source>Layer Speed Horizontal</source>
         <translation>Horizontal Layer Speed</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="202"/>
         <source>Layer Speed Vertical</source>
         <translation>Vertical Layer Speed</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="203"/>
         <source>Autoscroll Layer</source>
         <translation>Autoscroll Section</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="204"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Horizontal Autoscroll Section Speed</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="205"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Vertical Autoscroll Section Speed</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="206"/>
         <source>Section Size</source>
         <translation>Section Size</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="207"/>
         <source>Section Music</source>
         <translation>Section Music</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="208"/>
         <source>Section Background</source>
         <translation>Section Background</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="210"/>
         <source>Sound</source>
         <translation>Sound</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="211"/>
         <source>End Game</source>
         <translation>End Game</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="212"/>
         <source>Up Key Activate</source>
         <translation>Up Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="213"/>
         <source>Down Key Activate</source>
         <translation>Down Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="214"/>
         <source>Left Key Activate</source>
         <translation>Left Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="215"/>
         <source>Right Key Activate</source>
         <translation>Right Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="216"/>
         <source>Run Key Activate</source>
         <translation>Run Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="217"/>
         <source>Alt Run Key Activate</source>
         <translation>Alt Run Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="218"/>
         <source>Jump Key Activate</source>
         <translation>Jump Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="219"/>
         <source>Alt Jump Key Activate</source>
         <translation>Alt Jump Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="220"/>
         <source>Drop Key Activate</source>
         <translation>Drop Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="221"/>
         <source>Start Key Activate</source>
         <translation>Start Button Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="222"/>
         <source>Trigger Activate</source>
         <translation>Trigger Activate</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="223"/>
         <source>Trigger Delay</source>
         <translation>Trigger Delay</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="224"/>
         <source>Is Warp</source>
         <translation>Left-Right sides connection</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="225"/>
         <source>No Back</source>
         <translation>Disable returns to left</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="226"/>
         <source>Off Screen Exit</source>
         <translation>Off Screen Level Exit</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="227"/>
         <source>Underwater</source>
         <translation>Underwater</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="228"/>
         <source>Background Image</source>
         <translation>Background Image</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="229"/>
         <source>Music</source>
         <translation>Music</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="230"/>
         <source>Custom Music</source>
         <translation>Custom Music</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="231"/>
         <source>Level Name</source>
         <translation>Level Name</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="232"/>
         <source>BGO Sorting Priority</source>
         <translation>BGO Sorting Priority</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="260"/>
         <source>Unknown</source>
         <translation>Unknown</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="241"/>
         <source>Always Visible</source>
         <translation>Always Visible</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="242"/>
         <source>Big Path Background</source>
         <translation>Big Background Path</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="243"/>
         <source>Character</source>
         <translation>Character</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="244"/>
         <source>Door ID</source>
         <translation>Door ID</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="245"/>
         <source>Game start point</source>
         <translation>Game start point</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="246"/>
         <source>Goto X</source>
         <translation>Goto X</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="247"/>
         <source>Goto Y</source>
         <translation>Goto Y</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="248"/>
         <source>Hub styled world</source>
         <translation>Hub styled world</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="249"/>
         <source>Intro Level</source>
         <translation>Intro level</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="250"/>
         <source>Level file</source>
         <translation>Level file</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="251"/>
         <source>Level title</source>
         <translation>Level title</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="252"/>
         <source>Path Background</source>
         <translation>Background Path</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="253"/>
         <source>Exit at bottom</source>
         <translation>Exit at bottom</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="254"/>
         <source>Exit at left</source>
         <translation>Exit at left</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="255"/>
         <source>Exit at right</source>
         <translation>Exit at right</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="256"/>
         <source>Exit at top</source>
         <translation>Exit at top</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="257"/>
         <source>Restart after fail</source>
         <translation>Restart after fail</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="258"/>
         <source>Total stars</source>
         <translation>Total stars</translation>
     </message>
@@ -9479,12 +9499,12 @@ You will see &apos;ghosties&apos; or other dummy images instead of your custom g
 Please, reconvert your images to the valid format and try to reload this level.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="156"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="170"/>
         <source>Undone: %1</source>
         <translation>Undone action: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="169"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="183"/>
         <source>Redone: %1</source>
         <translation>Redone action: %1</translation>
     </message>
@@ -9523,6 +9543,7 @@ Please, reconvert your images to the valid format and try to reload this level.<
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="137"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
         <source>Flip</source>
         <translation>Flip</translation>
     </message>

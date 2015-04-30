@@ -1314,12 +1314,12 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="306"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="321"/>
         <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="307"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="322"/>
         <source>Please enter the Z-value offset:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1367,43 +1367,43 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="289"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="290"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Please enter the name of event:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Hit message text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="342"/>
         <source>Event has been created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="343"/>
         <source>Message event has been created!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="326"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
         <source>&apos;Hit&apos; event slot is busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
         <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3310,12 +3310,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="445"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="459"/>
         <source>Undone: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="465"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="479"/>
         <source>Redone: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3347,6 +3347,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="420"/>
         <source>Flip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="434"/>
+        <source>Transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3857,35 +3862,35 @@ Physical env. zones:	%6
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="908"/>
         <source>World map files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="909"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="917"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="920"/>
         <source>Select world map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="918"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="921"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="929"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="932"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="930"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="933"/>
         <source>Can&apos;t open the file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6023,454 +6028,469 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../defines.h" line="156"/>
-        <source>Slippery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../defines.h" line="157"/>
-        <source>Friendly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../defines.h" line="158"/>
-        <source>Boss</source>
+        <source>Invizible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="159"/>
-        <source>Not Moveable</source>
+        <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="160"/>
-        <location filename="../defines.h" line="204"/>
-        <source>Message</source>
+        <source>Z-Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="161"/>
-        <source>Direction</source>
+        <source>Z-Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="162"/>
-        <source>Included NPC</source>
+        <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="163"/>
-        <source>Water Type</source>
+        <source>Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="164"/>
-        <source>Layer</source>
+        <source>Not Moveable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="165"/>
-        <source>No Yoshi</source>
+        <location filename="../defines.h" line="209"/>
+        <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="166"/>
-        <source>Allow NPC</source>
+        <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="167"/>
-        <source>Locked</source>
+        <source>Included NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="168"/>
-        <source>Warp Type</source>
+        <source>Water Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="169"/>
-        <source>Need Stars</source>
+        <source>Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="170"/>
-        <source>Entrance Direction</source>
+        <source>No Yoshi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="171"/>
-        <source>Exit Direction</source>
+        <source>Allow NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="172"/>
-        <source>Set Level Exit</source>
+        <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="173"/>
-        <source>Set Level Entrance</source>
+        <source>Warp Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="174"/>
-        <source>Level Warp To</source>
+        <source>Need Stars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="175"/>
-        <source>Activate Generator</source>
+        <source>Entrance Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="176"/>
-        <source>Generator Type</source>
+        <source>Exit Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="177"/>
-        <source>Generator Direction</source>
+        <source>Set Level Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="178"/>
-        <source>Generator Time</source>
+        <source>Set Level Entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="179"/>
-        <source>Attach Layer</source>
+        <source>Level Warp To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="180"/>
-        <source>Event Block Destroyed</source>
+        <source>Activate Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="181"/>
-        <source>Event Block Hited</source>
+        <source>Generator Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="182"/>
-        <source>Event Layer Empty</source>
+        <source>Generator Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="183"/>
-        <source>Event NPC Activate</source>
+        <source>Generator Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="184"/>
-        <source>Event NPC Die</source>
+        <source>Attach Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="185"/>
-        <source>Event NPC Talk</source>
+        <source>Event Block Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="186"/>
-        <source>NPC Special Data</source>
+        <source>Event Block Hited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="187"/>
-        <source>Autostart</source>
+        <source>Event Layer Empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="188"/>
-        <source>Layer Smoke Effect</source>
+        <source>Event NPC Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="189"/>
-        <source>Add Hide Layer</source>
+        <source>Event NPC Die</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="190"/>
-        <source>Remove Hide Layer</source>
+        <source>Event NPC Talk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="191"/>
-        <source>Add Show Layer</source>
+        <source>NPC Special Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="192"/>
-        <source>Remove Show Layer</source>
+        <source>Autostart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="193"/>
-        <source>Add Toggle Layer</source>
+        <source>Layer Smoke Effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="194"/>
-        <source>Remove Toggle Layer</source>
+        <source>Add Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="195"/>
-        <source>Moving Layer</source>
+        <source>Remove Hide Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="196"/>
-        <source>Layer Speed Horizontal</source>
+        <source>Add Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="197"/>
-        <source>Layer Speed Vertical</source>
+        <source>Remove Show Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="198"/>
-        <source>Autoscroll Layer</source>
+        <source>Add Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="199"/>
-        <source>Autoscroll Layer Speed Horizontal</source>
+        <source>Remove Toggle Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
-        <source>Autoscroll Layer Speed Vertical</source>
+        <source>Moving Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="201"/>
-        <source>Section Size</source>
+        <source>Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="202"/>
-        <source>Section Music</source>
+        <source>Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="203"/>
-        <source>Section Background</source>
+        <source>Autoscroll Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="204"/>
+        <source>Autoscroll Layer Speed Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="205"/>
-        <source>Sound</source>
+        <source>Autoscroll Layer Speed Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="206"/>
-        <source>End Game</source>
+        <source>Section Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="207"/>
-        <source>Up Key Activate</source>
+        <source>Section Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="208"/>
-        <source>Down Key Activate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../defines.h" line="209"/>
-        <source>Left Key Activate</source>
+        <source>Section Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="210"/>
-        <source>Right Key Activate</source>
+        <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="211"/>
-        <source>Run Key Activate</source>
+        <source>End Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="212"/>
-        <source>Alt Run Key Activate</source>
+        <source>Up Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="213"/>
-        <source>Jump Key Activate</source>
+        <source>Down Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="214"/>
-        <source>Alt Jump Key Activate</source>
+        <source>Left Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="215"/>
-        <source>Drop Key Activate</source>
+        <source>Right Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="216"/>
-        <source>Start Key Activate</source>
+        <source>Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="217"/>
-        <source>Trigger Activate</source>
+        <source>Alt Run Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="218"/>
-        <source>Trigger Delay</source>
+        <source>Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="219"/>
-        <source>Is Warp</source>
+        <source>Alt Jump Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="220"/>
-        <source>No Back</source>
+        <source>Drop Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="221"/>
-        <source>Off Screen Exit</source>
+        <source>Start Key Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="222"/>
-        <source>Underwater</source>
+        <source>Trigger Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="223"/>
-        <source>Background Image</source>
+        <source>Trigger Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="224"/>
-        <source>Music</source>
+        <source>Is Warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="225"/>
-        <source>Custom Music</source>
+        <source>No Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="226"/>
-        <source>Level Name</source>
+        <source>Off Screen Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="227"/>
-        <source>BGO Sorting Priority</source>
+        <source>Underwater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="228"/>
+        <source>Background Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../defines.h" line="229"/>
-        <location filename="../defines.h" line="255"/>
+        <source>Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="230"/>
+        <source>Custom Music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="231"/>
+        <source>Level Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="232"/>
+        <source>BGO Sorting Priority</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="260"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="241"/>
         <source>Always Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="242"/>
         <source>Big Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="243"/>
         <source>Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="244"/>
         <source>Door ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="245"/>
         <source>Game start point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="246"/>
         <source>Goto X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="247"/>
         <source>Goto Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="248"/>
         <source>Hub styled world</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="249"/>
         <source>Intro Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="250"/>
         <source>Level file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="251"/>
         <source>Level title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="252"/>
         <source>Path Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="253"/>
         <source>Exit at bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="254"/>
         <source>Exit at left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="255"/>
         <source>Exit at right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="256"/>
         <source>Exit at top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="257"/>
         <source>Restart after fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="258"/>
         <source>Total stars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7454,12 +7474,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="156"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="170"/>
         <source>Undone: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="169"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="183"/>
         <source>Redone: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7490,6 +7510,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="137"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
         <source>Flip</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1394,12 +1394,12 @@ Please save them first before doing anything else.</source>
         <translation>Свойства...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="306"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="321"/>
         <source>Z-Offset</source>
         <translation>Смещение Z</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="307"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="322"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Пожалуйста, введите значение смещения Z:</translation>
     </message>
@@ -1447,17 +1447,17 @@ Please save them first before doing anything else.</source>
         <translation>Превратить все %1 в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="289"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
         <source>Event name</source>
         <translation>Имя события</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="290"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
         <source>Please enter the name of event:</source>
         <translation>Пожалуйста, введите имя события:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Пожалуйста, наберите сообщение для события
@@ -1465,27 +1465,27 @@ Message limits: max line lenth is 27 characters</source>
 максимальная длина строки 27 символов</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="296"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
         <source>Hit message text</source>
         <translation>Текст сообщения стукнутого блока</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="320"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="342"/>
         <source>Event has been created</source>
         <translation>Событие успешно создано</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="343"/>
         <source>Message event has been created!</source>
         <translation>Событие с сообщением успешно создано!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="326"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
         <source>&apos;Hit&apos; event slot is busy</source>
         <translation>Слот события &apos;Стуктут&apos; уже занято</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
         <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
         <translation>Извинте, но слот события &quot;Стукнут&quot; уже занято событием &quot;%1&quot;.</translation>
     </message>
@@ -3543,12 +3543,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="445"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="459"/>
         <source>Undone: %1</source>
         <translation>Отменено действие: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="465"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="479"/>
         <source>Redone: %1</source>
         <translation>Повторено действие: %1</translation>
     </message>
@@ -3571,6 +3571,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="120"/>
         <source>Move</source>
         <translation>Переместить</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="434"/>
+        <source>Transform</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Changed Setting [%1]</source>
@@ -4479,12 +4484,12 @@ Physical env. zones:	%6
         <translation>Дверь №</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="908"/>
         <source>World map files not found</source>
         <translation>Файлы карт мира не найдены</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="906"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="909"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -4493,24 +4498,24 @@ File path: %1</source>
 Путь к файлу: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="917"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="920"/>
         <source>Select world map file</source>
         <translation>Выбор файла карты мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="918"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="921"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Обнаружено больше чем одна карта мира.
 Пожалуйста, выберите нужную карту мира в списке:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="929"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="932"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="930"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="933"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
@@ -7988,454 +7993,469 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../defines.h" line="156"/>
+        <location filename="../defines.h" line="158"/>
+        <source>Invizible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="159"/>
         <source>Slippery</source>
         <translation>Скользкий</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="157"/>
+        <location filename="../defines.h" line="160"/>
+        <source>Z-Layer</source>
+        <translation type="unfinished">Z-Cлой</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="161"/>
+        <source>Z-Offset</source>
+        <translation type="unfinished">Смещение Z</translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="162"/>
         <source>Friendly</source>
         <translation>Дружественный</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="158"/>
+        <location filename="../defines.h" line="163"/>
         <source>Boss</source>
         <translation>Босс</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="159"/>
+        <location filename="../defines.h" line="164"/>
         <source>Not Moveable</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="160"/>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="165"/>
+        <location filename="../defines.h" line="209"/>
         <source>Message</source>
         <translation>Сообщение</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="161"/>
+        <location filename="../defines.h" line="166"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="162"/>
+        <location filename="../defines.h" line="167"/>
         <source>Included NPC</source>
         <translation>Изменить содержимое блока</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="163"/>
+        <location filename="../defines.h" line="168"/>
         <source>Water Type</source>
         <translation>Тип среды</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="164"/>
+        <location filename="../defines.h" line="169"/>
         <source>Layer</source>
         <translation>Слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="165"/>
+        <location filename="../defines.h" line="170"/>
         <source>No Yoshi</source>
         <translation>Без транспортных средств</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="166"/>
+        <location filename="../defines.h" line="171"/>
         <source>Allow NPC</source>
         <translation>Рразрешить предметы</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="167"/>
+        <location filename="../defines.h" line="172"/>
         <source>Locked</source>
         <translation>Заперто</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="168"/>
+        <location filename="../defines.h" line="173"/>
         <source>Warp Type</source>
         <translation>Тип прохода</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="169"/>
+        <location filename="../defines.h" line="174"/>
         <source>Need Stars</source>
         <translation>Нужно звёзд</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="170"/>
+        <location filename="../defines.h" line="175"/>
         <source>Entrance Direction</source>
         <translation>Направление входа</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="171"/>
+        <location filename="../defines.h" line="176"/>
         <source>Exit Direction</source>
         <translation>Направление выхода</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="172"/>
+        <location filename="../defines.h" line="177"/>
         <source>Set Level Exit</source>
         <translation>Установить выход уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="173"/>
+        <location filename="../defines.h" line="178"/>
         <source>Set Level Entrance</source>
         <translation>Установить вход уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="174"/>
+        <location filename="../defines.h" line="179"/>
         <source>Level Warp To</source>
         <translation>Проход на другой уровень</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="175"/>
+        <location filename="../defines.h" line="180"/>
         <source>Activate Generator</source>
         <translation>Активация Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="176"/>
+        <location filename="../defines.h" line="181"/>
         <source>Generator Type</source>
         <translation>Тип Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="177"/>
+        <location filename="../defines.h" line="182"/>
         <source>Generator Direction</source>
         <translation>Направление Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="178"/>
+        <location filename="../defines.h" line="183"/>
         <source>Generator Time</source>
         <translation>Время Генератора</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="179"/>
+        <location filename="../defines.h" line="184"/>
         <source>Attach Layer</source>
         <translation>Присоединить слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="185"/>
         <source>Event Block Destroyed</source>
         <translation>Событие: Блок сломан</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="186"/>
         <source>Event Block Hited</source>
         <translation>Событие: Блок стукнут</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="187"/>
         <source>Event Layer Empty</source>
         <translation>Событие: Слой пуст</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="188"/>
         <source>Event NPC Activate</source>
         <translation>Событие: НИП Активизировался</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
+        <location filename="../defines.h" line="189"/>
         <source>Event NPC Die</source>
         <translation>Событие: НИП Умер</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="190"/>
         <source>Event NPC Talk</source>
         <translation>Событие: Разговор с НИП</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="191"/>
         <source>NPC Special Data</source>
         <translation>Экстра-данные НИП</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="192"/>
         <source>Autostart</source>
         <translation>Автозапуск</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="193"/>
         <source>Layer Smoke Effect</source>
         <translation>Эффект дыма для слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="194"/>
         <source>Add Hide Layer</source>
         <translation>Добавить слой в список скрытия</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="195"/>
         <source>Remove Hide Layer</source>
         <translation>Удалить слой из списка скрытия</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="196"/>
         <source>Add Show Layer</source>
         <translation>Добавить слой в список проявление</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="197"/>
         <source>Remove Show Layer</source>
         <translation>Удалить слой из списка проявления</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="198"/>
         <source>Add Toggle Layer</source>
         <translation>Добавить слой в список переключения</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="199"/>
         <source>Remove Toggle Layer</source>
         <translation>Удалить слой из списка переключения</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="200"/>
         <source>Moving Layer</source>
         <translation>Движущийся слой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="201"/>
         <source>Layer Speed Horizontal</source>
         <translation>Горизонтальная скорость слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="202"/>
         <source>Layer Speed Vertical</source>
         <translation>Вертикальная скорость слоя</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="203"/>
         <source>Autoscroll Layer</source>
         <translation>Автопрокрутка секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="204"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Горизонтальная скорость автопрокрутки секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="205"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Вертикальная скорость автопрокрутки секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="206"/>
         <source>Section Size</source>
         <translation>Размер секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="207"/>
         <source>Section Music</source>
         <translation>Музыка секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="208"/>
         <source>Section Background</source>
         <translation>Фон секции</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="210"/>
         <source>Sound</source>
         <translation>Звук</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="211"/>
         <source>End Game</source>
         <translation>Завершение игры</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="212"/>
         <source>Up Key Activate</source>
         <translation>Клавиша &quot;Вверх&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="213"/>
         <source>Down Key Activate</source>
         <translation>Клавиша &quot;Вниз&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="214"/>
         <source>Left Key Activate</source>
         <translation>Клавиша &quot;Влево&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="215"/>
         <source>Right Key Activate</source>
         <translation>Клавиша &quot;Вправо&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="216"/>
         <source>Run Key Activate</source>
         <translation>Клавиша &quot;Бег&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="217"/>
         <source>Alt Run Key Activate</source>
         <translation>Клавиша &quot;Альт. Бег&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="218"/>
         <source>Jump Key Activate</source>
         <translation>Клавиша &quot;Прыжок&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="219"/>
         <source>Alt Jump Key Activate</source>
         <translation>Клавиша &quot;Альт.Прыжок&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="220"/>
         <source>Drop Key Activate</source>
         <translation>Клавиша &quot;Сбросить&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="221"/>
         <source>Start Key Activate</source>
         <translation>Клавиша &quot;Старт&quot; активирована</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="222"/>
         <source>Trigger Activate</source>
         <translation>Триггер события</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="223"/>
         <source>Trigger Delay</source>
         <translation>Задержка триггера</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="224"/>
         <source>Is Warp</source>
         <translation>Соедининение левого-правого крёв</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="225"/>
         <source>No Back</source>
         <translation>Отключить возвращение на лево</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="226"/>
         <source>Off Screen Exit</source>
         <translation>Выход из уровня за кадр</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="227"/>
         <source>Underwater</source>
         <translation>Под водой</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="228"/>
         <source>Background Image</source>
         <translation>Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="229"/>
         <source>Music</source>
         <translation>Музыка</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="230"/>
         <source>Custom Music</source>
         <translation>Пользовательская музыка</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="231"/>
         <source>Level Name</source>
         <translation>Имя уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="232"/>
         <source>BGO Sorting Priority</source>
         <translation>Приоритет сортировки Фоновых Объектов</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="260"/>
         <source>Unknown</source>
         <translation>Неизвестное</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="241"/>
         <source>Always Visible</source>
         <translation>Всегда Видим</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="242"/>
         <source>Big Path Background</source>
         <translation>Большой фоновый путь</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="243"/>
         <source>Character</source>
         <translation>Персонаж</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="244"/>
         <source>Door ID</source>
         <translation>ID Двери</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="245"/>
         <source>Game start point</source>
         <translation>Точка начала игры</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="246"/>
         <source>Goto X</source>
         <translation>Перейти к X</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="247"/>
         <source>Goto Y</source>
         <translation>Перейти к Y</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="248"/>
         <source>Hub styled world</source>
         <translation>Корридорный мир</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="249"/>
         <source>Intro Level</source>
         <translation>Входной уровень</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="250"/>
         <source>Level file</source>
         <translation>Файл уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="251"/>
         <source>Level title</source>
         <translation>Заголовок уровня</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="252"/>
         <source>Path Background</source>
         <translation>Фоновый путь</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="253"/>
         <source>Exit at bottom</source>
         <translation>Выход снизу</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="254"/>
         <source>Exit at left</source>
         <translation>Выход слева</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="255"/>
         <source>Exit at right</source>
         <translation>Выход справа</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="256"/>
         <source>Exit at top</source>
         <translation>Выход сверху</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="257"/>
         <source>Restart after fail</source>
         <translation>Переиграть после провала</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="258"/>
         <source>Total stars</source>
         <translation>Всего звёзд</translation>
     </message>
@@ -9461,12 +9481,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="156"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="170"/>
         <source>Undone: %1</source>
         <translation>Отменено действие: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="169"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="183"/>
         <source>Redone: %1</source>
         <translation>Повторено действие: %1</translation>
     </message>
@@ -9505,6 +9525,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="137"/>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
         <source>Flip</source>
         <translation>Отразить</translation>
     </message>
