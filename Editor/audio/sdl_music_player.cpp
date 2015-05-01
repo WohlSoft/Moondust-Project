@@ -235,9 +235,11 @@ void PGE_Sounds::SND_PlaySnd(QString sndFile)
 
 void PGE_Sounds::freeBuffer()
 {
+    #ifdef USE_SDL_MIXER
     if(sound)
     {
         Mix_FreeChunk(sound);
         sound=NULL;
     }
+    #endif
 }
