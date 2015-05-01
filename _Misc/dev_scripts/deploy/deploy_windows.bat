@@ -50,6 +50,20 @@ del "%DeployDir%\%PgePrjSD%\themes\*.zip"
 del "%DeployDir%\%PgePrjSD%\themes\pge_default\*.zip"
 "%SEVENZIP%\7z" x "%CurDir%\..\tools\sox-win32.zip" -o"%DeployDir%\%PgePrjSD%\tools" * -r
 
+rem Creating empty directories for a user stuff
+md "%DeployDir%\%PgePrjSD%\configs"
+md "%DeployDir%\%PgePrjSD%\worlds"
+md "%DeployDir%\%PgePrjSD%\screenshots"
+md "%DeployDir%\%PgePrjSD%\logs"
+
+echo Creating INI-files with portable config
+echo [Main]> "%DeployDir%\%PgePrjSD%\pge_editor.ini"
+echo force-portable=true>> "%DeployDir%\%PgePrjSD%\pge_editor.ini"
+echo [Main]> "%DeployDir%\%PgePrjSD%\pge_engine.ini"
+echo force-portable=true>> "%DeployDir%\%PgePrjSD%\pge_engine.ini"
+echo [Main]> "%DeployDir%\%PgePrjSD%\pge_calibrator.ini"
+echo force-portable=true>> "%DeployDir%\%PgePrjSD%\pge_calibrator.ini"
+
 cd "%DeployDir%"
 
 if exist ".\%TarGzArName%" del ".\%TarGzArName%"
