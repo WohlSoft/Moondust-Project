@@ -22,7 +22,7 @@
 #
 #----------------------------------------------------------------------------
 
-QT       += gui widgets network
+QT       += gui widgets network concurrent
 QT       -= opengl
 
 win32: {
