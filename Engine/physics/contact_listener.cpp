@@ -73,10 +73,12 @@ void PGEContactListener::BeginContact(b2Contact *contact)
 
     if(platformFixture)
     {
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
         //qDebug() <<"Contacted With Warp";
-        dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
-        dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=true;
-        dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched++;
+        chr->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
+        chr->contactedWithWarp=true;
+        chr->warpsTouched++;
     }
 
     /***********************************PhysEnvironment & Player***********************************/
@@ -101,8 +103,12 @@ void PGEContactListener::BeginContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        dynamic_cast<LVL_Player *>(bodyChar)->environments_map[(intptr_t)bodyBlock]
-                = dynamic_cast<LVL_PhysEnv *>(bodyBlock)->env_type;
+        LVL_PhysEnv *env=dynamic_cast<LVL_PhysEnv *>(bodyBlock);
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(!env) return;
+        chr->environments_map[(intptr_t)bodyBlock]
+                = env->env_type;
     }
 
     /***********************************BGO & Player***********************************/
@@ -127,8 +133,12 @@ void PGEContactListener::BeginContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        if(dynamic_cast<LVL_Bgo *>(bodyBlock)->setup->climbing)
-            dynamic_cast<LVL_Player *>(bodyChar)->climbable_map[(intptr_t)bodyBlock]=1;
+        LVL_Bgo *bgo=dynamic_cast<LVL_Bgo *>(bodyBlock);
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(!bgo) return;
+        if(bgo->setup->climbing)
+            chr->climbable_map[(intptr_t)bodyBlock]=1;
     }
 
 
@@ -156,48 +166,53 @@ void PGEContactListener::BeginContact(b2Contact *contact)
     {
         if(bodyBlock->collide==PGE_Phys_Object::COLLISION_ANY)
         {
-            if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+            LVL_Block *blk=dynamic_cast<LVL_Block *>(bodyBlock);
+            LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+            if(!chr) return;
+            if(!blk) return;
+
+            if(blk->destroyed)
             {
                     contact->SetEnabled(false);
                     return;
             }
 
-            if(  ( (bodyChar->bottom()<=bodyBlock->top()-0.1) ||
-                    ((bodyChar->bottom() >= bodyBlock->top())&&
-                    (bodyChar->bottom()<=bodyBlock->top()+2)) )
+            if(  ( (chr->bottom()<=blk->top()-0.1) ||
+                    ((chr->bottom() >= blk->top())&&
+                    (chr->bottom()<=blk->top()+2)) )
                  //Uncommend this code piece to disallow wall climbing (now wal climbing is needed without NPC's :P)
               /*   &&( !( (bodyChar->left()>=bodyBlock->right()-2) || (bodyChar->right() <= bodyBlock->left()+2) ) )*/
-                 &&(!dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+                 &&(!blk->isHidden)
                   )
             {
-                dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock] = 1;
-                dynamic_cast<LVL_Player *>(bodyChar)->onGround=(!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
-                if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
-                    dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
+                chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
+                chr->onGround=(!chr->foot_contacts_map.isEmpty());
+                if(chr->keys.down)
+                    chr->climbing=false;
                 if(bodyBlock->slippery_surface)
-                    dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
+                    chr->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
             }
 
             if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
                     && (bodyChar->physBody->GetLinearVelocity().y < -0.01) )
             {
-                dynamic_cast<LVL_Player *>(bodyChar)->jumpForce=0;
+                chr->jumpForce=0;
 
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->hitable)
+                if(blk->setup->hitable)
                 {
-                    dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                    chr->bump();
                 }
-                dynamic_cast<LVL_Block *>(bodyBlock)->hit();
+                blk->hit();
             }
 
-            if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+            if(blk->destroyed)
             {
-                    dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                    chr->bump();
                     contact->SetEnabled(false);
                     return;
             }
 
-            if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+            if(blk->isHidden)
             {
                 contact->SetEnabled(false);
                 return;
@@ -207,12 +222,12 @@ void PGEContactListener::BeginContact(b2Contact *contact)
             {
                 if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
                 {
-                    dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
+                    chr->onGround=true;
 
-                    if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->bounce)
+                    if(blk->setup->bounce)
                     {
-                        dynamic_cast<LVL_Player *>(bodyChar)->bump(true);
-                        dynamic_cast<LVL_Block *>(bodyBlock)->hit(LVL_Block::down);
+                        chr->bump(true);
+                        blk->hit(LVL_Block::down);
                     }
                 }
                 else
@@ -226,8 +241,8 @@ void PGEContactListener::BeginContact(b2Contact *contact)
             }
             else
             {
-                dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
-                dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock]=1;
+                chr->onGround=true;
+                chr->foot_contacts_map[(intptr_t)bodyBlock]=1;
             }
         }
     }
@@ -282,12 +297,14 @@ void PGEContactListener::EndContact(b2Contact *contact)
 
     if(platformFixture)
     {
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
         //qDebug() <<"Contact With Warp end";
-        dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched--;
-        if(dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched==0)
+        chr->warpsTouched--;
+        if(chr->warpsTouched==0)
         {
-            dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=false;
-            dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = NULL;
+            chr->contactedWithWarp=false;
+            chr->contactedWarp = NULL;
         }
     }
     /***********************************Physical Environment zone & Player***********************************/
@@ -312,9 +329,11 @@ void PGEContactListener::EndContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        if(dynamic_cast<LVL_Player *>(bodyChar)->environments_map.contains((intptr_t)bodyBlock))
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(chr->environments_map.contains((intptr_t)bodyBlock))
         {
-            dynamic_cast<LVL_Player *>(bodyChar)->environments_map.remove((intptr_t)bodyBlock);
+            chr->environments_map.remove((intptr_t)bodyBlock);
         }
     }
 
@@ -340,12 +359,14 @@ void PGEContactListener::EndContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        if(dynamic_cast<LVL_Player *>(bodyChar)->climbable_map.contains((intptr_t)bodyBlock))
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(chr->climbable_map.contains((intptr_t)bodyBlock))
         {
-            dynamic_cast<LVL_Player *>(bodyChar)->climbable_map.remove((intptr_t)bodyBlock);
-            dynamic_cast<LVL_Player *>(bodyChar)->climbing =
-                    ((!dynamic_cast<LVL_Player *>(bodyChar)->climbable_map.isEmpty()) &&
-                        (dynamic_cast<LVL_Player *>(bodyChar)->climbing));
+            chr->climbable_map.remove((intptr_t)bodyBlock);
+            chr->climbing =
+                    ((!chr->climbable_map.isEmpty()) &&
+                        (chr->climbing));
         }
     }
 
@@ -371,16 +392,18 @@ void PGEContactListener::EndContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        if(dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.contains((intptr_t)bodyBlock))
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(chr->foot_contacts_map.contains((intptr_t)bodyBlock))
         {
-            dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.remove((intptr_t)bodyBlock);
-            dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
-                    (!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
+            chr->foot_contacts_map.remove((intptr_t)bodyBlock);
+            chr->onGround  =
+                    (!chr->foot_contacts_map.isEmpty());
         }
 
-        if(dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map.contains((intptr_t)bodyBlock))
+        if(chr->foot_sl_contacts_map.contains((intptr_t)bodyBlock))
         {
-            dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map.remove((intptr_t)bodyBlock);
+            chr->foot_sl_contacts_map.remove((intptr_t)bodyBlock);
         }
     }
 
@@ -430,17 +453,22 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
 
         if(platformFixture)
         {
+            LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+            if(!chr) return;
+
             if(bodyBlock->type == PGE_Phys_Object::LVLBlock)
             {
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+                LVL_Block *blk=dynamic_cast<LVL_Block *>(bodyBlock);
+                if(!blk) return;
+                if(blk->destroyed)
                 {
                     contact->SetEnabled(false);
                     return;
                 }
 
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->lava)
+                if(blk->setup->lava)
                 {
-                    dynamic_cast<LVL_Player *>(bodyChar)->kill(LVL_Player::DEAD_burn);
+                    chr->kill(LVL_Player::DEAD_burn);
                 }
             }
 
@@ -470,14 +498,14 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         )
                 {
                     contact->SetEnabled(true);
-                    dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock] = 1;
-                    dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
-                            (!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
+                    chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
+                    chr->onGround  =
+                            (!chr->foot_contacts_map.isEmpty());
 
-                    if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
-                        dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
+                    if(chr->keys.down)
+                        chr->climbing=false;
                     if(bodyBlock->slippery_surface)
-                        dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
+                        chr->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
 
                 }
                 else //if( (bodyChar->bottom() > bodyBlock->top()+2) )
@@ -490,16 +518,21 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if( bodyBlock->collide == PGE_Phys_Object::COLLISION_ANY )
             /***********************Collision with any-side************************/
             {
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+                if(bodyBlock->type == PGE_Phys_Object::LVLBlock)
                 {
+                    LVL_Block *blk=dynamic_cast<LVL_Block *>(bodyBlock);
+                    if(!blk) return;
+                    if(blk->destroyed)
+                    {
+                            contact->SetEnabled(false);
+                            return;
+                    }
+
+                    if(blk->isHidden)
+                    {
                         contact->SetEnabled(false);
                         return;
-                }
-
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
-                {
-                    contact->SetEnabled(false);
-                    return;
+                    }
                 }
 
                 if( (bodyChar->left()>bodyBlock->right()) || (bodyChar->right() < bodyBlock->left()) )
@@ -515,14 +548,14 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                       )
                    )
                 {
-                    dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock]=1;
-                    dynamic_cast<LVL_Player *>(bodyChar)->onGround  =
-                            (!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
-                    if(dynamic_cast<LVL_Player *>(bodyChar)->keys.down)
-                        dynamic_cast<LVL_Player *>(bodyChar)->climbing=false;
+                    chr->foot_contacts_map[(intptr_t)bodyBlock]=1;
+                    chr->onGround  =
+                            (!chr->foot_contacts_map.isEmpty());
+                    if(chr->keys.down)
+                        chr->climbing=false;
 
                     if(bodyBlock->slippery_surface)
-                        dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
+                        chr->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
                 }
 
                 return;
