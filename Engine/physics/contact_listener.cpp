@@ -180,8 +180,9 @@ void PGEContactListener::BeginContact(b2Contact *contact)
             if(  ( (chr->bottom()<=blk->top()-0.1) ||
                     ((chr->bottom() >= blk->top())&&
                     (chr->bottom()<=blk->top()+2)) )
-                 //Uncommend this code piece to disallow wall climbing (now wal climbing is needed without NPC's :P)
-              /*   &&( !( (bodyChar->left()>=bodyBlock->right()-2) || (bodyChar->right() <= bodyBlock->left()+2) ) )*/
+
+                 &&( !( (bodyChar->left()>=bodyBlock->right()) || (bodyChar->right() <= bodyBlock->left()) ) )//prevent wall climbing
+
                  &&(!blk->isHidden)
                   )
             {
