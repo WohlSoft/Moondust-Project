@@ -1408,13 +1408,21 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
-        <source>&apos;Hit&apos; event slot is busy</source>
+        <source>&apos;Hit&apos; event slot is used</source>
         <translation>O campo de evento &apos;Bater&apos; está ocupado</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
-        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is busy</source>
+        <translation type="vanished">O campo de evento &apos;Bater&apos; está ocupado</translation>
+    </message>
+    <message>
+        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <translation type="vanished">Desculpe, o campo do evento &apos;Bater&apos; já está ocupado com o evento &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="199"/>
@@ -1535,7 +1543,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="173"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar em</translation>
+        <translation>Transformar em</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="174"/>
@@ -1771,7 +1779,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="152"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar em</translation>
+        <translation>Transformar em</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="153"/>
@@ -1948,7 +1956,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="150"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar em</translation>
+        <translation>Transformar em</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="151"/>
@@ -2636,8 +2644,12 @@ Deseja salvar sua mudanças?</translation>
         <translation>[Não incializado]</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
         <source>[Busy]</source>
+        <translation type="vanished">[Ocupado]</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
+        <source>[Used]</source>
         <translation>[Ocupado]</translation>
     </message>
     <message>
@@ -2664,15 +2676,26 @@ Por favor, escolha outra.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
-        <source>Section is busy</source>
+        <source>Section is used</source>
         <translation>Seção ocupada</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
-        <source>Destination section is busy!
+        <source>Destination section is used!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
         <translation>A seção destino está ocupada!
+Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deletar Seção&quot;.</translation>
+    </message>
+    <message>
+        <source>Section is busy</source>
+        <translation type="vanished">Seção ocupada</translation>
+    </message>
+    <message>
+        <source>Destination section is busy!
+Please select another section
+or delete them first with &apos;Delete Section&apos; option.</source>
+        <translation type="vanished">A seção destino está ocupada!
 Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deletar Seção&quot;.</translation>
     </message>
 </context>

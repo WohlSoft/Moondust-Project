@@ -1399,12 +1399,12 @@ Message limits: max line lenth is 27 characters</source>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
-        <source>&apos;Hit&apos; event slot is busy</source>
+        <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
-        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2595,7 +2595,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
-        <source>[Busy]</source>
+        <source>[Used]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2621,12 +2621,12 @@ Please select another section.</source>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
-        <source>Section is busy</source>
+        <source>Section is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
-        <source>Destination section is busy!
+        <source>Destination section is used!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
         <translation type="unfinished"></translation>
