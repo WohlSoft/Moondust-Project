@@ -1,9 +1,10 @@
 TEMPLATE = subdirs
-SUBDIRS = PGEServerAPI SDL2MixerModded OOLua Box2D
+SUBDIRS = PGEServerAPI SDL2MixerModded OOLua LuaBind Box2D
 
 PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 SDL2MixerModded.file = SDL2_mixer_modified/SDL2_mixer.pro
 OOLua.file = oolua/project/oolua.pro
+LuaBind.file = luabind/_project/luabind.pro
 Box2D.file = Box2D/project/box2d.pro
 
 deplibs.path = bin
