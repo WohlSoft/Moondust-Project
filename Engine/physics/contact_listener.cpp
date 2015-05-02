@@ -73,7 +73,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        qDebug() <<"Contacted With Warp";
+        //qDebug() <<"Contacted With Warp";
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=true;
         dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched++;
@@ -155,9 +155,20 @@ void PGEContactListener::BeginContact(b2Contact *contact)
     if(platformFixture)
     {
         if(bodyBlock->collide==PGE_Phys_Object::COLLISION_ANY)
-            if((bodyChar->bottom()<=bodyBlock->top()-0.1) ||
+        {
+            if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+            {
+                    contact->SetEnabled(false);
+                    return;
+            }
+
+            if(  ( (bodyChar->bottom()<=bodyBlock->top()-0.1) ||
                     ((bodyChar->bottom() >= bodyBlock->top())&&
-                    (bodyChar->bottom()<=bodyBlock->top()+2)))
+                    (bodyChar->bottom()<=bodyBlock->top()+2)) )
+                 //Uncommend this code piece to disallow wall climbing (now wal climbing is needed without NPC's :P)
+              /*   &&( !( (bodyChar->left()>=bodyBlock->right()-2) || (bodyChar->right() <= bodyBlock->left()+2) ) )*/
+                 &&(!dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+                  )
             {
                 dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock] = 1;
                 dynamic_cast<LVL_Player *>(bodyChar)->onGround=(!dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map.isEmpty());
@@ -166,6 +177,59 @@ void PGEContactListener::BeginContact(b2Contact *contact)
                 if(bodyBlock->slippery_surface)
                     dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
             }
+
+            if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
+                    && (bodyChar->physBody->GetLinearVelocity().y < -0.01) )
+            {
+                dynamic_cast<LVL_Player *>(bodyChar)->jumpForce=0;
+
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->hitable)
+                {
+                    dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                }
+                dynamic_cast<LVL_Block *>(bodyBlock)->hit();
+            }
+
+            if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+            {
+                    dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                    contact->SetEnabled(false);
+                    return;
+            }
+
+            if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+            {
+                contact->SetEnabled(false);
+                return;
+            }
+
+            if(bodyBlock->isRectangle)
+            {
+                if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
+                {
+                    dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
+
+                    if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->bounce)
+                    {
+                        dynamic_cast<LVL_Player *>(bodyChar)->bump(true);
+                        dynamic_cast<LVL_Block *>(bodyBlock)->hit(LVL_Block::down);
+                    }
+                }
+                else
+                if( (bodyChar->bottom() > bodyBlock->top()) &&
+                        (bodyChar->bottom() < bodyBlock->top()+2)
+                       && (fabs(bodyChar->physBody->GetLinearVelocity().x)>0))
+                {
+                    bodyChar->_player_moveup = true;
+                    contact->SetEnabled(false);
+                }
+            }
+            else
+            {
+                dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
+                dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock]=1;
+            }
+        }
     }
 
 }
@@ -218,7 +282,7 @@ void PGEContactListener::EndContact(b2Contact *contact)
 
     if(platformFixture)
     {
-        qDebug() <<"Contact With Warp end";
+        //qDebug() <<"Contact With Warp end";
         dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched--;
         if(dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched==0)
         {
@@ -426,6 +490,21 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if( bodyBlock->collide == PGE_Phys_Object::COLLISION_ANY )
             /***********************Collision with any-side************************/
             {
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+                {
+                        contact->SetEnabled(false);
+                        return;
+                }
+
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+                {
+                    contact->SetEnabled(false);
+                    return;
+                }
+
+                if( (bodyChar->left()>bodyBlock->right()) || (bodyChar->right() < bodyBlock->left()) )
+                    return;
+
                 if(
                     ( (bodyChar->bottom() <= bodyBlock->top()-0.1)
                         ||
@@ -446,57 +525,6 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         dynamic_cast<LVL_Player *>(bodyChar)->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
                 }
 
-                if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
-                        && (bodyChar->physBody->GetLinearVelocity().y < -0.01) )
-                {
-                    dynamic_cast<LVL_Player *>(bodyChar)->jumpForce=0;
-
-                    if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->hitable)
-                    {
-                        dynamic_cast<LVL_Player *>(bodyChar)->bump();
-                    }
-                    dynamic_cast<LVL_Block *>(bodyBlock)->hit();
-                }
-
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
-                {
-                        dynamic_cast<LVL_Player *>(bodyChar)->bump();
-                        contact->SetEnabled(false);
-                        return;
-                }
-
-                if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
-                {
-                    contact->SetEnabled(false);
-                    return;
-                }
-
-                if(bodyBlock->isRectangle)
-                {
-                    if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
-                    {
-                        dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
-
-                        if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->bounce)
-                        {
-                            dynamic_cast<LVL_Player *>(bodyChar)->bump(true);
-                            dynamic_cast<LVL_Block *>(bodyBlock)->hit(LVL_Block::down);
-                        }
-                    }
-                    else
-                    if( (bodyChar->bottom() > bodyBlock->top()) &&
-                            (bodyChar->bottom() < bodyBlock->top()+2)
-                           && (fabs(bodyChar->physBody->GetLinearVelocity().x)>0))
-                    {
-                        bodyChar->_player_moveup = true;
-                        contact->SetEnabled(false);
-                    }
-                }
-                else
-                {
-                    dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
-                    dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts_map[(intptr_t)bodyBlock]=1;
-                }
                 return;
             }
 
