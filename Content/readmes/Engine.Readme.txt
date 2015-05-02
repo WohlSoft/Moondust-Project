@@ -32,6 +32,7 @@ Up/Down - enter into door/pipe
 --------------------
 Z - jump
 X - run
+A - alt-jump (Temporary, fly up, use it to get inaccessible heights without vines!)
 
 T - Toggle fullscreen mode
 
