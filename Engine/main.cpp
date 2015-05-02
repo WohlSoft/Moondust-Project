@@ -57,8 +57,6 @@
 #include "scenes/scene_title.h"
 
 #include <Box2D/Box2D.h>
-
-#include <oolua/oolua.h>
 #include <QMessageBox>
 
 #include <iostream>
@@ -76,12 +74,6 @@ enum Level_returnTo
 };
 Level_returnTo end_level_jump=RETURN_TO_EXIT;
 
-
-void say(std::string input)
-{
-    QMessageBox::information(NULL, "Lua test", QString::fromStdString(input));
-}
-OOLUA_CFUNC(say, l_say);
 
 int main(int argc, char *argv[])
 {
