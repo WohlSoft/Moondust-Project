@@ -69,6 +69,7 @@ public:
 
     PGE_Texture texture;
     GLuint texId;
+    virtual GLdouble zIndex();
     GLdouble z_index;
 
     virtual void nextFrame();

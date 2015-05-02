@@ -548,6 +548,14 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     }
 }
 
+GLdouble LVL_Block::zIndex()
+{
+    if(fadeOffset!=0.f)
+        return z_index+10;
+    else
+        return z_index;
+}
+
 
 /**************************Fader*******************************/
 void LVL_Block::setFade(int speed, float target, float step)

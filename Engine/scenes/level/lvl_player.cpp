@@ -382,12 +382,19 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if( keys.alt_jump )
+    {
+        //Temporary it is ability to fly up!
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                           -physics_cur.velocity_jump));
+    }
+
     if( keys.jump )
     {
         if(!JumpPressed)
         {
             if(environment!=LVL_PhysEnv::Env_Water)
-                { if(onGround || (environment==LVL_PhysEnv::Env_Quicksand))
+                { if(climbing || onGround || (environment==LVL_PhysEnv::Env_Quicksand))
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
             else
                 PGE_Audio::playSound(72);//temporary!
@@ -450,7 +457,7 @@ void LVL_Player::update(float ticks)
             {
                 timeToFloat -= ticks;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*sin(timeToFloat/60.0)) );
+                                                   3.0*sin(timeToFloat/80.0)) );
                 if(timeToFloat<=0)
                 {
                     timeToFloat=0;
