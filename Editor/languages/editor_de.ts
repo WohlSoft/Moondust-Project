@@ -147,12 +147,12 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="369"/>
         <source>Max history entries limit:</source>
-        <translation>Maximale Anzahl an Verlaufeinträge</translation>
+        <translation>Maximale Anzahl an Verlaufeinträge:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="376"/>
         <source>Maximal number of remembered history actions.</source>
-        <translation>Maximale Anzahl an Verlaufeinträge</translation>
+        <translation>Maximale Anzahl an Verlaufeinträge.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="396"/>
@@ -294,7 +294,7 @@
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>Sox binary path:</source>
-        <translation>Sox exe-Pfade</translation>
+        <translation>Sox exe-Pfade:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
@@ -543,7 +543,7 @@ Bitte setze den SoX Exe-Pfad zuerst</translation>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="50"/>
         <source>Block Size: </source>
-        <translation>Blockgröße</translation>
+        <translation>Blockgröße:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="57"/>
@@ -582,7 +582,7 @@ Bitte setze den SoX Exe-Pfad zuerst</translation>
         <location filename="../main_window/dock/bookmarks_box.ui" line="67"/>
         <source>Remember current screen position on the level map or on the world map
 and store bookmark.</source>
-        <translation>Speichert die aktuelle Position auf dem Level oder Weltkarte und speichert diese in einen Lesezeichen</translation>
+        <translation>Speichert die aktuelle Position auf dem Level oder Weltkarte und speichert diese in einen Lesezeichen.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="71"/>
@@ -593,7 +593,7 @@ and store bookmark.</source>
         <location filename="../main_window/dock/bookmarks_box.ui" line="84"/>
         <source>Scroll to remembered position in selected item back.
 You also can double-click to item to scroll to bookmarked position.</source>
-        <translation>Scrollt zu einem ausgewählten Item</translation>
+        <translation>Scrollt zu einem ausgewählten Item.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="88"/>
@@ -884,7 +884,7 @@ Du kannst Konfigurationspacket hier herunterladen:&lt;br&gt;%2</translation>
         <source>Since the last crash, the editor recorved some files.
 Please save them first before doing anything else.</source>
         <translation>Seit dem letzten Absturz wurde ein paar Dateien wiederhergestellt.
-Bitte speichere sie sofort ab!</translation>
+Bitte speichere sie sofort ab!.</translation>
     </message>
 </context>
 <context>
@@ -1099,7 +1099,7 @@ Bitte speichere sie sofort ab!</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="261"/>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
-        <translation>[WIP] Versucht mit dem SMBX Level Editor zu testen</translation>
+        <translation>[WIP] Versucht mit dem SMBX Level Editor zu testen!</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="262"/>
@@ -1535,13 +1535,21 @@ Maximal 27 Zeichen pro Zeile</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
-        <source>&apos;Hit&apos; event slot is busy</source>
+        <source>&apos;Hit&apos; event slot is used</source>
         <translation>&apos;Hit&apos; event ist schon belegt</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
-        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Sorry, aber &apos;Hit&apos; event ist schon belegt mit &apos;%1&apos; event.</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is busy</source>
+        <translation type="vanished">&apos;Hit&apos; event ist schon belegt</translation>
+    </message>
+    <message>
+        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <translation type="vanished">Sorry, aber &apos;Hit&apos; event ist schon belegt mit &apos;%1&apos; event.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="199"/>
@@ -2864,7 +2872,7 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="89"/>
         <source>Margin (How far out of section items should be copied, in pixels):</source>
-        <translation>Rand vom Bereich</translation>
+        <translation>Rand vom Bereich:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="81"/>
@@ -2878,8 +2886,12 @@ Möchtest du die Änderungen speichern?</translation>
         <translation>[Leer]</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
         <source>[Busy]</source>
+        <translation type="vanished">[In Benutzung]</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
+        <source>[Used]</source>
         <translation>[In Benutzung]</translation>
     </message>
     <message>
@@ -2906,15 +2918,26 @@ Bitte wähle ein anderes aus.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
-        <source>Section is busy</source>
+        <source>Section is used</source>
         <translation>Bereich ist in Benutzung</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
-        <source>Destination section is busy!
+        <source>Destination section is used!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
         <translation>Zielbereich ist in benutzung!
+Bitte wähle ein anderen Bereich aus oder lösche es zuerst.</translation>
+    </message>
+    <message>
+        <source>Section is busy</source>
+        <translation type="vanished">Bereich ist in Benutzung</translation>
+    </message>
+    <message>
+        <source>Destination section is busy!
+Please select another section
+or delete them first with &apos;Delete Section&apos; option.</source>
+        <translation type="vanished">Zielbereich ist in benutzung!
 Bitte wähle ein anderen Bereich aus oder lösche es zuerst.</translation>
     </message>
 </context>
@@ -5401,7 +5424,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2111"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
-        <translation>Konvertiere GIF mit Bildmaske zu PNG (GIFs2PNG)</translation>
+        <translation>Konvertiere GIF mit Bildmaske zu PNG (GIFs2PNG)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2116"/>
@@ -6738,7 +6761,7 @@ Bitte wähle eine Weltkarte in der Liste aus:</translation>
         <source>Can&apos;t open the file.
 File not exist.</source>
         <translation>Kann Datei nicht öffnen.
-Die Datei exsistiert nicht</translation>
+Die Datei exsistiert nicht.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="57"/>
@@ -6813,14 +6836,14 @@ Die Datei exsistiert nicht</translation>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>Editor kann Dateien nicht öffnen:
-Konfigurationspacket hat Fehler</translation>
+Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="80"/>
         <source>Cannot open file:
 Configuration package loaded with errors.</source>
         <translation>Kann Datei nicht öffnen:
-Konfigurationspacket hat Fehler</translation>
+Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="215"/>
@@ -6952,7 +6975,7 @@ Alle Datein (*.*)</translation>
         <source>Cannot create NPC config file:
 Configuration package loaded with errors.</source>
         <translation>Kann keine NPC Konfurtionsdatei erstellen:
-Konfigurationspacket hat Fehler</translation>
+Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="53"/>
@@ -6964,14 +6987,14 @@ Konfigurationspacket hat Fehler</translation>
         <source>Cannot create level file:
 Configuration package loaded with errors.</source>
         <translation>Kann kein level erstellen:
-Konfigurationspacket hat Fehler</translation>
+Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="109"/>
         <source>Cannot create world map file:
 Configuration package loaded with errors.</source>
         <translation>Kann kein Weltkarte erstellen:
-Konfigurationspacket hat Fehler</translation>
+Konfigurationspacket hat Fehler.</translation>
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
@@ -7180,7 +7203,7 @@ Konfigurationspacket hat Fehler</translation>
         <location filename="../main_window/testing/testing.cpp" line="52"/>
         <location filename="../main_window/testing/testing.cpp" line="112"/>
         <source>Engine is not found</source>
-        <translation>Engine nicht gefunden!</translation>
+        <translation>Engine nicht gefunden</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="53"/>
@@ -7190,12 +7213,12 @@ Konfigurationspacket hat Fehler</translation>
 Please, check the application directory.</source>
         <translation>Kann Test nicht starten, engine wurde nicht gefunden:
 %1
-Bitte überprüfe das Anwendungsordner</translation>
+Bitte überprüfe das Anwendungsordner.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="61"/>
         <source>Engine already runned</source>
-        <translation>Engine läuft schon!</translation>
+        <translation>Engine läuft schon</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="62"/>
@@ -7224,12 +7247,12 @@ Du kannst jedoch mit &quot;Test starten&quot;-Menüpunkt es trotzdem starten.</t
         <source>Sorry, the testing feature is under construction.
 Settings will available soon.</source>
         <translation>Sorry, aber die Test-Funktion ist noch im Aufbau.
-Einstellungen werden bald zur Verfügung stehen!</translation>
+Einstellungen werden bald zur Verfügung stehen!.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="188"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation>Um mit SMBX das Testen zu starten muss die Datei zuerst gespeichert sein.</translation>
+        <translation>Um mit SMBX das Testen zu starten muss die Datei zuerst gespeichert sein.!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="197"/>
@@ -7469,7 +7492,7 @@ Siehe in %1 für mehr Informationen.</translation>
     <message>
         <location filename="../mainwindow.cpp" line="146"/>
         <source>Configuration package is loaded with errors.</source>
-        <translation>Konfigurationspacket ist Fehlerhaft!</translation>
+        <translation>Konfigurationspacket ist Fehlerhaft!.</translation>
     </message>
     <message>
         <location filename="../main_window/windows_extras.cpp" line="21"/>
@@ -8523,12 +8546,12 @@ Datei: %1
     <message>
         <location filename="../tools/smart_import/smartimporter.cpp" line="54"/>
         <source>You need to save the level, so you can import custom graphics!</source>
-        <translation>Du musst zuerst dein Level speichern, bevor du eigene Graphiken importieren kannst</translation>
+        <translation>Du musst zuerst dein Level speichern, bevor du eigene Graphiken importieren kannst!</translation>
     </message>
     <message>
         <location filename="../tools/smart_import/smartimporter.cpp" line="103"/>
         <source>You need to save the world, so you can import custom graphics!</source>
-        <translation>Du musst zuerst dein Welt speichern, bevor du eigene Graphiken importieren kannst</translation>
+        <translation>Du musst zuerst dein Welt speichern, bevor du eigene Graphiken importieren kannst!</translation>
     </message>
 </context>
 <context>
@@ -8685,7 +8708,7 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="405"/>
         <source>Don&apos;t show this message again.</source>
-        <translation>Diese Nachricht nicht mehr anzeigen</translation>
+        <translation>Diese Nachricht nicht mehr anzeigen.</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="407"/>
@@ -8701,9 +8724,8 @@ If you wish to create level/world specific tilesets with using of custom graphic
 
 Dies ist ein Editor für globale tilesets.
 Alle tilesets, die hier gemacht werden, werden in diesem Ordner gespeichert werden:
-1%
-Das heißt die Tileset werden global gespeichert. Möchtest du lokal für ein Level ein tileset erstellen, so klick bitte in der Tileset Item Box auf &quot;New Tileset&quot; im &quot;Custom&quot; tab.
-</translation>
+%1
+Das heißt die Tileset werden global gespeichert. Möchtest du lokal für ein Level ein tileset erstellen, so klick bitte in der Tileset Item Box auf &quot;New Tileset&quot; im &quot;Custom&quot; tab.</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="424"/>
@@ -8924,7 +8946,7 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="20"/>
         <source>Check for updates</source>
-        <translation>Nach updates suchen...</translation>
+        <translation>Nach updates suchen</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="139"/>
@@ -8994,7 +9016,7 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="245"/>
         <source>Check failed: %1.</source>
-        <translation>Fehler: %1</translation>
+        <translation>Fehler: %1.</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="251"/>
