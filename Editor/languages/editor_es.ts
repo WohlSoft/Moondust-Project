@@ -325,7 +325,7 @@
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="21"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="154"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
@@ -352,7 +352,7 @@ Please set SoX path first</source>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="376"/>
         <source>Nothing to do</source>
-        <translation type="unfinished">Nada para hacer</translation>
+        <translation>Nada para hacer</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
@@ -966,52 +966,52 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="33"/>
         <source>Debugger</source>
-        <translation type="unfinished">Depurador</translation>
+        <translation>Depurador</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="46"/>
         <source>Mouse coordinates</source>
-        <translation type="unfinished">Coordenadas del mouse</translation>
+        <translation>Coordenadas del mouse</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="104"/>
         <source>Go to point:</source>
-        <translation type="unfinished">Ir a punto:</translation>
+        <translation>Ir a punto:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="153"/>
         <source>Go!</source>
-        <translation type="unfinished">¡Ir!</translation>
+        <translation>¡Ir!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="169"/>
         <source>Items</source>
-        <translation type="unfinished">Items</translation>
+        <translation>Items</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="231"/>
         <source>Custom counters</source>
-        <translation type="unfinished">Contadores personalizados</translation>
+        <translation>Contadores personalizados</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="237"/>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="257"/>
         <source>Refresh</source>
-        <translation type="unfinished">Refrescar</translation>
+        <translation>Refrescar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="429"/>
         <source>Edit</source>
-        <translation type="unfinished">Edición</translation>
+        <translation>Edición</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="430"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
 </context>
 <context>
@@ -1529,12 +1529,12 @@ Message limits: max line lenth is 27 characters</source>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
-        <source>&apos;Hit&apos; event slot is busy</source>
+        <source>&apos;Hit&apos; event slot is used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
-        <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1660,7 +1660,7 @@ Message limits: max line lenth is 27 characters</source>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="173"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar en</translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="174"/>
@@ -1906,7 +1906,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="152"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar en</translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="153"/>
@@ -2083,7 +2083,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="150"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar en</translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="151"/>
@@ -2567,64 +2567,64 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level Toolbox</source>
-        <translation type="unfinished">Herramientas de nivel</translation>
+        <translation>Herramientas de nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="38"/>
         <source>Blocks</source>
-        <translation type="unfinished">Bloques</translation>
+        <translation>Bloques</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="71"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="244"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="433"/>
         <source>Category:</source>
-        <translation type="unfinished">Categoría:</translation>
+        <translation>Categoría:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="157"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="340"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="423"/>
         <source>Filter:</source>
-        <translation type="unfinished">Filtro:</translation>
+        <translation>Filtro:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="168"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="379"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="551"/>
         <source>Text</source>
-        <translation type="unfinished">Texto</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="173"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="384"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="556"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="193"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="356"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="540"/>
         <source>Uniform icon size</source>
-        <translation type="unfinished">Tamaño uniforme de ícono</translation>
+        <translation>Tamaño uniforme de ícono</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="206"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="333"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="564"/>
         <source>Group:</source>
-        <translation type="unfinished">Grupo:</translation>
+        <translation>Grupo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="223"/>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="402"/>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
 </context>
 <context>
@@ -2837,8 +2837,12 @@ Do you want to save your changes?</source>
         <translation>[Sin iniciar]</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
         <source>[Busy]</source>
+        <translation type="vanished">[Ocupado]</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
+        <source>[Used]</source>
         <translation>[Ocupado]</translation>
     </message>
     <message>
@@ -2865,15 +2869,27 @@ Por favor, seleccione otra.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
-        <source>Section is busy</source>
+        <source>Section is used</source>
         <translation>La sección está ocupada</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
-        <source>Destination section is busy!
+        <source>Destination section is used!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
         <translation>¡La sección de destino está ocupada!
+Por favor seleccione otra
+o elimínela con su respectiva opción.</translation>
+    </message>
+    <message>
+        <source>Section is busy</source>
+        <translation type="vanished">La sección está ocupada</translation>
+    </message>
+    <message>
+        <source>Destination section is busy!
+Please select another section
+or delete them first with &apos;Delete Section&apos; option.</source>
+        <translation type="vanished">¡La sección de destino está ocupada!
 Por favor seleccione otra
 o elimínela con su respectiva opción.</translation>
     </message>
@@ -2883,48 +2899,48 @@ o elimínela con su respectiva opción.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="29"/>
         <source>Classic Events</source>
-        <translation type="unfinished">Eventos clásicos</translation>
+        <translation>Eventos clásicos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="100"/>
         <source>Events list</source>
-        <translation type="unfinished">Lista de eventos</translation>
+        <translation>Lista de eventos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="139"/>
         <source>Layer visibly</source>
-        <translation type="unfinished">Visibilidad de capa</translation>
+        <translation>Visibilidad de capa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="160"/>
         <source>Disable smoke effects</source>
-        <translation type="unfinished">Deshabilitar efecto de humo</translation>
+        <translation>Deshabilitar efecto de humo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="237"/>
         <source>Show</source>
-        <translation type="unfinished">Mostrar</translation>
+        <translation>Mostrar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="266"/>
         <source>Toggle</source>
-        <translation type="unfinished">Intercambiar</translation>
+        <translation>Intercambiar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="304"/>
         <source>Hide</source>
-        <translation type="unfinished">Ocultar</translation>
+        <translation>Ocultar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="340"/>
         <source>Layers movement</source>
-        <translation type="unfinished">Movimiento de capas</translation>
+        <translation>Movimiento de capas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="412"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="510"/>
         <source>Horisontal speed:</source>
-        <translation type="unfinished">Velocidad horizontal:</translation>
+        <translation>Velocidad horizontal:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="365"/>
@@ -2932,247 +2948,247 @@ o elimínela con su respectiva opción.</translation>
         <location filename="../main_window/dock/lvl_events_box.ui" line="467"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="480"/>
         <source>bps</source>
-        <translation type="unfinished">bps</translation>
+        <translation>bps</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="432"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="530"/>
         <source>Vertical speed:</source>
-        <translation type="unfinished">Velocidad vertical:</translation>
+        <translation>Velocidad vertical:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="379"/>
         <source>Set moving layer</source>
-        <translation type="unfinished">Fijar capa móvil</translation>
+        <translation>Fijar capa móvil</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="448"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished">Autodesplazamiento</translation>
+        <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="454"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="348"/>
         <source>Section</source>
-        <translation type="unfinished">Sección</translation>
+        <translation>Sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="559"/>
         <source>Section settings</source>
-        <translation type="unfinished">Opciones de sección</translation>
+        <translation>Opciones de sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="571"/>
         <source>Current section:</source>
-        <translation type="unfinished">Sección actual:</translation>
+        <translation>Sección actual:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="593"/>
         <source>Set size and position</source>
-        <translation type="unfinished">Fijar tamaño y posición</translation>
+        <translation>Fijar tamaño y posición</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="605"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="788"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="868"/>
         <source>Don&apos;t change</source>
-        <translation type="unfinished">No cambiar</translation>
+        <translation>No cambiar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="624"/>
         <source>Capture...</source>
-        <translation type="unfinished">Capturar...</translation>
+        <translation>Capturar...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="801"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="875"/>
         <source>Reset to default</source>
-        <translation type="unfinished">Reiniciar a predeterminado</translation>
+        <translation>Reiniciar a predeterminado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="656"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1078"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="678"/>
         <source>Top</source>
-        <translation type="unfinished">Arriba</translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="694"/>
         <source>Define new:</source>
-        <translation type="unfinished">Definir nuevo:</translation>
+        <translation>Definir nuevo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="713"/>
         <source>Bottom</source>
-        <translation type="unfinished">Abajo</translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="735"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1106"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="776"/>
         <source>Set music</source>
-        <translation type="unfinished">Fijar música</translation>
+        <translation>Fijar música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="814"/>
         <source>Replace music to:</source>
-        <translation type="unfinished">Reemplazar música por:</translation>
+        <translation>Reemplazar música por:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="862"/>
         <source>Set background</source>
-        <translation type="unfinished">Fijar fondo</translation>
+        <translation>Fijar fondo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="882"/>
         <source>Replace background to:</source>
-        <translation type="unfinished">Reemplazar fondo por:</translation>
+        <translation>Reemplazar fondo por:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="949"/>
         <source>Common</source>
-        <translation type="unfinished">Común</translation>
+        <translation>Común</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="961"/>
         <source>Do end game:</source>
-        <translation type="unfinished">Terminar juego:</translation>
+        <translation>Terminar juego:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="986"/>
         <source>Play sound:</source>
-        <translation type="unfinished">Reproducir sonido:</translation>
+        <translation>Reproducir sonido:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="999"/>
         <source>Test</source>
-        <translation type="unfinished">Probar</translation>
+        <translation>Probar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1019"/>
         <source>Display message:</source>
-        <translation type="unfinished">Mostrar mensaje:</translation>
+        <translation>Mostrar mensaje:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1030"/>
         <source>Nothing</source>
-        <translation type="unfinished">Nada</translation>
+        <translation>Nada</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1035"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="unfinished">Final &quot;Bowser defeat&quot;</translation>
+        <translation>Final &quot;Bowser defeat&quot;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
         <source>Player Control hold keys</source>
-        <translation type="unfinished">Mantener teclas de control</translation>
+        <translation>Mantener teclas de control</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1071"/>
         <source>Run</source>
-        <translation type="unfinished">Correr</translation>
+        <translation>Correr</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
         <source>Down</source>
-        <translation type="unfinished">Abajo</translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1092"/>
         <source>Up</source>
-        <translation type="unfinished">Arriba</translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1099"/>
         <source>Drop</source>
-        <translation type="unfinished">Soltar</translation>
+        <translation>Soltar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1113"/>
         <source>Alt-run</source>
-        <translation type="unfinished">Correr secundario</translation>
+        <translation>Correr secundario</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1120"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1127"/>
         <source>Jump</source>
-        <translation type="unfinished">Salto</translation>
+        <translation>Salto</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1134"/>
         <source>Alt-jump</source>
-        <translation type="unfinished">Salto secundario</translation>
+        <translation>Salto secundario</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1163"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Evento seguido</translation>
+        <translation>Evento seguido</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1179"/>
         <source>Delay</source>
-        <translation type="unfinished">Retardo</translation>
+        <translation>Retardo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1210"/>
         <source>Autostart event</source>
-        <translation type="unfinished">Comenzar automáticamente</translation>
+        <translation>Comenzar automáticamente</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
         <source>Create copy of event</source>
-        <translation type="unfinished">Crear copia de evento</translation>
+        <translation>Crear copia de evento</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="258"/>
         <source>[Silence]</source>
-        <translation type="unfinished">[Silencio]</translation>
+        <translation>[Silencio]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="364"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1892"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[nada]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="902"/>
         <source>New Event %1</source>
-        <translation type="unfinished">Nuevo Evento %1</translation>
+        <translation>Nuevo Evento %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="947"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished">Evento Copiado %1</translation>
+        <translation>Evento Copiado %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1621"/>
         <source>Get section size</source>
-        <translation type="unfinished">Obtener tamaño de sección</translation>
+        <translation>Obtener tamaño de sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1622"/>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation type="unfinished">Por favor, fijar sección actual a %1 para capturar los datos de este evento</translation>
+        <translation>Por favor, fijar sección actual a %1 para capturar los datos de este evento</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1881"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
-        <translation type="unfinished">Por favor, escribir mensaje
+        <translation>Por favor, escribir mensaje
 Límite: máxima longitud de 28 caracteres</translation>
     </message>
 </context>
@@ -3474,52 +3490,52 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="35"/>
         <source>Layers</source>
-        <translation type="unfinished">Capas</translation>
+        <translation>Capas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="73"/>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="83"/>
         <source>Lock</source>
-        <translation type="unfinished">Bloquear</translation>
+        <translation>Bloquear</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="723"/>
         <source>Layers merge</source>
-        <translation type="unfinished">Fusión de capas</translation>
+        <translation>Fusión de capas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="724"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="unfinished">Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
+        <translation>Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="797"/>
         <source>New Layer %1</source>
-        <translation type="unfinished">Nueva Capa %1</translation>
+        <translation>Nueva Capa %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="877"/>
         <source>Rename layer</source>
-        <translation type="unfinished">Renombrar capa</translation>
+        <translation>Renombrar capa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="881"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished">Remover capa con ítems</translation>
+        <translation>Remover capa con ítems</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="882"/>
         <source>Remove layer and save items</source>
-        <translation type="unfinished">Remover capas y guardar ítems</translation>
+        <translation>Remover capas y guardar ítems</translation>
     </message>
 </context>
 <context>
@@ -3592,7 +3608,7 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="434"/>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar</translation>
     </message>
     <message>
         <source>Changed Setting [%1]</source>
@@ -4012,12 +4028,12 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="27"/>
         <source>Search of items on the level</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar por un elemento en el nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="61"/>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="82"/>
@@ -4033,31 +4049,31 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="388"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="409"/>
         <source>Reset Search Fields</source>
-        <translation type="unfinished">Reiniciar Campos de búsqueda</translation>
+        <translation>Reiniciar Campos de búsqueda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="92"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="378"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="517"/>
         <source>Data</source>
-        <translation type="unfinished">Datos</translation>
+        <translation>Datos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="99"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="392"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="531"/>
         <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
+        <translation>Capa:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="123"/>
         <source>Slippery:</source>
-        <translation type="unfinished">Resbaladizo:</translation>
+        <translation>Resbaladizo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="140"/>
         <source>Contains NPC:</source>
-        <translation type="unfinished">Contiene PNJ:</translation>
+        <translation>Contiene PNJ:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="150"/>
@@ -4071,19 +4087,19 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="382"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="398"/>
         <source>[empty]</source>
-        <translation type="unfinished">[vacío]</translation>
+        <translation>[vacío]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="166"/>
         <source>Invisible:</source>
-        <translation type="unfinished">Invisible:</translation>
+        <translation>Invisible:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="173"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="385"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="524"/>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="180"/>
@@ -4091,34 +4107,34 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="239"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="373"/>
         <source>Search Block</source>
-        <translation type="unfinished">Buscar Bloque</translation>
+        <translation>Buscar Bloque</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="207"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="320"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="496"/>
         <source>Search?</source>
-        <translation type="unfinished">¿Buscar?</translation>
+        <translation>¿Buscar?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="238"/>
         <source>Ev. Destroyed:</source>
-        <translation type="unfinished">Ev. Destruído:</translation>
+        <translation>Ev. Destruído:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="245"/>
         <source>Ev. Hited</source>
-        <translation type="unfinished">Ev. Golpeado</translation>
+        <translation>Ev. Golpeado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="252"/>
         <source>Ev. Layer Empty:</source>
-        <translation type="unfinished">Ev. Capa vacía:</translation>
+        <translation>Ev. Capa vacía:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="289"/>
         <source>BGO</source>
-        <translation type="unfinished">OF</translation>
+        <translation>OF</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="340"/>
@@ -4126,17 +4142,17 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="269"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="389"/>
         <source>Search BGO</source>
-        <translation type="unfinished">Buscar OF</translation>
+        <translation>Buscar OF</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="399"/>
         <source>Sort priority:</source>
-        <translation type="unfinished">Sortear prioridad:</translation>
+        <translation>Sortear prioridad:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="438"/>
         <source>NPC</source>
-        <translation type="unfinished">PNJ</translation>
+        <translation>PNJ</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="482"/>
@@ -4144,64 +4160,64 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="299"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="410"/>
         <source>Search NPC</source>
-        <translation type="unfinished">Buscar PNJ</translation>
+        <translation>Buscar PNJ</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="551"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished">No se mueve</translation>
+        <translation>No se mueve</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="558"/>
         <source>Friendly</source>
-        <translation type="unfinished">Amigable</translation>
+        <translation>Amigable</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="565"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar como jefe</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="596"/>
         <source>Contains Msg:</source>
-        <translation type="unfinished">Contiene Msj:</translation>
+        <translation>Contiene Msj:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="610"/>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="634"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="644"/>
         <source>Random</source>
-        <translation type="unfinished">Aleatorio</translation>
+        <translation>Aleatorio</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="654"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="667"/>
         <source>Case Sensitive?</source>
-        <translation type="unfinished">¿Sensible a las mayúsculas?</translation>
+        <translation>¿Sensible a las mayúsculas?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="222"/>
         <source>Next Block</source>
-        <translation type="unfinished">Siguiente bloque</translation>
+        <translation>Siguiente bloque</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="223"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="254"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="284"/>
         <source>Stop Search</source>
-        <translation type="unfinished">Terminar búsqueda</translation>
+        <translation>Terminar búsqueda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="229"/>
@@ -4211,35 +4227,35 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.cpp" line="289"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="300"/>
         <source>Search Complete</source>
-        <translation type="unfinished">Búsqueda completa</translation>
+        <translation>Búsqueda completa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="229"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="240"/>
         <source>Block search completed!</source>
-        <translation type="unfinished">Búsqueda de bloques completa!</translation>
+        <translation>Búsqueda de bloques completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="253"/>
         <source>Next BGO</source>
-        <translation type="unfinished">Siguiente OF</translation>
+        <translation>Siguiente OF</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="259"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="270"/>
         <source>BGO search completed!</source>
-        <translation type="unfinished">Búsqueda de OFs completa!</translation>
+        <translation>Búsqueda de OFs completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="283"/>
         <source>Next NPC</source>
-        <translation type="unfinished">Siguiente PNJ</translation>
+        <translation>Siguiente PNJ</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="289"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="300"/>
         <source>NPC search completed!</source>
-        <translation type="unfinished">Búsqueda de PNJs completa!</translation>
+        <translation>Búsqueda de PNJs completa!</translation>
     </message>
     <message>
         <source>%1 coins</source>
@@ -7907,7 +7923,7 @@ Razón: Violación de segmentación de señal [SIGSERV]
     <message>
         <location filename="../defines.h" line="158"/>
         <source>Invizible</source>
-        <translation type="unfinished"></translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <location filename="../defines.h" line="159"/>
@@ -7917,12 +7933,12 @@ Razón: Violación de segmentación de señal [SIGSERV]
     <message>
         <location filename="../defines.h" line="160"/>
         <source>Z-Layer</source>
-        <translation type="unfinished">Capa Z</translation>
+        <translation>Capa Z</translation>
     </message>
     <message>
         <location filename="../defines.h" line="161"/>
         <source>Z-Offset</source>
-        <translation type="unfinished">Ubicación Z</translation>
+        <translation>Ubicación Z</translation>
     </message>
     <message>
         <location filename="../defines.h" line="162"/>
@@ -8671,7 +8687,7 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="424"/>
         <source>Remove tileset</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="425"/>
@@ -8985,67 +9001,67 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="33"/>
         <source>Item Properties</source>
-        <translation type="unfinished">Propiedades de ítem</translation>
+        <translation>Propiedades de ítem</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="55"/>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="76"/>
         <source>Big path background</source>
-        <translation type="unfinished">Camino grande de fondo</translation>
+        <translation>Camino grande de fondo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="90"/>
         <source>Path background</source>
-        <translation type="unfinished">Camino de fondo</translation>
+        <translation>Camino de fondo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="97"/>
         <source>Game start point</source>
-        <translation type="unfinished">Punto de comienzo</translation>
+        <translation>Punto de comienzo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="111"/>
         <source>Always visible</source>
-        <translation type="unfinished">Siempre visible</translation>
+        <translation>Siempre visible</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="118"/>
         <source>Level file:</source>
-        <translation type="unfinished">Archivo de nivel:</translation>
+        <translation>Archivo de nivel:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="125"/>
         <source>Level title</source>
-        <translation type="unfinished">Título del nivel</translation>
+        <translation>Título del nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="132"/>
         <source>Enter to door ID:</source>
-        <translation type="unfinished">ID de puerta:</translation>
+        <translation>ID de puerta:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="148"/>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="171"/>
         <source>Go to coordinates:</source>
-        <translation type="unfinished">Ir a coordenadas:</translation>
+        <translation>Ir a coordenadas:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="205"/>
         <source>Set</source>
-        <translation type="unfinished">Fijar</translation>
+        <translation>Fijar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="240"/>
         <source>Open path by exists:</source>
-        <translation type="unfinished">Abrir camino por el que existe:</translation>
+        <translation>Abrir camino por el que existe:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="249"/>
@@ -9074,22 +9090,22 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="89"/>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation type="unfinished">ID de nivel: %1, Array ID: %2</translation>
+        <translation>ID de nivel: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="90"/>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished">Posición: [%1, %2]</translation>
+        <translation>Posición: [%1, %2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
         <source>* - Any</source>
-        <translation type="unfinished">* - Cualquiera</translation>
+        <translation>* - Cualquiera</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
         <source>0 - None</source>
-        <translation type="unfinished">0 - Nada</translation>
+        <translation>0 - Nada</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
@@ -9099,17 +9115,17 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
         <source>2 - SMB3 Boss Exit</source>
-        <translation type="unfinished">2 - Salida con Jefe SMB3</translation>
+        <translation>2 - Salida con Jefe SMB3</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
         <source>3 - Walked Offscreen</source>
-        <translation type="unfinished">4 - Salida de la pantalla</translation>
+        <translation>4 - Salida de la pantalla</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
         <source>4 - Secret Exit</source>
-        <translation type="unfinished">4 - Salida secreta</translation>
+        <translation>4 - Salida secreta</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
@@ -9119,12 +9135,12 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
         <source>6 - Warp Exit</source>
-        <translation type="unfinished">6 - Salida con traslado</translation>
+        <translation>6 - Salida con traslado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
         <source>7 - Star Exit</source>
-        <translation type="unfinished">7 - Salida con estrella SMB3</translation>
+        <translation>7 - Salida con estrella SMB3</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
@@ -9134,12 +9150,12 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="668"/>
         <source>Placing mode</source>
-        <translation type="unfinished">Modo de colocado</translation>
+        <translation>Modo de colocado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="668"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation type="unfinished">Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
+        <translation>Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
     </message>
 </context>
 <context>
@@ -9539,12 +9555,12 @@ Cajas de música:		%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="27"/>
         <source>Search of items on the World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar punto en el mapa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="64"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="85"/>
@@ -9553,7 +9569,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.ui" line="508"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="698"/>
         <source>Search?</source>
-        <translation type="unfinished">¿Buscar?</translation>
+        <translation>¿Buscar?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="99"/>
@@ -9562,7 +9578,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.ui" line="529"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="712"/>
         <source>Data</source>
-        <translation type="unfinished">Datos</translation>
+        <translation>Datos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="136"/>
@@ -9571,7 +9587,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.ui" line="553"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="749"/>
         <source>Type:</source>
-        <translation type="unfinished">Tipo:</translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="143"/>
@@ -9590,7 +9606,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="269"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="284"/>
         <source>[empty]</source>
-        <translation type="unfinished">[vacío]</translation>
+        <translation>[vacío]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="163"/>
@@ -9614,7 +9630,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="423"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="434"/>
         <source>Reset Search Fields</source>
-        <translation type="unfinished">Reiniciar Campos de búsqueda</translation>
+        <translation>Reiniciar Campos de búsqueda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="170"/>
@@ -9622,12 +9638,12 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="333"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="344"/>
         <source>Search Tile</source>
-        <translation type="unfinished">Buscar azulejo</translation>
+        <translation>Buscar azulejo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="186"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="292"/>
@@ -9635,12 +9651,12 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="363"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="375"/>
         <source>Search Scenery</source>
-        <translation type="unfinished">Buscar decoración</translation>
+        <translation>Buscar decoración</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="308"/>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="414"/>
@@ -9648,42 +9664,42 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="394"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="405"/>
         <source>Search Path</source>
-        <translation type="unfinished">Buscar camino</translation>
+        <translation>Buscar camino</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="430"/>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="460"/>
         <source>Level file</source>
-        <translation type="unfinished">Archivo de nivel</translation>
+        <translation>Archivo de nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="470"/>
         <source>Big Path Background</source>
-        <translation type="unfinished">Fondo de camino grande</translation>
+        <translation>Fondo de camino grande</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="477"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Siempre visible</translation>
+        <translation>Siempre visible</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="484"/>
         <source>Game start point</source>
-        <translation type="unfinished">Punto de comienzo</translation>
+        <translation>Punto de comienzo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="494"/>
         <source>Contains Title</source>
-        <translation type="unfinished">Contiene título</translation>
+        <translation>Contiene título</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="522"/>
         <source>Path background</source>
-        <translation type="unfinished">Camino de fondo</translation>
+        <translation>Camino de fondo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="576"/>
@@ -9691,12 +9707,12 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="303"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="314"/>
         <source>Search Level</source>
-        <translation type="unfinished">Buscar nivel</translation>
+        <translation>Buscar nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="677"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="783"/>
@@ -9704,12 +9720,12 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="424"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="435"/>
         <source>Search Music</source>
-        <translation type="unfinished">Buscar música</translation>
+        <translation>Buscar música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="296"/>
         <source>Next Level</source>
-        <translation type="unfinished">Siguiente nivel</translation>
+        <translation>Siguiente nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="297"/>
@@ -9718,7 +9734,7 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="388"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="418"/>
         <source>Stop Search</source>
-        <translation type="unfinished">Terminar búsqueda</translation>
+        <translation>Terminar búsqueda</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="304"/>
@@ -9732,57 +9748,57 @@ Cajas de música:		%5
         <location filename="../main_window/dock/wld_search_box.cpp" line="425"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="436"/>
         <source>Search Complete</source>
-        <translation type="unfinished">Búsqueda completa</translation>
+        <translation>Búsqueda completa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="304"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="315"/>
         <source>Level search completed!</source>
-        <translation type="unfinished">¡Búsqueda de nivel completada!</translation>
+        <translation>¡Búsqueda de nivel completada!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="326"/>
         <source>Next Tile</source>
-        <translation type="unfinished">Siguiente azulejo</translation>
+        <translation>Siguiente azulejo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="334"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="345"/>
         <source>Tile search completed!</source>
-        <translation type="unfinished">¡Búsqueda de azulejos completada!</translation>
+        <translation>¡Búsqueda de azulejos completada!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="356"/>
         <source>Next Scenery</source>
-        <translation type="unfinished">Siguiente decoración</translation>
+        <translation>Siguiente decoración</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="364"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="376"/>
         <source>Scenery search completed!</source>
-        <translation type="unfinished">¡Búsqueda de decoraciones completa!</translation>
+        <translation>¡Búsqueda de decoraciones completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="387"/>
         <source>Next Path</source>
-        <translation type="unfinished">Siguiente camino</translation>
+        <translation>Siguiente camino</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="395"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="406"/>
         <source>Path search completed!</source>
-        <translation type="unfinished">¡Búsqueda de caminos completa!</translation>
+        <translation>¡Búsqueda de caminos completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="417"/>
         <source>Next Music</source>
-        <translation type="unfinished">Siguiente música</translation>
+        <translation>Siguiente música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="425"/>
         <location filename="../main_window/dock/wld_search_box.cpp" line="436"/>
         <source>Music search completed!</source>
-        <translation type="unfinished">¡Búsqueda de música completa!</translation>
+        <translation>¡Búsqueda de música completa!</translation>
     </message>
 </context>
 <context>
@@ -10065,37 +10081,37 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="39"/>
         <source>World Map Toolbox</source>
-        <translation type="unfinished">Herramientas del mundo</translation>
+        <translation>Herramientas del mundo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="62"/>
         <source>Tiles</source>
-        <translation type="unfinished">Azulejos</translation>
+        <translation>Azulejos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="127"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="189"/>
         <source>Paths</source>
-        <translation type="unfinished">Caminos</translation>
+        <translation>Caminos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="251"/>
         <source>Levels</source>
-        <translation type="unfinished">Niveles</translation>
+        <translation>Niveles</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.ui" line="304"/>
         <source>Music Box</source>
-        <translation type="unfinished">Cajas de música</translation>
+        <translation>Cajas de música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_toolbox.cpp" line="258"/>
         <source>[Silence]</source>
-        <translation type="unfinished">[Silencio]</translation>
+        <translation>[Silencio]</translation>
     </message>
 </context>
 <context>
@@ -10103,72 +10119,72 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="21"/>
         <source>World Settings</source>
-        <translation type="unfinished">Opciones del mundo</translation>
+        <translation>Opciones del mundo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="60"/>
         <source>Count</source>
-        <translation type="unfinished">Cuenta</translation>
+        <translation>Cuenta</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="73"/>
         <source>Intro level:</source>
-        <translation type="unfinished">Nivel de intro:</translation>
+        <translation>Nivel de intro:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="86"/>
         <source>Disable characters:</source>
-        <translation type="unfinished">Deshabilitar personajes:</translation>
+        <translation>Deshabilitar personajes:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="132"/>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
-        <translation type="unfinished">Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
+        <translation>Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="145"/>
         <source>World title:</source>
-        <translation type="unfinished">Título del mundo:</translation>
+        <translation>Título del mundo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="152"/>
         <source>Restart last level after fail</source>
-        <translation type="unfinished">Reiniciar último nivel después de fallar</translation>
+        <translation>Reiniciar último nivel después de fallar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="159"/>
         <source>Hub-styled world (without world map)</source>
-        <translation type="unfinished">Mundo sin mapa (Hub-styled)</translation>
+        <translation>Mundo sin mapa (Hub-styled)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="166"/>
         <source>Total stars:</source>
-        <translation type="unfinished">Total de estrellas:</translation>
+        <translation>Total de estrellas:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="183"/>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="418"/>
         <source>Counting...</source>
-        <translation type="unfinished">Contando...</translation>
+        <translation>Contando...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="426"/>
         <source>Counting stars of placed levels</source>
-        <translation type="unfinished">Contar estrellas en niveles puestos</translation>
+        <translation>Contar estrellas en niveles puestos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="426"/>
         <source>Abort</source>
-        <translation type="unfinished">Abortar</translation>
+        <translation>Abortar</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="427"/>
         <source>Counting stars...</source>
-        <translation type="unfinished">Contando estrellas...</translation>
+        <translation>Contando estrellas...</translation>
     </message>
 </context>
 <context>
