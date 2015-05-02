@@ -345,8 +345,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             }
         }
         else
-            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is busy"),
-                         tr("Sorry, but 'Hit' event slot already busy with '%1' event.")
+            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is used"),
+                         tr("Sorry, but 'Hit' event slot already used by '%1' event.")
                                  .arg(blockData.event_hit), QMessageBox::Ok);
 
     }
