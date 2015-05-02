@@ -28,10 +28,10 @@ void KeyboardController::update()
     const Uint8* state = SDL_GetKeyboardState(NULL);
 
     keys.jump=state[SDL_SCANCODE_Z];
-    keys.alt_jump=state[SDL_SCANCODE_S];
+    keys.alt_jump=state[SDL_SCANCODE_A];
 
     keys.run=state[SDL_SCANCODE_X];
-    keys.alt_run=state[SDL_SCANCODE_D];
+    keys.alt_run=state[SDL_SCANCODE_S];
 
     keys.right=state[SDL_SCANCODE_RIGHT];
     keys.up=state[SDL_SCANCODE_UP];
