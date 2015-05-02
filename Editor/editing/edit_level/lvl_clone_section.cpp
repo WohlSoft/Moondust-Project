@@ -107,7 +107,7 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
                                    .arg(
                                        ( (y.size_bottom==0) && (y.size_left==0) && (y.size_top==0) && (y.size_right==0))?
                                            tr(""):
-                                           tr("[Busy]")
+                                           tr("[Used]")
                                        )
                                    );
         item->setData(3, QString::number(y.id));
@@ -166,8 +166,8 @@ void LvlCloneSection::on_buttonBox_accepted()
 
     if( (tmps.size_bottom!=0) || (tmps.size_left!=0) || (tmps.size_top!=0) || (tmps.size_right!=0))
     {
-        QMessageBox::warning(this, tr("Section is busy"),
-                             tr("Destination section is busy!\nPlease select another section\nor delete them first with 'Delete Section' option."));
+        QMessageBox::warning(this, tr("Section is used"),
+                             tr("Destination section is used!\nPlease select another section\nor delete them first with 'Delete Section' option."));
         return;
     }
 
