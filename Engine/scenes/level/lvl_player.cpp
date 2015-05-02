@@ -450,7 +450,7 @@ void LVL_Player::update(float ticks)
             {
                 timeToFloat -= ticks;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*sin(timeToFloat/60.0)) );
+                                                   3.0*sin(timeToFloat/80.0)) );
                 if(timeToFloat<=0)
                 {
                     timeToFloat=0;
