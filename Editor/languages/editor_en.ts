@@ -1538,13 +1538,21 @@ Message limits: max line lenth is 27 characters</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
-        <source>&apos;Hit&apos; event slot is busy</source>
-        <translation>&apos;Hit&apos; event slot is busy</translation>
+        <source>&apos;Hit&apos; event slot is used</source>
+        <translation>&apos;Hit&apos; event slot is used</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
+        <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
+        <translation>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</translation>
+    </message>
+    <message>
+        <source>&apos;Hit&apos; event slot is busy</source>
+        <translation type="vanished">&apos;Hit&apos; event slot is busy</translation>
+    </message>
+    <message>
         <source>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</source>
-        <translation>Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</translation>
+        <translation type="vanished">Sorry, but &apos;Hit&apos; event slot already busy with &apos;%1&apos; event.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="199"/>
@@ -2875,9 +2883,13 @@ Do you want to save your changes?</translation>
         <translation>[Uninitialized]</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
         <source>[Busy]</source>
-        <translation>[Busy]</translation>
+        <translation type="vanished">[Busy]</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/lvl_clone_section.cpp" line="110"/>
+        <source>[Used]</source>
+        <translation>[Used]</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="128"/>
@@ -2903,15 +2915,27 @@ Please select another section.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
-        <source>Section is busy</source>
+        <source>Section is used</source>
         <translation>Section is busy</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
+        <source>Destination section is used!
+Please select another section
+or delete them first with &apos;Delete Section&apos; option.</source>
+        <translation>Destination section is used!
+Please select another section
+or delete them first with &apos;Delete Section&apos; option.</translation>
+    </message>
+    <message>
+        <source>Section is busy</source>
+        <translation type="vanished">Section is busy</translation>
+    </message>
+    <message>
         <source>Destination section is busy!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
-        <translation>Destination section is busy!
+        <translation type="vanished">Destination section is busy!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</translation>
     </message>
@@ -3630,7 +3654,7 @@ Please, reconvert your images to the valid format and try to reload this level.<
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="434"/>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Transform</translation>
     </message>
     <message>
         <source>Changed Setting [%1]</source>
@@ -8015,7 +8039,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="158"/>
         <source>Invizible</source>
-        <translation type="unfinished"></translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <location filename="../defines.h" line="159"/>
@@ -8025,12 +8049,12 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="160"/>
         <source>Z-Layer</source>
-        <translation type="unfinished">Z-Layer</translation>
+        <translation>Z-Layer</translation>
     </message>
     <message>
         <location filename="../defines.h" line="161"/>
         <source>Z-Offset</source>
-        <translation type="unfinished">Z-Offset</translation>
+        <translation>Z-Offset</translation>
     </message>
     <message>
         <location filename="../defines.h" line="162"/>
