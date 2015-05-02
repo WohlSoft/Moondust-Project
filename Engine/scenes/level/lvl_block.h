@@ -66,6 +66,8 @@ public:
     void hit(directions _dir=up);
     directions hitDirection;
 
+    GLdouble zIndex();
+
     /**************Fader**************/
     float fadeOffset;
     float targetOffset;

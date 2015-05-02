@@ -182,14 +182,14 @@ void PGE_LevelCamera::update()
 
     while(sorted < objects_to_render.size())
     {
-        ymin = objects_to_render[sorted]->z_index;
+        ymin = objects_to_render[sorted]->zIndex();
         ymini = sorted;
 
         for(i = sorted; i < total; i++)
         {
-            if( objects_to_render[i]->z_index < ymin )
+            if( objects_to_render[i]->zIndex() < ymin )
             {
-                ymin = objects_to_render[i]->z_index; ymini = i;
+                ymin = objects_to_render[i]->zIndex(); ymini = i;
             }
         }
         objects_to_render.swap(ymini, sorted);
