@@ -266,8 +266,8 @@ void LVL_Block::transformTo_x(long id)
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
-        animated = ConfigManager::lvl_block_indexes[data.id].animated;
-        animator_ID = ConfigManager::lvl_block_indexes[data.id].animator_ID;
+        animated = setup->animated;
+        animator_ID = setup->animator_ID;
     }
 
     if(!setup->sizable)

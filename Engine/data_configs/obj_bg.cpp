@@ -23,7 +23,7 @@
 
 /*****Level BG************/
 QList<obj_BG >     ConfigManager::lvl_bg;
-QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
+QMap<long, obj_BG*>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
 QList<SimpleAnimator > ConfigManager::Animator_BG;
 /*****Level BG************/
@@ -160,7 +160,7 @@ bool ConfigManager::loadLevelBackG()
             lvl_bg.push_back(sbg);
 
             //Add to Index
-            lvl_bg_indexes[lvl_bg.last().id] = lvl_bg.last();
+            lvl_bg_indexes[lvl_bg.last().id] = &lvl_bg.last();
 
         skipBG:
         bgset.endGroup();

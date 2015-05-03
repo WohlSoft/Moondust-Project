@@ -21,7 +21,7 @@
 
 /*****Level BGO************/
 QList<obj_effect >     ConfigManager::lvl_effects;
-QMap<long, obj_effect>   ConfigManager::lvl_effects_indexes;
+QMap<long, obj_effect*>   ConfigManager::lvl_effects_indexes;
 CustomDirManager ConfigManager::Dir_EFFECT;
 QList<SimpleAnimator > ConfigManager::Animator_EFFECT;
 /*****Level BGO************/
@@ -100,7 +100,7 @@ bool ConfigManager::loadLevelEffects()
             lvl_effects.push_back(sbgo);
 
             //Add to Index
-            lvl_effects_indexes[lvl_effects.last().id] = lvl_effects.last();
+            lvl_effects_indexes[lvl_effects.last().id] = &lvl_effects.last();
 
         skipEffect:
         effectset.endGroup();

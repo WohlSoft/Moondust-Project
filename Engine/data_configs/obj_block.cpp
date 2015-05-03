@@ -22,7 +22,7 @@
 
 /*****Level blocks************/
 QList<obj_block >       ConfigManager::lvl_blocks;
-QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
+QMap<long, obj_block*>   ConfigManager::lvl_block_indexes;
 CustomDirManager        ConfigManager::Dir_Blocks;
 QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
 /*****Level blocks************/
@@ -178,7 +178,7 @@ bool ConfigManager::loadLevelBlocks()
                 lvl_blocks.push_back(sblock);
 
                 //Add to Index
-                lvl_block_indexes[lvl_blocks.last().id] = lvl_blocks.last();
+                lvl_block_indexes[lvl_blocks.last().id] = &lvl_blocks.last();
 
             skipBLOCK:
             blockset.endGroup();
