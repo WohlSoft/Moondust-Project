@@ -28,6 +28,7 @@ Editor 0.3.0
 - Added ability to install config pack into %UserProfile%\.PGE_Project, ~/.PGE_Project or ~/Library/Application Support/PGE Project folder
 - Added "delete tileset" button to provide built-in removing of junk tilesets
 - Fixed bug with music boxed placing undo history action
+- Loading speed has increased
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

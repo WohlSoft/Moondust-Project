@@ -465,7 +465,6 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         ui->WLD_DoCountStars->setEnabled(false);
         ui->WLD_DoCountStars->setText(tr("Counting..."));
 
-
         dirPath = edit->WldData.path;
 
         //Stop animations to increase performance
