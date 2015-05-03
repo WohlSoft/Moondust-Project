@@ -53,6 +53,9 @@ dataconfigs::dataconfigs()
     engine.wld_viewport_h=403;
 }
 
+dataconfigs::~dataconfigs()
+{}
+
 /*
 [background-1]
 name="Smallest bush"		;background name, default="background-%n"
@@ -126,7 +129,7 @@ void dataconfigs::loadBasics()
     }
 }
 
-bool dataconfigs::loadconfigs(QProgressDialog *prgs)
+bool dataconfigs::loadconfigs()
 {
     //unsigned long i;//, prgs=0;
 
@@ -227,27 +230,27 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
 
     ///////////////////////////////////////Level items////////////////////////////////////////////
-    loadLevelBackgrounds(prgs);
-    loadLevelBGO(prgs);
-    loadLevelBlocks(prgs);
-    loadLevelNPC(prgs);
+    loadLevelBackgrounds();
+    loadLevelBGO();
+    loadLevelBlocks();
+    loadLevelNPC();
     ///////////////////////////////////////Level items////////////////////////////////////////////
 
     ///////////////////////////////////////World map items////////////////////////////////////////
-    loadWorldTiles(prgs);
-    loadWorldScene(prgs);
-    loadWorldPaths(prgs);
-    loadWorldLevels(prgs);
+    loadWorldTiles();
+    loadWorldScene();
+    loadWorldPaths();
+    loadWorldLevels();
     ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
     ///////////////////////////////////////Music////////////////////////////////////////////
-    loadMusic(prgs);
+    loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
     ///////////////////////////////////////Sound////////////////////////////////////////////
-    loadSound(prgs);
+    loadSound();
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
 

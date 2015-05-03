@@ -54,7 +54,7 @@ long dataconfigs::getPathI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldPaths(QProgressDialog *prgs)
+void dataconfigs::loadWorldPaths()
 {
     unsigned int i;
 
@@ -80,8 +80,8 @@ void dataconfigs::loadWorldPaths(QProgressDialog *prgs)
         total_data +=path_total;
     pathset.endGroup();
 
-    if(prgs) prgs->setMaximum(path_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Paths images..."));
+    emit progressMax(path_total);
+    emit progressTitle(QApplication::tr("Loading Paths images..."));
 
     ConfStatus::total_wpath= path_total;
 
@@ -103,11 +103,7 @@ void dataconfigs::loadWorldPaths(QProgressDialog *prgs)
 
     for(i=1; i<=path_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
         QString errStr;
 
         pathset.beginGroup( QString("path-"+QString::number(i)) );

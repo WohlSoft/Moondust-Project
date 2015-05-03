@@ -27,7 +27,6 @@
 #include "mainwindow.h"
 
 #include <QtConcurrent>
-#include <QProgressDialog>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -126,7 +125,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     /*********************Loading of config pack**********************/
     // Do the loading in a thread
-    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs, (QProgressDialog*) 0);
+    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
     /*********************Loading of config pack**********************/
 
     /*********************Splash Screen**********************/
