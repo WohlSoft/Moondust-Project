@@ -76,7 +76,8 @@ void IntEngine::quit()
         qDebug() << "Close connection";
         engineSocket->closeConnection();
         qDebug() << "exit";
-        while(engineSocket->isWorking());
+//        while(engineSocket->isWorking())
+//            { qApp->processEvents(); }
         if(!engineSocket->wait(5000))
         {
             qDebug() << "TERMINATOR RETURNS BACK! 8-)";
