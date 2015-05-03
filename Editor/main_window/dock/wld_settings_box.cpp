@@ -26,6 +26,8 @@
 #include "wld_settings_box.h"
 #include "ui_wld_settings_box.h"
 
+#include <QtConcurrent>
+
 WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     QDockWidget(parent),
     MWDock_Base(parent),
@@ -162,6 +164,7 @@ void WorldSettingsBox::characterActivated(bool checked)
         edit->WldData.nocharacter[ind] = checked;
     }
 }
+
 
 void MainWindow::on_actionWLDProperties_triggered()
 {
@@ -364,6 +367,8 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
            getLevelHead.npc[q].is_star = MainWinConnect::pMainWin->configs.main_npc[id].is_star;
            if((getLevelHead.npc[q].is_star)&&(!getLevelHead.npc[q].friendly))
                 foundStars++;
+
+           if(StarCounter_canceled) return starCount;
         }
         starCount += foundStars;//getLevelHead.stars;
 
@@ -385,26 +390,69 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
                 }
                 else continue;
                 //qDebug() << "warp "<<getLevelHead.stars << getLevelHead.filename;
-
                 starCount += StarCounter_checkLevelFile(FilePath_W, exists);
 
-                qApp->processEvents();
-                //qDebug() << "starCount "<<starCount;
+                if(StarCounter_canceled) return starCount;
             }
         }
     }
     return starCount;
 }
 
+int WorldSettingsBox::doStarCount(QString dir, QVector<WorldLevels> levels, QString introLevel)
+{
+    //Count stars of all used levels on this world map
+    QString dirPath=dir;
+    long starzzz=0;
+    bool introCounted=false;
+    StarCounter_canceled=false;
+
+    QStringList LevelAlreadyChecked;
+
+    for(int i=0; i<levels.size() || !introCounted; i++)
+    {
+        //Attempt to read stars quantity of level:
+
+        QString FilePath;
+
+        if(introCounted)
+        {
+            FilePath = dirPath+"/"+levels[i].lvlfile;
+            if(levels[i].lvlfile.isEmpty()) continue;
+        }
+        else
+        {
+            FilePath = dirPath+"/"+introLevel;
+            i--;
+            introCounted=true;
+            if(FilePath.isEmpty()) continue;
+        }
+
+        if(!FilePath.endsWith(".lvl", Qt::CaseInsensitive)&&
+           !FilePath.endsWith(".lvlx", Qt::CaseInsensitive))
+           FilePath.append(".lvl");
+
+        if(!QFileInfo(FilePath).exists()) continue;
+
+        if(!LevelAlreadyChecked.contains(FilePath))
+        {
+            LevelAlreadyChecked.push_back(FilePath);
+        }
+        else continue;
+
+        emit countedStar(i<0?1:i);
+        starzzz += StarCounter_checkLevelFile(FilePath, LevelAlreadyChecked);
+        if(StarCounter_canceled) break;
+    }
+
+    return starzzz;
+}
+
 void WorldSettingsBox::on_WLD_DoCountStars_clicked()
 {
     if(world_settings_lock_fields) return;
 
-    //Count stars of all used levels on this world map
-
     QString dirPath;
-    long starzzz=0;
-    bool introCounted=false;
 
     if (mw()->activeChildWindow()==3)
     {
@@ -432,47 +480,19 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
              progress.setMinimumDuration(0);
              progress.show();
 
-        QStringList LevelAlreadyChecked;
+        progress.connect(this, SIGNAL(countedStar(int)), &progress, SLOT(setValue(int)));
 
-        //qDebug() << "total " << starzzz;
+        QFuture<int> isOk = QtConcurrent::run(this, &WorldSettingsBox::doStarCount,
+                                               QString(dirPath),
+                                               edit->WldData.levels,
+                                               edit->WldData.IntroLevel_file
+                                               );
 
-        for(int i=0; i<edit->WldData.levels.size() || !introCounted; i++)
+        while(!isOk.isFinished())
         {
-            //Attempt to read stars quantity of level:
-
-            QString FilePath;
-
-            if(introCounted)
-            {
-                FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
-                if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
-            }
-            else
-            {
-                FilePath = dirPath+"/"+edit->WldData.IntroLevel_file;
-                i--;
-                introCounted=true;
-                if(FilePath.isEmpty()) continue;
-            }
-
-            if(!FilePath.endsWith(".lvl", Qt::CaseInsensitive)&&
-               !FilePath.endsWith(".lvlx", Qt::CaseInsensitive))
-               FilePath.append(".lvl");
-
-            if(!QFileInfo(FilePath).exists()) continue;
-
-            if(!LevelAlreadyChecked.contains(FilePath))
-            {
-                LevelAlreadyChecked.push_back(FilePath);
-            }
-            else continue;
-
-            progress.setValue(i<0?1:i);
-            starzzz += StarCounter_checkLevelFile(FilePath, LevelAlreadyChecked);
-            //qDebug() << "starzzz " << starzzz;
-
-            if(progress.wasCanceled()) break;
             qApp->processEvents();
+            if(progress.wasCanceled())
+                StarCounter_canceled=true;
         }
 
         //Start animations again
@@ -483,9 +503,11 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         ui->WLD_DoCountStars->setText(__backUP);
 
         if(progress.wasCanceled()) return;
-        ui->WLD_Stars->setValue(starzzz);
+        ui->WLD_Stars->setValue(isOk.result());
         progress.close();
+
     }
+
 }
 /********************************Star counter End**************************************************/
 
