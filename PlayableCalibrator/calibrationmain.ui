@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>SMBX64 Playable Sprite Calibrator</string>
+   <string>Playable Character Sprite Calibrator</string>
   </property>
   <property name="windowIcon">
    <iconset resource="_resourses/images.qrc">
@@ -166,7 +166,7 @@
       <string>Save config</string>
      </property>
      <property name="icon">
-      <iconset resource="_resourses/images.qrc">
+      <iconset resource="../Editor/_resources/editor.qrc">
        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
      </property>
     </widget>
@@ -266,7 +266,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <string>Open sprite</string>
      </property>
      <property name="icon">
-      <iconset resource="_resourses/images.qrc">
+      <iconset resource="../Editor/_resources/editor.qrc">
        <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
      </property>
     </widget>
@@ -473,7 +473,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       </font>
      </property>
      <property name="text">
-      <string>Hotbox calibration:</string>
+      <string>Hitbox calibration:</string>
      </property>
     </widget>
    </item>
@@ -580,6 +580,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../Editor/_resources/editor.qrc"/>
   <include location="_resourses/images.qrc"/>
  </resources>
  <connections/>

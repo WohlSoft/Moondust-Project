@@ -21,6 +21,25 @@
 
 #include <QString>
 #include <QtMsgHandler>
+#include <QObject>
+
+class DevConsole;
+
+class LogWriterSignal :public QObject
+{
+    Q_OBJECT
+
+    friend class LogWriter;
+    friend void WriteToLog(QtMsgType type, QString msg, bool noConsole);
+    LogWriterSignal(QObject *parent=0);
+    LogWriterSignal(DevConsole *console, QObject *parent=0);
+    void setup(DevConsole*console);
+    virtual ~LogWriterSignal();
+    void log(QString msg, QString chan);
+
+signals:
+    void logToConsole(QString msg, QString chan);//!<msg, channel
+};
 
 class LogWriter
 {
@@ -33,7 +52,13 @@ public:
     static void LoadLogSettings();
 
     static void logMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+    static void installConsole(DevConsole *console);
+    static void uninstallConsole();
+private:
+    friend void ::WriteToLog(QtMsgType type, QString msg, bool noConsole);
+    static LogWriterSignal *consoleConnector;
 };
 
 
 #endif // LOGGER_SETS_H
+

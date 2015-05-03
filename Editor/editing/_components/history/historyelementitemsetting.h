@@ -60,6 +60,10 @@ public slots:
     void historyRedoSettingsInvisibleBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
     void historyUndoSettingsSlipperyBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
     void historyRedoSettingsSlipperyBlock(const LevelBlock &sourceBlock, QGraphicsItem *item);
+    void historyUndoSettingsZLayerBgo(const LevelBGO &sourceBgo, QGraphicsItem *item);
+    void historyRedoSettingsZLayerBgo(const LevelBGO &sourceBgo, QGraphicsItem *item);
+    void historyUndoSettingsZOffsetBgo(const LevelBGO &sourceBgo, QGraphicsItem *item);
+    void historyRedoSettingsZOffsetBgo(const LevelBGO &sourceBgo, QGraphicsItem *item);
     void historyUndoSettingsFriendlyNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyRedoSettingsFriendlyNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);
     void historyUndoSettingsBossNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);

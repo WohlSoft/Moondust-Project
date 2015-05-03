@@ -33,6 +33,7 @@ private slots:
 
 
 private:
+    bool WldSaveImage_lock;
     Ui::WldSaveImage *ui;
 };
 

@@ -207,6 +207,7 @@ bool LevelScene::init()
         PGE_LevelCamera* camera;
         camera = new PGE_LevelCamera();
         camera->setWorld(world);
+        camera->setMusicRoot(data.path);
         camera->changeSection(data.sections[sID]);
         camera->isWarp = data.sections[sID].IsWarp;
         camera->section = &(data.sections[sID]);
@@ -224,7 +225,8 @@ bool LevelScene::init()
     LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
     if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
     {
-        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID]);
+        obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
+        CurrentBackground->setBg(*bgSetup);
         qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
     }
     else
@@ -260,6 +262,9 @@ bool LevelScene::init()
     {
         loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
+
+        //Don't put contactable points for "level entrance" points
+        if(data.doors[i].lvl_i) continue;
 
         LVL_Warp * warpP;
         warpP = new LVL_Warp();

@@ -20,11 +20,11 @@
 #define DATACONFIGS_H
 
 #include <QVector>
+#include <QObject>
 #include <QPixmap>
 #include <QBitmap>
 #include <QtWidgets>
 #include <QSettings>
-#include <QProgressDialog>
 #include <QDebug>
 
 #include <common_features/logger.h>
@@ -96,11 +96,13 @@ struct obj_playable_character
 
 
 
-class dataconfigs
+class dataconfigs : public QObject
 {
+    Q_OBJECT
 public:
     dataconfigs();
-    bool loadconfigs(QProgressDialog *prgs=NULL);
+    virtual ~dataconfigs();
+    bool loadconfigs();
     DataFolders dirs;
     QString config_dir;
     QString data_dir;
@@ -184,6 +186,11 @@ public:
     void setConfigPath(QString p);
     void loadBasics();
 
+signals:
+    void progressValue(int);
+    void progressMax(int);
+    void progressTitle(QString);
+
 private:
 
     //Buffers
@@ -204,18 +211,18 @@ private:
     QString pathPath;
     QString wlvlPath;
 
-    void loadLevelBGO(QProgressDialog *prgs=NULL);
-    void loadLevelBlocks(QProgressDialog *prgs=NULL);
-    void loadLevelNPC(QProgressDialog *prgs=NULL);
-    void loadLevelBackgrounds(QProgressDialog *prgs=NULL);
+    void loadLevelBGO();
+    void loadLevelBlocks();
+    void loadLevelNPC();
+    void loadLevelBackgrounds();
 
-    void loadWorldTiles(QProgressDialog *prgs=NULL);
-    void loadWorldScene(QProgressDialog *prgs=NULL);
-    void loadWorldPaths(QProgressDialog *prgs=NULL);
-    void loadWorldLevels(QProgressDialog *prgs=NULL);
+    void loadWorldTiles();
+    void loadWorldScene();
+    void loadWorldPaths();
+    void loadWorldLevels();
 
-    void loadMusic(QProgressDialog *prgs=NULL);
-    void loadSound(QProgressDialog *prgs=NULL);
+    void loadMusic();
+    void loadSound();
 
     void loadRotationTable();
 

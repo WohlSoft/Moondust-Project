@@ -66,8 +66,10 @@ bool LevelScene::loadFileIP()
         loaderStep();
         //Abort loading process and exit from game if window was closed
         if(!isLevelContinues) return false;
-
+        #ifndef __APPLE__
         qApp->processEvents();
+        #endif
+        qDebug()<<"tick-"<<time.elapsed();
         if(time.elapsed()>10000)
         {
             errorMsg += "Wait timeout\n";

@@ -31,16 +31,36 @@ SingleApplication::SingleApplication(int argc, char *argv[])
 {
   _shouldContinue = false; // By default this is not the main process
 
-  socket = new QLocalSocket();
+  socket = new QUdpSocket();
+  QUdpSocket acceptor;
+  acceptor.bind(QHostAddress::LocalHost, 58488, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
   // Attempt to connect to the LocalServer
-  socket->connectToServer(LOCAL_SERVER_NAME);
+  socket->connectToHost(QHostAddress::LocalHost, 58487);
+  QString isServerRuns;
   if(socket->waitForConnected(100))
   {
+      socket->write(QString("CMD:Is editor running?").toUtf8());
+      socket->flush();
+      if(acceptor.waitForReadyRead(100))
+      {
+          //QByteArray dataGram;//Yes, I'm runs!
+          QByteArray datagram;
+          datagram.resize(acceptor.pendingDatagramSize());
+          QHostAddress sender;
+          quint16 senderPort;
+          acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+          if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
+          {
+              isServerRuns="Yes!";
+          }
+      }
+  }
 
+  if(!isServerRuns.isEmpty())
+  {
     QString str = QString("CMD:showUp");
     QByteArray bytes;
-
     for(int i=1;i<argc; i++)
     {
        str.append(QString("\n%1").arg(QString::fromLocal8Bit(argv[i])));
@@ -60,6 +80,7 @@ SingleApplication::SingleApplication(int argc, char *argv[])
     QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
     QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
     QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
+    QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
   }
 }
 
@@ -69,9 +90,19 @@ SingleApplication::SingleApplication(int argc, char *argv[])
  */
 SingleApplication::~SingleApplication()
 {
-  if(_shouldContinue){
-    server->terminate();
+  if(_shouldContinue)
+  {
+      emit stopServer();
+      if(!server->wait(5000))
+      {
+          qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
+          server->terminate();
+          qDebug() << "Wait for nothing";
+          server->wait();
+          qDebug() << "Terminated!";
+      }
   }
+  delete server;
 }
 
 /**

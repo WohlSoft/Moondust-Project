@@ -247,57 +247,72 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
         if(selected==ZMode_bg2)
         {
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
                     ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background2));
         }
         else
         if(selected==ZMode_bg1)
         {
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
                     ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Background1));
         }
         else
         if(selected==ZMode_def)
         {
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
                     ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::ZDefault));
         }
         else
         if(selected==ZMode_fg1)
         {
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
                     ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground1));
         }
         else
         if(selected==ZMode_fg2)
         {
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
                     ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
                 }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_LAYER, QVariant(LevelBGO::Foreground2));
         }
     else
     if(selected==ZOffset)
@@ -308,17 +323,25 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                                                    bgoData.z_offset,
                                                    -500, 500,7, &ok);
         if(ok)
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+            LevelData selData;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
+                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                {
+                    selData.bgo.push_back(((ItemBGO*)SelItem)->bgoData);
+                    ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
+                }
             }
+            scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_Z_OFFSET, QVariant(newzOffset));
         }
     }
     else
     if(selected==transform)
     {
+        LevelData oldData;
+        LevelData newData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
@@ -331,15 +354,23 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
+                    oldData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
                     ((ItemBGO *) SelItem)->transformTo(transformTO);
+                    newData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
                 }
             }
         }
         delete blockList;
+
+        if(!newData.bgo.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==transform_all)
     {
+        LevelData oldData;
+        LevelData newData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
@@ -354,11 +385,17 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
                     if(((ItemBGO *) SelItem)->bgoData.id==oldID)
+                    {
+                        oldData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
                         ((ItemBGO *) SelItem)->transformTo(transformTO);
+                        newData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
+                    }
                 }
             }
         }
         delete blockList;
+        if(!newData.bgo.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==props)
@@ -383,6 +420,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             }//Find selected layer's item
         }
     }
+
 }
 
 

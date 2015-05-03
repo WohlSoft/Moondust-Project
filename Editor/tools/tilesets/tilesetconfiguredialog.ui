@@ -122,7 +122,7 @@
       </widget>
      </item>
      <item row="3" column="0" colspan="4">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="clearTileset">
        <property name="text">
         <string>Clear</string>
        </property>
@@ -196,6 +196,13 @@
     <widget class="QCheckBox" name="specific">
      <property name="text">
       <string>Current Level/World specific</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="delete_me">
+     <property name="text">
+      <string>Detele this tileset</string>
      </property>
     </widget>
    </item>

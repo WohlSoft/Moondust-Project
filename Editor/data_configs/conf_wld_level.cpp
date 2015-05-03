@@ -74,7 +74,7 @@ long dataconfigs::getCharacterI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
+void dataconfigs::loadWorldLevels()
 {
     unsigned int i;
 
@@ -102,8 +102,8 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
         total_data +=levels_total;
     levelset.endGroup();
 
-    if(prgs) prgs->setMaximum(levels_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Level images..."));
+    emit progressMax(levels_total);
+    emit progressTitle(QApplication::tr("Loading Level images..."));
 
     ConfStatus::total_wlvl = levels_total;
 
@@ -125,12 +125,7 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
 
     for(i=0; i<=levels_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
-
+        emit progressValue(i);
         QString errStr;
 
         levelset.beginGroup( QString("level-"+QString::number(i)) );

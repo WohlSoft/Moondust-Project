@@ -26,6 +26,8 @@
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
+#include <QtConcurrent>
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -120,18 +122,23 @@ MainWindow::MainWindow(QMdiArea *parent) :
     #else
     splash.showFullScreen();
     #endif
-    /*********************Splash Screen**********************/
 
+    /*********************Loading of config pack**********************/
+    // Do the loading in a thread
+    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+    /*********************Loading of config pack**********************/
+
+    /*********************Splash Screen**********************/
+    // And meanwhile load the settings in the main thread
     loadSettings();
 
-    /*********************Loading of config pack**********************/
-    bool ok=configs.loadconfigs();
-    /*********************Loading of config pack**********************/
+    // Now wait until the config load in finished.
+    while(!isOk.isFinished()) qApp->processEvents();
 
     /*********************Splash Screen end**********************/
     splash.finish(this);
     /*********************Splash Screen end**********************/
-    if(!ok)
+    if(!isOk.result())
     {
         QMessageBox::critical(this, tr("Configuration error"),
                               tr("Configuration can't be loaded.\nSee in %1 for more information.").arg(LogWriter::DebugLogFile), QMessageBox::Ok);
@@ -167,7 +174,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
 

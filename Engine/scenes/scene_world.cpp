@@ -1033,6 +1033,7 @@ int WorldScene::exec()
                                   gameState->game_state.worldPosY=posY;
                                   PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
                                   stopMusic(true, 300);
+                                  lock_controls=true;
                                   setExiting(0, WldExit::EXIT_beginLevel);
                               }
                               else if(jumpTo)

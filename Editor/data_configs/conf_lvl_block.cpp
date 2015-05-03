@@ -56,7 +56,7 @@ long dataconfigs::getBlockI(unsigned long itemID)
 
 static QString Temp01="";
 
-void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
+void dataconfigs::loadLevelBlocks()
 {
     unsigned int i;
 
@@ -83,8 +83,8 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
         total_data +=block_total;
     blockset.endGroup();
 
-    if(prgs) prgs->setMaximum(block_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Blocks..."));
+    emit progressMax(block_total);
+    emit progressTitle(QApplication::tr("Loading Blocks..."));
 
     ConfStatus::total_blocks = block_total;
 
@@ -107,11 +107,7 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
 
         for(i=1; i<=block_total; i++)
         {
-            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-            if(prgs)
-            {
-                if(!prgs->wasCanceled()) prgs->setValue(i);
-            }
+            emit progressValue(i);
             QString errStr;
 
             blockset.beginGroup( QString("block-%1").arg(i) );

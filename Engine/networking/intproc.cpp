@@ -16,8 +16,11 @@ IntProc::IntProc(QObject *parent) :
 
 void IntProc::init()
 {
+    qDebug()<<"IntProc constructing...";
     editor = new EditorPipe();
+    qDebug()<<"IntProc starting...";
     editor->start();
+    qDebug()<<"IntProc started!";
     enabled=true;
 }
 
@@ -27,13 +30,15 @@ void IntProc::quit()
     if(editor!=NULL)
     {
         editor->isWorking=false;
-        editor->wait(4000);
-        editor->terminate();
+        if(!editor->wait(4000))
+        {
+            editor->terminate();
+            editor->wait();
+        }
         delete editor;
         editor = NULL;
         enabled=false;
     }
-
 }
 
 bool IntProc::isWorking()

@@ -143,6 +143,20 @@ void WldScene::addFlipHistory(WorldData flippedItems, WorldData unflippedItems)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addTransformHistory(WorldData transformedItems, WorldData sourceItems)
+{
+    updateHistoryBuffer();
+
+    HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
+    modf->setCustomHistoryName(tr("Flip"));
+    modf->setScene(this);
+
+    operationList.push_back(QSharedPointer<IHistoryElement>(modf));
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;

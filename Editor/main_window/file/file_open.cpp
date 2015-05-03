@@ -27,7 +27,6 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-
 void MainWindow::openFilesByArgs(QStringList args)
 {
     for(int i=1; i<args.size(); i++)

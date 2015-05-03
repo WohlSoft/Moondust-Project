@@ -55,7 +55,7 @@ long dataconfigs::getNpcI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
+void dataconfigs::loadLevelNPC()
 {
     unsigned int i;
 
@@ -92,8 +92,8 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
     npcset.endGroup();
 
-    if(prgs) prgs->setMaximum(npc_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading NPCs..."));
+    emit progressMax(npc_total);
+    emit progressTitle(QApplication::tr("Loading NPCs..."));
 
     ConfStatus::total_npc = npc_total;
 
@@ -121,12 +121,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
     for(i=1; i<= npc_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
-
+        emit progressValue(i);
         QString errStr;
 
         npcset.beginGroup( QString("npc-"+QString::number(i)) );

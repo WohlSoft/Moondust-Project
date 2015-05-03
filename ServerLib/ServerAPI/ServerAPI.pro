@@ -48,7 +48,8 @@ SOURCES += \
     pgeserver_p.cpp \
     packet/packet.cpp \
     packet/predefined/packethandshake.cpp \
-    packet/base/handshake/packethandshakeaccepted.cpp
+    packet/base/handshake/packethandshakeaccepted.cpp \
+    _tcp_server.cpp
 
 HEADERS += \
     pgesocketdefines.h \
@@ -60,7 +61,8 @@ HEADERS += \
     packet/predefined/packethandshake.h \
     utils/pgewriterutils.h \
     utils/pgemiscutils.h \
-    packet/base/handshake/packethandshakeaccepted.h
+    packet/base/handshake/packethandshakeaccepted.h \
+    _tcp_server.h
 
 OTHER_FILES += \
     PacketInfo.txt

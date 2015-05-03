@@ -54,7 +54,7 @@ long dataconfigs::getSceneI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldScene(QProgressDialog *prgs)
+void dataconfigs::loadWorldScene()
 {
     unsigned int i;
 
@@ -80,8 +80,8 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
         total_data +=scenery_total;
     sceneset.endGroup();
 
-    if(prgs) prgs->setMaximum(scenery_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Sceneries..."));
+    emit progressMax(scenery_total);
+    emit progressTitle(QApplication::tr("Loading Sceneries..."));
 
     ConfStatus::total_wscene= scenery_total;
 
@@ -103,11 +103,7 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
 
     for(i=1; i<=scenery_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
         QString errStr;
 
         sceneset.beginGroup( QString("scenery-"+QString::number(i)) );

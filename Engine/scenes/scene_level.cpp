@@ -32,10 +32,13 @@
 #include <gui/pge_msgbox.h>
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
+#include <audio/SdlMusPlayer.h>
 
 #include <QtDebug>
 
 #include <physics/phys_debug_draw.h>
+
+#include <settings/global_settings.h>
 
 DebugDraw dbgDraw;
 
@@ -225,7 +228,12 @@ void LevelScene::update()
             }
             else
             {
-                if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
+                if(fader_opacity<=0.0f)
+                {
+                    if(PGE_MusPlayer::MUS_IsPlaying())
+                        PGE_MusPlayer::MUS_stopMusicFadeOut(500);
+                    setFade(25, 1.0f, 0.02f);
+                }
                 if(fader_opacity>=1.0)
                     isLevelContinues=false;
             }
@@ -243,7 +251,7 @@ void LevelScene::update()
         {
             transformTask_block x = block_transfors.first();
             if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = &(ConfigManager::lvl_block_indexes[x.id]);
+                x.block->setup = ConfigManager::lvl_block_indexes[x.id];
             else
             {
                 block_transfors.pop_front();
@@ -416,6 +424,11 @@ int LevelScene::exec()
         {
             start_events = SDL_GetTicks();
         }
+
+        #ifndef __APPLE__
+        if(AppSettings.interprocessing)
+            qApp->processEvents();
+        #endif
 
         keyboard1.update();
 
@@ -602,6 +615,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
+        PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
 }
