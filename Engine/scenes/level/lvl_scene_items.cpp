@@ -32,7 +32,7 @@ void LevelScene::placeBlock(LevelBlock blockData)
     LVL_Block * block;
     block = new LVL_Block();
     if(ConfigManager::lvl_block_indexes.contains(blockData.id))
-        block->setup = &(ConfigManager::lvl_block_indexes[blockData.id]);
+        block->setup = ConfigManager::lvl_block_indexes[blockData.id];
     else
     {
         //Wrong block!
@@ -60,7 +60,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
     if(ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
-        bgo->setup = &(ConfigManager::lvl_bgo_indexes[bgoData.id]);
+        bgo->setup = ConfigManager::lvl_bgo_indexes[bgoData.id];
     else
     {
         //Wrong BGO!
@@ -76,7 +76,16 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     int zMode = bgo->data->z_mode;
 
     if(zMode==LevelBGO::ZDefault)
-        zMode = bgo->setup->view;
+    {
+        switch(bgo->setup->view)
+        {
+            case -1: zMode = LevelBGO::Background2;break;
+            case 0: zMode = LevelBGO::Background1;break;
+            case 1: zMode = LevelBGO::Foreground1;break;
+            case 2: zMode = LevelBGO::Foreground2;break;
+        }
+    }
+
     switch(zMode)
     {
         case LevelBGO::Background2:
@@ -93,7 +102,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
     bgo->z_index += targetZ;
 
-    zCounter += 0.0000000000001;
+    zCounter += 0.00000001;
     bgo->z_index += zCounter;
 
     long tID = ConfigManager::getBgoTexture(bgoData.id);
@@ -101,8 +110,8 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     {
         bgo->texId = ConfigManager::level_textures[tID].texture;
         bgo->texture = ConfigManager::level_textures[tID];
-        bgo->animated = ConfigManager::lvl_bgo_indexes[bgoData.id].animated;
-        bgo->animator_ID = ConfigManager::lvl_bgo_indexes[bgoData.id].animator_ID;
+        bgo->animated = bgo->setup->animated;
+        bgo->animator_ID = bgo->setup->animator_ID;
     }
     bgo->init();
 

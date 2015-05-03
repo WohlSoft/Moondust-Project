@@ -125,7 +125,7 @@ void MatrixAnimator::buildRect()
 {
     if(sequence.isEmpty())
     {
-        curRect = QRectF(0.0, 0.0, 1.0, 1.0);
+        curRect = QRectF(0.0, 0.0, width_f, height_f);
     }
     else
     {

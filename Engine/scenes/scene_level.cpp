@@ -251,7 +251,7 @@ void LevelScene::update()
         {
             transformTask_block x = block_transfors.first();
             if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = &(ConfigManager::lvl_block_indexes[x.id]);
+                x.block->setup = ConfigManager::lvl_block_indexes[x.id];
             else
             {
                 block_transfors.pop_front();

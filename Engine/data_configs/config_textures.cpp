@@ -25,19 +25,20 @@ long  ConfigManager::getBlockTexture(long blockID)
     {
         return -1;
     }
+    obj_block *blkSetup = lvl_block_indexes[blockID];
 
-    if(lvl_block_indexes[blockID].isInit)
+    if(blkSetup->isInit)
     {
 
-        if(lvl_block_indexes[blockID].textureArrayId < level_textures.size())
-            return lvl_block_indexes[blockID].textureArrayId;
+        if(blkSetup->textureArrayId < level_textures.size())
+            return blkSetup->textureArrayId;
         else
             return -1;
     }
     else
     {
-        QString imgFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].image_n);
-        QString maskFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].mask_n);
+        QString imgFile = Dir_Blocks.getCustomFile(blkSetup->image_n);
+        QString maskFile = Dir_Blocks.getCustomFile(blkSetup->mask_n);
 
         PGE_Texture texture;
         texture.w = 0;
@@ -49,7 +50,7 @@ long  ConfigManager::getBlockTexture(long blockID)
 
         long id = level_textures.size();
 
-        lvl_block_indexes[blockID].textureArrayId = id;
+        blkSetup->textureArrayId = id;
 
         level_textures.push_back(texture);
 
@@ -58,17 +59,17 @@ long  ConfigManager::getBlockTexture(long blockID)
              maskFile
              );
 
-        lvl_block_indexes[blockID].image = &(level_textures[id]);
-        lvl_block_indexes[blockID].textureID = level_textures[id].texture;
-        lvl_block_indexes[blockID].isInit = true;
+        blkSetup->image = &(level_textures[id]);
+        blkSetup->textureID = level_textures[id].texture;
+        blkSetup->isInit = true;
 
         //Also, load and init animator
-        if(lvl_block_indexes[blockID].animated)
+        if(blkSetup->animated)
         {
             int frameFirst;
             int frameLast;
 
-            switch(lvl_block_indexes[blockID].algorithm)
+            switch(blkSetup->algorithm)
             {
                 case 1: // Invisible block
                 {
@@ -99,19 +100,17 @@ long  ConfigManager::getBlockTexture(long blockID)
 
             SimpleAnimator animator(
                             true,
-                            lvl_block_indexes[blockID].frames,
-                            lvl_block_indexes[blockID].framespeed,
+                            blkSetup->frames,
+                            blkSetup->framespeed,
                             frameFirst,
                             frameLast,
-                            lvl_block_indexes[blockID].animation_rev,
-                            lvl_block_indexes[blockID].animation_bid
+                            blkSetup->animation_rev,
+                            blkSetup->animation_bid
                         );
 
             Animator_Blocks.push_back(animator);
-            lvl_block_indexes[blockID].animator_ID = Animator_Blocks.size()-1;
-
+            blkSetup->animator_ID = Animator_Blocks.size()-1;
         }
-
         return id;
     }
 }
@@ -130,18 +129,20 @@ long  ConfigManager::getBgoTexture(long bgoID)
         return -1;
     }
 
-    if(lvl_bgo_indexes[bgoID].isInit)
+    obj_bgo* bgoSetup=lvl_bgo_indexes[bgoID];
+
+    if(bgoSetup->isInit)
     {
 
-        if(lvl_bgo_indexes[bgoID].textureArrayId < level_textures.size())
-            return lvl_bgo_indexes[bgoID].textureArrayId;
+        if(bgoSetup->textureArrayId < level_textures.size())
+            return bgoSetup->textureArrayId;
         else
             return -1;
     }
     else
     {
-        QString imgFile = Dir_BGO.getCustomFile(lvl_bgo_indexes[bgoID].image_n);
-        QString maskFile = Dir_BGO.getCustomFile(lvl_bgo_indexes[bgoID].mask_n);
+        QString imgFile = Dir_BGO.getCustomFile(bgoSetup->image_n);
+        QString maskFile = Dir_BGO.getCustomFile(bgoSetup->mask_n);
 
         PGE_Texture texture;
         texture.w = 0;
@@ -153,7 +154,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
 
         long id = level_textures.size();
 
-        lvl_bgo_indexes[bgoID].textureArrayId = id;
+        bgoSetup->textureArrayId = id;
 
         level_textures.push_back(texture);
 
@@ -162,28 +163,28 @@ long  ConfigManager::getBgoTexture(long bgoID)
              maskFile
              );
 
-        lvl_bgo_indexes[bgoID].image = &(level_textures[id]);
-        lvl_bgo_indexes[bgoID].textureID = level_textures[id].texture;
-        lvl_bgo_indexes[bgoID].isInit = true;
+        bgoSetup->image = &(level_textures[id]);
+        bgoSetup->textureID = level_textures[id].texture;
+        bgoSetup->isInit = true;
 
         //Also, load and init animator
-        if(lvl_bgo_indexes[bgoID].animated)
+        if(bgoSetup->animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            lvl_bgo_indexes[bgoID].frame_h =
+            bgoSetup->frame_h =
                     (int)round(double(level_textures[id].h)
-                               /double(lvl_bgo_indexes[bgoID].frames));
+                               /double(bgoSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = lvl_bgo_indexes[bgoID].frame_h;
+            level_textures[id].h = bgoSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
-                            lvl_bgo_indexes[bgoID].frames,
-                            lvl_bgo_indexes[bgoID].framespeed,
+                            bgoSetup->frames,
+                            bgoSetup->framespeed,
                             frameFirst,
                             frameLast,
                             false,
@@ -191,7 +192,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
                         );
 
             Animator_BGO.push_back(animator);
-            lvl_bgo_indexes[bgoID].animator_ID = Animator_BGO.size()-1;
+            bgoSetup->animator_ID = Animator_BGO.size()-1;
 
         }
 
@@ -208,18 +209,20 @@ long ConfigManager::getEffectTexture(long effectID)
         return -1;
     }
 
-    if(lvl_effects_indexes[effectID].isInit)
+    obj_effect*effSetup=lvl_effects_indexes[effectID];
+
+    if(effSetup->isInit)
     {
 
-        if(lvl_effects_indexes[effectID].textureArrayId < level_textures.size())
-            return lvl_effects_indexes[effectID].textureArrayId;
+        if(effSetup->textureArrayId < level_textures.size())
+            return effSetup->textureArrayId;
         else
             return -1;
     }
     else
     {
-        QString imgFile = Dir_EFFECT.getCustomFile(lvl_effects_indexes[effectID].image_n);
-        QString maskFile = Dir_EFFECT.getCustomFile(lvl_effects_indexes[effectID].mask_n);
+        QString imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
+        QString maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
 
         PGE_Texture texture;
         texture.w = 0;
@@ -231,7 +234,7 @@ long ConfigManager::getEffectTexture(long effectID)
 
         long id = level_textures.size();
 
-        lvl_effects_indexes[effectID].textureArrayId = id;
+        effSetup->textureArrayId = id;
 
         level_textures.push_back(texture);
 
@@ -240,28 +243,28 @@ long ConfigManager::getEffectTexture(long effectID)
              maskFile
              );
 
-        lvl_effects_indexes[effectID].image = &(level_textures[id]);
-        lvl_effects_indexes[effectID].textureID = level_textures[id].texture;
-        lvl_effects_indexes[effectID].isInit = true;
+        effSetup->image = &(level_textures[id]);
+        effSetup->textureID = level_textures[id].texture;
+        effSetup->isInit = true;
 
         //Also, load and init animator
-        if(lvl_effects_indexes[effectID].animated)
+        if(effSetup->animated)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            lvl_effects_indexes[effectID].frame_h =
+            effSetup->frame_h =
                     (int)round(double(level_textures[id].h)
-                               /double(lvl_effects_indexes[effectID].frames));
+                               /double(effSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = lvl_effects_indexes[effectID].frame_h;
+            level_textures[id].h = effSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
-                            lvl_effects_indexes[effectID].frames,
-                            lvl_effects_indexes[effectID].framespeed,
+                            effSetup->frames,
+                            effSetup->framespeed,
                             frameFirst,
                             frameLast,
                             false,
@@ -269,7 +272,7 @@ long ConfigManager::getEffectTexture(long effectID)
                         );
 
             Animator_EFFECT.push_back(animator);
-            lvl_effects_indexes[effectID].animator_ID = Animator_EFFECT.size()-1;
+            effSetup->animator_ID = Animator_EFFECT.size()-1;
         }
 
         return id;
@@ -373,20 +376,22 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         return -1;
     }
 
-    if( (lvl_bg_indexes[bgID].isInit && !isSecond) || (lvl_bg_indexes[bgID].second_isInit && isSecond) )
+    obj_BG*bgSetup=lvl_bg_indexes[bgID];
+
+    if( (bgSetup->isInit && !isSecond) || (bgSetup->second_isInit && isSecond) )
     {
 
         if(isSecond)
         {
-            if(lvl_bg_indexes[bgID].second_textureArrayId < level_textures.size())
-                return lvl_bg_indexes[bgID].second_textureArrayId;
+            if(bgSetup->second_textureArrayId < level_textures.size())
+                return bgSetup->second_textureArrayId;
             else
                 return -1;
         }
         else
         {
-            if(lvl_bg_indexes[bgID].textureArrayId < level_textures.size())
-                return lvl_bg_indexes[bgID].textureArrayId;
+            if(bgSetup->textureArrayId < level_textures.size())
+                return bgSetup->textureArrayId;
             else
                 return -1;
         }
@@ -396,9 +401,9 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         QString imgFile ="";
 
         if(isSecond)
-            imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].second_image_n);
+            imgFile = Dir_BG.getCustomFile(bgSetup->second_image_n);
         else
-            imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].image_n);
+            imgFile = Dir_BG.getCustomFile(bgSetup->image_n);
 
         PGE_Texture texture;
         texture.w = 0;
@@ -411,9 +416,9 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         long id = level_textures.size();
 
         if(isSecond)
-            lvl_bg_indexes[bgID].second_textureArrayId = id;
+            bgSetup->second_textureArrayId = id;
         else
-            lvl_bg_indexes[bgID].textureArrayId = id;
+            bgSetup->textureArrayId = id;
 
         level_textures.push_back(texture);
 
@@ -421,39 +426,39 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
 
         if(isSecond)
         {
-            lvl_bg_indexes[bgID].second_image = &(level_textures[id]);
-            lvl_bg_indexes[bgID].second_textureID = level_textures[id].texture;
-            lvl_bg_indexes[bgID].second_isInit = true;
-            lvl_bg_indexes[bgID].second_Color_upper = level_textures[id].ColorUpper;
-            lvl_bg_indexes[bgID].second_Color_lower = level_textures[id].ColorLower;
+            bgSetup->second_image = &(level_textures[id]);
+            bgSetup->second_textureID = level_textures[id].texture;
+            bgSetup->second_isInit = true;
+            bgSetup->second_Color_upper = level_textures[id].ColorUpper;
+            bgSetup->second_Color_lower = level_textures[id].ColorLower;
         }
         else
         {
-            lvl_bg_indexes[bgID].image = &(level_textures[id]);
-            lvl_bg_indexes[bgID].textureID = level_textures[id].texture;
-            lvl_bg_indexes[bgID].Color_upper = level_textures[id].ColorUpper;
-            lvl_bg_indexes[bgID].Color_lower = level_textures[id].ColorLower;
-            lvl_bg_indexes[bgID].isInit = true;
+            bgSetup->image = &(level_textures[id]);
+            bgSetup->textureID = level_textures[id].texture;
+            bgSetup->Color_upper = level_textures[id].ColorUpper;
+            bgSetup->Color_lower = level_textures[id].ColorLower;
+            bgSetup->isInit = true;
         }
 
         //Also, load and init animator
-        if(lvl_bg_indexes[bgID].animated && !isSecond)
+        if(bgSetup->animated && !isSecond)
         {
             int frameFirst = 0;
             int frameLast = -1;
 
             //calculate height of frame
-            lvl_bg_indexes[bgID].frame_h =
+            bgSetup->frame_h =
                     (int)round(double(level_textures[id].h)
-                               /double(lvl_bg_indexes[bgID].frames));
+                               /double(bgSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = lvl_bg_indexes[bgID].frame_h;
+            level_textures[id].h = bgSetup->frame_h;
 
             SimpleAnimator animator(
                             true,
-                            lvl_bg_indexes[bgID].frames,
-                            128, //lvl_bg_indexes[bgID].framespeed, //Ouch, forgot made framespeed value for background :P Will add later
+                            bgSetup->frames,
+                            128, //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later
                             frameFirst,
                             frameLast,
                             false,
@@ -461,7 +466,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
                         );
 
             Animator_BG.push_back(animator);
-            lvl_bg_indexes[bgID].animator_ID = Animator_BG.size()-1;
+            bgSetup->animator_ID = Animator_BG.size()-1;
         }
 
         return id;

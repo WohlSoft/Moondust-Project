@@ -225,7 +225,8 @@ bool LevelScene::init()
     LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
     if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
     {
-        CurrentBackground->setBg(ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID]);
+        obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
+        CurrentBackground->setBg(*bgSetup);
         qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
     }
     else
