@@ -21,10 +21,28 @@
 
 #include <QThread>
 #include <QVector>
-#include <QLocalServer>
+#include <QTcpServer>
+#include <QUdpSocket>
+#include <QTcpSocket>
 #include <QLocalSocket>
 
-#define LOCAL_SERVER_NAME "PGEEditor335jh3c3n8g7"
+class IntProcServer  : public QUdpSocket
+{
+    Q_OBJECT
+public:
+    explicit IntProcServer();
+    ~IntProcServer();
+public slots:
+    void stateChanged(QAbstractSocket::SocketState stat);
+signals:
+    void messageIn(QString msg);
+
+protected slots:
+    void readData();
+    void displayError(QAbstractSocket::SocketError socketError);
+};
+
+
 
 class LocalServer : public QThread
 {
@@ -46,12 +64,10 @@ signals:
   void acceptedCommand(QString cmd);
 
 private slots:
-  void slotNewConnection();
+  void stopServer();
   void slotOnData(QString data);
 
 private:
-  QLocalServer* server;
-  QVector<QLocalSocket*> clients;
   void onCMD(QString data);
 
 };

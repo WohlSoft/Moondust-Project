@@ -436,8 +436,9 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
         ui->WLD_PROPS_LVLFile->setModified(true);
         on_WLD_PROPS_LVLFile_editingFinished();
 
-        QRegExp lvlext = QRegExp("*.lvl");
-        lvlext.setPatternSyntax(QRegExp::Wildcard);
+        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+        lvlext.setPatternSyntax(QRegExp::RegExp2);
+        lvlext.setCaseSensitivity(Qt::CaseInsensitive);
 
         //Attempt to read level title:
         QString FilePath = dirPath+"/"+levelList.SelectedFile;
@@ -449,7 +450,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
         getLevelHead.LevelName = "";
         if( lvlext.exactMatch(FilePath) )
         {
-            getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
+            getLevelHead = FileFormats::OpenLevelFileHeader(FilePath); //function in file_formats.cpp
             if( !getLevelHead.ReadFileValid ) return;
         }
 

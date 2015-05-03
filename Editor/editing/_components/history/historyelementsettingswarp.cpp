@@ -78,6 +78,10 @@ void HistoryElementSettingsWarp::undo()
         doorp[index].odirect = extraData.toList()[0].toInt();
     }
     else
+    if(subtype == HistorySettings::SETTING_LAYER){
+        doorp[index].layer = extraData.toList()[0].toString();
+    }
+    else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){
         doorp[index].lvl_o = !extraData.toList()[0].toBool();
         if(!doorp[index].lvl_o && !doorp[index].isSetOut && extraData.toList().size() >= 3){
@@ -162,6 +166,10 @@ void HistoryElementSettingsWarp::redo()
     else
     if(subtype == HistorySettings::SETTING_EXITDIR){
         doorp[index].odirect = extraData.toList()[1].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_LAYER){
+        doorp[index].layer = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_LEVELEXIT){

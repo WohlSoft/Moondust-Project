@@ -21,12 +21,50 @@
 
 #include <QThread>
 #include <QVector>
-#include <QLocalServer>
-#include <QLocalSocket>
+#include <QTcpSocket>
+#include <QAbstractSocket>
+#include <QHostAddress>
 
 #include <PGE_File_Formats/file_formats.h>
 
 #define ENGINE_SERVER_NAME "PGEEngine42e3j"
+
+
+class IpsEngineClient : public QObject
+{
+    Q_OBJECT
+public:
+    explicit IpsEngineClient(QObject *parent = 0);
+    ~IpsEngineClient();
+
+    bool doConnect();
+    QString errString();
+    bool isOpen();
+    void close();
+    bool openIsSuccess();
+    bool isBusy();
+signals:
+    void messageIn(QString msg);
+    void closeThread();
+public slots:
+    void doClose();
+    void doOpen();
+    void sendMessage(QString msg);
+    void connected();
+    void disconnected();
+    void bytesWritten(qint64 bytes);
+    void readyRead();
+private slots:
+    void displayError(QAbstractSocket::SocketError socketError);
+
+private:
+    bool opened;
+    bool busy;
+    QTcpSocket *socket;
+};
+
+
+
 
 class EngineClient : public QThread
 {
@@ -40,27 +78,30 @@ public:
     void OpenConnection();
     void closeConnection();
     bool isConnected();
+    bool isWorking();
 protected:
     void run();
     void exec();
 
 signals:
+    void sendMessage(QString msg);
     void dataReceived(QString data);
-    void privateDataReceived(QString data);
     void showUp();
+    void closed();
+    void open();
     void openFile(QString path);
 
 private slots:
+    void connectionLost();
     void slotOnData(QString data);
-    void displayError(QLocalSocket::LocalSocketError socketError);
     void icomingData(QString in);
 
 private:
     static bool alreadyRequested;
     friend class IntEngine;
-    QLocalSocket* engine;
     bool _connected;
     bool _busy;
+    bool working;
     bool readyToSendLvlx;
     bool doSendData;
     QString _buffer;

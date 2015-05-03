@@ -26,6 +26,161 @@
 #include "engine_intproc.h"
 #include "engine_client.h"
 
+IpsEngineClient::IpsEngineClient(QObject *parent) :
+    QObject(parent)
+{
+    socket=NULL;
+    opened=false;
+    busy=false;
+}
+
+IpsEngineClient::~IpsEngineClient()
+{
+    if(socket)
+    {
+        disconnect(socket, SIGNAL(connected()),this, SLOT(connected()));
+        disconnect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+        disconnect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+        disconnect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+        disconnect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+        delete socket;
+    }
+}
+
+bool IpsEngineClient::doConnect()
+{
+    if(!socket)
+    {
+        socket = new QTcpSocket(this);
+        connect(socket, SIGNAL(connected()),this, SLOT(connected()));
+        connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
+        connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
+        connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
+        connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+    }
+    opened=false;
+    busy=true;
+
+    qDebug() << "connecting...";
+
+    // this is not blocking call
+    socket->connectToHost(QHostAddress::LocalHost, 58486);
+
+    // we need to wait...
+    if(!socket->waitForConnected(10000))
+    {
+        qDebug() << "Error: " << socket->errorString();
+        busy=false;
+        return false;
+    }
+    busy=false;
+    return true;
+}
+
+QString IpsEngineClient::errString()
+{
+    if(socket)
+        return socket->errorString();
+    else
+        return "Socket is not constructed!";
+}
+
+bool IpsEngineClient::isOpen()
+{
+    if(socket)
+        return socket->isOpen();
+    else
+        return false;
+}
+
+void IpsEngineClient::close()
+{
+    if(socket)
+    {
+        socket->disconnectFromHost();
+        socket->close();
+    }
+    opened=false;
+}
+
+bool IpsEngineClient::openIsSuccess()
+{
+    return opened;
+}
+
+bool IpsEngineClient::isBusy()
+{
+    return busy;
+}
+
+void IpsEngineClient::doClose()
+{
+    close();
+}
+
+void IpsEngineClient::doOpen()
+{
+    opened=doConnect();
+}
+
+
+void IpsEngineClient::sendMessage(QString msg)
+{
+    if(!socket) return;
+    socket->write(msg.toUtf8());
+    socket->waitForBytesWritten(1000);
+}
+
+void IpsEngineClient::connected()
+{
+    qDebug() << "connected...";
+}
+
+void IpsEngineClient::disconnected()
+{
+    qDebug() << "disconnected...";
+    emit closeThread();
+}
+
+void IpsEngineClient::bytesWritten(qint64 bytes)
+{
+    qDebug() << bytes << " bytes written...";
+}
+
+void IpsEngineClient::readyRead()
+{
+    if(!socket) return;
+    qDebug() << "reading...";
+
+    // read the data from the socket
+    QByteArray arr = socket->readAll();
+    emit messageIn(QString::fromUtf8(arr));
+}
+
+
+void IpsEngineClient::displayError(QAbstractSocket::SocketError socketError)
+{
+    if(!socket) return;
+
+    switch (socketError)
+    {
+        case QTcpSocket::SocketTimeoutError:
+            break;
+        default:
+            WriteToLog(QtDebugMsg, QString("EDITOR: The following error occurred: %1.")
+                       .arg(socket->errorString()), true);
+    }
+}
+
+
+
+IpsEngineClient * ipClient=NULL;
+
+
+
+
+
+
 /**
  * @brief EngineClient::LocalServer
  *  Constructor
@@ -35,14 +190,19 @@ bool EngineClient::alreadyRequested=false;
 
 EngineClient::EngineClient() : QThread(NULL)
 {
-    engine = NULL;
-    qRegisterMetaType<QAbstractSocket::SocketState > ("QAbstractSocket::SocketState");
-    qRegisterMetaType<QLocalSocket::LocalSocketError > ("QLocalSocket::LocalSocketError");
-    qRegisterMetaType<QTextBlock > ("QTextBlock");
-
+    if(!ipClient)
+    {
+        ipClient = new IpsEngineClient();
+        connect(this, SIGNAL(sendMessage(QString)), ipClient, SLOT(sendMessage(QString)));
+        connect(ipClient, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+        connect(this, SIGNAL(closed()), ipClient, SLOT(doClose()));
+        connect(this, SIGNAL(open()), ipClient, SLOT(doOpen()));
+        connect(ipClient, SIGNAL(closeThread()), this, SLOT(connectionLost()));
+    }
     readyToSendLvlx = false;
     _connected = false;
     _busy = false;
+    working=false;
     doSendData = false;
 }
 
@@ -52,18 +212,26 @@ EngineClient::EngineClient() : QThread(NULL)
  */
 EngineClient::~EngineClient()
 {
-    if(engine)
-        delete engine;
+    if(ipClient)
+    {
+        disconnect(this, SIGNAL(sendMessage(QString)), ipClient, SLOT(sendMessage(QString)));
+        disconnect(ipClient, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+        disconnect(this, SIGNAL(closed()), ipClient, SLOT(doClose()));
+        disconnect(this, SIGNAL(open()), ipClient, SLOT(doOpen()));
+        disconnect(ipClient, SIGNAL(closeThread()), this, SLOT(connectionLost()));
+        delete ipClient;
+    }
+    ipClient=NULL;
 }
 
 void EngineClient::sendLevelData(LevelData _data)
 {
     if(!_data.ReadFileValid) return;
-    if(!engine) return;
+    if(!ipClient) return;
 
     doSendData = false;
 
-    if(!engine->isOpen())
+    if(!ipClient->isOpen())
         OpenConnection();
 
     QString sendLvlx;
@@ -98,11 +266,11 @@ void EngineClient::sendLevelData(LevelData _data)
 
 bool EngineClient::sendCommand(QString command)
 {
-    if(!engine)
+    if(!ipClient)
         return false;
     if(!_connected)
         return false;
-    if(!engine->isOpen())
+    if(!ipClient->isOpen())
         return false;
 
     QElapsedTimer timeout;
@@ -111,9 +279,7 @@ bool EngineClient::sendCommand(QString command)
     //WriteToLog(QtDebugMsg, "do 'while command is not empty'", true);
     while(!command.isEmpty())
     {
-        QByteArray bytes;
         QString send;
-
         if(command.size()>2048)
         {
             send = command.mid(0, 2048);
@@ -124,15 +290,7 @@ bool EngineClient::sendCommand(QString command)
             send = command;
             command.clear();
         }
-        bytes = send.toUtf8();
-
-        //WriteToLog(QtDebugMsg, "Write", true);
-        engine->write(bytes);
-        //WriteToLog(QtDebugMsg, "Flush", true);
-        engine->flush();
-        //WriteToLog(QtDebugMsg, "Wait", true);
-        engine->waitForBytesWritten(10000);
-        //WriteToLog(QtDebugMsg, "Check for timeout", true);
+        emit sendMessage(send);
         if(timeout.elapsed()>5000) break;
     }
     WriteToLog(QtDebugMsg, "done", true);
@@ -141,43 +299,36 @@ bool EngineClient::sendCommand(QString command)
 
 void EngineClient::OpenConnection()
 {
-    if(!engine)
-    {
-        engine = new QLocalSocket;
-        connect(engine, SIGNAL(error(QLocalSocket::LocalSocketError)),
-                this, SLOT(displayError(QLocalSocket::LocalSocketError)));
-        connect(this, SIGNAL(privateDataReceived(QString)),
-                         this, SLOT(slotOnData(QString)));
-    }
+    if(!ipClient) return;
 
     _buffer.clear();
-
     _busy=false;
-    if(engine->isOpen())
+    if(ipClient->isOpen())
     {
-        qDebug()<<"Connected to "+engine->serverName();
+        qDebug()<<"Connected to localhost:58486";
         return;
     }
 
-    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
+    WriteToLog(QtDebugMsg, QString("Connect to Engine localhost:58486"), true);
 
-    WriteToLog(QtDebugMsg, QString("Connect to Engine ")+ENGINE_SERVER_NAME, true);
-
-    engine->connectToServer(QString(ENGINE_SERVER_NAME));
     WriteToLog(QtDebugMsg, "Wait for connection", true);
+    emit open();
 
-    if(engine->waitForConnected(20000))
+    while(ipClient->isBusy());//!< wait for connection
+
+    if(ipClient->openIsSuccess())
     {
         WriteToLog(QtDebugMsg, "Connected", true);
     }
     else
     {
-        WriteToLog(QtDebugMsg, "Failed to connect: "+engine->errorString(), true);
+        WriteToLog(QtDebugMsg, "Failed to connect: "+ipClient->errString(), true);
     }
 }
 
 void EngineClient::closeConnection()
 {
+    emit closed();
     _busy=false;
     _connected=false;
     doSendData = false;
@@ -188,9 +339,15 @@ bool EngineClient::isConnected()
     return _connected;
 }
 
+bool EngineClient::isWorking()
+{
+    return working;
+}
+
 
 void EngineClient::run()
 {
+    working=true;
     //Set default values
     readyToSendLvlx = false;
     _busy = false;
@@ -199,43 +356,28 @@ void EngineClient::run()
     msleep(100);
     alreadyRequested=false;
     exec();
-    if(engine)
-    {
-        disconnect(engine, SIGNAL(error(QLocalSocket::LocalSocketError)),
-                this, SLOT(displayError(QLocalSocket::LocalSocketError)));
-        disconnect(this, SIGNAL(privateDataReceived(QString)),
-                         this, SLOT(slotOnData(QString)));
-
-        delete engine;
-        engine = NULL;
-    }
+    emit closed();
     _connected=false;
+    working=false;
 }
 
 void EngineClient::exec()
 {
-    while(engine->isOpen() && !this->isFinished() && _connected)
+    while(_connected)
     {
         if(doSendData)
         {
             doSendData=false;
             sendLevelData(IntEngine::testBuffer);
         }
-
-        WriteToLog(QtDebugMsg, "EDITOR: wait for ready to read...", true);
-        if(engine->waitForReadyRead())
-        {
-            QByteArray data = engine->readAll();
-            QString acceptedData = QString::fromUtf8(data);
-            WriteToLog(QtDebugMsg, "EDITOR: ready!", true);
-
-            emit privateDataReceived(acceptedData);
-        }
-        WriteToLog(QtDebugMsg, "EDITOR: sleep", true);
         msleep(100);
     }
-    engine->close();
     WriteToLog(QtDebugMsg, "EDITOR: Connection with engine was finished", true);
+}
+
+void EngineClient::connectionLost()
+{
+    _connected=false;
 }
 
 
@@ -275,10 +417,7 @@ void EngineClient::icomingData(QString in)
     if(in=="PING")
     {
         QString str = QString("PONG\n\n");
-        QByteArray bytes;
-        bytes = str.toUtf8();
-        engine->write(bytes);
-        engine->flush();
+        emit sendMessage(str);
     }
     else
     if(in=="PONG")
@@ -289,7 +428,7 @@ void EngineClient::icomingData(QString in)
     if(in=="BYE")
     {
         WriteToLog(QtDebugMsg, "Engine was closed", true);
-        //engine->disconnectFromServer();
+        emit closed();
         _connected=false;
     }
     else
@@ -326,19 +465,5 @@ void EngineClient::icomingData(QString in)
         //if(sendCommand("PARSE_LVLX\n\n"))
         if(sendCommand("OPEN_TEMP_LVLX\n\n"))
             WriteToLog(QtDebugMsg, "OPEN_TEMP_LVLX command Sent", true);
-    }
-}
-
-
-
-void EngineClient::displayError(QLocalSocket::LocalSocketError socketError)
-{
-    switch (socketError)
-    {
-        case QLocalSocket::SocketTimeoutError:
-            break;
-        default:
-            WriteToLog(QtDebugMsg, QString("EDITOR: The following error occurred: %1.")
-                       .arg(engine->errorString()), true);
     }
 }

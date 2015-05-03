@@ -19,6 +19,9 @@
 #include "lvl_camera.h"
 #include <graphics/window.h>
 
+#include <data_configs/config_manager.h>
+#include <audio/SdlMusPlayer.h>
+
 #include <QtDebug>
 
 PGE_LevelCamera::PGE_LevelCamera()
@@ -179,14 +182,14 @@ void PGE_LevelCamera::update()
 
     while(sorted < objects_to_render.size())
     {
-        ymin = objects_to_render[sorted]->z_index;
+        ymin = objects_to_render[sorted]->zIndex();
         ymini = sorted;
 
         for(i = sorted; i < total; i++)
         {
-            if( objects_to_render[i]->z_index < ymin )
+            if( objects_to_render[i]->zIndex() < ymin )
             {
-                ymin = objects_to_render[i]->z_index; ymini = i;
+                ymin = objects_to_render[i]->zIndex(); ymini = i;
             }
         }
         objects_to_render.swap(ymini, sorted);
@@ -237,9 +240,22 @@ void PGE_LevelCamera::changeSection(LevelSection &sct)
     RightOnly = section->noback;
     ExitOffscreen = section->OffScreenEn;
 
+    QString musFile = ConfigManager::getLvlMusic(section->music_id, musicRootDir+section->music_file.replace('\\', '/'));
+    if(!musFile.isEmpty())
+    {
+        PGE_MusPlayer::MUS_openFile(musFile);
+        PGE_MusPlayer::MUS_playMusic();
+    }
+
     changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);
 }
 
+void PGE_LevelCamera::setMusicRoot(QString dir)
+{
+    musicRootDir=dir;
+    if(!musicRootDir.endsWith('/'))
+        musicRootDir.append('/');
+}
 
 /**************************Fader*******************************/
 
@@ -271,4 +287,5 @@ void PGE_LevelCamera::fadeStep()
     else
         fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_LevelCamera::nextOpacity, this);
 }
+
 /**************************Fader**end**************************/

@@ -57,28 +57,28 @@ LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 
 DEFINES += PGE_ENGINE
 
+LIBS += -lluabind -lbox2d
 android: {
     LIBS += -L../_Libs/_builds/android/lib
     INCLUDEPATH += ../_Libs/_builds/android/include
-    LIBS += -loolua -lbox2d -lSDL2 -lglut -lGLU
+    LIBS += -lSDL2 -lglut -lGLU
 }
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
-    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lSDL2main libversion
+    LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
     LIBS += -L$$PWD/../_Libs/_builds/macos/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
-    LIBS += -loolua -lbox2d
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
     LIBS += -L ../_Libs/_builds/linux/lib
     INCLUDEPATH += ../_Libs/_builds/linux/include
-    LIBS += -loolua -lbox2d -lSDL2 -lSDL2_mixer -lglut -lGLU
+    LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
 macx {
@@ -175,7 +175,8 @@ SOURCES += \
     data_configs/setup_title_screen.cpp \
     data_configs/obj_music.cpp \
     data_configs/obj_sound.cpp \
-    audio/pge_audio.cpp
+    audio/pge_audio.cpp \
+    settings/global_settings.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -256,7 +257,8 @@ HEADERS  += \
     data_configs/obj_music.h \
     data_configs/obj_sound.h \
     audio/pge_audio.h \
-    data_configs/obj_sound_roles.h
+    data_configs/obj_sound_roles.h \
+    settings/global_settings.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtConcurrent>
+
 #include <data_configs/configstatus.h>
 #include <data_configs/config_manager.h>
 
@@ -54,9 +56,14 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     //Reload configs
     qApp->processEvents();
-    configs.loadconfigs(&progress);
 
-    if(!progress.wasCanceled())  progress.setValue(100);
+    progress.connect(&configs, SIGNAL(progressMax(int)), &progress, SLOT(setMaximum(int)));
+    progress.connect(&configs, SIGNAL(progressTitle(QString)), &progress, SLOT(setLabelText(QString)));
+    progress.connect(&configs, SIGNAL(progressValue(int)), &progress, SLOT(setValue(int)));
+
+    // Do the loading in a thread
+    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+    while(!isOk.isFinished()) qApp->processEvents();
 
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);
@@ -86,9 +93,21 @@ void MainWindow::on_actionLoad_configs_triggered()
         }
     }
 
-    QMessageBox::information(this, tr("Reloading configuration"),
-    tr("Configuration succesfully reloaded!"),
-    QMessageBox::Ok);
+    if(isOk.result())
+    {
+        QMessageBox::information(this, tr("Reloading configuration"),
+        tr("Configuration succesfully reloaded!"),
+        QMessageBox::Ok);
+    }
+    else
+    {
+        if(configs.check())
+        {
+            QMessageBox::warning(this, tr("Configuration error"),
+                tr("Configuration package is loaded with errors."), QMessageBox::Ok);
+            on_actionCurConfig_triggered();
+        }
+    }
 }
 
 

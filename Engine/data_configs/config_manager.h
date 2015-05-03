@@ -177,7 +177,7 @@ public:
     static long getBlockTexture(long blockID);
     /*****************************/
     static QList<obj_block >     lvl_blocks;
-    static QMap<long, obj_block>   lvl_block_indexes;
+    static QMap<long, obj_block*>   lvl_block_indexes;
     static CustomDirManager Dir_Blocks;
     static QList<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
@@ -187,7 +187,7 @@ public:
     static long getBgoTexture(long bgoID);
     /*****************************/
     static QList<obj_bgo >     lvl_bgo;
-    static QMap<long, obj_bgo>   lvl_bgo_indexes;
+    static QMap<long, obj_bgo*>   lvl_bgo_indexes;
     static CustomDirManager Dir_BGO;
     static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
@@ -198,7 +198,7 @@ public:
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
     static QList<obj_BG >     lvl_bg;
-    static QMap<long, obj_BG>   lvl_bg_indexes;
+    static QMap<long, obj_BG*>   lvl_bg_indexes;
     static CustomDirManager Dir_BG;
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
@@ -210,7 +210,7 @@ public:
     static long getEffectTexture(long effectID);
     /*****************************/
     static QList<obj_effect >    lvl_effects;
-    static QMap<long, obj_effect>   lvl_effects_indexes;
+    static QMap<long, obj_effect*>   lvl_effects_indexes;
     static CustomDirManager Dir_EFFECT;
     static QList<SimpleAnimator > Animator_EFFECT;
     /*****Level Effects************/

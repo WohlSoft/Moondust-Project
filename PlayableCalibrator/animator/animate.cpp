@@ -171,6 +171,12 @@ void Animate::on_Dig_clicked()
     aniFindSet();
 }
 
+void Animate::on_GrabIdle_clicked()
+{
+    aniStyle="GrabIdle";
+    aniFindSet();
+}
+
 void Animate::on_GrabRun_clicked()
 {
     aniStyle="GrabRun";
@@ -213,7 +219,7 @@ void Animate::on_RacoonTail_clicked()
     aniFindSet();
 }
 
-void Animate::on_Swin_clicked()
+void Animate::on_Swim_clicked()
 {
     aniStyle="Swim";
     aniFindSet();
@@ -243,11 +249,18 @@ void Animate::on_RideOnYoshiSit_clicked()
     aniFindSet();
 }
 
-void Animate::on_RideOnYoshiSit_2_clicked()
+void Animate::on_PipeUpDown_clicked()
 {
     aniStyle="PipeUpDown";
     aniFindSet();
 }
+
+void Animate::on_PipeUpDownRear_clicked()
+{
+    aniStyle="PipeUpDownRear";
+    aniFindSet();
+}
+
 
 void Animate::on_SlopeSlide_clicked()
 {
@@ -303,3 +316,4 @@ void Animate::on_FrameSpeed_valueChanged(int arg1)
 {
     AniScene->timer.setInterval(arg1);
 }
+

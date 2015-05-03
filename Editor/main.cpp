@@ -33,6 +33,9 @@
 #include <common_features/crashhandler.h>
 #include <SingleApplication/singleapplication.h>
 
+#include <networking/engine_intproc.h>
+#include <audio/sdl_music_player.h>
+
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
@@ -144,13 +147,24 @@ int main(int argc, char *argv[])
     ret=a->exec();
 
 QuitFromEditor:
+        WriteToLog(QtDebugMsg, "Closing interprocess communicator...");
+    IntEngine::destroy();
+    #ifdef USE_SDL_MIXER
+        WriteToLog(QtDebugMsg, "Free music buffer...");
+    PGE_MusPlayer::MUS_freeStream();
+        WriteToLog(QtDebugMsg, "Free sound buffer...");
+    PGE_Sounds::freeBuffer();
+        WriteToLog(QtDebugMsg, "Closing audio...");
+    Mix_CloseAudio();
+        WriteToLog(QtDebugMsg, "Closing SDL...");
+    SDL_Quit();
+    #endif
+
+    WriteToLog(QtDebugMsg, "--> Application closed <--");
     QApplication::quit();
     QApplication::exit();
     delete a;
     delete as;
 
-    #ifdef USE_SDL_MIXER
-    SDL_Quit();
-    #endif
     return ret;
 }

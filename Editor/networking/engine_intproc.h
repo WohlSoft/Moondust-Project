@@ -33,6 +33,7 @@ public:
     static void init();
 
     static void quit();
+    static void destroy();
     static EngineClient * engineSocket;
     static bool isWorking();
     static bool sendCheat(QString _args);

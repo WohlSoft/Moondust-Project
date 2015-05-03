@@ -26,6 +26,8 @@
 
 #include <common_features/app_path.h>
 #include <common_features/mainwinconnect.h>
+#include <common_features/logger_sets.h>
+
 #include <PGE_File_Formats/pge_x.h>
 
 #include <audio/music_player.h>
@@ -75,6 +77,11 @@ void DevConsole::retranslateP()
     ui->retranslateUi(this);
 }
 
+void DevConsole::logMessage(QString text, QString chan)
+{
+    logToConsole(text, chan, false);
+}
+
 void DevConsole::log(const QString &logText, const QString &channel, bool raise)
 {
     if(!currentDevConsole)
@@ -107,6 +114,7 @@ DevConsole::DevConsole(QWidget *parent) :
     connect(ui->button_cl_sysLog, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
     connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(update()));
     registerCommands();
+    LogWriter::installConsole(this);
 
     #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
@@ -131,14 +139,12 @@ DevConsole::DevConsole(QWidget *parent) :
 
 DevConsole::~DevConsole()
 {
+    LogWriter::uninstallConsole();
     delete ui;
 }
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
-    if(MainWinConnect::pMainWin->isMinimized())
-        return;
-
     QString target_channel = channel;
 
     if(channel=="System") //Prevent creation another "system" tab if switched another UI language
@@ -274,6 +280,10 @@ void DevConsole::doCommand()
     {
         (this->*(commands[baseCommand].first))(cmdList);
     }
+    else
+    {
+        log("-> Unknown command. Type 'help' to show available command list", ui->tabWidget->tabText(0));
+    }
 }
 
 void DevConsole::doHelp(QStringList /*args*/)
@@ -293,7 +303,7 @@ void DevConsole::doPlayMusic(QStringList args)
 {
     if(args.size()!=2)
     {
-        log("-> Bad command syntax!");
+        log("-> Bad command syntax!", ui->tabWidget->tabText(0));
         return;
     }
     if(args[0]=="lvl")
@@ -306,7 +316,7 @@ void DevConsole::doPlayMusic(QStringList args)
         LvlMusPlay::setMusic(LvlMusPlay::SpecialMusic, args[1].toLong(), "");
     else
     {
-        log("-> Unknown music type: (types are: lvl wld spc)!");
+        log("-> Unknown music type: (types are: lvl wld spc)!", ui->tabWidget->tabText(0));
         return;
     }
 
@@ -483,6 +493,8 @@ void DevConsole::doSendCheat(QStringList args)
         log(QString("-> Can't run engine command without arguments"), ui->tabWidget->tabText(0));
         return;
     }
+
+    src.replace('\n', ' ');
 
     if(IntEngine::sendCheat(src))
         log(QString("-> command sent"), ui->tabWidget->tabText(0));

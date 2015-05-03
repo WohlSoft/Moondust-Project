@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
 #include <common_features/logger.h>
 #include <common_features/mainwinconnect.h>
 
@@ -147,6 +149,9 @@ void ItemScene::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("SCENERY-%1").arg(sceneData.id));
+        ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
 
 QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
@@ -167,6 +172,62 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==copyTile)
     {
         MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if(selected==transform)
+    {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_SCENERY);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->sceneryID;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="SCENERY")
+                {
+                    HistoryOldData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
+                    ((ItemScene *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
+                }
+            }
+        }
+        delete itemList;
+        if(!HistoryNewData.scenery.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
+    }
+    else
+    if(selected==transform_all)
+    {
+        WorldData HistoryOldData;
+        WorldData HistoryNewData;
+        int transformTO;
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_SCENERY);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_SCENERY);
+        util::DialogToCenter(itemList, true);
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            transformTO = itemList->sceneryID;
+            unsigned long oldID = sceneData.id;
+            foreach(QGraphicsItem * SelItem, scene->items() )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="SCENERY")
+                {
+                    if(((ItemScene *) SelItem)->sceneData.id==oldID)
+                    {
+                        HistoryOldData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
+                        ((ItemScene *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.scenery.push_back( ((ItemScene *) SelItem)->sceneData );
+                    }
+                }
+            }
+        }
+        delete itemList;
+        if(!HistoryNewData.scenery.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==remove)

@@ -84,6 +84,11 @@ void MainWindow::on_action_doTest_triggered()
         qDebug() << "Executing engine..." << command;
         QProcess::startDetached(command, args);
         qDebug() << "Started";
+
+        //Stop music playback in the PGE!
+        on_actionPlayMusic_triggered(false);
+        setMusicButton(false);
+        PGE_MusPlayer::MUS_stopMusic();
     }
     else
         return;
@@ -101,7 +106,6 @@ void MainWindow::on_action_doSafeTest_triggered()
     #else
     command = ApplicationPath+"/pge_engine";
     #endif
-
 
     if(!QFileInfo(command).exists())
     {
@@ -129,6 +133,11 @@ void MainWindow::on_action_doSafeTest_triggered()
         args << activeLvlEditWin()->curFile;
 
         QProcess::startDetached(command, args);
+
+        //Stop music playback in the PGE!
+        on_actionPlayMusic_triggered(false);
+        setMusicButton(false);
+        PGE_MusPlayer::MUS_stopMusic();
     }
     else
     if(activeChildWindow()==3)
@@ -148,6 +157,11 @@ void MainWindow::on_action_doSafeTest_triggered()
         args << activeWldEditWin()->curFile;
 
         QProcess::startDetached(command, args);
+
+        //Stop music playback in the PGE!
+        on_actionPlayMusic_triggered(false);
+        setMusicButton(false);
+        PGE_MusPlayer::MUS_stopMusic();
     }
 }
 

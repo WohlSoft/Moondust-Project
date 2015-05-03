@@ -362,7 +362,7 @@ void ItemSearcher::find(const WorldData &dataToFind, const QList<QGraphicsItem *
     QMap<int, WorldMusic> sortedMusic;
     if(m_findFilter & ItemTypes::WLD_S_MusicBox){
         foreach (WorldMusic music, dataToFind.music) {
-            sortedMusic[music.id] = music;
+            sortedMusic[music.array_id] = music;
         }
     }
 

@@ -266,8 +266,8 @@ void LVL_Block::transformTo_x(long id)
     {
         texId = ConfigManager::level_textures[tID].texture;
         texture = ConfigManager::level_textures[tID];
-        animated = ConfigManager::lvl_block_indexes[data.id].animated;
-        animator_ID = ConfigManager::lvl_block_indexes[data.id].animator_ID;
+        animated = setup->animated;
+        animator_ID = setup->animator_ID;
     }
 
     if(!setup->sizable)
@@ -546,6 +546,14 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         fadeOffset=0.f;
         setFade(20, 1.0f, 0.25f);
     }
+}
+
+GLdouble LVL_Block::zIndex()
+{
+    if(fadeOffset!=0.f)
+        return z_index+10;
+    else
+        return z_index;
 }
 
 

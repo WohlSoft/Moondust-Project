@@ -105,6 +105,7 @@ bool obj_player_calibration::load(QString fileName)
     getSpriteAniData(conf, "Fire");
     getSpriteAniData(conf, "SitDown");
     getSpriteAniData(conf, "Dig");
+    getSpriteAniData(conf, "GrabIdle");
     getSpriteAniData(conf, "GrabRun");
     getSpriteAniData(conf, "GrabJump");
     getSpriteAniData(conf, "GrabSitDown");
@@ -117,6 +118,7 @@ bool obj_player_calibration::load(QString fileName)
     getSpriteAniData(conf, "OnYoshi");
     getSpriteAniData(conf, "OnYoshiSit");
     getSpriteAniData(conf, "PipeUpDown");
+    getSpriteAniData(conf, "PipeUpDownRear");
     getSpriteAniData(conf, "SlopeSlide");
     getSpriteAniData(conf, "TanookiStatue");
     getSpriteAniData(conf, "SwordAttak");

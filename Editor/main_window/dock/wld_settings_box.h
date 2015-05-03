@@ -7,6 +7,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
+struct WorldLevels;
 
 namespace Ui {
 class WorldSettingsBox;
@@ -35,13 +36,17 @@ private slots:
     void on_WLD_Credirs_textChanged();
     void characterActivated(bool checked);
 
+signals:
+    void countedStar(int);
 private:
     Ui::WorldSettingsBox *ui;
     bool world_settings_lock_fields;
     QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;
 
     //for star counter
+    int doStarCount(QString dir, QVector<WorldLevels > levels, QString introLevel);
     long StarCounter_checkLevelFile(QString FilePath, QStringList &exists);
+    bool StarCounter_canceled;
 };
 
 #endif // WLD_SETTINGS_BOX_H

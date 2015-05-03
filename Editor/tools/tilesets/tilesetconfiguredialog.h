@@ -48,7 +48,7 @@ public:
     void openTileset(QString filePath, bool isCustom);
     void loadSimpleTileset(const SimpleTileset &tileset, bool isCustom);
 private slots:
-    void on_pushButton_clicked();
+    void on_clearTileset_clicked();
     void setUpItems(int type);
     void setUpTileset(int type);
     void on_SaveTileset_clicked();
@@ -58,11 +58,14 @@ private slots:
     void on_customOnly_clicked();
     void showEvent( QShowEvent * event );
     void showNotify();
+    void on_delete_me_clicked();
+
 signals:
     void windowShowed();
 
 private:
     QString lastFileName;
+    QString lastFullPath;
     Ui::TilesetConfigureDialog *ui;
 
     GFXMode mode;

@@ -60,6 +60,7 @@ LVL_Player::LVL_Player()
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
     animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
+    animator.tickAnimation(1);
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
@@ -382,12 +383,19 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if( keys.alt_jump )
+    {
+        //Temporary it is ability to fly up!
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                           -physics_cur.velocity_jump));
+    }
+
     if( keys.jump )
     {
         if(!JumpPressed)
         {
             if(environment!=LVL_PhysEnv::Env_Water)
-                { if(onGround || (environment==LVL_PhysEnv::Env_Quicksand))
+                { if(climbing || onGround || (environment==LVL_PhysEnv::Env_Quicksand))
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
             else
                 PGE_Audio::playSound(72);//temporary!
@@ -450,7 +458,7 @@ void LVL_Player::update(float ticks)
             {
                 timeToFloat -= ticks;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*sin(timeToFloat/60.0)) );
+                                                   3.0*cos(timeToFloat/80.0)) );
                 if(timeToFloat<=0)
                 {
                     timeToFloat=0;
@@ -719,8 +727,8 @@ void LVL_Player::update(float ticks)
         animator.tickAnimation(64);
     }
     else
-        camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
-                        posY() - PGE_Window::Height/2 + posY_coefficient );
+        camera->setPos( round(posX()) - PGE_Window::Width/2 + posX_coefficient,
+                        round(posY()) - PGE_Window::Height/2 + posY_coefficient );
 }
 
 void LVL_Player::update()
@@ -839,10 +847,11 @@ void LVL_Player::teleport(float x, float y)
 
         if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
         {
-            LvlSceneP::s->bgList()->last()->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
+            obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[camera->BackgroundID];
+            LvlSceneP::s->bgList()->last()->setBg(*bgSetup);
 
-            if(ConfigManager::lvl_bg_indexes[camera->BackgroundID].animated)
-                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID].start();
+            if(bgSetup->animated)
+                ConfigManager::Animator_BG[bgSetup->animator_ID].start();
         }
         else
             LvlSceneP::s->bgList()->last()->setNone();
@@ -885,10 +894,10 @@ void LVL_Player::render(float camX, float camY)
     QRectF tPos = animator.curFrame();
     QPointF Ofs = animator.curOffset();
 
-    QRectF player = QRectF( posX()
-                            -camX-Ofs.x(),
+    QRectF player = QRectF( round(posX()
+                            -camX)-Ofs.x(),
 
-                            posY()-Ofs.y()
+                            round(posY()-Ofs.y())
                             -camY,
 
                             frameW,

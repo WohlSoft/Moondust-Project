@@ -51,7 +51,7 @@ void IntEngine::init()
     {
         if(!engineSocket)
         {
-            qDebug() << "Installing new engine socket";
+            qDebug() << "Constructing new engine socket";
             engineSocket = new EngineClient();
             engineSocket->setParent(0);
         }
@@ -68,13 +68,40 @@ void IntEngine::quit()
     qDebug() << "isWorking check";
     if(isWorking())
     {
-        qDebug() << "closeConnection call";
+        if(!engineSocket)
+        {
+            qDebug() << "Already disconnected";
+            return;
+        }
+        qDebug() << "Close connection";
         engineSocket->closeConnection();
-        qDebug() << "done";
-        engineSocket->exit(1000);
-        delete engineSocket;
-        engineSocket = NULL;
+        qDebug() << "exit";
+//        while(engineSocket->isWorking())
+//            { qApp->processEvents(); }
+        if(!engineSocket->wait(5000))
+        {
+            qDebug() << "TERMINATOR RETURNS BACK! 8-)";
+            engineSocket->terminate();
+            engineSocket->wait();
+            qDebug() << "Terminated!";
+        }
     }
+    qDebug() << "Interpricessing disconected";
+}
+
+void IntEngine::destroy()
+{
+    if(engineSocket)
+    {
+        if(isWorking())
+        {
+            quit();
+        }
+        qDebug() << "Destroting of the engine socket...";
+        delete engineSocket;
+        qDebug() << "Destroyed";
+    }
+    engineSocket=NULL;
 }
 
 bool IntEngine::isWorking()

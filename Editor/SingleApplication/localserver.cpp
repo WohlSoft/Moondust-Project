@@ -25,14 +25,72 @@
 
 #include "localserver.h"
 
+
+IntProcServer::IntProcServer()
+{
+    connect(this, SIGNAL(readyRead()), this, SLOT(readData()));
+}
+
+IntProcServer::~IntProcServer()
+{}
+
+void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
+{
+    switch(stat)
+    {
+        case QAbstractSocket::UnconnectedState: qDebug()<<"The socket is not connected.";break;
+        case QAbstractSocket::HostLookupState: qDebug()<<"The socket is performing a host name lookup.";break;
+        case QAbstractSocket::ConnectingState: qDebug()<<"The socket has started establishing a connection.";break;
+        case QAbstractSocket::ConnectedState: qDebug()<<"A connection is established.";break;
+        case QAbstractSocket::BoundState: qDebug()<<"The socket is bound to an address and port.";break;
+        case QAbstractSocket::ClosingState: qDebug()<<"The socket is about to close (data may still be waiting to be written).";break;
+        case QAbstractSocket::ListeningState: qDebug()<<"[For internal]";break;
+    }
+}
+
+void IntProcServer::readData()
+{
+    while (hasPendingDatagrams())
+    {
+            QByteArray datagram;
+            datagram.resize(pendingDatagramSize());
+            QHostAddress sender;
+            quint16 senderPort;
+            readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+            emit messageIn(QString::fromUtf8(datagram));
+    }
+}
+
+void IntProcServer::displayError(QTcpSocket::SocketError socketError)
+{
+    switch (socketError)
+    {
+        default:
+            qDebug() << QString("EDITOR SingleAPP: The following error occurred: %1.")
+                                     .arg(errorString());
+    }
+}
+
+IntProcServer *ipServer=NULL;
+
+
+
+
 /**
  * @brief LocalServer::LocalServer
  *  Constructor
  */
 LocalServer::LocalServer()
 {
-    qRegisterMetaType<QAbstractSocket::SocketState> ("QAbstractSocket::SocketState");
+    ipServer = new IntProcServer();
+    connect(ipServer, SIGNAL(messageIn(QString)), this, SLOT(slotOnData(QString)));
+    connect(this, SIGNAL(privateDataReceived(QString)), this, SLOT(slotOnData(QString)));
+    if(!ipServer->bind(QHostAddress::LocalHost, 58487,  QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress))
+    {
+        qWarning() << ipServer->errorString();
+    }
 }
+
 
 /**
  * @brief LocalServer::~LocalServer
@@ -40,12 +98,12 @@ LocalServer::LocalServer()
  */
 LocalServer::~LocalServer()
 {
-  server->close();
-  for(int i = 0; i < clients.size(); ++i)
-  {
-    clients[i]->close();
-  }
+  ipServer->close();
+  delete ipServer;
 }
+
+
+
 
 /**
  * -----------------------
@@ -59,25 +117,6 @@ LocalServer::~LocalServer()
  */
 void LocalServer::run()
 {
-  server = new QLocalServer();
-
-  QObject::connect(server, SIGNAL(newConnection()), this, SLOT(slotNewConnection()));
-  QObject::connect(this, SIGNAL(privateDataReceived(QString)), this, SLOT(slotOnData(QString)));
-
-#ifdef Q_OS_UNIX
-  // Make sure the temp address file is deleted
-  QFile address(QString("/tmp/" LOCAL_SERVER_NAME));
-  if(address.exists()){
-    address.remove();
-  }
-#endif
-
-  QString serverName = QString(LOCAL_SERVER_NAME);
-  server->listen(serverName);
-  while(server->isListening() == false){
-    server->listen(serverName);
-    msleep(100);
-  }
   exec();
 }
 
@@ -87,31 +126,11 @@ void LocalServer::run()
  */
 void LocalServer::exec()
 {
-  while(server->isListening())
+  while(ipServer->isOpen())
   {
     msleep(100);
-    server->waitForNewConnection(100);
-    for(int i = 0; i < clients.size(); ++i)
-    {
-      if(clients[i]->waitForReadyRead(100))
-      {
-        QByteArray data = clients[i]->readAll();
-        emit privateDataReceived(QString::fromUtf8(data));
-      }
-      else
-      {
-          if(!clients[i]->isOpen())
-          {
-              QLocalSocket* tmp = clients[i];
-              clients.removeAt(i);
-              delete tmp;
-              i--;
-          }
-      }
-    }
   }
 }
-
 
 
 /**
@@ -120,15 +139,9 @@ void LocalServer::exec()
  * -------
  */
 
-
-
-/**
- * @brief LocalServer::slotNewConnection
- *  Executed when a new connection is available
- */
-void LocalServer::slotNewConnection()
+void LocalServer::stopServer()
 {
-  clients.push_front(server->nextPendingConnection());
+    if(ipServer) ipServer->close();
 }
 
 
@@ -175,9 +188,12 @@ void LocalServer::onCMD(QString data)
     commands << "showUp";
     commands << "CONNECT_TO_ENGINE";
     commands << "ENGINE_CLOSED";
+    commands << "Is editor running?";
 
-    if(MainWinConnect::pMainWin->continueLoad)
-        switch(commands.indexOf(data))
+    int cmdID = commands.indexOf(data);
+
+    if((cmdID==3) || (MainWinConnect::pMainWin->continueLoad))
+        switch(cmdID)
         {
             case 0:
             {
@@ -200,7 +216,6 @@ void LocalServer::onCMD(QString data)
                 {
                     IntEngine::init();
                 }
-
                 IntEngine::sendLevelBuffer();
                 //MainWinConnect::pMainWin->showMinimized();
                 //IntEngine::engineSocket->sendLevelData(IntEngine::testBuffer);
@@ -208,21 +223,20 @@ void LocalServer::onCMD(QString data)
             }
             case 2:
             {
-                IntEngine::quit();
-                //qDebug()<<"Set Window state";
-                //MainWinConnect::pMainWin->setWindowState(MainWinConnect::pMainWin->windowState()&
-                //                                         (~(MainWinConnect::pMainWin->windowState()&Qt::WindowMinimized)));
-                //if(MainWinConnect::pMainWin->isMinimized())
-                //{
-                //    MainWinConnect::pMainWin->raise();
-                //    MainWinConnect::pMainWin->showNormal();
-                //}
-                //qDebug()<<"Set active Window";
-                //qApp->setActiveWindow(MainWinConnect::pMainWin);
-                //qDebug()<<"Update menus";
-                //MainWinConnect::pMainWin->updateMenus();
-                //qDebug()<<"IntEngine::quit();";
-                //IntEngine::quit();
+                if(IntEngine::isWorking())
+                {
+                    IntEngine::quit();
+                }
+                break;
+            }
+            case 3:
+            {
+                QUdpSocket answer;
+                answer.connectToHost(QHostAddress::LocalHost, 58488);
+                answer.waitForConnected(100);
+                answer.write(QString("Yes, I'm runs!").toUtf8());
+                answer.waitForBytesWritten(100);
+                answer.flush();
                 break;
             }
             default:

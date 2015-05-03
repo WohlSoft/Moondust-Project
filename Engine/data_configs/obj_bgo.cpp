@@ -22,7 +22,7 @@
 
 /*****Level BGO************/
 QList<obj_bgo >     ConfigManager::lvl_bgo;
-QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
+QMap<long, obj_bgo*>   ConfigManager::lvl_bgo_indexes;
 CustomDirManager ConfigManager::Dir_BGO;
 QList<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
@@ -121,7 +121,7 @@ bool ConfigManager::loadLevelBGO()
             lvl_bgo.push_back(sbgo);
 
             //Add to Index
-            lvl_bgo_indexes[lvl_bgo.last().id] = lvl_bgo.last();
+            lvl_bgo_indexes[lvl_bgo.last().id] = &lvl_bgo.last();
 
         skipBGO:
         bgoset.endGroup();

@@ -22,10 +22,10 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _LATEST_STABLE "0.2.2-rc"
+#define _LATEST_STABLE "0.3.0"
 
-#define _FILE_VERSION "0.3.0.0"
-#define _FILE_RELEASE "-beta"
+#define _FILE_VERSION "0.3.0"
+#define _FILE_RELEASE ""
 
 #define _VF1 0
 #define _VF2 3

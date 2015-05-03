@@ -77,6 +77,8 @@ public:
     enum LevelSettingSubType{
         SETTING_INVISIBLE = 0,      //extraData: bool [Activated?]
         SETTING_SLIPPERY,           //extraData: bool [Activated?]
+        SETTING_Z_LAYER,            //extraData: int  [ZLayerID]
+        SETTING_Z_OFFSET,           //extraData: qreal[ZOffsetValue]
         SETTING_FRIENDLY,           //extraData: bool [Activated?]
         SETTING_BOSS,               //extraData: bool [Activated?]
         SETTING_NOMOVEABLE,         //extraData: bool [Activated?]
@@ -153,7 +155,10 @@ public:
     static QString settingToString(const HistorySettings::LevelSettingSubType &modLevelSetting)
     {
         switch (modLevelSetting) {
+        case SETTING_INVISIBLE: return QObject::tr("Invizible");
         case SETTING_SLIPPERY: return QObject::tr("Slippery");
+        case SETTING_Z_LAYER: return QObject::tr("Z-Layer");
+        case SETTING_Z_OFFSET: return QObject::tr("Z-Offset");
         case SETTING_FRIENDLY: return QObject::tr("Friendly");
         case SETTING_BOSS: return QObject::tr("Boss");
         case SETTING_NOMOVEABLE: return QObject::tr("Not Moveable");

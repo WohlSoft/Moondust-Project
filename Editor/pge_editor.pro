@@ -22,7 +22,7 @@
 #
 #----------------------------------------------------------------------------
 
-QT       += gui widgets network
+QT       += gui widgets network concurrent
 QT       -= opengl
 
 win32: {
@@ -72,21 +72,6 @@ DEFINES += USE_SDL_MIXER
 DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES
 
 INSTALLS = translates
-
-contains(DEFINES, USE_SDL_MIXER):{
-    sdlmodded.path = $$PWD/../bin
-    unix: {
-        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.so*
-    }
-    win32: {
-        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dll
-    }
-    macx: {
-        sdlmodded.path = $$PWD/../bin/_Libs
-        sdlmodded.files += $$PWD/../_Libs/_builds/sdl2_mixer_mod/*.dylib
-    }
-    INSTALLS += sdlmodded
-}
 
 android:{
     themes.path = /assets/themes

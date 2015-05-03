@@ -49,14 +49,14 @@
 #include "networking/intproc.h"
 #include "graphics/graphics.h"
 
+#include <settings/global_settings.h>
+
 #include "scenes/scene_level.h"
 #include "scenes/scene_world.h"
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
 
 #include <Box2D/Box2D.h>
-
-#include <oolua/oolua.h>
 #include <QMessageBox>
 
 #include <iostream>
@@ -74,12 +74,6 @@ enum Level_returnTo
 };
 Level_returnTo end_level_jump=RETURN_TO_EXIT;
 
-
-void say(std::string input)
-{
-    QMessageBox::information(NULL, "Lua test", QString::fromStdString(input));
-}
-OOLUA_CFUNC(say, l_say);
 
 int main(int argc, char *argv[])
 {
@@ -117,8 +111,8 @@ int main(int argc, char *argv[])
     episode.character=0;
     episode.savefile="save1.savx";
     episode.worldfile="";
-    bool debugMode=false; //enable debug mode
-    bool interprocessing=false; //enable interprocessing
+    AppSettings.debugMode=false; //enable debug mode
+    AppSettings.interprocessing=false; //enable interprocessing
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -142,13 +136,13 @@ int main(int argc, char *argv[])
         else
         if(param == ("--debug"))
         {
-            debugMode=true;
+            AppSettings.debugMode=true;
         }
         else
         if(param == ("--interprocessing"))
         {
             IntProc::init();
-            interprocessing=true;
+            AppSettings.interprocessing=true;
         }
         else
         {
@@ -260,7 +254,7 @@ if(!fileToOpen.isEmpty())
     }
 }
 
-if(interprocessing) goto PlayLevel;
+if(AppSettings.interprocessing) goto PlayLevel;
 
 LoadingScreen:
 {
@@ -361,7 +355,7 @@ PlayWorldMap:
     if(sceneResult)
         ExitCode = wScene->exec();
 
-    if(debugMode)
+    if(AppSettings.debugMode)
     {
         if(ExitCode==WldExit::EXIT_beginLevel)
         {
@@ -425,7 +419,7 @@ PlayLevel:
 
             if(_game_state.LevelFile.isEmpty())
             {
-                if(interprocessing && IntProc::isEnabled())
+                if(AppSettings.interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
                     if((!sceneResult) && (!lScene->doExit))
@@ -505,7 +499,7 @@ PlayLevel:
                    if(_game_state.LevelFile.isEmpty()) playAgain = false;
 
 
-                   if(debugMode)
+                   if(AppSettings.debugMode)
                    {
                        if(!fileToOpen.isEmpty())
                        {
@@ -526,7 +520,7 @@ PlayLevel:
                 {
                     if(!_game_state.isEpisode)
                     {
-                        if(!debugMode)
+                        if(!AppSettings.debugMode)
                             end_level_jump=RETURN_TO_MAIN_MENU;
                         else
                             end_level_jump=RETURN_TO_EXIT;
@@ -544,7 +538,7 @@ PlayLevel:
             case LvlExit::EXIT_Error:
                 if(!_game_state.isEpisode)
                 {
-                    if(!debugMode)
+                    if(!AppSettings.debugMode)
                         end_level_jump=RETURN_TO_WORLDMAP;
                     else
                         end_level_jump=RETURN_TO_EXIT;
@@ -558,7 +552,7 @@ PlayLevel:
             ConfigManager::unloadLevelConfigs();
             delete lScene;
 
-            if(interprocessing)
+            if(AppSettings.interprocessing)
                 goto ExitFromApplication;
     }
 
@@ -580,11 +574,13 @@ ExitFromApplication:
 
     ConfigManager::unluadAll();
     if(IntProc::isEnabled()) IntProc::editor->shut();
+    PGE_MusPlayer::freeStream();
+    PGE_Sounds::clearSoundBuffer();
+    Mix_CloseAudio();
     IntProc::quit();
     FontManager::quit();
-    a.quit();
-
     PGE_Window::uninit();
+    a.quit();
     return 0;
 }
 

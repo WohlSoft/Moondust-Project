@@ -105,6 +105,11 @@ void PGE_Phys_Object::setPos(long x, long y)
 
 }
 
+GLdouble PGE_Phys_Object::zIndex()
+{
+    return z_index;
+}
+
 void PGE_Phys_Object::nextFrame() {}
 
 void PGE_Phys_Object::update() {}

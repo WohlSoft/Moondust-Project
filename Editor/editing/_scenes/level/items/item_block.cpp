@@ -234,11 +234,13 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        util::DialogToCenter(blockList, true);
         if(blockList->exec()==QDialog::Accepted)
         {
             transformTO = blockList->blockID;
@@ -246,20 +248,27 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
+                    HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                     ((ItemBlock *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                 }
             }
         }
         delete blockList;
+
+        if(!HistoryNewData.blocks.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        util::DialogToCenter(blockList, true);
         if(blockList->exec()==QDialog::Accepted)
         {
             transformTO = blockList->blockID;
@@ -269,11 +278,18 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
                     if(((ItemBlock *) SelItem)->blockData.id==oldID)
+                    {
+                        HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                         ((ItemBlock *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                    }
                 }
             }
         }
         delete blockList;
+
+        if(!HistoryNewData.blocks.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==makemsgevent)
@@ -306,13 +322,19 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
 
                         eventName = QString(eventName+" %1").arg(count);
                     }
-                    LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
-                    msgEvent.name = eventName;
-                    msgEvent.msg = msgText;
-                    msgEvent.array_id = ++scene->LvlData->events_array_id;
+
+                        LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
+                        msgEvent.name = eventName;
+                        msgEvent.msg = msgText;
+                        msgEvent.array_id = ++scene->LvlData->events_array_id;
                     scene->LvlData->events.push_back(msgEvent);
+                        LevelData historyOldData;
+                        historyOldData.blocks.push_back(blockData);
                     blockData.event_hit = eventName;
                     arrayApply();
+
+                    scene->addAddEventHistory(msgEvent);
+                    scene->addChangeSettingsHistory(historyOldData, HistorySettings::SETTING_EV_HITED, QVariant(eventName));
 
                     MainWinConnect::pMainWin->setEventsBox();
                     MainWinConnect::pMainWin->EventListsSync();
@@ -323,8 +345,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             }
         }
         else
-            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is busy"),
-                         tr("Sorry, but 'Hit' event slot already busy with '%1' event.")
+            QMessageBox::warning(scene->_edit, tr("'Hit' event slot is used"),
+                         tr("Sorry, but 'Hit' event slot already used by '%1' event.")
                                  .arg(blockData.event_hit), QMessageBox::Ok);
 
     }

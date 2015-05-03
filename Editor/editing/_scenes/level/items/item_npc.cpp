@@ -278,6 +278,9 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     else
     if(selected==transform)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
         npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
@@ -290,15 +293,22 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                 {
+                    HistoryOldData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
                     ((ItemNPC *) SelItem)->transformTo(transformTO);
+                    HistoryNewData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
                 }
             }
         }
         delete npcList;
+        if(!HistoryNewData.npc.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==transform_all)
     {
+        LevelData HistoryOldData;
+        LevelData HistoryNewData;
+
         int transformTO;
         ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
         npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
@@ -313,11 +323,17 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                 {
                     if(((ItemNPC *) SelItem)->npcData.id==oldID)
+                    {
+                        HistoryOldData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
                         ((ItemNPC *) SelItem)->transformTo(transformTO);
+                        HistoryNewData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
+                    }
                 }
             }
         }
         delete npcList;
+        if(!HistoryNewData.npc.isEmpty())
+            scene->addTransformHistory(HistoryNewData, HistoryOldData);
     }
     else
     if(selected==newNpc){

@@ -33,6 +33,31 @@ QString     LogWriter::DebugLogFile;
 QtMsgType   LogWriter::logLevel;
 bool        LogWriter::enabled;
 
+LogWriterSignal::LogWriterSignal(QObject *parent) : QObject(parent)
+{}
+
+LogWriterSignal::LogWriterSignal(DevConsole *console, QObject *parent) : QObject(parent)
+{
+    setup(console);
+}
+
+void LogWriterSignal::setup(DevConsole *console)
+{
+    connect(this, SIGNAL(logToConsole(QString, QString)), console, SLOT(logMessage(QString,QString)));
+}
+
+LogWriterSignal::~LogWriterSignal()
+{}
+
+void LogWriterSignal::log(QString msg, QString chan)
+{
+    emit logToConsole(msg, chan);
+}
+
+
+
+LogWriterSignal *LogWriter::consoleConnector=NULL;
+
 void LogWriter::LoadLogSettings()
 {
     QString logFileName = QString("PGE_Editor_log_%1-%2-%3_%4-%5-%6.txt")
@@ -176,29 +201,42 @@ void LogWriter::logMessageHandler(QtMsgType type,
     ts << txt << endl;
     outFile.close();
 
-    if(!DevConsole::isConsoleShown())
+    if(!LogWriter::consoleConnector)
         return;
 
-    switch (type)
-    {
+    switch (type) {
     case QtDebugMsg:
-        DevConsole::log(msg, QString("Debug"));
+        LogWriter::consoleConnector->log(msg, QString("Debug"));
         break;
     case QtWarningMsg:
-        DevConsole::log(msg, QString("Warning"));
+        LogWriter::consoleConnector->log(msg, QString("Warning"));
         break;
     case QtCriticalMsg:
-        DevConsole::log(msg, QString("Critical"));
+        LogWriter::consoleConnector->log(msg, QString("Critical"));
         break;
     case QtFatalMsg:
-        DevConsole::log(msg, QString("Fatal"));
+        LogWriter::consoleConnector->log(msg, QString("Fatal"));
         break;
     default:
-        DevConsole::log(msg);
+        LogWriter::consoleConnector->log(msg, QString("System"));
         break;
     }
 }
 
+void LogWriter::installConsole(DevConsole* console)
+{
+    if(consoleConnector)
+        delete consoleConnector;
+    consoleConnector = new LogWriterSignal;
+    consoleConnector->setup(console);
+}
+
+void LogWriter::uninstallConsole()
+{
+    if(consoleConnector)
+        delete consoleConnector;
+    consoleConnector=NULL;
+}
 
 void LoadLogSettings()
 {
@@ -211,24 +249,25 @@ void WriteToLog(QtMsgType type, QString msg, bool noConsole)
 
     if(noConsole)
         return;
-    if(!DevConsole::isConsoleShown())
+    if(!LogWriter::consoleConnector)
         return;
 
     switch (type) {
     case QtDebugMsg:
-        DevConsole::log(msg, QString("Debug"));
+        LogWriter::consoleConnector->log(msg, QString("Debug"));
         break;
     case QtWarningMsg:
-        DevConsole::log(msg, QString("Warning"));
+        LogWriter::consoleConnector->log(msg, QString("Warning"));
         break;
     case QtCriticalMsg:
-        DevConsole::log(msg, QString("Critical"));
+        LogWriter::consoleConnector->log(msg, QString("Critical"));
         break;
     case QtFatalMsg:
-        DevConsole::log(msg, QString("Fatal"));
+        LogWriter::consoleConnector->log(msg, QString("Fatal"));
         break;
     default:
-        DevConsole::log(msg);
+        LogWriter::consoleConnector->log(msg, QString("System"));
         break;
     }
 }
+
