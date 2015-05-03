@@ -38,7 +38,7 @@ long dataconfigs::getSndI(unsigned long itemID)
     return j;
 }
 
-void dataconfigs::loadSound(QProgressDialog *prgs)
+void dataconfigs::loadSound()
 {
     unsigned int i;
 
@@ -65,8 +65,8 @@ void dataconfigs::loadSound(QProgressDialog *prgs)
         total_data +=sound_total;
     soundset.endGroup();
 
-    if(prgs) prgs->setMaximum(sound_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Sound..."));
+    emit progressMax(sound_total);
+    emit progressTitle(QApplication::tr("Loading Sound..."));
 
     ConfStatus::total_sound = sound_total;
 
@@ -81,11 +81,7 @@ void dataconfigs::loadSound(QProgressDialog *prgs)
     //Sound
     for(i=1; i<=sound_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         soundset.beginGroup( QString("sound-"+QString::number(i)) );
             sound.name = soundset.value("name", "").toString();

@@ -40,7 +40,7 @@ long dataconfigs::getBgI(unsigned long itemID)
     return j;
 }
 
-void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
+void dataconfigs::loadLevelBackgrounds()
 {
     unsigned int i;
     obj_BG sbg;
@@ -64,8 +64,8 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
         total_data +=bg_total;
     bgset.endGroup();
 
-    if(prgs) prgs->setMaximum(bg_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Backgrounds..."));
+    emit progressMax(bg_total);
+    emit progressTitle(QApplication::tr("Loading Backgrounds..."));
 
     ConfStatus::total_bg = bg_total;
 
@@ -77,11 +77,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
     for(i=1; i<=bg_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         bgset.beginGroup( QString("background2-"+QString::number(i)) );
             sbg.name = bgset.value("name", "").toString();

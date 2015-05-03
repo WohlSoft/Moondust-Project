@@ -54,7 +54,7 @@ long dataconfigs::getBgoI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
+void dataconfigs::loadLevelBGO()
 {
     unsigned int i;
 
@@ -68,7 +68,6 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
         return;
     }
 
-
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     bgoset.setIniCodec("UTF-8");
 
@@ -80,8 +79,8 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
         total_data +=bgo_total;
     bgoset.endGroup();
 
-    if(prgs) prgs->setMaximum(bgo_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading BGOs..."));
+    emit progressMax(bgo_total);
+    emit progressTitle(QApplication::tr("Loading BGOs..."));
 
     ConfStatus::total_bgo = bgo_total;
 
@@ -103,13 +102,8 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
 
     for(i=1; i<=bgo_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
         QString errStr;
-
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
 
         sbgo.name = bgoset.value("name", "").toString();

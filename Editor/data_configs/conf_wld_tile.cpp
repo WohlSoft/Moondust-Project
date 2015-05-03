@@ -54,7 +54,7 @@ long dataconfigs::getTileI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
+void dataconfigs::loadWorldTiles()
 {
     unsigned int i;
 
@@ -80,8 +80,8 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
         total_data +=tiles_total;
     tileset.endGroup();
 
-    if(prgs) prgs->setMaximum(tiles_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Tiles..."));
+    emit progressMax(tiles_total);
+    emit progressTitle(QApplication::tr("Loading Tiles..."));
 
     ConfStatus::total_wtile = tiles_total;
 
@@ -103,11 +103,7 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
 
     for(i=1; i<=tiles_total; i++)
     {
-        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
         QString errStr;
 
         tileset.beginGroup( QString("tile-"+QString::number(i)) );
