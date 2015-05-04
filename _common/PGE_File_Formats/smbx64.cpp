@@ -38,42 +38,42 @@ namespace smbx64Format
 bool SMBX64::Int(QString in) // UNSIGNED INT
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !isint.exactMatch(in);
 }
 
 bool SMBX64::sInt(QString in) // SIGNED INT
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !issint.exactMatch(in);
 }
 
 bool SMBX64::sFloat(QString in) // SIGNED FLOAT
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !issfloat.exactMatch(in);
 }
 
 bool SMBX64::qStr(QString in) // QUOTED STRING
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !qstr.exactMatch(in);
 }
 
 bool SMBX64::wBool(QString in) //Worded BOOL
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !boolwords.exactMatch(in);
 }
 
 bool SMBX64::dBool(QString in) //Digital BOOL
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return !booldeg.exactMatch(in);
 }
 
@@ -81,7 +81,7 @@ bool SMBX64::dBool(QString in) //Digital BOOL
 bool SMBX64::wBoolR(QString in)
 {
     using namespace smbx64Format;
-    QMutexLocker(&locker);
+    QMutexLocker lock(&locker);
     return ((in=="#TRUE#")?true:false);
 }
 
