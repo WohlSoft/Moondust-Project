@@ -587,7 +587,7 @@ bool WorldScene::init()
     updateCenter();
 
     if(gameState)
-        playMusic(gameState->game_state.musicID, true, 200);
+        playMusic(gameState->game_state.musicID, gameState->game_state.musicFile, true, 200);
     isInit=true;
 
     return true;
@@ -766,10 +766,13 @@ void WorldScene::updateCenter()
             if(y)
             {
                 if(isInit)
-                    playMusic(y->data.id);
+                    playMusic(y->data.id, y->data.music_file);
                 else
                 if(gameState)
-                    gameState->game_state.musicID = y->data.id;
+                {
+                    gameState->game_state.musicID   = y->data.id;
+                    gameState->game_state.musicFile = y->data.music_file;
+                }
             }
         }
 
@@ -1192,9 +1195,9 @@ void WorldScene::stopMusic(bool fade, int fadeLen)
         PGE_MusPlayer::MUS_stopMusic();
 }
 
-void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
+void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int fadeLen)
 {
-    QString musPath = ConfigManager::getWldMusic(musicID);
+    QString musPath = ConfigManager::getWldMusic(musicID, data.path+"/"+customMusicFile);
     if(musPath.isEmpty()) return;
 
     PGE_MusPlayer::MUS_openFile(musPath);
@@ -1203,6 +1206,9 @@ void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
     else
         PGE_MusPlayer::MUS_playMusic();
     if(gameState)
+    {
         gameState->game_state.musicID = musicID;
+        gameState->game_state.musicFile = customMusicFile;
+    }
 }
 

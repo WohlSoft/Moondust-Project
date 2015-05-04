@@ -166,7 +166,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
         if(pgeX_Data.dataTree[section].name=="JOKES")
         {
             #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if(!pgeX_Data.dataTree[section].data.isEmpty())
+            if((!silentMode) && (!pgeX_Data.dataTree[section].data.isEmpty()))
                 if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                     QMessageBox::information(nullptr, "Jokes",
                             pgeX_Data.dataTree[section].data[0].values[0].value,

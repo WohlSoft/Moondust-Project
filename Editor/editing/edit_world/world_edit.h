@@ -46,7 +46,8 @@ public:
     WorldData WldData;
     //QGraphicsScene LvlScene;
 
-    long currentMusic;
+    long    currentMusic;
+    QString currentCustomMusic;
 
     bool newFile(dataconfigs &configs, LevelEditingSettings options);
     bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, LevelEditingSettings options);

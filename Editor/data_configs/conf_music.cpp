@@ -108,6 +108,7 @@ void dataconfigs::loadMusic()
         music_spc_total = musicset.value("total-special", "0").toInt();
 
         music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
+        music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
         total_data +=music_lvl_total;
         total_data +=music_wld_total;
         total_data +=music_spc_total;

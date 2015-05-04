@@ -101,7 +101,7 @@ public:
     void updateCenter();
     void setGameState(EpisodeState *_state);
 
-    void playMusic(long musicID, bool fade=false, int fadeLen=300);
+    void playMusic(long musicID, QString customMusicFile, bool fade=false, int fadeLen=300);
     void stopMusic(bool fade=false, int fadeLen=300);
 
 private:
