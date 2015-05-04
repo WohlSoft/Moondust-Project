@@ -34,6 +34,7 @@ LevelData FileFormats::OpenLevelFile(QString filePath)
 
     if (!file.open(QIODevice::ReadOnly))
     {
+        //qDebug() << "Failed to open file: " << filePath;
         #ifdef PGE_FILES_USE_MESSAGEBOXES
         QMessageBox::critical(NULL, QTranslator::tr("File open error"),
                 QTranslator::tr("Can't open the file."), QMessageBox::Ok);
