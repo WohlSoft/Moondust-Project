@@ -173,7 +173,13 @@ void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
     }
 
     MusicBoxItem->setMusicData(musicbox);
-    if(j>=0) MusicBoxItem->musicTitle = pConfigs->main_music_wld[j].name;
+    if(j>=0)
+    {
+        MusicBoxItem->musicTitle =
+                (pConfigs->music_w_custom_id==musicbox.id) ?
+                    pConfigs->main_music_wld[j].name:
+                    musicbox.music_file;
+    }
 
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_musbox));
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_musbox));

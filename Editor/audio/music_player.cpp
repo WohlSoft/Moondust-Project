@@ -159,7 +159,7 @@ void LvlMusPlay::updateMusic()
     {
         WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
         if(!w) return;
-        setMusic(LvlMusPlay::WorldMusic, w->currentMusic, "");
+        setMusic(LvlMusPlay::WorldMusic, w->currentMusic, w->currentCustomMusic);
         updatePlayerState(true);
     }
 }
