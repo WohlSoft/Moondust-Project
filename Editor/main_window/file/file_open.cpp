@@ -102,14 +102,10 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 
     if((in_1.suffix().toLower() == "lvl")||(in_1.suffix().toLower() == "lvlx"))
     {
-
         LevelData FileData;
 
         WriteToLog(QtDebugMsg, "> parsing level file format");
-        if(in_1.suffix().toLower() == "lvl")
-            FileData = FileFormats::ReadLevelFile(file);         //Read SMBX LVL File
-        else
-            FileData = FileFormats::ReadExtendedLevelFile(file); //Read PGE LVLX File
+        FileData = FileFormats::OpenLevelFile(FilePath);
 
         if( !FileData.ReadFileValid ) return;
         WriteToLog(QtDebugMsg, "File was read!");
@@ -173,11 +169,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     if((in_1.suffix().toLower() == "wld")||(in_1.suffix().toLower() == "wldx"))
     {
         WorldData FileData;
-        if(in_1.suffix().toLower() == "wld")
-            FileData= FileFormats::ReadWorldFile(file);
-        else
-            FileData= FileFormats::ReadExtendedWorldFile(file);
-
+        FileData= FileFormats::OpenWorldFile(FilePath);
         if( !FileData.ReadFileValid ) return;
 
         file.close();
