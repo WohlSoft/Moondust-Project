@@ -23,6 +23,7 @@
 #include <data_configs/custom_data.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
+#include <editing/_dialogs/musicfilelist.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -265,7 +266,7 @@ void WorldItemBox::setWldItemBoxes(bool setGrp, bool setCat)
     {
             item = new QListWidgetItem();
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-            item->setText( musicItem.name );
+            item->setText( (musicItem.id==mw()->configs.music_w_custom_id)? customWLabel : musicItem.name );
             item->setData(3, QString::number(musicItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
@@ -331,11 +332,38 @@ void WorldItemBox::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
     //placeLevel
     if ((mw()->activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
     {
+
+        QString customMusicFile;
+        if((unsigned)item->data(3).toInt()==mw()->configs.music_w_custom_id)
+        {
+            QString dirPath;
+            WorldEdit * edit = mw()->activeWldEditWin();
+            if(!edit) return;
+
+            dirPath = edit->WldData.path;
+
+            if(edit->isUntitled)
+            {
+                QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
+                return;
+            }
+
+            MusicFileList musicList( dirPath, "" );
+            if( musicList.exec() == QDialog::Accepted )
+                customMusicFile = musicList.SelectedFile;
+            else
+                return;
+        }
+
+        WldPlacingItems::MusicSet.music_file = customMusicFile;
         mw()->SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(3).toInt());
 
         //Play selected music
         mw()->activeWldEditWin()->currentMusic = item->data(3).toInt();
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, mw()->activeWldEditWin()->currentMusic, "");
+        mw()->activeWldEditWin()->currentCustomMusic = customMusicFile;
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic,
+                             mw()->activeWldEditWin()->currentMusic,
+                             mw()->activeWldEditWin()->currentCustomMusic);
         mw()->setMusic();
     }
 }

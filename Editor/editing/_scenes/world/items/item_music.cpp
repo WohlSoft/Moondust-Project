@@ -185,7 +185,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==play)
     {
         scene->_edit->currentMusic = musicData.id;
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, musicData.music_file);
         LvlMusPlay::updatePlayerState(true);
         MainWinConnect::pMainWin->setMusicButton(true);
     }
