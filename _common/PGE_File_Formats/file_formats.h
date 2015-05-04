@@ -44,7 +44,7 @@ public:
     static QString WriteNonSMBX64MetaData(MetaData metaData);
 
     /******************************Level files***********************************/
-    static LevelData OpenLevelFile(QString filePath); //!< Open supported level file via direct path
+    static LevelData OpenLevelFile(QString filePath, bool silent=false); //!< Open supported level file via direct path
     static LevelData OpenLevelFileHeader(QString filePath);
 
     static LevelData ReadLevelFile(QFile &inf); //!< Parse SMBX64 Level file by file stream
@@ -74,7 +74,7 @@ public:
 
 
     /******************************World file***********************************/
-    static WorldData OpenWorldFile(QString filePath);
+    static WorldData OpenWorldFile(QString filePath, bool silent=false);
     static WorldData OpenWorldFileHeader(QString filePath);
 
     static WorldData ReadWorldFile(QFile &inf); //!< Parse SMBX64 World file by file stream
@@ -121,6 +121,8 @@ public:
     static QString removeQuotes(QString str); // Remove quotes from begin and end
 
     static QString errorString; //!< String which contains info about last happened error
+private:
+    static bool silentMode;
 };
 
 #endif // FILE_FORMATS_H

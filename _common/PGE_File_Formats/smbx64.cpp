@@ -17,6 +17,8 @@
  */
 
 #include <QRegExp>
+#include <QMutex>
+#include <QMutexLocker>
 #include "smbx64.h"
 
 #include <QMutex>
@@ -82,7 +84,6 @@ bool SMBX64::dBool(QString in) //Digital BOOL
     QMutexLocker locker(&booldeg_mutex);
     return !booldeg.exactMatch(in);
 }
-
 
 //Convert from string to internal data
 bool SMBX64::wBoolR(QString in)
