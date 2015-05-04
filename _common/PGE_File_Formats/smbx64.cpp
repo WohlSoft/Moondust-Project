@@ -22,6 +22,7 @@
 
 namespace smbx64Format
 {
+    #define ReturnReg(reg, in)  locker.lock(); bool res=!reg.exactMatch(in); locker.unlock(); return res;
     QMutex locker;
     QRegExp isint = QRegExp("^\\d+$");     //Check "Is Numeric"
     QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
@@ -34,58 +35,41 @@ namespace smbx64Format
 // /////////////Validators///////////////
 //returns TRUE on wrong data
 
+
 bool SMBX64::Int(QString in) // UNSIGNED INT
 {
     using namespace smbx64Format;
-    locker.lock();
-    bool res=!isint.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(isint, in);
 }
 
 bool SMBX64::sInt(QString in) // SIGNED INT
 {
     using namespace smbx64Format;
-    locker.lock();
-    bool res=!issint.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(issint, in);
 }
 
 bool SMBX64::sFloat(QString in) // SIGNED FLOAT
 {
     using namespace smbx64Format;locker.lock();
-    locker.lock();
-    bool res=!issfloat.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(issfloat, in);
 }
 
 bool SMBX64::qStr(QString in) // QUOTED STRING
 {
     using namespace smbx64Format;
-    locker.lock();
-    bool res=!qstr.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(qstr, in);
 }
 
 bool SMBX64::wBool(QString in) //Worded BOOL
 {
     using namespace smbx64Format;
-    locker.lock();
-    bool res=!boolwords.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(boolwords, in);
 }
 
 bool SMBX64::dBool(QString in) //Digital BOOL
 {
     using namespace smbx64Format;
-    locker.lock();
-    bool res=!booldeg.exactMatch(in);
-    locker.unlock();
-    return res;
+    ReturnReg(booldeg, in);
 }
 
 
