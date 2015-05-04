@@ -177,8 +177,8 @@ void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
     {
         MusicBoxItem->musicTitle =
                 (pConfigs->music_w_custom_id==musicbox.id) ?
-                    pConfigs->main_music_wld[j].name:
-                    musicbox.music_file;
+                    musicbox.music_file:
+                    pConfigs->main_music_wld[j].name;
     }
 
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_musbox));
