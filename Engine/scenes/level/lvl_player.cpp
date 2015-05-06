@@ -92,6 +92,8 @@ LVL_Player::LVL_Player()
     foot_contacts=0;
     jumpForce=0;
 
+    jumpForce_default=260;
+
     isLive = true;
     doKill = false;
     kill_reason=DEAD_fall;
@@ -416,7 +418,7 @@ void LVL_Player::update(float ticks)
                 }
 
                 JumpPressed=true;
-                jumpForce=20;
+                jumpForce=jumpForce_default;
                 timeToFloat = maxFloatTime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    physBody->GetLinearVelocity().y
@@ -430,7 +432,7 @@ void LVL_Player::update(float ticks)
             if(onGround || climbing)
             {
                 climbing=false;
-                jumpForce=20;
+                jumpForce=jumpForce_default;
                 timeToFloat = maxFloatTime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    -physics_cur.velocity_jump
@@ -448,7 +450,7 @@ void LVL_Player::update(float ticks)
         {
             if(jumpForce>0)
             {
-                jumpForce--;
+                jumpForce -= ticks;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    -physics_cur.velocity_jump
                                                    -fabs(physBody->GetLinearVelocity().x/6)));
@@ -458,7 +460,7 @@ void LVL_Player::update(float ticks)
             {
                 timeToFloat -= ticks;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.0*cos(timeToFloat/80.0)) );
+                                                   3.5*cos(timeToFloat/80.0)) );
                 if(timeToFloat<=0)
                 {
                     timeToFloat=0;
@@ -752,7 +754,7 @@ void LVL_Player::refreshAnimation()
         {
             if(environment==LVL_PhysEnv::Env_Water)
             {
-                animator.switchAnimation(MatrixAnimator::Swim, direction, 86);
+                animator.switchAnimation(MatrixAnimator::Swim, direction, 128);
             }
             else if(environment==LVL_PhysEnv::Env_Quicksand)
             {
