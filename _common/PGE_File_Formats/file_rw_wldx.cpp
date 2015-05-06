@@ -551,7 +551,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                  FileData.scenery.push_back(scen);
              }
          }//SCENERY
-         else ///////////////////TILES//////////////////////
+         else ///////////////////PATHS//////////////////////
          if(pgeX_Data.dataTree[section].name=="PATHS")
          {
              if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
