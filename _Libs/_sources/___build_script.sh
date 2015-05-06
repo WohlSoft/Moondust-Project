@@ -72,6 +72,7 @@ UnArch 'flac-1.3.0'
 UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
+UnArch 'luajit-2.0-fromgit.tar.gz'
 cp ../libmad-0.15.1b.patched_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
@@ -118,6 +119,25 @@ then
 fi
 cd ..
 BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+
+###########LuaJIT###########
+echo "==========LuaJIT============"
+cd luajit-2.0
+make PREFIX=$InstallTo
+if [ $? -eq 0 ]
+then
+  echo "[good]"
+else
+  errorofbuid
+fi
+make install PREFIX=$InstallTo
+if [ $? -eq 0 ]
+then
+  echo "[good]"
+else
+  errorofbuid
+fi
+cd ..
 
 ###########SDL2_mixer###########
 #cd SDL2_mixer-2.0.0
