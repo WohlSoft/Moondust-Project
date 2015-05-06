@@ -71,7 +71,8 @@ class LVL_Player :
         int foot_contacts;
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
-        int jumpForce;
+        float jumpForce;
+        float jumpForce_default;
 
         QHash<int, int > climbable_map;
         bool climbing;
