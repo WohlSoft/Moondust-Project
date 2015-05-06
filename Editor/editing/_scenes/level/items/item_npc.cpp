@@ -650,7 +650,7 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     {
         grp->removeFromGroup(generatorArrow);
         scene->removeItem(generatorArrow);
-        free(generatorArrow);
+        delete generatorArrow;
         generatorArrow = NULL;
     }
 
@@ -663,7 +663,6 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     else
     {
         generatorArrow = new QGraphicsPixmapItem;
-
         switch(type)
         {
         case 2:
