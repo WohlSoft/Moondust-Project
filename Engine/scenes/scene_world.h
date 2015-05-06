@@ -105,6 +105,8 @@ public:
     void stopMusic(bool fade=false, int fadeLen=300);
 
 private:
+    float move_speed;//!< Calculated movement step dependent to physical step
+    float move_steps_count;//!< Speps counterm, used to correct inter-cell position
     EpisodeState *gameState;
     QString errorMsg;
     WorldMapSetup common_setup;
