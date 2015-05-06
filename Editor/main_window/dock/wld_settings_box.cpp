@@ -463,24 +463,23 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         WorldEdit * edit = mw()->activeWldEditWin();
         if(!edit) return;
 
+        #ifdef PGE_USE_NEW_STAR_COUNTER
+        /******New star counter********/
+        /* //New star counter in works and currently buggy :P
+         * but it must work more organized and safely */
+        AsyncStarCounter starCounter(dirPath, edit->WldData.levels, edit->WldData.IntroLevel_file, MainWinConnect::configs, mw());
+        starCounter.startAndShowProgress();
+        if(starCounter.isCancelled()) return;
+        ui->WLD_Stars->setValue(starCounter.countedStars());
+        /******New star counter**end***/
+        #else
+        /******Old star counter********/
+        /*
+         * Old Star Counter works in the single thread. Doing level data fetching recoursively to build level list.
+         */
         QString __backUP;
         __backUP = ui->WLD_DoCountStars->text();
 
-        /******New star counter********/
-        /* //New star counter in works and currently buggy :P
-         * but it must work more organized and safely
-
-        AsyncStarCounter starCounter(dirPath, edit->WldData.levels, edit->WldData.IntroLevel_file, MainWinConnect::configs, mw());
-        starCounter.startAndShowProgress();
-
-        */
-
-        //if(starCounter.isCancelled()) return;
-        //ui->WLD_Stars->setValue(starCounter.countedStars());
-        /******New star counter**end***/
-
-
-        /******Old star counter********/
         ui->WLD_DoCountStars->setEnabled(false);
         ui->WLD_DoCountStars->setText(tr("Counting..."));
 
@@ -521,10 +520,11 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);
         /***********************Resume stoped animation and restore 'count' button state**************************/
+        if(progress.wasCanceled()) return;
         ui->WLD_Stars->setValue(isOk.result());
         progress.close();
+        #endif
         /******Old star counter**end***/
-
     }
 
 }
