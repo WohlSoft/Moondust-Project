@@ -34,6 +34,7 @@ LevelData FileFormats::OpenLevelFile(QString filePath, bool silent)
     silentMode = silent;
     if (!file.open(QIODevice::ReadOnly))
     {
+        //qDebug() << "Failed to open file: " << filePath;
         #ifdef PGE_FILES_USE_MESSAGEBOXES
         if(!silentMode)
         {
