@@ -751,7 +751,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                      if(v.marker=="EI") //Entrance Warp ID (if 0 - start level from default points)
                      {
                          if(PGEFile::IsIntU(v.value))
-                             lvlitem.title = v.value.toInt();
+                             lvlitem.entertowarp = v.value.toInt();
                          else
                              goto badfile;
                      }
