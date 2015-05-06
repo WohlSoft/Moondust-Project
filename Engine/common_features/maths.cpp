@@ -1,12 +1,6 @@
 #include "maths.h"
 #include <cmath>
 
-Maths::Maths()
-{}
-
-Maths::~Maths()
-{}
-
 long Maths::roundTo(long src, long gridSize)
 {
     long gridX;
