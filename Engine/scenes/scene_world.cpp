@@ -26,6 +26,7 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <common_features/event_queue.h>
+#include <common_features/maths.h>
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
 
@@ -379,7 +380,10 @@ WorldScene::WorldScene()
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
+
     uTick = 1;
+    move_speed = 115/(float)PGE_Window::PhysStep;
+    move_steps_count=0;
 
     common_setup = ConfigManager::setup_WorldMap;
 
@@ -596,7 +600,6 @@ bool WorldScene::init()
 void WorldScene::update()
 {
     uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    float move_speed = 2;
     if(uTick<=0) uTick=1;
 
     if(doExit)
@@ -647,47 +650,57 @@ void WorldScene::update()
         }
         else
         {
+            #define setDir(dr) {dir=dr;\
+                    move_steps_count=ConfigManager::default_grid-move_steps_count;}
             switch(dir)
             {
             case 1://left
                 if(keyboard1.keys.right)
-                    dir=2;
+                setDir(2);
                 break;
             case 2://right
                 if(keyboard1.keys.left)
-                    dir=1;
+                setDir(1);
                 break;
             case 3://up
                 if(keyboard1.keys.down)
-                    dir=4;
+                setDir(4);
                 break;
             case 4://down
-                if(keyboard1.keys.down)
-                    dir=4;
+                if(keyboard1.keys.up)
+                setDir(3);
                 break;
             }
         }
+
+        #define doMoveStep(posVal)  \
+            move_steps_count+=move_speed;\
+            if(move_steps_count>=ConfigManager::default_grid)\
+            {\
+                move_steps_count=0;\
+                posVal=Maths::roundTo(posVal, ConfigManager::default_grid);\
+            }\
+            if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0)) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
 
         switch(dir)
         {
             case 1://left
                 posX-=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posX);
                 break;
             case 2://right
                 posX+=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posX);
                 break;
             case 3://up
                 posY-=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posY);
                 break;
             case 4://down
                 posY+=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posY);
                 break;
         }
-
 
         toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
 
