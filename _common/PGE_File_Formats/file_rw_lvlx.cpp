@@ -1069,7 +1069,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
                     if(v.marker=="GT") //Generator type
                     {
                         if(PGEFile::IsIntS(v.value))
-                            npcdata.generator = v.value.toInt();
+                            npcdata.generator_type = v.value.toInt();
                         else
                             goto badfile;
                     }
