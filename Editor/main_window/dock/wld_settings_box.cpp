@@ -20,6 +20,8 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/mainwinconnect.h>
 
+#include <tools/async/asyncstarcounter.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -27,6 +29,8 @@
 #include "ui_wld_settings_box.h"
 
 #include <QtConcurrent>
+
+#include <tuple>
 
 WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     QDockWidget(parent),
@@ -470,18 +474,20 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         //Stop animations to increase performance
         edit->scene->stopAnimation();
 
-        QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), mw());
+        AsyncStarCounter starCounter(dirPath, edit->WldData.levels, edit->WldData.IntroLevel_file, MainWinConnect::configs, mw());
+        starCounter.startAndShowProgress();
+        /*QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), mw());
              progress.setWindowTitle(tr("Counting stars..."));
              progress.setWindowModality(Qt::WindowModal);
              progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
              progress.setFixedSize(progress.size());
              progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
              progress.setMinimumDuration(0);
-             progress.show();
+             progress.show();*/
 
-        progress.connect(this, SIGNAL(countedStar(int)), &progress, SLOT(setValue(int)));
+        //progress.connect(this, SIGNAL(countedStar(int)), &progress, SLOT(setValue(int)));
 
-        QFuture<int> isOk = QtConcurrent::run(this, &WorldSettingsBox::doStarCount,
+        /*QFuture<int> isOk = QtConcurrent::run(this, &WorldSettingsBox::doStarCount,
                                                QString(dirPath),
                                                edit->WldData.levels,
                                                edit->WldData.IntroLevel_file
@@ -492,7 +498,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
             qApp->processEvents();
             if(progress.wasCanceled())
                 StarCounter_canceled=true;
-        }
+        }*/
 
         //Start animations again
         if(edit->scene->opts.animationEnabled)
@@ -501,9 +507,9 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);
 
-        if(progress.wasCanceled()) return;
-        ui->WLD_Stars->setValue(isOk.result());
-        progress.close();
+        if(starCounter.isCancelled()) return;
+        ui->WLD_Stars->setValue(starCounter.countedStars());
+        //progress.close();
 
     }
 
