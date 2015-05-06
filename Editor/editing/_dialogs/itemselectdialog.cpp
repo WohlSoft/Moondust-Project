@@ -20,6 +20,8 @@
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
 
+#include <editing/_dialogs/musicfilelist.h>
+
 #include "itemselectdialog.h"
 #include <ui_itemselectdialog.h>
 
@@ -291,6 +293,13 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
 
     removalFlags = tabs;
 
+}
+
+void ItemSelectDialog::setWorldMapRootDir(QString dir)
+{
+    worldMapRoot=dir;
+    if(!worldMapRoot.endsWith('/'))
+        worldMapRoot.append('/');
 }
 
 void ItemSelectDialog::addExtraDataControl(QWidget *control)
@@ -1063,6 +1072,28 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     pathID = extractID(ui->Sel_List_Path);
     levelID = extractID(ui->Sel_List_Level);
     musicID = extractID(ui->Sel_List_Music);
+
+    if((unsigned)musicID==conf->music_w_custom_id)
+    {
+        QString dirPath;
+        WorldEdit * edit = MainWinConnect::pMainWin->activeWldEditWin();
+        if(!edit)
+        {
+            return;
+        }
+        dirPath = edit->WldData.path;
+        if(edit->isUntitled)
+        {
+            QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
+            return;
+        }
+
+        MusicFileList musicList( dirPath, "" );
+        if( musicList.exec() == QDialog::Accepted )
+            musicFile = musicList.SelectedFile;
+        else
+            return;
+    }
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1){
         if(npcCoins){
