@@ -123,14 +123,14 @@ BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 ###########LuaJIT###########
 echo "==========LuaJIT============"
 cd luajit-2.0
-make PREFIX=$InstallTo
+make PREFIX=$InstallTo BUILDMODE=static
 if [ $? -eq 0 ]
 then
   echo "[good]"
 else
   errorofbuid
 fi
-make install PREFIX=$InstallTo
+make install PREFIX=$InstallTo BUILDMODE=static
 if [ $? -eq 0 ]
 then
   echo "[good]"
