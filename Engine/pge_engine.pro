@@ -57,7 +57,7 @@ LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 
 DEFINES += PGE_ENGINE
 
-LIBS += -lluabind -lbox2d
+LIBS += -lluabind -lluajit-5.1 -lbox2d
 android: {
     LIBS += -L../_Libs/_builds/android/lib
     INCLUDEPATH += ../_Libs/_builds/android/include
