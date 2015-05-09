@@ -123,3 +123,10 @@ bool operator<(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 
 bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 { return lhs.z_index<rhs.z_index; }
+
+
+
+bool CollidablesInRegionQueryCallback::ReportFixture(b2Fixture *fixture) {
+    foundBodies.push_back( fixture->GetBody() );
+    return true;//keep going to find all fixtures in the query area
+}

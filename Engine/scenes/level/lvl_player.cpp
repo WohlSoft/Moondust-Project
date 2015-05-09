@@ -74,6 +74,11 @@ LVL_Player::LVL_Player()
     floating_start_type=false;
     /********************floating************************/
 
+    /********************Attack************************/
+    attack_enabled=true;
+    attack_pressed=false;
+    /********************Attack************************/
+
     JumpPressed=false;
     onGround=false;
 
@@ -311,6 +316,31 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if(keys.alt_run)
+    {
+        if(attack_enabled && !attack_pressed && !climbing)
+        {
+            attack_pressed=true;
+
+            if(keys.up)
+                attack(Attack_Up);
+            else
+            if(keys.down)
+                attack(Attack_Down);
+            else
+            {
+                attack(Attack_Forward);
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
+                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75);
+            }
+        }
+    }
+    else
+    {
+        if(attack_pressed) attack_pressed=false;
+    }
+
+
 
     //if
     if(!keys.up && !keys.down && !keys.left && !keys.right)
@@ -356,36 +386,38 @@ void LVL_Player::update(float ticks)
                             physics_cur.slippery_c) :
                             physics_cur.walk_force;
 
-    if(keys.left) direction=-1;
-    if(keys.right) direction=1;
-
-    //If left key is pressed
-    if(keys.right)
+    if( (!keys.left) || (!keys.right) )
     {
-        if(climbing)
-        {
-            physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
-                                               physBody->GetLinearVelocity().y));
-        }
-        else
-        {
-        if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
-            physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
-        }
-    }
+        if(keys.left) direction=-1;
+        if(keys.right) direction=1;
 
-    //If right key is pressed
-    if(keys.left)
-    {
-        if(climbing)
+        //If left key is pressed
+        if(keys.right)
         {
-            physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
-                                               physBody->GetLinearVelocity().y));
+            if(climbing)
+            {
+                physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
+                                                   physBody->GetLinearVelocity().y));
+            }
+            else
+            {
+            if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
+                physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
+            }
         }
-        else
+        //If right key is pressed
+        if(keys.left)
         {
-            if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
-                physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+            if(climbing)
+            {
+                physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
+                                                   physBody->GetLinearVelocity().y));
+            }
+            else
+            {
+                if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
+                    physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+            }
         }
     }
 
@@ -469,7 +501,7 @@ void LVL_Player::update(float ticks)
                 floating_timer -= ticks;
                 if(floating_start_type)
                     physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*sin(floating_timer/80.0)) );
+                                                   3.5*(-cos(floating_timer/80.0)) ) );
                 else
                     physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    3.5*cos(floating_timer/80.0)) );
@@ -560,7 +592,10 @@ void LVL_Player::update(float ticks)
 
             if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
             {
+                isInited=false;
+                physBody->SetActive(false);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
+                return;
             }
         }
         else
@@ -764,6 +799,8 @@ void LVL_Player::refreshAnimation()
         else
         if(!onGround)
         {
+            if(animator.curAnimation()==MatrixAnimator::RacoonTail) return;
+
             if(environment==LVL_PhysEnv::Env_Water)
             {
                 animator.switchAnimation(MatrixAnimator::Swim, direction, 128);
@@ -776,7 +813,7 @@ void LVL_Player::refreshAnimation()
             {
                 if(physBody->GetLinearVelocity().y<0)
                     animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
-                else
+                else if(physBody->GetLinearVelocity().y>0)
                     animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
             }
         }
@@ -845,6 +882,69 @@ void LVL_Player::bump(bool _up)
         bumpDown=true;
     if(physBody)
         bumpVelocity = fabs(physBody->GetLinearVelocity().y)/4;
+}
+
+void LVL_Player::attack(LVL_Player::AttackDirection _dir)
+{
+    QRect attackZone;
+
+    switch(_dir)
+    {
+        case Attack_Up:
+            attackZone.setRect(left()+posX_coefficient-5, top()-17, 10, 5);
+        break;
+        case Attack_Down:
+            attackZone.setRect(left()+posX_coefficient-5, bottom(), 10, 5);
+        break;
+        case Attack_Forward:
+            if(direction>=0)
+                attackZone.setRect(right(), bottom()-32, 10, 10);
+            else
+                attackZone.setRect(left()-10, bottom()-32, 10, 10);
+        break;
+    }
+
+    CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
+    b2AABB aabb;
+    aabb.lowerBound.Set(PhysUtil::pix2met(attackZone.x()), PhysUtil::pix2met(attackZone.y()));
+    aabb.upperBound.Set(PhysUtil::pix2met(attackZone.right()), PhysUtil::pix2met(attackZone.bottom()));
+    worldPtr->QueryAABB(&cb, aabb);
+    int contacts = 0;
+
+    QList<LVL_Block *> target_blocks;
+    for(int i=0; i<cb.foundBodies.size();i++)
+    {
+        contacts++;
+        PGE_Phys_Object * visibleBody;
+        if(cb.foundBodies[i]==physBody) continue;
+
+        visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
+
+        if(visibleBody==NULL)
+            continue;
+
+        switch(visibleBody->type)
+        {
+            case PGE_Phys_Object::LVLBlock:
+                target_blocks.push_back(static_cast<LVL_Block*>(visibleBody));
+                break;
+            case PGE_Phys_Object::LVLNPC:
+            case PGE_Phys_Object::LVLPlayer:
+                default:break;
+        }
+    }
+
+    foreach(LVL_Block *x, target_blocks)
+    {
+        if(!x) continue;
+        if(x->destroyed) continue;
+        if(x->sizable && _dir==Attack_Forward)
+            continue;
+        x->hit();
+        if(!x->destroyed)
+            PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+        x->destroyed=true;
+    }
 }
 
 void LVL_Player::teleport(float x, float y)

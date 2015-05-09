@@ -130,6 +130,19 @@ class LVL_Player :
         bool    floating_start_type;//!< true= sin(time), false= cos(time)
         /******************floating*******************/
 
+        /******************Attack*******************/
+        /*This feature will provide teporary ability to break any nearest blocks*/
+        enum AttackDirection
+        {
+            Attack_Forward=0,
+            Attack_Up,
+            Attack_Down
+        };
+        bool    attack_enabled;
+        bool    attack_pressed;
+        void    attack(AttackDirection _dir);
+        /******************Attack*******************/
+
         void render(float camX, float camY);
         MatrixAnimator animator;
         int frameW;

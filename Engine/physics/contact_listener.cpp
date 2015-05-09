@@ -229,6 +229,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
                     {
                         chr->bump(true);
                         blk->hit(LVL_Block::down);
+                        contact->SetEnabled(false);
                     }
                 }
                 else
