@@ -531,7 +531,6 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(setup->switch_Button)
     {
-        PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
         LvlSceneP::s->toggleSwitch(setup->switch_ID);
     }
 

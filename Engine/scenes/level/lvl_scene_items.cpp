@@ -19,6 +19,7 @@
 #include "../scene_level.h"
 #include "../../data_configs/config_manager.h"
 
+#include <audio/pge_audio.h>
 
 //static double zCounter = 0;
 
@@ -161,16 +162,18 @@ void LevelScene::destroyBlock(LVL_Block *_block)
 
 void LevelScene::toggleSwitch(int switch_id)
 {
+    PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
     if(switch_blocks.contains(switch_id))
     {
-        for(int x=0;x<switch_blocks[switch_id].size();x++)
+        QList<LVL_Block*> &list = switch_blocks[switch_id];
+        for(int x=0;x<list.size();x++)
         {
-            if((switch_blocks[switch_id][x]->setup->switch_Block)&&
-                    (switch_blocks[switch_id][x]->setup->switch_ID==switch_id))
-                switch_blocks[switch_id][x]->
-                    transformTo(
-                            switch_blocks[switch_id][x]->setup->switch_transform,
-                            2);
+            if((list[x]->setup->switch_Block)&&(list[x]->setup->switch_ID==switch_id))
+                list[x]->transformTo(list[x]->setup->switch_transform, 2);
+            else
+            {
+                list.removeAt(x); x--; //Remove blocks which no more is a switch block
+            }
         }
     }
 }
