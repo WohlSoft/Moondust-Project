@@ -143,6 +143,41 @@ class LVL_Player :
         void    attack(AttackDirection _dir);
         /******************Attack*******************/
 
+        /************************************************
+                  ,;MMMM..
+               ,;:MM"MMMMM.
+            ,;.MM::M.MMMMMM:
+            ""::.;'MMMMMMMMM
+                   "'""MMMMM;
+                       ':MMMM.
+                        'MMMM;
+                         :MMMM;.
+                          MMMMMM;...
+                          MMMMMMMMMMMMM;.;..
+                          MMMMMMMMMMMMMMMMMMM...
+                          MMMMMM:MMMMMMMMMMMMMMM;...       ..:
+                          MMMMMM;MMMMMMMMMMMMM:MMMMMMM:MMMM:M
+                          :MMMMMM:MMMMMMMMMMMMMMM.:::;:::;;:'
+                          ':MMMMMMM:MMMM:;MM:M;.MMM:';::M:'
+                           ':MMMMMM;M;;MM;::M;;::::;MM:""
+                             'MMMMMMMM;M;:::MMMMMMMMMM"
+                              ''MMMMMMMMMMMMMMMMMMMMM"
+                                 ':MMMMMMMMMMMMMMMM"'
+                                   '':MMMMMMMMMMM"'
+               -Duck-                 ':MMMMMM""'
+                                         .
+                                         :
+                                        ::
+                                   ,..;.M'
+                                  ,;;MM:'
+                                    '"'
+        ************************************************/
+        bool duck_allow;
+        bool ducking;
+        void setDuck(bool duck);
+        b2Fixture     *f_player;
+        /******************Duck*************************/
+
         void render(float camX, float camY);
         MatrixAnimator animator;
         int frameW;

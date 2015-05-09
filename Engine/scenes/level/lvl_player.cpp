@@ -79,6 +79,11 @@ LVL_Player::LVL_Player()
     attack_pressed=false;
     /********************Attack************************/
 
+    /********************duck**************************/
+    duck_allow= state_cur.duck_allow;
+    ducking=false;
+    /********************duck**************************/
+
     JumpPressed=false;
     onGround=false;
 
@@ -163,7 +168,8 @@ void LVL_Player::init()
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-    physBody->CreateFixture(&fixtureDef);
+
+    f_player = physBody->CreateFixture(&fixtureDef);
 
     animator.tickAnimation(1);
     //qDebug() <<"Start position is " << posX() << posY();
@@ -377,6 +383,18 @@ void LVL_Player::update(float ticks)
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
         }
+        else
+        {
+            if(duck_allow & !ducking)
+            {
+                setDuck(true);
+            }
+        }
+    }
+    else
+    {
+        if(ducking)
+            setDuck(false);
     }
 
     slippery_surface = !foot_sl_contacts_map.isEmpty();
@@ -391,32 +409,35 @@ void LVL_Player::update(float ticks)
         if(keys.left) direction=-1;
         if(keys.right) direction=1;
 
-        //If left key is pressed
-        if(keys.right)
+        if(!ducking || !onGround)
         {
-            if(climbing)
+            //If left key is pressed
+            if(keys.right)
             {
-                physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
-                                                   physBody->GetLinearVelocity().y));
+                if(climbing)
+                {
+                    physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
+                                                       physBody->GetLinearVelocity().y));
+                }
+                else
+                {
+                if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
+                    physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
+                }
             }
-            else
+            //If right key is pressed
+            if(keys.left)
             {
-            if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
-                physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
-            }
-        }
-        //If right key is pressed
-        if(keys.left)
-        {
-            if(climbing)
-            {
-                physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
-                                                   physBody->GetLinearVelocity().y));
-            }
-            else
-            {
-                if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
-                    physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+                if(climbing)
+                {
+                    physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
+                                                       physBody->GetLinearVelocity().y));
+                }
+                else
+                {
+                    if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
+                        physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
+                }
             }
         }
     }
@@ -445,12 +466,13 @@ void LVL_Player::update(float ticks)
             {
                 if(environment==LVL_PhysEnv::Env_Water)
                 {
-                    animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                    if(!ducking)
+                        animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
                 }
                 else
                 if(environment==LVL_PhysEnv::Env_Quicksand)
                 {
-                    animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
+                    if(!ducking) animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
                 }
 
                 JumpPressed=true;
@@ -776,8 +798,10 @@ void LVL_Player::update(float ticks)
         animator.tickAnimation(64);
     }
     else
+    {
         camera->setPos( round(posX()) - PGE_Window::Width/2 + posX_coefficient,
-                        round(posY()) - PGE_Window::Height/2 + posY_coefficient );
+                        round(bottom()) - PGE_Window::Height/2-state_cur.height/2 );
+    }
 }
 
 void LVL_Player::update()
@@ -795,6 +819,11 @@ void LVL_Player::refreshAnimation()
                 animator.switchAnimation(MatrixAnimator::Climbing, direction, 128);
             else
                 animator.switchAnimation(MatrixAnimator::Climbing, direction, -1);
+        }
+        else
+        if(ducking)
+        {
+            animator.switchAnimation(MatrixAnimator::SitDown, direction, 128);
         }
         else
         if(!onGround)
@@ -945,6 +974,39 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
         x->destroyed=true;
     }
+}
+
+void LVL_Player::setDuck(bool duck)
+{
+    if(!duck_allow) return;
+    if(duck==ducking) return;
+
+    if(duck)
+    {
+        physBody->DestroyFixture(f_player);
+        b2PolygonShape shape;
+        setSize(state_cur.width-state_cur.width%2, state_cur.duck_height-state_cur.duck_height%2);
+        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                       PhysUtil::pix2met(posY_coefficient));
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
+        f_player = physBody->CreateFixture(&fixtureDef);
+        this->setPos(posX(), posY()+(state_cur.height/2-state_cur.duck_height/2)-1);
+    } else {
+        physBody->DestroyFixture(f_player);
+        b2PolygonShape shape;
+        setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
+        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                       PhysUtil::pix2met(posY_coefficient));
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
+        f_player = physBody->CreateFixture(&fixtureDef);
+        this->setPos(posX(), posY()+(state_cur.duck_height/2-state_cur.height/2)-1);
+    }
+
+    ducking=duck;
 }
 
 void LVL_Player::teleport(float x, float y)
