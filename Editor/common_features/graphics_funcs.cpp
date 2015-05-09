@@ -91,22 +91,29 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
     for(int y=0; y< image.height(); y++ )
         for(int x=0; x < image.width(); x++ )
         {
+            QColor Fpix = QColor(image.pixel(x,y));
             QColor Dpix = QColor(target.pixel(x,y));
             QColor Spix = QColor(newmask.pixel(x,y));
             QColor Npix;
 
             Npix.setAlpha(255);
+            //AND
             Npix.setRed( Dpix.red() & Spix.red());
             Npix.setGreen( Dpix.green() & Spix.green());
             Npix.setBlue( Dpix.blue() & Spix.blue());
+            //OR
+            Npix.setRed( Fpix.red() | Npix.red());
+            Npix.setGreen( Fpix.green() | Npix.green());
+            Npix.setBlue( Fpix.blue() | Npix.blue());
+
             target.setPixel(x, y, Npix.rgba());
 
             isWhiteMask &= ( (Spix.red()>240) //is almost White
                              &&(Spix.green()>240)
                              &&(Spix.blue()>240));
 
+            //Calculate alpha-channel level
             int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
-
             if( (Spix.red()>240) //is almost White
                             &&(Spix.green()>240)
                             &&(Spix.blue()>240))
@@ -114,30 +121,32 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
                 newAlpha = 0;
             }
 
-            alphaChannel.setPixel(x,y, newAlpha);
-        }
-
-    //vbSrcPaint
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
-        {
-            QColor Dpix = QColor(image.pixel(x,y));
-            QColor Spix = QColor(target.pixel(x,y));
-            QColor Npix;
-
-            Npix.setAlpha(255);
-            Npix.setRed( Dpix.red() | Spix.red());
-            Npix.setGreen( Dpix.green() | Spix.green());
-            Npix.setBlue( Dpix.blue() | Spix.blue());
-            target.setPixel(x, y, Npix.rgba());
-
-            //QColor curAlpha;
-            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
-            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
-
+            newAlpha = newAlpha+((Fpix.red() + Fpix.green() + Fpix.blue())/3);
             if(newAlpha>255) newAlpha=255;
+
             alphaChannel.setPixel(x,y, newAlpha);
         }
+//    //vbSrcPaint
+//    for(int y=0; y< image.height(); y++ )
+//        for(int x=0; x < image.width(); x++ )
+//        {
+//            QColor Dpix = QColor(image.pixel(x,y));
+//            QColor Spix = QColor(target.pixel(x,y));
+//            QColor Npix;
+
+//            Npix.setAlpha(255);
+//            Npix.setRed( Dpix.red() | Spix.red());
+//            Npix.setGreen( Dpix.green() | Spix.green());
+//            Npix.setBlue( Dpix.blue() | Spix.blue());
+//            target.setPixel(x, y, Npix.rgba());
+
+//            //QColor curAlpha;
+//            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
+//            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
+
+//            if(newAlpha>255) newAlpha=255;
+//            alphaChannel.setPixel(x,y, newAlpha);
+//        }
 
     target.setAlphaChannel(alphaChannel);
 
