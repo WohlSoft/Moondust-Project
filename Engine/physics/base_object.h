@@ -19,6 +19,7 @@
 #ifndef BASE_OBJECT_H
 #define BASE_OBJECT_H
 
+#include <QVector>
 #include <Box2D/Box2D.h>
 #include "phys_util.h"
 #include "../graphics/graphics.h"
@@ -108,5 +109,14 @@ public:
 
 bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
+
+
+//subclass b2QueryCallback
+class CollidablesInRegionQueryCallback : public b2QueryCallback
+{
+public:
+      QVector<b2Body*> foundBodies;
+      bool ReportFixture(b2Fixture* fixture);
+};
 
 #endif // BASE_OBJECT_H

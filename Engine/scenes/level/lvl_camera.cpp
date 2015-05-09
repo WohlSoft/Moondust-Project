@@ -128,18 +128,6 @@ void PGE_LevelCamera::setOffset(int x, int y)
     offset_y=y;
 }
 
-//subclass b2QueryCallback
-class CollidablesInRegionQueryCallback : public b2QueryCallback
-{
-public:
-  QVector<b2Body*> foundBodies;
-
-  bool ReportFixture(b2Fixture* fixture) {
-      foundBodies.push_back( fixture->GetBody() );
-      return true;//keep going to find all fixtures in the query area
-  }
-};
-
 void PGE_LevelCamera::update()
 {
     objects_to_render.clear();
