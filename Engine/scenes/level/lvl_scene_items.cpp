@@ -141,7 +141,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
     if(byWarp)
     {
         player->data.x = cameraStart.x();
-        player->data.y = cameraStart.y()+2;
+        player->data.y = cameraStart.y();
     }
 
     player->init();

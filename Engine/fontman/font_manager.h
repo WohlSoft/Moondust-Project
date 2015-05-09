@@ -23,8 +23,36 @@
 #include <SDL2/SDL_opengl.h>
 #include <QString>
 #include <QFont>
+#include <QSize>
 #include <QMap>
 #include <QRgb>
+#include <QRegExp>
+
+class RasterFont
+{
+public:
+    RasterFont();
+    ~RasterFont();
+    void  loadFontMap(QString fontmap_ini);
+    QSize textSize(QString &text, int max_line_lenght=0, bool cut=false);
+private:
+    int letter_width;
+    int letter_height;
+    struct RasChar
+    {
+        GLuint tx;
+        float l;//!< left
+        float t;//!< top
+        float b;//!< bottom
+        float r;//!< right
+    };
+    QHash<QChar, RasChar > fontMap;
+    QRegExp first_line_only;
+    //Font textures cache
+    QList<GLuint > textures;
+};
+
+
 
 class FontManager
 {

@@ -403,6 +403,7 @@ WorldScene::WorldScene()
     health = 3;
     points = 0;
     stars  = 0;
+    coins  = 0;
 
     jumpTo=false;
 
@@ -928,6 +929,14 @@ void WorldScene::render()
                            .arg(levelTitle),
                            common_setup.title_x,
                            common_setup.title_y);
+
+    if(common_setup.coin_en)
+    {
+        FontManager::printText(QString("%1")
+                               .arg(coins),
+                               common_setup.coin_x,
+                               common_setup.coin_y);
+    }
 
     if(common_setup.star_en)
     {

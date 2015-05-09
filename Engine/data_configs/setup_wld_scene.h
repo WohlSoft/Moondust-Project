@@ -42,6 +42,9 @@ struct WorldMapSetup
     bool portrait_en;
     int portrait_x;
     int portrait_y;
+    int portrait_frame_delay;
+    QString portrait_animation;
+    int portrait_direction;
 };
 
 #endif // SETUP_WLD_SCENE_H

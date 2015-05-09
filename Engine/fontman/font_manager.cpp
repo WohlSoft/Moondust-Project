@@ -34,6 +34,96 @@
 #include <SDL2/SDL.h>
 #undef main
 
+
+
+RasterFont::RasterFont() : first_line_only("\n.*")
+{
+    letter_width=0;
+    letter_height=0;
+}
+
+RasterFont::~RasterFont()
+{
+    glDisable(GL_TEXTURE_2D);
+    while(!textures.isEmpty())
+    {
+        glDeleteTextures(1, &textures.last() );
+        textures.pop_back();
+    }
+
+}
+
+void RasterFont::loadFontMap(QString fontmap_ini)
+{
+
+}
+
+QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
+{
+    int lastspace=0;//!< index of last found space character
+    int count=1;    //!< Count of lines
+    int maxWidth=0; //!< detected maximal width of message
+
+    if(cut) text.remove(first_line_only);
+
+    /****************Word wrap*********************/
+    for(int x=0, i=0;i<text.size();i++, x++)
+    {
+        switch(text[i].toLatin1())
+        {
+            case '\t':
+            case ' ':
+                lastspace=i;
+                break;
+            case '\n':
+                lastspace=0;
+                if((maxWidth<x)&&(maxWidth<max_line_lenght)) maxWidth=x;
+                x=0;count++;
+                break;
+        }
+        if((max_line_lenght>0)&&(x>=max_line_lenght))//If lenght more than allowed
+        {
+            maxWidth=x;
+            if(lastspace>0)
+            {
+                text[lastspace]='\n';
+                i=lastspace-1;
+                lastspace=0;
+            }
+            else
+            {
+                text.insert(i, QChar('\n'));
+                x=0;count++;
+            }
+        }
+    }
+    if(count==1)
+    {
+        maxWidth=text.length();
+    }
+    /****************Word wrap*end*****************/
+
+    return QSize(letter_width*maxWidth, letter_height*count);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 bool FontManager::isInit=false;
 //TTF_Font * FontManager::defaultFont=NULL;
 
@@ -73,7 +163,11 @@ void FontManager::init()
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
     defaultFont->setFamily(family);//font.setWeight(14);
+#ifdef __APPLE__
+    defaultFont->setPointSize(18);
+#else
     defaultFont->setPointSize(12);
+#endif
     defaultFont->setStyleStrategy(QFont::PreferBitmap);
     defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
@@ -84,15 +178,14 @@ void FontManager::init()
 void FontManager::quit()
 {
     //Clean font cache
+    glDisable(GL_TEXTURE_2D);
     while(!fontTable_1.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
         glDeleteTextures(1, &fontTable_1.first() );
         fontTable_1.remove(fontTable_1.firstKey());
     }
     while(!fontTable_2.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
         glDeleteTextures(1, &fontTable_2.first() );
         fontTable_2.remove(fontTable_2.firstKey());
     }

@@ -65,6 +65,7 @@ struct FontsSetup
 {
     bool double_pixled;
     QString fontname;
+    QString rasterFontsFile;
 };
 /******************************************/
 

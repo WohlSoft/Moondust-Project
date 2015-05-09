@@ -20,6 +20,7 @@ bool ConfigManager::loadEngineSettings()
     engineset.beginGroup("fonts");
         setup_fonts.fontname = engineset.value("font-file", "").toString();
         setup_fonts.double_pixled = engineset.value("double-pixled", false).toBool();
+        setup_fonts.rasterFontsFile = engineset.value("raster-fonts", "").toString();
     engineset.endGroup();
 
     engineset.beginGroup("common");
