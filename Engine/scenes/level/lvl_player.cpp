@@ -66,13 +66,13 @@ LVL_Player::LVL_Player()
     last_environment = LVL_PhysEnv::Env_Air;
     physics_cur = physics[environment];
 
-    //floating
-    allowFloat=state_cur.allow_floating;
-    maxFloatTime=state_cur.floating_max_time; //!< Max time to float
-
-    isFloating=false;                         //!< Is character currently floating in air
-    timeToFloat=0;                            //!< Milliseconds to float
-
+    /********************floating************************/
+    floating_allow=state_cur.allow_floating;
+    floating_maxtime=state_cur.floating_max_time; //!< Max time to float
+    floating_isworks=false;                         //!< Is character currently floating in air
+    floating_timer=0;                            //!< Milliseconds to float
+    floating_start_type=false;
+    /********************floating************************/
 
     JumpPressed=false;
     onGround=false;
@@ -167,7 +167,11 @@ void LVL_Player::init()
 
 void LVL_Player::initSize()
 {
-    setSize(states[stateID].width-states[stateID].width%2, states[stateID].height-states[stateID].height%2);
+    obj_player_state state = states[stateID];
+    setSize(state.width-state.width%2, state.height-state.height%2);
+    data.x = data.x+(data.w/2)-(state.width/2);
+    data.y = data.y+data.h-state.height;
+    direction = data.direction;
 }
 
 void LVL_Player::update(float ticks)
@@ -278,14 +282,14 @@ void LVL_Player::update(float ticks)
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk;
 
-        isFloating=false;//< Reset floating on re-entering into another physical envirinment
+        floating_isworks=false;//< Reset floating on re-entering into another physical envirinment
     }
 
     if(onGround)
     {
-        if(!isFloating)
+        if(!floating_isworks)
         {
-            timeToFloat=maxFloatTime;
+            floating_timer=floating_maxtime;
         }
     }
 
@@ -326,7 +330,7 @@ void LVL_Player::update(float ticks)
         if(climbable_map.size()>0)
         {
             climbing=true;
-            isFloating=false;//!< Reset floating on climbing start
+            floating_isworks=false;//!< Reset floating on climbing start
         }
     }
 
@@ -341,7 +345,7 @@ void LVL_Player::update(float ticks)
         if(climbable_map.size()>0)
         {
             climbing=true;
-            isFloating=false;//!< Reset floating on climbing start
+            floating_isworks=false;//!< Reset floating on climbing start
         }
     }
 
@@ -419,7 +423,7 @@ void LVL_Player::update(float ticks)
 
                 JumpPressed=true;
                 jumpForce=jumpForce_default;
-                timeToFloat = maxFloatTime;
+                floating_timer = floating_maxtime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    physBody->GetLinearVelocity().y
                                                   -physics_cur.velocity_jump));
@@ -433,15 +437,19 @@ void LVL_Player::update(float ticks)
             {
                 climbing=false;
                 jumpForce=jumpForce_default;
-                timeToFloat = maxFloatTime;
+                floating_timer = floating_maxtime;
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
                                                    -physics_cur.velocity_jump
                                                    -fabs(physBody->GetLinearVelocity().x/6)));
             }
             else
-            if((allowFloat)&&(timeToFloat>0))
+            if((floating_allow)&&(floating_timer>0))
             {
-                isFloating=true;
+                floating_isworks=true;
+
+                //if true - do floating with sin, if false - do with cos.
+                floating_start_type=(physBody->GetLinearVelocity().y<0);
+
                 physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
                 physBody->SetGravityScale(0);
             }
@@ -456,15 +464,19 @@ void LVL_Player::update(float ticks)
                                                    -fabs(physBody->GetLinearVelocity().x/6)));
             }
 
-            if(isFloating)
+            if(floating_isworks)
             {
-                timeToFloat -= ticks;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*cos(timeToFloat/80.0)) );
-                if(timeToFloat<=0)
+                floating_timer -= ticks;
+                if(floating_start_type)
+                    physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   3.5*sin(floating_timer/80.0)) );
+                else
+                    physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
+                                                   3.5*cos(floating_timer/80.0)) );
+                if(floating_timer<=0)
                 {
-                    timeToFloat=0;
-                    isFloating=false;
+                    floating_timer=0;
+                    floating_isworks=false;
                     physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }
@@ -476,12 +488,12 @@ void LVL_Player::update(float ticks)
         if(JumpPressed)
         {
             JumpPressed=false;
-            if(allowFloat)
+            if(floating_allow)
             {
-                if(isFloating)
+                if(floating_isworks)
                 {
-                    timeToFloat=0;
-                    isFloating=false;
+                    floating_timer=0;
+                    floating_isworks=false;
                     physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }

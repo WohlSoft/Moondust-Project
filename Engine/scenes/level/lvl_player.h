@@ -40,43 +40,35 @@ class LVL_Player :
         void initSize();
         void update(float ticks);
         void update();
-        int playerID;
 
+        int playerID;
         obj_player setup;
+        PlayerPoint data;
+        PGE_LevelCamera * camera;//!< Connected camera
+
+        void teleport(float x, float y);
+        void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         QHash<int, obj_player_state > states;
-        int stateID;
+        int     stateID;
         obj_player_state state_cur;
 
+        /*******************Environmept*********************/
         QHash<int, obj_player_physics > physics;
         QHash<int, int > environments_map;
 
         obj_player_physics physics_cur;
-        int environment;
-        int last_environment;
+        int     environment;
+        int     last_environment;
+        /*******************Environmept*********************/
 
+        /*******************Motion*************************/
         float32 curHMaxSpeed; //!< Current moving max speed
-        bool isRunning;
+        bool    isRunning;
+        int     direction;
+        /*******************Motion*************************/
 
-        int direction;
-
-        bool JumpPressed;
-        bool onGround;
-
-        bool bumpDown;
-        bool bumpUp;
-        float bumpVelocity;
-        void bump(bool _up=false);
-
-        int foot_contacts;
-        QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
-        QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
-        float jumpForce;
-        float jumpForce_default;
-
-        QHash<int, int > climbable_map;
-        bool climbing;
-
+        /*******************Life and Death*****************/
         bool isLive;
         enum deathReason
         {
@@ -84,40 +76,59 @@ class LVL_Player :
             DEAD_burn,
             DEAD_killed
         };
-        void kill(deathReason reason=DEAD_killed);
-        bool doKill;
+        void    kill(deathReason reason=DEAD_killed);
+        bool    doKill;
         deathReason kill_reason;
 
-        int health;
-        bool doHarm;
-        int doHarm_damage;
+        int     health;
+        bool    doHarm;
+        int     doHarm_damage;
         void harm(int _damage=1);
-
-        bool contactedWithWarp;
-        LVL_Warp * contactedWarp;
-        bool wasTeleported;
-        bool wasEntered;
-        int warpsTouched;
+        /*******************Life and Death*****************/
 
         float32 gscale_Backup; //!< BackUP of last gravity scale
 
-        bool   isWarping;
-        bool   warpDo;
-        int    warpDirect;
-        uint32 warpWaitTicks;
+        /********************Jumps***************************/
+        bool    JumpPressed;
+        bool    onGround;
+        int     foot_contacts;
+        QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
+        QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
+        float   jumpForce;
+        float   jumpForce_default;
+        /********************Jumps***************************/
 
-        //floating
-        bool allowFloat;
-        bool isFloating;
-        float timeToFloat;
-        float maxFloatTime;
+        /********************Bump***************************/
+        bool    bumpDown;
+        bool    bumpUp;
+        float   bumpVelocity;
+        void    bump(bool _up=false);
+        /********************Bump***************************/
 
-        PlayerPoint data;
+        /********************Climbing***************************/
+        QHash<int, int > climbable_map;
+        bool climbing;
+        /********************Climbing***************************/
 
-        PGE_LevelCamera * camera;
+        /*******************Warps*********************/
+        bool    contactedWithWarp;
+        LVL_Warp * contactedWarp;
+        bool    wasTeleported;
+        bool    wasEntered;
+        int     warpsTouched;
+        bool    isWarping;
+        bool    warpDo;
+        int     warpDirect;
+        uint32  warpWaitTicks;
+        /*******************Warps*********************/
 
-        void teleport(float x, float y);
-        void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
+        /******************floating*******************/
+        bool    floating_allow;
+        bool    floating_isworks;
+        float   floating_timer;
+        float   floating_maxtime;
+        bool    floating_start_type;//!< true= sin(time), false= cos(time)
+        /******************floating*******************/
 
         void render(float camX, float camY);
         MatrixAnimator animator;
