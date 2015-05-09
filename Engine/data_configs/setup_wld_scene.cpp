@@ -30,24 +30,27 @@ void WorldMapSetup::init(QSettings &engine_ini)
         else
             title_align = WorldMapSetup::align_left;
 
-        points_en = engine_ini.value("points-counter", "").toBool();
+        points_en = engine_ini.value("points-counter", false).toBool();
         points_x = engine_ini.value("points-counter-x", "").toInt();
         points_y = engine_ini.value("points-counter-y", "").toInt();
 
-        health_en = engine_ini.value("health-counter", "").toBool();
+        health_en = engine_ini.value("health-counter", false).toBool();
         health_x = engine_ini.value("health-counter-x", "").toInt();
         health_y = engine_ini.value("health-counter-y", "").toInt();
 
-        star_en = engine_ini.value("star-counter", "").toBool();
+        star_en = engine_ini.value("star-counter", false).toBool();
         star_x = engine_ini.value("star-counter-x", "").toInt();
         star_y = engine_ini.value("star-counter-y", "").toInt();
 
-        coin_en = engine_ini.value("coin-counter", "").toBool();
+        coin_en = engine_ini.value("coin-counter", false).toBool();
         coin_x = engine_ini.value("coin-counter-x", "").toInt();
         coin_y = engine_ini.value("coin-counter-y", "").toInt();
 
-        portrait_en = engine_ini.value("portrait", "").toBool();
+        portrait_en = engine_ini.value("portrait", false).toBool();
         portrait_x = engine_ini.value("portrait-x", "").toInt();
         portrait_y = engine_ini.value("portrait-y", "").toInt();
+        portrait_frame_delay = engine_ini.value("portrait-frame-delay", 64).toInt();
+        portrait_animation = engine_ini.value("portrait-animation", "Run").toString();
+        portrait_direction = engine_ini.value("portrait-direction", -1).toInt();
     engine_ini.endGroup();
 }
