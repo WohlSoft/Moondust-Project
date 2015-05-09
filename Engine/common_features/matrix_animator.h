@@ -85,6 +85,7 @@ public:
     void tickAnimation(int frametime);
     QRectF curFrame();
     QPointF curOffset();
+    MatrixAninates curAnimation();
 
     void installAnimationSet(obj_player_calibration &calibration);
     void playOnce(MatrixAninates aniName, int _direction, int speed=-1);

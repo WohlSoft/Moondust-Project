@@ -149,6 +149,11 @@ QPointF MatrixAnimator::curOffset()
     return curOffsets;
 }
 
+MatrixAnimator::MatrixAninates MatrixAnimator::curAnimation()
+{
+    return current_sequance;
+}
+
 void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 {
     s_bank_left.clear();
