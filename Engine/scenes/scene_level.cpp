@@ -164,6 +164,17 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+    qDebug() << "Destroy NPC";
+    while(!npcs.isEmpty())
+    {
+        LVL_Npc* tmp;
+        tmp = npcs.first();
+        npcs.pop_front();
+        if(tmp) delete tmp;
+    }
+
+
+
 
     qDebug() << "Destroy Warps";
     while(!warps.isEmpty())
@@ -347,6 +358,7 @@ void LevelScene::render()
             {
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
+            case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
                 item->render(cam->posX(), cam->posY());
                 break;

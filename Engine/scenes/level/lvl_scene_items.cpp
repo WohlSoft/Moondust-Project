@@ -70,11 +70,11 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     }
 
     bgo->worldPtr = world;
-    bgo->data = &(bgoData);
+    bgo->data = bgoData;
 
     double targetZ = 0;
     double zOffset = bgo->setup->zOffset;
-    int zMode = bgo->data->z_mode;
+    int zMode = bgo->data.z_mode;
 
     if(zMode==LevelBGO::ZDefault)
     {
@@ -90,15 +90,15 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     switch(zMode)
     {
         case LevelBGO::Background2:
-            targetZ = Z_BGOBack2 + zOffset + bgo->data->z_offset; break;
+            targetZ = Z_BGOBack2 + zOffset + bgo->data.z_offset; break;
         case LevelBGO::Background1:
-            targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
+            targetZ = Z_BGOBack1 + zOffset + bgo->data.z_offset; break;
         case LevelBGO::Foreground1:
-            targetZ = Z_BGOFore1 + zOffset + bgo->data->z_offset; break;
+            targetZ = Z_BGOFore1 + zOffset + bgo->data.z_offset; break;
         case LevelBGO::Foreground2:
-            targetZ = Z_BGOFore2 + zOffset + bgo->data->z_offset; break;
+            targetZ = Z_BGOFore2 + zOffset + bgo->data.z_offset; break;
         default:
-            targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
+            targetZ = Z_BGOBack1 + zOffset + bgo->data.z_offset; break;
     }
 
     bgo->z_index += targetZ;
@@ -117,6 +117,48 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     bgo->init();
 
     bgos.push_back(bgo);
+}
+
+void LevelScene::placeNPC(LevelNPC npcData)
+{
+    LVL_Npc * npc;
+    npc = new LVL_Npc();
+
+    /*
+    if(ConfigManager::lvl_npc_indexes.contains(bgoData.id))
+        npc->setup = ConfigManager::lvl_bgo_indexes[bgoData.id];
+    else
+    {
+        //Wrong BGO!
+        delete npc;
+        return;
+    }
+    */
+
+    npc->worldPtr = world;
+    npc->data = npcData;
+
+    double targetZ = 0;
+    targetZ = Z_npcStd;
+
+    npc->z_index += targetZ;
+
+    zCounter += 0.00000001;
+    npc->z_index += zCounter;
+
+    //long tID = ConfigManager::getNpcTexture(bgoData.id);
+    /*
+     * if( tID >= 0 )
+    {
+        npc->texId = ConfigManager::level_textures[tID].texture;
+        npc->texture = ConfigManager::level_textures[tID];
+        npc->animated = npc->setup->animated;
+        npc->animator_ID = npc->setup->animator_ID;
+    }
+    */
+    npc->init();
+
+    npcs.push_back(npc);
 }
 
 
@@ -180,4 +222,3 @@ void LevelScene::toggleSwitch(int switch_id)
         }
     }
 }
-

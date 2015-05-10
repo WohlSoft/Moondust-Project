@@ -906,6 +906,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     int contacts = 0;
 
     QList<LVL_Block *> target_blocks;
+    QList<LVL_Npc*> target_npcs;
     for(int i=0; i<cb.foundBodies.size();i++)
     {
         contacts++;
@@ -923,6 +924,8 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
                 target_blocks.push_back(static_cast<LVL_Block*>(visibleBody));
                 break;
             case PGE_Phys_Object::LVLNPC:
+                target_npcs.push_back(static_cast<LVL_Npc*>(visibleBody));
+                break;
             case PGE_Phys_Object::LVLPlayer:
                 default:break;
         }
@@ -938,6 +941,13 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(!x->destroyed)
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
         x->destroyed=true;
+    }
+    foreach(LVL_Npc *x, target_npcs)
+    {
+        if(!x) continue;
+        if(x->killed) continue;
+        x->kill();
+            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
     }
 }
 

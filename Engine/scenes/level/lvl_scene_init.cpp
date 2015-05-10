@@ -256,6 +256,16 @@ bool LevelScene::init()
         placeBGO(data.bgo[i]);
     }
 
+    qDebug()<<"Init NPCs";
+    //NPC
+    for(int i=0; i<data.npc.size(); i++)
+    {
+        loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        if(!isLevelContinues) return false;
+        placeNPC(data.npc[i]);
+    }
+
     qDebug()<<"Init Warps";
     //BGO
     for(int i=0; i<data.doors.size(); i++)
