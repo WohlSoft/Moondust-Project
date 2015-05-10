@@ -177,7 +177,8 @@ SOURCES += \
     data_configs/obj_sound.cpp \
     audio/pge_audio.cpp \
     settings/global_settings.cpp \
-    common_features/maths.cpp
+    common_features/maths.cpp \
+    controls/controller_joystick.cpp
 
 HEADERS  += \
     physics/base_object.h \
@@ -260,7 +261,8 @@ HEADERS  += \
     audio/pge_audio.h \
     data_configs/obj_sound_roles.h \
     settings/global_settings.h \
-    common_features/maths.h
+    common_features/maths.h \
+    controls/controller_joystick.h
 
 FORMS    += \
     data_configs/select_config.ui

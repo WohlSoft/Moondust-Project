@@ -14,6 +14,7 @@ public:
 
     bool debugMode;
     bool interprocessing;
+    bool testJoystickController;
 };
 
 extern GlobalSettings AppSettings;
