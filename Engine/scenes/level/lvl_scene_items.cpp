@@ -141,7 +141,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     player->init();
     players.push_back(player);
-    keyboard1.registerInControl(player);
+    player1Controller->registerInControl(player);
 
     if(byWarp)
     {

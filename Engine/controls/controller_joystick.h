@@ -16,29 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "controller_keyboard.h"
+#ifndef CONTROLLER_JOYSTICK_H
+#define CONTROLLER_JOYSTICK_H
 
-KeyboardController::KeyboardController() :
-    Controller()
-{}
+#include "controller.h"
+#include <SDL2/SDL.h>
 
-void KeyboardController::update()
+class JoystickController : public Controller
 {
-    SDL_PumpEvents();
+public:
+    JoystickController();
+    ~JoystickController();
 
-    const Uint8* state = SDL_GetKeyboardState(NULL);
+    SDL_Joystick* joystickController;
+    void update();
+};
 
-    keys.jump=state[SDL_SCANCODE_Z];
-    keys.alt_jump=state[SDL_SCANCODE_A];
-
-    keys.run=state[SDL_SCANCODE_X];
-    keys.alt_run=state[SDL_SCANCODE_S];
-
-    keys.right=state[SDL_SCANCODE_RIGHT];
-    keys.up=state[SDL_SCANCODE_UP];
-    keys.down=state[SDL_SCANCODE_DOWN];
-    keys.left=state[SDL_SCANCODE_LEFT];
-
-    keys.drop=state[SDL_SCANCODE_LSHIFT];
-    keys.start=state[SDL_SCANCODE_RETURN];
-}
+#endif // CONTROLLER_JOYSTICK_H
