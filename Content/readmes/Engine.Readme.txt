@@ -30,9 +30,10 @@ Arrows:
 left-right - walk
 Up/Down - enter into door/pipe
 --------------------
-Z - jump
+Z - jump / enter to level from world map [on German keyboard will work Y key instead by unknown for me reasons :P]
 X - run
 A - alt-jump (Temporary, fly up, use it to get inaccessible heights without vines!)
+S - alt-run (Temporary, tail-whipping to destroy any blocks over face, S+UP - destroy blocks over head, S+Down - destroy blocks under self)
 
 T - Toggle fullscreen mode
 
