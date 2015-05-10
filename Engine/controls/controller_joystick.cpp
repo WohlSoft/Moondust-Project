@@ -45,16 +45,12 @@ void JoystickController::update()
     keys.run = SDL_JoystickGetButton(joystickController, 0);
     keys.alt_run = SDL_JoystickGetButton(joystickController, 2);
 
-    Sint16 xAxis = SDL_JoystickGetAxis(joystickController, 0);
-    Sint16 yAxis = SDL_JoystickGetAxis(joystickController, 1);
+    Uint8 hatVal = SDL_JoystickGetHat(joystickController, 0);
 
-    qDebug() << "xAxis" << xAxis;
-    qDebug() << "yAxis" << yAxis;
-
-    keys.right = xAxis > 0;
-    keys.up = yAxis < 0;
-    keys.down = yAxis > 0;
-    keys.left = xAxis < 0;
+    keys.right = (hatVal == SDL_HAT_RIGHT);
+    keys.up = (hatVal == SDL_HAT_UP);
+    keys.down = (hatVal == SDL_HAT_DOWN);
+    keys.left = (hatVal == SDL_HAT_LEFT);
 
     keys.drop = SDL_JoystickGetButton(joystickController, 8);
     keys.start = SDL_JoystickGetButton(joystickController, 9);
