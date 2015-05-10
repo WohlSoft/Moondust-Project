@@ -2,6 +2,7 @@
 #define GLOBALSETTINGS_H
 
 
+
 class GlobalSettings
 {
 public:
