@@ -22,6 +22,7 @@
 #undef main
 #include "../common_features/graphics_funcs.h"
 
+#include <settings/global_settings.h>
 
 int PGE_Window::Width=800;
 int PGE_Window::Height=600;

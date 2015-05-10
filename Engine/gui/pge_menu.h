@@ -51,6 +51,7 @@ public:
         ITEM_Normal=0,
         ITEM_Bool,
         ITEM_Int,
+        ITEM_KeyGrab,
         ITEM_StrList
     };
 
@@ -93,6 +94,20 @@ private:
     int min;
     int max;
     bool allowRotation;
+    friend class PGE_Menu;
+};
+
+class PGE_KeyGrabMenuItem : public PGE_Menuitem
+{
+public:
+    PGE_KeyGrabMenuItem();
+    PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it);
+    ~PGE_KeyGrabMenuItem();
+    void grabKey();
+    void render(int x, int y);
+
+private:
+    int *keyValue;
     friend class PGE_Menu;
 };
 
