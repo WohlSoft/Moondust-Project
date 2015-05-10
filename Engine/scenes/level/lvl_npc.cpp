@@ -43,7 +43,7 @@ void LVL_Npc::init()
     if(!worldPtr) return;
     setSize(32, 32);
     b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
+    bodyDef.type = b2_staticBody;
     bodyDef.fixedRotation=true;
     bodyDef.awake=false;
     bodyDef.allowSleep=true;
@@ -81,7 +81,11 @@ void LVL_Npc::render(float camX, float camY)
     if(physBody)
     {
         if(!physBody->IsAwake())
+        {
             physBody->SetAwake(true);
+        }
+        if(physBody->GetType()!=b2_dynamicBody)
+            physBody->SetType(b2_dynamicBody);
     }
 
     QRectF NpcG = QRectF(posX()-camX,

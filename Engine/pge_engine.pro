@@ -178,7 +178,9 @@ SOURCES += \
     audio/pge_audio.cpp \
     settings/global_settings.cpp \
     common_features/maths.cpp \
-    scenes/level/lvl_npc.cpp
+    scenes/level/lvl_npc.cpp \
+    controls/controller_joystick.cpp
+
 
 HEADERS  += \
     physics/base_object.h \
@@ -262,7 +264,8 @@ HEADERS  += \
     data_configs/obj_sound_roles.h \
     settings/global_settings.h \
     common_features/maths.h \
-    scenes/level/lvl_npc.h
+    scenes/level/lvl_npc.h \
+    controls/controller_joystick.h
 
 FORMS    += \
     data_configs/select_config.ui
