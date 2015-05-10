@@ -124,7 +124,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 
 
-void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
+void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect)
 {
     //if(effect==0) //Simple Appear
     //if(effect==1) //Entered from pipe
@@ -139,16 +139,19 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
 
     player->initSize();
 
-    if(byWarp)
-    {
-        player->data.x = cameraStart.x();
-        player->data.y = cameraStart.y();
-    }
-
     player->init();
     players.push_back(player);
-
     keyboard1.registerInControl(player);
+
+    if(byWarp)
+    {
+        player->WarpTo(playerData.x, playerData.y, warpType, warpDirect);
+        if(warpType==2)
+            PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
+        else if(warpType==0)
+            PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
+
+    }
 }
 
 

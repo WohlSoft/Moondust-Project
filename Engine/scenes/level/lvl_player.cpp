@@ -116,8 +116,10 @@ LVL_Player::LVL_Player()
     wasTeleported = false;
     wasEntered = false;
     warpsTouched = 0;
-
+    warpDirectO = 0;
     isWarping=false;
+    warpPipeOffset=0;
+
     warpDo=false;
     warpDirect=0;
     warpWaitTicks=0;
@@ -191,6 +193,14 @@ void LVL_Player::update(float ticks)
     if(!physBody) return;
     if(!camera) return;
 
+    event_queue.processEvents(ticks);
+    if(isWarping)
+    {
+        physBody->SetLinearVelocity(b2Vec2(0, 0));
+        animator.tickAnimation(ticks);
+        goto CameraOnly;
+    }
+
     if(_player_moveup)
     {
         physBody->SetTransform(b2Vec2(
@@ -248,11 +258,10 @@ void LVL_Player::update(float ticks)
 
     if(environments_map.isEmpty())
     {
-        if(last_environment != (camera->section->underwater ?
+        if( (last_environment != (camera->section->underwater ?
                                     LVL_PhysEnv::Env_Water :
-                                    LVL_PhysEnv::Env_Air) )
+                                    LVL_PhysEnv::Env_Air)) )
         {
-            qDebug()<<"Exit from environment";
             environment = camera->section->underwater ?
                                             LVL_PhysEnv::Env_Water :
                                                     LVL_PhysEnv::Env_Air ;
@@ -275,7 +284,7 @@ void LVL_Player::update(float ticks)
     }
 
 
-    if(last_environment!=environment)
+    if((last_environment!=environment)||(last_environment==-1))
     {
         physics_cur = physics[environment];
 
@@ -399,13 +408,13 @@ void LVL_Player::update(float ticks)
 
     slippery_surface = !foot_sl_contacts_map.isEmpty();
 
-    float32 force = slippery_surface ?
-                           (physics_cur.walk_force/
-                            physics_cur.slippery_c) :
-                            physics_cur.walk_force;
-
     if( (!keys.left) || (!keys.right) )
     {
+        float32 force = slippery_surface ?
+                               (physics_cur.walk_force/
+                                physics_cur.slippery_c) :
+                                physics_cur.walk_force;
+
         if(keys.left) direction=-1;
         if(keys.right) direction=1;
 
@@ -704,40 +713,7 @@ void LVL_Player::update(float ticks)
 
                         if(doTeleport)
                         {
-
-                            if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()))
-                            {
-                                LvlSceneP::s->lastWarpID=contactedWarp->data.array_id;
-                                exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto
-                                              ,contactedWarp->data.world_x, contactedWarp->data.world_y);
-                            }
-                            else
-                            {
-                                // Exit direction: [1] down [3] up [4] left [2] right
-                                physBody->SetLinearVelocity(b2Vec2(0, 0));
-                                switch(contactedWarp->data.odirect)
-                                {
-                                    case 2://right
-                                        teleport(contactedWarp->data.ox,
-                                                     contactedWarp->data.oy+32-height);
-                                        break;
-                                    case 1://down
-                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                                     contactedWarp->data.oy);
-                                        break;
-                                    case 4://left
-                                        teleport(contactedWarp->data.ox+32-width,
-                                                     contactedWarp->data.oy+32-height);
-                                        if(keys.left && !wasEntered) doTeleport=true;
-                                        break;
-                                    case 3://up
-                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                                     contactedWarp->data.oy+32-height);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
+                            WarpTo(contactedWarp->data);
                             wasEntered = true;
                         }
                     }
@@ -750,18 +726,7 @@ void LVL_Player::update(float ticks)
                 {
                     if(!wasTeleported)
                     {
-                        if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
-                        {
-                            LvlSceneP::s->lastWarpID=contactedWarp->data.array_id;
-                            exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto
-                                          ,contactedWarp->data.world_x, contactedWarp->data.world_y);
-                        }
-                        else
-                        {
-                            physBody->SetLinearVelocity(b2Vec2(0, 0));
-                            teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                         contactedWarp->data.oy+32-height);
-                        }
+                        WarpTo(contactedWarp->data);
                         wasEntered = true;
                     }
                 }
@@ -770,8 +735,7 @@ void LVL_Player::update(float ticks)
             default:
                 if(!wasTeleported && !wasEntered)
                 {
-                    teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                 contactedWarp->data.oy+32-height);
+                    WarpTo(contactedWarp->data.ox, contactedWarp->data.oy, contactedWarp->data.type);
                     wasTeleported = true;
                     wasEntered = true;
                 }
@@ -791,6 +755,7 @@ void LVL_Player::update(float ticks)
         }
     }
 
+CameraOnly:
     if(!isInited)
     {
         isInited=true;
@@ -1009,6 +974,325 @@ void LVL_Player::setDuck(bool duck)
     ducking=duck;
 }
 
+
+
+
+//Enter player to level
+void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
+{
+    warpFrameW = texture.w;
+    warpFrameH = texture.h;
+
+    isInited=true;
+    switch(warpType)
+    {
+        case 2://door
+        {
+                physBody->SetGravityScale(0);
+                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                EventQueueEntry<LVL_Player >event2;
+                event2.makeCaller([this,x,y]()->void{
+                                      isWarping=true;
+                                      teleport(x+16-posX_coefficient,
+                                                     y+32-height);
+                                      animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                  }, 0);
+                event_queue.events.push_back(event2);
+
+                EventQueueEntry<LVL_Player >fadeOutBlack;
+                fadeOutBlack.makeCaller([this]()->void{
+                                      if(LvlSceneP::s->fader_opacity>0)
+                                         LvlSceneP::s->setFade(25, 0.0, 0.25);
+                                  }, 0);
+                event_queue.events.push_back(fadeOutBlack);
+
+                EventQueueEntry<LVL_Player >event3;
+                event3.makeCaller([this]()->void{
+                                      isWarping=false;
+                                      physBody->SetLinearVelocity(b2Vec2(0, -0.00001));
+                                      last_environment=-1;//!< Forcing to refresh physical environment
+                                  }, 200);
+                event_queue.events.push_back(event3);
+        }
+        break;
+    case 1://Pipe
+        {
+            // Exit direction: [1] down [3] up [4] left [2] right
+            physBody->SetGravityScale(0);
+            physBody->SetLinearVelocity(b2Vec2(0, 0));
+
+            EventQueueEntry<LVL_Player >eventPipeEnter;
+            eventPipeEnter.makeCaller([this,warpDirection]()->void{
+                                    isWarping=true;
+                                    warpDirectO=warpDirection;
+                                    warpPipeOffset=1.0;
+                              }, 0);
+            event_queue.events.push_back(eventPipeEnter);
+
+            // Exit direction: [1] down [3] up [4] left [2] right
+            switch(warpDirection)
+            {
+                case 2://right
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,x,y]()->void{
+                                direction=1;
+                                animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                teleport(x, y+32-height);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                    break;
+                case 1://down
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,x,y]()->void{
+                                animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                teleport(x+16-posX_coefficient, y);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                    break;
+                case 4://left
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,x, y]()->void{
+                                direction=-1;
+                                animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                teleport(x+32-width, y+32-height);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                    break;
+                case 3://up
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,x,y]()->void{
+                                animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                teleport(x+16-posX_coefficient,
+                                         y+32-height);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            EventQueueEntry<LVL_Player >fadeOutBlack;
+            fadeOutBlack.makeCaller([this]()->void{
+                                  if(LvlSceneP::s->fader_opacity>0)
+                                     LvlSceneP::s->setFade(25, 0.0, 0.25);
+                              }, 0);
+            event_queue.events.push_back(fadeOutBlack);
+
+            EventQueueEntry<LVL_Player >wait200ms;
+            wait200ms.makeTimer(250);
+            event_queue.events.push_back(wait200ms);
+
+            EventQueueEntry<LVL_Player >playSnd;
+            playSnd.makeCaller([this]()->void{PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                                        },0);
+            event_queue.events.push_back(playSnd);
+
+            EventQueueEntry<LVL_Player >warpOut;
+            warpOut.makeWaiterCond([this]()->bool{
+                                      warpPipeOffset-=0.02f;
+                                      return warpPipeOffset<=0.0f;
+                                  }, false, 0);
+            event_queue.events.push_back(warpOut);
+
+            EventQueueEntry<LVL_Player >endWarping;
+            endWarping.makeCaller([this]()->void{
+                                  isWarping=false;
+                                  physBody->SetLinearVelocity(b2Vec2(0, -0.00001));
+                                  last_environment=-1;//!< Forcing to refresh physical environment
+                              }, 0);
+            event_queue.events.push_back(endWarping);
+        }
+        break;
+    case 0://Instant
+        teleport(x+16-posX_coefficient,
+                     y+32-height);
+        break;
+    default:
+        break;
+    }
+}
+
+
+void LVL_Player::WarpTo(LevelDoor warp)
+{
+    warpFrameW = texture.w;
+    warpFrameH = texture.h;
+
+    switch(warp.type)
+    {
+        case 1:/*******Pipe!*******/
+        {
+            physBody->SetLinearVelocity(b2Vec2(0, 0));
+
+            //Create events
+            EventQueueEntry<LVL_Player >event1;
+            event1.makeCaller([this]()->void{
+                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                isWarping=true;
+                                setDuck(false);
+                                physBody->SetGravityScale(0);
+                                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                                warpPipeOffset=0.0f;
+                              }, 0);
+            event_queue.events.push_back(event1);
+
+            // Entrance direction: [3] down, [1] up, [2] left, [4] right
+            switch(contactedWarp->data.idirect)
+            {
+                case 4://Right
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,warp]()->void{
+                                  warpDirectO=4;
+                                  direction=1;
+                                  animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                  setPos(warp.ix+32-width, posY());
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                break;
+                case 3:
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,warp]()->void{
+                                  warpDirectO=3;
+                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                  setPos(posX(), warp.iy+32-height);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                break;
+                case 2://Left
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,warp]()->void{
+                                  warpDirectO=2;
+                                  direction=-1;
+                                  animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                  setPos(warp.ix, posY());
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                break;
+                case 1:
+                    {
+                        EventQueueEntry<LVL_Player >eventX;
+                        eventX.makeCaller([this,warp]()->void{
+                                  warpDirectO=1;
+                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                  setPos(posX(), warp.iy);
+                                          }, 0);
+                        event_queue.events.push_back(eventX);
+                    }
+                break;
+            }
+
+            EventQueueEntry<LVL_Player >warpIn;
+            warpIn.makeWaiterCond([this]()->bool{
+                                      warpPipeOffset+=0.02f;
+                                      return warpPipeOffset>=1.0f;
+                                  }, false, 0);
+            event_queue.events.push_back(warpIn);
+
+            EventQueueEntry<LVL_Player >wait200ms;
+            wait200ms.makeTimer(250);
+            event_queue.events.push_back(wait200ms);
+
+            if( (warp.lvl_o) || (!warp.lname.isEmpty()) )
+            {
+                EventQueueEntry<LVL_Player >event2;
+                event2.makeCaller([this, warp]()->void{
+                          LvlSceneP::s->lastWarpID=warp.array_id;
+                          exitFromLevel(warp.lname, warp.warpto,
+                                        warp.world_x, warp.world_y);
+                                  }, 200);
+                event_queue.events.push_back(event2);
+            }
+            else
+            {
+                int sID = LvlSceneP::s->findNearSection(warp.ox, warp.oy);
+                if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+                {
+                    EventQueueEntry<LVL_Player >event3;
+                    event3.makeCaller([this]()->void{
+                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                      }, 0);
+                    event_queue.events.push_back(event3);
+                }
+
+                EventQueueEntry<LVL_Player >whileOpacityFade;
+                whileOpacityFade.makeWaiterCond([this]()->bool{
+                                          return LvlSceneP::s->isOpacityFadding();
+                                      }, true, 100);
+                event_queue.events.push_back(whileOpacityFade);
+
+                WarpTo(warp.ox, warp.oy, warp.type, warp.odirect);
+            }
+        }
+        break;
+        case 2:/*******Door!*******/
+        {
+            //Create events
+            EventQueueEntry<LVL_Player >event1;
+            event1.makeCaller([this]()->void{
+                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                isWarping=true;
+                                setDuck(false);
+                                physBody->SetGravityScale(0);
+                                animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
+                                PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
+                              }, 0);
+            event_queue.events.push_back(event1);
+
+            EventQueueEntry<LVL_Player >event2;
+            event2.makeTimer(200);
+            event_queue.events.push_back(event2);
+
+            if( (warp.lvl_o) || (!warp.lname.isEmpty()) )
+            {
+                EventQueueEntry<LVL_Player >event2;
+                event2.makeCaller([this, warp]()->void{
+                          LvlSceneP::s->lastWarpID=warp.array_id;
+                          exitFromLevel(warp.lname, warp.warpto,
+                                        warp.world_x, warp.world_y);
+                                  }, 200);
+                event_queue.events.push_back(event2);
+
+            }
+            else
+            {
+                int sID = LvlSceneP::s->findNearSection(warp.ox, warp.oy);
+                if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+                {
+                    EventQueueEntry<LVL_Player >event3;
+                    event3.makeCaller([this]()->void{
+                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                      }, 0);
+                    event_queue.events.push_back(event3);
+                }
+
+                EventQueueEntry<LVL_Player >event4;
+                event4.makeWaiterCond([this]()->bool{
+                                          return LvlSceneP::s->isOpacityFadding();
+                                      }, true, 100);
+                event_queue.events.push_back(event4);
+
+                WarpTo(warp.ox, warp.oy, warp.type, warp.odirect);
+            }
+        break;
+        }
+    }
+}
+
+
 void LVL_Player::teleport(float x, float y)
 {
     if(!LvlSceneP::s) return;
@@ -1080,6 +1364,59 @@ void LVL_Player::render(float camX, float camY)
                             frameH
                          );
 
+    if(isWarping)
+    {
+        if(warpPipeOffset>=1.0)
+            return;
+        //     Exit direction: [1] down  [3] up  [4] left  [2] right
+        // Entrance direction: [3] down, [1] up, [2] left, [4] right
+        switch(warpDirectO)
+        {
+            case 2://Left entrance, right Exit
+                {
+                    float wOfs = Ofs.x()/warpFrameW;//Relative X offset
+                    float wOfsF = width/warpFrameW; //Relative hitbox width
+                    tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
+                    player.setLeft( player.left()+Ofs.x() );
+                    player.setRight( player.right()-(warpPipeOffset*width) );
+                }
+                break;
+            case 1://Up entrance, down exit
+                {
+                    float hOfs = Ofs.y()/warpFrameH;//Relative Y offset
+                    float hOfsF = height/warpFrameH; //Relative hitbox Height
+                    tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
+                    player.setTop( player.top()+Ofs.y() );
+                    player.setBottom( player.bottom()-(warpPipeOffset*height) );
+                }
+                break;
+            case 4://right emtramce. left entrance
+                {
+                    float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
+                    float fWw =   animator.sizeOfFrame().width();   //Relative width of frame
+                    float wOfHB = width/warpFrameW;                 //Relative width of hitbox
+                    float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
+                    tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
+                    player.setLeft( player.left()+(warpPipeOffset*width) );
+                    player.setRight( player.right()-(wWAbs-Ofs.x()-width) );
+                }
+                break;
+            case 3://down entrance, up exit
+                {
+                    float hOfs =  Ofs.y()/warpFrameH;               //Relative Y offset
+                    float fHh =   animator.sizeOfFrame().height();  //Relative height of frame
+                    float hOfHB = height/warpFrameH;                //Relative height of hitbox
+                    float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
+                    tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
+                    player.setTop( player.top()+(warpPipeOffset*height) );
+                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height) );
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     glEnable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
     glBindTexture( GL_TEXTURE_2D, texId );
@@ -1097,7 +1434,6 @@ void LVL_Player::render(float camX, float camY)
         glVertex2f( player.left(),  player.bottom());
     glEnd();
     glDisable(GL_TEXTURE_2D);
-
 }
 
 bool LVL_Player::locked()

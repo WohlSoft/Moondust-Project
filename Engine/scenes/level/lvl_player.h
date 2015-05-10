@@ -27,6 +27,7 @@
 #include <data_configs/obj_player.h>
 #include <common_features/matrix_animator.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <common_features/event_queue.h>
 #include <QMap>
 
 class LVL_Player :
@@ -118,9 +119,19 @@ class LVL_Player :
         int     warpsTouched;
         bool    isWarping;
         bool    warpDo;
+
         int     warpDirect;
+
+        int     warpDirectO;
+        float   warpPipeOffset;
         uint32  warpWaitTicks;
-        /*******************Warps*********************/
+        float   warpFrameW;
+        float   warpFrameH;
+
+        EventQueue<LVL_Player > event_queue;
+        void    WarpTo(float x, float y, int warpType, int warpDirection=1);
+        void    WarpTo(LevelDoor warp);
+        /*******************Warps*********************/\
 
         /******************floating*******************/
         bool    floating_allow;
