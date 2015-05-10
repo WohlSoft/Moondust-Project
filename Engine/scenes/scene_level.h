@@ -191,7 +191,7 @@ public:
     void placeBlock(LevelBlock blockData);
     void placeBGO(LevelBGO bgoData);
 
-    void addPlayer(PlayerPoint playerData, bool byWarp=false);
+    void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
     /*********************Item placing**********************/
 
     void destroyBlock(LVL_Block * _block);

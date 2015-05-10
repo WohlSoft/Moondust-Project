@@ -110,12 +110,12 @@ bool LevelScene::setEntrance(int entr)
                 event3.makeCaller([this]()->void{
                                       PlayerPoint newPoint;
                                       newPoint.id = data.players.first().id;
-                                      newPoint.x=cameraStart.x();
-                                      newPoint.y=cameraStart.y();
+                                      newPoint.x=startWarp.ox;
+                                      newPoint.y=startWarp.oy;
                                       newPoint.w = this->player_defs.first().width();
                                       newPoint.h = this->player_defs.first().height();
                                       newPoint.direction=1;
-                                      this->addPlayer(newPoint, true);
+                                      this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
                                       isWarpEntrance=false;
                                   }, 1000);
                 system_events.events.push_back(event3);

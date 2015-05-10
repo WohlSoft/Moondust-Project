@@ -82,6 +82,8 @@ public:
     void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
     void setFrameSpeed(int speed);
     void setSize(int _width, int _height);
+    QSize size();
+    QSizeF sizeOfFrame();
     void tickAnimation(int frametime);
     QRectF curFrame();
     QPointF curOffset();

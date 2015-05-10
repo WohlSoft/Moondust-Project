@@ -89,6 +89,16 @@ void MatrixAnimator::setSize(int _width, int _height)
     height_f = 1.0f/height;
 }
 
+QSize MatrixAnimator::size()
+{
+    return QSize(width, height);
+}
+
+QSizeF MatrixAnimator::sizeOfFrame()
+{
+    return QSizeF(width_f, height_f);
+}
+
 void MatrixAnimator::tickAnimation(int frametime)
 {
     if(framespeed<1) return; //Idling animation
