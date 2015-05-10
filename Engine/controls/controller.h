@@ -22,6 +22,7 @@
 #include <QVector>
 #include "control_keys.h"
 #include "controllable_object.h"
+#include "controller_key_map.h"
 
 class Controller
 {
@@ -41,6 +42,7 @@ public:
         key_drop
     };
     static controller_keys noKeys();
+    virtual void setKeyMap(KeyMap map);
 
     void resetControls();
     void sendControls();
@@ -49,6 +51,7 @@ public:
     void registerInControl(ControllableObject* obj);
     void removeFromControl(ControllableObject* obj);
 
+    KeyMap kmap;
     controller_keys keys;
     QVector<ControllableObject* > objects;
 };

@@ -30,11 +30,15 @@ controller_keys Controller::noKeys()
     return ResetControlKeys();
 }
 
+void Controller::setKeyMap(KeyMap map)
+{
+    kmap = map;
+}
+
 void Controller::sendControls()
 {
     foreach(ControllableObject* x, objects)
         x->applyControls(keys);
-
 }
 
 void Controller::update() {}
