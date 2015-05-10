@@ -14,6 +14,14 @@ public:
 
     bool debugMode;
     bool interprocessing;
+
+    int  ScreenWidth;
+    int  ScreenHeight;
+
+    int  MaxFPS;
+    int  PhysStep;
+
+    bool showDebugInfo;
 };
 
 extern GlobalSettings AppSettings;

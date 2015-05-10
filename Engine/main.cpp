@@ -31,6 +31,8 @@
 #include "common_features/logger.h"
 #include "common_features/episode_state.h"
 
+#include <settings/global_settings.h>
+
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
 
@@ -101,6 +103,9 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
+
+    AppSettings.load();
+    AppSettings.apply();
 
     //Init log writer
     LoadLogSettings();

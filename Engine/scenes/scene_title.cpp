@@ -20,9 +20,11 @@
 #include <graphics/graphics.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
+#include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <gui/pge_msgbox.h>
+#include <audio/pge_audio.h>
 
 #include "scene_title.h"
 #include <QtDebug>
@@ -516,6 +518,10 @@ int TitleScene::exec()
                             menu.reset();
                             menu.setCurrentItem(4);
                         break;
+                        case menu_options:
+                        AppSettings.apply();
+                        AppSettings.save();
+                        PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
                     default:
                         if(menuChain.size()>0)
                         {
@@ -560,8 +566,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setItemsNumber(5);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("dab", "Dummy and big menu");
-                menu.addBoolMenuItem(&PGE_Window::showDebugInfo, "dbg_flag", "Show debug info");
-                menu.addIntMenuItem(&PGE_Window::PhysStep, 65, 80, "phys_step", "Physics step");
+                menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
+                menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
+                menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step");
             break;
                 case menu_tests:
                     menu.setPos(260,380);

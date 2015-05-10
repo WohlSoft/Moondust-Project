@@ -22,8 +22,11 @@
 #include "../scenes/level/lvl_player.h"
 #include "../scenes/level/lvl_block.h"
 #include "../scenes/level/lvl_bgo.h"
+#include "../scenes/level/lvl_npc.h"
 #include "../scenes/level/lvl_physenv.h"
 #include "../scenes/level/lvl_warp.h"
+
+#include "../scenes/level/lvl_scene_ptr.h"
 
 #include <cstdint>
 
@@ -79,6 +82,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         chr->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
         chr->contactedWithWarp=true;
         chr->warpsTouched++;
+        return;
     }
 
     /***********************************PhysEnvironment & Player***********************************/
@@ -109,6 +113,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         if(!env) return;
         chr->environments_map[(intptr_t)bodyBlock]
                 = env->env_type;
+        return;
     }
 
     /***********************************BGO & Player***********************************/
@@ -139,6 +144,59 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         if(!bgo) return;
         if(bgo->setup->climbing)
             chr->climbable_map[(intptr_t)bodyBlock]=1;
+        return;
+    }
+
+    /***********************************NPC & Player***********************************/
+    if ( bodyA->type == PGE_Phys_Object::LVLNPC && bodyB->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( bodyB->type == PGE_Phys_Object::LVLNPC && bodyA->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        LVL_Npc *npc=dynamic_cast<LVL_Npc *>(bodyBlock);
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(!npc) return;
+        if(npc->data.id==11)
+        {
+            LvlSceneP::s->setExiting(1000, 1);
+        }
+        if(npc->collide==PGE_Phys_Object::COLLISION_ANY)
+        {
+            if(npc->killed)
+            {
+                    contact->SetEnabled(false);
+                    return;
+            }
+
+            if(  ( (chr->bottom()<=npc->top()-0.1) ||
+                    ((chr->bottom() >= npc->top())&&
+                    (chr->bottom()<=npc->top()+2)) )
+
+                 &&( !( (bodyChar->left()>=bodyBlock->right()) || (bodyChar->right() <= bodyBlock->left()) ) )//prevent wall climbing
+                  )
+            {
+                chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
+                chr->onGround=(!chr->foot_contacts_map.isEmpty());
+            }
+        }
+        return;
     }
 
 
@@ -308,6 +366,7 @@ void PGEContactListener::EndContact(b2Contact *contact)
             chr->contactedWithWarp=false;
             chr->contactedWarp = NULL;
         }
+        return;
     }
     /***********************************Physical Environment zone & Player***********************************/
     if ( (bodyA->type == PGE_Phys_Object::LVLPhysEnv) && (bodyB->type == PGE_Phys_Object::LVLPlayer) )
@@ -337,6 +396,7 @@ void PGEContactListener::EndContact(b2Contact *contact)
         {
             chr->environments_map.remove((intptr_t)bodyBlock);
         }
+        return;
     }
 
     /***********************************BGO & Player***********************************/
@@ -370,6 +430,7 @@ void PGEContactListener::EndContact(b2Contact *contact)
                     ((!chr->climbable_map.isEmpty()) &&
                         (chr->climbing));
         }
+        return;
     }
 
     /***********************************Block & Player***********************************/
@@ -407,6 +468,45 @@ void PGEContactListener::EndContact(b2Contact *contact)
         {
             chr->foot_sl_contacts_map.remove((intptr_t)bodyBlock);
         }
+        return;
+    }
+
+    /***********************************Npc & Player***********************************/
+    if ( (bodyA->type == PGE_Phys_Object::LVLNPC) && (bodyB->type == PGE_Phys_Object::LVLPlayer) )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( (bodyB->type == PGE_Phys_Object::LVLNPC) && (bodyA->type == PGE_Phys_Object::LVLPlayer) )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!chr) return;
+        if(chr->foot_contacts_map.contains((intptr_t)bodyBlock))
+        {
+            chr->foot_contacts_map.remove((intptr_t)bodyBlock);
+            chr->onGround  =
+                    (!chr->foot_contacts_map.isEmpty());
+        }
+
+        if(chr->foot_sl_contacts_map.contains((intptr_t)bodyBlock))
+        {
+            chr->foot_sl_contacts_map.remove((intptr_t)bodyBlock);
+        }
+        return;
     }
 
 }

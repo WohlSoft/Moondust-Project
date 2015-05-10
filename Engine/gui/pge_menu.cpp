@@ -642,6 +642,7 @@ void PGE_BoolMenuItem::render(int x, int y)
 
 void PGE_BoolMenuItem::toggle()
 {
+    PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     if(flag)
         *flag=!(*flag);
 }
@@ -673,6 +674,7 @@ PGE_IntMenuItem::~PGE_IntMenuItem()
 void PGE_IntMenuItem::left()
 {
     if(!intvalue) return;
+    PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     (*intvalue)--;
     if((*intvalue)<min)
         *intvalue=allowRotation?max:min;
@@ -681,6 +683,7 @@ void PGE_IntMenuItem::left()
 void PGE_IntMenuItem::right()
 {
     if(!intvalue) return;
+    PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     (*intvalue)++;
     if((*intvalue)>max)
         *intvalue=allowRotation?min:max;
@@ -692,3 +695,33 @@ void PGE_IntMenuItem::render(int x, int y)
     if(intvalue)
         FontManager::printText(QString::number(*intvalue), x+350, y);
 }
+
+
+/**************************Integer menu item************************************/
+
+PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem() : PGE_Menuitem()
+{
+    keyValue=NULL;
+    type=ITEM_KeyGrab;
+}
+
+PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it) : PGE_Menuitem(it)
+{
+    this->keyValue = it.keyValue;
+}
+
+PGE_KeyGrabMenuItem::~PGE_KeyGrabMenuItem()
+{}
+
+void PGE_KeyGrabMenuItem::grabKey()
+{
+
+}
+
+void PGE_KeyGrabMenuItem::render(int x, int y)
+{
+    PGE_Menuitem::render(x, y);
+    if(keyValue)
+        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+350, y);
+}
+
