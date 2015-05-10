@@ -32,6 +32,7 @@
 
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
+#include "level/lvl_npc.h"
 
 #include "level/lvl_physenv.h"
 
@@ -190,6 +191,7 @@ public:
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);
     void placeBGO(LevelBGO bgoData);
+    void placeNPC(LevelNPC npcData);
 
     void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
     /*********************Item placing**********************/
@@ -197,17 +199,18 @@ public:
     void destroyBlock(LVL_Block * _block);
     void setGameState(EpisodeState *_gameState);
 
+    EventQueue<LevelScene > system_events;
+
 private:
     LevelData data;
 
     EpisodeState *gameState;
 
-    EventQueue<LevelScene > system_events;
-
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;
     QVector<LVL_Block* > blocks;
     QVector<LVL_Bgo* > bgos;
+    QVector<LVL_Npc* > npcs;
     QVector<LVL_Warp* > warps;
     QVector<LVL_PhysEnv* > physenvs;
 

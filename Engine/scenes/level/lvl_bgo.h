@@ -31,7 +31,7 @@ public:
     ~LVL_Bgo();
     void init();
 
-    LevelBGO* data; //Local settings
+    LevelBGO data; //Local settings
 
     bool animated;
     long animator_ID;

@@ -16,18 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_bgo.h"
+#include "lvl_npc.h"
 #include "../../data_configs/config_manager.h"
 
-LVL_Bgo::LVL_Bgo()
+LVL_Npc::LVL_Npc()
 {
-    type = LVLBGO;
-    data=FileFormats::dummyLvlBgo();
+    type = LVLNPC;
+    data = FileFormats::dummyLvlNpc();
     animated=false;
     animator_ID=0;
+    killed=false;
 }
 
-LVL_Bgo::~LVL_Bgo()
+LVL_Npc::~LVL_Npc()
 {
     if(physBody && worldPtr)
     {
@@ -37,67 +38,77 @@ LVL_Bgo::~LVL_Bgo()
     }
 }
 
-//float LVL_Bgo::posX()
-//{
-//    return data->x;
-//}
-
-//float LVL_Bgo::posY()
-//{
-//    return data->y;
-//}
-
-void LVL_Bgo::init()
+void LVL_Npc::init()
 {
     if(!worldPtr) return;
-    setSize(texture.w, texture.h);
-
+    setSize(32, 32);
     b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.fixedRotation=true;
+    bodyDef.awake=false;
+    bodyDef.allowSleep=true;
     bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
         PhysUtil::pix2met(data.y + posY_coefficient ) );
+    bodyDef.linearDamping = 2.0;
     bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
     physBody = worldPtr->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-
     shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
-
-    b2Fixture * bgo = physBody->CreateFixture(&shape, 1.0f);
-    bgo->SetSensor(true);
-    bgo->SetFriction( 0 );
+    collide = COLLISION_ANY;
+    b2Fixture * npc = physBody->CreateFixture(&shape, 1.0f);
+    npc->SetDensity(1.0);
+    npc->SetFriction(0.3f);
+    npc->SetSensor(false);
+    npc->SetFriction( 0 );
 }
 
-void LVL_Bgo::render(float camX, float camY)
+void LVL_Npc::kill()
 {
-    QRectF bgoG = QRectF(posX()-camX,
+    killed=true;
+    if(physBody && worldPtr)
+    {
+      worldPtr->DestroyBody(physBody);
+      physBody->SetUserData(NULL);
+      physBody = NULL;
+    }
+}
+
+void LVL_Npc::render(float camX, float camY)
+{
+    if(killed) return;
+
+    if(physBody)
+    {
+        if(!physBody->IsAwake())
+            physBody->SetAwake(true);
+    }
+
+    QRectF NpcG = QRectF(posX()-camX,
                            posY()-camY,
                            width,
                            height);
 
-    AniPos x(0,1);
+    //AniPos x(0,1);
 
-    if(animated) //Get current animated frame
-        x = ConfigManager::Animator_BGO[animator_ID].image();
+    //if(animated) //Get current animated frame
+    //    x = ConfigManager::Animator_BGO[animator_ID].image();
 
-    glEnable(GL_TEXTURE_2D);
+    glDisable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    glBindTexture( GL_TEXTURE_2D, texId );
-
+    //glBindTexture( GL_TEXTURE_2D, texId );
     glBegin( GL_QUADS );
-        glTexCoord2f( 0, x.first );
-        glVertex2f( bgoG.left(), bgoG.top());
+        //glTexCoord2f( 0, x.first );
+        glVertex2f( NpcG.left(), NpcG.top());
 
-        glTexCoord2f( 1, x.first );
-        glVertex2f(  bgoG.right(), bgoG.top());
+        //glTexCoord2f( 1, x.first );
+        glVertex2f(  NpcG.right(), NpcG.top());
 
-        glTexCoord2f( 1, x.second );
-        glVertex2f(  bgoG.right(),  bgoG.bottom());
+        //glTexCoord2f( 1, x.second );
+        glVertex2f(  NpcG.right(),  NpcG.bottom());
 
-        glTexCoord2f( 0, x.second );
-        glVertex2f( bgoG.left(),  bgoG.bottom());
+        //glTexCoord2f( 0, x.second );
+        glVertex2f( NpcG.left(),  NpcG.bottom());
     glEnd();
     glDisable(GL_TEXTURE_2D);
-
 }
