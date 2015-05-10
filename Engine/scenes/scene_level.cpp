@@ -23,6 +23,9 @@
 
 #include "../graphics/gl_renderer.h"
 
+#include "../controls/controller_keyboard.h"
+#include "../controls/controller_joystick.h"
+
 #include "level/lvl_scene_ptr.h"
 
 #include <data_configs/config_manager.h>
@@ -88,6 +91,14 @@ LevelScene::LevelScene()
     fadeSpeed=25;
     /*********Fader*************/
 
+    /*********Controller********/
+    if(AppSettings.testJoystickController){
+        player1Controller = new JoystickController();
+    }else{
+        player1Controller = new KeyboardController();
+    }
+    /*********Controller********/
+
     errorMsg = "";
 
     gameState = NULL;
@@ -142,7 +153,7 @@ LevelScene::~LevelScene()
         LVL_Player* tmp;
         tmp = players.first();
         players.pop_front();
-        keyboard1.removeFromControl(tmp);
+        player1Controller->removeFromControl(tmp);
         if(tmp) delete tmp;
     }
 
@@ -193,6 +204,8 @@ LevelScene::~LevelScene()
         physenvs.pop_front();
         if(tmp) delete tmp;
     }
+
+    delete player1Controller;
 
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
@@ -276,7 +289,7 @@ void LevelScene::update()
         }
 
         //Update controllers
-        keyboard1.sendControls();
+        player1Controller->sendControls();
 
         //update players
         for(i=0; i<players.size(); i++)
@@ -442,7 +455,7 @@ int LevelScene::exec()
             qApp->processEvents();
         #endif
 
-        keyboard1.update();
+        player1Controller->update();
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )

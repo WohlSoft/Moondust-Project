@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
     episode.worldfile="";
     AppSettings.debugMode=false; //enable debug mode
     AppSettings.interprocessing=false; //enable interprocessing
+    AppSettings.testJoystickController=false;
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -148,6 +149,11 @@ int main(int argc, char *argv[])
         {
             IntProc::init();
             AppSettings.interprocessing=true;
+        }
+        else
+        if(param == ("--useJoystick"))
+        {
+            AppSettings.testJoystickController=true;
         }
         else
         {
@@ -204,6 +210,12 @@ int main(int argc, char *argv[])
             //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
         exit(1);
     }
+
+    if(AppSettings.testJoystickController)
+    {
+        SDL_JoystickEventState(SDL_ENABLE);
+    }
+
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
         QMessageBox::critical(NULL, "SDL Error",

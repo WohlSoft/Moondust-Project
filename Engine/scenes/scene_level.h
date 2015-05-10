@@ -41,7 +41,7 @@
 
 #include "../graphics/window.h"
 
-#include "../controls/controller_keyboard.h"
+#include "../controls/controller.h"
 
 #include "../data_configs/custom_data.h"
 
@@ -131,7 +131,7 @@ public:
 
     int numberOfPlayers;
 
-    KeyboardController keyboard1;
+    Controller* player1Controller;
 
 
     /**************Z-Layers**************/

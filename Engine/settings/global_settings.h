@@ -22,6 +22,8 @@ public:
     int  PhysStep;
 
     bool showDebugInfo;
+
+    bool testJoystickController;
 };
 
 extern GlobalSettings AppSettings;

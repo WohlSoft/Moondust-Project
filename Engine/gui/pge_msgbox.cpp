@@ -365,8 +365,8 @@ void PGE_MsgBox::updateControllers()
             LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
             if(s)
             {
-                s->keyboard1.update();
-                s->keyboard1.sendControls();
+                s->player1Controller->update();
+                s->player1Controller->sendControls();
             }
         }
     }

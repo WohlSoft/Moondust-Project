@@ -18,6 +18,8 @@ GlobalSettings::GlobalSettings()
     PhysStep=65;
 
     showDebugInfo=false;
+
+    testJoystickController=true;
 }
 
 GlobalSettings::~GlobalSettings()
