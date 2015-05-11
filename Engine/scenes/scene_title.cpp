@@ -304,7 +304,7 @@ int TitleScene::exec()
                         if(event.key.keysym.scancode!=SDL_SCANCODE_ESCAPE)
                             menu.storeKey(event.key.keysym.scancode);
                         else
-                            menu.storeKey(-2);
+                            menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
                     }
                     else
                     switch(event.key.keysym.sym)
@@ -353,7 +353,7 @@ int TitleScene::exec()
                 break;
                 case SDL_MOUSEBUTTONDOWN:
                     if(menu.isKeyGrabbing())
-                        menu.storeKey(-1); //Calcel Keygrabbing
+                        menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
                     else
                     switch(event.button.button)
                     {

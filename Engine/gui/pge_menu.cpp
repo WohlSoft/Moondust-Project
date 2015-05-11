@@ -786,7 +786,7 @@ void PGE_KeyGrabMenuItem::pushKey(int scancode)
         {
             *keyValue=scancode;
             PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
-        } else if(scancode==-1)//Cancel key grabbing
+        } else if(scancode==PGE_KEYGRAB_CANCEL)//Cancel key grabbing
         {
             PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
         }
