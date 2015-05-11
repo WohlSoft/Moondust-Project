@@ -24,6 +24,9 @@
 #include <QRect>
 #include <QPoint>
 #include <common_features/pge_texture.h>
+#include <functional>
+
+class PGE_Menu;
 
 class PGE_Menuitem
 {
@@ -56,6 +59,8 @@ public:
     };
 
     itemType type;
+protected:
+    std::function<void()> extAction;
 
 private:
     GLuint textTexture;
@@ -104,16 +109,20 @@ public:
     PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it);
     ~PGE_KeyGrabMenuItem();
     void grabKey();
+    void pushKey(int scancode);
     void render(int x, int y);
 
 private:
+    bool chosing;
     int *keyValue;
+    PGE_Menu* menu;
     friend class PGE_Menu;
 };
 
 
 class PGE_Menu
 {
+friend class PGE_KeyGrabMenuItem;
 public:
     PGE_Menu();
     ~PGE_Menu();
@@ -121,7 +130,9 @@ public:
     void addMenuItem(QString value, QString title="");
 
     void addBoolMenuItem(bool *flag, QString value, QString title="");
-    void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false);
+    void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
+                        std::function<void()> _extAction=([]()->void{}) );
+    void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
 
     void clear(); //!< Clean all menuitems
 
@@ -149,6 +160,8 @@ public:
 
     bool isSelected();  //!< Is menu was accepted or rejected
     bool isAccepted();  //!< Is menu was accepted, else rejected
+    bool isKeyGrabbing(); //!< Is a key grabbing mode
+    void storeKey(int scancode);
     const PGE_Menuitem currentItem(); //!< Returns current menu item entry
     int currentItemI();       //!< Returns index of current menu item
     void setCurrentItem(int i); //!< Sets current index of menuitem
@@ -168,6 +181,11 @@ public:
 private:
     QRect menuRect;
 
+    /*******Key grabbing********/
+    PGE_KeyGrabMenuItem *m_item;
+    bool is_keygrab;
+    /*******Key grabbing********/
+
     int _itemsOnScreen;
     int _currentItem;
     int _line;
@@ -179,6 +197,7 @@ private:
     QList<PGE_BoolMenuItem > _items_bool;
     QList<PGE_IntMenuItem > _items_int;
     QList<PGE_Menuitem > _items_normal;
+    QList<PGE_KeyGrabMenuItem > _items_keygrabs;
 
     QList<PGE_Menuitem *> _items;
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);

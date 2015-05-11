@@ -33,6 +33,9 @@ PGE_Menu::PGE_Menu()
     arrowDownViz=false;
     _EndSelection=false;
     _accept=false;
+    is_keygrab=false;
+    m_item=NULL;
+
     menuRect = QRect(260,380, 350, 30);
 
     if(ConfigManager::setup_menus.selector.isEmpty())
@@ -97,7 +100,7 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
     _items.push_back( &_items_bool.last() );
 }
 
-void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate)
+void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate, std::function<void()> _extAction)
 {
     PGE_IntMenuItem item;
     item.intvalue = intvalue;
@@ -109,8 +112,23 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     item.textTexture = FontManager::TextToTexture(item.title,
                                                   QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
                                                   Qt::AlignLeft | Qt::AlignVCenter, true );
+    item.extAction=_extAction;
     _items_int.push_back(item);
     _items.push_back( &_items_int.last() );
+}
+
+void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
+{
+    PGE_KeyGrabMenuItem item;
+    item.keyValue = keyvalue;
+    item.value = value;
+    item.title = (title.isEmpty() ? "unknown integer" : title);
+    item.textTexture = FontManager::TextToTexture(item.title,
+                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item.menu = this;
+    _items_keygrabs.push_back(item);
+    _items.push_back( &_items_keygrabs.last() );
 }
 
 
@@ -125,6 +143,8 @@ void PGE_Menu::clear()
     _items_normal.clear();
     _items_bool.clear();
     _items_int.clear();
+    _items_keygrabs.clear();
+    m_item=NULL;
     reset();
 }
 
@@ -213,6 +233,11 @@ void PGE_Menu::acceptItem()
     }
     else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Int)
     {}
+    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_KeyGrab)
+    {
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
+        static_cast<PGE_KeyGrabMenuItem*>(_items[_currentItem])->grabKey();
+    }
     else
     {
         PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
@@ -276,7 +301,16 @@ bool PGE_Menu::isAccepted()
     return _accept;
 }
 
+bool PGE_Menu::isKeyGrabbing()
+{
+    return is_keygrab;
+}
 
+void PGE_Menu::storeKey(int scancode)
+{
+    if(m_item)
+        m_item->pushKey(scancode);
+}
 
 void PGE_Menu::reset()
 {
@@ -285,6 +319,7 @@ void PGE_Menu::reset()
     _offset=0;
     _line=0;
     _currentItem=0;
+    is_keygrab=false;
 }
 
 void PGE_Menu::resetState()
@@ -584,6 +619,7 @@ PGE_Menuitem::PGE_Menuitem()
     this->title = "";
     this->value = "";
     this->textTexture = 0;
+    this->extAction = []()->void{};
 }
 
 PGE_Menuitem::~PGE_Menuitem()
@@ -595,6 +631,7 @@ PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
     this->value = _it.value;
     this->textTexture = _it.textTexture;
     this->type = _it.type;
+    this->extAction = _it.extAction;
 }
 
 void PGE_Menuitem::left() {}
@@ -678,6 +715,8 @@ void PGE_IntMenuItem::left()
     (*intvalue)--;
     if((*intvalue)<min)
         *intvalue=allowRotation?max:min;
+
+    extAction();
 }
 
 void PGE_IntMenuItem::right()
@@ -687,6 +726,8 @@ void PGE_IntMenuItem::right()
     (*intvalue)++;
     if((*intvalue)>max)
         *intvalue=allowRotation?min:max;
+
+    extAction();
 }
 
 void PGE_IntMenuItem::render(int x, int y)
@@ -703,11 +744,16 @@ PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem() : PGE_Menuitem()
 {
     keyValue=NULL;
     type=ITEM_KeyGrab;
+    menu=NULL;
+    chosing=false;
 }
 
 PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it) : PGE_Menuitem(it)
 {
     this->keyValue = it.keyValue;
+    this->menu = it.menu;
+    this->type = it.type;
+    this->chosing = it.chosing;
 }
 
 PGE_KeyGrabMenuItem::~PGE_KeyGrabMenuItem()
@@ -715,13 +761,38 @@ PGE_KeyGrabMenuItem::~PGE_KeyGrabMenuItem()
 
 void PGE_KeyGrabMenuItem::grabKey()
 {
+    chosing=true;
+    if(keyValue)
+    {
+        if(menu)
+        {
+            menu->is_keygrab=true;
+            menu->m_item = this;
+        }
+    }
+}
 
+void PGE_KeyGrabMenuItem::pushKey(int scancode)
+{
+    chosing=false;
+    if(keyValue)
+    {
+        if(scancode>=0)//if -1 - cancel grabbing of key
+        {
+            *keyValue=scancode;
+            PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
+        } else PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+        if(menu) menu->is_keygrab=false;
+    }
 }
 
 void PGE_KeyGrabMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
+    if(chosing)
+        FontManager::printText(QString("..."), x+210, y);
+    else
     if(keyValue)
-        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+350, y);
+        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+210, y);
 }
 

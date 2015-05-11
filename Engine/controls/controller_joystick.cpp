@@ -43,6 +43,9 @@ JoystickController::JoystickController() :
     kmap.down       = 13;
 }
 
+JoystickController::~JoystickController()
+{}
+
 void JoystickController::update()
 {
     if(!joystickController)
@@ -65,6 +68,4 @@ void JoystickController::update()
 
     keys.drop = SDL_JoystickGetButton(joystickController, 8);
     keys.start = SDL_JoystickGetButton(joystickController, 9);
-
-
 }

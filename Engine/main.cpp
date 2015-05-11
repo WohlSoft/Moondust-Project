@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
                 .arg( Mix_GetError() ), QMessageBox::Ok);
         exit(1);
     }
-    PGE_MusPlayer::MUS_changeVolume(100);
+    PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music);
 
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 

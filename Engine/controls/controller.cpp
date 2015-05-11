@@ -22,8 +22,10 @@
 Controller::Controller()
 {
     keys = noKeys();
-
 }
+
+Controller::~Controller()
+{}
 
 controller_keys Controller::noKeys()
 {

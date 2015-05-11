@@ -71,6 +71,11 @@ public:
         menu_playbattle,
         menu_opensave,
         menu_tests,
+        menu_controls,
+        menu_controls_plr1,
+        menu_controls_plr2,
+        menu_player,
+        menu_volume,
         menu_dummy_and_big,//leave it!
         //For fetching
         menuFirst=menu_main,
