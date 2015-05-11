@@ -127,9 +127,10 @@ public:
     PGE_Menu();
     ~PGE_Menu();
 
-    void addMenuItem(QString value, QString title="");
-
-    void addBoolMenuItem(bool *flag, QString value, QString title="");
+    void addMenuItem(QString value, QString title="",
+                     std::function<void()> _extAction=([]()->void{}));
+    void addBoolMenuItem(bool *flag, QString value, QString title="",
+                         std::function<void()> _extAction=([]()->void{}));
     void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
     void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
