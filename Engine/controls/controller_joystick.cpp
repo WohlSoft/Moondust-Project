@@ -24,12 +24,12 @@ JoystickController::JoystickController() :
     Controller(),
     joystickController(0)
 {
-    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
-    if(SDL_NumJoysticks() > 0){
-        //TODO: Select which controller you want to use.
-        joystickController =  SDL_JoystickOpen(0);
-        qDebug() << "Opened Controller \"" << SDL_JoystickName(joystickController) << "\"";
-    }
+//    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
+//    if(SDL_NumJoysticks() > 0){
+//        //TODO: Select which controller you want to use.
+//        joystickController =  SDL_JoystickOpen(0);
+//        qDebug() << "Opened Controller \"" << SDL_JoystickName(joystickController) << "\"";
+//    }
 
     kmap.jump       = 1;
     kmap.jump_alt   = 3;
@@ -45,6 +45,11 @@ JoystickController::JoystickController() :
 
 JoystickController::~JoystickController()
 {}
+
+void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
+{
+    joystickController=jctrl;
+}
 
 void JoystickController::update()
 {

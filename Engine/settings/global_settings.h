@@ -13,6 +13,7 @@ class GlobalSettings
 public:
     GlobalSettings();
     ~GlobalSettings();
+    void initJoysticks();
     void load();
     void save();
     void resetDefaults();
@@ -43,7 +44,7 @@ public:
     KeyMap player2_keyboard;
     QList<KeyMap> player2_joysticks;
 
-    SDL_Joystick* joysticks;
+    QList<SDL_Joystick*> joysticks;
 
     void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
     void saveKeyMap(KeyMap &map, QSettings &set, QString grp);

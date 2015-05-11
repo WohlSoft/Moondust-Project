@@ -7,14 +7,26 @@
 
 GlobalSettings AppSettings;
 
-GlobalSettings::GlobalSettings() : joysticks(0)
+GlobalSettings::GlobalSettings()
 {
     resetDefaults();
+    initJoysticks();
 }
 
 GlobalSettings::~GlobalSettings()
 {
+    while(!joysticks.isEmpty())
+    {
+        SDL_JoystickClose(joysticks.first());
+        joysticks.pop_front();
+    }
 
+}
+
+void GlobalSettings::initJoysticks()
+{
+    for(int i=0; i<SDL_NumJoysticks();i++)
+        joysticks.push_back(SDL_JoystickOpen(i));
 }
 
 void GlobalSettings::load()
