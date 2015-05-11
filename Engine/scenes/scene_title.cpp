@@ -304,7 +304,7 @@ int TitleScene::exec()
                         if(event.key.keysym.scancode!=SDL_SCANCODE_ESCAPE)
                             menu.storeKey(event.key.keysym.scancode);
                         else
-                            menu.storeKey(-1);
+                            menu.storeKey(-2);
                     }
                     else
                     switch(event.key.keysym.sym)

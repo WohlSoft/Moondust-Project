@@ -786,7 +786,15 @@ void PGE_KeyGrabMenuItem::pushKey(int scancode)
         {
             *keyValue=scancode;
             PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
-        } else PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+        } else if(scancode==-1)//Cancel key grabbing
+        {
+            PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+        }
+        else //Remove control key
+        {
+            *keyValue=-1;
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
+        }
         if(menu) menu->is_keygrab=false;
     }
 }
