@@ -173,7 +173,19 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
         if(!chr) return;
         if(!npc) return;
-        if(npc->data.id==11)
+        if(
+                (npc->data.id==11)||
+
+                (npc->data.id==15)||
+                (npc->data.id==86)||
+                (npc->data.id==39)||
+
+                (npc->data.id==41)||
+                (npc->data.id==16)||
+                (npc->data.id==97)||
+                (npc->data.id==197)
+
+                )
         {
             LvlSceneP::s->setExiting(1000, 1);
         }

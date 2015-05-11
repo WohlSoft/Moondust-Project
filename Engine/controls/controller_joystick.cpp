@@ -24,12 +24,31 @@ JoystickController::JoystickController() :
     Controller(),
     joystickController(0)
 {
-    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
-    if(SDL_NumJoysticks() > 0){
-        //TODO: Select which controller you want to use.
-        joystickController =  SDL_JoystickOpen(0);
-        qDebug() << "Opened Controller \"" << SDL_JoystickName(joystickController) << "\"";
-    }
+//    qDebug() << "Num of joysticks: " << SDL_NumJoysticks();
+//    if(SDL_NumJoysticks() > 0){
+//        //TODO: Select which controller you want to use.
+//        joystickController =  SDL_JoystickOpen(0);
+//        qDebug() << "Opened Controller \"" << SDL_JoystickName(joystickController) << "\"";
+//    }
+
+    kmap.jump       = 1;
+    kmap.jump_alt   = 3;
+    kmap.run        = 0;
+    kmap.run_alt    = 2;
+    kmap.drop       = 8;
+    kmap.start      = 9;
+    kmap.left       = 10;
+    kmap.right      = 11;
+    kmap.up         = 12;
+    kmap.down       = 13;
+}
+
+JoystickController::~JoystickController()
+{}
+
+void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
+{
+    joystickController=jctrl;
 }
 
 void JoystickController::update()
@@ -39,11 +58,11 @@ void JoystickController::update()
 
     SDL_PumpEvents();
 
-    keys.jump = SDL_JoystickGetButton(joystickController, 1);
-    keys.alt_jump = SDL_JoystickGetButton(joystickController, 3);
+    keys.jump = SDL_JoystickGetButton(joystickController, kmap.jump );
+    keys.alt_jump = SDL_JoystickGetButton(joystickController, kmap.jump_alt);
 
-    keys.run = SDL_JoystickGetButton(joystickController, 0);
-    keys.alt_run = SDL_JoystickGetButton(joystickController, 2);
+    keys.run = SDL_JoystickGetButton(joystickController, kmap.run);
+    keys.alt_run = SDL_JoystickGetButton(joystickController, kmap.run_alt);
 
     Uint8 hatVal = SDL_JoystickGetHat(joystickController, 0);
 
@@ -54,6 +73,4 @@ void JoystickController::update()
 
     keys.drop = SDL_JoystickGetButton(joystickController, 8);
     keys.start = SDL_JoystickGetButton(joystickController, 9);
-
-
 }

@@ -18,13 +18,13 @@
 
 #include "scene_level.h"
 
-#include "common_features/app_path.h"
-#include "common_features/graphics_funcs.h"
+#include <common_features/app_path.h>
+#include <common_features/graphics_funcs.h>
 
-#include "../graphics/gl_renderer.h"
+#include <graphics/gl_renderer.h>
 
-#include "../controls/controller_keyboard.h"
-#include "../controls/controller_joystick.h"
+#include <controls/controller_keyboard.h>
+#include <controls/controller_joystick.h>
 
 #include "level/lvl_scene_ptr.h"
 
@@ -92,10 +92,17 @@ LevelScene::LevelScene()
     /*********Fader*************/
 
     /*********Controller********/
-    if(AppSettings.testJoystickController){
+    if(AppSettings.player1_controller>0) {
         player1Controller = new JoystickController();
-    }else{
+        int did = AppSettings.player1_controller-1;
+        if(did<AppSettings.player1_joysticks.size())
+            player1Controller->setKeyMap(AppSettings.player1_joysticks[did]);
+        if(did<AppSettings.joysticks.size())
+        dynamic_cast<JoystickController*>(player1Controller)->
+                setJoystickDevice(AppSettings.joysticks[did]);
+    } else {
         player1Controller = new KeyboardController();
+        player1Controller->setKeyMap(AppSettings.player1_keyboard);
     }
     /*********Controller********/
 

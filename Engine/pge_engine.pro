@@ -265,7 +265,8 @@ HEADERS  += \
     settings/global_settings.h \
     common_features/maths.h \
     scenes/level/lvl_npc.h \
-    controls/controller_joystick.h
+    controls/controller_joystick.h \
+    controls/controller_key_map.h
 
 FORMS    += \
     data_configs/select_config.ui

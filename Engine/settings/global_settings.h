@@ -1,12 +1,19 @@
 #ifndef GLOBALSETTINGS_H
 #define GLOBALSETTINGS_H
 
+#include <controls/controller_key_map.h>
+#include <QList>
 
+#include <SDL2/SDL.h>
+#undef main
+
+class QSettings;
 class GlobalSettings
 {
 public:
     GlobalSettings();
     ~GlobalSettings();
+    void initJoysticks();
     void load();
     void save();
     void resetDefaults();
@@ -22,8 +29,25 @@ public:
     int  PhysStep;
 
     bool showDebugInfo;
-
     bool testJoystickController;
+
+    bool enableDummyNpc;
+
+    int volume_sound;
+    int volume_music;
+
+    int player1_controller;//!< 0 - keyboard, >=1 - joysticks
+    KeyMap player1_keyboard;
+    QList<KeyMap> player1_joysticks;
+
+    int player2_controller;//!< 0 - keyboard, >=1 - joysticks
+    KeyMap player2_keyboard;
+    QList<KeyMap> player2_joysticks;
+
+    QList<SDL_Joystick*> joysticks;
+
+    void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
+    void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
 };
 
 extern GlobalSettings AppSettings;
