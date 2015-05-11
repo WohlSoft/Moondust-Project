@@ -28,6 +28,7 @@ class Controller
 {
 public:
     Controller();
+    virtual ~Controller();
     enum commands
     {
         key_start=0,

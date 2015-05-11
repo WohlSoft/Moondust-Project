@@ -29,6 +29,7 @@
 #include <common_features/maths.h>
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
+#include <settings/global_settings.h>
 
 #include <QHash>
 #include <unordered_map>
@@ -380,6 +381,8 @@ WorldScene::WorldScene()
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
+
+    keyboard1.setKeyMap(AppSettings.player1_keyboard);
 
     uTick = 1;
     move_speed = 115/(float)PGE_Window::PhysStep;
@@ -1049,42 +1052,6 @@ int WorldScene::exec()
                     case SDLK_F3:
                         PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
                     break;
-                    case SDLK_z:
-                          if((!lock_controls) && (gameState))
-                          {
-                              if(!gameState->LevelFile.isEmpty())
-                              {
-                                  gameState->game_state.worldPosX=posX;
-                                  gameState->game_state.worldPosY=posY;
-                                  PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
-                                  stopMusic(true, 300);
-                                  lock_controls=true;
-                                  setExiting(0, WldExit::EXIT_beginLevel);
-                              }
-                              else if(jumpTo)
-                              {
-                                  //Create events
-                                  EventQueueEntry<WorldScene >event1;
-                                  event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
-                                  wld_events.events.push_back(event1);
-
-                                  EventQueueEntry<WorldScene >event2;
-                                  event2.makeCallerT(this, &WorldScene::jump, 100);
-                                  wld_events.events.push_back(event2);
-
-                                  EventQueueEntry<WorldScene >event3;
-                                  event3.makeCaller([this]()->void{
-                                                        this->setFade(25, 0.0, 0.08);
-                                                        this->lock_controls=false;
-                                                    }, 0);
-                                  wld_events.events.push_back(event3);
-
-                                  this->lock_controls=true;
-                                  PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                  this->setFade(25, 1.0f, 0.08);
-                              }
-                          }
-                    break;
                     case SDLK_F12:
                         GlRenderer::makeShot();
                     break;
@@ -1114,6 +1081,46 @@ int WorldScene::exec()
 
         /**********************Update physics and game progess***********************/
         update();
+
+        if(keyboard1.keys.jump)
+        {
+            if((!lock_controls) && (gameState))
+            {
+                if(!gameState->LevelFile.isEmpty())
+                {
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                    stopMusic(true, 300);
+                    lock_controls=true;
+                    setExiting(0, WldExit::EXIT_beginLevel);
+                }
+                else if(jumpTo)
+                {
+                    //Create events
+                    EventQueueEntry<WorldScene >event1;
+                    event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                    wld_events.events.push_back(event1);
+
+                    EventQueueEntry<WorldScene >event2;
+                    event2.makeCallerT(this, &WorldScene::jump, 100);
+                    wld_events.events.push_back(event2);
+
+                    EventQueueEntry<WorldScene >event3;
+                    event3.makeCaller([this]()->void{
+                                          this->setFade(25, 0.0, 0.08);
+                                          this->lock_controls=false;
+                                      }, 0);
+                    wld_events.events.push_back(event3);
+
+                    this->lock_controls=true;
+                    PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                    this->setFade(25, 1.0f, 0.08);
+                }
+            }
+        }
+
+        /**********************Update physics and game progess***********************/
 
         if(PGE_Window::showDebugInfo)
         {

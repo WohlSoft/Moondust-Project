@@ -3,6 +3,12 @@
 
 struct KeyMap
 {
+    inline KeyMap()
+    {
+        start=0; drop=0;
+        left=0; right=0; up=0; down=0;
+        jump=0; jump_alt=0; run=0; run_alt=0;
+    }
     int start;
     int drop;
 

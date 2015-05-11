@@ -25,6 +25,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <gui/pge_msgbox.h>
 #include <audio/pge_audio.h>
+#include <audio/SdlMusPlayer.h>
 
 #include "scene_title.h"
 #include <QtDebug>
@@ -298,6 +299,9 @@ int TitleScene::exec()
                 break;
 
                 case SDL_KEYDOWN: // If pressed key
+                    if(menu.isKeyGrabbing())
+                        menu.storeKey(event.key.keysym.scancode);
+                    else
                     switch(event.key.keysym.sym)
                     {
                       case SDLK_x:
@@ -339,9 +343,13 @@ int TitleScene::exec()
                 case SDL_MOUSEMOTION:
                     mousePos.setX(event.motion.x);
                     mousePos.setY(event.motion.y);
+                if(!menu.isKeyGrabbing() && !doExit)
                     menu.setMouseHoverPos(mousePos.x(), mousePos.y());
                 break;
                 case SDL_MOUSEBUTTONDOWN:
+                    if(menu.isKeyGrabbing())
+                        menu.storeKey(-1); //Calcel Keygrabbing
+                    else
                     switch(event.button.button)
                     {
                         case SDL_BUTTON_LEFT:
@@ -468,10 +476,10 @@ int TitleScene::exec()
                                 setMenu(menu_tests);
                             }
                             else
-                            if(value=="dab")
+                            if(value=="controls")
                             {
                                 menuChain.push(_currentMenu);
-                                setMenu(menu_dummy_and_big);
+                                setMenu(menu_controls);
                             }
                             else
                             {
@@ -480,6 +488,24 @@ int TitleScene::exec()
                                 msgBox.exec();
                                 menu.resetState();
                             }
+                        break;
+                        case menu_controls:
+                            if(value=="control_plr1")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_controls_plr1);
+                            }
+                            else
+                            if(value=="control_plr2")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_controls_plr2);
+                            }
+                        break;
+                        case menu_controls_plr1:
+
+                        break;
+                        case menu_controls_plr2:
 
                         break;
                         case menu_tests:
@@ -523,6 +549,9 @@ int TitleScene::exec()
                         AppSettings.save();
                         PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
                     default:
+                        if(menu.isKeyGrabbing())
+                            menu.reset();
+                        else
                         if(menuChain.size()>0)
                         {
                             setMenu((CurrentMenu)menuChain.pop());
@@ -561,12 +590,15 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.addMenuItem("Exit", "Exit");
         break;
             case menu_options:
-                menu.setPos(260,380);
+                menu.setPos(260,300);
                 menu.setSize(300, 30);
-                menu.setItemsNumber(5);
+                menu.setItemsNumber(7);
                 menu.addMenuItem("tests", "Test of screens");
-                menu.addMenuItem("dab", "Dummy and big menu");
+                menu.addMenuItem("controls", "Player controlling");
+                menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
+                                    []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
                 menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
+                menu.addBoolMenuItem(&AppSettings.enableDummyNpc, "dummy_npcs", "Enable dummy NPC's");
                 menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
                 menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step");
             break;
@@ -578,23 +610,35 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
-                case menu_dummy_and_big:
-                    menu.setPos(260,300);
-                    menu.setSize(300, 30);
-                    menu.setItemsNumber(7);
-                    menu.addMenuItem("1", "Item 1");
-                    menu.addMenuItem("2", "Item 2");
-                    menu.addMenuItem("3", "Item 3");
-                    menu.addMenuItem("4", "Кое-что по-русски");
-                    menu.addMenuItem("5", "Ich bin glücklich!");
-                    menu.addMenuItem("6", "¿Que se ocupas?");
-                    menu.addMenuItem("7", "Minä rakastan sinua!");
-                    menu.addMenuItem("8", "هذا هو اختبار صغير");
-                    menu.addMenuItem("9", "這是一個小測試!");
-                    menu.addMenuItem("10", "דאס איז אַ קליין פּרובירן");
-                    menu.addMenuItem("11", "આ નાના કસોટી છે");
-                    menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
-                break;
+                    case menu_controls:
+                        menu.setPos(260,300);
+                        menu.setSize(300, 30);
+                        menu.setItemsNumber(7);
+                        menu.addMenuItem("control_plr1", "Player 1 controls");
+                        menu.addMenuItem("control_plr2", "Player 2 controls");
+                    break;
+                        case menu_controls_plr1:
+                        case menu_controls_plr2:
+                        {
+                        KeyMap &mp = (_menu==menu_controls_plr1)?
+                                    AppSettings.player1_keyboard :
+                                    AppSettings.player2_keyboard;
+
+                            menu.setPos(200,250);
+                            menu.setSize(300, 30);
+                            menu.setItemsNumber(10);
+                            menu.addKeyGrabMenuItem(&mp.left, "key1", "Left");
+                            menu.addKeyGrabMenuItem(&mp.right, "key2", "Right");
+                            menu.addKeyGrabMenuItem(&mp.up, "key3", "Up");
+                            menu.addKeyGrabMenuItem(&mp.down, "key4", "Down");
+                            menu.addKeyGrabMenuItem(&mp.jump, "key5", "Jump");
+                            menu.addKeyGrabMenuItem(&mp.jump_alt, "key6", "Alt-Jump");
+                            menu.addKeyGrabMenuItem(&mp.run, "key7", "Run");
+                            menu.addKeyGrabMenuItem(&mp.run_alt, "key8", "Alt-Run");
+                            menu.addKeyGrabMenuItem(&mp.drop, "key9", "Drop");
+                            menu.addKeyGrabMenuItem(&mp.start, "key10", "Start");
+                        }
+                        break;
         case menu_playepisode:
             {
                 //Build list of episodes

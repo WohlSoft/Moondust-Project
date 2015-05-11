@@ -96,6 +96,7 @@ LevelScene::LevelScene()
         player1Controller = new JoystickController();
     }else{
         player1Controller = new KeyboardController();
+        player1Controller->setKeyMap(AppSettings.player1_keyboard);
     }
     /*********Controller********/
 

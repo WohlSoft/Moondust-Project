@@ -33,6 +33,9 @@ KeyboardController::KeyboardController() :
     kmap.down       = SDL_SCANCODE_DOWN;
 }
 
+KeyboardController::~KeyboardController()
+{}
+
 void KeyboardController::update()
 {
     SDL_PumpEvents();
