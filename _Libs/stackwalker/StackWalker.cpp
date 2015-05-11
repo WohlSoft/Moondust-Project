@@ -418,7 +418,7 @@ public:
   LPSTR m_szSymPath;
 
 #pragma pack(push,8)
-typedef struct IMAGEHLP_MODULE64_V3 {
+struct IMAGEHLP_MODULE64_V3 {
     DWORD    SizeOfStruct;           // set to sizeof(IMAGEHLP_MODULE64)
     DWORD64  BaseOfImage;            // base load address of module
     DWORD    ImageSize;              // virtual size of the loaded module
@@ -446,7 +446,7 @@ typedef struct IMAGEHLP_MODULE64_V3 {
     BOOL     Publics;                // contains public symbols
 };
 
-typedef struct IMAGEHLP_MODULE64_V2 {
+struct IMAGEHLP_MODULE64_V2 {
     DWORD    SizeOfStruct;           // set to sizeof(IMAGEHLP_MODULE64)
     DWORD64  BaseOfImage;            // base load address of module
     DWORD    ImageSize;              // virtual size of the loaded module
@@ -778,6 +778,8 @@ private:
             break;
           case 8: //SymVirtual:
             szSymType = "Virtual";
+            break;
+          default:
             break;
         }
       }
@@ -1317,8 +1319,9 @@ void StackWalker::OnCallstackEntry(CallstackEntryType eType, CallstackEntry &ent
   }
 }
 
-void StackWalker::OnDbgHelpErr(LPCSTR szFuncName, DWORD gle, DWORD64 addr)
-{/*
+void StackWalker::OnDbgHelpErr(LPCSTR /*szFuncName*/, DWORD /*gle*/, DWORD64 /*addr*/)
+{
+  /*
   CHAR buffer[STACKWALK_MAX_NAMELEN];
   _snprintf_s(buffer, STACKWALK_MAX_NAMELEN, "ERROR: %s, GetLastError: %d (Address: %p)\n", szFuncName, gle, (LPVOID) addr);
   OnOutput(buffer);
