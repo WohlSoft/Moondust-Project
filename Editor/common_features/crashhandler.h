@@ -57,4 +57,49 @@ private:
     Ui::CrashHandler *ui;
 };
 
+#ifdef _WIN32
+#include <stackwalker/StackWalker.h>
+#include <tlhelp32.h>
+
+class StackTracer : public StackWalker
+{
+public:
+    StackTracer() : StackWalker(), theOutput(""){}
+
+    void runStackTracerForAllThreads(){
+        HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+        if (h != INVALID_HANDLE_VALUE) {
+            THREADENTRY32 te;
+            te.dwSize = sizeof(te);
+            if (Thread32First(h, &te)) {
+                do {
+                    if (te.dwSize >= FIELD_OFFSET(THREADENTRY32, th32OwnerProcessID) +
+                                sizeof(te.th32OwnerProcessID)) {
+                        if(GetCurrentProcessId() == te.th32OwnerProcessID){
+                            theOutput += QString("\n\nThread #%1:\n").arg(te.th32ThreadID);
+                            HANDLE theThread = OpenThread(THREAD_ALL_ACCESS, false, te.th32ThreadID);
+                            ShowCallstack(theThread);
+                            CloseHandle(theThread);
+                        }
+                    }
+                    te.dwSize = sizeof(te);
+                } while (Thread32Next(h, &te));
+            }
+            CloseHandle(h);
+        }else{
+            theOutput = "Failed to create stacktrace!";
+        }
+    }
+
+    QString theOutput;
+
+protected:
+    virtual void OnOutput(LPCSTR szText)
+    {
+        theOutput += szText;
+    }
+};
+
+#endif
+
 #endif // CRASHHANDLER_H
