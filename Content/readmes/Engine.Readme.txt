@@ -16,6 +16,14 @@ Launching:
 You can copy your levels into worlds folder or into %UserProfile%\.PGE_Project\worlds
 or into ~/.PGE_Project/worlds folder and you can play than levels from "Battle game" menu
 ==============================================
+Note: If you want have everything in SAME folder like in the SMBX, create "pge_engine.ini" file with next contents:
+----------------------------
+[Main]
+force-portable=true
+----------------------------
+and everything: worlds, screenshots, logs will be stored in same folder where pge_engine application is located.
+[will not work with Mac version. Use "Data Directory" symlink to get data folder!]
+==============================================
 
 You should be up to date with any configuration packages,
 there are in dev-state: I fixing old mistakes, misses, adding new important features which
@@ -23,17 +31,17 @@ should be presented in your ini files of each config pack. Else you may get wron
 because wrong config settings.
 
 ==============================================
-Controlls:
+Controlls: <can be cusetomized in the controllers menu>
 ==============================================
 Arrows:
 --------------------
 left-right - walk
 Up/Down - enter into door/pipe
 --------------------
-Z - jump / enter to level from world map [on German keyboard will work Y key instead by unknown for me reasons :P]
-X - run
-A - alt-jump (Temporary, fly up, use it to get inaccessible heights without vines!)
-S - alt-run (Temporary, tail-whipping to destroy any blocks over face, S+UP - destroy blocks over head, S+Down - destroy blocks under self)
+Z - (jump) / enter to level from world map [on German keyboard will work Y key instead by unknown for me reasons :P]
+X - (run)
+A - (alt-jump) (Temporary, fly up, use it to get inaccessible heights without vines!)
+S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face, S+UP - destroy blocks over head, S+Down - destroy blocks under self)
 
 T - Toggle fullscreen mode
 
