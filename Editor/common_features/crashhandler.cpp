@@ -97,51 +97,23 @@ CrashHandler::~CrashHandler()
 
 void CrashHandler::crashByFlood()
 {
-    attemptCrashsave();
-
-    QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
-                                        "To prevent this, try closing other uneccessary programs to free up more memory.");
-
-    if(DevConsole::isConsoleShown())
-        DevConsole::closeIfPossible();
-
-    crashMsg += QString("\n\n") + getStacktrace();
-
-    CrashHandler* crsh = new CrashHandler(crashMsg);
-    crsh->exec();
-
-    exit(EXIT_FAILURE);
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
+                                        "To prevent this, try closing other uneccessary programs to free up more memory."));
 }
 
 void CrashHandler::crashByUnhandledException()
 {
-    attemptCrashsave();
-
-    std::exception_ptr unhandledException = std::current_exception();
-    try{
-        std::rethrow_exception(unhandledException);
-    }
-    catch(const std::exception& e)
-    {
-        QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: %1\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum").arg(e.what());
-
-        if(DevConsole::isConsoleShown())
-            DevConsole::closeIfPossible();
-
-        crashMsg += QString("\n\n") + getStacktrace();
-
-        CrashHandler* crsh = new CrashHandler(crashMsg);
-        crsh->exec();
-    }
-
-    exit(EXIT_FAILURE);
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
 }
 
 void CrashHandler::crashBySIGSERV(int /*signalid*/)
 {
-    attemptCrashsave();
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n"));
+}
 
-    QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n");
+void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
+{
+    attemptCrashsave();
 
     if(DevConsole::isConsoleShown())
         DevConsole::closeIfPossible();
