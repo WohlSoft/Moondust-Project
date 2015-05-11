@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QList>
+#include <QPair>
 #include <QRect>
 #include <QPoint>
 #include <common_features/pge_texture.h>
@@ -54,11 +55,13 @@ public:
         ITEM_Normal=0,
         ITEM_Bool,
         ITEM_Int,
+        ITEM_NamedInt,
         ITEM_KeyGrab,
         ITEM_StrList
     };
 
     itemType type;
+    int valueOffset;//!< X-offset where must be rendered value label
 protected:
     std::function<void()> extAction;
 
@@ -102,6 +105,33 @@ private:
     friend class PGE_Menu;
 };
 
+
+struct IntAssocItem
+{
+    inline IntAssocItem() { value=0; }
+    int value;
+    QString label;
+};
+
+class PGE_NamedIntMenuItem : public PGE_Menuitem
+{
+public:
+    PGE_NamedIntMenuItem();
+    PGE_NamedIntMenuItem(const PGE_NamedIntMenuItem &it);
+    ~PGE_NamedIntMenuItem();
+    void left();
+    void right();
+    void render(int x, int y);
+
+private:
+    int *intvalue;
+    QList<IntAssocItem > items;
+    int curItem;
+    bool allowRotation;
+    friend class PGE_Menu;
+};
+
+
 #define PGE_KEYGRAB_CANCEL -1
 #define PGE_KEYGRAB_REMOVE_KEY -2
 class PGE_KeyGrabMenuItem : public PGE_Menuitem
@@ -134,6 +164,8 @@ public:
     void addBoolMenuItem(bool *flag, QString value, QString title="",
                          std::function<void()> _extAction=([]()->void{}));
     void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
+                        std::function<void()> _extAction=([]()->void{}) );
+    void addNamedIntMenuItem(int *intvalue, QList<IntAssocItem > _items, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
     void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
 
@@ -199,6 +231,7 @@ private:
     bool _accept;
     QList<PGE_BoolMenuItem > _items_bool;
     QList<PGE_IntMenuItem > _items_int;
+    QList<PGE_NamedIntMenuItem > _items_named_int;
     QList<PGE_Menuitem > _items_normal;
     QList<PGE_KeyGrabMenuItem > _items_keygrabs;
 

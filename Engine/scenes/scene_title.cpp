@@ -31,6 +31,9 @@
 #include <QtDebug>
 #include <QDir>
 
+#include <SDL2/SDL.h>
+#undef main
+
 TitleScene::TitleScene()
 {
     doExit=false;
@@ -625,23 +628,58 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                         case menu_controls_plr1:
                         case menu_controls_plr2:
                         {
-                        KeyMap &mp = (_menu==menu_controls_plr1)?
-                                    AppSettings.player1_keyboard :
-                                    AppSettings.player2_keyboard;
 
-                            menu.setPos(200,250);
+                        KeyMap *mp_p;
+                        int *mct_p;
+                        std::function<void()> ctrlSwitch;
+
+                        if(_menu==menu_controls_plr1)
+                        {
+                            ctrlSwitch = [this]()->void{
+                                setMenu(menu_controls_plr1);
+                                };
+                            mct_p = &AppSettings.player1_controller;
+                            if((*mct_p>0)&&(*mct_p<=AppSettings.player1_joysticks.size()))
+                                mp_p = &AppSettings.player1_joysticks[*mct_p-1];
+                            else
+                                mp_p = &AppSettings.player1_keyboard;
+                        }
+                        else{
+                            ctrlSwitch = [this]()->void{
+                                setMenu(menu_controls_plr2);
+                                };
+                            mct_p  = &AppSettings.player2_controller;
+                            if((*mct_p>0)&&(*mct_p<=AppSettings.player2_joysticks.size()))
+                                mp_p = &AppSettings.player2_joysticks[*mct_p-1];
+                            else
+                                mp_p = &AppSettings.player2_keyboard;
+                        }
+
+                            menu.setPos(200, 200);
                             menu.setSize(300, 30);
-                            menu.setItemsNumber(10);
-                            menu.addKeyGrabMenuItem(&mp.left, "key1", "Left");
-                            menu.addKeyGrabMenuItem(&mp.right, "key2", "Right");
-                            menu.addKeyGrabMenuItem(&mp.up, "key3", "Up");
-                            menu.addKeyGrabMenuItem(&mp.down, "key4", "Down");
-                            menu.addKeyGrabMenuItem(&mp.jump, "key5", "Jump");
-                            menu.addKeyGrabMenuItem(&mp.jump_alt, "key6", "Alt-Jump");
-                            menu.addKeyGrabMenuItem(&mp.run, "key7", "Run");
-                            menu.addKeyGrabMenuItem(&mp.run_alt, "key8", "Alt-Run");
-                            menu.addKeyGrabMenuItem(&mp.drop, "key9", "Drop");
-                            menu.addKeyGrabMenuItem(&mp.start, "key10", "Start");
+                            menu.setItemsNumber(11);
+                            QList<IntAssocItem> ctrls;
+                            IntAssocItem controller;
+                            controller.value=0;
+                            controller.label="Keyboard";
+                            ctrls.push_back(controller);
+                            for(int i=0;i<AppSettings.joysticks.size();i++)
+                            {
+                                controller.value=i+1;
+                                controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
+                                ctrls.push_back(controller);
+                            }
+                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Controller type", false, ctrlSwitch);
+                            menu.addKeyGrabMenuItem(&mp_p->left, "key1", "Left");
+                            menu.addKeyGrabMenuItem(&mp_p->right, "key2", "Right");
+                            menu.addKeyGrabMenuItem(&mp_p->up, "key3", "Up");
+                            menu.addKeyGrabMenuItem(&mp_p->down, "key4", "Down");
+                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5", "Jump");
+                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6", "Alt-Jump");
+                            menu.addKeyGrabMenuItem(&mp_p->run, "key7", "Run");
+                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8", "Alt-Run");
+                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9", "Drop");
+                            menu.addKeyGrabMenuItem(&mp_p->start, "key10", "Start");
                         }
                         break;
         case menu_playepisode:

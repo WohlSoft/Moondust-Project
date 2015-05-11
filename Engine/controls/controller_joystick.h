@@ -27,6 +27,7 @@ class JoystickController : public Controller
 public:
     JoystickController();
     ~JoystickController();
+    void setJoystickDevice(SDL_Joystick* jctrl);
 
     SDL_Joystick* joystickController;
     void update();

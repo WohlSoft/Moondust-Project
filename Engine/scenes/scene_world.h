@@ -23,7 +23,7 @@
 #include <QList>
 #include <QRect>
 #include "scene.h"
-#include <controls/controller_keyboard.h>
+#include <controls/controller.h>
 #include <PGE_File_Formats/wld_filedata.h>
 #include <common_features/pge_texture.h>
 #include <common_features/episode_state.h>
@@ -42,7 +42,8 @@ public:
     int exitWorldCode;
     QString targetLevel;
 
-    KeyboardController keyboard1;
+    Controller *player1Controller;
+    controller_keys controls_1;
 
     bool worldIsContinues;
     bool doExit;
