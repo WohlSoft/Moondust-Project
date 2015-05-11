@@ -58,7 +58,7 @@ private:
 };
 
 #ifdef _WIN32
-#include <stackwalker/StackWalker.h>
+#include <StackWalker/StackWalker.h>
 #include <tlhelp32.h>
 
 class StackTracer : public StackWalker
