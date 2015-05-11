@@ -41,6 +41,7 @@ void GlobalSettings::load()
 
     setup.endGroup();
     loadKeyMap(player1_keyboard, setup, "player-1-keyboard");
+    loadKeyMap(player2_keyboard, setup, "player-2-keyboard");
 
     player1_joysticks.clear();
     player2_joysticks.clear();
