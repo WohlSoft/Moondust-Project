@@ -415,7 +415,8 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/smbx64.cpp \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
     common_features/dir_copy.cpp \
-    tools/async/asyncstarcounter.cpp
+    tools/async/asyncstarcounter.cpp \
+    ../_Libs/stackwalker/StackWalker.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -598,7 +599,8 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/smbx64.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
     common_features/dir_copy.h \
-    tools/async/asyncstarcounter.h
+    tools/async/asyncstarcounter.h \
+    ../_Libs/stackwalker/StackWalker.h
 
 
 FORMS    += \
