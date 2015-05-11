@@ -881,6 +881,30 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
                         else
                             goto badfile;
                     }
+                    else
+                    if(v.marker=="ED") //Destroy event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_destroy = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EH") //Hit event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_hit = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EE") //Hit event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_no_more = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
                 }
 
                 block.array_id = FileData.blocks_array_id++;
