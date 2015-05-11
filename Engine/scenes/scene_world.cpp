@@ -418,6 +418,7 @@ WorldScene::WorldScene()
     allow_right=false;
     allow_down=false;
     _playStopSnd=false;
+    _playDenySnd=false;
 
     data = FileFormats::dummyWldDataArray();
 }
@@ -641,9 +642,19 @@ void WorldScene::update()
                     dir=3;
                 if(keyboard1.keys.down && (allow_down || ignore_paths))
                     dir=4;
+
+                //If movement denied - play sound
+                if((keyboard1.keys.left||keyboard1.keys.right||keyboard1.keys.up||keyboard1.keys.down)&&(dir==0))
+                {       _playStopSnd=false;
+                        if(!_playDenySnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny); _playDenySnd=true; }
+                }
+                else
+                if (!keyboard1.keys.left&&!keyboard1.keys.right&&!keyboard1.keys.up&&!keyboard1.keys.down)
+                    _playDenySnd=false;
             }
             if(dir!=0)
             {
+                _playDenySnd=false;
                 _playStopSnd=false;
                 levelTitle.clear();
                 gameState->LevelFile.clear();
