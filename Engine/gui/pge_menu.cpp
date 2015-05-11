@@ -74,7 +74,7 @@ PGE_Menu::~PGE_Menu()
     }
 }
 
-void PGE_Menu::addMenuItem(QString value, QString title)
+void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _extAction)
 {
     PGE_Menuitem item;
     item.value = value;
@@ -83,11 +83,12 @@ void PGE_Menu::addMenuItem(QString value, QString title)
     item.textTexture = FontManager::TextToTexture(item.title,
                                                   QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
                                                   Qt::AlignLeft | Qt::AlignVCenter, true );
+    item.extAction=_extAction;
     _items_normal.push_back(item);
     _items.push_back( &_items_normal.last() );
 }
 
-void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
+void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::function<void()> _extAction)
 {
     PGE_BoolMenuItem item;
     item.flag = flag;
@@ -96,6 +97,7 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
     item.textTexture = FontManager::TextToTexture(item.title,
                                                   QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
                                                   Qt::AlignLeft | Qt::AlignVCenter, true );
+    item.extAction=_extAction;
     _items_bool.push_back(item);
     _items.push_back( &_items_bool.last() );
 }
@@ -235,7 +237,7 @@ void PGE_Menu::acceptItem()
     {}
     else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_KeyGrab)
     {
-        PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
         static_cast<PGE_KeyGrabMenuItem*>(_items[_currentItem])->grabKey();
     }
     else
@@ -243,6 +245,8 @@ void PGE_Menu::acceptItem()
         PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
         _EndSelection=true;
         _accept=true;
+        if((_currentItem<_items.size())&&(_currentItem>=0))
+            _items[_currentItem]->extAction();
     }
 }
 
@@ -682,6 +686,7 @@ void PGE_BoolMenuItem::toggle()
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     if(flag)
         *flag=!(*flag);
+    extAction();
 }
 
 
