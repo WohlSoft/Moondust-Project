@@ -26,6 +26,7 @@ class KeyboardController : public Controller
 {
 public:
     KeyboardController();
+    ~KeyboardController();
     void update();
 
 };
