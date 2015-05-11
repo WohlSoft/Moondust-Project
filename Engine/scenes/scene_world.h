@@ -96,6 +96,7 @@ public:
     bool allow_right;
     bool allow_down;
     bool _playStopSnd;
+    bool _playDenySnd;
 
     void updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
     void updateCenter();
