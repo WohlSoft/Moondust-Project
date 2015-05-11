@@ -102,6 +102,8 @@ private:
     friend class PGE_Menu;
 };
 
+#define PGE_KEYGRAB_CANCEL -1
+#define PGE_KEYGRAB_REMOVE_KEY -2
 class PGE_KeyGrabMenuItem : public PGE_Menuitem
 {
 public:
