@@ -24,7 +24,10 @@
 #include <QtOpenGL/QGLWidget>
 
 #include "graphics_funcs.h"
-#include "../../_Libs/EasyBMP/EasyBMP.h"
+#include <EasyBMP/EasyBMP.h>
+extern "C"{
+#include <giflib/gif_lib.h>
+}
 
 #include <QtDebug>
 
@@ -79,9 +82,41 @@ QImage GraphicsHelps::fromBMP(QString &file)
 
 QImage GraphicsHelps::loadQImage(QString file)
 {
+    QFile img(file);
+    if(!img.exists())
+        return QImage();
+    if(!img.open(QIODevice::ReadOnly))
+        return QImage();
+
+    QByteArray mg=img.read(5); //Get magic number!
+    if(mg.size()<2) // too short!
+        return QImage();
+    char *magic = mg.data();
+    img.close();
+
+    //Detect PNG 89 50 4e 47
+    if( (magic[0]=='\x89')&&(magic[1]=='\x50')&&(magic[2]=='\x4e')&&(magic[3]=='\x47') )
+    {
+        QImage image = QImage( file );
+        return image;
+    } else
+    //Detect GIF 47 49 46 38
+    if( (magic[0]=='\x47')&&(magic[1]=='\x49')&&(magic[2]=='\x46')&&(magic[3]=='\x38') )
+    {
+        QImage image = QImage( file );
+        //QImage image = fromGIF( file );
+        return image;
+    }
+    else
+    //Detect BMP 42 4d
+    if( (magic[0]=='\x42')&&(magic[1]=='\x4d') )
+    {
+        QImage image = fromBMP( file );
+        return image;
+    }
+
+    //Another formats, supported by Qt :P
     QImage image = QImage( file );
-    if(image.isNull())
-        image = fromBMP( file);
     return image;
 }
 
