@@ -35,6 +35,7 @@ Makefile.*
 *-build-*
 *build-*
 /bin
+/android-build
 /Editor/app_process
 /Editor/android-build
 /Editor/android-libpge_editor.so*
