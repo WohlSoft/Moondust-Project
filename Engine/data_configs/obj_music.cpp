@@ -94,7 +94,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_wld.file = musicset.value("file", "").toString();
-            if(smusic_wld.file.isEmpty())
+            if(smusic_wld.file.isEmpty()&&(i != music_w_custom_id))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -104,7 +104,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_wld.absPath = rootPath + smusic_wld.file;
-            if(!QFileInfo(smusic_wld.absPath).exists())
+            if((smusic_wld.id!=music_w_custom_id)&&(!QFileInfo(smusic_wld.absPath).exists()))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -197,7 +197,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_lvl.absPath = rootPath + smusic_lvl.file;
-            if(!QFileInfo(smusic_lvl.absPath).exists())
+            if((smusic_lvl.id!=music_custom_id)&&(!QFileInfo(smusic_lvl.absPath).exists()))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
