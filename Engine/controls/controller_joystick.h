@@ -28,9 +28,12 @@ public:
     JoystickController();
     ~JoystickController();
     void setJoystickDevice(SDL_Joystick* jctrl);
+    SDL_Joystick* getJoystickDevice() const;
 
-    SDL_Joystick* joystickController;
     void update();
+
+private:
+    SDL_Joystick* joystickController;
 };
 
 #endif // CONTROLLER_JOYSTICK_H

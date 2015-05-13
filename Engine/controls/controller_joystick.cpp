@@ -51,6 +51,11 @@ void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
     joystickController=jctrl;
 }
 
+SDL_Joystick *JoystickController::getJoystickDevice() const
+{
+    return joystickController;
+}
+
 void JoystickController::update()
 {
     if(!joystickController)
