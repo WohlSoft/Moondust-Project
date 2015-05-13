@@ -1,7 +1,8 @@
 #include "global_settings.h"
 #include <common_features/app_path.h>
 #include <graphics/window.h>
-
+#include <controls/controller_joystick.h>
+#include <controls/controller_keyboard.h>
 
 #include <QSettings>
 
@@ -176,6 +177,40 @@ void GlobalSettings::saveKeyMap(KeyMap &map, QSettings &set, QString grp)
 
         set.setValue("drop", map.drop);
         set.setValue("start", map.start);
-    set.endGroup();
+        set.endGroup();
+}
+
+Controller *GlobalSettings::openController(int player)
+{
+    Controller *TargetController=NULL;
+    if(player==1)
+    {
+        if(player1_controller>0) {
+            TargetController = new JoystickController();
+            int did = player1_controller-1;
+            if(did<player1_joysticks.size())
+                TargetController->setKeyMap(player1_joysticks[did]);
+            if(did<joysticks.size())
+            dynamic_cast<JoystickController*>(TargetController)->
+                    setJoystickDevice(joysticks[did]);
+        } else {
+            TargetController = new KeyboardController();
+            TargetController->setKeyMap(player1_keyboard);
+        }
+    } else if (player==2) {
+        if(player2_controller>0) {
+            TargetController = new JoystickController();
+            int did = player2_controller-1;
+            if(did<player2_joysticks.size())
+                TargetController->setKeyMap(player2_joysticks[did]);
+            if(did<joysticks.size())
+            dynamic_cast<JoystickController*>(TargetController)->
+                    setJoystickDevice(joysticks[did]);
+        } else {
+            TargetController = new KeyboardController();
+            TargetController->setKeyMap(player2_keyboard);
+        }
+    }
+    return TargetController;
 }
 

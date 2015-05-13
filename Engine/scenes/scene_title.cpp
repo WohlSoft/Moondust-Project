@@ -41,6 +41,8 @@ TitleScene::TitleScene()
     mousePos.setY(-300);
     _cursorIsLoaded=false;
 
+    controller = AppSettings.openController(1);
+
     glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
@@ -148,6 +150,8 @@ TitleScene::~TitleScene()
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
     imgs.clear();
+
+    delete controller;
 }
 
 void TitleScene::update()
@@ -229,6 +233,8 @@ int TitleScene::exec()
                 running=false;
         }
 
+        controller->update();
+
         SDL_Event event; //  Events of SDL
         SDL_PumpEvents();             //for mouse
         while( SDL_PollEvent(&event) )//Common
@@ -254,8 +260,20 @@ int TitleScene::exec()
                             menu.storeKey(event.key.keysym.scancode);
                         else
                             menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
-                    }
-                    else
+                    /**************Control men via controllers*************/
+                    } else if(controller->keys.up) {
+                        menu.selectUp();
+                    } else if(controller->keys.down) {
+                        menu.selectDown();
+                    } else if(controller->keys.left) {
+                        menu.selectLeft();
+                    } else if(controller->keys.right) {
+                        menu.selectRight();
+                    } else if(controller->keys.jump) {
+                        menu.acceptItem();
+                    } else if(controller->keys.run) {
+                        menu.rejectItem();
+                    } else
                     if(!doExit)
                     switch(event.key.keysym.sym)
                     {

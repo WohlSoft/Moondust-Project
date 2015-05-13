@@ -8,6 +8,7 @@
 #undef main
 
 class QSettings;
+class Controller;
 class GlobalSettings
 {
 public:
@@ -19,8 +20,10 @@ public:
     void resetDefaults();
     void apply();
 
+    /*Via command line only*/
     bool debugMode;
     bool interprocessing;
+    /*Via command line only. End*/
 
     bool fullScreen;
 
@@ -50,6 +53,7 @@ public:
 
     void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
     void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
+    Controller *openController(int player);
 };
 
 extern GlobalSettings AppSettings;

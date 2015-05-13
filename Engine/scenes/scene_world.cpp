@@ -385,18 +385,7 @@ WorldScene::WorldScene()
     debug_event_delay=0;
 
     /*********Controller********/
-    if(AppSettings.player1_controller>0) {
-        player1Controller = new JoystickController();
-        int did = AppSettings.player1_controller-1;
-        if(did<AppSettings.player1_joysticks.size())
-            player1Controller->setKeyMap(AppSettings.player1_joysticks[did]);
-        if(did<AppSettings.joysticks.size())
-        dynamic_cast<JoystickController*>(player1Controller)->
-                setJoystickDevice(AppSettings.joysticks[did]);
-    } else {
-        player1Controller = new KeyboardController();
-        player1Controller->setKeyMap(AppSettings.player1_keyboard);
-    }
+    player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
     uTick = 1;

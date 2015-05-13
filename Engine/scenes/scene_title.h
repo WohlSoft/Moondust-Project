@@ -26,6 +26,7 @@
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
+#include <controls/controller.h>
 
 typedef QPair<int, int > menustate;
 
@@ -95,6 +96,8 @@ public:
 
     PlayEpisodeResult result_episode; //play episode
     PlayLevelResult   result_level; //Play level/battle
+
+    Controller *controller;
 
 private:
     QPoint mousePos;
