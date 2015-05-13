@@ -195,14 +195,11 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() + height*fader_opacity + padding);
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() + height*fader_opacity + padding);
-            glEnd();
+            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
+                                   _sizeRect.center().y() - height*fader_opacity - padding,
+                                     _sizeRect.center().x() + width*fader_opacity + padding,
+                                   _sizeRect.center().y() + height*fader_opacity + padding,
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
         glFlush();
@@ -231,14 +228,9 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.left(), _sizeRect.top());
-                glVertex2f( _sizeRect.right(), _sizeRect.top());
-                glVertex2f( _sizeRect.right(), _sizeRect.bottom());
-                glVertex2f( _sizeRect.left(), _sizeRect.bottom());
-            glEnd();
+            GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
+                                   _sizeRect.width(), _sizeRect.height(),
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
 
@@ -328,18 +320,12 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
-                            _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
-                            _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
-                            _sizeRect.center().y() + height*fader_opacity + padding);
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
-                            _sizeRect.center().y() + height*fader_opacity + padding);
-            glEnd();
+
+            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
+                                   _sizeRect.center().y() - height*fader_opacity - padding,
+                                     _sizeRect.center().x() + width*fader_opacity + padding,
+                                   _sizeRect.center().y() + height*fader_opacity + padding,
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
         glFlush();

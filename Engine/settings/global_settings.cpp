@@ -38,6 +38,7 @@ void GlobalSettings::load()
     PhysStep=setup.value("phys-step", PhysStep).toUInt();
         if(PhysStep<65) PhysStep=65;
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
+    fullScreen=setup.value("full-screen", fullScreen).toBool();
 
     enableDummyNpc=setup.value("enable-dummy-npc", enableDummyNpc).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
@@ -76,6 +77,7 @@ void GlobalSettings::save()
         setup.setValue("phys-step", PhysStep);
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("enable-dummy-npc", enableDummyNpc);
+        setup.setValue("full-screen", fullScreen);
         setup.setValue("player1-controller", player1_controller);
         setup.setValue("player2-controller", player2_controller);
         setup.setValue("volume-sfx", volume_sound);
@@ -106,6 +108,8 @@ void GlobalSettings::resetDefaults()
 
     enableDummyNpc=false;
 
+    fullScreen=false;
+
     volume_sound=128;
     volume_music=64;
 
@@ -133,6 +137,7 @@ void GlobalSettings::apply()
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;
     PGE_Window::showDebugInfo=showDebugInfo;
+    PGE_Window::setFullScreen(fullScreen);
 }
 
 

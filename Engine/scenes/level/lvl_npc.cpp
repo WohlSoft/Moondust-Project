@@ -18,6 +18,8 @@
 
 #include "lvl_npc.h"
 #include "../../data_configs/config_manager.h"
+#include <graphics/gl_renderer.h>
+
 
 LVL_Npc::LVL_Npc()
 {
@@ -88,31 +90,12 @@ void LVL_Npc::render(float camX, float camY)
             physBody->SetType(b2_dynamicBody);
     }
 
-    QRectF NpcG = QRectF(posX()-camX,
-                           posY()-camY,
-                           width,
-                           height);
-
     //AniPos x(0,1);
 
     //if(animated) //Get current animated frame
     //    x = ConfigManager::Animator_BGO[animator_ID].image();
-
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-    //glBindTexture( GL_TEXTURE_2D, texId );
-    glBegin( GL_QUADS );
-        //glTexCoord2f( 0, x.first );
-        glVertex2f( NpcG.left(), NpcG.top());
-
-        //glTexCoord2f( 1, x.first );
-        glVertex2f(  NpcG.right(), NpcG.top());
-
-        //glTexCoord2f( 1, x.second );
-        glVertex2f(  NpcG.right(),  NpcG.bottom());
-
-        //glTexCoord2f( 0, x.second );
-        glVertex2f( NpcG.left(),  NpcG.bottom());
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+    GlRenderer::renderRect(posX()-camX,
+                           posY()-camY,
+                           width+1,
+                           height+1);
 }

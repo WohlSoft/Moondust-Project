@@ -19,6 +19,7 @@
 #include "scene.h"
 #include <QString>
 #include <graphics/window.h>
+#include <graphics/gl_renderer.h>
 
 Scene::Scene()
 {
@@ -55,14 +56,7 @@ void Scene::render()
 {
     if(fader_opacity>0.0f)
     {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
-        glBegin( GL_QUADS );
-            glVertex2f( 0, 0);
-            glVertex2f( PGE_Window::Width, 0);
-            glVertex2f( PGE_Window::Width, PGE_Window::Height);
-            glVertex2f( 0, PGE_Window::Height);
-        glEnd();
+        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader_opacity);
     }
 }
 

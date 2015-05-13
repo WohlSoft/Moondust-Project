@@ -18,6 +18,7 @@
 
 #include <data_configs/config_manager.h>
 #include <graphics/graphics.h>
+#include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 
 #include "lvl_backgrnd.h"
@@ -324,23 +325,29 @@ void LVL_Background::draw(float x, float y)
                         d_top = strips[mg].top;
                         d_bottom = strips[mg].bottom;
                     }
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-                    glEnable(GL_TEXTURE_2D);
-                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, d_top );
-                        glVertex2f( backgrndG.left(), backgrndG.top());
 
-                        glTexCoord2f( 1, d_top );
-                        glVertex2f(  backgrndG.right(), backgrndG.top());
+                    GlRenderer::renderTexture(&txData1,
+                                              backgrndG.left(),
+                                              backgrndG.top(),
+                                              backgrndG.width(), backgrndG.height(),
+                                              d_top, d_bottom);
+//                    glColor4f( 1.f, 1.f, 1.f, 1.f);
+//                    glEnable(GL_TEXTURE_2D);
+//                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
+//                    glBegin( GL_QUADS );
+//                        glTexCoord2f( 0, d_top );
+//                        glVertex2f( backgrndG.left(), backgrndG.top());
 
-                        glTexCoord2f( 1, d_bottom );
-                        glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+//                        glTexCoord2f( 1, d_top );
+//                        glVertex2f(  backgrndG.right(), backgrndG.top());
 
-                        glTexCoord2f( 0, d_bottom );
-                        glVertex2f( backgrndG.left(),  backgrndG.bottom());
+//                        glTexCoord2f( 1, d_bottom );
+//                        glVertex2f(  backgrndG.right(),  backgrndG.bottom());
 
-                    glEnd();
+//                        glTexCoord2f( 0, d_bottom );
+//                        glVertex2f( backgrndG.left(),  backgrndG.bottom());
+
+//                    glEnd();
                 }
                 lenght += txData1.w;
                 draw_x += txData1.w;
@@ -374,23 +381,28 @@ void LVL_Background::draw(float x, float y)
             while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
             {
                 backgrndG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glEnable(GL_TEXTURE_2D);
-                glBindTexture( GL_TEXTURE_2D, txData2.texture );
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, ani_x.first );
-                    glVertex2f( backgrndG.left(), backgrndG.top());
+                GlRenderer::renderTexture(&txData2,
+                                          backgrndG.left(),
+                                          backgrndG.top(),
+                                          backgrndG.width(), backgrndG.height(),
+                                          ani_x.first, ani_x.second);
+//                glColor4f( 1.f, 1.f, 1.f, 1.f);
+//                glEnable(GL_TEXTURE_2D);
+//                glBindTexture( GL_TEXTURE_2D, txData2.texture );
+//                glBegin( GL_QUADS );
+//                    glTexCoord2f( 0, ani_x.first );
+//                    glVertex2f( backgrndG.left(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.first );
-                    glVertex2f(  backgrndG.right(), backgrndG.top());
+//                    glTexCoord2f( 1, ani_x.first );
+//                    glVertex2f(  backgrndG.right(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.second );
-                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+//                    glTexCoord2f( 1, ani_x.second );
+//                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
 
-                    glTexCoord2f( 0, ani_x.second );
-                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
+//                    glTexCoord2f( 0, ani_x.second );
+//                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
 
-                glEnd();
+//                glEnd();
                 lenght += txData2.w;
                 imgPos_X += txData2.w;
             }

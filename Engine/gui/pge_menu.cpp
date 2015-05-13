@@ -18,6 +18,7 @@
 
 #include "pge_menu.h"
 #include <graphics/window.h>
+#include <graphics/gl_renderer.h>
 #include <fontman/font_manager.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
@@ -535,30 +536,11 @@ void PGE_Menu::render()
             int posY = menuRect.y()-h-4;
             if(_scroll_up.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 0.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( posX, posY);
-                    glVertex2f( posX+w, posY);
-                    glVertex2f( posX+w, posY+h);
-                    glVertex2f( posX, posY+h);
-                glEnd();
+                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _scroll_up.texture);
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( posX,             posY);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( posX+_scroll_up.w, posY);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( posX+_scroll_up.w, posY+_scroll_up.h);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( posX,             posY+_scroll_up.h);
-                glEnd();
+                GlRenderer::renderTexture(&_scroll_up, posX, posY);
             }
         }
 
@@ -575,30 +557,11 @@ void PGE_Menu::render()
             int posY = menuRect.y()+menuRect.height()*_itemsOnScreen+4;
             if(_scroll_down.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 0.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( posX, posY);
-                    glVertex2f( posX+w, posY);
-                    glVertex2f( posX+w, posY+h);
-                    glVertex2f( posX, posY+h);
-                glEnd();
+                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _scroll_down.texture);
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( posX,             posY);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( posX+_scroll_down.w, posY);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( posX+_scroll_down.w, posY+_scroll_down.h);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( posX,             posY+_scroll_down.h);
-                glEnd();
+                GlRenderer::renderTexture(&_scroll_down, posX, posY);
             }
         }
     }
@@ -613,34 +576,14 @@ void PGE_Menu::render()
         {
             if(_selector.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( xPos_s-10,                 yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s+10-10,              yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s+10-10,           10+yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s-10,              10+yPos + (menuRect.height()/2)-5 );
-                glEnd();
+                GlRenderer::renderRect(xPos_s-10, yPos + (menuRect.height()/2)-5, 20, 20, 1.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _selector.texture);
-                glBegin( GL_QUADS );
-                    int y_offset=(menuRect.height()/2)-(_selector.h/2);
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( xPos_s,             yPos+y_offset);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( xPos_s+_selector.w, yPos+y_offset);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( xPos_s+_selector.w, yPos+_selector.h+y_offset);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( xPos_s,             yPos+_selector.h+y_offset);
-                glEnd();
+                int y_offset=(menuRect.height()/2)-(_selector.h/2);
+                GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }
-
         _items[i]->render(xPos, yPos);
     }
 }

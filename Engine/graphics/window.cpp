@@ -23,6 +23,7 @@
 #include "../common_features/graphics_funcs.h"
 
 #include <settings/global_settings.h>
+#include "gl_renderer.h"
 
 int PGE_Window::Width=800;
 int PGE_Window::Height=600;
@@ -67,10 +68,14 @@ bool PGE_Window::init(QString WindowTitle)
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
+    GlRenderer::setViewportSize(Width, Height);
+
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               Width, Height,
                               SDL_WINDOW_SHOWN /*| SDL_WINDOW_RESIZABLE*/ | SDL_WINDOW_OPENGL);
     checkSDLError();
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
     if(window == NULL)
     {
@@ -131,6 +136,41 @@ void PGE_Window::setCursorVisibly(bool viz)
                 SDL_ShowCursor(SDL_DISABLE);
         }
     }
+}
+
+int PGE_Window::setFullScreen(bool fs)
+{
+    if(window==NULL) return -1;
+    if(fs != IsFullScreen(window))
+    {
+        if(fs)
+        {
+            // Swith to FULLSCREEN mode
+            if (SDL_SetWindowFullscreen(window, SDL_TRUE) < 0)
+            {
+                //Hide mouse cursor in full screen mdoe
+                qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
+                return -1;
+            }
+            SDL_ShowCursor(SDL_DISABLE);
+            return 1;
+        }
+        else
+        {
+            //Show mouse cursor
+            if(showCursor)
+                SDL_ShowCursor(SDL_ENABLE);
+
+            // Swith to WINDOWED mode
+            if (SDL_SetWindowFullscreen(window, SDL_FALSE) < 0)
+            {
+                qDebug() <<"Setting windowed failed : "<<SDL_GetError();
+                return -1;
+            }
+            return 0;
+        }
+    }
+    return 0;
 }
 
 

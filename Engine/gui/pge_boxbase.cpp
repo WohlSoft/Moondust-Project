@@ -4,6 +4,7 @@
 #include <SDL2/SDL_opengl.h>
 #undef main
 #include <common_features/graphics_funcs.h>
+#include <graphics/gl_renderer.h>
 
 
 PGE_BoxBase::PGE_BoxBase()
@@ -266,10 +267,8 @@ void PGE_BoxBase::drawPiece(QRectF target, QRectF block, QRectF texture)
     tx.setBottom(texture.bottom()/this->styleTexture.h);
 
     QRectF blockG;
-    blockG.setX(target.x()+block.x());
-    blockG.setY(target.y()+block.y());
-    blockG.setRight(target.x()+block.x()+block.width());
-    blockG.setBottom(target.y()+block.y()+block.height());
+    blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
+    blockG.setBottomRight(GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ));
 
     glBegin( GL_QUADS );
         glTexCoord2f( tx.left(), tx.top() );
