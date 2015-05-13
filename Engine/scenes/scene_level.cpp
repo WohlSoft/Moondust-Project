@@ -92,18 +92,7 @@ LevelScene::LevelScene()
     /*********Fader*************/
 
     /*********Controller********/
-    if(AppSettings.player1_controller>0) {
-        player1Controller = new JoystickController();
-        int did = AppSettings.player1_controller-1;
-        if(did<AppSettings.player1_joysticks.size())
-            player1Controller->setKeyMap(AppSettings.player1_joysticks[did]);
-        if(did<AppSettings.joysticks.size())
-        dynamic_cast<JoystickController*>(player1Controller)->
-                setJoystickDevice(AppSettings.joysticks[did]);
-    } else {
-        player1Controller = new KeyboardController();
-        player1Controller->setKeyMap(AppSettings.player1_keyboard);
-    }
+    player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
     errorMsg = "";
@@ -562,9 +551,6 @@ int LevelScene::exec()
 
         if(wait_delay>0)
             SDL_Delay( wait_delay );
-
-        stop_render=0;
-        start_render=0;
 
         if(isExit())
             running = false;
