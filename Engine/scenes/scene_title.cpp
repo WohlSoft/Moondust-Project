@@ -163,59 +163,18 @@ void TitleScene::render()
 
     if(_bgIsLoaded)
     {
-        QRectF loadAniG = QRectF(PGE_Window::Width/2 - background.w/2,
-                               PGE_Window::Height/2 - background.h/2,
-                               background.w,
-                               background.h);
-
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-        glBindTexture( GL_TEXTURE_2D, background.texture );
-
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( loadAniG.left(), loadAniG.top());
-
-            glTexCoord2f( 1, 0 );
-            glVertex2f(  loadAniG.right(), loadAniG.top());
-
-            glTexCoord2f( 1, 1 );
-            glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-            glTexCoord2f( 0, 1 );
-            glVertex2f( loadAniG.left(),  loadAniG.bottom());
-            glEnd();
-        glDisable(GL_TEXTURE_2D);
+        GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2,
+                                  PGE_Window::Height/2 - background.h/2);
     }
 
     for(int i=0;i<imgs.size();i++)
     {
-        QRectF imgRect = QRectF(imgs[i].x,
-                               imgs[i].y,
-                               imgs[i].t.w,
-                               imgs[i].frmH);
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture( GL_TEXTURE_2D, imgs[i].t.texture );
-
-        AniPos x(0,1);
-               x = imgs[i].a.image();
-
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, x.first );
-            glVertex2f( imgRect.left(), imgRect.top());
-
-            glTexCoord2f( 1, x.first );
-            glVertex2f(  imgRect.right(), imgRect.top());
-
-            glTexCoord2f( 1, x.second );
-            glVertex2f(  imgRect.right(),  imgRect.bottom());
-
-            glTexCoord2f( 0, x.second );
-            glVertex2f( imgRect.left(),  imgRect.bottom());
-            glEnd();
-        glDisable(GL_TEXTURE_2D);
+        AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::renderTexture(&imgs[i].t,
+                                  imgs[i].x,
+                                  imgs[i].y,
+                                  imgs[i].t.w,
+                                  imgs[i].frmH, x.first, x.second);
     }
 
 
@@ -231,30 +190,11 @@ void TitleScene::renderMouse()
 
     if(_cursorIsLoaded)
     {
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture(GL_TEXTURE_2D, cursor.texture);
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( posX, posY);
-            glTexCoord2f( 1, 0 );
-            glVertex2f( posX+cursor.w, posY);
-            glTexCoord2f( 1, 1 );
-            glVertex2f( posX+cursor.w, posY+cursor.h);
-            glTexCoord2f( 0, 1 );
-            glVertex2f( posX, posY+cursor.h);
-        glEnd();
+        GlRenderer::renderTexture(&cursor, posX, posY);
     }
     else
     {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 1.f, 0.f, 1.0f);
-        glBegin( GL_QUADS );
-            glVertex2f( posX, posY);
-            glVertex2f( posX+10, posY);
-            glVertex2f( posX+10, posY+10);
-            glVertex2f( posX, posY+10);
-        glEnd();
+        GlRenderer::renderRect(posX, posY, 10,10, 0.f, 1.f, 0.f, 1.0f);
     }
 }
 
@@ -300,8 +240,14 @@ int TitleScene::exec()
                         return ANSWER_EXIT;
                     }   // End work of program
                 break;
+//                case SDL_WINDOWEVENT:
+//                case SDL_WINDOWEVENT_RESIZED:
+//                    SDL_GetWindowSize(PGE_Window::window, &PGE_Window::Width, &PGE_Window::Height);
+//                    GlRenderer::setWindowSize(PGE_Window::Width, PGE_Window::Height);
+//                    GlRenderer::resetViewport();
+//                break;
 
-                case SDL_KEYDOWN: // If pressed key
+            case SDL_KEYDOWN: // If pressed key
                     if(menu.isKeyGrabbing())
                     {
                         if(event.key.keysym.scancode!=SDL_SCANCODE_ESCAPE)
@@ -310,13 +256,12 @@ int TitleScene::exec()
                             menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
                     }
                     else
+                    if(!doExit)
                     switch(event.key.keysym.sym)
                     {
-                      case SDLK_x:
-                          qDebug()<<"Cu";
-                      break;
-                      case SDLK_t:
-                          PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                      case SDLK_f:
+                        if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+                            AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
                       break;
                       case SDLK_F3:
                           PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
@@ -598,13 +543,16 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.addMenuItem("Exit", "Exit");
         break;
             case menu_options:
-                menu.setPos(260,300);
+                menu.setPos(260,280);
                 menu.setSize(300, 30);
-                menu.setItemsNumber(7);
+                menu.setItemsNumber(8);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
                                     []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
+                menu.addBoolMenuItem(&AppSettings.fullScreen, "full_screen", "Full Screen mode",
+                                     []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
+                                     );
                 menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
                 menu.addBoolMenuItem(&AppSettings.enableDummyNpc, "dummy_npcs", "Enable dummy NPC's");
                 menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");

@@ -22,7 +22,9 @@
 #include <QPoint>
 #include <QPointF>
 #include <QString>
+#include <common_features/pge_texture.h>
 
+struct SDL_Thread;
 class GlRenderer
 {
 public:
@@ -32,9 +34,42 @@ public:
 
     static QString ScreenshotPath;
     static void makeShot();
+    static int makeShot_action(void *_pixels);
     static bool ready();
+
+    static void renderTexture(PGE_Texture *texture, int x, int y); //!<Render texture as-is
+    static void renderTexture(PGE_Texture *texture, int x, int y, int w, int h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!<Render matrix animation fragment
+    static void renderTextureCur(int x, int y, int w, int h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!< Draw currently binded texture
+    static void renderRect(int x, int y, int w, int h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f);
+    static void renderRectBR(int _left, int _top, int _right, int _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+
+    static QPointF MapToGl(QPoint point);
+    static QPointF MapToGl(int x, int y);
+    static void setViewport(int x, int y, int w, int h);
+    static void resetViewport();
+    static void applyResizedWindow();
+    static void setViewportSize(int w, int h);
+    static void setWindowSize(int w, int h);
+
+
 private:
+    static int window_w;
+    static int window_h;
+    static float viewport_x;
+    static float viewport_y;
+    static float viewport_w;
+    static float viewport_h;
+    static float viewport_w_half;
+    static float viewport_h_half;
+
+    static float color_level_red;
+    static float color_level_green;
+    static float color_level_blue;
+    static float color_level_alpha;
+
+    static SDL_Thread *thread;
     static bool _isReady;
 };
 
 #endif // GL_RENDERER_H
+

@@ -881,63 +881,28 @@ void WorldScene::render()
 
     if(backgroundTex.w>0)
     {
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture(GL_TEXTURE_2D, backgroundTex.texture);
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( 0,             0);
-            glTexCoord2f( 1, 0 );
-            glVertex2f( backgroundTex.w, 0);
-            glTexCoord2f( 1, 1 );
-            glVertex2f( backgroundTex.w, backgroundTex.h);
-            glTexCoord2f( 0, 1 );
-            glVertex2f( 0,             backgroundTex.h);
-        glEnd();
+        GlRenderer::renderTexture(&backgroundTex, 0,0);
     }
 
     //Viewport zone black background
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 0.f, 1.0f);
-    glBegin( GL_QUADS );
-        glVertex2f( viewportRect.left(), viewportRect.top());
-        glVertex2f( viewportRect.right()+1, viewportRect.top());
-        glVertex2f( viewportRect.right()+1, viewportRect.bottom()+1);
-        glVertex2f( viewportRect.left(), viewportRect.bottom()+1);
-    glEnd();
+    GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f,0.f,0.f);
 
     {
         //Set small viewport
-        glViewport( viewportRect.left(), PGE_Window::Height-(viewportRect.bottom()+1), viewportRect.width(), viewportRect.height());
+        GlRenderer::setViewport(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height());
         double renderX = posX+16-(viewportRect.width()/2);
         double renderY = posY+16-(viewportRect.height()/2);
-        double ratioX = double(PGE_Window::Width)/double(viewportRect.width());
-        double ratioY = double(PGE_Window::Height)/double(viewportRect.height());
 
         //Render items
         foreach(WorldNode * it, toRender)
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( it->r, it->g, it->b, 1.0f);
-            glBegin( GL_QUADS );
-                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y)-renderY));
-                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y)-renderY));
-                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y+it->h)-renderY));
-                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y+it->h)-renderY));
-            glEnd();
+            GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
         }
-
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.0f);
-        glBegin( GL_QUADS );
-            glVertex2f( ratioX*(posX-renderX),       ratioY*(posY-renderY));
-            glVertex2f( ratioX*((posX+32)-renderX), ratioY*(posY-renderY));
-            glVertex2f( ratioX*((posX+32)-renderX), ratioY*((posY+32)-renderY));
-            glVertex2f( ratioX*(posX-renderX),       ratioY*((posY+32)-renderY));
-        glEnd();
+        //draw our "character"
+        GlRenderer::renderRect(posX-renderX, posY-renderY, 32, 32, 1.f, 1.f, 1.f, 1.0f);
 
         //Restore viewport
-        glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+        GlRenderer::resetViewport();
     }
 
     if(common_setup.points_en)
@@ -1072,11 +1037,16 @@ int WorldScene::exec()
                             isPauseMenu = true;
                         }
                     break;
-                    case SDLK_t:
-                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    case SDLK_f:
+                      if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+                         AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
                     break;
                     case SDLK_i:
                         ignore_paths= !ignore_paths;
+                        if(ignore_paths)
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+                        else
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
                     break;
                     case SDLK_F3:
                         PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

@@ -19,6 +19,7 @@
 #include "lvl_player.h"
 
 #include <graphics/window.h>
+#include <graphics/gl_renderer.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
@@ -1388,7 +1389,7 @@ void LVL_Player::render(float camX, float camY)
                     float wOfsF = width/warpFrameW; //Relative hitbox width
                     tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
                     player.setLeft( player.left()+Ofs.x() );
-                    player.setRight( player.right()-(warpPipeOffset*width) );
+                    player.setRight( player.right()-(warpPipeOffset*width)+1 );
                 }
                 break;
             case 1://Up entrance, down exit
@@ -1397,7 +1398,7 @@ void LVL_Player::render(float camX, float camY)
                     float hOfsF = height/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
                     player.setTop( player.top()+Ofs.y() );
-                    player.setBottom( player.bottom()-(warpPipeOffset*height) );
+                    player.setBottom( player.bottom()-(warpPipeOffset*height)+1 );
                 }
                 break;
             case 4://right emtramce. left entrance
@@ -1408,7 +1409,7 @@ void LVL_Player::render(float camX, float camY)
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
                     player.setLeft( player.left()+(warpPipeOffset*width) );
-                    player.setRight( player.right()-(wWAbs-Ofs.x()-width) );
+                    player.setRight( player.right()-(wWAbs-Ofs.x()-width)+1 );
                 }
                 break;
             case 3://down entrance, up exit
@@ -1419,7 +1420,7 @@ void LVL_Player::render(float camX, float camY)
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
                     player.setTop( player.top()+(warpPipeOffset*height) );
-                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height) );
+                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height)+1 );
                 }
                 break;
             default:
@@ -1427,23 +1428,16 @@ void LVL_Player::render(float camX, float camY)
         }
     }
 
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-    glBindTexture( GL_TEXTURE_2D, texId );
-    glBegin( GL_QUADS );
-        glTexCoord2f( tPos.left(), tPos.top() );
-        glVertex2f( player.left(), player.top());
 
-        glTexCoord2f( tPos.right(), tPos.top() );
-        glVertex2f( player.right(), player.top());
-
-        glTexCoord2f( tPos.right(), tPos.bottom() );
-        glVertex2f( player.right(),  player.bottom());
-
-        glTexCoord2f( tPos.left(), tPos.bottom() );
-        glVertex2f( player.left(),  player.bottom());
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+    GlRenderer::renderTexture(&texture,
+                              player.x(),
+                              player.y(),
+                              player.width(),
+                              player.height(),
+                              tPos.top(),
+                              tPos.bottom(),
+                              tPos.left(),
+                              tPos.right());
 }
 
 bool LVL_Player::locked()

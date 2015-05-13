@@ -104,58 +104,16 @@ void LoadingScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
-    QRectF loadAniG = QRectF(PGE_Window::Width/2 - background.w/2,
-                           PGE_Window::Height/2 - background.h/2,
-                           background.w,
-                           background.h);
-
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    glBindTexture( GL_TEXTURE_2D, background.texture );
-
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, 0 );
-        glVertex2f( loadAniG.left(), loadAniG.top());
-
-        glTexCoord2f( 1, 0 );
-        glVertex2f(  loadAniG.right(), loadAniG.top());
-
-        glTexCoord2f( 1, 1 );
-        glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-        glTexCoord2f( 0, 1 );
-        glVertex2f( loadAniG.left(),  loadAniG.bottom());
-        glEnd();
-    glDisable(GL_TEXTURE_2D);
+    GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2, PGE_Window::Height/2 - background.h/2);
 
     for(int i=0;i<imgs.size();i++)
     {
-        QRectF imgRect = QRectF(imgs[i].x,
-                               imgs[i].y,
-                               imgs[i].t.w,
-                               imgs[i].frmH);
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture( GL_TEXTURE_2D, imgs[i].t.texture );
-
-        AniPos x(0,1);
-               x = imgs[i].a.image();
-
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, x.first );
-            glVertex2f( imgRect.left(), imgRect.top());
-
-            glTexCoord2f( 1, x.first );
-            glVertex2f(  imgRect.right(), imgRect.top());
-
-            glTexCoord2f( 1, x.second );
-            glVertex2f(  imgRect.right(),  imgRect.bottom());
-
-            glTexCoord2f( 0, x.second );
-            glVertex2f( imgRect.left(),  imgRect.bottom());
-            glEnd();
-        glDisable(GL_TEXTURE_2D);
+        AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::renderTexture(&imgs[i].t,
+                                  imgs[i].x,
+                                  imgs[i].y,
+                                  imgs[i].t.w,
+                                  imgs[i].frmH, x.first, x.second);
     }
 
     Scene::render();

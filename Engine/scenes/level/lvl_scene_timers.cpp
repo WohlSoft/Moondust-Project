@@ -22,6 +22,7 @@
 
 #include <fontman/font_manager.h>
 #include <networking/intproc.h>
+#include <graphics/gl_renderer.h>
 
 
 /**************************LoadAnimation*******************************/
@@ -42,42 +43,19 @@ void LevelScene::drawLoader()
     glLoadIdentity();
 
 
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 0.f, 1.0f);
-    glBegin( GL_QUADS );
-        glVertex2f( 0, 0);
-        glVertex2f( PGE_Window::Width, 0);
-        glVertex2f( PGE_Window::Width, PGE_Window::Height);
-        glVertex2f( 0, PGE_Window::Height);
-    glEnd();
+    GlRenderer::renderRect(0,0,PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, 1.0f);
 
     QRectF loadAniG = QRectF(PGE_Window::Width/2 - loading_texture.w/2,
                            PGE_Window::Height/2 - (loading_texture.h/4)/2,
                            loading_texture.w,
                            loading_texture.h/4);
 
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
+
 
     AniPos x(0,1);
             x = loading_Ani->image();
 
-    glBindTexture( GL_TEXTURE_2D, loading_texture.texture );
-
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, x.first );
-        glVertex2f( loadAniG.left(), loadAniG.top());
-
-        glTexCoord2f( 1, x.first );
-        glVertex2f(  loadAniG.right(), loadAniG.top());
-
-        glTexCoord2f( 1, x.second );
-        glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-        glTexCoord2f( 0, x.second );
-        glVertex2f( loadAniG.left(),  loadAniG.bottom());
-        glEnd();
-    glDisable(GL_TEXTURE_2D);
+    GlRenderer::renderTexture(&loading_texture, loadAniG.left(), loadAniG.top(), loadAniG.width(), loadAniG.height(), x.first, x.second);
 
     if(IntProc::isEnabled())
         FontManager::printText(QString("%1")

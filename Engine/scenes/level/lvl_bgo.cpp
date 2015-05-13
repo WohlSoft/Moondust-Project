@@ -19,6 +19,8 @@
 #include "lvl_bgo.h"
 #include "../../data_configs/config_manager.h"
 
+#include <graphics/gl_renderer.h>
+
 LVL_Bgo::LVL_Bgo()
 {
     type = LVLBGO;
@@ -70,34 +72,9 @@ void LVL_Bgo::init()
 
 void LVL_Bgo::render(float camX, float camY)
 {
-    QRectF bgoG = QRectF(posX()-camX,
-                           posY()-camY,
-                           width,
-                           height);
-
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
-
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    glBindTexture( GL_TEXTURE_2D, texId );
-
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, x.first );
-        glVertex2f( bgoG.left(), bgoG.top());
-
-        glTexCoord2f( 1, x.first );
-        glVertex2f(  bgoG.right(), bgoG.top());
-
-        glTexCoord2f( 1, x.second );
-        glVertex2f(  bgoG.right(),  bgoG.bottom());
-
-        glTexCoord2f( 0, x.second );
-        glVertex2f( bgoG.left(),  bgoG.bottom());
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
 }

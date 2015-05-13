@@ -22,6 +22,8 @@ public:
     bool debugMode;
     bool interprocessing;
 
+    bool fullScreen;
+
     int  ScreenWidth;
     int  ScreenHeight;
 

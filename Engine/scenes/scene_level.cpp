@@ -490,8 +490,9 @@ int LevelScene::exec()
                             isPauseMenu = true;
                         }
                     break;
-                    case SDLK_t:
-                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    case SDLK_f:
+                       if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+                          AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
                     break;
                     case SDLK_F3:
                         PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

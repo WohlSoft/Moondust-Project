@@ -21,6 +21,7 @@
 #include "../common_features/app_path.h"
 #include "../common_features/graphics_funcs.h"
 #include <data_configs/config_manager.h>
+#include <graphics/gl_renderer.h>
 
 #include <QtDebug>
 #include <QFile>
@@ -342,17 +343,24 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
     GLint h;
 
     glEnable(GL_TEXTURE_2D);
-
     glBindTexture(GL_TEXTURE_2D, *texture);
     glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
     glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
 
+    QPointF point;
+        point = GlRenderer::MapToGl(x, y);
+    float left = point.x();
+    float top = point.y();
+        point = GlRenderer::MapToGl(x+w, y+h);
+    float right = point.x();
+    float bottom = point.y();
+
     glColor4f( 1.f, 1.f, 1.f, 1.f);
     glBegin(GL_QUADS);
-        glTexCoord2f(0.0,1.0);glVertex3f(x, y, 0.0);
-        glTexCoord2f(0.0,0.0);glVertex3f(x, y+h, 0.0) ;
-        glTexCoord2f(1.0,0.0);glVertex3f(x+w, y+h, 0.0);
-        glTexCoord2f(1.0,1.0);glVertex3f(x+w, y, 0.0);
+        glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+        glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
+        glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
+        glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
@@ -386,13 +394,23 @@ void FontManager::printText(QString text, int x, int y)
         glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
         glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
 
+
+        QPointF point;
+            point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
+        float left = point.x();
+        float top = point.y();
+            point = GlRenderer::MapToGl(x+offsetX+w, y+h+offsetY);
+        float right = point.x();
+        float bottom = point.y();
+
         glColor4f( 1.f, 1.f, 1.f, 1.f);
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0,1.0);glVertex3f(x+offsetX, y+offsetY, 0.0);
-            glTexCoord2f(0.0,0.0);glVertex3f(x+offsetX, y+h+offsetY, 0.0) ;
-            glTexCoord2f(1.0,0.0);glVertex3f(x+offsetX+w, y+h+offsetY, 0.0);
-            glTexCoord2f(1.0,1.0);glVertex3f(x+offsetX+w, y+offsetY, 0.0);
+            glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+            glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
+            glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
+            glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
         glEnd();
+
         glDisable(GL_TEXTURE_2D);
         width=w;
         height=h;
