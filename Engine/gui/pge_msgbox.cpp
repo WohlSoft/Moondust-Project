@@ -205,7 +205,9 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) ) {}
+        while ( SDL_PollEvent(&event) ) {
+            PGE_Window::processEvents(event);
+        }
         updateControllers();
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
@@ -248,6 +250,7 @@ void PGE_MsgBox::exec()
         updateControllers();
         while ( SDL_PollEvent(&event) )
         {
+            PGE_Window::processEvents(event);
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -255,7 +258,6 @@ void PGE_MsgBox::exec()
                         running=false;
                     }
                 break;
-
                 case SDL_KEYDOWN: // If pressed key
                     switch(event.key.keysym.sym)
                     { // Check which
@@ -331,7 +333,9 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) ) {}
+        while ( SDL_PollEvent(&event) ) {
+            PGE_Window::processEvents(event);
+        }
         updateControllers();
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)

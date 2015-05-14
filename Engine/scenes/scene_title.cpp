@@ -239,6 +239,7 @@ int TitleScene::exec()
         SDL_PumpEvents();             //for mouse
         while( SDL_PollEvent(&event) )//Common
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -246,13 +247,6 @@ int TitleScene::exec()
                         return ANSWER_EXIT;
                     }   // End work of program
                 break;
-//                case SDL_WINDOWEVENT:
-//                case SDL_WINDOWEVENT_RESIZED:
-//                    SDL_GetWindowSize(PGE_Window::window, &PGE_Window::Width, &PGE_Window::Height);
-//                    GlRenderer::setWindowSize(PGE_Window::Width, PGE_Window::Height);
-//                    GlRenderer::resetViewport();
-//                break;
-
             case SDL_KEYDOWN: // If pressed key
                     if(menu.isKeyGrabbing())
                     {
@@ -277,16 +271,6 @@ int TitleScene::exec()
                     if(!doExit)
                     switch(event.key.keysym.sym)
                     {
-                      case SDLK_f:
-                        if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
-                            AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
-                      break;
-                      case SDLK_F3:
-                          PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                      break;
-                      case SDLK_F12:
-                          GlRenderer::makeShot();
-                      break;
                       case SDLK_UP:
                         menu.selectUp();
                       break;
@@ -605,8 +589,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 setMenu(menu_controls_plr1);
                                 };
                             mct_p = &AppSettings.player1_controller;
-                            if((*mct_p>0)&&(*mct_p<=AppSettings.player1_joysticks.size()))
-                                mp_p = &AppSettings.player1_joysticks[*mct_p-1];
+                            if((*mct_p>=0)&&(*mct_p<AppSettings.player1_joysticks.size()))
+                                mp_p = &AppSettings.player1_joysticks[*mct_p];
                             else
                                 mp_p = &AppSettings.player1_keyboard;
                         }
@@ -615,8 +599,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 setMenu(menu_controls_plr2);
                                 };
                             mct_p  = &AppSettings.player2_controller;
-                            if((*mct_p>0)&&(*mct_p<=AppSettings.player2_joysticks.size()))
-                                mp_p = &AppSettings.player2_joysticks[*mct_p-1];
+                            if((*mct_p>=0)&&(*mct_p<AppSettings.player2_joysticks.size()))
+                                mp_p = &AppSettings.player2_joysticks[*mct_p];
                             else
                                 mp_p = &AppSettings.player2_keyboard;
                         }
@@ -626,12 +610,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             menu.setItemsNumber(11);
                             QList<IntAssocItem> ctrls;
                             IntAssocItem controller;
-                            controller.value=0;
+                            controller.value=-1;
                             controller.label="Keyboard";
                             ctrls.push_back(controller);
                             for(int i=0;i<AppSettings.joysticks.size();i++)
                             {
-                                controller.value=i+1;
+                                controller.value=i;
                                 controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
                                 ctrls.push_back(controller);
                             }

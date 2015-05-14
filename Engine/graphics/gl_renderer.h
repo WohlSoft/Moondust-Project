@@ -47,21 +47,35 @@ public:
     static QPointF MapToGl(int x, int y);
     static void setViewport(int x, int y, int w, int h);
     static void resetViewport();
-    static void applyResizedWindow();
     static void setViewportSize(int w, int h);
     static void setWindowSize(int w, int h);
 
 
 private:
+    //Virtual resolution of renderable zone
     static int window_w;
     static int window_h;
+
+    //Scale of virtual and window resolutuins
+    static float scale_x;
+    static float scale_y;
+    //Side offsets to keep ratio
+    static float offset_x;
+    static float offset_y;
+    //current viewport
     static float viewport_x;
     static float viewport_y;
+    //Need to calculate relative viewport position when screen was scaled
+    static float viewport_scale_x;
+    static float viewport_scale_y;
+    //Resolution of viewport
     static float viewport_w;
     static float viewport_h;
+    //Half values of viewport Resolution
     static float viewport_w_half;
     static float viewport_h_half;
 
+    //Texture render color levels
     static float color_level_red;
     static float color_level_green;
     static float color_level_blue;

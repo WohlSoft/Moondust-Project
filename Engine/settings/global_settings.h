@@ -54,6 +54,7 @@ public:
     void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
     void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
     Controller *openController(int player);
+    void loadJoystickSettings();
 };
 
 extern GlobalSettings AppSettings;

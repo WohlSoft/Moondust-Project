@@ -72,9 +72,10 @@ bool PGE_Window::init(QString WindowTitle)
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               Width, Height,
-                              SDL_WINDOW_SHOWN /*| SDL_WINDOW_RESIZABLE*/ | SDL_WINDOW_OPENGL);
+                              SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     checkSDLError();
 
+    SDL_SetWindowMinimumSize(window, Width, Height);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
     if(window == NULL)
@@ -146,7 +147,7 @@ int PGE_Window::setFullScreen(bool fs)
         if(fs)
         {
             // Swith to FULLSCREEN mode
-            if (SDL_SetWindowFullscreen(window, SDL_TRUE) < 0)
+            if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
             {
                 //Hide mouse cursor in full screen mdoe
                 qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
@@ -179,7 +180,7 @@ SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
 {
    Uint32 flags = SDL_GetWindowFlags(win);
 
-   if(flags & SDL_WINDOW_FULLSCREEN) return SDL_TRUE; // return SDL_TRUE if fullscreen
+   if(flags & SDL_WINDOW_FULLSCREEN_DESKTOP) return SDL_TRUE; // return SDL_TRUE if fullscreen
 
    return SDL_FALSE; // Return SDL_FALSE if windowed
 }
@@ -208,7 +209,7 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     }
 
     // Swith to FULLSCREEN mode
-    if (SDL_SetWindowFullscreen(win, SDL_TRUE) < 0)
+    if (SDL_SetWindowFullscreen(win, SDL_WINDOW_FULLSCREEN_DESKTOP) < 0)
     {
         //Hide mouse cursor in full screen mdoe
         qDebug() <<"Setting fullscreen failed : "<<SDL_GetError();
@@ -216,4 +217,37 @@ int PGE_Window::SDL_ToggleFS(SDL_Window *win)
     }
     SDL_ShowCursor(SDL_DISABLE);
     return 1;
+}
+
+
+
+int PGE_Window::processEvents(SDL_Event &event)
+{
+    switch(event.type)
+    {
+        case SDL_WINDOWEVENT:
+            if(event.window.event==SDL_WINDOWEVENT_RESIZED)
+                GlRenderer::resetViewport();
+            return 1;
+        break;
+    case SDL_KEYDOWN:
+          switch(event.key.keysym.sym)
+          {
+              case SDLK_f:
+                 if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+                    AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
+                 return 2;
+              break;
+              case SDLK_F3:
+                  PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
+                  return 2;
+              break;
+              case SDLK_F12:
+                  GlRenderer::makeShot();
+                  return 2;
+              break;
+          }
+        break;
+    }
+    return 0;
 }

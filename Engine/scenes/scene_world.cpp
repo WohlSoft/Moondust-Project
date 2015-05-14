@@ -1003,6 +1003,7 @@ int WorldScene::exec()
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -1026,10 +1027,6 @@ int WorldScene::exec()
                             isPauseMenu = true;
                         }
                     break;
-                    case SDLK_f:
-                      if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
-                         AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
-                    break;
                     case SDLK_i:
                         ignore_paths= !ignore_paths;
                         if(ignore_paths)
@@ -1037,15 +1034,8 @@ int WorldScene::exec()
                         else
                             PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
                     break;
-                    case SDLK_F3:
-                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                    break;
-                    case SDLK_F12:
-                        GlRenderer::makeShot();
-                    break;
                     default:
-                      break;
-
+                    break;
                   }
                 break;
 

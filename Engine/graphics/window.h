@@ -44,6 +44,8 @@ public:
     static int setFullScreen(bool fs);
     static int SDL_ToggleFS(SDL_Window *win=NULL);
 
+    static int processEvents(SDL_Event &event);
+
     static void checkSDLError(int line = -1);
 private:
     static bool IsInit;

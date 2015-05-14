@@ -45,8 +45,14 @@ SDL_Thread *GlRenderer::thread = NULL;
 
 int GlRenderer::window_w=800;
 int GlRenderer::window_h=600;
+float GlRenderer::scale_x=1.0f;
+float GlRenderer::scale_y=1.0f;
+float GlRenderer::offset_x=0.0f;
+float GlRenderer::offset_y=0.0f;
 float GlRenderer::viewport_x=0;
 float GlRenderer::viewport_y=0;
+float GlRenderer::viewport_scale_x=1.0f;
+float GlRenderer::viewport_scale_y=1.0f;
 float GlRenderer::viewport_w=800;
 float GlRenderer::viewport_h=600;
 float GlRenderer::viewport_w_half=400;
@@ -68,7 +74,7 @@ bool GlRenderer::init()
     glLoadIdentity();
 
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
-    //glOrtho( 0.0, PGE_Window::Width, PGE_Window::Height, 0.0, 1.0, -1.0 );
+    //glOrtho( 0.0, PGE_Window::Width, PGE_Window::Heightб 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
     glMatrixMode( GL_MODELVIEW );
@@ -109,6 +115,8 @@ bool GlRenderer::init()
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
 
+    resetViewport();
+
     return true;
 }
 
@@ -126,31 +134,40 @@ QPointF GlRenderer::mapToOpengl(QPoint s)
 
 QString GlRenderer::ScreenshotPath = "";
 
+struct PGE_GL_shoot{
+    uchar* pixels;
+    GLsizei w,h;
+};
+
 void GlRenderer::makeShot()
 {
     if(!_isReady) return;
 
     // Make the BYTE array, factor of 3 because it's RBG.
-    uchar* pixels = new uchar[ 3 * PGE_Window::Width * PGE_Window::Height];
-    glReadPixels(0, 0, PGE_Window::Width, PGE_Window::Height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-
-    thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)pixels );
+    GLsizei w,h;
+    SDL_GetWindowSize(PGE_Window::window, &w, &h);
+    uchar* pixels = new uchar[4*w*h];
+    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    PGE_GL_shoot *shoot=new PGE_GL_shoot;
+    shoot->pixels=pixels;
+    shoot->w=w;
+    shoot->w=h;
+    thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)shoot );
 
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
 }
 
 int GlRenderer::makeShot_action(void *_pixels)
 {
-    uchar* pixels=(uchar*)_pixels;
-    QImage shotImg = QImage(PGE_Window::Width, PGE_Window::Height, QImage::Format_ARGB32);
+    PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
+    QImage shotImg(shoot->w, shoot->h, QImage::Format_ARGB32);
     shotImg.fill(Qt::black);
-
-    for(int i=0, x=0, y=PGE_Window::Height-1; i<3*PGE_Window::Width*PGE_Window::Height; i+=3, x++)
+    for(int i=0, x=0, y=shoot->h-1; i<3*shoot->w*shoot->h; i+=3, x++)
     {
-        if(x==PGE_Window::Width) {x=0; y--;}
-        shotImg.setPixel( QPoint(x,y), qRgb(pixels[i],pixels[i+1], pixels[i+2]) );
+        if(x==shoot->w) {x=0; y--;}
+        shotImg.setPixel( QPoint(x,y), qRgb(shoot->pixels[i],shoot->pixels[i+1], shoot->pixels[i+2]) );
     }
-
+    shotImg=shotImg.scaled(PGE_Window::Width, PGE_Window::Height);
     if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
@@ -160,9 +177,13 @@ int GlRenderer::makeShot_action(void *_pixels)
             .arg(date.year()).arg(date.month()).arg(date.day())
             .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
 
-    qDebug() << saveTo << shotImg.width() << shotImg.height() << pixels[0];
+    qDebug() << saveTo << shotImg.width() << shotImg.height();
     shotImg.save(saveTo, "PNG");
-    delete [] pixels;
+
+    delete []shoot->pixels;
+    shoot->pixels=NULL;
+    delete shoot;
+
     return 0;
 }
 
@@ -185,7 +206,9 @@ QPointF GlRenderer::MapToGl(int x, int y)
 
 void GlRenderer::setViewport(int x, int y, int w, int h)
 {
-    glViewport(x, (window_h-(y+h)), w, h );
+    glViewport(offset_x+x*viewport_scale_x,
+               offset_y+(window_h-(y+h))*viewport_scale_y,
+               w*viewport_scale_x, h*viewport_scale_y);
     viewport_x=x;
     viewport_y=y;
     setViewportSize(w, h);
@@ -193,18 +216,33 @@ void GlRenderer::setViewport(int x, int y, int w, int h)
 
 void GlRenderer::resetViewport()
 {
-    int w=0,h=0;
-    SDL_GetWindowSize(PGE_Window::window, &w, &h);
-    glViewport( 0.f, 0.f, w, h);
-    setViewportSize(w, h);
-}
+    float w, w1, h, h1;
+    int   wi, hi;
+    SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
+    w=wi;h=hi; w1=w;h1=h;
+    scale_x=(float)((float)(w)/(float)window_w);
+    scale_y=(float)((float)(h)/(float)window_h);
+    viewport_scale_x = scale_x;
+    viewport_scale_y = scale_y;
+    if(scale_x>scale_y)
+    {
+        w1=scale_y*window_w;
+        viewport_scale_x=w1/window_w;
+    }
+    else if(scale_x<scale_y)
+    {
+        h1=scale_x*window_h;
+        viewport_scale_y=h1/window_h;
+    }
 
-void GlRenderer::applyResizedWindow()
-{
-    int w=0,h=0;
-    SDL_GetWindowSize(PGE_Window::window, &w, &h);
-    setViewportSize(w, h);
-    glViewport( viewport_x, viewport_y, viewport_w, viewport_h );
+    offset_x=(w-w1)/2;
+    offset_y=(h-h1)/2;
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1);
+    gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+    setViewportSize(window_w, window_h);
 }
 
 void GlRenderer::setViewportSize(int w, int h)
@@ -278,6 +316,11 @@ void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y)
     float bottom = point.y();
 
     glEnable(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
+
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     glBindTexture( GL_TEXTURE_2D, texture->texture );
 
@@ -308,6 +351,11 @@ void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y, int w, int h,
     float bottom = point.y();
 
     glEnable(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
+
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     glBindTexture( GL_TEXTURE_2D, texture->texture );
 

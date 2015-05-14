@@ -456,6 +456,7 @@ int LevelScene::exec()
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -464,7 +465,6 @@ int LevelScene::exec()
                         setExiting(0, LvlExit::EXIT_Closed);
                     }   // End work of program
                 break;
-
                 case SDL_KEYDOWN: // If pressed key
                   switch(event.key.keysym.sym)
                   { // Check which
@@ -478,16 +478,6 @@ int LevelScene::exec()
                             if(doExit) break;
                             isPauseMenu = true;
                         }
-                    break;
-                    case SDLK_f:
-                       if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
-                          AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
-                    break;
-                    case SDLK_F3:
-                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                    break;
-                    case SDLK_F12:
-                        GlRenderer::makeShot();
                     break;
                     default:
                       break;

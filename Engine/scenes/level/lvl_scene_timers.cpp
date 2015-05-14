@@ -124,6 +124,7 @@ void LevelScene::loaderStep()
     SDL_Event event; //  Events of SDL
     while ( SDL_PollEvent(&event) )
     {
+        PGE_Window::processEvents(event);
         switch(event.type)
         {
             case SDL_QUIT:

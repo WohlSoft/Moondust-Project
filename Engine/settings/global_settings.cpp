@@ -11,7 +11,6 @@ GlobalSettings AppSettings;
 GlobalSettings::GlobalSettings()
 {
     resetDefaults();
-    initJoysticks();
 }
 
 GlobalSettings::~GlobalSettings()
@@ -26,6 +25,7 @@ GlobalSettings::~GlobalSettings()
 
 void GlobalSettings::initJoysticks()
 {
+    SDL_JoystickEventState(SDL_ENABLE);
     for(int i=0; i<SDL_NumJoysticks();i++)
         joysticks.push_back(SDL_JoystickOpen(i));
 }
@@ -43,10 +43,7 @@ void GlobalSettings::load()
 
     enableDummyNpc=setup.value("enable-dummy-npc", enableDummyNpc).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
-        if((player1_controller<0)||(player1_controller>SDL_NumJoysticks())) player1_controller=0;
-
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
-        if((player2_controller<0)||(player2_controller>SDL_NumJoysticks())) player2_controller=0;
 
     volume_sound=setup.value("volume-sfx", 128).toInt();
         if((volume_sound<0)||(volume_sound>128)) volume_sound=128;
@@ -59,6 +56,20 @@ void GlobalSettings::load()
 
     player1_joysticks.clear();
     player2_joysticks.clear();
+
+    if(PGE_Window::isReady())
+        loadJoystickSettings();
+}
+
+void GlobalSettings::loadJoystickSettings()
+{
+    player1_joysticks.clear();
+    player2_joysticks.clear();
+
+    if((player1_controller<-1)||(player1_controller>SDL_NumJoysticks()-1)) player1_controller=-1;
+    if((player2_controller<-1)||(player2_controller>SDL_NumJoysticks()-1)) player2_controller=-1;
+
+    QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     for(int i=0; i<SDL_NumJoysticks();i++)
     {
         KeyMap joy1;
@@ -68,6 +79,7 @@ void GlobalSettings::load()
         loadKeyMap(joy2, setup, QString("player-2-joystick%1").arg(i));
         player1_joysticks.push_back(joy2);
     }
+
 }
 
 void GlobalSettings::save()
@@ -116,8 +128,8 @@ void GlobalSettings::resetDefaults()
 
     testJoystickController=true;
 
-    player1_controller=0;
-    player2_controller=0;
+    player1_controller=-1;
+    player2_controller=-1;
 
     player1_keyboard.jump       = SDL_SCANCODE_Z;
     player1_keyboard.jump_alt   = SDL_SCANCODE_A;
@@ -185,27 +197,27 @@ Controller *GlobalSettings::openController(int player)
     Controller *TargetController=NULL;
     if(player==1)
     {
-        if(player1_controller>0) {
+        if(player1_controller>=0) {
             TargetController = new JoystickController();
-            int did = player1_controller-1;
-            if(did<player1_joysticks.size())
-                TargetController->setKeyMap(player1_joysticks[did]);
-            if(did<joysticks.size())
+            int DeviceID = player1_controller;
+            if(DeviceID<player1_joysticks.size())
+                TargetController->setKeyMap(player1_joysticks[DeviceID]);
+            if(DeviceID<joysticks.size())
             dynamic_cast<JoystickController*>(TargetController)->
-                    setJoystickDevice(joysticks[did]);
+                    setJoystickDevice(joysticks[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player1_keyboard);
         }
     } else if (player==2) {
-        if(player2_controller>0) {
+        if(player2_controller>=0) {
             TargetController = new JoystickController();
-            int did = player2_controller-1;
-            if(did<player2_joysticks.size())
-                TargetController->setKeyMap(player2_joysticks[did]);
-            if(did<joysticks.size())
+            int DeviceID = player2_controller;
+            if(DeviceID<player2_joysticks.size())
+                TargetController->setKeyMap(player2_joysticks[DeviceID]);
+            if(DeviceID<joysticks.size())
             dynamic_cast<JoystickController*>(TargetController)->
-                    setJoystickDevice(joysticks[did]);
+                    setJoystickDevice(joysticks[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player2_keyboard);
@@ -213,4 +225,6 @@ Controller *GlobalSettings::openController(int player)
     }
     return TargetController;
 }
+
+
 

@@ -211,10 +211,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    if(AppSettings.testJoystickController)
-    {
-        SDL_JoystickEventState(SDL_ENABLE);
-    }
+    AppSettings.initJoysticks();
+    AppSettings.loadJoystickSettings();
 
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
