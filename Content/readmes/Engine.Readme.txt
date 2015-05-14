@@ -41,9 +41,11 @@ Up/Down - enter into door/pipe
 Z - (jump) / enter to level from world map [on German keyboard will work Y key instead by unknown for me reasons :P]
 X - (run)
 A - (alt-jump) (Temporary, fly up, use it to get inaccessible heights without vines!)
-S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face, S+UP - destroy blocks over head, S+Down - destroy blocks under self)
+S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
+    S+UP - destroy blocks over head,
+    S+Down - destroy blocks under self)
 
-T - Toggle fullscreen mode
+Ctrl+F - Toggle fullscreen mode
 
 F3 - enable/disable printinf of debug information
 F12 - take screenshot (will be saved in the 'screenshots' folder which will be in PGE folder or in the %UserProfile%\.PGE_Project).
@@ -53,5 +55,6 @@ i - disable/enable walkable zone limit on the world map (you will have able to w
 
 Enter - pause/resume game, show dummy message box
 
-Esc - Exit from level [you will return to world map or into main hub level], or exit from episode [if you on the world map or in the main hub level]
+Esc - Exit from level [you will return to world map or into main hub level],
+      or exit from episode [if you on the world map or in the main hub level]
 
