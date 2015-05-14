@@ -27,6 +27,9 @@
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
 
+#include <fontman/font_manager.h>
+#include <controls/controller_joystick.h>
+
 #include "scene_title.h"
 #include <QtDebug>
 #include <QDir>
@@ -161,6 +164,10 @@ void TitleScene::update()
 
 }
 
+int debug_joy_keyval=0;
+int debug_joy_keyid=0;
+int debug_joy_keytype=0;
+
 void TitleScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -181,6 +188,14 @@ void TitleScene::render()
                                   imgs[i].y,
                                   imgs[i].t.w,
                                   imgs[i].frmH, x.first, x.second);
+    }
+
+    if(AppSettings.showDebugInfo)
+    {
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%2")
+                               .arg(debug_joy_keyval)
+                               .arg(debug_joy_keyid)
+                               .arg(debug_joy_keytype),10, 10);
     }
 
 
@@ -236,6 +251,19 @@ int TitleScene::exec()
         }
 
         controller->update();
+
+
+        if(PGE_Window::showDebugInfo)
+        {
+            if(AppSettings.joysticks.size()>0)
+            {
+                JoystickController::bindJoystickKey(AppSettings.joysticks.first(),
+                                                    debug_joy_keyval,
+                                                    debug_joy_keyid,
+                                                    debug_joy_keytype);
+            }
+        }
+
 
         SDL_Event event; //  Events of SDL
         SDL_PumpEvents();             //for mouse
