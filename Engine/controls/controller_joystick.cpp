@@ -67,7 +67,7 @@ void JoystickController::updateKey(bool &key, int &keyValue, int &keyID, int &ke
     int val=0, dx=0, dy=0;
     switch(keyType)
     {
-    case KeyMapJoyCtrls::JoyAxisX:
+    case KeyMapJoyCtrls::JoyAxis:
         val=SDL_JoystickGetAxis(joystickController, keyID);
             if(keyValue>0)
                 key=(val>0);
