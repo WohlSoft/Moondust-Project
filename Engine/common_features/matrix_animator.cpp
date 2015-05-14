@@ -159,7 +159,7 @@ QPointF MatrixAnimator::curOffset()
     return curOffsets;
 }
 
-MatrixAnimator::MatrixAninates MatrixAnimator::curAnimation()
+MatrixAnimator::MatrixAnimates MatrixAnimator::curAnimation()
 {
     return current_sequance;
 }
@@ -171,7 +171,7 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 
     for(int i=0; i<calibration.AniFrames.set.size(); i++)
     {
-        MatrixAnimator::MatrixAninates seq = toEnum(calibration.AniFrames.set[i].name);
+        MatrixAnimator::MatrixAnimates seq = toEnum(calibration.AniFrames.set[i].name);
         for(int j=0; j<calibration.AniFrames.set[i].L.size();j++)
         {
             float x = calibration.AniFrames.set[i].L[j].x;
@@ -205,7 +205,7 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
     }
 }
 
-void MatrixAnimator::playOnce(MatrixAninates aniName, int _direction, int speed)
+void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed)
 {
     if(once)
     {
@@ -232,7 +232,7 @@ void MatrixAnimator::playOnce(MatrixAninates aniName, int _direction, int speed)
     buildRect();
 }
 
-void MatrixAnimator::switchAnimation(MatrixAninates aniName, int _direction, int speed)
+void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int speed)
 {
     if(once)
     {
@@ -270,45 +270,45 @@ void MatrixAnimator::switchAnimation(MatrixAninates aniName, int _direction, int
 
 void MatrixAnimator::buildEnums()
 {
-    StrToEnum["Idle"]=              MatrixAninates::Idle;
-    StrToEnum["Run"]=               MatrixAninates::Run;
-    StrToEnum["JumpFloat"]=         MatrixAninates::JumpFloat;
-    StrToEnum["JumpFall"]=          MatrixAninates::JumpFall;
-    StrToEnum["SpinJump"]=          MatrixAninates::SpinJump;
-    StrToEnum["Sliding"]=           MatrixAninates::Sliding;
-    StrToEnum["Climbing"]=          MatrixAninates::Climbing;
-    StrToEnum["Fire"]=              MatrixAninates::Fire;
-    StrToEnum["SitDown"]=           MatrixAninates::SitDown;
-    StrToEnum["Dig"]=               MatrixAninates::Dig;
-    StrToEnum["GrabIdle"]=          MatrixAninates::GrabIdle;
-    StrToEnum["GrabRun"]=           MatrixAninates::GrabRun;
-    StrToEnum["GrabJump"]=          MatrixAninates::GrabJump;
-    StrToEnum["GrabSitDown"]=       MatrixAninates::GrabSitDown;
-    StrToEnum["RacoonRun"]=         MatrixAninates::RacoonRun;
-    StrToEnum["RacoonFloat"]=       MatrixAninates::RacoonFloat;
-    StrToEnum["RacoonFly"]=         MatrixAninates::RacoonFly;
-    StrToEnum["RacoonTail"]=        MatrixAninates::RacoonTail;
-    StrToEnum["Swim"]=              MatrixAninates::Swim;
-    StrToEnum["SwimUp"]=            MatrixAninates::SwimUp;
-    StrToEnum["OnYoshi"]=           MatrixAninates::OnYoshi;
-    StrToEnum["OnYoshiSit"]=        MatrixAninates::OnYoshiSit;
-    StrToEnum["PipeUpDown"]=        MatrixAninates::PipeUpDown;
-    StrToEnum["PipeUpDownRear"]=    MatrixAninates::PipeUpDownRear;
-    StrToEnum["SlopeSlide"]=        MatrixAninates::SlopeSlide;
-    StrToEnum["TanookiStatue"]=     MatrixAninates::TanookiStatue;
-    StrToEnum["SwordAttak"]=        MatrixAninates::SwordAttak;
-    StrToEnum["JumpSwordUp"]=       MatrixAninates::JumpSwordUp;
-    StrToEnum["JumpSwordDown"]=     MatrixAninates::JumpSwordDown;
-    StrToEnum["DownSwordAttak"]=    MatrixAninates::DownSwordAttak;
-    StrToEnum["Hurted"]=            MatrixAninates::Hurted;
+    StrToEnum["Idle"]=              MatrixAnimates::Idle;
+    StrToEnum["Run"]=               MatrixAnimates::Run;
+    StrToEnum["JumpFloat"]=         MatrixAnimates::JumpFloat;
+    StrToEnum["JumpFall"]=          MatrixAnimates::JumpFall;
+    StrToEnum["SpinJump"]=          MatrixAnimates::SpinJump;
+    StrToEnum["Sliding"]=           MatrixAnimates::Sliding;
+    StrToEnum["Climbing"]=          MatrixAnimates::Climbing;
+    StrToEnum["Fire"]=              MatrixAnimates::Fire;
+    StrToEnum["SitDown"]=           MatrixAnimates::SitDown;
+    StrToEnum["Dig"]=               MatrixAnimates::Dig;
+    StrToEnum["GrabIdle"]=          MatrixAnimates::GrabIdle;
+    StrToEnum["GrabRun"]=           MatrixAnimates::GrabRun;
+    StrToEnum["GrabJump"]=          MatrixAnimates::GrabJump;
+    StrToEnum["GrabSitDown"]=       MatrixAnimates::GrabSitDown;
+    StrToEnum["RacoonRun"]=         MatrixAnimates::RacoonRun;
+    StrToEnum["RacoonFloat"]=       MatrixAnimates::RacoonFloat;
+    StrToEnum["RacoonFly"]=         MatrixAnimates::RacoonFly;
+    StrToEnum["RacoonTail"]=        MatrixAnimates::RacoonTail;
+    StrToEnum["Swim"]=              MatrixAnimates::Swim;
+    StrToEnum["SwimUp"]=            MatrixAnimates::SwimUp;
+    StrToEnum["OnYoshi"]=           MatrixAnimates::OnYoshi;
+    StrToEnum["OnYoshiSit"]=        MatrixAnimates::OnYoshiSit;
+    StrToEnum["PipeUpDown"]=        MatrixAnimates::PipeUpDown;
+    StrToEnum["PipeUpDownRear"]=    MatrixAnimates::PipeUpDownRear;
+    StrToEnum["SlopeSlide"]=        MatrixAnimates::SlopeSlide;
+    StrToEnum["TanookiStatue"]=     MatrixAnimates::TanookiStatue;
+    StrToEnum["SwordAttak"]=        MatrixAnimates::SwordAttak;
+    StrToEnum["JumpSwordUp"]=       MatrixAnimates::JumpSwordUp;
+    StrToEnum["JumpSwordDown"]=     MatrixAnimates::JumpSwordDown;
+    StrToEnum["DownSwordAttak"]=    MatrixAnimates::DownSwordAttak;
+    StrToEnum["Hurted"]=            MatrixAnimates::Hurted;
 }
 
-MatrixAnimator::MatrixAninates MatrixAnimator::toEnum(QString aniName)
+MatrixAnimator::MatrixAnimates MatrixAnimator::toEnum(QString aniName)
 {
     if(StrToEnum.isEmpty())
         buildEnums();
     if(StrToEnum.contains(aniName))
         return StrToEnum[aniName];
     else
-        return MatrixAninates::Nothing;
+        return MatrixAnimates::Nothing;
 }

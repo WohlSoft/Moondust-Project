@@ -39,7 +39,7 @@ class MatrixAnimator
 {
 public:
 
-    enum MatrixAninates
+    enum MatrixAnimates
     {
         Nothing=-1,
         Idle=0,
@@ -87,12 +87,13 @@ public:
     void tickAnimation(int frametime);
     QRectF curFrame();
     QPointF curOffset();
-    MatrixAninates curAnimation();
+    MatrixAnimates curAnimation();
 
     void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(MatrixAninates aniName, int _direction, int speed=-1);
-    void switchAnimation(MatrixAninates aniName, int _direction, int speed=-1);
+    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1);
+    void switchAnimation(MatrixAnimates aniName, int _direction, int speed=-1);
 
+    MatrixAnimates toEnum(QString aniName);
 private:
     void nextFrame();
     void buildRect();
@@ -111,15 +112,14 @@ private:
 
     int direction;
     bool once;
-    MatrixAninates backup_sequance;
-    MatrixAninates current_sequance;
+    MatrixAnimates backup_sequance;
+    MatrixAnimates current_sequance;
     AniSequence sequence;//!< Current frame sequance
-    QHash<MatrixAninates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
-    QHash<MatrixAninates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
+    QHash<MatrixAnimates, AniSequence > s_bank_left;  //!< Animation sequances bank for left  frames
+    QHash<MatrixAnimates, AniSequence > s_bank_right; //!< Animation sequances bank for right frames
 
     void buildEnums();
-    MatrixAninates toEnum(QString aniName);
-    QHash<QString, MatrixAninates > StrToEnum;
+    QHash<QString, MatrixAnimates > StrToEnum;
 };
 
 #endif // MATRIXANIMATOR_H
