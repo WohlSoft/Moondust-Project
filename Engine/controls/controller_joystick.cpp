@@ -51,9 +51,57 @@ void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
     joystickController=jctrl;
 }
 
+void JoystickController::setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls values)
+{
+    _ctrls_id=ids;
+    _ctrls_val=values;
+}
+
 SDL_Joystick *JoystickController::getJoystickDevice() const
 {
     return joystickController;
+}
+
+void JoystickController::updateKey(bool &key, int &keyID,int &keyValue, int &keyType)
+{
+    int val=0, dx=0, dy=0;
+    switch(keyType)
+    {
+    case KeyMapJoyCtrls::JoyAxisX:
+        val=SDL_JoystickGetAxis(joystickController, keyID);
+            if(keyValue>0)
+                key=(val>0);
+            else if(keyValue<0)
+                key=(val<0);
+            else key=false;
+        break;
+    case KeyMapJoyCtrls::JoyBallX:
+        SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
+        if(keyID>0)
+            key=(dx>0);
+        else if(keyID<0)
+            key=(dx<0);
+        else key=false;
+        break;
+    case KeyMapJoyCtrls::JoyBallY:
+        SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
+        if(keyValue>0)
+            key=(dy>0);
+        else if(keyValue<0)
+            key=(dy<0);
+        else key=false;
+        break;
+    case KeyMapJoyCtrls::JoyHat:
+        val=SDL_JoystickGetHat(joystickController, keyID);
+        key = (val==keyValue);
+        break;
+    case KeyMapJoyCtrls::JoyButton:
+        key = SDL_JoystickGetButton(joystickController, keyID);
+        break;
+    default:
+        key=false;
+        break;
+    }
 }
 
 void JoystickController::update()
@@ -62,20 +110,19 @@ void JoystickController::update()
         return;
 
     SDL_PumpEvents();
+    SDL_JoystickUpdate();
 
-    keys.jump = SDL_JoystickGetButton(joystickController, kmap.jump );
-    keys.alt_jump = SDL_JoystickGetButton(joystickController, kmap.jump_alt);
+    updateKey(keys.jump, kmap.jump,   _ctrls_id.jump,  _ctrls_val.jump);
+    updateKey(keys.alt_jump, kmap.jump_alt, _ctrls_id.jump_alt, _ctrls_val.jump_alt);
 
-    keys.run = SDL_JoystickGetButton(joystickController, kmap.run);
-    keys.alt_run = SDL_JoystickGetButton(joystickController, kmap.run_alt);
+    updateKey(keys.run, kmap.run,     _ctrls_id.run,   _ctrls_val.run);
+    updateKey(keys.alt_run, kmap.run_alt, _ctrls_id.run_alt, _ctrls_val.run_alt);
 
-    Uint8 hatVal = SDL_JoystickGetHat(joystickController, 0);
+    updateKey(keys.right, kmap.right, _ctrls_id.right, _ctrls_val.right);
+    updateKey(keys.left, kmap.left,   _ctrls_id.left,  _ctrls_val.left);
+    updateKey(keys.up, kmap.up,       _ctrls_id.up,    _ctrls_val.up);
+    updateKey(keys.down, kmap.down,   _ctrls_id.down,  _ctrls_val.down);
 
-    keys.right = (hatVal == SDL_HAT_RIGHT);
-    keys.up = (hatVal == SDL_HAT_UP);
-    keys.down = (hatVal == SDL_HAT_DOWN);
-    keys.left = (hatVal == SDL_HAT_LEFT);
-
-    keys.drop = SDL_JoystickGetButton(joystickController, 8);
-    keys.start = SDL_JoystickGetButton(joystickController, 9);
+    updateKey(keys.drop, kmap.drop,   _ctrls_id.drop,  _ctrls_val.drop);
+    updateKey(keys.start, kmap.start, _ctrls_id.start, _ctrls_val.start);
 }

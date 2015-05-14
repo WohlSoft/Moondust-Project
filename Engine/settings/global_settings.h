@@ -41,18 +41,24 @@ public:
     int volume_sound;
     int volume_music;
 
-    int player1_controller;//!< 0 - keyboard, >=1 - joysticks
+    int player1_controller;//!< -1 - keyboard, >=0 - joysticks
     KeyMap player1_keyboard;
-    QList<KeyMap> player1_joysticks;
+    QList<KeyMap>         player1_joysticks;
+    QList<KeyMapJoyCtrls> player1_joysticks_ctrls_ids;
+    QList<KeyMapJoyCtrls> player1_joysticks_ctrls_val;
 
-    int player2_controller;//!< 0 - keyboard, >=1 - joysticks
+    int player2_controller;//!< -1 - keyboard, >=0 - joysticks
     KeyMap player2_keyboard;
-    QList<KeyMap> player2_joysticks;
+    QList<KeyMap>         player2_joysticks;
+    QList<KeyMapJoyCtrls> player2_joysticks_ctrls_ids;
+    QList<KeyMapJoyCtrls> player2_joysticks_ctrls_val;
 
     QList<SDL_Joystick*> joysticks;
 
     void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
     void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
+    void loadJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp);
+    void saveJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp);
     Controller *openController(int player);
     void loadJoystickSettings();
 };
