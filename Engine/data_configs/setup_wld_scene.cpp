@@ -9,6 +9,7 @@ WorldMapSetup ConfigManager::setup_WorldMap;
 
 void WorldMapSetup::init(QSettings &engine_ini)
 {
+    int LoadScreenImages=0;
     engine_ini.beginGroup("world-map");
         backgroundImg = engine_ini.value("background", "").toString();
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
@@ -52,5 +53,33 @@ void WorldMapSetup::init(QSettings &engine_ini)
         portrait_frame_delay = engine_ini.value("portrait-frame-delay", 64).toInt();
         portrait_animation = engine_ini.value("portrait-animation", "Run").toString();
         portrait_direction = engine_ini.value("portrait-direction", -1).toInt();
+
+        LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
     engine_ini.endGroup();
+
+    AdditionalImages.clear();
+    for(int i=1; i<=LoadScreenImages; i++)
+    {
+        engine_ini.beginGroup(QString("world-image-%1").arg(i));
+            WorldAdditionalImage img;
+
+            img.imgFile = engine_ini.value("image", "").toString();
+            ConfigManager::checkForImage(img.imgFile, ConfigManager::dirs.gcommon);
+
+            img.animated = engine_ini.value("animated", false).toBool();
+            if(img.animated)
+            {
+                img.frames = engine_ini.value("frames", 1).toInt();
+                img.framedelay = engine_ini.value("frames-delay", 128).toInt();
+            } else {
+                img.frames = 1;
+                img.framedelay = 128;
+            }
+            if(img.frames<=0) img.frames = 1;
+
+            img.x =  engine_ini.value("pos-x", 1).toInt();
+            img.y =  engine_ini.value("pos-y", 1).toInt();
+            AdditionalImages.push_back(img);
+        engine_ini.endGroup();
+    }
 }

@@ -28,11 +28,17 @@ typedef QPair<QString, int > starOnLevel; //!< Level file, section of level
 
 struct saveCharacterState
 {
+    int id;
     unsigned int state;
     unsigned long itemID;
     unsigned int mountType;
     unsigned int mountID;
     unsigned int health;
+};
+
+struct savePlayerState
+{
+    int characterID;
 };
 
 struct GamesaveData
