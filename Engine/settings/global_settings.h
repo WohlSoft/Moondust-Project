@@ -45,13 +45,13 @@ public:
     KeyMap player1_keyboard;
     QList<KeyMap>         player1_joysticks;
     QList<KeyMapJoyCtrls> player1_joysticks_ctrls_ids;
-    QList<KeyMapJoyCtrls> player1_joysticks_ctrls_val;
+    QList<KeyMapJoyCtrls> player1_joysticks_ctrls_types;
 
     int player2_controller;//!< -1 - keyboard, >=0 - joysticks
     KeyMap player2_keyboard;
     QList<KeyMap>         player2_joysticks;
     QList<KeyMapJoyCtrls> player2_joysticks_ctrls_ids;
-    QList<KeyMapJoyCtrls> player2_joysticks_ctrls_val;
+    QList<KeyMapJoyCtrls> player2_joysticks_ctrls_types;
 
     QList<SDL_Joystick*> joysticks;
 
