@@ -211,9 +211,6 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    AppSettings.initJoysticks();
-    AppSettings.loadJoystickSettings();
-
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
         QMessageBox::critical(NULL, "SDL Error",
@@ -225,9 +222,11 @@ int main(int argc, char *argv[])
 
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
-
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+
+    AppSettings.initJoysticks();
+    AppSettings.loadJoystickSettings();
 
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
