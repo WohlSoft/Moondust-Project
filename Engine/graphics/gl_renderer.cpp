@@ -151,8 +151,12 @@ void GlRenderer::makeShot()
         PGE_Audio::playSoundByRole(obj_sound_role::WeaponFire);
         return;
     }
+
+    w=w-offset_x*2;
+    h=h-offset_y*2;
+
     uchar* pixels = new uchar[4*w*h];
-    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    glReadPixels(offset_x, offset_y, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
