@@ -1,0 +1,21 @@
+Editor
+- Refresh warp's entry XY coordninates inside combobox
+- Improve unused custom data detector to provide clean-up of unused data.
+
+Engine
+- Raster fonts support
+- Playable character and it's state switching support
+- Textures support for world map items
+- Add loading of NPC configs
+Engine:New physics
+- R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
+- Support of speed-adding of items which makes stack
+- Walkhable slopes
+
+
+GIFs2PNG
+- Use editor's unmasking code insead of alphachannel
+- Add support of looking for a masks in given data directory.
+  (some custom foreground are presented without mask image and uses default mask.
+  After conversion those images will be without transparency).
+
