@@ -4,6 +4,16 @@
 #include <QString>
 class QSettings;
 
+struct WorldAdditionalImage
+{
+    QString imgFile;
+    bool animated;
+    int frames;
+    int framedelay;
+    int x;
+    int y;
+};
+
 struct WorldMapSetup
 {
     void init(QSettings &engine_ini);
@@ -45,6 +55,7 @@ struct WorldMapSetup
     int portrait_frame_delay;
     QString portrait_animation;
     int portrait_direction;
+    QList<WorldAdditionalImage > AdditionalImages;
 };
 
 #endif // SETUP_WLD_SCENE_H

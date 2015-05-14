@@ -388,6 +388,11 @@ WorldScene::WorldScene()
     player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
+    /***********Number of Players*****************/
+    numOfPlayers=1;
+    /***********Number of Players*****************/
+
+
     uTick = 1;
     move_speed = 115/(float)PGE_Window::PhysStep;
     move_steps_count=0;
@@ -398,6 +403,29 @@ WorldScene::WorldScene()
         backgroundTex.w=0;
     else
         backgroundTex = GraphicsHelps::loadTexture(backgroundTex, ConfigManager::setup_WorldMap.backgroundImg);
+
+    imgs.clear();
+    for(int i=0; i<ConfigManager::setup_WorldMap.AdditionalImages.size(); i++)
+    {
+        if(ConfigManager::setup_WorldMap.AdditionalImages[i].imgFile.isEmpty()) continue;
+
+        WorldScene_misc_img img;
+        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_WorldMap.AdditionalImages[i].imgFile);
+
+        img.x = ConfigManager::setup_WorldMap.AdditionalImages[i].x;
+        img.y = ConfigManager::setup_WorldMap.AdditionalImages[i].y;
+        img.a.construct(ConfigManager::setup_WorldMap.AdditionalImages[i].animated,
+                        ConfigManager::setup_WorldMap.AdditionalImages[i].frames,
+                        ConfigManager::setup_WorldMap.AdditionalImages[i].framedelay);
+        img.frmH = (img.t.h / ConfigManager::setup_WorldMap.AdditionalImages[i].frames);
+
+        imgs.push_back(img);
+    }
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.start();
+    }
 
     viewportRect.setX(ConfigManager::setup_WorldMap.viewport_x);
     viewportRect.setY(ConfigManager::setup_WorldMap.viewport_y);
@@ -454,6 +482,16 @@ WorldScene::~WorldScene()
         glDeleteTextures( 1, &(textures_bank[0].texture) );
         textures_bank.pop_front();
     }
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.stop();
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(imgs[i].t.texture) );
+    }
+    imgs.clear();
+
+    ConfigManager::unloadLevelConfigs();
 
     delete player1Controller;
 }
@@ -547,6 +585,38 @@ bool WorldScene::init()
 
     if(doExit) return true;
 
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+
+    players.clear();
+    for(int i=1; i<=numOfPlayers;i++)
+    {
+        PlayerState state;
+        if(gameState)
+        {
+            state = gameState->getPlayerState(i);
+            players.push_back(state);
+        }
+        else
+        {
+            state.characterID=1;
+            state.stateID=1;
+            state._chsetup=FileFormats::dummySavCharacterState();
+            players.push_back(state);
+        }
+
+        if(ConfigManager::setup_WorldMap.points_en)
+        {
+            WorldScene_Portrait portrait(state.characterID, state.stateID,
+                                                             ConfigManager::setup_WorldMap.portrait_x,
+                                                             ConfigManager::setup_WorldMap.portrait_y,
+                                                             ConfigManager::setup_WorldMap.portrait_animation,
+                                                             ConfigManager::setup_WorldMap.portrait_frame_delay,
+                                                             ConfigManager::setup_WorldMap.portrait_direction);
+            portraits.push_back(portrait);
+        }
+    }
+
+
 
     for(int i=0; i<data.tiles.size(); i++)
     {
@@ -603,6 +673,7 @@ bool WorldScene::init()
 
     if(gameState)
         playMusic(gameState->game_state.musicID, gameState->game_state.musicFile, true, 200);
+
     isInit=true;
 
     return true;
@@ -635,6 +706,9 @@ void WorldScene::update()
     else
     {
         wld_events.processEvents(uTick);
+
+        for(int i=0; i<portraits.size(); i++)
+            portraits[i].update(uTick);
 
         if(dir==0)
         {
@@ -869,9 +943,20 @@ void WorldScene::render()
         goto renderBlack;
 
     if(backgroundTex.w>0)
+        GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width/2 - backgroundTex.w/2, PGE_Window::Height/2 - backgroundTex.h/2);
+
+    for(int i=0;i<imgs.size();i++)
     {
-        GlRenderer::renderTexture(&backgroundTex, 0,0);
+        AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::renderTexture(&imgs[i].t,
+                                  imgs[i].x,
+                                  imgs[i].y,
+                                  imgs[i].t.w,
+                                  imgs[i].frmH, x.first, x.second);
     }
+
+    for(int i=0; i<portraits.size(); i++)
+        portraits[i].render();
 
     //Viewport zone black background
     GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f,0.f,0.f);
@@ -1219,3 +1304,90 @@ void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int
     }
 }
 
+
+
+
+
+
+
+
+
+
+WorldScene_Portrait::WorldScene_Portrait()
+{
+    posX=0;
+    posY=0;
+    posX_render=0;
+    posY_render=0;
+    setup = ConfigManager::playable_characters[1];
+    state_cur = ConfigManager::playable_characters[1].states[1];
+    frameW = 0;
+    frameH = 0;
+}
+
+WorldScene_Portrait::WorldScene_Portrait(int CharacterID, int stateID, int _posX, int _posY, QString ani, int framedelay, int dir)
+{
+    posX=_posX;
+    posY=_posY;
+    setup = ConfigManager::playable_characters[CharacterID];
+    state_cur = ConfigManager::playable_characters[CharacterID].states[stateID];
+
+    posX_render=posX-state_cur.width/2;
+    posY_render=posY-state_cur.height;
+
+    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
+    if( tID >= 0 )
+    {
+        texture = ConfigManager::level_textures[tID];
+        frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
+        frameH = ConfigManager::level_textures[tID].h / setup.matrix_height;
+    }
+    else return;
+
+    animator.setSize(setup.matrix_width, setup.matrix_height);
+    animator.installAnimationSet(state_cur.sprite_setup);
+    animator.switchAnimation(animator.toEnum(ani), dir, framedelay);
+}
+
+WorldScene_Portrait::WorldScene_Portrait(const WorldScene_Portrait &pt)
+{
+    this->setup = pt.setup;
+    this->state_cur = pt.state_cur;
+    this->animator = pt.animator;
+    this->texture = pt.texture;
+    this->frameW = pt.frameW;
+    this->frameH = pt.frameH;
+    this->posX = pt.posX;
+    this->posY = pt.posY;
+    this->posX_render = pt.posX_render;
+    this->posY_render = pt.posY_render;
+}
+
+WorldScene_Portrait::~WorldScene_Portrait()
+{}
+
+void WorldScene_Portrait::render()
+{
+    QRectF tPos = animator.curFrame();
+    QPointF Ofs = animator.curOffset();
+
+    QRectF player = QRectF( posX_render - Ofs.x(),
+                            posY_render-Ofs.y(),
+                            frameW,
+                            frameH
+                            );
+    GlRenderer::renderTexture(&texture,
+                              player.x(),
+                              player.y(),
+                              player.width(),
+                              player.height(),
+                              tPos.top(),
+                              tPos.bottom(),
+                              tPos.left(),
+                              tPos.right());
+}
+
+void WorldScene_Portrait::update(int ticks)
+{
+    animator.tickAnimation(ticks);
+}

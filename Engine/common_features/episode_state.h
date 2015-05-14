@@ -36,16 +36,27 @@ public:
     };
 };
 
+struct PlayerState
+{
+    int characterID;
+    int stateID;
+    saveCharacterState _chsetup;
+};
+
 class EpisodeState
 {
 public:
     EpisodeState();
     ~EpisodeState();
     void reset();//!< Sets initial state of episode
+    int numOfPlayers;//!< Number of players
     bool episodeIsStarted;
     bool isEpisode;
     bool isHubLevel;
     GamesaveData game_state;
+
+    PlayerState getPlayerState(int playerID);
+    void setPlayerState(int playerID, PlayerState &state);
 
     QString WorldFile;
     QString WorldPath;

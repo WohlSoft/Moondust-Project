@@ -29,6 +29,37 @@
 #include <common_features/episode_state.h>
 #include <data_configs/config_manager.h>
 
+struct WorldScene_misc_img
+{
+    int x;
+    int y;
+    PGE_Texture t;
+    SimpleAnimator a;
+    int frmH;
+};
+
+class WorldScene_Portrait
+{
+public:
+    WorldScene_Portrait();
+    WorldScene_Portrait(int CharacterID, int stateID, int _posX, int _posY, QString ani, int framedelay, int dir);
+    WorldScene_Portrait(const WorldScene_Portrait &pt);
+    ~WorldScene_Portrait();
+    void render();
+    void update(int ticks);
+private:
+    int posX;
+    int posY;
+    int posX_render;
+    int posY_render;
+    obj_player       setup;
+    obj_player_state state_cur;
+    MatrixAnimator animator;
+    PGE_Texture texture;
+    int frameW;
+    int frameH;
+};
+
 class WorldScene : public Scene
 {
 public:
@@ -113,8 +144,14 @@ private:
     QString errorMsg;
     WorldMapSetup common_setup;
 
+    int numOfPlayers;
+    QList<PlayerState > players;
+
     PGE_Texture backgroundTex;
     QList<PGE_Texture > textures_bank;
+
+    QVector<WorldScene_misc_img > imgs;
+    QVector<WorldScene_Portrait > portraits;
 };
 
 #endif // SCENE_WORLD_H
