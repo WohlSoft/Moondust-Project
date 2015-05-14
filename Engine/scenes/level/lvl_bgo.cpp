@@ -52,7 +52,7 @@ LVL_Bgo::~LVL_Bgo()
 void LVL_Bgo::init()
 {
     if(!worldPtr) return;
-    setSize(texture.w, texture.h/setup->frames);
+    setSize(texture.w, texture.h);
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
