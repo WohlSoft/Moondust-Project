@@ -21,6 +21,7 @@
 
 #include "controller.h"
 #include <SDL2/SDL.h>
+#include <controls/controller_key_map.h>
 
 class JoystickController : public Controller
 {
@@ -28,12 +29,16 @@ public:
     JoystickController();
     ~JoystickController();
     void setJoystickDevice(SDL_Joystick* jctrl);
+    void setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls values);
     SDL_Joystick* getJoystickDevice() const;
 
+    void updateKey(bool &key, int &keyID, int &keyValue, int &keyType);
     void update();
 
 private:
     SDL_Joystick* joystickController;
+    KeyMapJoyCtrls _ctrls_id;
+    KeyMapJoyCtrls _ctrls_val;
 };
 
 #endif // CONTROLLER_JOYSTICK_H
