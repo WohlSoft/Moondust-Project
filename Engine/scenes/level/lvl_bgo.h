@@ -40,7 +40,7 @@ public:
 
     //float posX();
     //float posY();
-    void render(float camX, float camY);
+    void render(double camX, double camY);
 };
 
 

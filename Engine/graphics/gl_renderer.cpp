@@ -201,10 +201,10 @@ QPointF GlRenderer::MapToGl(QPoint point)
     return MapToGl(point.x(), point.y());
 }
 
-QPointF GlRenderer::MapToGl(int x, int y)
+QPointF GlRenderer::MapToGl(float x, float y)
 {
-    double nx1 = (float)x/(viewport_w_half)-1.f;
-    double ny1 = (viewport_h-(float)y)/viewport_h_half-1.f;
+    double nx1 = (double)x/(viewport_w_half)-1.0;
+    double ny1 = (viewport_h-((double)y))/viewport_h_half-1.0;
     return QPointF(nx1, ny1);
 }
 
@@ -276,7 +276,7 @@ void GlRenderer::setWindowSize(int w, int h)
 
 
 
-void GlRenderer::renderRect(int x, int y, int w, int h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
     QPointF point;
         point = MapToGl(x, y);
@@ -297,7 +297,7 @@ void GlRenderer::renderRect(int x, int y, int w, int h, GLfloat red, GLfloat gre
     glDisable(GL_TEXTURE_2D);
 }
 
-void GlRenderer::renderRectBR(int _left, int _top, int _right, int _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
     QPointF point;
         point = MapToGl(_left, _top);
@@ -319,7 +319,7 @@ void GlRenderer::renderRectBR(int _left, int _top, int _right, int _bottom, GLfl
 }
 
 
-void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y)
+void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 {
     QPointF point;
         point = MapToGl(x, y);
@@ -354,7 +354,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y)
     glDisable(GL_TEXTURE_2D);
 }
 
-void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y, int w, int h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     QPointF point;
         point = MapToGl(x, y);
@@ -389,7 +389,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, int x, int y, int w, int h,
     glDisable(GL_TEXTURE_2D);
 }
 
-void GlRenderer::renderTextureCur(int x, int y, int w, int h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
     QPointF point;
         point = MapToGl(x, y);

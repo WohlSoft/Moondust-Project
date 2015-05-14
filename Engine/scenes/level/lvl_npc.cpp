@@ -76,7 +76,7 @@ void LVL_Npc::kill()
     }
 }
 
-void LVL_Npc::render(float camX, float camY)
+void LVL_Npc::render(double camX, double camY)
 {
     if(killed) return;
 

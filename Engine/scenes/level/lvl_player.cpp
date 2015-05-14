@@ -1357,7 +1357,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 
 
 
-void LVL_Player::render(float camX, float camY)
+void LVL_Player::render(double camX, double camY)
 {
     if(!isLive) return;
     if(!isInited) return;

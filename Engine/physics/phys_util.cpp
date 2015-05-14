@@ -19,15 +19,15 @@
 #include "phys_util.h"
 
 
-float PhysUtil::pixMeter = 10.0000000f; // Pixels per meter;
+double PhysUtil::pixMeter = 10.0000000f; // Pixels per meter;
 
 
-float PhysUtil::met2pix(float met)
+double PhysUtil::met2pix(double met)
 {
     return met * pixMeter;
 }
 
-float PhysUtil::pix2met(float pix)
+double PhysUtil::pix2met(double pix)
 {
     return pix / pixMeter;
 }

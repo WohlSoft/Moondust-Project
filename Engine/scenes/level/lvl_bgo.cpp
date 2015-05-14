@@ -52,7 +52,7 @@ LVL_Bgo::~LVL_Bgo()
 void LVL_Bgo::init()
 {
     if(!worldPtr) return;
-    setSize(texture.w, texture.h);
+    setSize(texture.w, texture.h/setup->frames);
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
@@ -70,7 +70,7 @@ void LVL_Bgo::init()
     bgo->SetFriction( 0 );
 }
 
-void LVL_Bgo::render(float camX, float camY)
+void LVL_Bgo::render(double camX, double camY)
 {
     AniPos x(0,1);
 

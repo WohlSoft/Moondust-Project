@@ -37,14 +37,14 @@ public:
     static int makeShot_action(void *_pixels);
     static bool ready();
 
-    static void renderTexture(PGE_Texture *texture, int x, int y); //!<Render texture as-is
-    static void renderTexture(PGE_Texture *texture, int x, int y, int w, int h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!<Render matrix animation fragment
-    static void renderTextureCur(int x, int y, int w, int h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!< Draw currently binded texture
-    static void renderRect(int x, int y, int w, int h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f);
-    static void renderRectBR(int _left, int _top, int _right, int _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+    static void renderTexture(PGE_Texture *texture, float x, float y); //!<Render texture as-is
+    static void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!<Render matrix animation fragment
+    static void renderTextureCur(float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!< Draw currently binded texture
+    static void renderRect(float x, float y, float w, float h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f);
+    static void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 
     static QPointF MapToGl(QPoint point);
-    static QPointF MapToGl(int x, int y);
+    static QPointF MapToGl(float x, float y);
     static QPoint MapToScr(QPoint point);
     static QPoint MapToScr(int x, int y);
     static void setViewport(int x, int y, int w, int h);

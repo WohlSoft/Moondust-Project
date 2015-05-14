@@ -279,7 +279,7 @@ void LVL_Block::transformTo_x(long id)
 }
 
 
-void LVL_Block::render(float camX, float camY)
+void LVL_Block::render(double camX, double camY)
 {
     //Don't draw hidden block before it will be hitten
     if(isHidden) return;
