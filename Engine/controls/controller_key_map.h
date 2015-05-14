@@ -28,8 +28,10 @@ struct KeyMapJoyCtrls
 {
     enum CtrlTypes
     {
+        NoControl=-1,
         JoyAxis=0,
-        JoyBall,
+        JoyBallX,
+        JoyBallY,
         JoyHat,
         JoyButton
     };

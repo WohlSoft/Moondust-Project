@@ -31,6 +31,7 @@ public:
     void setJoystickDevice(SDL_Joystick* jctrl);
     void setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls types);
     SDL_Joystick* getJoystickDevice() const;
+    static bool bindJoystickKey(SDL_Joystick* joy, int &keyValue, int &keyID, int &keyType);
 
     void updateKey(bool &key, int &keyValue, int &keyID, int &keyType);
     void update();
