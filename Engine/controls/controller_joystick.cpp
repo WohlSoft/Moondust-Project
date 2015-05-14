@@ -51,10 +51,10 @@ void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
     joystickController=jctrl;
 }
 
-void JoystickController::setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls values)
+void JoystickController::setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls types)
 {
-    _ctrls_id=ids;
-    _ctrls_val=values;
+    _ctrls_ids=ids;
+    _ctrls_types=types;
 }
 
 SDL_Joystick *JoystickController::getJoystickDevice() const
@@ -62,7 +62,7 @@ SDL_Joystick *JoystickController::getJoystickDevice() const
     return joystickController;
 }
 
-void JoystickController::updateKey(bool &key, int &keyID,int &keyValue, int &keyType)
+void JoystickController::updateKey(bool &key, int &keyValue, int &keyID, int &keyType)
 {
     int val=0, dx=0, dy=0;
     switch(keyType)
@@ -75,20 +75,12 @@ void JoystickController::updateKey(bool &key, int &keyID,int &keyValue, int &key
                 key=(val<0);
             else key=false;
         break;
-    case KeyMapJoyCtrls::JoyBallX:
+    case KeyMapJoyCtrls::JoyBall:
         SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
         if(keyID>0)
             key=(dx>0);
         else if(keyID<0)
             key=(dx<0);
-        else key=false;
-        break;
-    case KeyMapJoyCtrls::JoyBallY:
-        SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
-        if(keyValue>0)
-            key=(dy>0);
-        else if(keyValue<0)
-            key=(dy<0);
         else key=false;
         break;
     case KeyMapJoyCtrls::JoyHat:
@@ -112,17 +104,17 @@ void JoystickController::update()
     SDL_PumpEvents();
     SDL_JoystickUpdate();
 
-    updateKey(keys.jump, kmap.jump,   _ctrls_id.jump,  _ctrls_val.jump);
-    updateKey(keys.alt_jump, kmap.jump_alt, _ctrls_id.jump_alt, _ctrls_val.jump_alt);
+    updateKey(keys.jump, kmap.jump,   _ctrls_ids.jump,  _ctrls_types.jump);
+    updateKey(keys.alt_jump, kmap.jump_alt, _ctrls_ids.jump_alt, _ctrls_types.jump_alt);
 
-    updateKey(keys.run, kmap.run,     _ctrls_id.run,   _ctrls_val.run);
-    updateKey(keys.alt_run, kmap.run_alt, _ctrls_id.run_alt, _ctrls_val.run_alt);
+    updateKey(keys.run, kmap.run,     _ctrls_ids.run,   _ctrls_types.run);
+    updateKey(keys.alt_run, kmap.run_alt, _ctrls_ids.run_alt, _ctrls_types.run_alt);
 
-    updateKey(keys.right, kmap.right, _ctrls_id.right, _ctrls_val.right);
-    updateKey(keys.left, kmap.left,   _ctrls_id.left,  _ctrls_val.left);
-    updateKey(keys.up, kmap.up,       _ctrls_id.up,    _ctrls_val.up);
-    updateKey(keys.down, kmap.down,   _ctrls_id.down,  _ctrls_val.down);
+    updateKey(keys.right, kmap.right, _ctrls_ids.right, _ctrls_types.right);
+    updateKey(keys.left, kmap.left,   _ctrls_ids.left,  _ctrls_types.left);
+    updateKey(keys.up, kmap.up,       _ctrls_ids.up,    _ctrls_types.up);
+    updateKey(keys.down, kmap.down,   _ctrls_ids.down,  _ctrls_types.down);
 
-    updateKey(keys.drop, kmap.drop,   _ctrls_id.drop,  _ctrls_val.drop);
-    updateKey(keys.start, kmap.start, _ctrls_id.start, _ctrls_val.start);
+    updateKey(keys.drop, kmap.drop,   _ctrls_ids.drop,  _ctrls_types.drop);
+    updateKey(keys.start, kmap.start, _ctrls_ids.start, _ctrls_types.start);
 }

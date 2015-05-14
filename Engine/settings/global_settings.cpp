@@ -67,8 +67,8 @@ void GlobalSettings::loadJoystickSettings()
     player2_joysticks.clear();
     player1_joysticks_ctrls_ids.clear();
     player2_joysticks_ctrls_ids.clear();
-    player1_joysticks_ctrls_val.clear();
-    player2_joysticks_ctrls_val.clear();
+    player1_joysticks_ctrls_types.clear();
+    player2_joysticks_ctrls_types.clear();
 
     if((player1_controller<-1)||(player1_controller>SDL_NumJoysticks()-1)) player1_controller=-1;
     if((player2_controller<-1)||(player2_controller>SDL_NumJoysticks()-1)) player2_controller=-1;
@@ -82,8 +82,8 @@ void GlobalSettings::loadJoystickSettings()
         loadJoyCtrlMap(joy1c, setup, QString("player-1-joystick%1-ctrls-id").arg(i));
         player1_joysticks.push_back(joy1);
         player1_joysticks_ctrls_ids.push_back(joy1c);
-        loadJoyCtrlMap(joy1c, setup, QString("player-1-joystick%1-ctrls-val").arg(i));
-        player1_joysticks_ctrls_val.push_back(joy1c);
+        loadJoyCtrlMap(joy1c, setup, QString("player-1-joystick%1-ctrls-type").arg(i));
+        player1_joysticks_ctrls_types.push_back(joy1c);
 
         KeyMap joy2;
         KeyMapJoyCtrls joy2c;
@@ -91,8 +91,8 @@ void GlobalSettings::loadJoystickSettings()
         loadJoyCtrlMap(joy2c, setup, QString("player-2-joystick%1-ctrls-id").arg(i));
         player2_joysticks.push_back(joy2);
         player2_joysticks_ctrls_ids.push_back(joy2c);
-        loadJoyCtrlMap(joy2c, setup, QString("player-2-joystick%1-ctrls-val").arg(i));
-        player2_joysticks_ctrls_val.push_back(joy2c);
+        loadJoyCtrlMap(joy2c, setup, QString("player-2-joystick%1-ctrls-type").arg(i));
+        player2_joysticks_ctrls_types.push_back(joy2c);
     }
 
 }
@@ -120,8 +120,8 @@ void GlobalSettings::save()
         saveKeyMap(player2_joysticks[i], setup, QString("player-2-joystick%1").arg(i));
         saveJoyCtrlMap(player1_joysticks_ctrls_ids[i], setup, QString("player-1-joystick%1-ctrls-id").arg(i));
         saveJoyCtrlMap(player2_joysticks_ctrls_ids[i], setup, QString("player-2-joystick%1-ctrls-id").arg(i));
-        saveJoyCtrlMap(player1_joysticks_ctrls_val[i], setup, QString("player-1-joystick%1-ctrls-val").arg(i));
-        saveJoyCtrlMap(player2_joysticks_ctrls_val[i], setup, QString("player-2-joystick%1-ctrls-val").arg(i));
+        saveJoyCtrlMap(player1_joysticks_ctrls_types[i], setup, QString("player-1-joystick%1-ctrls-type").arg(i));
+        saveJoyCtrlMap(player2_joysticks_ctrls_types[i], setup, QString("player-2-joystick%1-ctrls-type").arg(i));
     }
 }
 
@@ -263,7 +263,7 @@ Controller *GlobalSettings::openController(int player)
             dynamic_cast<JoystickController*>(TargetController)->
                     setJoystickDevice(joysticks[DeviceID]);
             dynamic_cast<JoystickController*>(TargetController)->
-                    setJoyCtrlMap(player1_joysticks_ctrls_ids[DeviceID], player1_joysticks_ctrls_val[DeviceID]);
+                    setJoyCtrlMap(player1_joysticks_ctrls_ids[DeviceID], player1_joysticks_ctrls_types[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player1_keyboard);
@@ -278,7 +278,7 @@ Controller *GlobalSettings::openController(int player)
             dynamic_cast<JoystickController*>(TargetController)->
                     setJoystickDevice(joysticks[DeviceID]);
             dynamic_cast<JoystickController*>(TargetController)->
-                    setJoyCtrlMap(player2_joysticks_ctrls_ids[DeviceID], player2_joysticks_ctrls_val[DeviceID]);
+                    setJoyCtrlMap(player2_joysticks_ctrls_ids[DeviceID], player2_joysticks_ctrls_types[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player2_keyboard);
