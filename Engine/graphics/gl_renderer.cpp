@@ -144,14 +144,19 @@ void GlRenderer::makeShot()
     if(!_isReady) return;
 
     // Make the BYTE array, factor of 3 because it's RBG.
-    GLsizei w,h;
+    int w, h;
     SDL_GetWindowSize(PGE_Window::window, &w, &h);
+    if((w==0) || (h==0))
+    {
+        PGE_Audio::playSoundByRole(obj_sound_role::WeaponFire);
+        return;
+    }
     uchar* pixels = new uchar[4*w*h];
     glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-    PGE_GL_shoot *shoot=new PGE_GL_shoot;
+    PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
     shoot->w=w;
-    shoot->w=h;
+    shoot->h=h;
     thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)shoot );
 
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
@@ -160,14 +165,9 @@ void GlRenderer::makeShot()
 int GlRenderer::makeShot_action(void *_pixels)
 {
     PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
-    QImage shotImg(shoot->w, shoot->h, QImage::Format_ARGB32);
-    shotImg.fill(Qt::black);
-    for(int i=0, x=0, y=shoot->h-1; i<3*shoot->w*shoot->h; i+=3, x++)
-    {
-        if(x==shoot->w) {x=0; y--;}
-        shotImg.setPixel( QPoint(x,y), qRgb(shoot->pixels[i],shoot->pixels[i+1], shoot->pixels[i+2]) );
-    }
-    shotImg=shotImg.scaled(PGE_Window::Width, PGE_Window::Height);
+
+    QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
+    shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
     if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
@@ -182,7 +182,7 @@ int GlRenderer::makeShot_action(void *_pixels)
 
     delete []shoot->pixels;
     shoot->pixels=NULL;
-    delete shoot;
+    delete []shoot;
 
     return 0;
 }
