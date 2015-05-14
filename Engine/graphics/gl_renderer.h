@@ -45,6 +45,8 @@ public:
 
     static QPointF MapToGl(QPoint point);
     static QPointF MapToGl(int x, int y);
+    static QPoint MapToScr(QPoint point);
+    static QPoint MapToScr(int x, int y);
     static void setViewport(int x, int y, int w, int h);
     static void resetViewport();
     static void setViewportSize(int w, int h);

@@ -296,8 +296,7 @@ int TitleScene::exec()
                 case SDL_KEYUP:
                     break;
                 case SDL_MOUSEMOTION:
-                    mousePos.setX(event.motion.x);
-                    mousePos.setY(event.motion.y);
+                    mousePos = GlRenderer::MapToScr(event.motion.x, event.motion.y);
                 if(!menu.isKeyGrabbing() && !doExit)
                     menu.setMouseHoverPos(mousePos.x(), mousePos.y());
                 break;
@@ -308,7 +307,8 @@ int TitleScene::exec()
                     switch(event.button.button)
                     {
                         case SDL_BUTTON_LEFT:
-                            menu.setMouseClickPos(event.button.x, event.button.y);
+                            mousePos = GlRenderer::MapToScr(event.button.x, event.button.y);
+                            menu.setMouseClickPos(mousePos.x(), mousePos.y());
                         break;
                         case SDL_BUTTON_RIGHT:
                             menu.rejectItem();
@@ -318,18 +318,20 @@ int TitleScene::exec()
                     }
                 break;
                 case SDL_MOUSEWHEEL:
-                    if(event.wheel.y>0)
-                        menu.scrollUp();
-                    else
-                        menu.scrollDown();
+                    if(!menu.isKeyGrabbing() && !doExit)
+                    {
+                        if(event.wheel.y>0)
+                            menu.scrollUp();
+                        else
+                            menu.scrollDown();
+                    }
                 default: break;
             }
         }
         int mouseX=0;
         int mouseY=0;
         SDL_GetMouseState(&mouseX, &mouseY);
-        mousePos.setX(mouseX);
-        mousePos.setY(mouseY);
+        mousePos = GlRenderer::MapToScr(mouseX, mouseY);
 
         render();
         renderMouse();

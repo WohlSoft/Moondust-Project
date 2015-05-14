@@ -539,6 +539,7 @@ GLuint FontManager::getChar2(QChar _x)
 
         GLuint texture;
 
+        glEnable(GL_TEXTURE_2D);
         glGenTextures(1, &texture);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -552,6 +553,7 @@ GLuint FontManager::getChar2(QChar _x)
 
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         fontTable_2[_x] = texture;
+        glDisable(GL_TEXTURE_2D);
 
         return fontTable_2[_x];
     }
