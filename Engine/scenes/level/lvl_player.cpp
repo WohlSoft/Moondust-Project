@@ -765,8 +765,8 @@ CameraOnly:
     }
     else
     {
-        camera->setPos( round(posX()) - PGE_Window::Width/2 + posX_coefficient,
-                        round(bottom()) - PGE_Window::Height/2-state_cur.height/2 );
+        camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
+                        round(bottom()) - camera->h()/2-state_cur.height/2 );
     }
 }
 

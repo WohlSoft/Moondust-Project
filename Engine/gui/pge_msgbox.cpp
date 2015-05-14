@@ -357,6 +357,8 @@ void PGE_MsgBox::updateControllers()
             {
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
+                s->player2Controller->update();
+                s->player2Controller->sendControls();
             }
         }
     }

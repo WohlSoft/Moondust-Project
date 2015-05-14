@@ -41,6 +41,8 @@ TitleScene::TitleScene()
     mousePos.setY(-300);
     _cursorIsLoaded=false;
 
+    numOfPlayers=1;
+
     controller = AppSettings.openController(1);
 
     glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
@@ -359,6 +361,14 @@ int TitleScene::exec()
                         case menu_main:
                             if(value=="game1p")
                             {
+                                numOfPlayers=1;
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_playepisode);
+                            }
+                            else
+                            if(value=="game2p")
+                            {
+                                numOfPlayers=2;
                                 menuChain.push(_currentMenu);
                                 setMenu(menu_playepisode);
                             }
@@ -404,7 +414,10 @@ int TitleScene::exec()
                                     result_episode.worldfile = value;
                                     result_episode.character = 0;
                                     result_episode.savefile = "save1.savx";
-                                    ret = ANSWER_PLAYEPISODE;
+                                    if(numOfPlayers>1)
+                                        ret = ANSWER_PLAYEPISODE_2P;
+                                    else
+                                        ret = ANSWER_PLAYEPISODE;
                                     setFade(21, 1.0f, 0.2f);
                                     fader_opacity=0.1f;
                                     doExit=true;

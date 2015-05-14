@@ -132,6 +132,7 @@ public:
     int numberOfPlayers;
 
     Controller* player1Controller;
+    Controller* player2Controller;
 
 
     /**************Z-Layers**************/
