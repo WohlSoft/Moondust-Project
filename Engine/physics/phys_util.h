@@ -22,9 +22,9 @@
 class PhysUtil
 {
 public:
-    static float met2pix(float met);
-    static float pix2met(float pix);
-    static float pixMeter;
+    static double met2pix(double met);
+    static double pix2met(double pix);
+    static double pixMeter;
 };
 
 #endif // PHYS_UTIL_H

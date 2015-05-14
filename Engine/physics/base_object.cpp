@@ -44,7 +44,7 @@ PGE_Phys_Object::~PGE_Phys_Object()
 
 }
 
-float PGE_Phys_Object::posX()
+double PGE_Phys_Object::posX()
 {
     if(physBody)
     {//PhysUtil::pixMeter
@@ -54,7 +54,7 @@ float PGE_Phys_Object::posX()
         return 0;
 }
 
-float PGE_Phys_Object::posY()
+double PGE_Phys_Object::posY()
 {
     if(physBody)
     {
@@ -67,22 +67,22 @@ float PGE_Phys_Object::posY()
         return 0;
 }
 
-float PGE_Phys_Object::top()
+double PGE_Phys_Object::top()
 {
     return posY();
 }
 
-float PGE_Phys_Object::bottom()
+double PGE_Phys_Object::bottom()
 {
     return posY()+height;
 }
 
-float PGE_Phys_Object::left()
+double PGE_Phys_Object::left()
 {
     return posX();
 }
 
-float PGE_Phys_Object::right()
+double PGE_Phys_Object::right()
 {
     return posX()+width;
 }
@@ -114,7 +114,7 @@ void PGE_Phys_Object::nextFrame() {}
 
 void PGE_Phys_Object::update() {}
 
-void PGE_Phys_Object::render(float x, float y) {Q_UNUSED(x); Q_UNUSED(y);}
+void PGE_Phys_Object::render(double x, double y) {Q_UNUSED(x); Q_UNUSED(y);}
 
 
 bool operator<(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)

@@ -175,7 +175,7 @@ class LVL_Player :
         b2Fixture     *f_player;
         /******************Duck*************************/
 
-        void render(float camX, float camY);
+        void render(double camX, double camY);
         MatrixAnimator animator;
         int frameW;
         int frameH;

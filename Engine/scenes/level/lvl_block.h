@@ -81,7 +81,7 @@ public:
 
     //float posX();
     //float posY();
-    void render(float camX, float camY);
+    void render(double camX, double camY);
 private:
     void drawPiece(QRectF target, QRectF block, QRectF texture);
 };
