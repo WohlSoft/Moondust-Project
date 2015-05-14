@@ -203,8 +203,8 @@ QPointF GlRenderer::MapToGl(QPoint point)
 
 QPointF GlRenderer::MapToGl(float x, float y)
 {
-    double nx1 = (double)x/(viewport_w_half)-1.0;
-    double ny1 = (viewport_h-((double)y))/viewport_h_half-1.0;
+    double nx1 = roundf(x)/(viewport_w_half)-1.0;
+    double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
     return QPointF(nx1, ny1);
 }
 
