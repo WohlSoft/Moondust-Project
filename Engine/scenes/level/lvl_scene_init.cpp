@@ -235,7 +235,6 @@ bool LevelScene::init()
 
     backgrounds.push_back(CurrentBackground);
 
-
     //Init data
 
     qDebug()<<"Init blocks";

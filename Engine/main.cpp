@@ -319,10 +319,13 @@ MainMenu:
         case TitleScene::ANSWER_PLAYLEVEL:
             end_level_jump=RETURN_TO_MAIN_MENU;
             _game_state.isEpisode=false;
+            _game_state.numOfPlayers=1;
             _game_state.LevelFile = res_level.levelfile;
             goto PlayLevel;
         case TitleScene::ANSWER_PLAYEPISODE:
+        case TitleScene::ANSWER_PLAYEPISODE_2P:
             end_level_jump=RETURN_TO_WORLDMAP;
+            _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
             _game_state.isEpisode=true;
             episode = res_episode;
             goto PlayWorldMap;

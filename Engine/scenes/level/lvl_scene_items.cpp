@@ -174,7 +174,12 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     LVL_Player * player;
     player = new LVL_Player();
-    player->camera = cameras.last();
+
+    if(players.size()==0)
+        player->camera = cameras.first();
+    else if(players.size()==1)
+        player->camera = cameras.last();
+
     player->worldPtr = world;
     player->z_index = Z_Player;
     player->data = playerData;
@@ -183,7 +188,11 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     player->init();
     players.push_back(player);
-    player1Controller->registerInControl(player);
+
+    if(players.size()==1)
+        player1Controller->registerInControl(player);
+    else if(players.size()==2)
+        player2Controller->registerInControl(player);
 
     if(byWarp)
     {

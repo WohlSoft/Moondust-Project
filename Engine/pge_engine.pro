@@ -179,7 +179,8 @@ SOURCES += \
     settings/global_settings.cpp \
     common_features/maths.cpp \
     scenes/level/lvl_npc.cpp \
-    controls/controller_joystick.cpp
+    controls/controller_joystick.cpp \
+    scenes/world/wld_player_portrait.cpp
 
 
 HEADERS  += \
@@ -266,7 +267,9 @@ HEADERS  += \
     common_features/maths.h \
     scenes/level/lvl_npc.h \
     controls/controller_joystick.h \
-    controls/controller_key_map.h
+    controls/controller_key_map.h \
+    scenes/world/wld_tilebox.h \
+    scenes/world/wld_player_portrait.h
 
 FORMS    += \
     data_configs/select_config.ui

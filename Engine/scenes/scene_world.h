@@ -29,6 +29,8 @@
 #include <common_features/episode_state.h>
 #include <data_configs/config_manager.h>
 
+#include "world/wld_player_portrait.h"
+
 struct WorldScene_misc_img
 {
     int x;
@@ -38,27 +40,6 @@ struct WorldScene_misc_img
     int frmH;
 };
 
-class WorldScene_Portrait
-{
-public:
-    WorldScene_Portrait();
-    WorldScene_Portrait(int CharacterID, int stateID, int _posX, int _posY, QString ani, int framedelay, int dir);
-    WorldScene_Portrait(const WorldScene_Portrait &pt);
-    ~WorldScene_Portrait();
-    void render();
-    void update(int ticks);
-private:
-    int posX;
-    int posY;
-    int posX_render;
-    int posY_render;
-    obj_player       setup;
-    obj_player_state state_cur;
-    MatrixAnimator animator;
-    PGE_Texture texture;
-    int frameW;
-    int frameH;
-};
 
 class WorldScene : public Scene
 {

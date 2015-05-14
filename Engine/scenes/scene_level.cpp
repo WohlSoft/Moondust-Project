@@ -75,7 +75,7 @@ LevelScene::LevelScene()
     /**************************/
 
     /*********Default players number*************/
-    numberOfPlayers=1;
+    numberOfPlayers=2;
     /*********Default players number*************/
 
     world=NULL;
@@ -93,6 +93,7 @@ LevelScene::LevelScene()
 
     /*********Controller********/
     player1Controller = AppSettings.openController(1);
+    player2Controller = AppSettings.openController(2);
     /*********Controller********/
 
     errorMsg = "";
@@ -202,6 +203,7 @@ LevelScene::~LevelScene()
     }
 
     delete player1Controller;
+    delete player2Controller;
 
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
@@ -286,6 +288,7 @@ void LevelScene::update()
 
         //Update controllers
         player1Controller->sendControls();
+        player2Controller->sendControls();
 
         //update players
         for(i=0; i<players.size(); i++)
@@ -351,15 +354,14 @@ void LevelScene::render()
     if(!isInit) goto renderBlack;
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    foreach(PGE_LevelCamera* cam, cameras)
+    for(int c=0;c<cameras.size();c++)
     {
-        backgrounds.last()->draw(cam->posX(), cam->posY());
+        PGE_LevelCamera* cam=cameras[c];
 
-//        if(PGE_Window::showDebugInfo)
-//        {
-//            cam_x = cam->posX();
-//            cam_y = cam->posY();
-//        }
+        if(numberOfPlayers>1)
+            GlRenderer::setViewport(0, cam->h()*c,cam->w(), cam->h());
+
+        backgrounds.last()->draw(cam->posX(), cam->posY());
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
@@ -375,6 +377,8 @@ void LevelScene::render()
                 break;
             }
         }
+        if(numberOfPlayers>1)
+            GlRenderer::resetViewport();
     }
 
     if(PGE_Window::showDebugInfo)
@@ -452,6 +456,7 @@ int LevelScene::exec()
         #endif
 
         player1Controller->update();
+        player2Controller->update();
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
@@ -641,4 +646,5 @@ void LevelScene::setExiting(int delay, int reason)
 void LevelScene::setGameState(EpisodeState *_gameState)
 {
     gameState = _gameState;
+    numberOfPlayers = gameState->numOfPlayers;
 }

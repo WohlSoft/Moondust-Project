@@ -88,12 +88,14 @@ public:
         ANSWER_EXIT=0,
         ANSWER_PLAYLEVEL,
         ANSWER_PLAYEPISODE,
+        ANSWER_PLAYEPISODE_2P,
         ANSWER_PLAYBATTLE,
         ANSWER_CREDITS,
         ANSWER_LOADING,
         ANSWER_GAMEOVER
     };
 
+    int numOfPlayers;
     PlayEpisodeResult result_episode; //play episode
     PlayLevelResult   result_level; //Play level/battle
 
