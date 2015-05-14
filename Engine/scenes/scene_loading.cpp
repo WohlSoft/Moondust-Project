@@ -20,6 +20,7 @@
 #include <graphics/gl_renderer.h>
 #include <graphics/graphics.h>
 #include <graphics/window.h>
+#include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
@@ -149,6 +150,8 @@ int LoadingScene::exec()
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
+
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -156,21 +159,11 @@ int LoadingScene::exec()
                         return -1;
                     }   // End work of program
                 break;
-
                 case SDL_KEYDOWN: // If pressed key
                     switch(event.key.keysym.sym)
                     {
-                      case SDLK_t:
-                          PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                      break;
-                      case SDLK_F3:
-                          PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                      break;
-                      case SDLK_F12:
-                          GlRenderer::makeShot();
-                      break;
-                      default:
-                        doExit=true;
+                        default:
+                           doExit=true;
                         break;
                     }
                 break;
