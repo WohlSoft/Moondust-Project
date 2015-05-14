@@ -204,6 +204,16 @@ QPointF GlRenderer::MapToGl(int x, int y)
     return QPointF(nx1, ny1);
 }
 
+QPoint GlRenderer::MapToScr(QPoint point)
+{
+    return MapToScr(point.x(), point.y());
+}
+
+QPoint GlRenderer::MapToScr(int x, int y)
+{
+    return QPoint(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
+}
+
 void GlRenderer::setViewport(int x, int y, int w, int h)
 {
     glViewport(offset_x+x*viewport_scale_x,
