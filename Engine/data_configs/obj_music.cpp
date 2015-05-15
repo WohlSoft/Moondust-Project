@@ -83,6 +83,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_wld_total; i++)
     {
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
+            smusic_wld.id = i;
             smusic_wld.name = musicset.value("name", "").toString();
             if(smusic_wld.name.isEmpty())
             {
@@ -112,8 +113,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipWldMusic;
             }
-
-            smusic_wld.id = i;
             main_music_wld[i] = smusic_wld;
         skipWldMusic:
         musicset.endGroup();
@@ -130,6 +129,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_spc_total; i++)
     {
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
+            smusic_spc.id = i;
             smusic_spc.name = musicset.value("name", "").toString();
             if(smusic_spc.name.isEmpty())
             {
@@ -148,7 +148,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipSpcMusic;
             }
-
             smusic_spc.absPath = rootPath + smusic_spc.file;
             if(!QFileInfo(smusic_spc.absPath).exists())
             {
@@ -159,7 +158,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 goto skipSpcMusic;
             }
 
-            smusic_spc.id = i;
             main_music_spc[i] = smusic_spc;
         skipSpcMusic:
         musicset.endGroup();
@@ -176,6 +174,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_lvl_total; i++)
     {
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
+            smusic_lvl.id = i;
             smusic_lvl.name = musicset.value("name", "").toString();
             if(smusic_lvl.name.isEmpty())
             {
@@ -206,8 +205,8 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 goto skipLvlMusic;
             }
 
-            smusic_lvl.id = i;
             main_music_lvl[i] = smusic_lvl;
+
         skipLvlMusic:
         musicset.endGroup();
 
