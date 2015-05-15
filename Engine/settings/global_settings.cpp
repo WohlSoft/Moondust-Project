@@ -3,6 +3,7 @@
 #include <graphics/window.h>
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>
+#include <common_features/logger.h>
 
 #include <QSettings>
 
@@ -14,20 +15,32 @@ GlobalSettings::GlobalSettings()
 }
 
 GlobalSettings::~GlobalSettings()
+{}
+
+void GlobalSettings::initJoysticks()
+{
+    SDL_JoystickEventState(SDL_ENABLE);
+    for(int i=0; i<SDL_NumJoysticks();i++)
+    {
+        joysticks.push_back(SDL_JoystickOpen(i));
+        WriteToLog(QtDebugMsg, QString("=========================="));
+        WriteToLog(QtDebugMsg, QString("Josytick %1").arg(SDL_JoystickName(joysticks.last())));
+        WriteToLog(QtDebugMsg, QString("--------------------------"));
+        WriteToLog(QtDebugMsg, QString("Axes:    %1").arg(SDL_JoystickNumAxes(joysticks.last())));
+        WriteToLog(QtDebugMsg, QString("Balls:   %1").arg(SDL_JoystickNumBalls(joysticks.last())));
+        WriteToLog(QtDebugMsg, QString("Hats:    %1").arg(SDL_JoystickNumHats(joysticks.last())));
+        WriteToLog(QtDebugMsg, QString("Buttons: %1").arg(SDL_JoystickNumButtons(joysticks.last())));
+        WriteToLog(QtDebugMsg, QString("=========================="));
+    }
+}
+
+void GlobalSettings::closeJoysticks()
 {
     while(!joysticks.isEmpty())
     {
         SDL_JoystickClose(joysticks.first());
         joysticks.pop_front();
     }
-
-}
-
-void GlobalSettings::initJoysticks()
-{
-    SDL_JoystickEventState(SDL_ENABLE);
-    for(int i=0; i<SDL_NumJoysticks();i++)
-        joysticks.push_back(SDL_JoystickOpen(i));
 }
 
 void GlobalSettings::load()

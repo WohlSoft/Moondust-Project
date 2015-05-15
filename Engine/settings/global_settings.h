@@ -15,6 +15,7 @@ public:
     GlobalSettings();
     ~GlobalSettings();
     void initJoysticks();
+    void closeJoysticks();
     void load();
     void save();
     void resetDefaults();

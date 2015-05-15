@@ -598,6 +598,8 @@ ExitFromApplication:
     PGE_MusPlayer::freeStream();
     PGE_Sounds::clearSoundBuffer();
     Mix_CloseAudio();
+    AppSettings.save();
+    AppSettings.closeJoysticks();
     IntProc::quit();
     FontManager::quit();
     PGE_Window::uninit();
