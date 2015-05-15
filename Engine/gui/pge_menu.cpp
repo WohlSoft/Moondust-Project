@@ -129,7 +129,7 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<IntAssocItem> _items, QS
     if(intvalue)
         for(int i=0; i<_items.size(); i++)
         {
-            if(i==_items[i].value)
+            if(*intvalue==_items[i].value)
             { item.curItem=i; break; }
         }
     item.allowRotation=rotate;
@@ -747,7 +747,7 @@ void PGE_NamedIntMenuItem::left()
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     curItem--;
     if(curItem<0)
-        curItem=allowRotation? items.size()-1 : 0;
+        curItem = allowRotation?(items.size()-1):0;
     *intvalue=items[curItem].value;
     extAction();
 }
@@ -759,7 +759,7 @@ void PGE_NamedIntMenuItem::right()
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
     curItem++;
     if(curItem>=items.size())
-        curItem = allowRotation?  0  : items.size()-1;
+        curItem = allowRotation?  0  : (items.size()-1);
 
     *intvalue=items[curItem].value;
 
