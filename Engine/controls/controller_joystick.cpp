@@ -132,8 +132,7 @@ void JoystickController::update()
 bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &keyID, int &keyType)
 {
     int val=0, dx=0, dy=0;
-
-    SDL_PumpEvents();
+    //SDL_PumpEvents();
     SDL_JoystickUpdate();
 
     for(int i=0; i<SDL_JoystickNumAxes(joy);i++)
@@ -148,6 +147,7 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &
             return true;
         }
     }
+
     for(int i=0; i<SDL_JoystickNumBalls(joy);i++)
     {
         dx=0; dy=0;
@@ -156,16 +156,17 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &
         {
             keyValue=dx;
             keyID=i;
-            keyType=KeyMapJoyCtrls::JoyBallX;
+            keyType=(int)KeyMapJoyCtrls::JoyBallX;
             return true;
         }else if(dy!=0)
         {
             keyValue=dy;
             keyID=i;
-            keyType=KeyMapJoyCtrls::JoyBallY;
+            keyType=(int)KeyMapJoyCtrls::JoyBallY;
             return true;
         }
     }
+
     for(int i=0; i<SDL_JoystickNumHats(joy);i++)
     {
         val=0;
@@ -174,25 +175,25 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &
         {
             keyValue=val;
             keyID=i;
-            keyType=KeyMapJoyCtrls::JoyHat;
+            keyType=(int)KeyMapJoyCtrls::JoyHat;
             return true;
         }
     }
-
     for(int i=0; i<SDL_JoystickNumButtons(joy);i++)
     {
         val=0;
         val=SDL_JoystickGetButton(joy, i);
-        if(val!=0)
+        if(val==1)
         {
             keyValue=val;
             keyID=i;
-            keyType=KeyMapJoyCtrls::JoyButton;
+            keyType=(int)KeyMapJoyCtrls::JoyButton;
             return true;
         }
     }
+
     keyValue=0;
     keyID=0;
-    keyType=KeyMapJoyCtrls::NoControl;
+    keyType=(int)KeyMapJoyCtrls::NoControl;
     return false;
 }
