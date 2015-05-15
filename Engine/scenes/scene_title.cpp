@@ -164,9 +164,9 @@ void TitleScene::update()
 
 }
 
-int debug_joy_keyval=0;
-int debug_joy_keyid=0;
-int debug_joy_keytype=0;
+static int debug_joy_keyval=0;
+static int debug_joy_keyid=0;
+static int debug_joy_keytype=0;
 
 void TitleScene::render()
 {
@@ -192,7 +192,7 @@ void TitleScene::render()
 
     if(AppSettings.showDebugInfo)
     {
-        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%2")
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3")
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype),10, 10);
@@ -662,7 +662,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
                                 ctrls.push_back(controller);
                             }
-                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Controller type", false, ctrlSwitch);
+                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Controller type", true, ctrlSwitch);
                             menu.addKeyGrabMenuItem(&mp_p->left, "key1", "Left");
                             menu.addKeyGrabMenuItem(&mp_p->right, "key2", "Right");
                             menu.addKeyGrabMenuItem(&mp_p->up, "key3", "Up");
