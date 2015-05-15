@@ -28,19 +28,31 @@
 #include <QRgb>
 #include <QRegExp>
 
+
+#include <common_features/pge_texture.h>
 class RasterFont
 {
 public:
     RasterFont();
     ~RasterFont();
+    void  loadFont(QString font_ini);
     void  loadFontMap(QString fontmap_ini);
     QSize textSize(QString &text, int max_line_lenght=0, bool cut=false);
+    void printText(QString text, int x, int y);
+    bool isLoaded();
 private:
+    bool isReady;
     int letter_width;
     int letter_height;
+    int matrix_width;
+    int matrix_height;
     struct RasChar
     {
+        RasChar(){valid=false;}
+        bool valid;
         GLuint tx;
+        int padding_left;
+        int padding_right;
         float l;//!< left
         float t;//!< top
         float b;//!< bottom
@@ -49,7 +61,7 @@ private:
     QHash<QChar, RasChar > fontMap;
     QRegExp first_line_only;
     //Font textures cache
-    QList<GLuint > textures;
+    QList<PGE_Texture > textures;
 };
 
 
@@ -76,13 +88,14 @@ public:
     static void printText(QString text, int x, int y);
     static void printText(QString text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
 
+    static RasterFont rFont;
 
 private:
     static bool isInit;
     //static TTF_Font * defaultFont;
     static GLuint textTexture;
-    static QMap<QChar, GLuint> fontTable_1;
-    static QMap<QChar, GLuint> fontTable_2;
+    static QHash<QChar, GLuint> fontTable_1;
+    static QHash<QChar, GLuint> fontTable_2;
     static int fontID;
     static bool double_pixled;
 

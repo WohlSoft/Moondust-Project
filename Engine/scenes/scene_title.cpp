@@ -196,6 +196,12 @@ void TitleScene::render()
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype),10, 10);
+        FontManager::printText("0123456789\n"
+                               "ABCDEFGHIJKLMBNOPQRSTUVWXYZ\n"
+                               "abcdefghijklmnopqrstvwxyz\n"
+                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
+                               "Ich bin glücklich!",10, 60);
     }
 
 

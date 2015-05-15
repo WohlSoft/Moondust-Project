@@ -81,9 +81,9 @@ void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _
     item.value = value;
     item.type=PGE_Menuitem::ITEM_Normal;
     item.title = (title.isEmpty() ? value : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+//    item.textTexture = FontManager::TextToTexture(item.title,
+//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     item.extAction=_extAction;
     _items_normal.push_back(item);
     _items.push_back( &_items_normal.last() );
@@ -95,9 +95,9 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::fu
     item.flag = flag;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown flag" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+//    item.textTexture = FontManager::TextToTexture(item.title,
+//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     item.extAction=_extAction;
     _items_bool.push_back(item);
     _items.push_back( &_items_bool.last() );
@@ -112,9 +112,9 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     item.max=max;
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown integer" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+//    item.textTexture = FontManager::TextToTexture(item.title,
+//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     item.extAction=_extAction;
     _items_int.push_back(item);
     _items.push_back( &_items_int.last() );
@@ -134,9 +134,9 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<IntAssocItem> _items, QS
         }
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown named integer" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+//    item.textTexture = FontManager::TextToTexture(item.title,
+//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     item.extAction=_extAction;
     _items_named_int.push_back(item);
     PGE_Menu::_items.push_back( &_items_named_int.last() );
@@ -148,9 +148,9 @@ void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
     item.keyValue = keyvalue;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown key-grabber" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+//    item.textTexture = FontManager::TextToTexture(item.title,
+//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
+//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
     item.menu = this;
     _items_keygrabs.push_back(item);
     _items.push_back( &_items_keygrabs.last() );
@@ -580,7 +580,7 @@ void PGE_Menu::render()
             }
             else
             {
-                int y_offset=(menuRect.height()/2)-(_selector.h/2);
+                int y_offset=0;//(menuRect.height()/2)-(_selector.h/2);
                 GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }
@@ -618,7 +618,8 @@ void PGE_Menuitem::toggle() {}
 
 void PGE_Menuitem::render(int x, int y)
 {
-    FontManager::SDL_string_render2D(x,y, &textTexture);
+    FontManager::printText(title, x, y);
+    //FontManager::SDL_string_render2D(x,y, &textTexture);
 }
 
 

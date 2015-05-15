@@ -31,6 +31,10 @@
 #include <QFontMetrics>
 #include <QFontDatabase>
 #include <QGLWidget>
+#include <QFileInfo>
+#include <QDir>
+
+#include <common_features/graphics_funcs.h>
 
 #include <SDL2/SDL.h>
 #undef main
@@ -41,6 +45,9 @@ RasterFont::RasterFont() : first_line_only("\n.*")
 {
     letter_width=0;
     letter_height=0;
+    matrix_width=0;
+    matrix_height=0;
+    isReady=false;
 }
 
 RasterFont::~RasterFont()
@@ -48,15 +55,125 @@ RasterFont::~RasterFont()
     glDisable(GL_TEXTURE_2D);
     while(!textures.isEmpty())
     {
-        glDeleteTextures(1, &textures.last() );
+        glDeleteTextures(1, &textures.last().texture );
         textures.pop_back();
     }
 
 }
 
+void RasterFont::loadFont(QString font_ini)
+{
+    QFileInfo fm_ini(font_ini);
+    if(!fm_ini.exists())
+    {
+        qWarning() <<"Can't load font "<<font_ini<<": file not exist";
+        return;
+    }
+    QString root=fm_ini.absoluteDir().absolutePath()+"/";
+    QSettings font(font_ini, QSettings::IniFormat);
+    font.setIniCodec("UTF-8");
+
+    int tables=0;
+    font.beginGroup("font");
+    tables=font.value("tables", 0).toInt();
+    font.endGroup();
+
+    QStringList tables_list;
+    font.beginGroup("tables");
+    for(int i=1;i<=tables;i++)
+    {
+        QString table=font.value(QString("table%1").arg(i), "").toString();
+        if(!table.isEmpty())
+            tables_list.append(table);
+    }
+    font.endGroup();
+
+    foreach(QString tbl, tables_list)
+    {
+        loadFontMap(root+tbl);
+    }
+}
+
 void RasterFont::loadFontMap(QString fontmap_ini)
 {
+    QFileInfo fm_ini(fontmap_ini);
+    QString root=fm_ini.absoluteDir().absolutePath()+"/";
+    if(!fm_ini.exists())
+    {
+        qWarning() <<"Can't load font map "<<fontmap_ini<<": file not exist";
+        return;
+    }
+    QSettings font(fontmap_ini, QSettings::IniFormat);
+    font.setIniCodec("UTF-8");
+    QString texFile;
+    int w=letter_width, h=letter_height;
+    font.beginGroup("font-map");
+    texFile=font.value("texture", "").toString();
+    w=font.value("width", 0).toInt();
+    h=font.value("height", 0).toInt();
+    matrix_width=w;
+    matrix_height=h;
+    if((w<=0)||(h<=0))
+    {
+        qWarning() <<"Wrong width and height values ! "<<w<<h;
+        return;
+    }
+    font.endGroup();
 
+    if(!QFileInfo(root+texFile).exists())
+        return;
+    PGE_Texture fontTexture;
+    GraphicsHelps::loadTexture(fontTexture, root+texFile);
+    textures.push_back(fontTexture);
+
+    if((letter_width==0)||(letter_height==0))
+    {
+        letter_width=fontTexture.w/w;
+        letter_height=fontTexture.h/h;
+    }
+
+    font.beginGroup("entries");
+    QStringList entries=font.allKeys();
+
+    qDebug()<<entries;
+
+    foreach(QString x, entries)
+    {
+        bool ok=false;
+        x=x.trimmed();
+        QStringList tmp=x.split('-');
+        if(tmp.isEmpty()) continue;
+        QString x2=tmp.first();
+        x2.toInt(&ok);
+        if(!ok)
+        {
+            qDebug()<<"=invalid=" <<x<<"=";
+            continue;
+        }
+
+        QString charX = font.value(x, "").toString();
+        /*Format of entry: X23
+         * X - UTF-8 Symbol
+         * 2 - padding left [for non-mono fonts]
+         * 3 - padding right [for non-mono fonts]
+        */
+        if(charX.isEmpty()) continue;
+        QChar ch=charX[0];
+        qDebug()<<"=char=" << ch << "=id="<<x2.toInt()<<"=";
+
+        RasChar rch;
+        rch.valid=true;
+        rch.tx = fontTexture.texture;
+        rch.l = 0;
+        rch.r = 1;
+        rch.padding_left=(charX.size()>1)? QString(charX[1]).toInt():0;
+        rch.padding_right=(charX.size()>2)? QString(charX[2]).toInt():0;
+        rch.t = x2.toFloat(&ok)/matrix_height;
+        rch.b = (x2.toFloat(&ok)+1.0)/matrix_height;
+        fontMap[ch]=rch;
+    }
+    font.endGroup();
+    if(!fontMap.isEmpty()) isReady=true;
 }
 
 QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
@@ -105,7 +222,88 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
     /****************Word wrap*end*****************/
 
     return QSize(letter_width*maxWidth, letter_height*count);
+}
 
+void RasterFont::printText(QString text, int x, int y)
+{
+    if(fontMap.isEmpty()) return;
+    int offsetX=0;
+    int offsetY=0;
+    int height=letter_height;
+    int width=letter_width;
+    GLint w=letter_width;
+    GLint h=letter_height;
+    foreach(QChar cx, text)
+    {
+        switch(cx.toLatin1())
+        {
+        case '\n':
+            offsetX=0;
+            offsetY+=height;
+            continue;
+        case '\t':
+            offsetX+=offsetX+offsetX%width;
+            continue;
+        }
+
+        RasChar rch=fontMap[cx];
+        if(rch.valid)
+        {
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, rch.tx);
+            QPointF point;
+                point = GlRenderer::MapToGl(x+offsetX-rch.padding_left, y+offsetY);
+            float left = point.x();
+            float top = point.y();
+                point = GlRenderer::MapToGl(x+offsetX-rch.padding_left+w, y+h+offsetY);
+            float right = point.x();
+            float bottom = point.y();
+
+            glColor4f( 1.f, 1.f, 1.f, 1.f);
+            glBegin(GL_QUADS);
+                glTexCoord2f(rch.l,rch.t);glVertex3f(left, top, 0.0);
+                glTexCoord2f(rch.l,rch.b);glVertex3f(left, bottom, 0.0) ;
+                glTexCoord2f(rch.r,rch.b);glVertex3f(right, bottom, 0.0);
+                glTexCoord2f(rch.r,rch.t);glVertex3f(right, top, 0.0);
+            glEnd();
+
+            glDisable(GL_TEXTURE_2D);
+            width=w;
+            height=h;
+            offsetX+=w-rch.padding_left-rch.padding_right;
+        }
+        else
+        {
+            GLuint charTex = FontManager::getChar2(cx);
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, charTex);
+            QPointF point;
+                point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
+            float left = point.x();
+            float top = point.y();
+                point = GlRenderer::MapToGl(x+offsetX+w, y+h+offsetY);
+            float right = point.x();
+            float bottom = point.y();
+
+            glColor4f( 1.f, 1.f, 1.f, 1.f);
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+                glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
+                glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
+                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+            glEnd();
+
+            glDisable(GL_TEXTURE_2D);
+            width=w;
+            height=h;
+            offsetX+=w;
+        }
+    }
+}
+
+bool RasterFont::isLoaded()
+{
+    return isReady;
 }
 
 
@@ -123,14 +321,16 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
 
 
 
+RasterFont FontManager::rFont;
+
 
 
 bool FontManager::isInit=false;
 //TTF_Font * FontManager::defaultFont=NULL;
 
 GLuint FontManager::textTexture=0;
-QMap<QChar, GLuint> FontManager::fontTable_1;
-QMap<QChar, GLuint> FontManager::fontTable_2;
+QHash<QChar, GLuint> FontManager::fontTable_1;
+QHash<QChar, GLuint> FontManager::fontTable_2;
 
 int     FontManager::fontID;
 QFont *FontManager::defaultFont=NULL;
@@ -173,6 +373,16 @@ void FontManager::init()
     defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
 
+    /***************Load raster font support****************/
+    QDir fontsDir(ConfigManager::config_dir+"/fonts");
+    QStringList filter;
+    filter<<"*.font.ini";
+    fontsDir.setNameFilters(filter);
+
+    foreach(QString fonFile, fontsDir.entryList(QDir::Files))
+    {
+        rFont.loadFont(fontsDir.absolutePath()+"/"+fonFile);
+    }
     isInit = true;
 }
 
@@ -180,16 +390,17 @@ void FontManager::quit()
 {
     //Clean font cache
     glDisable(GL_TEXTURE_2D);
-    while(!fontTable_1.isEmpty())
+    QHash<QChar, GLuint>::iterator i;
+    for (i = fontTable_1.begin(); i != fontTable_1.end(); ++i)
     {
-        glDeleteTextures(1, &fontTable_1.first() );
-        fontTable_1.remove(fontTable_1.firstKey());
+        glDeleteTextures(1, &i.value() );
     }
-    while(!fontTable_2.isEmpty())
+    fontTable_1.clear();
+    for (i = fontTable_2.begin(); i != fontTable_2.end(); ++i)
     {
-        glDeleteTextures(1, &fontTable_2.first() );
-        fontTable_2.remove(fontTable_2.firstKey());
+        glDeleteTextures(1, &i.value() );
     }
+    fontTable_2.clear();
 
     if(defaultFont)
         delete defaultFont;
@@ -369,6 +580,13 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
 void FontManager::printText(QString text, int x, int y)
 {
     if(!isInit) return;
+
+    if(rFont.isLoaded())
+    {
+        rFont.printText(text,x,y);
+        return;
+    }
+
     int offsetX=0;
     int offsetY=0;
     int height=32;
