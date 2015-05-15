@@ -42,7 +42,7 @@ public:
     double right();
 
     void setSize(float w, float h);
-    virtual void setPos(long x, long y);
+    virtual void setPos(double x, double y);
 
     float width;  //!< Width
     float height; //!< Height

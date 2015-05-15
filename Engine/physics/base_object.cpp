@@ -95,7 +95,7 @@ void PGE_Phys_Object::setSize(float w, float h)
     posY_coefficient = height/2.0f;
 }
 
-void PGE_Phys_Object::setPos(long x, long y)
+void PGE_Phys_Object::setPos(double x, double y)
 {
     physBody->SetTransform(
                 b2Vec2(

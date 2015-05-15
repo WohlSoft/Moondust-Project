@@ -968,7 +968,7 @@ void LVL_Player::setDuck(bool duck)
         fixtureDef.shape = &shape;
         fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
         f_player = physBody->CreateFixture(&fixtureDef);
-        this->setPos(posX(), posY()+(state_cur.height/2-state_cur.duck_height/2)-1);
+        this->setPos(posX(), posY()+(state_cur.height/2-state_cur.duck_height/2)-0.01);
     } else {
         physBody->DestroyFixture(f_player);
         b2PolygonShape shape;
@@ -979,7 +979,7 @@ void LVL_Player::setDuck(bool duck)
         fixtureDef.shape = &shape;
         fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
         f_player = physBody->CreateFixture(&fixtureDef);
-        this->setPos(posX(), posY()+(state_cur.duck_height/2-state_cur.height/2)-1);
+        this->setPos(posX(), posY()+(state_cur.duck_height/2-state_cur.height/2)-0.01);
     }
 
     ducking=duck;
@@ -1401,7 +1401,7 @@ void LVL_Player::render(double camX, double camY)
                     player.setBottom( player.bottom()-(warpPipeOffset*height)+1 );
                 }
                 break;
-            case 4://right emtramce. left entrance
+            case 4://right emtramce. left exit
                 {
                     float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
                     float fWw =   animator.sizeOfFrame().width();   //Relative width of frame
@@ -1409,7 +1409,7 @@ void LVL_Player::render(double camX, double camY)
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
                     player.setLeft( player.left()+(warpPipeOffset*width) );
-                    player.setRight( player.right()-(wWAbs-Ofs.x()-width)+1 );
+                    player.setRight( player.right()-(wWAbs-Ofs.x()-width) );
                 }
                 break;
             case 3://down entrance, up exit
@@ -1420,7 +1420,7 @@ void LVL_Player::render(double camX, double camY)
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
                     player.setTop( player.top()+(warpPipeOffset*height) );
-                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height)+1 );
+                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height) );
                 }
                 break;
             default:
