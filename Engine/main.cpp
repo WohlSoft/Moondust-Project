@@ -225,9 +225,13 @@ int main(int argc, char *argv[])
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
+    PGE_Window::setFullScreen(AppSettings.fullScreen);
+
     AppSettings.initJoysticks();
     AppSettings.loadJoystickSettings();
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();//Reset modelview matrix
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
     SDL_Event event; //  Events of SDL
