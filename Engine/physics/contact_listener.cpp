@@ -211,6 +211,70 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         return;
     }
 
+    /***********************************Player & Player***********************************/
+    if ( bodyA->type == PGE_Phys_Object::LVLPlayer && bodyB->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        LVL_Player *plr1=dynamic_cast<LVL_Player *>(bodyBlock);
+        LVL_Player *plr2=dynamic_cast<LVL_Player *>(bodyChar);
+        if(!plr2) return;
+        if(!plr1) return;
+
+        if(plr1->isWarping) /*Don't collide with warping friend!*/
+        {
+            contact->SetEnabled(false);
+            return;
+        }
+        if(plr2->isWarping) /*Don't collide with warping friend!*/
+        {
+            contact->SetEnabled(false);
+            return;
+        }
+
+        if(!plr1->isLive)
+        {
+                contact->SetEnabled(false);
+                return;
+        }
+        if(!plr2->isLive)
+        {
+                contact->SetEnabled(false);
+                return;
+        }
+
+        if(  ( (plr1->bottom()<=plr2->top()) ||
+                ((plr1->bottom() >= plr2->top())&&
+                (plr1->bottom()<=plr2->top()+2)) )
+              )
+        {
+            plr1->bump(true);
+            plr2->bump();
+            return;
+        }
+
+        if(  ( (plr2->bottom()<=plr1->top()) ||
+                ((plr2->bottom() >= plr1->top())&&
+                (plr2->bottom()<=plr1->top()+2)) )
+              )
+        {
+            plr2->bump(true);
+            plr1->bump();
+            return;
+        }
+        return;
+    }
+
 
     /***********************************Block & Player***********************************/
     if ( (bodyA->type == PGE_Phys_Object::LVLBlock) && (bodyB->type == PGE_Phys_Object::LVLPlayer) )
@@ -520,7 +584,6 @@ void PGEContactListener::EndContact(b2Contact *contact)
         }
         return;
     }
-
 }
 
 void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManifold)
@@ -564,7 +627,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             platformFixture=NULL;
         }
 
-
+        /*Player and Block*/
         if(platformFixture)
         {
             LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
