@@ -180,7 +180,8 @@ SOURCES += \
     common_features/maths.cpp \
     scenes/level/lvl_npc.cpp \
     controls/controller_joystick.cpp \
-    scenes/world/wld_player_portrait.cpp
+    scenes/world/wld_player_portrait.cpp \
+    graphics/gl_color.cpp
 
 
 HEADERS  += \
@@ -269,7 +270,8 @@ HEADERS  += \
     controls/controller_joystick.h \
     controls/controller_key_map.h \
     scenes/world/wld_tilebox.h \
-    scenes/world/wld_player_portrait.h
+    scenes/world/wld_player_portrait.h \
+    graphics/gl_color.h
 
 FORMS    += \
     data_configs/select_config.ui
