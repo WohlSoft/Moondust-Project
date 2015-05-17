@@ -9,13 +9,16 @@ PacketCursor::PacketCursor() :
 {}
 
 PacketCursor::PacketCursor(const PacketCursor &obj) :
-    Packet(),
+    Packet(obj),
     x(0),
     y(0)
 {
     x = obj.getX();
     y = obj.getY();
 }
+
+PacketCursor::~PacketCursor()
+{}
 
 QVariant PacketCursor::encode()
 {

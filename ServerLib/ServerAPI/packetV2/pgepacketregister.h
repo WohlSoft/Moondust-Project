@@ -26,9 +26,16 @@ private:
 
     QMap<PacketID, int> m_registeredPackets;
     QMutex mutex;
+
+
 protected:
     //Add here friend classes
-    PGEPacketRegister() {}
+    PGEPacketRegister() {
+        int regId = QMetaType::type(typeid(Packet).name());
+        if(regId == QMetaType::UnknownType){
+            regId = qRegisterMetaType<T>(typeid(Packet).name());
+        }
+    }
 
 public:
 
