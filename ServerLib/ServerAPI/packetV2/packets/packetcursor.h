@@ -22,4 +22,6 @@ public:
     void setY(int value);
 };
 
+Q_DECLARE_METATYPE(PacketCursor)
+
 #endif // PACKETCURSOR_H
