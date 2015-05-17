@@ -45,9 +45,31 @@ RasterFont::RasterFont() : first_line_only("\n.*")
 {
     letter_width=0;
     letter_height=0;
+
+    space_width=0;
+    newline_offset=0;
+
     matrix_width=0;
     matrix_height=0;
     isReady=false;
+    ttf_borders=false;
+    fontName=QString("font%1").arg(rand());
+}
+
+RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
+{
+    this->letter_width=rf.letter_width;
+    this->letter_height=rf.letter_height;
+    this->space_width=rf.space_width;
+    this->newline_offset=rf.newline_offset;
+    this->matrix_width=rf.matrix_width;
+    this->matrix_height=rf.matrix_height;
+    this->isReady=rf.isReady;
+    this->ttf_borders=rf.ttf_borders;
+
+    this->fontMap = rf.fontMap;
+    this->textures = rf.textures;
+    this->fontName=rf.fontName;
 }
 
 RasterFont::~RasterFont()
@@ -76,6 +98,10 @@ void RasterFont::loadFont(QString font_ini)
     int tables=0;
     font.beginGroup("font");
     tables=font.value("tables", 0).toInt();
+    fontName=font.value("name", fontName).toString();
+    ttf_borders=font.value("ttf-borders", false).toBool();
+    space_width=font.value("space-width", 0).toInt();
+    newline_offset=font.value("newline-offset", 0).toInt();
     font.endGroup();
 
     QStringList tables_list;
@@ -118,7 +144,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
         qWarning() <<"Wrong width and height values ! "<<w<<h;
         return;
     }
-    font.endGroup();
+
 
     if(!QFileInfo(root+texFile).exists())
         return;
@@ -130,7 +156,12 @@ void RasterFont::loadFontMap(QString fontmap_ini)
     {
         letter_width=fontTexture.w/w;
         letter_height=fontTexture.h/h;
+        if(space_width==0)
+            space_width=letter_width;
+        if(newline_offset==0)
+            newline_offset=letter_height;
     }
+    font.endGroup();
 
     font.beginGroup("entries");
     QStringList entries=font.allKeys();
@@ -139,16 +170,30 @@ void RasterFont::loadFontMap(QString fontmap_ini)
 
     foreach(QString x, entries)
     {
-        bool ok=false;
+        bool okX=false;
+        bool okY=false;
         x=x.trimmed();
+        QString charPosX="0", charPosY="0";
         QStringList tmp=x.split('-');
         if(tmp.isEmpty()) continue;
-        QString x2=tmp.first();
-        x2.toInt(&ok);
-        if(!ok)
+        charPosX=tmp[0];
+        charPosX.toInt(&okX);
+        if(!okX)
         {
-            qDebug()<<"=invalid=" <<x<<"=";
+            qDebug()<<"=invalid-X=" <<x<<"=";
             continue;
+        }
+
+        if(matrix_width>1)
+        {
+            if(tmp.size()<2) continue;
+            charPosY=tmp[1];
+            charPosY.toInt(&okY);
+            if(!okY)
+            {
+                qDebug()<<"=invalid-Y=" <<x<<"=";
+                continue;
+            }
         }
 
         QString charX = font.value(x, "").toString();
@@ -159,17 +204,17 @@ void RasterFont::loadFontMap(QString fontmap_ini)
         */
         if(charX.isEmpty()) continue;
         QChar ch=charX[0];
-        qDebug()<<"=char=" << ch << "=id="<<x2.toInt()<<"=";
+        qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
 
         RasChar rch;
         rch.valid=true;
         rch.tx = fontTexture.texture;
-        rch.l = 0;
-        rch.r = 1;
+        rch.l = charPosY.toFloat(&okY)/matrix_width;
+        rch.r = (charPosY.toFloat(&okY)+1.0)/matrix_width;
         rch.padding_left=(charX.size()>1)? QString(charX[1]).toInt():0;
         rch.padding_right=(charX.size()>2)? QString(charX[2]).toInt():0;
-        rch.t = x2.toFloat(&ok)/matrix_height;
-        rch.b = (x2.toFloat(&ok)+1.0)/matrix_height;
+        rch.t = charPosX.toFloat(&okX)/matrix_height;
+        rch.b = (charPosX.toFloat(&okX)+1.0)/matrix_height;
         fontMap[ch]=rch;
     }
     font.endGroup();
@@ -181,7 +226,8 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
     int lastspace=0;//!< index of last found space character
     int count=1;    //!< Count of lines
     int maxWidth=0; //!< detected maximal width of message
-
+    int widthSumm=0;
+    int widthSummMax=0;
     if(cut) text.remove(first_line_only);
 
     /****************Word wrap*********************/
@@ -192,12 +238,23 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
             case '\t':
             case ' ':
                 lastspace=i;
+                widthSumm+=space_width;
+                if(widthSumm>widthSummMax) widthSummMax=widthSumm;
                 break;
             case '\n':
                 lastspace=0;
                 if((maxWidth<x)&&(maxWidth<max_line_lenght)) maxWidth=x;
-                x=0;count++;
+                x=0;widthSumm=0;
+                count++;
                 break;
+            default:
+                RasChar rch=fontMap[text[i]];
+                if(rch.valid)
+                {
+                    widthSumm+=(letter_width-rch.padding_left-rch.padding_right);
+                    if(widthSumm>widthSummMax) widthSummMax=widthSumm;
+                }
+            break;
         }
         if((max_line_lenght>0)&&(x>=max_line_lenght))//If lenght more than allowed
         {
@@ -220,17 +277,15 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
         maxWidth=text.length();
     }
     /****************Word wrap*end*****************/
-
-    return QSize(letter_width*maxWidth, letter_height*count);
+    return QSize(widthSummMax, newline_offset*count);
 }
 
-void RasterFont::printText(QString text, int x, int y)
+void RasterFont::printText(QString text, int x, int y, float Red, float Green, float Blue, float Alpha)
 {
     if(fontMap.isEmpty()) return;
+    if(text.isEmpty()) return;
     int offsetX=0;
     int offsetY=0;
-    int height=letter_height;
-    int width=letter_width;
     GLint w=letter_width;
     GLint h=letter_height;
     foreach(QChar cx, text)
@@ -239,10 +294,13 @@ void RasterFont::printText(QString text, int x, int y)
         {
         case '\n':
             offsetX=0;
-            offsetY+=height;
+            offsetY+=newline_offset;
             continue;
         case '\t':
-            offsetX+=offsetX+offsetX%width;
+            offsetX+=offsetX+offsetX%w;
+            continue;
+        case ' ':
+            offsetX+=space_width;
             continue;
         }
 
@@ -259,7 +317,7 @@ void RasterFont::printText(QString text, int x, int y)
             float right = point.x();
             float bottom = point.y();
 
-            glColor4f( 1.f, 1.f, 1.f, 1.f);
+            glColor4f( Red, Green, Blue, Alpha);
             glBegin(GL_QUADS);
                 glTexCoord2f(rch.l,rch.t);glVertex3f(left, top, 0.0);
                 glTexCoord2f(rch.l,rch.b);glVertex3f(left, bottom, 0.0) ;
@@ -268,13 +326,13 @@ void RasterFont::printText(QString text, int x, int y)
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
-            width=w;
-            height=h;
             offsetX+=w-rch.padding_left-rch.padding_right;
         }
         else
         {
-            GLuint charTex = FontManager::getChar2(cx);
+            GLuint charTex;
+            charTex = ttf_borders ? FontManager::getChar2(cx) : FontManager::getChar1(cx);
+
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, charTex);
             QPointF point;
@@ -285,7 +343,7 @@ void RasterFont::printText(QString text, int x, int y)
             float right = point.x();
             float bottom = point.y();
 
-            glColor4f( 1.f, 1.f, 1.f, 1.f);
+            glColor4f( Red, Green, Blue, Alpha);
             glBegin(GL_QUADS);
                 glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
                 glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
@@ -294,8 +352,6 @@ void RasterFont::printText(QString text, int x, int y)
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
-            width=w;
-            height=h;
             offsetX+=w;
         }
     }
@@ -306,6 +362,10 @@ bool RasterFont::isLoaded()
     return isReady;
 }
 
+QString RasterFont::getFontName()
+{
+    return fontName;
+}
 
 
 
@@ -321,7 +381,9 @@ bool RasterFont::isLoaded()
 
 
 
-RasterFont FontManager::rFont;
+
+RasterFont *FontManager::rFont=NULL;
+QList<RasterFont> FontManager::rasterFonts;
 
 
 
@@ -332,22 +394,14 @@ GLuint FontManager::textTexture=0;
 QHash<QChar, GLuint> FontManager::fontTable_1;
 QHash<QChar, GLuint> FontManager::fontTable_2;
 
+QHash<QString, int> FontManager::fonts;
+
 int     FontManager::fontID;
 QFont *FontManager::defaultFont=NULL;
 bool FontManager::double_pixled=false;
 
 void FontManager::init()
 {
-    //    int ok = TTF_Init();
-    //    if(ok==-1)
-    //    {
-    //        qDebug() << "Can't load Font manager: " << TTF_GetError() << "\n";
-    //        return;
-    //    }
-
-    //defaultFont = buildFont(ApplicationPath + "/fonts/PressStart2P.ttf", 14);
-    //if(defaultFont==NULL)
-    //    return;
     if(!defaultFont)
         defaultFont = new QFont();
 
@@ -381,10 +435,22 @@ void FontManager::init()
 
     foreach(QString fonFile, fontsDir.entryList(QDir::Files))
     {
-        rFont.loadFont(fontsDir.absolutePath()+"/"+fonFile);
+        RasterFont rfont;
+        rasterFonts.push_back(rfont);
+        rasterFonts.last().loadFont(fontsDir.absolutePath()+"/"+fonFile);
+        if(!rasterFonts.last().isLoaded()) { //Pop broken font from array
+            rasterFonts.pop_back();
+        } else { //Register font name in a table
+            fonts[rasterFonts.last().getFontName()] = rasterFonts.size()-1;
+        }
     }
+
+    if(!rasterFonts.isEmpty())
+        rFont = &rasterFonts.first();
+
     isInit = true;
 }
+
 
 void FontManager::quit()
 {
@@ -402,53 +468,12 @@ void FontManager::quit()
     }
     fontTable_2.clear();
 
+    fonts.clear();
+
     if(defaultFont)
         delete defaultFont;
 }
 
-//TTF_Font *FontManager::buildFont(QString _fontPath, GLint size)
-//{
-//    TTF_Font *temp_font = TTF_OpenFont(_fontPath.toLocal8Bit(), size);
-//    if(!temp_font)
-//    {
-//        qDebug() << "TTF_OpenFont: " << TTF_GetError() << "\n";
-//        return NULL;
-//    }
-
-//    TTF_SetFontStyle( temp_font, TTF_STYLE_NORMAL );
-
-//    return temp_font;
-//}
-
-//TTF_Font *FontManager::buildFont_RW(QString _fontPath, GLint size)
-//{
-//    QFile font(_fontPath);
-//    if(!font.open(QFile::ReadOnly))
-//        {
-//            qDebug() << "Can't open file" << _fontPath;
-//            return NULL;
-//        }
-//    QDataStream in(&font);
-//    int bufferSize = font.size();
-//    char *temp = new char[bufferSize];
-//    qDebug() << "read data";
-//    in.readRawData(temp, bufferSize);
-
-//    qDebug() << "read font";
-
-//    TTF_Font *temp_font = TTF_OpenFontRW(SDL_RWFromMem(temp, (int)bufferSize), 0, size);
-//    if(!temp_font)
-//    {
-//        qDebug() << "TTF_OpenFont: " << TTF_GetError() << "\n";
-//        return NULL;
-//    }
-
-//    //temp[bufferSize-1] = '\n';
-//    //delete[] temp;
-
-//    TTF_SetFontStyle( temp_font, TTF_STYLE_NORMAL );
-//    return temp_font;
-//}
 
 void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders)
 {
@@ -577,66 +602,81 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
     glDisable(GL_TEXTURE_2D);
 }
 
-void FontManager::printText(QString text, int x, int y)
+
+
+
+
+
+void FontManager::printText(QString text, int x, int y, int font, float Red, float Green, float Blue, float Alpha, int ttf_FontSize)
 {
     if(!isInit) return;
+    if(text.isEmpty()) return;
 
-    if(rFont.isLoaded())
+    if((font>=0)&&(font<rasterFonts.size()))
     {
-        rFont.printText(text,x,y);
+        if(rasterFonts[font].isLoaded())
+        {
+            rasterFonts[font].printText(text, x, y, Red, Green, Blue, Alpha);
+            return;
+        }
+    }
+    else if(font==DefaultTTF_Font)
+    {
+        int offsetX=0;
+        int offsetY=0;
+        int height=32;
+        int width=32;
+        foreach(QChar cx, text)
+        {
+            switch(cx.toLatin1())
+            {
+            case '\n':
+                offsetX=0;
+                offsetY+=height;
+                continue;
+            case '\t':
+                offsetX+=offsetX+offsetX%width;
+                continue;
+            }
+            GLint w;
+            GLint h;
+            GLuint charTex = getChar2(cx);
+
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, charTex);
+            glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
+            glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
+
+
+            QPointF point;
+                point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
+            float left = point.x();
+            float top = point.y();
+                point = GlRenderer::MapToGl(x+offsetX+w, y+h+offsetY);
+            float right = point.x();
+            float bottom = point.y();
+
+            glColor4f(Red, Green, Blue, Alpha);
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+                glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
+                glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
+                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+            glEnd();
+
+            glDisable(GL_TEXTURE_2D);
+            width=w;
+            height=h;
+            offsetX+=w;
+        }
         return;
     }
-
-    int offsetX=0;
-    int offsetY=0;
-    int height=32;
-    int width=32;
-    foreach(QChar cx, text)
-    {
-        switch(cx.toLatin1())
-        {
-        case '\n':
-            offsetX=0;
-            offsetY+=height;
-            continue;
-        case '\t':
-            offsetX+=offsetX+offsetX%width;
-            continue;
-        }
-        GLint w;
-        GLint h;
-        GLuint charTex = getChar2(cx);
-
-        glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, charTex);
-        glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
-        glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
-
-
-        QPointF point;
-            point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
-        float left = point.x();
-        float top = point.y();
-            point = GlRenderer::MapToGl(x+offsetX+w, y+h+offsetY);
-        float right = point.x();
-        float bottom = point.y();
-
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBegin(GL_QUADS);
-            glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
-            glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
-            glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
-            glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
-        glEnd();
-
-        glDisable(GL_TEXTURE_2D);
-        width=w;
-        height=h;
-        offsetX+=w;
+    else {
+        printTextTTF(text, x, y, ttf_FontSize, qRgba(Red*255.0, Green*255, Blue*255, Alpha*255));
     }
 }
 
-void FontManager::printText(QString text, int x, int y, int pointSize, QRgb color)
+void FontManager::printTextTTF(QString text, int x, int y, int pointSize, QRgb color)
 {
     if(!isInit) return;
 
@@ -666,9 +706,18 @@ GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags,
     //glDeleteTextures(1, &textTexture );
 }
 
+int FontManager::getFontID(QString fontName)
+{
+    if(fonts.contains(fontName))
+        return fonts[fontName];
+    else
+        return DefaultRaster;
+}
+
 GLuint FontManager::getChar1(QChar _x)
 {
-    if(fontTable_1.contains(_x))
+    QChar c=fontTable_1[_x];
+    if(!c.isNull())
         return fontTable_1[_x];
     else
     {
@@ -718,7 +767,8 @@ GLuint FontManager::getChar1(QChar _x)
 
 GLuint FontManager::getChar2(QChar _x)
 {
-    if(fontTable_2.contains(_x))
+    QChar c=fontTable_2[_x];
+    if(!c.isNull())
         return fontTable_2[_x];
     else
     {

@@ -86,27 +86,29 @@ WorldScene::WorldScene()
     move_speed = 115/(float)PGE_Window::PhysStep;
     move_steps_count=0;
 
+    ConfigManager::setup_WorldMap.initFonts();
+
     common_setup = ConfigManager::setup_WorldMap;
 
-    if(ConfigManager::setup_WorldMap.backgroundImg.isEmpty())
+    if(common_setup.backgroundImg.isEmpty())
         backgroundTex.w=0;
     else
-        backgroundTex = GraphicsHelps::loadTexture(backgroundTex, ConfigManager::setup_WorldMap.backgroundImg);
+        backgroundTex = GraphicsHelps::loadTexture(backgroundTex, common_setup.backgroundImg);
 
     imgs.clear();
-    for(int i=0; i<ConfigManager::setup_WorldMap.AdditionalImages.size(); i++)
+    for(int i=0; i<common_setup.AdditionalImages.size(); i++)
     {
-        if(ConfigManager::setup_WorldMap.AdditionalImages[i].imgFile.isEmpty()) continue;
+        if(common_setup.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         WorldScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_WorldMap.AdditionalImages[i].imgFile);
+        img.t = GraphicsHelps::loadTexture(img.t, common_setup.AdditionalImages[i].imgFile);
 
-        img.x = ConfigManager::setup_WorldMap.AdditionalImages[i].x;
-        img.y = ConfigManager::setup_WorldMap.AdditionalImages[i].y;
-        img.a.construct(ConfigManager::setup_WorldMap.AdditionalImages[i].animated,
-                        ConfigManager::setup_WorldMap.AdditionalImages[i].frames,
-                        ConfigManager::setup_WorldMap.AdditionalImages[i].framedelay);
-        img.frmH = (img.t.h / ConfigManager::setup_WorldMap.AdditionalImages[i].frames);
+        img.x = common_setup.AdditionalImages[i].x;
+        img.y = common_setup.AdditionalImages[i].y;
+        img.a.construct(common_setup.AdditionalImages[i].animated,
+                        common_setup.AdditionalImages[i].frames,
+                        common_setup.AdditionalImages[i].framedelay);
+        img.frmH = (img.t.h / common_setup.AdditionalImages[i].frames);
 
         imgs.push_back(img);
     }
@@ -116,10 +118,10 @@ WorldScene::WorldScene()
         imgs[i].a.start();
     }
 
-    viewportRect.setX(ConfigManager::setup_WorldMap.viewport_x);
-    viewportRect.setY(ConfigManager::setup_WorldMap.viewport_y);
-    viewportRect.setWidth(ConfigManager::setup_WorldMap.viewport_w);
-    viewportRect.setHeight(ConfigManager::setup_WorldMap.viewport_h);
+    viewportRect.setX(common_setup.viewport_x);
+    viewportRect.setY(common_setup.viewport_y);
+    viewportRect.setWidth(common_setup.viewport_w);
+    viewportRect.setHeight(common_setup.viewport_h);
 
     posX=0;
     posY=0;
@@ -191,6 +193,14 @@ void WorldScene::setGameState(EpisodeState *_state)
     gameState = _state;
 
     numOfPlayers=_state->numOfPlayers;
+
+    points = 1000;//gameState->game_state.points;
+    coins  = 55;//gameState->game_state.coins;
+    stars  = 5;//gameState->game_state.gottenStars;
+
+    PlayerState x = gameState->getPlayerState(1);
+    health = x._chsetup.health;
+
 
     gameState->replay_on_fail = data.restartlevel;
     if(gameState->episodeIsStarted && !data.HubStyledWorld)
@@ -279,8 +289,8 @@ bool WorldScene::init()
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
 
     int player_portrait_step=0;
-    int player_portrait_x=ConfigManager::setup_WorldMap.portrait_x;
-    int player_portrait_y=ConfigManager::setup_WorldMap.portrait_y;
+    int player_portrait_x=common_setup.portrait_x;
+    int player_portrait_y=common_setup.portrait_y;
 
     if(numOfPlayers>1)
     {
@@ -305,14 +315,14 @@ bool WorldScene::init()
             players.push_back(state);
         }
 
-        if(ConfigManager::setup_WorldMap.points_en)
+        if(common_setup.points_en)
         {
             WorldScene_Portrait portrait(state.characterID, state.stateID,
                                                              player_portrait_x,
                                                              player_portrait_y,
-                                                             ConfigManager::setup_WorldMap.portrait_animation,
-                                                             ConfigManager::setup_WorldMap.portrait_frame_delay,
-                                                             ConfigManager::setup_WorldMap.portrait_direction);
+                                                             common_setup.portrait_animation,
+                                                             common_setup.portrait_frame_delay,
+                                                             common_setup.portrait_direction);
             portraits.push_back(portrait);
             player_portrait_x +=player_portrait_step;
         }
@@ -641,6 +651,7 @@ void WorldScene::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
     glLoadIdentity();
+
     if(!isInit)
         goto renderBlack;
 
@@ -686,7 +697,12 @@ void WorldScene::render()
         FontManager::printText(QString("%1")
                                .arg(points),
                                common_setup.points_x,
-                               common_setup.points_y);
+                               common_setup.points_y,
+                               common_setup.points_fontID,
+                               common_setup.points_rgba.Red(),
+                               common_setup.points_rgba.Green(),
+                               common_setup.points_rgba.Blue(),
+                               common_setup.points_rgba.Alpha());
     }
 
     if(common_setup.health_en)
@@ -694,20 +710,25 @@ void WorldScene::render()
         FontManager::printText(QString("%1")
                                .arg(health),
                                common_setup.health_x,
-                               common_setup.health_y);
+                               common_setup.health_y,
+                               common_setup.health_fontID,
+                               common_setup.health_rgba.Red(),
+                               common_setup.health_rgba.Green(),
+                               common_setup.health_rgba.Blue(),
+                               common_setup.health_rgba.Alpha());
     }
-
-    FontManager::printText(QString("%1")
-                           .arg(levelTitle),
-                           common_setup.title_x,
-                           common_setup.title_y);
 
     if(common_setup.coin_en)
     {
         FontManager::printText(QString("%1")
                                .arg(coins),
                                common_setup.coin_x,
-                               common_setup.coin_y);
+                               common_setup.coin_y,
+                               common_setup.coin_fontID,
+                               common_setup.coin_rgba.Red(),
+                               common_setup.coin_rgba.Green(),
+                               common_setup.coin_rgba.Blue(),
+                               common_setup.coin_rgba.Alpha());
     }
 
     if(common_setup.star_en)
@@ -715,8 +736,24 @@ void WorldScene::render()
         FontManager::printText(QString("%1")
                                .arg(stars),
                                common_setup.star_x,
-                               common_setup.star_y);
+                               common_setup.star_y,
+                               common_setup.star_fontID,
+                               common_setup.star_rgba.Red(),
+                               common_setup.star_rgba.Green(),
+                               common_setup.star_rgba.Blue(),
+                               common_setup.star_rgba.Alpha());
     }
+
+    FontManager::printText(QString("%1")
+                           .arg(levelTitle),
+                           common_setup.title_x,
+                           common_setup.title_y,
+                           common_setup.title_fontID,
+                           common_setup.title_rgba.Red(),
+                           common_setup.title_rgba.Green(),
+                           common_setup.title_rgba.Blue(),
+                           common_setup.title_rgba.Alpha()
+                           );
 
     if(PGE_Window::showDebugInfo)
     {
@@ -746,7 +783,7 @@ void WorldScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitWorldDelay)
-                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
 
     renderBlack:

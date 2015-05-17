@@ -36,6 +36,8 @@ public:
     static void makeShot();
     static int makeShot_action(void *_pixels);
     static bool ready();
+    static void setRGB(float Red, float Green, float Blue, float Alpha=1.0);
+    static void resetRGB();
 
     static void renderTexture(PGE_Texture *texture, float x, float y); //!<Render texture as-is
     static void renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top=0, float ani_bottom=1, float ani_left=0, float ani_right=1);//!<Render matrix animation fragment
