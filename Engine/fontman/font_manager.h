@@ -47,6 +47,7 @@ private:
     bool ttf_borders;   //!<Enable borders on backup ttf font render [all unknown characters will be rendered as TTF]
     int letter_width;   //!<Width of one letter
     int letter_height;  //!<Height of one letter
+    int interletter_space;//!< Space between printing letters
     int space_width;    //!<Width of space symbol
     int newline_offset; //!< Distance between top of one line and top of next
 

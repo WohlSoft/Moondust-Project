@@ -47,6 +47,7 @@ RasterFont::RasterFont() : first_line_only("\n.*")
     letter_height=0;
 
     space_width=0;
+    interletter_space=0;
     newline_offset=0;
 
     matrix_width=0;
@@ -60,6 +61,7 @@ RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
 {
     this->letter_width=rf.letter_width;
     this->letter_height=rf.letter_height;
+    this->interletter_space=rf.interletter_space;
     this->space_width=rf.space_width;
     this->newline_offset=rf.newline_offset;
     this->matrix_width=rf.matrix_width;
@@ -101,6 +103,7 @@ void RasterFont::loadFont(QString font_ini)
     fontName=font.value("name", fontName).toString();
     ttf_borders=font.value("ttf-borders", false).toBool();
     space_width=font.value("space-width", 0).toInt();
+    interletter_space=font.value("interletter-space", 0).toInt();
     newline_offset=font.value("newline-offset", 0).toInt();
     font.endGroup();
 
@@ -251,7 +254,7 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
                 RasChar rch=fontMap[text[i]];
                 if(rch.valid)
                 {
-                    widthSumm+=(letter_width-rch.padding_left-rch.padding_right);
+                    widthSumm+=(letter_width-rch.padding_left-rch.padding_right+interletter_space);
                     if(widthSumm>widthSummMax) widthSummMax=widthSumm;
                 }
             break;
@@ -326,7 +329,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
-            offsetX+=w-rch.padding_left-rch.padding_right;
+            offsetX+=w-rch.padding_left-rch.padding_right+interletter_space;
         }
         else
         {
@@ -352,7 +355,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
-            offsetX+=w;
+            offsetX+=w+interletter_space;
         }
     }
 }
