@@ -201,11 +201,22 @@ void TitleScene::render()
 //                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
 //                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
 //                               "Ich bin glücklich!",10, 60, 2, 1.0, 1.0, 1.0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 50, 0, 1.0, 0, 0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 130, 2, 1.0, 0, 1.0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 170, 3, 1.0, 1.0, 1.0, 1.0);
-        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 210, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+                               "¡¢£€¥Š§š©ª«¬®¯°±²³Žµ¶·ž¹º»ŒŸ¿\n"
+                               "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×\n"
+                               "ØÙÚÛÜÝÞß÷ © ®\n\n"
+                               "Ich bin glücklich!\n\n"
+                               "Как хорошо, что всё работает!", 10, 50, 0, 1.0, 1.0, 0, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
+//        FontManager::printText("0123456789\n"
+//                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+//                               "abcdefghijklmnopqrstuvwxyz\n"
+//                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+//                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
+//                               "Ich bin glücklich!", 10, 130, 2, 1.0, 1.0, 1.0, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 250, 3, 1.0, 1.0, 1.0, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 290, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
     }
 
 
