@@ -196,12 +196,16 @@ void TitleScene::render()
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype),10, 10);
-        FontManager::printText("0123456789\n"
-                               "ABCDEFGHIJKLMBNOPQRSTUVWXYZ\n"
-                               "abcdefghijklmnopqrstvwxyz\n"
-                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
-                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
-                               "Ich bin glücklich!",10, 60);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+//                               "abcdefghijklmnopqrstuvwxyz\n"
+//                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+//                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
+//                               "Ich bin glücklich!",10, 60, 2, 1.0, 1.0, 1.0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 50, 0, 1.0, 0, 0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 130, 2, 1.0, 0, 1.0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 170, 3, 1.0, 1.0, 1.0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 210, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
     }
 
 

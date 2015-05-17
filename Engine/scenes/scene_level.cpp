@@ -346,14 +346,7 @@ void LevelScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
-    //Move to center of the screen
-    //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
-
-    //long cam_x=0, cam_y=0;
-
     if(!isInit) goto renderBlack;
-
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     for(int c=0;c<cameras.size();c++)
     {
         PGE_LevelCamera* cam=cameras[c];
@@ -399,7 +392,7 @@ void LevelScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
         //world->DrawDebugData();
     }
     renderBlack:

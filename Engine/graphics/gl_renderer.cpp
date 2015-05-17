@@ -72,14 +72,13 @@ bool GlRenderer::init()
     glMatrixMode( GL_PROJECTION );
     //glPushMatrix();
     glLoadIdentity();
-
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
     //glOrtho( 0.0, PGE_Window::Width, PGE_Window::Heightб 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
     glMatrixMode( GL_MODELVIEW );
     //glPushMatrix();
-    //glLoadIdentity();
+    glLoadIdentity();
 
     //Initialize clear color
     glClearColor( 0.f, 0.f, 0.f, 1.f );
@@ -195,6 +194,24 @@ bool GlRenderer::ready()
 {
     return _isReady;
 }
+
+
+void GlRenderer::setRGB(float Red, float Green, float Blue, float Alpha)
+{
+    color_level_red=Red;
+    color_level_green=Green;
+    color_level_blue=Blue;
+    color_level_alpha=Alpha;
+}
+
+void GlRenderer::resetRGB()
+{
+    color_level_red=1.f;
+    color_level_green=1.f;
+    color_level_blue=1.f;
+    color_level_alpha=1.f;
+}
+
 
 QPointF GlRenderer::MapToGl(QPoint point)
 {
@@ -330,7 +347,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
     float bottom = point.y();
 
     glEnable(GL_TEXTURE_2D);
-
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
@@ -365,7 +382,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
     float bottom = point.y();
 
     glEnable(GL_TEXTURE_2D);
-
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
