@@ -57,6 +57,9 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     if(!texture.isEmpty())
         loadTexture(texture);
 
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    if(uTick<=0) uTick=1;
+
     message = msg;
     type = _type;
 
@@ -175,9 +178,8 @@ void PGE_MsgBox::exec()
         }
         updateControllers();
 
-        if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 
 
@@ -256,9 +258,8 @@ void PGE_MsgBox::exec()
             }
         }
 
-        if(1000.0 / 75.0 > SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / 75.0 - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 
 
@@ -303,9 +304,8 @@ void PGE_MsgBox::exec()
         }
         updateControllers();
 
-        if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 
 }
@@ -320,6 +320,7 @@ void PGE_MsgBox::updateControllers()
             LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
             if(s)
             {
+                s->tickAnimations(uTick);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 s->player2Controller->update();

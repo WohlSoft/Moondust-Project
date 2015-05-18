@@ -73,6 +73,7 @@ private:
     float padding;
     QColor bg_color;
     void updateControllers();
+    Uint32 uTick;//Tick step
 };
 
 #endif // PGE_MSGBOX_H

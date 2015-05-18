@@ -669,8 +669,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
                             menu.setPos(300, 216);
                             menu.setItemsNumber(11);
-                            QList<IntAssocItem> ctrls;
-                            IntAssocItem controller;
+                            QList<NamedIntItem> ctrls;
+                            NamedIntItem controller;
                             controller.value=-1;
                             controller.label="Keyboard";
                             ctrls.push_back(controller);

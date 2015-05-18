@@ -91,6 +91,8 @@ public:
     void render();
     int exec();
 
+    void tickAnimations(int ticks);
+
     QString getLastError();
 
 
