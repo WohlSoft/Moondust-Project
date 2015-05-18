@@ -171,6 +171,9 @@ public:
                         std::function<void()> _extAction=([]()->void{}) );
     void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
 
+    void setValueOffset(int offset);
+    void setItemWidth(int width);
+
     void clear(); //!< Clean all menuitems
 
     void selectUp();   //!< move selection cursor up

@@ -574,8 +574,8 @@ int TitleScene::exec()
                         else
                         if(menuChain.size()>0)
                         {
-                            setMenu((CurrentMenu)menuChain.pop());
                             menu.reset();
+                            setMenu((CurrentMenu)menuChain.pop());
                         }
                         break;
                     }
@@ -601,7 +601,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     switch(_menu)
     {
         case menu_main:
-            menu.setPos(260,380);
+            menu.setPos(300, 350);
             menu.setItemsNumber(5);
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
@@ -610,7 +610,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.addMenuItem("Exit", "Exit");
         break;
             case menu_options:
-                menu.setPos(260,280);
+                menu.setPos(260,284);
                 menu.setItemsNumber(8);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("controls", "Player controlling");
@@ -625,15 +625,15 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step");
             break;
                 case menu_tests:
-                    menu.setPos(260,380);
+                    menu.setPos(300, 350);
                     menu.setItemsNumber(5);
                     menu.addMenuItem("credits", "Credits");
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
                     case menu_controls:
-                        menu.setPos(260,300);
-                        menu.setItemsNumber(7);
+                        menu.setPos(300, 350);
+                        menu.setItemsNumber(5);
                         menu.addMenuItem("control_plr1", "Player 1 controls");
                         menu.addMenuItem("control_plr2", "Player 2 controls");
                     break;
@@ -667,7 +667,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 mp_p = &AppSettings.player2_keyboard;
                         }
 
-                            menu.setPos(200, 200);
+                            menu.setPos(300, 216);
                             menu.setItemsNumber(11);
                             QList<IntAssocItem> ctrls;
                             IntAssocItem controller;
@@ -680,21 +680,25 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
                                 ctrls.push_back(controller);
                             }
-                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Controller type", true, ctrlSwitch);
-                            menu.addKeyGrabMenuItem(&mp_p->left, "key1", "Left");
-                            menu.addKeyGrabMenuItem(&mp_p->right, "key2", "Right");
-                            menu.addKeyGrabMenuItem(&mp_p->up, "key3", "Up");
-                            menu.addKeyGrabMenuItem(&mp_p->down, "key4", "Down");
-                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5", "Jump");
-                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6", "Alt-Jump");
-                            menu.addKeyGrabMenuItem(&mp_p->run, "key7", "Run");
-                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8", "Alt-Run");
-                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9", "Drop");
-                            menu.addKeyGrabMenuItem(&mp_p->start, "key10", "Start");
+                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Input:", true, ctrlSwitch);
+                            menu.setItemWidth(300);
+                            menu.setValueOffset(150);
+                            menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........");
+                            menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........");
+                            menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........");
+                            menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........");
+                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........");
+                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....");
+                            menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........");
+                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....");
+                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........");
+                            menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........");
                         }
                         break;
         case menu_playepisode:
             {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
                 //Build list of episodes
                 QDir worlddir(ConfigManager::dirs.worlds);
                 QStringList filter;
@@ -732,6 +736,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         break;
         case menu_playlevel:
             {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
                 //Build list of casual levels
                 QDir leveldir(ConfigManager::dirs.worlds);
                 QStringList filter;
@@ -758,8 +764,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     default:
         break;
     }
-    menu.setCurrentItem(menustates[_menu].first);
-    menu.setOffset(menustates[_menu].second);
     QRect menuBox = menu.rect();
     menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
+    qDebug()<<"Menuitem ID: "<<menustates[_menu].first << ", scrolling offset: "<<menustates[_menu].second;
+    menu.setCurrentItem(menustates[_menu].first);
+    menu.setOffset(menustates[_menu].second);
 }
