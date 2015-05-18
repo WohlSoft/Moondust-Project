@@ -27,131 +27,12 @@
 #include <common_features/pge_texture.h>
 #include <functional>
 
-class PGE_Menu;
+#include "menu/_pge_menuitem.h"
 
-class PGE_Menuitem
-{
-public:
-    PGE_Menuitem();
-    virtual ~PGE_Menuitem();
-    PGE_Menuitem(const PGE_Menuitem &_it);
-    PGE_Menuitem operator=(const PGE_Menuitem &_it)
-    {
-        this->title = _it.title;
-        this->value = _it.value;
-        this->textTexture = _it.textTexture;
-        return *this;
-    }
-
-    virtual void left();
-    virtual void right();
-    virtual void toggle();
-
-    virtual void render(int x, int y);
-
-    QString title;
-    QString value;
-    enum itemType{
-        ITEM_Normal=0,
-        ITEM_Bool,
-        ITEM_Int,
-        ITEM_NamedInt,
-        ITEM_KeyGrab,
-        ITEM_StrList
-    };
-
-    itemType type;
-    int valueOffset;//!< X-offset where must be rendered value label
-protected:
-    std::function<void()> extAction;
-    int _width;
-    int    _font_id;
-
-private:
-    GLuint textTexture;
-    friend class PGE_Menu;
-};
-
-class PGE_BoolMenuItem : public PGE_Menuitem
-{
-public:
-    PGE_BoolMenuItem();
-    PGE_BoolMenuItem(const PGE_BoolMenuItem &it);
-    ~PGE_BoolMenuItem();
-    void left();
-    void right();
-    void render(int x, int y);
-    void toggle();
-
-private:
-    bool *flag;
-    friend class PGE_Menu;
-};
-
-
-class PGE_IntMenuItem : public PGE_Menuitem
-{
-public:
-    PGE_IntMenuItem();
-    PGE_IntMenuItem(const PGE_IntMenuItem &it);
-    ~PGE_IntMenuItem();
-    void left();
-    void right();
-    void render(int x, int y);
-
-private:
-    int *intvalue;
-    int min;
-    int max;
-    bool allowRotation;
-    friend class PGE_Menu;
-};
-
-
-struct IntAssocItem
-{
-    inline IntAssocItem() { value=0; }
-    int value;
-    QString label;
-};
-
-class PGE_NamedIntMenuItem : public PGE_Menuitem
-{
-public:
-    PGE_NamedIntMenuItem();
-    PGE_NamedIntMenuItem(const PGE_NamedIntMenuItem &it);
-    ~PGE_NamedIntMenuItem();
-    void left();
-    void right();
-    void render(int x, int y);
-
-private:
-    int *intvalue;
-    QList<IntAssocItem > items;
-    int curItem;
-    bool allowRotation;
-    friend class PGE_Menu;
-};
-
-
-#define PGE_KEYGRAB_CANCEL -1
-#define PGE_KEYGRAB_REMOVE_KEY -2
-class PGE_KeyGrabMenuItem : public PGE_Menuitem
-{
-public:
-    PGE_KeyGrabMenuItem();
-    PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it);
-    ~PGE_KeyGrabMenuItem();
-    void grabKey();
-    void pushKey(int scancode);
-    void render(int x, int y);
-
-private:
-    bool chosing;
-    int *keyValue;
-    PGE_Menu* menu;
-    friend class PGE_Menu;
-};
+#include "menu/pge_bool_menuitem.h"
+#include "menu/pge_int_menuitem.h"
+#include "menu/pge_int_named_menuitem.h"
+#include "menu/pge_keygrab_menuitem.h"
 
 
 class PGE_Menu
@@ -167,7 +48,7 @@ public:
                          std::function<void()> _extAction=([]()->void{}));
     void addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
-    void addNamedIntMenuItem(int *intvalue, QList<IntAssocItem > _items, QString value, QString title, bool rotate=false,
+    void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
     void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
 
