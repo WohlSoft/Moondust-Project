@@ -214,6 +214,21 @@ void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
     refreshRect();
 }
 
+void PGE_Menu::setValueOffset(int offset)
+{
+    if(_items.isEmpty()) return;
+    if(offset<=0) return;
+    _items.last()->valueOffset=offset;
+}
+
+void PGE_Menu::setItemWidth(int width)
+{
+    if(_items.isEmpty()) return;
+    if(width<=0) return;
+    _items.last()->_width=width;
+}
+
+
 
 void PGE_Menu::clear()
 {
