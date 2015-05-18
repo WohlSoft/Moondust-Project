@@ -76,47 +76,12 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         QFont fnt = FontManager::font();
         QFontMetrics meter(fnt);
         /****************Word wrap*********************/
-        int lastspace=0;
         int count=1;
         int maxWidth=0;
-        for(int x=0, i=0;i<message.size();i++, x++)
-        {
-            switch(message[i].toLatin1())
-            {
-                case '\t':
-                case ' ':
-                    lastspace=i;
-                    break;
-                case '\n':
-                    lastspace=0;
-                    if((maxWidth<x)&&(maxWidth<28)) maxWidth=x;
-                    x=0;count++;
-                    break;
-            }
 
-            if(x>=27)//If lenght more than allowed
-            {
-                maxWidth=x;
-                if(lastspace>0)
-                {
-                    message[lastspace]='\n';
-                    i=lastspace-1;
-                    lastspace=0;
-                }
-                else
-                {
-                    message.insert(i, QChar('\n'));
-                    x=0;count++;
-                }
-            }
-        }
-        if(count==1)
-        {
-            maxWidth=message.length();
-            centered=true;
-        }
+        FontManager::optimizeText(message, 28, &count, &maxWidth);
+        if(count==1) centered=true;
         /****************Word wrap*end*****************/
-
         boxSize = meter.size(Qt::TextExpandTabs, message);
     }
 

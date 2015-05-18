@@ -513,7 +513,7 @@ void WorldScene::update()
 
         if(isPauseMenu)
         {
-            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dumym world map. I think, it works fine!",
+            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dummy world map. I think, it works fine!",
                               PGE_MsgBox::msg_info);
 
             if(!ConfigManager::setup_message_box.sprite.isEmpty())

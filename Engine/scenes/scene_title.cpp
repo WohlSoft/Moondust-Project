@@ -597,11 +597,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
     _currentMenu=_menu;
     menu.clear();
+    menu.setTextLenLimit(22);
     switch(_menu)
     {
         case menu_main:
             menu.setPos(260,380);
-            menu.setSize(300, 30);
             menu.setItemsNumber(5);
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
@@ -611,7 +611,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         break;
             case menu_options:
                 menu.setPos(260,280);
-                menu.setSize(300, 30);
                 menu.setItemsNumber(8);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("controls", "Player controlling");
@@ -627,7 +626,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             break;
                 case menu_tests:
                     menu.setPos(260,380);
-                    menu.setSize(300, 30);
                     menu.setItemsNumber(5);
                     menu.addMenuItem("credits", "Credits");
                     menu.addMenuItem("loading", "Loading screen");
@@ -635,7 +633,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 break;
                     case menu_controls:
                         menu.setPos(260,300);
-                        menu.setSize(300, 30);
                         menu.setItemsNumber(7);
                         menu.addMenuItem("control_plr1", "Player 1 controls");
                         menu.addMenuItem("control_plr2", "Player 2 controls");
@@ -671,7 +668,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                         }
 
                             menu.setPos(200, 200);
-                            menu.setSize(300, 30);
                             menu.setItemsNumber(11);
                             QList<IntAssocItem> ctrls;
                             IntAssocItem controller;
@@ -764,4 +760,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     }
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
+    QRect menuBox = menu.rect();
+    menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
 }

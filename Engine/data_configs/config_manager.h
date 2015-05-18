@@ -89,6 +89,10 @@ struct MenuSetup
     QString selector;
     QString scrollerUp;
     QString scrollerDown;
+    int     item_height;
+    int     font_offset;
+    QString font_name;
+    int     font_id;
 };
 
 ////////////////////Common items///////////////////////////

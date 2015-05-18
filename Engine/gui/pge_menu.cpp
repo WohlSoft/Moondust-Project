@@ -37,7 +37,15 @@ PGE_Menu::PGE_Menu()
     is_keygrab=false;
     m_item=NULL;
 
-    menuRect = QRect(260,380, 350, 30);
+    menuRect = QRect(260,380, 350, ConfigManager::setup_menus.item_height);
+    _item_height = ConfigManager::setup_menus.item_height;
+    _width_limit=PGE_Window::Width-100;
+    _text_len_limit=0;
+
+    /// Init menu font
+    ConfigManager::setup_menus.font_id = FontManager::getFontID(ConfigManager::setup_menus.font_name);
+    _font_id = ConfigManager::setup_menus.font_id;
+    _font_offset = ConfigManager::setup_menus.font_offset;
 
     if(ConfigManager::setup_menus.selector.isEmpty())
         _selector.w=0;
@@ -81,12 +89,22 @@ void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _
     item.value = value;
     item.type=PGE_Menuitem::ITEM_Normal;
     item.title = (title.isEmpty() ? value : title);
-//    item.textTexture = FontManager::TextToTexture(item.title,
-//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
     item.extAction=_extAction;
     _items_normal.push_back(item);
     _items.push_back( &_items_normal.last() );
+    refreshRect();
 }
 
 void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::function<void()> _extAction)
@@ -95,12 +113,22 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::fu
     item.flag = flag;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown flag" : title);
-//    item.textTexture = FontManager::TextToTexture(item.title,
-//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
     item.extAction=_extAction;
     _items_bool.push_back(item);
     _items.push_back( &_items_bool.last() );
+    refreshRect();
 }
 
 void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate, std::function<void()> _extAction)
@@ -112,12 +140,22 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     item.max=max;
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown integer" : title);
-//    item.textTexture = FontManager::TextToTexture(item.title,
-//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
     item.extAction=_extAction;
     _items_int.push_back(item);
     _items.push_back( &_items_int.last() );
+    refreshRect();
 }
 
 void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<IntAssocItem> _items, QString value, QString title, bool rotate, std::function<void()> _extAction)
@@ -134,12 +172,22 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<IntAssocItem> _items, QS
         }
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown named integer" : title);
-//    item.textTexture = FontManager::TextToTexture(item.title,
-//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
     item.extAction=_extAction;
     _items_named_int.push_back(item);
     PGE_Menu::_items.push_back( &_items_named_int.last() );
+    refreshRect();
 }
 
 void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
@@ -148,12 +196,22 @@ void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
     item.keyValue = keyvalue;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown key-grabber" : title);
-//    item.textTexture = FontManager::TextToTexture(item.title,
-//                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-//                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
     item.menu = this;
     _items_keygrabs.push_back(item);
     _items.push_back( &_items_keygrabs.last() );
+    refreshRect();
 }
 
 
@@ -172,6 +230,7 @@ void PGE_Menu::clear()
     _items_keygrabs.clear();
     m_item=NULL;
     reset();
+    refreshRect();
 }
 
 void PGE_Menu::selectUp()
@@ -381,16 +440,16 @@ int PGE_Menu::findItem(int x, int y)
     if(x>menuRect.right()) return -1;
     if(x<menuRect.left())  return -1;
     if(y<menuRect.top())  return -1;
-    if(y>menuRect.top()+menuRect.height()*_itemsOnScreen) return -1;
+    if(y>menuRect.bottom()) return -1;
 
     int pos = menuRect.y();
     for(int i=0; (i<_itemsOnScreen) && (i<_items.size()); i++)
     {
-        if( (y > pos) && ( y<(pos+menuRect.height()) ) )
+        if( (y > pos) && ( y<(pos+_item_height) ) )
         {
             return _offset+i;
         }
-        pos+=menuRect.height();
+        pos+=_item_height;
     }
 
     return -1;
@@ -495,22 +554,53 @@ void PGE_Menu::setPos(int x, int y)
 {
     menuRect.setX(x);
     menuRect.setY(y);
+    refreshRect();
 }
 
 void PGE_Menu::setPos(QPoint p)
 {
     menuRect.setTopLeft(p);
+    refreshRect();
 }
 
 void PGE_Menu::setSize(int w, int h)
 {
-    menuRect.setWidth(w);
-    menuRect.setHeight(h);
+    Q_UNUSED(w);
+    _item_height=h;
+    refreshRect();
 }
 
 void PGE_Menu::setSize(QSize s)
 {
-    menuRect.setSize(s);
+    _item_height=s.height();
+    refreshRect();
+}
+
+void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
+{
+    if(maxlen<=0)
+        _text_len_limit=0;
+    else
+        _text_len_limit=maxlen;
+    _text_len_limit_strict = strict;
+}
+
+
+void PGE_Menu::refreshRect()
+{
+    if(_items.size()<_itemsOnScreen)
+        menuRect.setHeight(_items.size() * _item_height );
+    else
+        menuRect.setHeight(_itemsOnScreen * _item_height );
+
+    menuRect.setWidth(0);
+    for(int i=0; i<_items.size(); i++)
+    {
+        if(menuRect.width()<_items[i]->_width)
+            menuRect.setWidth(_items[i]->_width);
+    }
+    if(menuRect.width()>_width_limit)
+        menuRect.setWidth(_width_limit);
 }
 
 QRect PGE_Menu::rect()
@@ -554,7 +644,7 @@ void PGE_Menu::render()
                 h=_scroll_down.h;
             }
             int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()+menuRect.height()*_itemsOnScreen+4;
+            int posY = menuRect.y()+_item_height*_itemsOnScreen+4;
             if(_scroll_down.w==0)
             {
                 GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
@@ -570,21 +660,21 @@ void PGE_Menu::render()
     {
         int xPos = menuRect.x();
         int xPos_s = menuRect.x()-_selector.w-10;
-        int yPos = menuRect.y()+ j*menuRect.height();
+        int yPos = menuRect.y()+ j*_item_height;
 
         if(i==_currentItem)
         {
             if(_selector.w==0)
             {
-                GlRenderer::renderRect(xPos_s-10, yPos + (menuRect.height()/2)-5, 20, 20, 1.f, 1.f, 0.f, 1.0f);
+                GlRenderer::renderRect(xPos_s-10, yPos + (_item_height/2)-5, 20, 20, 1.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                int y_offset=0;//(menuRect.height()/2)-(_selector.h/2);
+                int y_offset=(_item_height/2)-(_selector.h/2);
                 GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }
-        _items[i]->render(xPos, yPos);
+        _items[i]->render(xPos, yPos+_font_offset);
     }
 }
 
@@ -595,6 +685,8 @@ PGE_Menuitem::PGE_Menuitem()
     this->textTexture = 0;
     this->extAction = []()->void{};
     this->valueOffset=350;
+    this->_font_id=0;
+    this->_width=0;
 }
 
 PGE_Menuitem::~PGE_Menuitem()
@@ -608,6 +700,8 @@ PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
     this->type = _it.type;
     this->extAction = _it.extAction;
     this->valueOffset = _it.valueOffset;
+    this->_font_id = _it._font_id;
+    this->_width=_it._width;
 }
 
 void PGE_Menuitem::left() {}
@@ -618,7 +712,7 @@ void PGE_Menuitem::toggle() {}
 
 void PGE_Menuitem::render(int x, int y)
 {
-    FontManager::printText(title, x, y);
+    FontManager::printText(title, x, y, _font_id);
     //FontManager::SDL_string_render2D(x,y, &textTexture);
 }
 
@@ -651,7 +745,7 @@ void PGE_BoolMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
     if(flag)
-        FontManager::printText((*flag)?"ON":"OFF", x+valueOffset, y);
+        FontManager::printText((*flag)?"ON":"OFF", x+valueOffset, y, _font_id);
 }
 
 void PGE_BoolMenuItem::toggle()
@@ -712,7 +806,7 @@ void PGE_IntMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
     if(intvalue)
-        FontManager::printText(QString::number(*intvalue), x+valueOffset, y);
+        FontManager::printText(QString::number(*intvalue), x+valueOffset, y, _font_id);
 }
 
 
@@ -771,7 +865,7 @@ void PGE_NamedIntMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
     if(!items.isEmpty())
-        FontManager::printText(items[curItem].label, x+valueOffset, y);
+        FontManager::printText(items[curItem].label, x+valueOffset, y, _font_id);
 }
 
 /**************************Labeled Integer menu item************************************/
@@ -839,7 +933,7 @@ void PGE_KeyGrabMenuItem::render(int x, int y)
         FontManager::printText(QString("..."), x+210, y);
     else
     if(keyValue)
-        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+210, y);
+        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+210, y, _font_id);
 }
 
 /**************************Key Grabber menu utem************************************/
