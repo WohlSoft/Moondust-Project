@@ -1318,7 +1318,7 @@ void LVL_Player::teleport(float x, float y)
 
         if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
         {
-            obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[camera->BackgroundID];
+            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[camera->BackgroundID];
             LvlSceneP::s->bgList()->last()->setBg(*bgSetup);
 
             if(bgSetup->animated)

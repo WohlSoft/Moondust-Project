@@ -25,7 +25,7 @@ long  ConfigManager::getBlockTexture(long blockID)
     {
         return -1;
     }
-    obj_block *blkSetup = lvl_block_indexes[blockID];
+    obj_block *blkSetup = &lvl_block_indexes[blockID];
 
     if(blkSetup->isInit)
     {
@@ -129,7 +129,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
         return -1;
     }
 
-    obj_bgo* bgoSetup=lvl_bgo_indexes[bgoID];
+    obj_bgo* bgoSetup=&lvl_bgo_indexes[bgoID];
 
     if(bgoSetup->isInit)
     {
@@ -209,7 +209,7 @@ long ConfigManager::getEffectTexture(long effectID)
         return -1;
     }
 
-    obj_effect*effSetup=lvl_effects_indexes[effectID];
+    obj_effect*effSetup=&lvl_effects_indexes[effectID];
 
     if(effSetup->isInit)
     {
@@ -376,7 +376,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         return -1;
     }
 
-    obj_BG*bgSetup=lvl_bg_indexes[bgID];
+    obj_BG*bgSetup=&lvl_bg_indexes[bgID];
 
     if( (bgSetup->isInit && !isSecond) || (bgSetup->second_isInit && isSecond) )
     {
