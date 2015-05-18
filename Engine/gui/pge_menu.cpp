@@ -553,13 +553,14 @@ void PGE_Menu::autoOffset()
 void PGE_Menu::setPos(int x, int y)
 {
     menuRect.setX(x);
-    menuRect.setY(y);
+    menuRect.setY(y-_font_offset);
     refreshRect();
 }
 
 void PGE_Menu::setPos(QPoint p)
 {
     menuRect.setTopLeft(p);
+    menuRect.setY(menuRect.y()-_font_offset);
     refreshRect();
 }
 
