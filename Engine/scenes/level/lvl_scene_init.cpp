@@ -226,7 +226,7 @@ bool LevelScene::init()
     LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
     if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
     {
-        obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
+        obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
         CurrentBackground->setBg(*bgSetup);
         qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
     }
@@ -368,15 +368,13 @@ bool LevelScene::init()
         }
     }
 
-    //start animation
-    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i].start();
-
-    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i].start();
-
-    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-        ConfigManager::Animator_BG[i].start();
+//    //start animation
+//    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
+//        ConfigManager::Animator_Blocks[i].start();
+//    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
+//        ConfigManager::Animator_BGO[i].start();
+//    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
+//        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
     isInit = true;

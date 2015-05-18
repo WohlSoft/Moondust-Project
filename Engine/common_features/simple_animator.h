@@ -52,12 +52,18 @@ public:
 
     static unsigned int TickAnimation(unsigned int x, void *p);
 
+    void setOnceMode(bool once);
+    void manualTick(int ticks);
+    bool isFinished();
 public:
     void nextFrame();
 
 private:
     double pos1;
     double pos2;
+    int manual_ticks;
+    bool onceMode;
+    bool animationFinished;
 
     int CurrentFrame;
 

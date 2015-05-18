@@ -218,6 +218,16 @@ LevelScene::~LevelScene()
 }
 
 
+void LevelScene::tickAnimations(int ticks)
+{
+    //tick animation
+    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
+        ConfigManager::Animator_Blocks[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
+        ConfigManager::Animator_BGO[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
+        ConfigManager::Animator_BG[i].manualTick(ticks);
+}
 
 
 
@@ -236,6 +246,8 @@ void LevelScene::update()
 {
     uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
     if(uTick<=0) uTick=1;
+
+    tickAnimations(uTick);
 
     if(doExit)
     {
@@ -273,7 +285,7 @@ void LevelScene::update()
         {
             transformTask_block x = block_transfors.first();
             if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = ConfigManager::lvl_block_indexes[x.id];
+                x.block->setup = &ConfigManager::lvl_block_indexes[x.id];
             else
             {
                 block_transfors.pop_front();
@@ -546,6 +558,8 @@ int LevelScene::exec()
     }
     return exitLevelCode;
 }
+
+
 
 QString LevelScene::getLastError()
 {

@@ -49,6 +49,11 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     frameLast = Last;
     CurrentFrame = 0;
 
+    manual_ticks = fspeed;
+
+    onceMode=false;
+    animationFinished=false;
+
     isEnabled=false;
 
     pos1 = 0.0;
@@ -82,6 +87,9 @@ bool SimpleAnimator::operator==(const SimpleAnimator &animator) const
     if(animator.frameLast != frameLast) return false;
     if(animator.reverce != reverce) return false;
     if(animator.bidirectional != bidirectional) return false;
+    if(animator.manual_ticks != manual_ticks) return false;
+    if(animator.animationFinished != animationFinished) return false;
+    if(animator.onceMode != onceMode) return false;
     return true;
 }
 
@@ -119,6 +127,7 @@ void SimpleAnimator::nextFrame()
             {
                 reverce=!reverce; // change direction on first frame
                 CurrentFrame+=2;
+                if(onceMode) animationFinished=true;
             }
             else
             {
@@ -127,6 +136,7 @@ void SimpleAnimator::nextFrame()
                     CurrentFrame=framesQ-1;
                 else
                     CurrentFrame=frameLast;
+                if(onceMode) animationFinished=true;
             }
         }
 
@@ -145,6 +155,7 @@ void SimpleAnimator::nextFrame()
             else
             {
                 CurrentFrame=frameFirst; // Return to first frame;
+                if(onceMode) animationFinished=true;
             }
         }
     }
@@ -203,6 +214,32 @@ unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
     SimpleAnimator *self = reinterpret_cast<SimpleAnimator *>(p);
     self->nextFrame();
     return 0;
+}
+
+void SimpleAnimator::setOnceMode(bool once)
+{
+    onceMode=once;
+    animationFinished=false;
+    if(once)
+        setFrame(frameFirst);
+}
+
+//Ability to tick animation manually!
+void SimpleAnimator::manualTick(int ticks)
+{
+    if(speed<1) return; //Idling animation
+
+    manual_ticks-=abs(ticks);
+        while(manual_ticks<=0)
+        {
+            nextFrame();
+            manual_ticks+=speed;
+        }
+}
+
+bool SimpleAnimator::isFinished()
+{
+    return animationFinished;
 }
 
 

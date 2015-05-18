@@ -181,7 +181,12 @@ SOURCES += \
     scenes/level/lvl_npc.cpp \
     controls/controller_joystick.cpp \
     scenes/world/wld_player_portrait.cpp \
-    graphics/gl_color.cpp
+    graphics/gl_color.cpp \
+    gui/menu/_pge_menuitem.cpp \
+    gui/menu/pge_bool_menuitem.cpp \
+    gui/menu/pge_int_menuitem.cpp \
+    gui/menu/pge_int_named_menuitem.cpp \
+    gui/menu/pge_keygrab_menuitem.cpp
 
 
 HEADERS  += \
@@ -271,7 +276,12 @@ HEADERS  += \
     controls/controller_key_map.h \
     scenes/world/wld_tilebox.h \
     scenes/world/wld_player_portrait.h \
-    graphics/gl_color.h
+    graphics/gl_color.h \
+    gui/menu/_pge_menuitem.h \
+    gui/menu/pge_bool_menuitem.h \
+    gui/menu/pge_int_menuitem.h \
+    gui/menu/pge_int_named_menuitem.h \
+    gui/menu/pge_keygrab_menuitem.h
 
 FORMS    += \
     data_configs/select_config.ui
