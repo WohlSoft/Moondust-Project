@@ -20,8 +20,7 @@
 #include "../gui/pge_msgbox.h"
 
 /*****Level BGO************/
-QList<obj_effect >     ConfigManager::lvl_effects;
-QMap<long, obj_effect*>   ConfigManager::lvl_effects_indexes;
+QMap<long, obj_effect>   ConfigManager::lvl_effects_indexes;
 CustomDirManager ConfigManager::Dir_EFFECT;
 QList<SimpleAnimator > ConfigManager::Animator_EFFECT;
 /*****Level BGO************/
@@ -31,7 +30,7 @@ bool ConfigManager::loadLevelEffects()
 {
     unsigned int i;
 
-    obj_effect sbgo;
+    obj_effect seffect;
     unsigned long effects_total=0;
     QString effects_ini = config_dir + "lvl_effects.ini";
 
@@ -47,8 +46,7 @@ bool ConfigManager::loadLevelEffects()
     QSettings effectset(effects_ini, QSettings::IniFormat);
     effectset.setIniCodec("UTF-8");
 
-    lvl_effects.clear();   //Clear old
-    lvl_effects_indexes.clear();
+    lvl_effects_indexes.clear();   //Clear old
 
     effectset.beginGroup("effects-main");
         effects_total = effectset.value("total", "0").toInt();
@@ -59,23 +57,23 @@ bool ConfigManager::loadLevelEffects()
     for(i=1; i<=effects_total; i++)
     {
 
-        sbgo.isInit = false;
-        sbgo.image = NULL;
-        sbgo.textureArrayId = 0;
-        sbgo.animator_ID = 0;
+        seffect.isInit = false;
+        seffect.image = NULL;
+        seffect.textureArrayId = 0;
+        seffect.animator_ID = 0;
 
         effectset.beginGroup( QString("effect-"+QString::number(i)) );
 
-            sbgo.name = effectset.value("name", "").toString();
+            seffect.name = effectset.value("name", "").toString();
 
-                if(sbgo.name=="")
+                if(seffect.name=="")
                 {
                     addError(QString("EFFECT-%1 Item name isn't defined").arg(i));
                     goto skipEffect;
                 }
 
             imgFile = effectset.value("image", "").toString();
-            sbgo.image_n = imgFile;
+            seffect.image_n = imgFile;
             if( (imgFile!="") )
             {
                 tmp = imgFile.split(".", QString::SkipEmptyParts);
@@ -83,24 +81,23 @@ bool ConfigManager::loadLevelEffects()
                     imgFileM = tmp[0] + "m." + tmp[1];
                 else
                     imgFileM = "";
-                sbgo.mask_n = imgFileM;
+                seffect.mask_n = imgFileM;
             }
             else
             {
                 addError(QString("EFFECT-%1 Image filename isn't defined").arg(i));
                 goto skipEffect;
             }
-            sbgo.frames = effectset.value("frames", "1").toInt();
-            sbgo.animated = (sbgo.frames>1);
-            sbgo.framestyle = effectset.value("frame-style", "125").toInt();
-            sbgo.framespeed = effectset.value("frame-speed", "125").toInt();
+            seffect.frames = effectset.value("frames", "1").toInt();
+            seffect.animated = (seffect.frames>1);
+            seffect.framestyle = effectset.value("frame-style", "125").toInt();
+            seffect.framespeed = effectset.value("frame-speed", "125").toInt();
 
-            sbgo.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
-            sbgo.id = i;
-            lvl_effects.push_back(sbgo);
+            seffect.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
+            seffect.id = i;
 
             //Add to Index
-            lvl_effects_indexes[lvl_effects.last().id] = &lvl_effects.last();
+            lvl_effects_indexes[seffect.id] = seffect;
 
         skipEffect:
         effectset.endGroup();
@@ -111,10 +108,10 @@ bool ConfigManager::loadLevelEffects()
         }
     }
 
-    if((unsigned int)lvl_effects.size()<effects_total)
+    if((unsigned int)lvl_effects_indexes.size()<effects_total)
     {
-        addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects.size()));
-        PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects.size()),
+        addError(QString("Not all Effects loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.size()));
+        PGE_MsgBox msgBox(NULL, QString("Not all Effectss loaded! Total: %1, Loaded: %2").arg(effects_total).arg(lvl_effects_indexes.size()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

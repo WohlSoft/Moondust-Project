@@ -33,7 +33,7 @@ void LevelScene::placeBlock(LevelBlock blockData)
     LVL_Block * block;
     block = new LVL_Block();
     if(ConfigManager::lvl_block_indexes.contains(blockData.id))
-        block->setup = ConfigManager::lvl_block_indexes[blockData.id];
+        block->setup = &ConfigManager::lvl_block_indexes[blockData.id];
     else
     {
         //Wrong block!
@@ -61,7 +61,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
     if(ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
-        bgo->setup = ConfigManager::lvl_bgo_indexes[bgoData.id];
+        bgo->setup = &ConfigManager::lvl_bgo_indexes[bgoData.id];
     else
     {
         //Wrong BGO!

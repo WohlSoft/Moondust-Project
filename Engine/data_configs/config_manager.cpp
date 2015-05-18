@@ -226,16 +226,12 @@ bool ConfigManager::unloadLevelConfigs()
     /***************Clear settings*************/
 
     lvl_block_indexes.clear();
-    lvl_blocks.clear();
 
     lvl_bgo_indexes.clear();
-    lvl_bgo.clear();
 
     lvl_bg_indexes.clear();
-    lvl_bg.clear();
 
     lvl_effects_indexes.clear();
-    lvl_effects.clear();
 
     return true;
 }

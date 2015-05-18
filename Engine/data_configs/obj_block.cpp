@@ -21,8 +21,7 @@
 #include <common_features/graphics_funcs.h>
 
 /*****Level blocks************/
-QList<obj_block >       ConfigManager::lvl_blocks;
-QMap<long, obj_block*>   ConfigManager::lvl_block_indexes;
+QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager        ConfigManager::Dir_Blocks;
 QList<SimpleAnimator >  ConfigManager::Animator_Blocks;
 /*****Level blocks************/
@@ -48,8 +47,7 @@ bool ConfigManager::loadLevelBlocks()
     QSettings blockset(block_ini, QSettings::IniFormat);
     blockset.setIniCodec("UTF-8");
 
-    lvl_blocks.clear();   //Clear old
-    lvl_block_indexes.clear();
+    lvl_block_indexes.clear();//Clear old
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
@@ -175,10 +173,9 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
 
                 sblock.id = i;
-                lvl_blocks.push_back(sblock);
 
                 //Add to Index
-                lvl_block_indexes[lvl_blocks.last().id] = &lvl_blocks.last();
+                lvl_block_indexes[sblock.id] = sblock;
 
             skipBLOCK:
             blockset.endGroup();
@@ -192,9 +189,9 @@ bool ConfigManager::loadLevelBlocks()
           }
        }
 
-       if((unsigned int)lvl_blocks.size()<block_total)
+       if((unsigned int)lvl_block_indexes.size()<block_total)
        {
-           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_blocks.size()), QtWarningMsg);
+           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(lvl_block_indexes.size()), QtWarningMsg);
        }
 
        return true;
