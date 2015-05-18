@@ -35,6 +35,9 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
               animator.frameLast,
               animator.reverce,
               animator.bidirectional);
+    this->manual_ticks = animator.manual_ticks;
+    this->onceMode = animator.onceMode;
+    this->animationFinished = animator.animationFinished;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
