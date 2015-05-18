@@ -64,6 +64,8 @@ public:
     int valueOffset;//!< X-offset where must be rendered value label
 protected:
     std::function<void()> extAction;
+    int _width;
+    int    _font_id;
 
 private:
     GLuint textTexture;
@@ -211,9 +213,10 @@ public:
     void setPos(QPoint p);     //!< Sets current position of menu box
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(QSize s);      //!< Sets size of menu box
-
+    void setTextLenLimit(int maxlen, bool strict=false);
 
 private:
+    void refreshRect();
     QRect menuRect;
 
     /*******Key grabbing********/
@@ -241,7 +244,13 @@ private:
     PGE_Texture _selector;
     PGE_Texture _scroll_up;
     PGE_Texture _scroll_down;
+    int _item_height;
+    int _width_limit;
+    int _text_len_limit;
+    bool _text_len_limit_strict;
 
+    int _font_id;
+    int _font_offset;
 };
 
 #endif // PGE_MENU_H

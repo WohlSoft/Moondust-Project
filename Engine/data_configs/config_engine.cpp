@@ -57,6 +57,11 @@ bool ConfigManager::loadEngineSettings()
 
         setup_menus.scrollerDown = engineset.value("scroll-down", "").toString();
         checkForImage(setup_menus.scrollerDown, dirs.gcommon);
+
+        setup_menus.item_height = abs(engineset.value("item-height", 32).toInt());
+        setup_menus.font_offset = abs(engineset.value("font-offset", 10).toInt());
+        setup_menus.font_name = engineset.value("font", "font1").toString();
+        setup_menus.font_id = 0;
     engineset.endGroup();
 
     ////// World map settings

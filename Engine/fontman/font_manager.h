@@ -83,13 +83,8 @@ public:
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
-    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
-    static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
-                                          QString &text, GLuint *texture, bool borders=false);
 
-    static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
-    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
-
+    static QSize textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false);
     static int getFontID(QString fontName);
 
     static GLuint getChar1(QChar _x);
@@ -105,8 +100,20 @@ public:
                           float Red=1.0, float Green=1.0, float Blue=1.0, float Alpha=1.0, int ttf_FontSize=14);
     static void printTextTTF(QString text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
 
+
     static QList<RasterFont> rasterFonts;//!< Complete array of raster fonts
     static RasterFont *rFont;//!< Default raster font
+
+    static void optimizeText(QString &text, int max_line_lenght, int *numLines=0, int *numCols=0);
+    static QString cropText(QString text, int max_symbols);
+
+    /****Deprecated functions*******/
+    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
+    static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
+                                          QString &text, GLuint *texture, bool borders=false);
+
+    static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
+    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
 
 private:
     static bool isInit;
