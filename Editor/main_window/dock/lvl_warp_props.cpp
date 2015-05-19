@@ -361,7 +361,7 @@ void LvlWarpBox::on_WarpRemove_clicked()
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors.remove(i);
+                edit->LvlData.doors.removeAt(i);
                 break;
             }
         }

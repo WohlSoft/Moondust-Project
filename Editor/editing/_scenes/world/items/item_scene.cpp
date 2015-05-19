@@ -320,14 +320,14 @@ void ItemScene::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->scenery.remove(sceneData.index);
+        scene->WldData->scenery.removeAt(sceneData.index);
     }
     else
     for(int i=0; i<scene->WldData->scenery.size(); i++)
     {
         if(scene->WldData->scenery[i].array_id == sceneData.array_id)
         {
-            scene->WldData->scenery.remove(i); break;
+            scene->WldData->scenery.removeAt(i); break;
         }
     }
 }

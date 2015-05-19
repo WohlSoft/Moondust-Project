@@ -266,14 +266,14 @@ void ItemMusic::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->music.remove(musicData.index);
+        scene->WldData->music.removeAt(musicData.index);
     }
     else
     for(int i=0; i<scene->WldData->music.size(); i++)
     {
         if(scene->WldData->music[i].array_id == musicData.array_id)
         {
-            scene->WldData->music.remove(i); break;
+            scene->WldData->music.removeAt(i); break;
         }
     }
 }

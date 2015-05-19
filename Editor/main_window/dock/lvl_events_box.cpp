@@ -678,7 +678,7 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceSt
         if(sourceStart < edit->LvlData.events.size())
         {
             buffer = edit->LvlData.events[sourceStart];
-            edit->LvlData.events.remove(sourceStart);
+            edit->LvlData.events.removeAt(sourceStart);
             edit->LvlData.events.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
         }
     }
@@ -926,7 +926,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
             {
                 edit->scene->addRemoveEventHistory(edit->LvlData.events[i]);
                 ModifyEvent(edit->LvlData.events[i].name, "");
-                edit->LvlData.events.remove(i);
+                edit->LvlData.events.removeAt(i);
                 delete ui->LVLEvents_List->selectedItems()[0];
                 break;
             }
