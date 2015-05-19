@@ -205,6 +205,8 @@ public:
     EventQueue<LevelScene > system_events;
 
 private:
+    int  uTick;
+
     LevelData data;
 
     EpisodeState *gameState;

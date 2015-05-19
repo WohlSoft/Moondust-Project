@@ -117,7 +117,7 @@ void dataconfigs::loadWorldLevels()
             index_wlvl.push_back(levelIndex);
         }
 
-    if(ConfStatus::total_wtile==0)
+    if(ConfStatus::total_wlvl==0)
     {
         addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), QtCriticalMsg);
         return;

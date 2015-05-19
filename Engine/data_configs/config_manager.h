@@ -33,6 +33,7 @@
 #include "obj_bg.h"
 #include "obj_player.h"
 #include "obj_effect.h"
+#include "obj_wld_items.h"
 
 #include "obj_sound.h"
 #include "obj_music.h"
@@ -172,10 +173,10 @@ public:
     //Load settings
     static bool loadBasics();
     static bool unloadLevelConfigs();
+    static bool unloadWorldConfigs();
     static void unluadAll();
 
-
-    //Level config Data
+    /*================================Level config Data===========================*/
 
     /*****Level blocks************/
     static bool loadLevelBlocks();
@@ -204,8 +205,49 @@ public:
     static CustomDirManager Dir_BG;
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
+    /*================================Level config Data===end=====================*/
+
+    /*================================World config Data===========================*/
+    /*****World Tiles************/
+    static bool loadWorldTiles();
+    static long getTileTexture(long tileID);
+    /*****************************/
+    static QMap<long, obj_w_tile>   wld_tiles;
+    static CustomDirManager         Dir_Tiles;
+    static QList<SimpleAnimator >   Animator_Tiles;
+    /*****World Tiles************/
+
+    /*****World Scenery************/
+    static bool loadWorldScenery();
+    static long getSceneryTexture(long sceneryID);
+    /*****************************/
+    static QMap<long, obj_w_scenery>   wld_scenery;
+    static CustomDirManager         Dir_Scenery;
+    static QList<SimpleAnimator >   Animator_Scenery;
+    /*****World Scenery************/
+
+    /*****World Paths************/
+    static bool loadWorldPaths();
+    static long getWldPathTexture(long pathID);
+    /*****************************/
+    static QMap<long, obj_w_path>   wld_paths;
+    static CustomDirManager         Dir_WldPaths;
+    static QList<SimpleAnimator >   Animator_WldPaths;
+    /*****World Paths************/
+
+    /*****World Levels************/
+    static bool loadWorldLevels();
+    static long getWldLevelTexture(long levelID);
+    /*****************************/
+    static QMap<long, obj_w_level>   wld_levels;
+    static CustomDirManager         Dir_WldLevel;
+    static QList<SimpleAnimator >   Animator_WldLevel;
+    static wld_levels_Markers        marker_wlvl;
+    /*****World Levels************/
 
 
+
+    /*================================World config Data===end=====================*/
 
     /*****Level Effects************/
     static bool loadLevelEffects();

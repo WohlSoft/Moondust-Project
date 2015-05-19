@@ -53,6 +53,9 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    if(uTick<=0) uTick=1;
+
     isInit=false;
     isWarpEntrance=false;
     cameraStartDirected=false;
@@ -240,13 +243,9 @@ int  debug_player_foots=0;
 int  debug_render_delay=0;
 int  debug_phys_delay=0;
 int  debug_event_delay=0;
-int  uTick = 1;
 
 void LevelScene::update()
 {
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    if(uTick<=0) uTick=1;
-
     tickAnimations(uTick);
 
     if(doExit)
@@ -419,7 +418,6 @@ int LevelScene::exec()
     isLevelContinues=true;
     doExit=false;
 
-
     dbgDraw.c = cameras.first();
 
     world->SetDebugDraw(&dbgDraw);
@@ -442,8 +440,6 @@ int LevelScene::exec()
 
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
-
-    uTick = 1;
 
     bool running = true;
     while(running)

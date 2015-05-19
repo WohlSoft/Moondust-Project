@@ -236,9 +236,39 @@ bool ConfigManager::unloadLevelConfigs()
     return true;
 }
 
+
+bool ConfigManager::unloadWorldConfigs()
+{
+
+    ///Clear texture bank
+    while(!world_textures.isEmpty())
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(world_textures.last().texture) );
+        world_textures.pop_back();
+    }
+
+    resetPlayableTexuresState();
+
+    /***************Clear animators*************/
+    Animator_Tiles.clear();
+    Animator_Scenery.clear();
+    Animator_WldPaths.clear();
+    Animator_WldLevel.clear();
+    /***************Clear settings*************/
+
+    wld_tiles.clear();
+    wld_scenery.clear();
+    wld_paths.clear();
+    wld_levels.clear();
+
+    return true;
+}
+
 void ConfigManager::unluadAll()
 {
     unloadLevelConfigs();
+    unloadWorldConfigs();
     clearSoundIndex();
     playable_characters.clear();
 }

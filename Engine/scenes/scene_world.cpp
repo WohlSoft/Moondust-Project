@@ -50,6 +50,7 @@ QList<WorldNode > wldItems;
 QList<WorldNode * > toRender;
 
 WorldScene::WorldScene()
+    : Scene(World)
 {
     wld_events.abort();
 
@@ -81,8 +82,16 @@ WorldScene::WorldScene()
     numOfPlayers=1;
     /***********Number of Players*****************/
 
+    /*********Fader*************/
+    fader_opacity=1.0f;
+    target_opacity=1.0f;
+    fade_step=0.0f;
+    fadeSpeed=25;
+    /*********Fader*************/
 
-    uTick = 1;
+    uTick = (1000.0/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
+
     move_speed = 115/(float)PGE_Window::PhysStep;
     move_steps_count=0;
 
@@ -111,11 +120,6 @@ WorldScene::WorldScene()
         img.frmH = (img.t.h / common_setup.AdditionalImages[i].frames);
 
         imgs.push_back(img);
-    }
-
-    for(int i=0;i<imgs.size();i++)
-    {
-        imgs[i].a.start();
     }
 
     viewportRect.setX(common_setup.viewport_x);
@@ -183,6 +187,7 @@ WorldScene::~WorldScene()
     imgs.clear();
 
     ConfigManager::unloadLevelConfigs();
+    ConfigManager::unloadWorldConfigs();
 
     delete player1Controller;
 }
@@ -286,7 +291,8 @@ bool WorldScene::init()
 
     if(doExit) return true;
 
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+    if(!loadConfigs())
+        return false;
 
     int player_portrait_step=0;
     int player_portrait_x=common_setup.portrait_x;
@@ -328,14 +334,11 @@ bool WorldScene::init()
         }
     }
 
-
-
     for(int i=0; i<data.tiles.size(); i++)
     {
         WldTileItem path(data.tiles[i]);
-        path.r=1.f;
-        path.g=1.f;
-        path.b=0.f;
+        if(!path.init())
+            continue;
         wld_tiles << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
     }
@@ -343,9 +346,8 @@ bool WorldScene::init()
     for(int i=0; i<data.scenery.size(); i++)
     {
         WldSceneryItem path(data.scenery[i]);
-        path.r=1.f;
-        path.g=0.f;
-        path.b=1.f;
+        if(!path.init())
+            continue;
         wld_sceneries << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
     }
@@ -353,9 +355,8 @@ bool WorldScene::init()
     for(int i=0; i<data.paths.size(); i++)
     {
         WldPathItem path(data.paths[i]);
-        path.r=0.f;
-        path.g=0.f;
-        path.b=1.f;
+        if(!path.init())
+            continue;
         wld_paths << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
     }
@@ -363,11 +364,10 @@ bool WorldScene::init()
     for(int i=0; i<data.levels.size(); i++)
     {
         WldLevelItem path(data.levels[i]);
-        path.r=1.f;
-        path.g=0.f;
-        path.b=0.f;
+        if(!path.init())
+            continue;
         wld_levels << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_levels.last()));
+        worldMap.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
@@ -391,10 +391,30 @@ bool WorldScene::init()
     return true;
 }
 
+bool WorldScene::loadConfigs()
+{
+    bool success=true;
+
+    //Load INI-files
+    success = ConfigManager::loadWorldTiles();   //!< Tiles
+    success = ConfigManager::loadWorldScenery(); //!< Scenery
+    success = ConfigManager::loadWorldPaths();   //!< Paths
+    success = ConfigManager::loadWorldLevels();  //!< Levels
+
+    //Set paths
+    ConfigManager::Dir_Tiles.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldTiles() );
+    ConfigManager::Dir_Scenery.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldScenery() );
+    ConfigManager::Dir_WldPaths.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPaths() );
+    ConfigManager::Dir_WldLevel.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldLevels() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+
+    if(!success) exitWorldCode = WldExit::EXIT_error;
+    return success;
+}
+
 void WorldScene::update()
 {
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    if(uTick<=0) uTick=1;
+    tickAnimations(uTick);
 
     if(doExit)
     {
@@ -418,9 +438,6 @@ void WorldScene::update()
     else
     {
         wld_events.processEvents(uTick);
-
-        for(int i=0; i<portraits.size(); i++)
-            portraits[i].update(uTick);
 
         if(dir==0)
         {
@@ -526,19 +543,19 @@ void WorldScene::update()
     Scene::update();
 }
 
-void fetchSideNodes(bool &side, QList<WorldNode* > &nodes)
+void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
 {
     side=false;
     foreach (WorldNode* x, nodes)
     {
         if(x->type==WorldNode::path)
         {
-            side=true; break;
+            side=x->collidePoint(cx, cy); break;
         }
 
         if(x->type==WorldNode::level)
         {
-            side=true; break;
+            side=x->collidePoint(cx, cy); break;
         }
     }
 }
@@ -547,22 +564,31 @@ void WorldScene::updateAvailablePaths()
 {
     QList<WorldNode* > nodes;
 
+    long x,y;
     //left
-    nodes=worldMap.query(posX+worldMap.gridSize_h-worldMap.gridSize,    posY+worldMap.gridSize_h);
-    fetchSideNodes(allow_left, nodes);
+    x=posX+worldMap.gridSize_h-worldMap.gridSize;
+    y=posY+worldMap.gridSize_h;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_left, nodes, x,y);
 
     //Right
-    nodes=worldMap.query(posX+worldMap.gridSize_h+worldMap.gridSize,    posY+worldMap.gridSize_h);
-    fetchSideNodes(allow_right, nodes);
+    x=posX+worldMap.gridSize_h+worldMap.gridSize;
+    y=posY+worldMap.gridSize_h;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_right, nodes, x, y);
 
 
     //Top
-    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h-worldMap.gridSize);
-    fetchSideNodes(allow_up, nodes);
+    x=posX+worldMap.gridSize_h;
+    y=posY+worldMap.gridSize_h-worldMap.gridSize;
+    nodes=worldMap.query(x, y);
+    fetchSideNodes(allow_up, nodes, x, y);
 
     //Bottom
-    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h+worldMap.gridSize);
-    fetchSideNodes(allow_down, nodes);
+    x=posX+worldMap.gridSize_h;
+    y=posY+worldMap.gridSize_h+worldMap.gridSize;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_down, nodes, x, y);
 }
 
 void WorldScene::updateCenter()
@@ -683,7 +709,8 @@ void WorldScene::render()
         //Render items
         foreach(WorldNode * it, toRender)
         {
-            GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
+            it->render(it->x-renderX, it->y-renderY);
+            //GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
         }
         //draw our "character"
         GlRenderer::renderRect(posX-renderX, posY-renderY, 32, 32, 1.f, 1.f, 1.f, 1.0f);
@@ -968,6 +995,25 @@ int WorldScene::exec()
 
     }
     return exitWorldCode;
+}
+
+void WorldScene::tickAnimations(int ticks)
+{
+    //tick animation
+    for(int i=0; i<ConfigManager::Animator_Tiles.size(); i++)
+        ConfigManager::Animator_Tiles[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_Scenery.size(); i++)
+        ConfigManager::Animator_Scenery[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_WldPaths.size(); i++)
+        ConfigManager::Animator_WldPaths[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_WldLevel.size(); i++)
+        ConfigManager::Animator_WldLevel[i].manualTick(ticks);
+
+    for(int i=0;i<imgs.size();i++)
+        imgs[i].a.manualTick(ticks);
+
+    for(int i=0; i<portraits.size(); i++)
+        portraits[i].update(uTick);
 }
 
 bool WorldScene::isExit()
