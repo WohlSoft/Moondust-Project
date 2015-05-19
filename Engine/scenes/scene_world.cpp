@@ -465,7 +465,6 @@ void WorldScene::update()
             {
                 _playDenySnd=false;
                 _playStopSnd=false;
-                levelTitle.clear();
                 gameState->LevelFile.clear();
                 jumpTo=false;
             }
