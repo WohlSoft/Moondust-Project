@@ -403,7 +403,7 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
     return starCount;
 }
 
-int WorldSettingsBox::doStarCount(QString dir, QVector<WorldLevels> levels, QString introLevel)
+int WorldSettingsBox::doStarCount(QString dir, QList<WorldLevels> levels, QString introLevel)
 {
     //Count stars of all used levels on this world map
     QString dirPath=dir;

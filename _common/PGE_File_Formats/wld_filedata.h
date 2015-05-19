@@ -120,15 +120,15 @@ struct WorldData
     QString author4;
     QString author5;
 
-    QVector<WorldTiles > tiles;
+    QList<WorldTiles > tiles;
     unsigned int tile_array_id;
-    QVector<WorldScenery > scenery;
+    QList<WorldScenery > scenery;
     unsigned int scene_array_id;
-    QVector<WorldPaths > paths;
+    QList<WorldPaths > paths;
     unsigned int path_array_id;
-    QVector<WorldLevels > levels;
+    QList<WorldLevels > levels;
     unsigned int level_array_id;
-    QVector<WorldMusic > music;
+    QList<WorldMusic > music;
     unsigned int musicbox_array_id;
 
     //meta:

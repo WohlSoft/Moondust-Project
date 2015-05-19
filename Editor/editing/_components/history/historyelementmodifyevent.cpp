@@ -56,7 +56,7 @@ void HistoryElementModifyEvent::doEventRemove()
                 }
             }
             MainWinConnect::pMainWin->dock_LvlEvents->ModifyEvent(lvlScene->LvlData->events[i].name, "");
-            lvlScene->LvlData->events.remove(i);
+            lvlScene->LvlData->events.removeAt(i);
         }
     }
 

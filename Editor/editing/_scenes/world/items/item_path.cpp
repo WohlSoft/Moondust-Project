@@ -322,14 +322,14 @@ void ItemPath::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->paths.remove(pathData.index);
+        scene->WldData->paths.removeAt(pathData.index);
     }
     else
     for(int i=0; i<scene->WldData->paths.size(); i++)
     {
         if(scene->WldData->paths[i].array_id == pathData.array_id)
         {
-            scene->WldData->paths.remove(i); break;
+            scene->WldData->paths.removeAt(i); break;
         }
     }
 }
