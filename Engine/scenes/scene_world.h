@@ -50,6 +50,8 @@ public:
     bool init();
     bool isInit;
 
+    bool loadConfigs();
+
     int exitWorldDelay;
     int exitWorldCode;
     QString targetLevel;
@@ -64,6 +66,9 @@ public:
     void update();
     void render();
     int exec();
+
+    void tickAnimations(int ticks);
+
     bool isExit();
     void setExiting(int delay, int reason);
 

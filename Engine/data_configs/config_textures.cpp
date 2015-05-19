@@ -472,3 +472,334 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         return id;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****************************World map items*****************************/
+
+long  ConfigManager::getTileTexture(long tileID)
+{
+    if(!wld_tiles.contains(tileID))
+    {
+        return -1;
+    }
+
+    obj_w_tile* tileSetup=&wld_tiles[tileID];
+
+    if(tileSetup->isInit)
+    {
+
+        if(tileSetup->textureArrayId < world_textures.size())
+            return tileSetup->textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_Tiles.getCustomFile(tileSetup->image_n);
+        QString maskFile = Dir_Tiles.getCustomFile(tileSetup->mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = world_textures.size();
+
+        tileSetup->textureArrayId = id;
+
+        world_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( world_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        tileSetup->image = &(world_textures[id]);
+        tileSetup->textureID = world_textures[id].texture;
+        tileSetup->isInit = true;
+
+        //Also, load and init animator
+        if(tileSetup->animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            tileSetup->frame_h =
+                    (int)round(double(world_textures[id].h)
+                               /double(tileSetup->frames));
+
+            //store animated texture value back
+            world_textures[id].h = tileSetup->frame_h;
+
+            SimpleAnimator animator(
+                            true,
+                            tileSetup->frames,
+                            tileSetup->framespeed,
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_Tiles.push_back(animator);
+            tileSetup->animator_ID = Animator_Tiles.size()-1;
+        }
+
+        return id;
+    }
+}
+
+
+long  ConfigManager::getSceneryTexture(long sceneryID)
+{
+    if(!wld_scenery.contains(sceneryID))
+    {
+        return -1;
+    }
+
+    obj_w_scenery* scenerySetup=&wld_scenery[sceneryID];
+
+    if(scenerySetup->isInit)
+    {
+
+        if(scenerySetup->textureArrayId < world_textures.size())
+            return scenerySetup->textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_Scenery.getCustomFile(scenerySetup->image_n);
+        QString maskFile = Dir_Scenery.getCustomFile(scenerySetup->mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = world_textures.size();
+
+        scenerySetup->textureArrayId = id;
+
+        world_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( world_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        scenerySetup->image = &(world_textures[id]);
+        scenerySetup->textureID = world_textures[id].texture;
+        scenerySetup->isInit = true;
+
+        //Also, load and init animator
+        if(scenerySetup->animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            scenerySetup->frame_h =
+                    (int)round(double(world_textures[id].h)
+                               /double(scenerySetup->frames));
+
+            //store animated texture value back
+            world_textures[id].h = scenerySetup->frame_h;
+
+            SimpleAnimator animator(
+                            true,
+                            scenerySetup->frames,
+                            scenerySetup->framespeed,
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_Scenery.push_back(animator);
+            scenerySetup->animator_ID = Animator_Scenery.size()-1;
+        }
+
+        return id;
+    }
+}
+
+
+long  ConfigManager::getWldPathTexture(long pathID)
+{
+    if(!wld_paths.contains(pathID))
+    {
+        return -1;
+    }
+
+    obj_w_path* pathSetup=&wld_paths[pathID];
+
+    if(pathSetup->isInit)
+    {
+
+        if(pathSetup->textureArrayId < world_textures.size())
+            return pathSetup->textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_WldPaths.getCustomFile(pathSetup->image_n);
+        QString maskFile = Dir_WldPaths.getCustomFile(pathSetup->mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = world_textures.size();
+
+        pathSetup->textureArrayId = id;
+
+        world_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( world_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        pathSetup->image = &(world_textures[id]);
+        pathSetup->textureID = world_textures[id].texture;
+        pathSetup->isInit = true;
+
+        //Also, load and init animator
+        if(pathSetup->animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            pathSetup->frame_h =
+                    (int)round(double(world_textures[id].h)
+                               /double(pathSetup->frames));
+
+            //store animated texture value back
+            world_textures[id].h = pathSetup->frame_h;
+
+            SimpleAnimator animator(
+                            true,
+                            pathSetup->frames,
+                            pathSetup->framespeed,
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_WldPaths.push_back(animator);
+            pathSetup->animator_ID = Animator_WldPaths.size()-1;
+        }
+
+        return id;
+    }
+}
+
+
+
+long  ConfigManager::getWldLevelTexture(long levelID)
+{
+    if(!wld_levels.contains(levelID))
+    {
+        return -1;
+    }
+
+    obj_w_level* lvlSetup=&wld_levels[levelID];
+
+    if(lvlSetup->isInit)
+    {
+
+        if(lvlSetup->textureArrayId < world_textures.size())
+            return lvlSetup->textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_WldLevel.getCustomFile(lvlSetup->image_n);
+        QString maskFile = Dir_WldLevel.getCustomFile(lvlSetup->mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = world_textures.size();
+
+        lvlSetup->textureArrayId = id;
+
+        world_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( world_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        lvlSetup->image = &(world_textures[id]);
+        lvlSetup->textureID = world_textures[id].texture;
+        lvlSetup->isInit = true;
+
+        //Also, load and init animator
+        if(lvlSetup->animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            lvlSetup->frame_h =
+                    (int)round(double(world_textures[id].h)
+                               /double(lvlSetup->frames));
+
+            //store animated texture value back
+            world_textures[id].h = lvlSetup->frame_h;
+
+            SimpleAnimator animator(
+                            true,
+                            lvlSetup->frames,
+                            lvlSetup->framespeed,
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_WldLevel.push_back(animator);
+            lvlSetup->animator_ID = Animator_WldLevel.size()-1;
+        }
+
+        return id;
+    }
+}
+
+
+

@@ -186,7 +186,8 @@ SOURCES += \
     gui/menu/pge_bool_menuitem.cpp \
     gui/menu/pge_int_menuitem.cpp \
     gui/menu/pge_int_named_menuitem.cpp \
-    gui/menu/pge_keygrab_menuitem.cpp
+    gui/menu/pge_keygrab_menuitem.cpp \
+    data_configs/obj_wld_items.cpp
 
 
 HEADERS  += \
@@ -281,7 +282,8 @@ HEADERS  += \
     gui/menu/pge_bool_menuitem.h \
     gui/menu/pge_int_menuitem.h \
     gui/menu/pge_int_named_menuitem.h \
-    gui/menu/pge_keygrab_menuitem.h
+    gui/menu/pge_keygrab_menuitem.h \
+    data_configs/obj_wld_items.h
 
 FORMS    += \
     data_configs/select_config.ui

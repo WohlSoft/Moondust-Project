@@ -24,6 +24,7 @@
 #include "../graphics/gl_renderer.h"
 
 #include "../scenes/scene_level.h"
+#include "../scenes/scene_world.h"
 
 #include <QRect>
 #include <QFontMetrics>
@@ -325,6 +326,16 @@ void PGE_MsgBox::updateControllers()
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
                 s->player2Controller->sendControls();
+            }
+        }
+        else if(parentScene->type()==Scene::World)
+        {
+            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
+            if(s)
+            {
+                s->tickAnimations(uTick);
+                s->player1Controller->update();
+                s->player1Controller->sendControls();
             }
         }
     }
