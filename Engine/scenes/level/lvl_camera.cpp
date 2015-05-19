@@ -17,6 +17,7 @@
  */
 
 #include "lvl_camera.h"
+#include "lvl_backgrnd.h"
 #include <graphics/window.h>
 
 #include <data_configs/config_manager.h>
@@ -26,6 +27,7 @@
 
 PGE_LevelCamera::PGE_LevelCamera()
 {
+    BackgroundHandler = NULL;
     worldPtr = NULL;
     section = 0;
     isWarp = false;
@@ -209,7 +211,7 @@ void PGE_LevelCamera::resetLimits()
     limitBottom = s_bottom;
 }
 
-PGE_RenderList PGE_LevelCamera::renderObjects()
+PGE_RenderList &PGE_LevelCamera::renderObjects()
 {
     return objects_to_render;
 }
@@ -217,7 +219,11 @@ PGE_RenderList PGE_LevelCamera::renderObjects()
 
 void PGE_LevelCamera::drawBackground()
 {
-
+    if(BackgroundHandler)
+    {
+        BackgroundHandler->applyColor();
+        BackgroundHandler->draw(posX(), posY());
+    }
 }
 
 void PGE_LevelCamera::changeSection(LevelSection &sct)
@@ -233,6 +239,17 @@ void PGE_LevelCamera::changeSection(LevelSection &sct)
     {
         PGE_MusPlayer::MUS_openFile(musFile);
         PGE_MusPlayer::MUS_playMusic();
+    }
+
+    if(BackgroundHandler)
+    {
+        if(ConfigManager::lvl_bg_indexes.contains(BackgroundID))
+        {
+            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[BackgroundID];
+            BackgroundHandler->setBg(*bgSetup);
+        }
+        else
+            BackgroundHandler->setNone();
     }
 
     changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);

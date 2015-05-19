@@ -28,8 +28,11 @@
 
 typedef QList<PGE_Phys_Object *> PGE_RenderList;
 
+class LVL_Background;
+
 class PGE_LevelCamera
 {
+    friend class LVL_Background;
 public:
     PGE_LevelCamera();
     ~PGE_LevelCamera();
@@ -51,7 +54,7 @@ public:
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
-    PGE_RenderList renderObjects();
+    PGE_RenderList &renderObjects();
 
     LevelSection *section;
 
@@ -92,6 +95,7 @@ public:
 
 private:
     PGE_RenderList objects_to_render;
+    LVL_Background *BackgroundHandler;
 
     int width;
     int height;

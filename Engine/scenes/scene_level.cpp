@@ -365,7 +365,7 @@ void LevelScene::render()
         if(numberOfPlayers>1)
             GlRenderer::setViewport(0, cam->h()*c,cam->w(), cam->h());
 
-        backgrounds.last()->draw(cam->posX(), cam->posY());
+        cam->drawBackground();
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {

@@ -159,6 +159,22 @@ TitleScene::~TitleScene()
     delete controller;
 }
 
+bool TitleScene::init()
+{
+    if(!ConfigManager::music_lastIniFile.isEmpty())
+    {
+        ConfigManager::music_lastIniFile.clear();
+        ConfigManager::loadDefaultMusics();
+    }
+    if(!ConfigManager::sound_lastIniFile.isEmpty())
+    {
+        ConfigManager::sound_lastIniFile.clear();
+        ConfigManager::loadDefaultSounds();
+        ConfigManager::buildSoundIndex();
+    }
+    return true;
+}
+
 void TitleScene::update()
 {
 
@@ -249,18 +265,6 @@ int TitleScene::exec()
     bool running = true;
     float doUpdate_Render=0;
     bool doExit=false;
-
-    if(!ConfigManager::music_lastIniFile.isEmpty())
-    {
-        ConfigManager::music_lastIniFile.clear();
-        ConfigManager::loadDefaultMusics();
-    }
-    if(!ConfigManager::sound_lastIniFile.isEmpty())
-    {
-        ConfigManager::sound_lastIniFile.clear();
-        ConfigManager::loadDefaultSounds();
-        ConfigManager::buildSoundIndex();
-    }
 
     menustates.clear();
     menuChain.clear();
@@ -399,8 +403,7 @@ int TitleScene::exec()
 
         render();
         renderMouse();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+        PGE_Window::rePaint();
 
         if( (100.0 / (float)PGE_Window::PhysStep) >(SDL_GetTicks()-start_render))
         {
@@ -596,6 +599,8 @@ int TitleScene::exec()
         }
     }
     menu.clear();
+
+    PGE_Window::clean();
 
     //Show mouse cursor
     PGE_Window::setCursorVisibly(true);

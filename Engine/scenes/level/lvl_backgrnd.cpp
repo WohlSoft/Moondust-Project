@@ -33,7 +33,9 @@ LVL_Background::LVL_Background()
 LVL_Background::LVL_Background(PGE_LevelCamera *parentCamera)
 {
     construct();
+    if(!parentCamera) return;
     pCamera = parentCamera;
+    pCamera->BackgroundHandler = this;
 }
 
 void LVL_Background::construct()
@@ -166,9 +168,7 @@ void LVL_Background::setBg(obj_BG &bg)
             break;
     }
 
-    //set background color
-    qDebug() << color.r << color.g << color.b;
-    glClearColor(color.r, color.g, color.b, 1.0f);
+    applyColor();
 }
 
 void LVL_Background::setNone()
@@ -177,7 +177,7 @@ void LVL_Background::setNone()
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
-    glClearColor(color.r, color.g, color.b, 1.0f);
+    applyColor();
 }
 
 void LVL_Background::draw(float x, float y)
@@ -409,5 +409,10 @@ void LVL_Background::draw(float x, float y)
         }
 
     }
+}
+
+void LVL_Background::applyColor()
+{
+    glClearColor(color.r, color.g, color.b, 1.0f);
 }
 

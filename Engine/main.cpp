@@ -304,6 +304,7 @@ MainMenu:
 {
     _game_state.reset();
     TitleScene * iScene = new TitleScene();
+    iScene->init();
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
