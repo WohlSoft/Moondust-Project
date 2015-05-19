@@ -69,7 +69,6 @@ QString ConfigManager::imgFile, ConfigManager::imgFileM;
 QString ConfigManager::tmpstr;
 QStringList ConfigManager::tmp;
 
-unsigned long ConfigManager::total_data;
 QString ConfigManager::bgoPath;
 QString ConfigManager::BGPath;
 QString ConfigManager::blockPath;
@@ -105,8 +104,6 @@ bool ConfigManager::loadBasics()
                         ApplicationPath + "/" : config_dir + "data/" );
         guiset.endGroup();
 
-
-    total_data=0;
     errorsList.clear();
 
     //dirs
@@ -179,10 +176,10 @@ bool ConfigManager::loadBasics()
     if(!loadEngineSettings()) //!< Load engine.ini file
         return false;
 
-    if(!loadMusic(dirs.music, config_dir+"music.ini", false))
+    if(!loadDefaultMusics())
         return false;
 
-    if(!loadSound(dirs.sounds, config_dir+"sounds.ini", false))
+    if(!loadDefaultSounds())
         return false;
 
     if(!loadSoundRolesTable())

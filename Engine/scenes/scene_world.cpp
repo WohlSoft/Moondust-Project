@@ -394,6 +394,20 @@ bool WorldScene::init()
 bool WorldScene::loadConfigs()
 {
     bool success=true;
+    QString musIni=data.path+"/music.ini";
+    QString sndIni=data.path+"/sounds.ini";
+    if(ConfigManager::music_lastIniFile!=musIni)
+    {
+        ConfigManager::loadDefaultMusics();
+        ConfigManager::loadMusic(data.path+"/", musIni, true);
+    }
+    if(ConfigManager::sound_lastIniFile!=sndIni)
+    {
+        ConfigManager::loadDefaultSounds();
+        ConfigManager::loadSound(data.path+"/", sndIni, true);
+        if(ConfigManager::soundIniChanged())
+            ConfigManager::buildSoundIndex();
+    }
 
     //Load INI-files
     success = ConfigManager::loadWorldTiles();   //!< Tiles

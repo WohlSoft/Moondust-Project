@@ -14,9 +14,24 @@ QHash<int, obj_music> ConfigManager::main_music_wld;
 QHash<int, obj_music> ConfigManager::main_music_spc;
 
 
+bool ConfigManager::musicIniChanged()
+{
+    bool s=music_lastIniFile_changed;
+    music_lastIniFile_changed=false;
+    return s;
+}
+
+QString ConfigManager::music_lastIniFile;
+bool ConfigManager::music_lastIniFile_changed=false;
+
 obj_music::obj_music()
 {
     id=0;
+}
+
+bool ConfigManager::loadDefaultMusics()
+{
+    return loadMusic(dirs.music, config_dir+"music.ini", false);
 }
 
 bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
@@ -35,9 +50,18 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 
     if(!QFile::exists(music_ini))
     {
+        if(isCustom) return false;
         addError(QString("ERROR LOADING music.ini: file does not exist"), QtCriticalMsg);
         return false;
     }
+
+    if(isCustom)
+    {
+        if(music_lastIniFile==iniFile) return false;
+        music_lastIniFile=iniFile;
+        music_lastIniFile_changed=true;
+    }
+
 
     QSettings musicset(music_ini, QSettings::IniFormat);
     musicset.setIniCodec("UTF-8");
@@ -56,9 +80,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 
         music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
         music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
-        total_data +=music_lvl_total;
-        total_data +=music_wld_total;
-        total_data +=music_spc_total;
     musicset.endGroup();
 
     //////////////////////////////

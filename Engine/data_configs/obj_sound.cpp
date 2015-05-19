@@ -14,6 +14,23 @@ QHash<obj_sound_role::roles, long > ConfigManager::main_sound_table;
 
 QVector<obj_sound_index > ConfigManager::main_sfx_index;
 
+
+bool ConfigManager::soundIniChanged()
+{
+    bool s=sound_lastIniFile_changed;
+    sound_lastIniFile_changed=false;
+    return s;
+}
+
+QString ConfigManager::sound_lastIniFile;
+bool ConfigManager::sound_lastIniFile_changed=false;
+
+
+bool ConfigManager::loadDefaultSounds()
+{
+    return loadSound(dirs.sounds, config_dir+"sounds.ini", false);
+}
+
 obj_sound::obj_sound()
 {
     id=0;
@@ -94,9 +111,17 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
     QString sound_ini = iniFile;
     if(!QFile::exists(sound_ini))
     {
+        if(isCustom) return false;
         addError(QString("ERROR LOADING sounds.ini: file does not exist"), QtCriticalMsg);
         PGE_MsgBox::error(QString("ERROR LOADING sounds.ini: file does not exist"));
         return false;
+    }
+
+    if(isCustom)
+    {
+        if(sound_lastIniFile==iniFile) return false;
+        sound_lastIniFile=iniFile;
+        sound_lastIniFile_changed=true;
     }
 
     QSettings soundset(sound_ini, QSettings::IniFormat);
@@ -110,12 +135,11 @@ bool ConfigManager::loadSound(QString rootPath, QString iniFile, bool isCustom)
 
     soundset.beginGroup("sound-main");
         sound_total = soundset.value("total", "0").toInt();
-
-        total_data +=sound_total;
     soundset.endGroup();
 
     if(sound_total==0)
     {
+        if(isCustom) return false;
         addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), QtCriticalMsg);
         PGE_MsgBox::error(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"));
         return false;
