@@ -20,7 +20,7 @@
 #define OBJ_NPC_H
 
 #include <QString>
-#include <QPixmap>
+#include <QStringList>
 
 #include "../graphics/graphics.h"
 
@@ -37,8 +37,6 @@ struct obj_npc
     QString category;   //    category="Enemy"		;The sort category
     QString image_n;    //    image="npc-1.gif"		;NPC Image file
     QString mask_n;
-    //QPixmap image;
-    QPixmap mask;
 
     /*   OpenGL    */
     bool isInit;
