@@ -83,7 +83,6 @@ bool ConfigManager::loadPlayableCharacters()
 
     playerset.beginGroup("main-characters");
         players_total = playerset.value("total", "0").toInt();
-        total_data +=players_total;
     playerset.endGroup();
 
     if(players_total==0)

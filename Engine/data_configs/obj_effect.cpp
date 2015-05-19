@@ -50,7 +50,6 @@ bool ConfigManager::loadLevelEffects()
 
     effectset.beginGroup("effects-main");
         effects_total = effectset.value("total", "0").toInt();
-        total_data +=effects_total;
     effectset.endGroup();
 
 

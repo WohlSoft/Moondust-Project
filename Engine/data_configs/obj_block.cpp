@@ -51,7 +51,6 @@ bool ConfigManager::loadLevelBlocks()
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
-        total_data +=block_total;
     blockset.endGroup();
 
 
