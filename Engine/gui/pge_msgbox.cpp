@@ -131,10 +131,6 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 void PGE_MsgBox::exec()
 {
     Uint32 start_render;
-    Uint32 start_fade;
-
-    Uint32 AntiFreeze_delay=3000; //Protecting from freezing if fading timer wasn't start
-
     SDL_Event event; //  Events of SDL
 
     while ( SDL_PollEvent(&event) ) {}
@@ -142,15 +138,9 @@ void PGE_MsgBox::exec()
 
     PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
 
-    setFade(20, 1.0f, 0.09f);
-
-    start_fade = SDL_GetTicks();
+    setFade(10, 1.0f, 0.05f);
     while(fader_opacity<1.0f)
     {
-        if( start_fade+AntiFreeze_delay
-                < SDL_GetTicks()-start_fade)
-            fader_opacity = 1.0f;
-
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -176,11 +166,15 @@ void PGE_MsgBox::exec()
 
         while ( SDL_PollEvent(&event) ) {
             PGE_Window::processEvents(event);
+            if(event.type==SDL_QUIT)
+                fader_opacity=1.0;
         }
-        updateControllers();
 
         if(uTick > (SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+
+        updateControllers();
+        tickFader(uTick);
     }
 
 
@@ -267,15 +261,9 @@ void PGE_MsgBox::exec()
 
 
 
-    setFade(20, 0.0f, 0.09f);
-
-    start_fade = SDL_GetTicks();
+    setFade(10, 0.0f, 0.05f);
     while(fader_opacity>0.0f)
     {
-        if( start_fade+AntiFreeze_delay
-                < SDL_GetTicks()-start_fade)
-            fader_opacity = 0.0f;
-
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -302,11 +290,15 @@ void PGE_MsgBox::exec()
 
         while ( SDL_PollEvent(&event) ) {
             PGE_Window::processEvents(event);
+            if(event.type==SDL_QUIT)
+                fader_opacity=0.0;
         }
-        updateControllers();
 
         if(uTick > (SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+
+        updateControllers();
+        tickFader(uTick);
     }
 
 }
