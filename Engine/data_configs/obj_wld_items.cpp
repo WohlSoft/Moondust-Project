@@ -69,7 +69,6 @@ bool ConfigManager::loadWorldTiles()
 
     tileset.beginGroup("tiles-main");
         tiles_total = tileset.value("total", "0").toInt();
-        total_data +=tiles_total;
     tileset.endGroup();
 
 //    emit progressMax(tiles_total);
@@ -173,7 +172,6 @@ bool ConfigManager::loadWorldScenery()
 
     sceneset.beginGroup("scenery-main");
         scenery_total = sceneset.value("total", "0").toInt();
-        total_data +=scenery_total;
     sceneset.endGroup();
 
     if(scenery_total==0)
@@ -268,7 +266,6 @@ bool ConfigManager::loadWorldPaths()
 
     pathset.beginGroup("path-main");
         path_total = pathset.value("total", "0").toInt();
-        total_data +=path_total;
     pathset.endGroup();
 
     if(path_total==0)
@@ -368,7 +365,6 @@ bool ConfigManager::loadWorldLevels()
         levels_total = levelset.value("total", "0").toInt();
         marker_wlvl.path = levelset.value("path", "0").toInt();
         marker_wlvl.bigpath = levelset.value("bigpath", "0").toInt();
-        total_data +=levels_total;
     levelset.endGroup();
 
     if(levels_total==0)

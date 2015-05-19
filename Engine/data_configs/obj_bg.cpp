@@ -48,7 +48,6 @@ bool ConfigManager::loadLevelBackG()
 
     bgset.beginGroup("background2-main");
         bg_total = bgset.value("total", "0").toInt();
-        total_data +=bg_total;
     bgset.endGroup();
 
     QStringList tmp;

@@ -50,7 +50,6 @@ bool ConfigManager::loadLevelBGO()
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();
-        total_data +=bgo_total;
     bgoset.endGroup();
 
 
