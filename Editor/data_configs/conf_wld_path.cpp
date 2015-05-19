@@ -129,7 +129,7 @@ void dataconfigs::loadWorldPaths()
 
             sPath.animated =       (pathset.value("animated", "0").toString()=="1");
             sPath.frames =          pathset.value("frames", "1").toInt();
-            sPath.framespeed =      pathset.value("frame-speed", "125").toInt();
+            sPath.framespeed =      pathset.value("frame-speed", "175").toInt();
 
             sPath.frame_h = (sPath.animated? qRound(qreal(sPath.image.height())/sPath.frames) : sPath.image.height());
 

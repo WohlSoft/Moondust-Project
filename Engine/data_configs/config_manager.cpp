@@ -246,6 +246,7 @@ bool ConfigManager::unloadWorldConfigs()
     }
 
     resetPlayableTexuresState();
+    resetPlayableTexuresStateWld();
 
     /***************Clear animators*************/
     Animator_Tiles.clear();

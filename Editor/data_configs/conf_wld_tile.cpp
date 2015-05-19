@@ -129,7 +129,7 @@ void dataconfigs::loadWorldTiles()
 
         stile.animated =       (tileset.value("animated", "0").toString()=="1");
         stile.frames =          tileset.value("frames", "1").toInt();
-        stile.framespeed =      tileset.value("frame-speed", "125").toInt();
+        stile.framespeed =      tileset.value("frame-speed", "175").toInt();
 
         stile.frame_h = (stile.animated?
                              qRound(

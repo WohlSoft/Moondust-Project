@@ -107,6 +107,7 @@ struct obj_player
 /* World map */
     int wld_framespeed;
     int wld_frames;
+    int wld_offset_y;
     QList<int > wld_frames_up;
     QList<int > wld_frames_right;
     QList<int > wld_frames_down;

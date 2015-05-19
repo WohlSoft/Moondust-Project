@@ -74,6 +74,10 @@ WorldScene::WorldScene()
     debug_phys_delay=0;
     debug_event_delay=0;
 
+    mapwalker_img_h=32;
+    mapwalker_offset_x=0;
+    mapwalker_offset_y=0;
+
     /*********Controller********/
     player1Controller = AppSettings.openController(1);
     /*********Controller********/
@@ -92,7 +96,7 @@ WorldScene::WorldScene()
     uTick = (1000.0/(float)PGE_Window::PhysStep);
     if(uTick<=0) uTick=1;
 
-    move_speed = 115/(float)PGE_Window::PhysStep;
+    move_speed = 125/(float)PGE_Window::PhysStep;
     move_steps_count=0;
 
     ConfigManager::setup_WorldMap.initFonts();
@@ -334,6 +338,25 @@ bool WorldScene::init()
         }
     }
 
+
+    PlayerState player_state;
+    if(gameState)
+    {
+        player_state = gameState->getPlayerState(1);
+    }
+    mapwalker_setup = ConfigManager::playable_characters[player_state.characterID];
+    long tID = ConfigManager::getWldPlayerTexture(player_state.characterID, player_state.stateID);
+        if(tID<0)
+            return false;
+
+    mapwalker_texture = ConfigManager::world_textures[tID];
+    mapwalker_img_h = mapwalker_texture.h/mapwalker_setup.wld_frames;
+    mapwalker_ani.construct(true, mapwalker_setup.wld_frames, mapwalker_setup.wld_framespeed);
+    mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down);
+    mapwalker_offset_x = (ConfigManager::default_grid/2)-(mapwalker_texture.w/2);
+    mapwalker_offset_y = ConfigManager::default_grid-mapwalker_img_h + mapwalker_setup.wld_offset_y;
+
+
     for(int i=0; i<data.tiles.size(); i++)
     {
         WldTileItem path(data.tiles[i]);
@@ -421,6 +444,7 @@ bool WorldScene::loadConfigs()
     ConfigManager::Dir_WldPaths.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPaths() );
     ConfigManager::Dir_WldLevel.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldLevels() );
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+    ConfigManager::Dir_PlayerWld.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPlayable() );
 
     if(!success) exitWorldCode = WldExit::EXIT_error;
     return success;
@@ -481,14 +505,17 @@ void WorldScene::update()
                 _playStopSnd=false;
                 gameState->LevelFile.clear();
                 jumpTo=false;
+                mapwalker_refreshDir();
             }
 
             if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
         }
         else
         {
+            mapwalker_ani.manualTick(uTick);
+
             #define setDir(dr) {dir=dr;\
-                    move_steps_count=ConfigManager::default_grid-move_steps_count;}
+                    move_steps_count=ConfigManager::default_grid-move_steps_count; mapwalker_refreshDir();}
             switch(dir)
             {
             case 1://left
@@ -725,8 +752,15 @@ void WorldScene::render()
             it->render(it->x-renderX, it->y-renderY);
             //GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
         }
+
         //draw our "character"
-        GlRenderer::renderRect(posX-renderX, posY-renderY, 32, 32, 1.f, 1.f, 1.f, 1.0f);
+        AniPos img(0,1); img = mapwalker_ani.image();
+        GlRenderer::renderTexture(&mapwalker_texture,
+                                  posX-renderX+mapwalker_offset_x,
+                                  posY-renderY+mapwalker_offset_y,
+                                  mapwalker_texture.w,
+                                  mapwalker_img_h,
+                                  img.first, img.second);
 
         //Restore viewport
         GlRenderer::resetViewport();
@@ -1103,6 +1137,16 @@ void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int
 }
 
 
+void WorldScene::mapwalker_refreshDir()
+{
+    switch(dir)
+    {
+        case 1: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
+        case 2: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
+        case 3: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
+        case 4: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+    }
+}
 
 
 

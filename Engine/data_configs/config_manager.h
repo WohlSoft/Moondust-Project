@@ -270,6 +270,7 @@ public:
 
     /********Playable characters*******/
     static long getLvlPlayerTexture(long playerID, int stateID);
+    static long getWldPlayerTexture(long playerID, int stateID);
     static void resetPlayableTexuresState();        //!< Sets all 'isInit' state to false for all textures for level textutes
     static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
     static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
