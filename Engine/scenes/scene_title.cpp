@@ -250,6 +250,18 @@ int TitleScene::exec()
     float doUpdate_Render=0;
     bool doExit=false;
 
+    if(!ConfigManager::music_lastIniFile.isEmpty())
+    {
+        ConfigManager::music_lastIniFile.clear();
+        ConfigManager::loadDefaultMusics();
+    }
+    if(!ConfigManager::sound_lastIniFile.isEmpty())
+    {
+        ConfigManager::sound_lastIniFile.clear();
+        ConfigManager::loadDefaultSounds();
+        ConfigManager::buildSoundIndex();
+    }
+
     menustates.clear();
     menuChain.clear();
 

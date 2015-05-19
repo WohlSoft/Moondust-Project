@@ -144,6 +144,25 @@ bool LevelScene::loadConfigs()
 {
     bool success=true;
 
+    QString musIni=data.path+"/music.ini";
+    QString sndIni=data.path+"/sounds.ini";
+    if(ConfigManager::music_lastIniFile!=musIni)
+    {
+        ConfigManager::loadDefaultMusics();
+        ConfigManager::loadMusic(data.path+"/", musIni, true);
+        loaderStep();
+    }
+
+    if(ConfigManager::sound_lastIniFile!=sndIni)
+    {
+        ConfigManager::loadDefaultSounds();
+            loaderStep();
+        ConfigManager::loadSound(data.path+"/", sndIni, true);
+            loaderStep();
+        if(ConfigManager::soundIniChanged())
+            ConfigManager::buildSoundIndex();
+    }
+
     //Load INI-files
         loaderStep();
     success = ConfigManager::loadLevelBlocks(); //!< Blocks

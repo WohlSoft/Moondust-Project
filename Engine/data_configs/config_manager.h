@@ -146,6 +146,7 @@ public:
 
     /********Music and sounds*******/
     static bool loadMusic(QString rootPath, QString iniFile, bool isCustom=false);
+    static bool loadDefaultMusics();
     static QString getWldMusic(unsigned long musicID, QString customMusic="");
     static QString getLvlMusic(unsigned long musicID, QString customMusic="");
     static QString getSpecialMusic(unsigned long musicID);
@@ -156,6 +157,7 @@ public:
     static QHash<int, obj_music> main_music_wld;
     static QHash<int, obj_music> main_music_spc;
 
+    static bool loadDefaultSounds();
     static bool loadSound(QString rootPath, QString iniFile, bool isCustom=false);
     static QString getSound(unsigned long sndID);
     static long getSoundByRole(obj_sound_role::roles role);
@@ -166,6 +168,13 @@ public:
     static void buildSoundIndex();
     static void clearSoundIndex();
     static QVector<obj_sound_index > main_sfx_index;
+
+    static bool musicIniChanged();
+    static bool soundIniChanged();
+    static QString music_lastIniFile;
+    static QString sound_lastIniFile;
+    static bool music_lastIniFile_changed;
+    static bool sound_lastIniFile_changed;
     /********Music and sounds*******/
 
 
@@ -305,7 +314,6 @@ private:
     static QString tmpstr;
     static QStringList tmp;
 
-    static unsigned long total_data;
     static QString bgoPath;
     static QString BGPath;
     static QString blockPath;
