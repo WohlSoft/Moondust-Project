@@ -68,8 +68,8 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
 #if defined(PGE_EDITOR)
     merged.image = QPixmap();   //Clear image values
-#endif
     merged.mask = QPixmap();
+#endif
 
     merged.name = (local.en_name)?local.name:global.name;
 
