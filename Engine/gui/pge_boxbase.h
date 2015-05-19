@@ -5,7 +5,6 @@
 #include <QString>
 #include <QRectF>
 
-#include <SDL2/SDL_timer.h>
 #include <common_features/pge_texture.h>
 
 ///
@@ -27,10 +26,10 @@ public:
     float target_opacity;
     float fade_step;
     int fadeSpeed;
+    int manual_ticks;
     void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
+    bool tickFader(int ticks);
     void fadeStep();
-    SDL_TimerID fader_timer_id;
     /**************Fader**************/
 
     void loadTexture(QString path);

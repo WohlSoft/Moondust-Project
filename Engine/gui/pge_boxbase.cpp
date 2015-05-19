@@ -21,7 +21,7 @@ void PGE_BoxBase::construct(Scene *_parentScene)
 {
     fader_opacity = 0.0f;
     fade_step = 0.02f;
-    target_opacity=0.0f;
+    target_opacity= 0.0f;
     fadeSpeed=10;
     _textureUsed=false;
     parentScene = _parentScene;
@@ -57,17 +57,20 @@ void PGE_BoxBase::setFade(int speed, float target, float step)
     fade_step = fabs(step);
     target_opacity = target;
     fadeSpeed = speed;
-
-    fader_timer_id = SDL_AddTimer(speed, &PGE_BoxBase::nextOpacity, this);
-    if(!fader_timer_id) fader_opacity = target_opacity;
+    manual_ticks = speed;
 }
 
-unsigned int PGE_BoxBase::nextOpacity(unsigned int x, void *p)
+bool PGE_BoxBase::tickFader(int ticks)
 {
-    Q_UNUSED(x);
-    PGE_BoxBase *self = reinterpret_cast<PGE_BoxBase *>(p);
-    self->fadeStep();
-    return 0;
+    if(fadeSpeed<1) return true; //Idling animation
+
+    manual_ticks-=abs(ticks);
+        while(manual_ticks<=0)
+        {
+            fadeStep();
+            manual_ticks+=fadeSpeed;
+        }
+    return (fader_opacity==target_opacity);
 }
 
 void PGE_BoxBase::fadeStep()
@@ -76,14 +79,6 @@ void PGE_BoxBase::fadeStep()
         fader_opacity+=fade_step;
     else
         fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0f || fader_opacity<=0.0f)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        {
-            fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_BoxBase::nextOpacity, this);
-            if(!fader_timer_id) fader_opacity = target_opacity;
-        }
 
     if(fader_opacity>1.0f) fader_opacity = 1.0f;
     else
