@@ -310,29 +310,31 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
         return -1;
     }
 
-    if(!playable_characters[playerID].states.contains(stateID))
+    obj_player &plr = playable_characters[playerID];
+
+    if(!plr.states.contains(stateID))
     {
         return -1;
     }
-
-    if(playable_characters[playerID].states[stateID].isInit)
+    obj_player_state &state = plr.states[stateID];
+    if(state.isInit)
     {
 
-        if(playable_characters[playerID].states[stateID].textureArrayId < level_textures.size())
-            return playable_characters[playerID].states[stateID].textureArrayId;
+        if(state.textureArrayId < level_textures.size())
+            return state.textureArrayId;
         else
             return -1;
     }
     else
     {
         bool isDefault=false;
-        QString imgFile = Dir_PlayerLvl.getCustomFile(playable_characters[playerID].states[stateID].image_n, &isDefault);
+        QString imgFile = Dir_PlayerLvl.getCustomFile(state.image_n, &isDefault);
         if(isDefault)
-            imgFile = playerLvlPath+playable_characters[playerID].sprite_folder+"/"+playable_characters[playerID].states[stateID].image_n;
+            imgFile = playerLvlPath+plr.sprite_folder+"/"+state.image_n;
 
-        QString maskFile = Dir_PlayerLvl.getCustomFile(playable_characters[playerID].states[stateID].mask_n, &isDefault);
+        QString maskFile = Dir_PlayerLvl.getCustomFile(state.mask_n, &isDefault);
         if(isDefault)
-            maskFile  = playerLvlPath+playable_characters[playerID].sprite_folder+"/"+playable_characters[playerID].states[stateID].mask_n;
+            maskFile  = playerLvlPath+plr.sprite_folder+"/"+state.mask_n;
 
         PGE_Texture texture;
         texture.w = 0;
@@ -344,7 +346,7 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
 
         long id = level_textures.size();
 
-        playable_characters[playerID].states[stateID].textureArrayId = id;
+        state.textureArrayId = id;
 
         level_textures.push_back(texture);
 
@@ -353,18 +355,77 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
              maskFile
              );
 
-        playable_characters[playerID].states[stateID].image = &(level_textures[id]);
-        playable_characters[playerID].states[stateID].textureID = level_textures[id].texture;
-        playable_characters[playerID].states[stateID].isInit = true;
+        state.image = &(level_textures[id]);
+        state.textureID = level_textures[id].texture;
+        state.isInit = true;
 
         //Store size of one frame
-        playable_characters[playerID].frame_width = level_textures[id].w/playable_characters[playerID].matrix_width;
-        playable_characters[playerID].frame_height = level_textures[id].h/playable_characters[playerID].matrix_height;
+        plr.frame_width = level_textures[id].w/plr.matrix_width;
+        plr.frame_height = level_textures[id].h/plr.matrix_height;
 
         return id;
     }
 }
 
+
+long  ConfigManager::getWldPlayerTexture(long playerID, int stateID)
+{
+    if(!playable_characters.contains(playerID))
+    {
+        return -1;
+    }
+    obj_player &plr = playable_characters[playerID];
+
+    if(!plr.states.contains(stateID))
+    {
+        return -1;
+    }
+
+    if(plr.isInit_wld)
+    {
+
+        if(plr.textureArrayId_wld < world_textures.size())
+            return plr.textureArrayId_wld;
+        else
+            return -1;
+    }
+    else
+    {
+        bool isDefault=false;
+        QString imgFile = Dir_PlayerWld.getCustomFile(plr.image_wld_n, &isDefault);
+        if(isDefault)
+            imgFile = playerWldPath+plr.image_wld_n;
+
+        QString maskFile = Dir_PlayerWld.getCustomFile(plr.mask_wld_n, &isDefault);
+        if(isDefault)
+            maskFile  = playerWldPath+plr.mask_wld_n;
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = world_textures.size();
+
+        plr.textureArrayId_wld = id;
+
+        world_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( world_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        plr.image_wld = &(world_textures[id]);
+        plr.textureID_wld = world_textures[id].texture;
+        plr.isInit_wld = true;
+
+        return id;
+    }
+}
 
 
 

@@ -136,6 +136,14 @@ private:
     PGE_Texture backgroundTex;
     QList<PGE_Texture > textures_bank;
 
+    obj_player     mapwalker_setup;
+    PGE_Texture    mapwalker_texture;
+    float          mapwalker_img_h;
+    SimpleAnimator mapwalker_ani;
+    int            mapwalker_offset_x;
+    int            mapwalker_offset_y;
+    void           mapwalker_refreshDir();
+
     QVector<WorldScene_misc_img > imgs;
     QVector<WorldScene_Portrait > portraits;
 };

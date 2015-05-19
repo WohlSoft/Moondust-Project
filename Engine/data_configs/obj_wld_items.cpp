@@ -115,7 +115,7 @@ bool ConfigManager::loadWorldTiles()
 
         stile.animated =       (tileset.value("animated", "0").toString()=="1");
         stile.frames =          tileset.value("frames", "1").toInt();
-        stile.framespeed =      tileset.value("frame-speed", "125").toInt();
+        stile.framespeed =      tileset.value("frame-speed", "150").toInt();
 
         stile.frame_h = 0;
 
@@ -212,7 +212,7 @@ bool ConfigManager::loadWorldScenery()
 
             sScene.animated =     (sceneset.value("animated", "0").toString()=="1");
             sScene.frames =        sceneset.value("frames", "1").toInt();
-            sScene.framespeed =    sceneset.value("frame-speed", "125").toInt();
+            sScene.framespeed =    sceneset.value("frame-speed", "175").toInt();
 
             sScene.frame_h = 0;
 
@@ -307,7 +307,7 @@ bool ConfigManager::loadWorldPaths()
 
             sPath.animated =       (pathset.value("animated", "0").toString()=="1");
             sPath.frames =          pathset.value("frames", "1").toInt();
-            sPath.framespeed =      pathset.value("frame-speed", "125").toInt();
+            sPath.framespeed =      pathset.value("frame-speed", "175").toInt();
 
             sPath.frame_h = 0;
 
@@ -405,7 +405,7 @@ bool ConfigManager::loadWorldLevels()
 
         slevel.animated =  (levelset.value("animated", "0").toString()=="1");
         slevel.frames =     levelset.value("frames", "1").toInt();
-        slevel.framespeed = levelset.value("frame-speed", "125").toInt();
+        slevel.framespeed = levelset.value("frame-speed", "175").toInt();
 
         slevel.frame_h =   0;
 

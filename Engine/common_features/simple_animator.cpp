@@ -52,6 +52,8 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     frameLast = Last;
     CurrentFrame = 0;
 
+    frame_sequance_enabled=false;
+
     manual_ticks = fspeed;
 
     onceMode=false;
@@ -69,6 +71,20 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     framesQ = framesq;
 
     setFrame(frameFirst);
+}
+
+void SimpleAnimator::setFrameSequance(QList<int> sequance)
+{
+    frame_sequance=sequance;
+    frame_sequance_enabled=true;
+    frame_sequance_cur=0;
+    if(!frame_sequance.isEmpty())
+    {
+        CurrentFrame = frame_sequance[frame_sequance_cur];
+        pos1 = CurrentFrame/framesQ;
+        pos2 = CurrentFrame/framesQ + 1.0/framesQ;
+        manual_ticks = speed;
+    }
 }
 
 SimpleAnimator::~SimpleAnimator()
@@ -121,6 +137,18 @@ AniPos SimpleAnimator::image(double frame)
 //Animation process
 void SimpleAnimator::nextFrame()
 {
+    if(frame_sequance_enabled)
+    {
+        frame_sequance_cur++;
+        if(frame_sequance_cur<0)
+            frame_sequance_cur=0;
+        if(frame_sequance_cur>=frame_sequance.size())
+            frame_sequance_cur=0;
+        if(!frame_sequance.isEmpty())
+            CurrentFrame = frame_sequance[frame_sequance_cur];
+        goto makeFrame;
+    }
+
     if(reverce)
     { // Reverce animation
         CurrentFrame--;
@@ -163,14 +191,12 @@ void SimpleAnimator::nextFrame()
         }
     }
 
+makeFrame:
     pos1 = CurrentFrame/framesQ;
     pos2 = CurrentFrame/framesQ + 1.0/framesQ;
 
     if(isEnabled)
         timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
-    else
-        SDL_RemoveTimer(timer_id);
-
 }
 
 

@@ -106,12 +106,14 @@ public:
         b=0.f;
         if(!ConfigManager::wld_tiles.contains(data.id))
             return false;
-        setup = ConfigManager::wld_tiles[data.id];
-        animated   = setup.animated;
-        animatorID = setup.animator_ID;
+
         long tID=ConfigManager::getTileTexture(data.id);
         if(tID<0) return false;
         texture = ConfigManager::world_textures[tID];
+
+        setup = ConfigManager::wld_tiles[data.id];
+        animated   = setup.animated;
+        animatorID = setup.animator_ID;
         w = texture.w;
         h = texture.h;
         return true;
@@ -161,8 +163,9 @@ public:
             return false;
         long tID= ConfigManager::getSceneryTexture(data.id);
         if(tID<0) return false;
-        setup = ConfigManager::wld_scenery[data.id];
         texture = ConfigManager::world_textures[tID];
+        setup = ConfigManager::wld_scenery[data.id];
+
         animated   = setup.animated;
         animatorID = setup.animator_ID;
         w = texture.w;
@@ -213,8 +216,9 @@ public:
             return false;
         long tID = ConfigManager::getWldPathTexture(data.id);
         if(tID<0) return false;
-        setup = ConfigManager::wld_paths[data.id];
         texture = ConfigManager::world_textures[tID];
+        setup = ConfigManager::wld_paths[data.id];
+
         animated   = setup.animated;
         animatorID = setup.animator_ID;
         w = texture.w;
@@ -283,8 +287,8 @@ public:
         if(tID<0) return false; _path_tex = ConfigManager::world_textures[tID];
             tID = ConfigManager::getWldLevelTexture(ConfigManager::marker_wlvl.bigpath);
         if(tID<0) return false; _path_big_tex = ConfigManager::world_textures[tID];
-
         setup = ConfigManager::wld_levels[data.id];
+
         animated   = setup.animated;
         animatorID = setup.animator_ID;
         w = ConfigManager::default_grid;
