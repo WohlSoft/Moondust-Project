@@ -56,6 +56,9 @@ class TitleScene : public Scene
 public:
     TitleScene();
     ~TitleScene();
+
+    bool init();
+
     void update();
     void render();
     void renderMouse();

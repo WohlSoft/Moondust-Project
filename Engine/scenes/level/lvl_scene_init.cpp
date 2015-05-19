@@ -240,19 +240,18 @@ bool LevelScene::init()
                        cameraStart.y()-camera->h()/2 + player_defs.first().height()/2);
 
         cameras.push_back(camera);
-    }
 
-    LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
-    if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
-    {
-        obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
-        CurrentBackground->setBg(*bgSetup);
-        qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
+        LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
+        if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
+        {
+            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
+            CurrentBackground->setBg(*bgSetup);
+            qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
+        }
+        else
+            CurrentBackground->setNone();
+        backgrounds.push_back(CurrentBackground);
     }
-    else
-        CurrentBackground->setNone();
-
-    backgrounds.push_back(CurrentBackground);
 
     //Init data
 
