@@ -190,7 +190,10 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     refreshRect();
 }
 
-void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
+void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title,
+                                  int *joystick_key_id,
+                                  int *joystick_key_type,
+                                  SDL_Joystick* joystick_device)
 {
     PGE_KeyGrabMenuItem item;
     item.keyValue = keyvalue;
@@ -208,6 +211,15 @@ void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title)
         QString temp=FontManager::cropText(item.title, _text_len_limit);
         item._width=FontManager::textSize(temp, _font_id, 0, true).width();
     }
+
+    if(joystick_key_id && joystick_key_type)
+    {
+        item.joystick_mode=true;
+        item.joystick_key_id=joystick_key_id;
+        item.joystick_key_type=joystick_key_type;
+        item.joystick_device=joystick_device;
+    }
+
     item.menu = this;
     _items_keygrabs.push_back(item);
     _items.push_back( &_items_keygrabs.last() );
@@ -405,6 +417,16 @@ bool PGE_Menu::isAccepted()
 bool PGE_Menu::isKeyGrabbing()
 {
     return is_keygrab;
+}
+
+bool PGE_Menu::processJoystickBinder()
+{
+    if((is_keygrab) && (m_item) && (m_item->joystick_mode))
+    {
+        m_item->processJoystickBind();
+        return true;
+    }
+    return false;
 }
 
 void PGE_Menu::storeKey(int scancode)

@@ -252,8 +252,10 @@ int PGE_Window::processEvents(SDL_Event &event)
           {
               case SDLK_f:
                  if((event.key.keysym.mod&(KMOD_LCTRL|KMOD_RCTRL))!=0)
+                 {
                     AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
-                 return 2;
+                    return 2;
+                 }
               break;
               case SDLK_F3:
                   PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

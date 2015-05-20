@@ -63,6 +63,7 @@ public:
     void render();
     void renderMouse();
     int exec();
+    void resetController();
     PGE_Menu menu;
     bool doExit;
 

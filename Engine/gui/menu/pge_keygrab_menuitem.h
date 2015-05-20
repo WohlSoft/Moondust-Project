@@ -20,15 +20,18 @@
 #define PGE_KEYGRAB_MENUITEM_H
 
 #include "_pge_menuitem.h"
+#include <SDL2/SDL_joystick.h>
 
 #define PGE_KEYGRAB_CANCEL -1
 #define PGE_KEYGRAB_REMOVE_KEY -2
+
 class PGE_KeyGrabMenuItem : public PGE_Menuitem
 {
 public:
     PGE_KeyGrabMenuItem();
     PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it);
     ~PGE_KeyGrabMenuItem();
+    void processJoystickBind();
     void grabKey();
     void pushKey(int scancode);
     void render(int x, int y);
@@ -38,6 +41,11 @@ private:
     int *keyValue;
     PGE_Menu* menu;
     friend class PGE_Menu;
+
+    bool          joystick_mode;
+    int         * joystick_key_id;
+    int         * joystick_key_type;
+    SDL_Joystick* joystick_device;
 };
 
 #endif // PGE_KEYGRAB_MENUITEM_H
