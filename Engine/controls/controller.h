@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,13 @@
 #include <QVector>
 #include "control_keys.h"
 #include "controllable_object.h"
+#include "controller_key_map.h"
 
 class Controller
 {
 public:
     Controller();
+    virtual ~Controller();
     enum commands
     {
         key_start=0,
@@ -41,6 +43,7 @@ public:
         key_drop
     };
     static controller_keys noKeys();
+    virtual void setKeyMap(KeyMap map);
 
     void resetControls();
     void sendControls();
@@ -49,6 +52,7 @@ public:
     void registerInControl(ControllableObject* obj);
     void removeFromControl(ControllableObject* obj);
 
+    KeyMap kmap;
     controller_keys keys;
     QVector<ControllableObject* > objects;
 };

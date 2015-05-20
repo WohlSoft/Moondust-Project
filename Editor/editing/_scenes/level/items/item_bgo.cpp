@@ -482,14 +482,14 @@ void ItemBGO::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->bgo.remove(bgoData.index);
+        scene->LvlData->bgo.removeAt(bgoData.index);
     }
     else
     for(int i=0; i<scene->LvlData->bgo.size(); i++)
     {
         if(scene->LvlData->bgo[i].array_id == bgoData.array_id)
         {
-            scene->LvlData->bgo.remove(i); break;
+            scene->LvlData->bgo.removeAt(i); break;
         }
     }
 }

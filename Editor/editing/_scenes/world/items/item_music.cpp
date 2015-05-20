@@ -185,7 +185,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==play)
     {
         scene->_edit->currentMusic = musicData.id;
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, "");
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, musicData.id, musicData.music_file);
         LvlMusPlay::updatePlayerState(true);
         MainWinConnect::pMainWin->setMusicButton(true);
     }
@@ -266,14 +266,14 @@ void ItemMusic::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->music.remove(musicData.index);
+        scene->WldData->music.removeAt(musicData.index);
     }
     else
     for(int i=0; i<scene->WldData->music.size(); i++)
     {
         if(scene->WldData->music[i].array_id == musicData.array_id)
         {
-            scene->WldData->music.remove(i); break;
+            scene->WldData->music.removeAt(i); break;
         }
     }
 }

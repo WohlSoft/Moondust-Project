@@ -21,14 +21,15 @@
 #include <QFile>
 #include <QTextStream>
 #include <QtDebug>
+#include <memory>
 
 #include <common_features/logger.h>
 
 #include "graphics_funcs.h"
 
-#include "../../_Libs/EasyBMP/EasyBMP.h"
+#include <EasyBMP/EasyBMP.h>
 extern "C"{
-#include "../../_Libs/giflib/gif_lib.h"
+#include <giflib/gif_lib.h>
 }
 
 
@@ -91,22 +92,29 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
     for(int y=0; y< image.height(); y++ )
         for(int x=0; x < image.width(); x++ )
         {
+            QColor Fpix = QColor(image.pixel(x,y));
             QColor Dpix = QColor(target.pixel(x,y));
             QColor Spix = QColor(newmask.pixel(x,y));
             QColor Npix;
 
             Npix.setAlpha(255);
+            //AND
             Npix.setRed( Dpix.red() & Spix.red());
             Npix.setGreen( Dpix.green() & Spix.green());
             Npix.setBlue( Dpix.blue() & Spix.blue());
+            //OR
+            Npix.setRed( Fpix.red() | Npix.red());
+            Npix.setGreen( Fpix.green() | Npix.green());
+            Npix.setBlue( Fpix.blue() | Npix.blue());
+
             target.setPixel(x, y, Npix.rgba());
 
             isWhiteMask &= ( (Spix.red()>240) //is almost White
                              &&(Spix.green()>240)
                              &&(Spix.blue()>240));
 
+            //Calculate alpha-channel level
             int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
-
             if( (Spix.red()>240) //is almost White
                             &&(Spix.green()>240)
                             &&(Spix.blue()>240))
@@ -114,30 +122,32 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
                 newAlpha = 0;
             }
 
-            alphaChannel.setPixel(x,y, newAlpha);
-        }
-
-    //vbSrcPaint
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
-        {
-            QColor Dpix = QColor(image.pixel(x,y));
-            QColor Spix = QColor(target.pixel(x,y));
-            QColor Npix;
-
-            Npix.setAlpha(255);
-            Npix.setRed( Dpix.red() | Spix.red());
-            Npix.setGreen( Dpix.green() | Spix.green());
-            Npix.setBlue( Dpix.blue() | Spix.blue());
-            target.setPixel(x, y, Npix.rgba());
-
-            //QColor curAlpha;
-            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
-            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
-
+            newAlpha = newAlpha+((Fpix.red() + Fpix.green() + Fpix.blue())/3);
             if(newAlpha>255) newAlpha=255;
+
             alphaChannel.setPixel(x,y, newAlpha);
         }
+//    //vbSrcPaint
+//    for(int y=0; y< image.height(); y++ )
+//        for(int x=0; x < image.width(); x++ )
+//        {
+//            QColor Dpix = QColor(image.pixel(x,y));
+//            QColor Spix = QColor(target.pixel(x,y));
+//            QColor Npix;
+
+//            Npix.setAlpha(255);
+//            Npix.setRed( Dpix.red() | Spix.red());
+//            Npix.setGreen( Dpix.green() | Spix.green());
+//            Npix.setBlue( Dpix.blue() | Spix.blue());
+//            target.setPixel(x, y, Npix.rgba());
+
+//            //QColor curAlpha;
+//            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
+//            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
+
+//            if(newAlpha>255) newAlpha=255;
+//            alphaChannel.setPixel(x,y, newAlpha);
+//        }
 
     target.setAlphaChannel(alphaChannel);
 
@@ -211,6 +221,108 @@ QImage GraphicsHelps::fromBMP(QString &file)
     return bmpImg;
 }
 
+QImage GraphicsHelps::fromGIF(QString &file)
+{
+    /*Slow and creepy code :P */
+
+    int errcode;
+
+    if(!QFile(file).exists())
+        return QImage();
+
+    GifFileType* t = DGifOpenFileName(file.toLocal8Bit().data(), &errcode);
+    if(!t)
+    {
+        qWarning()  << "Can't open GIF "<<file<< GifErrorString(errcode);
+        DGifCloseFile(t, &errcode);
+        return QImage();
+    }
+
+    QImage tarImg=QImage(t->SWidth, t->SHeight, QImage::Format_Indexed8);
+    GifRecordType RecordType;
+    do {
+        if (DGifGetRecordType(t, &RecordType) == GIF_ERROR)
+        {
+            qWarning()  << "GIF error 2"<< GifErrorString(errcode);
+            DGifCloseFile(t, &errcode);
+            return QImage();
+        }
+
+        switch (RecordType)
+        {
+           case IMAGE_DESC_RECORD_TYPE:
+                {
+                    errcode=DGifGetImageDesc(t);
+                    GifWord Width = t->Image.Width;
+                    GifWord Height = t->Image.Height;
+                    ColorMapObject* colrMap = (t->Image.ColorMap
+                                             ? t->Image.ColorMap
+                                             : t->SColorMap);
+                    QVector<QRgb> clTab;
+                    int padding = ((Width % 4)!=0 ? 4 - (Width % 4) : 0);
+                    for(int c=0; c<colrMap->ColorCount; c++)
+                    {
+                        QRgb pix=0;
+                        // 00000000 R24-00000000 G16-00000000 B8-00000000
+                        pix=(((unsigned int)colrMap->Colors[c].Red)<<16)|pix;
+                        pix=(((unsigned int)colrMap->Colors[c].Green)<<8)|pix;
+                        pix=(((unsigned int)colrMap->Colors[c].Blue))|pix;
+                    }
+                    tarImg.setColorTable(clTab);
+
+                    if (t->Image.Left + t->Image.Width > t->SWidth ||
+                         t->Image.Top + t->Image.Height > t->SHeight) {
+                          qWarning()<<"Image %d is not confined to screen dimension, aborted.\n" << GifErrorString(errcode);
+                          DGifCloseFile(t, &errcode);
+                          return QImage();
+                    }
+
+                    std::shared_ptr<GifPixelType>ptr(new GifPixelType[Width+padding]);
+                    GifPixelType *gifPixelLine=  ptr.get();
+                    if (t->Image.Interlace) {
+                        /* Need to perform 4 passes on the images: */
+                        for (int i = 0; i < 4; i++)
+                            for (int j = 0, pixH=0; j < Height;
+                                       j++,pixH++) {
+                                if(DGifGetLine(t, gifPixelLine, Width) == GIF_ERROR)
+                                {
+                                  qWarning()<<"Gif Error 3"<< GifErrorString(errcode);
+                                  DGifCloseFile(t, &errcode);
+                                  return QImage();
+                                }
+                                for(int pixW=0; pixW<Width; pixW++)
+                                    tarImg.setPixel(pixW, pixH, qGray(gifPixelLine[pixW]));
+                            }
+                        }
+                        else {
+                            for (int i = 0, pixH=0; i < Height; i++,pixH++) {
+                              if (DGifGetLine(t, gifPixelLine,
+                                  Width) == GIF_ERROR) {
+                                  qWarning()<<"Gif Error 4"<< GifErrorString(errcode);
+                                  DGifCloseFile(t, &errcode);
+                                  return QImage();
+                              }
+                              for(int pixW=0; pixW<Width; pixW++)
+                                    tarImg.setPixel(pixW, pixH, qGray(gifPixelLine[pixW]));
+                            }
+                        }
+                }
+                break;
+           case EXTENSION_RECORD_TYPE:
+               break;
+           case TERMINATE_RECORD_TYPE:
+               break;
+           default:            /* Should be traps by DGifGetRecordType. */
+               break;
+       }
+    }
+    while (RecordType != TERMINATE_RECORD_TYPE);
+
+    DGifCloseFile(t, &errcode);
+
+    return tarImg;
+}
+
 QPixmap GraphicsHelps::loadPixmap(QString file)
 {
     return QPixmap::fromImage(loadQImage(file));
@@ -218,9 +330,41 @@ QPixmap GraphicsHelps::loadPixmap(QString file)
 
 QImage GraphicsHelps::loadQImage(QString file)
 {
+    QFile img(file);
+    if(!img.exists())
+        return QImage();
+    if(!img.open(QIODevice::ReadOnly))
+        return QImage();
+
+    QByteArray mg=img.read(5); //Get magic number!
+    if(mg.size()<2) // too short!
+        return QImage();
+    char *magic = mg.data();
+    img.close();
+
+    //Detect PNG 89 50 4e 47
+    if( (magic[0]=='\x89')&&(magic[1]=='\x50')&&(magic[2]=='\x4e')&&(magic[3]=='\x47') )
+    {
+        QImage image = QImage( file );
+        return image;
+    } else
+    //Detect GIF 47 49 46 38
+    if( (magic[0]=='\x47')&&(magic[1]=='\x49')&&(magic[2]=='\x46')&&(magic[3]=='\x38') )
+    {
+        QImage image = QImage( file );
+        //QImage image = fromGIF( file );
+        return image;
+    }
+    else
+    //Detect BMP 42 4d
+    if( (magic[0]=='\x42')&&(magic[1]=='\x4d') )
+    {
+        QImage image = fromBMP( file );
+        return image;
+    }
+
+    //Another formats, supported by Qt :P
     QImage image = QImage( file );
-    if(image.isNull())
-        image = fromBMP( file);
     return image;
 }
 
@@ -279,8 +423,8 @@ bool GraphicsHelps::toGif(QImage& img, QString& path)
     }
 
     EGifSetGifVersion(t, true);
-
-    GifColorType* colorArr = new GifColorType[256];
+    std::shared_ptr<GifColorType>ptr(new GifColorType[256]);
+    GifColorType* colorArr = ptr.get();
     ColorMapObject* cmo = GifMakeMapObject(256, colorArr);
 
     bool unfinished = false;

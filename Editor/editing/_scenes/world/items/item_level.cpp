@@ -403,14 +403,14 @@ void ItemLevel::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->levels.remove(levelData.index);
+        scene->WldData->levels.removeAt(levelData.index);
     }
     else
     for(int i=0; i<scene->WldData->levels.size(); i++)
     {
         if(scene->WldData->levels[i].array_id == levelData.array_id)
         {
-            scene->WldData->levels.remove(i); break;
+            scene->WldData->levels.removeAt(i); break;
         }
     }
 }

@@ -68,7 +68,7 @@ void HistoryElementRemoveWarp::redo()
     {
         if(lvlScene->LvlData->doors[i].array_id==m_removedDoor.array_id)
         {
-            lvlScene->LvlData->doors.remove(i);
+            lvlScene->LvlData->doors.removeAt(i);
             break;
         }
     }

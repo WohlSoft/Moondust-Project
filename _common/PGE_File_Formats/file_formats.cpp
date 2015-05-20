@@ -30,22 +30,26 @@
 #endif
 
 QString FileFormats::errorString="";
+bool FileFormats::silentMode=false;
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
     #ifdef PGE_FILES_USE_MESSAGEBOXES
-    QMessageBox * box;
-    box= new QMessageBox();
-    box->setWindowTitle( QTranslator::tr("Bad File") );
-    box->setWindowIcon( Themes::icon(Themes::debugger) );
-    box->setText(
-                QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
-                          +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
-                           +QTranslator::tr("Line Data: %1").arg(line))
-                );
-    box->setStandardButtons(QMessageBox::Ok);
-    box->setIcon(QMessageBox::Warning);
-    box->exec();
+    if(!silentMode)
+    {
+        QMessageBox * box;
+        box= new QMessageBox();
+        box->setWindowTitle( QTranslator::tr("Bad File") );
+        box->setWindowIcon( Themes::icon(Themes::debugger) );
+        box->setText(
+                    QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+                              +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
+                               +QTranslator::tr("Line Data: %1").arg(line))
+                    );
+        box->setStandardButtons(QMessageBox::Ok);
+        box->setIcon(QMessageBox::Warning);
+        box->exec();
+    }
     #endif
     errorString = QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
                            +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error

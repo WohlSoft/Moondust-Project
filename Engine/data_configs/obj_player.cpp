@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,6 @@ bool ConfigManager::loadPlayableCharacters()
 
     playerset.beginGroup("main-characters");
         players_total = playerset.value("total", "0").toInt();
-        total_data +=players_total;
     playerset.endGroup();
 
     if(players_total==0)
@@ -104,6 +103,7 @@ bool ConfigManager::loadPlayableCharacters()
             splayer.image_wld = NULL;
             splayer.textureArrayId_wld= 0;
             splayer.animator_ID_wld = 0;
+            splayer.wld_offset_y = 0;
 
             //Default size of frame is 100x100
             splayer.frame_width=100;
@@ -160,8 +160,13 @@ bool ConfigManager::loadPlayableCharacters()
                             goto skipPLAYER;
                         }
                     }
+
+                    splayer.wld_offset_y = playerset.value("offset-y", "0").toInt();
+
                     splayer.wld_frames = playerset.value("frames-total", "1").toInt();
+                        if(splayer.wld_frames<1) splayer.wld_frames=1;
                     splayer.wld_framespeed = playerset.value("frame-speed", "128").toInt();
+                        if(splayer.wld_framespeed<1) splayer.wld_framespeed=1;
                     {
                     QStringList frms;
                             frms = playerset.value("frames-down", "").toString().split(",");

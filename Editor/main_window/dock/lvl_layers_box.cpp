@@ -371,7 +371,7 @@ void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
         {
             if( edit->LvlData.layers[i].array_id==(unsigned int)layerItem->data(Qt::UserRole).toInt() )
             {
-                edit->LvlData.layers.remove(i);
+                edit->LvlData.layers.removeAt(i);
                 delete layerItem;
                 break;
             }
@@ -737,7 +737,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                         ModifyLayer(newLayerName, visible);
                         ModifyLayer(oldLayerName, newLayerName, visible, 1);
                         delete item;
-                        edit->LvlData.layers.remove(i);
+                        edit->LvlData.layers.removeAt(i);
                         mw()->LayerListsSync();  //Sync comboboxes in properties
                         setLayersBox();
                     lockLayerEdit=false;
@@ -782,7 +782,7 @@ void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceSt
         if(sourceStart<edit->LvlData.layers.size())
         {
             buffer = edit->LvlData.layers[sourceStart];
-            edit->LvlData.layers.remove(sourceStart);
+            edit->LvlData.layers.removeAt(sourceStart);
             edit->LvlData.layers.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
         }
     }

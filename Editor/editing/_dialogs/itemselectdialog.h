@@ -48,6 +48,7 @@ public:
     int pathID;
     int levelID;
     int musicID;
+    QString musicFile;
 
     bool isCoin;
 
@@ -69,6 +70,7 @@ public:
 
     void removeEmptyEntry(int tabs);
 
+    void setWorldMapRootDir(QString dir);
 
 private slots:
 
@@ -135,6 +137,8 @@ private:
     QList<QWidget*> extraPathWid;
     QList<QWidget*> extraLevelWid;
     QList<QWidget*> extraMusicWid;
+
+    QString worldMapRoot;
 
     dataconfigs* conf;
     Ui::ItemSelectDialog *ui;

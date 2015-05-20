@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
+#include <controls/controller.h>
 
 typedef QPair<int, int > menustate;
 
@@ -55,10 +56,14 @@ class TitleScene : public Scene
 public:
     TitleScene();
     ~TitleScene();
+
+    bool init();
+
     void update();
     void render();
     void renderMouse();
     int exec();
+    void resetController();
     PGE_Menu menu;
     bool doExit;
 
@@ -71,6 +76,11 @@ public:
         menu_playbattle,
         menu_opensave,
         menu_tests,
+        menu_controls,
+        menu_controls_plr1,
+        menu_controls_plr2,
+        menu_player,
+        menu_volume,
         menu_dummy_and_big,//leave it!
         //For fetching
         menuFirst=menu_main,
@@ -82,14 +92,18 @@ public:
         ANSWER_EXIT=0,
         ANSWER_PLAYLEVEL,
         ANSWER_PLAYEPISODE,
+        ANSWER_PLAYEPISODE_2P,
         ANSWER_PLAYBATTLE,
         ANSWER_CREDITS,
         ANSWER_LOADING,
         ANSWER_GAMEOVER
     };
 
+    int numOfPlayers;
     PlayEpisodeResult result_episode; //play episode
     PlayLevelResult   result_level; //Play level/battle
+
+    Controller *controller;
 
 private:
     QPoint mousePos;

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include "pge_menu.h"
 #include <graphics/window.h>
+#include <graphics/gl_renderer.h>
 #include <fontman/font_manager.h>
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
@@ -33,7 +34,18 @@ PGE_Menu::PGE_Menu()
     arrowDownViz=false;
     _EndSelection=false;
     _accept=false;
-    menuRect = QRect(260,380, 350, 30);
+    is_keygrab=false;
+    m_item=NULL;
+
+    menuRect = QRect(260,380, 350, ConfigManager::setup_menus.item_height);
+    _item_height = ConfigManager::setup_menus.item_height;
+    _width_limit=PGE_Window::Width-100;
+    _text_len_limit=0;
+
+    /// Init menu font
+    ConfigManager::setup_menus.font_id = FontManager::getFontID(ConfigManager::setup_menus.font_name);
+    _font_id = ConfigManager::setup_menus.font_id;
+    _font_offset = ConfigManager::setup_menus.font_offset;
 
     if(ConfigManager::setup_menus.selector.isEmpty())
         _selector.w=0;
@@ -71,33 +83,55 @@ PGE_Menu::~PGE_Menu()
     }
 }
 
-void PGE_Menu::addMenuItem(QString value, QString title)
+void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _extAction)
 {
     PGE_Menuitem item;
     item.value = value;
     item.type=PGE_Menuitem::ITEM_Normal;
     item.title = (title.isEmpty() ? value : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
+    item.extAction=_extAction;
     _items_normal.push_back(item);
     _items.push_back( &_items_normal.last() );
+    refreshRect();
 }
 
-void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title)
+void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::function<void()> _extAction)
 {
     PGE_BoolMenuItem item;
     item.flag = flag;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown flag" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
+    item.extAction=_extAction;
     _items_bool.push_back(item);
     _items.push_back( &_items_bool.last() );
+    refreshRect();
 }
 
-void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate)
+void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QString title, bool rotate, std::function<void()> _extAction)
 {
     PGE_IntMenuItem item;
     item.intvalue = intvalue;
@@ -106,26 +140,119 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     item.max=max;
     item.allowRotation=rotate;
     item.title = (title.isEmpty() ? "unknown integer" : title);
-    item.textTexture = FontManager::TextToTexture(item.title,
-                                                  QRect(0,0, abs(PGE_Window::Width-menuRect.x()), menuRect.height()),
-                                                  Qt::AlignLeft | Qt::AlignVCenter, true );
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
+    item.extAction=_extAction;
     _items_int.push_back(item);
     _items.push_back( &_items_int.last() );
+    refreshRect();
 }
+
+void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QString value, QString title, bool rotate, std::function<void()> _extAction)
+{
+    PGE_NamedIntMenuItem item;
+    item.intvalue = intvalue;
+    item.value = value;
+    item.items=_items;
+    if(intvalue)
+        for(int i=0; i<_items.size(); i++)
+        {
+            if(*intvalue==_items[i].value)
+            { item.curItem=i; break; }
+        }
+    item.allowRotation=rotate;
+    item.title = (title.isEmpty() ? "unknown named integer" : title);
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
+    item.extAction=_extAction;
+    _items_named_int.push_back(item);
+    PGE_Menu::_items.push_back( &_items_named_int.last() );
+    refreshRect();
+}
+
+void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title,
+                                  int *joystick_key_id,
+                                  int *joystick_key_type,
+                                  SDL_Joystick* joystick_device)
+{
+    PGE_KeyGrabMenuItem item;
+    item.keyValue = keyvalue;
+    item.value = value;
+    item.title = (title.isEmpty() ? "unknown key-grabber" : title);
+    item._font_id = _font_id;
+    if(_text_len_limit_strict)
+    {   //Crop lenght
+        item.title=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+    }
+    else
+    {
+        //Capture limited lenght, but don't crop
+        QString temp=FontManager::cropText(item.title, _text_len_limit);
+        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+    }
+
+    if(joystick_key_id && joystick_key_type)
+    {
+        item.joystick_mode=true;
+        item.joystick_key_id=joystick_key_id;
+        item.joystick_key_type=joystick_key_type;
+        item.joystick_device=joystick_device;
+    }
+
+    item.menu = this;
+    _items_keygrabs.push_back(item);
+    _items.push_back( &_items_keygrabs.last() );
+    refreshRect();
+}
+
+void PGE_Menu::setValueOffset(int offset)
+{
+    if(_items.isEmpty()) return;
+    if(offset<=0) return;
+    _items.last()->valueOffset=offset;
+}
+
+void PGE_Menu::setItemWidth(int width)
+{
+    if(_items.isEmpty()) return;
+    if(width<=0) return;
+    _items.last()->_width=width;
+}
+
 
 
 void PGE_Menu::clear()
 {
-    for(int i=0;i<_items.size();i++)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &_items[i]->textTexture );
-    }
     _items.clear();
     _items_normal.clear();
     _items_bool.clear();
     _items_int.clear();
+    _items_named_int.clear();
+    _items_keygrabs.clear();
+    m_item=NULL;
     reset();
+    refreshRect();
 }
 
 void PGE_Menu::selectUp()
@@ -213,11 +340,22 @@ void PGE_Menu::acceptItem()
     }
     else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_Int)
     {}
+    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_NamedInt)
+    {
+        _items[_currentItem]->right();
+    }
+    else if(_items[_currentItem]->type==PGE_Menuitem::ITEM_KeyGrab)
+    {
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
+        static_cast<PGE_KeyGrabMenuItem*>(_items[_currentItem])->grabKey();
+    }
     else
     {
         PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
         _EndSelection=true;
         _accept=true;
+        if((_currentItem<_items.size())&&(_currentItem>=0))
+            _items[_currentItem]->extAction();
     }
 }
 
@@ -276,7 +414,26 @@ bool PGE_Menu::isAccepted()
     return _accept;
 }
 
+bool PGE_Menu::isKeyGrabbing()
+{
+    return is_keygrab;
+}
 
+bool PGE_Menu::processJoystickBinder()
+{
+    if((is_keygrab) && (m_item) && (m_item->joystick_mode))
+    {
+        m_item->processJoystickBind();
+        return true;
+    }
+    return false;
+}
+
+void PGE_Menu::storeKey(int scancode)
+{
+    if(m_item)
+        m_item->pushKey(scancode);
+}
 
 void PGE_Menu::reset()
 {
@@ -285,6 +442,7 @@ void PGE_Menu::reset()
     _offset=0;
     _line=0;
     _currentItem=0;
+    is_keygrab=false;
 }
 
 void PGE_Menu::resetState()
@@ -314,16 +472,16 @@ int PGE_Menu::findItem(int x, int y)
     if(x>menuRect.right()) return -1;
     if(x<menuRect.left())  return -1;
     if(y<menuRect.top())  return -1;
-    if(y>menuRect.top()+menuRect.height()*_itemsOnScreen) return -1;
+    if(y>menuRect.bottom()) return -1;
 
     int pos = menuRect.y();
     for(int i=0; (i<_itemsOnScreen) && (i<_items.size()); i++)
     {
-        if( (y > pos) && ( y<(pos+menuRect.height()) ) )
+        if( (y > pos) && ( y<(pos+_item_height) ) )
         {
             return _offset+i;
         }
-        pos+=menuRect.height();
+        pos+=_item_height;
     }
 
     return -1;
@@ -427,23 +585,55 @@ void PGE_Menu::autoOffset()
 void PGE_Menu::setPos(int x, int y)
 {
     menuRect.setX(x);
-    menuRect.setY(y);
+    menuRect.setY(y-_font_offset);
+    refreshRect();
 }
 
 void PGE_Menu::setPos(QPoint p)
 {
     menuRect.setTopLeft(p);
+    menuRect.setY(menuRect.y()-_font_offset);
+    refreshRect();
 }
 
 void PGE_Menu::setSize(int w, int h)
 {
-    menuRect.setWidth(w);
-    menuRect.setHeight(h);
+    Q_UNUSED(w);
+    _item_height=h;
+    refreshRect();
 }
 
 void PGE_Menu::setSize(QSize s)
 {
-    menuRect.setSize(s);
+    _item_height=s.height();
+    refreshRect();
+}
+
+void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
+{
+    if(maxlen<=0)
+        _text_len_limit=0;
+    else
+        _text_len_limit=maxlen;
+    _text_len_limit_strict = strict;
+}
+
+
+void PGE_Menu::refreshRect()
+{
+    if(_items.size()<_itemsOnScreen)
+        menuRect.setHeight(_items.size() * _item_height );
+    else
+        menuRect.setHeight(_itemsOnScreen * _item_height );
+
+    menuRect.setWidth(0);
+    for(int i=0; i<_items.size(); i++)
+    {
+        if(menuRect.width()<_items[i]->_width)
+            menuRect.setWidth(_items[i]->_width);
+    }
+    if(menuRect.width()>_width_limit)
+        menuRect.setWidth(_width_limit);
 }
 
 QRect PGE_Menu::rect()
@@ -469,30 +659,11 @@ void PGE_Menu::render()
             int posY = menuRect.y()-h-4;
             if(_scroll_up.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 0.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( posX, posY);
-                    glVertex2f( posX+w, posY);
-                    glVertex2f( posX+w, posY+h);
-                    glVertex2f( posX, posY+h);
-                glEnd();
+                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _scroll_up.texture);
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( posX,             posY);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( posX+_scroll_up.w, posY);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( posX+_scroll_up.w, posY+_scroll_up.h);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( posX,             posY+_scroll_up.h);
-                glEnd();
+                GlRenderer::renderTexture(&_scroll_up, posX, posY);
             }
         }
 
@@ -506,33 +677,14 @@ void PGE_Menu::render()
                 h=_scroll_down.h;
             }
             int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()+menuRect.height()*_itemsOnScreen+4;
+            int posY = menuRect.y()+_item_height*_itemsOnScreen+4;
             if(_scroll_down.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 0.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( posX, posY);
-                    glVertex2f( posX+w, posY);
-                    glVertex2f( posX+w, posY+h);
-                    glVertex2f( posX, posY+h);
-                glEnd();
+                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _scroll_down.texture);
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( posX,             posY);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( posX+_scroll_down.w, posY);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( posX+_scroll_down.w, posY+_scroll_down.h);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( posX,             posY+_scroll_down.h);
-                glEnd();
+                GlRenderer::renderTexture(&_scroll_down, posX, posY);
             }
         }
     }
@@ -541,154 +693,20 @@ void PGE_Menu::render()
     {
         int xPos = menuRect.x();
         int xPos_s = menuRect.x()-_selector.w-10;
-        int yPos = menuRect.y()+ j*menuRect.height();
+        int yPos = menuRect.y()+ j*_item_height;
 
         if(i==_currentItem)
         {
             if(_selector.w==0)
             {
-                glDisable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 0.f, 1.0f);
-                glBegin( GL_QUADS );
-                    glVertex2f( xPos_s-10,                 yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s+10-10,              yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s+10-10,           10+yPos + (menuRect.height()/2)-5 );
-                    glVertex2f( xPos_s-10,              10+yPos + (menuRect.height()/2)-5 );
-                glEnd();
+                GlRenderer::renderRect(xPos_s-10, yPos + (_item_height/2)-5, 20, 20, 1.f, 1.f, 0.f, 1.0f);
             }
             else
             {
-                glEnable(GL_TEXTURE_2D);
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glBindTexture(GL_TEXTURE_2D, _selector.texture);
-                glBegin( GL_QUADS );
-                    int y_offset=(menuRect.height()/2)-(_selector.h/2);
-                    glTexCoord2f( 0, 0 );
-                    glVertex2f( xPos_s,             yPos+y_offset);
-                    glTexCoord2f( 1, 0 );
-                    glVertex2f( xPos_s+_selector.w, yPos+y_offset);
-                    glTexCoord2f( 1, 1 );
-                    glVertex2f( xPos_s+_selector.w, yPos+_selector.h+y_offset);
-                    glTexCoord2f( 0, 1 );
-                    glVertex2f( xPos_s,             yPos+_selector.h+y_offset);
-                glEnd();
+                int y_offset=(_item_height/2)-(_selector.h/2);
+                GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }
-
-        _items[i]->render(xPos, yPos);
+        _items[i]->render(xPos, yPos+_font_offset);
     }
-}
-
-PGE_Menuitem::PGE_Menuitem()
-{
-    this->title = "";
-    this->value = "";
-    this->textTexture = 0;
-}
-
-PGE_Menuitem::~PGE_Menuitem()
-{}
-
-PGE_Menuitem::PGE_Menuitem(const PGE_Menuitem &_it)
-{
-    this->title = _it.title;
-    this->value = _it.value;
-    this->textTexture = _it.textTexture;
-    this->type = _it.type;
-}
-
-void PGE_Menuitem::left() {}
-
-void PGE_Menuitem::right() {}
-
-void PGE_Menuitem::toggle() {}
-
-void PGE_Menuitem::render(int x, int y)
-{
-    FontManager::SDL_string_render2D(x,y, &textTexture);
-}
-
-
-/**************************Bool menu item************************************/
-PGE_BoolMenuItem::PGE_BoolMenuItem() : PGE_Menuitem()
-{
-    flag=NULL;
-    type=ITEM_Bool;
-}
-
-PGE_BoolMenuItem::PGE_BoolMenuItem(const PGE_BoolMenuItem &it) : PGE_Menuitem(it)
-{
-    this->flag = it.flag;
-}
-
-PGE_BoolMenuItem::~PGE_BoolMenuItem() {}
-
-void PGE_BoolMenuItem::left()
-{
-    toggle();
-}
-
-void PGE_BoolMenuItem::right()
-{
-    toggle();
-}
-
-void PGE_BoolMenuItem::render(int x, int y)
-{
-    PGE_Menuitem::render(x, y);
-    if(flag)
-        FontManager::printText((*flag)?"ON":"OFF", x+350, y);
-}
-
-void PGE_BoolMenuItem::toggle()
-{
-    if(flag)
-        *flag=!(*flag);
-}
-
-
-
-/**************************Integer menu item************************************/
-
-PGE_IntMenuItem::PGE_IntMenuItem() : PGE_Menuitem()
-{
-    intvalue=NULL;
-    type=ITEM_Int;
-    min=0;
-    max=0;
-    allowRotation=false;
-}
-
-PGE_IntMenuItem::PGE_IntMenuItem(const PGE_IntMenuItem &it) : PGE_Menuitem(it)
-{
-    this->intvalue = it.intvalue;
-    this->min = it.min;
-    this->max = it.max;
-    this->allowRotation = it.allowRotation;
-}
-
-PGE_IntMenuItem::~PGE_IntMenuItem()
-{}
-
-void PGE_IntMenuItem::left()
-{
-    if(!intvalue) return;
-    (*intvalue)--;
-    if((*intvalue)<min)
-        *intvalue=allowRotation?max:min;
-}
-
-void PGE_IntMenuItem::right()
-{
-    if(!intvalue) return;
-    (*intvalue)++;
-    if((*intvalue)>max)
-        *intvalue=allowRotation?min:max;
-}
-
-void PGE_IntMenuItem::render(int x, int y)
-{
-    PGE_Menuitem::render(x, y);
-    if(intvalue)
-        FontManager::printText(QString::number(*intvalue), x+350, y);
 }

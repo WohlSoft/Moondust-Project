@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
               animator.frameLast,
               animator.reverce,
               animator.bidirectional);
+    this->manual_ticks = animator.manual_ticks;
+    this->onceMode = animator.onceMode;
+    this->animationFinished = animator.animationFinished;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
@@ -49,6 +52,13 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     frameLast = Last;
     CurrentFrame = 0;
 
+    frame_sequance_enabled=false;
+
+    manual_ticks = fspeed;
+
+    onceMode=false;
+    animationFinished=false;
+
     isEnabled=false;
 
     pos1 = 0.0;
@@ -61,6 +71,20 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
     framesQ = framesq;
 
     setFrame(frameFirst);
+}
+
+void SimpleAnimator::setFrameSequance(QList<int> sequance)
+{
+    frame_sequance=sequance;
+    frame_sequance_enabled=true;
+    frame_sequance_cur=0;
+    if(!frame_sequance.isEmpty())
+    {
+        CurrentFrame = frame_sequance[frame_sequance_cur];
+        pos1 = CurrentFrame/framesQ;
+        pos2 = CurrentFrame/framesQ + 1.0/framesQ;
+        manual_ticks = speed;
+    }
 }
 
 SimpleAnimator::~SimpleAnimator()
@@ -82,6 +106,9 @@ bool SimpleAnimator::operator==(const SimpleAnimator &animator) const
     if(animator.frameLast != frameLast) return false;
     if(animator.reverce != reverce) return false;
     if(animator.bidirectional != bidirectional) return false;
+    if(animator.manual_ticks != manual_ticks) return false;
+    if(animator.animationFinished != animationFinished) return false;
+    if(animator.onceMode != onceMode) return false;
     return true;
 }
 
@@ -110,6 +137,18 @@ AniPos SimpleAnimator::image(double frame)
 //Animation process
 void SimpleAnimator::nextFrame()
 {
+    if(frame_sequance_enabled)
+    {
+        frame_sequance_cur++;
+        if(frame_sequance_cur<0)
+            frame_sequance_cur=0;
+        if(frame_sequance_cur>=frame_sequance.size())
+            frame_sequance_cur=0;
+        if(!frame_sequance.isEmpty())
+            CurrentFrame = frame_sequance[frame_sequance_cur];
+        goto makeFrame;
+    }
+
     if(reverce)
     { // Reverce animation
         CurrentFrame--;
@@ -119,6 +158,7 @@ void SimpleAnimator::nextFrame()
             {
                 reverce=!reverce; // change direction on first frame
                 CurrentFrame+=2;
+                if(onceMode) animationFinished=true;
             }
             else
             {
@@ -127,6 +167,7 @@ void SimpleAnimator::nextFrame()
                     CurrentFrame=framesQ-1;
                 else
                     CurrentFrame=frameLast;
+                if(onceMode) animationFinished=true;
             }
         }
 
@@ -145,18 +186,17 @@ void SimpleAnimator::nextFrame()
             else
             {
                 CurrentFrame=frameFirst; // Return to first frame;
+                if(onceMode) animationFinished=true;
             }
         }
     }
 
+makeFrame:
     pos1 = CurrentFrame/framesQ;
     pos2 = CurrentFrame/framesQ + 1.0/framesQ;
 
     if(isEnabled)
         timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
-    else
-        SDL_RemoveTimer(timer_id);
-
 }
 
 
@@ -203,6 +243,32 @@ unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
     SimpleAnimator *self = reinterpret_cast<SimpleAnimator *>(p);
     self->nextFrame();
     return 0;
+}
+
+void SimpleAnimator::setOnceMode(bool once)
+{
+    onceMode=once;
+    animationFinished=false;
+    if(once)
+        setFrame(frameFirst);
+}
+
+//Ability to tick animation manually!
+void SimpleAnimator::manualTick(int ticks)
+{
+    if(speed<1) return; //Idling animation
+
+    manual_ticks-=abs(ticks);
+        while(manual_ticks<=0)
+        {
+            nextFrame();
+            manual_ticks+=speed;
+        }
+}
+
+bool SimpleAnimator::isFinished()
+{
+    return animationFinished;
 }
 
 

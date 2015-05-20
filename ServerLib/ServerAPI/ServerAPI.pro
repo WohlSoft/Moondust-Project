@@ -42,27 +42,13 @@ message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LIN
 
 
 SOURCES += \
-    pgeconnection.cpp \
-    pgeclient.cpp \
-    pgeserver.cpp \
-    pgeserver_p.cpp \
-    packet/packet.cpp \
-    packet/predefined/packethandshake.cpp \
-    packet/base/handshake/packethandshakeaccepted.cpp \
-    _tcp_server.cpp
+    packetV2/packets/packetcursor.cpp
 
 HEADERS += \
-    pgesocketdefines.h \
-    pgeconnection.h \
-    pgeclient.h \
-    pgeserver.h \
-    pgeconnecteduser.h \
-    packet/packet.h \
-    packet/predefined/packethandshake.h \
-    utils/pgewriterutils.h \
-    utils/pgemiscutils.h \
-    packet/base/handshake/packethandshakeaccepted.h \
-    _tcp_server.h
+    packetV2/pgepacketregister.h \
+    packetV2/pgepacketgloabls.h \
+    packetV2/packets/packet.h \
+    packetV2/packets/packetcursor.h
 
 OTHER_FILES += \
     PacketInfo.txt

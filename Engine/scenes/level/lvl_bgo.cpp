@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,12 @@
 #include "lvl_bgo.h"
 #include "../../data_configs/config_manager.h"
 
+#include <graphics/gl_renderer.h>
+
 LVL_Bgo::LVL_Bgo()
 {
     type = LVLBGO;
-    data = NULL;
+    data=FileFormats::dummyLvlBgo();
     animated=false;
     animator_ID=0;
 }
@@ -54,8 +56,8 @@ void LVL_Bgo::init()
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
-    bodyDef.position.Set( PhysUtil::pix2met( data->x+posX_coefficient ),
-        PhysUtil::pix2met(data->y + posY_coefficient ) );
+    bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
+        PhysUtil::pix2met(data.y + posY_coefficient ) );
     bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
     physBody = worldPtr->CreateBody(&bodyDef);
 
@@ -68,36 +70,11 @@ void LVL_Bgo::init()
     bgo->SetFriction( 0 );
 }
 
-void LVL_Bgo::render(float camX, float camY)
+void LVL_Bgo::render(double camX, double camY)
 {
-    QRectF bgoG = QRectF(posX()-camX,
-                           posY()-camY,
-                           width,
-                           height);
-
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
-
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    glBindTexture( GL_TEXTURE_2D, texId );
-
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, x.first );
-        glVertex2f( bgoG.left(), bgoG.top());
-
-        glTexCoord2f( 1, x.first );
-        glVertex2f(  bgoG.right(), bgoG.top());
-
-        glTexCoord2f( 1, x.second );
-        glVertex2f(  bgoG.right(),  bgoG.bottom());
-
-        glTexCoord2f( 0, x.second );
-        glVertex2f( bgoG.left(),  bgoG.bottom());
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
 }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #ifndef BASE_OBJECT_H
 #define BASE_OBJECT_H
 
+#include <QVector>
 #include <Box2D/Box2D.h>
 #include "phys_util.h"
 #include "../graphics/graphics.h"
@@ -32,16 +33,16 @@ class PGE_Phys_Object
 public:
     PGE_Phys_Object();
     virtual ~PGE_Phys_Object();
-    virtual float posX(); //!< Position X
-    virtual float posY(); //!< Position Y
+    virtual double posX(); //!< Position X
+    virtual double posY(); //!< Position Y
 
-    float top();
-    float bottom();
-    float left();
-    float right();
+    double top();
+    double bottom();
+    double left();
+    double right();
 
     void setSize(float w, float h);
-    virtual void setPos(long x, long y);
+    virtual void setPos(double x, double y);
 
     float width;  //!< Width
     float height; //!< Height
@@ -103,10 +104,19 @@ public:
     };
 
     virtual void update();
-    virtual void render(float x, float y);
+    virtual void render(double x, double y);
 };
 
 bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
+
+
+//subclass b2QueryCallback
+class CollidablesInRegionQueryCallback : public b2QueryCallback
+{
+public:
+      QVector<b2Body*> foundBodies;
+      bool ReportFixture(b2Fixture* fixture);
+};
 
 #endif // BASE_OBJECT_H

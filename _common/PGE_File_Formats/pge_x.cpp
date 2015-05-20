@@ -16,11 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMutex>
+#include <QMutexLocker>
+
 #include "pge_x.h"
 #include "file_strlist.h"
 
 namespace PGEExtendedFormat
 {
+    QMutex locker;
     QRegExp section_title = QRegExp("^[A-Z0-9_]*$");
 
     QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
@@ -226,6 +230,7 @@ QString PGEFile::lastError()
 bool PGEFile::IsSectionTitle(QString in)
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return section_title.exactMatch(in);
 }
 
@@ -234,36 +239,42 @@ bool PGEFile::IsSectionTitle(QString in)
 bool PGEFile::IsQStr(QString in) // QUOTED STRING
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return qstr.exactMatch(in);
 }
 
 bool PGEFile::IsHex(QString in) // Heximal string
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return heximal.exactMatch(in);
 }
 
 bool PGEFile::IsBool(QString in) // Boolean
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return boolean.exactMatch(in);
 }
 
 bool PGEFile::IsIntU(QString in) // Unsigned Int
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return usig_int.exactMatch(in);
 }
 
 bool PGEFile::IsIntS(QString in) // Signed Int
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return sig_int.exactMatch(in);
 }
 
 bool PGEFile::IsFloat(QString in) // Float Point numeric
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return floatptr.exactMatch(in);
 }
 
@@ -271,18 +282,19 @@ bool PGEFile::IsFloat(QString in) // Float Point numeric
 bool PGEFile::IsBoolArray(QString in) // Boolean array
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return boolArray.exactMatch(in);
 }
 
 bool PGEFile::IsIntArray(QString in) // Boolean array
 {
     using namespace PGEExtendedFormat;
+    QMutexLocker lock(&locker);
     return intArray.exactMatch(in);
 }
 
 bool PGEFile::IsStringArray(QString in) // String array
 {
-    using namespace PGEExtendedFormat;
     bool valid=true;
     int i=0, depth=0, comma=0;
     while(i<in.size())

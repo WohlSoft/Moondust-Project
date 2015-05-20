@@ -29,6 +29,11 @@ Editor 0.3.0
 - Added "delete tileset" button to provide built-in removing of junk tilesets
 - Fixed bug with music boxed placing undo history action
 - Loading speed has increased
+Minor updates after release (updated version since 11 may 2015 build date):
+- Fixed musicbox history
+- Fixed history of z-values
+- Copy-pasting bugs has been fixed
+- Added support of custom music on world map (WLDX files only!)
 
 Editor 0.2.2
 - Added "Ask every startup" flag into config manager

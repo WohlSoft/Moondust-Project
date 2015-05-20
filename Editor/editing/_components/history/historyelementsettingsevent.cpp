@@ -29,7 +29,6 @@ void HistoryElementSettingsEvent::undo()
 
     HistorySettings::LevelSettingSubType subtype = m_subtype;
     int array_id = m_array_id;
-    int index = -1;
     QVariant extraData = m_modData;
     LevelSMBX64Event * eventp;
     bool found = false;
@@ -37,8 +36,7 @@ void HistoryElementSettingsEvent::undo()
     for(int i = 0; i < lvlScene->LvlData->events.size(); i++){
         if(lvlScene->LvlData->events[i].array_id == (unsigned int)array_id){
             found = true;
-            eventp = lvlScene->LvlData->events.data();
-            index = i;
+            eventp = &lvlScene->LvlData->events[i];
             break;
         }
     }
@@ -48,19 +46,19 @@ void HistoryElementSettingsEvent::undo()
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
-        eventp[index].autostart = !extraData.toBool();
+        eventp->autostart = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SMOKE){
-        eventp[index].nosmoke = !extraData.toBool();
+        eventp->nosmoke = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LSHOWADD){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_show.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_show.size(); i++){
-                if(eventp[index].layers_show[i] == layer){
-                    eventp[index].layers_show.removeAt(i);
+        if(!eventp->layers_show.isEmpty()){
+            for(int i = 0; i < eventp->layers_show.size(); i++){
+                if(eventp->layers_show[i] == layer){
+                    eventp->layers_show.removeAt(i);
                 }
             }
         }
@@ -68,10 +66,10 @@ void HistoryElementSettingsEvent::undo()
     else
     if(subtype == HistorySettings::SETTING_EV_LHIDEADD){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_hide.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_hide.size(); i++){
-                if(eventp[index].layers_hide[i] == layer){
-                    eventp[index].layers_hide.removeAt(i);
+        if(!eventp->layers_hide.isEmpty()){
+            for(int i = 0; i < eventp->layers_hide.size(); i++){
+                if(eventp->layers_hide[i] == layer){
+                    eventp->layers_hide.removeAt(i);
                 }
             }
         }
@@ -79,10 +77,10 @@ void HistoryElementSettingsEvent::undo()
     else
     if(subtype == HistorySettings::SETTING_EV_LTOGADD){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_toggle.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
-                if(eventp[index].layers_toggle[i] == layer){
-                    eventp[index].layers_toggle.removeAt(i);
+        if(!eventp->layers_toggle.isEmpty()){
+            for(int i = 0; i < eventp->layers_toggle.size(); i++){
+                if(eventp->layers_toggle[i] == layer){
+                    eventp->layers_toggle.removeAt(i);
                 }
             }
         }
@@ -90,117 +88,117 @@ void HistoryElementSettingsEvent::undo()
     else
     if(subtype == HistorySettings::SETTING_EV_LSHOWDEL){
         QString layer = extraData.toString();
-        eventp[index].layers_show.push_back(layer);
+        eventp->layers_show.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LHIDEDEL){
         QString layer = extraData.toString();
-        eventp[index].layers_hide.push_back(layer);
+        eventp->layers_hide.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LTOGDEL){
         QString layer = extraData.toString();
-        eventp[index].layers_toggle.push_back(layer);
+        eventp->layers_toggle.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_MOVELAYER){
         QString layer = extraData.toList()[0].toString();
-        eventp[index].movelayer = layer;
+        eventp->movelayer = layer;
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SPEEDLAYERX){
-        eventp[index].layer_speed_x = extraData.toList()[0].toDouble();
+        eventp->layer_speed_x = extraData.toList()[0].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SPEEDLAYERY){
-        eventp[index].layer_speed_y = extraData.toList()[0].toDouble();
+        eventp->layer_speed_y = extraData.toList()[0].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRSEC){
-        eventp[index].scroll_section = (long)extraData.toList()[0].toLongLong();
+        eventp->scroll_section = (long)extraData.toList()[0].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRX){
-        eventp[index].move_camera_x = extraData.toList()[0].toDouble();
+        eventp->move_camera_x = extraData.toList()[0].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRY){
-        eventp[index].move_camera_y = extraData.toList()[0].toDouble();
+        eventp->move_camera_y = extraData.toList()[0].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECSIZE){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[1].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[2].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[3].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[4].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[1].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[2].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[3].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[4].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECMUS){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[1].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[1].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECBG){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_MSG){
-        eventp[index].msg = extraData.toList()[0].toString();
+        eventp->msg = extraData.toList()[0].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SOUND){
-        eventp[index].sound_id = (long)extraData.toList()[0].toLongLong();
+        eventp->sound_id = (long)extraData.toList()[0].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_ENDGAME){
-        eventp[index].end_game = (long)extraData.toList()[0].toLongLong();
+        eventp->end_game = (long)extraData.toList()[0].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KUP){
-        eventp[index].ctrl_up = !extraData.toBool();
+        eventp->ctrl_up = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KDOWN){
-        eventp[index].ctrl_down = !extraData.toBool();
+        eventp->ctrl_down = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KLEFT){
-        eventp[index].ctrl_left = !extraData.toBool();
+        eventp->ctrl_left = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KRIGHT){
-        eventp[index].ctrl_right = !extraData.toBool();
+        eventp->ctrl_right = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KRUN){
-        eventp[index].ctrl_run = !extraData.toBool();
+        eventp->ctrl_run = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KALTRUN){
-        eventp[index].ctrl_altrun = !extraData.toBool();
+        eventp->ctrl_altrun = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KJUMP){
-        eventp[index].ctrl_jump = !extraData.toBool();
+        eventp->ctrl_jump = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KALTJUMP){
-        eventp[index].ctrl_altjump = !extraData.toBool();
+        eventp->ctrl_altjump = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KDROP){
-        eventp[index].ctrl_drop = !extraData.toBool();
+        eventp->ctrl_drop = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KSTART){
-        eventp[index].ctrl_start = !extraData.toBool();
+        eventp->ctrl_start = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_TRIACTIVATE){
-        eventp[index].trigger = extraData.toList()[0].toString();
+        eventp->trigger = extraData.toList()[0].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_TRIDELAY){
-        eventp[index].trigger_timer = (long)extraData.toList()[0].toLongLong();
+        eventp->trigger_timer = (long)extraData.toList()[0].toLongLong();
     }
 
 
@@ -219,7 +217,6 @@ void HistoryElementSettingsEvent::redo()
 
     HistorySettings::LevelSettingSubType subtype = m_subtype;
     int array_id = m_array_id;
-    int index = -1;
     QVariant extraData = m_modData;
     LevelSMBX64Event * eventp;
     bool found = false;
@@ -227,8 +224,7 @@ void HistoryElementSettingsEvent::redo()
     for(int i = 0; i < lvlScene->LvlData->events.size(); i++){
         if(lvlScene->LvlData->events[i].array_id == (unsigned int)array_id){
             found = true;
-            eventp = lvlScene->LvlData->events.data();
-            index = i;
+            eventp = &lvlScene->LvlData->events[i];
             break;
         }
     }
@@ -238,34 +234,34 @@ void HistoryElementSettingsEvent::redo()
 
     MainWinConnect::pMainWin->dock_LvlEvents->setEventToolsLocked(true);
     if(subtype == HistorySettings::SETTING_EV_AUTOSTART){
-        eventp[index].autostart = extraData.toBool();
+        eventp->autostart = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SMOKE){
-        eventp[index].nosmoke = extraData.toBool();
+        eventp->nosmoke = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LSHOWADD){
         QString layer = extraData.toString();
-        eventp[index].layers_show.push_back(layer);
+        eventp->layers_show.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LHIDEADD){
         QString layer = extraData.toString();
-        eventp[index].layers_hide.push_back(layer);
+        eventp->layers_hide.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LTOGADD){
         QString layer = extraData.toString();
-        eventp[index].layers_toggle.push_back(layer);
+        eventp->layers_toggle.push_back(layer);
     }
     else
     if(subtype == HistorySettings::SETTING_EV_LSHOWDEL){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_show.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_show.size(); i++){
-                if(eventp[index].layers_show[i] == layer){
-                    eventp[index].layers_show.removeAt(i);
+        if(!eventp->layers_show.isEmpty()){
+            for(int i = 0; i < eventp->layers_show.size(); i++){
+                if(eventp->layers_show[i] == layer){
+                    eventp->layers_show.removeAt(i);
                 }
             }
         }
@@ -273,10 +269,10 @@ void HistoryElementSettingsEvent::redo()
     else
     if(subtype == HistorySettings::SETTING_EV_LHIDEDEL){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_hide.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_hide.size(); i++){
-                if(eventp[index].layers_hide[i] == layer){
-                    eventp[index].layers_hide.removeAt(i);
+        if(!eventp->layers_hide.isEmpty()){
+            for(int i = 0; i < eventp->layers_hide.size(); i++){
+                if(eventp->layers_hide[i] == layer){
+                    eventp->layers_hide.removeAt(i);
                 }
             }
         }
@@ -284,10 +280,10 @@ void HistoryElementSettingsEvent::redo()
     else
     if(subtype == HistorySettings::SETTING_EV_LTOGDEL){
         QString layer = extraData.toString();
-        if(!eventp[index].layers_toggle.isEmpty()){
-            for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
-                if(eventp[index].layers_toggle[i] == layer){
-                    eventp[index].layers_toggle.removeAt(i);
+        if(!eventp->layers_toggle.isEmpty()){
+            for(int i = 0; i < eventp->layers_toggle.size(); i++){
+                if(eventp->layers_toggle[i] == layer){
+                    eventp->layers_toggle.removeAt(i);
                 }
             }
         }
@@ -295,102 +291,102 @@ void HistoryElementSettingsEvent::redo()
     else
     if(subtype == HistorySettings::SETTING_EV_MOVELAYER){
         QString layer = extraData.toList()[1].toString();
-        eventp[index].movelayer = layer;
+        eventp->movelayer = layer;
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SPEEDLAYERX){
-        eventp[index].layer_speed_x = extraData.toList()[1].toDouble();
+        eventp->layer_speed_x = extraData.toList()[1].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SPEEDLAYERY){
-        eventp[index].layer_speed_y = extraData.toList()[1].toDouble();
+        eventp->layer_speed_y = extraData.toList()[1].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRSEC){
-        eventp[index].scroll_section = (long)extraData.toList()[1].toLongLong();
+        eventp->scroll_section = (long)extraData.toList()[1].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRX){
-        eventp[index].move_camera_x = extraData.toList()[1].toDouble();
+        eventp->move_camera_x = extraData.toList()[1].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_AUTOSCRY){
-        eventp[index].move_camera_y = extraData.toList()[1].toDouble();
+        eventp->move_camera_y = extraData.toList()[1].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECSIZE){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[5].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[6].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[7].toLongLong();
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[8].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[5].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[6].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[7].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[8].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECMUS){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[2].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[2].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SECBG){
-        eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_MSG){
-        eventp[index].msg = extraData.toList()[1].toString();
+        eventp->msg = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_SOUND){
-        eventp[index].sound_id = (long)extraData.toList()[1].toLongLong();
+        eventp->sound_id = (long)extraData.toList()[1].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_ENDGAME){
-        eventp[index].end_game = (long)extraData.toList()[1].toLongLong();
+        eventp->end_game = (long)extraData.toList()[1].toLongLong();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KUP){
-        eventp[index].ctrl_up = extraData.toBool();
+        eventp->ctrl_up = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KDOWN){
-        eventp[index].ctrl_down = extraData.toBool();
+        eventp->ctrl_down = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KLEFT){
-        eventp[index].ctrl_left = extraData.toBool();
+        eventp->ctrl_left = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KRIGHT){
-        eventp[index].ctrl_right = extraData.toBool();
+        eventp->ctrl_right = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KRUN){
-        eventp[index].ctrl_run = extraData.toBool();
+        eventp->ctrl_run = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KALTRUN){
-        eventp[index].ctrl_altrun = extraData.toBool();
+        eventp->ctrl_altrun = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KJUMP){
-        eventp[index].ctrl_jump = extraData.toBool();
+        eventp->ctrl_jump = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KALTJUMP){
-        eventp[index].ctrl_altjump = extraData.toBool();
+        eventp->ctrl_altjump = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KDROP){
-        eventp[index].ctrl_drop = extraData.toBool();
+        eventp->ctrl_drop = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_KSTART){
-        eventp[index].ctrl_start = extraData.toBool();
+        eventp->ctrl_start = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_TRIACTIVATE){
-        eventp[index].trigger = extraData.toList()[1].toString();
+        eventp->trigger = extraData.toList()[1].toString();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_TRIDELAY){
-        eventp[index].trigger_timer = (long)extraData.toList()[1].toLongLong();
+        eventp->trigger_timer = (long)extraData.toList()[1].toLongLong();
     }
 
 

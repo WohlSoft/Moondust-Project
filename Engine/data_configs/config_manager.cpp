@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,6 @@ QString ConfigManager::imgFile, ConfigManager::imgFileM;
 QString ConfigManager::tmpstr;
 QStringList ConfigManager::tmp;
 
-unsigned long ConfigManager::total_data;
 QString ConfigManager::bgoPath;
 QString ConfigManager::BGPath;
 QString ConfigManager::blockPath;
@@ -105,8 +104,6 @@ bool ConfigManager::loadBasics()
                         ApplicationPath + "/" : config_dir + "data/" );
         guiset.endGroup();
 
-
-    total_data=0;
     errorsList.clear();
 
     //dirs
@@ -179,10 +176,10 @@ bool ConfigManager::loadBasics()
     if(!loadEngineSettings()) //!< Load engine.ini file
         return false;
 
-    if(!loadMusic(dirs.music, config_dir+"music.ini", false))
+    if(!loadDefaultMusics())
         return false;
 
-    if(!loadSound(dirs.sounds, config_dir+"sounds.ini", false))
+    if(!loadDefaultSounds())
         return false;
 
     if(!loadSoundRolesTable())
@@ -226,16 +223,42 @@ bool ConfigManager::unloadLevelConfigs()
     /***************Clear settings*************/
 
     lvl_block_indexes.clear();
-    lvl_blocks.clear();
 
     lvl_bgo_indexes.clear();
-    lvl_bgo.clear();
 
     lvl_bg_indexes.clear();
-    lvl_bg.clear();
 
     lvl_effects_indexes.clear();
-    lvl_effects.clear();
+
+    return true;
+}
+
+
+bool ConfigManager::unloadWorldConfigs()
+{
+
+    ///Clear texture bank
+    while(!world_textures.isEmpty())
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(world_textures.last().texture) );
+        world_textures.pop_back();
+    }
+
+    resetPlayableTexuresState();
+    resetPlayableTexuresStateWld();
+
+    /***************Clear animators*************/
+    Animator_Tiles.clear();
+    Animator_Scenery.clear();
+    Animator_WldPaths.clear();
+    Animator_WldLevel.clear();
+    /***************Clear settings*************/
+
+    wld_tiles.clear();
+    wld_scenery.clear();
+    wld_paths.clear();
+    wld_levels.clear();
 
     return true;
 }
@@ -243,6 +266,7 @@ bool ConfigManager::unloadLevelConfigs()
 void ConfigManager::unluadAll()
 {
     unloadLevelConfigs();
+    unloadWorldConfigs();
     clearSoundIndex();
     playable_characters.clear();
 }

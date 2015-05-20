@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,15 @@
 #undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_thread.h>
 #ifdef __APPLE__
     #include <OpenGL/glu.h>
 #else
     #include <GL/glu.h>
 #endif
 #undef main
+
+#include <audio/pge_audio.h>
 
 #include <QDir>
 #include <QImage>
@@ -38,6 +41,27 @@
 #include <QtDebug>
 
 bool GlRenderer::_isReady=false;
+SDL_Thread *GlRenderer::thread = NULL;
+
+int GlRenderer::window_w=800;
+int GlRenderer::window_h=600;
+float GlRenderer::scale_x=1.0f;
+float GlRenderer::scale_y=1.0f;
+float GlRenderer::offset_x=0.0f;
+float GlRenderer::offset_y=0.0f;
+float GlRenderer::viewport_x=0;
+float GlRenderer::viewport_y=0;
+float GlRenderer::viewport_scale_x=1.0f;
+float GlRenderer::viewport_scale_y=1.0f;
+float GlRenderer::viewport_w=800;
+float GlRenderer::viewport_h=600;
+float GlRenderer::viewport_w_half=400;
+float GlRenderer::viewport_h_half=300;
+
+float GlRenderer::color_level_red=1.0;
+float GlRenderer::color_level_green=1.0;
+float GlRenderer::color_level_blue=1.0;
+float GlRenderer::color_level_alpha=1.0;
 
 bool GlRenderer::init()
 {
@@ -48,14 +72,13 @@ bool GlRenderer::init()
     glMatrixMode( GL_PROJECTION );
     //glPushMatrix();
     glLoadIdentity();
-
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
-    glOrtho( 0.0, PGE_Window::Width, PGE_Window::Height, 0.0, 1.0, -1.0 );
+    //glOrtho( 0.0, PGE_Window::Width, PGE_Window::Heightб 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
     glMatrixMode( GL_MODELVIEW );
     //glPushMatrix();
-    //glLoadIdentity();
+    glLoadIdentity();
 
     //Initialize clear color
     glClearColor( 0.f, 0.f, 0.f, 1.f );
@@ -91,6 +114,8 @@ bool GlRenderer::init()
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
 
+    resetViewport();
+
     return true;
 }
 
@@ -108,23 +133,44 @@ QPointF GlRenderer::mapToOpengl(QPoint s)
 
 QString GlRenderer::ScreenshotPath = "";
 
+struct PGE_GL_shoot{
+    uchar* pixels;
+    GLsizei w,h;
+};
+
 void GlRenderer::makeShot()
 {
     if(!_isReady) return;
 
     // Make the BYTE array, factor of 3 because it's RBG.
-    uchar* pixels = new uchar[ 3 * PGE_Window::Width * PGE_Window::Height];
-    glReadPixels(0, 0, PGE_Window::Width, PGE_Window::Height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-
-    QImage shotImg = QImage(PGE_Window::Width, PGE_Window::Height, QImage::Format_ARGB32);
-    shotImg.fill(Qt::black);
-
-    for(int i=0, x=0, y=PGE_Window::Height-1; i<3*PGE_Window::Width*PGE_Window::Height; i+=3, x++)
+    int w, h;
+    SDL_GetWindowSize(PGE_Window::window, &w, &h);
+    if((w==0) || (h==0))
     {
-        if(x==PGE_Window::Width) {x=0; y--;}
-        shotImg.setPixel( QPoint(x,y), qRgb(pixels[i],pixels[i+1], pixels[i+2]) );
+        PGE_Audio::playSoundByRole(obj_sound_role::WeaponFire);
+        return;
     }
 
+    w=w-offset_x*2;
+    h=h-offset_y*2;
+
+    uchar* pixels = new uchar[4*w*h];
+    glReadPixels(offset_x, offset_y, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+    PGE_GL_shoot *shoot=new PGE_GL_shoot();
+    shoot->pixels=pixels;
+    shoot->w=w;
+    shoot->h=h;
+    thread = SDL_CreateThread( makeShot_action, "scrn_maker", (void*)shoot );
+
+    PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
+}
+
+int GlRenderer::makeShot_action(void *_pixels)
+{
+    PGE_GL_shoot *shoot=(PGE_GL_shoot*)_pixels;
+
+    QImage shotImg(shoot->pixels, shoot->w, shoot->h, QImage::Format_RGB888);
+    shotImg=shotImg.scaled(window_w, window_h).mirrored(false, true);
     if(!QDir(ScreenshotPath).exists()) QDir().mkpath(ScreenshotPath);
 
     QDate date = QDate::currentDate();
@@ -134,14 +180,254 @@ void GlRenderer::makeShot()
             .arg(date.year()).arg(date.month()).arg(date.day())
             .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
 
-    qDebug() << saveTo << shotImg.width() << shotImg.height() << pixels[0];
-
+    qDebug() << saveTo << shotImg.width() << shotImg.height();
     shotImg.save(saveTo, "PNG");
 
-    delete [] pixels;
+    delete []shoot->pixels;
+    shoot->pixels=NULL;
+    delete []shoot;
+
+    return 0;
 }
 
 bool GlRenderer::ready()
 {
     return _isReady;
 }
+
+
+void GlRenderer::setRGB(float Red, float Green, float Blue, float Alpha)
+{
+    color_level_red=Red;
+    color_level_green=Green;
+    color_level_blue=Blue;
+    color_level_alpha=Alpha;
+}
+
+void GlRenderer::resetRGB()
+{
+    color_level_red=1.f;
+    color_level_green=1.f;
+    color_level_blue=1.f;
+    color_level_alpha=1.f;
+}
+
+
+QPointF GlRenderer::MapToGl(QPoint point)
+{
+    return MapToGl(point.x(), point.y());
+}
+
+QPointF GlRenderer::MapToGl(float x, float y)
+{
+    double nx1 = roundf(x)/(viewport_w_half)-1.0;
+    double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
+    return QPointF(nx1, ny1);
+}
+
+QPoint GlRenderer::MapToScr(QPoint point)
+{
+    return MapToScr(point.x(), point.y());
+}
+
+QPoint GlRenderer::MapToScr(int x, int y)
+{
+    return QPoint(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
+}
+
+void GlRenderer::setViewport(int x, int y, int w, int h)
+{
+    glViewport(offset_x+x*viewport_scale_x,
+               offset_y+(window_h-(y+h))*viewport_scale_y,
+               w*viewport_scale_x, h*viewport_scale_y);
+    viewport_x=x;
+    viewport_y=y;
+    setViewportSize(w, h);
+}
+
+void GlRenderer::resetViewport()
+{
+    float w, w1, h, h1;
+    int   wi, hi;
+    SDL_GetWindowSize(PGE_Window::window, &wi, &hi);
+    w=wi;h=hi; w1=w;h1=h;
+    scale_x=(float)((float)(w)/(float)window_w);
+    scale_y=(float)((float)(h)/(float)window_h);
+    viewport_scale_x = scale_x;
+    viewport_scale_y = scale_y;
+    if(scale_x>scale_y)
+    {
+        w1=scale_y*window_w;
+        viewport_scale_x=w1/window_w;
+    }
+    else if(scale_x<scale_y)
+    {
+        h1=scale_x*window_h;
+        viewport_scale_y=h1/window_h;
+    }
+
+    offset_x=(w-w1)/2;
+    offset_y=(h-h1)/2;
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glViewport(offset_x, offset_y, (GLsizei)w1, (GLsizei)h1);
+    gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+    setViewportSize(window_w, window_h);
+}
+
+void GlRenderer::setViewportSize(int w, int h)
+{
+    viewport_w=w;
+    viewport_h=h;
+    viewport_w_half=w/2;
+    viewport_h_half=h/2;
+}
+
+void GlRenderer::setWindowSize(int w, int h)
+{
+    window_w=w;
+    window_h=h;
+    resetViewport();
+}
+
+
+
+void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+{
+    QPointF point;
+        point = MapToGl(x, y);
+    float left = point.x();
+    float top = point.y();
+        point = MapToGl(x+w, y+h);
+    float right = point.x();
+    float bottom = point.y();
+
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( red, green, blue, alpha);
+    glBegin( GL_QUADS );
+        glVertex2f( left, top);
+        glVertex2f(  right, top);
+        glVertex2f(  right, bottom);
+        glVertex2f( left,  bottom);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+{
+    QPointF point;
+        point = MapToGl(_left, _top);
+    float left = point.x();
+    float top = point.y();
+        point = MapToGl(_right, _bottom);
+    float right = point.x();
+    float bottom = point.y();
+
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( red, green, blue, alpha);
+    glBegin( GL_QUADS );
+        glVertex2f( left, top);
+        glVertex2f(  right, top);
+        glVertex2f(  right, bottom);
+        glVertex2f( left,  bottom);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+
+void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
+{
+    QPointF point;
+        point = MapToGl(x, y);
+    float left = point.x();
+    float top = point.y();
+        point = MapToGl(x+texture->w, y+texture->h);
+    float right = point.x();
+    float bottom = point.y();
+
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
+
+    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+    glBindTexture( GL_TEXTURE_2D, texture->texture );
+
+    glBegin( GL_QUADS );
+        glTexCoord2f( 0, 0 );
+        glVertex2f( left, top);
+
+        glTexCoord2f( 1, 0 );
+        glVertex2f(  right, top);
+
+        glTexCoord2f( 1, 1 );
+        glVertex2f(  right, bottom);
+
+        glTexCoord2f( 0, 1 );
+        glVertex2f( left,  bottom);
+        glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+{
+    QPointF point;
+        point = MapToGl(x, y);
+    float left = point.x();
+    float top = point.y();
+        point = MapToGl(x+w, y+h);
+    float right = point.x();
+    float bottom = point.y();
+
+    glEnable(GL_TEXTURE_2D);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,  GL_CLAMP);
+
+    glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
+    glBindTexture( GL_TEXTURE_2D, texture->texture );
+
+    glBegin( GL_QUADS );
+        glTexCoord2f( ani_left, ani_top );
+        glVertex2f( left, top);
+
+        glTexCoord2f( ani_right, ani_top );
+        glVertex2f(  right, top);
+
+        glTexCoord2f( ani_right, ani_bottom );
+        glVertex2f(  right, bottom);
+
+        glTexCoord2f( ani_left, ani_bottom );
+        glVertex2f( left,  bottom);
+        glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
+{
+    QPointF point;
+        point = MapToGl(x, y);
+    float left = point.x();
+    float top = point.y();
+        point = MapToGl(x+w, y+h);
+    float right = point.x();
+    float bottom = point.y();
+
+    glBegin( GL_QUADS );
+        glTexCoord2f( ani_left, ani_top );
+        glVertex2f( left, top);
+
+        glTexCoord2f( ani_right, ani_top );
+        glVertex2f(  right, top);
+
+        glTexCoord2f( ani_right, ani_bottom );
+        glVertex2f(  right, bottom);
+
+        glTexCoord2f( ani_left, ani_bottom );
+        glVertex2f( left,  bottom);
+    glEnd();
+}
+

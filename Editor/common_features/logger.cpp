@@ -192,7 +192,6 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(context.line)
                 .arg(context.function)
                 .arg(lMessage.constData());
-        abort();
     }
 
     QFile outFile(DebugLogFile);
@@ -200,6 +199,9 @@ void LogWriter::logMessageHandler(QtMsgType type,
     QTextStream ts(&outFile);
     ts << txt << endl;
     outFile.close();
+
+    if(type == QtFatalMsg)
+        abort();
 
     if(!LogWriter::consoleConnector)
         return;

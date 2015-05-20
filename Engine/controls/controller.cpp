@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,19 +22,25 @@
 Controller::Controller()
 {
     keys = noKeys();
-
 }
+
+Controller::~Controller()
+{}
 
 controller_keys Controller::noKeys()
 {
     return ResetControlKeys();
 }
 
+void Controller::setKeyMap(KeyMap map)
+{
+    kmap = map;
+}
+
 void Controller::sendControls()
 {
     foreach(ControllableObject* x, objects)
         x->applyControls(keys);
-
 }
 
 void Controller::update() {}

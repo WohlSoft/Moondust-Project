@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,15 @@
 #include "phys_util.h"
 
 
-float PhysUtil::pixMeter = 10.0000000f; // Pixels per meter;
+double PhysUtil::pixMeter = 10.0000000f; // Pixels per meter;
 
 
-float PhysUtil::met2pix(float met)
+double PhysUtil::met2pix(double met)
 {
     return met * pixMeter;
 }
 
-float PhysUtil::pix2met(float pix)
+double PhysUtil::pix2met(double pix)
 {
     return pix / pixMeter;
 }

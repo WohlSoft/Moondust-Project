@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #include "common_features/graphics_funcs.h"
 #include "common_features/logger.h"
 #include "common_features/episode_state.h"
+
+#include <settings/global_settings.h>
 
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
@@ -102,6 +104,9 @@ int main(int argc, char *argv[])
         }
     }
 
+    AppSettings.load();
+    AppSettings.apply();
+
     //Init log writer
     LoadLogSettings();
 
@@ -113,6 +118,7 @@ int main(int argc, char *argv[])
     episode.worldfile="";
     AppSettings.debugMode=false; //enable debug mode
     AppSettings.interprocessing=false; //enable interprocessing
+    AppSettings.testJoystickController=false;
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -143,6 +149,11 @@ int main(int argc, char *argv[])
         {
             IntProc::init();
             AppSettings.interprocessing=true;
+        }
+        else
+        if(param == ("--useJoystick"))
+        {
+            AppSettings.testJoystickController=true;
         }
         else
         {
@@ -199,6 +210,7 @@ int main(int argc, char *argv[])
             //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
         exit(1);
     }
+
     if(PGE_MusPlayer::initAudio(44100, 32, 4096)==-1)
     {
         QMessageBox::critical(NULL, "SDL Error",
@@ -206,14 +218,18 @@ int main(int argc, char *argv[])
                 .arg( Mix_GetError() ), QMessageBox::Ok);
         exit(1);
     }
-    PGE_MusPlayer::MUS_changeVolume(100);
+    PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music);
 
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
-
 
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
+    AppSettings.initJoysticks();
+    AppSettings.loadJoystickSettings();
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();//Reset modelview matrix
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
     SDL_Event event; //  Events of SDL
@@ -221,6 +237,9 @@ int main(int argc, char *argv[])
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
+
+    PGE_Window::setFullScreen(AppSettings.fullScreen);
+    GlRenderer::resetViewport();
 
     //Init font manager
     FontManager::init();
@@ -286,6 +305,7 @@ MainMenu:
 {
     _game_state.reset();
     TitleScene * iScene = new TitleScene();
+    iScene->init();
     iScene->setFade(25, 0.0f, 0.05f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
@@ -305,10 +325,13 @@ MainMenu:
         case TitleScene::ANSWER_PLAYLEVEL:
             end_level_jump=RETURN_TO_MAIN_MENU;
             _game_state.isEpisode=false;
+            _game_state.numOfPlayers=1;
             _game_state.LevelFile = res_level.levelfile;
             goto PlayLevel;
         case TitleScene::ANSWER_PLAYEPISODE:
+        case TitleScene::ANSWER_PLAYEPISODE_2P:
             end_level_jump=RETURN_TO_WORLDMAP;
+            _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
             _game_state.isEpisode=true;
             episode = res_episode;
             goto PlayWorldMap;
@@ -577,6 +600,8 @@ ExitFromApplication:
     PGE_MusPlayer::freeStream();
     PGE_Sounds::clearSoundBuffer();
     Mix_CloseAudio();
+    AppSettings.save();
+    AppSettings.closeJoysticks();
     IntProc::quit();
     FontManager::quit();
     PGE_Window::uninit();

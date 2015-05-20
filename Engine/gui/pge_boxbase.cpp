@@ -4,6 +4,7 @@
 #include <SDL2/SDL_opengl.h>
 #undef main
 #include <common_features/graphics_funcs.h>
+#include <graphics/gl_renderer.h>
 
 
 PGE_BoxBase::PGE_BoxBase()
@@ -20,7 +21,7 @@ void PGE_BoxBase::construct(Scene *_parentScene)
 {
     fader_opacity = 0.0f;
     fade_step = 0.02f;
-    target_opacity=0.0f;
+    target_opacity= 0.0f;
     fadeSpeed=10;
     _textureUsed=false;
     parentScene = _parentScene;
@@ -56,17 +57,20 @@ void PGE_BoxBase::setFade(int speed, float target, float step)
     fade_step = fabs(step);
     target_opacity = target;
     fadeSpeed = speed;
-
-    fader_timer_id = SDL_AddTimer(speed, &PGE_BoxBase::nextOpacity, this);
-    if(!fader_timer_id) fader_opacity = target_opacity;
+    manual_ticks = speed;
 }
 
-unsigned int PGE_BoxBase::nextOpacity(unsigned int x, void *p)
+bool PGE_BoxBase::tickFader(int ticks)
 {
-    Q_UNUSED(x);
-    PGE_BoxBase *self = reinterpret_cast<PGE_BoxBase *>(p);
-    self->fadeStep();
-    return 0;
+    if(fadeSpeed<1) return true; //Idling animation
+
+    manual_ticks-=abs(ticks);
+        while(manual_ticks<=0)
+        {
+            fadeStep();
+            manual_ticks+=fadeSpeed;
+        }
+    return (fader_opacity==target_opacity);
 }
 
 void PGE_BoxBase::fadeStep()
@@ -75,14 +79,6 @@ void PGE_BoxBase::fadeStep()
         fader_opacity+=fade_step;
     else
         fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0f || fader_opacity<=0.0f)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        {
-            fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_BoxBase::nextOpacity, this);
-            if(!fader_timer_id) fader_opacity = target_opacity;
-        }
 
     if(fader_opacity>1.0f) fader_opacity = 1.0f;
     else
@@ -266,10 +262,8 @@ void PGE_BoxBase::drawPiece(QRectF target, QRectF block, QRectF texture)
     tx.setBottom(texture.bottom()/this->styleTexture.h);
 
     QRectF blockG;
-    blockG.setX(target.x()+block.x());
-    blockG.setY(target.y()+block.y());
-    blockG.setRight(target.x()+block.x()+block.width());
-    blockG.setBottom(target.y()+block.y()+block.height());
+    blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
+    blockG.setBottomRight(GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ));
 
     glBegin( GL_QUADS );
         glTexCoord2f( tx.left(), tx.top() );

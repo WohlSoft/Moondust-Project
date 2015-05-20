@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,324 +26,17 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
 #include <common_features/event_queue.h>
+#include <common_features/maths.h>
+#include <controls/controller_keyboard.h>
+#include <controls/controller_joystick.h>
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
+#include <settings/global_settings.h>
 
 #include <QHash>
 #include <unordered_map>
 
-class WorldNode
-{
-public:
-    enum nodeType
-    {
-        unknown=0,
-        tile,
-        scenery,
-        path,
-        level,
-        musicbox
-    };
-
-    WorldNode()
-    {
-        x=0;
-        y=0;
-        w=32;
-        h=32;
-        r=0.f;
-        g=0.f;
-        b=1.f;
-        Z=0.0;
-        type=unknown;
-    }
-
-    virtual ~WorldNode() {}
-
-    WorldNode(const WorldNode &xx)
-    {
-        x=xx.x;
-        y=xx.y;
-        w=xx.w;
-        h=xx.h;
-        r=xx.r;
-        g=xx.g;
-        b=xx.b;
-        Z=xx.Z;
-        type=xx.type;
-    }
-    int type;
-    long x;
-    long y;
-    long w;
-    long h;
-    float r;
-    float g;
-    float b;
-    double Z;
-};
-
-class WldTileItem: public WorldNode
-{
-public:
-    WldTileItem(WorldTiles _data): WorldNode()
-    {
-        data = _data;
-        x=data.x;
-        y=data.y;
-        Z=0.0+(double(data.array_id)*0.0000001);
-        type=tile;
-    }
-    WldTileItem(const WldTileItem &x): WorldNode(x)
-    {
-        data = x.data;
-        type=tile;
-    }
-    ~WldTileItem()
-    {}
-
-    WorldTiles data;
-};
-
-class WldSceneryItem: public WorldNode
-{
-public:
-    WldSceneryItem(WorldScenery _data): WorldNode()
-    {
-        data = _data;
-        x=data.x;
-        y=data.y;
-        w = 16;
-        h = 16;
-        Z=10.0+(double(data.array_id)*0.0000001);
-        vizible=true;
-        type=scenery;
-    }
-    WldSceneryItem(const WldSceneryItem &x): WorldNode(x)
-    {
-        data = x.data;
-        vizible=x.vizible;
-        type=scenery;
-    }
-    ~WldSceneryItem()
-    {}
-    WorldScenery data;
-    bool vizible;
-};
-
-class WldPathItem: public WorldNode
-{
-public:
-    WldPathItem(WorldPaths _data): WorldNode()
-    {
-        data = _data;
-        x=data.x;
-        y=data.y;
-        Z=20.0+(double(data.array_id)*0.0000001);
-        vizible=true;
-        type=path;
-    }
-    WldPathItem(const WldPathItem &x): WorldNode(x)
-    {
-        data = x.data;
-        vizible=x.vizible;
-        type=path;
-    }
-    ~WldPathItem()
-    {}
-    WorldPaths data;
-    bool vizible;
-};
-
-class WldLevelItem: public WorldNode
-{
-public:
-    WldLevelItem(WorldLevels _data): WorldNode()
-    {
-        data = _data;
-        x=data.x;
-        y=data.y;
-        Z=30.0+(double(data.array_id)*0.0000001);
-        vizible=true;
-        type=level;
-    }
-    WldLevelItem(const WldLevelItem &x): WorldNode(x)
-    {
-        data = x.data;
-        vizible=x.vizible;
-        type=level;
-    }
-    ~WldLevelItem()
-    {}
-    WorldLevels data;
-    bool vizible;
-};
-
-class WldMusicBoxItem: public WorldNode
-{
-public:
-    WldMusicBoxItem(WorldMusic _data): WorldNode()
-    {
-        data = _data;
-        x=data.x;
-        y=data.y;
-        Z=-10.0;
-        type=musicbox;
-    }
-    WldMusicBoxItem(const WldMusicBoxItem &x): WorldNode(x)
-    {
-        data = x.data;
-        type=musicbox;
-    }
-    ~WldMusicBoxItem()
-    {}
-    WorldMusic data;
-};
-
-class TileBox
-{
-public:
-    TileBox()
-    {
-        gridSize=32;
-        gridSize_h=16;
-    }
-
-    TileBox(unsigned long size)
-    {
-        gridSize=size;
-        gridSize_h=size/2;
-    }
-
-    ~TileBox()
-    {
-        clean();
-    }
-
-    void addNode(long X, long Y, long W, long H, WorldNode* item)
-    {
-        for(long i=X; i<X+W; i+=gridSize)
-        {
-            for(long j=Y; j<Y+H; j+=gridSize)
-            {
-                QPoint t = applyGrid(i,j);
-                map[t.x()][t.y()].push_back(item);
-            }
-        }
-    }
-
-    QList<WorldNode* > query(long X, long Y)
-    {
-        QList<WorldNode * > list;
-
-        QPoint t = applyGrid(X,Y);
-        long listI = t.x();
-        long listJ = t.y();
-
-        const typename std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > >::const_iterator got = map.find(listI);
-        if(got != map.end())
-        {
-            const typename std::unordered_map<long, QList<WorldNode* > >::const_iterator got2 = map[listI].find(listJ);
-            if(got2 != map[listI].end())
-                list.append(map[listI][listJ]);
-        }
-        return list;
-    }
-
-    QList<WorldNode* > query(long Left, long Top, long Right, long Bottom, bool z_sort=false)
-    {
-        QList<WorldNode * > list;
-        for(long i=Left-gridSize; i<Right+gridSize*2; i+=gridSize)
-        {
-            for(long j=Top-gridSize; j<Bottom+gridSize*2; j+=gridSize)
-            {
-                QPoint t = applyGrid(i,j);
-                long listI = t.x();
-                long listJ = t.y();
-
-                const typename std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > >::const_iterator got = map.find(listI);
-                if(got != map.end())
-                {
-                    const typename std::unordered_map<long, QList<WorldNode* > >::const_iterator got2 = map[listI].find(listJ);
-                    if(got2 != map[listI].end())
-                        list.append(map[listI][listJ]);
-                }
-            }
-        }
-
-        if(z_sort)
-        {
-            //Sort array
-            int total = list.size();
-            long i;
-            double ymin;
-            long ymini;
-            long sorted = 0;
-
-            while(sorted < list.size())
-            {
-                ymin = list[sorted]->Z;
-                ymini = sorted;
-
-                for(i = sorted; i < total; i++)
-                {
-                    if( list[i]->Z < ymin )
-                    {
-                        ymin = list[i]->Z; ymini = i;
-                    }
-                }
-                list.swap(ymini, sorted);
-                sorted++;
-            }
-        }
-
-        return list;
-    }
-
-    void clean()
-    {
-        map.clear();
-    }
-
-    QPoint applyGrid(long x, long y)
-    {
-        QPoint source;
-        source.setX(x);
-        source.setY(y);
-        int gridX, gridY;
-        if(gridSize>0)
-        { //ATTACH TO GRID
-
-            if((int)source.x()<0)
-            {
-                gridX=(int)source.x()+1+(abs((int)source.x()+1)%gridSize)-gridSize;
-            }
-            else
-            {
-                gridX=((int)source.x()-(int)source.x() % gridSize);
-            }
-
-            if((int)source.y()<0)
-            {
-                gridY = (int)source.y()+1+(abs((int)source.y()+1) % gridSize)-gridSize;
-            }
-            else
-            {
-                gridY = ((int)source.y() - (int)source.y() % gridSize);
-            }
-
-            return QPoint(gridX, gridY);
-        }
-        else
-            return source;
-    }
-
-    std::unordered_map<long, std::unordered_map<long, QList<WorldNode* > > > map;
-    long gridSize;
-    long gridSize_h;
-};
-
-
+#include "world/wld_tilebox.h"
 
 TileBox worldMap;
 QList<WldTileItem >     wld_tiles;
@@ -357,6 +50,7 @@ QList<WorldNode > wldItems;
 QList<WorldNode * > toRender;
 
 WorldScene::WorldScene()
+    : Scene(World)
 {
     wld_events.abort();
 
@@ -379,19 +73,63 @@ WorldScene::WorldScene()
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
-    uTick = 1;
+
+    mapwalker_img_h=32;
+    mapwalker_offset_x=0;
+    mapwalker_offset_y=0;
+
+    /*********Controller********/
+    player1Controller = AppSettings.openController(1);
+    /*********Controller********/
+
+    /***********Number of Players*****************/
+    numOfPlayers=1;
+    /***********Number of Players*****************/
+
+    /*********Fader*************/
+    fader_opacity=1.0f;
+    target_opacity=1.0f;
+    fade_step=0.0f;
+    fadeSpeed=25;
+    /*********Fader*************/
+
+    uTick = (1000.0/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
+
+    move_speed = 125/(float)PGE_Window::PhysStep;
+    move_steps_count=0;
+
+    ConfigManager::setup_WorldMap.initFonts();
 
     common_setup = ConfigManager::setup_WorldMap;
 
-    if(ConfigManager::setup_WorldMap.backgroundImg.isEmpty())
+    if(common_setup.backgroundImg.isEmpty())
         backgroundTex.w=0;
     else
-        backgroundTex = GraphicsHelps::loadTexture(backgroundTex, ConfigManager::setup_WorldMap.backgroundImg);
+        backgroundTex = GraphicsHelps::loadTexture(backgroundTex, common_setup.backgroundImg);
 
-    viewportRect.setX(ConfigManager::setup_WorldMap.viewport_x);
-    viewportRect.setY(ConfigManager::setup_WorldMap.viewport_y);
-    viewportRect.setWidth(ConfigManager::setup_WorldMap.viewport_w);
-    viewportRect.setHeight(ConfigManager::setup_WorldMap.viewport_h);
+    imgs.clear();
+    for(int i=0; i<common_setup.AdditionalImages.size(); i++)
+    {
+        if(common_setup.AdditionalImages[i].imgFile.isEmpty()) continue;
+
+        WorldScene_misc_img img;
+        img.t = GraphicsHelps::loadTexture(img.t, common_setup.AdditionalImages[i].imgFile);
+
+        img.x = common_setup.AdditionalImages[i].x;
+        img.y = common_setup.AdditionalImages[i].y;
+        img.a.construct(common_setup.AdditionalImages[i].animated,
+                        common_setup.AdditionalImages[i].frames,
+                        common_setup.AdditionalImages[i].framedelay);
+        img.frmH = (img.t.h / common_setup.AdditionalImages[i].frames);
+
+        imgs.push_back(img);
+    }
+
+    viewportRect.setX(common_setup.viewport_x);
+    viewportRect.setY(common_setup.viewport_y);
+    viewportRect.setWidth(common_setup.viewport_w);
+    viewportRect.setHeight(common_setup.viewport_h);
 
     posX=0;
     posY=0;
@@ -399,6 +137,7 @@ WorldScene::WorldScene()
     health = 3;
     points = 0;
     stars  = 0;
+    coins  = 0;
 
     jumpTo=false;
 
@@ -410,6 +149,7 @@ WorldScene::WorldScene()
     allow_right=false;
     allow_down=false;
     _playStopSnd=false;
+    _playDenySnd=false;
 
     data = FileFormats::dummyWldDataArray();
 }
@@ -441,12 +181,35 @@ WorldScene::~WorldScene()
         glDeleteTextures( 1, &(textures_bank[0].texture) );
         textures_bank.pop_front();
     }
+
+    for(int i=0;i<imgs.size();i++)
+    {
+        imgs[i].a.stop();
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(imgs[i].t.texture) );
+    }
+    imgs.clear();
+
+    ConfigManager::unloadLevelConfigs();
+    ConfigManager::unloadWorldConfigs();
+
+    delete player1Controller;
 }
 
 void WorldScene::setGameState(EpisodeState *_state)
 {
     if(!_state) return;
     gameState = _state;
+
+    numOfPlayers=_state->numOfPlayers;
+
+    points = 1000;//gameState->game_state.points;
+    coins  = 55;//gameState->game_state.coins;
+    stars  = 5;//gameState->game_state.gottenStars;
+
+    PlayerState x = gameState->getPlayerState(1);
+    health = x._chsetup.health;
+
 
     gameState->replay_on_fail = data.restartlevel;
     if(gameState->episodeIsStarted && !data.HubStyledWorld)
@@ -532,13 +295,73 @@ bool WorldScene::init()
 
     if(doExit) return true;
 
+    if(!loadConfigs())
+        return false;
+
+    int player_portrait_step=0;
+    int player_portrait_x=common_setup.portrait_x;
+    int player_portrait_y=common_setup.portrait_y;
+
+    if(numOfPlayers>1)
+    {
+        player_portrait_step=30;
+        player_portrait_x=player_portrait_x-(numOfPlayers*30)/2;
+    }
+
+    players.clear();
+    for(int i=1; i<=numOfPlayers;i++)
+    {
+        PlayerState state;
+        if(gameState)
+        {
+            state = gameState->getPlayerState(i);
+            players.push_back(state);
+        }
+        else
+        {
+            state.characterID=1;
+            state.stateID=1;
+            state._chsetup=FileFormats::dummySavCharacterState();
+            players.push_back(state);
+        }
+
+        if(common_setup.points_en)
+        {
+            WorldScene_Portrait portrait(state.characterID, state.stateID,
+                                                             player_portrait_x,
+                                                             player_portrait_y,
+                                                             common_setup.portrait_animation,
+                                                             common_setup.portrait_frame_delay,
+                                                             common_setup.portrait_direction);
+            portraits.push_back(portrait);
+            player_portrait_x +=player_portrait_step;
+        }
+    }
+
+
+    PlayerState player_state;
+    if(gameState)
+    {
+        player_state = gameState->getPlayerState(1);
+    }
+    mapwalker_setup = ConfigManager::playable_characters[player_state.characterID];
+    long tID = ConfigManager::getWldPlayerTexture(player_state.characterID, player_state.stateID);
+        if(tID<0)
+            return false;
+
+    mapwalker_texture = ConfigManager::world_textures[tID];
+    mapwalker_img_h = mapwalker_texture.h/mapwalker_setup.wld_frames;
+    mapwalker_ani.construct(true, mapwalker_setup.wld_frames, mapwalker_setup.wld_framespeed);
+    mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down);
+    mapwalker_offset_x = (ConfigManager::default_grid/2)-(mapwalker_texture.w/2);
+    mapwalker_offset_y = ConfigManager::default_grid-mapwalker_img_h + mapwalker_setup.wld_offset_y;
+
 
     for(int i=0; i<data.tiles.size(); i++)
     {
         WldTileItem path(data.tiles[i]);
-        path.r=1.f;
-        path.g=1.f;
-        path.b=0.f;
+        if(!path.init())
+            continue;
         wld_tiles << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
     }
@@ -546,9 +369,8 @@ bool WorldScene::init()
     for(int i=0; i<data.scenery.size(); i++)
     {
         WldSceneryItem path(data.scenery[i]);
-        path.r=1.f;
-        path.g=0.f;
-        path.b=1.f;
+        if(!path.init())
+            continue;
         wld_sceneries << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
     }
@@ -556,9 +378,8 @@ bool WorldScene::init()
     for(int i=0; i<data.paths.size(); i++)
     {
         WldPathItem path(data.paths[i]);
-        path.r=0.f;
-        path.g=0.f;
-        path.b=1.f;
+        if(!path.init())
+            continue;
         wld_paths << path;
         worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
     }
@@ -566,11 +387,10 @@ bool WorldScene::init()
     for(int i=0; i<data.levels.size(); i++)
     {
         WldLevelItem path(data.levels[i]);
-        path.r=1.f;
-        path.g=0.f;
-        path.b=0.f;
+        if(!path.init())
+            continue;
         wld_levels << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_levels.last()));
+        worldMap.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
@@ -587,17 +407,52 @@ bool WorldScene::init()
     updateCenter();
 
     if(gameState)
-        playMusic(gameState->game_state.musicID, true, 200);
+        playMusic(gameState->game_state.musicID, gameState->game_state.musicFile, true, 200);
+
     isInit=true;
 
     return true;
 }
 
+bool WorldScene::loadConfigs()
+{
+    bool success=true;
+    QString musIni=data.path+"/music.ini";
+    QString sndIni=data.path+"/sounds.ini";
+    if(ConfigManager::music_lastIniFile!=musIni)
+    {
+        ConfigManager::loadDefaultMusics();
+        ConfigManager::loadMusic(data.path+"/", musIni, true);
+    }
+    if(ConfigManager::sound_lastIniFile!=sndIni)
+    {
+        ConfigManager::loadDefaultSounds();
+        ConfigManager::loadSound(data.path+"/", sndIni, true);
+        if(ConfigManager::soundIniChanged())
+            ConfigManager::buildSoundIndex();
+    }
+
+    //Load INI-files
+    success = ConfigManager::loadWorldTiles();   //!< Tiles
+    success = ConfigManager::loadWorldScenery(); //!< Scenery
+    success = ConfigManager::loadWorldPaths();   //!< Paths
+    success = ConfigManager::loadWorldLevels();  //!< Levels
+
+    //Set paths
+    ConfigManager::Dir_Tiles.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldTiles() );
+    ConfigManager::Dir_Scenery.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldScenery() );
+    ConfigManager::Dir_WldPaths.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPaths() );
+    ConfigManager::Dir_WldLevel.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldLevels() );
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
+    ConfigManager::Dir_PlayerWld.setCustomDirs(data.path, data.filename, ConfigManager::PathWorldPlayable() );
+
+    if(!success) exitWorldCode = WldExit::EXIT_error;
+    return success;
+}
+
 void WorldScene::update()
 {
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    float move_speed = 2;
-    if(uTick<=0) uTick=1;
+    tickAnimations(uTick);
 
     if(doExit)
     {
@@ -626,74 +481,96 @@ void WorldScene::update()
         {
             if(!lock_controls)
             {
-                if(keyboard1.keys.left && (allow_left || ignore_paths))
+                if(controls_1.left && (allow_left || ignore_paths))
                     dir=1;
-                if(keyboard1.keys.right && (allow_right || ignore_paths))
+                if(controls_1.right && (allow_right || ignore_paths))
                     dir=2;
-                if(keyboard1.keys.up && (allow_up || ignore_paths))
+                if(controls_1.up && (allow_up || ignore_paths))
                     dir=3;
-                if(keyboard1.keys.down && (allow_down || ignore_paths))
+                if(controls_1.down && (allow_down || ignore_paths))
                     dir=4;
+
+                //If movement denied - play sound
+                if((controls_1.left||controls_1.right||controls_1.up||controls_1.down)&&(dir==0))
+                {       _playStopSnd=false;
+                        if(!_playDenySnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny); _playDenySnd=true; }
+                }
+                else
+                if (!controls_1.left&&!controls_1.right&&!controls_1.up&&!controls_1.down)
+                    _playDenySnd=false;
             }
             if(dir!=0)
             {
+                _playDenySnd=false;
                 _playStopSnd=false;
-                levelTitle.clear();
                 gameState->LevelFile.clear();
                 jumpTo=false;
+                mapwalker_refreshDir();
             }
 
             if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
         }
         else
         {
+            mapwalker_ani.manualTick(uTick);
+
+            #define setDir(dr) {dir=dr;\
+                    move_steps_count=ConfigManager::default_grid-move_steps_count; mapwalker_refreshDir();}
             switch(dir)
             {
             case 1://left
-                if(keyboard1.keys.right)
-                    dir=2;
+                if(controls_1.right)
+                setDir(2);
                 break;
             case 2://right
-                if(keyboard1.keys.left)
-                    dir=1;
+                if(controls_1.left)
+                setDir(1);
                 break;
             case 3://up
-                if(keyboard1.keys.down)
-                    dir=4;
+                if(controls_1.down)
+                setDir(4);
                 break;
             case 4://down
-                if(keyboard1.keys.down)
-                    dir=4;
+                if(controls_1.up)
+                setDir(3);
                 break;
             }
         }
+
+        #define doMoveStep(posVal)  \
+            move_steps_count+=move_speed;\
+            if(move_steps_count>=ConfigManager::default_grid)\
+            {\
+                move_steps_count=0;\
+                posVal=Maths::roundTo(posVal, ConfigManager::default_grid);\
+            }\
+            if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0)) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
 
         switch(dir)
         {
             case 1://left
                 posX-=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posX);
                 break;
             case 2://right
                 posX+=move_speed;
-                if(int(posX)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posX);
                 break;
             case 3://up
                 posY-=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posY);
                 break;
             case 4://down
                 posY+=move_speed;
-                if(int(posY)%ConfigManager::default_grid==0) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
+                doMoveStep(posY);
                 break;
         }
-
 
         toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
 
         if(isPauseMenu)
         {
-            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dumym world map. I think, it works fine!",
+            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dummy world map. I think, it works fine!",
                               PGE_MsgBox::msg_info);
 
             if(!ConfigManager::setup_message_box.sprite.isEmpty())
@@ -706,19 +583,19 @@ void WorldScene::update()
     Scene::update();
 }
 
-void fetchSideNodes(bool &side, QList<WorldNode* > &nodes)
+void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
 {
     side=false;
     foreach (WorldNode* x, nodes)
     {
         if(x->type==WorldNode::path)
         {
-            side=true; break;
+            side=x->collidePoint(cx, cy); break;
         }
 
         if(x->type==WorldNode::level)
         {
-            side=true; break;
+            side=x->collidePoint(cx, cy); break;
         }
     }
 }
@@ -727,22 +604,31 @@ void WorldScene::updateAvailablePaths()
 {
     QList<WorldNode* > nodes;
 
+    long x,y;
     //left
-    nodes=worldMap.query(posX+worldMap.gridSize_h-worldMap.gridSize,    posY+worldMap.gridSize_h);
-    fetchSideNodes(allow_left, nodes);
+    x=posX+worldMap.gridSize_h-worldMap.gridSize;
+    y=posY+worldMap.gridSize_h;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_left, nodes, x,y);
 
     //Right
-    nodes=worldMap.query(posX+worldMap.gridSize_h+worldMap.gridSize,    posY+worldMap.gridSize_h);
-    fetchSideNodes(allow_right, nodes);
+    x=posX+worldMap.gridSize_h+worldMap.gridSize;
+    y=posY+worldMap.gridSize_h;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_right, nodes, x, y);
 
 
     //Top
-    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h-worldMap.gridSize);
-    fetchSideNodes(allow_up, nodes);
+    x=posX+worldMap.gridSize_h;
+    y=posY+worldMap.gridSize_h-worldMap.gridSize;
+    nodes=worldMap.query(x, y);
+    fetchSideNodes(allow_up, nodes, x, y);
 
     //Bottom
-    nodes=worldMap.query(posX+worldMap.gridSize_h,      posY+worldMap.gridSize_h+worldMap.gridSize);
-    fetchSideNodes(allow_down, nodes);
+    x=posX+worldMap.gridSize_h;
+    y=posY+worldMap.gridSize_h+worldMap.gridSize;
+    nodes=worldMap.query(x,y);
+    fetchSideNodes(allow_down, nodes, x, y);
 }
 
 void WorldScene::updateCenter()
@@ -766,10 +652,13 @@ void WorldScene::updateCenter()
             if(y)
             {
                 if(isInit)
-                    playMusic(y->data.id);
+                    playMusic(y->data.id, y->data.music_file);
                 else
                 if(gameState)
-                    gameState->game_state.musicID = y->data.id;
+                {
+                    gameState->game_state.musicID   = y->data.id;
+                    gameState->game_state.musicFile = y->data.music_file;
+                }
             }
         }
 
@@ -828,68 +717,53 @@ void WorldScene::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
     glLoadIdentity();
+
     if(!isInit)
         goto renderBlack;
 
     if(backgroundTex.w>0)
+        GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width/2 - backgroundTex.w/2, PGE_Window::Height/2 - backgroundTex.h/2);
+
+    for(int i=0;i<imgs.size();i++)
     {
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture(GL_TEXTURE_2D, backgroundTex.texture);
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( 0,             0);
-            glTexCoord2f( 1, 0 );
-            glVertex2f( backgroundTex.w, 0);
-            glTexCoord2f( 1, 1 );
-            glVertex2f( backgroundTex.w, backgroundTex.h);
-            glTexCoord2f( 0, 1 );
-            glVertex2f( 0,             backgroundTex.h);
-        glEnd();
+        AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::renderTexture(&imgs[i].t,
+                                  imgs[i].x,
+                                  imgs[i].y,
+                                  imgs[i].t.w,
+                                  imgs[i].frmH, x.first, x.second);
     }
 
+    for(int i=0; i<portraits.size(); i++)
+        portraits[i].render();
+
     //Viewport zone black background
-    glDisable(GL_TEXTURE_2D);
-    glColor4f( 0.f, 0.f, 0.f, 1.0f);
-    glBegin( GL_QUADS );
-        glVertex2f( viewportRect.left(), viewportRect.top());
-        glVertex2f( viewportRect.right()+1, viewportRect.top());
-        glVertex2f( viewportRect.right()+1, viewportRect.bottom()+1);
-        glVertex2f( viewportRect.left(), viewportRect.bottom()+1);
-    glEnd();
+    GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f,0.f,0.f);
 
     {
         //Set small viewport
-        glViewport( viewportRect.left(), PGE_Window::Height-(viewportRect.bottom()+1), viewportRect.width(), viewportRect.height());
+        GlRenderer::setViewport(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height());
         double renderX = posX+16-(viewportRect.width()/2);
         double renderY = posY+16-(viewportRect.height()/2);
-        double ratioX = double(PGE_Window::Width)/double(viewportRect.width());
-        double ratioY = double(PGE_Window::Height)/double(viewportRect.height());
 
         //Render items
         foreach(WorldNode * it, toRender)
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( it->r, it->g, it->b, 1.0f);
-            glBegin( GL_QUADS );
-                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y)-renderY));
-                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y)-renderY));
-                glVertex2f( ratioX*((it->x+it->w)-renderX), ratioY*((it->y+it->h)-renderY));
-                glVertex2f( ratioX*((it->x)-renderX),       ratioY*((it->y+it->h)-renderY));
-            glEnd();
+            it->render(it->x-renderX, it->y-renderY);
+            //GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
         }
 
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.0f);
-        glBegin( GL_QUADS );
-            glVertex2f( ratioX*(posX-renderX),       ratioY*(posY-renderY));
-            glVertex2f( ratioX*((posX+32)-renderX), ratioY*(posY-renderY));
-            glVertex2f( ratioX*((posX+32)-renderX), ratioY*((posY+32)-renderY));
-            glVertex2f( ratioX*(posX-renderX),       ratioY*((posY+32)-renderY));
-        glEnd();
+        //draw our "character"
+        AniPos img(0,1); img = mapwalker_ani.image();
+        GlRenderer::renderTexture(&mapwalker_texture,
+                                  posX-renderX+mapwalker_offset_x,
+                                  posY-renderY+mapwalker_offset_y,
+                                  mapwalker_texture.w,
+                                  mapwalker_img_h,
+                                  img.first, img.second);
 
         //Restore viewport
-        glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
+        GlRenderer::resetViewport();
     }
 
     if(common_setup.points_en)
@@ -897,7 +771,12 @@ void WorldScene::render()
         FontManager::printText(QString("%1")
                                .arg(points),
                                common_setup.points_x,
-                               common_setup.points_y);
+                               common_setup.points_y,
+                               common_setup.points_fontID,
+                               common_setup.points_rgba.Red(),
+                               common_setup.points_rgba.Green(),
+                               common_setup.points_rgba.Blue(),
+                               common_setup.points_rgba.Alpha());
     }
 
     if(common_setup.health_en)
@@ -905,21 +784,50 @@ void WorldScene::render()
         FontManager::printText(QString("%1")
                                .arg(health),
                                common_setup.health_x,
-                               common_setup.health_y);
+                               common_setup.health_y,
+                               common_setup.health_fontID,
+                               common_setup.health_rgba.Red(),
+                               common_setup.health_rgba.Green(),
+                               common_setup.health_rgba.Blue(),
+                               common_setup.health_rgba.Alpha());
     }
 
-    FontManager::printText(QString("%1")
-                           .arg(levelTitle),
-                           common_setup.title_x,
-                           common_setup.title_y);
+    if(common_setup.coin_en)
+    {
+        FontManager::printText(QString("%1")
+                               .arg(coins),
+                               common_setup.coin_x,
+                               common_setup.coin_y,
+                               common_setup.coin_fontID,
+                               common_setup.coin_rgba.Red(),
+                               common_setup.coin_rgba.Green(),
+                               common_setup.coin_rgba.Blue(),
+                               common_setup.coin_rgba.Alpha());
+    }
 
     if(common_setup.star_en)
     {
         FontManager::printText(QString("%1")
                                .arg(stars),
                                common_setup.star_x,
-                               common_setup.star_y);
+                               common_setup.star_y,
+                               common_setup.star_fontID,
+                               common_setup.star_rgba.Red(),
+                               common_setup.star_rgba.Green(),
+                               common_setup.star_rgba.Blue(),
+                               common_setup.star_rgba.Alpha());
     }
+
+    FontManager::printText(QString("%1")
+                           .arg(levelTitle),
+                           common_setup.title_x,
+                           common_setup.title_y,
+                           common_setup.title_fontID,
+                           common_setup.title_rgba.Red(),
+                           common_setup.title_rgba.Green(),
+                           common_setup.title_rgba.Blue(),
+                           common_setup.title_rgba.Alpha()
+                           );
 
     if(PGE_Window::showDebugInfo)
     {
@@ -949,7 +857,7 @@ void WorldScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitWorldDelay)
-                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
 
     renderBlack:
@@ -987,11 +895,13 @@ int WorldScene::exec()
             start_events = SDL_GetTicks();
         }
 
-        keyboard1.update();
+        player1Controller->update();
+        controls_1 = player1Controller->keys;
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -1015,57 +925,15 @@ int WorldScene::exec()
                             isPauseMenu = true;
                         }
                     break;
-                    case SDLK_t:
-                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                    break;
                     case SDLK_i:
                         ignore_paths= !ignore_paths;
-                    break;
-                    case SDLK_F3:
-                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                    break;
-                    case SDLK_z:
-                          if((!lock_controls) && (gameState))
-                          {
-                              if(!gameState->LevelFile.isEmpty())
-                              {
-                                  gameState->game_state.worldPosX=posX;
-                                  gameState->game_state.worldPosY=posY;
-                                  PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
-                                  stopMusic(true, 300);
-                                  lock_controls=true;
-                                  setExiting(0, WldExit::EXIT_beginLevel);
-                              }
-                              else if(jumpTo)
-                              {
-                                  //Create events
-                                  EventQueueEntry<WorldScene >event1;
-                                  event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
-                                  wld_events.events.push_back(event1);
-
-                                  EventQueueEntry<WorldScene >event2;
-                                  event2.makeCallerT(this, &WorldScene::jump, 100);
-                                  wld_events.events.push_back(event2);
-
-                                  EventQueueEntry<WorldScene >event3;
-                                  event3.makeCaller([this]()->void{
-                                                        this->setFade(25, 0.0, 0.08);
-                                                        this->lock_controls=false;
-                                                    }, 0);
-                                  wld_events.events.push_back(event3);
-
-                                  this->lock_controls=true;
-                                  PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                  this->setFade(25, 1.0f, 0.08);
-                              }
-                          }
-                    break;
-                    case SDLK_F12:
-                        GlRenderer::makeShot();
+                        if(ignore_paths)
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+                        else
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
                     break;
                     default:
-                      break;
-
+                    break;
                   }
                 break;
 
@@ -1089,6 +957,46 @@ int WorldScene::exec()
 
         /**********************Update physics and game progess***********************/
         update();
+
+        if(controls_1.jump)
+        {
+            if((!lock_controls) && (gameState))
+            {
+                if(!gameState->LevelFile.isEmpty())
+                {
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                    stopMusic(true, 300);
+                    lock_controls=true;
+                    setExiting(0, WldExit::EXIT_beginLevel);
+                }
+                else if(jumpTo)
+                {
+                    //Create events
+                    EventQueueEntry<WorldScene >event1;
+                    event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                    wld_events.events.push_back(event1);
+
+                    EventQueueEntry<WorldScene >event2;
+                    event2.makeCallerT(this, &WorldScene::jump, 100);
+                    wld_events.events.push_back(event2);
+
+                    EventQueueEntry<WorldScene >event3;
+                    event3.makeCaller([this]()->void{
+                                          this->setFade(25, 0.0, 0.08);
+                                          this->lock_controls=false;
+                                      }, 0);
+                    wld_events.events.push_back(event3);
+
+                    this->lock_controls=true;
+                    PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                    this->setFade(25, 1.0f, 0.08);
+                }
+            }
+        }
+
+        /**********************Update physics and game progess***********************/
 
         if(PGE_Window::showDebugInfo)
         {
@@ -1134,6 +1042,25 @@ int WorldScene::exec()
 
     }
     return exitWorldCode;
+}
+
+void WorldScene::tickAnimations(int ticks)
+{
+    //tick animation
+    for(int i=0; i<ConfigManager::Animator_Tiles.size(); i++)
+        ConfigManager::Animator_Tiles[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_Scenery.size(); i++)
+        ConfigManager::Animator_Scenery[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_WldPaths.size(); i++)
+        ConfigManager::Animator_WldPaths[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_WldLevel.size(); i++)
+        ConfigManager::Animator_WldLevel[i].manualTick(ticks);
+
+    for(int i=0;i<imgs.size();i++)
+        imgs[i].a.manualTick(ticks);
+
+    for(int i=0; i<portraits.size(); i++)
+        portraits[i].update(uTick);
 }
 
 bool WorldScene::isExit()
@@ -1192,9 +1119,9 @@ void WorldScene::stopMusic(bool fade, int fadeLen)
         PGE_MusPlayer::MUS_stopMusic();
 }
 
-void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
+void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int fadeLen)
 {
-    QString musPath = ConfigManager::getWldMusic(musicID);
+    QString musPath = ConfigManager::getWldMusic(musicID, data.path+"/"+customMusicFile);
     if(musPath.isEmpty()) return;
 
     PGE_MusPlayer::MUS_openFile(musPath);
@@ -1203,6 +1130,27 @@ void WorldScene::playMusic(long musicID, bool fade, int fadeLen)
     else
         PGE_MusPlayer::MUS_playMusic();
     if(gameState)
+    {
         gameState->game_state.musicID = musicID;
+        gameState->game_state.musicFile = customMusicFile;
+    }
 }
+
+
+void WorldScene::mapwalker_refreshDir()
+{
+    switch(dir)
+    {
+        case 1: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
+        case 2: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
+        case 3: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
+        case 4: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+    }
+}
+
+
+
+
+
+
 

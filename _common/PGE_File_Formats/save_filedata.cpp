@@ -26,11 +26,12 @@ saveCharacterState FileFormats::dummySavCharacterState()
 {
     saveCharacterState newData;
 
+    newData.id          = 1;
     newData.health      = 0;
     newData.itemID      = 0;
     newData.mountID     = 0;
     newData.mountType   = 0;
-    newData.state       = 0;
+    newData.state       = 1;
 
     return newData;
 }
@@ -63,6 +64,7 @@ GamesaveData FileFormats::dummySaveDataArray()
     newData.smbx64strict = false;
     newData.filename = "";
     newData.path = "";
+    newData.characterStates.push_back(dummySavCharacterState());
     newData.currentCharacter.push_back(1);
 
     return newData;

@@ -44,7 +44,7 @@ private:
     QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;
 
     //for star counter
-    int doStarCount(QString dir, QVector<WorldLevels > levels, QString introLevel);
+    int doStarCount(QString dir, QList<WorldLevels > levels, QString introLevel);
     long StarCounter_checkLevelFile(QString FilePath, QStringList &exists);
     bool StarCounter_canceled;
 };

@@ -581,14 +581,14 @@ void ItemBlock::removeFromArray()
     }
     if(found)
     { //directlry
-        scene->LvlData->blocks.remove(blockData.index);
+        scene->LvlData->blocks.removeAt(blockData.index);
     }
     else
     for(int i=0; i<scene->LvlData->blocks.size(); i++)
     {
         if(scene->LvlData->blocks[i].array_id == blockData.array_id)
         {
-            scene->LvlData->blocks.remove(i); break;
+            scene->LvlData->blocks.removeAt(i); break;
         }
     }
 }

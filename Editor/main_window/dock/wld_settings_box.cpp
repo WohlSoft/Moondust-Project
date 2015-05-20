@@ -20,6 +20,8 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/mainwinconnect.h>
 
+#include <tools/async/asyncstarcounter.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -27,6 +29,8 @@
 #include "ui_wld_settings_box.h"
 
 #include <QtConcurrent>
+
+#include <tuple>
 
 WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     QDockWidget(parent),
@@ -399,7 +403,7 @@ long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QStringList 
     return starCount;
 }
 
-int WorldSettingsBox::doStarCount(QString dir, QVector<WorldLevels> levels, QString introLevel)
+int WorldSettingsBox::doStarCount(QString dir, QList<WorldLevels> levels, QString introLevel)
 {
     //Count stars of all used levels on this world map
     QString dirPath=dir;
@@ -459,6 +463,20 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         WorldEdit * edit = mw()->activeWldEditWin();
         if(!edit) return;
 
+        #ifdef PGE_USE_NEW_STAR_COUNTER
+        /******New star counter********/
+        /* //New star counter in works and currently buggy :P
+         * but it must work more organized and safely */
+        AsyncStarCounter starCounter(dirPath, edit->WldData.levels, edit->WldData.IntroLevel_file, MainWinConnect::configs, mw());
+        starCounter.startAndShowProgress();
+        if(starCounter.isCancelled()) return;
+        ui->WLD_Stars->setValue(starCounter.countedStars());
+        /******New star counter**end***/
+        #else
+        /******Old star counter********/
+        /*
+         * Old Star Counter works in the single thread. Doing level data fetching recoursively to build level list.
+         */
         QString __backUP;
         __backUP = ui->WLD_DoCountStars->text();
 
@@ -467,8 +485,9 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
 
         dirPath = edit->WldData.path;
 
-        //Stop animations to increase performance
+        /*********************Stop animations to increase performance***********************/
         edit->scene->stopAnimation();
+        /*********************Stop animations to increase performance***********************/
 
         QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), mw());
              progress.setWindowTitle(tr("Counting stars..."));
@@ -480,31 +499,32 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
              progress.show();
 
         progress.connect(this, SIGNAL(countedStar(int)), &progress, SLOT(setValue(int)));
-
         QFuture<int> isOk = QtConcurrent::run(this, &WorldSettingsBox::doStarCount,
                                                QString(dirPath),
                                                edit->WldData.levels,
                                                edit->WldData.IntroLevel_file
                                                );
 
+        /*************************Wait until star counter will do work***************************/
         while(!isOk.isFinished())
         {
             qApp->processEvents();
             if(progress.wasCanceled())
                 StarCounter_canceled=true;
         }
+        /****************************************************************************************/
 
-        //Start animations again
+        /***********************Resume stoped animation and restore 'count' button state**************************/
         if(edit->scene->opts.animationEnabled)
             edit->scene->startAnimation();
-
         ui->WLD_DoCountStars->setEnabled(true);
         ui->WLD_DoCountStars->setText(__backUP);
-
+        /***********************Resume stoped animation and restore 'count' button state**************************/
         if(progress.wasCanceled()) return;
         ui->WLD_Stars->setValue(isOk.result());
         progress.close();
-
+        #endif
+        /******Old star counter**end***/
     }
 
 }

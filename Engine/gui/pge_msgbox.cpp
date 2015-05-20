@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "../graphics/gl_renderer.h"
 
 #include "../scenes/scene_level.h"
+#include "../scenes/scene_world.h"
 
 #include <QRect>
 #include <QFontMetrics>
@@ -57,6 +58,9 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     if(!texture.isEmpty())
         loadTexture(texture);
 
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    if(uTick<=0) uTick=1;
+
     message = msg;
     type = _type;
 
@@ -76,47 +80,12 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         QFont fnt = FontManager::font();
         QFontMetrics meter(fnt);
         /****************Word wrap*********************/
-        int lastspace=0;
         int count=1;
         int maxWidth=0;
-        for(int x=0, i=0;i<message.size();i++, x++)
-        {
-            switch(message[i].toLatin1())
-            {
-                case '\t':
-                case ' ':
-                    lastspace=i;
-                    break;
-                case '\n':
-                    lastspace=0;
-                    if((maxWidth<x)&&(maxWidth<28)) maxWidth=x;
-                    x=0;count++;
-                    break;
-            }
 
-            if(x>=27)//If lenght more than allowed
-            {
-                maxWidth=x;
-                if(lastspace>0)
-                {
-                    message[lastspace]='\n';
-                    i=lastspace-1;
-                    lastspace=0;
-                }
-                else
-                {
-                    message.insert(i, QChar('\n'));
-                    x=0;count++;
-                }
-            }
-        }
-        if(count==1)
-        {
-            maxWidth=message.length();
-            centered=true;
-        }
+        FontManager::optimizeText(message, 28, &count, &maxWidth);
+        if(count==1) centered=true;
         /****************Word wrap*end*****************/
-
         boxSize = meter.size(Qt::TextExpandTabs, message);
     }
 
@@ -162,10 +131,6 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 void PGE_MsgBox::exec()
 {
     Uint32 start_render;
-    Uint32 start_fade;
-
-    Uint32 AntiFreeze_delay=3000; //Protecting from freezing if fading timer wasn't start
-
     SDL_Event event; //  Events of SDL
 
     while ( SDL_PollEvent(&event) ) {}
@@ -173,15 +138,9 @@ void PGE_MsgBox::exec()
 
     PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
 
-    setFade(20, 1.0f, 0.09f);
-
-    start_fade = SDL_GetTicks();
+    setFade(10, 1.0f, 0.05f);
     while(fader_opacity<1.0f)
     {
-        if( start_fade+AntiFreeze_delay
-                < SDL_GetTicks()-start_fade)
-            fader_opacity = 1.0f;
-
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -195,25 +154,27 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding, _sizeRect.center().y() + height*fader_opacity + padding);
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding, _sizeRect.center().y() + height*fader_opacity + padding);
-            glEnd();
+            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
+                                   _sizeRect.center().y() - height*fader_opacity - padding,
+                                     _sizeRect.center().x() + width*fader_opacity + padding,
+                                   _sizeRect.center().y() + height*fader_opacity + padding,
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) ) {}
-        updateControllers();
+        while ( SDL_PollEvent(&event) ) {
+            PGE_Window::processEvents(event);
+            if(event.type==SDL_QUIT)
+                fader_opacity=1.0;
+        }
 
-        if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+
+        updateControllers();
+        tickFader(uTick);
     }
 
 
@@ -231,14 +192,9 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.left(), _sizeRect.top());
-                glVertex2f( _sizeRect.right(), _sizeRect.top());
-                glVertex2f( _sizeRect.right(), _sizeRect.bottom());
-                glVertex2f( _sizeRect.left(), _sizeRect.bottom());
-            glEnd();
+            GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
+                                   _sizeRect.width(), _sizeRect.height(),
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
 
@@ -256,6 +212,7 @@ void PGE_MsgBox::exec()
         updateControllers();
         while ( SDL_PollEvent(&event) )
         {
+            PGE_Window::processEvents(event);
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -263,7 +220,6 @@ void PGE_MsgBox::exec()
                         running=false;
                     }
                 break;
-
                 case SDL_KEYDOWN: // If pressed key
                     switch(event.key.keysym.sym)
                     { // Check which
@@ -297,24 +253,17 @@ void PGE_MsgBox::exec()
             }
         }
 
-        if(1000.0 / 75.0 > SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / 75.0 - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 
 
 
 
 
-    setFade(20, 0.0f, 0.09f);
-
-    start_fade = SDL_GetTicks();
+    setFade(10, 0.0f, 0.05f);
     while(fader_opacity>0.0f)
     {
-        if( start_fade+AntiFreeze_delay
-                < SDL_GetTicks()-start_fade)
-            fader_opacity = 0.0f;
-
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -328,29 +277,28 @@ void PGE_MsgBox::exec()
         }
         else
         {
-            glDisable(GL_TEXTURE_2D);
-            glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-            glBegin( GL_QUADS );
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
-                            _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
-                            _sizeRect.center().y() - height*fader_opacity - padding);
-                glVertex2f( _sizeRect.center().x() + width*fader_opacity + padding,
-                            _sizeRect.center().y() + height*fader_opacity + padding);
-                glVertex2f( _sizeRect.center().x() - width*fader_opacity - padding,
-                            _sizeRect.center().y() + height*fader_opacity + padding);
-            glEnd();
+
+            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
+                                   _sizeRect.center().y() - height*fader_opacity - padding,
+                                     _sizeRect.center().x() + width*fader_opacity + padding,
+                                   _sizeRect.center().y() + height*fader_opacity + padding,
+                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) ) {}
-        updateControllers();
+        while ( SDL_PollEvent(&event) ) {
+            PGE_Window::processEvents(event);
+            if(event.type==SDL_QUIT)
+                fader_opacity=0.0;
+        }
 
-        if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
-                //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
+        if(uTick > (SDL_GetTicks() - start_render))
+                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+
+        updateControllers();
+        tickFader(uTick);
     }
 
 }
@@ -365,8 +313,21 @@ void PGE_MsgBox::updateControllers()
             LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
             if(s)
             {
-                s->keyboard1.update();
-                s->keyboard1.sendControls();
+                s->tickAnimations(uTick);
+                s->player1Controller->update();
+                s->player1Controller->sendControls();
+                s->player2Controller->update();
+                s->player2Controller->sendControls();
+            }
+        }
+        else if(parentScene->type()==Scene::World)
+        {
+            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
+            if(s)
+            {
+                s->tickAnimations(uTick);
+                s->player1Controller->update();
+                s->player1Controller->sendControls();
             }
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,7 @@
 
 
 /*****Level BG************/
-QList<obj_BG >     ConfigManager::lvl_bg;
-QMap<long, obj_BG*>   ConfigManager::lvl_bg_indexes;
+QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
 QList<SimpleAnimator > ConfigManager::Animator_BG;
 /*****Level BG************/
@@ -45,12 +44,10 @@ bool ConfigManager::loadLevelBackG()
     QSettings bgset(bg_ini, QSettings::IniFormat);
     bgset.setIniCodec("UTF-8");
 
-    lvl_bg.clear();   //Clear old
-    lvl_bg_indexes.clear();
+    lvl_bg_indexes.clear();//Clear old
 
     bgset.beginGroup("background2-main");
         bg_total = bgset.value("total", "0").toInt();
-        total_data +=bg_total;
     bgset.endGroup();
 
     QStringList tmp;
@@ -157,10 +154,9 @@ bool ConfigManager::loadLevelBackG()
 
 
             sbg.id = i;
-            lvl_bg.push_back(sbg);
 
             //Add to Index
-            lvl_bg_indexes[lvl_bg.last().id] = &lvl_bg.last();
+            lvl_bg_indexes[sbg.id] = sbg;
 
         skipBG:
         bgset.endGroup();

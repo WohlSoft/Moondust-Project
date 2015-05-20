@@ -650,7 +650,7 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     {
         grp->removeFromGroup(generatorArrow);
         scene->removeItem(generatorArrow);
-        free(generatorArrow);
+        delete generatorArrow;
         generatorArrow = NULL;
     }
 
@@ -663,7 +663,6 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
     else
     {
         generatorArrow = new QGraphicsPixmapItem;
-
         switch(type)
         {
         case 2:
@@ -787,14 +786,14 @@ void ItemNPC::removeFromArray()
     }
     if(found)
     { //directlry
-        scene->LvlData->npc.remove(npcData.index);
+        scene->LvlData->npc.removeAt(npcData.index);
     }
     else
     for(int i=0; i<scene->LvlData->npc.size(); i++)
     {
         if(scene->LvlData->npc[i].array_id == npcData.array_id)
         {
-            scene->LvlData->npc.remove(i); break;
+            scene->LvlData->npc.removeAt(i); break;
         }
     }
 }

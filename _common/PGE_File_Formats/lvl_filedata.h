@@ -213,14 +213,14 @@ struct LevelSMBX64Event
     QString msg;
     long sound_id;
     long end_game;
-    QVector<LevelEvent_layers > layers;
+    QList<LevelEvent_layers > layers;
 
     bool nosmoke;
     QStringList layers_hide;
     QStringList layers_show;
     QStringList layers_toggle;
 
-    QVector<LevelEvent_Sets > sets;
+    QList<LevelEvent_Sets > sets;
     QString trigger;
     long trigger_timer;
 
@@ -255,21 +255,21 @@ struct LevelData
     int stars;
     bool ReadFileValid;
     QString LevelName;
-    QVector<LevelSection > sections;       //Sections
-    QVector<PlayerPoint > players;         //Players
-    QVector<LevelBlock > blocks;           //Blocks
+    QList<LevelSection > sections;       //Sections
+    QList<PlayerPoint > players;         //Players
+    QList<LevelBlock > blocks;           //Blocks
     unsigned int blocks_array_id;   //latest array_id
-    QVector<LevelBGO > bgo;                //Background objects
+    QList<LevelBGO > bgo;                //Background objects
     unsigned int bgo_array_id;   //latest array_id
-    QVector<LevelNPC > npc;                //NPCs
+    QList<LevelNPC > npc;                //NPCs
     unsigned int npc_array_id;   //latest array_id
-    QVector<LevelDoor > doors;            //Warps and Doors
+    QList<LevelDoor > doors;            //Warps and Doors
     unsigned int doors_array_id;   //latest array_id
-    QVector<LevelPhysEnv > physez;            //Physical Environment zones
+    QList<LevelPhysEnv > physez;            //Physical Environment zones
     unsigned int physenv_array_id;   //latest array_id
-    QVector<LevelLayer > layers;          //Layers
+    QList<LevelLayer > layers;          //Layers
     unsigned int layers_array_id;   //latest array_id
-    QVector<LevelSMBX64Event > events;          //Events
+    QList<LevelSMBX64Event > events;          //Events
     unsigned int events_array_id;   //latest array_id
 
     //meta:

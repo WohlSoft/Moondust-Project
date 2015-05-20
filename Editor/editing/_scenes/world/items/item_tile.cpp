@@ -317,14 +317,14 @@ void ItemTile::removeFromArray()
 
     if(found)
     { //directlry
-        scene->WldData->tiles.remove(tileData.index);
+        scene->WldData->tiles.removeAt(tileData.index);
     }
     else
     for(int i=0; i<scene->WldData->tiles.size(); i++)
     {
         if(scene->WldData->tiles[i].array_id == tileData.array_id)
         {
-            scene->WldData->tiles.remove(i); break;
+            scene->WldData->tiles.removeAt(i); break;
         }
     }
 }

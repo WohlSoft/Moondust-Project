@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include "../scene_level.h"
 #include "../../data_configs/config_manager.h"
 #include "../../physics/contact_listener.h"
+#include <settings/global_settings.h>
 
 #include "../../gui/pge_msgbox.h"
 
@@ -106,19 +107,22 @@ bool LevelScene::setEntrance(int entr)
                     }
                 }
 
-                EventQueueEntry<LevelScene >event3;
-                event3.makeCaller([this]()->void{
-                                      PlayerPoint newPoint;
-                                      newPoint.id = data.players.first().id;
-                                      newPoint.x=cameraStart.x();
-                                      newPoint.y=cameraStart.y();
-                                      newPoint.w = this->player_defs.first().width();
-                                      newPoint.h = this->player_defs.first().height();
-                                      newPoint.direction=1;
-                                      this->addPlayer(newPoint, true);
-                                      isWarpEntrance=false;
-                                  }, 1000);
-                system_events.events.push_back(event3);
+                for(int i=1; i<=numberOfPlayers; i++)
+                {
+                    EventQueueEntry<LevelScene >event3;
+                    event3.makeCaller([this, i]()->void{
+                                          PlayerPoint newPoint = getStartLocation(i);
+                                          newPoint.id = i;
+                                          newPoint.x=startWarp.ox;
+                                          newPoint.y=startWarp.oy;
+                                          newPoint.w = this->player_defs.first().width();
+                                          newPoint.h = this->player_defs.first().height();
+                                          newPoint.direction=1;
+                                          this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
+                                          isWarpEntrance=false;
+                                      }, 1000);
+                    system_events.events.push_back(event3);
+                }
                 return true;
             }
         }
@@ -135,6 +139,69 @@ bool LevelScene::setEntrance(int entr)
     return false;
 }
 
+PlayerPoint LevelScene::getStartLocation(int playerID)
+{
+    //If no placed player star points
+    if(data.players.isEmpty())
+    {
+        PlayerPoint point;
+        if(this->isWarpEntrance) {
+            //Construct spawn point with basing on camera position
+            point.x=cameraStart.x();
+            point.y=cameraStart.x();
+            point.w=20;
+            point.h=60;
+        } else if(!data.sections.isEmpty()) {
+            //Construct point based on first section boundary coordinates
+            point.x=data.sections[0].size_left+20;
+            point.y=data.sections[0].size_top+60;
+            point.w = 20;
+            point.h = 60;
+        } else {
+            //Construct null player point
+            point.x=0;
+            point.y=0;
+            point.w=0;
+            point.h=0;
+        }
+        point.direction=1;
+        point.id=playerID;
+        return point;
+    }
+
+    foreach(PlayerPoint p, data.players)
+    {   //Return player ID specific spawn point
+        if(p.id==(unsigned)playerID)
+        {
+            //Must not be null!
+            if((p.w!=0)&&(p.h!=0))
+                return p;
+        }
+    }
+
+    if(playerID<=data.players.size())
+    {
+        PlayerPoint p = data.players[playerID-1];
+        //Return spawn point by array index if not out of range [Not null]
+        if((p.w!=0)&&(p.h!=0))
+        {
+            p.id=playerID;
+            return data.players[playerID-1];
+        }
+    }
+
+    foreach(PlayerPoint p, data.players)
+    {   //Return first not null point
+        if((p.w!=0)&&(p.h!=0))
+        {
+            p.id=playerID;
+            return p;
+        }
+    }
+    //Return first presented point entry even if null
+    return data.players.first();
+}
+
 
 
 
@@ -142,6 +209,25 @@ bool LevelScene::setEntrance(int entr)
 bool LevelScene::loadConfigs()
 {
     bool success=true;
+
+    QString musIni=data.path+"/music.ini";
+    QString sndIni=data.path+"/sounds.ini";
+    if(ConfigManager::music_lastIniFile!=musIni)
+    {
+        ConfigManager::loadDefaultMusics();
+        ConfigManager::loadMusic(data.path+"/", musIni, true);
+        loaderStep();
+    }
+
+    if(ConfigManager::sound_lastIniFile!=sndIni)
+    {
+        ConfigManager::loadDefaultSounds();
+            loaderStep();
+        ConfigManager::loadSound(data.path+"/", sndIni, true);
+            loaderStep();
+        if(ConfigManager::soundIniChanged())
+            ConfigManager::buildSoundIndex();
+    }
 
     //Load INI-files
         loaderStep();
@@ -220,20 +306,18 @@ bool LevelScene::init()
                        cameraStart.y()-camera->h()/2 + player_defs.first().height()/2);
 
         cameras.push_back(camera);
+
+        LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
+        if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
+        {
+            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
+            CurrentBackground->setBg(*bgSetup);
+            qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
+        }
+        else
+            CurrentBackground->setNone();
+        backgrounds.push_back(CurrentBackground);
     }
-
-    LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
-    if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
-    {
-        obj_BG*bgSetup = ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
-        CurrentBackground->setBg(*bgSetup);
-        qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
-    }
-    else
-        CurrentBackground->setNone();
-
-    backgrounds.push_back(CurrentBackground);
-
 
     //Init data
 
@@ -255,6 +339,46 @@ bool LevelScene::init()
         if(!isLevelContinues) return false;
         placeBGO(data.bgo[i]);
     }
+
+    qDebug()<<"Init NPCs";
+    if(AppSettings.enableDummyNpc)
+    {
+        //NPC
+        for(int i=0; i<data.npc.size(); i++)
+        {
+            loaderStep();
+            if(!isLevelContinues) return false;//!< quit from game if window was closed
+            if(!isLevelContinues) return false;
+            placeNPC(data.npc[i]);
+        }
+    }
+    else
+    {
+        //NPC
+        for(int i=0; i<data.npc.size(); i++)
+        {
+            if(
+               (data.npc[i].id!=11)&&
+
+               (data.npc[i].id!=15)&&
+               (data.npc[i].id!=86)&&
+               (data.npc[i].id!=39)&&
+
+               (data.npc[i].id!=41)&&
+               (data.npc[i].id!=16)&&
+               (data.npc[i].id!=97)&&
+               (data.npc[i].id!=197)
+                    )
+                continue;
+            loaderStep();
+            if(!isLevelContinues) return false;//!< quit from game if window was closed
+            if(!isLevelContinues) return false;
+            placeNPC(data.npc[i]);
+        }
+    }
+
+
+
 
     qDebug()<<"Init Warps";
     //BGO
@@ -295,23 +419,22 @@ bool LevelScene::init()
 
     qDebug()<<"Add players";
 
-    int getPlayers = numberOfPlayers;
-    int players_count=0;
+    int added_players=0;
     if(!isWarpEntrance) //Dont place players if entered through warp
-        for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
+        for(int i=1; i <= numberOfPlayers; i++)
         {
             loaderStep();
             if(!isLevelContinues) return false;//!< quit from game if window was closed
+            PlayerPoint startPoint = getStartLocation(i);
 
-            int i = players_count;
-            if(data.players[i].w==0 && data.players[i].h==0) continue;
+            //Don't place player if point is null!
+            if(startPoint.w==0 && startPoint.h==0) continue;
 
-            addPlayer(data.players[i]);
-
-            getPlayers--;
+            addPlayer(startPoint);
+            added_players++;
         }
 
-    if(players_count<0 && !isWarpEntrance)
+    if(added_players<=0 && !isWarpEntrance)
     {
         qDebug()<<"No defined players!";
         return false;
@@ -328,15 +451,13 @@ bool LevelScene::init()
         }
     }
 
-    //start animation
-    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i].start();
-
-    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i].start();
-
-    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-        ConfigManager::Animator_BG[i].start();
+//    //start animation
+//    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
+//        ConfigManager::Animator_Blocks[i].start();
+//    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
+//        ConfigManager::Animator_BGO[i].start();
+//    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
+//        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
     isInit = true;
