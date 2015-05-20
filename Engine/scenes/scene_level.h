@@ -82,6 +82,7 @@ public:
     int    cameraStartDirection;
     LevelDoor startWarp;
     int NewPlayerID;
+    PlayerPoint getStartLocation(int playerID);
 
     QList<LVL_PlayerDef > player_defs;
 
