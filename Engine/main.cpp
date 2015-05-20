@@ -225,8 +225,6 @@ int main(int argc, char *argv[])
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
-    PGE_Window::setFullScreen(AppSettings.fullScreen);
-
     AppSettings.initJoysticks();
     AppSettings.loadJoystickSettings();
 
@@ -239,6 +237,9 @@ int main(int argc, char *argv[])
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
+
+    PGE_Window::setFullScreen(AppSettings.fullScreen);
+    GlRenderer::resetViewport();
 
     //Init font manager
     FontManager::init();
