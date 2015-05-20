@@ -385,6 +385,13 @@ void LevelScene::render()
             GlRenderer::resetViewport();
     }
 
+    //Draw camera separators
+    for(int c=1;c<cameras.size();c++)
+    {
+        GlRenderer::renderRect(0, cameras[c]->h()*c-1, cameras[c]->w(), 2, 0.f, 0.f, 0.f, 1.f);
+    }
+
+
     if(PGE_Window::showDebugInfo)
     {
         //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);

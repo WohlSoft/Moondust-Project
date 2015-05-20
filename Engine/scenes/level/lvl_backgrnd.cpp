@@ -167,8 +167,6 @@ void LVL_Background::setBg(obj_BG &bg)
         default:
             break;
     }
-
-    applyColor();
 }
 
 void LVL_Background::setNone()
@@ -177,11 +175,12 @@ void LVL_Background::setNone()
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
-    applyColor();
 }
 
 void LVL_Background::draw(float x, float y)
 {
+    GlRenderer::renderRect(0,0, PGE_Window::Width, PGE_Window::Height, color.r, color.g, color.b, 1.0);
+
     if(setup && pCamera) //draw BG if is set
     {
         double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
@@ -413,6 +412,6 @@ void LVL_Background::draw(float x, float y)
 
 void LVL_Background::applyColor()
 {
-    glClearColor(color.r, color.g, color.b, 1.0f);
+    glClearColor(0.f, 0.f, 0.f, 1.0f);
 }
 

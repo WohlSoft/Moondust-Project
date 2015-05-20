@@ -221,7 +221,6 @@ void PGE_LevelCamera::drawBackground()
 {
     if(BackgroundHandler)
     {
-        BackgroundHandler->applyColor();
         BackgroundHandler->draw(posX(), posY());
     }
 }
