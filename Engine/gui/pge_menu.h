@@ -50,7 +50,7 @@ public:
                         std::function<void()> _extAction=([]()->void{}) );
     void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
-    void addKeyGrabMenuItem(int *keyvalue, QString value, QString title);
+    void addKeyGrabMenuItem(int *keyvalue, QString value, QString title, int *joystick_key_id=NULL, int *joystick_key_type=NULL, SDL_Joystick *joystick_device=NULL);
 
     void setValueOffset(int offset);
     void setItemWidth(int width);
@@ -81,7 +81,8 @@ public:
 
     bool isSelected();  //!< Is menu was accepted or rejected
     bool isAccepted();  //!< Is menu was accepted, else rejected
-    bool isKeyGrabbing(); //!< Is a key grabbing mode
+    bool isKeyGrabbing();         //!< Is a key grabbing mode
+    bool processJoystickBinder(); //!< Is a joystick key grabbing mode
     void storeKey(int scancode);
     const PGE_Menuitem currentItem(); //!< Returns current menu item entry
     int currentItemI();       //!< Returns index of current menu item

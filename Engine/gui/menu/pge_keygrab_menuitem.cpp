@@ -21,6 +21,7 @@
 #include <fontman/font_manager.h>
 #include <audio/pge_audio.h>
 #include "pge_keygrab_menuitem.h"
+#include <controls/controller_joystick.h>
 
 #include "../pge_menu.h"
 
@@ -30,6 +31,10 @@ PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem() : PGE_Menuitem()
     type=ITEM_KeyGrab;
     menu=NULL;
     chosing=false;
+    joystick_mode=false;
+    joystick_key_id     = NULL;
+    joystick_key_type   = NULL;
+    joystick_device     = NULL;
 }
 
 PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it) : PGE_Menuitem(it)
@@ -38,10 +43,33 @@ PGE_KeyGrabMenuItem::PGE_KeyGrabMenuItem(const PGE_KeyGrabMenuItem &it) : PGE_Me
     this->menu = it.menu;
     this->type = it.type;
     this->chosing = it.chosing;
+    this->joystick_mode=it.joystick_mode;
+    this->joystick_key_id=it.joystick_key_id;
+    this->joystick_key_type=it.joystick_key_type;
+    this->joystick_device = it.joystick_device;
 }
 
 PGE_KeyGrabMenuItem::~PGE_KeyGrabMenuItem()
 {}
+
+void PGE_KeyGrabMenuItem::processJoystickBind()
+{
+    if(joystick_mode)
+    {
+        int jkeyValue=0;
+        int keyType=0;
+        int keyId=0;
+        if(JoystickController::bindJoystickKey(joystick_device, jkeyValue, keyId, keyType) )
+        {
+            chosing=false;
+            *keyValue=jkeyValue;
+            *joystick_key_id=keyId;
+            *joystick_key_type=keyType;
+            PGE_Audio::playSoundByRole(obj_sound_role::MenuDo);
+            if(menu) menu->is_keygrab=false;
+        }
+    }
+}
 
 void PGE_KeyGrabMenuItem::grabKey()
 {
@@ -58,7 +86,10 @@ void PGE_KeyGrabMenuItem::grabKey()
 
 void PGE_KeyGrabMenuItem::pushKey(int scancode)
 {
+    if(joystick_mode && (scancode>=0))
+        return;
     chosing=false;
+
     if(keyValue)
     {
         if(scancode>=0)//if -1 - cancel grabbing of key
@@ -71,6 +102,11 @@ void PGE_KeyGrabMenuItem::pushKey(int scancode)
         }
         else //Remove control key
         {
+            if(joystick_mode)
+            {
+                *joystick_key_id=-1;
+                *joystick_key_type=-1;
+            }
             *keyValue=-1;
             PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
         }
@@ -82,8 +118,27 @@ void PGE_KeyGrabMenuItem::render(int x, int y)
 {
     PGE_Menuitem::render(x, y);
     if(chosing)
-        FontManager::printText(QString("..."), x+210, y);
+        FontManager::printText(QString("..."), x+valueOffset, y);
     else
     if(keyValue)
-        FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+210, y, _font_id);
+    {
+        if(joystick_mode)
+        {
+            if(*joystick_key_type!=-1)
+                FontManager::printText(QString("Key=%1 ID=%2 Type=%3")
+                                       .arg(*keyValue)
+                                       .arg(*joystick_key_id)
+                                       .arg(*joystick_key_type)
+                                       , x+valueOffset, y, _font_id);
+            else
+                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id);
+        }
+        else
+        {
+            if(*keyValue!=-1)
+                FontManager::printText(QString(SDL_GetScancodeName((SDL_Scancode)*keyValue)), x+valueOffset, y, _font_id);
+            else
+                FontManager::printText(QString("<none>"), x+valueOffset, y, _font_id);
+        }
+    }
 }

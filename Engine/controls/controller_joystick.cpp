@@ -132,22 +132,21 @@ void JoystickController::update()
 bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &keyID, int &keyType)
 {
     int val=0, dx=0, dy=0;
-    //SDL_PumpEvents();
+    SDL_PumpEvents();
     SDL_JoystickUpdate();
 
-    for(int i=0; i<SDL_JoystickNumAxes(joy);i++)
-    {
-        val=0;
-        val=SDL_JoystickGetAxis(joy, i);
-        if(val!=0)
-        {
-            keyValue=val;
-            keyID=i;
-            keyType=KeyMapJoyCtrls::JoyAxis;
-            return true;
-        }
-    }
-
+//    for(int i=0; i<SDL_JoystickNumAxes(joy);i++)
+//    {
+//        val=0;
+//        val=SDL_JoystickGetAxis(joy, i);
+//        if(val!=0)
+//        {
+//            keyValue=val;
+//            keyID=i;
+//            keyType=KeyMapJoyCtrls::JoyAxis;
+//            return true;
+//        }
+//    }
     for(int i=0; i<SDL_JoystickNumBalls(joy);i++)
     {
         dx=0; dy=0;

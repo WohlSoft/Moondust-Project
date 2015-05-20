@@ -5,9 +5,9 @@ struct KeyMap
 {
     inline KeyMap()
     {
-        start=0; drop=0;
-        left=0; right=0; up=0; down=0;
-        jump=0; jump_alt=0; run=0; run_alt=0;
+        start=-1; drop=-1;
+        left=-1; right=-1; up=-1; down=-1;
+        jump=-1; jump_alt=-1; run=-1; run_alt=-1;
     }
     int start;
     int drop;
@@ -37,9 +37,9 @@ struct KeyMapJoyCtrls
     };
     inline KeyMapJoyCtrls()
     {
-        start=0; drop=0;
-        left=0; right=0; up=0; down=0;
-        jump=0; jump_alt=0; run=0; run_alt=0;
+        start=-1; drop=-1;
+        left=-1; right=-1; up=-1; down=-1;
+        jump=-1; jump_alt=-1; run=-1; run_alt=-1;
     }
     int start;
 
