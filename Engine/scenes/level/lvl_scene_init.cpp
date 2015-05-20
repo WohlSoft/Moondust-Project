@@ -107,19 +107,22 @@ bool LevelScene::setEntrance(int entr)
                     }
                 }
 
-                EventQueueEntry<LevelScene >event3;
-                event3.makeCaller([this]()->void{
-                                      PlayerPoint newPoint;
-                                      newPoint.id = data.players.first().id;
-                                      newPoint.x=startWarp.ox;
-                                      newPoint.y=startWarp.oy;
-                                      newPoint.w = this->player_defs.first().width();
-                                      newPoint.h = this->player_defs.first().height();
-                                      newPoint.direction=1;
-                                      this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
-                                      isWarpEntrance=false;
-                                  }, 1000);
-                system_events.events.push_back(event3);
+                for(int i=1; i<=numberOfPlayers; i++)
+                {
+                    EventQueueEntry<LevelScene >event3;
+                    event3.makeCaller([this, i]()->void{
+                                          PlayerPoint newPoint = getStartLocation(i);
+                                          newPoint.id = i;
+                                          newPoint.x=startWarp.ox;
+                                          newPoint.y=startWarp.oy;
+                                          newPoint.w = this->player_defs.first().width();
+                                          newPoint.h = this->player_defs.first().height();
+                                          newPoint.direction=1;
+                                          this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
+                                          isWarpEntrance=false;
+                                      }, 1000);
+                    system_events.events.push_back(event3);
+                }
                 return true;
             }
         }
@@ -134,6 +137,69 @@ bool LevelScene::setEntrance(int entr)
     //Error, sections is not found
     exitLevelCode = LvlExit::EXIT_Error;
     return false;
+}
+
+PlayerPoint LevelScene::getStartLocation(int playerID)
+{
+    //If no placed player star points
+    if(data.players.isEmpty())
+    {
+        PlayerPoint point;
+        if(this->isWarpEntrance) {
+            //Construct spawn point with basing on camera position
+            point.x=cameraStart.x();
+            point.y=cameraStart.x();
+            point.w=20;
+            point.h=60;
+        } else if(!data.sections.isEmpty()) {
+            //Construct point based on first section boundary coordinates
+            point.x=data.sections[0].size_left+20;
+            point.y=data.sections[0].size_top+60;
+            point.w = 20;
+            point.h = 60;
+        } else {
+            //Construct null player point
+            point.x=0;
+            point.y=0;
+            point.w=0;
+            point.h=0;
+        }
+        point.direction=1;
+        point.id=playerID;
+        return point;
+    }
+
+    foreach(PlayerPoint p, data.players)
+    {   //Return player ID specific spawn point
+        if(p.id==(unsigned)playerID)
+        {
+            //Must not be null!
+            if((p.w!=0)&&(p.h!=0))
+                return p;
+        }
+    }
+
+    if(playerID<=data.players.size())
+    {
+        PlayerPoint p = data.players[playerID-1];
+        //Return spawn point by array index if not out of range [Not null]
+        if((p.w!=0)&&(p.h!=0))
+        {
+            p.id=playerID;
+            return data.players[playerID-1];
+        }
+    }
+
+    foreach(PlayerPoint p, data.players)
+    {   //Return first not null point
+        if((p.w!=0)&&(p.h!=0))
+        {
+            p.id=playerID;
+            return p;
+        }
+    }
+    //Return first presented point entry even if null
+    return data.players.first();
 }
 
 
@@ -353,23 +419,22 @@ bool LevelScene::init()
 
     qDebug()<<"Add players";
 
-    int getPlayers = numberOfPlayers;
-    int players_count=0;
+    int added_players=0;
     if(!isWarpEntrance) //Dont place players if entered through warp
-        for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
+        for(int i=1; i <= numberOfPlayers; i++)
         {
             loaderStep();
             if(!isLevelContinues) return false;//!< quit from game if window was closed
+            PlayerPoint startPoint = getStartLocation(i);
 
-            int i = players_count;
-            if(data.players[i].w==0 && data.players[i].h==0) continue;
+            //Don't place player if point is null!
+            if(startPoint.w==0 && startPoint.h==0) continue;
 
-            addPlayer(data.players[i]);
-
-            getPlayers--;
+            addPlayer(startPoint);
+            added_players++;
         }
 
-    if(players_count<0 && !isWarpEntrance)
+    if(added_players<=0 && !isWarpEntrance)
     {
         qDebug()<<"No defined players!";
         return false;
