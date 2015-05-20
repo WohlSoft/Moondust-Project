@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 #include <data_configs/config_manager.h>
 #include <graphics/graphics.h>
+#include <graphics/gl_renderer.h>
 #include <graphics/window.h>
 
 #include "lvl_backgrnd.h"
@@ -32,7 +33,9 @@ LVL_Background::LVL_Background()
 LVL_Background::LVL_Background(PGE_LevelCamera *parentCamera)
 {
     construct();
+    if(!parentCamera) return;
     pCamera = parentCamera;
+    pCamera->BackgroundHandler = this;
 }
 
 void LVL_Background::construct()
@@ -164,10 +167,6 @@ void LVL_Background::setBg(obj_BG &bg)
         default:
             break;
     }
-
-    //set background color
-    qDebug() << color.r << color.g << color.b;
-    glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
 void LVL_Background::setNone()
@@ -176,11 +175,12 @@ void LVL_Background::setNone()
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
-    glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
 void LVL_Background::draw(float x, float y)
 {
+    GlRenderer::renderRect(0,0, PGE_Window::Width, PGE_Window::Height, color.r, color.g, color.b, 1.0);
+
     if(setup && pCamera) //draw BG if is set
     {
         double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
@@ -324,23 +324,29 @@ void LVL_Background::draw(float x, float y)
                         d_top = strips[mg].top;
                         d_bottom = strips[mg].bottom;
                     }
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-                    glEnable(GL_TEXTURE_2D);
-                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, d_top );
-                        glVertex2f( backgrndG.left(), backgrndG.top());
 
-                        glTexCoord2f( 1, d_top );
-                        glVertex2f(  backgrndG.right(), backgrndG.top());
+                    GlRenderer::renderTexture(&txData1,
+                                              backgrndG.left(),
+                                              backgrndG.top(),
+                                              backgrndG.width(), backgrndG.height(),
+                                              d_top, d_bottom);
+//                    glColor4f( 1.f, 1.f, 1.f, 1.f);
+//                    glEnable(GL_TEXTURE_2D);
+//                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
+//                    glBegin( GL_QUADS );
+//                        glTexCoord2f( 0, d_top );
+//                        glVertex2f( backgrndG.left(), backgrndG.top());
 
-                        glTexCoord2f( 1, d_bottom );
-                        glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+//                        glTexCoord2f( 1, d_top );
+//                        glVertex2f(  backgrndG.right(), backgrndG.top());
 
-                        glTexCoord2f( 0, d_bottom );
-                        glVertex2f( backgrndG.left(),  backgrndG.bottom());
+//                        glTexCoord2f( 1, d_bottom );
+//                        glVertex2f(  backgrndG.right(),  backgrndG.bottom());
 
-                    glEnd();
+//                        glTexCoord2f( 0, d_bottom );
+//                        glVertex2f( backgrndG.left(),  backgrndG.bottom());
+
+//                    glEnd();
                 }
                 lenght += txData1.w;
                 draw_x += txData1.w;
@@ -374,28 +380,38 @@ void LVL_Background::draw(float x, float y)
             while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
             {
                 backgrndG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glEnable(GL_TEXTURE_2D);
-                glBindTexture( GL_TEXTURE_2D, txData2.texture );
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, ani_x.first );
-                    glVertex2f( backgrndG.left(), backgrndG.top());
+                GlRenderer::renderTexture(&txData2,
+                                          backgrndG.left(),
+                                          backgrndG.top(),
+                                          backgrndG.width(), backgrndG.height(),
+                                          ani_x.first, ani_x.second);
+//                glColor4f( 1.f, 1.f, 1.f, 1.f);
+//                glEnable(GL_TEXTURE_2D);
+//                glBindTexture( GL_TEXTURE_2D, txData2.texture );
+//                glBegin( GL_QUADS );
+//                    glTexCoord2f( 0, ani_x.first );
+//                    glVertex2f( backgrndG.left(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.first );
-                    glVertex2f(  backgrndG.right(), backgrndG.top());
+//                    glTexCoord2f( 1, ani_x.first );
+//                    glVertex2f(  backgrndG.right(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.second );
-                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+//                    glTexCoord2f( 1, ani_x.second );
+//                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
 
-                    glTexCoord2f( 0, ani_x.second );
-                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
+//                    glTexCoord2f( 0, ani_x.second );
+//                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
 
-                glEnd();
+//                glEnd();
                 lenght += txData2.w;
                 imgPos_X += txData2.w;
             }
         }
 
     }
+}
+
+void LVL_Background::applyColor()
+{
+    glClearColor(0.f, 0.f, 0.f, 1.0f);
 }
 

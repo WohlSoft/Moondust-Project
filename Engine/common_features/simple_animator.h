@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #define SIMPLE_ANIMATOR_H
 
 #include <SDL2/SDL_timer.h>
+#include <QList>
 #include <utility>
 
 typedef std::pair<double, double > AniPos;
@@ -40,6 +41,8 @@ public:
     void construct(bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                    bool rev=false, bool bid=false);
 
+    void setFrameSequance(QList<int> sequance);
+
     AniPos image(double frame=-1);
 
     void setFrame(int y);
@@ -52,12 +55,22 @@ public:
 
     static unsigned int TickAnimation(unsigned int x, void *p);
 
+    void setOnceMode(bool once);
+    void manualTick(int ticks);
+    bool isFinished();
 public:
     void nextFrame();
 
 private:
     double pos1;
     double pos2;
+    int manual_ticks;
+    bool onceMode;
+    bool animationFinished;
+
+    bool       frame_sequance_enabled;
+    QList<int> frame_sequance;
+    int        frame_sequance_cur;
 
     int CurrentFrame;
 

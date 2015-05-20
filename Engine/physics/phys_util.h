@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@
 class PhysUtil
 {
 public:
-    static float met2pix(float met);
-    static float pix2met(float pix);
-    static float pixMeter;
+    static double met2pix(double met);
+    static double pix2met(double pix);
+    static double pixMeter;
 };
 
 #endif // PHYS_UTIL_H

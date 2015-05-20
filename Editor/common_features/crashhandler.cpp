@@ -38,31 +38,9 @@
 QString CrashHandler::getStacktrace()
 {
     #ifdef _WIN32
-        unsigned int   i;
-        void         * stack[ 100 ];
-        unsigned short frames;
-        SYMBOL_INFO  * symbol;
-        HANDLE         process;
-
-        process = GetCurrentProcess();
-
-        SymInitialize( process, NULL, TRUE );
-
-        frames               = CaptureStackBackTrace( 0, 100, stack, NULL );
-        symbol               = ( SYMBOL_INFO * )calloc( sizeof( SYMBOL_INFO ) + 256 * sizeof( char ), 1 );
-        symbol->MaxNameLen   = 255;
-        symbol->SizeOfStruct = sizeof( SYMBOL_INFO );
-
-        QString bkTrace("");
-        for( i = 0; i < frames; i++ )
-        {
-            char buf[500];
-            SymFromAddr( process, ( DWORD64 )( stack[ i ] ), 0, symbol );
-
-            sprintf(buf, "%i: %s - 0x%0llx\n", frames - i - 1, symbol->Name, symbol->Address );
-            bkTrace += buf;
-        }
-        return bkTrace;
+        StackTracer tracer;
+        tracer.runStackTracerForAllThreads();
+        return tracer.theOutput;
     #elif (__linux__ && !(__ANDROID__))
         void *array[400];
         size_t size;
@@ -97,51 +75,23 @@ CrashHandler::~CrashHandler()
 
 void CrashHandler::crashByFlood()
 {
-    attemptCrashsave();
-
-    QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
-                                        "To prevent this, try closing other uneccessary programs to free up more memory.");
-
-    if(DevConsole::isConsoleShown())
-        DevConsole::closeIfPossible();
-
-    crashMsg += QString("\n\n") + getStacktrace();
-
-    CrashHandler* crsh = new CrashHandler(crashMsg);
-    crsh->exec();
-
-    exit(EXIT_FAILURE);
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Out of memory!\n\n"
+                                        "To prevent this, try closing other uneccessary programs to free up more memory."));
 }
 
 void CrashHandler::crashByUnhandledException()
 {
-    attemptCrashsave();
-
-    std::exception_ptr unhandledException = std::current_exception();
-    try{
-        std::rethrow_exception(unhandledException);
-    }
-    catch(const std::exception& e)
-    {
-        QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: %1\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum").arg(e.what());
-
-        if(DevConsole::isConsoleShown())
-            DevConsole::closeIfPossible();
-
-        crashMsg += QString("\n\n") + getStacktrace();
-
-        CrashHandler* crsh = new CrashHandler(crashMsg);
-        crsh->exec();
-    }
-
-    exit(EXIT_FAILURE);
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Unhandled Exception\n\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum"));
 }
 
 void CrashHandler::crashBySIGSERV(int /*signalid*/)
 {
-    attemptCrashsave();
+    doCrashScreenAndCleanup(QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n"));
+}
 
-    QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. \nReason: Signal Segmentation Violation [SIGSERV]\n\n");
+void CrashHandler::doCrashScreenAndCleanup(QString crashMsg)
+{
+    attemptCrashsave();
 
     if(DevConsole::isConsoleShown())
         DevConsole::closeIfPossible();

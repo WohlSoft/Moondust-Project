@@ -386,14 +386,14 @@ void ItemWater::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->physez.remove(waterData.index);
+        scene->LvlData->physez.removeAt(waterData.index);
     }
     else
     for(int i=0; i<scene->LvlData->physez.size(); i++)
     {
         if(scene->LvlData->physez[i].array_id == waterData.array_id)
         {
-            scene->LvlData->physez.remove(i); break;
+            scene->LvlData->physez.removeAt(i); break;
         }
     }
 }

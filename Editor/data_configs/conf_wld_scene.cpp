@@ -129,7 +129,7 @@ void dataconfigs::loadWorldScene()
 
             sScene.animated =     (sceneset.value("animated", "0").toString()=="1");
             sScene.frames =        sceneset.value("frames", "1").toInt();
-            sScene.framespeed =    sceneset.value("frame-speed", "125").toInt();
+            sScene.framespeed =    sceneset.value("frame-speed", "175").toInt();
 
             sScene.frame_h =   (sScene.animated?
                       qRound(qreal(sScene.image.height())/

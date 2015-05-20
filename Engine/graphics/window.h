@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,10 +38,15 @@ public:
     static bool uninit();
     static bool isReady();
     static void setCursorVisibly(bool viz);
+    static void clean();
+    static void rePaint();
 
     static SDL_Window *window;
     static SDL_GLContext glcontext;
+    static int setFullScreen(bool fs);
     static int SDL_ToggleFS(SDL_Window *win=NULL);
+
+    static int processEvents(SDL_Event &event);
 
     static void checkSDLError(int line = -1);
 private:

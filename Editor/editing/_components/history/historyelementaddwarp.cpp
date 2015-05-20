@@ -33,7 +33,7 @@ void HistoryElementAddWarp::undo()
     {
         if(lvlScene->LvlData->doors[i].array_id==(unsigned int)m_array_id)
         {
-            lvlScene->LvlData->doors.remove(i);
+            lvlScene->LvlData->doors.removeAt(i);
             break;
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #define OBJ_NPC_H
 
 #include <QString>
-#include <QPixmap>
+#include <QStringList>
 
 #include "../graphics/graphics.h"
 
@@ -37,8 +37,6 @@ struct obj_npc
     QString category;   //    category="Enemy"		;The sort category
     QString image_n;    //    image="npc-1.gif"		;NPC Image file
     QString mask_n;
-    //QPixmap image;
-    QPixmap mask;
 
     /*   OpenGL    */
     bool isInit;

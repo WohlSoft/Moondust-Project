@@ -200,7 +200,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          if(pgeX_Data.dataTree[section].name=="JOKES")
          {
              #ifdef PGE_FILES_USE_MESSAGEBOXES
-             if(!pgeX_Data.dataTree[section].data.isEmpty())
+             if((!silentMode)&&(!pgeX_Data.dataTree[section].data.isEmpty()))
                  if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                      QMessageBox::information(nullptr, "Jokes",
                              pgeX_Data.dataTree[section].data[0].values[0].value,
@@ -551,7 +551,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                  FileData.scenery.push_back(scen);
              }
          }//SCENERY
-         else ///////////////////TILES//////////////////////
+         else ///////////////////PATHS//////////////////////
          if(pgeX_Data.dataTree[section].name=="PATHS")
          {
              if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
@@ -751,7 +751,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                      if(v.marker=="EI") //Entrance Warp ID (if 0 - start level from default points)
                      {
                          if(PGEFile::IsIntU(v.value))
-                             lvlitem.title = v.value.toInt();
+                             lvlitem.entertowarp = v.value.toInt();
                          else
                              goto badfile;
                      }

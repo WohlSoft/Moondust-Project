@@ -117,7 +117,7 @@ void dataconfigs::loadWorldLevels()
             index_wlvl.push_back(levelIndex);
         }
 
-    if(ConfStatus::total_wtile==0)
+    if(ConfStatus::total_wlvl==0)
     {
         addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), QtCriticalMsg);
         return;
@@ -151,7 +151,7 @@ void dataconfigs::loadWorldLevels()
 
         slevel.animated =  (levelset.value("animated", "0").toString()=="1");
         slevel.frames =     levelset.value("frames", "1").toInt();
-        slevel.framespeed = levelset.value("frame-speed", "125").toInt();
+        slevel.framespeed = levelset.value("frame-speed", "175").toInt();
 
         slevel.frame_h =   (slevel.animated?
                                 qRound(qreal(slevel.image.height())/

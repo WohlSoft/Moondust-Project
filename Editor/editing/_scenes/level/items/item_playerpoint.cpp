@@ -293,7 +293,7 @@ void ItemPlayerPoint::removeFromArray()
     {
         if(pointData.id==scene->LvlData->players[i].id)
         {
-            scene->LvlData->players.remove(i);
+            scene->LvlData->players.removeAt(i);
             break;
         }
     }

@@ -166,7 +166,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
         if(pgeX_Data.dataTree[section].name=="JOKES")
         {
             #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if(!pgeX_Data.dataTree[section].data.isEmpty())
+            if((!silentMode) && (!pgeX_Data.dataTree[section].data.isEmpty()))
                 if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
                     QMessageBox::information(nullptr, "Jokes",
                             pgeX_Data.dataTree[section].data[0].values[0].value,
@@ -881,6 +881,30 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
                         else
                             goto badfile;
                     }
+                    else
+                    if(v.marker=="ED") //Destroy event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_destroy = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EH") //Hit event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_hit = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
+                    else
+                    if(v.marker=="EE") //Hit event slot
+                    {
+                        if(PGEFile::IsQStr(v.value))
+                            block.event_no_more = PGEFile::X2STR(v.value);
+                        else
+                            goto badfile;
+                    }
                 }
 
                 block.array_id = FileData.blocks_array_id++;
@@ -1069,7 +1093,7 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath, bo
                     if(v.marker=="GT") //Generator type
                     {
                         if(PGEFile::IsIntS(v.value))
-                            npcdata.generator = v.value.toInt();
+                            npcdata.generator_type = v.value.toInt();
                         else
                             goto badfile;
                     }

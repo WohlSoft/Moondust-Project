@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,13 @@
 
 #include "scene_level.h"
 
-#include "common_features/app_path.h"
-#include "common_features/graphics_funcs.h"
+#include <common_features/app_path.h>
+#include <common_features/graphics_funcs.h>
 
-#include "../graphics/gl_renderer.h"
+#include <graphics/gl_renderer.h>
+
+#include <controls/controller_keyboard.h>
+#include <controls/controller_joystick.h>
 
 #include "level/lvl_scene_ptr.h"
 
@@ -50,6 +53,9 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
+    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    if(uTick<=0) uTick=1;
+
     isInit=false;
     isWarpEntrance=false;
     cameraStartDirected=false;
@@ -72,7 +78,7 @@ LevelScene::LevelScene()
     /**************************/
 
     /*********Default players number*************/
-    numberOfPlayers=1;
+    numberOfPlayers=2;
     /*********Default players number*************/
 
     world=NULL;
@@ -87,6 +93,11 @@ LevelScene::LevelScene()
     fade_step=0.0f;
     fadeSpeed=25;
     /*********Fader*************/
+
+    /*********Controller********/
+    player1Controller = AppSettings.openController(1);
+    player2Controller = AppSettings.openController(2);
+    /*********Controller********/
 
     errorMsg = "";
 
@@ -142,7 +153,7 @@ LevelScene::~LevelScene()
         LVL_Player* tmp;
         tmp = players.first();
         players.pop_front();
-        keyboard1.removeFromControl(tmp);
+        player1Controller->removeFromControl(tmp);
         if(tmp) delete tmp;
     }
 
@@ -164,6 +175,17 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+    qDebug() << "Destroy NPC";
+    while(!npcs.isEmpty())
+    {
+        LVL_Npc* tmp;
+        tmp = npcs.first();
+        npcs.pop_front();
+        if(tmp) delete tmp;
+    }
+
+
+
 
     qDebug() << "Destroy Warps";
     while(!warps.isEmpty())
@@ -183,6 +205,9 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+    delete player1Controller;
+    delete player2Controller;
+
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
     world = NULL;
@@ -196,6 +221,16 @@ LevelScene::~LevelScene()
 }
 
 
+void LevelScene::tickAnimations(int ticks)
+{
+    //tick animation
+    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
+        ConfigManager::Animator_Blocks[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
+        ConfigManager::Animator_BGO[i].manualTick(ticks);
+    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
+        ConfigManager::Animator_BG[i].manualTick(ticks);
+}
 
 
 
@@ -208,12 +243,10 @@ int  debug_player_foots=0;
 int  debug_render_delay=0;
 int  debug_phys_delay=0;
 int  debug_event_delay=0;
-int  uTick = 1;
 
 void LevelScene::update()
 {
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    if(uTick<=0) uTick=1;
+    tickAnimations(uTick);
 
     if(doExit)
     {
@@ -251,7 +284,7 @@ void LevelScene::update()
         {
             transformTask_block x = block_transfors.first();
             if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = ConfigManager::lvl_block_indexes[x.id];
+                x.block->setup = &ConfigManager::lvl_block_indexes[x.id];
             else
             {
                 block_transfors.pop_front();
@@ -265,7 +298,8 @@ void LevelScene::update()
         }
 
         //Update controllers
-        keyboard1.sendControls();
+        player1Controller->sendControls();
+        player2Controller->sendControls();
 
         //update players
         for(i=0; i<players.size(); i++)
@@ -323,23 +357,15 @@ void LevelScene::render()
     //Reset modelview matrix
     glLoadIdentity();
 
-    //Move to center of the screen
-    //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
-
-    //long cam_x=0, cam_y=0;
-
     if(!isInit) goto renderBlack;
-
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    foreach(PGE_LevelCamera* cam, cameras)
+    for(int c=0;c<cameras.size();c++)
     {
-        backgrounds.last()->draw(cam->posX(), cam->posY());
+        PGE_LevelCamera* cam=cameras[c];
 
-//        if(PGE_Window::showDebugInfo)
-//        {
-//            cam_x = cam->posX();
-//            cam_y = cam->posY();
-//        }
+        if(numberOfPlayers>1)
+            GlRenderer::setViewport(0, cam->h()*c,cam->w(), cam->h());
+
+        cam->drawBackground();
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
@@ -347,6 +373,7 @@ void LevelScene::render()
             {
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
+            case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
                 item->render(cam->posX(), cam->posY());
                 break;
@@ -354,7 +381,16 @@ void LevelScene::render()
                 break;
             }
         }
+        if(numberOfPlayers>1)
+            GlRenderer::resetViewport();
     }
+
+    //Draw camera separators
+    for(int c=1;c<cameras.size();c++)
+    {
+        GlRenderer::renderRect(0, cameras[c]->h()*c-1, cameras[c]->w(), 2, 0.f, 0.f, 0.f, 1.f);
+    }
+
 
     if(PGE_Window::showDebugInfo)
     {
@@ -374,7 +410,7 @@ void LevelScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(uTick), 10, 140, 10, qRgb(255,0,0));
+                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
         //world->DrawDebugData();
     }
     renderBlack:
@@ -388,7 +424,6 @@ int LevelScene::exec()
 {
     isLevelContinues=true;
     doExit=false;
-
 
     dbgDraw.c = cameras.first();
 
@@ -413,8 +448,6 @@ int LevelScene::exec()
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
 
-    uTick = 1;
-
     bool running = true;
     while(running)
     {
@@ -430,11 +463,13 @@ int LevelScene::exec()
             qApp->processEvents();
         #endif
 
-        keyboard1.update();
+        player1Controller->update();
+        player2Controller->update();
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -443,7 +478,6 @@ int LevelScene::exec()
                         setExiting(0, LvlExit::EXIT_Closed);
                     }   // End work of program
                 break;
-
                 case SDL_KEYDOWN: // If pressed key
                   switch(event.key.keysym.sym)
                   { // Check which
@@ -457,15 +491,6 @@ int LevelScene::exec()
                             if(doExit) break;
                             isPauseMenu = true;
                         }
-                    break;
-                    case SDLK_t:
-                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                    break;
-                    case SDLK_F3:
-                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                    break;
-                    case SDLK_F12:
-                        GlRenderer::makeShot();
                     break;
                     default:
                       break;
@@ -530,15 +555,14 @@ int LevelScene::exec()
         if(wait_delay>0)
             SDL_Delay( wait_delay );
 
-        stop_render=0;
-        start_render=0;
-
         if(isExit())
             running = false;
 
     }
     return exitLevelCode;
 }
+
+
 
 QString LevelScene::getLastError()
 {
@@ -632,4 +656,5 @@ void LevelScene::setExiting(int delay, int reason)
 void LevelScene::setGameState(EpisodeState *_gameState)
 {
     gameState = _gameState;
+    numberOfPlayers = gameState->numOfPlayers;
 }

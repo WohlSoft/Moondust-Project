@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,22 @@
 #include <graphics/graphics.h>
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
+#include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <gui/pge_msgbox.h>
+#include <audio/pge_audio.h>
+#include <audio/SdlMusPlayer.h>
+
+#include <fontman/font_manager.h>
+#include <controls/controller_joystick.h>
 
 #include "scene_title.h"
 #include <QtDebug>
 #include <QDir>
+
+#include <SDL2/SDL.h>
+#undef main
 
 TitleScene::TitleScene()
 {
@@ -34,6 +43,10 @@ TitleScene::TitleScene()
     mousePos.setX(-300);
     mousePos.setY(-300);
     _cursorIsLoaded=false;
+
+    numOfPlayers=1;
+
+    controller = NULL;
 
     glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
@@ -142,12 +155,36 @@ TitleScene::~TitleScene()
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
     imgs.clear();
+
+    if(controller)
+        delete controller;
 }
+
+bool TitleScene::init()
+{
+    controller = AppSettings.openController(1);
+
+    if(!ConfigManager::music_lastIniFile.isEmpty())
+    {
+        ConfigManager::music_lastIniFile.clear();
+        ConfigManager::loadDefaultMusics();
+    }
+    if(!ConfigManager::sound_lastIniFile.isEmpty())
+    {
+        ConfigManager::sound_lastIniFile.clear();
+        ConfigManager::loadDefaultSounds();
+        ConfigManager::buildSoundIndex();
+    }
+    return true;
+}
+
 
 void TitleScene::update()
-{
+{}
 
-}
+static int debug_joy_keyval=0;
+static int debug_joy_keyid=0;
+static int debug_joy_keytype=0;
 
 void TitleScene::render()
 {
@@ -157,59 +194,48 @@ void TitleScene::render()
 
     if(_bgIsLoaded)
     {
-        QRectF loadAniG = QRectF(PGE_Window::Width/2 - background.w/2,
-                               PGE_Window::Height/2 - background.h/2,
-                               background.w,
-                               background.h);
-
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-        glBindTexture( GL_TEXTURE_2D, background.texture );
-
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( loadAniG.left(), loadAniG.top());
-
-            glTexCoord2f( 1, 0 );
-            glVertex2f(  loadAniG.right(), loadAniG.top());
-
-            glTexCoord2f( 1, 1 );
-            glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-            glTexCoord2f( 0, 1 );
-            glVertex2f( loadAniG.left(),  loadAniG.bottom());
-            glEnd();
-        glDisable(GL_TEXTURE_2D);
+        GlRenderer::renderTexture(&background, PGE_Window::Width/2 - background.w/2,
+                                  PGE_Window::Height/2 - background.h/2);
     }
 
     for(int i=0;i<imgs.size();i++)
     {
-        QRectF imgRect = QRectF(imgs[i].x,
-                               imgs[i].y,
-                               imgs[i].t.w,
-                               imgs[i].frmH);
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture( GL_TEXTURE_2D, imgs[i].t.texture );
+        AniPos x(0,1); x = imgs[i].a.image();
+        GlRenderer::renderTexture(&imgs[i].t,
+                                  imgs[i].x,
+                                  imgs[i].y,
+                                  imgs[i].t.w,
+                                  imgs[i].frmH, x.first, x.second);
+    }
 
-        AniPos x(0,1);
-               x = imgs[i].a.image();
-
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, x.first );
-            glVertex2f( imgRect.left(), imgRect.top());
-
-            glTexCoord2f( 1, x.first );
-            glVertex2f(  imgRect.right(), imgRect.top());
-
-            glTexCoord2f( 1, x.second );
-            glVertex2f(  imgRect.right(),  imgRect.bottom());
-
-            glTexCoord2f( 0, x.second );
-            glVertex2f( imgRect.left(),  imgRect.bottom());
-            glEnd();
-        glDisable(GL_TEXTURE_2D);
+    if(AppSettings.showDebugInfo)
+    {
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3")
+                               .arg(debug_joy_keyval)
+                               .arg(debug_joy_keyid)
+                               .arg(debug_joy_keytype),10, 10);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+//                               "abcdefghijklmnopqrstuvwxyz\n"
+//                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+//                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
+//                               "Ich bin glücklich!",10, 60, 2, 1.0, 1.0, 1.0, 1.0);
+        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+                               "{|}\\¡¢£€¥Š§š©ª«¬®¯°±²³Žµ¶·ž¹º»ŒŸ¿\n"
+                               "ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×\n"
+                               "ØÙÚÛÜÝÞß÷ © ®\n\n"
+                               "Ich bin glücklich!\n\n"
+                               "Как хорошо, что всё работает!\n"
+                               "Живіть всі дружно!", 10, 50, 0, 1.75, 1.0, 0.7, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
+//        FontManager::printText("0123456789\n"
+//                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+//                               "abcdefghijklmnopqrstuvwxyz\n"
+//                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
+//                               "абвгдеёжзийклмнопрстуфхцчшщъыьэюя\n"
+//                               "Ich bin glücklich!", 10, 130, 2, 1.0, 1.0, 1.0, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 250, 3, 1.0, 1.0, 1.0, 1.0);
+//        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 290, FontManager::DefaultTTF_Font, 1.0, 0.5, 1.0, 1.0);
     }
 
 
@@ -225,30 +251,11 @@ void TitleScene::renderMouse()
 
     if(_cursorIsLoaded)
     {
-        glEnable(GL_TEXTURE_2D);
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glBindTexture(GL_TEXTURE_2D, cursor.texture);
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, 0 );
-            glVertex2f( posX, posY);
-            glTexCoord2f( 1, 0 );
-            glVertex2f( posX+cursor.w, posY);
-            glTexCoord2f( 1, 1 );
-            glVertex2f( posX+cursor.w, posY+cursor.h);
-            glTexCoord2f( 0, 1 );
-            glVertex2f( posX, posY+cursor.h);
-        glEnd();
+        GlRenderer::renderTexture(&cursor, posX, posY);
     }
     else
     {
-        glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 1.f, 0.f, 1.0f);
-        glBegin( GL_QUADS );
-            glVertex2f( posX, posY);
-            glVertex2f( posX+10, posY);
-            glVertex2f( posX+10, posY+10);
-            glVertex2f( posX, posY+10);
-        glEnd();
+        GlRenderer::renderRect(posX, posY, 10,10, 0.f, 1.f, 0.f, 1.0f);
     }
 }
 
@@ -283,10 +290,29 @@ int TitleScene::exec()
                 running=false;
         }
 
+        if(PGE_Window::showDebugInfo)
+        {
+            if(AppSettings.joysticks.size()>0)
+            {
+                JoystickController::bindJoystickKey(AppSettings.joysticks.first(),
+                                                    debug_joy_keyval,
+                                                    debug_joy_keyid,
+                                                    debug_joy_keytype);
+            }
+        }
+
+        if(menu.processJoystickBinder())
+        {
+            //If key was grabbed, reset controlls
+            if(!menu.isKeyGrabbing()) resetController();
+        }
+        controller->update();
+
         SDL_Event event; //  Events of SDL
         SDL_PumpEvents();             //for mouse
         while( SDL_PollEvent(&event) )//Common
         {
+            if(PGE_Window::processEvents(event)!=0) continue;
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -294,22 +320,32 @@ int TitleScene::exec()
                         return ANSWER_EXIT;
                     }   // End work of program
                 break;
-
-                case SDL_KEYDOWN: // If pressed key
+            case SDL_KEYDOWN: // If pressed key
+                    if(menu.isKeyGrabbing())
+                    {
+                        if(event.key.keysym.scancode!=SDL_SCANCODE_ESCAPE)
+                            menu.storeKey(event.key.keysym.scancode);
+                        else
+                            menu.storeKey(PGE_KEYGRAB_REMOVE_KEY);
+                        //If key was grabbed, reset controlls
+                        if(!menu.isKeyGrabbing()) resetController();
+                    /**************Control men via controllers*************/
+                    } else if(controller->keys.up) {
+                        menu.selectUp();
+                    } else if(controller->keys.down) {
+                        menu.selectDown();
+                    } else if(controller->keys.left) {
+                        menu.selectLeft();
+                    } else if(controller->keys.right) {
+                        menu.selectRight();
+                    } else if(controller->keys.jump) {
+                        menu.acceptItem();
+                    } else if(controller->keys.run) {
+                        menu.rejectItem();
+                    } else
+                    if(!doExit)
                     switch(event.key.keysym.sym)
                     {
-                      case SDLK_x:
-                          qDebug()<<"Cu";
-                      break;
-                      case SDLK_t:
-                          PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                      break;
-                      case SDLK_F3:
-                          PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
-                      break;
-                      case SDLK_F12:
-                          GlRenderer::makeShot();
-                      break;
                       case SDLK_UP:
                         menu.selectUp();
                       break;
@@ -335,15 +371,19 @@ int TitleScene::exec()
                 case SDL_KEYUP:
                     break;
                 case SDL_MOUSEMOTION:
-                    mousePos.setX(event.motion.x);
-                    mousePos.setY(event.motion.y);
+                    mousePos = GlRenderer::MapToScr(event.motion.x, event.motion.y);
+                if(!menu.isKeyGrabbing() && !doExit)
                     menu.setMouseHoverPos(mousePos.x(), mousePos.y());
                 break;
                 case SDL_MOUSEBUTTONDOWN:
+                    if(menu.isKeyGrabbing())
+                        menu.storeKey(PGE_KEYGRAB_CANCEL); //Calcel Keygrabbing
+                    else
                     switch(event.button.button)
                     {
                         case SDL_BUTTON_LEFT:
-                            menu.setMouseClickPos(event.button.x, event.button.y);
+                            mousePos = GlRenderer::MapToScr(event.button.x, event.button.y);
+                            menu.setMouseClickPos(mousePos.x(), mousePos.y());
                         break;
                         case SDL_BUTTON_RIGHT:
                             menu.rejectItem();
@@ -353,23 +393,24 @@ int TitleScene::exec()
                     }
                 break;
                 case SDL_MOUSEWHEEL:
-                    if(event.wheel.y>0)
-                        menu.scrollUp();
-                    else
-                        menu.scrollDown();
+                    if(!menu.isKeyGrabbing() && !doExit)
+                    {
+                        if(event.wheel.y>0)
+                            menu.scrollUp();
+                        else
+                            menu.scrollDown();
+                    }
                 default: break;
             }
         }
         int mouseX=0;
         int mouseY=0;
         SDL_GetMouseState(&mouseX, &mouseY);
-        mousePos.setX(mouseX);
-        mousePos.setY(mouseY);
+        mousePos = GlRenderer::MapToScr(mouseX, mouseY);
 
         render();
         renderMouse();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+        PGE_Window::rePaint();
 
         if( (100.0 / (float)PGE_Window::PhysStep) >(SDL_GetTicks()-start_render))
         {
@@ -392,6 +433,14 @@ int TitleScene::exec()
                         case menu_main:
                             if(value=="game1p")
                             {
+                                numOfPlayers=1;
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_playepisode);
+                            }
+                            else
+                            if(value=="game2p")
+                            {
+                                numOfPlayers=2;
                                 menuChain.push(_currentMenu);
                                 setMenu(menu_playepisode);
                             }
@@ -437,7 +486,10 @@ int TitleScene::exec()
                                     result_episode.worldfile = value;
                                     result_episode.character = 0;
                                     result_episode.savefile = "save1.savx";
-                                    ret = ANSWER_PLAYEPISODE;
+                                    if(numOfPlayers>1)
+                                        ret = ANSWER_PLAYEPISODE_2P;
+                                    else
+                                        ret = ANSWER_PLAYEPISODE;
                                     setFade(21, 1.0f, 0.2f);
                                     fader_opacity=0.1f;
                                     doExit=true;
@@ -466,10 +518,10 @@ int TitleScene::exec()
                                 setMenu(menu_tests);
                             }
                             else
-                            if(value=="dab")
+                            if(value=="controls")
                             {
                                 menuChain.push(_currentMenu);
-                                setMenu(menu_dummy_and_big);
+                                setMenu(menu_controls);
                             }
                             else
                             {
@@ -478,6 +530,24 @@ int TitleScene::exec()
                                 msgBox.exec();
                                 menu.resetState();
                             }
+                        break;
+                        case menu_controls:
+                            if(value=="control_plr1")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_controls_plr1);
+                            }
+                            else
+                            if(value=="control_plr2")
+                            {
+                                menuChain.push(_currentMenu);
+                                setMenu(menu_controls_plr2);
+                            }
+                        break;
+                        case menu_controls_plr1:
+
+                        break;
+                        case menu_controls_plr2:
 
                         break;
                         case menu_tests:
@@ -516,11 +586,18 @@ int TitleScene::exec()
                             menu.reset();
                             menu.setCurrentItem(4);
                         break;
+                        case menu_options:
+                        AppSettings.apply();
+                        AppSettings.save();
+                        PGE_Audio::playSoundByRole(obj_sound_role::Bonus1up);
                     default:
+                        if(menu.isKeyGrabbing())
+                            menu.reset();
+                        else
                         if(menuChain.size()>0)
                         {
-                            setMenu((CurrentMenu)menuChain.pop());
                             menu.reset();
+                            setMenu((CurrentMenu)menuChain.pop());
                         }
                         break;
                     }
@@ -530,9 +607,18 @@ int TitleScene::exec()
     }
     menu.clear();
 
+    PGE_Window::clean();
+
     //Show mouse cursor
     PGE_Window::setCursorVisibly(true);
     return ret;
+}
+
+void TitleScene::resetController()
+{
+    if(controller)
+        delete controller;
+    controller = AppSettings.openController(1);
 }
 
 void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
@@ -542,11 +628,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
     _currentMenu=_menu;
     menu.clear();
+    menu.setTextLenLimit(22);
     switch(_menu)
     {
         case menu_main:
-            menu.setPos(260,380);
-            menu.setSize(300, 30);
+            menu.setPos(300, 350);
             menu.setItemsNumber(5);
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
@@ -555,41 +641,123 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.addMenuItem("Exit", "Exit");
         break;
             case menu_options:
-                menu.setPos(260,380);
-                menu.setSize(300, 30);
-                menu.setItemsNumber(5);
+                menu.setPos(260,284);
+                menu.setItemsNumber(8);
                 menu.addMenuItem("tests", "Test of screens");
-                menu.addMenuItem("dab", "Dummy and big menu");
-                menu.addBoolMenuItem(&PGE_Window::showDebugInfo, "dbg_flag", "Show debug info");
-                menu.addIntMenuItem(&PGE_Window::PhysStep, 65, 80, "phys_step", "Physics step");
+                menu.addMenuItem("controls", "Player controlling");
+                menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
+                                    []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
+                menu.addBoolMenuItem(&AppSettings.fullScreen, "full_screen", "Full Screen mode",
+                                     []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
+                                     );
+                menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
+                menu.addBoolMenuItem(&AppSettings.enableDummyNpc, "dummy_npcs", "Enable dummy NPC's");
+                menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
+                menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step");
             break;
                 case menu_tests:
-                    menu.setPos(260,380);
-                    menu.setSize(300, 30);
+                    menu.setPos(300, 350);
                     menu.setItemsNumber(5);
                     menu.addMenuItem("credits", "Credits");
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
-                case menu_dummy_and_big:
-                    menu.setPos(260,300);
-                    menu.setSize(300, 30);
-                    menu.setItemsNumber(7);
-                    menu.addMenuItem("1", "Item 1");
-                    menu.addMenuItem("2", "Item 2");
-                    menu.addMenuItem("3", "Item 3");
-                    menu.addMenuItem("4", "Кое-что по-русски");
-                    menu.addMenuItem("5", "Ich bin glücklich!");
-                    menu.addMenuItem("6", "¿Que se ocupas?");
-                    menu.addMenuItem("7", "Minä rakastan sinua!");
-                    menu.addMenuItem("8", "هذا هو اختبار صغير");
-                    menu.addMenuItem("9", "這是一個小測試!");
-                    menu.addMenuItem("10", "דאס איז אַ קליין פּרובירן");
-                    menu.addMenuItem("11", "આ નાના કસોટી છે");
-                    menu.addMenuItem("12", "यह एक छोटी सी परीक्षा है");
-                break;
+                    case menu_controls:
+                        menu.setPos(300, 350);
+                        menu.setItemsNumber(5);
+                        menu.addMenuItem("control_plr1", "Player 1 controls");
+                        menu.addMenuItem("control_plr2", "Player 2 controls");
+                    break;
+                        case menu_controls_plr1:
+                        case menu_controls_plr2:
+                        {
+
+                        KeyMap *mp_p;
+                        int *mct_p=0;
+                        KeyMapJoyCtrls *jk_id=0;
+                        KeyMapJoyCtrls *jk_type=0;
+                        SDL_Joystick* jdev=NULL;
+                        std::function<void()> ctrlSwitch;
+                        bool joy=false;
+
+                        if(_menu==menu_controls_plr1)
+                        {
+                            ctrlSwitch = [this]()->void{
+                                setMenu(menu_controls_plr1);
+                                };
+                            mct_p = &AppSettings.player1_controller;
+                            if((*mct_p>=0)&&(*mct_p<AppSettings.player1_joysticks.size()))
+                            {
+                                if(*mct_p<AppSettings.joysticks.size())
+                                    jdev        = AppSettings.joysticks[*mct_p];
+                                mp_p         = &AppSettings.player1_joysticks[*mct_p];
+                                jk_id   = &AppSettings.player1_joysticks_ctrls_ids[*mct_p];
+                                jk_type = &AppSettings.player1_joysticks_ctrls_types[*mct_p];
+                                joy=true;
+                            }
+                            else
+                                mp_p = &AppSettings.player1_keyboard;
+                        }
+                        else{
+                            ctrlSwitch = [this]()->void{
+                                setMenu(menu_controls_plr2);
+                                };
+                            mct_p  = &AppSettings.player2_controller;
+                            if((*mct_p>=0)&&(*mct_p<AppSettings.player2_joysticks.size()))
+                            {
+                                if(*mct_p<AppSettings.joysticks.size())
+                                    jdev        = AppSettings.joysticks[*mct_p];
+                                mp_p = &AppSettings.player2_joysticks[*mct_p];
+                                jk_id   = &AppSettings.player2_joysticks_ctrls_ids[*mct_p];
+                                jk_type = &AppSettings.player2_joysticks_ctrls_types[*mct_p];
+                                joy=true;
+                            }
+                            else
+                                mp_p = &AppSettings.player2_keyboard;
+                        }
+
+                            menu.setPos(300, 216);
+                            menu.setItemsNumber(11);
+                            QList<NamedIntItem> ctrls;
+                            NamedIntItem controller;
+                            controller.value=-1;
+                            controller.label="Keyboard";
+                            ctrls.push_back(controller);
+                            for(int i=0;i<AppSettings.joysticks.size();i++)
+                            {
+                                controller.value=i;
+                                controller.label=QString("Joystick: %1").arg(SDL_JoystickName(AppSettings.joysticks[i]));
+                                ctrls.push_back(controller);
+                            }
+                            menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Input:", true, ctrlSwitch);
+                            menu.setItemWidth(300);
+                            menu.setValueOffset(150);
+                            menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", (joy?&jk_id->left:NULL),(joy?&jk_type->left:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", (joy?&jk_id->right:NULL),(joy?&jk_type->right:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", (joy?&jk_id->up:NULL),(joy?&jk_type->up:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", (joy?&jk_id->down:NULL),(joy?&jk_type->down:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", (joy?&jk_id->jump:NULL),(joy?&jk_type->jump:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", (joy?&jk_id->jump_alt:NULL),(joy?&jk_type->jump_alt:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", (joy?&jk_id->run:NULL),(joy?&jk_type->run:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", (joy?&jk_id->run_alt:NULL),(joy?&jk_type->run_alt:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", (joy?&jk_id->drop:NULL), (joy?&jk_type->drop:NULL), jdev);
+                            menu.setValueOffset(210);
+                            menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", (joy?&jk_id->start:NULL),(joy?&jk_type->start:NULL), jdev);
+                            menu.setValueOffset(210);
+                        }
+                        break;
         case menu_playepisode:
             {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
                 //Build list of episodes
                 QDir worlddir(ConfigManager::dirs.worlds);
                 QStringList filter;
@@ -627,6 +795,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         break;
         case menu_playlevel:
             {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
                 //Build list of casual levels
                 QDir leveldir(ConfigManager::dirs.worlds);
                 QStringList filter;
@@ -653,6 +823,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     default:
         break;
     }
+    QRect menuBox = menu.rect();
+    menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
+    qDebug()<<"Menuitem ID: "<<menustates[_menu].first << ", scrolling offset: "<<menustates[_menu].second;
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
 }

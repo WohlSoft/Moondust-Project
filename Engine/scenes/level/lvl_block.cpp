@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include "lvl_scene_ptr.h"
 #include <audio/pge_audio.h>
+#include <graphics/gl_renderer.h>
 
 LVL_Block::LVL_Block()
 {
@@ -278,7 +279,7 @@ void LVL_Block::transformTo_x(long id)
 }
 
 
-void LVL_Block::render(float camX, float camY)
+void LVL_Block::render(double camX, double camY)
 {
     //Don't draw hidden block before it will be hitten
     if(isHidden) return;
@@ -437,19 +438,22 @@ void LVL_Block::render(float camX, float camY)
     }
     else
     {
-        glBegin( GL_QUADS );
-            glTexCoord2f( 0, x.first );
-            glVertex2f( blockG.left(), blockG.top());
 
-            glTexCoord2f( 1, x.first );
-            glVertex2f(  blockG.right(), blockG.top());
+        GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), x.first, x.second );
 
-            glTexCoord2f( 1, x.second );
-            glVertex2f(  blockG.right(),  blockG.bottom());
+//        glBegin( GL_QUADS );
+//            glTexCoord2f( 0, x.first );
+//            glVertex2f( blockG.left(), blockG.top());
 
-            glTexCoord2f( 0, x.second );
-            glVertex2f( blockG.left(),  blockG.bottom());
-        glEnd();
+//            glTexCoord2f( 1, x.first );
+//            glVertex2f(  blockG.right(), blockG.top());
+
+//            glTexCoord2f( 1, x.second );
+//            glVertex2f(  blockG.right(),  blockG.bottom());
+
+//            glTexCoord2f( 0, x.second );
+//            glVertex2f( blockG.left(),  blockG.bottom());
+//        glEnd();
     }
 
     glDisable(GL_TEXTURE_2D);
@@ -469,20 +473,7 @@ void LVL_Block::drawPiece(QRectF target, QRectF block, QRectF texture)
     blockG.setRight(target.x()+block.x()+block.width());
     blockG.setBottom(target.y()+block.y()+block.height());
 
-    glBegin( GL_QUADS );
-        glTexCoord2f( tx.left(), tx.top() );
-        glVertex2f( blockG.left(), blockG.top());
-
-        glTexCoord2f( tx.right(), tx.top() );
-        glVertex2f(  blockG.right(), blockG.top());
-
-        glTexCoord2f( tx.right(), tx.bottom() );
-        glVertex2f(  blockG.right(),  blockG.bottom());
-
-        glTexCoord2f( tx.left(), tx.bottom() );
-        glVertex2f( blockG.left(),  blockG.bottom());
-    glEnd();
-
+    GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), tx.top(), tx.bottom(), tx.left(), tx.right() );
 }
 
 
@@ -531,7 +522,6 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(setup->switch_Button)
     {
-        PGE_Audio::playSoundByRole(obj_sound_role::BlockSwitch);
         LvlSceneP::s->toggleSwitch(setup->switch_ID);
     }
 

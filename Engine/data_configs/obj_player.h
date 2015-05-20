@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,6 +107,7 @@ struct obj_player
 /* World map */
     int wld_framespeed;
     int wld_frames;
+    int wld_offset_y;
     QList<int > wld_frames_up;
     QList<int > wld_frames_right;
     QList<int > wld_frames_down;

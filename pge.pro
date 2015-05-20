@@ -29,4 +29,9 @@ calibrator_cnfs.files  = Content/calibrator/*
 
 INSTALLS += configs helps themes calibrator_cnfs
 
+android:{
+SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager DependentLibs
+INSTALLS -= configs helps themes calibrator_cnfs
+}
+
 #CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb

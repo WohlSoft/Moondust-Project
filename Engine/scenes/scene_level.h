@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
+#include "level/lvl_npc.h"
 
 #include "level/lvl_physenv.h"
 
@@ -40,7 +41,7 @@
 
 #include "../graphics/window.h"
 
-#include "../controls/controller_keyboard.h"
+#include "../controls/controller.h"
 
 #include "../data_configs/custom_data.h"
 
@@ -81,6 +82,7 @@ public:
     int    cameraStartDirection;
     LevelDoor startWarp;
     int NewPlayerID;
+    PlayerPoint getStartLocation(int playerID);
 
     QList<LVL_PlayerDef > player_defs;
 
@@ -89,6 +91,8 @@ public:
     void update();
     void render();
     int exec();
+
+    void tickAnimations(int ticks);
 
     QString getLastError();
 
@@ -130,7 +134,8 @@ public:
 
     int numberOfPlayers;
 
-    KeyboardController keyboard1;
+    Controller* player1Controller;
+    Controller* player2Controller;
 
 
     /**************Z-Layers**************/
@@ -190,24 +195,28 @@ public:
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);
     void placeBGO(LevelBGO bgoData);
+    void placeNPC(LevelNPC npcData);
 
-    void addPlayer(PlayerPoint playerData, bool byWarp=false);
+    void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
     /*********************Item placing**********************/
 
     void destroyBlock(LVL_Block * _block);
     void setGameState(EpisodeState *_gameState);
 
+    EventQueue<LevelScene > system_events;
+
 private:
+    int  uTick;
+
     LevelData data;
 
     EpisodeState *gameState;
-
-    EventQueue<LevelScene > system_events;
 
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;
     QVector<LVL_Block* > blocks;
     QVector<LVL_Bgo* > bgos;
+    QVector<LVL_Npc* > npcs;
     QVector<LVL_Warp* > warps;
     QVector<LVL_PhysEnv* > physenvs;
 

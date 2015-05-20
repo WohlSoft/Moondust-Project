@@ -14,9 +14,24 @@ QHash<int, obj_music> ConfigManager::main_music_wld;
 QHash<int, obj_music> ConfigManager::main_music_spc;
 
 
+bool ConfigManager::musicIniChanged()
+{
+    bool s=music_lastIniFile_changed;
+    music_lastIniFile_changed=false;
+    return s;
+}
+
+QString ConfigManager::music_lastIniFile;
+bool ConfigManager::music_lastIniFile_changed=false;
+
 obj_music::obj_music()
 {
     id=0;
+}
+
+bool ConfigManager::loadDefaultMusics()
+{
+    return loadMusic(dirs.music, config_dir+"music.ini", false);
 }
 
 bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
@@ -35,9 +50,18 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 
     if(!QFile::exists(music_ini))
     {
+        if(isCustom) return false;
         addError(QString("ERROR LOADING music.ini: file does not exist"), QtCriticalMsg);
         return false;
     }
+
+    if(isCustom)
+    {
+        if(music_lastIniFile==iniFile) return false;
+        music_lastIniFile=iniFile;
+        music_lastIniFile_changed=true;
+    }
+
 
     QSettings musicset(music_ini, QSettings::IniFormat);
     musicset.setIniCodec("UTF-8");
@@ -55,9 +79,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
         music_spc_total = musicset.value("total-special", "0").toInt();
 
         music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
-        total_data +=music_lvl_total;
-        total_data +=music_wld_total;
-        total_data +=music_spc_total;
+        music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
     musicset.endGroup();
 
     //////////////////////////////
@@ -82,6 +104,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_wld_total; i++)
     {
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
+            smusic_wld.id = i;
             smusic_wld.name = musicset.value("name", "").toString();
             if(smusic_wld.name.isEmpty())
             {
@@ -93,7 +116,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_wld.file = musicset.value("file", "").toString();
-            if(smusic_wld.file.isEmpty())
+            if(smusic_wld.file.isEmpty()&&(i != music_w_custom_id))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -103,7 +126,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_wld.absPath = rootPath + smusic_wld.file;
-            if(!QFileInfo(smusic_wld.absPath).exists())
+            if((smusic_wld.id!=music_w_custom_id)&&(!QFileInfo(smusic_wld.absPath).exists()))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -111,8 +134,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipWldMusic;
             }
-
-            smusic_wld.id = i;
             main_music_wld[i] = smusic_wld;
         skipWldMusic:
         musicset.endGroup();
@@ -129,6 +150,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_spc_total; i++)
     {
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
+            smusic_spc.id = i;
             smusic_spc.name = musicset.value("name", "").toString();
             if(smusic_spc.name.isEmpty())
             {
@@ -147,7 +169,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 }
                 goto skipSpcMusic;
             }
-
             smusic_spc.absPath = rootPath + smusic_spc.file;
             if(!QFileInfo(smusic_spc.absPath).exists())
             {
@@ -158,7 +179,6 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 goto skipSpcMusic;
             }
 
-            smusic_spc.id = i;
             main_music_spc[i] = smusic_spc;
         skipSpcMusic:
         musicset.endGroup();
@@ -175,6 +195,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
     for(i=1; i<=music_lvl_total; i++)
     {
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
+            smusic_lvl.id = i;
             smusic_lvl.name = musicset.value("name", "").toString();
             if(smusic_lvl.name.isEmpty())
             {
@@ -196,7 +217,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_lvl.absPath = rootPath + smusic_lvl.file;
-            if(!QFileInfo(smusic_lvl.absPath).exists())
+            if((smusic_lvl.id!=music_custom_id)&&(!QFileInfo(smusic_lvl.absPath).exists()))
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -205,8 +226,8 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 goto skipLvlMusic;
             }
 
-            smusic_lvl.id = i;
             main_music_lvl[i] = smusic_lvl;
+
         skipLvlMusic:
         musicset.endGroup();
 

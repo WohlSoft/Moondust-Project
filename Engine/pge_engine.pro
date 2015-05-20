@@ -57,7 +57,7 @@ LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 
 DEFINES += PGE_ENGINE
 
-LIBS += -lluabind -lbox2d
+LIBS += -lluabind -lluajit-5.1 -lbox2d
 android: {
     LIBS += -L../_Libs/_builds/android/lib
     INCLUDEPATH += ../_Libs/_builds/android/include
@@ -176,7 +176,20 @@ SOURCES += \
     data_configs/obj_music.cpp \
     data_configs/obj_sound.cpp \
     audio/pge_audio.cpp \
-    settings/global_settings.cpp
+    settings/global_settings.cpp \
+    common_features/maths.cpp \
+    scenes/level/lvl_npc.cpp \
+    controls/controller_joystick.cpp \
+    scenes/world/wld_player_portrait.cpp \
+    graphics/gl_color.cpp \
+    gui/menu/_pge_menuitem.cpp \
+    gui/menu/pge_bool_menuitem.cpp \
+    gui/menu/pge_int_menuitem.cpp \
+    gui/menu/pge_int_named_menuitem.cpp \
+    gui/menu/pge_keygrab_menuitem.cpp \
+    data_configs/obj_wld_items.cpp \
+    common_features/npc_animator.cpp
+
 
 HEADERS  += \
     physics/base_object.h \
@@ -258,7 +271,21 @@ HEADERS  += \
     data_configs/obj_sound.h \
     audio/pge_audio.h \
     data_configs/obj_sound_roles.h \
-    settings/global_settings.h
+    settings/global_settings.h \
+    common_features/maths.h \
+    scenes/level/lvl_npc.h \
+    controls/controller_joystick.h \
+    controls/controller_key_map.h \
+    scenes/world/wld_tilebox.h \
+    scenes/world/wld_player_portrait.h \
+    graphics/gl_color.h \
+    gui/menu/_pge_menuitem.h \
+    gui/menu/pge_bool_menuitem.h \
+    gui/menu/pge_int_menuitem.h \
+    gui/menu/pge_int_named_menuitem.h \
+    gui/menu/pge_keygrab_menuitem.h \
+    data_configs/obj_wld_items.h \
+    common_features/npc_animator.h
 
 FORMS    += \
     data_configs/select_config.ui

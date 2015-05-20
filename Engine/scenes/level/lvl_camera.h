@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,11 @@
 
 typedef QList<PGE_Phys_Object *> PGE_RenderList;
 
+class LVL_Background;
+
 class PGE_LevelCamera
 {
+    friend class LVL_Background;
 public:
     PGE_LevelCamera();
     ~PGE_LevelCamera();
@@ -51,7 +54,7 @@ public:
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
-    PGE_RenderList renderObjects();
+    PGE_RenderList &renderObjects();
 
     LevelSection *section;
 
@@ -92,6 +95,7 @@ public:
 
 private:
     PGE_RenderList objects_to_render;
+    LVL_Background *BackgroundHandler;
 
     int width;
     int height;

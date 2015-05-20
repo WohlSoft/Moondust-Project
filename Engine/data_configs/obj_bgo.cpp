@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@
 #include <common_features/graphics_funcs.h>
 
 /*****Level BGO************/
-QList<obj_bgo >     ConfigManager::lvl_bgo;
-QMap<long, obj_bgo*>   ConfigManager::lvl_bgo_indexes;
+QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
 CustomDirManager ConfigManager::Dir_BGO;
 QList<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
@@ -47,12 +46,10 @@ bool ConfigManager::loadLevelBGO()
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     bgoset.setIniCodec("UTF-8");
 
-    lvl_bgo.clear();   //Clear old
-    lvl_bgo_indexes.clear();
+    lvl_bgo_indexes.clear();//Clear old
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();
-        total_data +=bgo_total;
     bgoset.endGroup();
 
 
@@ -118,10 +115,10 @@ bool ConfigManager::loadLevelBGO()
 
             sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
             sbgo.id = i;
-            lvl_bgo.push_back(sbgo);
+            //lvl_bgo.push_back(sbgo);
 
             //Add to Index
-            lvl_bgo_indexes[lvl_bgo.last().id] = &lvl_bgo.last();
+            lvl_bgo_indexes[sbgo.id] = sbgo;
 
         skipBGO:
         bgoset.endGroup();
@@ -132,10 +129,10 @@ bool ConfigManager::loadLevelBGO()
         }
     }
 
-    if((unsigned int)lvl_bgo.size()<bgo_total)
+    if((unsigned int)lvl_bgo_indexes.size()<bgo_total)
     {
-        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo.size()));
-        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo.size()),
+        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.size()));
+        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo_indexes.size()),
                           PGE_MsgBox::msg_error);
         msgBox.exec();
     }

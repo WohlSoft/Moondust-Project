@@ -361,7 +361,7 @@ void LvlWarpBox::on_WarpRemove_clicked()
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors.remove(i);
+                edit->LvlData.doors.removeAt(i);
                 break;
             }
         }
@@ -933,9 +933,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
                 tr("Can't open the file."), QMessageBox::Ok);
                 return;
         }
-        QFileInfo in_1(wldPath);
-
-        WorldData FileData = FileFormats::ReadWorldFile(file);
+        WorldData FileData = FileFormats::OpenWorldFile(wldPath);
         if( !FileData.ReadFileValid ) return;
 
         WLD_SetPoint * pointDialog = new WLD_SetPoint;

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include "obj_bg.h"
 #include "obj_player.h"
 #include "obj_effect.h"
+#include "obj_wld_items.h"
 
 #include "obj_sound.h"
 #include "obj_music.h"
@@ -65,6 +66,7 @@ struct FontsSetup
 {
     bool double_pixled;
     QString fontname;
+    QString rasterFontsFile;
 };
 /******************************************/
 
@@ -88,6 +90,10 @@ struct MenuSetup
     QString selector;
     QString scrollerUp;
     QString scrollerDown;
+    int     item_height;
+    int     font_offset;
+    QString font_name;
+    int     font_id;
 };
 
 ////////////////////Common items///////////////////////////
@@ -140,6 +146,7 @@ public:
 
     /********Music and sounds*******/
     static bool loadMusic(QString rootPath, QString iniFile, bool isCustom=false);
+    static bool loadDefaultMusics();
     static QString getWldMusic(unsigned long musicID, QString customMusic="");
     static QString getLvlMusic(unsigned long musicID, QString customMusic="");
     static QString getSpecialMusic(unsigned long musicID);
@@ -150,6 +157,7 @@ public:
     static QHash<int, obj_music> main_music_wld;
     static QHash<int, obj_music> main_music_spc;
 
+    static bool loadDefaultSounds();
     static bool loadSound(QString rootPath, QString iniFile, bool isCustom=false);
     static QString getSound(unsigned long sndID);
     static long getSoundByRole(obj_sound_role::roles role);
@@ -160,6 +168,13 @@ public:
     static void buildSoundIndex();
     static void clearSoundIndex();
     static QVector<obj_sound_index > main_sfx_index;
+
+    static bool musicIniChanged();
+    static bool soundIniChanged();
+    static QString music_lastIniFile;
+    static QString sound_lastIniFile;
+    static bool music_lastIniFile_changed;
+    static bool sound_lastIniFile_changed;
     /********Music and sounds*******/
 
 
@@ -167,17 +182,16 @@ public:
     //Load settings
     static bool loadBasics();
     static bool unloadLevelConfigs();
+    static bool unloadWorldConfigs();
     static void unluadAll();
 
-
-    //Level config Data
+    /*================================Level config Data===========================*/
 
     /*****Level blocks************/
     static bool loadLevelBlocks();
     static long getBlockTexture(long blockID);
     /*****************************/
-    static QList<obj_block >     lvl_blocks;
-    static QMap<long, obj_block*>   lvl_block_indexes;
+    static QMap<long, obj_block>   lvl_block_indexes;
     static CustomDirManager Dir_Blocks;
     static QList<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
@@ -186,8 +200,7 @@ public:
     static bool loadLevelBGO();
     static long getBgoTexture(long bgoID);
     /*****************************/
-    static QList<obj_bgo >     lvl_bgo;
-    static QMap<long, obj_bgo*>   lvl_bgo_indexes;
+    static QMap<long, obj_bgo>   lvl_bgo_indexes;
     static CustomDirManager Dir_BGO;
     static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
@@ -197,20 +210,59 @@ public:
     static bool loadLevelBackG();
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
-    static QList<obj_BG >     lvl_bg;
-    static QMap<long, obj_BG*>   lvl_bg_indexes;
+    static QMap<long, obj_BG>   lvl_bg_indexes;
     static CustomDirManager Dir_BG;
     static QList<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
+    /*================================Level config Data===end=====================*/
+
+    /*================================World config Data===========================*/
+    /*****World Tiles************/
+    static bool loadWorldTiles();
+    static long getTileTexture(long tileID);
+    /*****************************/
+    static QMap<long, obj_w_tile>   wld_tiles;
+    static CustomDirManager         Dir_Tiles;
+    static QList<SimpleAnimator >   Animator_Tiles;
+    /*****World Tiles************/
+
+    /*****World Scenery************/
+    static bool loadWorldScenery();
+    static long getSceneryTexture(long sceneryID);
+    /*****************************/
+    static QMap<long, obj_w_scenery>   wld_scenery;
+    static CustomDirManager         Dir_Scenery;
+    static QList<SimpleAnimator >   Animator_Scenery;
+    /*****World Scenery************/
+
+    /*****World Paths************/
+    static bool loadWorldPaths();
+    static long getWldPathTexture(long pathID);
+    /*****************************/
+    static QMap<long, obj_w_path>   wld_paths;
+    static CustomDirManager         Dir_WldPaths;
+    static QList<SimpleAnimator >   Animator_WldPaths;
+    /*****World Paths************/
+
+    /*****World Levels************/
+    static bool loadWorldLevels();
+    static long getWldLevelTexture(long levelID);
+    /*****************************/
+    static QMap<long, obj_w_level>   wld_levels;
+    static CustomDirManager         Dir_WldLevel;
+    static QList<SimpleAnimator >   Animator_WldLevel;
+    static wld_levels_Markers        marker_wlvl;
+    /*****World Levels************/
 
 
+
+    /*================================World config Data===end=====================*/
 
     /*****Level Effects************/
     static bool loadLevelEffects();
     static long getEffectTexture(long effectID);
     /*****************************/
-    static QList<obj_effect >    lvl_effects;
-    static QMap<long, obj_effect*>   lvl_effects_indexes;
+    static QMap<long, obj_effect>   lvl_effects_indexes;
     static CustomDirManager Dir_EFFECT;
     static QList<SimpleAnimator > Animator_EFFECT;
     /*****Level Effects************/
@@ -218,6 +270,7 @@ public:
 
     /********Playable characters*******/
     static long getLvlPlayerTexture(long playerID, int stateID);
+    static long getWldPlayerTexture(long playerID, int stateID);
     static void resetPlayableTexuresState();        //!< Sets all 'isInit' state to false for all textures for level textutes
     static void resetPlayableTexuresStateWld();     //!< Same but for world map player images
     static bool loadPlayableCharacters();           //!< Load lvl_characters.ini file
@@ -262,7 +315,6 @@ private:
     static QString tmpstr;
     static QStringList tmp;
 
-    static unsigned long total_data;
     static QString bgoPath;
     static QString BGPath;
     static QString blockPath;
