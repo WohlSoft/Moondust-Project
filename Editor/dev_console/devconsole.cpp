@@ -22,6 +22,7 @@
 #include <stdexcept>
 #ifdef Q_OS_WIN
 #include <QtWin>
+#include <QSysInfo>
 #endif
 
 #include <common_features/app_path.h>
@@ -122,16 +123,19 @@ DevConsole::DevConsole(QWidget *parent) :
     #ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QtWin::isCompositionEnabled())
+    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
     {
-        this->setAttribute(Qt::WA_TranslucentBackground, true);
-        QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
-        QtWin::enableBlurBehindWindow(this);
-    }
-    else
-    {
-        QtWin::resetExtendedFrame(this);
-        setAttribute(Qt::WA_TranslucentBackground, false);
+        if(QtWin::isCompositionEnabled())
+        {
+            this->setAttribute(Qt::WA_TranslucentBackground, true);
+            QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+            QtWin::enableBlurBehindWindow(this);
+        }
+        else
+        {
+            QtWin::resetExtendedFrame(this);
+            setAttribute(Qt::WA_TranslucentBackground, false);
+        }
     }
     #endif
     if(!hasFocus()) setWindowOpacity(0.9);
