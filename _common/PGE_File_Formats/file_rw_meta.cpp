@@ -48,36 +48,37 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
     for(int section=0; section<pgeX_Data.dataTree.size(); section++) //look sections
     {
-        if(pgeX_Data.dataTree[section].name=="JOKES")
+        PGEFile::PGEX_Entry &f_section = pgeX_Data.dataTree[section];
+        if(f_section.name=="JOKES")
         {
             #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode)&&(!pgeX_Data.dataTree[section].data.isEmpty()))
-                if(!pgeX_Data.dataTree[section].data[0].values.isEmpty())
+            if((!silentMode)&&(!f_section.data.isEmpty()))
+                if(!f_section.data[0].values.isEmpty())
                     QMessageBox::information(nullptr, "Jokes",
-                            pgeX_Data.dataTree[section].data[0].values[0].value,
+                            f_section.data[0].values[0].value,
                             QMessageBox::Ok);
             #endif
         }
         else
-        if(pgeX_Data.dataTree[section].name=="META_BOOKMARKS")
+        if(f_section.name=="META_BOOKMARKS")
         {
-            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(pgeX_Data.dataTree[section].name);
+                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
-            for(int sdata=0;sdata<pgeX_Data.dataTree[section].data.size();sdata++)
+            for(int sdata=0;sdata<f_section.data.size();sdata++)
             {
-                if(pgeX_Data.dataTree[section].data[sdata].type!=PGEFile::PGEX_Struct)
+                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
                 }
 
-                PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].data[sdata];
+                PGEFile::PGEX_Item x = f_section.data[sdata];
 
                 Bookmark meta_bookmark;
                 meta_bookmark.bookmarkName = "";
@@ -88,7 +89,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(pgeX_Data.dataTree[section].name)
+                            .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
                             .arg(v.value);
@@ -122,54 +123,54 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
         }
         #ifdef PGE_EDITOR
         else
-        if(pgeX_Data.dataTree[section].name=="META_SCRIPT_EVENTS")
+        if(f_section.name=="META_SCRIPT_EVENTS")
         {
-            if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+            if(f_section.type!=PGEFile::PGEX_Struct)
             {
                 errorString=QString("Wrong section data syntax:\nSection [%1]").
-                            arg(pgeX_Data.dataTree[section].name);
+                            arg(f_section.name);
                 goto badfile;
             }
 
-            if(pgeX_Data.dataTree[section].subTree.size()>0)
+            if(f_section.subTree.size()>0)
             {
                 if(!FileData.script)
                     FileData.script = new ScriptHolder();
             }
 
             //Read subtree
-            for(int subtree=0;subtree<pgeX_Data.dataTree[section].subTree.size();subtree++)
+            for(int subtree=0;subtree<f_section.subTree.size();subtree++)
             {
-                if(pgeX_Data.dataTree[section].subTree[subtree].name=="EVENT")
+                if(f_section.subTree[subtree].name=="EVENT")
                 {
-                    if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+                    if(f_section.type!=PGEFile::PGEX_Struct)
                     {
                         errorString=QString("Wrong section data syntax:\nSection [%1]\nSubtree [%2]").
-                                    arg(pgeX_Data.dataTree[section].name).
-                                    arg(pgeX_Data.dataTree[section].subTree[subtree].name);
+                                    arg(f_section.name).
+                                    arg(f_section.subTree[subtree].name);
                         goto badfile;
                     }
 
                     EventCommand * event = new EventCommand(EventCommand::EVENTTYPE_LOAD);
 
-                    for(int sdata=0;sdata<pgeX_Data.dataTree[section].subTree[subtree].data.size();sdata++)
+                    for(int sdata=0;sdata<f_section.subTree[subtree].data.size();sdata++)
                     {
-                        if(pgeX_Data.dataTree[section].subTree[subtree].data[sdata].type!=PGEFile::PGEX_Struct)
+                        if(f_section.subTree[subtree].data[sdata].type!=PGEFile::PGEX_Struct)
                         {
                             errorString=QString("Wrong data item syntax:\nSubtree [%1]\nData line %2")
-                                    .arg(pgeX_Data.dataTree[section].subTree[subtree].name)
+                                    .arg(f_section.subTree[subtree].name)
                                     .arg(sdata);
                             goto badfile;
                         }
 
-                        PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].subTree[subtree].data[sdata];
+                        PGEFile::PGEX_Item x = f_section.subTree[subtree].data[sdata];
 
                         //Get values
                         for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                         {
                             PGEFile::PGEX_Val v = x.values[sval];
                             errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                                    .arg(pgeX_Data.dataTree[section].name)
+                                    .arg(f_section.name)
                                     .arg(sdata)
                                     .arg(v.marker)
                                     .arg(v.value);
@@ -195,30 +196,30 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                     //Basic commands subtree
                     if(event->eventType()==EventCommand::EVENTTYPE_LOAD)
                     {
-                        for(int subtree2=0;subtree2<pgeX_Data.dataTree[section].subTree[subtree].subTree.size();subtree2++)
+                        for(int subtree2=0;subtree2<f_section.subTree[subtree].subTree.size();subtree2++)
                         {
-                            if(pgeX_Data.dataTree[section].subTree[subtree2].subTree[subtree2].name=="BASIC_COMMANDS")
+                            if(f_section.subTree[subtree2].subTree[subtree2].name=="BASIC_COMMANDS")
                             {
-                                if(pgeX_Data.dataTree[section].type!=PGEFile::PGEX_Struct)
+                                if(f_section.type!=PGEFile::PGEX_Struct)
                                 {
                                     errorString=QString("Wrong section data syntax:\nSection [%1]\nSubtree [%2]\nSubtree [%2]").
-                                                arg(pgeX_Data.dataTree[section].name).
-                                                arg(pgeX_Data.dataTree[section].subTree[subtree].name).
-                                                arg(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].name);
+                                                arg(f_section.name).
+                                                arg(f_section.subTree[subtree].name).
+                                                arg(f_section.subTree[subtree].subTree[subtree2].name);
                                     goto badfile;
                                 }
 
-                                for(int sdata=0;sdata<pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data.size();sdata++)
+                                for(int sdata=0;sdata<f_section.subTree[subtree].subTree[subtree2].data.size();sdata++)
                                 {
-                                    if(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data[sdata].type!=PGEFile::PGEX_Struct)
+                                    if(f_section.subTree[subtree].subTree[subtree2].data[sdata].type!=PGEFile::PGEX_Struct)
                                     {
                                         errorString=QString("Wrong data item syntax:\nSubtree [%1]\nData line %2")
-                                                .arg(pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].name)
+                                                .arg(f_section.subTree[subtree].subTree[subtree2].name)
                                                 .arg(sdata);
                                         goto badfile;
                                     }
 
-                                    PGEFile::PGEX_Item x = pgeX_Data.dataTree[section].subTree[subtree].subTree[subtree2].data[sdata];
+                                    PGEFile::PGEX_Item x = f_section.subTree[subtree].subTree[subtree2].data[sdata];
 
                                     QString name="";
                                     QString commandType="";
@@ -231,7 +232,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
                                     {
                                         PGEFile::PGEX_Val v = x.values[sval];
                                         errorString=QString("Wrong value syntax\nSubtree [%1]\nData line %2\nMarker %3\nValue %4")
-                                                .arg(pgeX_Data.dataTree[section].subTree[subtree2].name)
+                                                .arg(f_section.subTree[subtree2].name)
                                                 .arg(sdata)
                                                 .arg(v.marker)
                                                 .arg(v.value);
