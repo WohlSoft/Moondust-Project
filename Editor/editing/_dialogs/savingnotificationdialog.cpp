@@ -20,6 +20,7 @@
 #include <ui_savingnotificationdialog.h>
 #ifdef Q_OS_WIN
 #include <QtWin>
+#include <QSysInfo>
 #endif
 
 SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, DialogType dType, QWidget *parent) :
@@ -43,22 +44,25 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
     }
 
     #ifdef Q_OS_WIN
-    if(QtWin::isCompositionEnabled())
+    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
     {
-        this->setAttribute(Qt::WA_TranslucentBackground, true);
-        QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
-        QtWin::enableBlurBehindWindow(this);
-    }
-    else
-    {
-        QtWin::resetExtendedFrame(this);
-        setAttribute(Qt::WA_TranslucentBackground, false);
-    }
+        if(QtWin::isCompositionEnabled())
+        {
+            this->setAttribute(Qt::WA_TranslucentBackground, true);
+            QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+            QtWin::enableBlurBehindWindow(this);
+        }
+        else
+        {
+            QtWin::resetExtendedFrame(this);
+            setAttribute(Qt::WA_TranslucentBackground, false);
+        }
 
-    switch(dType)
-    {
-        case D_WARN:       PlaySound(L"SystemAsterisk", NULL, SND_ASYNC);break;
-        case D_QUESTION:   PlaySound(L"SystemQuestion", NULL, SND_ASYNC);break;
+        switch(dType)
+        {
+            case D_WARN:       PlaySound(L"SystemAsterisk", NULL, SND_ASYNC);break;
+            case D_QUESTION:   PlaySound(L"SystemQuestion", NULL, SND_ASYNC);break;
+        }
     }
     #endif
     switch(dType)

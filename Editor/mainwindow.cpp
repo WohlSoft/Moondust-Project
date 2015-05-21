@@ -173,6 +173,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 MainWindow::~MainWindow()
 {
+#ifdef Q_OS_WIN
+    if(pge_thumbbar)
+        delete pge_thumbbar;
+#endif
     delete ui;
 }
 

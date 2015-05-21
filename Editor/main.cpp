@@ -38,12 +38,14 @@
 
 #include "mainwindow.h"
 
+
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
     QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
     QApplication *a = new QApplication(argc, argv);
+    QStringList args=a->arguments();
 
 #ifdef Q_OS_MAC
     QDir dir(QApplication::applicationDirPath());
@@ -51,7 +53,7 @@ int main(int argc, char *argv[])
     QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
 #endif
 
-    SingleApplication *as = new SingleApplication(argc, argv);
+    SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
     {
         QTextStream(stdout) << "Editor already runned!\n";
@@ -68,7 +70,7 @@ int main(int argc, char *argv[])
     //Init system paths
     AppPathManager::initAppPath();
 
-    foreach(QString arg, a->arguments())
+    foreach(QString arg, args)
     {
         if(arg=="--install")
         {
@@ -134,7 +136,7 @@ int main(int argc, char *argv[])
     CrashHandler::checkCrashsaves();
 
     //Open files which opened by command line
-    w->openFilesByArgs(a->arguments());
+    w->openFilesByArgs(args);
 
     //Set acception of external file openings
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
