@@ -27,7 +27,7 @@
  * @param argc
  * @param argv
  */
-SingleApplication::SingleApplication(int argc, char *argv[])
+SingleApplication::SingleApplication(QStringList &args)
 {
   _shouldContinue = false; // By default this is not the main process
 
@@ -57,13 +57,20 @@ SingleApplication::SingleApplication(int argc, char *argv[])
       }
   }
 
+  if(args.contains("--force-run", Qt::CaseInsensitive))
+  {
+      isServerRuns.clear();
+      args.removeAll("--force-run");
+  }
+  _arguments = args;
+
   if(!isServerRuns.isEmpty())
   {
     QString str = QString("CMD:showUp");
     QByteArray bytes;
-    for(int i=1;i<argc; i++)
+    for(int i=1; i<_arguments.size(); i++)
     {
-       str.append(QString("\n%1").arg(QString::fromLocal8Bit(argv[i])));
+       str.append(QString("\n%1").arg(_arguments[i]));
     }
     bytes = str.toUtf8();
     socket->write(bytes);
@@ -112,7 +119,12 @@ SingleApplication::~SingleApplication()
  */
 bool SingleApplication::shouldContinue()
 {
-  return _shouldContinue;
+    return _shouldContinue;
+}
+
+QStringList SingleApplication::arguments()
+{
+    return _arguments;
 }
 
 /**
