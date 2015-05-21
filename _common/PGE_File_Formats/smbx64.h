@@ -34,7 +34,7 @@ public:
     //returns TRUE on wrong data
     static bool Int(QString in); // UNSIGNED INT
     static bool sInt(QString in); // SIGNED INT
-    static bool sFloat(QString in); // SIGNED FLOAT
+    static bool sFloat(QString &in); // SIGNED FLOAT
     static bool qStr(QString in); // QUOTED STRING
     static bool wBool(QString in); //Worded BOOL
     static bool dBool(QString in); //Worded BOOL

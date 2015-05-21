@@ -26,13 +26,13 @@ namespace PGEExtendedFormat
 {
     QMutex locker;
     QRegExp section_title = QRegExp("^[A-Z0-9_]*$");
-
     QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
     QRegExp heximal = QRegExp("^[0-9a-fA-F]+$");
 
     QRegExp boolean = QRegExp("^(1|0)$");
 
     QRegExp usig_int = QRegExp("\\d+");     //Check "Is Numeric"
+
     QRegExp sig_int = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
 
     QRegExp floatptr = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
@@ -41,6 +41,39 @@ namespace PGEExtendedFormat
     QRegExp boolArray = QRegExp("^[1|0]+$");
     QRegExp intArray = QRegExp("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
 
+    const char *section_title_valid_chars    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const int   section_title_valid_chars_len= 36;
+
+    const char *heximal_valid_chars    = "0123456789ABCDEFabcdef";
+    const int   heximal_valid_chars_len= 22;
+
+    const char *uint_vc = "0123456789";
+    const int   uint_vc_len = 10;
+
+    bool isDegit(QChar c)
+    {
+        for(int i=0;i<uint_vc_len;i++)
+        {
+            if(c.toLatin1()==uint_vc[i])
+                return true;
+        }
+        return false;
+    }
+
+    bool isValid(QString &s, const char*valid_chars, const int& valid_chars_len)
+    {
+        if(s.isEmpty()) return false;
+        int i, j;
+        for(i=0;i<s.size();i++)
+        {
+            bool found=false;
+            for(j=0;j<valid_chars_len;j++) {
+                if(s[i].toLatin1()==valid_chars[j]) { found=true; break; }
+            }
+            if(!found) return false;
+        }
+        return true;
+    }
 }
 
 PGEFile::PGEFile(QObject *parent)
@@ -230,8 +263,7 @@ QString PGEFile::lastError()
 bool PGEFile::IsSectionTitle(QString in)
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return section_title.exactMatch(in);
+    return isValid(in, section_title_valid_chars, section_title_valid_chars_len);
 }
 
 
@@ -246,44 +278,92 @@ bool PGEFile::IsQStr(QString in) // QUOTED STRING
 bool PGEFile::IsHex(QString in) // Heximal string
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return heximal.exactMatch(in);
+    return isValid(in, heximal_valid_chars, heximal_valid_chars_len);
 }
 
 bool PGEFile::IsBool(QString in) // Boolean
 {
-    using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return boolean.exactMatch(in);
+    if((in.size()!=1) || (in.isEmpty()) )
+        return false;
+    return ((in[0].toLatin1()=='1')||(in[0].toLatin1()=='0'));
 }
 
 bool PGEFile::IsIntU(QString in) // Unsigned Int
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return usig_int.exactMatch(in);
+    return isValid(in, uint_vc, uint_vc_len);
 }
 
 bool PGEFile::IsIntS(QString in) // Signed Int
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return sig_int.exactMatch(in);
+
+    if(in.isEmpty()) return false;
+
+    if((in.size()==1)&&(!isDegit(in[0])))          return false;
+    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')) return false;
+
+    for(int i=1; i<in.size(); i++)
+        if(!isDegit(in[i])) return false;
+
+    return true;
 }
 
-bool PGEFile::IsFloat(QString in) // Float Point numeric
+bool PGEFile::IsFloat(QString &in) // Float Point numeric
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return floatptr.exactMatch(in);
-}
 
+    if(in.isEmpty()) return false;
+
+    if((in.size()==1)&&(!isDegit(in[0])))          return false;
+    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')&&(in[0].toLatin1()!='.')&&(in[0].toLatin1()!=',')) return false;
+
+    bool decimal=false;
+    bool pow10  =false;
+    bool sign   =false;
+    for(int i=((in[0].toLatin1()=='-')?1:0); i<in.size(); i++)
+    {
+        if((!decimal) &&(!pow10))
+        {
+            if((in[i].toLatin1()=='.')||(in[i].toLatin1()==','))
+            {
+                in[i]='.';//replace comma with a dot
+                decimal=true;
+                if(i==(in.size()-1)) return false;
+                continue;
+            }
+        }
+        if(!pow10)
+        {
+            if((in[i].toLatin1()=='E')||(in[i].toLatin1()=='e'))
+            {
+                pow10=true;
+                if(i==(in.size()-1)) return false;
+                continue;
+            }
+        }
+        else
+        {
+            if(!sign)
+            {
+                sign=true;
+                if((in[i].toLatin1()=='+')||(in[i].toLatin1()=='-'))
+                {
+                    if(i==(in.size()-1)) return false;
+                    continue;
+                }
+            }
+        }
+        if(!isDegit(in[i])) return false;
+    }
+
+    return true;
+}
 
 bool PGEFile::IsBoolArray(QString in) // Boolean array
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return boolArray.exactMatch(in);
+    return isValid(in, "01", 2);
 }
 
 bool PGEFile::IsIntArray(QString in) // Boolean array
