@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUdpSocket>
+#include <QStringList>
 
 #include "localserver.h"
 
@@ -13,9 +14,10 @@ class SingleApplication : public QObject
 {
   Q_OBJECT
 public:
-  explicit SingleApplication(int, char *[]);
+  explicit SingleApplication(QStringList &args);
   ~SingleApplication();
   bool shouldContinue();
+  QStringList arguments();
 
 public slots:
 
@@ -33,6 +35,7 @@ private slots:
 private:
   QUdpSocket* socket;
   LocalServer* server;
+  QStringList _arguments;
   bool _shouldContinue;
 
 };
