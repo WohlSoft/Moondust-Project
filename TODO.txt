@@ -1,13 +1,16 @@
 Editor
-- Refresh warp's entry XY coordninates inside combobox
-- Improve unused custom data detector to provide clean-up of unused data.
+- Add function to refresh warp's entry XY coordninates inside combobox
+- Improve detector of unused custom data to provide clean-up of unused data.
+- New custom stuff indexing system to have more convenient usage of customized stuff.
+  It's a big work, but in result we will have much more convenient system to manage a custom stuff
 
 Engine
-- Raster fonts support
++ Raster fonts support
++ Textures support for world map items
 - Playable character and it's state switching support
-- Textures support for world map items
-- Add loading of NPC configs
-Engine:New physics
+- Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
+
+Engine: New level physics
 - R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
 - Support of speed-adding of items which makes stack
 - Walkhable slopes

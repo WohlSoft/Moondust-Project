@@ -85,7 +85,7 @@ public:
     static bool IsHex(QString in);// Hex Encoded String
     static bool IsIntU(QString in);// UNSIGNED INT
     static bool IsIntS(QString in);// SIGNED INT
-    static bool IsFloat(QString in);// FLOAT
+    static bool IsFloat(QString &in);// FLOAT
     static bool IsBool(QString in);//BOOL
     static bool IsBoolArray(QString in);//Boolean array
     static bool IsIntArray(QString in);//Integer array
