@@ -38,6 +38,34 @@ namespace smbx64Format
     QMutex boolwords_mutex;
     QRegExp booldeg = QRegExp("^(1|0)$");
     QMutex booldeg_mutex;
+
+    const char *uint_vc = "0123456789";
+    const int   uint_vc_len = 10;
+
+    bool isDegit(QChar c)
+    {
+        for(int i=0;i<uint_vc_len;i++)
+        {
+            if(c.toLatin1()==uint_vc[i])
+                return true;
+        }
+        return false;
+    }
+
+    bool isValid(QString &s, const char*valid_chars, const int& valid_chars_len)
+    {
+        if(s.isEmpty()) return false;
+        int i, j;
+        for(i=0;i<s.size();i++)
+        {
+            bool found=false;
+            for(j=0;j<valid_chars_len;j++) {
+                if(s[i].toLatin1()==valid_chars[j]) { found=true; break; }
+            }
+            if(!found) return false;
+        }
+        return true;
+    }
 }
 
 // /////////////Validators///////////////
@@ -46,22 +74,70 @@ namespace smbx64Format
 bool SMBX64::Int(QString in) // UNSIGNED INT
 {
     using namespace smbx64Format;
-    QMutexLocker locker(&isint_mutex);
-    return !isint.exactMatch(in);
+    return !isValid(in, uint_vc, uint_vc_len);
 }
 
 bool SMBX64::sInt(QString in) // SIGNED INT
 {
     using namespace smbx64Format;
-    QMutexLocker locker(&issint_mutex);
-    return !issint.exactMatch(in);
+    if(in.isEmpty()) return true;
+
+    if((in.size()==1)&&(!isDegit(in[0])))          return true;
+    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')) return true;
+
+    for(int i=1; i<in.size(); i++)
+        if(!isDegit(in[i])) return true;
+
+    return false;
 }
 
-bool SMBX64::sFloat(QString in) // SIGNED FLOAT
+bool SMBX64::sFloat(QString &in) // SIGNED FLOAT
 {
     using namespace smbx64Format;
-    QMutexLocker locker(&issfloat_mutex);
-    return !issfloat.exactMatch(in);
+    if(in.isEmpty()) return true;
+
+    if((in.size()==1)&&(!isDegit(in[0])))          return true;
+    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')&&(in[0].toLatin1()!='.')&&(in[0].toLatin1()!=',')) return true;
+
+    bool decimal=false;
+    bool pow10  =false;
+    bool sign   =false;
+    for(int i=((in[0].toLatin1()=='-')?1:0); i<in.size(); i++)
+    {
+        if((!decimal) &&(!pow10))
+        {
+            if((in[i].toLatin1()=='.')||(in[i].toLatin1()==','))
+            {
+                in[i]='.';//replace comma with a dot
+                decimal=true;
+                if(i==(in.size()-1)) return true;
+                continue;
+            }
+        }
+        if(!pow10)
+        {
+            if((in[i].toLatin1()=='E')||(in[i].toLatin1()=='e'))
+            {
+                pow10=true;
+                if(i==(in.size()-1)) return true;
+                continue;
+            }
+        }
+        else
+        {
+            if(!sign)
+            {
+                sign=true;
+                if((in[i].toLatin1()=='+')||(in[i].toLatin1()=='-'))
+                {
+                    if(i==(in.size()-1)) return true;
+                    continue;
+                }
+            }
+        }
+        if(!isDegit(in[i])) return true;
+    }
+    return false;
 }
 
 bool SMBX64::qStr(QString in) // QUOTED STRING
@@ -73,22 +149,19 @@ bool SMBX64::qStr(QString in) // QUOTED STRING
 
 bool SMBX64::wBool(QString in) //Worded BOOL
 {
-    using namespace smbx64Format;
-    QMutexLocker locker(&boolwords_mutex);
-    return !boolwords.exactMatch(in);
+    return !( (in=="#TRUE#")||(in=="#FALSE#") );
 }
 
 bool SMBX64::dBool(QString in) //Digital BOOL
 {
-    using namespace smbx64Format;
-    QMutexLocker locker(&booldeg_mutex);
-    return !booldeg.exactMatch(in);
+    if((in.size()!=1) || (in.isEmpty()) )
+        return true;
+    return !((in[0].toLatin1()=='1')||(in[0].toLatin1()=='0'));
 }
 
 //Convert from string to internal data
 bool SMBX64::wBoolR(QString in)
 {
-    using namespace smbx64Format;
     return ((in=="#TRUE#")?true:false);
 }
 
