@@ -643,13 +643,16 @@ void WorldScene::updateCenter()
     jumpTo=false;
 
     QList<WorldNode* > nodes;
-    nodes=worldMap.query(posX+worldMap.gridSize_h, posY+worldMap.gridSize_h);
+    long px=posX+worldMap.gridSize_h;
+    long py=posY+worldMap.gridSize_h;
+    nodes=worldMap.query(px, py);
     foreach (WorldNode* x, nodes)
     {
+        /*************MusicBox***************/
         if(x->type==WorldNode::musicbox)
         {
             WldMusicBoxItem *y = dynamic_cast<WldMusicBoxItem*>(x);
-            if(y)
+            if(y && y->collidePoint(px, py))
             {
                 if(isInit)
                     playMusic(y->data.id, y->data.music_file);
@@ -661,11 +664,13 @@ void WorldScene::updateCenter()
                 }
             }
         }
+        /*************MusicBox***************/
 
+        /*************Level Point***************/
         if(x->type==WorldNode::level)
         {
             WldLevelItem *y = dynamic_cast<WldLevelItem*>(x);
-            if(y)
+            if(y && y->collidePoint(px, py))
             {
                 levelTitle = y->data.title;
                 if(!y->data.lvlfile.isEmpty())
@@ -704,11 +709,8 @@ void WorldScene::updateCenter()
                     }
                 }
             }
-            else
-            {
-                levelTitle = "!!!FAIL!!!";
-            }
         }
+        /*************Level Point***************/
     }
 }
 
