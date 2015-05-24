@@ -239,12 +239,12 @@
         <translation>Depuración</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="184"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="188"/>
         <source>Set log file</source>
         <translation>Establecer archivo</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="185"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="189"/>
         <source>Text files (*.txt *.log)</source>
         <translation>Archivos de texto (*.txt *.log)</translation>
     </message>
@@ -269,19 +269,37 @@
         <translation type="vanished">Mapa SMBX</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="262"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="266"/>
         <source>Success</source>
         <translation>Éxito</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="262"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="266"/>
         <source>All file associations have been set</source>
         <translation>Todas las asociaciones se hicieron</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="264"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="268"/>
         <source>Error</source>
         <translation>Error</translation>
+    </message>
+</context>
+<context>
+    <name>AsyncStarCounter</name>
+    <message>
+        <location filename="../tools/async/asyncstarcounter.cpp" line="21"/>
+        <source>Counting stars of placed levels</source>
+        <translation>Contar estrellas en niveles puestos</translation>
+    </message>
+    <message>
+        <location filename="../tools/async/asyncstarcounter.cpp" line="21"/>
+        <source>Abort</source>
+        <translation>Abortar</translation>
+    </message>
+    <message>
+        <location filename="../tools/async/asyncstarcounter.cpp" line="22"/>
+        <source>Counting stars...</source>
+        <translation>Contando estrellas...</translation>
     </message>
 </context>
 <context>
@@ -561,7 +579,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="23"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished">Marcadores de posición</translation>
+        <translation>Marcadores de posición</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="51"/>
@@ -571,7 +589,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="67"/>
@@ -582,7 +600,7 @@ and store bookmark.</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="71"/>
         <source>Add</source>
-        <translation type="unfinished">Añadir</translation>
+        <translation>Añadir</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="84"/>
@@ -593,12 +611,12 @@ You also can double-click to item to scroll to bookmarked position.</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="88"/>
         <source>Go To...</source>
-        <translation type="unfinished">Ir a...</translation>
+        <translation>Ir a...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.cpp" line="227"/>
         <source>Rename Bookmark</source>
-        <translation type="unfinished">Renombrar marcador</translation>
+        <translation>Renombrar marcador</translation>
     </message>
 </context>
 <context>
@@ -623,12 +641,12 @@ You also can double-click to item to scroll to bookmarked position.</source>
         <translation type="vanished">Por favor, seleccione el juego que definirá las opciones y elementos</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_manager.cpp" line="280"/>
+        <location filename="../data_configs/config_manager.cpp" line="284"/>
         <source>Config packs are not found</source>
         <translation>No se encuentran los packs</translation>
     </message>
     <message>
-        <location filename="../data_configs/config_manager.cpp" line="283"/>
+        <location filename="../data_configs/config_manager.cpp" line="287"/>
         <source>Available configuration packages are not found!&lt;br&gt;
 Please download and install them into directory&lt;br&gt;
 &lt;br&gt;
@@ -737,107 +755,107 @@ Puede tomar cualquier paquete aquí: %2</translation>
         <translation type="vanished">Sonidos (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="62"/>
+        <location filename="../data_configs/configstatus.cpp" line="66"/>
         <source>Level Blocks (%1/%2)</source>
         <translation>Bloques de nivel (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="74"/>
+        <location filename="../data_configs/configstatus.cpp" line="78"/>
         <source>Level Background objects (%1/%2)</source>
         <translation>Objetos de fondo del nivel (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="86"/>
+        <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Level Background images (%1/%2)</source>
         <translation>Imágenes de fondo del nivel (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="98"/>
+        <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Level NPCs (%1/%2)</source>
         <translation>PNJs del nivel (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="110"/>
+        <location filename="../data_configs/configstatus.cpp" line="114"/>
         <source>Music (level) (%1/%2)</source>
         <translation>Música (nivel) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="121"/>
+        <location filename="../data_configs/configstatus.cpp" line="125"/>
         <source>Music (world) (%1/%2)</source>
         <translation>Música (mundo) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="132"/>
+        <location filename="../data_configs/configstatus.cpp" line="136"/>
         <source>Music (special) (%1/%2)</source>
         <translation>Música (especial) (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="144"/>
+        <location filename="../data_configs/configstatus.cpp" line="148"/>
         <source>Sounds (%1/%2)</source>
         <translation>Sonidos (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="157"/>
+        <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map Tiles (%1/%2)</source>
         <translation>Azulejos del mapa (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="169"/>
+        <location filename="../data_configs/configstatus.cpp" line="173"/>
         <source>World map Sceneries (%1/%2)</source>
         <translation>Decoraciones del mapa (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="182"/>
+        <location filename="../data_configs/configstatus.cpp" line="186"/>
         <source>World map Paths (%1/%2)</source>
         <translation>Caminos del mapa (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="195"/>
+        <location filename="../data_configs/configstatus.cpp" line="199"/>
         <source>World map Levels (%1/%2)</source>
         <translation>Niveles del mapa (%1/%2)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="207"/>
+        <location filename="../data_configs/configstatus.cpp" line="211"/>
         <source>Default rotation rules (%1)</source>
         <translation>Reglas de rotación predeterminadas (%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="218"/>
+        <location filename="../data_configs/configstatus.cpp" line="222"/>
         <source>Level data</source>
         <translation>Datos de nivel</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="224"/>
+        <location filename="../data_configs/configstatus.cpp" line="228"/>
         <source>World data</source>
         <translation>Datos de mundo</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="231"/>
+        <location filename="../data_configs/configstatus.cpp" line="235"/>
         <source>Characters</source>
         <translation>Personajes</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="238"/>
+        <location filename="../data_configs/configstatus.cpp" line="242"/>
         <source>Game worlds</source>
         <translation>Mundos del juego</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="245"/>
+        <location filename="../data_configs/configstatus.cpp" line="249"/>
         <source>Music</source>
         <translation>Música</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="252"/>
+        <location filename="../data_configs/configstatus.cpp" line="256"/>
         <source>Sounds</source>
         <translation>Sonidos</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="259"/>
+        <location filename="../data_configs/configstatus.cpp" line="263"/>
         <source>Custom data</source>
         <translation>Datos personalizados</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="271"/>
+        <location filename="../data_configs/configstatus.cpp" line="275"/>
         <source>[Error list is empty]</source>
         <translation>[Lista de errores está vacía]</translation>
     </message>
@@ -870,12 +888,12 @@ Puede tomar cualquier paquete aquí: %2</translation>
         <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="244"/>
+        <location filename="../common_features/crashhandler.cpp" line="194"/>
         <source>Crashsave</source>
         <translation>Crashsave</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="244"/>
+        <location filename="../common_features/crashhandler.cpp" line="194"/>
         <source>Since the last crash, the editor recorved some files.
 Please save them first before doing anything else.</source>
         <translation>Desde el último colapso, el editor recuperó algunos archivos.
@@ -1047,62 +1065,62 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <translation>Limpiar todos los logs</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="174"/>
+        <location filename="../dev_console/devconsole.cpp" line="178"/>
         <source>Clear %1 Log</source>
         <translation>Limpiar %1 Log</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="250"/>
+        <location filename="../dev_console/devconsole.cpp" line="254"/>
         <source>Prints the command help</source>
         <translation>Muestra la ayuda</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="251"/>
+        <location filename="../dev_console/devconsole.cpp" line="255"/>
         <source>Prints a test command</source>
         <translation>Muestra un comando de prueba</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="252"/>
+        <location filename="../dev_console/devconsole.cpp" line="256"/>
         <source>Prints the version</source>
         <translation>Muestra la versión</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="253"/>
+        <location filename="../dev_console/devconsole.cpp" line="257"/>
         <source>Quits the program</source>
         <translation>Sale del programa</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="254"/>
+        <location filename="../dev_console/devconsole.cpp" line="258"/>
         <source>Saves the application settings</source>
         <translation>Guarda las opciones</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="255"/>
+        <location filename="../dev_console/devconsole.cpp" line="259"/>
         <source>Args: {SomeString} Calculating MD5 hash of string</source>
         <translation>Args: {SomeString} Calculando hash MD5 of string</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="256"/>
+        <location filename="../dev_console/devconsole.cpp" line="260"/>
         <source>Arg: {String array} validating the PGE-X string array</source>
         <translation>Arg: {String array} validando el array PGE-X</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="260"/>
+        <location filename="../dev_console/devconsole.cpp" line="264"/>
         <source>Arg: {Path to file} testing of PGE-X file format</source>
         <translation>Arg: {Ruta de archivo} probando el formato PGE-X</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="261"/>
+        <location filename="../dev_console/devconsole.cpp" line="265"/>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
         <translation>[TEP] ¡Intentar probar en SMBX!</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="262"/>
+        <location filename="../dev_console/devconsole.cpp" line="266"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="263"/>
+        <location filename="../dev_console/devconsole.cpp" line="267"/>
         <source>Args: {engine commands} Send command or message into running engine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1111,17 +1129,17 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <translation type="vanished">Args: {String array} validando string array PGE-X</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="257"/>
+        <location filename="../dev_console/devconsole.cpp" line="261"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
         <translation>Args: {[Number] gigabytes} | Fluye la memoria con megabytes</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="258"/>
+        <location filename="../dev_console/devconsole.cpp" line="262"/>
         <source>Throws an unhandled exception to crash the editor</source>
         <translation>Tira una excepción no controlada para colapsar el editor</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="259"/>
+        <location filename="../dev_console/devconsole.cpp" line="263"/>
         <source>Does a segmentation violation</source>
         <translation>Hace una violación de segmentación</translation>
     </message>
@@ -2012,8 +2030,8 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>[todo]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="68"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1190"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="70"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1221"/>
         <source>[Empty]</source>
         <translation>[Vacío]</translation>
     </message>
@@ -2058,14 +2076,24 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Datos extra:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="126"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="128"/>
         <source>NPC from List</source>
         <translation>PNJ de la lista</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="127"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="129"/>
         <source>Coins</source>
         <translation>Monedas</translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1087"/>
+        <source>Please, save file</source>
+        <translation>Por favor, guarde el archivo</translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1087"/>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
 </context>
 <context>
@@ -5504,7 +5532,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="703"/>
-        <location filename="../main_window/windows_extras.cpp" line="14"/>
+        <location filename="../main_window/windows_extras.cpp" line="18"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
@@ -6595,7 +6623,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua movidos al portapapeles</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="42"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="44"/>
         <source>Reloading configurations</source>
         <translation>Recargando configuraciones</translation>
     </message>
@@ -6603,23 +6631,23 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/file/file_save.cpp" line="31"/>
         <location filename="../main_window/file/file_save.cpp" line="77"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
-        <location filename="../main_window/tools/data_configs.cpp" line="41"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="43"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="89"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="98"/>
         <source>Reloading configuration</source>
         <translation>Recargando configuraciones</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="125"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="144"/>
         <source>Configuration changed</source>
         <translation>Configuración cambiada</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="125"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="144"/>
         <source>The Configuration was switched!
 To start work with new configuration, please restart application.</source>
         <translation>¡La configuración fue cambiada!
@@ -6630,7 +6658,7 @@ Para trabajar con la nueva configuración, por favor reinicie la aplicación.</t
         <translation type="vanished">Recargar configuración</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs.cpp" line="90"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="99"/>
         <source>Configuration succesfully reloaded!</source>
         <translation>¡Configuración recargada exitosamente!</translation>
     </message>
@@ -6657,9 +6685,9 @@ Please, select necessary world map in a list:</source>
 Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="95"/>
-        <location filename="../main_window/file/file_open.cpp" line="144"/>
-        <location filename="../main_window/file/file_open.cpp" line="198"/>
+        <location filename="../main_window/file/file_open.cpp" line="94"/>
+        <location filename="../main_window/file/file_open.cpp" line="139"/>
+        <location filename="../main_window/file/file_open.cpp" line="189"/>
         <location filename="../main_window/file/file_reload.cpp" line="50"/>
         <location filename="../main_window/file/file_reload.cpp" line="94"/>
         <location filename="../main_window/file/file_reload.cpp" line="187"/>
@@ -6669,9 +6697,9 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <translation>Error al abrir archivo</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="96"/>
-        <location filename="../main_window/file/file_open.cpp" line="145"/>
-        <location filename="../main_window/file/file_open.cpp" line="199"/>
+        <location filename="../main_window/file/file_open.cpp" line="95"/>
+        <location filename="../main_window/file/file_open.cpp" line="140"/>
+        <location filename="../main_window/file/file_open.cpp" line="190"/>
         <location filename="../main_window/file/file_reload.cpp" line="95"/>
         <location filename="../main_window/file/file_reload.cpp" line="188"/>
         <location filename="../main_window/file/file_reload.cpp" line="267"/>
@@ -6761,7 +6789,7 @@ El archivo no existe.</translation>
         <translation type="vanished">Remover capas y guardar ítems</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="156"/>
+        <location filename="../main_window/file/file_open.cpp" line="151"/>
         <source>Level file loaded</source>
         <translation>Nivel cargado</translation>
     </message>
@@ -6775,40 +6803,40 @@ El archivo no existe.</translation>
         <translation type="vanished">Perdón, el soporte de mapas no está implementado en ésta versión.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="46"/>
+        <location filename="../main_window/file/file_open.cpp" line="45"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="80"/>
+        <location filename="../main_window/file/file_open.cpp" line="79"/>
         <source>Cannot open file:
 Configuration package loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="215"/>
+        <location filename="../main_window/file/file_open.cpp" line="206"/>
         <location filename="../main_window/file/file_reload.cpp" line="300"/>
         <source>World map file loaded</source>
         <translation>Mapa cargado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="233"/>
+        <location filename="../main_window/file/file_open.cpp" line="224"/>
         <source>NPC Config loaded</source>
         <translation>Configuración PNJ cargada</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="323"/>
+        <location filename="../main_window/file/file_open.cpp" line="314"/>
         <source>Game save statistics</source>
         <translation>Estadísticas de guardado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="330"/>
+        <location filename="../main_window/file/file_open.cpp" line="321"/>
         <source>Bad file</source>
         <translation>Archivo corrupto</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="331"/>
+        <location filename="../main_window/file/file_open.cpp" line="322"/>
         <source>This file have unknown extension</source>
         <translation>Éste archivo tiene una extensión desconocida</translation>
     </message>
@@ -6835,7 +6863,7 @@ Configuration package loaded with errors.</source>
         <translation>Guardado de archivos...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="53"/>
+        <location filename="../main_window/file/file_open.cpp" line="52"/>
         <source>Open file</source>
         <translation>Abrir archivo</translation>
     </message>
@@ -6894,8 +6922,8 @@ Configuration package loaded with errors.</source>
         <location filename="../main_window/file/file_new.cpp" line="41"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="45"/>
-        <location filename="../main_window/file/file_open.cpp" line="79"/>
+        <location filename="../main_window/file/file_open.cpp" line="44"/>
+        <location filename="../main_window/file/file_open.cpp" line="78"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6958,18 +6986,18 @@ Configuration package loaded with errors.</source>
         <translation>[Nada]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="303"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="690"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="312"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="699"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="93"/>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="94"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="95"/>
         <source>[all]</source>
         <translation>[todo]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="304"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="691"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="313"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="700"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="94"/>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="95"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="96"/>
         <source>[custom]</source>
         <translation>[personalizado]</translation>
     </message>
@@ -7420,19 +7448,21 @@ Overwrite?</source>
         <translation>Compilado exitosamente a %1/lunadll.txt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="136"/>
-        <location filename="../mainwindow.cpp" line="145"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="106"/>
+        <location filename="../mainwindow.cpp" line="143"/>
+        <location filename="../mainwindow.cpp" line="152"/>
         <source>Configuration error</source>
         <translation>Error de configuración</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="137"/>
+        <location filename="../mainwindow.cpp" line="144"/>
         <source>Configuration can&apos;t be loaded.
 See in %1 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="146"/>
+        <location filename="../main_window/tools/data_configs.cpp" line="107"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7450,13 +7480,13 @@ to get more information.</source>
 Por favor vea el Estado de Configuración para obtener más información.</translation>
     </message>
     <message>
-        <location filename="../main_window/windows_extras.cpp" line="21"/>
+        <location filename="../main_window/windows_extras.cpp" line="25"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../main_window/windows_extras.cpp" line="96"/>
-        <location filename="../main_window/windows_extras.cpp" line="97"/>
+        <location filename="../main_window/windows_extras.cpp" line="103"/>
+        <location filename="../main_window/windows_extras.cpp" line="104"/>
         <source>No file loaded!</source>
         <translation>¡No se cargó nada!</translation>
     </message>
@@ -7815,7 +7845,7 @@ Do you want to save your changes?</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../data_configs/conf_lvl_bgo.cpp" line="84"/>
+        <location filename="../data_configs/conf_lvl_bgo.cpp" line="83"/>
         <source>Loading BGOs...</source>
         <translation>Cargando OFs...</translation>
     </message>
@@ -7835,7 +7865,7 @@ Do you want to save your changes?</source>
         <translation>Cargando PNJs...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_music.cpp" line="117"/>
+        <location filename="../data_configs/conf_music.cpp" line="118"/>
         <source>Loading Music...</source>
         <translation>Cargando música...</translation>
     </message>
@@ -7875,7 +7905,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
 Para prevenir ésto, pruebe cerrando otros programas innecesarios para liberar memoria).</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="102"/>
+        <location filename="../common_features/crashhandler.cpp" line="78"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -7886,20 +7916,29 @@ Razón: ¡memoria insuficiente!
 Para prevenir esto, pruebe cerrando otras aplicaciones innecesarias para despejar más memoria.</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="126"/>
+        <location filename="../common_features/crashhandler.cpp" line="84"/>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: engine.wohlnet.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation>Lo lamentamos, pero el editor ha colapsado.
+        <translation type="vanished">Lo lamentamos, pero el editor ha colapsado.
 Razón: %1
 
 Enlace al foro: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="144"/>
+        <location filename="../common_features/crashhandler.cpp" line="89"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Signal Segmentation Violation [SIGSERV]
 
@@ -7913,7 +7952,7 @@ Razón: Violación de segmentación de señal [SIGSERV]
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="264"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="268"/>
         <source>File association failed.</source>
         <translation>Asociación de archivos fallida.</translation>
     </message>
@@ -8391,41 +8430,41 @@ Razón: Violación de segmentación de señal [SIGSERV]
 <context>
     <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="38"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="99"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="41"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="104"/>
         <source>File open error</source>
         <translation>Error al abrir archivo</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="39"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="100"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="42"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="105"/>
         <source>Can&apos;t open the file.</source>
         <translation>No se puede abrir archivo.</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="39"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="42"/>
         <source>Bad File</source>
         <translation>Archivo Corrupto</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="42"/>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="50"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="45"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="54"/>
         <source>Bad file format
 File: %1
 </source>
         <translation>Formato de archivo corrupto: %1</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="43"/>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="51"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="46"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="55"/>
         <source>Line Number: %1
 </source>
         <translation>Número de línea: %1
 </translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="44"/>
-        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="52"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="47"/>
+        <location filename="../../_common/PGE_File_Formats/file_formats.cpp" line="56"/>
         <source>Line Data: %1</source>
         <translation>Dato de línea: %1</translation>
     </message>
@@ -8592,7 +8631,7 @@ cuando guarde su archivo</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.ui" line="205"/>
-        <source>Detele this tileset</source>
+        <source>Delete this tileset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9148,12 +9187,12 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="668"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="669"/>
         <source>Placing mode</source>
         <translation>Modo de colocado</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="668"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="669"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
     </message>
@@ -10109,9 +10148,19 @@ Do you want to save your changes?</source>
         <translation>Cajas de música</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="258"/>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="259"/>
         <source>[Silence]</source>
         <translation>[Silencio]</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="347"/>
+        <source>Please, save file</source>
+        <translation>Por favor, guarde el archivo</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_toolbox.cpp" line="347"/>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
 </context>
 <context>
@@ -10167,22 +10216,22 @@ Do you want to save your changes?</source>
         <translation>Explorar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="418"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="484"/>
         <source>Counting...</source>
         <translation>Contando...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="426"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="492"/>
         <source>Counting stars of placed levels</source>
         <translation>Contar estrellas en niveles puestos</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="426"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="492"/>
         <source>Abort</source>
         <translation>Abortar</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="427"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="493"/>
         <source>Counting stars...</source>
         <translation>Contando estrellas...</translation>
     </message>
