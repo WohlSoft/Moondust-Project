@@ -7967,7 +7967,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>PGE ist Abgestürzt.
+Grund: Unbearbeitete Ausnahme
+
+Bitte informieren uns beim Forum, so dass wir das Problem beheben könne. Danke
+
+Forum link: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 

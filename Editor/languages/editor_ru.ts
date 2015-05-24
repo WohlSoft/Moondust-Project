@@ -8018,7 +8018,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Извините, но PGE Editor сломался. 
+Причина: необработанное исключение
+
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+
+Ссылка форума: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
