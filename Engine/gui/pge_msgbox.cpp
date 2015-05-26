@@ -147,17 +147,17 @@ void PGE_MsgBox::exec()
 
         if(_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - width*fader_opacity - padding,
-                        _sizeRect.center().y() - height*fader_opacity - padding,
-                         _sizeRect.center().x() + width*fader_opacity + padding,
-                        _sizeRect.center().y() + height*fader_opacity + padding);
+            drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
+                        _sizeRect.center().y()-(height + padding)*fader_opacity,
+                        _sizeRect.center().x()+(width + padding)*fader_opacity,
+                        _sizeRect.center().y()+(height + padding)*fader_opacity);
         }
         else
         {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
-                                   _sizeRect.center().y() - height*fader_opacity - padding,
-                                     _sizeRect.center().x() + width*fader_opacity + padding,
-                                   _sizeRect.center().y() + height*fader_opacity + padding,
+            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity ,
+                                   _sizeRect.center().y() - (height+padding)*fader_opacity,
+                                     _sizeRect.center().x() + (width+padding)*fader_opacity,
+                                   _sizeRect.center().y() + (height+padding)*fader_opacity,
                                    bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
@@ -270,18 +270,17 @@ void PGE_MsgBox::exec()
 
         if(_textureUsed)
         {
-            drawTexture(_sizeRect.center().x() - width*fader_opacity - padding,
-                        _sizeRect.center().y() - height*fader_opacity - padding,
-                        _sizeRect.center().x() + width*fader_opacity + padding,
-                        _sizeRect.center().y() + height*fader_opacity + padding);
+            drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
+                        _sizeRect.center().y()-(height + padding)*fader_opacity,
+                        _sizeRect.center().x()+(width + padding)*fader_opacity,
+                        _sizeRect.center().y()+(height + padding)*fader_opacity);
         }
         else
         {
-
-            GlRenderer::renderRectBR(_sizeRect.center().x() - width*fader_opacity - padding,
-                                   _sizeRect.center().y() - height*fader_opacity - padding,
-                                     _sizeRect.center().x() + width*fader_opacity + padding,
-                                   _sizeRect.center().y() + height*fader_opacity + padding,
+            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity ,
+                                   _sizeRect.center().y() - (height+padding)*fader_opacity,
+                                     _sizeRect.center().x() + (width+padding)*fader_opacity,
+                                   _sizeRect.center().y() + (height+padding)*fader_opacity,
                                    bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
 
