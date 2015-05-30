@@ -19,7 +19,6 @@
 #ifndef LVL_CAMERA_H
 #define LVL_CAMERA_H
 
-#include <Box2D/Box2D.h>
 #include <physics/base_object.h>
 #include <graphics/graphics.h>
 
@@ -38,13 +37,13 @@ class PGE_LevelCamera
     friend class LVL_Section;
 public:
     PGE_LevelCamera();
+    PGE_LevelCamera(const PGE_LevelCamera &cam);
     ~PGE_LevelCamera();
     int w(); //!< Width
     int h(); //!< Height
     qreal posX(); //!< Position X
     qreal posY(); //!< Position Y
 
-    void setWorld(b2World * wld);
     void init(float x, float y, float w, float h);
 
     void setPos(float x, float y);
@@ -62,20 +61,11 @@ public:
     LevelSection* section;
     LVL_Section * cur_section;
 
-    /// Limits of section motion
-    int s_top;
-    int s_bottom;
-    int s_left;
-    int s_right;
-    long BackgroundID;
-
     int offset_x;
     int offset_y;
 
     float pos_x;
     float pos_y;
-
-    void setMusicRoot(QString dir);
 
     /**************Fader**************/
     float fader_opacity;
@@ -93,9 +83,6 @@ private:
 
     int width;
     int height;
-    QString musicRootDir;
-
-    b2World * worldPtr;
 };
 
 #endif // LVL_CAMERA_H
