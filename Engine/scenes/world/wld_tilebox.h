@@ -423,31 +423,41 @@ public:
 
         if(z_sort)
         {
-            //Sort array
-            int total = list.size();
-            long i;
-            double ymin;
-            long ymini;
-            long sorted = 0;
-
-            while(sorted < list.size())
-            {
-                ymin = list[sorted]->Z;
-                ymini = sorted;
-
-                for(i = sorted; i < total; i++)
-                {
-                    if( list[i]->Z < ymin )
-                    {
-                        ymin = list[i]->Z; ymini = i;
-                    }
-                }
-                list.swap(ymini, sorted);
-                sorted++;
-            }
+            sortElements(list);
         }
 
         return list;
+    }
+
+    void sortElements(QList<WorldNode * > &list)
+    {
+        sortElements(list, 0, list.size()-1);
+    }
+
+    void sortElements(QList<WorldNode * > &list, int l, int r)
+    {
+        double x = list[l + (r - l) / 2]->Z;
+        //запись эквивалентна (l+r)/2,
+        //но не вызввает переполнения на больших данных
+        int i = l;
+        int j = r;
+        //код в while обычно выносят в процедуру particle
+        while(i <= j)
+        {
+            while(list[i]->Z < x) i++;
+            while(list[j]->Z > x) j--;
+            if(i <= j)
+            {
+                list.swap(i, j);
+                i++;
+                j--;
+            }
+        }
+        if (i<r)
+                    sortElements(list, i, r);
+
+        if (l<j)
+            sortElements(list, l, j);
     }
 
     void clean()

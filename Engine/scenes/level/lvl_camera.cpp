@@ -181,28 +181,40 @@ void PGE_LevelCamera::update()
     }
 
     //Sort array
-    int total = objects_to_render.size();
-    long i;
-    double ymin;
-    long ymini;
-    long sorted = 0;
-
-    while(sorted < objects_to_render.size())
-    {
-        ymin = objects_to_render[sorted]->zIndex();
-        ymini = sorted;
-
-        for(i = sorted; i < total; i++)
-        {
-            if( objects_to_render[i]->zIndex() < ymin )
-            {
-                ymin = objects_to_render[i]->zIndex(); ymini = i;
-            }
-        }
-        objects_to_render.swap(ymini, sorted);
-        sorted++;
-    }
+    sortElements();
 }
+
+void PGE_LevelCamera::sortElements()
+{
+    sortElements(0, objects_to_render.size()-1);
+}
+
+void PGE_LevelCamera::sortElements(int l, int r)
+{
+    GLdouble x = objects_to_render[l + (r - l) / 2]->zIndex();
+    //запись эквивалентна (l+r)/2,
+    //но не вызввает переполнения на больших данных
+    int i = l;
+    int j = r;
+    //код в while обычно выносят в процедуру particle
+    while(i <= j)
+    {
+        while(objects_to_render[i]->zIndex() < x) i++;
+        while(objects_to_render[j]->zIndex() > x) j--;
+        if(i <= j)
+        {
+            objects_to_render.swap(i, j);
+            i++;
+            j--;
+        }
+    }
+    if (i<r)
+                sortElements(i, r);
+
+    if (l<j)
+        sortElements(l, j);
+}
+
 
 
 void PGE_LevelCamera::changeSectionBorders(long left, long top, long right, long bottom)
@@ -271,5 +283,4 @@ void PGE_LevelCamera::fadeStep()
     else
         fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_LevelCamera::nextOpacity, this);
 }
-
 /**************************Fader**end**************************/

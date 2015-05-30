@@ -79,6 +79,8 @@ public:
     /**************Fader**************/
 
 private:
+    void sortElements();
+    void sortElements(int l, int r);
     PGE_RenderList objects_to_render;
 
     int width;
