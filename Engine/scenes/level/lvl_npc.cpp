@@ -86,6 +86,23 @@ void LVL_Npc::update(float ticks)
     if(killed) return;
     PGE_Phys_Object::update(ticks);
     timeout-=ticks;
+
+    LVL_Section *section=sct();
+    PGE_RectF sBox = section->sectionRect();
+
+    if(section->isWarp())
+    {
+        if(posX() < sBox.left()-width-1 )
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
+                 physBody->GetPosition().y), 0.0f);
+        else
+        if(posX() > sBox.right() + 1 )
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
+                 physBody->GetPosition().y), 0.0f
+                                   );
+    }
 }
 
 void LVL_Npc::render(double camX, double camY)
