@@ -50,6 +50,7 @@ public:
     void changeLimitBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
+    void initBG();
     void setMusicRoot(QString _path);
     int  getBgId();
 
@@ -61,6 +62,7 @@ public:
     void renderBG(float x, float y, float w, float h);
 
     void setBG(int bgID);
+    void resetBG();
 
     PGE_RectF sectionRect();
     PGE_RectF sectionLimitBox();
@@ -79,6 +81,7 @@ private:
     QString        music_root;
     int            curMus;
     QString        curCustomMus;
+    int            curBgID;
     LVL_Background _background;
 
     bool isInit;

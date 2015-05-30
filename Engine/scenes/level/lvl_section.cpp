@@ -29,6 +29,7 @@ LVL_Section::LVL_Section()
     data= FileFormats::dummyLvlSection();
     isInit=false;
     curMus=0;
+    curBgID=0;
 }
 
 LVL_Section::LVL_Section(const LVL_Section &_sct)
@@ -40,6 +41,7 @@ LVL_Section::LVL_Section(const LVL_Section &_sct)
     music_root=_sct.music_root;
     curMus=_sct.curMus;
     curCustomMus=_sct.curCustomMus;
+    curBgID=_sct.curBgID;
 }
 
 LVL_Section::~LVL_Section()
@@ -55,6 +57,7 @@ void LVL_Section::setData(LevelSection _d)
     data=_d;
     isInit=true;
     resetMusic();
+    curBgID = data.background;
     changeSectionBorders(data.size_left, data.size_top, data.size_right, data.size_bottom);
 }
 
@@ -82,11 +85,6 @@ void LVL_Section::setMusicRoot(QString _path)
     music_root=_path;
     if(!music_root.endsWith('/'))
         music_root.append('/');
-}
-
-int LVL_Section::getBgId()
-{
-    return data.background;
 }
 
 void LVL_Section::playMusic()
@@ -120,6 +118,16 @@ void LVL_Section::renderBG(float x, float y, float w, float h)
     _background.draw(x, y, w, h);
 }
 
+int LVL_Section::getBgId()
+{
+    return curBgID;
+}
+
+void LVL_Section::initBG()
+{
+    setBG(curBgID);
+}
+
 void LVL_Section::setBG(int bgID)
 {
     if(_background.isInit() && (bgID==_background.curBgId())) return;
@@ -131,6 +139,13 @@ void LVL_Section::setBG(int bgID)
     }
     else
         _background.setNone();
+
+    curBgID=bgID;
+}
+
+void LVL_Section::resetBG()
+{
+    setBG(data.background);
 }
 
 PGE_RectF LVL_Section::sectionRect()

@@ -31,14 +31,26 @@
 
 PGE_LevelCamera::PGE_LevelCamera()
 {
-    worldPtr = NULL;
-    section = 0;
     width=800;
     height=600;
     offset_x=0;
     offset_y=0;
-    BackgroundID = 0;
+
+    section = 0;
     cur_section = NULL;
+}
+
+PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
+{
+    width=cam.width;
+    height=cam.height;
+    offset_x=cam.offset_x;
+    offset_y=cam.offset_y;
+
+    objects_to_render = cam.objects_to_render;
+
+    section = cam.section;
+    cur_section = cam.cur_section;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -46,16 +58,8 @@ PGE_LevelCamera::~PGE_LevelCamera()
     qDebug() << "Destroy camera";
 }
 
-void PGE_LevelCamera::setWorld(b2World *wld)
-{
-    worldPtr = wld;
-}
-
-
 void PGE_LevelCamera::init(float x, float y, float w, float h)
 {
-    if(!worldPtr) return;
-
     pos_x = x;
     pos_y = y;
     width = w;
@@ -134,25 +138,22 @@ void PGE_LevelCamera::update()
 //    aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
 //    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
 //    worldPtr->QueryAABB(&cb, aabb);
-    R_itemList foundItems;
-    cur_section->queryItems(PGE_RectF(pos_x, pos_y, width, height), &foundItems);
+    cur_section->queryItems(PGE_RectF(pos_x, pos_y, width, height), &objects_to_render);
 
     int contacts = 0;
-    for(int i=0; i<foundItems.size();i++)
+    for(int i=0; i<objects_to_render.size();i++)
     {
         contacts++;
-        PGE_Phys_Object * visibleBody = foundItems[i];
-        //visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
-        //if(visibleBody==NULL)
-        //    continue;
+        PGE_Phys_Object * visibleBody = objects_to_render[i];
+        bool renderable=false;
         switch(visibleBody->type)
         {
-        case PGE_Phys_Object::LVLBlock:
-        case PGE_Phys_Object::LVLBGO:
-        case PGE_Phys_Object::LVLNPC:
-        case PGE_Phys_Object::LVLPlayer:
-        case PGE_Phys_Object::LVLEffect:
-            objects_to_render.push_back(visibleBody);
+            case PGE_Phys_Object::LVLBlock:
+            case PGE_Phys_Object::LVLBGO:
+            case PGE_Phys_Object::LVLNPC:
+            case PGE_Phys_Object::LVLPlayer:
+            case PGE_Phys_Object::LVLEffect:
+                renderable=true;
         }
 
         if(visibleBody->type==PGE_Phys_Object::LVLNPC)
@@ -171,6 +172,11 @@ void PGE_LevelCamera::update()
                     npc->timeout=4000;
                 }
             }
+        }
+
+        if(!renderable)
+        {
+            objects_to_render.removeAt(i); i--;
         }
     }
 
@@ -231,16 +237,8 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct)
 
     cur_section=sct;
     section = &sct->data;
-    BackgroundID = sct->getBgId();
-    cur_section->playMusic();
-    cur_section->setBG(BackgroundID);
-}
-
-void PGE_LevelCamera::setMusicRoot(QString dir)
-{
-    musicRootDir=dir;
-    if(!musicRootDir.endsWith('/'))
-        musicRootDir.append('/');
+    cur_section->playMusic();//Play current section music
+    cur_section->initBG();   //Init background if not initialized
 }
 
 /**************************Fader*******************************/

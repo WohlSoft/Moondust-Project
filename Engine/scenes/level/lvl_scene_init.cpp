@@ -302,7 +302,6 @@ bool LevelScene::init()
         //Init Cameras
         PGE_LevelCamera* camera;
         camera = new PGE_LevelCamera();
-        camera->setWorld(world);
         camera->init(
                         (float)x,
                         (float)y,
