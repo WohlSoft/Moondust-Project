@@ -23,16 +23,19 @@
 #include <physics/base_object.h>
 #include <graphics/graphics.h>
 
-#include <vector>
+#include <QList>
 #include <PGE_File_Formats/file_formats.h>
 
+class   PGE_Phys_Object;
 typedef QList<PGE_Phys_Object *> PGE_RenderList;
 
 class LVL_Background;
+class LVL_Section;
 
 class PGE_LevelCamera
 {
     friend class LVL_Background;
+    friend class LVL_Section;
 public:
     PGE_LevelCamera();
     ~PGE_LevelCamera();
@@ -50,22 +53,14 @@ public:
     void update();
     void drawBackground();
 
-    void changeSection(LevelSection &sct);
+    void changeSection(LVL_Section *sct);
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
     PGE_RenderList &renderObjects();
 
-    LevelSection *section;
-
-    bool isWarp;
-    bool RightOnly;
-    bool ExitOffscreen;
-
-    int limitLeft;
-    int limitRight;
-    int limitTop;
-    int limitBottom;
+    LevelSection* section;
+    LVL_Section * cur_section;
 
     /// Limits of section motion
     int s_top;
@@ -95,7 +90,6 @@ public:
 
 private:
     PGE_RenderList objects_to_render;
-    LVL_Background *BackgroundHandler;
 
     int width;
     int height;

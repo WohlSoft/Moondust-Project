@@ -30,17 +30,28 @@ LVL_Background::LVL_Background()
     construct();
 }
 
-LVL_Background::LVL_Background(PGE_LevelCamera *parentCamera)
+LVL_Background::LVL_Background(const LVL_Background &_bg)
 {
-    construct();
-    if(!parentCamera) return;
-    pCamera = parentCamera;
-    pCamera->BackgroundHandler = this;
+    _isInited = _bg._isInited;
+    setup = _bg.setup;
+    color = _bg.color;
+    box   = _bg.box;
+
+    isNoImage = _bg.isNoImage;
+
+    bgType = _bg.bgType;
+    txData1 = _bg.txData1;
+    txData2 = _bg.txData2;
+    isAnimated = _bg.isAnimated;
+    animator_ID = _bg.animator_ID;
+    isMagic = _bg.isMagic;
+    strips = _bg.strips;
 }
 
 void LVL_Background::construct()
 {
-    pCamera = NULL;
+    _isInited=false;
+    isNoImage=true;
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
@@ -59,9 +70,8 @@ LVL_Background::~LVL_Background()
 
 void LVL_Background::setBg(obj_BG &bg)
 {
-    setup = &bg;
-
-    bgType = (type)bg.type;
+    setup = bg;
+    bgType = (type)setup.type;
 
     qDebug()<< "BG Type" << bgType;
 
@@ -167,51 +177,59 @@ void LVL_Background::setBg(obj_BG &bg)
         default:
             break;
     }
+
+    isNoImage=false;
 }
 
 void LVL_Background::setNone()
 {
-    setup = NULL;
+    isNoImage=true;
+    setup.id=0;
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
 }
 
-void LVL_Background::draw(float x, float y)
+void LVL_Background::setBox(PGE_RectF &_box)
 {
-    GlRenderer::renderRect(0,0, PGE_Window::Width, PGE_Window::Height, color.r, color.g, color.b, 1.0);
+    box=_box;
+}
 
-    if(setup && pCamera) //draw BG if is set
+void LVL_Background::draw(float x, float y, float w, float h)
+{
+    GlRenderer::renderRect(0, 0, w, h, color.r, color.g, color.b, 1.0);
+
+    if(!isNoImage) //draw BG if is set
     {
-        double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
-        double sWidth = fabs(pCamera->s_left-pCamera->s_right);
+        double sHeight = box.height();
+        double sWidth = box.width();
 
         int imgPos_X;
         int imgPos_Y;
 
-        if(setup->repeat_h>0)
+        if(setup.repeat_h>0)
         {
-            imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
+            imgPos_X = (int)round((box.left()-x)/setup.repeat_h) % (int)round(txData1.w);
         }
         else
         {
-            if(txData1.w < PGE_Window::Width) //If image height less than screen
+            if(txData1.w < w) //If image height less than screen
                 imgPos_X = 0;
             else
 
             if( sWidth > (double)txData1.w )
             {
                 imgPos_X =
-                        (pCamera->s_left-x)
+                        (box.left()-x)
                         /
                         (
-                            (sWidth - PGE_Window::Width)/
-                            (txData1.w - PGE_Window::Width)
+                            (sWidth - w)/
+                            (txData1.w - w)
                         );
             }
             else
             {
-                imgPos_X = pCamera->s_left-x;
+                imgPos_X = box.left()-x;
             }
         }
 
@@ -227,43 +245,43 @@ void LVL_Background::draw(float x, float y)
         //          sbg.repead_v = 3;
         //    else sbg.repead_v = 0;
 
-        switch(setup->repead_v)
+        switch(setup.repead_v)
         {
             case 2: //Repeat vertical with paralax coefficient =2
-                imgPos_Y = (setup->attached==1)?
-                        (int)round((pCamera->s_top-y)/2) % (int)round(txData1.h):
-                        (int)round((pCamera->s_bottom+pCamera->h()-y)/2) % (int)round(txData1.h);
+                imgPos_Y = (setup.attached==1)?
+                        (int)round((box.top()-y)/2) % (int)round(txData1.h):
+                        (int)round((box.bottom()+h-y)/2) % (int)round(txData1.h);
                 break;
             case 1: //Zero Repeat
-                imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
+                imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.h);
                 break;
             case 0: //Proportional repeat
             default:
 
-                if(txData1.h < PGE_Window::Height) //If image height less than screen
-                    imgPos_Y = (setup->attached==1) ? 0 : (PGE_Window::Height-txData1.h);
+                if(txData1.h < h) //If image height less than screen
+                    imgPos_Y = (setup.attached==1) ? 0 : (h-txData1.h);
                 else
 
                 if( sHeight > (double)txData1.h )
                     imgPos_Y =
-                            (pCamera->s_top-y)
+                            (box.top()-y)
                             /
                             (
-                                (sHeight - PGE_Window::Height)/
-                                (txData1.h - PGE_Window::Height)
+                                (sHeight - h)/
+                                (txData1.h - h)
                             );
                 else if(sHeight == (double)txData1.h)
-                    imgPos_Y = pCamera->s_top-y;
+                    imgPos_Y = box.top()-y;
                 else
-                    imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
+                    imgPos_Y = (setup.attached==1) ? box.top()-y : (box.bottom()-y-txData1.h);
                 break;
         }
 
-        //((setup->attached==1)? pCamera->s_top-y : pCamera->s_bottom)
+        //((setup.attached==1)? pCamera->s_top-y : pCamera->s_bottom)
 
         //fabs(pCamera->s_top-pCamera->s_bottom)
         //txData1.h
-        //PGE_Window::Height
+        //h
         //pos_y
 
         QRectF backgrndG;
@@ -283,8 +301,8 @@ void LVL_Background::draw(float x, float y)
         {
             verticalRepeats=0;
             lenght_v -= txData1.h;
-            imgPos_Y -= txData1.h * ( (setup->attached==0)? -1 : 1 );
-            while(lenght_v <= PGE_Window::Height*2  ||  (lenght_v <=txData1.h*2))
+            imgPos_Y -= txData1.h * ( (setup.attached==0)? -1 : 1 );
+            while(lenght_v <= h*2  ||  (lenght_v <=txData1.h*2))
             {
                 verticalRepeats++;
                 lenght_v += txData1.h;
@@ -296,7 +314,7 @@ void LVL_Background::draw(float x, float y)
         {
             draw_x = imgPos_X;
             lenght = 0;
-            while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
+            while((lenght <= w*2) || (lenght <=txData1.w*2))
             {
                 int magicRepeat=1;
                 if(isMagic)
@@ -315,7 +333,7 @@ void LVL_Background::draw(float x, float y)
                 {
                     if(isMagic)
                     {
-                        draw_x = (int)round((pCamera->s_left-x)/strips[mg].repeat_h) % (int)round(txData1.w);
+                        draw_x = (int)round((box.left()-x)/strips[mg].repeat_h) % (int)round(txData1.w);
                         draw_x += lenght;
                         backgrndG = QRectF(QPointF(draw_x, imgPos_Y+drawedHeight),
                                            QPointF(draw_x+txData1.w, imgPos_Y+drawedHeight+
@@ -355,7 +373,7 @@ void LVL_Background::draw(float x, float y)
             verticalRepeats--;
             if(verticalRepeats>0)
             {
-                imgPos_Y += txData1.h * ( (setup->attached==0)? -1 : 1 );
+                imgPos_Y += txData1.h * ( (setup.attached==0)? -1 : 1 );
             }
         }
 
@@ -365,19 +383,19 @@ void LVL_Background::draw(float x, float y)
         {
             ani_x = AniPos(0,1);
 
-            if(setup->second_attached==0) // over first
-                imgPos_Y = pCamera->s_bottom-y-txData1.h - txData2.h;
+            if(setup.second_attached==0) // over first
+                imgPos_Y = box.bottom()-y-txData1.h - txData2.h;
             else
-            if(setup->second_attached==1) //bottom
-                imgPos_Y = pCamera->s_bottom-y - txData2.h;
+            if(setup.second_attached==1) //bottom
+                imgPos_Y = box.bottom()-y - txData2.h;
                 else
-            if(setup->second_attached==2) //top
+            if(setup.second_attached==2) //top
                 imgPos_Y = 0; //pCamera->s_bottom-y-txData1.h - txData2.h;
 
-            int imgPos_X = (int)round((pCamera->s_left-x)/setup->second_repeat_h) % (int)round(txData2.w);
+            int imgPos_X = (int)round((box.left()-x)/setup.second_repeat_h) % (int)round(txData2.w);
 
             lenght = 0;
-            while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
+            while((lenght <= w*2) || (lenght <=txData1.w*2))
             {
                 backgrndG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
                 GlRenderer::renderTexture(&txData2,
@@ -413,5 +431,18 @@ void LVL_Background::draw(float x, float y)
 void LVL_Background::applyColor()
 {
     glClearColor(0.f, 0.f, 0.f, 1.0f);
+}
+
+bool LVL_Background::isInit()
+{
+    return _isInited;
+}
+
+int LVL_Background::curBgId()
+{
+    if(_isInited)
+        return 0;
+    else
+        return setup.id;
 }
 

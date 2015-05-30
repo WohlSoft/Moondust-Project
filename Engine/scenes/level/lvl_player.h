@@ -30,6 +30,8 @@
 #include <common_features/event_queue.h>
 #include <QMap>
 
+class LVL_Section;
+
 class LVL_Player :
         public PGE_Phys_Object,
         public ControllableObject
@@ -41,6 +43,7 @@ class LVL_Player :
         void initSize();
         void update(float ticks);
         void update();
+        void updateCamera();
 
         int playerID;
         obj_player setup;

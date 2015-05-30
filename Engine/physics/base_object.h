@@ -24,6 +24,7 @@
 #include "phys_util.h"
 #include "../graphics/graphics.h"
 
+class LVL_Section;
 ///
 /// \brief The PGE_Phys_Object class
 ///
@@ -44,11 +45,23 @@ public:
     void setSize(float w, float h);
     virtual void setPos(double x, double y);
 
-    float width;  //!< Width
-    float height; //!< Height
+    void doPhysics();
+    void _syncBox2dWithPos();
 
-    float posX_coefficient;
-    float posY_coefficient;
+    double _posX;
+    double _posY;
+
+    double _velX;
+    double _velY;
+
+    double width;  //!< Width
+    double height; //!< Height
+
+    double posX_coefficient;
+    double posY_coefficient;
+    void setParentSection(LVL_Section* sct);
+    LVL_Section* sct();
+    LVL_Section *_parentSection;
 
     int type;
 
@@ -104,6 +117,7 @@ public:
     };
 
     virtual void update();
+    virtual void update(float ticks);
     virtual void render(double x, double y);
 };
 

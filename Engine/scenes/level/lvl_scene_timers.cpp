@@ -144,11 +144,6 @@ void LevelScene::loaderStep()
     doLoaderStep = false;
 }
 
-QVector<LVL_Background *> *LevelScene::bgList()
-{
-    return &backgrounds;
-}
-
 LevelData *LevelScene::levelData()
 {
     return &data;

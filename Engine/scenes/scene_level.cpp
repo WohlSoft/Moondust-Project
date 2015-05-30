@@ -118,7 +118,6 @@ LevelScene::~LevelScene()
     //desroy animators
 
     switch_blocks.clear();
-
     //destroy textures
     qDebug() << "clear level textures";
     while(!textures_bank.isEmpty())
@@ -126,16 +125,6 @@ LevelScene::~LevelScene()
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(textures_bank[0].texture) );
         textures_bank.pop_front();
-    }
-
-
-    qDebug() << "Destroy backgrounds";
-    while(!backgrounds.isEmpty())
-    {
-        LVL_Background* tmp;
-        tmp = backgrounds.first();
-        backgrounds.pop_front();
-        if(tmp) delete tmp;
     }
 
     qDebug() << "Destroy cameras";
@@ -204,6 +193,9 @@ LevelScene::~LevelScene()
         physenvs.pop_front();
         if(tmp) delete tmp;
     }
+
+    qDebug() << "Destroy sections";
+    sections.clear();
 
     delete player1Controller;
     delete player2Controller;
@@ -313,6 +305,29 @@ void LevelScene::update()
             players[i]->update(uTick);
         }
 
+        for(int i=0;i<active_npcs.size();i++)
+        {
+            active_npcs[i]->update(uTick);
+            if(active_npcs[i]->killed)
+            {
+                active_npcs.removeAt(i); i--;
+            }
+            else
+            if(active_npcs[i]->timeout<=0)
+            {
+                active_npcs[i]->deActivate();
+                active_npcs.removeAt(i); i--;
+            }
+        }
+
+        while(!dead_npcs.isEmpty())
+        {
+            LVL_Npc *corpse = dead_npcs.last();
+            dead_npcs.pop_back();
+            npcs.removeAll(corpse);
+            delete corpse;
+        }
+
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //update activated NPC's
@@ -396,21 +411,23 @@ void LevelScene::render()
     {
         //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
-        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4")
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\nNPC's: %5, Active %6")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
                                .arg(debug_player_foots)
-                               .arg(uTick), 10,100);
+                               .arg(uTick)
+                               .arg(npcs.size())
+                               .arg(active_npcs.size()), 10,100);
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
                                .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,120);
+                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,135);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
+                                   .arg(uTick), 10, 155, 0, 1.0, 0, 0, 1.0);
         //world->DrawDebugData();
     }
     renderBlack:
@@ -657,4 +674,21 @@ void LevelScene::setGameState(EpisodeState *_gameState)
 {
     gameState = _gameState;
     numberOfPlayers = gameState->numOfPlayers;
+}
+
+
+LVL_Section *LevelScene::getSection(int sct)
+{
+    if((sct>=0)&&(sct<sections.size()))
+    {
+        if(sections[sct].data.id==sct)
+            return &sections[sct];
+        else
+        {
+            for(int i=0;i<sections.size();i++)
+                if(sections[i].data.id==sct)
+                    return &sections[i];
+        }
+    }
+    return NULL;
 }

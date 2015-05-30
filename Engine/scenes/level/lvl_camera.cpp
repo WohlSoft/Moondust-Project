@@ -18,6 +18,8 @@
 
 #include "lvl_camera.h"
 #include "lvl_backgrnd.h"
+#include "lvl_section.h"
+
 #include <graphics/window.h>
 
 #include <data_configs/config_manager.h>
@@ -25,26 +27,24 @@
 
 #include <QtDebug>
 
+#include "lvl_scene_ptr.h"
+
 PGE_LevelCamera::PGE_LevelCamera()
 {
-    BackgroundHandler = NULL;
     worldPtr = NULL;
     section = 0;
-    isWarp = false;
-    RightOnly = false;
-    ExitOffscreen = false;
     width=800;
     height=600;
     offset_x=0;
     offset_y=0;
     BackgroundID = 0;
+    cur_section = NULL;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
 {
     qDebug() << "Destroy camera";
 }
-
 
 void PGE_LevelCamera::setWorld(b2World *wld)
 {
@@ -88,26 +88,25 @@ void PGE_LevelCamera::setPos(float x, float y)
     pos_x = x;
     pos_y = y;
 
-    if(pos_x < limitLeft)
-        pos_x = limitLeft;
+    if(!cur_section) return;
 
-    if((pos_x+width) > limitRight)
-        pos_x = limitRight-width;
+    if(pos_x < cur_section->limitBox.left())
+        pos_x = cur_section->limitBox.left();
 
-    if(pos_y < limitTop)
-        pos_y = limitTop;
+    if((pos_x+width) > cur_section->limitBox.right())
+        pos_x = cur_section->limitBox.right()-width;
 
-    if((pos_y+height) > limitBottom)
-        pos_y = limitBottom-height;
+    if(pos_y < cur_section->limitBox.top())
+        pos_y = cur_section->limitBox.top();
 
-    if(RightOnly)
+    if((pos_y+height) > cur_section->limitBox.bottom())
+        pos_y = cur_section->limitBox.bottom()-height;
+
+    if(cur_section->RightOnly())
     {
-        if(pos_x>limitLeft)
-            limitLeft = pos_x;
+        if(pos_x>cur_section->limitBox.left())
+            cur_section->limitBox.setLeft(pos_x);
     }
-
-    //    sensor->SetTransform(b2Vec2( PhysUtil::pix2met(pos_x+width/2),
-    //                                 PhysUtil::pix2met(pos_y+height/2)), 0);
 
     pos_x = round(pos_x);
     pos_y = round(pos_y);
@@ -117,11 +116,6 @@ void PGE_LevelCamera::setSize(int w, int h)
 {
     width = w;
     height = h;
-//    b2PolygonShape* shape = (b2PolygonShape*)(sensor->GetFixtureList()->GetShape());
-//    shape->m_vertices[0].Set(-PhysUtil::pix2met(w)/2, -PhysUtil::pix2met(h)/2);
-//    shape->m_vertices[1].Set( PhysUtil::pix2met(w)/2, -PhysUtil::pix2met(h)/2);
-//    shape->m_vertices[2].Set( PhysUtil::pix2met(w)/2,  PhysUtil::pix2met(h)/2);
-    //    shape->m_vertices[3].Set(-PhysUtil::pix2met(w)/2,  PhysUtil::pix2met(h)/2);
 }
 
 void PGE_LevelCamera::setOffset(int x, int y)
@@ -134,24 +128,23 @@ void PGE_LevelCamera::update()
 {
     objects_to_render.clear();
 
-    CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
-    b2AABB aabb;
-    aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
-    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
-    worldPtr->QueryAABB(&cb, aabb);
+    if(!cur_section) return;
+//    CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
+//    b2AABB aabb;
+//    aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
+//    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
+//    worldPtr->QueryAABB(&cb, aabb);
+    R_itemList foundItems;
+    cur_section->queryItems(PGE_RectF(pos_x, pos_y, width, height), &foundItems);
 
     int contacts = 0;
-
-    for(int i=0; i<cb.foundBodies.size();i++)
+    for(int i=0; i<foundItems.size();i++)
     {
         contacts++;
-        PGE_Phys_Object * visibleBody;
-
-        visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
-
-        if(visibleBody==NULL)
-            continue;
-
+        PGE_Phys_Object * visibleBody = foundItems[i];
+        //visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
+        //if(visibleBody==NULL)
+        //    continue;
         switch(visibleBody->type)
         {
         case PGE_Phys_Object::LVLBlock:
@@ -160,6 +153,24 @@ void PGE_LevelCamera::update()
         case PGE_Phys_Object::LVLPlayer:
         case PGE_Phys_Object::LVLEffect:
             objects_to_render.push_back(visibleBody);
+        }
+
+        if(visibleBody->type==PGE_Phys_Object::LVLNPC)
+        {
+            LVL_Npc *npc = dynamic_cast<LVL_Npc*>(visibleBody);
+            if(npc)
+            {
+                if(!npc->isActivated)
+                {
+                    npc->Activate();
+                    npc->timeout=4000;
+                    LvlSceneP::s->active_npcs.push_back(npc);
+                }
+                else
+                {
+                    npc->timeout=4000;
+                }
+            }
         }
     }
 
@@ -190,25 +201,14 @@ void PGE_LevelCamera::update()
 
 void PGE_LevelCamera::changeSectionBorders(long left, long top, long right, long bottom)
 {
-    s_left = left;
-    limitLeft = left;
-
-    s_top = top;
-    limitTop = top;
-
-    s_right = right;
-    limitRight = right;
-
-    s_bottom = bottom;
-    limitBottom = bottom;
+    if(cur_section)
+        cur_section->changeSectionBorders(left, top, right, bottom);
 }
 
 void PGE_LevelCamera::resetLimits()
 {
-    limitLeft = s_left;
-    limitTop = s_top;
-    limitRight = s_right;
-    limitBottom = s_bottom;
+    if(cur_section)
+        cur_section->resetLimits();
 }
 
 PGE_RenderList &PGE_LevelCamera::renderObjects()
@@ -219,39 +219,21 @@ PGE_RenderList &PGE_LevelCamera::renderObjects()
 
 void PGE_LevelCamera::drawBackground()
 {
-    if(BackgroundHandler)
+    if(cur_section)
     {
-        BackgroundHandler->draw(posX(), posY());
+        cur_section->renderBG(posX(), posY(), width, height);
     }
 }
 
-void PGE_LevelCamera::changeSection(LevelSection &sct)
+void PGE_LevelCamera::changeSection(LVL_Section *sct)
 {
-    section = &sct;
-    BackgroundID = sct.background;
-    isWarp = section->IsWarp;
-    RightOnly = section->noback;
-    ExitOffscreen = section->OffScreenEn;
+    if(!sct) return;
 
-    QString musFile = ConfigManager::getLvlMusic(section->music_id, musicRootDir+section->music_file.replace('\\', '/'));
-    if(!musFile.isEmpty())
-    {
-        PGE_MusPlayer::MUS_openFile(musFile);
-        PGE_MusPlayer::MUS_playMusic();
-    }
-
-    if(BackgroundHandler)
-    {
-        if(ConfigManager::lvl_bg_indexes.contains(BackgroundID))
-        {
-            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[BackgroundID];
-            BackgroundHandler->setBg(*bgSetup);
-        }
-        else
-            BackgroundHandler->setNone();
-    }
-
-    changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);
+    cur_section=sct;
+    section = &sct->data;
+    BackgroundID = sct->getBgId();
+    cur_section->playMusic();
+    cur_section->setBG(BackgroundID);
 }
 
 void PGE_LevelCamera::setMusicRoot(QString dir)
