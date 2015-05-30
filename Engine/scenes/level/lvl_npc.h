@@ -28,7 +28,13 @@ public:
 
     //float posX();
     //float posY();
+    void update(float ticks);
     void render(double camX, double camY);
+    void Activate();
+    void deActivate();
+
+    bool isActivated;
+    int timeout;
 };
 
 #endif // LVL_NPC_H

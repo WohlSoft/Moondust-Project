@@ -37,6 +37,7 @@
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
+#include "level/lvl_section.h"
 #include "level/lvl_backgrnd.h"
 
 #include "../graphics/window.h"
@@ -183,14 +184,15 @@ public:
     SDL_TimerID loader_timer_id;
     /**************LoadScreen**************/
 
-
-    QVector<LVL_Background *> * bgList();
     LevelData *levelData();
 
     QQueue<transformTask_block > block_transfors;
 
     QMap<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
+
+    QList<LVL_Npc* > active_npcs;
+    QList<LVL_Npc* > dead_npcs;
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);
@@ -200,11 +202,11 @@ public:
     void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
     /*********************Item placing**********************/
 
-    void destroyBlock(LVL_Block * _block);
+    void destroyBlock(LVL_Block *&_block);
     void setGameState(EpisodeState *_gameState);
 
     EventQueue<LevelScene > system_events;
-
+    LVL_Section *getSection(int sct);
 private:
     int  uTick;
 
@@ -212,22 +214,20 @@ private:
 
     EpisodeState *gameState;
 
-    QVector<PGE_LevelCamera* > cameras;
-    QVector<LVL_Player* > players;
-    QVector<LVL_Block* > blocks;
-    QVector<LVL_Bgo* > bgos;
-    QVector<LVL_Npc* > npcs;
-    QVector<LVL_Warp* > warps;
-    QVector<LVL_PhysEnv* > physenvs;
-
-
-    QVector<LVL_Background *> backgrounds;
+    QList<PGE_LevelCamera* > cameras;
+    QList<LVL_Player* > players;
+    QList<LVL_Block* > blocks;
+    QList<LVL_Bgo* > bgos;
+    QList<LVL_Npc* > npcs;
+    QList<LVL_Warp* > warps;
+    QList<LVL_PhysEnv* > physenvs;
+    QList<LVL_Section>      sections;
 
     QString errorMsg;
 
 
     b2World *world;
-    QVector<PGE_Texture > textures_bank;
+    QList<PGE_Texture > textures_bank;
 };
 
 #endif // SCENE_LEVEL_H

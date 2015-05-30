@@ -46,6 +46,15 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
     block->transformTo_x(blockData.id);
     block->init();
+
+    int sID = findNearSection(block->posX(), block->posY());
+    LVL_Section *sct = getSection(sID);
+    if(sct)
+    {
+        block->setParentSection(sct);
+        block->_syncBox2dWithPos();
+    }
+
     blocks.push_back(block);
 
 }
@@ -116,6 +125,14 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     }
     bgo->init();
 
+    int sID = findNearSection(bgo->posX(), bgo->posY());
+    LVL_Section *sct = getSection(sID);
+    if(sct)
+    {
+        bgo->setParentSection(sct);
+        bgo->_syncBox2dWithPos();
+    }
+
     bgos.push_back(bgo);
 }
 
@@ -158,6 +175,14 @@ void LevelScene::placeNPC(LevelNPC npcData)
     */
     npc->init();
 
+    int sID = findNearSection(npc->posX(), npc->posY());
+    LVL_Section *sct = getSection(sID);
+    if(sct)
+    {
+        npc->setParentSection(sct);
+        npc->_syncBox2dWithPos();
+    }
+
     npcs.push_back(npc);
 }
 
@@ -179,6 +204,15 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
         player->camera = cameras.first();
     else if(players.size()==1)
         player->camera = cameras.last();
+
+    int sID = findNearSection(playerData.x, playerData.y);
+    LVL_Section *sct = getSection(sID);
+    if(!sct)
+    {
+        delete player;
+        return;
+    }
+    player->setParentSection(sct);
 
     player->worldPtr = world;
     player->z_index = Z_Player;
@@ -206,9 +240,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 }
 
 
-void LevelScene::destroyBlock(LVL_Block *_block)
+void LevelScene::destroyBlock(LVL_Block *&_block)
 {
-    blocks.remove(blocks.indexOf(_block));
+    blocks.removeAll(_block);
     delete _block;
     _block = NULL;
 }

@@ -177,6 +177,7 @@ void LVL_Player::init()
     animator.tickAnimation(1);
     //qDebug() <<"Start position is " << posX() << posY();
     isLocked=false;
+    isInited=true;
 }
 
 void LVL_Player::initSize()
@@ -193,13 +194,17 @@ void LVL_Player::update(float ticks)
     if(isLocked) return;
     if(!physBody) return;
     if(!camera) return;
+    LVL_Section* section = sct();
+    if(!section) return;
+    PGE_Phys_Object::update(ticks);
 
     event_queue.processEvents(ticks);
     if(isWarping)
     {
         physBody->SetLinearVelocity(b2Vec2(0, 0));
         animator.tickAnimation(ticks);
-        goto CameraOnly;
+        updateCamera();
+        return;
     }
 
     if(_player_moveup)
@@ -259,18 +264,14 @@ void LVL_Player::update(float ticks)
 
     if(environments_map.isEmpty())
     {
-        if( (last_environment != (camera->section->underwater ?
-                                    LVL_PhysEnv::Env_Water :
-                                    LVL_PhysEnv::Env_Air)) )
+        if(last_environment!=section->getPhysicalEnvironment() )
         {
-            environment = camera->section->underwater ?
-                                            LVL_PhysEnv::Env_Water :
-                                                    LVL_PhysEnv::Env_Air ;
+            environment = section->getPhysicalEnvironment();
         }
     }
     else
     {
-        int newEnv = camera->section->underwater ? LVL_PhysEnv::Env_Water:LVL_PhysEnv::Env_Air;
+        int newEnv = section->getPhysicalEnvironment();
 
         foreach(int x, environments_map)
         {
@@ -567,8 +568,10 @@ void LVL_Player::update(float ticks)
     refreshAnimation();
     animator.tickAnimation(ticks);
 
+    PGE_RectF sBox = section->sectionLimitBox();
+
     //Return player to start position on fall down
-    if( posY() > camera->limitBottom+height )
+    if( posY() > sBox.bottom()+height )
     {
         kill(DEAD_fall);
     }
@@ -592,37 +595,37 @@ void LVL_Player::update(float ticks)
 
 
     //Connection of section opposite sides
-    if(camera->isWarp)
+    if(section->isWarp())
     {
-        if(posX() < camera->limitLeft-width-1 )
+        if(posX() < sBox.left()-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->limitRight+posX_coefficient-1),
+                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
                  physBody->GetPosition().y), 0.0f);
         else
-        if(posX() > camera->limitRight + 1 )
+        if(posX() > sBox.right() + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->limitLeft-posX_coefficient+1 ),
+                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
                  physBody->GetPosition().y), 0.0f
                                    );
     }
     else
     {
 
-        if(camera->ExitOffscreen)
+        if(section->ExitOffscreen())
         {
-            if(camera->RightOnly)
+            if(section->RightOnly())
             {
-                if( posX() < camera->limitLeft)
+                if( posX() < sBox.left())
                 {
                     physBody->SetTransform(b2Vec2(
-                         PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                         PhysUtil::pix2met(sBox.left() + posX_coefficient),
                             physBody->GetPosition().y), 0.0f);
 
                     physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
                 }
             }
 
-            if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
+            if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 isInited=false;
                 physBody->SetActive(false);
@@ -633,19 +636,19 @@ void LVL_Player::update(float ticks)
         else
         {
             //Prevent moving of player away from screen
-            if( posX() < camera->limitLeft)
+            if( posX() < sBox.left())
             {
                 physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                     PhysUtil::pix2met(sBox.left() + posX_coefficient),
                         physBody->GetPosition().y), 0.0f);
 
                 physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
             }
             else
-            if( posX()+width > camera->limitRight)
+            if( posX()+width > sBox.right())
             {
                 physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(camera->limitRight-posX_coefficient ),
+                     PhysUtil::pix2met(sBox.right()-posX_coefficient ),
                         physBody->GetPosition().y), 0.0f
                                        );
                 physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
@@ -756,23 +759,19 @@ void LVL_Player::update(float ticks)
         }
     }
 
-CameraOnly:
-    if(!isInited)
-    {
-        isInited=true;
-        animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
-        animator.tickAnimation(64);
-    }
-    else
-    {
-        camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
-                        round(bottom()) - camera->h()/2-state_cur.height/2 );
-    }
+
+    updateCamera();
 }
 
 void LVL_Player::update()
 {
     update(1.0);
+}
+
+void LVL_Player::updateCamera()
+{
+    camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
+                    round(bottom()) - camera->h()/2-state_cur.height/2 );
 }
 
 Uint32 slideTicks=0;
@@ -1311,10 +1310,12 @@ void LVL_Player::teleport(float x, float y)
     this->setPos(x, y);
 
     int sID = LvlSceneP::s->findNearSection(x, y);
+    LVL_Section* t_sct = LvlSceneP::s->getSection(sID);
 
-    if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+    if(t_sct)
     {
-        camera->changeSection(LvlSceneP::s->levelData()->sections[sID]);
+        camera->changeSection(t_sct);
+        setParentSection(t_sct);
     }
     else
     {

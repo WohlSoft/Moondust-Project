@@ -188,7 +188,10 @@ SOURCES += \
     gui/menu/pge_int_named_menuitem.cpp \
     gui/menu/pge_keygrab_menuitem.cpp \
     data_configs/obj_wld_items.cpp \
-    common_features/npc_animator.cpp
+    common_features/npc_animator.cpp \
+    scenes/level/lvl_section.cpp \
+    common_features/rect.cpp \
+    common_features/rectf.cpp
 
 
 HEADERS  += \
@@ -285,7 +288,11 @@ HEADERS  += \
     gui/menu/pge_int_named_menuitem.h \
     gui/menu/pge_keygrab_menuitem.h \
     data_configs/obj_wld_items.h \
-    common_features/npc_animator.h
+    common_features/npc_animator.h \
+    common_features/RTree/RTree.h \
+    scenes/level/lvl_section.h \
+    common_features/rect.h \
+    common_features/rectf.h
 
 FORMS    += \
     data_configs/select_config.ui
