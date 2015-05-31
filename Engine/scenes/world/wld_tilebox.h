@@ -4,6 +4,7 @@
 #include <QHash>
 #include <QList>
 #include <unordered_map>
+#include <common_features/point.h>
 #include <PGE_File_Formats/wld_filedata.h>
 #include <graphics/graphics.h>
 #include <graphics/gl_renderer.h>
@@ -376,7 +377,7 @@ public:
         {
             for(long j=Y; j<Y+H; j+=gridSize)
             {
-                QPoint t = applyGrid(i,j);
+                PGE_Point t = applyGrid(i,j);
                 map[t.x()][t.y()].push_back(item);
             }
         }
@@ -386,7 +387,7 @@ public:
     {
         QList<WorldNode * > list;
 
-        QPoint t = applyGrid(X,Y);
+        PGE_Point t = applyGrid(X,Y);
         long listI = t.x();
         long listJ = t.y();
 
@@ -407,7 +408,7 @@ public:
         {
             for(long j=Top-gridSize; j<Bottom+gridSize*2; j+=gridSize)
             {
-                QPoint t = applyGrid(i,j);
+                PGE_Point t = applyGrid(i,j);
                 long listI = t.x();
                 long listJ = t.y();
 
@@ -465,9 +466,9 @@ public:
         map.clear();
     }
 
-    QPoint applyGrid(long x, long y)
+    PGE_Point applyGrid(long x, long y)
     {
-        QPoint source;
+        PGE_Point source;
         source.setX(x);
         source.setY(y);
         int gridX, gridY;
@@ -492,7 +493,7 @@ public:
                 gridY = ((int)source.y() - (int)source.y() % gridSize);
             }
 
-            return QPoint(gridX, gridY);
+            return PGE_Point(gridX, gridY);
         }
         else
             return source;

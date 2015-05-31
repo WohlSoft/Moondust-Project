@@ -16,10 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL.h> // SDL 2 Library
-#include <SDL2/SDL_opengl.h>
-#include <QtDebug>
-#include "graphics.h"
-#include "window.h"
+#ifndef PGE_POINTF_H
+#define PGE_POINTF_H
 
+class PGE_Point;
+class PGE_PointF
+{
+    friend class PGE_Point;
+public:
+    PGE_PointF();
+    PGE_PointF(const PGE_PointF &p);
+    PGE_PointF(const PGE_Point &p);
+    PGE_PointF(double x, double y);
+    ~PGE_PointF();
+    void setPoint(double x, double y);
+    void setX(double x);
+    void setY(double y);
+    bool isNull();
+    double x();
+    double y();
+private:
+    double _x;
+    double _y;
+};
 
+#endif // PGE_POINTF_H

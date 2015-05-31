@@ -20,6 +20,9 @@
 #define PGE_RECT_H
 
 class PGE_RectF;
+class PGE_Point;
+class PGE_Size;
+
 class PGE_Rect
 {
     friend class PGE_RectF;
@@ -43,6 +46,11 @@ public:
     void setWidth(int w);
     void setHeight(int h);
 
+    void setTopLeft(PGE_Point p);
+    void setTopRight(PGE_Point p);
+    void setBottomRight(PGE_Point p);
+    void setBottomLeft(PGE_Point p);
+
     void setTopLeft(int l, int t);
     void setTopRight(int r, int t);
     void setBottomRight(int r, int b);
@@ -58,6 +66,9 @@ public:
 
     int width();
     int height();
+
+    PGE_Point center();
+    PGE_Size size();
 
     bool collidePoint(int x, int y);
     bool collideRect(int x, int y, int w, int h);

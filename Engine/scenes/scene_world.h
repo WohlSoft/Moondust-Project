@@ -21,12 +21,13 @@
 
 #include <QString>
 #include <QList>
-#include <QRect>
 #include "scene.h"
 #include <controls/controller.h>
 #include <PGE_File_Formats/wld_filedata.h>
 #include <common_features/pge_texture.h>
 #include <common_features/episode_state.h>
+#include <common_features/rect.h>
+#include <common_features/point.h>
 #include <data_configs/config_manager.h>
 
 #include "world/wld_player_portrait.h"
@@ -78,7 +79,7 @@ public:
 
     WorldData data;
 
-    QRect viewportRect;
+    PGE_Rect viewportRect;
 
     double posX;
     double posY;
@@ -92,7 +93,7 @@ public:
 
     void jump();
     bool jumpTo;
-    QPoint jumpToXY;
+    PGE_Point jumpToXY;
 
 
     int i;

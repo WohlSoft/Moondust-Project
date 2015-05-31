@@ -285,10 +285,11 @@ void LVL_Block::render(double camX, double camY)
     if(isHidden) return;
     if(destroyed) return;
 
-    QRectF blockG = QRectF(posX()-camX+offset_x,
-                           posY()-camY+offset_y,
-                           width,
-                           height);
+    PGE_RectF blockG;
+    blockG.setRect(posX()-camX+offset_x,
+                         posY()-camY+offset_y,
+                         width,
+                         height);
 
 
     AniPos x(0,1);
@@ -339,12 +340,12 @@ void LVL_Block::render(double camX, double camY)
             hc=0;
             for(i=0; i<totalH; i++ )
             {
-                drawPiece(blockG, QRectF(0, x+hc, x-dX, pHeight), QRectF(0, y, x-dX, pHeight));
+                drawPiece(blockG, PGE_RectF(0, x+hc, x-dX, pHeight), PGE_RectF(0, y, x-dX, pHeight));
                 hc+=pHeight;
             }
                 fLnt = (h-y2)%pHeight;
                 if( fLnt != 0)
-                    drawPiece(blockG, QRectF(0, x+hc, x-dX, fLnt), QRectF(0, y, x-dX, fLnt));
+                    drawPiece(blockG, PGE_RectF(0, x+hc, x-dX, fLnt), PGE_RectF(0, y, x-dX, fLnt));
         }
 
         //T Draw top border
@@ -353,12 +354,12 @@ void LVL_Block::render(double camX, double camY)
             hc=0;
             for(i=0; i<totalW; i++ )
             {
-                drawPiece(blockG, QRectF(x+hc, 0, pWidth, y-dY), QRectF(x, 0, pWidth, y-dY));
+                drawPiece(blockG, PGE_RectF(x+hc, 0, pWidth, y-dY), PGE_RectF(x, 0, pWidth, y-dY));
                     hc+=pWidth;
             }
                 fLnt = (w-(x2))%pWidth;
                 if( fLnt != 0)
-                    drawPiece(blockG, QRectF(x+hc, 0, fLnt, y-dY), QRectF(x, 0, fLnt, y-dY));
+                    drawPiece(blockG, PGE_RectF(x+hc, 0, fLnt, y-dY), PGE_RectF(x, 0, fLnt, y-dY));
         }
 
         //B Draw bottom border
@@ -367,12 +368,12 @@ void LVL_Block::render(double camX, double camY)
             hc=0;
             for(i=0; i<totalW; i++ )
             {
-                drawPiece(blockG, QRectF(x+hc, h-y+dY, pWidth, y-dY), QRectF(x, texture.h-y+dY, pWidth, y-dY));
+                drawPiece(blockG, PGE_RectF(x+hc, h-y+dY, pWidth, y-dY), PGE_RectF(x, texture.h-y+dY, pWidth, y-dY));
                     hc+=pWidth;
             }
                 fLnt = (w-(x2))%pWidth;
                 if( fLnt != 0)
-                    drawPiece(blockG, QRectF(x+hc, h-y+dY, fLnt, y-dY), QRectF(x, texture.h-y+dY, fLnt, y-dY));
+                    drawPiece(blockG, PGE_RectF(x+hc, h-y+dY, fLnt, y-dY), PGE_RectF(x, texture.h-y+dY, fLnt, y-dY));
         }
 
         //R Draw right border
@@ -381,12 +382,12 @@ void LVL_Block::render(double camX, double camY)
             hc=0;
             for(i=0; i<totalH; i++ )
             {
-                drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, pHeight), QRectF(texture.w-x+dX, y, x-dX, pHeight));
+                drawPiece(blockG, PGE_RectF(w-x+dX, y+hc, x-dX, pHeight), PGE_RectF(texture.w-x+dX, y, x-dX, pHeight));
                     hc+=pHeight;
             }
                 fLnt = (h-y2)%pHeight;
                 if( fLnt != 0)
-                    drawPiece(blockG, QRectF(w-x+dX, y+hc, x-dX, fLnt), QRectF(texture.w-x+dX, y, x-dX, fLnt));
+                    drawPiece(blockG, PGE_RectF(w-x+dX, y+hc, x-dX, fLnt), PGE_RectF(texture.w-x+dX, y, x-dX, fLnt));
         }
 
 
@@ -400,12 +401,12 @@ void LVL_Block::render(double camX, double camY)
                 hc=0;
                 for(j=0; j< totalW; j++ )
                 {
-                    drawPiece(blockG, QRectF(x+hc, y+wc, pWidth, pHeight), QRectF(x, y, pWidth, pHeight));
+                    drawPiece(blockG, PGE_RectF(x+hc, y+wc, pWidth, pHeight), PGE_RectF(x, y, pWidth, pHeight));
                     hc+=pWidth;
                 }
                     fLnt = (w-x2)%pWidth;
                     if(fLnt != 0 )
-                        drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, pHeight), QRectF(x, y, fLnt, pHeight));
+                        drawPiece(blockG, PGE_RectF(x+hc, y+wc, fLnt, pHeight), PGE_RectF(x, y, fLnt, pHeight));
                 wc+=pHeight;
             }
 
@@ -415,25 +416,25 @@ void LVL_Block::render(double camX, double camY)
                 hc=0;
                 for(j=0; j<totalW; j++ )
                 {
-                    drawPiece(blockG, QRectF(x+hc, y+wc, pWidth, fWdt), QRectF(x, y, pWidth, fWdt));
+                    drawPiece(blockG, PGE_RectF(x+hc, y+wc, pWidth, fWdt), PGE_RectF(x, y, pWidth, fWdt));
                     hc+=pWidth;
                 }
                     fLnt = (w-x2)%pWidth;
                     if(fLnt != 0 )
-                        drawPiece(blockG, QRectF(x+hc, y+wc, fLnt, fWdt), QRectF(x, y, fLnt, fWdt));
+                        drawPiece(blockG, PGE_RectF(x+hc, y+wc, fLnt, fWdt), PGE_RectF(x, y, fLnt, fWdt));
             }
 
         }
 
         //Draw corners
          //1 Left-top
-        drawPiece(blockG, QRectF(0,0,x-dX,y-dY), QRectF(0,0,x-dX, y-dY));
+        drawPiece(blockG, PGE_RectF(0,0,x-dX,y-dY), PGE_RectF(0,0,x-dX, y-dY));
          //2 Right-top
-        drawPiece(blockG, QRectF(w-x+dX, 0, x-dX, y-dY), QRectF(texture.w-x+dX, 0, x-dX, y-dY));
+        drawPiece(blockG, PGE_RectF(w-x+dX, 0, x-dX, y-dY), PGE_RectF(texture.w-x+dX, 0, x-dX, y-dY));
          //3 Right-bottom
-        drawPiece(blockG, QRectF(w-x+dX, h-y+dY, x-dX, y-dY), QRectF(texture.w-x+dX, texture.h-y+dY, x-dX, y-dY));
+        drawPiece(blockG, PGE_RectF(w-x+dX, h-y+dY, x-dX, y-dY), PGE_RectF(texture.w-x+dX, texture.h-y+dY, x-dX, y-dY));
          //4 Left-bottom
-        drawPiece(blockG, QRectF(0, h-y+dY, x-dX, y-dY), QRectF(0, texture.h-y+dY, x-dX, y-dY));
+        drawPiece(blockG, PGE_RectF(0, h-y+dY, x-dX, y-dY), PGE_RectF(0, texture.h-y+dY, x-dX, y-dY));
 
     }
     else
@@ -459,15 +460,15 @@ void LVL_Block::render(double camX, double camY)
     glDisable(GL_TEXTURE_2D);
 }
 
-void LVL_Block::drawPiece(QRectF target, QRectF block, QRectF texture)
+void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)
 {
-    QRectF tx;
+    PGE_RectF tx;
     tx.setLeft(texture.left()/this->texture.w);
     tx.setRight(texture.right()/this->texture.w);
     tx.setTop(texture.top()/this->texture.h);
     tx.setBottom(texture.bottom()/this->texture.h);
 
-    QRectF blockG;
+    PGE_RectF blockG;
     blockG.setX(target.x()+block.x());
     blockG.setY(target.y()+block.y());
     blockG.setRight(target.x()+block.x()+block.width());

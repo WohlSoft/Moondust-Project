@@ -18,8 +18,8 @@
 
 #include "font_manager.h"
 
-#include "../common_features/app_path.h"
-#include "../common_features/graphics_funcs.h"
+#include <common_features/app_path.h>
+#include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 
@@ -224,8 +224,11 @@ void RasterFont::loadFontMap(QString fontmap_ini)
     if(!fontMap.isEmpty()) isReady=true;
 }
 
-QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
+PGE_Size RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
 {
+    if(text.isEmpty())
+        return PGE_Size(0, 0);
+
     int lastspace=0;//!< index of last found space character
     int count=1;    //!< Count of lines
     int maxWidth=0; //!< detected maximal width of message
@@ -290,7 +293,7 @@ QSize RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
         maxWidth=text.length();
     }
     /****************Word wrap*end*****************/
-    return QSize(widthSummMax, newline_offset*count);
+    return PGE_Size(widthSummMax, newline_offset*count);
 }
 
 void RasterFont::printText(QString text, int x, int y, float Red, float Green, float Blue, float Alpha)
@@ -322,7 +325,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
         {
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, rch.tx);
-            QPointF point;
+            PGE_PointF point;
                 point = GlRenderer::MapToGl(x+offsetX-rch.padding_left, y+offsetY);
             float left = point.x();
             float top = point.y();
@@ -348,7 +351,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
 
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, charTex);
-            QPointF point;
+            PGE_PointF point;
                 point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
             float left = point.x();
             float top = point.y();
@@ -487,10 +490,10 @@ void FontManager::quit()
         delete defaultFont;
 }
 
-QSize FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool cut)
+PGE_Size FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool cut)
 {
-    if(!isInit) return QSize(text.length()*20, text.split(QChar(QChar::LineFeed)).size()*20);
-    if(text.isEmpty()) return QSize(0, 0);
+    if(!isInit) return PGE_Size(text.length()*20, text.split(QChar(QChar::LineFeed)).size()*20);
+    if(text.isEmpty()) return PGE_Size(0, 0);
     if(max_line_lenght<=0)
         max_line_lenght=1000;
 
@@ -520,7 +523,8 @@ QSize FontManager::textSize(QString &text, int fontID, int max_line_lenght, bool
     QFontMetrics meter(fnt);
 
     optimizeText(text, max_line_lenght);
-    return meter.size(Qt::TextExpandTabs, text);
+    QSize meterSize = meter.size(Qt::TextExpandTabs, text);
+    return PGE_Size(meterSize.width(), meterSize.height());
 }
 
 void FontManager::optimizeText(QString &text, int max_line_lenght, int *numLines, int *numCols)
@@ -632,7 +636,7 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
             glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
 
 
-            QPointF point;
+            PGE_PointF point;
                 point = GlRenderer::MapToGl(x+offsetX, y+offsetY);
             float left = point.x();
             float top = point.y();
@@ -820,7 +824,7 @@ QFont FontManager::font()
 
 
 
-GLuint FontManager::TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders)
+GLuint FontManager::TextToTexture(QString text, PGE_Rect rectangle, int alignFlags, bool borders)
 {
     if(!isInit) return 0;
 
@@ -876,7 +880,7 @@ void FontManager::SDL_string_texture_create(QFont &font, QRgb color, QString &te
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 }
 
-void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color, QString &text, GLuint *texture, bool borders)
+void FontManager::SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int fontFlags, QRgb color, QString &text, GLuint *texture, bool borders)
 {
     if(!isInit) return;
 
@@ -884,7 +888,7 @@ void FontManager::SDL_string_texture_create(QFont &font, QRect limitRect, int fo
     int off = (borders ? 4 : 0);
 
     QPainterPath path;
-    text_image = QImage(limitRect.size(), QImage::Format_ARGB32);
+    text_image = QImage(QSize(limitRect.width(), limitRect.height()), QImage::Format_ARGB32);
     text_image.fill(Qt::transparent);
     QFont font_i = font;
     if(borders)
@@ -941,7 +945,7 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
     glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_WIDTH, &w);
     glGetTexLevelParameteriv(GL_TEXTURE_2D,0,GL_TEXTURE_HEIGHT,&h);
 
-    QPointF point;
+    PGE_PointF point;
         point = GlRenderer::MapToGl(x, y);
     float left = point.x();
     float top = point.y();

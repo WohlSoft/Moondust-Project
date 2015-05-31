@@ -3,8 +3,9 @@
 
 #include "../scenes/scene.h"
 #include <QString>
-#include <QRectF>
 
+#include <common_features/rect.h>
+#include <common_features/rectf.h>
 #include <common_features/pge_texture.h>
 
 ///
@@ -39,9 +40,9 @@ protected:
     void construct(Scene *_parentScene = 0);
 
     void drawTexture(int left, int top, int right, int bottom, int border=32);
-    void drawTexture(QRect _rect, int border=32);
+    void drawTexture(PGE_Rect _rect, int border=32);
     bool _textureUsed;
-    void drawPiece(QRectF target, QRectF block, QRectF texture);
+    void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
     PGE_Texture styleTexture;
 };
 

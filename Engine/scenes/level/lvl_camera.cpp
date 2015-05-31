@@ -54,9 +54,7 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
-{
-    qDebug() << "Destroy camera";
-}
+{}
 
 void PGE_LevelCamera::init(float x, float y, float w, float h)
 {

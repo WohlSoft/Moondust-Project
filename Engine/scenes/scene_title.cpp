@@ -823,7 +823,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     default:
         break;
     }
-    QRect menuBox = menu.rect();
+    PGE_Rect menuBox = menu.rect();
     menu.setPos(PGE_Window::Width/2-menuBox.width()/2, menuBox.y());
     qDebug()<<"Menuitem ID: "<<menustates[_menu].first << ", scrolling offset: "<<menustates[_menu].second;
     menu.setCurrentItem(menustates[_menu].first);

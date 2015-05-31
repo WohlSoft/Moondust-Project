@@ -89,14 +89,14 @@ void MatrixAnimator::setSize(int _width, int _height)
     height_f = 1.0f/height;
 }
 
-QSize MatrixAnimator::size()
+PGE_SizeF MatrixAnimator::size()
 {
-    return QSize(width, height);
+    return PGE_SizeF(width, height);
 }
 
-QSizeF MatrixAnimator::sizeOfFrame()
+PGE_SizeF MatrixAnimator::sizeOfFrame()
 {
-    return QSizeF(width_f, height_f);
+    return PGE_SizeF(width_f, height_f);
 }
 
 void MatrixAnimator::tickAnimation(int frametime)
@@ -135,7 +135,7 @@ void MatrixAnimator::buildRect()
 {
     if(sequence.isEmpty())
     {
-        curRect = QRectF(0.0, 0.0, width_f, height_f);
+        curRect.setRect(0.0, 0.0, width_f, height_f);
     }
     else
     {
@@ -149,12 +149,12 @@ void MatrixAnimator::buildRect()
     }
 }
 
-QRectF MatrixAnimator::curFrame()
+PGE_RectF MatrixAnimator::curFrame()
 {
     return curRect;
 }
 
-QPointF MatrixAnimator::curOffset()
+PGE_PointF MatrixAnimator::curOffset()
 {
     return curOffsets;
 }

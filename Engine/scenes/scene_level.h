@@ -20,12 +20,13 @@
 #define SCENE_LEVEL_H
 
 #include "scene.h"
-#include "../graphics/graphics.h"
+#include <graphics/graphics.h>
+#include <graphics/window.h>
 
-#include "../common_features/pge_texture.h"
-
+#include <common_features/pge_texture.h>
 #include <common_features/episode_state.h>
 #include <common_features/event_queue.h>
+#include <common_features/point.h>
 
 #include "level/lvl_player.h"
 #include "level/lvl_player_def.h"
@@ -40,11 +41,9 @@
 #include "level/lvl_section.h"
 #include "level/lvl_backgrnd.h"
 
-#include "../graphics/window.h"
+#include <controls/controller.h>
 
-#include "../controls/controller.h"
-
-#include "../data_configs/custom_data.h"
+#include <data_configs/custom_data.h>
 
 #include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>
@@ -78,7 +77,7 @@ public:
     //Init 2
     bool setEntrance(int entr);
     bool isWarpEntrance;
-    QPoint cameraStart;
+    PGE_Point cameraStart;
     bool   cameraStartDirected;
     int    cameraStartDirection;
     LevelDoor startWarp;
@@ -125,9 +124,9 @@ public:
     int toAnotherEntrance();
     int warpToArrayID;
 
-    QPoint toWorldXY();
+    PGE_Point toWorldXY();
     bool warpToWorld;
-    QPoint warpToWorldXY;
+    PGE_Point warpToWorldXY;
 
     int exitLevelDelay;
     int exitLevelCode;

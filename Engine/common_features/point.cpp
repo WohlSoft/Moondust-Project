@@ -16,10 +16,65 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL.h> // SDL 2 Library
-#include <SDL2/SDL_opengl.h>
-#include <QtDebug>
-#include "graphics.h"
-#include "window.h"
+#include "point.h"
+#include "pointf.h"
+
+PGE_Point::PGE_Point()
+{
+    setPoint(0, 0);
+}
+
+PGE_Point::PGE_Point(const PGE_Point &p)
+{
+    _x=p._x;
+    _y=p._y;
+}
+
+PGE_Point::PGE_Point(const PGE_PointF &p)
+{
+    _x=p._x;
+    _y=p._y;
+}
+
+PGE_Point::PGE_Point(int x, int y)
+{
+    _x=x;
+    _y=y;
+}
+
+PGE_Point::~PGE_Point()
+{}
+
+void PGE_Point::setPoint(int x, int y)
+{
+    _x=x;
+    _y=y;
+}
+
+void PGE_Point::setX(int x)
+{
+    _x=x;
+}
+
+void PGE_Point::setY(int y)
+{
+    _y=y;
+}
+
+bool PGE_Point::isNull()
+{
+    return ((_x==0)&&(_y==0));
+}
+
+int PGE_Point::x()
+{
+    return _x;
+}
+
+int PGE_Point::y()
+{
+    return _y;
+}
+
 
 

@@ -838,7 +838,7 @@ void WorldScene::render()
                                .arg(posY), 300,10);
 
         {
-        QPoint grid = worldMap.applyGrid(posX, posY);
+        PGE_Point grid = worldMap.applyGrid(posX, posY);
         FontManager::printText(QString("TILE X=%1 Y=%2")
                                .arg(grid.x())
                                .arg(grid.y()), 300,45);
