@@ -35,6 +35,7 @@
 #include "menu/pge_int_named_menuitem.h"
 #include "menu/pge_keygrab_menuitem.h"
 
+struct KM_Key;
 
 class PGE_Menu
 {
@@ -51,7 +52,7 @@ public:
                         std::function<void()> _extAction=([]()->void{}) );
     void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
-    void addKeyGrabMenuItem(int *keyvalue, QString value, QString title, int *joystick_key_id=NULL, int *joystick_key_type=NULL, SDL_Joystick *joystick_device=NULL);
+    void addKeyGrabMenuItem(KM_Key *key, QString value, QString title, SDL_Joystick *joystick_device=NULL);
 
     void setValueOffset(int offset);
     void setItemWidth(int width);

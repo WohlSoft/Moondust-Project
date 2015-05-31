@@ -31,16 +31,16 @@ JoystickController::JoystickController() :
 //        qDebug() << "Opened Controller \"" << SDL_JoystickName(joystickController) << "\"";
 //    }
 
-    kmap.jump       = 1;
-    kmap.jump_alt   = 3;
-    kmap.run        = 0;
-    kmap.run_alt    = 2;
-    kmap.drop       = 8;
-    kmap.start      = 9;
-    kmap.left       = 10;
-    kmap.right      = 11;
-    kmap.up         = 12;
-    kmap.down       = 13;
+    kmap.jump.val       = 1;
+    kmap.jump_alt.val   = 3;
+    kmap.run.val        = 0;
+    kmap.run_alt.val    = 2;
+    kmap.drop.val       = 8;
+    kmap.start.val      = 9;
+    kmap.left.val       = 10;
+    kmap.right.val      = 11;
+    kmap.up.val         = 12;
+    kmap.down.val       = 13;
 }
 
 JoystickController::~JoystickController()
@@ -51,52 +51,46 @@ void JoystickController::setJoystickDevice(SDL_Joystick *jctrl)
     joystickController=jctrl;
 }
 
-void JoystickController::setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls types)
-{
-    _ctrls_ids=ids;
-    _ctrls_types=types;
-}
-
 SDL_Joystick *JoystickController::getJoystickDevice() const
 {
     return joystickController;
 }
 
-void JoystickController::updateKey(bool &key, int &keyValue, int &keyID, int &keyType)
+void JoystickController::updateKey(bool &key, KM_Key &mkey)
 {
     int val=0, dx=0, dy=0;
-    switch(keyType)
+    switch(mkey.type)
     {
     case KeyMapJoyCtrls::JoyAxis:
-        val=SDL_JoystickGetAxis(joystickController, keyID);
-            if(keyValue>0)
+        val=SDL_JoystickGetAxis(joystickController, mkey.id);
+            if(mkey.val>0)
                 key=(val>0);
-            else if(keyValue<0)
+            else if(mkey.val<0)
                 key=(val<0);
             else key=false;
         break;
     case KeyMapJoyCtrls::JoyBallX:
-        SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
-        if(keyID>0)
+        SDL_JoystickGetBall(joystickController, mkey.id, &dx, &dy);
+        if(mkey.id>0)
             key=(dx>0);
-        else if(keyID<0)
+        else if(mkey.id<0)
             key=(dx<0);
         else key=false;
         break;
     case KeyMapJoyCtrls::JoyBallY:
-        SDL_JoystickGetBall(joystickController, keyID, &dx, &dy);
-        if(keyID>0)
+        SDL_JoystickGetBall(joystickController, mkey.id, &dx, &dy);
+        if(mkey.id>0)
             key=(dy>0);
-        else if(keyID<0)
+        else if(mkey.id<0)
             key=(dy<0);
         else key=false;
         break;
     case KeyMapJoyCtrls::JoyHat:
-        val=SDL_JoystickGetHat(joystickController, keyID);
-        key = (val==keyValue);
+        val=SDL_JoystickGetHat(joystickController, mkey.id);
+        key = (val==mkey.val);
         break;
     case KeyMapJoyCtrls::JoyButton:
-        key = SDL_JoystickGetButton(joystickController, keyID);
+        key = SDL_JoystickGetButton(joystickController, mkey.id);
         break;
     default:
         key=false;
@@ -112,56 +106,44 @@ void JoystickController::update()
     SDL_PumpEvents();
     SDL_JoystickUpdate();
 
-    updateKey(keys.jump, kmap.jump,   _ctrls_ids.jump,  _ctrls_types.jump);
-    updateKey(keys.alt_jump, kmap.jump_alt, _ctrls_ids.jump_alt, _ctrls_types.jump_alt);
+    updateKey(keys.jump, kmap.jump);
+    updateKey(keys.alt_jump, kmap.jump_alt);
 
-    updateKey(keys.run, kmap.run,     _ctrls_ids.run,   _ctrls_types.run);
-    updateKey(keys.alt_run, kmap.run_alt, _ctrls_ids.run_alt, _ctrls_types.run_alt);
+    updateKey(keys.run, kmap.run);
+    updateKey(keys.alt_run, kmap.run_alt);
 
-    updateKey(keys.right, kmap.right, _ctrls_ids.right, _ctrls_types.right);
-    updateKey(keys.left, kmap.left,   _ctrls_ids.left,  _ctrls_types.left);
-    updateKey(keys.up, kmap.up,       _ctrls_ids.up,    _ctrls_types.up);
-    updateKey(keys.down, kmap.down,   _ctrls_ids.down,  _ctrls_types.down);
+    updateKey(keys.right, kmap.right);
+    updateKey(keys.left, kmap.left);
+    updateKey(keys.up, kmap.up);
+    updateKey(keys.down, kmap.down);
 
-    updateKey(keys.drop, kmap.drop,   _ctrls_ids.drop,  _ctrls_types.drop);
-    updateKey(keys.start, kmap.start, _ctrls_ids.start, _ctrls_types.start);
+    updateKey(keys.drop, kmap.drop);
+    updateKey(keys.start, kmap.start);
 }
 
 
 
-bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &keyID, int &keyType)
+bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
 {
     int val=0, dx=0, dy=0;
     SDL_PumpEvents();
     SDL_JoystickUpdate();
 
-//    for(int i=0; i<SDL_JoystickNumAxes(joy);i++)
-//    {
-//        val=0;
-//        val=SDL_JoystickGetAxis(joy, i);
-//        if(val!=0)
-//        {
-//            keyValue=val;
-//            keyID=i;
-//            keyType=KeyMapJoyCtrls::JoyAxis;
-//            return true;
-//        }
-//    }
     for(int i=0; i<SDL_JoystickNumBalls(joy);i++)
     {
         dx=0; dy=0;
         SDL_JoystickGetBall(joy, i, &dx, &dy);
         if(dx!=0)
         {
-            keyValue=dx;
-            keyID=i;
-            keyType=(int)KeyMapJoyCtrls::JoyBallX;
+            k.val=dx;
+            k.id=i;
+            k.type=(int)KeyMapJoyCtrls::JoyBallX;
             return true;
         }else if(dy!=0)
         {
-            keyValue=dy;
-            keyID=i;
-            keyType=(int)KeyMapJoyCtrls::JoyBallY;
+            k.val=dy;
+            k.id=i;
+            k.type=(int)KeyMapJoyCtrls::JoyBallY;
             return true;
         }
     }
@@ -172,9 +154,9 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &
         val=SDL_JoystickGetHat(joy, i);
         if(val!=0)
         {
-            keyValue=val;
-            keyID=i;
-            keyType=(int)KeyMapJoyCtrls::JoyHat;
+            k.val=val;
+            k.id=i;
+            k.type=(int)KeyMapJoyCtrls::JoyHat;
             return true;
         }
     }
@@ -184,15 +166,15 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, int &keyValue, int &
         val=SDL_JoystickGetButton(joy, i);
         if(val==1)
         {
-            keyValue=val;
-            keyID=i;
-            keyType=(int)KeyMapJoyCtrls::JoyButton;
+            k.val=val;
+            k.id=i;
+            k.type=(int)KeyMapJoyCtrls::JoyButton;
             return true;
         }
     }
 
-    keyValue=0;
-    keyID=0;
-    keyType=(int)KeyMapJoyCtrls::NoControl;
+    k.val=0;
+    k.id=0;
+    k.type=(int)KeyMapJoyCtrls::NoControl;
     return false;
 }
