@@ -181,7 +181,6 @@ WorldScene::~WorldScene()
 
     for(int i=0;i<imgs.size();i++)
     {
-        imgs[i].a.stop();
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }

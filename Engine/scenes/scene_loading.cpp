@@ -27,9 +27,30 @@
 
 #include <QtDebug>
 
+
+LoadingScene_misc_img::LoadingScene_misc_img()
+{
+    x=0;y=0;t.w=0;frmH=0;
+}
+
+LoadingScene_misc_img::~LoadingScene_misc_img()
+{}
+
+LoadingScene_misc_img::LoadingScene_misc_img(const LoadingScene_misc_img &im)
+{
+    x=im.x;
+    y=im.y;
+    t=im.t;
+    a=im.a;
+    frmH=im.frmH;
+}
+
+
 LoadingScene::LoadingScene()
 {
     _waitTimer=5000;
+    uTick = (1000.0/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
 }
 
 LoadingScene::~LoadingScene()
@@ -93,6 +114,13 @@ void LoadingScene::setWaitTime(unsigned int time)
         _waitTimer=time;
 }
 
+void LoadingScene::update()
+{
+    fader.tickFader(uTick);
+    for(int i=0;i<imgs.size(); i++)
+        imgs[i].a.manualTick(uTick);
+}
+
 void LoadingScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -124,20 +152,12 @@ int LoadingScene::exec()
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
 
-    int uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
-
     Uint32 start_wait_timer=SDL_GetTicks();
     while(running)
     {
-
-        fader.tickFader(uTick);
-
-        for(int i=0;i<imgs.size(); i++)
-            imgs[i].a.manualTick(uTick);
-
         //UPDATE Events
         start_render=SDL_GetTicks();
+        update();
         render();
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
@@ -191,3 +211,4 @@ int LoadingScene::exec()
     }
     return 0;
 }
+

@@ -70,6 +70,9 @@ bool ConfigManager::loadEngineSettings()
     ////////// Loading scene settings
     setup_LoadingScreen.init(engineset);
 
+    ////////// Credits scene settings
+    setup_CreditsScreen.init(engineset);
+
     ////////// Title screen (main menu) settings
     setup_TitleScreen.init(engineset);
 

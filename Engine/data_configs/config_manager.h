@@ -27,6 +27,7 @@
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
 #include "setup_title_screen.h"
+#include "setup_credits_screen.h"
 
 #include "obj_block.h"
 #include "obj_bgo.h"
@@ -142,6 +143,10 @@ public:
     //World map data
     friend struct WorldMapSetup;
     static WorldMapSetup setup_WorldMap;
+
+    //Credits Screen
+    friend struct CreditsScreenSetup;
+    static CreditsScreenSetup setup_CreditsScreen;
 
 
     /********Music and sounds*******/

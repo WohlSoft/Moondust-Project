@@ -57,6 +57,7 @@
 #include "scenes/scene_world.h"
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
+#include "scenes/scene_credits.h"
 
 #include <Box2D/Box2D.h>
 #include <QMessageBox>
@@ -291,6 +292,14 @@ LoadingScreen:
 
 CreditsScreen:
 {
+    CreditsScene *ttl = new CreditsScene;
+    ttl->setWaitTime(15000);
+
+    ttl->init();
+    ttl->fader.setFade(10, 0.0f, 0.01f);
+    int ret = ttl->exec();
+    delete ttl;
+    if(ret==-1) goto ExitFromApplication;
 
     goto MainMenu;
 }

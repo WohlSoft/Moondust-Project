@@ -196,7 +196,8 @@ SOURCES += \
     common_features/point.cpp \
     common_features/sizef.cpp \
     common_features/size.cpp \
-    common_features/fader.cpp
+    common_features/fader.cpp \
+    data_configs/setup_credits_screen.cpp
 
 
 HEADERS  += \
@@ -302,7 +303,8 @@ HEADERS  += \
     common_features/point.h \
     common_features/sizef.h \
     common_features/size.h \
-    common_features/fader.h
+    common_features/fader.h \
+    data_configs/setup_credits_screen.h
 
 FORMS    += \
     data_configs/select_config.ui
