@@ -68,20 +68,26 @@ public:
     ~LevelScene();
 
     bool init();
+private:
     bool isInit;
 
+public:
     //Init 1
-    bool loadFile(QString filePath);
-    bool loadFileIP(); //!< Load data via interprocessing
+    bool        loadFile(QString filePath);
+    bool        loadFileIP(); //!< Load data via interprocessing
 
     //Init 2
-    bool setEntrance(int entr);
-    bool isWarpEntrance;
-    PGE_Point cameraStart;
-    bool   cameraStartDirected;
-    int    cameraStartDirection;
-    LevelDoor startWarp;
-    int NewPlayerID;
+    bool        setEntrance(int entr);
+private:
+    bool        isWarpEntrance;
+    PGE_Point   cameraStart;
+    bool        cameraStartDirected;
+    int         cameraStartDirection;
+
+    LevelDoor   startWarp;
+    int         NewPlayerID;
+
+public:
     PlayerPoint getStartLocation(int playerID);
 
     QList<LVL_PlayerDef > player_defs;
@@ -112,24 +118,23 @@ public:
 
     /****************Level Running State*****************/
     bool isLevelContinues;
-    bool doExit;
 
     void checkPlayers();
     void setExiting(int delay, int reason);
 
-    QString toAnotherLevel();
-    QString warpToLevelFile;
-    long lastWarpID;
+    QString     toAnotherLevel();
+    QString     warpToLevelFile;
+    long        lastWarpID;
 
-    int toAnotherEntrance();
-    int warpToArrayID;
+    int         toAnotherEntrance();
+    int         warpToArrayID;
 
-    PGE_Point toWorldXY();
-    bool warpToWorld;
-    PGE_Point warpToWorldXY;
+    PGE_Point   toWorldXY();
+    bool        warpToWorld;
+    PGE_Point   warpToWorldXY;
 
-    int exitLevelDelay;
-    int exitLevelCode;
+    int         exitLevelDelay;
+    int         exitLevelCode;
     /****************Level Running State*****************/
 
     int numberOfPlayers;
@@ -208,9 +213,8 @@ public:
 
     EventQueue<LevelScene > system_events;
     LVL_Section *getSection(int sct);
-private:
-    int  uTick;
 
+private:
     LevelData data;
 
     EpisodeState *gameState;

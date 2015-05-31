@@ -37,7 +37,7 @@
 #include <SDL2/SDL.h>
 #undef main
 
-TitleScene::TitleScene()
+TitleScene::TitleScene() : Scene(Title)
 {
     doExit=false;
     mousePos.setX(-300);
@@ -47,8 +47,6 @@ TitleScene::TitleScene()
     numOfPlayers=1;
 
     controller = NULL;
-
-    fader.setFull();
 
     glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
@@ -264,13 +262,8 @@ int TitleScene::exec()
 {
     int ret=0;
     //Level scene's Loop
-    Uint32 start_render;
-    bool running = true;
-    float doUpdate_Render=0;
-    bool doExit=false;
-
-    int uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
+    Uint32  start_render;
+    float   doUpdate_Render=0;
 
     menustates.clear();
     menuChain.clear();
@@ -320,7 +313,6 @@ int TitleScene::exec()
         controller->update();
 
         SDL_Event event; //  Events of SDL
-        SDL_PumpEvents();             //for mouse
         while( SDL_PollEvent(&event) )//Common
         {
             if(PGE_Window::processEvents(event)!=0) continue;
@@ -414,10 +406,6 @@ int TitleScene::exec()
                 default: break;
             }
         }
-        int mouseX=0;
-        int mouseY=0;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        mousePos = GlRenderer::MapToScr(mouseX, mouseY);
 
         render();
         renderMouse();

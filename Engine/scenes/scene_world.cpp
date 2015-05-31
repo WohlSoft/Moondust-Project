@@ -57,7 +57,6 @@ WorldScene::WorldScene()
     exitWorldCode=WldExit::EXIT_error;
     exitWorldDelay=2000;
     worldIsContinues=true;
-    doExit=false;
     isPauseMenu=false;
 
     gameState=NULL;
@@ -89,9 +88,6 @@ WorldScene::WorldScene()
     /*********Fader*************/
     fader.setFull();
     /*********Fader*************/
-
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
 
     move_speed = 125/(float)PGE_Window::PhysStep;
     move_steps_count=0;
@@ -449,24 +445,23 @@ bool WorldScene::loadConfigs()
 void WorldScene::update()
 {
     tickAnimations(uTick);
-    fader.tickFader(uTick);
+    Scene::update();
 
     if(doExit)
     {
-        if(exitWorldDelay>=0)
-            exitWorldDelay -= uTick;
+        if(exitWorldCode==WldExit::EXIT_close)
+        {
+            fader.setFull();
+            worldIsContinues=false;
+            running=false;
+        }
         else
         {
-            if(exitWorldCode==WldExit::EXIT_close)
+            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
+            if(fader.isFull())
             {
-                fader.setFull();
                 worldIsContinues=false;
-            }
-            else
-            {
-                if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
-                if(fader.isFull())
-                    worldIsContinues=false;
+                running=false;
             }
         }
     }
@@ -884,7 +879,7 @@ int WorldScene::exec()
 
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
 
-    bool running = !doExit;
+    running = !doExit;
     while(running)
     {
         start_common = SDL_GetTicks();
@@ -1035,10 +1030,6 @@ int WorldScene::exec()
 
         stop_render=0;
         start_render=0;
-
-        if(isExit())
-            running = false;
-
     }
     return exitWorldCode;
 }

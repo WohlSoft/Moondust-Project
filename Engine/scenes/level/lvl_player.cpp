@@ -195,6 +195,7 @@ void LVL_Player::initSize()
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
+    if(!isInited) return;
     if(!physBody) return;
     if(!camera) return;
     LVL_Section* section = sct();
@@ -224,7 +225,12 @@ void LVL_Player::update(float ticks)
     {
         doKill=false;
         isLive = false;
-        physBody->SetActive(false);
+        if(physBody)
+        {
+            physBody->SetGravityScale(0);
+            physBody->SetAwake(false);
+            physBody->SetActive(false);
+        }
         LvlSceneP::s->checkPlayers();
         return;
     }
@@ -631,7 +637,8 @@ void LVL_Player::update(float ticks)
             if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 isInited=false;
-                physBody->SetActive(false);
+                physBody->SetAwake(false);
+                physBody->SetGravityScale(0);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -1443,6 +1450,8 @@ void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
     if(physBody)
-        physBody->SetActive(!lock);
+    {
+        physBody->SetAwake(!lock);
+    }
 }
 

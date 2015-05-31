@@ -454,7 +454,7 @@ PlayLevel:
                 if(AppSettings.interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
-                    if((!sceneResult) && (!lScene->doExit))
+                    if((!sceneResult) && (!lScene->isExiting()))
                     {
                         SDL_Delay(50);
                         PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")

@@ -53,9 +53,6 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
-
     isInit=false;
     isWarpEntrance=false;
     cameraStartDirected=false;
@@ -235,32 +232,35 @@ int  debug_event_delay=0;
 
 void LevelScene::update()
 {
+    Scene::update();
     tickAnimations(uTick);
 
-    fader.tickFader(uTick);
+    if(!isLevelContinues)
+    {
+        exitLevelDelay -= uTick;
+        if(exitLevelDelay<=0)
+        {
+            doExit=true;
+            if(fader.isNull())
+            {
+                if(PGE_MusPlayer::MUS_IsPlaying())
+                    PGE_MusPlayer::MUS_stopMusicFadeOut(500);
+                fader.setFade(10, 1.0f, 0.01f);
+            }
+        }
+    }
 
     if(doExit)
     {
-        if(exitLevelDelay>=0)
-            exitLevelDelay -= uTick;
+        if(exitLevelCode==LvlExit::EXIT_Closed)
+        {
+            fader.setFull();
+            running=false;
+        }
         else
         {
-            if(exitLevelCode==LvlExit::EXIT_Closed)
-            {
-                fader.setFull();
-                isLevelContinues=false;
-            }
-            else
-            {
-                if(fader.isNull())
-                {
-                    if(PGE_MusPlayer::MUS_IsPlaying())
-                        PGE_MusPlayer::MUS_stopMusicFadeOut(500);
-                    fader.setFade(10, 1.0f, 0.01f);
-                }
-                if(fader.isFull())
-                    isLevelContinues=false;
-            }
+            if(fader.isFull())
+                running=false;
         }
     }
     else
@@ -434,7 +434,7 @@ void LevelScene::render()
                                .arg(debug_render_delay, 3, 10, QChar('0'))
                                .arg(debug_phys_delay, 3, 10, QChar('0')), 10,135);
 
-        if(doExit)
+        if(!isLevelContinues)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTick), 10, 155, 0, 1.0, 0, 0, 1.0);
@@ -451,6 +451,7 @@ int LevelScene::exec()
 {
     isLevelContinues=true;
     doExit=false;
+    running=true;
 
     dbgDraw.c = cameras.first();
 
@@ -474,8 +475,6 @@ int LevelScene::exec()
 
   //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
   float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
-
-    bool running = true;
     while(running)
     {
         start_common = SDL_GetTicks();
@@ -581,10 +580,6 @@ int LevelScene::exec()
 
         if(wait_delay>0)
             SDL_Delay( wait_delay );
-
-        if(isExit())
-            running = false;
-
     }
     return exitLevelCode;
 }
@@ -598,12 +593,16 @@ QString LevelScene::getLastError()
 
 
 
-
-
-
 bool LevelScene::isExit()
 {
     return !isLevelContinues;
+}
+
+void LevelScene::setExiting(int delay, int reason)
+{
+    exitLevelDelay   = delay;
+    exitLevelCode    = reason;
+    isLevelContinues = false;
 }
 
 QString LevelScene::toAnotherLevel()
@@ -669,14 +668,6 @@ void LevelScene::checkPlayers()
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
-}
-
-
-void LevelScene::setExiting(int delay, int reason)
-{
-    exitLevelDelay = delay;
-    exitLevelCode = reason;
-    doExit = true;
 }
 
 
