@@ -25,6 +25,8 @@
 #include <audio/pge_audio.h>
 #include <controls/controller_key_map.h>
 
+#include <QStack>
+
 PGE_Menu::PGE_Menu()
 {
     _itemsOnScreen=5;
@@ -373,32 +375,54 @@ void PGE_Menu::setItemsNumber(int q)
 
 void PGE_Menu::sort()
 {
-    while(1)
+    if(_items.size()<=1) { autoOffset(); return;} //Nothing to sort!
+
+    QStack<int> beg;
+    QStack<int> end;
+    PGE_Menuitem * piv;
+    int i=0, L, R, swapv;
+    beg.push_back(0);
+    end.push_back(_items.size());
+    while (i>=0)
     {
-        bool swaped=false;
-        for(int i=0; i<_items.size()-1; i++)
+        L=beg[i]; R=end[i]-1;
+        if (L<R)
         {
-            if(namefileLessThan(_items[i], _items[i+1]))
+            piv=_items[L];
+            while (L<R)
             {
-                _items.swap(i, i+1);
+                while ((namefileMoreThan(_items[R], piv)) && (L<R)) R--;
+                if (L<R) _items[L++]=_items[R];
 
-                if(_currentItem==i)
-                    _currentItem=i+1;
-                else
-                if(_currentItem==i+1)
-                    _currentItem=i;
-
-                swaped=true;
+                while ((namefileLessThan(_items[L], piv)) && (L<R)) L++;
+                if (L<R) _items[R--]=_items[L];
+            }
+            _items[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+            if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
+            {
+                swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;
+                swapv=end[i]; end[i]=end[i-1]; end[i-1]=swapv;
             }
         }
-        if(!swaped) break;
+        else
+        {
+            i--;
+            beg.pop_back();
+            end.pop_back();
+        }
     }
+
     autoOffset();
 }
 
 bool PGE_Menu::namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
 {
-    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)>0); // sort by title
+    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)<=0); // sort by title
+}
+
+bool PGE_Menu::namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
+{
+    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)>=0); // sort by title
 }
 
 bool PGE_Menu::isSelected()

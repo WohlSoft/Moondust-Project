@@ -127,6 +127,7 @@ private:
 
     QList<PGE_Menuitem *> _items;
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
+    bool namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();
     PGE_Texture _selector;
     PGE_Texture _scroll_up;
