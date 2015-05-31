@@ -45,12 +45,11 @@ void LevelScene::drawLoader()
 
     GlRenderer::renderRect(0,0,PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, 1.0f);
 
-    QRectF loadAniG = QRectF(PGE_Window::Width/2 - loading_texture.w/2,
-                           PGE_Window::Height/2 - (loading_texture.h/4)/2,
-                           loading_texture.w,
-                           loading_texture.h/4);
-
-
+    PGE_RectF loadAniG;
+    loadAniG.setRect(PGE_Window::Width/2 - loading_texture.w/2,
+                     PGE_Window::Height/2 - (loading_texture.h/4)/2,
+                     loading_texture.w,
+                     loading_texture.h/4);
 
     AniPos x(0,1);
             x = loading_Ani->image();

@@ -26,6 +26,7 @@
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
+#include <common_features/point.h>
 #include <controls/controller.h>
 
 typedef QPair<int, int > menustate;
@@ -106,7 +107,7 @@ public:
     Controller *controller;
 
 private:
-    QPoint mousePos;
+    PGE_Point mousePos;
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
     QMap<CurrentMenu, menustate> menustates;

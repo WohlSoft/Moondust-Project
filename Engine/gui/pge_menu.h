@@ -22,9 +22,10 @@
 #include <QString>
 #include <QList>
 #include <QPair>
-#include <QRect>
-#include <QPoint>
 #include <common_features/pge_texture.h>
+#include <common_features/rect.h>
+#include <common_features/size.h>
+#include <common_features/point.h>
 #include <functional>
 
 #include "menu/_pge_menuitem.h"
@@ -93,16 +94,16 @@ public:
     void setOffset(int of);//!< Sets scrolling offset from begin of menu list
 
     //Position and size Rectangle
-    QRect rect(); //!< Returns rectangle of menu box
+    PGE_Rect rect(); //!< Returns rectangle of menu box
     void setPos(int x, int y); //!< Sets current position of menu box
-    void setPos(QPoint p);     //!< Sets current position of menu box
+    void setPos(PGE_Point p);     //!< Sets current position of menu box
     void setSize(int w, int h); //!< Sets size of menu box
-    void setSize(QSize s);      //!< Sets size of menu box
+    void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(int maxlen, bool strict=false);
 
 private:
     void refreshRect();
-    QRect menuRect;
+    PGE_Rect menuRect;
 
     /*******Key grabbing********/
     PGE_KeyGrabMenuItem *m_item;

@@ -611,7 +611,7 @@ int LevelScene::toAnotherEntrance()
     return warpToArrayID;
 }
 
-QPoint LevelScene::toWorldXY()
+PGE_Point LevelScene::toWorldXY()
 {
     return warpToWorldXY;
 }

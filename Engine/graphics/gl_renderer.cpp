@@ -124,11 +124,11 @@ bool GlRenderer::uninit()
     return false;
 }
 
-QPointF GlRenderer::mapToOpengl(QPoint s)
+PGE_PointF GlRenderer::mapToOpengl(PGE_Point s)
 {
     qreal nx  =  s.x() - qreal(PGE_Window::Width)  /  2;
     qreal ny  =  s.y() - qreal(PGE_Window::Height)  /  2;
-    return QPointF(nx, ny);
+    return PGE_PointF(nx, ny);
 }
 
 QString GlRenderer::ScreenshotPath = "";
@@ -213,26 +213,26 @@ void GlRenderer::resetRGB()
 }
 
 
-QPointF GlRenderer::MapToGl(QPoint point)
+PGE_PointF GlRenderer::MapToGl(PGE_Point point)
 {
     return MapToGl(point.x(), point.y());
 }
 
-QPointF GlRenderer::MapToGl(float x, float y)
+PGE_PointF GlRenderer::MapToGl(float x, float y)
 {
     double nx1 = roundf(x)/(viewport_w_half)-1.0;
     double ny1 = (viewport_h-(roundf(y)))/viewport_h_half-1.0;
-    return QPointF(nx1, ny1);
+    return PGE_PointF(nx1, ny1);
 }
 
-QPoint GlRenderer::MapToScr(QPoint point)
+PGE_Point GlRenderer::MapToScr(PGE_Point point)
 {
     return MapToScr(point.x(), point.y());
 }
 
-QPoint GlRenderer::MapToScr(int x, int y)
+PGE_Point GlRenderer::MapToScr(int x, int y)
 {
-    return QPoint(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
+    return PGE_Point(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
 }
 
 void GlRenderer::setViewport(int x, int y, int w, int h)
@@ -295,7 +295,7 @@ void GlRenderer::setWindowSize(int w, int h)
 
 void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    QPointF point;
+    PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();
     float top = point.y();
@@ -316,7 +316,7 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
-    QPointF point;
+    PGE_PointF point;
         point = MapToGl(_left, _top);
     float left = point.x();
     float top = point.y();
@@ -338,7 +338,7 @@ void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bott
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 {
-    QPointF point;
+    PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();
     float top = point.y();
@@ -373,7 +373,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
-    QPointF point;
+    PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();
     float top = point.y();
@@ -408,7 +408,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
 
 void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
-    QPointF point;
+    PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();
     float top = point.y();

@@ -23,6 +23,9 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
+#include <common_features/rectf.h>
+#include <common_features/pointf.h>
+
 #include "lvl_scene_ptr.h"
 
 #include <QtDebug>
@@ -880,7 +883,7 @@ void LVL_Player::bump(bool _up)
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 {
-    QRect attackZone;
+    PGE_RectF attackZone;
 
     switch(_dir)
     {
@@ -1003,6 +1006,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this,x,y]()->void{
                                       isWarping=true;
+                                      warpPipeOffset=0.0;
+                                      warpDirectO=0;
                                       teleport(x+16-posX_coefficient,
                                                      y+32-height);
                                       animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
@@ -1147,10 +1152,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
             event1.makeCaller([this]()->void{
                                 physBody->SetLinearVelocity(b2Vec2(0, 0));
                                 isWarping=true;
+                                warpPipeOffset=0.0f;
                                 setDuck(false);
                                 physBody->SetGravityScale(0);
-                                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                warpPipeOffset=0.0f;
+                                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);                                
                               }, 0);
             event_queue.events.push_back(event1);
 
@@ -1255,6 +1260,8 @@ void LVL_Player::WarpTo(LevelDoor warp)
             event1.makeCaller([this]()->void{
                                 physBody->SetLinearVelocity(b2Vec2(0, 0));
                                 isWarping=true;
+                                warpPipeOffset=0.0;
+                                warpDirectO=0;
                                 setDuck(false);
                                 physBody->SetGravityScale(0);
                                 animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
@@ -1352,15 +1359,12 @@ void LVL_Player::render(double camX, double camY)
     if(!isLive) return;
     if(!isInited) return;
 
-    QRectF tPos = animator.curFrame();
-    QPointF Ofs = animator.curOffset();
+    PGE_RectF tPos = animator.curFrame();
+    PGE_PointF Ofs = animator.curOffset();
 
-    QRectF player = QRectF( round(posX()
-                            -camX)-Ofs.x(),
-
-                            round(posY()-Ofs.y())
-                            -camY,
-
+    PGE_RectF player;
+    player.setRect(round(posX()-camX)-Ofs.x(),
+                   round(posY()-Ofs.y())-camY,
                             frameW,
                             frameH
                          );
@@ -1379,7 +1383,7 @@ void LVL_Player::render(double camX, double camY)
                     float wOfsF = width/warpFrameW; //Relative hitbox width
                     tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
                     player.setLeft( player.left()+Ofs.x() );
-                    player.setRight( player.right()-(warpPipeOffset*width)+1 );
+                    player.setRight( player.right()-(warpPipeOffset*width) );
                 }
                 break;
             case 1://Up entrance, down exit
@@ -1388,13 +1392,13 @@ void LVL_Player::render(double camX, double camY)
                     float hOfsF = height/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
                     player.setTop( player.top()+Ofs.y() );
-                    player.setBottom( player.bottom()-(warpPipeOffset*height)+1 );
+                    player.setBottom( player.bottom()-(warpPipeOffset*height) );
                 }
                 break;
             case 4://right emtramce. left exit
                 {
                     float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
-                    float fWw =   animator.sizeOfFrame().width();   //Relative width of frame
+                    float fWw =   animator.sizeOfFrame().w();   //Relative width of frame
                     float wOfHB = width/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
@@ -1405,7 +1409,7 @@ void LVL_Player::render(double camX, double camY)
             case 3://down entrance, up exit
                 {
                     float hOfs =  Ofs.y()/warpFrameH;               //Relative Y offset
-                    float fHh =   animator.sizeOfFrame().height();  //Relative height of frame
+                    float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
                     float hOfHB = height/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));

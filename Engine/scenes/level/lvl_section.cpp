@@ -46,10 +46,7 @@ LVL_Section::LVL_Section(const LVL_Section &_sct)
 
 LVL_Section::~LVL_Section()
 {
-    qDebug()<<"Destroy section object" << data.id;
-
     tree.RemoveAll();
-    qDebug()<<"tree is clear";
 }
 
 void LVL_Section::setData(LevelSection _d)

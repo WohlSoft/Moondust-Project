@@ -27,7 +27,11 @@
 #undef main
 
 #include <QString>
-#include <QRect>
+#include <common_features/rect.h>
+#include <common_features/point.h>
+#include <common_features/pointf.h>
+#include <common_features/size.h>
+#include <common_features/sizef.h>
 #include <QColor>
 
 class PGE_MsgBox : public PGE_BoxBase
@@ -44,7 +48,7 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, QPoint boxCenterPos=QPoint(-1,-1), QSizeF boxSize=QSizeF(0,0), float _padding=20, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), PGE_SizeF boxSize=PGE_SizeF(0,0), float _padding=20, QString texture="");
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
@@ -63,9 +67,9 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(0,0), QPoint pos=QPoint(-1,-1), float _padding=20, QString texture="");
+                    msgType _type=msg_info, bool autosize=true, PGE_SizeF boxSize=PGE_SizeF(0,0), PGE_Point pos=PGE_Point(-1,-1), float _padding=20, QString texture="");
     msgType type;
-    QRect _sizeRect;
+    PGE_Rect _sizeRect;
     QString message;
     GLuint textTexture;
     float width;

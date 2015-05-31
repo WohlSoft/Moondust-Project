@@ -18,6 +18,8 @@
 
 #include "rect.h"
 #include "rectf.h"
+#include "point.h"
+#include "size.h"
 
 PGE_Rect::PGE_Rect()
 {
@@ -127,6 +129,29 @@ void PGE_Rect::setHeight(int h)
     _b=_y+_h;
 }
 
+void PGE_Rect::setTopLeft(PGE_Point p)
+{
+    setLeft(p.x());
+    setTop(p.y());
+}
+
+void PGE_Rect::setTopRight(PGE_Point p)
+{
+    setTop(p.y());
+    setRight(p.x());
+}
+
+void PGE_Rect::setBottomRight(PGE_Point p)
+{
+    setRight(p.x());
+    setBottom(p.y());
+}
+
+void PGE_Rect::setBottomLeft(PGE_Point p)
+{
+    setLeft(p.x());
+    setBottom(p.y());
+}
 
 void PGE_Rect::setTopLeft(int l, int t)
 {
@@ -192,6 +217,16 @@ int PGE_Rect::width()
 int PGE_Rect::height()
 {
     return _h;
+}
+
+PGE_Point PGE_Rect::center()
+{
+    return PGE_Point(_x+_w/2, _y+_h/2);
+}
+
+PGE_Size PGE_Rect::size()
+{
+    return PGE_Size(_w, _h);
 }
 
 bool PGE_Rect::collidePoint(int x, int y)

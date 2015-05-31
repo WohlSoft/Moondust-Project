@@ -19,10 +19,11 @@
 #ifndef GL_RENDERER_H
 #define GL_RENDERER_H
 
-#include <QPoint>
-#include <QPointF>
 #include <QString>
 #include <common_features/pge_texture.h>
+#include <common_features/rectf.h>
+#include <common_features/point.h>
+#include <common_features/pointf.h>
 
 struct SDL_Thread;
 class GlRenderer
@@ -30,7 +31,7 @@ class GlRenderer
 public:
     static bool init();
     static bool uninit();
-    static QPointF mapToOpengl(QPoint s);
+    static PGE_PointF mapToOpengl(PGE_Point s);
 
     static QString ScreenshotPath;
     static void makeShot();
@@ -45,10 +46,10 @@ public:
     static void renderRect(float x, float y, float w, float h, GLfloat red=1.f, GLfloat green=1.f, GLfloat blue=1.f, GLfloat alpha=1.f);
     static void renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
 
-    static QPointF MapToGl(QPoint point);
-    static QPointF MapToGl(float x, float y);
-    static QPoint MapToScr(QPoint point);
-    static QPoint MapToScr(int x, int y);
+    static PGE_PointF MapToGl(PGE_Point point);
+    static PGE_PointF MapToGl(float x, float y);
+    static PGE_Point  MapToScr(PGE_Point point);
+    static PGE_Point  MapToScr(int x, int y);
     static void setViewport(int x, int y, int w, int h);
     static void resetViewport();
     static void setViewportSize(int w, int h);

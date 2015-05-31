@@ -75,10 +75,11 @@ WorldScene_Portrait::~WorldScene_Portrait()
 
 void WorldScene_Portrait::render()
 {
-    QRectF tPos = animator.curFrame();
-    QPointF Ofs = animator.curOffset();
+    PGE_RectF tPos = animator.curFrame();
+    PGE_PointF Ofs = animator.curOffset();
 
-    QRectF player = QRectF( posX_render - Ofs.x(),
+    PGE_RectF player;
+    player.setRect( posX_render - Ofs.x(),
                             posY_render-Ofs.y(),
                             frameW,
                             frameH

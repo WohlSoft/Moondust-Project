@@ -191,7 +191,11 @@ SOURCES += \
     common_features/npc_animator.cpp \
     scenes/level/lvl_section.cpp \
     common_features/rect.cpp \
-    common_features/rectf.cpp
+    common_features/rectf.cpp \
+    common_features/pointf.cpp \
+    common_features/point.cpp \
+    common_features/sizef.cpp \
+    common_features/size.cpp
 
 
 HEADERS  += \
@@ -292,7 +296,11 @@ HEADERS  += \
     common_features/RTree/RTree.h \
     scenes/level/lvl_section.h \
     common_features/rect.h \
-    common_features/rectf.h
+    common_features/rectf.h \
+    common_features/pointf.h \
+    common_features/point.h \
+    common_features/sizef.h \
+    common_features/size.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -73,7 +73,7 @@ public:
     long animator_ID;
 
     bool isMagic;
-    QVector<LVL_Background_strip > strips;
+    QList<LVL_Background_strip > strips;
 
     PGEColor color;
 
@@ -81,6 +81,7 @@ public:
 
 private:
     void construct();
+    PGE_RectF backgrndG;//!< Used in draw process
 };
 
 

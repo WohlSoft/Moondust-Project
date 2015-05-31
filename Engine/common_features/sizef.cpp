@@ -16,10 +16,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <SDL2/SDL.h> // SDL 2 Library
-#include <SDL2/SDL_opengl.h>
-#include <QtDebug>
-#include "graphics.h"
-#include "window.h"
+#include "sizef.h"
+#include "size.h"
 
+PGE_SizeF::PGE_SizeF()
+{
+    setSize(0, 0);
+}
+
+PGE_SizeF::PGE_SizeF(const PGE_SizeF &p)
+{
+    _w=p._w;
+    _h=p._h;
+}
+
+PGE_SizeF::PGE_SizeF(const PGE_Size &p)
+{
+    _w=p._w;
+    _h=p._h;
+}
+
+PGE_SizeF::PGE_SizeF(double w, double h)
+{
+    _w=w;
+    _h=h;
+}
+
+PGE_SizeF::~PGE_SizeF()
+{}
+
+void PGE_SizeF::setSize(double w, double h)
+{
+    _w=w;
+    _h=h;
+}
+
+void PGE_SizeF::setWidth(double w)
+{
+    _w=w;
+}
+
+void PGE_SizeF::setHeight(double h)
+{
+    _h=h;
+}
+
+bool PGE_SizeF::isNull()
+{
+    return ((_w==0)&&(_h==0));
+}
+
+double PGE_SizeF::w()
+{
+    return _w;
+}
+
+double PGE_SizeF::h()
+{
+    return _h;
+}
 

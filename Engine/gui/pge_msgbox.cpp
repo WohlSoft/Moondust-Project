@@ -26,7 +26,6 @@
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 
-#include <QRect>
 #include <QFontMetrics>
 #include <QMessageBox>
 #include <common_features/app_path.h>
@@ -43,17 +42,17 @@ PGE_MsgBox::PGE_MsgBox()
 }
 
 PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type,
-                       QPoint boxCenterPos, QSizeF boxSize,
+                       PGE_Point boxCenterPos, PGE_SizeF boxSize,
                        float _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
-    construct(msg,_type, ((boxSize.width()==0) || (boxSize.height()==0)),
+    construct(msg,_type, ((boxSize.w()==0) || (boxSize.h()==0)),
                            boxSize, boxCenterPos, _padding, texture);
 }
 
 
 void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
-                                bool autosize, QSizeF boxSize, QPoint pos, float _padding, QString texture)
+                                bool autosize, PGE_SizeF boxSize, PGE_Point pos, float _padding, QString texture)
 {
     if(!texture.isEmpty())
         loadTexture(texture);
@@ -86,10 +85,12 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         FontManager::optimizeText(message, 28, &count, &maxWidth);
         if(count==1) centered=true;
         /****************Word wrap*end*****************/
-        boxSize = meter.size(Qt::TextExpandTabs, message);
+        QSize newBoxSize = meter.size(Qt::TextExpandTabs, message);
+        boxSize.setWidth(newBoxSize.width());
+        boxSize.setHeight(newBoxSize.height());
     }
 
-    setBoxSize(boxSize.width()/2, boxSize.height()/2, _padding);
+    setBoxSize(boxSize.w()/2, boxSize.h()/2, _padding);
     buildBox(centered);
 
     if((pos.x()==-1)&&(pos.y()==-1))
@@ -111,7 +112,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
 void PGE_MsgBox::buildBox(bool centered)
 {
     textTexture = FontManager::TextToTexture(message,
-                                             QRect(0,0, width*2, height*2),
+                                             PGE_Rect(0,0, width*2, height*2),
                                              (centered ? Qt::AlignCenter:Qt::AlignLeft) | Qt::AlignTop );
 }
 
@@ -230,12 +231,7 @@ void PGE_MsgBox::exec()
                         running=false;
                     }
                     break;
-                    case SDLK_t:
-                    PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                    break;
-                    case SDLK_F12:
-                    GlRenderer::makeShot();
-                    break;
+
                     default:
                     break;
                     }
