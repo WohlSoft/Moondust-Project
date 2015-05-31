@@ -87,10 +87,7 @@ WorldScene::WorldScene()
     /***********Number of Players*****************/
 
     /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
+    fader.setFull();
     /*********Fader*************/
 
     uTick = (1000.0/(float)PGE_Window::PhysStep);
@@ -453,6 +450,7 @@ bool WorldScene::loadConfigs()
 void WorldScene::update()
 {
     tickAnimations(uTick);
+    fader.tickFader(uTick);
 
     if(doExit)
     {
@@ -462,13 +460,13 @@ void WorldScene::update()
         {
             if(exitWorldCode==WldExit::EXIT_close)
             {
-                fader_opacity=1.0f;
+                fader.setFull();
                 worldIsContinues=false;
             }
             else
             {
-                if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-                if(fader_opacity>=1.0)
+                if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
+                if(fader.isFull())
                     worldIsContinues=false;
             }
         }
@@ -960,7 +958,7 @@ int WorldScene::exec()
         /**********************Update physics and game progess***********************/
         update();
 
-        if(controls_1.jump)
+        if(controls_1.jump || controls_1.alt_jump)
         {
             if((!lock_controls) && (gameState))
             {
@@ -986,14 +984,14 @@ int WorldScene::exec()
 
                     EventQueueEntry<WorldScene >event3;
                     event3.makeCaller([this]()->void{
-                                          this->setFade(25, 0.0, 0.08);
+                                          this->fader.setFade(10, 0.0f, 0.05);
                                           this->lock_controls=false;
                                       }, 0);
                     wld_events.events.push_back(event3);
 
                     this->lock_controls=true;
                     PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                    this->setFade(25, 1.0f, 0.08);
+                    fader.setFade(10, 1.0f, 0.05);
                 }
             }
         }

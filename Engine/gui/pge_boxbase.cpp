@@ -84,7 +84,9 @@ void PGE_BoxBase::fadeStep()
     else
         if(fader_opacity<0.0f) fader_opacity = 0.0f;
 }
+/**************************Fader**end**************************/
 
+/********************************Texture************************************/
 void PGE_BoxBase::loadTexture(QString path)
 {
     styleTexture = GraphicsHelps::loadTexture(styleTexture, path);
@@ -102,9 +104,6 @@ void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int bord
     drawTexture(x, border);
 }
 
-/**************************Fader**end**************************/
-
-/********************************Texture************************************/
 void PGE_BoxBase::drawTexture(PGE_Rect _rect, int border)
 {
     if(_textureUsed)

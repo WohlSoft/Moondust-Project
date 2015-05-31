@@ -233,7 +233,7 @@ void LVL_Block::transformTo(long id, int type)
         t.id=id;
         t.type=type;
 
-        LvlSceneP::s->block_transfors.push_back(t);
+        LvlSceneP::s->block_transforms.push_back(t);
     }
     if(type==1)//Other NPC
     {
@@ -535,7 +535,11 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     if(doFade)
     {
         fadeOffset=0.f;
-        setFade(20, 1.0f, 0.25f);
+        if(!isFading())
+        {
+            LvlSceneP::s->fading_blocks.push_back(this);
+            setFade(5, 1.0f, 0.07f);
+        }
     }
 }
 
@@ -551,23 +555,27 @@ GLdouble LVL_Block::zIndex()
 /**************************Fader*******************************/
 void LVL_Block::setFade(int speed, float target, float step)
 {
-    if(fader_timer_id)
-        SDL_RemoveTimer(fader_timer_id);
-
     fade_step = fabs(step);
     targetOffset = target;
     fadeSpeed = speed;
-
-    fader_timer_id = SDL_AddTimer(speed, &LVL_Block::nextOpacity, this);
-    if(!fader_timer_id) fadeOffset = targetOffset;
+    manual_ticks = speed;
 }
 
-unsigned int LVL_Block::nextOpacity(unsigned int x, void *p)
+bool LVL_Block::isFading()
 {
-    Q_UNUSED(x);
-    LVL_Block *self = reinterpret_cast<LVL_Block *>(p);
-    self->fadeStep();
-    return 0;
+    return (fadeOffset!=targetOffset);
+}
+
+bool LVL_Block::tickFader(int ticks)
+{
+    if(fadeSpeed<1) return true; //Idling animation
+    manual_ticks-=abs(ticks);
+        while(manual_ticks<=0)
+        {
+            fadeStep();
+            manual_ticks+=fadeSpeed;
+        }
+    return (fadeOffset==targetOffset);
 }
 
 void LVL_Block::fadeStep()
@@ -577,17 +585,8 @@ void LVL_Block::fadeStep()
     else
         fadeOffset-=fade_step;
 
-    if(fadeOffset>=1.0f || fadeOffset<=0.0f)
-    {
-        SDL_RemoveTimer(fader_timer_id);
-        if(fadeOffset>=1.0f)
-            setFade(fadeSpeed, 0.0f, fade_step);
-    }
-    else
-        {
-            fader_timer_id = SDL_AddTimer(fadeSpeed, &LVL_Block::nextOpacity, this);
-            if(!fader_timer_id) fadeOffset = targetOffset;
-        }
+    if(fadeOffset>=1.0f)
+        setFade(fadeSpeed, 0.0f, fade_step);
 
     if(fadeOffset>1.0f) fadeOffset = 1.0f;
     else

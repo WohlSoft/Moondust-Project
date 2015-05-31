@@ -281,7 +281,7 @@ LoadingScreen:
     ttl->setWaitTime(15000);
 
     ttl->init();
-    ttl->setFade(25, 0.0f, 0.02f);
+    ttl->fader.setFade(10, 0.0f, 0.01f);
     int ret = ttl->exec();
     delete ttl;
     if(ret==-1) goto ExitFromApplication;
@@ -306,7 +306,7 @@ MainMenu:
     _game_state.reset();
     TitleScene * iScene = new TitleScene();
     iScene->init();
-    iScene->setFade(25, 0.0f, 0.05f);
+    iScene->fader.setFade(10, 0.0f, 0.02f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
     PlayEpisodeResult res_episode = iScene->result_episode;
@@ -373,7 +373,7 @@ PlayWorldMap:
         sceneResult = wScene->init();
 
     if(sceneResult)
-        wScene->setFade(25, 0.0f, 0.05f);
+        wScene->fader.setFade(10, 0.0f, 0.02f);
 
     if(sceneResult)
         ExitCode = wScene->exec();
@@ -486,7 +486,7 @@ PlayLevel:
                 sceneResult = lScene->init();
             lScene->stopLoaderAnimation();
 
-            lScene->setFade(25, 0.0f, 0.05f);
+            lScene->fader.setFade(10, 0.0f, 0.02f);
 
             if(sceneResult)
                 ExitCode = lScene->exec();
