@@ -534,12 +534,10 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(doFade)
     {
-        fadeOffset=0.f;
         if(!isFading())
-        {
             LvlSceneP::s->fading_blocks.push_back(this);
-            setFade(5, 1.0f, 0.07f);
-        }
+        fadeOffset=0.f;
+        setFade(5, 1.0f, 0.07f);
     }
 }
 
