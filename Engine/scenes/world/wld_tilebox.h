@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QList>
+#include <QStack>
 #include <unordered_map>
 #include <common_features/point.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -432,33 +433,41 @@ public:
 
     void sortElements(QList<WorldNode * > &list)
     {
-        sortElements(list, 0, list.size()-1);
-    }
-
-    void sortElements(QList<WorldNode * > &list, int l, int r)
-    {
-        double x = list[l + (r - l) / 2]->Z;
-        //запись эквивалентна (l+r)/2,
-        //но не вызввает переполнения на больших данных
-        int i = l;
-        int j = r;
-        //код в while обычно выносят в процедуру particle
-        while(i <= j)
+        if(list.size()<=1) return; //Nothing to sort!
+        QStack<int> beg;
+        QStack<int> end;
+        WorldNode* piv;
+        int i=0, L, R, swapv;
+        beg.push_back(0);
+        end.push_back(list.size());
+        while (i>=0)
         {
-            while(list[i]->Z < x) i++;
-            while(list[j]->Z > x) j--;
-            if(i <= j)
+            L=beg[i]; R=end[i]-1;
+            if (L<R)
             {
-                list.swap(i, j);
-                i++;
-                j--;
+                piv=list[L];
+                while (L<R)
+                {
+                    while ((list[R]->Z>=piv->Z) && (L<R)) R--;
+                    if (L<R) list[L++]=list[R];
+
+                    while ((list[L]->Z<=piv->Z) && (L<R)) L++;
+                    if (L<R) list[R--]=list[L];
+                }
+                list[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+                if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
+                {
+                    swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;
+                    swapv=end[i]; end[i]=end[i-1]; end[i-1]=swapv;
+                }
+            }
+            else
+            {
+                i--;
+                beg.pop_back();
+                end.pop_back();
             }
         }
-        if (i<r)
-                    sortElements(list, i, r);
-
-        if (l<j)
-            sortElements(list, l, j);
     }
 
     void clean()
