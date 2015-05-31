@@ -46,11 +46,9 @@ LoadingScene_misc_img::LoadingScene_misc_img(const LoadingScene_misc_img &im)
 }
 
 
-LoadingScene::LoadingScene()
+LoadingScene::LoadingScene() : Scene(Loading)
 {
     _waitTimer=5000;
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
 }
 
 LoadingScene::~LoadingScene()
@@ -116,7 +114,7 @@ void LoadingScene::setWaitTime(unsigned int time)
 
 void LoadingScene::update()
 {
-    fader.tickFader(uTick);
+    Scene::update();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTick);
 }

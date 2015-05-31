@@ -46,11 +46,9 @@ CreditsScene_misc_img::CreditsScene_misc_img(const CreditsScene_misc_img &im)
 }
 
 
-CreditsScene::CreditsScene()
+CreditsScene::CreditsScene() : Scene(Credits)
 {
     _waitTimer=5000;
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
 }
 
 CreditsScene::~CreditsScene()
@@ -123,7 +121,7 @@ void CreditsScene::setWaitTime(unsigned int time)
 void CreditsScene::update()
 {
     /******************Update built-in faders and animators*********************/
-    fader.tickFader(uTick);
+    Scene::update();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTick);
     /******************Update built-in faders and animators*********************/
@@ -163,9 +161,7 @@ int CreditsScene::exec()
 {
     //Level scene's Loop
     Uint32 start_render;
-    bool running = true;
     float doUpdate_Render=0;
-    bool doExit=false;
 
     Uint32 start_wait_timer=SDL_GetTicks();
     while(running)

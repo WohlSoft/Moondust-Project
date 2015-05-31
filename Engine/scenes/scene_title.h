@@ -66,7 +66,6 @@ public:
     int exec();
     void resetController();
     PGE_Menu menu;
-    bool doExit;
 
     enum CurrentMenu
     {

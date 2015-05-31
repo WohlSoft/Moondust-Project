@@ -61,7 +61,6 @@ public:
     controller_keys controls_1;
 
     bool worldIsContinues;
-    bool doExit;
     bool isPauseMenu;
 
     void update();

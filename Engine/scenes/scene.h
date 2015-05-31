@@ -20,15 +20,21 @@
 #define SCENE_H
 
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_keycode.h>
+#include <SDL2/SDL_scancode.h>
+#include <SDL2/SDL_events.h>
 #include <common_features/fader.h>
 
 class Scene
 {
+    void construct();
 public:
+    void updateTickValue();
+
     enum TypeOfScene
     {
         _Unknown=0,
-        Intro,
+        Loading,
         Title,
         Level,
         World,
@@ -39,17 +45,36 @@ public:
     Scene();
     Scene(TypeOfScene _type);
     virtual ~Scene();
+    virtual void onKeyInput(int key);             //!< Triggering when pressed game specific key
+    virtual void onKeyboardPressed(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardReleased(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardReleasedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    virtual void onMouseMoved(SDL_MouseMotionEvent &mmevent);
+    virtual void onMousePressed(SDL_MouseButtonEvent &mbevent);
+    virtual void onMouseReleased(SDL_MouseButtonEvent &mbevent);
+    virtual void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+    virtual void processEvents();
+
     virtual void update();
     virtual void render();
     virtual void renderMouse();
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
+    bool isExiting();
+    bool doShutDown();
     /**************Fader**************/
     bool isOpacityFadding();
     void setFade(int speed, float target, float step);
     PGE_Fader fader;
     /**************Fader**************/
+
+protected:
+    bool        running;
+    bool        _doShutDown;
+    bool        doExit;
+    int         uTick;
 
 private:
     TypeOfScene sceneType;

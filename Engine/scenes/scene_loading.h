@@ -53,7 +53,6 @@ public:
 
 private:
     unsigned int _waitTimer;
-    int uTick;
 
     PGE_Texture background;
     QVector<LoadingScene_misc_img > imgs;
