@@ -189,36 +189,42 @@ void PGE_LevelCamera::update(float ticks)
 
 void PGE_LevelCamera::sortElements()
 {
-    sortElements(0, objects_to_render.size()-1);
-}
-
-void PGE_LevelCamera::sortElements(int l, int r)
-{
-    GLdouble x = objects_to_render[l + (r - l) / 2]->zIndex();
-    //запись эквивалентна (l+r)/2,
-    //но не вызввает переполнения на больших данных
-    int i = l;
-    int j = r;
-    //код в while обычно выносят в процедуру particle
-    while(i <= j)
+    if(objects_to_render.size()<=1) return; //Nothing to sort!
+    QStack<int> beg;
+    QStack<int> end;
+    PGE_Phys_Object* piv;
+    int i=0, L, R, swapv;
+    beg.push_back(0);
+    end.push_back(objects_to_render.size());
+    while (i>=0)
     {
-        while(objects_to_render[i]->zIndex() < x) i++;
-        while(objects_to_render[j]->zIndex() > x) j--;
-        if(i <= j)
+        L=beg[i]; R=end[i]-1;
+        if (L<R)
         {
-            objects_to_render.swap(i, j);
-            i++;
-            j--;
+            piv=objects_to_render[L];
+            while (L<R)
+            {
+                while ((objects_to_render[R]->zIndex()>=piv->zIndex()) && (L<R)) R--;
+                if (L<R) objects_to_render[L++]=objects_to_render[R];
+
+                while ((objects_to_render[L]->zIndex()<=piv->zIndex()) && (L<R)) L++;
+                if (L<R) objects_to_render[R--]=objects_to_render[L];
+            }
+            objects_to_render[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+            if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
+            {
+                swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;
+                swapv=end[i]; end[i]=end[i-1]; end[i-1]=swapv;
+            }
+        }
+        else
+        {
+            i--;
+            beg.pop_back();
+            end.pop_back();
         }
     }
-    if (i<r)
-                sortElements(i, r);
-
-    if (l<j)
-        sortElements(l, j);
 }
-
-
 
 void PGE_LevelCamera::changeSectionBorders(long left, long top, long right, long bottom)
 {
