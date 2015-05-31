@@ -304,10 +304,11 @@ int TitleScene::exec()
         {
             if(AppSettings.joysticks.size()>0)
             {
-                JoystickController::bindJoystickKey(AppSettings.joysticks.first(),
-                                                    debug_joy_keyval,
-                                                    debug_joy_keyid,
-                                                    debug_joy_keytype);
+                KM_Key jkey;
+                JoystickController::bindJoystickKey(AppSettings.joysticks.first(), jkey);
+                debug_joy_keyval    =jkey.val,
+                debug_joy_keyid     =jkey.id;
+                debug_joy_keytype   =jkey.type;
             }
         }
 
@@ -685,11 +686,8 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
                         KeyMap *mp_p;
                         int *mct_p=0;
-                        KeyMapJoyCtrls *jk_id=0;
-                        KeyMapJoyCtrls *jk_type=0;
                         SDL_Joystick* jdev=NULL;
                         std::function<void()> ctrlSwitch;
-                        bool joy=false;
 
                         if(_menu==menu_controls_plr1)
                         {
@@ -702,9 +700,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 if(*mct_p<AppSettings.joysticks.size())
                                     jdev        = AppSettings.joysticks[*mct_p];
                                 mp_p         = &AppSettings.player1_joysticks[*mct_p];
-                                jk_id   = &AppSettings.player1_joysticks_ctrls_ids[*mct_p];
-                                jk_type = &AppSettings.player1_joysticks_ctrls_types[*mct_p];
-                                joy=true;
                             }
                             else
                                 mp_p = &AppSettings.player1_keyboard;
@@ -719,9 +714,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                 if(*mct_p<AppSettings.joysticks.size())
                                     jdev        = AppSettings.joysticks[*mct_p];
                                 mp_p = &AppSettings.player2_joysticks[*mct_p];
-                                jk_id   = &AppSettings.player2_joysticks_ctrls_ids[*mct_p];
-                                jk_type = &AppSettings.player2_joysticks_ctrls_types[*mct_p];
-                                joy=true;
                             }
                             else
                                 mp_p = &AppSettings.player2_keyboard;
@@ -743,25 +735,25 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", "Input:", true, ctrlSwitch);
                             menu.setItemWidth(300);
                             menu.setValueOffset(150);
-                            menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", (joy?&jk_id->left:NULL),(joy?&jk_type->left:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", (joy?&jk_id->right:NULL),(joy?&jk_type->right:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", (joy?&jk_id->up:NULL),(joy?&jk_type->up:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", (joy?&jk_id->down:NULL),(joy?&jk_type->down:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", (joy?&jk_id->jump:NULL),(joy?&jk_type->jump:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", (joy?&jk_id->jump_alt:NULL),(joy?&jk_type->jump_alt:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", (joy?&jk_id->run:NULL),(joy?&jk_type->run:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", (joy?&jk_id->run_alt:NULL),(joy?&jk_type->run_alt:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", (joy?&jk_id->drop:NULL), (joy?&jk_type->drop:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", jdev);
                             menu.setValueOffset(210);
-                            menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", (joy?&jk_id->start:NULL),(joy?&jk_type->start:NULL), jdev);
+                            menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", jdev);
                             menu.setValueOffset(210);
                         }
                         break;

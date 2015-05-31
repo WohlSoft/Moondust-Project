@@ -29,17 +29,14 @@ public:
     JoystickController();
     ~JoystickController();
     void setJoystickDevice(SDL_Joystick* jctrl);
-    void setJoyCtrlMap(KeyMapJoyCtrls ids, KeyMapJoyCtrls types);
     SDL_Joystick* getJoystickDevice() const;
-    static bool bindJoystickKey(SDL_Joystick* joy, int &keyValue, int &keyID, int &keyType);
+    static bool bindJoystickKey(SDL_Joystick* joy, KM_Key &k);
 
-    void updateKey(bool &key, int &keyValue, int &keyID, int &keyType);
+    void updateKey(bool &key, KM_Key &mkey);
     void update();
 
 private:
     SDL_Joystick* joystickController;
-    KeyMapJoyCtrls _ctrls_ids;
-    KeyMapJoyCtrls _ctrls_types;
 };
 
 #endif // CONTROLLER_JOYSTICK_H

@@ -23,6 +23,7 @@
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <controls/controller_key_map.h>
 
 PGE_Menu::PGE_Menu()
 {
@@ -190,13 +191,11 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     refreshRect();
 }
 
-void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title,
-                                  int *joystick_key_id,
-                                  int *joystick_key_type,
+void PGE_Menu::addKeyGrabMenuItem(KM_Key *key, QString value, QString title,
                                   SDL_Joystick* joystick_device)
 {
     PGE_KeyGrabMenuItem item;
-    item.keyValue = keyvalue;
+    item.targetKey = key;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown key-grabber" : title);
     item._font_id = _font_id;
@@ -212,11 +211,9 @@ void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title,
         item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
 
-    if(joystick_key_id && joystick_key_type)
+    if(joystick_device)
     {
         item.joystick_mode=true;
-        item.joystick_key_id=joystick_key_id;
-        item.joystick_key_type=joystick_key_type;
         item.joystick_device=joystick_device;
     }
 

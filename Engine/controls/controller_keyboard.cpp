@@ -21,16 +21,16 @@
 KeyboardController::KeyboardController() :
     Controller()
 {
-    kmap.jump       = SDL_SCANCODE_Z;
-    kmap.jump_alt   = SDL_SCANCODE_A;
-    kmap.run        = SDL_SCANCODE_X;
-    kmap.run_alt    = SDL_SCANCODE_S;
-    kmap.drop       = SDL_SCANCODE_LSHIFT;
-    kmap.start      = SDL_SCANCODE_RETURN;
-    kmap.left       = SDL_SCANCODE_LEFT;
-    kmap.right      = SDL_SCANCODE_RIGHT;
-    kmap.up         = SDL_SCANCODE_UP;
-    kmap.down       = SDL_SCANCODE_DOWN;
+    kmap.jump.val       = SDL_SCANCODE_Z;
+    kmap.jump_alt.val   = SDL_SCANCODE_A;
+    kmap.run.val        = SDL_SCANCODE_X;
+    kmap.run_alt.val    = SDL_SCANCODE_S;
+    kmap.drop.val       = SDL_SCANCODE_LSHIFT;
+    kmap.start.val      = SDL_SCANCODE_RETURN;
+    kmap.left.val       = SDL_SCANCODE_LEFT;
+    kmap.right.val      = SDL_SCANCODE_RIGHT;
+    kmap.up.val         = SDL_SCANCODE_UP;
+    kmap.down.val       = SDL_SCANCODE_DOWN;
 }
 
 KeyboardController::~KeyboardController()
@@ -42,17 +42,17 @@ void KeyboardController::update()
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
 
-    keys.jump=state[kmap.jump];
-    keys.alt_jump=state[kmap.jump_alt];
+    keys.jump=state[kmap.jump.val];
+    keys.alt_jump=state[kmap.jump_alt.val];
 
-    keys.run=state[kmap.run];
-    keys.alt_run=state[kmap.run_alt];
+    keys.run=state[kmap.run.val];
+    keys.alt_run=state[kmap.run_alt.val];
 
-    keys.right=state[kmap.right];
-    keys.up=state[kmap.up];
-    keys.down=state[kmap.down];
-    keys.left=state[kmap.left];
+    keys.right=state[kmap.right.val];
+    keys.up=state[kmap.up.val];
+    keys.down=state[kmap.down.val];
+    keys.left=state[kmap.left.val];
 
-    keys.drop=state[kmap.drop];
-    keys.start=state[kmap.start];
+    keys.drop=state[kmap.drop.val];
+    keys.start=state[kmap.start.val];
 }
