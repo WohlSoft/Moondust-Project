@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_INTRO_H
-#define SCENE_INTRO_H
+#ifndef SCENE_TITLE_H
+#define SCENE_TITLE_H
 
 #include <QMap>
 #include <QPair>
@@ -121,4 +121,4 @@ private:
     bool _cursorIsLoaded;
 };
 
-#endif // SCENE_INTRO_H
+#endif // SCENE_TITLE_H
