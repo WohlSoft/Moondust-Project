@@ -53,7 +53,7 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
+    uTick = (1000.0/(float)PGE_Window::PhysStep);
     if(uTick<=0) uTick=1;
 
     isInit=false;
@@ -88,10 +88,7 @@ LevelScene::LevelScene()
     /*********Loader*************/
 
     /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
+    fader.setFull();
     /*********Fader*************/
 
     /*********Controller********/
@@ -240,6 +237,8 @@ void LevelScene::update()
 {
     tickAnimations(uTick);
 
+    fader.tickFader(uTick);
+
     if(doExit)
     {
         if(exitLevelDelay>=0)
@@ -248,18 +247,18 @@ void LevelScene::update()
         {
             if(exitLevelCode==LvlExit::EXIT_Closed)
             {
-                fader_opacity=1.0f;
+                fader.setFull();
                 isLevelContinues=false;
             }
             else
             {
-                if(fader_opacity<=0.0f)
+                if(fader.isNull())
                 {
                     if(PGE_MusPlayer::MUS_IsPlaying())
                         PGE_MusPlayer::MUS_stopMusicFadeOut(500);
-                    setFade(25, 1.0f, 0.02f);
+                    fader.setFade(10, 1.0f, 0.01f);
                 }
-                if(fader_opacity>=1.0)
+                if(fader.isFull())
                     isLevelContinues=false;
             }
         }
@@ -272,21 +271,21 @@ void LevelScene::update()
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
 
-        while(!block_transfors.isEmpty())
+        while(!block_transforms.isEmpty())
         {
-            transformTask_block x = block_transfors.first();
+            transformTask_block x = block_transforms.first();
             if(ConfigManager::lvl_block_indexes.contains(x.id))
                 x.block->setup = &ConfigManager::lvl_block_indexes[x.id];
             else
             {
-                block_transfors.pop_front();
+                block_transforms.pop_front();
                 continue;
             }
-            x.block->data.id = block_transfors.first().id;
+            x.block->data.id = block_transforms.first().id;
             x.block->transformTo_x(x.id);
             x.block->init();
 
-            block_transfors.pop_front();
+            block_transforms.pop_front();
         }
 
         //Update controllers
@@ -303,6 +302,14 @@ void LevelScene::update()
                 debug_player_foots=players[i]->foot_contacts_map.size();
             }
             players[i]->update(uTick);
+        }
+
+        for(int i=0;i<fading_blocks.size();i++)
+        {
+            if(fading_blocks[i]->tickFader(uTick))
+            {
+                fading_blocks.removeAt(i); i--;
+            }
         }
 
         for(int i=0;i<active_npcs.size();i++)
@@ -339,7 +346,7 @@ void LevelScene::update()
 
         //update cameras
         for(i=0; i<cameras.size(); i++)
-            cameras[i]->update();
+            cameras[i]->update(uTick);
     }
 
     if(IntProc::enabled && IntProc::cmd_accepted)
@@ -396,6 +403,9 @@ void LevelScene::render()
                 break;
             }
         }
+
+        cam->drawForeground();
+
         if(numberOfPlayers>1)
             GlRenderer::resetViewport();
     }

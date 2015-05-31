@@ -48,6 +48,8 @@ TitleScene::TitleScene()
 
     controller = NULL;
 
+    fader.setFull();
+
     glClearColor(float(ConfigManager::setup_TitleScreen.backgroundColor.red())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.green())/255.0f,
                  float(ConfigManager::setup_TitleScreen.backgroundColor.blue())/255.0f, 1.0f);
@@ -124,11 +126,6 @@ TitleScene::TitleScene()
 
         imgs.push_back(img);
     }
-
-    for(int i=0;i<imgs.size();i++)
-    {
-        imgs[i].a.start();
-    }
 }
 
 TitleScene::~TitleScene()
@@ -150,7 +147,6 @@ TitleScene::~TitleScene()
 
     for(int i=0;i<imgs.size();i++)
     {
-        imgs[i].a.stop();
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
@@ -210,10 +206,15 @@ void TitleScene::render()
 
     if(AppSettings.showDebugInfo)
     {
-        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3")
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\nfader ratio %4 N%5 F%6 TKS-%7")
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
-                               .arg(debug_joy_keytype),10, 10);
+                               .arg(debug_joy_keytype)
+                               .arg(fader.fadeRatio())
+                               .arg(fader.isNull())
+                               .arg(fader.isFull())
+                               .arg(fader.ticksLeft())
+                               ,10, 10);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
 //                               "abcdefghijklmnopqrstuvwxyz\n"
 //                               "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ\n"
@@ -268,6 +269,9 @@ int TitleScene::exec()
     float doUpdate_Render=0;
     bool doExit=false;
 
+    int uTick = (1000.0/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
+
     menustates.clear();
     menuChain.clear();
 
@@ -282,13 +286,19 @@ int TitleScene::exec()
     while(running)
     {
         //UPDATE Events
-        start_render=SDL_GetTicks();
+        fader.tickFader(uTick);
+
+        for(int i=0;i<imgs.size(); i++)
+            imgs[i].a.manualTick(uTick);
+
         if(doExit)
         {
-            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-            if(fader_opacity>=1.0)
+            if(fader.isNull()) fader.setFade(10, 1.0f, 0.02f);
+            if(fader.isFull())
                 running=false;
         }
+
+        start_render=SDL_GetTicks();
 
         if(PGE_Window::showDebugInfo)
         {
@@ -460,17 +470,18 @@ int TitleScene::exec()
                             if(value=="Exit")
                             {
                                 ret = ANSWER_EXIT;
+                                fader.setNull();
                                 doExit=true;
                             }
                             else
                             {
                                 PGE_MsgBox msgBox(this, QString("Sorry, is not implemented yet..."),
                                                   PGE_MsgBox::msg_warn);
-                                fader_opacity=0.5;
+                                fader.setRatio(0.5);
                                 PGE_Window::setCursorVisibly(true);
                                 msgBox.exec();
                                 PGE_Window::setCursorVisibly(false);
-                                fader_opacity=0.0;
+                                fader.setNull();
                                 menu.resetState();
                             }
                         break;
@@ -490,9 +501,9 @@ int TitleScene::exec()
                                         ret = ANSWER_PLAYEPISODE_2P;
                                     else
                                         ret = ANSWER_PLAYEPISODE;
-                                    setFade(21, 1.0f, 0.2f);
-                                    fader_opacity=0.1f;
+                                    fader.setFade(10, 1.0f, 0.06f);
                                     doExit=true;
+                                    menu.resetState();
                                 }
                             }
                         break;
@@ -506,9 +517,9 @@ int TitleScene::exec()
                             {
                                 result_level.levelfile = value;
                                 ret = ANSWER_PLAYLEVEL;
-                                setFade(21, 1.0f, 0.2f);
-                                fader_opacity=0.1f;
+                                fader.setFade(10, 1.0f, 0.06f);
                                 doExit=true;
+                                menu.resetState();
                             }
                         break;
                         case menu_options:

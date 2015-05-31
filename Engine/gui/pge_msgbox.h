@@ -24,6 +24,7 @@
 
 #undef main
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_types.h>
 #undef main
 
 #include <QString>

@@ -24,6 +24,7 @@
 
 #include <data_configs/config_manager.h>
 #include <audio/SdlMusPlayer.h>
+#include <graphics/gl_renderer.h>
 
 #include <QtDebug>
 
@@ -38,6 +39,7 @@ PGE_LevelCamera::PGE_LevelCamera()
 
     section = 0;
     cur_section = NULL;
+    fader.setNull();
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
@@ -51,6 +53,8 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
 
     section = cam.section;
     cur_section = cam.cur_section;
+
+    fader = cam.fader;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -126,7 +130,7 @@ void PGE_LevelCamera::setOffset(int x, int y)
     offset_y=y;
 }
 
-void PGE_LevelCamera::update()
+void PGE_LevelCamera::update(float ticks)
 {
     objects_to_render.clear();
 
@@ -136,6 +140,7 @@ void PGE_LevelCamera::update()
 //    aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
 //    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
 //    worldPtr->QueryAABB(&cb, aabb);
+    fader.tickFader(ticks);
     cur_section->queryItems(PGE_RectF(pos_x, pos_y, width, height), &objects_to_render);
 
     int contacts = 0;
@@ -241,6 +246,15 @@ void PGE_LevelCamera::drawBackground()
     }
 }
 
+void PGE_LevelCamera::drawForeground()
+{
+    if(!fader.isNull())
+    {
+        GlRenderer::renderRect(0, 0, width, height, 0.0f, 0.0f, 0.0f, fader.fadeRatio());
+    }
+}
+
+
 void PGE_LevelCamera::changeSection(LVL_Section *sct)
 {
     if(!sct) return;
@@ -250,35 +264,3 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct)
     cur_section->playMusic();//Play current section music
     cur_section->initBG();   //Init background if not initialized
 }
-
-/**************************Fader*******************************/
-
-void PGE_LevelCamera::setFade(int speed, float target, float step)
-{
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fader_timer_id = SDL_AddTimer(speed, &PGE_LevelCamera::nextOpacity, this);
-}
-
-unsigned int PGE_LevelCamera::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    PGE_LevelCamera *self = reinterpret_cast<PGE_LevelCamera *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void PGE_LevelCamera::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_LevelCamera::nextOpacity, this);
-}
-/**************************Fader**end**************************/

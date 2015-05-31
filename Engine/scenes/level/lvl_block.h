@@ -24,8 +24,6 @@
 #include <common_features/rectf.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include <SDL2/SDL_timer.h>
-
 class LVL_Block : public PGE_Phys_Object
 {
 public:
@@ -74,9 +72,10 @@ public:
     float fade_step;
     int   fadeSpeed;
     void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
+    bool isFading();
+    bool tickFader(int ticks);
+    int manual_ticks;
     void fadeStep();
-    SDL_TimerID fader_timer_id;
     /**************Fader**************/
 
     //float posX();

@@ -16,43 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef PGE_FADER_H
+#define PGE_FADER_H
 
-#include <SDL2/SDL_opengl.h>
-#include <common_features/fader.h>
-
-class Scene
+class PGE_Fader
 {
 public:
-    enum TypeOfScene
-    {
-        _Unknown=0,
-        Intro,
-        Title,
-        Level,
-        World,
-        Credits,
-        GameOver
-    };
+    PGE_Fader();
+    PGE_Fader(const PGE_Fader&f);
+    ~PGE_Fader();
 
-    Scene();
-    Scene(TypeOfScene _type);
-    virtual ~Scene();
-    virtual void update();
-    virtual void render();
-    virtual void renderMouse();
-    virtual int exec(); //scene's loop
-    TypeOfScene type();
-
-    /**************Fader**************/
-    bool isOpacityFadding();
     void setFade(int speed, float target, float step);
-    PGE_Fader fader;
-    /**************Fader**************/
+    void setRatio(float ratio);
+    bool tickFader(int ticks);
+    const float &fadeRatio();
+    bool isFading();
+    bool isFull();
+    void setFull();
+    bool isNull();
+    void setNull();
 
+    int ticksLeft();
 private:
-    TypeOfScene sceneType;
+    void fadeStep();
+    float cur_ratio;
+    float target_ratio;
+    float fade_step;
+    int fadeSpeed;
+    int manual_ticks;
 };
 
-#endif // SCENE_H
+#endif // PGE_FADER_H

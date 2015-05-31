@@ -46,7 +46,6 @@ LoadingScene::~LoadingScene()
 
     for(int i=0;i<imgs.size();i++)
     {
-        imgs[i].a.stop();
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
@@ -83,11 +82,6 @@ void LoadingScene::init()
         img.frmH = (img.t.h / ConfigManager::setup_LoadingScreen.AdditionalImages[i].frames);
 
         imgs.push_back(img);
-    }
-
-    for(int i=0;i<imgs.size();i++)
-    {
-        imgs[i].a.start();
     }
 }
 
@@ -130,9 +124,17 @@ int LoadingScene::exec()
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
 
+    int uTick = (1000.0/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
+
     Uint32 start_wait_timer=SDL_GetTicks();
     while(running)
     {
+
+        fader.tickFader(uTick);
+
+        for(int i=0;i<imgs.size(); i++)
+            imgs[i].a.manualTick(uTick);
 
         //UPDATE Events
         start_render=SDL_GetTicks();
@@ -142,8 +144,8 @@ int LoadingScene::exec()
 
         if(doExit)
         {
-            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-            if(fader_opacity>=1.0)
+            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
+            if(fader.isFull())
                 running=false;
         }
 

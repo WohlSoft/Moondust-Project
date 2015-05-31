@@ -21,6 +21,7 @@
 
 #include <physics/base_object.h>
 #include <graphics/graphics.h>
+#include <common_features/fader.h>
 
 #include <QList>
 #include <PGE_File_Formats/file_formats.h>
@@ -49,8 +50,9 @@ public:
     void setPos(float x, float y);
     void setSize(int w, int h);
     void setOffset(int x, int y);
-    void update();
+    void update(float ticks);
     void drawBackground();
+    void drawForeground();
 
     void changeSection(LVL_Section *sct);
     void changeSectionBorders(long left, long top, long right, long bottom);
@@ -68,16 +70,8 @@ public:
     float pos_y;
 
     /**************Fader**************/
-    float fader_opacity;
-    float target_opacity;
-    float fade_step;
-    int fadeSpeed;
-    void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
-    void fadeStep();
-    SDL_TimerID fader_timer_id;
+    PGE_Fader fader;
     /**************Fader**************/
-
 private:
     void sortElements();
     void sortElements(int l, int r);

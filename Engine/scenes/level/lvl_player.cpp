@@ -1016,8 +1016,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
                 EventQueueEntry<LVL_Player >fadeOutBlack;
                 fadeOutBlack.makeCaller([this]()->void{
-                                      if(LvlSceneP::s->fader_opacity>0)
-                                         LvlSceneP::s->setFade(25, 0.0, 0.25);
+                                      if(!camera->fader.isNull())
+                                          camera->fader.setFade(10, 0.0, 0.08);
                                   }, 0);
                 event_queue.events.push_back(fadeOutBlack);
 
@@ -1096,8 +1096,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
             EventQueueEntry<LVL_Player >fadeOutBlack;
             fadeOutBlack.makeCaller([this]()->void{
-                                  if(LvlSceneP::s->fader_opacity>0)
-                                     LvlSceneP::s->setFade(25, 0.0, 0.25);
+                                  if(!camera->fader.isNull())
+                                      camera->fader.setFade(10, 0.0, 0.08);
                               }, 0);
             event_queue.events.push_back(fadeOutBlack);
 
@@ -1238,14 +1238,14 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
-                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                          camera->fader.setFade(10, 1.0, 0.08);
                                       }, 0);
                     event_queue.events.push_back(event3);
                 }
 
                 EventQueueEntry<LVL_Player >whileOpacityFade;
                 whileOpacityFade.makeWaiterCond([this]()->bool{
-                                          return LvlSceneP::s->isOpacityFadding();
+                                          return camera->fader.isFading();
                                       }, true, 100);
                 event_queue.events.push_back(whileOpacityFade);
 
@@ -1291,14 +1291,14 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
-                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                          camera->fader.setFade(10, 1.0, 0.08);
                                       }, 0);
                     event_queue.events.push_back(event3);
                 }
 
                 EventQueueEntry<LVL_Player >event4;
                 event4.makeWaiterCond([this]()->bool{
-                                          return LvlSceneP::s->isOpacityFadding();
+                                          return camera->fader.isFading();
                                       }, true, 100);
                 event_queue.events.push_back(event4);
 

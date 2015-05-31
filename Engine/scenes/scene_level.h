@@ -185,13 +185,15 @@ public:
 
     LevelData *levelData();
 
-    QQueue<transformTask_block > block_transfors;
+    QQueue<transformTask_block > block_transforms;
 
     QMap<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
 
     QList<LVL_Npc* > active_npcs;
     QList<LVL_Npc* > dead_npcs;
+
+    QList<LVL_Block* > fading_blocks;
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);

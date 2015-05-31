@@ -24,13 +24,7 @@
 Scene::Scene()
 {
     sceneType = _Unknown;
-    /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
-    fadeRunned=false;
-    /*********Fader*************/
+    fader.setFull();
 }
 
 Scene::Scene(TypeOfScene _type)
@@ -40,8 +34,6 @@ Scene::Scene(TypeOfScene _type)
 
 Scene::~Scene()
 {
-    if(fader_timer_id)
-        SDL_RemoveTimer(fader_timer_id);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -54,9 +46,9 @@ void Scene::update()
 
 void Scene::render()
 {
-    if(fader_opacity>0.0f)
+    if(!fader.isNull())
     {
-        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader_opacity);
+        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
 }
 
@@ -76,39 +68,11 @@ Scene::TypeOfScene Scene::type()
 /**************************Fader*******************************/
 bool Scene::isOpacityFadding()
 {
-    return fadeRunned;
+    return fader.isFading();
 }
 
 void Scene::setFade(int speed, float target, float step)
 {
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fadeRunned=true;
-    fader_timer_id = SDL_AddTimer(speed, &Scene::nextOpacity, this);
-}
-
-unsigned int Scene::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    Scene *self = reinterpret_cast<Scene *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void Scene::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-    {
-        SDL_RemoveTimer(fader_timer_id);
-        fadeRunned=false;
-    }
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &Scene::nextOpacity, this);
+    fader.setFade(speed, target, step);
 }
 /**************************Fader**end**************************/
