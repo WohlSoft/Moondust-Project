@@ -20,6 +20,8 @@
 #include <common_features/mainwinconnect.h>
 #include <common_features/item_rectangles.h>
 
+#include <main_window/dock/lvl_warp_props.h>
+
 #include "mode_select.h"
 #include "../lvl_scene.h"
 #include "../items/item_bgo.h"
@@ -315,7 +317,13 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         }////////////////////////SECOND FETCH///////////////////////
 
         if(s->mouseMoved)
+        {
+            /***********If some door items are moved, refresh list!*****************/
+            if(!historySourceBuffer.doors.isEmpty())
+                MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
+            /***********************************************************************/
             s->addMoveHistory(historySourceBuffer, historyBuffer);
+        }
 
         s->mouseMoved = false;
     }

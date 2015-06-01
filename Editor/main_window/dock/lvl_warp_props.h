@@ -10,6 +10,7 @@ class LvlWarpBox;
 
 class MainWindow;
 class QComboBox;
+struct LevelDoor;
 
 class LvlWarpBox : public QDockWidget, public MWDock_Base
 {
@@ -74,6 +75,7 @@ private slots:
     void on_WarpBrowseLevels_clicked();
 
 private:
+    QString doorTitle(LevelDoor &door);
     bool lockWarpSetSettings;
 
     Ui::LvlWarpBox *ui;
