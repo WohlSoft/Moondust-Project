@@ -148,7 +148,7 @@ void WldScene::addTransformHistory(WorldData transformedItems, WorldData sourceI
     updateHistoryBuffer();
 
     HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
-    modf->setCustomHistoryName(tr("Flip"));
+    modf->setCustomHistoryName(tr("Transform"));
     modf->setScene(this);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
