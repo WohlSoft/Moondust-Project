@@ -40,14 +40,14 @@ public:
                               int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
-    int blockID;
-    int bgoID;
-    int npcID;
-    int tileID;
-    int sceneryID;
-    int pathID;
-    int levelID;
-    int musicID;
+    int blockID;    QList<int> blockIDs;
+    int bgoID;      QList<int> bgoIDs;
+    int npcID;      QList<int> npcIDs;
+    int tileID;     QList<int> tileIDs;
+    int sceneryID;  QList<int> sceneryIDs;
+    int pathID;     QList<int> pathIDs;
+    int levelID;    QList<int> levelIDs;
+    int musicID;    QList<int> musicIDs;
     QString musicFile;
 
     bool isCoin;
@@ -69,6 +69,8 @@ public:
     };
 
     void removeEmptyEntry(int tabs);
+
+    void setMultiSelect(bool _multiselect);
 
     void setWorldMapRootDir(QString dir);
 
@@ -111,7 +113,10 @@ private:
 
     int extractID(QListWidget * w);
     int extractID(QTableWidget * w);
+    QList<int> extractIDs(QListWidget *w);
+    QList<int> extractIDs(QTableWidget *w);
 
+    bool isMultiSelect;
 
     QRadioButton* npcFromList;
     QRadioButton* npcCoins;

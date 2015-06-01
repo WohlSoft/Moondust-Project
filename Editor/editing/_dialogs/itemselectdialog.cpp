@@ -53,6 +53,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     removalFlags = 0;
     ui->setupUi(this);
 
+    isMultiSelect=false;
+
     QFont font;
     font.setItalic(true);
     QListWidgetItem * empBlock = new QListWidgetItem();
@@ -293,6 +295,24 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
 
     removalFlags = tabs;
 
+}
+
+void ItemSelectDialog::setMultiSelect(bool _multiselect)
+{
+    isMultiSelect = _multiselect;
+    QAbstractItemView::SelectionMode mode = _multiselect?
+                                        QAbstractItemView::MultiSelection:
+                                        QAbstractItemView::SingleSelection;
+
+    ui->Sel_List_Block->setSelectionMode(mode);
+    ui->Sel_List_BGO->setSelectionMode(mode);
+    ui->Sel_List_NPC->setSelectionMode(mode);
+
+    ui->Sel_List_Tile->setSelectionMode(mode);
+    ui->Sel_List_Scenery->setSelectionMode(mode);
+    ui->Sel_List_Path->setSelectionMode(mode);
+    ui->Sel_List_Level->setSelectionMode(mode);
+    ui->Sel_List_Music->setSelectionMode(mode);
 }
 
 void ItemSelectDialog::setWorldMapRootDir(QString dir)
@@ -1073,6 +1093,14 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     levelID = extractID(ui->Sel_List_Level);
     musicID = extractID(ui->Sel_List_Music);
 
+    blockIDs = extractIDs(ui->Sel_List_Block);
+    bgoIDs = extractIDs(ui->Sel_List_BGO);
+    tileIDs = extractIDs(ui->Sel_List_Tile);
+    sceneryIDs = extractIDs(ui->Sel_List_Scenery);
+    pathIDs = extractIDs(ui->Sel_List_Path);
+    levelIDs = extractIDs(ui->Sel_List_Level);
+    musicIDs = extractIDs(ui->Sel_List_Music);
+
     if((unsigned)musicID==conf->music_w_custom_id)
     {
         QString dirPath;
@@ -1274,4 +1302,26 @@ int ItemSelectDialog::extractID(QTableWidget *w)
         }
     }
     return 0;
+}
+
+QList<int> ItemSelectDialog::extractIDs(QListWidget *w)
+{
+    QList<int> elements;
+    if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
+        for(int i=0; i<w->selectedItems().size(); i++) {
+            elements.push_back(w->selectedItems()[i]->data(3).toInt());
+        }
+    }
+    return elements;
+}
+
+QList<int> ItemSelectDialog::extractIDs(QTableWidget *w)
+{
+    QList<int> elements;
+    if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
+        for(int i=0; i<w->selectedItems().size(); i++) {
+            elements.push_back(w->selectedItems()[i]->data(3).toInt());
+        }
+    }
+    return elements;
 }
