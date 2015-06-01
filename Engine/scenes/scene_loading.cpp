@@ -120,6 +120,14 @@ void LoadingScene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
     fader.setFade(10, 1.0f, 0.01f);
 }
 
+void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
+{
+    if(doExit) return;
+
+    doExit=true;
+    fader.setFade(10, 1.0f, 0.01f);
+}
+
 void LoadingScene::update()
 {
     Scene::update();
@@ -164,17 +172,15 @@ int LoadingScene::exec()
         //UPDATE Events
         start_render=SDL_GetTicks();
         update();
+        processEvents();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+        PGE_Window::rePaint();
 
         if(doExit)
         {
             if(fader.isFull())
                 running=false;
         }
-
-        processEvents();
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {
