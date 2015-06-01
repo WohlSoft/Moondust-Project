@@ -94,6 +94,8 @@ public:
 
     bool loadConfigs();
 
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+
     void update();
     void render();
     int exec();

@@ -442,6 +442,7 @@ bool WorldScene::loadConfigs()
     return success;
 }
 
+
 void WorldScene::update()
 {
     tickAnimations(uTick);
@@ -571,8 +572,6 @@ void WorldScene::update()
             isPauseMenu=false;
         }
     }
-
-    Scene::update();
 }
 
 void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
@@ -858,6 +857,34 @@ void WorldScene::render()
     Scene::render();
 }
 
+void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit) return;
+
+    switch(sdl_key)
+    { // Check which
+        case SDLK_ESCAPE: // ESC
+            {
+                setExiting(0, WldExit::EXIT_exitNoSave);
+            }   // End work of program
+        break;
+        case SDLK_RETURN:// Enter
+            {
+                if( doExit || lock_controls) break;
+                isPauseMenu = true;
+            }
+        break;
+        case SDLK_i:
+            ignore_paths= !ignore_paths;
+            if(ignore_paths)
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+            else
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+        break;
+        default: break;
+    }
+}
+
 int WorldScene::exec()
 {
     worldIsContinues=true;
@@ -892,64 +919,13 @@ int WorldScene::exec()
         player1Controller->update();
         controls_1 = player1Controller->keys;
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        if(doExit) break;
-                        setExiting(0, WldExit::EXIT_close);
-                    }   // End work of program
-                break;
-
-                case SDL_KEYDOWN: // If pressed key
-                  switch(event.key.keysym.sym)
-                  { // Check which
-                    case SDLK_ESCAPE: // ESC
-                            {
-                                setExiting(0, WldExit::EXIT_exitNoSave);
-                            }   // End work of program
-                        break;
-                    case SDLK_RETURN:// Enter
-                        {
-                            if( doExit || lock_controls) break;
-                            isPauseMenu = true;
-                        }
-                    break;
-                    case SDLK_i:
-                        ignore_paths= !ignore_paths;
-                        if(ignore_paths)
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
-                        else
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
-                    break;
-                    default:
-                    break;
-                  }
-                break;
-
-                case SDL_KEYUP:
-                switch(event.key.keysym.sym)
-                {
-                case SDLK_RETURN:// Enter
-                    break;
-                default:
-                    break;
-                }
-                break;
-            }
-        }
+        processEvents();
 
         if(PGE_Window::showDebugInfo)
         {
             stop_events = SDL_GetTicks();
             start_physics=SDL_GetTicks();
         }
-
-        /**********************Update physics and game progess***********************/
         update();
 
         if(controls_1.jump || controls_1.alt_jump)

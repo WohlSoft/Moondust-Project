@@ -199,7 +199,8 @@ SOURCES += \
     common_features/size.cpp \
     common_features/fader.cpp \
     data_configs/setup_credits_screen.cpp \
-    script/luaengine.cpp
+    script/luaengine.cpp \
+    scenes/title/ttl_main_menu.cpp
 
 
 HEADERS  += \
