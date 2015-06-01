@@ -424,6 +424,8 @@ PlayWorldMap:
             PGE_MsgBox::warn(QString("Start level\n%1")
                           .arg(_game_state.LevelFile));
             delete wScene;
+            if(_game_state.isHubLevel) goto ExitFromApplication;
+
             goto PlayWorldMap;
         }
         else
