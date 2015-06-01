@@ -5,7 +5,7 @@ Editor
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 + Add "Replace all Item-ID in a current section" feature
 - Provide ability to define NPC's "friendly" flag from message editing dialog
-- Add multi-selection into ItemSelection dialog which needed for some cases
++ Add multi-selection into ItemSelection dialog which needed for some cases
 
 Engine
 + Raster fonts support
