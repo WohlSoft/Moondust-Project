@@ -60,9 +60,20 @@ public:
 
     bool init();
 
+    void onKeyboardPressed(SDL_Scancode scancode);
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    void onMouseMoved(SDL_MouseMotionEvent &mmevent);
+    void onMousePressed(SDL_MouseButtonEvent &mbevent);
+    void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+
+    void processEvents();
+
     void update();
     void render();
     void renderMouse();
+
+    void processMenu();
+
     int exec();
     void resetController();
     PGE_Menu menu;
@@ -106,6 +117,7 @@ public:
     Controller *controller;
 
 private:
+    int ret;//!< Exit code
     PGE_Point mousePos;
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
@@ -118,6 +130,10 @@ private:
 
     PGE_Texture cursor;
     bool _cursorIsLoaded;
+
+    int debug_joy_keyval;
+    int debug_joy_keyid;
+    int debug_joy_keytype;
 };
 
 #endif // SCENE_TITLE_H

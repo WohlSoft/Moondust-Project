@@ -112,6 +112,14 @@ void LoadingScene::setWaitTime(unsigned int time)
         _waitTimer=time;
 }
 
+void LoadingScene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
+{
+    if(doExit) return;
+
+    doExit=true;
+    fader.setFade(10, 1.0f, 0.01f);
+}
+
 void LoadingScene::update()
 {
     Scene::update();
@@ -144,9 +152,9 @@ int LoadingScene::exec()
 {
     //Level scene's Loop
     Uint32 start_render;
-    bool running = true;
+    running = true;
     float doUpdate_Render=0;
-    bool doExit=false;
+    doExit=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
 
@@ -162,37 +170,11 @@ int LoadingScene::exec()
 
         if(doExit)
         {
-            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
             if(fader.isFull())
                 running=false;
         }
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        return -1;
-                    }   // End work of program
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                    switch(event.key.keysym.sym)
-                    {
-                        default:
-                           doExit=true;
-                        break;
-                    }
-                break;
-
-                case SDL_KEYUP:
-                break;
-                default: break;
-            }
-        }
+        processEvents();
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {

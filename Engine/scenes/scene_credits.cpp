@@ -118,6 +118,21 @@ void CreditsScene::setWaitTime(unsigned int time)
         _waitTimer=time;
 }
 
+void CreditsScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit) return;
+
+    switch(sdl_key)
+    {
+        case SDLK_ESCAPE:
+            doExit=true;
+            fader.setFade(10, 1.0f, 0.01f);
+        break;
+        default:
+        break;
+    }
+}
+
 void CreditsScene::update()
 {
     /******************Update built-in faders and animators*********************/
@@ -175,39 +190,11 @@ int CreditsScene::exec()
 
         if(doExit)
         {
-            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
             if(fader.isFull())
                 running=false;
         }
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        return -1;
-                    }   // End work of program
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                    switch(event.key.keysym.sym)
-                    {
-                        case SDLK_ESCAPE:
-                            doExit=true;
-                        break;
-                        default:
-                        break;
-                    }
-                break;
-
-                case SDL_KEYUP:
-                break;
-                default: break;
-            }
-        }
+        processEvents();
 
         if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
         {

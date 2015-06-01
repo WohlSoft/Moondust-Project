@@ -63,6 +63,8 @@ public:
     bool worldIsContinues;
     bool isPauseMenu;
 
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+
     void update();
     void render();
     int exec();
@@ -104,7 +106,6 @@ public:
     int  debug_render_delay;
     int  debug_phys_delay;
     int  debug_event_delay;
-    int  uTick;
 
     int dir;
     bool lock_controls;
