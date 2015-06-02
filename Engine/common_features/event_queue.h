@@ -4,6 +4,13 @@
 #include <QQueue>
 #include <functional>
 
+
+/*!
+    \brief Event queue entry
+
+    Entry of an event queue, holds a delay time, pointer to variable, function.
+    Also can hold a lamda-function code for execution.
+*/
 template<class T>
 struct EventQueueEntry
 {
@@ -33,6 +40,13 @@ struct EventQueueEntry
         flag_target=false;
     }
 
+    ///
+    /// \brief makeCaller
+    ///
+    /// Executes a static or any static non-member function
+    /// \param _caller pointer to a static or any non-member function
+    /// \param _delay time in milliseconds to wait before this function will be executed
+    ///
     void makeCaller( void(*_caller)(void), int _delay=0)
     {
         type=caller;
@@ -40,6 +54,13 @@ struct EventQueueEntry
         delay = _delay;
     }
 
+    ///
+    /// \brief makeCallerT
+    ///
+    /// Executes a member function of object of a type equal to defined on creation of templated event queue entry
+    /// \param _obj pointer to object where function must be executed
+    /// \param _delay time in milliseconds to wait before this function will be executed
+    ///
     void makeCallerT(T*_obj, void(T::*_caller)(void), int _delay=0)
     {
         obj=_obj;
@@ -48,7 +69,13 @@ struct EventQueueEntry
         delay = _delay;
     }
 
-
+    ///
+    /// \brief makeCaller
+    ///
+    /// Executes a code of lamda-function
+    /// \param _call_func lamda-function which returns void
+    /// \param _delay time in milliseconds to wait before this function will be executed
+    ///
     void makeCaller( std::function<void()> _call_func, int _delay=0)
     {
         type=caller_func;
@@ -56,12 +83,25 @@ struct EventQueueEntry
         delay = _delay;
     }
 
+    ///
+    /// \brief makeTimer
+    ///
+    /// Waits a specified time
+    /// \param _delay milliseconds to wait
+    ///
     void makeTimer(int _delay)
     {
         delay=_delay;
         type=timer;
     }
 
+    ///
+    /// \brief makeWaiterFlag
+    /// Waits while flag is equal to target state
+    /// \param _flag Pointer to boolean variable
+    /// \param target target state
+    /// \param _delay milliseconds to wait before checking of target state will be processed
+    ///
     void makeWaiterFlag(bool *_flag, bool target=true, int _delay=0)
     {
         flag_var=_flag;
@@ -69,7 +109,13 @@ struct EventQueueEntry
         type=wait_flag_var;
         flag_target=target;
     }
-
+    ///
+    /// \brief makeWaiterFlag
+    /// Waits while static or non-member function returns equal to target state
+    /// \param _flag Pointer to function which returns a boolean
+    /// \param target target state
+    /// \param _delay milliseconds to wait before checking of target state will be processed
+    ///
     void makeWaiterFlag(bool(*_flag)(), bool target=true, int _delay=0)
     {
         flag_func=_flag;
@@ -77,6 +123,14 @@ struct EventQueueEntry
         type=wait_flag_func;
         flag_target=target;
     }
+
+    ///
+    /// \brief makeWaiterFlagT
+    /// Waits while member function returns equal to target state
+    /// \param _flag Pointer to function which returns a boolean
+    /// \param target target state
+    /// \param _delay milliseconds to wait before checking of target state will be processed
+    ///
     void makeWaiterFlagT(T*_obj, bool(T::*_flag)(), bool target=true, int _delay=0)
     {
         obj=_obj;
@@ -86,7 +140,13 @@ struct EventQueueEntry
         flag_target=target;
     }
 
-
+    ///
+    /// \brief makeWaiterCond
+    /// Waits while lamda-function returns equal to target state
+    /// \param _flag lamda-function which returns a boolean
+    /// \param target target state
+    /// \param _delay milliseconds to wait before checking of target state will be processed
+    ///
     void makeWaiterCond(std::function<bool()> _condition, bool target=true, int _delay=0)
     {
         condition = _condition;
@@ -95,6 +155,18 @@ struct EventQueueEntry
         flag_target=target;
     }
 
+/*
+    Private zone!
+*/
+
+    ///
+    /// \brief trigger
+    /// \warning this function is using by event queue internally. Use this function if you use this event outside of queue!
+    ///
+    /// Processes this event.
+    /// \param step time delay between loop steps
+    /// \return time left after delaying. Append this piece to step value in next time
+    ///
     float trigger(float step=1)
     {
         delay-=step;
@@ -115,21 +187,21 @@ struct EventQueueEntry
         case wait_flag_var:
             if((delay<=0)&&(flag_var))
             {
-                if( flag_target? ((*flag_var)==true) : ((*flag_var)==false) )
+                if( (*flag_var)==flag_target )
                     delay=1;
             }
             break;
         case wait_flag_func:
             if((delay<=0)&&(flag_func))
             {
-                if( flag_target? ((flag_func())==true) : ((flag_func())==false) )
+                if(flag_func()==flag_target)
                     delay=1;
             }
             break;
         case wait_flag_func_t:
             if((delay<=0)&&(obj)&&(flag_func_t))
             {
-                if( flag_target? ( ((obj->*flag_func_t)()) ==true) : ( ((obj->*flag_func_t)())==false) )
+                if((obj->*flag_func_t)() == flag_target)
                     delay=1;
             }
             break;
@@ -165,6 +237,39 @@ struct EventQueueEntry
     __Types type;
 };
 
+/*!
+    \brief Event queue
+
+    Event queue provides sequenced and timed event processing.
+
+    How to use:
+
+    1) Create object:
+
+    EventQueue<ParentClass > myEventQueue;
+
+    2) Add into loop the calling of the processor which triggers events in queue
+
+    myEventQueue.processEvents(ticks);
+
+    where ticks - is a number of milliseconds time of each loop.
+
+    3) when in some case you wanna process bunch of events
+    - create an EventQueueEntry object and construct event of specific type
+
+    EventQueueEntry<WorldScene >event1;
+    event1.makeCaller(this, &myFunction, 1000);
+
+    - add this object into end of queue
+
+    myEventQueue.push_back(event1)
+
+    We are added an event to execute function after 1000 milliseconds past previouse event.
+    If event queue is empty, this event will be triggered in next loop step with waiting of 1000 millisecods
+
+    4) If you wish abort all events in loop, call the abort() function inside
+    myEventQueue.abort();
+*/
 template<class T>
 class EventQueue
 {
