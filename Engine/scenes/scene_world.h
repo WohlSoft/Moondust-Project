@@ -99,7 +99,6 @@ public:
 
     int i;
     int delayToEnter;
-    Uint32 lastTicks;
     bool debug_player_jumping;
     bool debug_player_onground;
     int  debug_player_foots;

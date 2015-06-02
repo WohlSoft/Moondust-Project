@@ -65,7 +65,6 @@ WorldScene::WorldScene()
 
     i=0;
     delayToEnter = 1000;
-    lastTicks=0;
     debug_player_jumping=false;
     debug_player_onground=false;
     debug_player_foots=0;
@@ -572,6 +571,49 @@ void WorldScene::update()
             isPauseMenu=false;
         }
     }
+
+
+
+
+    if(controls_1.jump || controls_1.alt_jump)
+    {
+        if((!lock_controls) && (gameState))
+        {
+            if(!gameState->LevelFile.isEmpty())
+            {
+                gameState->game_state.worldPosX=posX;
+                gameState->game_state.worldPosY=posY;
+                PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                stopMusic(true, 300);
+                lock_controls=true;
+                setExiting(0, WldExit::EXIT_beginLevel);
+            }
+            else if(jumpTo)
+            {
+                //Create events
+                EventQueueEntry<WorldScene >event1;
+                event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                wld_events.events.push_back(event1);
+
+                EventQueueEntry<WorldScene >event2;
+                event2.makeCallerT(this, &WorldScene::jump, 100);
+                wld_events.events.push_back(event2);
+
+                EventQueueEntry<WorldScene >event3;
+                event3.makeCaller([this]()->void{
+                                      this->fader.setFade(10, 0.0f, 0.05);
+                                      this->lock_controls=false;
+                                  }, 0);
+                wld_events.events.push_back(event3);
+
+                this->lock_controls=true;
+                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                fader.setFade(10, 1.0f, 0.05);
+            }
+        }
+    }
+
+
 }
 
 void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
@@ -902,110 +944,42 @@ int WorldScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
-     int wait_delay=0;
-
-  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
 
     running = !doExit;
     while(running)
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo)
-        {
-            start_events = SDL_GetTicks();
-        }
-
+        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
         player1Controller->update();
         controls_1 = player1Controller->keys;
-
         processEvents();
+        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay=(stop_events-start_events);
 
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_events = SDL_GetTicks();
-            start_physics=SDL_GetTicks();
-        }
+        start_physics=SDL_GetTicks();
         update();
-
-        if(controls_1.jump || controls_1.alt_jump)
-        {
-            if((!lock_controls) && (gameState))
-            {
-                if(!gameState->LevelFile.isEmpty())
-                {
-                    gameState->game_state.worldPosX=posX;
-                    gameState->game_state.worldPosY=posY;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
-                    stopMusic(true, 300);
-                    lock_controls=true;
-                    setExiting(0, WldExit::EXIT_beginLevel);
-                }
-                else if(jumpTo)
-                {
-                    //Create events
-                    EventQueueEntry<WorldScene >event1;
-                    event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
-                    wld_events.events.push_back(event1);
-
-                    EventQueueEntry<WorldScene >event2;
-                    event2.makeCallerT(this, &WorldScene::jump, 100);
-                    wld_events.events.push_back(event2);
-
-                    EventQueueEntry<WorldScene >event3;
-                    event3.makeCaller([this]()->void{
-                                          this->fader.setFade(10, 0.0f, 0.05);
-                                          this->lock_controls=false;
-                                      }, 0);
-                    wld_events.events.push_back(event3);
-
-                    this->lock_controls=true;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                    fader.setFade(10, 1.0f, 0.05);
-                }
-            }
-        }
-
-        /**********************Update physics and game progess***********************/
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_physics=SDL_GetTicks();
-        }
+        stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay=(stop_physics-start_physics);
 
         stop_render=0;
         start_render=0;
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
             render();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
+            PGE_Window::rePaint();
             stop_render = SDL_GetTicks();
-            doUpdate_render = stop_render-start_render;//-timeStep;
-            debug_render_delay = stop_render-start_render;
+            doUpdate_render = stop_render-start_render;
+            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= timeStep;
+        doUpdate_render -= uTick;
+        if(stop_render < start_render) {stop_render=0; start_render=0; }
 
-        if(stop_render < start_render)
-            {stop_render=0; start_render=0;}
-
-        wait_delay=timeStep;
-        lastTicks=1;
-        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
+        if( uTick > (signed)(SDL_GetTicks()-start_common) )
         {
-            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
-            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
+            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common));
         }
-        debug_phys_delay=(stop_physics-start_physics);
-        debug_event_delay=(stop_events-start_events);
-
-        if(wait_delay>0)
-            SDL_Delay( wait_delay );
-
-        stop_render=0;
-        start_render=0;
     }
     return exitWorldCode;
 }

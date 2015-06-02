@@ -332,7 +332,7 @@ void TitleScene::render()
 
     if(AppSettings.showDebugInfo)
     {
-        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\nfader ratio %4 N%5 F%6 TKS-%7")
+        FontManager::printText(QString("Joystick key: val=%1, id=%2, type=%3\nfader ratio %4 N%5 F%6 TKS-%7\nTICK: %8")
                                .arg(debug_joy_keyval)
                                .arg(debug_joy_keyid)
                                .arg(debug_joy_keytype)
@@ -340,6 +340,7 @@ void TitleScene::render()
                                .arg(fader.isNull())
                                .arg(fader.isFull())
                                .arg(fader.ticksLeft())
+                               .arg(uTick)
                                ,10, 10);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
 //                               "abcdefghijklmnopqrstuvwxyz\n"
@@ -353,7 +354,7 @@ void TitleScene::render()
                                "ØÙÚÛÜÝÞß÷ © ®\n\n"
                                "Ich bin glücklich!\n\n"
                                "Как хорошо, что всё работает!\n"
-                               "Живіть всі дружно!", 10, 50, 0, 1.75, 1.0, 0.7, 1.0);
+                               "Живіть всі дружно!", 10, 100, 0, 1.75, 1.0, 0.7, 1.0);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\nIch bin glücklich!", 10, 90, 1, 0, 1.0, 0, 1.0);
 //        FontManager::printText("0123456789\n"
 //                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
@@ -409,19 +410,18 @@ int TitleScene::exec()
     {
         start_render=SDL_GetTicks();
 
-        update();
         processEvents();
-
         processMenu();
+        update();        
 
         render();
         renderMouse();
 
         PGE_Window::rePaint();
 
-        if( (100.0 / (float)PGE_Window::PhysStep) >(SDL_GetTicks()-start_render))
+        if( uTick > (signed)(SDL_GetTicks()-start_render) )
         {
-            doUpdate_Render = (1000.0/100.0)-(SDL_GetTicks()-start_render);
+            doUpdate_Render = uTick-(SDL_GetTicks()-start_render);
             SDL_Delay( doUpdate_Render );
         }
     }

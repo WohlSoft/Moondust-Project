@@ -222,7 +222,6 @@ void LevelScene::tickAnimations(int ticks)
 
 int i;
 int delayToEnter = 1000;
-Uint32 lastTicks=0;
 bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
@@ -494,19 +493,13 @@ int LevelScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
-     int wait_delay=0;
 
-  //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
-  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
     while(running)
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo)
-        {
-            start_events = SDL_GetTicks();
-        }
-
+        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
+        /**********************Update common events and controllers******************/
         #ifndef __APPLE__
         if(AppSettings.interprocessing)
             qApp->processEvents();
@@ -514,53 +507,39 @@ int LevelScene::exec()
 
         player1Controller->update();
         player2Controller->update();
-
         processEvents();
+        /****************************************************************************/
+        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay = (stop_events-start_events);
 
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_events = SDL_GetTicks();
-            start_physics=SDL_GetTicks();
-        }
-
+        start_physics=SDL_GetTicks();
         /**********************Update physics and game progess***********************/
         update();
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_physics=SDL_GetTicks();
-        }
+        /****************************************************************************/
+        stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay  = (stop_physics-start_physics);
 
         stop_render=0;
         start_render=0;
+        /**********************Process rendering of stuff****************************/
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
-            stop_render = SDL_GetTicks();
+            PGE_Window::rePaint();
+            stop_render=SDL_GetTicks();
             doUpdate_render = stop_render-start_render;
-            debug_render_delay = stop_render-start_render;
+            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= timeStep;
+        doUpdate_render -= uTick;
+        if(stop_render < start_render) { stop_render=0; start_render=0; }
+        /****************************************************************************/
 
-        if(stop_render < start_render)
-            {stop_render=0; start_render=0;}
-
-        wait_delay=timeStep;
-        lastTicks=1;
-        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
+        if( uTick > (signed)(SDL_GetTicks()-start_common) )
         {
-            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
-            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
+            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common) );
         }
-        debug_phys_delay=(stop_physics-start_physics);
-        debug_event_delay=(stop_events-start_events);
-
-        if(wait_delay>0)
-            SDL_Delay( wait_delay );
     }
     return exitLevelCode;
 }
