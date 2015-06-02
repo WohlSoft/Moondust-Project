@@ -199,7 +199,8 @@ SOURCES += \
     common_features/size.cpp \
     common_features/fader.cpp \
     data_configs/setup_credits_screen.cpp \
-    script/luaengine.cpp
+    script/luaengine.cpp \
+    script/bindings/core/globalfuncs/luafuncs_logger.cpp
 
 
 HEADERS  += \
@@ -307,7 +308,9 @@ HEADERS  += \
     common_features/size.h \
     common_features/fader.h \
     data_configs/setup_credits_screen.h \
-    script/luaengine.h
+    script/luaengine.h \
+    script/luautils.h \
+    script/bindings/core/globalfuncs/luafuncs_logger.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -4,13 +4,10 @@
 #include <QObject>
 #include <QString>
 #include <QtDebug>
-#include <luabind/luabind.hpp>
 
-extern "C"{
-#include <lua/lua.h>
-#include <lua/lualib.h>
-#include <lua/lauxlib.h>
-}
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
+
 
 ///
 /// \brief This class should have basic functions for interacting with lua
@@ -54,11 +51,14 @@ public:
     void setCoreFile(const QString &coreFile);
 
 protected:
-    virtual void registerFunctions() {}
+    virtual void onBindAll() {}
+    virtual void onReportError(const QString& errMsg);
 
 
 
 private:
+    void bindCore();
+
     lua_State* L;
     QString m_coreFile;
 };
