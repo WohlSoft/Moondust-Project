@@ -5,6 +5,7 @@
 #undef main
 #include <common_features/graphics_funcs.h>
 #include <graphics/gl_renderer.h>
+#include <graphics/window.h>
 
 
 PGE_BoxBase::PGE_BoxBase()
@@ -60,12 +61,12 @@ void PGE_BoxBase::setFade(int speed, float target, float step)
     manual_ticks = speed;
 }
 
-bool PGE_BoxBase::tickFader(int ticks)
+bool PGE_BoxBase::tickFader(float ticks)
 {
     if(fadeSpeed<1) return true; //Idling animation
 
-    manual_ticks-=abs(ticks);
-        while(manual_ticks<=0)
+    manual_ticks-=fabs(ticks);
+        while(manual_ticks<=0.0f)
         {
             fadeStep();
             manual_ticks+=fadeSpeed;
@@ -92,6 +93,14 @@ void PGE_BoxBase::loadTexture(QString path)
     styleTexture = GraphicsHelps::loadTexture(styleTexture, path);
     if(styleTexture.texture>0)
         _textureUsed=true;
+}
+
+void PGE_BoxBase::updateTickValue()
+{
+    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTick = round(uTickf);
+    if(uTick<=0) uTick=1;
+    if(uTickf<=0) uTickf=1.0;
 }
 
 void PGE_BoxBase::drawTexture(int left, int top, int right, int bottom, int border)

@@ -86,7 +86,7 @@ public:
     void setSize(int _width, int _height);
     PGE_SizeF size();
     PGE_SizeF sizeOfFrame();
-    void tickAnimation(int frametime);
+    void tickAnimation(float frametime);
     PGE_RectF curFrame();
     PGE_PointF curOffset();
     MatrixAnimates curAnimation();
@@ -104,7 +104,7 @@ private:
     float height; //!< height of frame matrix
     float width_f; //!< width of one frame; (from 0 to 1)
     float height_f; //!< height of one frame; (from 0 to 1)
-    int delay_wait; //!< Delay between next frame will be switched
+    float delay_wait; //!< Delay between next frame will be switched
     int framespeed; //!< delay between frames
     int framespeed_once; //!< delay between frames for "once" mode
     int curFrameI; //!< index of current frame

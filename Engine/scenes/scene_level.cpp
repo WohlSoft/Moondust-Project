@@ -207,7 +207,7 @@ LevelScene::~LevelScene()
 }
 
 
-void LevelScene::tickAnimations(int ticks)
+void LevelScene::tickAnimations(float ticks)
 {
     //tick animation
     for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
@@ -232,12 +232,12 @@ int  debug_event_delay=0;
 void LevelScene::update()
 {
     Scene::update();
-    tickAnimations(uTick);
+    tickAnimations(uTickf);
 
     if(!isLevelContinues)
     {
-        exitLevelDelay -= uTick;
-        if(exitLevelDelay<=0)
+        exitLevelDelay -= uTickf;
+        if(exitLevelDelay<=0.f)
         {
             doExit=true;
             if(fader.isNull())
@@ -265,7 +265,7 @@ void LevelScene::update()
     else
     if(!isPauseMenu) //Update physics is not pause menu
     {
-        system_events.processEvents(uTick);
+        system_events.processEvents(uTickf);
 
         //Make world step
         world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
@@ -300,12 +300,12 @@ void LevelScene::update()
                 debug_player_onground=players[i]->onGround;
                 debug_player_foots=players[i]->foot_contacts_map.size();
             }
-            players[i]->update(uTick);
+            players[i]->update(uTickf);
         }
 
         for(int i=0;i<fading_blocks.size();i++)
         {
-            if(fading_blocks[i]->tickFader(uTick))
+            if(fading_blocks[i]->tickFader(uTickf))
             {
                 fading_blocks.removeAt(i); i--;
             }
@@ -313,7 +313,7 @@ void LevelScene::update()
 
         for(int i=0;i<active_npcs.size();i++)
         {
-            active_npcs[i]->update(uTick);
+            active_npcs[i]->update(uTickf);
             if(active_npcs[i]->killed)
             {
                 active_npcs.removeAt(i); i--;
@@ -345,7 +345,7 @@ void LevelScene::update()
 
         //update cameras
         for(i=0; i<cameras.size(); i++)
-            cameras[i]->update(uTick);
+            cameras[i]->update(uTickf);
     }
 
     if(IntProc::enabled && IntProc::cmd_accepted)
@@ -424,7 +424,7 @@ void LevelScene::render()
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
                                .arg(debug_player_foots)
-                               .arg(uTick)
+                               .arg(uTickf)
                                .arg(npcs.size())
                                .arg(active_npcs.size()), 10,100);
 
@@ -436,7 +436,7 @@ void LevelScene::render()
         if(!isLevelContinues)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(uTick), 10, 155, 0, 1.0, 0, 0, 1.0);
+                                   .arg(uTickf), 10, 155, 0, 1.0, 0, 0, 1.0);
         //world->DrawDebugData();
     }
     renderBlack:
@@ -468,7 +468,6 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
-
 int LevelScene::exec()
 {
     isLevelContinues=true;
@@ -484,7 +483,7 @@ int LevelScene::exec()
     //Level scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
-    int doUpdate_render=0;
+    float doUpdate_render=0;
 
  Uint32 start_physics=0;
  Uint32 stop_physics=0;
@@ -522,7 +521,7 @@ int LevelScene::exec()
         stop_render=0;
         start_render=0;
         /**********************Process rendering of stuff****************************/
-        if(doUpdate_render<=0)
+        if(doUpdate_render<=0.f)
         {
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
@@ -532,13 +531,13 @@ int LevelScene::exec()
             doUpdate_render = stop_render-start_render;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= uTick;
+        doUpdate_render -= uTickf;
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
 
-        if( uTick > (signed)(SDL_GetTicks()-start_common) )
+        if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common) );
+            wait( uTickf-(float)(SDL_GetTicks()-start_common) );
         }
     }
     return exitLevelCode;

@@ -57,8 +57,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     if(!texture.isEmpty())
         loadTexture(texture);
 
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    if(uTick<=0) uTick=1;
+    updateTickValue();
 
     message = msg;
     type = _type;
@@ -171,11 +170,11 @@ void PGE_MsgBox::exec()
                 fader_opacity=1.0;
         }
 
-        if(uTick > (SDL_GetTicks() - start_render))
+        if(uTick > (signed)(SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
 
         updateControllers();
-        tickFader(uTick);
+        tickFader(uTickf);
     }
 
 
@@ -249,7 +248,7 @@ void PGE_MsgBox::exec()
             }
         }
 
-        if(uTick > (SDL_GetTicks() - start_render))
+        if(uTick > (signed)(SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 
@@ -289,11 +288,11 @@ void PGE_MsgBox::exec()
                 fader_opacity=0.0;
         }
 
-        if(uTick > (SDL_GetTicks() - start_render))
+        if(uTick > (signed)(SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
 
         updateControllers();
-        tickFader(uTick);
+        tickFader(uTickf);
     }
 
 }
@@ -308,7 +307,7 @@ void PGE_MsgBox::updateControllers()
             LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
             if(s)
             {
-                s->tickAnimations(uTick);
+                s->tickAnimations(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
@@ -320,7 +319,7 @@ void PGE_MsgBox::updateControllers()
             WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
             if(s)
             {
-                s->tickAnimations(uTick);
+                s->tickAnimations(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
             }

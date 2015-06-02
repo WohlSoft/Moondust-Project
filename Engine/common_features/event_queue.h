@@ -95,7 +95,7 @@ struct EventQueueEntry
         flag_target=target;
     }
 
-    int trigger(int step=1)
+    float trigger(float step=1)
     {
         delay-=step;
         switch(type)
@@ -152,7 +152,7 @@ struct EventQueueEntry
     //for function
     std::function<void()> call_func;
     //for caller, function and for waiting timer
-    int delay;
+    float delay;
     //for a flag waiter
     bool *flag_var;
     bool (*flag_func)();
@@ -177,7 +177,7 @@ public:
     ~EventQueue()
     {}
 
-    void processEvents(int timeStep=1)
+    void processEvents(float timeStep=1.0f)
     {
         int appendTime=0;
         process_event:
@@ -186,7 +186,7 @@ public:
         if(left_time<=0)
         {
             events.pop_front();
-            left_time=0;
+            left_time=0.0f;
             appendTime=left_time*-1;
             goto process_event;
         }
@@ -198,7 +198,7 @@ public:
         left_time=0;
     }
 
-    int left_time;
+    float left_time;
     QQueue<EventQueueEntry<T > > events;
 };
 

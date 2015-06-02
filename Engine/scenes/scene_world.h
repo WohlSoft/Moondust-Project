@@ -69,7 +69,7 @@ public:
     void render();
     int exec();
 
-    void tickAnimations(int ticks);
+    void tickAnimations(float ticks);
 
     bool isExit();
     void setExiting(int delay, int reason);

@@ -56,7 +56,7 @@ public:
     static unsigned int TickAnimation(unsigned int x, void *p);
 
     void setOnceMode(bool once);
-    void manualTick(int ticks);
+    void manualTick(float ticks);
     bool isFinished();
 public:
     void nextFrame();
@@ -64,7 +64,7 @@ public:
 private:
     double pos1;
     double pos2;
-    int manual_ticks;
+    float  manual_ticks;
     bool onceMode;
     bool animationFinished;
 

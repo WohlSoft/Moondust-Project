@@ -75,9 +75,14 @@ protected:
     bool        _doShutDown;
     bool        doExit;
     int         uTick;
+    float       uTickf;
 
+    /************waiting timer************/
+    void wait(float ms);
+    /************waiting timer************/
 private:
     TypeOfScene sceneType;
+    float __waiting_step;
 };
 
 #endif // SCENE_H

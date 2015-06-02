@@ -55,14 +55,14 @@ void PGE_Fader::setRatio(float ratio)
     target_ratio=ratio;
 }
 
-bool PGE_Fader::tickFader(int ticks)
+bool PGE_Fader::tickFader(float ticks)
 {
     if(fadeSpeed<1) return true; //Idling animation
     if(cur_ratio==target_ratio)
         return true;
 
-    manual_ticks-=abs(ticks);
-        while(manual_ticks<=0)
+    manual_ticks-=fabs(ticks);
+        while(manual_ticks<=0.0f)
         {
             fadeStep();
             manual_ticks+=fadeSpeed;

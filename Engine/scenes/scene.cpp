@@ -28,13 +28,16 @@ void Scene::construct()
     running=true;
     doExit=false;
     _doShutDown=false;
-    updateTickValue();
+    __waiting_step=0;
+    updateTickValue();    
 }
 
 void Scene::updateTickValue()
 {
-    uTick = round(1000.0f/(float)PGE_Window::PhysStep);
+    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTick = round(uTickf);
     if(uTick<=0) uTick=1;
+    if(uTickf<=0) uTickf=1.0;
 }
 
 Scene::Scene()
@@ -128,7 +131,7 @@ void Scene::processEvents()
 
 void Scene::update()
 {
-    fader.tickFader(uTick);
+    fader.tickFader(uTickf);
 }
 
 void Scene::render()
@@ -173,3 +176,16 @@ void Scene::setFade(int speed, float target, float step)
     fader.setFade(speed, target, step);
 }
 /**************************Fader**end**************************/
+
+/************waiting timer************/
+void Scene::wait(float ms)
+{
+    while(__waiting_step < floor(ms) )
+    {
+        __waiting_step+=ms;
+        SDL_Delay((int)floor(ms));
+    }
+    while(__waiting_step > 0)
+        __waiting_step-=ms;
+}
+/************waiting timer************/

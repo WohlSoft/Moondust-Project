@@ -444,7 +444,7 @@ bool WorldScene::loadConfigs()
 
 void WorldScene::update()
 {
-    tickAnimations(uTick);
+    tickAnimations(uTickf);
     Scene::update();
 
     if(doExit)
@@ -467,7 +467,7 @@ void WorldScene::update()
     }
     else
     {
-        wld_events.processEvents(uTick);
+        wld_events.processEvents(uTickf);
 
         if(dir==0)
         {
@@ -504,7 +504,7 @@ void WorldScene::update()
         }
         else
         {
-            mapwalker_ani.manualTick(uTick);
+            mapwalker_ani.manualTick(uTickf);
 
             #define setDir(dr) {dir=dr;\
                     move_steps_count=ConfigManager::default_grid-move_steps_count; mapwalker_refreshDir();}
@@ -881,7 +881,7 @@ void WorldScene::render()
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
                                .arg(debug_player_foots)
-                               .arg(uTick)
+                               .arg(uTickf)
                                .arg(toRender.size()), 10,100);
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
@@ -892,7 +892,7 @@ void WorldScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitWorldDelay)
-                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
+                                   .arg(uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
 
     renderBlack:
@@ -976,15 +976,15 @@ int WorldScene::exec()
         doUpdate_render -= uTick;
         if(stop_render < start_render) {stop_render=0; start_render=0; }
 
-        if( uTick > (signed)(SDL_GetTicks()-start_common) )
+        if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common));
+            wait( uTickf-(float)(SDL_GetTicks()-start_common));
         }
     }
     return exitWorldCode;
 }
 
-void WorldScene::tickAnimations(int ticks)
+void WorldScene::tickAnimations(float ticks)
 {
     //tick animation
     for(int i=0; i<ConfigManager::Animator_Tiles.size(); i++)
@@ -1000,7 +1000,7 @@ void WorldScene::tickAnimations(int ticks)
         imgs[i].a.manualTick(ticks);
 
     for(int i=0; i<portraits.size(); i++)
-        portraits[i].update(uTick);
+        portraits[i].update(ticks);
 }
 
 bool WorldScene::isExit()

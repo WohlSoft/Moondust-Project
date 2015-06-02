@@ -145,12 +145,12 @@ void LoadingScene::update()
 
     Scene::update();
     for(int i=0;i<imgs.size(); i++)
-        imgs[i].a.manualTick(uTick);
+        imgs[i].a.manualTick(uTickf);
 
     if(!doExit)
     {
         if(_waitTimer>0)
-            _waitTimer -= uTick;
+            _waitTimer -= uTickf;
         else
             exitFromScene();
     }
@@ -182,7 +182,6 @@ int LoadingScene::exec()
     //Level scene's Loop
     Uint32 start_render;
     running = true;
-    float doUpdate_Render=0;
     doExit=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
@@ -195,10 +194,9 @@ int LoadingScene::exec()
         render();
         PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks()-start_render))
+        if( uTickf > (float)(SDL_GetTicks()-start_render))
         {
-            doUpdate_Render = uTick-(SDL_GetTicks()-start_render);
-            SDL_Delay( doUpdate_Render );
+            wait( uTickf-(float)(SDL_GetTicks()-start_render) );
         }
     }
     return 0;
