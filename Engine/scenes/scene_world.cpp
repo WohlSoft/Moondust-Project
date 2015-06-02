@@ -25,7 +25,6 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <common_features/event_queue.h>
 #include <common_features/maths.h>
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
@@ -35,19 +34,6 @@
 
 #include <QHash>
 #include <unordered_map>
-
-#include "world/wld_tilebox.h"
-
-TileBox worldMap;
-QList<WldTileItem >     wld_tiles;
-QList<WldSceneryItem >  wld_sceneries;
-QList<WldPathItem >     wld_paths;
-QList<WldLevelItem >    wld_levels;
-QList<WldMusicBoxItem > wld_musicboxes;
-EventQueue<WorldScene > wld_events;
-
-QList<WorldNode > wldItems;
-QList<WorldNode * > toRender;
 
 WorldScene::WorldScene()
     : Scene(World)
@@ -63,16 +49,11 @@ WorldScene::WorldScene()
 
     isInit=false;
 
-    i=0;
-    delayToEnter = 1000;
-    debug_player_jumping=false;
-    debug_player_onground=false;
-    debug_player_foots=0;
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
 
-    mapwalker_img_h=32;
+    mapwalker_img_h = ConfigManager::default_grid;
     mapwalker_offset_x=0;
     mapwalker_offset_y=0;
 
@@ -133,7 +114,7 @@ WorldScene::WorldScene()
 
     jumpTo=false;
 
-    dir=0;
+    walk_direction=Walk_Idle;
     lock_controls=false;
     ignore_paths=false;
     allow_left=false;
@@ -150,9 +131,9 @@ WorldScene::~WorldScene()
 {
     PGE_MusPlayer::MUS_stopMusic();
     wld_events.abort();
-    worldMap.clean();
+    _indexTable.clean();
     wldItems.clear();
-    toRender.clear();
+    _itemsToRender.clear();
 
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -274,9 +255,9 @@ void WorldScene::setGameState(EpisodeState *_state)
 
 bool WorldScene::init()
 {
-    worldMap.clean();
+    _indexTable.clean();
     wldItems.clear();
-    toRender.clear();
+    _itemsToRender.clear();
 
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -354,7 +335,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_tiles << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
     }
 
     for(int i=0; i<data.scenery.size(); i++)
@@ -363,7 +344,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_sceneries << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
     }
 
     for(int i=0; i<data.paths.size(); i++)
@@ -372,7 +353,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_paths << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
     }
 
     for(int i=0; i<data.levels.size(); i++)
@@ -381,7 +362,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_levels << path;
-        worldMap.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
+        _indexTable.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
@@ -391,7 +372,7 @@ bool WorldScene::init()
         path.g=0.5f;
         path.b=1.f;
         wld_musicboxes << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_musicboxes.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_musicboxes.last()));
     }
 
     updateAvailablePaths();
@@ -442,6 +423,30 @@ bool WorldScene::loadConfigs()
 }
 
 
+
+void WorldScene::doMoveStep(float posVal)
+{
+    move_steps_count+=move_speed;
+    if(move_steps_count>=ConfigManager::default_grid)
+    {
+        move_steps_count=0;
+        posVal=Maths::roundTo(posVal, ConfigManager::default_grid);
+    }
+    if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0))
+    {
+        walk_direction=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();
+    }
+}
+
+void WorldScene::setDir(int dr)
+{
+    walk_direction=dr;
+    move_steps_count=ConfigManager::default_grid-move_steps_count;
+    mapwalker_refreshDirection();
+}
+
+
+
 void WorldScene::update()
 {
     tickAnimations(uTickf);
@@ -469,21 +474,21 @@ void WorldScene::update()
     {
         wld_events.processEvents(uTickf);
 
-        if(dir==0)
+        if(walk_direction==Walk_Idle)
         {
             if(!lock_controls)
             {
                 if(controls_1.left && (allow_left || ignore_paths))
-                    dir=1;
+                    walk_direction=Walk_Left;
                 if(controls_1.right && (allow_right || ignore_paths))
-                    dir=2;
+                    walk_direction=Walk_Right;
                 if(controls_1.up && (allow_up || ignore_paths))
-                    dir=3;
+                    walk_direction=Walk_Up;
                 if(controls_1.down && (allow_down || ignore_paths))
-                    dir=4;
+                    walk_direction=Walk_Down;
 
                 //If movement denied - play sound
-                if((controls_1.left||controls_1.right||controls_1.up||controls_1.down)&&(dir==0))
+                if((controls_1.left||controls_1.right||controls_1.up||controls_1.down)&&(walk_direction==Walk_Idle))
                 {       _playStopSnd=false;
                         if(!_playDenySnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny); _playDenySnd=true; }
                 }
@@ -491,13 +496,13 @@ void WorldScene::update()
                 if (!controls_1.left&&!controls_1.right&&!controls_1.up&&!controls_1.down)
                     _playDenySnd=false;
             }
-            if(dir!=0)
+            if(walk_direction!=Walk_Idle)
             {
                 _playDenySnd=false;
                 _playStopSnd=false;
                 gameState->LevelFile.clear();
                 jumpTo=false;
-                mapwalker_refreshDir();
+                mapwalker_refreshDirection();
             }
 
             if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
@@ -506,59 +511,51 @@ void WorldScene::update()
         {
             mapwalker_ani.manualTick(uTickf);
 
-            #define setDir(dr) {dir=dr;\
-                    move_steps_count=ConfigManager::default_grid-move_steps_count; mapwalker_refreshDir();}
-            switch(dir)
+            switch(walk_direction)
             {
-            case 1://left
+            case Walk_Left:
                 if(controls_1.right)
-                setDir(2);
+                setDir(Walk_Right);
                 break;
-            case 2://right
+            case Walk_Right:
                 if(controls_1.left)
-                setDir(1);
+                setDir(Walk_Left);
                 break;
-            case 3://up
+            case Walk_Up:
                 if(controls_1.down)
-                setDir(4);
+                setDir(Walk_Down);
                 break;
-            case 4://down
+            case Walk_Down:
                 if(controls_1.up)
-                setDir(3);
+                setDir(Walk_Up);
                 break;
+            default: break;
             }
         }
 
-        #define doMoveStep(posVal)  \
-            move_steps_count+=move_speed;\
-            if(move_steps_count>=ConfigManager::default_grid)\
-            {\
-                move_steps_count=0;\
-                posVal=Maths::roundTo(posVal, ConfigManager::default_grid);\
-            }\
-            if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0)) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
-
-        switch(dir)
+        switch(walk_direction)
         {
-            case 1://left
+            case Walk_Left:
                 posX-=move_speed;
                 doMoveStep(posX);
                 break;
-            case 2://right
+            case Walk_Right:
                 posX+=move_speed;
                 doMoveStep(posX);
                 break;
-            case 3://up
+            case Walk_Up:
                 posY-=move_speed;
                 doMoveStep(posY);
                 break;
-            case 4://down
+            case Walk_Down:
                 posY+=move_speed;
                 doMoveStep(posY);
                 break;
+            default: break;
         }
 
-        toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
+        _itemsToRender.clear();
+        _indexTable.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), _itemsToRender, true);
 
         if(isPauseMenu)
         {
@@ -612,11 +609,10 @@ void WorldScene::update()
             }
         }
     }
-
-
 }
 
-void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
+
+void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float cx, float cy)
 {
     side=false;
     foreach (WorldNode* x, nodes)
@@ -635,33 +631,36 @@ void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
 
 void WorldScene::updateAvailablePaths()
 {
-    QList<WorldNode* > nodes;
+    QVector<WorldNode* > nodes;
 
     long x,y;
     //left
-    x=posX+worldMap.gridSize_h-worldMap.gridSize;
-    y=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half()-_indexTable.grid();
+    y=posY+_indexTable.grid_half();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_left, nodes, x,y);
+    nodes.clear();
 
     //Right
-    x=posX+worldMap.gridSize_h+worldMap.gridSize;
-    y=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half()+_indexTable.grid();
+    y=posY+_indexTable.grid_half();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_right, nodes, x, y);
-
+    nodes.clear();
 
     //Top
-    x=posX+worldMap.gridSize_h;
-    y=posY+worldMap.gridSize_h-worldMap.gridSize;
-    nodes=worldMap.query(x, y);
+    x=posX+_indexTable.grid_half();
+    y=posY+_indexTable.grid_half()-_indexTable.grid();
+    _indexTable.query(x, y, nodes);
     fetchSideNodes(allow_up, nodes, x, y);
+    nodes.clear();
 
     //Bottom
-    x=posX+worldMap.gridSize_h;
-    y=posY+worldMap.gridSize_h+worldMap.gridSize;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half();
+    y=posY+_indexTable.grid_half()+_indexTable.grid();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_down, nodes, x, y);
+    nodes.clear();
 }
 
 void WorldScene::updateCenter()
@@ -675,10 +674,10 @@ void WorldScene::updateCenter()
     levelTitle.clear();
     jumpTo=false;
 
-    QList<WorldNode* > nodes;
-    long px=posX+worldMap.gridSize_h;
-    long py=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(px, py);
+    QVector<WorldNode* > nodes;
+    long px=posX+_indexTable.grid_half();
+    long py=posY+_indexTable.grid_half();
+    _indexTable.query(px, py, nodes);
     foreach (WorldNode* x, nodes)
     {
         /*************MusicBox***************/
@@ -759,18 +758,18 @@ void WorldScene::render()
     if(backgroundTex.w>0)
         GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width/2 - backgroundTex.w/2, PGE_Window::Height/2 - backgroundTex.h/2);
 
-    for(int i=0;i<imgs.size();i++)
+    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it!= imgs.end(); it++)
     {
-        AniPos x(0,1); x = imgs[i].a.image();
-        GlRenderer::renderTexture(&imgs[i].t,
-                                  imgs[i].x,
-                                  imgs[i].y,
-                                  imgs[i].t.w,
-                                  imgs[i].frmH, x.first, x.second);
+        AniPos x(0,1); x = it->a.image();
+        GlRenderer::renderTexture(&it->t,
+                                  it->x,
+                                  it->y,
+                                  it->t.w,
+                                  it->frmH, x.first, x.second);
     }
 
-    for(int i=0; i<portraits.size(); i++)
-        portraits[i].render();
+    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it!= portraits.end(); it++)
+            it->render();
 
     //Viewport zone black background
     GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f,0.f,0.f);
@@ -782,11 +781,8 @@ void WorldScene::render()
         double renderY = posY+16-(viewportRect.height()/2);
 
         //Render items
-        foreach(WorldNode * it, toRender)
-        {
-            it->render(it->x-renderX, it->y-renderY);
-            //GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
-        }
+        for(QVector<WorldNode*>::iterator it = _itemsToRender.begin(); it!=_itemsToRender.end(); it++)
+            (*it)->render((*it)->x-renderX, (*it)->y-renderY);
 
         //draw our "character"
         AniPos img(0,1); img = mapwalker_ani.image();
@@ -871,18 +867,15 @@ void WorldScene::render()
                                .arg(posY), 300,10);
 
         {
-        PGE_Point grid = worldMap.applyGrid(posX, posY);
+        PGE_Point grid = _indexTable.applyGrid(posX, posY);
         FontManager::printText(QString("TILE X=%1 Y=%2")
                                .arg(grid.x())
                                .arg(grid.y()), 300,45);
         }
 
-        FontManager::printText(QString("Player J=%1 G=%2,%5 F=%3; TICK-SUB: %4")
-                               .arg(debug_player_jumping)
-                               .arg(debug_player_onground)
-                               .arg(debug_player_foots)
+        FontManager::printText(QString("TICK-SUB: %2, Vizible items=%1;")
                                .arg(uTickf)
-                               .arg(toRender.size()), 10,100);
+                               .arg(_itemsToRender.size()), 10,100);
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
@@ -987,20 +980,20 @@ int WorldScene::exec()
 void WorldScene::tickAnimations(float ticks)
 {
     //tick animation
-    for(int i=0; i<ConfigManager::Animator_Tiles.size(); i++)
-        ConfigManager::Animator_Tiles[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_Scenery.size(); i++)
-        ConfigManager::Animator_Scenery[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_WldPaths.size(); i++)
-        ConfigManager::Animator_WldPaths[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_WldLevel.size(); i++)
-        ConfigManager::Animator_WldLevel[i].manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Tiles.begin(); it!=ConfigManager::Animator_Tiles.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Scenery.begin(); it!=ConfigManager::Animator_Scenery.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_WldPaths.begin(); it!=ConfigManager::Animator_WldPaths.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_WldLevel.begin(); it!=ConfigManager::Animator_WldLevel.end(); it++ )
+        it->manualTick(ticks);
 
-    for(int i=0;i<imgs.size();i++)
-        imgs[i].a.manualTick(ticks);
+    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it!= imgs.end(); it++)
+        it->a.manualTick(ticks);
 
-    for(int i=0; i<portraits.size(); i++)
-        portraits[i].update(ticks);
+    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it!= portraits.end(); it++)
+        it->update(ticks);
 }
 
 bool WorldScene::isExit()
@@ -1077,20 +1070,16 @@ void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int
 }
 
 
-void WorldScene::mapwalker_refreshDir()
+void WorldScene::mapwalker_refreshDirection()
 {
-    switch(dir)
+    switch(walk_direction)
     {
-        case 1: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
-        case 2: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
-        case 3: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
-        case 4: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+        case Walk_Left:  mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
+        case Walk_Right: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
+        case Walk_Up:    mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
+        case Walk_Down:  mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+        default: break;
     }
 }
-
-
-
-
-
 
 

@@ -201,7 +201,8 @@ SOURCES += \
     data_configs/setup_credits_screen.cpp \
     script/luaengine.cpp \
     script/bindings/core/globalfuncs/luafuncs_logger.cpp \
-    scenes/title/ttl_main_menu.cpp
+    scenes/title/ttl_main_menu.cpp \
+    scenes/world/wld_tilebox.cpp
 
 
 HEADERS  += \
