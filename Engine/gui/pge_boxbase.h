@@ -27,17 +27,21 @@ public:
     float target_opacity;
     float fade_step;
     int fadeSpeed;
-    int manual_ticks;
+    float manual_ticks;
     void setFade(int speed, float target, float step);
-    bool tickFader(int ticks);
+    bool tickFader(float ticks);
     void fadeStep();
     /**************Fader**************/
 
     void loadTexture(QString path);
 
+    void updateTickValue();
+
 protected:
     Scene * parentScene;
     void construct(Scene *_parentScene = 0);
+    float uTickf;
+    int   uTick;
 
     void drawTexture(int left, int top, int right, int bottom, int border=32);
     void drawTexture(PGE_Rect _rect, int border=32);

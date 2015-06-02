@@ -55,7 +55,7 @@ public:
     int exec();
 
 private:
-    int _waitTimer;
+    float _waitTimer;
 
     PGE_Texture background;
     QVector<CreditsScene_misc_img > imgs;

@@ -95,7 +95,7 @@ void WorldScene_Portrait::render()
                               tPos.right());
 }
 
-void WorldScene_Portrait::update(int ticks)
+void WorldScene_Portrait::update(float ticks)
 {
     animator.tickAnimation(ticks);
 }

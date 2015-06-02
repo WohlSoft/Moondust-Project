@@ -254,12 +254,12 @@ void SimpleAnimator::setOnceMode(bool once)
 }
 
 //Ability to tick animation manually!
-void SimpleAnimator::manualTick(int ticks)
+void SimpleAnimator::manualTick(float ticks)
 {
     if(speed<1) return; //Idling animation
 
-    manual_ticks-=abs(ticks);
-        while(manual_ticks<=0)
+    manual_ticks-=fabs(ticks);
+        while(manual_ticks<=0.0f)
         {
             nextFrame();
             manual_ticks+=speed;

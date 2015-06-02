@@ -64,7 +64,7 @@ LVL_Player::LVL_Player()
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
     animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
-    animator.tickAnimation(1);
+    animator.tickAnimation(0.f);
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
@@ -177,7 +177,7 @@ void LVL_Player::init()
 
     f_player = physBody->CreateFixture(&fixtureDef);
 
-    animator.tickAnimation(1);
+    animator.tickAnimation(0.f);
     //qDebug() <<"Start position is " << posX() << posY();
     isLocked=false;
     isInited=true;

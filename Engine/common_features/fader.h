@@ -28,7 +28,7 @@ public:
 
     void setFade(int speed, float target, float step);
     void setRatio(float ratio);
-    bool tickFader(int ticks);
+    bool tickFader(float ticks);
     const float &fadeRatio();
     bool isFading();
     bool isFull();
@@ -43,7 +43,7 @@ private:
     float target_ratio;
     float fade_step;
     int fadeSpeed;
-    int manual_ticks;
+    float manual_ticks;
 };
 
 #endif // PGE_FADER_H

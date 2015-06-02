@@ -100,7 +100,7 @@ public:
     void render();
     int exec();
 
-    void tickAnimations(int ticks);
+    void tickAnimations(float ticks);
 
     QString getLastError();
 
@@ -135,7 +135,7 @@ public:
     bool        warpToWorld;
     PGE_Point   warpToWorldXY;
 
-    int         exitLevelDelay;
+    float       exitLevelDelay;
     int         exitLevelCode;
     /****************Level Running State*****************/
 

@@ -99,12 +99,12 @@ PGE_SizeF MatrixAnimator::sizeOfFrame()
     return PGE_SizeF(width_f, height_f);
 }
 
-void MatrixAnimator::tickAnimation(int frametime)
+void MatrixAnimator::tickAnimation(float frametime)
 {
     if(framespeed<1) return; //Idling animation
 
-    delay_wait-=abs(frametime);
-        while(delay_wait<=0)
+    delay_wait-=fabs(frametime);
+        while(delay_wait<=0.0f)
         {
             nextFrame();
             delay_wait+=framespeed;

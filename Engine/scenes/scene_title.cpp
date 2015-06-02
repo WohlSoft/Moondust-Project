@@ -297,7 +297,7 @@ void TitleScene::update()
 {
     Scene::update();
     for(int i=0;i<imgs.size(); i++)
-        imgs[i].a.manualTick(uTick);
+        imgs[i].a.manualTick(uTickf);
 
     if(doExit)
     {
@@ -340,7 +340,7 @@ void TitleScene::render()
                                .arg(fader.isNull())
                                .arg(fader.isFull())
                                .arg(fader.ticksLeft())
-                               .arg(uTick)
+                               .arg(uTickf)
                                ,10, 10);
 //        FontManager::printText("0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
 //                               "abcdefghijklmnopqrstuvwxyz\n"
@@ -393,7 +393,6 @@ int TitleScene::exec()
 {
     //Level scene's Loop
     Uint32  start_render;
-    float   doUpdate_Render=0;
 
     menustates.clear();
     menuChain.clear();
@@ -419,10 +418,9 @@ int TitleScene::exec()
 
         PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks()-start_render) )
+        if( uTickf > (float)(SDL_GetTicks()-start_render) )
         {
-            doUpdate_Render = uTick-(SDL_GetTicks()-start_render);
-            SDL_Delay( doUpdate_Render );
+            wait( uTick-(float)(SDL_GetTicks()-start_render) );
         }
     }
     menu.clear();
