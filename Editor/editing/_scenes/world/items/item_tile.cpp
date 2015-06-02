@@ -172,60 +172,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else
-    if(selected==transform)
+    if((selected==transform)||(selected==transform_all))
     {
-        WorldData HistoryOldData;
-        WorldData HistoryNewData;
+        WorldData oldData;
+        WorldData newData;
         int transformTO;
-        ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
-        tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
-        util::DialogToCenter(tileList, true);
-        if(tileList->exec()==QDialog::Accepted)
+
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
+        util::DialogToCenter(itemList, true);
+
+        if(itemList->exec()==QDialog::Accepted)
         {
-            transformTO = tileList->tileID;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(ITEM_TYPE).toString()=="TILE")
-                {
-                    HistoryOldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
-                    ((ItemTile *) SelItem)->transformTo(transformTO);
-                    HistoryNewData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
-                }
-            }
-        }
-        delete tileList;
-        if(!HistoryNewData.tiles.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
-    }
-    else
-    if(selected==transform_all)
-    {
-        WorldData HistoryOldData;
-        WorldData HistoryNewData;
-        int transformTO;
-        ItemSelectDialog * tileList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_TILE);
-        tileList->removeEmptyEntry(ItemSelectDialog::TAB_TILE);
-        util::DialogToCenter(tileList, true);
-        if(tileList->exec()==QDialog::Accepted)
-        {
-            transformTO = tileList->tileID;
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
+            transformTO = itemList->tileID;
             unsigned long oldID = tileData.id;
-            foreach(QGraphicsItem * SelItem, scene->items() )
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+
+            foreach(QGraphicsItem * SelItem, our_items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="TILE")
                 {
-                    if(((ItemTile *) SelItem)->tileData.id==oldID)
+                    if((!sameID)||(((ItemTile *) SelItem)->tileData.id==oldID))
                     {
-                        HistoryOldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
+                        oldData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
                         ((ItemTile *) SelItem)->transformTo(transformTO);
-                        HistoryNewData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
+                        newData.tiles.push_back( ((ItemTile *) SelItem)->tileData );
                     }
                 }
             }
         }
-        delete tileList;
-        if(!HistoryNewData.tiles.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
+        delete itemList;
+        if(!newData.tiles.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)

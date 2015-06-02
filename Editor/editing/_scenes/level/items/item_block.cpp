@@ -199,6 +199,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent * mouseEvent)
     QAction *chNPC = ItemMenu.addAction(tr("Change included NPC..."));
         ItemMenu.addSeparator();
     QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BLOCK-%1").arg(blockData.id));
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BLOCK-%1").arg(blockData.id));
     QAction *makemsgevent = ItemMenu.addAction(tr("Make message box..."));
         ItemMenu.addSeparator();
@@ -232,64 +233,67 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else
-    if(selected==transform)
+    if((selected==transform)||(selected==transform_all)||(selected==transform_all_s))
     {
-        LevelData HistoryOldData;
-        LevelData HistoryNewData;
+        LevelData oldData;
+        LevelData newData;
 
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
         util::DialogToCenter(blockList, true);
+
         if(blockList->exec()==QDialog::Accepted)
         {
-            transformTO = blockList->blockID;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(ITEM_TYPE).toString()=="Block")
-                {
-                    HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
-                    ((ItemBlock *) SelItem)->transformTo(transformTO);
-                    HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
-                }
-            }
-        }
-        delete blockList;
-
-        if(!HistoryNewData.blocks.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
-    }
-    else
-    if(selected==transform_all)
-    {
-        LevelData HistoryOldData;
-        LevelData HistoryNewData;
-
-        int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
-        util::DialogToCenter(blockList, true);
-        if(blockList->exec()==QDialog::Accepted)
-        {
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
             transformTO = blockList->blockID;
             unsigned long oldID = blockData.id;
-            foreach(QGraphicsItem * SelItem, scene->items() )
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+            else if(selected==transform_all_s)
+            {
+                bool ok=false;
+                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                               tr("Please select, how far items out of section should be removed too (in pixels)"),
+                               32, 0, 214948, 1, &ok);
+                if(!ok) goto cancelTransform;
+                LevelSection &s=scene->LvlData->sections[scene->LvlData->CurSection];
+                QRectF section;
+                section.setLeft(s.size_left-mg);
+                section.setTop(s.size_top-mg);
+                section.setRight(s.size_right+mg);
+                section.setBottom(s.size_bottom+mg);
+                our_items=scene->items(section, Qt::IntersectsItemShape);
+                sameID=true;
+            }
+
+
+            foreach(QGraphicsItem * SelItem, our_items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="Block")
                 {
-                    if(((ItemBlock *) SelItem)->blockData.id==oldID)
+                    if((!sameID)||(((ItemBlock *) SelItem)->blockData.id==oldID))
                     {
-                        HistoryOldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                        oldData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                         ((ItemBlock *) SelItem)->transformTo(transformTO);
-                        HistoryNewData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
+                        newData.blocks.push_back( ((ItemBlock *) SelItem)->blockData );
                     }
                 }
             }
+            cancelTransform:;
         }
         delete blockList;
 
-        if(!HistoryNewData.blocks.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
+        if(!newData.blocks.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==makemsgevent)

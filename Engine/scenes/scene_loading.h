@@ -46,14 +46,18 @@ public:
     ~LoadingScene();
     void init();
 
-    void setWaitTime(unsigned int time);
+    void setWaitTime(int time);
+    void exitFromScene();
+
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    void onMousePressed(SDL_MouseButtonEvent &mbevent);
+
     void update();
     void render();
     int exec();
 
 private:
-    unsigned int _waitTimer;
-    int uTick;
+    int _waitTimer;
 
     PGE_Texture background;
     QVector<LoadingScene_misc_img > imgs;

@@ -46,11 +46,9 @@ CreditsScene_misc_img::CreditsScene_misc_img(const CreditsScene_misc_img &im)
 }
 
 
-CreditsScene::CreditsScene()
+CreditsScene::CreditsScene() : Scene(Credits)
 {
-    _waitTimer=5000;
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
+    _waitTimer=30000;
 }
 
 CreditsScene::~CreditsScene()
@@ -112,18 +110,47 @@ void CreditsScene::init()
     /*****************************Load LUA stuff*******************************/
 }
 
-void CreditsScene::setWaitTime(unsigned int time)
+void CreditsScene::setWaitTime(int time)
 {
-    if(time==0)
-        _waitTimer=5000;
+    if(time<=0)
+        _waitTimer=30000;
     else
         _waitTimer=time;
 }
 
+void CreditsScene::exitFromScene()
+{
+    doExit=true;
+    fader.setFade(10, 1.0f, 0.01f);
+}
+
+void CreditsScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit) return;
+
+    switch(sdl_key)
+    {
+        case SDLK_ESCAPE:
+            exitFromScene();
+        break;
+        default:
+        break;
+    }
+}
+
 void CreditsScene::update()
 {
+    if(doExit)
+    {
+        if(fader.isFull())
+        {
+            running=false;
+            return;
+        }
+    }
+
     /******************Update built-in faders and animators*********************/
-    fader.tickFader(uTick);
+    Scene::update();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTick);
     /******************Update built-in faders and animators*********************/
@@ -136,6 +163,14 @@ void CreditsScene::update()
 
 
     /*****************************Update LUA stuff*******************************/
+
+    if(!doExit)
+    {
+        if(_waitTimer>0)
+            _waitTimer-=uTick;
+        else
+            exitFromScene();
+    }
 }
 
 void CreditsScene::render()
@@ -163,68 +198,23 @@ int CreditsScene::exec()
 {
     //Level scene's Loop
     Uint32 start_render;
-    bool running = true;
     float doUpdate_Render=0;
-    bool doExit=false;
+    doExit=false;
 
-    Uint32 start_wait_timer=SDL_GetTicks();
     while(running)
     {
-        //UPDATE Events
         start_render=SDL_GetTicks();
+
+        processEvents();
         update();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+        PGE_Window::rePaint();
 
-        if(doExit)
+        if( uTick > (signed)(SDL_GetTicks()-start_render))
         {
-            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
-            if(fader.isFull())
-                running=false;
-        }
-
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        return -1;
-                    }   // End work of program
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                    switch(event.key.keysym.sym)
-                    {
-                        case SDLK_ESCAPE:
-                            doExit=true;
-                        break;
-                        default:
-                        break;
-                    }
-                break;
-
-                case SDL_KEYUP:
-                break;
-                default: break;
-            }
-        }
-
-        if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
-        {
-            doUpdate_Render = 1000.0/100.0-(SDL_GetTicks()-start_render);
+            doUpdate_Render = uTick-(SDL_GetTicks()-start_render);
             SDL_Delay( doUpdate_Render );
         }
-
-        if(!doExit)
-        {
-            if( (SDL_GetTicks()-start_wait_timer) > _waitTimer)
-                doExit=true;
-        }
-
     }
     return 0;
 }

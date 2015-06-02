@@ -246,6 +246,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         boss->setChecked( npcData.legacyboss );
         ItemMenu.addSeparator();
     QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("NPC-%1").arg(npcData.id));
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("NPC-%1").arg(npcData.id));
         ItemMenu.addSeparator();
     QAction *copyNpc = ItemMenu.addAction(tr("Copy"));
@@ -276,64 +277,65 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         MainWinConnect::pMainWin->on_actionCopy_triggered();
     }
     else
-    if(selected==transform)
+    if((selected==transform)||(selected==transform_all)||(selected==transform_all_s))
     {
-        LevelData HistoryOldData;
-        LevelData HistoryNewData;
+        LevelData oldData;
+        LevelData newData;
 
         int transformTO;
         ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
         npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
-        npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-        if(npcList->exec()==QDialog::Accepted)
-        {
-            transformTO = npcList->npcID;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(ITEM_TYPE).toString()=="NPC")
-                {
-                    HistoryOldData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
-                    ((ItemNPC *) SelItem)->transformTo(transformTO);
-                    HistoryNewData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
-                }
-            }
-        }
-        delete npcList;
-        if(!HistoryNewData.npc.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
-    }
-    else
-    if(selected==transform_all)
-    {
-        LevelData HistoryOldData;
-        LevelData HistoryNewData;
+        util::DialogToCenter(npcList, true);
 
-        int transformTO;
-        ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
-        npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
-        npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
         if(npcList->exec()==QDialog::Accepted)
         {
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
             transformTO = npcList->npcID;
             unsigned long oldID = npcData.id;
-            foreach(QGraphicsItem * SelItem, scene->items() )
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+            else if(selected==transform_all_s)
+            {
+                bool ok=false;
+                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                               tr("Please select, how far items out of section should be removed too (in pixels)"),
+                               32, 0, 214948, 1, &ok);
+                if(!ok) goto cancelTransform;
+                LevelSection &s=scene->LvlData->sections[scene->LvlData->CurSection];
+                QRectF section;
+                section.setLeft(s.size_left-mg);
+                section.setTop(s.size_top-mg);
+                section.setRight(s.size_right+mg);
+                section.setBottom(s.size_bottom+mg);
+                our_items=scene->items(section, Qt::IntersectsItemShape);
+                sameID=true;
+            }
+
+            foreach(QGraphicsItem * SelItem, our_items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC")
                 {
-                    if(((ItemNPC *) SelItem)->npcData.id==oldID)
+                    if((!sameID)||(((ItemNPC *) SelItem)->npcData.id==oldID))
                     {
-                        HistoryOldData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
+                        oldData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
                         ((ItemNPC *) SelItem)->transformTo(transformTO);
-                        HistoryNewData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
+                        newData.npc.push_back( ((ItemNPC *) SelItem)->npcData );
                     }
                 }
             }
+            cancelTransform:;
         }
         delete npcList;
-        if(!HistoryNewData.npc.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
+        if(!newData.npc.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==newNpc){

@@ -61,8 +61,9 @@ public:
     controller_keys controls_1;
 
     bool worldIsContinues;
-    bool doExit;
     bool isPauseMenu;
+
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
 
     void update();
     void render();
@@ -98,14 +99,12 @@ public:
 
     int i;
     int delayToEnter;
-    Uint32 lastTicks;
     bool debug_player_jumping;
     bool debug_player_onground;
     int  debug_player_foots;
     int  debug_render_delay;
     int  debug_phys_delay;
     int  debug_event_delay;
-    int  uTick;
 
     int dir;
     bool lock_controls;

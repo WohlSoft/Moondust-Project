@@ -53,9 +53,6 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
-
     isInit=false;
     isWarpEntrance=false;
     cameraStartDirected=false;
@@ -225,7 +222,6 @@ void LevelScene::tickAnimations(int ticks)
 
 int i;
 int delayToEnter = 1000;
-Uint32 lastTicks=0;
 bool debug_player_jumping=false;
 bool debug_player_onground=false;
 int  debug_player_foots=0;
@@ -235,32 +231,35 @@ int  debug_event_delay=0;
 
 void LevelScene::update()
 {
+    Scene::update();
     tickAnimations(uTick);
 
-    fader.tickFader(uTick);
+    if(!isLevelContinues)
+    {
+        exitLevelDelay -= uTick;
+        if(exitLevelDelay<=0)
+        {
+            doExit=true;
+            if(fader.isNull())
+            {
+                if(PGE_MusPlayer::MUS_IsPlaying())
+                    PGE_MusPlayer::MUS_stopMusicFadeOut(500);
+                fader.setFade(10, 1.0f, 0.01f);
+            }
+        }
+    }
 
     if(doExit)
     {
-        if(exitLevelDelay>=0)
-            exitLevelDelay -= uTick;
+        if(exitLevelCode==LvlExit::EXIT_Closed)
+        {
+            fader.setFull();
+            running=false;
+        }
         else
         {
-            if(exitLevelCode==LvlExit::EXIT_Closed)
-            {
-                fader.setFull();
-                isLevelContinues=false;
-            }
-            else
-            {
-                if(fader.isNull())
-                {
-                    if(PGE_MusPlayer::MUS_IsPlaying())
-                        PGE_MusPlayer::MUS_stopMusicFadeOut(500);
-                    fader.setFade(10, 1.0f, 0.01f);
-                }
-                if(fader.isFull())
-                    isLevelContinues=false;
-            }
+            if(fader.isFull())
+                running=false;
         }
     }
     else
@@ -434,7 +433,7 @@ void LevelScene::render()
                                .arg(debug_render_delay, 3, 10, QChar('0'))
                                .arg(debug_phys_delay, 3, 10, QChar('0')), 10,135);
 
-        if(doExit)
+        if(!isLevelContinues)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTick), 10, 155, 0, 1.0, 0, 0, 1.0);
@@ -447,10 +446,34 @@ void LevelScene::render()
 
 
 
+void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit || isExit()) return;
+
+    switch(sdl_key)
+    { // Check which
+      case SDLK_ESCAPE: // ESC
+              {
+                  setExiting(0, LvlExit::EXIT_MenuExit);
+              }   // End work of program
+          break;
+      case SDLK_RETURN:// Enter
+          {
+              if(doExit) break;
+              isPauseMenu = true;
+          }
+      break;
+      default:
+        break;
+    }
+}
+
+
 int LevelScene::exec()
 {
     isLevelContinues=true;
     doExit=false;
+    running=true;
 
     dbgDraw.c = cameras.first();
 
@@ -470,21 +493,13 @@ int LevelScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
-     int wait_delay=0;
 
-  //float timeFPS = 1000.0 / (float)PGE_Window::MaxFPS;
-  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
-
-    bool running = true;
     while(running)
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo)
-        {
-            start_events = SDL_GetTicks();
-        }
-
+        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
+        /**********************Update common events and controllers******************/
         #ifndef __APPLE__
         if(AppSettings.interprocessing)
             qApp->processEvents();
@@ -492,99 +507,39 @@ int LevelScene::exec()
 
         player1Controller->update();
         player2Controller->update();
+        processEvents();
+        /****************************************************************************/
+        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay = (stop_events-start_events);
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        if(doExit) break;
-                        setExiting(0, LvlExit::EXIT_Closed);
-                    }   // End work of program
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                  switch(event.key.keysym.sym)
-                  { // Check which
-                    case SDLK_ESCAPE: // ESC
-                            {
-                                setExiting(0, LvlExit::EXIT_MenuExit);
-                            }   // End work of program
-                        break;
-                    case SDLK_RETURN:// Enter
-                        {
-                            if(doExit) break;
-                            isPauseMenu = true;
-                        }
-                    break;
-                    default:
-                      break;
-
-                  }
-                break;
-
-                case SDL_KEYUP:
-                switch(event.key.keysym.sym)
-                {
-                case SDLK_RETURN:// Enter
-                    break;
-                default:
-                    break;
-                }
-                break;
-            }
-        }
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_events = SDL_GetTicks();
-            start_physics=SDL_GetTicks();
-        }
-
+        start_physics=SDL_GetTicks();
         /**********************Update physics and game progess***********************/
         update();
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_physics=SDL_GetTicks();
-        }
+        /****************************************************************************/
+        stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay  = (stop_physics-start_physics);
 
         stop_render=0;
         start_render=0;
+        /**********************Process rendering of stuff****************************/
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
-            stop_render = SDL_GetTicks();
+            PGE_Window::rePaint();
+            stop_render=SDL_GetTicks();
             doUpdate_render = stop_render-start_render;
-            debug_render_delay = stop_render-start_render;
+            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= timeStep;
+        doUpdate_render -= uTick;
+        if(stop_render < start_render) { stop_render=0; start_render=0; }
+        /****************************************************************************/
 
-        if(stop_render < start_render)
-            {stop_render=0; start_render=0;}
-
-        wait_delay=timeStep;
-        lastTicks=1;
-        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
+        if( uTick > (signed)(SDL_GetTicks()-start_common) )
         {
-            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
-            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
+            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common) );
         }
-        debug_phys_delay=(stop_physics-start_physics);
-        debug_event_delay=(stop_events-start_events);
-
-        if(wait_delay>0)
-            SDL_Delay( wait_delay );
-
-        if(isExit())
-            running = false;
-
     }
     return exitLevelCode;
 }
@@ -598,12 +553,16 @@ QString LevelScene::getLastError()
 
 
 
-
-
-
 bool LevelScene::isExit()
 {
     return !isLevelContinues;
+}
+
+void LevelScene::setExiting(int delay, int reason)
+{
+    exitLevelDelay   = delay;
+    exitLevelCode    = reason;
+    isLevelContinues = false;
 }
 
 QString LevelScene::toAnotherLevel()
@@ -669,14 +628,6 @@ void LevelScene::checkPlayers()
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);
     }
-}
-
-
-void LevelScene::setExiting(int delay, int reason)
-{
-    exitLevelDelay = delay;
-    exitLevelCode = reason;
-    doExit = true;
 }
 
 
