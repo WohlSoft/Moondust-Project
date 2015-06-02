@@ -33,7 +33,7 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
+    uTick = round(1000.0f/(float)PGE_Window::PhysStep);
     if(uTick<=0) uTick=1;
 }
 

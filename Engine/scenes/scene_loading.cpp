@@ -104,35 +104,56 @@ void LoadingScene::init()
     }
 }
 
-void LoadingScene::setWaitTime(unsigned int time)
+void LoadingScene::setWaitTime(int time)
 {
-    if(time==0)
+    if(time<=0)
         _waitTimer=5000;
     else
         _waitTimer=time;
+}
+
+void LoadingScene::exitFromScene()
+{
+    doExit=true;
+    fader.setFade(10, 1.0f, 0.01f);
 }
 
 void LoadingScene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
 {
     if(doExit) return;
 
-    doExit=true;
-    fader.setFade(10, 1.0f, 0.01f);
+    exitFromScene();
 }
 
 void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
 {
     if(doExit) return;
 
-    doExit=true;
-    fader.setFade(10, 1.0f, 0.01f);
+    exitFromScene();
 }
 
 void LoadingScene::update()
 {
+    if(doExit)
+    {
+        if(fader.isFull())
+        {
+            running=false;
+            return;
+        }
+    }
+
     Scene::update();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTick);
+
+    if(!doExit)
+    {
+        if(_waitTimer>0)
+            _waitTimer -= uTick;
+        else
+            exitFromScene();
+    }
 }
 
 void LoadingScene::render()
@@ -165,35 +186,20 @@ int LoadingScene::exec()
     doExit=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
-
-    Uint32 start_wait_timer=SDL_GetTicks();
     while(running)
     {
-        //UPDATE Events
         start_render=SDL_GetTicks();
-        update();
+
         processEvents();
+        update();
         render();
         PGE_Window::rePaint();
 
-        if(doExit)
+        if( uTick > (signed)(SDL_GetTicks()-start_render))
         {
-            if(fader.isFull())
-                running=false;
-        }
-
-        if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
-        {
-            doUpdate_Render = 1000.0/100.0-(SDL_GetTicks()-start_render);
+            doUpdate_Render = uTick-(SDL_GetTicks()-start_render);
             SDL_Delay( doUpdate_Render );
         }
-
-        if(!doExit)
-        {
-            if( (SDL_GetTicks()-start_wait_timer) > _waitTimer)
-                doExit=true;
-        }
-
     }
     return 0;
 }
