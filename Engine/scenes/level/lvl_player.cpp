@@ -195,6 +195,7 @@ void LVL_Player::initSize()
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
+    if(!isInited) return;
     if(!physBody) return;
     if(!camera) return;
     LVL_Section* section = sct();
@@ -224,7 +225,12 @@ void LVL_Player::update(float ticks)
     {
         doKill=false;
         isLive = false;
-        physBody->SetActive(false);
+        if(physBody)
+        {
+            physBody->SetGravityScale(0);
+            physBody->SetAwake(false);
+            physBody->SetActive(false);
+        }
         LvlSceneP::s->checkPlayers();
         return;
     }
@@ -631,7 +637,8 @@ void LVL_Player::update(float ticks)
             if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 isInited=false;
-                physBody->SetActive(false);
+                physBody->SetAwake(false);
+                physBody->SetGravityScale(0);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -1110,9 +1117,11 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                         },0);
             event_queue.events.push_back(playSnd);
 
+            float pStep = 1.5f/((float)PGE_Window::PhysStep);
+
             EventQueueEntry<LVL_Player >warpOut;
-            warpOut.makeWaiterCond([this]()->bool{
-                                      warpPipeOffset-=0.02f;
+            warpOut.makeWaiterCond([this, pStep]()->bool{
+                                      warpPipeOffset -= pStep;
                                       return warpPipeOffset<=0.0f;
                                   }, false, 0);
             event_queue.events.push_back(warpOut);
@@ -1210,9 +1219,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 break;
             }
 
+            float pStep = 1.5f/((float)PGE_Window::PhysStep);
             EventQueueEntry<LVL_Player >warpIn;
-            warpIn.makeWaiterCond([this]()->bool{
-                                      warpPipeOffset+=0.02f;
+            warpIn.makeWaiterCond([this, pStep]()->bool{
+                                      warpPipeOffset += pStep;
                                       return warpPipeOffset>=1.0f;
                                   }, false, 0);
             event_queue.events.push_back(warpIn);
@@ -1443,6 +1453,8 @@ void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
     if(physBody)
-        physBody->SetActive(!lock);
+    {
+        physBody->SetAwake(!lock);
+    }
 }
 

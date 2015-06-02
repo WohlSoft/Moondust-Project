@@ -21,15 +21,32 @@
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 
+void Scene::construct()
+{
+    fader.setFull();
+    fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
+    running=true;
+    doExit=false;
+    _doShutDown=false;
+    updateTickValue();
+}
+
+void Scene::updateTickValue()
+{
+    uTick = round(1000.0f/(float)PGE_Window::PhysStep);
+    if(uTick<=0) uTick=1;
+}
+
 Scene::Scene()
 {
     sceneType = _Unknown;
-    fader.setFull();
+    construct();
 }
 
 Scene::Scene(TypeOfScene _type)
 {
     sceneType = _type;
+    construct();
 }
 
 Scene::~Scene()
@@ -41,8 +58,78 @@ Scene::~Scene()
     glLoadIdentity();
 }
 
-void Scene::update()
+void Scene::onKeyInput(int)
 {}
+
+void Scene::onKeyboardPressed(SDL_Scancode)
+{}
+
+void Scene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
+{}
+
+void Scene::onKeyboardReleased(SDL_Scancode)
+{}
+
+void Scene::onKeyboardReleasedSDL(SDL_Keycode, Uint16)
+{}
+
+void Scene::onMouseMoved(SDL_MouseMotionEvent &)
+{}
+
+void Scene::onMousePressed(SDL_MouseButtonEvent &)
+{}
+
+void Scene::onMouseReleased(SDL_MouseButtonEvent &)
+{}
+
+void Scene::onMouseWheel(SDL_MouseWheelEvent &)
+{}
+
+
+void Scene::processEvents()
+{
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) )
+    {
+        if(PGE_Window::processEvents(event)!=0) continue;
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                {
+                    doExit          = true;
+                    running         = false;
+                    _doShutDown = true;
+                    break;
+                }// End work of program
+            break;
+            case SDL_KEYDOWN: // If pressed key
+                onKeyboardPressedSDL(event.key.keysym.sym, event.key.keysym.mod);
+                onKeyboardPressed(event.key.keysym.scancode);
+            break;
+            case SDL_KEYUP: // If released key
+                onKeyboardReleasedSDL(event.key.keysym.sym, event.key.keysym.mod);
+                onKeyboardReleased(event.key.keysym.scancode);
+            break;
+            case SDL_MOUSEBUTTONDOWN:
+                onMousePressed(event.button);
+            break;
+            case SDL_MOUSEBUTTONUP:
+                onMouseReleased(event.button);
+            break;
+            case SDL_MOUSEWHEEL:
+                onMouseWheel(event.wheel);
+            break;
+            case SDL_MOUSEMOTION:
+                onMouseMoved(event.motion);
+            break;
+        }
+    }
+}
+
+void Scene::update()
+{
+    fader.tickFader(uTick);
+}
 
 void Scene::render()
 {
@@ -63,6 +150,16 @@ int Scene::exec()
 Scene::TypeOfScene Scene::type()
 {
     return sceneType;
+}
+
+bool Scene::isExiting()
+{
+    return doExit;
+}
+
+bool Scene::doShutDown()
+{
+    return _doShutDown;
 }
 
 /**************************Fader*******************************/

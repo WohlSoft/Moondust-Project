@@ -46,14 +46,16 @@ public:
     ~CreditsScene();
     void init();
 
-    void setWaitTime(unsigned int time);
+    void setWaitTime(int time);
+    void exitFromScene();
+
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
     void update();
     void render();
     int exec();
 
 private:
-    unsigned int _waitTimer;
-    int uTick;
+    int _waitTimer;
 
     PGE_Texture background;
     QVector<CreditsScene_misc_img > imgs;

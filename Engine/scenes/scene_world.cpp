@@ -57,7 +57,6 @@ WorldScene::WorldScene()
     exitWorldCode=WldExit::EXIT_error;
     exitWorldDelay=2000;
     worldIsContinues=true;
-    doExit=false;
     isPauseMenu=false;
 
     gameState=NULL;
@@ -66,7 +65,6 @@ WorldScene::WorldScene()
 
     i=0;
     delayToEnter = 1000;
-    lastTicks=0;
     debug_player_jumping=false;
     debug_player_onground=false;
     debug_player_foots=0;
@@ -89,9 +87,6 @@ WorldScene::WorldScene()
     /*********Fader*************/
     fader.setFull();
     /*********Fader*************/
-
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
 
     move_speed = 125/(float)PGE_Window::PhysStep;
     move_steps_count=0;
@@ -446,27 +441,27 @@ bool WorldScene::loadConfigs()
     return success;
 }
 
+
 void WorldScene::update()
 {
     tickAnimations(uTick);
-    fader.tickFader(uTick);
+    Scene::update();
 
     if(doExit)
     {
-        if(exitWorldDelay>=0)
-            exitWorldDelay -= uTick;
+        if(exitWorldCode==WldExit::EXIT_close)
+        {
+            fader.setFull();
+            worldIsContinues=false;
+            running=false;
+        }
         else
         {
-            if(exitWorldCode==WldExit::EXIT_close)
+            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
+            if(fader.isFull())
             {
-                fader.setFull();
                 worldIsContinues=false;
-            }
-            else
-            {
-                if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
-                if(fader.isFull())
-                    worldIsContinues=false;
+                running=false;
             }
         }
     }
@@ -577,7 +572,48 @@ void WorldScene::update()
         }
     }
 
-    Scene::update();
+
+
+
+    if(controls_1.jump || controls_1.alt_jump)
+    {
+        if((!lock_controls) && (gameState))
+        {
+            if(!gameState->LevelFile.isEmpty())
+            {
+                gameState->game_state.worldPosX=posX;
+                gameState->game_state.worldPosY=posY;
+                PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                stopMusic(true, 300);
+                lock_controls=true;
+                setExiting(0, WldExit::EXIT_beginLevel);
+            }
+            else if(jumpTo)
+            {
+                //Create events
+                EventQueueEntry<WorldScene >event1;
+                event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                wld_events.events.push_back(event1);
+
+                EventQueueEntry<WorldScene >event2;
+                event2.makeCallerT(this, &WorldScene::jump, 100);
+                wld_events.events.push_back(event2);
+
+                EventQueueEntry<WorldScene >event3;
+                event3.makeCaller([this]()->void{
+                                      this->fader.setFade(10, 0.0f, 0.05);
+                                      this->lock_controls=false;
+                                  }, 0);
+                wld_events.events.push_back(event3);
+
+                this->lock_controls=true;
+                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                fader.setFade(10, 1.0f, 0.05);
+            }
+        }
+    }
+
+
 }
 
 void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
@@ -863,6 +899,34 @@ void WorldScene::render()
     Scene::render();
 }
 
+void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit) return;
+
+    switch(sdl_key)
+    { // Check which
+        case SDLK_ESCAPE: // ESC
+            {
+                setExiting(0, WldExit::EXIT_exitNoSave);
+            }   // End work of program
+        break;
+        case SDLK_RETURN:// Enter
+            {
+                if( doExit || lock_controls) break;
+                isPauseMenu = true;
+            }
+        break;
+        case SDLK_i:
+            ignore_paths= !ignore_paths;
+            if(ignore_paths)
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+            else
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+        break;
+        default: break;
+    }
+}
+
 int WorldScene::exec()
 {
     worldIsContinues=true;
@@ -880,165 +944,42 @@ int WorldScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
-     int wait_delay=0;
 
-  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
-
-    bool running = !doExit;
+    running = !doExit;
     while(running)
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo)
-        {
-            start_events = SDL_GetTicks();
-        }
-
+        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
         player1Controller->update();
         controls_1 = player1Controller->keys;
+        processEvents();
+        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay=(stop_events-start_events);
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        if(doExit) break;
-                        setExiting(0, WldExit::EXIT_close);
-                    }   // End work of program
-                break;
-
-                case SDL_KEYDOWN: // If pressed key
-                  switch(event.key.keysym.sym)
-                  { // Check which
-                    case SDLK_ESCAPE: // ESC
-                            {
-                                setExiting(0, WldExit::EXIT_exitNoSave);
-                            }   // End work of program
-                        break;
-                    case SDLK_RETURN:// Enter
-                        {
-                            if( doExit || lock_controls) break;
-                            isPauseMenu = true;
-                        }
-                    break;
-                    case SDLK_i:
-                        ignore_paths= !ignore_paths;
-                        if(ignore_paths)
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
-                        else
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
-                    break;
-                    default:
-                    break;
-                  }
-                break;
-
-                case SDL_KEYUP:
-                switch(event.key.keysym.sym)
-                {
-                case SDLK_RETURN:// Enter
-                    break;
-                default:
-                    break;
-                }
-                break;
-            }
-        }
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_events = SDL_GetTicks();
-            start_physics=SDL_GetTicks();
-        }
-
-        /**********************Update physics and game progess***********************/
+        start_physics=SDL_GetTicks();
         update();
-
-        if(controls_1.jump || controls_1.alt_jump)
-        {
-            if((!lock_controls) && (gameState))
-            {
-                if(!gameState->LevelFile.isEmpty())
-                {
-                    gameState->game_state.worldPosX=posX;
-                    gameState->game_state.worldPosY=posY;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
-                    stopMusic(true, 300);
-                    lock_controls=true;
-                    setExiting(0, WldExit::EXIT_beginLevel);
-                }
-                else if(jumpTo)
-                {
-                    //Create events
-                    EventQueueEntry<WorldScene >event1;
-                    event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
-                    wld_events.events.push_back(event1);
-
-                    EventQueueEntry<WorldScene >event2;
-                    event2.makeCallerT(this, &WorldScene::jump, 100);
-                    wld_events.events.push_back(event2);
-
-                    EventQueueEntry<WorldScene >event3;
-                    event3.makeCaller([this]()->void{
-                                          this->fader.setFade(10, 0.0f, 0.05);
-                                          this->lock_controls=false;
-                                      }, 0);
-                    wld_events.events.push_back(event3);
-
-                    this->lock_controls=true;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                    fader.setFade(10, 1.0f, 0.05);
-                }
-            }
-        }
-
-        /**********************Update physics and game progess***********************/
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_physics=SDL_GetTicks();
-        }
+        stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay=(stop_physics-start_physics);
 
         stop_render=0;
         start_render=0;
         if(doUpdate_render<=0)
         {
             start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
             render();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
+            PGE_Window::rePaint();
             stop_render = SDL_GetTicks();
-            doUpdate_render = stop_render-start_render;//-timeStep;
-            debug_render_delay = stop_render-start_render;
+            doUpdate_render = stop_render-start_render;
+            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= timeStep;
+        doUpdate_render -= uTick;
+        if(stop_render < start_render) {stop_render=0; start_render=0; }
 
-        if(stop_render < start_render)
-            {stop_render=0; start_render=0;}
-
-        wait_delay=timeStep;
-        lastTicks=1;
-        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
+        if( uTick > (signed)(SDL_GetTicks()-start_common) )
         {
-            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
-            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
+            SDL_Delay( uTick-(signed)(SDL_GetTicks()-start_common));
         }
-        debug_phys_delay=(stop_physics-start_physics);
-        debug_event_delay=(stop_events-start_events);
-
-        if(wait_delay>0)
-            SDL_Delay( wait_delay );
-
-        stop_render=0;
-        start_render=0;
-
-        if(isExit())
-            running = false;
-
     }
     return exitWorldCode;
 }

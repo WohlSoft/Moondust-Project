@@ -200,7 +200,8 @@ SOURCES += \
     common_features/fader.cpp \
     data_configs/setup_credits_screen.cpp \
     script/luaengine.cpp \
-    script/bindings/core/globalfuncs/luafuncs_logger.cpp
+    script/bindings/core/globalfuncs/luafuncs_logger.cpp \
+    scenes/title/ttl_main_menu.cpp
 
 
 HEADERS  += \
