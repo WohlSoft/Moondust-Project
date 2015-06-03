@@ -203,7 +203,8 @@ SOURCES += \
     script/bindings/core/globalfuncs/luafuncs_logger.cpp \
     scenes/title/ttl_main_menu.cpp \
     scenes/world/wld_tilebox.cpp \
-    scenes/level/lvl_scene_rtree.cpp
+    scenes/level/lvl_scene_rtree.cpp \
+    gui/pge_menubox.cpp
 
 
 HEADERS  += \
@@ -313,7 +314,8 @@ HEADERS  += \
     data_configs/setup_credits_screen.h \
     script/luaengine.h \
     script/luautils.h \
-    script/bindings/core/globalfuncs/luafuncs_logger.h
+    script/bindings/core/globalfuncs/luafuncs_logger.h \
+    gui/pge_menubox.h
 
 FORMS    += \
     data_configs/select_config.ui

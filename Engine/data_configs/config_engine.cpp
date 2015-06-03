@@ -53,6 +53,17 @@ bool ConfigManager::loadEngineSettings()
         setup_message_box.font_id=0;
     engineset.endGroup();
 
+    engineset.beginGroup("menu-box");
+        setup_menu_box.sprite = engineset.value("image", "").toString();
+        checkForImage(setup_menu_box.sprite, dirs.gcommon);
+        setup_menu_box.box_padding = (float)(unsigned)engineset.value("box-padding", 20).toInt();
+        setup_menu_box.borderWidth = (unsigned)engineset.value("border-width", 32).toInt();
+        setup_menu_box.title_font_name = engineset.value("title-font", "font2").toString();
+        setup_menu_box.title_font_color = engineset.value("title-font-color", "#FF0000").toString();
+        setup_menu_box.title_font_rgba.setRgba(setup_menu_box.title_font_color);
+        setup_menu_box.title_font_id=0;
+    engineset.endGroup();
+
     engineset.beginGroup("menu");
         setup_menus.selector = engineset.value("selector", "").toString();
         checkForImage(setup_menus.selector, dirs.gcommon);

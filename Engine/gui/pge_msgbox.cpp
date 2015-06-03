@@ -188,6 +188,7 @@ void PGE_MsgBox::restart()
 {
     PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
     running=true;
+    _page=0;
 }
 
 bool PGE_MsgBox::isRunning()

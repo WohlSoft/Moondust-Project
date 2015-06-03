@@ -91,6 +91,17 @@ struct MessageBoxSetup
     GlColor font_rgba;
 };
 
+struct MenuBoxSetup
+{
+    QString sprite;
+    int borderWidth;
+    float   box_padding;
+    QString title_font_name;
+    int     title_font_id;
+    QString title_font_color;
+    GlColor title_font_rgba;
+};
+
 struct MenuSetup
 {
     QString selector;
@@ -133,6 +144,8 @@ public:
     static MainCursors setup_cursors;
     //MessageBox setup
     static MessageBoxSetup setup_message_box;
+    //MenuBox setup
+    static MenuBoxSetup    setup_menu_box;
     //Menu setup
     static MenuSetup setup_menus;
 
