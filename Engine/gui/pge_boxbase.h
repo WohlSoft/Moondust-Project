@@ -21,6 +21,8 @@ public:
     PGE_BoxBase(const PGE_BoxBase &bb);
     virtual ~PGE_BoxBase();
 
+    virtual void setParentScene(Scene *_parentScene);
+
     virtual void exec();
     virtual void update(float ticks);
     virtual void render();

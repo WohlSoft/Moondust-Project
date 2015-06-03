@@ -33,7 +33,6 @@
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
-#include <gui/pge_menubox.h>
 
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
@@ -59,9 +58,6 @@ LevelScene::LevelScene()
     isWarpEntrance=false;
     cameraStartDirected=false;
     cameraStartDirection=0;
-
-    isPauseMenu=false;
-    isTimeStopped=false;
 
     /*********Exit*************/
     isLevelContinues=true;
@@ -95,12 +91,117 @@ LevelScene::LevelScene()
     player2Controller = AppSettings.openController(2);
     /*********Controller********/
 
+    /*********Pause menu*************/
+    initPauseMenu1();
+    /*********Pause menu*************/
+
     frameSkip=AppSettings.frameSkip;
 
     errorMsg = "";
 
     gameState = NULL;
+
+    debug_player_jumping=false;
+    debug_player_onground=false;
+    debug_player_foots=0;
+    debug_render_delay=0;
+    debug_phys_delay=0;
+    debug_event_delay=0;
 }
+
+void LevelScene::initPauseMenu1()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=1;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Save and continue";
+    items<<"Save and quit";
+    items<<"Exit from level";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+    isTimeStopped=false;
+}
+
+void LevelScene::initPauseMenu2()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=2;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Quit";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+    isTimeStopped=false;
+}
+
+void LevelScene::processPauseMenu()
+{
+    if(!_pauseMenu_opened)
+    {
+        _pauseMenu.restart();
+        _pauseMenu_opened=true;
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
+    }
+    else
+    {
+        _pauseMenu.update(uTickf);
+        if(!_pauseMenu.isRunning())
+        {
+            if(_pauseMenuID==1)
+            {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_SaveCont:
+                    //Save game state!
+                break;
+                case PAUSE_SaveQuit:
+                    //Save game state! and exit from episode
+                    setExiting(0, LvlExit::EXIT_MenuExit);
+                    break;
+                case PAUSE_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, LvlExit::EXIT_MenuExit);
+                break;
+                default: break;
+                }
+            } else {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_2_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_2_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, LvlExit::EXIT_MenuExit);
+                break;
+                default: break;
+                }
+            }
+            _pauseMenu_opened=false;
+            isPauseMenu=false;
+        }
+    }
+}
+
+
 
 LevelScene::~LevelScene()
 {
@@ -220,16 +321,6 @@ void LevelScene::tickAnimations(float ticks)
 }
 
 
-
-int i;
-int delayToEnter = 1000;
-bool debug_player_jumping=false;
-bool debug_player_onground=false;
-int  debug_player_foots=0;
-int  debug_render_delay=0;
-int  debug_phys_delay=0;
-int  debug_event_delay=0;
-
 void LevelScene::update()
 {
     Scene::update();
@@ -262,10 +353,10 @@ void LevelScene::update()
             if(fader.isFull())
                 running=false;
         }
-    }
-    else
-    if(!isPauseMenu) //Update physics is not pause menu
-    {
+    } else if(isPauseMenu) {
+        processPauseMenu();
+    } else {//Update physics is not pause menu
+
         system_events.processEvents(uTickf);
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
@@ -305,7 +396,7 @@ void LevelScene::update()
                 debug_player_onground= plr->onGround;
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
-            players[i]->update(uTickf);
+            plr->update(uTickf);
         }
 
         for(int i=0;i<fading_blocks.size();i++)
@@ -353,64 +444,16 @@ void LevelScene::update()
             cam->update(uTickf);
     }
 
+    //Recive external commands!
     if(IntProc::enabled && IntProc::cmd_accepted)
     {
-        PGE_MsgBox msgBox(this, IntProc::getCMD(),
-                          PGE_MsgBox::msg_info);
-
-        if(!ConfigManager::setup_message_box.sprite.isEmpty())
-            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+        PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
+                          PGE_MsgBox::msg_info, PGE_Point(-1, -1),
+                           ConfigManager::setup_message_box.box_padding,
+                           ConfigManager::setup_message_box.sprite);
         msgBox.exec();
     }
 
-    if(isPauseMenu)
-    {
-        PGE_MenuBox menuBox(this, "Pause",
-                          PGE_MenuBox::msg_info);
-        QStringList items;
-        items<<"Continue";
-        items<<"Save and continue";
-        items<<"Save and exit";
-        items<<"Item 3";
-        items<<"Show 5 items";
-        items<<"Show 7 items";
-        items<<"Show 8 items";
-        items<<"Item 7";
-        menuBox.addMenuItems(items);
-        menuBox.setRejectSnd(obj_sound_role::MenuPause);
-
-        goto menu;
-        repeat8:
-        menuBox.setMaxMenuItems(8);
-        goto menu2;
-        repeat7:
-        menuBox.setMaxMenuItems(7);
-        goto menu2;
-        repeat6:
-        menuBox.setMaxMenuItems(5);
-        goto menu2;
-        menu:
-
-        if(!ConfigManager::setup_message_box.sprite.isEmpty())
-            menuBox.loadTexture(ConfigManager::setup_message_box.sprite);
-        menu2:
-        PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
-        menuBox.exec();
-
-        if(menuBox.answer()==6) {menuBox.restart();goto repeat8;}
-        if(menuBox.answer()==5) {menuBox.restart();goto repeat7;}
-        if(menuBox.answer()==4) {menuBox.restart();goto repeat6;}
-
-        if(menuBox.answer()!=-1)
-        {
-            PGE_MsgBox msg(this, QString("Answer is %1").arg(menuBox.answer()), PGE_MsgBox::msg_info);
-            if(!ConfigManager::setup_message_box.sprite.isEmpty())
-                msg.loadTexture(ConfigManager::setup_message_box.sprite);
-            msg.exec();
-        }
-
-        isPauseMenu=false;
-    }
 }
 
 
@@ -488,6 +531,8 @@ void LevelScene::render()
     renderBlack:
     Scene::render();
     if(IsLoaderWorks) drawLoader();
+
+    if(isPauseMenu) _pauseMenu.render();
 }
 
 
@@ -496,16 +541,14 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
     if(doExit || isExit()) return;
 
+    if(isPauseMenu) _pauseMenu.processKeyEvent(sdl_key);
+
     switch(sdl_key)
     { // Check which
-      case SDLK_ESCAPE:     // Exit from a level
-              {
-                  setExiting(0, LvlExit::EXIT_MenuExit);
-              }   // End work of program
-          break;
+      case SDLK_ESCAPE:
       case SDLK_RETURN:     // Toggle pause mode
           {
-              if(doExit) break;
+              if(doExit || isPauseMenu) break;
               isPauseMenu = true;
           }
       break;
@@ -707,5 +750,12 @@ void LevelScene::setGameState(EpisodeState *_gameState)
 {
     gameState = _gameState;
     numberOfPlayers = gameState->numOfPlayers;
+    if(gameState)
+    {
+        if(gameState->isEpisode && !gameState->isHubLevel)
+            initPauseMenu2();
+        else
+            initPauseMenu1();
+    }
 }
 

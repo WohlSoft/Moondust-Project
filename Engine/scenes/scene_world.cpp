@@ -61,6 +61,8 @@ WorldScene::WorldScene()
     player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
+    initPauseMenu1();
+
     frameSkip=AppSettings.frameSkip;
 
     /***********Number of Players*****************/
@@ -448,6 +450,95 @@ void WorldScene::setDir(int dr)
 }
 
 
+void WorldScene::initPauseMenu1()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=1;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Save and continue";
+    items<<"Save and quit";
+    items<<"Quit without saving";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+}
+
+void WorldScene::initPauseMenu2()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=2;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Quit";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+}
+
+void WorldScene::processPauseMenu()
+{
+    if(!_pauseMenu_opened)
+    {
+        _pauseMenu.restart();
+        _pauseMenu_opened=true;
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
+    }
+    else
+    {
+        _pauseMenu.update(uTickf);
+        if(!_pauseMenu.isRunning())
+        {
+            if(_pauseMenuID==1)
+            {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_SaveCont:
+                    //Save game state!
+                break;
+                case PAUSE_SaveQuit:
+                    //Save game state! and exit from episode
+                    setExiting(0, WldExit::EXIT_exitWithSave);
+                    break;
+                case PAUSE_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, WldExit::EXIT_exitNoSave);
+                break;
+                default: break;
+                }
+            } else {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_2_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_2_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, WldExit::EXIT_exitNoSave);
+                break;
+                default: break;
+                }
+            }
+            _pauseMenu_opened=false;
+            isPauseMenu=false;
+        }
+    }
+}
 
 void WorldScene::update()
 {
@@ -471,9 +562,9 @@ void WorldScene::update()
                 running=false;
             }
         }
-    }
-    else
-    {
+    } else if(isPauseMenu) {
+        processPauseMenu();
+    } else {
         wld_events.processEvents(uTickf);
 
         if(walk_direction==Walk_Idle)
@@ -889,25 +980,24 @@ void WorldScene::render()
                                    .arg(exitWorldDelay)
                                    .arg(uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
-
     renderBlack:
     Scene::render();
+
+    if(isPauseMenu) _pauseMenu.render();
 }
 
 void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
     if(doExit) return;
 
+    if(isPauseMenu) _pauseMenu.processKeyEvent(sdl_key);
+
     switch(sdl_key)
     { // Check which
         case SDLK_ESCAPE: // ESC
-            {
-                setExiting(0, WldExit::EXIT_exitNoSave);
-            }   // End work of program
-        break;
         case SDLK_RETURN:// Enter
             {
-                if( doExit || lock_controls) break;
+                if( isPauseMenu || doExit || lock_controls) break;
                 isPauseMenu = true;
             }
         break;

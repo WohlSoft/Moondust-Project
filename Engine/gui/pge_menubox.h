@@ -50,11 +50,21 @@ public:
         msg_fatal
     };
 
-    PGE_MenuBox();
     PGE_MenuBox(Scene * _parentScene=NULL, QString _title="Menu is works!",
                msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
     PGE_MenuBox(const PGE_MenuBox &mb);
+
+    void construct(QString _title="Menu is works!",
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+
     ~PGE_MenuBox();
+
+    void setParentScene(Scene * _parentScene);
+    void setType(msgType _type);
+    void setTitleFont(QString fontName);
+    void setTitleFontColor(GlColor color);
+    void setTitleText(QString text);
+    void setPadding(int _padding);
 
     void clearMenu();
     void addMenuItem(QString &menuitem);
@@ -89,9 +99,6 @@ public:
     //static void fatal(std::string msg);
 
 private:
-    void construct(QString _title="Menu is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
-
     void updateSize();
     int     _page;
     bool    running;
@@ -100,17 +107,16 @@ private:
     int     _answer_id;
 
     long    reject_snd;
-
     PGE_Point _pos;
-
     Controller *_ctrl1;
     Controller *_ctrl2;
-
     msgType type;
+
     PGE_Rect _sizeRect;
     QString  title;
     PGE_Size title_size;
     PGE_Menu _menu;
+
     float width;
     float height;
     float padding;

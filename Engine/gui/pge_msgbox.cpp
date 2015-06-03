@@ -40,12 +40,11 @@ PGE_MsgBox::PGE_MsgBox()
 }
 
 PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type,
-                       PGE_Point boxCenterPos, PGE_SizeF boxSize,
+                       PGE_Point boxCenterPos,
                        float _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
-    construct(msg,_type, ((boxSize.w()==0) || (boxSize.h()==0)),
-              boxSize, boxCenterPos, _padding, texture);
+    construct(msg,_type, boxCenterPos, _padding, texture);
 }
 
 PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
@@ -66,11 +65,9 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
 }
 
 
-void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
-                                bool autosize, PGE_SizeF boxSize, PGE_Point pos, float _padding, QString texture)
+void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos, float _padding, QString texture)
 {
-    if(!texture.isEmpty())
-        loadTexture(texture);
+    loadTexture(texture);
 
     updateTickValue();
     _page=0;
@@ -92,16 +89,11 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
         default:  bg_color =            QColor(qRgb(0,0,0)); break;
     }
-    if(autosize)
-    {
-        /****************Word wrap*********************/
-        int count=1;
-        int maxWidth=0;
-        FontManager::optimizeText(message, 27, &count, &maxWidth);
-        /****************Word wrap*end*****************/
-        boxSize = FontManager::textSize(message, fontID, 27);
-    }
 
+    /****************Word wrap*********************/
+    FontManager::optimizeText(message, 27);
+    /****************Word wrap*end*****************/
+    PGE_Size boxSize = FontManager::textSize(message, fontID, 27);
     setBoxSize(boxSize.w()/2, boxSize.h()/2, _padding);
 
     if((pos.x()==-1)&&(pos.y()==-1))
