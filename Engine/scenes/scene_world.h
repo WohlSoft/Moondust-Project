@@ -112,7 +112,7 @@ private:
     int     walk_direction;
     float   move_speed;//!< Calculated movement step dependent to physical step
     float   move_steps_count;//!< Speps counterm, used to correct inter-cell position
-    void    doMoveStep(float posVal);
+    void    doMoveStep(double &posVal);
     void    setDir(int dr);
 
     obj_player     mapwalker_setup;

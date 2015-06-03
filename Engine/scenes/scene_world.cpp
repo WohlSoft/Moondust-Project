@@ -424,7 +424,7 @@ bool WorldScene::loadConfigs()
 
 
 
-void WorldScene::doMoveStep(float posVal)
+void WorldScene::doMoveStep(double &posVal)
 {
     move_steps_count+=move_speed;
     if(move_steps_count>=ConfigManager::default_grid)
