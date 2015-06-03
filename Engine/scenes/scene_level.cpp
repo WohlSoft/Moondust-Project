@@ -93,6 +93,8 @@ LevelScene::LevelScene()
     player2Controller = AppSettings.openController(2);
     /*********Controller********/
 
+    frameSkip=AppSettings.frameSkip;
+
     errorMsg = "";
 
     gameState = NULL;
@@ -122,20 +124,14 @@ LevelScene::~LevelScene()
     }
 
     qDebug() << "Destroy cameras";
-    while(!cameras.isEmpty())
-    {
-        PGE_LevelCamera* tmp;
-        tmp = cameras.first();
-        cameras.pop_front();
-        if(tmp) delete tmp;
-    }
+    cameras.clear();
 
     qDebug() << "Destroy players";
     while(!players.isEmpty())
     {
         LVL_Player* tmp;
-        tmp = players.first();
-        players.pop_front();
+        tmp = players.last();
+        players.pop_back();
         player1Controller->removeFromControl(tmp);
         if(tmp) delete tmp;
     }
@@ -144,8 +140,8 @@ LevelScene::~LevelScene()
     while(!blocks.isEmpty())
     {
         LVL_Block* tmp;
-        tmp = blocks.first();
-        blocks.pop_front();
+        tmp = blocks.last();
+        blocks.pop_back();
         if(tmp) delete tmp;
     }
 
@@ -153,8 +149,8 @@ LevelScene::~LevelScene()
     while(!bgos.isEmpty())
     {
         LVL_Bgo* tmp;
-        tmp = bgos.first();
-        bgos.pop_front();
+        tmp = bgos.last();
+        bgos.pop_back();
         if(tmp) delete tmp;
     }
 
@@ -162,8 +158,8 @@ LevelScene::~LevelScene()
     while(!npcs.isEmpty())
     {
         LVL_Npc* tmp;
-        tmp = npcs.first();
-        npcs.pop_front();
+        tmp = npcs.last();
+        npcs.pop_back();
         if(tmp) delete tmp;
     }
 
@@ -210,12 +206,15 @@ LevelScene::~LevelScene()
 void LevelScene::tickAnimations(float ticks)
 {
     //tick animation
-    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-        ConfigManager::Animator_BG[i].manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Blocks.begin();
+        it!=ConfigManager::Animator_Blocks.end(); it++)
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_BGO.begin();
+        it!=ConfigManager::Animator_BGO.end(); it++)
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_BG.begin();
+        it!=ConfigManager::Animator_BG.end(); it++)
+        it->manualTick(ticks);
 }
 
 
@@ -267,8 +266,11 @@ void LevelScene::update()
     {
         system_events.processEvents(uTickf);
 
-        //Make world step
-        world->Step(1.0f / (float)PGE_Window::PhysStep, 1, 1);
+        if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
+        {
+            //Make world step
+            world->Step(uTickf/1000.f, 1, 1);
+        }
 
         while(!block_transforms.isEmpty())
         {
@@ -292,13 +294,14 @@ void LevelScene::update()
         player2Controller->sendControls();
 
         //update players
-        for(i=0; i<players.size(); i++)
+        for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
         {
+            LVL_Player*plr=(*it);
             if(PGE_Window::showDebugInfo)
             {
-                debug_player_jumping=players[i]->JumpPressed;
-                debug_player_onground=players[i]->onGround;
-                debug_player_foots=players[i]->foot_contacts_map.size();
+                debug_player_jumping = plr->JumpPressed;
+                debug_player_onground= plr->onGround;
+                debug_player_foots   = plr->foot_contacts_map.size();
             }
             players[i]->update(uTickf);
         }
@@ -344,8 +347,8 @@ void LevelScene::update()
         }
 
         //update cameras
-        for(i=0; i<cameras.size(); i++)
-            cameras[i]->update(uTickf);
+        for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
+            cam->update(uTickf);
     }
 
     if(IntProc::enabled && IntProc::cmd_accepted)
@@ -377,19 +380,21 @@ void LevelScene::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
     glLoadIdentity();
+    int c=0;
 
     if(!isInit) goto renderBlack;
-    for(int c=0;c<cameras.size();c++)
+    for(QList<PGE_LevelCamera>::iterator it=cameras.begin();it!=cameras.end(); it++)
     {
-        PGE_LevelCamera* cam=cameras[c];
+        PGE_LevelCamera* cam=&(*it);
 
         if(numberOfPlayers>1)
             GlRenderer::setViewport(0, cam->h()*c,cam->w(), cam->h());
 
         cam->drawBackground();
 
-        foreach(PGE_Phys_Object * item, cam->renderObjects())
+        for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
         {
+            PGE_Phys_Object*&item=(*it);
             switch(item->type)
             {
             case PGE_Phys_Object::LVLBlock:
@@ -407,12 +412,13 @@ void LevelScene::render()
 
         if(numberOfPlayers>1)
             GlRenderer::resetViewport();
+        c++;
     }
 
     //Draw camera separators
-    for(int c=1;c<cameras.size();c++)
+    for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
     {
-        GlRenderer::renderRect(0, cameras[c]->h()*c-1, cameras[c]->w(), 2, 0.f, 0.f, 0.f, 1.f);
+        GlRenderer::renderRect(0, cam->h()*c-1, cam->w(), 2, 0.f, 0.f, 0.f, 1.f);
     }
 
 
@@ -452,16 +458,22 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
     switch(sdl_key)
     { // Check which
-      case SDLK_ESCAPE: // ESC
+      case SDLK_ESCAPE:     // Exit from a level
               {
                   setExiting(0, LvlExit::EXIT_MenuExit);
               }   // End work of program
           break;
-      case SDLK_RETURN:// Enter
+      case SDLK_RETURN:     // Toggle pause mode
           {
               if(doExit) break;
               isPauseMenu = true;
           }
+      break;
+      case SDLK_F5:
+        {
+          PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
+          isTimeStopped=!isTimeStopped;
+        }
       break;
       default:
         break;
@@ -474,10 +486,8 @@ int LevelScene::exec()
     doExit=false;
     running=true;
 
-    dbgDraw.c = cameras.first();
-
+    dbgDraw.c = &cameras.first();
     world->SetDebugDraw(&dbgDraw);
-
     dbgDraw.SetFlags( dbgDraw.e_shapeBit | dbgDraw.e_jointBit );
 
     //Level scene's Loop
@@ -528,7 +538,7 @@ int LevelScene::exec()
             render();
             PGE_Window::rePaint();
             stop_render=SDL_GetTicks();
-            doUpdate_render = stop_render-start_render;
+            doUpdate_render = frameSkip? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
@@ -561,6 +571,29 @@ void LevelScene::setExiting(int delay, int reason)
 {
     exitLevelDelay   = delay;
     exitLevelCode    = reason;
+    if(isLevelContinues)
+    {
+        long snd=0;
+        switch(exitLevelCode)
+        {
+            case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
+            case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
+            case  3: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit03); break;
+            case  4: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit04); break;
+            case  5: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit05); break;
+            case  6: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit06); break;
+            case  7: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit07); break;
+            case  8: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit08); break;
+            case  9: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit09); break;
+            case 10: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit10); break;
+            default: break;
+        }
+        if(snd>0)
+        {
+            PGE_MusPlayer::MUS_stopMusic();
+            PGE_Audio::playSound(snd);
+        }
+    }
     isLevelContinues = false;
 }
 
@@ -636,19 +669,3 @@ void LevelScene::setGameState(EpisodeState *_gameState)
     numberOfPlayers = gameState->numOfPlayers;
 }
 
-
-LVL_Section *LevelScene::getSection(int sct)
-{
-    if((sct>=0)&&(sct<sections.size()))
-    {
-        if(sections[sct].data.id==sct)
-            return &sections[sct];
-        else
-        {
-            for(int i=0;i<sections.size();i++)
-                if(sections[i].data.id==sct)
-                    return &sections[i];
-        }
-    }
-    return NULL;
-}

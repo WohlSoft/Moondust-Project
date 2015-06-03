@@ -17,7 +17,7 @@
  */
 
 #include "base_object.h"
-#include <scenes/level/lvl_section.h>
+#include <scenes/level/lvl_scene_ptr.h>
 
 PGE_Phys_Object::PGE_Phys_Object()
 {
@@ -49,7 +49,7 @@ PGE_Phys_Object::~PGE_Phys_Object()
         physBody->SetUserData(NULL);
         physBody = NULL;
     }
-    if(_parentSection) _parentSection->unregisterElement(this);
+    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
 }
 
 double PGE_Phys_Object::posX()
@@ -120,10 +120,10 @@ void PGE_Phys_Object::doPhysics()
 
 void PGE_Phys_Object::_syncBox2dWithPos()
 {
-    if(_parentSection) _parentSection->unregisterElement(this);
+    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
     _posX= PhysUtil::met2pix(physBody->GetPosition().x)-posX_coefficient;
     _posY= PhysUtil::met2pix(physBody->GetPosition().y)-posY_coefficient;
-    if(_parentSection) _parentSection->registerElement(this);
+    if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
 }
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)

@@ -173,22 +173,35 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
         if(!chr) return;
         if(!npc) return;
-        if(
-                (npc->data.id==11)||
 
-                (npc->data.id==15)||
-                (npc->data.id==86)||
-                (npc->data.id==39)||
-
-                (npc->data.id==41)||
-                (npc->data.id==16)||
-                (npc->data.id==97)||
-                (npc->data.id==197)
-
-                )
+        if(!LvlSceneP::s->isExit())
         {
-            LvlSceneP::s->setExiting(1000, 1);
+            if(npc->data.id==11){
+                LvlSceneP::s->setExiting(4500, 1);
+            }
+            else
+            if((npc->data.id==15)||(npc->data.id==16)){
+                LvlSceneP::s->setExiting(7000, 2);
+            }
+            else
+            if((npc->data.id==39)||(npc->data.id==41)){
+                LvlSceneP::s->setExiting(3200, 5);
+            }
+            else
+            if(npc->data.id==97){
+                LvlSceneP::s->setExiting(4500, 7);
+            }
+            else
+            if(npc->data.id==197){
+                LvlSceneP::s->setExiting(15000, 8);
+            }
+            else
+            if(npc->data.id==86 )
+            {
+                LvlSceneP::s->setExiting(5000, 7);
+            }
         }
+
         if(npc->collide==PGE_Phys_Object::COLLISION_ANY)
         {
             if(npc->killed)

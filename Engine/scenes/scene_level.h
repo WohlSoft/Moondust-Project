@@ -28,6 +28,8 @@
 #include <common_features/event_queue.h>
 #include <common_features/point.h>
 
+#include <common_features/RTree/RTree.h>
+
 #include "level/lvl_player.h"
 #include "level/lvl_player_def.h"
 
@@ -48,6 +50,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
+#include <QList>
 #include <QVector>
 
 #include <SDL2/SDL_opengl.h>
@@ -68,10 +71,7 @@ public:
     ~LevelScene();
 
     bool init();
-private:
-    bool isInit;
 
-public:
     //Init 1
     bool        loadFile(QString filePath);
     bool        loadFileIP(); //!< Load data via interprocessing
@@ -197,10 +197,10 @@ public:
     QMap<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
 
-    QList<LVL_Npc* > active_npcs;
-    QList<LVL_Npc* > dead_npcs;
+    QVector<LVL_Npc* > active_npcs;
+    QVector<LVL_Npc* > dead_npcs;
 
-    QList<LVL_Block* > fading_blocks;
+    QVector<LVL_Block* > fading_blocks;
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);
@@ -217,21 +217,44 @@ public:
     LVL_Section *getSection(int sct);
 
 private:
+    bool isInit;
+
     LevelData data;
 
     EpisodeState *gameState;
-
-    QList<PGE_LevelCamera* > cameras;
-    QList<LVL_Player* > players;
-    QList<LVL_Block* > blocks;
-    QList<LVL_Bgo* > bgos;
-    QList<LVL_Npc* > npcs;
-    QList<LVL_Warp* > warps;
-    QList<LVL_PhysEnv* > physenvs;
-    QList<LVL_Section>      sections;
-
     QString errorMsg;
 
+    bool frameSkip;
+
+    typedef QList<PGE_LevelCamera> LVL_CameraList;
+    typedef QList<LVL_Section> LVL_SectionsList;
+
+    LVL_CameraList      cameras;
+    LVL_SectionsList    sections;
+
+    typedef QVector<LVL_Player* >  LVL_PlayersArray;
+    typedef QVector<LVL_Block* >   LVL_BlocksArray;
+    typedef QVector<LVL_Bgo* >     LVL_BgosArray;
+    typedef QVector<LVL_Npc* >     LVL_NpcsArray;
+    typedef QVector<LVL_Warp* >    LVL_WarpsArray;
+    typedef QVector<LVL_PhysEnv* > LVL_PhysEnvsArray;
+
+    LVL_PlayersArray    players;
+    LVL_BlocksArray     blocks;
+    LVL_BgosArray       bgos;
+    LVL_NpcsArray       npcs;
+    LVL_WarpsArray      warps;
+    LVL_PhysEnvsArray   physenvs;
+
+public:
+    void registerElement(PGE_Phys_Object* item);
+    void unregisterElement(PGE_Phys_Object* item);
+    typedef double RPoint[2];
+    void queryItems(PGE_RectF zone, QVector<PGE_Phys_Object* > *resultList);
+    void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
+private:
+    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
+    IndexTree tree;
 
     b2World *world;
     QList<PGE_Texture > textures_bank;

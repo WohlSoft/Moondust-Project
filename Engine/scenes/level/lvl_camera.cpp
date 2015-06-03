@@ -36,7 +36,8 @@ PGE_LevelCamera::PGE_LevelCamera()
     height=600;
     offset_x=0;
     offset_y=0;
-
+    pos_x=0;
+    pos_y=0;
     section = 0;
     cur_section = NULL;
     fader.setNull();
@@ -48,6 +49,8 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
     height=cam.height;
     offset_x=cam.offset_x;
     offset_y=cam.offset_y;
+    pos_x=cam.pos_x;
+    pos_y=cam.pos_y;
 
     objects_to_render = cam.objects_to_render;
 
@@ -141,7 +144,7 @@ void PGE_LevelCamera::update(float ticks)
 //    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
 //    worldPtr->QueryAABB(&cb, aabb);
     fader.tickFader(ticks);
-    cur_section->queryItems(PGE_RectF(pos_x, pos_y, width, height), &objects_to_render);
+    LvlSceneP::s->queryItems(PGE_RectF(pos_x, pos_y, width, height), &objects_to_render);
 
     int contacts = 0;
     for(int i=0; i<objects_to_render.size();i++)

@@ -61,6 +61,8 @@ WorldScene::WorldScene()
     player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
+    frameSkip=AppSettings.frameSkip;
+
     /***********Number of Players*****************/
     numOfPlayers=1;
     /***********Number of Players*****************/
@@ -928,7 +930,7 @@ int WorldScene::exec()
     //World scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
-    int doUpdate_render=0;
+  float doUpdate_render=0;
 
  Uint32 start_physics=0;
  Uint32 stop_physics=0;
@@ -957,16 +959,16 @@ int WorldScene::exec()
 
         stop_render=0;
         start_render=0;
-        if(doUpdate_render<=0)
+        if(doUpdate_render<=0.f)
         {
             start_render = SDL_GetTicks();
             render();
             PGE_Window::rePaint();
             stop_render = SDL_GetTicks();
-            doUpdate_render = stop_render-start_render;
+            doUpdate_render = frameSkip ? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= uTick;
+        doUpdate_render -= uTickf;
         if(stop_render < start_render) {stop_render=0; start_render=0; }
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
