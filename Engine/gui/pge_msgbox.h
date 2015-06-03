@@ -60,8 +60,6 @@ public:
     void processBox(float);
     void processUnLoader(float ticks);
 
-    void buildBox(bool centered=false);
-
     static void info(QString msg);
     //static void info(std::string msg);
     static void warn(QString msg);
@@ -82,7 +80,6 @@ private:
     msgType type;
     PGE_Rect _sizeRect;
     QString message;
-    GLuint textTexture;
     float width;
     float height;
     float padding;
