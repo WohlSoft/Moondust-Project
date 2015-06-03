@@ -286,6 +286,7 @@ void PGE_MenuBox::exec()
         Uint32 start_render=SDL_GetTicks();
 
         update(uTickf);
+        updateControllers();
         PGE_BoxBase::render();
         render();
         PGE_Window::rePaint();
@@ -376,9 +377,7 @@ void PGE_MenuBox::processLoader(float ticks)
         if(event.type==SDL_QUIT)
             fader_opacity=1.0;
     }
-    updateControllers();
     tickFader(ticks);
-
     if(fader_opacity>=1.0f) _page++;
 }
 
@@ -388,8 +387,6 @@ void PGE_MenuBox::processBox(float)
     if(AppSettings.interprocessing)
         qApp->processEvents();
     #endif
-    updateControllers();
-
     SDL_Event event;
     while ( SDL_PollEvent(&event) )
     {
@@ -426,8 +423,6 @@ void PGE_MenuBox::processUnLoader(float ticks)
         if(event.type==SDL_QUIT)
             fader_opacity=0.0;
     }
-
-    updateControllers();
     tickFader(ticks);
     if(fader_opacity<=0.0f) _page++;
 }
