@@ -48,11 +48,13 @@ public:
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
                msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), PGE_SizeF boxSize=PGE_SizeF(0,0), float _padding=-1, QString texture="");
+    PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
     void update(float ticks);
     void render();
+    void restart();
     bool isRunning();
     void exec();
 

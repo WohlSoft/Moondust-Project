@@ -18,6 +18,20 @@ PGE_BoxBase::PGE_BoxBase(Scene *_parentScene)
     construct(_parentScene);
 }
 
+PGE_BoxBase::PGE_BoxBase(const PGE_BoxBase &bb)
+{
+    fader_opacity=  bb.fader_opacity;
+    target_opacity= bb.target_opacity;
+    fade_step=      bb.fade_step;
+    fadeSpeed=      bb.fadeSpeed;
+    manual_ticks=   bb.manual_ticks;
+    parentScene=    bb.parentScene;
+    uTickf=         bb.uTickf;
+    uTick=          bb.uTick;
+    _textureUsed=   bb._textureUsed;
+    styleTexture=   bb.styleTexture;
+}
+
 void PGE_BoxBase::construct(Scene *_parentScene)
 {
     fader_opacity = 0.0f;
