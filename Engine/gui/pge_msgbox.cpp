@@ -74,27 +74,17 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
         default:  bg_color =            QColor(qRgb(0,0,0)); break;
     }
-
-    bool centered=false;
     if(autosize)
     {
-//        QFont fnt = FontManager::font();
-//        QFontMetrics meter(fnt);
         /****************Word wrap*********************/
         int count=1;
         int maxWidth=0;
-
         FontManager::optimizeText(message, 27, &count, &maxWidth);
-        if(count==1) centered=true;
         /****************Word wrap*end*****************/
         boxSize = FontManager::textSize(message, fontID, 27);
-        //QSize newBoxSize = meter.size(Qt::TextExpandTabs, message);
-        //boxSize.setWidth(newBoxSize.width());
-        //boxSize.setHeight(newBoxSize.height());
     }
 
     setBoxSize(boxSize.w()/2, boxSize.h()/2, _padding);
-    buildBox(centered);
 
     if((pos.x()==-1)&&(pos.y()==-1))
     {
@@ -114,18 +104,8 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     }
 }
 
-void PGE_MsgBox::buildBox(bool centered)
-{
-    textTexture = FontManager::TextToTexture(message,
-                                             PGE_Rect(0,0, width*2, height*2),
-                                             (centered ? Qt::AlignCenter:Qt::AlignLeft) | Qt::AlignTop );
-}
-
 PGE_MsgBox::~PGE_MsgBox()
-{
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures(1, &textTexture );
-}
+{}
 
 void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 {
