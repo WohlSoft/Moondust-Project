@@ -22,18 +22,16 @@
 #include "pge_boxbase.h"
 #include "../scenes/scene.h"
 
-#undef main
-#include <SDL2/SDL_opengl.h>
-#include <SDL2/SDL_types.h>
-#undef main
-
-#include <QString>
+#include <graphics/gl_renderer.h>
+#include <graphics/gl_color.h>
 #include <common_features/rect.h>
 #include <common_features/point.h>
 #include <common_features/pointf.h>
 #include <common_features/size.h>
 #include <common_features/sizef.h>
+
 #include <QColor>
+#include <QString>
 
 class PGE_MsgBox : public PGE_BoxBase
 {
@@ -49,11 +47,18 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), PGE_SizeF boxSize=PGE_SizeF(0,0), float _padding=20, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), PGE_SizeF boxSize=PGE_SizeF(0,0), float _padding=-1, QString texture="");
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
+    void update(float ticks);
+    void render();
+    bool isRunning();
     void exec();
+
+    void processLoader(float ticks);
+    void processBox(float);
+    void processUnLoader(float ticks);
 
     void buildBox(bool centered=false);
 
@@ -68,7 +73,12 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, bool autosize=true, PGE_SizeF boxSize=PGE_SizeF(0,0), PGE_Point pos=PGE_Point(-1,-1), float _padding=20, QString texture="");
+                    msgType _type=msg_info, bool autosize=true, PGE_SizeF boxSize=PGE_SizeF(0,0), PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+    int     _page;
+    bool    running;
+    int     fontID;
+    GlColor fontRgba;
+
     msgType type;
     PGE_Rect _sizeRect;
     QString message;

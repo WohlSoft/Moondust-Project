@@ -40,6 +40,12 @@ PGE_BoxBase::~PGE_BoxBase()
 }
 
 void PGE_BoxBase::exec()
+{}
+
+void PGE_BoxBase::update(float)
+{}
+
+void PGE_BoxBase::render()
 {
     if(parentScene)
         parentScene->render();
