@@ -270,6 +270,11 @@ PGE_Size RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
                     widthSumm+=(letter_width-rch.padding_left-rch.padding_right+interletter_space);
                     if(widthSumm>widthSummMax) widthSummMax=widthSumm;
                 }
+                else
+                {
+                    widthSumm+=(letter_width+interletter_space);
+                    if(widthSumm>widthSummMax) widthSummMax=widthSumm;
+                }
             break;
         }
         if((max_line_lenght>0)&&(x>=max_line_lenght))//If lenght more than allowed

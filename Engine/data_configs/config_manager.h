@@ -84,6 +84,11 @@ struct MessageBoxSetup
 {
     QString sprite;
     int borderWidth;
+    float   box_padding;
+    QString font_name;
+    int     font_id;
+    QString font_color;
+    GlColor font_rgba;
 };
 
 struct MenuSetup

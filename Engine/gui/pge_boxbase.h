@@ -21,6 +21,8 @@ public:
     virtual ~PGE_BoxBase();
 
     virtual void exec();
+    virtual void update(float ticks);
+    virtual void render();
 
     /**************Fader**************/
     float fader_opacity;
