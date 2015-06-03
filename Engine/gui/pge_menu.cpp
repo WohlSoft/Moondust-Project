@@ -66,6 +66,42 @@ PGE_Menu::PGE_Menu()
         _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::setup_menus.scrollerDown);
 }
 
+PGE_Menu::PGE_Menu(const PGE_Menu &menu)
+{
+    menuRect=   menu.menuRect;
+
+    /*******Key grabbing********/
+    m_item     = menu.m_item;
+    is_keygrab = menu.is_keygrab;
+    /*******Key grabbing********/
+
+    _itemsOnScreen = menu._itemsOnScreen;
+    _currentItem   = menu._currentItem;
+    _line          = menu._line;
+    _offset        = menu._offset;
+    arrowUpViz     = menu.arrowUpViz;
+    arrowDownViz   = menu.arrowDownViz;
+    _EndSelection  = menu._EndSelection;
+    _accept        = menu._accept;
+    _items_bool    = menu._items_bool;
+    _items_int     = menu._items_int;
+    _items_named_int=menu._items_named_int;
+    _items_normal   =menu._items_normal;
+    _items_keygrabs= menu._items_keygrabs;
+
+    _items  = menu._items;
+    _selector = menu._selector;
+    _scroll_up = menu._selector;
+    _scroll_down = menu._scroll_down;
+    _item_height = menu._item_height;
+    _width_limit = menu._width_limit;
+    _text_len_limit = menu._text_len_limit;
+    _text_len_limit_strict = menu._text_len_limit_strict;
+
+    _font_id = menu._font_id;
+    _font_offset=menu._font_offset;
+}
+
 PGE_Menu::~PGE_Menu()
 {
     clear();
@@ -371,6 +407,7 @@ void PGE_Menu::setItemsNumber(int q)
         _itemsOnScreen = q;
     else
         _itemsOnScreen = 5;
+    refreshRect();
 }
 
 void PGE_Menu::sort()
@@ -660,6 +697,28 @@ void PGE_Menu::refreshRect()
 PGE_Rect PGE_Menu::rect()
 {
     return menuRect;
+}
+
+PGE_Rect PGE_Menu::rectFull()
+{
+    PGE_Rect tRect = menuRect;
+    tRect.setWidth( menuRect.width() + (_selector.w!=0 ? _selector.w : 20)+10 );
+    if(_items.size()>_itemsOnScreen)
+    {
+        tRect.setHeight(menuRect.height() +
+                        (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
+                        (_scroll_down.w!=0 ? _scroll_down.h : 10 )+20-_font_offset);
+    }
+    return tRect;
+}
+
+int PGE_Menu::topOffset()
+{
+    if(_items.size()>_itemsOnScreen)
+    {
+        return (_scroll_up.w!=0 ? _scroll_up.h : 10 )+10+_font_offset;
+    }
+    return _font_offset;
 }
 
 void PGE_Menu::render()

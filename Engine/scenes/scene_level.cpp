@@ -33,6 +33,8 @@
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
+#include <gui/pge_menubox.h>
+
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
@@ -363,12 +365,50 @@ void LevelScene::update()
 
     if(isPauseMenu)
     {
-        PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D\n\nXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxxXXxxXXXxxxXxxXXXxxXXXxXXxx",
-                          PGE_MsgBox::msg_info);
+        PGE_MenuBox menuBox(this, "Pause",
+                          PGE_MenuBox::msg_info);
+        QStringList items;
+        items<<"Continue";
+        items<<"Save and continue";
+        items<<"Save and exit";
+        items<<"Item 3";
+        items<<"Show 5 items";
+        items<<"Show 7 items";
+        items<<"Show 8 items";
+        items<<"Item 7";
+        menuBox.addMenuItems(items);
+        menuBox.setRejectSnd(obj_sound_role::MenuPause);
+
+        goto menu;
+        repeat8:
+        menuBox.setMaxMenuItems(8);
+        goto menu2;
+        repeat7:
+        menuBox.setMaxMenuItems(7);
+        goto menu2;
+        repeat6:
+        menuBox.setMaxMenuItems(5);
+        goto menu2;
+        menu:
 
         if(!ConfigManager::setup_message_box.sprite.isEmpty())
-            msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
-        msgBox.exec();
+            menuBox.loadTexture(ConfigManager::setup_message_box.sprite);
+        menu2:
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
+        menuBox.exec();
+
+        if(menuBox.answer()==6) {menuBox.restart();goto repeat8;}
+        if(menuBox.answer()==5) {menuBox.restart();goto repeat7;}
+        if(menuBox.answer()==4) {menuBox.restart();goto repeat6;}
+
+        if(menuBox.answer()!=-1)
+        {
+            PGE_MsgBox msg(this, QString("Answer is %1").arg(menuBox.answer()), PGE_MsgBox::msg_info);
+            if(!ConfigManager::setup_message_box.sprite.isEmpty())
+                msg.loadTexture(ConfigManager::setup_message_box.sprite);
+            msg.exec();
+        }
+
         isPauseMenu=false;
     }
 }

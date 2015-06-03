@@ -42,6 +42,7 @@ class PGE_Menu
 friend class PGE_KeyGrabMenuItem;
 public:
     PGE_Menu();
+    PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
     void addMenuItem(QString value, QString title="",
@@ -96,6 +97,8 @@ public:
 
     //Position and size Rectangle
     PGE_Rect rect(); //!< Returns rectangle of menu box
+    PGE_Rect rectFull(); //!< Returns rectangle of menu box include sliders
+    int  topOffset();//!< Offset
     void setPos(int x, int y); //!< Sets current position of menu box
     void setPos(PGE_Point p);     //!< Sets current position of menu box
     void setSize(int w, int h); //!< Sets size of menu box

@@ -597,8 +597,8 @@ PlayLevel:
                 break;
             case LvlExit::EXIT_PlayerDeath:
                 {
-                    playAgain = _game_state.replay_on_fail;
-                    end_level_jump = RETURN_TO_WORLDMAP;
+                    playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
+                    end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 }
                 break;
             case LvlExit::EXIT_Error:
