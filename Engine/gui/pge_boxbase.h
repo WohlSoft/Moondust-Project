@@ -18,6 +18,7 @@ class PGE_BoxBase
 public:
     PGE_BoxBase();
     PGE_BoxBase(Scene *_parentScene = 0);
+    PGE_BoxBase(const PGE_BoxBase &bb);
     virtual ~PGE_BoxBase();
 
     virtual void exec();

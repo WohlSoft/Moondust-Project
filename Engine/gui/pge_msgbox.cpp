@@ -45,7 +45,24 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type,
     : PGE_BoxBase(_parentScene)
 {
     construct(msg,_type, ((boxSize.w()==0) || (boxSize.h()==0)),
-                           boxSize, boxCenterPos, _padding, texture);
+              boxSize, boxCenterPos, _padding, texture);
+}
+
+PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
+    : PGE_BoxBase(mb)
+{
+    _page   = mb._page;
+    running = mb.running;
+    fontID  = mb.fontID;
+    fontRgba= mb.fontRgba;
+
+    type    = mb.type;
+    _sizeRect=mb._sizeRect;
+    message = mb.message;
+    width   = mb.width;
+    height  = mb.height;
+    padding = mb.padding;
+    bg_color= mb.bg_color;
 }
 
 
@@ -59,6 +76,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     _page=0;
     message = msg;
     type = _type;
+    running=false;
 
     fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
     fontRgba = ConfigManager::setup_message_box.font_rgba;
@@ -166,6 +184,12 @@ void PGE_MsgBox::render()
     }
 }
 
+void PGE_MsgBox::restart()
+{
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
+    running=true;
+}
+
 bool PGE_MsgBox::isRunning()
 {
     return running;
@@ -174,8 +198,7 @@ bool PGE_MsgBox::isRunning()
 void PGE_MsgBox::exec()
 {
     updateControllers();
-    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
-    running=true;
+    restart();
     while(running)
     {
         Uint32 start_render=SDL_GetTicks();
