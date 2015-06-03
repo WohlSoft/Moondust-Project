@@ -1012,6 +1012,13 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+void WorldScene::processEvents()
+{
+    player1Controller->update();
+    controls_1 = player1Controller->keys;
+    Scene::processEvents();
+}
+
 int WorldScene::exec()
 {
     worldIsContinues=true;
@@ -1031,13 +1038,17 @@ int WorldScene::exec()
   Uint32 start_common=0;
 
     running = !doExit;
+    /****************Initial update***********************/
+    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    controls_1 = Controller::noKeys();
+    if(running) update();
+    /*****************************************************/
+
     while(running)
     {
         start_common = SDL_GetTicks();
 
         if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
-        player1Controller->update();
-        controls_1 = player1Controller->keys;
         processEvents();
         if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
         if(PGE_Window::showDebugInfo) debug_event_delay=(stop_events-start_events);

@@ -456,7 +456,16 @@ void LevelScene::update()
 
 }
 
-
+void LevelScene::processEvents()
+{
+    #ifndef __APPLE__
+    if(AppSettings.interprocessing)
+        qApp->processEvents();
+    #endif
+    player1Controller->update();
+    player2Controller->update();
+    Scene::processEvents();
+}
 
 void LevelScene::render()
 {
@@ -586,19 +595,19 @@ int LevelScene::exec()
 
   Uint32 start_common=0;
 
+    /****************Initial update***********************/
+    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    player1Controller->resetControls();
+    player2Controller->resetControls();
+    if(running) update();
+    /*****************************************************/
+
     while(running)
     {
         start_common = SDL_GetTicks();
 
         if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
         /**********************Update common events and controllers******************/
-        #ifndef __APPLE__
-        if(AppSettings.interprocessing)
-            qApp->processEvents();
-        #endif
-
-        player1Controller->update();
-        player2Controller->update();
         processEvents();
         /****************************************************************************/
         if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();

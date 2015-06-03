@@ -99,6 +99,7 @@ public:
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
 
     void update();
+    void processEvents();
     void render();
     int exec();
 
