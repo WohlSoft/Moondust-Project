@@ -875,7 +875,7 @@ void WorldScene::render()
                                .arg(grid.y()), 300,45);
         }
 
-        FontManager::printText(QString("TICK-SUB: %2, Vizible items=%1;")
+        FontManager::printText(QString("TICK-SUB: %1, Vizible items=%2;")
                                .arg(uTickf)
                                .arg(_itemsToRender.size()), 10,100);
 
