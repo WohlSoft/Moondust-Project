@@ -290,21 +290,19 @@ bool LevelScene::init()
     {
         int x=cameraStart.x();
         int y=cameraStart.y();
-        int width=PGE_Window::Width;
-        int height=PGE_Window::Height/numberOfPlayers;
+        int width  = PGE_Window::Width;
+        int height = PGE_Window::Height/numberOfPlayers;
 
         //Init Cameras
-        PGE_LevelCamera* camera;
-        camera = new PGE_LevelCamera();
-        camera->init(
+        PGE_LevelCamera camera;
+        camera.init(
                         (float)x,
                         (float)y,
                         (float)width, (float)height
                     );
-        camera->changeSection(t_sct);
-        camera->setPos(cameraStart.x()-camera->w()/2 + player_defs.first().width()/2,
-                       cameraStart.y()-camera->h()/2 + player_defs.first().height()/2);
-
+        camera.changeSection(t_sct);
+        camera.setPos(cameraStart.x()-camera.w()/2 + player_defs.first().width()/2,
+                       cameraStart.y()-camera.h()/2 + player_defs.first().height()/2);
         cameras.push_back(camera);
     }
 
@@ -390,8 +388,8 @@ bool LevelScene::init()
         if(sct)
         {
             warpP->setParentSection(sct);
-            warpP->_syncBox2dWithPos();
         }
+        warpP->_syncBox2dWithPos();
 
         warps.push_back(warpP);
     }

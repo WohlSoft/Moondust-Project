@@ -76,8 +76,11 @@ private:
     Controller *    player1Controller;
     controller_keys controls_1;
 
+    bool frameSkip;
+
     EpisodeState *  gameState;
     QString         errorMsg;
+
     WorldMapSetup   common_setup;
     WorldData       data;
 

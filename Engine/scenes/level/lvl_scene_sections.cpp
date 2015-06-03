@@ -52,8 +52,28 @@ int LevelScene::findNearSection(long x, long y)
 
             break;
         }
-        padding+=64;
+        padding+=32;
     }
     return result;
 }
+
+
+
+LVL_Section *LevelScene::getSection(int sct)
+{
+    if((sct>=0)&&(sct<sections.size()))
+    {
+        if(sections[sct].data.id==sct)
+            return &sections[sct];
+        else
+        {
+            for(LVL_SectionsList::iterator it=sections.begin(); it!=sections.end(); it++)
+                if(it->data.id==sct)
+                    return &(*it);
+        }
+    }
+    return NULL;
+}
+
+
 

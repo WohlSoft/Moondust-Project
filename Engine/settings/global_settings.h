@@ -39,6 +39,8 @@ public:
 
     bool enableDummyNpc;
 
+    bool frameSkip;
+
     int volume_sound;
     int volume_music;
 

@@ -202,7 +202,8 @@ SOURCES += \
     script/luaengine.cpp \
     script/bindings/core/globalfuncs/luafuncs_logger.cpp \
     scenes/title/ttl_main_menu.cpp \
-    scenes/world/wld_tilebox.cpp
+    scenes/world/wld_tilebox.cpp \
+    scenes/level/lvl_scene_rtree.cpp
 
 
 HEADERS  += \

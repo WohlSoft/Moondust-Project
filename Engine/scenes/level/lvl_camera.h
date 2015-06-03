@@ -27,7 +27,7 @@
 #include <PGE_File_Formats/file_formats.h>
 
 class   PGE_Phys_Object;
-typedef QList<PGE_Phys_Object *> PGE_RenderList;
+typedef QVector<PGE_Phys_Object *> PGE_RenderList;
 
 class LVL_Background;
 class LVL_Section;

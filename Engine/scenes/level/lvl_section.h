@@ -26,7 +26,7 @@
 #include "lvl_backgrnd.h"
 
 
-typedef QList<PGE_Phys_Object* > R_itemList;
+typedef QVector<PGE_Phys_Object* > R_itemList;
 
 class PGE_Phys_Object;
 class PGE_LevelCamera;

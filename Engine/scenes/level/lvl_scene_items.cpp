@@ -52,8 +52,8 @@ void LevelScene::placeBlock(LevelBlock blockData)
     if(sct)
     {
         block->setParentSection(sct);
-        block->_syncBox2dWithPos();
     }
+    block->_syncBox2dWithPos();
 
     blocks.push_back(block);
 
@@ -130,8 +130,8 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     if(sct)
     {
         bgo->setParentSection(sct);
-        bgo->_syncBox2dWithPos();
     }
+    bgo->_syncBox2dWithPos();
 
     bgos.push_back(bgo);
 }
@@ -180,8 +180,8 @@ void LevelScene::placeNPC(LevelNPC npcData)
     if(sct)
     {
         npc->setParentSection(sct);
-        npc->_syncBox2dWithPos();
     }
+    npc->_syncBox2dWithPos();
 
     npcs.push_back(npc);
 }
@@ -201,9 +201,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player = new LVL_Player();
 
     if(players.size()==0)
-        player->camera = cameras.first();
+        player->camera = &cameras.first();
     else if(players.size()==1)
-        player->camera = cameras.last();
+        player->camera = &cameras.last();
 
     int sID = findNearSection(playerData.x, playerData.y);
     LVL_Section *sct = getSection(sID);
