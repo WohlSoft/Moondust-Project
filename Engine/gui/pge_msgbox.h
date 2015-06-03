@@ -47,7 +47,7 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), PGE_SizeF boxSize=PGE_SizeF(0,0), float _padding=-1, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
     PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
@@ -73,7 +73,7 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, bool autosize=true, PGE_SizeF boxSize=PGE_SizeF(0,0), PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
     int     _page;
     bool    running;
     int     fontID;

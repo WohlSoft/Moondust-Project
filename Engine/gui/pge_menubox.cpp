@@ -31,19 +31,12 @@
 #include <QFontMetrics>
 #include <QMessageBox>
 
-PGE_MenuBox::PGE_MenuBox()
-    : PGE_BoxBase(0)
-{
-    width=0;
-    height=0;
-    title = "Message box works fine!";
-    construct(title, type);
-}
 
 PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
                        PGE_Point boxCenterPos, float _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
+    setParentScene(_parentScene);
     construct(_title,_type, boxCenterPos, _padding, texture);
 }
 
@@ -56,15 +49,18 @@ PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
     fontRgba  = mb.fontRgba;
     _answer_id= mb._answer_id;
 
+    reject_snd= mb.reject_snd;
     _ctrl1    = mb._ctrl1;
     _ctrl2    = mb._ctrl2;
-
     type      = mb.type;
     _pos=       mb._pos;
+
     _sizeRect = mb._sizeRect;
     title     = mb.title;
+    title_size= mb.title_size;
     _menu     = mb._menu;
     width     = mb.width;
+
     height    = mb.height;
     padding   = mb.padding;
     bg_color  = mb.bg_color;
@@ -79,23 +75,33 @@ void PGE_MenuBox::construct(QString _title, PGE_MenuBox::msgType _type,
 
     updateTickValue();
     _page=0;
-    title = _title;
-    type = _type;
     running=false;
     _answer_id = -1;
     _pos=pos;
-
     _menu.setTextLenLimit(30, true);
+    /****************Word wrap*********************/
+    title = _title;
+    FontManager::optimizeText(title, 27);
+    title_size = FontManager::textSize(_title, fontID, 27);
+    /****************Word wrap*end*****************/
+    setTitleFont(ConfigManager::setup_menu_box.title_font_name);
+    setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
+    setPadding(_padding);
+    setType(_type);
+    updateSize();
+}
 
-    _ctrl1 = NULL;
-    _ctrl2 = NULL;
+PGE_MenuBox::~PGE_MenuBox()
+{}
 
+void PGE_MenuBox::setParentScene(Scene *_parentScene)
+{
+    PGE_BoxBase::setParentScene(_parentScene);
     initControllers();
-    fontID   = FontManager::getFontID(ConfigManager::setup_menu_box.title_font_name);
-    fontRgba = ConfigManager::setup_menu_box.title_font_rgba;
-    if(_padding<0)
-        _padding = ConfigManager::setup_menu_box.box_padding;
+}
 
+void PGE_MenuBox::setType(PGE_MenuBox::msgType _type)
+{
     switch(type)
     {
         case msg_info: bg_color =       QColor(qRgb(0,0,0)); break;
@@ -105,18 +111,33 @@ void PGE_MenuBox::construct(QString _title, PGE_MenuBox::msgType _type,
         case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
         default:  bg_color =            QColor(qRgb(0,0,0)); break;
     }
+    type=_type;
+}
 
-    /****************Word wrap*********************/
-    int count=1;
-    int maxWidth=0;
-    FontManager::optimizeText(_title, 27, &count, &maxWidth);
-    /****************Word wrap*end*****************/
-    title_size = FontManager::textSize(_title, fontID, 27);
-    padding=_padding;
+void PGE_MenuBox::setTitleFont(QString fontName)
+{
+    fontID   = FontManager::getFontID(fontName);
+}
+
+void PGE_MenuBox::setTitleFontColor(GlColor color)
+{
+    fontRgba=color;
+}
+
+void PGE_MenuBox::setTitleText(QString text)
+{
+    title = text;
+    FontManager::optimizeText(title, 27);
+    title_size = FontManager::textSize(text, fontID, 27);
     updateSize();
 }
 
-
+void PGE_MenuBox::setPadding(int _padding)
+{
+    if(_padding<0)
+        _padding = ConfigManager::setup_menu_box.box_padding;
+    padding=_padding;
+}
 
 void PGE_MenuBox::setPos(float x, float y)
 {
@@ -168,8 +189,7 @@ void PGE_MenuBox::updateSize()
                  _sizeRect.bottom()-menuRect.height()+_menu.topOffset()-padding);
 }
 
-PGE_MenuBox::~PGE_MenuBox()
-{}
+
 
 void PGE_MenuBox::clearMenu()
 {
@@ -295,6 +315,8 @@ void PGE_MenuBox::reject()
 
 void PGE_MenuBox::processKeyEvent(SDL_Keycode &key)
 {
+    if(_page!=2) return;
+
     if(_ctrl1)
     {
         if(_ctrl1->keys.up) {
@@ -392,7 +414,6 @@ void PGE_MenuBox::processBox(float)
             _answer_id = -1;
         _page++; setFade(10, 0.0f, 0.05f);return;
     }
-
 }
 
 
@@ -431,8 +452,14 @@ void PGE_MenuBox::initControllers()
             if(s)
             {
                 _ctrl1 = s->player1Controller;
+                _ctrl2=NULL;
             }
         }
+    }
+    else
+    {
+        _ctrl1=NULL;
+        _ctrl2=NULL;
     }
 }
 

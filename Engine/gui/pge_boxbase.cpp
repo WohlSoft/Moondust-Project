@@ -39,8 +39,7 @@ void PGE_BoxBase::construct(Scene *_parentScene)
     target_opacity= 0.0f;
     fadeSpeed=10;
     _textureUsed=false;
-    parentScene = _parentScene;
-    if(!parentScene) glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    setParentScene(_parentScene);
 }
 
 PGE_BoxBase::~PGE_BoxBase()
@@ -51,6 +50,12 @@ PGE_BoxBase::~PGE_BoxBase()
         glDeleteTextures(1, &styleTexture.texture);
     }
 
+}
+
+void PGE_BoxBase::setParentScene(Scene *_parentScene)
+{
+    parentScene = _parentScene;
+    if(!parentScene) glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void PGE_BoxBase::exec()
@@ -110,6 +115,13 @@ void PGE_BoxBase::fadeStep()
 /********************************Texture************************************/
 void PGE_BoxBase::loadTexture(QString path)
 {
+    if(path.isEmpty()) return;
+
+    if(_textureUsed)
+    {   //remove old texture
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures(1, &styleTexture.texture);
+    }
     styleTexture = GraphicsHelps::loadTexture(styleTexture, path);
     if(styleTexture.texture>0)
         _textureUsed=true;

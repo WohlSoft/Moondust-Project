@@ -30,6 +30,8 @@
 
 #include <common_features/RTree/RTree.h>
 
+#include <gui/pge_menubox.h>
+
 #include "level/lvl_player.h"
 #include "level/lvl_player_def.h"
 
@@ -115,7 +117,6 @@ public:
     int exitType();
 
     //Flags
-    bool isPauseMenu;
     bool isTimeStopped;
 
     /****************Level Running State*****************/
@@ -245,6 +246,35 @@ private:
     LVL_NpcsArray       npcs;
     LVL_WarpsArray      warps;
     LVL_PhysEnvsArray   physenvs;
+
+    /*****************Pause Menu*******************/
+    enum PauseMenuItems_Menu1
+    {
+        PAUSE_Continue=0,
+        PAUSE_SaveCont,
+        PAUSE_SaveQuit,
+        PAUSE_Exit
+    };
+    enum PauseMenuItems_Menu2
+    {
+        PAUSE_2_Continue=0,
+        PAUSE_2_Exit
+    };
+    int         _pauseMenuID;
+    bool        isPauseMenu;
+    PGE_MenuBox _pauseMenu;
+    bool        _pauseMenu_opened;
+    void initPauseMenu1();
+    void initPauseMenu2();
+    void processPauseMenu();
+    /*****************Pause Menu**end**************/
+
+    bool debug_player_jumping;
+    bool debug_player_onground;
+    int  debug_player_foots;
+    int  debug_render_delay;
+    int  debug_phys_delay;
+    int  debug_event_delay;
 
 public:
     void registerElement(PGE_Phys_Object* item);

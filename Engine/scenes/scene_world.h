@@ -30,6 +30,7 @@
 #include <common_features/point.h>
 #include <common_features/event_queue.h>
 #include <data_configs/config_manager.h>
+#include <gui/pge_menubox.h>
 
 #include "world/wld_tilebox.h"
 #include "world/wld_player_portrait.h"
@@ -85,14 +86,9 @@ private:
     WorldData       data;
 
     bool     worldIsContinues;
-    bool     isPauseMenu;
     bool     lock_controls;
 
     PGE_Rect viewportRect;
-
-    int     debug_render_delay;
-    int     debug_phys_delay;
-    int     debug_event_delay;
 
     int     exitWorldDelay;
     int     exitWorldCode;
@@ -167,6 +163,33 @@ private:
 
     QList<WorldNode >       wldItems;
     QVector<WorldNode * >   _itemsToRender;
+
+
+    /*****************Pause Menu*******************/
+    enum PauseMenuItems_Menu1
+    {
+        PAUSE_Continue=0,
+        PAUSE_SaveCont,
+        PAUSE_SaveQuit,
+        PAUSE_Exit
+    };
+    enum PauseMenuItems_Menu2
+    {
+        PAUSE_2_Continue=0,
+        PAUSE_2_Exit
+    };
+    int         _pauseMenuID;
+    bool        isPauseMenu;
+    PGE_MenuBox _pauseMenu;
+    bool        _pauseMenu_opened;
+    void initPauseMenu1();
+    void initPauseMenu2();
+    void processPauseMenu();
+    /*****************Pause Menu**end**************/
+
+    int     debug_render_delay;
+    int     debug_phys_delay;
+    int     debug_event_delay;
 };
 
 #endif // SCENE_WORLD_H
