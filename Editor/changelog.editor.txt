@@ -1,3 +1,8 @@
+Editor 0.3.0.2
+- Added "Transform all Item-ID's in current section" menuitem
+- Added ability to transform music boxes!
+- Added multiselection for item selection dialog for "add" action in the editor of custom counters.
+
 Editor 0.3.0
 - Fixed group collision random crash
 - Fixed 'too large weight' crash
