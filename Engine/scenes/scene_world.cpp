@@ -667,7 +667,7 @@ void WorldScene::update()
 
     if(controls_1.jump || controls_1.alt_jump)
     {
-        if((!lock_controls) && (gameState))
+        if((!lock_controls) && (!isPauseMenu) && (gameState))
         {
             if(!gameState->LevelFile.isEmpty())
             {
