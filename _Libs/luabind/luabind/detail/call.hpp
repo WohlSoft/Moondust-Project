@@ -110,7 +110,7 @@ namespace luabind {
 
 			template< typename ConverterPolicy, typename StackIndexList >
 			struct converter_policy_postcall< ConverterPolicy, StackIndexList, false > {
-				static void postcall(lua_State* L, int results) {
+                static void postcall(lua_State* L, int results) {_unused(L);_unused(results);
 				}
 			};
 
