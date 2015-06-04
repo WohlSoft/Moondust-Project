@@ -204,7 +204,10 @@ SOURCES += \
     scenes/title/ttl_main_menu.cpp \
     scenes/world/wld_tilebox.cpp \
     scenes/level/lvl_scene_rtree.cpp \
-    gui/pge_menubox.cpp
+    gui/pge_menubox.cpp \
+    script/luaevent.cpp \
+    script/bindings/core/events/luaevents_engine.cpp \
+    script/luatitlescreenengine.cpp
 
 
 HEADERS  += \
@@ -315,7 +318,10 @@ HEADERS  += \
     script/luaengine.h \
     script/luautils.h \
     script/bindings/core/globalfuncs/luafuncs_logger.h \
-    gui/pge_menubox.h
+    gui/pge_menubox.h \
+    script/luaevent.h \
+    script/bindings/core/events/luaevents_engine.h \
+    script/luatitlescreenengine.h
 
 FORMS    += \
     data_configs/select_config.ui
@@ -331,6 +337,8 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    unused_thungs.txt
+    unused_thungs.txt \
+    script/scrapped_code.txt \
+    script/binding-tree.txt
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

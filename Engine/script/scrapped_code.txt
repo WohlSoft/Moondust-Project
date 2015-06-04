@@ -1,0 +1,56 @@
+template<typename ...Args>
+class LuaEvent
+{
+private:
+    QString m_eventName;
+    std::tuple<Args...> m_params;
+
+public:
+    LuaEvent(E* engine, const QString& eventName, const std::tuple<Args...>& params) :
+        m_eventName(eventName),
+        m_params(params)
+    {
+        std::string regEventName = eventName.toStdString() + "_event";
+        if(!engine->isClassRegistered(regEventName)){
+            engine->registerEventClass<Args...>(this, regEventName);
+        }
+
+    }
+    std::tuple<Args...>& getParams(){ return m_params; }
+    QString getEventName() const
+    {
+        return m_eventName;
+    }
+    void setEventName(const QString &eventName)
+    {
+        m_eventName = eventName;
+    }
+};
+
+
+
+
+
+    template<typename T>
+    void dispatchEvent(T& event){
+        internalCallFunc<T>(event, typename varadic_util::gens<sizeof...(Args)>::type());
+    }
+
+    template<typename T>
+    void registerEventClass(T* cls, const std::string& className){
+        using namespace luabind;
+        module(L)[
+            class_<decltype(T)>(className)
+                .property("eventName", &decltype(T)::getEventName, &decltype(T)::setEventName)
+        ];
+    }
+
+    bool isClassRegistered(const std::string& className){
+        return luabind::type(luabind::globals(L)[className]) == LUA_TUSERDATA;
+    }
+
+    template<typename...Args, int ...S>
+    void internalCallFunc(LuaEvent<Args...>& ev, varadic_util::seq<S...>) {
+        std::tuple<Args...> args = ev.getParams();
+        return luabind::call_function<void>(L, ev.getEventName(), ev, std::get<S>(args) ...);
+    }

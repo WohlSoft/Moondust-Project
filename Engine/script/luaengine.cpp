@@ -1,12 +1,14 @@
 #include "luaengine.h"
 
-
+#include "luaevent.h"
 #include "luautils.h"
 
 //Core libraries:
 #include "bindings/core/globalfuncs/luafuncs_logger.h"
+#include "bindings/core/events/luaevents_engine.h"
 
 #include <QFile>
+#include <tuple>
 
 LuaEngine::LuaEngine()
 {}
@@ -70,7 +72,8 @@ void LuaEngine::init()
         return;
     }
 
-
+    LuaEvent initEvent = BindingCore_Events_Engine::createInitEngineEvent(this);
+    dispatchEvent(initEvent);
 }
 
 void LuaEngine::shutdown()
@@ -110,6 +113,31 @@ void LuaEngine::setCoreFile(const QString &coreFile)
     m_coreFile = coreFile;
 }
 
+void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
+{
+    lua_getglobal(L, "__native_event");
+    if(!lua_isfunction(L,-1))
+    {
+        lua_pop(L,1);
+        return;
+    }
+
+    lua_pushstring(L, toDispatchEvent.eventName().toStdString().c_str());
+
+    int argsNum = 0;
+    for(luabind::object& obj : toDispatchEvent.objList){
+        argsNum++;
+        obj.push(L);
+    }
+
+    if (lua_pcall(L, argsNum + 1, 0, 0) != 0) {
+        onReportError(lua_tostring(L, -1));
+        shutdown();
+        return;
+    }
+
+}
+
 void LuaEngine::onReportError(const QString &errMsg)
 {
     qWarning() << "Lua-Error: ";
@@ -118,7 +146,13 @@ void LuaEngine::onReportError(const QString &errMsg)
 
 void LuaEngine::bindCore()
 {
-    Binding_Logger::bindToLua(L);
+    BindingCore_GlobalFuncs_Logger::bindToLua(L);
+}
+
+void LuaEngine::error()
+{
+    qWarning() << "Runtime Lua Error, shutting down";
+    shutdown();
 }
 
 
