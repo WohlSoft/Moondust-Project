@@ -510,9 +510,15 @@ void WorldScene::processPauseMenu()
                 break;
                 case PAUSE_SaveCont:
                     //Save game state!
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
                 break;
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
                     setExiting(0, WldExit::EXIT_exitWithSave);
                     break;
                 case PAUSE_Exit:

@@ -49,6 +49,8 @@ public:
     EpisodeState();
     ~EpisodeState();
     void reset();//!< Sets initial state of episode
+    bool load();
+    bool save();
     int numOfPlayers;//!< Number of players
     bool episodeIsStarted;
     bool isEpisode;
@@ -60,6 +62,8 @@ public:
 
     QString WorldFile;
     QString WorldPath;
+    QString saveFileName;
+    QString _episodePath;
 
     QString LevelFile;
     QString LevelFile_hub;
