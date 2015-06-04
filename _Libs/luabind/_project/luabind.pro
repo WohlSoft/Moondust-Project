@@ -192,4 +192,5 @@ HEADERS += ../lua/lapi.h \
     ../luabind/version.hpp \
     ../luabind/weak_ref.hpp \
     ../luabind/wrapper_base.hpp \
-    ../luabind/yield_policy.hpp
+    ../luabind/yield_policy.hpp \
+    ../lua_inclues/lua.hpp
