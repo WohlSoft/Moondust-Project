@@ -204,7 +204,8 @@ SOURCES += \
     scenes/title/ttl_main_menu.cpp \
     scenes/world/wld_tilebox.cpp \
     scenes/level/lvl_scene_rtree.cpp \
-    gui/pge_menubox.cpp
+    gui/pge_menubox.cpp \
+    ../_common/PGE_File_Formats/file_rw_savx.cpp
 
 
 HEADERS  += \

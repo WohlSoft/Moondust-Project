@@ -122,7 +122,7 @@ void LevelScene::initPauseMenu1()
     items<<"Continue";
     items<<"Save and continue";
     items<<"Save and quit";
-    items<<"Exit from level";
+    items<<"Exit without saving";
     _pauseMenu.addMenuItems(items);
     _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
     _pauseMenu.setMaxMenuItems(4);
@@ -171,9 +171,11 @@ void LevelScene::processPauseMenu()
                 break;
                 case PAUSE_SaveCont:
                     //Save game state!
+                    gameState->save();
                 break;
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
+                    gameState->save();
                     setExiting(0, LvlExit::EXIT_MenuExit);
                     break;
                 case PAUSE_Exit:
@@ -508,9 +510,9 @@ void LevelScene::render()
     }
 
     //Draw camera separators
-    for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
+    for(c=1; c<cameras.size(); c++)
     {
-        GlRenderer::renderRect(0, cam->h()*c-1, cam->w(), 2, 0.f, 0.f, 0.f, 1.f);
+        GlRenderer::renderRect(0, cameras[c].h()*c-1, cameras[c].w(), 2, 0.f, 0.f, 0.f, 1.f);
     }
 
 

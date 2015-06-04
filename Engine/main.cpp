@@ -280,6 +280,8 @@ if(!fileToOpen.isEmpty())
         episode.character=1;
         episode.savefile="save1.savx";
         episode.worldfile=fileToOpen;
+        _game_state._episodePath= QFileInfo(fileToOpen).absoluteDir().absolutePath()+"/";
+        _game_state.saveFileName = episode.savefile;
         _game_state.isEpisode = true;
         _game_state.WorldFile = fileToOpen;
 
@@ -360,6 +362,8 @@ MainMenu:
             _game_state.isEpisode=false;
             _game_state.numOfPlayers=1;
             _game_state.LevelFile = res_level.levelfile;
+            _game_state._episodePath.clear();
+            _game_state.saveFileName.clear();
             goto PlayLevel;
         case TitleScene::ANSWER_PLAYEPISODE:
         case TitleScene::ANSWER_PLAYEPISODE_2P:
@@ -367,6 +371,9 @@ MainMenu:
             _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
             _game_state.isEpisode=true;
             episode = res_episode;
+            _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";
+            _game_state.saveFileName = episode.savefile;
+            _game_state.load();
             goto PlayWorldMap;
         default:
             goto PlayWorldMap;
