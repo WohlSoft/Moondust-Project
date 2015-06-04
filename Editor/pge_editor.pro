@@ -416,7 +416,8 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/wld_filedata.cpp \
     common_features/dir_copy.cpp \
     tools/async/asyncstarcounter.cpp \
-    ../_common/StackWalker/StackWalker.cpp
+    ../_common/StackWalker/StackWalker.cpp \
+    ../_common/PGE_File_Formats/file_rw_savx.cpp
 
 HEADERS  += defines.h \
     version.h \

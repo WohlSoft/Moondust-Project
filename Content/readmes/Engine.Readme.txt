@@ -47,14 +47,13 @@ S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
 
 Ctrl+F - Toggle fullscreen mode
 
-F3 - enable/disable printinf of debug information
+F3 - enable/disable printing of debug information
+F5 - pause/resume physical loopsteps. (with stopped physics you can make
+     mega-boosted run while you holds arrow+"run" keys)
 F12 - take screenshot (will be saved in the 'screenshots' folder which will be in PGE folder or in the %UserProfile%\.PGE_Project).
 Screenshots will be written into PNG format and will have timedate based filename.
 
 i - disable/enable walkable zone limit on the world map (you will have able to walk anywhere)
 
-Enter - pause/resume game, show dummy message box
-
-Esc - Exit from level [you will return to world map or into main hub level],
-      or exit from episode [if you on the world map or in the main hub level]
+Enter, Esc - pause/resume game, show pause menu
 

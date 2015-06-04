@@ -207,7 +207,8 @@ SOURCES += \
     gui/pge_menubox.cpp \
     script/luaevent.cpp \
     script/bindings/core/events/luaevents_engine.cpp \
-    script/luatitlescreenengine.cpp
+    script/luatitlescreenengine.cpp \
+    ../_common/PGE_File_Formats/file_rw_savx.cpp
 
 
 HEADERS  += \
