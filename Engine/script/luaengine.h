@@ -8,6 +8,8 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
+class LuaEvent;
+#include "../common_features/util.h"
 
 ///
 /// \brief This class should have basic functions for interacting with lua
@@ -19,6 +21,7 @@
 ///
 class LuaEngine
 {
+    friend class LuaEvent;
 private:
     Q_DISABLE_COPY(LuaEngine)
 
@@ -50,14 +53,19 @@ public:
     QString coreFile() const;
     void setCoreFile(const QString &coreFile);
 
+    void dispatchEvent(LuaEvent& toDispatchEvent);
+
+
 protected:
     virtual void onBindAll() {}
     virtual void onReportError(const QString& errMsg);
 
-
+    lua_State* getNativeState() {return L; }
 
 private:
+
     void bindCore();
+    void error();
 
     lua_State* L;
     QString m_coreFile;
