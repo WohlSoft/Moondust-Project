@@ -37,6 +37,7 @@ struct obj_BG{
     bool editing_tiled;
     bool animated;
     unsigned int frames;
+    unsigned int framespeed;
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     unsigned int display_frame;
