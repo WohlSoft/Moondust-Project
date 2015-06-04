@@ -6,7 +6,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
-class Binding_Logger
+class BindingCore_GlobalFuncs_Logger
 {
 public:
 
