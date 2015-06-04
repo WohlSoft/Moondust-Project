@@ -510,9 +510,15 @@ void WorldScene::processPauseMenu()
                 break;
                 case PAUSE_SaveCont:
                     //Save game state!
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
                 break;
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
                     setExiting(0, WldExit::EXIT_exitWithSave);
                     break;
                 case PAUSE_Exit:
@@ -667,7 +673,7 @@ void WorldScene::update()
 
     if(controls_1.jump || controls_1.alt_jump)
     {
-        if((!lock_controls) && (gameState))
+        if((!lock_controls) && (!isPauseMenu) && (gameState))
         {
             if(!gameState->LevelFile.isEmpty())
             {
@@ -1012,6 +1018,13 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+void WorldScene::processEvents()
+{
+    player1Controller->update();
+    controls_1 = player1Controller->keys;
+    Scene::processEvents();
+}
+
 int WorldScene::exec()
 {
     worldIsContinues=true;
@@ -1031,13 +1044,17 @@ int WorldScene::exec()
   Uint32 start_common=0;
 
     running = !doExit;
+    /****************Initial update***********************/
+    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    controls_1 = Controller::noKeys();
+    if(running) update();
+    /*****************************************************/
+
     while(running)
     {
         start_common = SDL_GetTicks();
 
         if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
-        player1Controller->update();
-        controls_1 = player1Controller->keys;
         processEvents();
         if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
         if(PGE_Window::showDebugInfo) debug_event_delay=(stop_events-start_events);

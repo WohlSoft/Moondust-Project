@@ -1,6 +1,10 @@
 #include <PGE_File_Formats/file_formats.h>
 #include "episode_state.h"
 
+#include <gui/pge_msgbox.h>
+
+#include <QFile>
+
 EpisodeState::EpisodeState()
 {
     reset();
@@ -22,6 +26,52 @@ void EpisodeState::reset()
     game_state = FileFormats::dummySaveDataArray();
     gameType=Testing;
     LevelTargetWarp=0;
+
+    saveFileName="";
+    _episodePath="";
+}
+
+bool EpisodeState::load()
+{
+    QString file= _episodePath+saveFileName;
+    QFile _f(file);
+    if(!_f.exists(file)) return false;
+    if (_f.open(QIODevice::ReadOnly))
+    {
+        QString fileRaw;
+        QTextStream inStr(&_f);
+        GamesaveData FileData;
+        inStr.setCodec("UTF-8");
+        fileRaw = inStr.readAll();
+        FileData = FileFormats::ReadExtendedSaveFile(fileRaw, file);
+
+        if(FileData.ReadFileValid)
+        {
+            game_state = FileData;
+            episodeIsStarted=true;
+            return true;
+        }
+        else
+        {
+            PGE_MsgBox::error(file+"\n"+FileFormats::errorString);
+        }
+    }
+    return false;
+}
+
+bool EpisodeState::save()
+{
+    if(!isEpisode) return false;
+    QString file= _episodePath+saveFileName;
+    QFile outFile(file);
+    if (!outFile.open(QFile::WriteOnly | QFile::Text)) {
+        return false;
+    }
+    QTextStream out(&outFile);
+    out.setCodec("UTF-8");
+    out << FileFormats::WriteExtendedSaveFile(game_state);
+    outFile.close();
+    return true;
 }
 
 PlayerState EpisodeState::getPlayerState(int playerID)
