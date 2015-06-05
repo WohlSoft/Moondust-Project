@@ -27,6 +27,7 @@
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
 #include "setup_title_screen.h"
+#include "setup_credits_screen.h"
 
 #include "obj_block.h"
 #include "obj_bgo.h"
@@ -83,6 +84,22 @@ struct MessageBoxSetup
 {
     QString sprite;
     int borderWidth;
+    float   box_padding;
+    QString font_name;
+    int     font_id;
+    QString font_color;
+    GlColor font_rgba;
+};
+
+struct MenuBoxSetup
+{
+    QString sprite;
+    int borderWidth;
+    float   box_padding;
+    QString title_font_name;
+    int     title_font_id;
+    QString title_font_color;
+    GlColor title_font_rgba;
 };
 
 struct MenuSetup
@@ -127,6 +144,8 @@ public:
     static MainCursors setup_cursors;
     //MessageBox setup
     static MessageBoxSetup setup_message_box;
+    //MenuBox setup
+    static MenuBoxSetup    setup_menu_box;
     //Menu setup
     static MenuSetup setup_menus;
 
@@ -142,6 +161,10 @@ public:
     //World map data
     friend struct WorldMapSetup;
     static WorldMapSetup setup_WorldMap;
+
+    //Credits Screen
+    friend struct CreditsScreenSetup;
+    static CreditsScreenSetup setup_CreditsScreen;
 
 
     /********Music and sounds*******/

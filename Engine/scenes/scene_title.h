@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_INTRO_H
-#define SCENE_INTRO_H
+#ifndef SCENE_TITLE_H
+#define SCENE_TITLE_H
 
 #include <QMap>
 #include <QPair>
@@ -26,6 +26,7 @@
 #include <gui/pge_menu.h>
 #include <common_features/pge_texture.h>
 #include <common_features/simple_animator.h>
+#include <common_features/point.h>
 #include <controls/controller.h>
 
 typedef QPair<int, int > menustate;
@@ -59,13 +60,23 @@ public:
 
     bool init();
 
+    void onKeyboardPressed(SDL_Scancode scancode);
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    void onMouseMoved(SDL_MouseMotionEvent &mmevent);
+    void onMousePressed(SDL_MouseButtonEvent &mbevent);
+    void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+
+    void processEvents();
+
     void update();
     void render();
     void renderMouse();
+
+    void processMenu();
+
     int exec();
     void resetController();
     PGE_Menu menu;
-    bool doExit;
 
     enum CurrentMenu
     {
@@ -106,7 +117,8 @@ public:
     Controller *controller;
 
 private:
-    QPoint mousePos;
+    int ret;//!< Exit code
+    PGE_Point mousePos;
     CurrentMenu _currentMenu;
     void setMenu(CurrentMenu _menu);
     QMap<CurrentMenu, menustate> menustates;
@@ -118,6 +130,10 @@ private:
 
     PGE_Texture cursor;
     bool _cursorIsLoaded;
+
+    int debug_joy_keyval;
+    int debug_joy_keyid;
+    int debug_joy_keytype;
 };
 
-#endif // SCENE_INTRO_H
+#endif // SCENE_TITLE_H

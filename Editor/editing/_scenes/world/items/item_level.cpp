@@ -253,60 +253,48 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         scene->contextMenuOpened = false;
     }
     else
-    if(selected==transform)
+    if((selected==transform)||(selected==transform_all))
     {
-        WorldData HistoryOldData;
-        WorldData HistoryNewData;
+        WorldData oldData;
+        WorldData newData;
         int transformTO;
+
         ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
         util::DialogToCenter(itemList, true);
+
         if(itemList->exec()==QDialog::Accepted)
         {
-            transformTO = itemList->levelID;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
-                {
-                    HistoryOldData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
-                    ((ItemLevel *) SelItem)->transformTo(transformTO);
-                    HistoryNewData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
-                }
-            }
-        }
-        delete itemList;
-        if(!HistoryNewData.levels.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
-    }
-    else
-    if(selected==transform_all)
-    {
-        WorldData HistoryOldData;
-        WorldData HistoryNewData;
-        int transformTO;
-        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_LEVEL);
-        itemList->removeEmptyEntry(ItemSelectDialog::TAB_LEVEL);
-        util::DialogToCenter(itemList, true);
-        if(itemList->exec()==QDialog::Accepted)
-        {
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
             transformTO = itemList->levelID;
             unsigned long oldID = levelData.id;
-            foreach(QGraphicsItem * SelItem, scene->items() )
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+
+            foreach(QGraphicsItem * SelItem, our_items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
                 {
-                    if(((ItemLevel *) SelItem)->levelData.id==oldID)
+                    if((!sameID)||(((ItemLevel *) SelItem)->levelData.id==oldID))
                     {
-                        HistoryOldData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
+                        oldData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
                         ((ItemLevel *) SelItem)->transformTo(transformTO);
-                        HistoryNewData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
+                        newData.levels.push_back( ((ItemLevel *) SelItem)->levelData );
                     }
                 }
             }
         }
         delete itemList;
-        if(!HistoryNewData.levels.isEmpty())
-            scene->addTransformHistory(HistoryNewData, HistoryOldData);
+        if(!newData.levels.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)

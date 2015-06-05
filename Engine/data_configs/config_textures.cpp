@@ -519,7 +519,8 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
             SimpleAnimator animator(
                             true,
                             bgSetup->frames,
-                            128, //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later
+                            bgSetup->framespeed, //bgSetup->framespeed, //Ouch, forgot made framespeed value for background :P Will add later...
+                                                 //3 june 2015. I Finally implemented this sweet variable :D
                             frameFirst,
                             frameLast,
                             false,

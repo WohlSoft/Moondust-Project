@@ -25,7 +25,6 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
-#include <common_features/event_queue.h>
 #include <common_features/maths.h>
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
@@ -36,19 +35,6 @@
 #include <QHash>
 #include <unordered_map>
 
-#include "world/wld_tilebox.h"
-
-TileBox worldMap;
-QList<WldTileItem >     wld_tiles;
-QList<WldSceneryItem >  wld_sceneries;
-QList<WldPathItem >     wld_paths;
-QList<WldLevelItem >    wld_levels;
-QList<WldMusicBoxItem > wld_musicboxes;
-EventQueue<WorldScene > wld_events;
-
-QList<WorldNode > wldItems;
-QList<WorldNode * > toRender;
-
 WorldScene::WorldScene()
     : Scene(World)
 {
@@ -57,24 +43,17 @@ WorldScene::WorldScene()
     exitWorldCode=WldExit::EXIT_error;
     exitWorldDelay=2000;
     worldIsContinues=true;
-    doExit=false;
     isPauseMenu=false;
 
     gameState=NULL;
 
     isInit=false;
 
-    i=0;
-    delayToEnter = 1000;
-    lastTicks=0;
-    debug_player_jumping=false;
-    debug_player_onground=false;
-    debug_player_foots=0;
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
 
-    mapwalker_img_h=32;
+    mapwalker_img_h = ConfigManager::default_grid;
     mapwalker_offset_x=0;
     mapwalker_offset_y=0;
 
@@ -82,19 +61,17 @@ WorldScene::WorldScene()
     player1Controller = AppSettings.openController(1);
     /*********Controller********/
 
+    initPauseMenu1();
+
+    frameSkip=AppSettings.frameSkip;
+
     /***********Number of Players*****************/
     numOfPlayers=1;
     /***********Number of Players*****************/
 
     /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
+    fader.setFull();
     /*********Fader*************/
-
-    uTick = (1000.0/(float)PGE_Window::PhysStep);
-    if(uTick<=0) uTick=1;
 
     move_speed = 125/(float)PGE_Window::PhysStep;
     move_steps_count=0;
@@ -141,7 +118,7 @@ WorldScene::WorldScene()
 
     jumpTo=false;
 
-    dir=0;
+    walk_direction=Walk_Idle;
     lock_controls=false;
     ignore_paths=false;
     allow_left=false;
@@ -158,9 +135,9 @@ WorldScene::~WorldScene()
 {
     PGE_MusPlayer::MUS_stopMusic();
     wld_events.abort();
-    worldMap.clean();
+    _indexTable.clean();
     wldItems.clear();
-    toRender.clear();
+    _itemsToRender.clear();
 
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -184,7 +161,6 @@ WorldScene::~WorldScene()
 
     for(int i=0;i<imgs.size();i++)
     {
-        imgs[i].a.stop();
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
@@ -283,9 +259,9 @@ void WorldScene::setGameState(EpisodeState *_state)
 
 bool WorldScene::init()
 {
-    worldMap.clean();
+    _indexTable.clean();
     wldItems.clear();
-    toRender.clear();
+    _itemsToRender.clear();
 
     wld_tiles.clear();
     wld_sceneries.clear();
@@ -363,7 +339,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_tiles << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_tiles.last()));
     }
 
     for(int i=0; i<data.scenery.size(); i++)
@@ -372,7 +348,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_sceneries << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_sceneries.last()));
     }
 
     for(int i=0; i<data.paths.size(); i++)
@@ -381,7 +357,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_paths << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_paths.last()));
     }
 
     for(int i=0; i<data.levels.size(); i++)
@@ -390,7 +366,7 @@ bool WorldScene::init()
         if(!path.init())
             continue;
         wld_levels << path;
-        worldMap.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
+        _indexTable.addNode(path.x+path.offset_x, path.y+path.offset_y, path.texture.w, path.texture.h, &(wld_levels.last()));
     }
 
     for(int i=0; i<data.music.size(); i++)
@@ -400,7 +376,7 @@ bool WorldScene::init()
         path.g=0.5f;
         path.b=1.f;
         wld_musicboxes << path;
-        worldMap.addNode(path.x, path.y, path.w, path.h, &(wld_musicboxes.last()));
+        _indexTable.addNode(path.x, path.y, path.w, path.h, &(wld_musicboxes.last()));
     }
 
     updateAvailablePaths();
@@ -450,48 +426,168 @@ bool WorldScene::loadConfigs()
     return success;
 }
 
-void WorldScene::update()
-{
-    tickAnimations(uTick);
 
-    if(doExit)
+
+void WorldScene::doMoveStep(double &posVal)
+{
+    move_steps_count+=move_speed;
+    if(move_steps_count>=ConfigManager::default_grid)
     {
-        if(exitWorldDelay>=0)
-            exitWorldDelay -= uTick;
-        else
-        {
-            if(exitWorldCode==WldExit::EXIT_close)
-            {
-                fader_opacity=1.0f;
-                worldIsContinues=false;
-            }
-            else
-            {
-                if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-                if(fader_opacity>=1.0)
-                    worldIsContinues=false;
-            }
-        }
+        move_steps_count=0;
+        posVal=Maths::roundTo(posVal, ConfigManager::default_grid);
+    }
+    if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0))
+    {
+        walk_direction=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();
+    }
+}
+
+void WorldScene::setDir(int dr)
+{
+    walk_direction=dr;
+    move_steps_count=ConfigManager::default_grid-move_steps_count;
+    mapwalker_refreshDirection();
+}
+
+
+void WorldScene::initPauseMenu1()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=1;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Save and continue";
+    items<<"Save and quit";
+    items<<"Quit without saving";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+}
+
+void WorldScene::initPauseMenu2()
+{
+    _pauseMenu_opened=false;
+    _pauseMenuID=2;
+    _pauseMenu.setParentScene(this);
+    _pauseMenu.construct("Pause", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                         ConfigManager::setup_menu_box.box_padding,
+                         ConfigManager::setup_menu_box.sprite);
+    _pauseMenu.clearMenu();
+    QStringList items;
+    items<<"Continue";
+    items<<"Quit";
+    _pauseMenu.addMenuItems(items);
+    _pauseMenu.setRejectSnd(obj_sound_role::MenuPause);
+    _pauseMenu.setMaxMenuItems(4);
+    isPauseMenu=false;
+}
+
+void WorldScene::processPauseMenu()
+{
+    if(!_pauseMenu_opened)
+    {
+        _pauseMenu.restart();
+        _pauseMenu_opened=true;
+        PGE_Audio::playSoundByRole(obj_sound_role::MenuPause);
     }
     else
     {
-        wld_events.processEvents(uTick);
+        _pauseMenu.update(uTickf);
+        if(!_pauseMenu.isRunning())
+        {
+            if(_pauseMenuID==1)
+            {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_SaveCont:
+                    //Save game state!
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
+                break;
+                case PAUSE_SaveQuit:
+                    //Save game state! and exit from episode
+                    gameState->game_state.worldPosX=posX;
+                    gameState->game_state.worldPosY=posY;
+                    gameState->save();
+                    setExiting(0, WldExit::EXIT_exitWithSave);
+                    break;
+                case PAUSE_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, WldExit::EXIT_exitNoSave);
+                break;
+                default: break;
+                }
+            } else {
+                switch(_pauseMenu.answer())
+                {
+                case PAUSE_2_Continue:
+                    //do nothing!!
+                break;
+                case PAUSE_2_Exit:
+                    //Save game state! and exit from episode
+                    setExiting(0, WldExit::EXIT_exitNoSave);
+                break;
+                default: break;
+                }
+            }
+            _pauseMenu_opened=false;
+            isPauseMenu=false;
+        }
+    }
+}
 
-        if(dir==0)
+void WorldScene::update()
+{
+    tickAnimations(uTickf);
+    Scene::update();
+
+    if(doExit)
+    {
+        if(exitWorldCode==WldExit::EXIT_close)
+        {
+            fader.setFull();
+            worldIsContinues=false;
+            running=false;
+        }
+        else
+        {
+            if(fader.isNull()) fader.setFade(10, 1.0f, 0.01f);
+            if(fader.isFull())
+            {
+                worldIsContinues=false;
+                running=false;
+            }
+        }
+    } else if(isPauseMenu) {
+        processPauseMenu();
+    } else {
+        wld_events.processEvents(uTickf);
+
+        if(walk_direction==Walk_Idle)
         {
             if(!lock_controls)
             {
                 if(controls_1.left && (allow_left || ignore_paths))
-                    dir=1;
+                    walk_direction=Walk_Left;
                 if(controls_1.right && (allow_right || ignore_paths))
-                    dir=2;
+                    walk_direction=Walk_Right;
                 if(controls_1.up && (allow_up || ignore_paths))
-                    dir=3;
+                    walk_direction=Walk_Up;
                 if(controls_1.down && (allow_down || ignore_paths))
-                    dir=4;
+                    walk_direction=Walk_Down;
 
                 //If movement denied - play sound
-                if((controls_1.left||controls_1.right||controls_1.up||controls_1.down)&&(dir==0))
+                if((controls_1.left||controls_1.right||controls_1.up||controls_1.down)&&(walk_direction==Walk_Idle))
                 {       _playStopSnd=false;
                         if(!_playDenySnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldDeny); _playDenySnd=true; }
                 }
@@ -499,74 +595,66 @@ void WorldScene::update()
                 if (!controls_1.left&&!controls_1.right&&!controls_1.up&&!controls_1.down)
                     _playDenySnd=false;
             }
-            if(dir!=0)
+            if(walk_direction!=Walk_Idle)
             {
                 _playDenySnd=false;
                 _playStopSnd=false;
                 gameState->LevelFile.clear();
                 jumpTo=false;
-                mapwalker_refreshDir();
+                mapwalker_refreshDirection();
             }
 
             if(_playStopSnd) { PGE_Audio::playSoundByRole(obj_sound_role::WorldMove); _playStopSnd=false; }
         }
         else
         {
-            mapwalker_ani.manualTick(uTick);
+            mapwalker_ani.manualTick(uTickf);
 
-            #define setDir(dr) {dir=dr;\
-                    move_steps_count=ConfigManager::default_grid-move_steps_count; mapwalker_refreshDir();}
-            switch(dir)
+            switch(walk_direction)
             {
-            case 1://left
+            case Walk_Left:
                 if(controls_1.right)
-                setDir(2);
+                setDir(Walk_Right);
                 break;
-            case 2://right
+            case Walk_Right:
                 if(controls_1.left)
-                setDir(1);
+                setDir(Walk_Left);
                 break;
-            case 3://up
+            case Walk_Up:
                 if(controls_1.down)
-                setDir(4);
+                setDir(Walk_Down);
                 break;
-            case 4://down
+            case Walk_Down:
                 if(controls_1.up)
-                setDir(3);
+                setDir(Walk_Up);
                 break;
+            default: break;
             }
         }
 
-        #define doMoveStep(posVal)  \
-            move_steps_count+=move_speed;\
-            if(move_steps_count>=ConfigManager::default_grid)\
-            {\
-                move_steps_count=0;\
-                posVal=Maths::roundTo(posVal, ConfigManager::default_grid);\
-            }\
-            if((long(posVal)==posVal)&&(long(posVal)%ConfigManager::default_grid==0)) {dir=0; _playStopSnd=true; updateAvailablePaths(); updateCenter();}
-
-        switch(dir)
+        switch(walk_direction)
         {
-            case 1://left
+            case Walk_Left:
                 posX-=move_speed;
                 doMoveStep(posX);
                 break;
-            case 2://right
+            case Walk_Right:
                 posX+=move_speed;
                 doMoveStep(posX);
                 break;
-            case 3://up
+            case Walk_Up:
                 posY-=move_speed;
                 doMoveStep(posY);
                 break;
-            case 4://down
+            case Walk_Down:
                 posY+=move_speed;
                 doMoveStep(posY);
                 break;
+            default: break;
         }
 
-        toRender = worldMap.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), true);
+        _itemsToRender.clear();
+        _indexTable.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), _itemsToRender, true);
 
         if(isPauseMenu)
         {
@@ -580,10 +668,50 @@ void WorldScene::update()
         }
     }
 
-    Scene::update();
+
+
+
+    if(controls_1.jump || controls_1.alt_jump)
+    {
+        if((!lock_controls) && (!isPauseMenu) && (gameState))
+        {
+            if(!gameState->LevelFile.isEmpty())
+            {
+                gameState->game_state.worldPosX=posX;
+                gameState->game_state.worldPosY=posY;
+                PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
+                stopMusic(true, 300);
+                lock_controls=true;
+                setExiting(0, WldExit::EXIT_beginLevel);
+            }
+            else if(jumpTo)
+            {
+                //Create events
+                EventQueueEntry<WorldScene >event1;
+                event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
+                wld_events.events.push_back(event1);
+
+                EventQueueEntry<WorldScene >event2;
+                event2.makeCallerT(this, &WorldScene::jump, 100);
+                wld_events.events.push_back(event2);
+
+                EventQueueEntry<WorldScene >event3;
+                event3.makeCaller([this]()->void{
+                                      this->fader.setFade(10, 0.0f, 0.05);
+                                      this->lock_controls=false;
+                                  }, 0);
+                wld_events.events.push_back(event3);
+
+                this->lock_controls=true;
+                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
+                fader.setFade(10, 1.0f, 0.05);
+            }
+        }
+    }
 }
 
-void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
+
+void WorldScene::fetchSideNodes(bool &side, QVector<WorldNode* > &nodes, float cx, float cy)
 {
     side=false;
     foreach (WorldNode* x, nodes)
@@ -602,33 +730,36 @@ void fetchSideNodes(bool &side, QList<WorldNode* > &nodes, float cx, float cy)
 
 void WorldScene::updateAvailablePaths()
 {
-    QList<WorldNode* > nodes;
+    QVector<WorldNode* > nodes;
 
     long x,y;
     //left
-    x=posX+worldMap.gridSize_h-worldMap.gridSize;
-    y=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half()-_indexTable.grid();
+    y=posY+_indexTable.grid_half();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_left, nodes, x,y);
+    nodes.clear();
 
     //Right
-    x=posX+worldMap.gridSize_h+worldMap.gridSize;
-    y=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half()+_indexTable.grid();
+    y=posY+_indexTable.grid_half();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_right, nodes, x, y);
-
+    nodes.clear();
 
     //Top
-    x=posX+worldMap.gridSize_h;
-    y=posY+worldMap.gridSize_h-worldMap.gridSize;
-    nodes=worldMap.query(x, y);
+    x=posX+_indexTable.grid_half();
+    y=posY+_indexTable.grid_half()-_indexTable.grid();
+    _indexTable.query(x, y, nodes);
     fetchSideNodes(allow_up, nodes, x, y);
+    nodes.clear();
 
     //Bottom
-    x=posX+worldMap.gridSize_h;
-    y=posY+worldMap.gridSize_h+worldMap.gridSize;
-    nodes=worldMap.query(x,y);
+    x=posX+_indexTable.grid_half();
+    y=posY+_indexTable.grid_half()+_indexTable.grid();
+    _indexTable.query(x,y, nodes);
     fetchSideNodes(allow_down, nodes, x, y);
+    nodes.clear();
 }
 
 void WorldScene::updateCenter()
@@ -642,10 +773,10 @@ void WorldScene::updateCenter()
     levelTitle.clear();
     jumpTo=false;
 
-    QList<WorldNode* > nodes;
-    long px=posX+worldMap.gridSize_h;
-    long py=posY+worldMap.gridSize_h;
-    nodes=worldMap.query(px, py);
+    QVector<WorldNode* > nodes;
+    long px=posX+_indexTable.grid_half();
+    long py=posY+_indexTable.grid_half();
+    _indexTable.query(px, py, nodes);
     foreach (WorldNode* x, nodes)
     {
         /*************MusicBox***************/
@@ -726,18 +857,18 @@ void WorldScene::render()
     if(backgroundTex.w>0)
         GlRenderer::renderTexture(&backgroundTex, PGE_Window::Width/2 - backgroundTex.w/2, PGE_Window::Height/2 - backgroundTex.h/2);
 
-    for(int i=0;i<imgs.size();i++)
+    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it!= imgs.end(); it++)
     {
-        AniPos x(0,1); x = imgs[i].a.image();
-        GlRenderer::renderTexture(&imgs[i].t,
-                                  imgs[i].x,
-                                  imgs[i].y,
-                                  imgs[i].t.w,
-                                  imgs[i].frmH, x.first, x.second);
+        AniPos x(0,1); x = it->a.image();
+        GlRenderer::renderTexture(&it->t,
+                                  it->x,
+                                  it->y,
+                                  it->t.w,
+                                  it->frmH, x.first, x.second);
     }
 
-    for(int i=0; i<portraits.size(); i++)
-        portraits[i].render();
+    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it!= portraits.end(); it++)
+            it->render();
 
     //Viewport zone black background
     GlRenderer::renderRect(viewportRect.left(), viewportRect.top(), viewportRect.width(), viewportRect.height(), 0.f,0.f,0.f);
@@ -749,11 +880,8 @@ void WorldScene::render()
         double renderY = posY+16-(viewportRect.height()/2);
 
         //Render items
-        foreach(WorldNode * it, toRender)
-        {
-            it->render(it->x-renderX, it->y-renderY);
-            //GlRenderer::renderRect(it->x-renderX, it->y-renderY, it->w, it->h, it->r, it->g, it->b, 1.0f);
-        }
+        for(QVector<WorldNode*>::iterator it = _itemsToRender.begin(); it!=_itemsToRender.end(); it++)
+            (*it)->render((*it)->x-renderX, (*it)->y-renderY);
 
         //draw our "character"
         AniPos img(0,1); img = mapwalker_ani.image();
@@ -838,18 +966,15 @@ void WorldScene::render()
                                .arg(posY), 300,10);
 
         {
-        QPoint grid = worldMap.applyGrid(posX, posY);
+        PGE_Point grid = _indexTable.applyGrid(posX, posY);
         FontManager::printText(QString("TILE X=%1 Y=%2")
                                .arg(grid.x())
                                .arg(grid.y()), 300,45);
         }
 
-        FontManager::printText(QString("Player J=%1 G=%2,%5 F=%3; TICK-SUB: %4")
-                               .arg(debug_player_jumping)
-                               .arg(debug_player_onground)
-                               .arg(debug_player_foots)
-                               .arg(uTick)
-                               .arg(toRender.size()), 10,100);
+        FontManager::printText(QString("TICK-SUB: %1, Vizible items=%2;")
+                               .arg(uTickf)
+                               .arg(_itemsToRender.size()), 10,100);
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
@@ -859,11 +984,45 @@ void WorldScene::render()
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitWorldDelay)
-                                   .arg(uTick), 10, 140, 0, 1.0, 0, 0, 1.0);
+                                   .arg(uTickf), 10, 140, 0, 1.0, 0, 0, 1.0);
     }
-
     renderBlack:
     Scene::render();
+
+    if(isPauseMenu) _pauseMenu.render();
+}
+
+void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
+{
+    if(doExit) return;
+
+    if(isPauseMenu) _pauseMenu.processKeyEvent(sdl_key);
+
+    switch(sdl_key)
+    { // Check which
+        case SDLK_ESCAPE: // ESC
+        case SDLK_RETURN:// Enter
+            {
+                if( isPauseMenu || doExit || lock_controls) break;
+                isPauseMenu = true;
+            }
+        break;
+        case SDLK_i:
+            ignore_paths= !ignore_paths;
+            if(ignore_paths)
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
+            else
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+        break;
+        default: break;
+    }
+}
+
+void WorldScene::processEvents()
+{
+    player1Controller->update();
+    controls_1 = player1Controller->keys;
+    Scene::processEvents();
 }
 
 int WorldScene::exec()
@@ -874,7 +1033,7 @@ int WorldScene::exec()
     //World scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
-    int doUpdate_render=0;
+  float doUpdate_render=0;
 
  Uint32 start_physics=0;
  Uint32 stop_physics=0;
@@ -883,186 +1042,67 @@ int WorldScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
-     int wait_delay=0;
 
-  float timeStep = 1000.0 / (float)PGE_Window::PhysStep;
+    running = !doExit;
+    /****************Initial update***********************/
+    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    controls_1 = Controller::noKeys();
+    if(running) update();
+    /*****************************************************/
 
-    bool running = !doExit;
     while(running)
     {
         start_common = SDL_GetTicks();
 
-        if(PGE_Window::showDebugInfo)
-        {
-            start_events = SDL_GetTicks();
-        }
+        if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
+        processEvents();
+        if(PGE_Window::showDebugInfo) stop_events = SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_event_delay=(stop_events-start_events);
 
-        player1Controller->update();
-        controls_1 = player1Controller->keys;
-
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        if(doExit) break;
-                        setExiting(0, WldExit::EXIT_close);
-                    }   // End work of program
-                break;
-
-                case SDL_KEYDOWN: // If pressed key
-                  switch(event.key.keysym.sym)
-                  { // Check which
-                    case SDLK_ESCAPE: // ESC
-                            {
-                                setExiting(0, WldExit::EXIT_exitNoSave);
-                            }   // End work of program
-                        break;
-                    case SDLK_RETURN:// Enter
-                        {
-                            if( doExit || lock_controls) break;
-                            isPauseMenu = true;
-                        }
-                    break;
-                    case SDLK_i:
-                        ignore_paths= !ignore_paths;
-                        if(ignore_paths)
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
-                        else
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
-                    break;
-                    default:
-                    break;
-                  }
-                break;
-
-                case SDL_KEYUP:
-                switch(event.key.keysym.sym)
-                {
-                case SDLK_RETURN:// Enter
-                    break;
-                default:
-                    break;
-                }
-                break;
-            }
-        }
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_events = SDL_GetTicks();
-            start_physics=SDL_GetTicks();
-        }
-
-        /**********************Update physics and game progess***********************/
+        start_physics=SDL_GetTicks();
         update();
-
-        if(controls_1.jump)
-        {
-            if((!lock_controls) && (gameState))
-            {
-                if(!gameState->LevelFile.isEmpty())
-                {
-                    gameState->game_state.worldPosX=posX;
-                    gameState->game_state.worldPosY=posY;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
-                    stopMusic(true, 300);
-                    lock_controls=true;
-                    setExiting(0, WldExit::EXIT_beginLevel);
-                }
-                else if(jumpTo)
-                {
-                    //Create events
-                    EventQueueEntry<WorldScene >event1;
-                    event1.makeWaiterFlagT(this, &WorldScene::isOpacityFadding, true, 100);
-                    wld_events.events.push_back(event1);
-
-                    EventQueueEntry<WorldScene >event2;
-                    event2.makeCallerT(this, &WorldScene::jump, 100);
-                    wld_events.events.push_back(event2);
-
-                    EventQueueEntry<WorldScene >event3;
-                    event3.makeCaller([this]()->void{
-                                          this->setFade(25, 0.0, 0.08);
-                                          this->lock_controls=false;
-                                      }, 0);
-                    wld_events.events.push_back(event3);
-
-                    this->lock_controls=true;
-                    PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                    this->setFade(25, 1.0f, 0.08);
-                }
-            }
-        }
-
-        /**********************Update physics and game progess***********************/
-
-        if(PGE_Window::showDebugInfo)
-        {
-            stop_physics=SDL_GetTicks();
-        }
+        stop_physics=SDL_GetTicks();
+        if(PGE_Window::showDebugInfo) debug_phys_delay=(stop_physics-start_physics);
 
         stop_render=0;
         start_render=0;
-        if(doUpdate_render<=0)
+        if(doUpdate_render<=0.f)
         {
             start_render = SDL_GetTicks();
-            /**********************Render everything***********************/
             render();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
+            PGE_Window::rePaint();
             stop_render = SDL_GetTicks();
-            doUpdate_render = stop_render-start_render;//-timeStep;
-            debug_render_delay = stop_render-start_render;
+            doUpdate_render = frameSkip ? (stop_render-start_render) : 0;
+            if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
-        doUpdate_render -= timeStep;
+        doUpdate_render -= uTickf;
+        if(stop_render < start_render) {stop_render=0; start_render=0; }
 
-        if(stop_render < start_render)
-            {stop_render=0; start_render=0;}
-
-        wait_delay=timeStep;
-        lastTicks=1;
-        if( timeStep > (timeStep-(int)(SDL_GetTicks()-start_common)) )
+        if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            wait_delay = timeStep-(int)(SDL_GetTicks()-start_common);
-            lastTicks = (stop_physics-start_physics)+(stop_render-start_render)+(stop_events-start_events);
+            wait( uTickf-(float)(SDL_GetTicks()-start_common));
         }
-        debug_phys_delay=(stop_physics-start_physics);
-        debug_event_delay=(stop_events-start_events);
-
-        if(wait_delay>0)
-            SDL_Delay( wait_delay );
-
-        stop_render=0;
-        start_render=0;
-
-        if(isExit())
-            running = false;
-
     }
     return exitWorldCode;
 }
 
-void WorldScene::tickAnimations(int ticks)
+void WorldScene::tickAnimations(float ticks)
 {
     //tick animation
-    for(int i=0; i<ConfigManager::Animator_Tiles.size(); i++)
-        ConfigManager::Animator_Tiles[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_Scenery.size(); i++)
-        ConfigManager::Animator_Scenery[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_WldPaths.size(); i++)
-        ConfigManager::Animator_WldPaths[i].manualTick(ticks);
-    for(int i=0; i<ConfigManager::Animator_WldLevel.size(); i++)
-        ConfigManager::Animator_WldLevel[i].manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Tiles.begin(); it!=ConfigManager::Animator_Tiles.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_Scenery.begin(); it!=ConfigManager::Animator_Scenery.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_WldPaths.begin(); it!=ConfigManager::Animator_WldPaths.end(); it++ )
+        it->manualTick(ticks);
+    for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_WldLevel.begin(); it!=ConfigManager::Animator_WldLevel.end(); it++ )
+        it->manualTick(ticks);
 
-    for(int i=0;i<imgs.size();i++)
-        imgs[i].a.manualTick(ticks);
+    for(QVector<WorldScene_misc_img>::iterator it = imgs.begin(); it!= imgs.end(); it++)
+        it->a.manualTick(ticks);
 
-    for(int i=0; i<portraits.size(); i++)
-        portraits[i].update(uTick);
+    for(QVector<WorldScene_Portrait>::iterator it = portraits.begin(); it!= portraits.end(); it++)
+        it->update(ticks);
 }
 
 bool WorldScene::isExit()
@@ -1139,20 +1179,16 @@ void WorldScene::playMusic(long musicID, QString customMusicFile, bool fade, int
 }
 
 
-void WorldScene::mapwalker_refreshDir()
+void WorldScene::mapwalker_refreshDirection()
 {
-    switch(dir)
+    switch(walk_direction)
     {
-        case 1: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
-        case 2: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
-        case 3: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
-        case 4: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+        case Walk_Left:  mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_left); break;
+        case Walk_Right: mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_right); break;
+        case Walk_Up:    mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_up); break;
+        case Walk_Down:  mapwalker_ani.setFrameSequance(mapwalker_setup.wld_frames_down); break;
+        default: break;
     }
 }
-
-
-
-
-
 
 

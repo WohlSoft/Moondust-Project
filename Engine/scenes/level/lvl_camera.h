@@ -19,60 +19,49 @@
 #ifndef LVL_CAMERA_H
 #define LVL_CAMERA_H
 
-#include <Box2D/Box2D.h>
 #include <physics/base_object.h>
 #include <graphics/graphics.h>
+#include <common_features/fader.h>
 
-#include <vector>
+#include <QList>
 #include <PGE_File_Formats/file_formats.h>
 
-typedef QList<PGE_Phys_Object *> PGE_RenderList;
+class   PGE_Phys_Object;
+typedef QVector<PGE_Phys_Object *> PGE_RenderList;
 
 class LVL_Background;
+class LVL_Section;
 
 class PGE_LevelCamera
 {
     friend class LVL_Background;
+    friend class LVL_Section;
 public:
     PGE_LevelCamera();
+    PGE_LevelCamera(const PGE_LevelCamera &cam);
     ~PGE_LevelCamera();
     int w(); //!< Width
     int h(); //!< Height
     qreal posX(); //!< Position X
     qreal posY(); //!< Position Y
 
-    void setWorld(b2World * wld);
     void init(float x, float y, float w, float h);
 
     void setPos(float x, float y);
     void setSize(int w, int h);
     void setOffset(int x, int y);
-    void update();
+    void update(float ticks);
     void drawBackground();
+    void drawForeground();
 
-    void changeSection(LevelSection &sct);
+    void changeSection(LVL_Section *sct);
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 
     PGE_RenderList &renderObjects();
 
-    LevelSection *section;
-
-    bool isWarp;
-    bool RightOnly;
-    bool ExitOffscreen;
-
-    int limitLeft;
-    int limitRight;
-    int limitTop;
-    int limitBottom;
-
-    /// Limits of section motion
-    int s_top;
-    int s_bottom;
-    int s_left;
-    int s_right;
-    long BackgroundID;
+    LevelSection* section;
+    LVL_Section * cur_section;
 
     int offset_x;
     int offset_y;
@@ -80,28 +69,15 @@ public:
     float pos_x;
     float pos_y;
 
-    void setMusicRoot(QString dir);
-
     /**************Fader**************/
-    float fader_opacity;
-    float target_opacity;
-    float fade_step;
-    int fadeSpeed;
-    void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
-    void fadeStep();
-    SDL_TimerID fader_timer_id;
+    PGE_Fader fader;
     /**************Fader**************/
-
 private:
+    void sortElements();
     PGE_RenderList objects_to_render;
-    LVL_Background *BackgroundHandler;
 
     int width;
     int height;
-    QString musicRootDir;
-
-    b2World * worldPtr;
 };
 
 #endif // LVL_CAMERA_H

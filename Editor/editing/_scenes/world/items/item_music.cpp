@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
 #include <audio/music_player.h>
@@ -37,6 +39,9 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     scene->addItem(this);
     this->setZValue(scene->musicZ);
     gridSize = scene->pConfigs->default_grid;
+    imageSize = QRectF(0, 0, gridSize, gridSize);
+    setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
+    setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
 }
 
 void ItemMusic::construct()
@@ -49,7 +54,7 @@ void ItemMusic::construct()
     animatorID=-1;
     musicTitle = "";
     scene=NULL;
-    imageSize = QRectF(0,0,32,32);
+    imageSize = QRectF(0, 0, gridSize, gridSize);
 
     setData(ITEM_TYPE, "MUSICBOX");
     setData(ITEM_IS_ITEM, 1);
@@ -170,6 +175,11 @@ void ItemMusic::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));
     QAction *cutTile = ItemMenu.addAction(tr("Cut"));
         ItemMenu.addSeparator();
+    QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("MUSIC-%1%2")
+                                                .arg(musicData.id)
+                                                .arg( musicData.music_file.isEmpty()?"":" ("+musicData.music_file+")" ) );
+        ItemMenu.addSeparator();
     QAction *remove = ItemMenu.addAction(tr("Remove"));
 
 QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
@@ -198,6 +208,52 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
     if(selected==copyTile)
     {
         MainWinConnect::pMainWin->on_actionCopy_triggered();
+    }
+    else
+    if((selected==transform)||(selected==transform_all))
+    {
+        WorldData oldData;
+        WorldData newData;
+        int transformTO;
+        QString transformTO_file;
+
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_MUSIC);
+        itemList->removeEmptyEntry(ItemSelectDialog::TAB_MUSIC);
+        util::DialogToCenter(itemList, true);
+
+        if(itemList->exec()==QDialog::Accepted)
+        {
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
+            transformTO   = itemList->musicID;
+            transformTO_file = itemList->musicFile;
+            unsigned long oldID = musicData.id;
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+
+            foreach(QGraphicsItem * SelItem, our_items )
+            {
+                if(SelItem->data(ITEM_TYPE).toString()=="MUSICBOX")
+                {
+                    if((!sameID)||(((ItemMusic *) SelItem)->musicData.id==oldID))
+                    {
+                        oldData.music.push_back( ((ItemMusic *) SelItem)->musicData );
+                        ((ItemMusic *) SelItem)->transformTo(transformTO, transformTO_file);
+                        newData.music.push_back( ((ItemMusic *) SelItem)->musicData );
+                    }
+                }
+            }
+        }
+        delete itemList;
+        if(!newData.music.isEmpty())
+            scene->addTransformHistory(newData, oldData);
     }
     else
     if(selected==remove)
@@ -336,5 +392,21 @@ void ItemMusic::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
 void ItemMusic::setScenePoint(WldScene *theScene)
 {
     scene = theScene;
+}
+
+void ItemMusic::transformTo(int musicID, QString musicFile)
+{
+    int j = scene->pConfigs->getMusWldI(musicID);
+    if(j>=0)
+        {
+            musicTitle =
+                    (scene->pConfigs->music_w_custom_id==(unsigned)musicID) ?
+                        musicFile:
+                        scene->pConfigs->main_music_wld[j].name;
+
+            musicData.id         = musicID;
+            musicData.music_file = musicFile;
+            arrayApply();
+        }
 }
 

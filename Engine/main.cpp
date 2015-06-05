@@ -57,6 +57,7 @@
 #include "scenes/scene_world.h"
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
+#include "scenes/scene_credits.h"
 
 #include <Box2D/Box2D.h>
 #include <QMessageBox>
@@ -76,6 +77,18 @@ enum Level_returnTo
 };
 Level_returnTo end_level_jump=RETURN_TO_EXIT;
 
+struct cmdArgs
+{
+    cmdArgs()
+    {
+        debugMode=false;
+        testWorld=false;
+        testLevel=false;
+    }
+    bool debugMode;
+    bool testWorld;
+    bool testLevel;
+} _flags;
 
 int main(int argc, char *argv[])
 {
@@ -143,17 +156,13 @@ int main(int argc, char *argv[])
         if(param == ("--debug"))
         {
             AppSettings.debugMode=true;
+            _flags.debugMode=true;
         }
         else
         if(param == ("--interprocessing"))
         {
             IntProc::init();
             AppSettings.interprocessing=true;
-        }
-        else
-        if(param == ("--useJoystick"))
-        {
-            AppSettings.testJoystickController=true;
         }
         else
         {
@@ -256,6 +265,10 @@ if(!fileToOpen.isEmpty())
        (fileToOpen.endsWith(".lvlx", Qt::CaseInsensitive)))
     {
         _game_state.LevelFile = fileToOpen;
+        _game_state.isEpisode = false;
+
+        _flags.testLevel=true;
+        _flags.testWorld=false;
         goto PlayLevel;
     }
     else
@@ -267,8 +280,13 @@ if(!fileToOpen.isEmpty())
         episode.character=1;
         episode.savefile="save1.savx";
         episode.worldfile=fileToOpen;
+        _game_state._episodePath= QFileInfo(fileToOpen).absoluteDir().absolutePath()+"/";
+        _game_state.saveFileName = episode.savefile;
         _game_state.isEpisode = true;
         _game_state.WorldFile = fileToOpen;
+
+        _flags.testLevel=false;
+        _flags.testWorld=true;
         goto PlayWorldMap;
     }
 }
@@ -281,8 +299,9 @@ LoadingScreen:
     ttl->setWaitTime(15000);
 
     ttl->init();
-    ttl->setFade(25, 0.0f, 0.02f);
+    ttl->fader.setFade(10, 0.0f, 0.01f);
     int ret = ttl->exec();
+    if(ttl->doShutDown()) ret=-1;
     delete ttl;
     if(ret==-1) goto ExitFromApplication;
 
@@ -291,12 +310,27 @@ LoadingScreen:
 
 CreditsScreen:
 {
+    CreditsScene *ttl = new CreditsScene;
+    ttl->setWaitTime(15000);
+
+    ttl->init();
+    ttl->fader.setFade(10, 0.0f, 0.01f);
+    int ret = ttl->exec();
+    if(ttl->doShutDown()) ret=-1;
+    delete ttl;
+    if(ret==-1) goto ExitFromApplication;
+
+    if(_flags.testWorld)
+        goto ExitFromApplication;
 
     goto MainMenu;
 }
 
 GameOverScreen:
 {
+
+    if(_flags.testWorld)
+        goto ExitFromApplication;
 
     goto MainMenu;
 }
@@ -306,10 +340,11 @@ MainMenu:
     _game_state.reset();
     TitleScene * iScene = new TitleScene();
     iScene->init();
-    iScene->setFade(25, 0.0f, 0.05f);
+    iScene->fader.setFade(10, 0.0f, 0.02f);
     int answer = iScene->exec();
     PlayLevelResult   res_level   = iScene->result_level;
     PlayEpisodeResult res_episode = iScene->result_episode;
+    if(iScene->doShutDown()) answer=TitleScene::ANSWER_EXIT;
     delete iScene;
 
     switch(answer)
@@ -327,6 +362,8 @@ MainMenu:
             _game_state.isEpisode=false;
             _game_state.numOfPlayers=1;
             _game_state.LevelFile = res_level.levelfile;
+            _game_state._episodePath.clear();
+            _game_state.saveFileName.clear();
             goto PlayLevel;
         case TitleScene::ANSWER_PLAYEPISODE:
         case TitleScene::ANSWER_PLAYEPISODE_2P:
@@ -334,6 +371,9 @@ MainMenu:
             _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
             _game_state.isEpisode=true;
             episode = res_episode;
+            _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";
+            _game_state.saveFileName = episode.savefile;
+            _game_state.load();
             goto PlayWorldMap;
         default:
             goto PlayWorldMap;
@@ -373,10 +413,16 @@ PlayWorldMap:
         sceneResult = wScene->init();
 
     if(sceneResult)
-        wScene->setFade(25, 0.0f, 0.05f);
+        wScene->fader.setFade(10, 0.0f, 0.02f);
 
     if(sceneResult)
         ExitCode = wScene->exec();
+
+    if(wScene->doShutDown())
+    {
+        delete wScene;
+        goto ExitFromApplication;
+    }
 
     if(AppSettings.debugMode)
     {
@@ -385,11 +431,18 @@ PlayWorldMap:
             PGE_MsgBox::warn(QString("Start level\n%1")
                           .arg(_game_state.LevelFile));
             delete wScene;
+            if(_game_state.isHubLevel) goto ExitFromApplication;
+
             goto PlayWorldMap;
         }
         else
+        {
+            delete wScene;
             goto ExitFromApplication;
+        }
     }
+
+    delete wScene;
 
     switch(ExitCode)
     {
@@ -406,7 +459,8 @@ PlayWorldMap:
             break;
     }
 
-    delete wScene;
+    if(_flags.testWorld)
+        goto ExitFromApplication;
 
     goto MainMenu;
 }
@@ -445,7 +499,7 @@ PlayLevel:
                 if(AppSettings.interprocessing && IntProc::isEnabled())
                 {
                     sceneResult = lScene->loadFileIP();
-                    if((!sceneResult) && (!lScene->doExit))
+                    if((!sceneResult) && (!lScene->isExiting()))
                     {
                         SDL_Delay(50);
                         PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")
@@ -486,7 +540,7 @@ PlayLevel:
                 sceneResult = lScene->init();
             lScene->stopLoaderAnimation();
 
-            lScene->setFade(25, 0.0f, 0.05f);
+            lScene->fader.setFade(10, 0.0f, 0.02f);
 
             if(sceneResult)
                 ExitCode = lScene->exec();
@@ -504,6 +558,7 @@ PlayLevel:
                        _game_state.game_state.worldPosY = lScene->toWorldXY().y();
                        _game_state.LevelFile.clear();
                        entranceID = 0;
+                       end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                    }
                    else
                    {
@@ -517,7 +572,6 @@ PlayLevel:
                            _game_state.game_state.last_hub_warp = lScene->lastWarpID;
                        }
                    }
-
 
                    if(_game_state.LevelFile.isEmpty()) playAgain = false;
 
@@ -541,36 +595,31 @@ PlayLevel:
                 break;
             case LvlExit::EXIT_MenuExit:
                 {
-                    if(!_game_state.isEpisode)
-                    {
-                        if(!AppSettings.debugMode)
-                            end_level_jump=RETURN_TO_MAIN_MENU;
-                        else
-                            end_level_jump=RETURN_TO_EXIT;
-                    }
+                    end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     if(_game_state.isHubLevel)
-                        end_level_jump=RETURN_TO_MAIN_MENU;
+                        end_level_jump = _flags.testLevel ? RETURN_TO_EXIT : RETURN_TO_MAIN_MENU;
+
                     playAgain = false;
                 }
                 break;
             case LvlExit::EXIT_PlayerDeath:
                 {
-                    playAgain = _game_state.replay_on_fail;
+                    playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
+                    end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 }
                 break;
             case LvlExit::EXIT_Error:
-                if(!_game_state.isEpisode)
                 {
-                    if(!AppSettings.debugMode)
-                        end_level_jump=RETURN_TO_WORLDMAP;
-                    else
-                        end_level_jump=RETURN_TO_EXIT;
+                    end_level_jump = (_game_state.isEpisode)? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    playAgain = false;
                 }
-                playAgain = false;
                 break;
             default:
                 playAgain = false;
             }
+
+            if(_flags.testLevel || AppSettings.debugMode)
+                end_level_jump=RETURN_TO_EXIT;
 
             ConfigManager::unloadLevelConfigs();
             delete lScene;
@@ -594,7 +643,6 @@ PlayLevel:
     }
 }
 ExitFromApplication:
-
     ConfigManager::unluadAll();
     if(IntProc::isEnabled()) IntProc::editor->shut();
     PGE_MusPlayer::freeStream();
@@ -605,6 +653,7 @@ ExitFromApplication:
     IntProc::quit();
     FontManager::quit();
     PGE_Window::uninit();
+    qDebug()<<"<Application closed>";
     a.quit();
     return 0;
 }

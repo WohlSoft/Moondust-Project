@@ -19,8 +19,6 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include <QPoint>
-#include <QPointF>
 #include <QString>
 
 #undef main
@@ -29,8 +27,5 @@
 #undef main
 
 #include "../common_features/pge_texture.h"
-
-QPointF mapToOpengl(QPoint s);
-
 
 #endif // GRAPHICS_H

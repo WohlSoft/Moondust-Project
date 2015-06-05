@@ -240,3 +240,5 @@ GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
     FileData.ReadFileValid=false;
     return FileData;
 }
+
+

@@ -21,6 +21,7 @@
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/mainwinconnect.h>
 #include <common_features/logger.h>
+#include <common_features/util.h>
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -204,6 +205,7 @@ void ItemBGO::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         ItemMenu.addSeparator();
 
     QAction *transform = ItemMenu.addAction(tr("Transform into"));
+    QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("BGO-%1").arg(bgoData.id));
     QAction *transform_all = ItemMenu.addAction(tr("Transform all %1 into").arg("BGO-%1").arg(bgoData.id));
         ItemMenu.addSeparator();
 
@@ -337,7 +339,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         }
     }
     else
-    if(selected==transform)
+    if((selected==transform)||(selected==transform_all)||(selected==transform_all_s))
     {
         LevelData oldData;
         LevelData newData;
@@ -345,46 +347,46 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         int transformTO;
         ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
+        util::DialogToCenter(blockList, true);
+
         if(blockList->exec()==QDialog::Accepted)
         {
-            transformTO = blockList->bgoID;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
-                {
-                    oldData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
-                    ((ItemBGO *) SelItem)->transformTo(transformTO);
-                    newData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
-                }
-            }
-        }
-        delete blockList;
-
-        if(!newData.bgo.isEmpty())
-            scene->addTransformHistory(newData, oldData);
-    }
-    else
-    if(selected==transform_all)
-    {
-        LevelData oldData;
-        LevelData newData;
-
-        int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BGO);
-        blockList->removeEmptyEntry(ItemSelectDialog::TAB_BGO);
-        blockList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        blockList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, blockList->size(), qApp->desktop()->availableGeometry()));
-        if(blockList->exec()==QDialog::Accepted)
-        {
+            QList<QGraphicsItem *> our_items;
+            bool sameID=false;
             transformTO = blockList->bgoID;
             unsigned long oldID = bgoData.id;
-            foreach(QGraphicsItem * SelItem, scene->items() )
+
+            if(selected==transform)
+                our_items=scene->selectedItems();
+            else
+            if(selected==transform_all)
+            {
+                our_items=scene->items();
+                sameID=true;
+            }
+            else if(selected==transform_all_s)
+            {
+                bool ok=false;
+                long mg = QInputDialog::getInt(NULL, tr("Margin of section"),
+                               tr("Please select, how far items out of section should be removed too (in pixels)"),
+                               32, 0, 214948, 1, &ok);
+                if(!ok) goto cancelTransform;
+                LevelSection &s=scene->LvlData->sections[scene->LvlData->CurSection];
+                QRectF section;
+                section.setLeft(s.size_left-mg);
+                section.setTop(s.size_top-mg);
+                section.setRight(s.size_right+mg);
+                section.setBottom(s.size_bottom+mg);
+                our_items=scene->items(section, Qt::IntersectsItemShape);
+                sameID=true;
+            }
+
+
+            foreach(QGraphicsItem * SelItem, our_items )
             {
                 if(SelItem->data(ITEM_TYPE).toString()=="BGO")
                 {
-                    if(((ItemBGO *) SelItem)->bgoData.id==oldID)
+                    if((!sameID)||(((ItemBGO *) SelItem)->bgoData.id==oldID))
                     {
                         oldData.bgo.push_back( ((ItemBGO *) SelItem)->bgoData );
                         ((ItemBGO *) SelItem)->transformTo(transformTO);
@@ -392,8 +394,10 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                     }
                 }
             }
+            cancelTransform:;
         }
         delete blockList;
+
         if(!newData.bgo.isEmpty())
             scene->addTransformHistory(newData, oldData);
     }

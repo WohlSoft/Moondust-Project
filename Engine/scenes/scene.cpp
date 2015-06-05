@@ -21,27 +21,39 @@
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 
+void Scene::construct()
+{
+    fader.setFull();
+    fader.setFade(10, 0.0f, 0.02f); //!< Fade in scene when it was started
+    running=true;
+    doExit=false;
+    _doShutDown=false;
+    __waiting_step=0;
+    updateTickValue();    
+}
+
+void Scene::updateTickValue()
+{
+    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTick = round(uTickf);
+    if(uTick<=0) uTick=1;
+    if(uTickf<=0) uTickf=1.0;
+}
+
 Scene::Scene()
 {
     sceneType = _Unknown;
-    /*********Fader*************/
-    fader_opacity=1.0f;
-    target_opacity=1.0f;
-    fade_step=0.0f;
-    fadeSpeed=25;
-    fadeRunned=false;
-    /*********Fader*************/
+    construct();
 }
 
 Scene::Scene(TypeOfScene _type)
 {
     sceneType = _type;
+    construct();
 }
 
 Scene::~Scene()
 {
-    if(fader_timer_id)
-        SDL_RemoveTimer(fader_timer_id);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -49,14 +61,84 @@ Scene::~Scene()
     glLoadIdentity();
 }
 
-void Scene::update()
+void Scene::onKeyInput(int)
 {}
+
+void Scene::onKeyboardPressed(SDL_Scancode)
+{}
+
+void Scene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
+{}
+
+void Scene::onKeyboardReleased(SDL_Scancode)
+{}
+
+void Scene::onKeyboardReleasedSDL(SDL_Keycode, Uint16)
+{}
+
+void Scene::onMouseMoved(SDL_MouseMotionEvent &)
+{}
+
+void Scene::onMousePressed(SDL_MouseButtonEvent &)
+{}
+
+void Scene::onMouseReleased(SDL_MouseButtonEvent &)
+{}
+
+void Scene::onMouseWheel(SDL_MouseWheelEvent &)
+{}
+
+
+void Scene::processEvents()
+{
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) )
+    {
+        if(PGE_Window::processEvents(event)!=0) continue;
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                {
+                    doExit          = true;
+                    running         = false;
+                    _doShutDown = true;
+                    break;
+                }// End work of program
+            break;
+            case SDL_KEYDOWN: // If pressed key
+                onKeyboardPressedSDL(event.key.keysym.sym, event.key.keysym.mod);
+                onKeyboardPressed(event.key.keysym.scancode);
+            break;
+            case SDL_KEYUP: // If released key
+                onKeyboardReleasedSDL(event.key.keysym.sym, event.key.keysym.mod);
+                onKeyboardReleased(event.key.keysym.scancode);
+            break;
+            case SDL_MOUSEBUTTONDOWN:
+                onMousePressed(event.button);
+            break;
+            case SDL_MOUSEBUTTONUP:
+                onMouseReleased(event.button);
+            break;
+            case SDL_MOUSEWHEEL:
+                onMouseWheel(event.wheel);
+            break;
+            case SDL_MOUSEMOTION:
+                onMouseMoved(event.motion);
+            break;
+        }
+    }
+}
+
+void Scene::update()
+{
+    fader.tickFader(uTickf);
+}
 
 void Scene::render()
 {
-    if(fader_opacity>0.0f)
+    if(!fader.isNull())
     {
-        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader_opacity);
+        GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
 }
 
@@ -73,42 +155,37 @@ Scene::TypeOfScene Scene::type()
     return sceneType;
 }
 
+bool Scene::isExiting()
+{
+    return doExit;
+}
+
+bool Scene::doShutDown()
+{
+    return _doShutDown;
+}
+
 /**************************Fader*******************************/
 bool Scene::isOpacityFadding()
 {
-    return fadeRunned;
+    return fader.isFading();
 }
 
 void Scene::setFade(int speed, float target, float step)
 {
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fadeRunned=true;
-    fader_timer_id = SDL_AddTimer(speed, &Scene::nextOpacity, this);
-}
-
-unsigned int Scene::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    Scene *self = reinterpret_cast<Scene *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void Scene::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-    {
-        SDL_RemoveTimer(fader_timer_id);
-        fadeRunned=false;
-    }
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &Scene::nextOpacity, this);
+    fader.setFade(speed, target, step);
 }
 /**************************Fader**end**************************/
+
+/************waiting timer************/
+void Scene::wait(float ms)
+{
+    while(__waiting_step < floor(ms) )
+    {
+        __waiting_step+=ms;
+        SDL_Delay((int)floor(ms));
+    }
+    while(__waiting_step > 0)
+        __waiting_step-=ms;
+}
+/************waiting timer************/

@@ -37,6 +37,11 @@ void Controller::setKeyMap(KeyMap map)
     kmap = map;
 }
 
+void Controller::resetControls()
+{
+    keys=ResetControlKeys();
+}
+
 void Controller::sendControls()
 {
     foreach(ControllableObject* x, objects)

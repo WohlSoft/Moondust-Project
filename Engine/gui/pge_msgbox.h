@@ -22,13 +22,16 @@
 #include "pge_boxbase.h"
 #include "../scenes/scene.h"
 
-#undef main
-#include <SDL2/SDL_opengl.h>
-#undef main
+#include <graphics/gl_renderer.h>
+#include <graphics/gl_color.h>
+#include <common_features/rect.h>
+#include <common_features/point.h>
+#include <common_features/pointf.h>
+#include <common_features/size.h>
+#include <common_features/sizef.h>
 
-#include <QString>
-#include <QRect>
 #include <QColor>
+#include <QString>
 
 class PGE_MsgBox : public PGE_BoxBase
 {
@@ -44,13 +47,20 @@ public:
 
     PGE_MsgBox();
     PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
-               msgType _type=msg_info, QPoint boxCenterPos=QPoint(-1,-1), QSizeF boxSize=QSizeF(0,0), float _padding=20, QString texture="");
+               msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+    PGE_MsgBox(const PGE_MsgBox &mb);
     ~PGE_MsgBox();
 
     void setBoxSize(float _Width, float _Height, float _padding);
+    void update(float ticks);
+    void render();
+    void restart();
+    bool isRunning();
     void exec();
 
-    void buildBox(bool centered=false);
+    void processLoader(float ticks);
+    void processBox(float);
+    void processUnLoader(float ticks);
 
     static void info(QString msg);
     //static void info(std::string msg);
@@ -63,17 +73,20 @@ public:
 
 private:
     void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, bool autosize=true, QSizeF boxSize=QSizeF(0,0), QPoint pos=QPoint(-1,-1), float _padding=20, QString texture="");
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+    int     _page;
+    bool    running;
+    int     fontID;
+    GlColor fontRgba;
+
     msgType type;
-    QRect _sizeRect;
+    PGE_Rect _sizeRect;
     QString message;
-    GLuint textTexture;
     float width;
     float height;
     float padding;
     QColor bg_color;
     void updateControllers();
-    Uint32 uTick;//Tick step
 };
 
 #endif // PGE_MSGBOX_H

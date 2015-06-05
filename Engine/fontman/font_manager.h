@@ -30,6 +30,7 @@
 
 
 #include <common_features/pge_texture.h>
+#include <common_features/rect.h>
 class RasterFont
 {
 public:
@@ -38,7 +39,7 @@ public:
     ~RasterFont();
     void  loadFont(QString font_ini);
     void  loadFontMap(QString fontmap_ini);
-    QSize textSize(QString &text, int max_line_lenght=0, bool cut=false);
+    PGE_Size textSize(QString &text, int max_line_lenght=0, bool cut=false);
     void printText(QString text, int x, int y, float Red=1.f, float Green=1.f, float Blue=1.f, float Alpha=1.f);
     bool isLoaded();
     QString getFontName();
@@ -84,7 +85,7 @@ public:
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
 
-    static QSize textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false);
+    static PGE_Size textSize(QString &text, int fontID, int max_line_lenght=0, bool cut=false);
     static int getFontID(QString fontName);
 
     static GLuint getChar1(QChar _x);
@@ -109,11 +110,11 @@ public:
 
     /****Deprecated functions*******/
     static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture, bool borders=false);
-    static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
+    static void SDL_string_texture_create(QFont &font, PGE_Rect limitRect, int fontFlags, QRgb color,
                                           QString &text, GLuint *texture, bool borders=false);
 
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
-    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags, bool borders=false);
+    static GLuint TextToTexture(QString text, PGE_Rect rectangle, int alignFlags, bool borders=false);
 
 private:
     static bool isInit;

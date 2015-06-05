@@ -20,9 +20,11 @@
 #define GRAPHICS_LVL_BACKGRND_H
 
 #include <data_configs/obj_bg.h>
-#include <common_features/pge_texture.h>
-#include "lvl_camera.h"
 
+#include <common_features/pge_texture.h>
+#include <common_features/rectf.h>
+
+#include "lvl_camera.h"
 
 //Magic background strip value
 struct LVL_Background_strip
@@ -39,9 +41,19 @@ class LVL_Background
     friend class PGE_LevelCamera;
 public:
     LVL_Background();
-    LVL_Background(PGE_LevelCamera *parentCamera);
-
+    LVL_Background(const LVL_Background &_bg);
     ~LVL_Background();
+
+    void setBg(obj_BG &bg);
+    void setNone();
+    void setBox(PGE_RectF &_box);
+    void draw(float x, float y, float w, float h); //draw by camera position
+    void applyColor();
+    bool isInit();
+    int  curBgId();
+
+    bool _isInited;
+
     enum type
     {
         single_row      = 0,
@@ -49,11 +61,10 @@ public:
         tiled           = 2,
         multi_layered   = 3
     };
-    obj_BG * setup;
-
-    PGE_LevelCamera *pCamera;
-
+    obj_BG setup;
     type bgType;
+
+    bool isNoImage;
 
     PGE_Texture txData1;
     PGE_Texture txData2;
@@ -62,17 +73,15 @@ public:
     long animator_ID;
 
     bool isMagic;
-    QVector<LVL_Background_strip > strips;
+    QList<LVL_Background_strip > strips;
 
     PGEColor color;
 
-    void setBg(obj_BG &bg);
-    void setNone();
-    void draw(float x, float y); //draw by camera position
-    void applyColor();
+    PGE_RectF box;
 
 private:
     void construct();
+    PGE_RectF backgrndG;//!< Used in draw process
 };
 
 

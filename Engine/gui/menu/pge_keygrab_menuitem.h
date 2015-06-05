@@ -21,6 +21,7 @@
 
 #include "_pge_menuitem.h"
 #include <SDL2/SDL_joystick.h>
+#include <controls/controller_key_map.h>
 
 #define PGE_KEYGRAB_CANCEL -1
 #define PGE_KEYGRAB_REMOVE_KEY -2
@@ -38,13 +39,11 @@ public:
 
 private:
     bool chosing;
-    int *keyValue;
+    KM_Key *targetKey;
+
     PGE_Menu* menu;
     friend class PGE_Menu;
-
     bool          joystick_mode;
-    int         * joystick_key_id;
-    int         * joystick_key_type;
     SDL_Joystick* joystick_device;
 };
 

@@ -20,12 +20,17 @@
 #define SCENE_LEVEL_H
 
 #include "scene.h"
-#include "../graphics/graphics.h"
+#include <graphics/graphics.h>
+#include <graphics/window.h>
 
-#include "../common_features/pge_texture.h"
-
+#include <common_features/pge_texture.h>
 #include <common_features/episode_state.h>
 #include <common_features/event_queue.h>
+#include <common_features/point.h>
+
+#include <common_features/RTree/RTree.h>
+
+#include <gui/pge_menubox.h>
 
 #include "level/lvl_player.h"
 #include "level/lvl_player_def.h"
@@ -37,17 +42,17 @@
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
+#include "level/lvl_section.h"
 #include "level/lvl_backgrnd.h"
 
-#include "../graphics/window.h"
+#include <controls/controller.h>
 
-#include "../controls/controller.h"
-
-#include "../data_configs/custom_data.h"
+#include <data_configs/custom_data.h>
 
 #include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
+#include <QList>
 #include <QVector>
 
 #include <SDL2/SDL_opengl.h>
@@ -68,31 +73,37 @@ public:
     ~LevelScene();
 
     bool init();
-    bool isInit;
 
     //Init 1
-    bool loadFile(QString filePath);
-    bool loadFileIP(); //!< Load data via interprocessing
+    bool        loadFile(QString filePath);
+    bool        loadFileIP(); //!< Load data via interprocessing
 
     //Init 2
-    bool setEntrance(int entr);
-    bool isWarpEntrance;
-    QPoint cameraStart;
-    bool   cameraStartDirected;
-    int    cameraStartDirection;
-    LevelDoor startWarp;
-    int NewPlayerID;
+    bool        setEntrance(int entr);
+private:
+    bool        isWarpEntrance;
+    PGE_Point   cameraStart;
+    bool        cameraStartDirected;
+    int         cameraStartDirection;
+
+    LevelDoor   startWarp;
+    int         NewPlayerID;
+
+public:
     PlayerPoint getStartLocation(int playerID);
 
     QList<LVL_PlayerDef > player_defs;
 
     bool loadConfigs();
 
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+
     void update();
+    void processEvents();
     void render();
     int exec();
 
-    void tickAnimations(int ticks);
+    void tickAnimations(float ticks);
 
     QString getLastError();
 
@@ -107,29 +118,27 @@ public:
     int exitType();
 
     //Flags
-    bool isPauseMenu;
     bool isTimeStopped;
 
     /****************Level Running State*****************/
     bool isLevelContinues;
-    bool doExit;
 
     void checkPlayers();
     void setExiting(int delay, int reason);
 
-    QString toAnotherLevel();
-    QString warpToLevelFile;
-    long lastWarpID;
+    QString     toAnotherLevel();
+    QString     warpToLevelFile;
+    long        lastWarpID;
 
-    int toAnotherEntrance();
-    int warpToArrayID;
+    int         toAnotherEntrance();
+    int         warpToArrayID;
 
-    QPoint toWorldXY();
-    bool warpToWorld;
-    QPoint warpToWorldXY;
+    PGE_Point   toWorldXY();
+    bool        warpToWorld;
+    PGE_Point   warpToWorldXY;
 
-    int exitLevelDelay;
-    int exitLevelCode;
+    float       exitLevelDelay;
+    int         exitLevelCode;
     /****************Level Running State*****************/
 
     int numberOfPlayers;
@@ -183,14 +192,17 @@ public:
     SDL_TimerID loader_timer_id;
     /**************LoadScreen**************/
 
-
-    QVector<LVL_Background *> * bgList();
     LevelData *levelData();
 
-    QQueue<transformTask_block > block_transfors;
+    QQueue<transformTask_block > block_transforms;
 
     QMap<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
+
+    QVector<LVL_Npc* > active_npcs;
+    QVector<LVL_Npc* > dead_npcs;
+
+    QVector<LVL_Block* > fading_blocks;
 
     /*********************Item placing**********************/
     void placeBlock(LevelBlock blockData);
@@ -200,34 +212,83 @@ public:
     void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
     /*********************Item placing**********************/
 
-    void destroyBlock(LVL_Block * _block);
+    void destroyBlock(LVL_Block *&_block);
     void setGameState(EpisodeState *_gameState);
 
     EventQueue<LevelScene > system_events;
+    LVL_Section *getSection(int sct);
 
 private:
-    int  uTick;
+    bool isInit;
 
     LevelData data;
 
     EpisodeState *gameState;
-
-    QVector<PGE_LevelCamera* > cameras;
-    QVector<LVL_Player* > players;
-    QVector<LVL_Block* > blocks;
-    QVector<LVL_Bgo* > bgos;
-    QVector<LVL_Npc* > npcs;
-    QVector<LVL_Warp* > warps;
-    QVector<LVL_PhysEnv* > physenvs;
-
-
-    QVector<LVL_Background *> backgrounds;
-
     QString errorMsg;
 
+    bool frameSkip;
+
+    typedef QList<PGE_LevelCamera> LVL_CameraList;
+    typedef QList<LVL_Section> LVL_SectionsList;
+
+    LVL_CameraList      cameras;
+    LVL_SectionsList    sections;
+
+    typedef QVector<LVL_Player* >  LVL_PlayersArray;
+    typedef QVector<LVL_Block* >   LVL_BlocksArray;
+    typedef QVector<LVL_Bgo* >     LVL_BgosArray;
+    typedef QVector<LVL_Npc* >     LVL_NpcsArray;
+    typedef QVector<LVL_Warp* >    LVL_WarpsArray;
+    typedef QVector<LVL_PhysEnv* > LVL_PhysEnvsArray;
+
+    LVL_PlayersArray    players;
+    LVL_BlocksArray     blocks;
+    LVL_BgosArray       bgos;
+    LVL_NpcsArray       npcs;
+    LVL_WarpsArray      warps;
+    LVL_PhysEnvsArray   physenvs;
+
+    /*****************Pause Menu*******************/
+    enum PauseMenuItems_Menu1
+    {
+        PAUSE_Continue=0,
+        PAUSE_SaveCont,
+        PAUSE_SaveQuit,
+        PAUSE_Exit
+    };
+    enum PauseMenuItems_Menu2
+    {
+        PAUSE_2_Continue=0,
+        PAUSE_2_Exit
+    };
+    int         _pauseMenuID;
+    bool        isPauseMenu;
+    PGE_MenuBox _pauseMenu;
+    bool        _pauseMenu_opened;
+    void initPauseMenu1();
+    void initPauseMenu2();
+    void processPauseMenu();
+    /*****************Pause Menu**end**************/
+
+    bool debug_player_jumping;
+    bool debug_player_onground;
+    int  debug_player_foots;
+    int  debug_render_delay;
+    int  debug_phys_delay;
+    int  debug_event_delay;
+
+public:
+    void registerElement(PGE_Phys_Object* item);
+    void unregisterElement(PGE_Phys_Object* item);
+    typedef double RPoint[2];
+    void queryItems(PGE_RectF zone, QVector<PGE_Phys_Object* > *resultList);
+    void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
+private:
+    typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
+    IndexTree tree;
 
     b2World *world;
-    QVector<PGE_Texture > textures_bank;
+    QList<PGE_Texture > textures_bank;
 };
 
 #endif // SCENE_LEVEL_H

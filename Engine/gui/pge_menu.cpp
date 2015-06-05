@@ -23,6 +23,9 @@
 #include <common_features/graphics_funcs.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <controls/controller_key_map.h>
+
+#include <QStack>
 
 PGE_Menu::PGE_Menu()
 {
@@ -37,7 +40,7 @@ PGE_Menu::PGE_Menu()
     is_keygrab=false;
     m_item=NULL;
 
-    menuRect = QRect(260,380, 350, ConfigManager::setup_menus.item_height);
+    menuRect.setRect(260,380, 350, ConfigManager::setup_menus.item_height);
     _item_height = ConfigManager::setup_menus.item_height;
     _width_limit=PGE_Window::Width-100;
     _text_len_limit=0;
@@ -61,6 +64,42 @@ PGE_Menu::PGE_Menu()
         _scroll_down.w=0;
     else
         _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::setup_menus.scrollerDown);
+}
+
+PGE_Menu::PGE_Menu(const PGE_Menu &menu)
+{
+    menuRect=   menu.menuRect;
+
+    /*******Key grabbing********/
+    m_item     = menu.m_item;
+    is_keygrab = menu.is_keygrab;
+    /*******Key grabbing********/
+
+    _itemsOnScreen = menu._itemsOnScreen;
+    _currentItem   = menu._currentItem;
+    _line          = menu._line;
+    _offset        = menu._offset;
+    arrowUpViz     = menu.arrowUpViz;
+    arrowDownViz   = menu.arrowDownViz;
+    _EndSelection  = menu._EndSelection;
+    _accept        = menu._accept;
+    _items_bool    = menu._items_bool;
+    _items_int     = menu._items_int;
+    _items_named_int=menu._items_named_int;
+    _items_normal   =menu._items_normal;
+    _items_keygrabs= menu._items_keygrabs;
+
+    _items  = menu._items;
+    _selector = menu._selector;
+    _scroll_up = menu._selector;
+    _scroll_down = menu._scroll_down;
+    _item_height = menu._item_height;
+    _width_limit = menu._width_limit;
+    _text_len_limit = menu._text_len_limit;
+    _text_len_limit_strict = menu._text_len_limit_strict;
+
+    _font_id = menu._font_id;
+    _font_offset=menu._font_offset;
 }
 
 PGE_Menu::~PGE_Menu()
@@ -93,13 +132,13 @@ void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).w();
     }
     else
     {
         //Capture limited lenght, but don't crop
         QString temp=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+        item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction=_extAction;
     _items_normal.push_back(item);
@@ -117,13 +156,13 @@ void PGE_Menu::addBoolMenuItem(bool *flag, QString value, QString title, std::fu
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).w();
     }
     else
     {
         //Capture limited lenght, but don't crop
         QString temp=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+        item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction=_extAction;
     _items_bool.push_back(item);
@@ -144,13 +183,13 @@ void PGE_Menu::addIntMenuItem(int *intvalue, int min, int max, QString value, QS
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).w();
     }
     else
     {
         //Capture limited lenght, but don't crop
         QString temp=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+        item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction=_extAction;
     _items_int.push_back(item);
@@ -176,13 +215,13 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).w();
     }
     else
     {
         //Capture limited lenght, but don't crop
         QString temp=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+        item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
     item.extAction=_extAction;
     _items_named_int.push_back(item);
@@ -190,33 +229,29 @@ void PGE_Menu::addNamedIntMenuItem(int *intvalue, QList<NamedIntItem> _items, QS
     refreshRect();
 }
 
-void PGE_Menu::addKeyGrabMenuItem(int *keyvalue, QString value, QString title,
-                                  int *joystick_key_id,
-                                  int *joystick_key_type,
+void PGE_Menu::addKeyGrabMenuItem(KM_Key *key, QString value, QString title,
                                   SDL_Joystick* joystick_device)
 {
     PGE_KeyGrabMenuItem item;
-    item.keyValue = keyvalue;
+    item.targetKey = key;
     item.value = value;
     item.title = (title.isEmpty() ? "unknown key-grabber" : title);
     item._font_id = _font_id;
     if(_text_len_limit_strict)
     {   //Crop lenght
         item.title=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(item.title, _font_id, 0, true).width();
+        item._width=FontManager::textSize(item.title, _font_id, 0, true).w();
     }
     else
     {
         //Capture limited lenght, but don't crop
         QString temp=FontManager::cropText(item.title, _text_len_limit);
-        item._width=FontManager::textSize(temp, _font_id, 0, true).width();
+        item._width=FontManager::textSize(temp, _font_id, 0, true).w();
     }
 
-    if(joystick_key_id && joystick_key_type)
+    if(joystick_device)
     {
         item.joystick_mode=true;
-        item.joystick_key_id=joystick_key_id;
-        item.joystick_key_type=joystick_key_type;
         item.joystick_device=joystick_device;
     }
 
@@ -372,36 +407,59 @@ void PGE_Menu::setItemsNumber(int q)
         _itemsOnScreen = q;
     else
         _itemsOnScreen = 5;
+    refreshRect();
 }
 
 void PGE_Menu::sort()
 {
-    while(1)
+    if(_items.size()<=1) { autoOffset(); return;} //Nothing to sort!
+
+    QStack<int> beg;
+    QStack<int> end;
+    PGE_Menuitem * piv;
+    int i=0, L, R, swapv;
+    beg.push_back(0);
+    end.push_back(_items.size());
+    while (i>=0)
     {
-        bool swaped=false;
-        for(int i=0; i<_items.size()-1; i++)
+        L=beg[i]; R=end[i]-1;
+        if (L<R)
         {
-            if(namefileLessThan(_items[i], _items[i+1]))
+            piv=_items[L];
+            while (L<R)
             {
-                _items.swap(i, i+1);
+                while ((namefileMoreThan(_items[R], piv)) && (L<R)) R--;
+                if (L<R) _items[L++]=_items[R];
 
-                if(_currentItem==i)
-                    _currentItem=i+1;
-                else
-                if(_currentItem==i+1)
-                    _currentItem=i;
-
-                swaped=true;
+                while ((namefileLessThan(_items[L], piv)) && (L<R)) L++;
+                if (L<R) _items[R--]=_items[L];
+            }
+            _items[L]=piv; beg.push_back(L+1); end.push_back(end[i]); end[i++]=(L);
+            if((end[i]-beg[i]) > (end[i-1]-beg[i-1]))
+            {
+                swapv=beg[i]; beg[i]=beg[i-1]; beg[i-1]=swapv;
+                swapv=end[i]; end[i]=end[i-1]; end[i-1]=swapv;
             }
         }
-        if(!swaped) break;
+        else
+        {
+            i--;
+            beg.pop_back();
+            end.pop_back();
+        }
     }
+
     autoOffset();
 }
 
 bool PGE_Menu::namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
 {
-    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)>0); // sort by title
+    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)<=0); // sort by title
+}
+
+bool PGE_Menu::namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2)
+{
+    return (QString::compare(d1->title, d2->title, Qt::CaseInsensitive)>=0); // sort by title
 }
 
 bool PGE_Menu::isSelected()
@@ -589,10 +647,10 @@ void PGE_Menu::setPos(int x, int y)
     refreshRect();
 }
 
-void PGE_Menu::setPos(QPoint p)
+void PGE_Menu::setPos(PGE_Point p)
 {
-    menuRect.setTopLeft(p);
-    menuRect.setY(menuRect.y()-_font_offset);
+    menuRect.setX(p.x());
+    menuRect.setY(p.y()-_font_offset);
     refreshRect();
 }
 
@@ -603,9 +661,9 @@ void PGE_Menu::setSize(int w, int h)
     refreshRect();
 }
 
-void PGE_Menu::setSize(QSize s)
+void PGE_Menu::setSize(PGE_Size s)
 {
-    _item_height=s.height();
+    _item_height=s.h();
     refreshRect();
 }
 
@@ -636,9 +694,31 @@ void PGE_Menu::refreshRect()
         menuRect.setWidth(_width_limit);
 }
 
-QRect PGE_Menu::rect()
+PGE_Rect PGE_Menu::rect()
 {
     return menuRect;
+}
+
+PGE_Rect PGE_Menu::rectFull()
+{
+    PGE_Rect tRect = menuRect;
+    tRect.setWidth( menuRect.width() + (_selector.w!=0 ? _selector.w : 20)+10 );
+    if(_items.size()>_itemsOnScreen)
+    {
+        tRect.setHeight(menuRect.height() +
+                        (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
+                        (_scroll_down.w!=0 ? _scroll_down.h : 10 )+20-_font_offset);
+    }
+    return tRect;
+}
+
+int PGE_Menu::topOffset()
+{
+    if(_items.size()>_itemsOnScreen)
+    {
+        return (_scroll_up.w!=0 ? _scroll_up.h : 10 )+10+_font_offset;
+    }
+    return _font_offset;
 }
 
 void PGE_Menu::render()

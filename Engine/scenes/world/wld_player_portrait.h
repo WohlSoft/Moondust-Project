@@ -12,7 +12,7 @@ public:
     WorldScene_Portrait(const WorldScene_Portrait &pt);
     ~WorldScene_Portrait();
     void render();
-    void update(int ticks);
+    void update(float ticks);
 private:
     int posX;
     int posY;

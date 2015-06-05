@@ -23,6 +23,9 @@
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 
+#include <common_features/rectf.h>
+#include <common_features/pointf.h>
+
 #include "lvl_scene_ptr.h"
 
 #include <QtDebug>
@@ -61,7 +64,7 @@ LVL_Player::LVL_Player()
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
     animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
-    animator.tickAnimation(1);
+    animator.tickAnimation(0.f);
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
@@ -174,9 +177,10 @@ void LVL_Player::init()
 
     f_player = physBody->CreateFixture(&fixtureDef);
 
-    animator.tickAnimation(1);
+    animator.tickAnimation(0.f);
     //qDebug() <<"Start position is " << posX() << posY();
     isLocked=false;
+    isInited=true;
 }
 
 void LVL_Player::initSize()
@@ -191,15 +195,20 @@ void LVL_Player::initSize()
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
+    if(!isInited) return;
     if(!physBody) return;
     if(!camera) return;
+    LVL_Section* section = sct();
+    if(!section) return;
+    PGE_Phys_Object::update(ticks);
 
     event_queue.processEvents(ticks);
     if(isWarping)
     {
         physBody->SetLinearVelocity(b2Vec2(0, 0));
         animator.tickAnimation(ticks);
-        goto CameraOnly;
+        updateCamera();
+        return;
     }
 
     if(_player_moveup)
@@ -216,7 +225,12 @@ void LVL_Player::update(float ticks)
     {
         doKill=false;
         isLive = false;
-        physBody->SetActive(false);
+        if(physBody)
+        {
+            physBody->SetGravityScale(0);
+            physBody->SetAwake(false);
+            physBody->SetActive(false);
+        }
         LvlSceneP::s->checkPlayers();
         return;
     }
@@ -259,18 +273,14 @@ void LVL_Player::update(float ticks)
 
     if(environments_map.isEmpty())
     {
-        if( (last_environment != (camera->section->underwater ?
-                                    LVL_PhysEnv::Env_Water :
-                                    LVL_PhysEnv::Env_Air)) )
+        if(last_environment!=section->getPhysicalEnvironment() )
         {
-            environment = camera->section->underwater ?
-                                            LVL_PhysEnv::Env_Water :
-                                                    LVL_PhysEnv::Env_Air ;
+            environment = section->getPhysicalEnvironment();
         }
     }
     else
     {
-        int newEnv = camera->section->underwater ? LVL_PhysEnv::Env_Water:LVL_PhysEnv::Env_Air;
+        int newEnv = section->getPhysicalEnvironment();
 
         foreach(int x, environments_map)
         {
@@ -567,8 +577,10 @@ void LVL_Player::update(float ticks)
     refreshAnimation();
     animator.tickAnimation(ticks);
 
+    PGE_RectF sBox = section->sectionLimitBox();
+
     //Return player to start position on fall down
-    if( posY() > camera->limitBottom+height )
+    if( posY() > sBox.bottom()+height )
     {
         kill(DEAD_fall);
     }
@@ -592,40 +604,41 @@ void LVL_Player::update(float ticks)
 
 
     //Connection of section opposite sides
-    if(camera->isWarp)
+    if(section->isWarp())
     {
-        if(posX() < camera->limitLeft-width-1 )
+        if(posX() < sBox.left()-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->limitRight+posX_coefficient-1),
+                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
                  physBody->GetPosition().y), 0.0f);
         else
-        if(posX() > camera->limitRight + 1 )
+        if(posX() > sBox.right() + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->limitLeft-posX_coefficient+1 ),
+                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
                  physBody->GetPosition().y), 0.0f
                                    );
     }
     else
     {
 
-        if(camera->ExitOffscreen)
+        if(section->ExitOffscreen())
         {
-            if(camera->RightOnly)
+            if(section->RightOnly())
             {
-                if( posX() < camera->limitLeft)
+                if( posX() < sBox.left())
                 {
                     physBody->SetTransform(b2Vec2(
-                         PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                         PhysUtil::pix2met(sBox.left() + posX_coefficient),
                             physBody->GetPosition().y), 0.0f);
 
                     physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
                 }
             }
 
-            if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
+            if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 isInited=false;
-                physBody->SetActive(false);
+                physBody->SetAwake(false);
+                physBody->SetGravityScale(0);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -633,19 +646,19 @@ void LVL_Player::update(float ticks)
         else
         {
             //Prevent moving of player away from screen
-            if( posX() < camera->limitLeft)
+            if( posX() < sBox.left())
             {
                 physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                     PhysUtil::pix2met(sBox.left() + posX_coefficient),
                         physBody->GetPosition().y), 0.0f);
 
                 physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
             }
             else
-            if( posX()+width > camera->limitRight)
+            if( posX()+width > sBox.right())
             {
                 physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(camera->limitRight-posX_coefficient ),
+                     PhysUtil::pix2met(sBox.right()-posX_coefficient ),
                         physBody->GetPosition().y), 0.0f
                                        );
                 physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
@@ -756,23 +769,19 @@ void LVL_Player::update(float ticks)
         }
     }
 
-CameraOnly:
-    if(!isInited)
-    {
-        isInited=true;
-        animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
-        animator.tickAnimation(64);
-    }
-    else
-    {
-        camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
-                        round(bottom()) - camera->h()/2-state_cur.height/2 );
-    }
+
+    updateCamera();
 }
 
 void LVL_Player::update()
 {
     update(1.0);
+}
+
+void LVL_Player::updateCamera()
+{
+    camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
+                    round(bottom()) - camera->h()/2-state_cur.height/2 );
 }
 
 Uint32 slideTicks=0;
@@ -881,7 +890,7 @@ void LVL_Player::bump(bool _up)
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 {
-    QRect attackZone;
+    PGE_RectF attackZone;
 
     switch(_dir)
     {
@@ -1004,6 +1013,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this,x,y]()->void{
                                       isWarping=true;
+                                      warpPipeOffset=0.0;
+                                      warpDirectO=0;
                                       teleport(x+16-posX_coefficient,
                                                      y+32-height);
                                       animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
@@ -1012,8 +1023,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
                 EventQueueEntry<LVL_Player >fadeOutBlack;
                 fadeOutBlack.makeCaller([this]()->void{
-                                      if(LvlSceneP::s->fader_opacity>0)
-                                         LvlSceneP::s->setFade(25, 0.0, 0.25);
+                                      if(!camera->fader.isNull())
+                                          camera->fader.setFade(10, 0.0, 0.08);
                                   }, 0);
                 event_queue.events.push_back(fadeOutBlack);
 
@@ -1092,8 +1103,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
             EventQueueEntry<LVL_Player >fadeOutBlack;
             fadeOutBlack.makeCaller([this]()->void{
-                                  if(LvlSceneP::s->fader_opacity>0)
-                                     LvlSceneP::s->setFade(25, 0.0, 0.25);
+                                  if(!camera->fader.isNull())
+                                      camera->fader.setFade(10, 0.0, 0.08);
                               }, 0);
             event_queue.events.push_back(fadeOutBlack);
 
@@ -1106,9 +1117,11 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                         },0);
             event_queue.events.push_back(playSnd);
 
+            float pStep = 1.5f/((float)PGE_Window::PhysStep);
+
             EventQueueEntry<LVL_Player >warpOut;
-            warpOut.makeWaiterCond([this]()->bool{
-                                      warpPipeOffset-=0.02f;
+            warpOut.makeWaiterCond([this, pStep]()->bool{
+                                      warpPipeOffset -= pStep;
                                       return warpPipeOffset<=0.0f;
                                   }, false, 0);
             event_queue.events.push_back(warpOut);
@@ -1148,10 +1161,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
             event1.makeCaller([this]()->void{
                                 physBody->SetLinearVelocity(b2Vec2(0, 0));
                                 isWarping=true;
+                                warpPipeOffset=0.0f;
                                 setDuck(false);
                                 physBody->SetGravityScale(0);
-                                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);
-                                warpPipeOffset=0.0f;
+                                PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);                                
                               }, 0);
             event_queue.events.push_back(event1);
 
@@ -1206,9 +1219,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 break;
             }
 
+            float pStep = 1.5f/((float)PGE_Window::PhysStep);
             EventQueueEntry<LVL_Player >warpIn;
-            warpIn.makeWaiterCond([this]()->bool{
-                                      warpPipeOffset+=0.02f;
+            warpIn.makeWaiterCond([this, pStep]()->bool{
+                                      warpPipeOffset += pStep;
                                       return warpPipeOffset>=1.0f;
                                   }, false, 0);
             event_queue.events.push_back(warpIn);
@@ -1234,14 +1248,14 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
-                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                          camera->fader.setFade(10, 1.0, 0.08);
                                       }, 0);
                     event_queue.events.push_back(event3);
                 }
 
                 EventQueueEntry<LVL_Player >whileOpacityFade;
                 whileOpacityFade.makeWaiterCond([this]()->bool{
-                                          return LvlSceneP::s->isOpacityFadding();
+                                          return camera->fader.isFading();
                                       }, true, 100);
                 event_queue.events.push_back(whileOpacityFade);
 
@@ -1256,6 +1270,8 @@ void LVL_Player::WarpTo(LevelDoor warp)
             event1.makeCaller([this]()->void{
                                 physBody->SetLinearVelocity(b2Vec2(0, 0));
                                 isWarping=true;
+                                warpPipeOffset=0.0;
+                                warpDirectO=0;
                                 setDuck(false);
                                 physBody->SetGravityScale(0);
                                 animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
@@ -1285,14 +1301,14 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 {
                     EventQueueEntry<LVL_Player >event3;
                     event3.makeCaller([this]()->void{
-                                          LvlSceneP::s->setFade(25, 1.0, 0.25);
+                                          camera->fader.setFade(10, 1.0, 0.08);
                                       }, 0);
                     event_queue.events.push_back(event3);
                 }
 
                 EventQueueEntry<LVL_Player >event4;
                 event4.makeWaiterCond([this]()->bool{
-                                          return LvlSceneP::s->isOpacityFadding();
+                                          return camera->fader.isFading();
                                       }, true, 100);
                 event_queue.events.push_back(event4);
 
@@ -1311,10 +1327,12 @@ void LVL_Player::teleport(float x, float y)
     this->setPos(x, y);
 
     int sID = LvlSceneP::s->findNearSection(x, y);
+    LVL_Section* t_sct = LvlSceneP::s->getSection(sID);
 
-    if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+    if(t_sct)
     {
-        camera->changeSection(LvlSceneP::s->levelData()->sections[sID]);
+        camera->changeSection(t_sct);
+        setParentSection(t_sct);
     }
     else
     {
@@ -1351,15 +1369,12 @@ void LVL_Player::render(double camX, double camY)
     if(!isLive) return;
     if(!isInited) return;
 
-    QRectF tPos = animator.curFrame();
-    QPointF Ofs = animator.curOffset();
+    PGE_RectF tPos = animator.curFrame();
+    PGE_PointF Ofs = animator.curOffset();
 
-    QRectF player = QRectF( round(posX()
-                            -camX)-Ofs.x(),
-
-                            round(posY()-Ofs.y())
-                            -camY,
-
+    PGE_RectF player;
+    player.setRect(round(posX()-camX)-Ofs.x(),
+                   round(posY()-Ofs.y())-camY,
                             frameW,
                             frameH
                          );
@@ -1378,7 +1393,7 @@ void LVL_Player::render(double camX, double camY)
                     float wOfsF = width/warpFrameW; //Relative hitbox width
                     tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
                     player.setLeft( player.left()+Ofs.x() );
-                    player.setRight( player.right()-(warpPipeOffset*width)+1 );
+                    player.setRight( player.right()-(warpPipeOffset*width) );
                 }
                 break;
             case 1://Up entrance, down exit
@@ -1387,13 +1402,13 @@ void LVL_Player::render(double camX, double camY)
                     float hOfsF = height/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
                     player.setTop( player.top()+Ofs.y() );
-                    player.setBottom( player.bottom()-(warpPipeOffset*height)+1 );
+                    player.setBottom( player.bottom()-(warpPipeOffset*height) );
                 }
                 break;
             case 4://right emtramce. left exit
                 {
                     float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
-                    float fWw =   animator.sizeOfFrame().width();   //Relative width of frame
+                    float fWw =   animator.sizeOfFrame().w();   //Relative width of frame
                     float wOfHB = width/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
@@ -1404,7 +1419,7 @@ void LVL_Player::render(double camX, double camY)
             case 3://down entrance, up exit
                 {
                     float hOfs =  Ofs.y()/warpFrameH;               //Relative Y offset
-                    float fHh =   animator.sizeOfFrame().height();  //Relative height of frame
+                    float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
                     float hOfHB = height/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
@@ -1438,6 +1453,8 @@ void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
     if(physBody)
-        physBody->SetActive(!lock);
+    {
+        physBody->SetAwake(!lock);
+    }
 }
 

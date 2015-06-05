@@ -52,9 +52,10 @@ DEPENDPATH += "$$PWD/../_Libs/Box2D/project"
 
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
+INCLUDEPATH += "$$PWD/../_Libs/luabind"
+INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
 LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
-
 DEFINES += PGE_ENGINE
 
 LIBS += -lluabind -lluajit-5.1 -lbox2d
@@ -188,7 +189,26 @@ SOURCES += \
     gui/menu/pge_int_named_menuitem.cpp \
     gui/menu/pge_keygrab_menuitem.cpp \
     data_configs/obj_wld_items.cpp \
-    common_features/npc_animator.cpp
+    common_features/npc_animator.cpp \
+    scenes/level/lvl_section.cpp \
+    common_features/rect.cpp \
+    common_features/rectf.cpp \
+    common_features/pointf.cpp \
+    common_features/point.cpp \
+    common_features/sizef.cpp \
+    common_features/size.cpp \
+    common_features/fader.cpp \
+    data_configs/setup_credits_screen.cpp \
+    script/luaengine.cpp \
+    script/bindings/core/globalfuncs/luafuncs_logger.cpp \
+    scenes/title/ttl_main_menu.cpp \
+    scenes/world/wld_tilebox.cpp \
+    scenes/level/lvl_scene_rtree.cpp \
+    gui/pge_menubox.cpp \
+    script/luaevent.cpp \
+    script/bindings/core/events/luaevents_engine.cpp \
+    script/luatitlescreenengine.cpp \
+    ../_common/PGE_File_Formats/file_rw_savx.cpp
 
 
 HEADERS  += \
@@ -285,7 +305,24 @@ HEADERS  += \
     gui/menu/pge_int_named_menuitem.h \
     gui/menu/pge_keygrab_menuitem.h \
     data_configs/obj_wld_items.h \
-    common_features/npc_animator.h
+    common_features/npc_animator.h \
+    common_features/RTree/RTree.h \
+    scenes/level/lvl_section.h \
+    common_features/rect.h \
+    common_features/rectf.h \
+    common_features/pointf.h \
+    common_features/point.h \
+    common_features/sizef.h \
+    common_features/size.h \
+    common_features/fader.h \
+    data_configs/setup_credits_screen.h \
+    script/luaengine.h \
+    script/luautils.h \
+    script/bindings/core/globalfuncs/luafuncs_logger.h \
+    gui/pge_menubox.h \
+    script/luaevent.h \
+    script/bindings/core/events/luaevents_engine.h \
+    script/luatitlescreenengine.h
 
 FORMS    += \
     data_configs/select_config.ui
@@ -301,6 +338,8 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    unused_thungs.txt
+    unused_thungs.txt \
+    script/scrapped_code.txt \
+    script/binding-tree.txt
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

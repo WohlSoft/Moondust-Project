@@ -100,6 +100,8 @@ public:
 
     /****************************Save of game file********************************/
     static GamesaveData ReadSMBX64SavFile(QString RawData, QString filePath);  //!< Parse SMBX1-SMBX64 game save
+    static GamesaveData ReadExtendedSaveFile(QString RawData, QString filePath, bool sielent=false);  //!< Parse PGE-X game save
+    static QString      WriteExtendedSaveFile(GamesaveData &FileData);
     static GamesaveData dummySaveDataArray();
 
     //Save Data

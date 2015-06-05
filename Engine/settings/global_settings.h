@@ -39,6 +39,8 @@ public:
 
     bool enableDummyNpc;
 
+    bool frameSkip;
+
     int volume_sound;
     int volume_music;
 
@@ -58,8 +60,10 @@ public:
 
     void loadKeyMap(KeyMap &map, QSettings &set, QString grp);
     void saveKeyMap(KeyMap &map, QSettings &set, QString grp);
-    void loadJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp);
-    void saveJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp);
+    void loadJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp);
+    void saveJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp);
+    void loadJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp);
+    void saveJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp);
     Controller *openController(int player);
     void loadJoystickSettings();
 };

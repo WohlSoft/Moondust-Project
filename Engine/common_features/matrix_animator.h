@@ -21,9 +21,11 @@
 
 #include <QList>
 #include <QHash>
-#include <QRectF>
-#include <QSizeF>
-#include <QPointF>
+
+#include "pointf.h"
+#include "rectf.h"
+#include "sizef.h"
+#include "size.h"
 
 #include "player_calibration.h"
 
@@ -82,11 +84,11 @@ public:
     void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
     void setFrameSpeed(int speed);
     void setSize(int _width, int _height);
-    QSize size();
-    QSizeF sizeOfFrame();
-    void tickAnimation(int frametime);
-    QRectF curFrame();
-    QPointF curOffset();
+    PGE_SizeF size();
+    PGE_SizeF sizeOfFrame();
+    void tickAnimation(float frametime);
+    PGE_RectF curFrame();
+    PGE_PointF curOffset();
     MatrixAnimates curAnimation();
 
     void installAnimationSet(obj_player_calibration &calibration);
@@ -102,12 +104,12 @@ private:
     float height; //!< height of frame matrix
     float width_f; //!< width of one frame; (from 0 to 1)
     float height_f; //!< height of one frame; (from 0 to 1)
-    int delay_wait; //!< Delay between next frame will be switched
+    float delay_wait; //!< Delay between next frame will be switched
     int framespeed; //!< delay between frames
     int framespeed_once; //!< delay between frames for "once" mode
     int curFrameI; //!< index of current frame
-    QRectF curRect;
-    QPointF curOffsets;
+    PGE_RectF curRect;
+    PGE_PointF curOffsets;
     typedef QList<MatrixAnimatorFrame > AniSequence;
 
     int direction;

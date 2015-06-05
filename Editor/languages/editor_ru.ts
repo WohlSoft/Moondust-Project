@@ -1337,89 +1337,105 @@ Please save them first before doing anything else.</source>
 <context>
     <name>ItemBGO</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="160"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="161"/>
         <source>Layer: </source>
         <translation>Слой: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="165"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="166"/>
         <source>Add to new layer...</source>
         <translation>Добавить на новый слой...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="185"/>
         <source>Change Z-Offset...</source>
         <translation>Изменить смещение Z...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="186"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="187"/>
         <source>Z-Layer</source>
         <translation>Z-Cлой</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="189"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="190"/>
         <source>Background-2</source>
         <translation>Фон-2</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="193"/>
         <source>Background</source>
         <translation>Фон</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="196"/>
         <source>Default</source>
         <translation>По-умолчанию</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="198"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="199"/>
         <source>Foreground</source>
         <translation>Передний план</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="202"/>
         <source>Foreground-2</source>
         <translation>Передний план-2</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="207"/>
         <source>Transform into</source>
         <translation>Превратить в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="208"/>
+        <source>Transform all %1 in this section into</source>
+        <translation>Превратить все %1 из текущей секции в</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="209"/>
         <source>Transform all %1 into</source>
         <translation>Превратить все %1 в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="210"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="212"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="212"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="214"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="215"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="217"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="218"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="220"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="321"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="323"/>
         <source>Z-Offset</source>
         <translation>Смещение Z</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="322"/>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="324"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Пожалуйста, введите значение смещения Z:</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="370"/>
+        <source>Margin of section</source>
+        <translation>Поля секции</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="371"/>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation>Укажите величину поля вокруг секции,
+объекты которого также будут удалены (в пикселях)</translation>
     </message>
 </context>
 <context>
@@ -1461,21 +1477,37 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
+        <source>Transform all %1 in this section into</source>
+        <translation>Превратить все %1 из текущей секции в</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="203"/>
         <source>Transform all %1 into</source>
         <translation>Превратить все %1 в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="305"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="264"/>
+        <source>Margin of section</source>
+        <translation>Поля секции</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation>Укажите величину поля вокруг секции,
+объекты которого также будут удалены (в пикселях)</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
         <source>Event name</source>
         <translation>Имя события</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="306"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
         <source>Please enter the name of event:</source>
         <translation>Пожалуйста, введите имя события:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="316"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Пожалуйста, наберите сообщение для события
@@ -1483,27 +1515,27 @@ Message limits: max line lenth is 27 characters</source>
 максимальная длина строки 27 символов</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="312"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="316"/>
         <source>Hit message text</source>
         <translation>Текст сообщения стукнутого блока</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="342"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="346"/>
         <source>Event has been created</source>
         <translation>Событие успешно создано</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="343"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="347"/>
         <source>Message event has been created!</source>
         <translation>Событие с сообщением успешно создано!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="348"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="352"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>Слот события &apos;Стуктут&apos; уже используется</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="349"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="353"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Извинте, но слот события &quot;Стукнут&quot; уже используется событием &quot;%1&quot;.</translation>
     </message>
@@ -1521,27 +1553,27 @@ Message limits: max line lenth is 27 characters</source>
         <translation>Изменить содержимое блока...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
         <source>Make message box...</source>
         <translation>Сделать всплыв. сообщение...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="207"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="208"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="209"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="210"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="211"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
@@ -1696,27 +1728,37 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemMusic</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="165"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="170"/>
         <source>&lt;Silence&gt;</source>
         <translation>&lt;Тишина&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="168"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="173"/>
         <source>Play this</source>
         <translation>Воспроизвести</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="170"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="175"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="171"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="176"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="173"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="178"/>
+        <source>Transform into</source>
+        <translation>Превратить в</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="179"/>
+        <source>Transform all %1 into</source>
+        <translation>Превратить все %1 в</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="183"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -1779,6 +1821,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="308"/>
+        <source>Margin of section</source>
+        <translation>Поля секции</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="309"/>
+        <source>Please select, how far items out of section should be removed too (in pixels)</source>
+        <translation>Укажите величину поля вокруг секции,
+объекты которого также будут удалены (в пикселях)</translation>
+    </message>
+    <message>
         <source>Not movable</source>
         <translation type="vanished">Неподвижный</translation>
     </message>
@@ -1799,11 +1852,16 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="249"/>
+        <source>Transform all %1 in this section into</source>
+        <translation>Превратить все %1 из текущей секции в</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="250"/>
         <source>Transform all %1 into</source>
         <translation>Превратить все %1 в</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="256"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
@@ -1812,17 +1870,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="obsolete">Главный босс</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="253"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -2004,8 +2062,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>[всё]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="70"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1221"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1249"/>
         <source>[Empty]</source>
         <translation></translation>
     </message>
@@ -2050,22 +2108,22 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Доп. данные:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="128"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="130"/>
         <source>NPC from List</source>
         <translation>НИП из списка</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="129"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="131"/>
         <source>Coins</source>
         <translation>Монетки</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1087"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1115"/>
         <source>Please, save file</source>
         <translation>Пожалуйста, сохраните файл</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1087"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1115"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Пожалуйста, сначала сохраните файл, если вы хотите выбрать файл пользовательской музыки.</translation>
     </message>
@@ -4536,12 +4594,12 @@ Physical env. zones:	%6
         <translation>Дверь №</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="908"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="912"/>
         <source>World map files not found</source>
         <translation>Файлы карт мира не найдены</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="909"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="913"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -4550,24 +4608,24 @@ File path: %1</source>
 Путь к файлу: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="920"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="924"/>
         <source>Select world map file</source>
         <translation>Выбор файла карты мира</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="921"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="925"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Обнаружено больше чем одна карта мира.
 Пожалуйста, выберите нужную карту мира в списке:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="932"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="936"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="933"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="937"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
@@ -4652,16 +4710,16 @@ Please, select necessary world map in a list:</source>
         <translation type="vanished">Категория:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="312"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="699"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="332"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="719"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="93"/>
         <location filename="../main_window/dock/wld_item_toolbox.cpp" line="95"/>
         <source>[all]</source>
         <translation>[всё]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="313"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="700"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="333"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="720"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="94"/>
         <location filename="../main_window/dock/wld_item_toolbox.cpp" line="96"/>
         <source>[custom]</source>
@@ -9583,6 +9641,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Переместить</translation>
     </message>
     <message>
+        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
+        <source>Transform</source>
+        <translation>Превращение</translation>
+    </message>
+    <message>
         <source>Changed Worldsetting [%1]</source>
         <translation type="vanished">Изменена настройка мира [%1]</translation>
     </message>
@@ -9597,7 +9660,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="137"/>
-        <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
         <source>Flip</source>
         <translation>Отразить</translation>
     </message>

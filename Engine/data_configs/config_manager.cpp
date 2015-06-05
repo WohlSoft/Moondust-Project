@@ -52,6 +52,8 @@ FontsSetup ConfigManager::setup_fonts;
 MainCursors ConfigManager::setup_cursors;
 //MessageBox setup
 MessageBoxSetup ConfigManager::setup_message_box;
+//MenuBox setup
+MenuBoxSetup ConfigManager::setup_menu_box;
 //Menu setup
 MenuSetup ConfigManager::setup_menus;
 
