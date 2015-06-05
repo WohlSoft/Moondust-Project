@@ -65,7 +65,6 @@ void MainWindow::on_actionTileset_groups_editor_triggered()
 void MainWindow::on_actionShow_Development_Console_triggered()
 {
     DevConsole::show();
-    DevConsole::log("Showing DevConsole!","View");
 }
 
 LazyFixTool_gui * lazyfixGUI;

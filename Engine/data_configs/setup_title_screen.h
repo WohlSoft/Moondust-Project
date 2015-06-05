@@ -34,6 +34,7 @@ struct TitleScreenSetup
     QString backgroundImg;
     QColor backgroundColor;
     QList<TitleScreenAdditionalImage > AdditionalImages;
+    QString luaFile;
 };
 
 #endif // SETUP_TITLE_SCREEN_H
