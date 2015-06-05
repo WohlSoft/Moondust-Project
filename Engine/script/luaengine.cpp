@@ -10,11 +10,13 @@
 #include <QFile>
 #include <tuple>
 
-LuaEngine::LuaEngine()
+LuaEngine::LuaEngine() : L(nullptr), m_coreFile("")
 {}
 
 LuaEngine::~LuaEngine()
-{}
+{
+    shutdown();
+}
 
 void LuaEngine::init()
 {
@@ -115,9 +117,15 @@ void LuaEngine::setCoreFile(const QString &coreFile)
 
 void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
 {
+    if(!isValid()){
+        qWarning() << "Dispatching events while engine is invalid!";
+        return;
+    }
+
     lua_getglobal(L, "__native_event");
     if(!lua_isfunction(L,-1))
     {
+        qWarning() << "Did not find __native_event function in core!";
         lua_pop(L,1);
         return;
     }
