@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>469</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,24 +34,45 @@
     <number>0</number>
    </property>
    <item row="2" column="1">
-    <widget class="QLineEdit" name="edit_command"/>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="button_send">
-     <property name="text">
-      <string>Send Command</string>
+    <widget class="QLineEdit" name="edit_command">
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Type command here...</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_cmd">
+   <item row="2" column="2">
+    <widget class="QPushButton" name="button_send">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-color: rgb(0, 0, 0);</string>
+     </property>
      <property name="text">
-      <string>Command: </string>
+      <string>Send Command</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item row="0" column="0" colspan="3">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="font">
+      <font>
+       <stylestrategy>PreferDefault</stylestrategy>
+      </font>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -77,15 +98,21 @@
        </property>
        <item row="0" column="0">
         <widget class="QPlainTextEdit" name="plainTextEdit">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+           <stylestrategy>NoAntialias</stylestrategy>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 255, 0);
+background-color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="undoRedoEnabled">
+          <bool>false</bool>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="button_cl_sysLog">
-         <property name="text">
-          <string>Clear System Log</string>
          </property>
         </widget>
        </item>
@@ -93,7 +120,7 @@
      </widget>
     </widget>
    </item>
-   <item row="3" column="0" rowspan="2" colspan="3">
+   <item row="4" column="0" rowspan="2" colspan="3">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -119,12 +146,18 @@
       </property>
       <item row="0" column="0">
        <widget class="QPushButton" name="button_clearAllLogs">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-width: 2px;</string>
+        </property>
         <property name="text">
          <string>Clear All Logs</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="2">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -137,7 +170,27 @@
         </property>
        </spacer>
       </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="button_cl_sysLog">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Clear System Log</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
   </layout>
@@ -147,7 +200,6 @@
   <tabstop>button_send</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>button_clearAllLogs</tabstop>
-  <tabstop>button_cl_sysLog</tabstop>
   <tabstop>edit_command</tabstop>
  </tabstops>
  <resources>

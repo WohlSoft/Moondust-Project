@@ -55,6 +55,7 @@ void DevConsole::init()
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
     settings.endGroup();
 
+    DevConsole::log("Welcome to Development Console of PGE Editor!\nType 'help' to get more about console commands");
 }
 
 void DevConsole::show()
@@ -174,12 +175,15 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
     l->addWidget(e,0,0,1,1);
     QPushButton *p = new QPushButton(w);
     l->addWidget(p,1,0,1,1);
-    connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
+    p->setFlat(true);
+    p->connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
     p->setText(tr("Clear %1 Log").arg(target_channel));
     e->setReadOnly(true);
+    e->setStyleSheet(ui->plainTextEdit->styleSheet());
+    e->setFont(ui->plainTextEdit->font());
     e->appendPlainText(logText);
     e->verticalScrollBar()->setValue(e->verticalScrollBar()->maximum());
-    ui->tabWidget->addTab(w,target_channel);
+    ui->tabWidget->addTab(w, target_channel);
 }
 
 QPlainTextEdit *DevConsole::getEditByIndex(const int &index)
