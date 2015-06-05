@@ -167,6 +167,9 @@ bool TitleScene::init()
         ConfigManager::loadDefaultSounds();
         ConfigManager::buildSoundIndex();
     }
+
+    luaEngine.setCoreFile(ConfigManager::config_dir + "titlescreen.lua");
+    luaEngine.init();
     return true;
 }
 

@@ -29,6 +29,8 @@
 #include <common_features/point.h>
 #include <controls/controller.h>
 
+#include <script/luatitlescreenengine.h>
+
 typedef QPair<int, int > menustate;
 
 struct TitleScene_misc_img
@@ -134,6 +136,8 @@ private:
     int debug_joy_keyval;
     int debug_joy_keyid;
     int debug_joy_keytype;
+
+    LuaTitleScreenEngine luaEngine;
 };
 
 #endif // SCENE_TITLE_H
