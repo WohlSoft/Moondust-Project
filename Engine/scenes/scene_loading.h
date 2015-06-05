@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCENE_TITLE_H
-#define SCENE_TITLE_H
+#ifndef SCENE_LOADING_H
+#define SCENE_LOADING_H
 
 #include <QVector>
 #include <common_features/pge_texture.h>
@@ -25,8 +25,13 @@
 
 #include "scene.h"
 
-struct LoadingScene_misc_img
+class LoadingScene_misc_img
 {
+public:
+    LoadingScene_misc_img();
+    ~LoadingScene_misc_img();
+    LoadingScene_misc_img(const LoadingScene_misc_img &im);
+
     int x;
     int y;
     PGE_Texture t;
@@ -41,15 +46,21 @@ public:
     ~LoadingScene();
     void init();
 
-    void setWaitTime(unsigned int time);
+    void setWaitTime(int time);
+    void exitFromScene();
+
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    void onMousePressed(SDL_MouseButtonEvent &mbevent);
+
+    void update();
     void render();
     int exec();
 
 private:
-    unsigned int _waitTimer;
+    float _waitTimer;
 
     PGE_Texture background;
     QVector<LoadingScene_misc_img > imgs;
 };
 
-#endif // SCENE_TITLE_H
+#endif // SCENE_LOADING_H

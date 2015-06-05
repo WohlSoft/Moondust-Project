@@ -19,12 +19,10 @@
 #ifndef LVL_BLOCK_H
 #define LVL_BLOCK_H
 
-#include "../../physics/base_object.h"
-#include "../../data_configs/obj_block.h"
-
+#include <physics/base_object.h>
+#include <data_configs/obj_block.h>
+#include <common_features/rectf.h>
 #include <PGE_File_Formats/file_formats.h>
-
-#include <SDL2/SDL_timer.h>
 
 class LVL_Block : public PGE_Phys_Object
 {
@@ -74,16 +72,17 @@ public:
     float fade_step;
     int   fadeSpeed;
     void setFade(int speed, float target, float step);
-    static unsigned int nextOpacity(unsigned int x, void *p);
+    bool isFading();
+    bool tickFader(int ticks);
+    int manual_ticks;
     void fadeStep();
-    SDL_TimerID fader_timer_id;
     /**************Fader**************/
 
     //float posX();
     //float posY();
     void render(double camX, double camY);
 private:
-    void drawPiece(QRectF target, QRectF block, QRectF texture);
+    void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
 };
 
 #endif // LVL_BLOCK_H

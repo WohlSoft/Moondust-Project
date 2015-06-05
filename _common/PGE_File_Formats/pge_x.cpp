@@ -41,8 +41,8 @@ namespace PGEExtendedFormat
     QRegExp boolArray = QRegExp("^[1|0]+$");
     QRegExp intArray = QRegExp("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
 
-    const char *section_title_valid_chars    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const int   section_title_valid_chars_len= 36;
+    const char *section_title_valid_chars    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+    const int   section_title_valid_chars_len= 38;
 
     const char *heximal_valid_chars    = "0123456789ABCDEFabcdef";
     const int   heximal_valid_chars_len= 22;

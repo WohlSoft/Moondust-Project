@@ -19,12 +19,46 @@
 #ifndef SCENE_CREDITS_H
 #define SCENE_CREDITS_H
 
+#include <QVector>
+#include <common_features/pge_texture.h>
+#include <common_features/simple_animator.h>
+
 #include "scene.h"
+
+class CreditsScene_misc_img
+{
+public:
+    CreditsScene_misc_img();
+    ~CreditsScene_misc_img();
+    CreditsScene_misc_img(const CreditsScene_misc_img &im);
+
+    int x;
+    int y;
+    PGE_Texture t;
+    SimpleAnimator a;
+    int frmH;
+};
 
 class CreditsScene : public Scene
 {
 public:
     CreditsScene();
+    ~CreditsScene();
+    void init();
+
+    void setWaitTime(int time);
+    void exitFromScene();
+
+    void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    void update();
+    void render();
+    int exec();
+
+private:
+    float _waitTimer;
+
+    PGE_Texture background;
+    QVector<CreditsScene_misc_img > imgs;
 };
 
 #endif // SCENE_CREDITS_H

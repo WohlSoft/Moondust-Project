@@ -17,6 +17,7 @@
  */
 
 #include "base_object.h"
+#include <scenes/level/lvl_scene_ptr.h>
 
 PGE_Phys_Object::PGE_Phys_Object()
 {
@@ -24,13 +25,20 @@ PGE_Phys_Object::PGE_Phys_Object()
     worldPtr = NULL;
     posX_coefficient = 0.0f;
     posY_coefficient = 0.0f;
-    width = 0.0f;
-    height = 0.0f;
+
     z_index = 0.0;
     isRectangle = true;
     _player_moveup = true;
     slippery_surface = false;
     collide = COLLISION_ANY;
+
+    _parentSection=NULL;
+    width = 0.0f;
+    height = 0.0f;
+    _posX=0.0f;
+    _posY=0.0f;
+    _velX=0.0f;
+    _velY=0.0f;
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -41,7 +49,7 @@ PGE_Phys_Object::~PGE_Phys_Object()
         physBody->SetUserData(NULL);
         physBody = NULL;
     }
-
+    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
 }
 
 double PGE_Phys_Object::posX()
@@ -102,7 +110,34 @@ void PGE_Phys_Object::setPos(double x, double y)
                 PhysUtil::pix2met( x+posX_coefficient),
                 PhysUtil::pix2met( y+posY_coefficient)
                     ), 0.0f);
+    _syncBox2dWithPos();
+}
 
+void PGE_Phys_Object::doPhysics()
+{
+
+}
+
+void PGE_Phys_Object::_syncBox2dWithPos()
+{
+    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
+    _posX= PhysUtil::met2pix(physBody->GetPosition().x)-posX_coefficient;
+    _posY= PhysUtil::met2pix(physBody->GetPosition().y)-posY_coefficient;
+    if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+}
+
+void PGE_Phys_Object::setParentSection(LVL_Section *sct)
+{
+    if(_parentSection)
+    {
+        _parentSection->unregisterElement(this);
+    }
+    _parentSection=sct;
+}
+
+LVL_Section *PGE_Phys_Object::sct()
+{
+    return _parentSection;
 }
 
 GLdouble PGE_Phys_Object::zIndex()
@@ -112,7 +147,13 @@ GLdouble PGE_Phys_Object::zIndex()
 
 void PGE_Phys_Object::nextFrame() {}
 
-void PGE_Phys_Object::update() {}
+void PGE_Phys_Object::update() { _syncBox2dWithPos(); }
+
+void PGE_Phys_Object::update(float ticks)
+{
+    Q_UNUSED(ticks);
+    _syncBox2dWithPos();
+}
 
 void PGE_Phys_Object::render(double x, double y) {Q_UNUSED(x); Q_UNUSED(y);}
 

@@ -20,6 +20,9 @@
 #include "../../data_configs/config_manager.h"
 #include <graphics/gl_renderer.h>
 
+#include "lvl_section.h"
+
+#include "lvl_scene_ptr.h"
 
 LVL_Npc::LVL_Npc()
 {
@@ -28,6 +31,7 @@ LVL_Npc::LVL_Npc()
     animated=false;
     animator_ID=0;
     killed=false;
+    isActivated=false;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -62,23 +66,49 @@ void LVL_Npc::init()
     npc->SetDensity(1.0);
     npc->SetFriction(0.3f);
     npc->SetSensor(false);
-    npc->SetFriction( 0 );
 }
 
 void LVL_Npc::kill()
 {
     killed=true;
+    sct()->unregisterElement(this);
     if(physBody && worldPtr)
     {
       worldPtr->DestroyBody(physBody);
       physBody->SetUserData(NULL);
       physBody = NULL;
     }
+    LvlSceneP::s->dead_npcs.push_back(this);
+}
+
+void LVL_Npc::update(float ticks)
+{
+    if(killed) return;
+    PGE_Phys_Object::update(ticks);
+    timeout-=ticks;
+
+    LVL_Section *section=sct();
+    PGE_RectF sBox = section->sectionRect();
+
+    if(section->isWarp())
+    {
+        if(posX() < sBox.left()-width-1 )
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
+                 physBody->GetPosition().y), 0.0f);
+        else
+        if(posX() > sBox.right() + 1 )
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
+                 physBody->GetPosition().y), 0.0f
+                                   );
+    }
 }
 
 void LVL_Npc::render(double camX, double camY)
 {
     if(killed) return;
+    if(!isActivated) return;
 
     if(physBody)
     {
@@ -98,4 +128,25 @@ void LVL_Npc::render(double camX, double camY)
                            posY()-camY,
                            width+1,
                            height+1);
+}
+
+void LVL_Npc::Activate()
+{
+    if(!physBody->IsAwake())
+    {
+        physBody->SetAwake(true);
+    }
+    if(physBody->GetType()!=b2_dynamicBody)
+        physBody->SetType(b2_dynamicBody);
+    isActivated=true;
+    timeout=4000;
+}
+
+void LVL_Npc::deActivate()
+{
+    isActivated=false;
+    physBody->SetAwake(false);
+    if(physBody->GetType()!=b2_staticBody)
+        physBody->SetType(b2_staticBody);
+    setPos(data.x, data.y);
 }

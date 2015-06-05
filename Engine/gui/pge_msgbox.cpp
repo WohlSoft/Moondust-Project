@@ -21,12 +21,9 @@
 #include "../fontman/font_manager.h"
 #include "../graphics/window.h"
 
-#include "../graphics/gl_renderer.h"
-
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 
-#include <QRect>
 #include <QFontMetrics>
 #include <QMessageBox>
 #include <common_features/app_path.h>
@@ -43,54 +40,61 @@ PGE_MsgBox::PGE_MsgBox()
 }
 
 PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type,
-                       QPoint boxCenterPos, QSizeF boxSize,
+                       PGE_Point boxCenterPos,
                        float _padding, QString texture)
     : PGE_BoxBase(_parentScene)
 {
-    construct(msg,_type, ((boxSize.width()==0) || (boxSize.height()==0)),
-                           boxSize, boxCenterPos, _padding, texture);
+    construct(msg,_type, boxCenterPos, _padding, texture);
+}
+
+PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
+    : PGE_BoxBase(mb)
+{
+    _page   = mb._page;
+    running = mb.running;
+    fontID  = mb.fontID;
+    fontRgba= mb.fontRgba;
+
+    type    = mb.type;
+    _sizeRect=mb._sizeRect;
+    message = mb.message;
+    width   = mb.width;
+    height  = mb.height;
+    padding = mb.padding;
+    bg_color= mb.bg_color;
 }
 
 
-void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
-                                bool autosize, QSizeF boxSize, QPoint pos, float _padding, QString texture)
+void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos, float _padding, QString texture)
 {
-    if(!texture.isEmpty())
-        loadTexture(texture);
+    loadTexture(texture);
 
-    uTick = (1000.0/(float)PGE_Window::PhysStep);//-lastTicks;
-    if(uTick<=0) uTick=1;
-
+    updateTickValue();
+    _page=0;
     message = msg;
     type = _type;
+    running=false;
+
+    fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
+    fontRgba = ConfigManager::setup_message_box.font_rgba;
+    if(_padding<0)
+        _padding = ConfigManager::setup_message_box.box_padding;
 
     switch(type)
     {
-        case msg_info: bg_color = QColor(qRgb(0,0,0)); break;
+        case msg_info: bg_color =       QColor(qRgb(0,0,0)); break;
         case msg_info_light: bg_color = QColor(qRgb(0,0,125)); break;
-        case msg_warn: bg_color = QColor(qRgb(255,201,14)); break;
-        case msg_error: bg_color = QColor(qRgb(125,0,0)); break;
-        case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
-        default:  bg_color = QColor(qRgb(0,0,0)); break;
+        case msg_warn: bg_color =       QColor(qRgb(255,201,14)); break;
+        case msg_error: bg_color =      QColor(qRgb(125,0,0)); break;
+        case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
+        default:  bg_color =            QColor(qRgb(0,0,0)); break;
     }
 
-    bool centered=false;
-    if(autosize)
-    {
-        QFont fnt = FontManager::font();
-        QFontMetrics meter(fnt);
-        /****************Word wrap*********************/
-        int count=1;
-        int maxWidth=0;
-
-        FontManager::optimizeText(message, 28, &count, &maxWidth);
-        if(count==1) centered=true;
-        /****************Word wrap*end*****************/
-        boxSize = meter.size(Qt::TextExpandTabs, message);
-    }
-
-    setBoxSize(boxSize.width()/2, boxSize.height()/2, _padding);
-    buildBox(centered);
+    /****************Word wrap*********************/
+    FontManager::optimizeText(message, 27);
+    /****************Word wrap*end*****************/
+    PGE_Size boxSize = FontManager::textSize(message, fontID, 27);
+    setBoxSize(boxSize.w()/2, boxSize.h()/2, _padding);
 
     if((pos.x()==-1)&&(pos.y()==-1))
     {
@@ -98,6 +102,8 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
         _sizeRect.setTop(PGE_Window::Height/3-height-padding);
         _sizeRect.setRight(PGE_Window::Width/2 + width + padding);
         _sizeRect.setBottom(PGE_Window::Height/3+height + padding);
+        if(_sizeRect.top() < padding)
+            _sizeRect.setY(padding);
     }
     else
     {
@@ -108,18 +114,8 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type,
     }
 }
 
-void PGE_MsgBox::buildBox(bool centered)
-{
-    textTexture = FontManager::TextToTexture(message,
-                                             QRect(0,0, width*2, height*2),
-                                             (centered ? Qt::AlignCenter:Qt::AlignLeft) | Qt::AlignTop );
-}
-
 PGE_MsgBox::~PGE_MsgBox()
-{
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures(1, &textTexture );
-}
+{}
 
 void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 {
@@ -128,64 +124,22 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
     padding = _padding;
 }
 
-void PGE_MsgBox::exec()
+void PGE_MsgBox::update(float ticks)
 {
-    Uint32 start_render;
-    SDL_Event event; //  Events of SDL
-
-    while ( SDL_PollEvent(&event) ) {}
-    updateControllers();
-
-    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
-
-    setFade(10, 1.0f, 0.05f);
-    while(fader_opacity<1.0f)
+    switch(_page)
     {
-        start_render=SDL_GetTicks();
-
-        PGE_BoxBase::exec();
-
-        if(_textureUsed)
-        {
-            drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
-                        _sizeRect.center().y()-(height + padding)*fader_opacity,
-                        _sizeRect.center().x()+(width + padding)*fader_opacity,
-                        _sizeRect.center().y()+(height + padding)*fader_opacity);
-        }
-        else
-        {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity ,
-                                   _sizeRect.center().y() - (height+padding)*fader_opacity,
-                                     _sizeRect.center().x() + (width+padding)*fader_opacity,
-                                   _sizeRect.center().y() + (height+padding)*fader_opacity,
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-        }
-
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
-
-        while ( SDL_PollEvent(&event) ) {
-            PGE_Window::processEvents(event);
-            if(event.type==SDL_QUIT)
-                fader_opacity=1.0;
-        }
-
-        if(uTick > (SDL_GetTicks() - start_render))
-                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
-
-        updateControllers();
-        tickFader(uTick);
+        case 0: setFade(10, 1.0f, 0.05f); _page++; break;
+        case 1: processLoader(ticks); break;
+        case 2: processBox(ticks); break;
+        case 3: processUnLoader(ticks); break;
+        case 4: running=false; break;
     }
+}
 
-
-    bool running=true;
-    while(running)
+void PGE_MsgBox::render()
+{
+    if(_page==2)
     {
-
-        start_render=SDL_GetTicks();
-
-        PGE_BoxBase::exec();
-
         if(_textureUsed)
         {
             drawTexture(_sizeRect);
@@ -196,78 +150,14 @@ void PGE_MsgBox::exec()
                                    _sizeRect.width(), _sizeRect.height(),
                                    bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
-
-
-        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-                                         _sizeRect.top()+padding,
-                                         &textTexture);
-
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
-
-        #ifndef __APPLE__
-        if(AppSettings.interprocessing)
-            qApp->processEvents();
-        #endif
-        updateControllers();
-        while ( SDL_PollEvent(&event) )
-        {
-            PGE_Window::processEvents(event);
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        running=false;
-                    }
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                    switch(event.key.keysym.sym)
-                    { // Check which
-                    case SDLK_ESCAPE: // ESC
-                    case SDLK_RETURN:// Enter
-                    case SDLK_KP_ENTER:
-                    {
-                        running=false;
-                    }
-                    break;
-                    case SDLK_t:
-                    PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                    break;
-                    case SDLK_F12:
-                    GlRenderer::makeShot();
-                    break;
-                    default:
-                    break;
-                    }
-                break;
-                case SDL_MOUSEBUTTONDOWN:
-                    switch(event.button.button)
-                    {
-                        case SDL_BUTTON_LEFT:
-                        running=false;
-                        break;
-                    }
-                break;
-                default:
-                  break;
-            }
-        }
-
-        if(uTick > (SDL_GetTicks() - start_render))
-                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+        FontManager::printText(message, _sizeRect.left()+padding, _sizeRect.top()+padding, fontID,
+                               fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
+//        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
+//                                         _sizeRect.top()+padding,
+//                                         &textTexture);
     }
-
-
-
-
-
-    setFade(10, 0.0f, 0.05f);
-    while(fader_opacity>0.0f)
+    else
     {
-        start_render=SDL_GetTicks();
-
-        PGE_BoxBase::exec();
-
         if(_textureUsed)
         {
             drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
@@ -283,23 +173,118 @@ void PGE_MsgBox::exec()
                                    _sizeRect.center().y() + (height+padding)*fader_opacity,
                                    bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
+    }
+}
 
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+void PGE_MsgBox::restart()
+{
+    PGE_Audio::playSoundByRole(obj_sound_role::MenuMessageBox);
+    running=true;
+    _page=0;
+}
 
-        while ( SDL_PollEvent(&event) ) {
-            PGE_Window::processEvents(event);
-            if(event.type==SDL_QUIT)
-                fader_opacity=0.0;
-        }
+bool PGE_MsgBox::isRunning()
+{
+    return running;
+}
 
-        if(uTick > (SDL_GetTicks() - start_render))
+void PGE_MsgBox::exec()
+{
+    updateControllers();
+    restart();
+    while(running)
+    {
+        Uint32 start_render=SDL_GetTicks();
+
+        update(uTickf);
+        PGE_BoxBase::render();
+        render();
+        PGE_Window::rePaint();
+
+        if(uTick > (signed)(SDL_GetTicks() - start_render))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
+    }
+}
 
-        updateControllers();
-        tickFader(uTick);
+void PGE_MsgBox::processLoader(float ticks)
+{
+    SDL_Event event;
+    while ( SDL_PollEvent(&event) ) {
+        PGE_Window::processEvents(event);
+        if(event.type==SDL_QUIT)
+            fader_opacity=1.0;
+    }
+    updateControllers();
+    tickFader(ticks);
+
+    if(fader_opacity>=1.0f) _page++;
+}
+
+void PGE_MsgBox::processBox(float)
+{
+    #ifndef __APPLE__
+    if(AppSettings.interprocessing)
+        qApp->processEvents();
+    #endif
+    updateControllers();
+
+    SDL_Event event;
+    while ( SDL_PollEvent(&event) )
+    {
+        PGE_Window::processEvents(event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                _page++;
+            break;
+            case SDL_KEYDOWN: // If pressed key
+                switch(event.key.keysym.sym)
+                { // Check which
+                case SDLK_ESCAPE: // ESC
+                case SDLK_RETURN:// Enter
+                case SDLK_KP_ENTER:
+                {
+                    _page++;
+                    setFade(10, 0.0f, 0.05f);
+                }
+                break;
+
+                default:
+                break;
+                }
+            break;
+            case SDL_MOUSEBUTTONDOWN:
+                switch(event.button.button)
+                {
+                    case SDL_BUTTON_LEFT:
+                    {
+                        _page++;
+                        setFade(10, 0.0f, 0.05f);
+                    }
+                    break;
+                }
+            break;
+            default:
+              break;
+        }
     }
 
+}
+
+
+
+void PGE_MsgBox::processUnLoader(float ticks)
+{
+    SDL_Event event;
+    while ( SDL_PollEvent(&event) ) {
+        PGE_Window::processEvents(event);
+        if(event.type==SDL_QUIT)
+            fader_opacity=0.0;
+    }
+
+    updateControllers();
+    tickFader(ticks);
+    if(fader_opacity<=0.0f) _page++;
 }
 
 
@@ -312,7 +297,7 @@ void PGE_MsgBox::updateControllers()
             LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
             if(s)
             {
-                s->tickAnimations(uTick);
+                s->tickAnimations(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
@@ -324,7 +309,7 @@ void PGE_MsgBox::updateControllers()
             WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
             if(s)
             {
-                s->tickAnimations(uTick);
+                s->tickAnimations(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
             }

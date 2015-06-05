@@ -52,6 +52,7 @@ public:
 
     void setMusicData(WorldMusic inD);
     void setScenePoint(WldScene *theScene);
+    void transformTo(int musicID, QString musicFile);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

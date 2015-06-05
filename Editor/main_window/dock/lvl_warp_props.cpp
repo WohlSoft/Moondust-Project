@@ -98,9 +98,7 @@ void LvlWarpBox::init()
         ui->WarpList->clear();
         foreach(LevelDoor door, mw()->activeLvlEditWin()->LvlData.doors)
         {
-            ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
-           .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy),
-                                  door.array_id);
+            ui->WarpList->addItem(doorTitle(door), door.array_id);
         }
         if(ui->WarpList->count()<=0)
             setDoorData(-1);
@@ -108,8 +106,14 @@ void LvlWarpBox::init()
             setDoorData( ui->WarpList->currentIndex() );
 
     }
-
 }
+
+QString LvlWarpBox::doorTitle(LevelDoor &door)
+{
+    return QString("%1: x%2y%3 <=> x%4y%5")
+            .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy);
+}
+
 
 void LvlWarpBox::SwitchToDoor(long arrayID)
 {
@@ -147,6 +151,8 @@ void LvlWarpBox::setDoorData(long index)
             {
                 if(door.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
                 {
+                    ui->WarpList->setItemText(cIndex, doorTitle(door));
+
                     ui->WarpRemove->setEnabled(true);
 
                     ui->WarpAllowNPC->setEnabled(true);
@@ -331,9 +337,7 @@ void LvlWarpBox::on_WarpAdd_clicked()
 
         edit->scene->addAddWarpHistory(newDoor.array_id, ui->WarpList->count(), newDoor.index);
 
-        ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
-       .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
-                              newDoor.array_id);
+        ui->WarpList->addItem(doorTitle(newDoor), newDoor.array_id);
         ui->WarpList->setCurrentIndex( ui->WarpList->count()-1 );
         ui->WarpRemove->setEnabled(true);
     }

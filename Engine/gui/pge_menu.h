@@ -22,9 +22,10 @@
 #include <QString>
 #include <QList>
 #include <QPair>
-#include <QRect>
-#include <QPoint>
 #include <common_features/pge_texture.h>
+#include <common_features/rect.h>
+#include <common_features/size.h>
+#include <common_features/point.h>
 #include <functional>
 
 #include "menu/_pge_menuitem.h"
@@ -34,12 +35,14 @@
 #include "menu/pge_int_named_menuitem.h"
 #include "menu/pge_keygrab_menuitem.h"
 
+struct KM_Key;
 
 class PGE_Menu
 {
 friend class PGE_KeyGrabMenuItem;
 public:
     PGE_Menu();
+    PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
     void addMenuItem(QString value, QString title="",
@@ -50,7 +53,7 @@ public:
                         std::function<void()> _extAction=([]()->void{}) );
     void addNamedIntMenuItem(int *intvalue, QList<NamedIntItem > _items, QString value, QString title, bool rotate=false,
                         std::function<void()> _extAction=([]()->void{}) );
-    void addKeyGrabMenuItem(int *keyvalue, QString value, QString title, int *joystick_key_id=NULL, int *joystick_key_type=NULL, SDL_Joystick *joystick_device=NULL);
+    void addKeyGrabMenuItem(KM_Key *key, QString value, QString title, SDL_Joystick *joystick_device=NULL);
 
     void setValueOffset(int offset);
     void setItemWidth(int width);
@@ -93,16 +96,18 @@ public:
     void setOffset(int of);//!< Sets scrolling offset from begin of menu list
 
     //Position and size Rectangle
-    QRect rect(); //!< Returns rectangle of menu box
+    PGE_Rect rect(); //!< Returns rectangle of menu box
+    PGE_Rect rectFull(); //!< Returns rectangle of menu box include sliders
+    int  topOffset();//!< Offset
     void setPos(int x, int y); //!< Sets current position of menu box
-    void setPos(QPoint p);     //!< Sets current position of menu box
+    void setPos(PGE_Point p);     //!< Sets current position of menu box
     void setSize(int w, int h); //!< Sets size of menu box
-    void setSize(QSize s);      //!< Sets size of menu box
+    void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(int maxlen, bool strict=false);
 
 private:
     void refreshRect();
-    QRect menuRect;
+    PGE_Rect menuRect;
 
     /*******Key grabbing********/
     PGE_KeyGrabMenuItem *m_item;
@@ -125,6 +130,7 @@ private:
 
     QList<PGE_Menuitem *> _items;
     bool namefileLessThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
+    bool namefileMoreThan(const PGE_Menuitem *d1, const PGE_Menuitem *d2);
     void autoOffset();
     PGE_Texture _selector;
     PGE_Texture _scroll_up;

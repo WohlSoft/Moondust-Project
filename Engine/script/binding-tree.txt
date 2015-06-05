@@ -1,0 +1,13 @@
+bindings/{binding-section}/{binding-type}/xxx.h
+
+binding-section: core, level, world, menu, credits
+binding-type:
+    globalfuncs (luafuncs_****.h)
+    classes     (luaclass_****.h)
+    fields      (luafields_****.h)
+    events      (luaevents_****.h)
+
+Class Name:
+    Binding_{binding-section}_******
+
+every file must have class with a static void bindToLua(lua_State* L);

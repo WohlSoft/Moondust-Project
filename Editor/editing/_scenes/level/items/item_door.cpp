@@ -390,12 +390,12 @@ void ItemDoor::arrayApply()
 {
     bool found=false;
 
-    if(direction==D_Entrance)
+    if((direction==D_Entrance) && doorData.isSetIn)
     {
         doorData.ix = qRound(this->scenePos().x());
         doorData.iy = qRound(this->scenePos().y());
     }
-    else
+    else if( doorData.isSetOut )
     {
         doorData.ox = qRound(this->scenePos().x());
         doorData.oy = qRound(this->scenePos().y());
@@ -461,7 +461,6 @@ void ItemDoor::arrayApply()
 
 void ItemDoor::removeFromArray()
 {
-
     if(direction==D_Entrance)
     {
         doorData.isSetIn=false;

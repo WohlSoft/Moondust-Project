@@ -27,7 +27,26 @@
 
 #include <QtDebug>
 
-LoadingScene::LoadingScene()
+
+LoadingScene_misc_img::LoadingScene_misc_img()
+{
+    x=0;y=0;t.w=0;frmH=0;
+}
+
+LoadingScene_misc_img::~LoadingScene_misc_img()
+{}
+
+LoadingScene_misc_img::LoadingScene_misc_img(const LoadingScene_misc_img &im)
+{
+    x=im.x;
+    y=im.y;
+    t=im.t;
+    a=im.a;
+    frmH=im.frmH;
+}
+
+
+LoadingScene::LoadingScene() : Scene(Loading)
 {
     _waitTimer=5000;
 }
@@ -46,7 +65,6 @@ LoadingScene::~LoadingScene()
 
     for(int i=0;i<imgs.size();i++)
     {
-        imgs[i].a.stop();
         glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(imgs[i].t.texture) );
     }
@@ -84,19 +102,58 @@ void LoadingScene::init()
 
         imgs.push_back(img);
     }
-
-    for(int i=0;i<imgs.size();i++)
-    {
-        imgs[i].a.start();
-    }
 }
 
-void LoadingScene::setWaitTime(unsigned int time)
+void LoadingScene::setWaitTime(int time)
 {
-    if(time==0)
+    if(time<=0)
         _waitTimer=5000;
     else
         _waitTimer=time;
+}
+
+void LoadingScene::exitFromScene()
+{
+    doExit=true;
+    fader.setFade(10, 1.0f, 0.01f);
+}
+
+void LoadingScene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
+{
+    if(doExit) return;
+
+    exitFromScene();
+}
+
+void LoadingScene::onMousePressed(SDL_MouseButtonEvent &)
+{
+    if(doExit) return;
+
+    exitFromScene();
+}
+
+void LoadingScene::update()
+{
+    if(doExit)
+    {
+        if(fader.isFull())
+        {
+            running=false;
+            return;
+        }
+    }
+
+    Scene::update();
+    for(int i=0;i<imgs.size(); i++)
+        imgs[i].a.manualTick(uTickf);
+
+    if(!doExit)
+    {
+        if(_waitTimer>0)
+            _waitTimer -= uTickf;
+        else
+            exitFromScene();
+    }
 }
 
 void LoadingScene::render()
@@ -124,68 +181,24 @@ int LoadingScene::exec()
 {
     //Level scene's Loop
     Uint32 start_render;
-    bool running = true;
-    float doUpdate_Render=0;
-    bool doExit=false;
+    running = true;
+    doExit=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::Greeting);
-
-    Uint32 start_wait_timer=SDL_GetTicks();
     while(running)
     {
-
-        //UPDATE Events
         start_render=SDL_GetTicks();
+
+        processEvents();
+        update();
         render();
-        glFlush();
-        SDL_GL_SwapWindow(PGE_Window::window);
+        PGE_Window::rePaint();
 
-        if(doExit)
+        if( uTickf > (float)(SDL_GetTicks()-start_render))
         {
-            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
-            if(fader_opacity>=1.0)
-                running=false;
+            wait( uTickf-(float)(SDL_GetTicks()-start_render) );
         }
-
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {
-            if(PGE_Window::processEvents(event)!=0) continue;
-
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    {
-                        return -1;
-                    }   // End work of program
-                break;
-                case SDL_KEYDOWN: // If pressed key
-                    switch(event.key.keysym.sym)
-                    {
-                        default:
-                           doExit=true;
-                        break;
-                    }
-                break;
-
-                case SDL_KEYUP:
-                break;
-                default: break;
-            }
-        }
-
-        if( 100.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_render)
-        {
-            doUpdate_Render = 1000.0/100.0-(SDL_GetTicks()-start_render);
-            SDL_Delay( doUpdate_Render );
-        }
-
-        if(!doExit)
-        {
-            if( (SDL_GetTicks()-start_wait_timer) > _waitTimer)
-                doExit=true;
-        }
-
     }
     return 0;
 }
+

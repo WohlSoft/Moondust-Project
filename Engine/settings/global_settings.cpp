@@ -53,7 +53,7 @@ void GlobalSettings::load()
         if(PhysStep<65) PhysStep=65;
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
-
+    frameSkip=setup.value("frame-skip", frameSkip).toBool();
     enableDummyNpc=setup.value("enable-dummy-npc", enableDummyNpc).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
@@ -90,22 +90,16 @@ void GlobalSettings::loadJoystickSettings()
     for(int i=0; i<SDL_NumJoysticks();i++)
     {
         KeyMap joy1;
-        KeyMapJoyCtrls joy1c;
         loadKeyMap(joy1, setup, QString("player-1-joystick%1").arg(i));
-        loadJoyCtrlMap(joy1c, setup, QString("player-1-joystick%1-ctrls-id").arg(i));
+        loadJoyCtrlMapID(joy1, setup, QString("player-1-joystick%1-ctrls-id").arg(i));
+        loadJoyCtrlMapType(joy1, setup, QString("player-1-joystick%1-ctrls-type").arg(i));
         player1_joysticks.push_back(joy1);
-        player1_joysticks_ctrls_ids.push_back(joy1c);
-        loadJoyCtrlMap(joy1c, setup, QString("player-1-joystick%1-ctrls-type").arg(i));
-        player1_joysticks_ctrls_types.push_back(joy1c);
 
         KeyMap joy2;
-        KeyMapJoyCtrls joy2c;
         loadKeyMap(joy2, setup, QString("player-2-joystick%1").arg(i));
-        loadJoyCtrlMap(joy2c, setup, QString("player-2-joystick%1-ctrls-id").arg(i));
+        loadJoyCtrlMapID(joy2, setup, QString("player-2-joystick%1-ctrls-id").arg(i));
+        loadJoyCtrlMapType(joy2, setup, QString("player-2-joystick%1-ctrls-type").arg(i));
         player2_joysticks.push_back(joy2);
-        player2_joysticks_ctrls_ids.push_back(joy2c);
-        loadJoyCtrlMap(joy2c, setup, QString("player-2-joystick%1-ctrls-type").arg(i));
-        player2_joysticks_ctrls_types.push_back(joy2c);
     }
 
 }
@@ -118,6 +112,7 @@ void GlobalSettings::save()
         setup.setValue("phys-step", PhysStep);
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("enable-dummy-npc", enableDummyNpc);
+        setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
         setup.setValue("player1-controller", player1_controller);
         setup.setValue("player2-controller", player2_controller);
@@ -131,10 +126,10 @@ void GlobalSettings::save()
     {
         saveKeyMap(player1_joysticks[i], setup, QString("player-1-joystick%1").arg(i));
         saveKeyMap(player2_joysticks[i], setup, QString("player-2-joystick%1").arg(i));
-        saveJoyCtrlMap(player1_joysticks_ctrls_ids[i], setup, QString("player-1-joystick%1-ctrls-id").arg(i));
-        saveJoyCtrlMap(player2_joysticks_ctrls_ids[i], setup, QString("player-2-joystick%1-ctrls-id").arg(i));
-        saveJoyCtrlMap(player1_joysticks_ctrls_types[i], setup, QString("player-1-joystick%1-ctrls-type").arg(i));
-        saveJoyCtrlMap(player2_joysticks_ctrls_types[i], setup, QString("player-2-joystick%1-ctrls-type").arg(i));
+        saveJoyCtrlMapID(player1_joysticks[i], setup, QString("player-1-joystick%1-ctrls-id").arg(i));
+        saveJoyCtrlMapID(player2_joysticks[i], setup, QString("player-2-joystick%1-ctrls-id").arg(i));
+        saveJoyCtrlMapType(player1_joysticks[i], setup, QString("player-1-joystick%1-ctrls-type").arg(i));
+        saveJoyCtrlMapType(player2_joysticks[i], setup, QString("player-2-joystick%1-ctrls-type").arg(i));
     }
 }
 
@@ -153,6 +148,8 @@ void GlobalSettings::resetDefaults()
 
     enableDummyNpc=false;
 
+    frameSkip=true;
+
     fullScreen=false;
 
     volume_sound=128;
@@ -163,16 +160,16 @@ void GlobalSettings::resetDefaults()
     player1_controller=-1;
     player2_controller=-1;
 
-    player1_keyboard.jump       = SDL_SCANCODE_Z;
-    player1_keyboard.jump_alt   = SDL_SCANCODE_A;
-    player1_keyboard.run        = SDL_SCANCODE_X;
-    player1_keyboard.run_alt    = SDL_SCANCODE_S;
-    player1_keyboard.drop       = SDL_SCANCODE_LSHIFT;
-    player1_keyboard.start      = SDL_SCANCODE_RETURN;
-    player1_keyboard.left       = SDL_SCANCODE_LEFT;
-    player1_keyboard.right      = SDL_SCANCODE_RIGHT;
-    player1_keyboard.up         = SDL_SCANCODE_UP;
-    player1_keyboard.down       = SDL_SCANCODE_DOWN;
+    player1_keyboard.jump.val       = SDL_SCANCODE_Z;
+    player1_keyboard.jump_alt.val   = SDL_SCANCODE_A;
+    player1_keyboard.run.val        = SDL_SCANCODE_X;
+    player1_keyboard.run_alt.val    = SDL_SCANCODE_S;
+    player1_keyboard.drop.val       = SDL_SCANCODE_LSHIFT;
+    player1_keyboard.start.val      = SDL_SCANCODE_RETURN;
+    player1_keyboard.left.val       = SDL_SCANCODE_LEFT;
+    player1_keyboard.right.val      = SDL_SCANCODE_RIGHT;
+    player1_keyboard.up.val         = SDL_SCANCODE_UP;
+    player1_keyboard.down.val       = SDL_SCANCODE_DOWN;
 }
 
 void GlobalSettings::apply()
@@ -188,78 +185,117 @@ void GlobalSettings::apply()
 void GlobalSettings::loadKeyMap(KeyMap &map, QSettings &set, QString grp)
 {
     set.beginGroup(grp);
-        map.left=set.value("left", map.left).toInt();
-        map.right=set.value("right", map.right).toInt();
-        map.up=set.value("up", map.up).toInt();
-        map.down=set.value("down", map.down).toInt();
+        map.left.val=set.value("left", map.left.val).toInt();
+        map.right.val=set.value("right", map.right.val).toInt();
+        map.up.val=set.value("up", map.up.val).toInt();
+        map.down.val=set.value("down", map.down.val).toInt();
 
-        map.jump=set.value("jump", map.jump).toInt();
-        map.jump_alt=set.value("jump-alt", map.jump_alt).toInt();
+        map.jump.val=set.value("jump", map.jump.val).toInt();
+        map.jump_alt.val=set.value("jump-alt", map.jump_alt.val).toInt();
 
-        map.run=set.value("run", map.run).toInt();
-        map.run_alt=set.value("run-alt", map.run_alt).toInt();
+        map.run.val=set.value("run", map.run.val).toInt();
+        map.run_alt.val=set.value("run-alt", map.run_alt.val).toInt();
 
-        map.drop=set.value("drop", map.drop).toInt();
-        map.start=set.value("start", map.start).toInt();
+        map.drop.val=set.value("drop", map.drop.val).toInt();
+        map.start.val=set.value("start", map.start.val).toInt();
     set.endGroup();
 }
 
 void GlobalSettings::saveKeyMap(KeyMap &map, QSettings &set, QString grp)
 {
     set.beginGroup(grp);
-        set.setValue("left", map.left);
-        set.setValue("right", map.right);
-        set.setValue("up", map.up);
-        set.setValue("down", map.down);
+        set.setValue("left", map.left.val);
+        set.setValue("right", map.right.val);
+        set.setValue("up", map.up.val);
+        set.setValue("down", map.down.val);
 
-        set.setValue("jump", map.jump);
-        set.setValue("jump-alt", map.jump_alt);
+        set.setValue("jump", map.jump.val);
+        set.setValue("jump-alt", map.jump_alt.val);
 
-        set.setValue("run", map.run);
-        set.setValue("run-alt", map.run_alt);
+        set.setValue("run", map.run.val);
+        set.setValue("run-alt", map.run_alt.val);
 
-        set.setValue("drop", map.drop);
-        set.setValue("start", map.start);
+        set.setValue("drop", map.drop.val);
+        set.setValue("start", map.start.val);
     set.endGroup();
 }
 
-void GlobalSettings::loadJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp)
+void GlobalSettings::loadJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp)
 {
     set.beginGroup(grp);
-        map.left=set.value("left", map.left).toInt();
-        map.right=set.value("right", map.right).toInt();
-        map.up=set.value("up", map.up).toInt();
-        map.down=set.value("down", map.down).toInt();
+        map.left.id=set.value("left", map.left.id).toInt();
+        map.right.id=set.value("right", map.right.id).toInt();
+        map.up.id=set.value("up", map.up.id).toInt();
+        map.down.id=set.value("down", map.down.id).toInt();
 
-        map.jump=set.value("jump", map.jump).toInt();
-        map.jump_alt=set.value("jump-alt", map.jump_alt).toInt();
+        map.jump.id=set.value("jump", map.jump.id).toInt();
+        map.jump_alt.id=set.value("jump-alt", map.jump_alt.id).toInt();
 
-        map.run=set.value("run", map.run).toInt();
-        map.run_alt=set.value("run-alt", map.run_alt).toInt();
+        map.run.id=set.value("run", map.run.id).toInt();
+        map.run_alt.id=set.value("run-alt", map.run_alt.id).toInt();
 
-        map.drop=set.value("drop", map.drop).toInt();
-        map.start=set.value("start", map.start).toInt();
+        map.drop.id=set.value("drop", map.drop.id).toInt();
+        map.start.id=set.value("start", map.start.id).toInt();
     set.endGroup();
 }
 
-void GlobalSettings::saveJoyCtrlMap(KeyMapJoyCtrls &map, QSettings &set, QString grp)
+void GlobalSettings::saveJoyCtrlMapID(KeyMap &map, QSettings &set, QString grp)
 {
     set.beginGroup(grp);
-        set.setValue("left", map.left);
-        set.setValue("right", map.right);
-        set.setValue("up", map.up);
-        set.setValue("down", map.down);
+        set.setValue("left", map.left.id);
+        set.setValue("right", map.right.id);
+        set.setValue("up", map.up.id);
+        set.setValue("down", map.down.id);
 
-        set.setValue("jump", map.jump);
-        set.setValue("jump-alt", map.jump_alt);
+        set.setValue("jump", map.jump.id);
+        set.setValue("jump-alt", map.jump_alt.id);
 
-        set.setValue("run", map.run);
-        set.setValue("run-alt", map.run_alt);
+        set.setValue("run", map.run.id);
+        set.setValue("run-alt", map.run_alt.id);
 
-        set.setValue("drop", map.drop);
-        set.setValue("start", map.start);
+        set.setValue("drop", map.drop.id);
+        set.setValue("start", map.start.id);
     set.endGroup();
 }
+
+void GlobalSettings::loadJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp)
+{
+    set.beginGroup(grp);
+        map.left.type=set.value("left", map.left.type).toInt();
+        map.right.type=set.value("right", map.right.type).toInt();
+        map.up.type=set.value("up", map.up.type).toInt();
+        map.down.type=set.value("down", map.down.type).toInt();
+
+        map.jump.type=set.value("jump", map.jump.type).toInt();
+        map.jump_alt.type=set.value("jump-alt", map.jump_alt.type).toInt();
+
+        map.run.type=set.value("run", map.run.type).toInt();
+        map.run_alt.type=set.value("run-alt", map.run_alt.type).toInt();
+
+        map.drop.type=set.value("drop", map.drop.type).toInt();
+        map.start.type=set.value("start", map.start.type).toInt();
+    set.endGroup();
+}
+
+void GlobalSettings::saveJoyCtrlMapType(KeyMap &map, QSettings &set, QString grp)
+{
+    set.beginGroup(grp);
+        set.setValue("left", map.left.type);
+        set.setValue("right", map.right.type);
+        set.setValue("up", map.up.type);
+        set.setValue("down", map.down.type);
+
+        set.setValue("jump", map.jump.type);
+        set.setValue("jump-alt", map.jump_alt.type);
+
+        set.setValue("run", map.run.type);
+        set.setValue("run-alt", map.run_alt.type);
+
+        set.setValue("drop", map.drop.type);
+        set.setValue("start", map.start.type);
+    set.endGroup();
+}
+
 
 Controller *GlobalSettings::openController(int player)
 {
@@ -274,8 +310,6 @@ Controller *GlobalSettings::openController(int player)
             if(DeviceID<joysticks.size())
             dynamic_cast<JoystickController*>(TargetController)->
                     setJoystickDevice(joysticks[DeviceID]);
-            dynamic_cast<JoystickController*>(TargetController)->
-                    setJoyCtrlMap(player1_joysticks_ctrls_ids[DeviceID], player1_joysticks_ctrls_types[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player1_keyboard);
@@ -289,8 +323,6 @@ Controller *GlobalSettings::openController(int player)
             if(DeviceID<joysticks.size())
             dynamic_cast<JoystickController*>(TargetController)->
                     setJoystickDevice(joysticks[DeviceID]);
-            dynamic_cast<JoystickController*>(TargetController)->
-                    setJoyCtrlMap(player2_joysticks_ctrls_ids[DeviceID], player2_joysticks_ctrls_types[DeviceID]);
         } else {
             TargetController = new KeyboardController();
             TargetController->setKeyMap(player2_keyboard);

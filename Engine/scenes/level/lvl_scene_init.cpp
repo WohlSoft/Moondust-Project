@@ -41,7 +41,7 @@ bool LevelScene::setEntrance(int entr)
         player_defs.push_back(def);
     }
 
-    if(entr<=0)
+    if((entr<=0) || (entr>data.doors.size()))
     {
         isWarpEntrance=false;
         bool found=false;
@@ -252,12 +252,6 @@ bool LevelScene::loadConfigs()
 }
 
 
-
-
-
-
-
-
 bool LevelScene::init()
 {
     //Load File
@@ -276,8 +270,18 @@ bool LevelScene::init()
 
     int sID = findNearSection(cameraStart.x(), cameraStart.y());
 
-    qDebug()<<"Create cameras";
+    qDebug()<<"Build sections";
+    for(int i=0;i<data.sections.size();i++)
+    {
+        LVL_Section sct;
+        sections.push_back(sct);
+        sections.last().setData(data.sections[i]);
+        sections.last().setMusicRoot(data.path);
+    }
 
+    LVL_Section *t_sct = getSection(sID);
+
+    qDebug()<<"Create cameras";
     loaderStep();
     //quit from game if window was closed
     if(!isLevelContinues) return false;
@@ -286,37 +290,20 @@ bool LevelScene::init()
     {
         int x=cameraStart.x();
         int y=cameraStart.y();
-        int width=PGE_Window::Width;
-        int height=PGE_Window::Height/numberOfPlayers;
+        int width  = PGE_Window::Width;
+        int height = PGE_Window::Height/numberOfPlayers;
 
         //Init Cameras
-        PGE_LevelCamera* camera;
-        camera = new PGE_LevelCamera();
-        camera->setWorld(world);
-        camera->setMusicRoot(data.path);
-        camera->changeSection(data.sections[sID]);
-        camera->isWarp = data.sections[sID].IsWarp;
-        camera->section = &(data.sections[sID]);
-        camera->init(
+        PGE_LevelCamera camera;
+        camera.init(
                         (float)x,
                         (float)y,
                         (float)width, (float)height
                     );
-        camera->setPos(cameraStart.x()-camera->w()/2 + player_defs.first().width()/2,
-                       cameraStart.y()-camera->h()/2 + player_defs.first().height()/2);
-
+        camera.changeSection(t_sct);
+        camera.setPos(cameraStart.x()-camera.w()/2 + player_defs.first().width()/2,
+                       cameraStart.y()-camera.h()/2 + player_defs.first().height()/2);
         cameras.push_back(camera);
-
-        LVL_Background * CurrentBackground = new LVL_Background(cameras.last());
-        if(ConfigManager::lvl_bg_indexes.contains(cameras.last()->BackgroundID))
-        {
-            obj_BG*bgSetup = &ConfigManager::lvl_bg_indexes[cameras.last()->BackgroundID];
-            CurrentBackground->setBg(*bgSetup);
-            qDebug() << "Backgroubnd ID:" << cameras.last()->BackgroundID;
-        }
-        else
-            CurrentBackground->setNone();
-        backgrounds.push_back(CurrentBackground);
     }
 
     //Init data
@@ -395,6 +382,15 @@ bool LevelScene::init()
         warpP->worldPtr = world;
         warpP->data = data.doors[i];
         warpP->init();
+
+        int sID = findNearSection(warpP->posX(), warpP->posY());
+        LVL_Section *sct = getSection(sID);
+        if(sct)
+        {
+            warpP->setParentSection(sct);
+        }
+        warpP->_syncBox2dWithPos();
+
         warps.push_back(warpP);
     }
 
