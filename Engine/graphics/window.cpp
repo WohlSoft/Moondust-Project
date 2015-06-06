@@ -71,8 +71,7 @@ bool PGE_Window::init(QString WindowTitle)
     GlRenderer::setViewportSize(Width, Height);
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              Width, Height,
-                              SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+                              Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
     checkSDLError();
 
     SDL_SetWindowMinimumSize(window, Width, Height);
@@ -98,6 +97,9 @@ bool PGE_Window::init(QString WindowTitle)
 
     SDL_GL_SetSwapInterval(1);
     checkSDLError();
+
+    SDL_ShowWindow(window);
+
     IsInit=true;
     return true;
 }
@@ -112,6 +114,9 @@ bool PGE_Window::uninit()
         return -1;
     }
 
+    SDL_HideWindow(window);
+    SDL_PumpEvents();
+    GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(window);
     SDL_Quit();
