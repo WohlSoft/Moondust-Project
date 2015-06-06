@@ -68,9 +68,9 @@ void LevelScene::setLoaderAnimation(int speed)
     loaderSpeed = speed;
 
     if(IntProc::isEnabled())
-        loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/coin.png");
+        GlRenderer::loadTextureP(loading_texture, ":/images/coin.png");
     else
-        loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/shell.png");
+        GlRenderer::loadTextureP(loading_texture, ":/images/shell.png");
 
     loading_Ani = new SimpleAnimator(true,
                                      4,
@@ -96,8 +96,7 @@ void LevelScene::stopLoaderAnimation()
         loading_Ani->stop();
         delete loading_Ani;
         loading_Ani = NULL;
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(loading_texture.texture) );
+        GlRenderer::deleteTexture( loading_texture );
     }
 
 }

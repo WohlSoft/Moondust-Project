@@ -13,5 +13,6 @@
         <file>images/shell.png</file>
         <file>images/coin.png</file>
         <file>PressStart2P.ttf</file>
+        <file>images/_broken.png</file>
     </qresource>
 </RCC>
