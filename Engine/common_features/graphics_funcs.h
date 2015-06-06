@@ -25,8 +25,6 @@
 #include <SDL2/SDL_opengl.h>
 #undef main
 
-#include "pge_texture.h"
-
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
 
@@ -37,14 +35,8 @@ public:
     static QImage setAlphaMask(QImage image, QImage mask);
     static QImage fromBMP(QString& file);
     static QImage loadQImage(QString file);
-    static PGE_Texture loadTexture(PGE_Texture &target, QString path, QString maskPath="");
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
-
-    static void flipHorizontally(SDL_Surface *&image);
-    static void flipVertically(SDL_Surface *&image);
-    static Uint32 getpixel(SDL_Surface *surface, int x, int y);
-    static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr);
 };
 

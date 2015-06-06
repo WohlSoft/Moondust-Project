@@ -55,8 +55,13 @@ public:
     static void setViewportSize(int w, int h);
     static void setWindowSize(int w, int h);
 
-
+    static PGE_Texture loadTexture(QString path, QString maskPath="");
+    static void loadTextureP(PGE_Texture &target, QString path, QString maskPath="");
+    static void deleteTexture(PGE_Texture &tx);
 private:
+    static void initDummyTexture();
+    static PGE_Texture _dummyTexture;
+
     //Virtual resolution of renderable zone
     static int window_w;
     static int window_h;

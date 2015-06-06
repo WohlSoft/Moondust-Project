@@ -83,7 +83,7 @@ WorldScene::WorldScene()
     if(common_setup.backgroundImg.isEmpty())
         backgroundTex.w=0;
     else
-        backgroundTex = GraphicsHelps::loadTexture(backgroundTex, common_setup.backgroundImg);
+        GlRenderer::loadTextureP(backgroundTex, common_setup.backgroundImg);
 
     imgs.clear();
     for(int i=0; i<common_setup.AdditionalImages.size(); i++)
@@ -91,7 +91,7 @@ WorldScene::WorldScene()
         if(common_setup.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         WorldScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, common_setup.AdditionalImages[i].imgFile);
+        GlRenderer::loadTextureP(img.t, common_setup.AdditionalImages[i].imgFile);
 
         img.x = common_setup.AdditionalImages[i].x;
         img.y = common_setup.AdditionalImages[i].y;
@@ -145,24 +145,19 @@ WorldScene::~WorldScene()
     wld_levels.clear();
     wld_musicboxes.clear();
 
-    if(backgroundTex.w>0)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(backgroundTex.texture) );
-    }
+    GlRenderer::deleteTexture(backgroundTex);
+
     //destroy textures
     qDebug() << "clear world textures";
     while(!textures_bank.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(textures_bank[0].texture) );
+        GlRenderer::deleteTexture(textures_bank[0]);
         textures_bank.pop_front();
     }
 
     for(int i=0;i<imgs.size();i++)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(imgs[i].t.texture) );
+        GlRenderer::deleteTexture(imgs[i].t);
     }
     imgs.clear();
 

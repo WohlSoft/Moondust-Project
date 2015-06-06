@@ -16,33 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_TEXTURE_H
-#define PGE_TEXTURE_H
+#include "pge_texture.h"
 
-#include <SDL2/SDL_opengl.h>
-#undef main
-
-struct PGEColor
+PGE_Texture::PGE_Texture()
 {
-    float r;
-    float g;
-    float b;
-};
-
-struct PGE_Texture
-{
-    PGE_Texture();
-    GLuint texture; // Texture object handle
-    int w; //Width of the texture.
-    int h; //Height of the texture.
-    bool inited; //Texture is valid and loaded
-    GLubyte *texture_layout;
-    GLenum format;
-    GLint  nOfColors;
-
-    PGEColor ColorUpper;
-    PGEColor ColorLower;
-};
-
-
-#endif // PGE_TEXTURE_H
+    inited=false;
+    w=0;
+    h=0;
+    texture_layout=NULL; format=0;nOfColors=0;
+    ColorUpper.r=0; ColorUpper.g=0; ColorUpper.b=0;
+    ColorLower.r=0; ColorLower.g=0; ColorLower.b=0;
+}

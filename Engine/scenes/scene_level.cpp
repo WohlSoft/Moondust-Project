@@ -223,8 +223,7 @@ LevelScene::~LevelScene()
     qDebug() << "clear level textures";
     while(!textures_bank.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(textures_bank[0].texture) );
+        GlRenderer::deleteTexture( textures_bank[0] );
         textures_bank.pop_front();
     }
 

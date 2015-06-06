@@ -60,13 +60,11 @@ LoadingScene::~LoadingScene()
     //Reset modelview matrix
     glLoadIdentity();
 
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures( 1, &(background.texture) );
+    GlRenderer::deleteTexture( background );
 
     for(int i=0;i<imgs.size();i++)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(imgs[i].t.texture) );
+        GlRenderer::deleteTexture( imgs[i].t );
     }
     imgs.clear();
 }
@@ -79,9 +77,9 @@ void LoadingScene::init()
                 // Set background color from file
 
     if(!ConfigManager::setup_LoadingScreen.backgroundImg.isEmpty())
-        background = GraphicsHelps::loadTexture(background, ConfigManager::setup_LoadingScreen.backgroundImg);
+        GlRenderer::loadTextureP(background, ConfigManager::setup_LoadingScreen.backgroundImg);
     else
-        background = GraphicsHelps::loadTexture(background, ":/images/cat_splash.png");
+        GlRenderer::loadTextureP(background, ":/images/cat_splash.png");
 
     imgs.clear();
 
@@ -90,7 +88,7 @@ void LoadingScene::init()
         if(ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         LoadingScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile);
+        GlRenderer::loadTextureP(img.t, ConfigManager::setup_LoadingScreen.AdditionalImages[i].imgFile);
 
         img.x = ConfigManager::setup_LoadingScreen.AdditionalImages[i].x;
         img.y = ConfigManager::setup_LoadingScreen.AdditionalImages[i].y;
