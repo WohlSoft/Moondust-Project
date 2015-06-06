@@ -164,9 +164,9 @@ bool TitleScene::init()
         ConfigManager::loadDefaultSounds();
         ConfigManager::buildSoundIndex();
     }
-    qDebug() << "set Lua file "<<ConfigManager::config_dir + "/titlescreen.lua";
+    qDebug() << "set Lua file "<<ConfigManager::config_dir+"titlescreen.lua";
 
-    luaEngine.setCoreFile(ConfigManager::config_dir + "/titlescreen.lua");
+    luaEngine.setCoreFile(ConfigManager::config_dir+"titlescreen.lua");
     qDebug() << "Attempt to init...";
     luaEngine.init();
     qDebug() << "done!";
