@@ -20,18 +20,25 @@ LuaEngine::~LuaEngine()
 
 void LuaEngine::init()
 {
+    qDebug() <<"check 'is valid'";
     //First check if lua engine is already active
     if(isValid()){
         qWarning() << "LuaEngine: Called init(), while engine is already initialized!";
         return;
     }
 
+    qDebug() <<"Nee state...";
+
     //Create our new lua state
     L = luaL_newstate();
+    luaopen_base(L);
+    luaL_openlibs(L);
 
+    qDebug() <<"luabind...open";
     //Activate Luabind for out state
     luabind::open(L);
 
+    qDebug() <<"pushes...";
     //Open up "safe" standard lua libraries
     // FIXME: Add more accurate sandbox
     lua_pushcfunction(L, luaopen_base);
@@ -45,13 +52,16 @@ void LuaEngine::init()
     lua_pushcfunction(L, luaopen_debug);
     lua_call(L,0,0);
 
+    qDebug() <<"bind core";
     //Now let's bind our functions
     bindCore();
 
+    qDebug() <<"bind all";
     //The rest of the functions
     onBindAll();
 
 
+    qDebug() <<"core file...";
     //Now read the core file. This file should manage incoming events
     //and process them to all other files.
     QFile luaCoreFile(m_coreFile);
@@ -98,7 +108,7 @@ void LuaEngine::forceShutdown()
     }
 
     lua_close(L);
-    L = NULL;
+    L = nullptr;
 }
 
 QString LuaEngine::coreFile() const
