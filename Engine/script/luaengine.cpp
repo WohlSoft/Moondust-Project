@@ -131,7 +131,7 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
         return;
     }
 
-    lua_pushstring(L, toDispatchEvent.eventName().toStdString().c_str());
+    luabind::object(L, toDispatchEvent).push(L);
 
     int argsNum = 0;
     for(luabind::object& obj : toDispatchEvent.objList){
@@ -155,6 +155,7 @@ void LuaEngine::onReportError(const QString &errMsg)
 
 void LuaEngine::bindCore()
 {
+    LuaEvent::bindToLua(L);
     BindingCore_GlobalFuncs_Logger::bindToLua(L);
 }
 
