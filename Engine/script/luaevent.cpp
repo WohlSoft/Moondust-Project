@@ -22,11 +22,11 @@ void LuaEvent::setEventName(const std::string &eventName)
     m_eventName = eventName;
 }
 
-void LuaEvent::bindToLua(lua_State *L)
+luabind::scope LuaEvent::bindToLua()
 {
     using namespace luabind;
-    module(L)[
+    return
         class_<LuaEvent>("LuaEvent")
-            .property("eventName", &LuaEvent::eventName, &LuaEvent::setEventName)
-        ];
+            .property("eventName", &LuaEvent::eventName, &LuaEvent::setEventName);
+
 }

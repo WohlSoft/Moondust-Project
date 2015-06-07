@@ -155,8 +155,10 @@ void LuaEngine::onReportError(const QString &errMsg)
 
 void LuaEngine::bindCore()
 {
-    LuaEvent::bindToLua(L);
-    BindingCore_GlobalFuncs_Logger::bindToLua(L);
+    luabind::module(L)[
+        LuaEvent::bindToLua(),
+        BindingCore_GlobalFuncs_Logger::bindToLua()
+    ];
 }
 
 void LuaEngine::error()

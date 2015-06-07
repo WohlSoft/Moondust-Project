@@ -14,7 +14,7 @@ public:
     static void warning(const std::string& msg);
     static void critical(const std::string& msg);
 
-    static void bindToLua(lua_State* L);
+    static luabind::scope bindToLua();
 
 };
 
