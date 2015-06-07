@@ -15,7 +15,7 @@ class LuaEvent{
     friend class LuaEngine;
 private:
 
-    QString m_eventName;
+    std::string m_eventName;
     LuaEngine* m_engine;
 
     lua_State* getNativeState();
@@ -24,13 +24,15 @@ protected:
     std::vector<luabind::object> objList;
 public:
     LuaEvent(LuaEngine* engine);
-    QString eventName() const;
-    void setEventName(const QString &eventName);
+    std::string eventName() const;
+    void setEventName(const std::string &eventName);
 
     template<typename T>
     void addParameter(T par){
         objList.emplace_back(getNativeState(), par);
     }
+
+    static luabind::scope bindToLua();
 
 };
 
