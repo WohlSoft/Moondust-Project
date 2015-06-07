@@ -32,7 +32,7 @@ public:
         objList.emplace_back(getNativeState(), par);
     }
 
-    static void bindToLua(lua_State *L);
+    static luabind::scope bindToLua();
 
 };
 
