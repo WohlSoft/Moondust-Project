@@ -289,6 +289,7 @@ void PGE_MenuBox::exec()
         updateControllers();
         PGE_BoxBase::render();
         render();
+        glFlush();
         PGE_Window::rePaint();
 
         if(uTick > (signed)(SDL_GetTicks() - start_render))

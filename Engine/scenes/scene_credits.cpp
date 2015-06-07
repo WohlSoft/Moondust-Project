@@ -205,6 +205,7 @@ int CreditsScene::exec()
         processEvents();
         update();
         render();
+        glFlush();
         PGE_Window::rePaint();
 
         if( uTickf > (float)(SDL_GetTicks()-start_render))
