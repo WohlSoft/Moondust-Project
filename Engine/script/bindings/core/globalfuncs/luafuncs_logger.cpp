@@ -17,16 +17,13 @@ void BindingCore_GlobalFuncs_Logger::critical(const std::string &msg)
     qCritical() << msg.c_str();
 }
 
-void BindingCore_GlobalFuncs_Logger::bindToLua(lua_State *L)
+luabind::scope BindingCore_GlobalFuncs_Logger::bindToLua()
 {
     using namespace luabind;
-
-    module(L)[
+    return
         namespace_("Logger")[
             def("debug", &BindingCore_GlobalFuncs_Logger::debug),
             def("warning", &BindingCore_GlobalFuncs_Logger::warning),
             def("critical", &BindingCore_GlobalFuncs_Logger::critical)
-        ]
-
-    ];
+        ];
 }
