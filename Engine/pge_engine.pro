@@ -208,7 +208,8 @@ SOURCES += \
     script/luaevent.cpp \
     script/bindings/core/events/luaevents_engine.cpp \
     script/luatitlescreenengine.cpp \
-    ../_common/PGE_File_Formats/file_rw_savx.cpp
+    ../_common/PGE_File_Formats/file_rw_savx.cpp \
+    common_features/pge_texture.cpp
 
 
 HEADERS  += \

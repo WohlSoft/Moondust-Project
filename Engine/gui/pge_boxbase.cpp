@@ -46,8 +46,7 @@ PGE_BoxBase::~PGE_BoxBase()
 {
     if(_textureUsed)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &styleTexture.texture);
+        GlRenderer::deleteTexture( styleTexture );
     }
 
 }
@@ -119,10 +118,9 @@ void PGE_BoxBase::loadTexture(QString path)
 
     if(_textureUsed)
     {   //remove old texture
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &styleTexture.texture);
+        GlRenderer::deleteTexture( styleTexture );
     }
-    styleTexture = GraphicsHelps::loadTexture(styleTexture, path);
+    GlRenderer::loadTextureP(styleTexture, path);
     if(styleTexture.texture>0)
         _textureUsed=true;
 }

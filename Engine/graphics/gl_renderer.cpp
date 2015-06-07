@@ -20,6 +20,11 @@
 #include "window.h"
 #include "../common_features/app_path.h"
 
+#include <common_features/graphics_funcs.h>
+#include <QtOpenGL/QGLWidget>
+
+#include <gui/pge_msgbox.h>
+
 #undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
@@ -62,6 +67,8 @@ float GlRenderer::color_level_red=1.0;
 float GlRenderer::color_level_green=1.0;
 float GlRenderer::color_level_blue=1.0;
 float GlRenderer::color_level_alpha=1.0;
+
+PGE_Texture GlRenderer::_dummyTexture;
 
 bool GlRenderer::init()
 {
@@ -116,13 +123,129 @@ bool GlRenderer::init()
 
     resetViewport();
 
+    //Init dummy texture;
+    initDummyTexture();
+
     return true;
 }
 
 bool GlRenderer::uninit()
 {
+    glDisable(GL_TEXTURE_2D);
+    glDeleteTextures( 1, &(_dummyTexture.texture) );
     return false;
 }
+
+void GlRenderer::initDummyTexture()
+{
+    loadTextureP(_dummyTexture, "://images/_broken.png");
+}
+
+PGE_Texture GlRenderer::loadTexture(QString path, QString maskPath)
+{
+    PGE_Texture target;
+    loadTextureP(target, path, maskPath);
+    return target;
+}
+
+void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPath)
+{
+    QImage sourceImage;
+    // Load the OpenGL texture
+    sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
+
+    if(sourceImage.isNull())
+    {
+//        SDL_Quit();
+//        //if(ErrorCheck::hardMode)
+//        //{
+            PGE_MsgBox::error(
+                QString("Error loading of image file: \n%1\nReason: %2.")
+                .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
+//            exit(1);
+        //}
+        target = _dummyTexture;
+        return;
+    }
+
+    //Apply Alpha mask
+    if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
+    {
+        QImage maskImage = GraphicsHelps::loadQImage(maskPath);
+        sourceImage = GraphicsHelps::setAlphaMask(sourceImage, maskImage);
+    }
+
+    sourceImage=sourceImage.convertToFormat(QImage::Format_ARGB32);
+    QRgb upperColor = sourceImage.pixel(0,0);
+    target.ColorUpper.r = float(qRed(upperColor))/255.0f;
+    target.ColorUpper.g = float(qGreen(upperColor))/255.0f;
+    target.ColorUpper.b = float(qBlue(upperColor))/255.0f;
+
+    QRgb lowerColor = sourceImage.pixel(0, sourceImage.height()-1);
+    target.ColorLower.r = float(qRed(lowerColor))/255.0f;
+    target.ColorLower.g = float(qGreen(lowerColor))/255.0f;
+    target.ColorLower.b = float(qBlue(lowerColor))/255.0f;
+
+    //qDebug() << path << sourceImage.size();
+
+    sourceImage = QGLWidget::convertToGLFormat(sourceImage).mirrored(false, true);
+
+    target.nOfColors = 4;
+    target.format = GL_RGBA;
+
+    glEnable(GL_TEXTURE_2D);
+    // Have OpenGL generate a texture object handle for us
+    glGenTextures( 1, &(target.texture) );
+
+    // Bind the texture object
+    glBindTexture( GL_TEXTURE_2D, target.texture );
+
+    // Edit the texture object's image data using the information SDL_Surface gives us
+    target.w = sourceImage.width();
+    target.h = sourceImage.height();
+    // Set the texture's stretching properties
+
+    // Bind the texture object
+    glBindTexture( GL_TEXTURE_2D, target.texture );
+
+    glTexImage2D(GL_TEXTURE_2D, 0, target.nOfColors, sourceImage.width(), sourceImage.height(),
+         0, target.format, GL_UNSIGNED_BYTE, sourceImage.bits() );
+
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+    glDisable(GL_TEXTURE_2D);
+
+    target.inited = true;
+
+    return;
+}
+
+void GlRenderer::deleteTexture(PGE_Texture &tx)
+{
+    if( (tx.inited) && (tx.texture != _dummyTexture.texture))
+    {
+        glDisable(GL_TEXTURE_2D);
+        glDeleteTextures( 1, &(tx.texture) );
+    }
+    tx.inited = false;
+    tx.inited=false;
+    tx.w=0;
+    tx.h=0;
+    tx.texture_layout=NULL; tx.format=0;tx.nOfColors=0;
+    tx.ColorUpper.r=0; tx.ColorUpper.g=0; tx.ColorUpper.b=0;
+    tx.ColorLower.r=0; tx.ColorLower.g=0; tx.ColorLower.b=0;
+}
+
+
+
+
+
+
+
+
+
 
 PGE_PointF GlRenderer::mapToOpengl(PGE_Point s)
 {
@@ -291,8 +414,6 @@ void GlRenderer::setWindowSize(int w, int h)
     resetViewport();
 }
 
-
-
 void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
 {
     PGE_PointF point;
@@ -338,6 +459,8 @@ void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bott
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 {
+    if(!texture) return;
+
     PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();
@@ -373,6 +496,7 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
 
 void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, float h, float ani_top, float ani_bottom, float ani_left, float ani_right)
 {
+    if(!texture) return;
     PGE_PointF point;
         point = MapToGl(x, y);
     float left = point.x();

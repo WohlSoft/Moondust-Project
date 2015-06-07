@@ -48,7 +48,7 @@ public:
     /// \brief isValid Checks if the lua engine is valid
     /// \return True, if the engine is valid
     ///
-    inline bool isValid() { return L != NULL; }
+    inline bool isValid() { return L != nullptr; }
 
     QString coreFile() const;
     void setCoreFile(const QString &coreFile);
