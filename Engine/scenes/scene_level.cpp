@@ -472,7 +472,7 @@ void LevelScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
     int c=0;
 
     if(!isInit) goto renderBlack;
@@ -629,7 +629,7 @@ int LevelScene::exec()
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            PGE_Window::rePaint();
+            glFlush();
             stop_render=SDL_GetTicks();
             doUpdate_render = frameSkip? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
@@ -637,6 +637,8 @@ int LevelScene::exec()
         doUpdate_render -= uTickf;
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
+
+        PGE_Window::rePaint();
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {

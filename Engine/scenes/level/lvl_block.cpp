@@ -439,22 +439,7 @@ void LVL_Block::render(double camX, double camY)
     }
     else
     {
-
         GlRenderer::renderTextureCur( blockG.left(), blockG.top(), blockG.width(), blockG.height(), x.first, x.second );
-
-//        glBegin( GL_QUADS );
-//            glTexCoord2f( 0, x.first );
-//            glVertex2f( blockG.left(), blockG.top());
-
-//            glTexCoord2f( 1, x.first );
-//            glVertex2f(  blockG.right(), blockG.top());
-
-//            glTexCoord2f( 1, x.second );
-//            glVertex2f(  blockG.right(),  blockG.bottom());
-
-//            glTexCoord2f( 0, x.second );
-//            glVertex2f( blockG.left(),  blockG.bottom());
-//        glEnd();
     }
 
     glDisable(GL_TEXTURE_2D);

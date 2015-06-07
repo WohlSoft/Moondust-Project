@@ -199,6 +199,7 @@ void PGE_MsgBox::exec()
         update(uTickf);
         PGE_BoxBase::render();
         render();
+        glFlush();
         PGE_Window::rePaint();
 
         if(uTick > (signed)(SDL_GetTicks() - start_render))
