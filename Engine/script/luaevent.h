@@ -28,7 +28,7 @@ public:
     void setEventName(const QString &eventName);
 
     template<typename T>
-    void addParameter(T* par){
+    void addParameter(T par){
         objList.emplace_back(getNativeState(), par);
     }
 

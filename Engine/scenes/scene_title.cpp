@@ -53,13 +53,13 @@ TitleScene::TitleScene() : Scene(Title)
     }
     else
     {
-        cursor = GraphicsHelps::loadTexture(cursor, ConfigManager::setup_cursors.normal);
+        GlRenderer::loadTextureP(cursor, ConfigManager::setup_cursors.normal);
         _cursorIsLoaded=true;
     }
 
     if(!ConfigManager::setup_TitleScreen.backgroundImg.isEmpty())
     {
-        background = GraphicsHelps::loadTexture(background, ConfigManager::setup_TitleScreen.backgroundImg);
+        GlRenderer::loadTextureP(background, ConfigManager::setup_TitleScreen.backgroundImg);
         _bgIsLoaded=true;
     }
     else
@@ -72,7 +72,7 @@ TitleScene::TitleScene() : Scene(Title)
         if(ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         TitleScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile);
+        GlRenderer::loadTextureP(img.t, ConfigManager::setup_TitleScreen.AdditionalImages[i].imgFile);
 
         //Using of X-Y as offsets if aligning is enabled
         int x_offset=ConfigManager::setup_TitleScreen.AdditionalImages[i].x;
@@ -134,17 +134,14 @@ TitleScene::~TitleScene()
 
     if(_cursorIsLoaded)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &cursor.texture);
+        GlRenderer::deleteTexture(  cursor  );
     }
 
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures( 1, &(background.texture) );
+    GlRenderer::deleteTexture( background );
 
     for(int i=0;i<imgs.size();i++)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(imgs[i].t.texture) );
+        GlRenderer::deleteTexture( imgs[i].t );
     }
     imgs.clear();
 
@@ -167,6 +164,12 @@ bool TitleScene::init()
         ConfigManager::loadDefaultSounds();
         ConfigManager::buildSoundIndex();
     }
+    qDebug() << "set Lua file "<<ConfigManager::config_dir+"titlescreen.lua";
+
+    luaEngine.setCoreFile(ConfigManager::config_dir+"titlescreen.lua");
+    qDebug() << "Attempt to init...";
+    luaEngine.init();
+    qDebug() << "done!";
     return true;
 }
 

@@ -53,17 +53,17 @@ PGE_Menu::PGE_Menu()
     if(ConfigManager::setup_menus.selector.isEmpty())
         _selector.w=0;
     else
-        _selector = GraphicsHelps::loadTexture(_selector, ConfigManager::setup_menus.selector);
+        GlRenderer::loadTextureP(_selector, ConfigManager::setup_menus.selector);
 
     if(ConfigManager::setup_menus.scrollerUp.isEmpty())
         _scroll_up.w=0;
     else
-        _scroll_up = GraphicsHelps::loadTexture(_scroll_up, ConfigManager::setup_menus.scrollerUp);
+        GlRenderer::loadTextureP(_scroll_up, ConfigManager::setup_menus.scrollerUp);
 
     if(ConfigManager::setup_menus.scrollerDown.isEmpty())
         _scroll_down.w=0;
     else
-        _scroll_down = GraphicsHelps::loadTexture(_scroll_down, ConfigManager::setup_menus.scrollerDown);
+        GlRenderer::loadTextureP(_scroll_down, ConfigManager::setup_menus.scrollerDown);
 }
 
 PGE_Menu::PGE_Menu(const PGE_Menu &menu)
@@ -105,21 +105,9 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
 PGE_Menu::~PGE_Menu()
 {
     clear();
-    if(_selector.w>0)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &_selector.texture );
-    }
-    if(_scroll_up.w>0)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &_scroll_up.texture );
-    }
-    if(_scroll_down.w>0)
-    {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures(1, &_scroll_down.texture );
-    }
+    GlRenderer::deleteTexture( _selector );
+    GlRenderer::deleteTexture( _scroll_up );
+    GlRenderer::deleteTexture( _scroll_down );
 }
 
 void PGE_Menu::addMenuItem(QString value, QString title, std::function<void()> _extAction)

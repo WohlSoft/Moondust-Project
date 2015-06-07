@@ -19,7 +19,7 @@
 #include "../common_features/pge_texture.h"
 #include "config_manager.h"
 
-#include "../common_features/graphics_funcs.h"
+#include <graphics/gl_renderer.h>
 
 #include <QMessageBox>
 #include <QDir>
@@ -210,8 +210,7 @@ bool ConfigManager::unloadLevelConfigs()
     ///Clear texture bank
     while(!level_textures.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(level_textures.last().texture) );
+        GlRenderer::deleteTexture( level_textures.last() );
         level_textures.pop_back();
     }
 
@@ -242,8 +241,7 @@ bool ConfigManager::unloadWorldConfigs()
     ///Clear texture bank
     while(!world_textures.isEmpty())
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(world_textures.last().texture) );
+        GlRenderer::deleteTexture( world_textures.last() );
         world_textures.pop_back();
     }
 

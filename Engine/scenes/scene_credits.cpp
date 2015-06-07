@@ -60,13 +60,11 @@ CreditsScene::~CreditsScene()
     //Reset modelview matrix
     glLoadIdentity();
 
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures( 1, &(background.texture) );
+    GlRenderer::deleteTexture( background );
 
     for(int i=0;i<imgs.size();i++)
     {
-        glDisable(GL_TEXTURE_2D);
-        glDeleteTextures( 1, &(imgs[i].t.texture) );
+        GlRenderer::deleteTexture(imgs[i].t);
     }
     imgs.clear();
 }
@@ -80,16 +78,16 @@ void CreditsScene::init()
                 // Set background color from file
 
     if(!ConfigManager::setup_CreditsScreen.backgroundImg.isEmpty())
-        background = GraphicsHelps::loadTexture(background, ConfigManager::setup_CreditsScreen.backgroundImg);
+        GlRenderer::loadTextureP(background, ConfigManager::setup_CreditsScreen.backgroundImg);
     else
-        background = GraphicsHelps::loadTexture(background, ":/images/cat_splash.png");
+        GlRenderer::loadTextureP(background, ":/images/cat_splash.png");
     imgs.clear();
     for(int i=0; i<ConfigManager::setup_CreditsScreen.AdditionalImages.size(); i++)
     {
         if(ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile.isEmpty()) continue;
 
         CreditsScene_misc_img img;
-        img.t = GraphicsHelps::loadTexture(img.t, ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile);
+        GlRenderer::loadTextureP(img.t, ConfigManager::setup_CreditsScreen.AdditionalImages[i].imgFile);
 
         img.x = ConfigManager::setup_CreditsScreen.AdditionalImages[i].x;
         img.y = ConfigManager::setup_CreditsScreen.AdditionalImages[i].y;

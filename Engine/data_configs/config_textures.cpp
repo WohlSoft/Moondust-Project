@@ -17,7 +17,7 @@
  */
 
 #include "config_manager.h"
-#include "../common_features/graphics_funcs.h"
+#include <graphics/gl_renderer.h>
 
 long  ConfigManager::getBlockTexture(long blockID)
 {
@@ -54,7 +54,7 @@ long  ConfigManager::getBlockTexture(long blockID)
 
         level_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( level_textures[id],
+        GlRenderer::loadTextureP( level_textures[id],
              imgFile,
              maskFile
              );
@@ -158,7 +158,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
 
         level_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( level_textures[id],
+        GlRenderer::loadTextureP( level_textures[id],
              imgFile,
              maskFile
              );
@@ -238,7 +238,7 @@ long ConfigManager::getEffectTexture(long effectID)
 
         level_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( level_textures[id],
+        GlRenderer::loadTextureP( level_textures[id],
              imgFile,
              maskFile
              );
@@ -350,7 +350,7 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
 
         level_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( level_textures[id],
+        GlRenderer::loadTextureP( level_textures[id],
              imgFile,
              maskFile
              );
@@ -414,7 +414,7 @@ long  ConfigManager::getWldPlayerTexture(long playerID, int stateID)
 
         world_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( world_textures[id],
+        GlRenderer::loadTextureP( world_textures[id],
              imgFile,
              maskFile
              );
@@ -483,7 +483,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
 
         level_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( level_textures[id], imgFile );
+        GlRenderer::loadTextureP( level_textures[id], imgFile );
 
         if(isSecond)
         {
@@ -587,7 +587,7 @@ long  ConfigManager::getTileTexture(long tileID)
 
         world_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( world_textures[id],
+        GlRenderer::loadTextureP( world_textures[id],
              imgFile,
              maskFile
              );
@@ -665,7 +665,7 @@ long  ConfigManager::getSceneryTexture(long sceneryID)
 
         world_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( world_textures[id],
+        GlRenderer::loadTextureP( world_textures[id],
              imgFile,
              maskFile
              );
@@ -743,7 +743,7 @@ long  ConfigManager::getWldPathTexture(long pathID)
 
         world_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( world_textures[id],
+        GlRenderer::loadTextureP( world_textures[id],
              imgFile,
              maskFile
              );
@@ -822,7 +822,7 @@ long  ConfigManager::getWldLevelTexture(long levelID)
 
         world_textures.push_back(texture);
 
-        GraphicsHelps::loadTexture( world_textures[id],
+        GlRenderer::loadTextureP( world_textures[id],
              imgFile,
              maskFile
              );

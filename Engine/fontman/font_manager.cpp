@@ -76,13 +76,11 @@ RasterFont::RasterFont(const RasterFont &rf) : first_line_only("\n.*")
 
 RasterFont::~RasterFont()
 {
-    glDisable(GL_TEXTURE_2D);
     while(!textures.isEmpty())
     {
-        glDeleteTextures(1, &textures.last().texture );
+        GlRenderer::deleteTexture(textures.last() );
         textures.pop_back();
     }
-
 }
 
 void RasterFont::loadFont(QString font_ini)
@@ -152,7 +150,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
     if(!QFileInfo(root+texFile).exists())
         return;
     PGE_Texture fontTexture;
-    GraphicsHelps::loadTexture(fontTexture, root+texFile);
+    GlRenderer::loadTextureP(fontTexture, root+texFile);
     textures.push_back(fontTexture);
 
     if((letter_width==0)||(letter_height==0))
@@ -836,9 +834,6 @@ GLuint FontManager::TextToTexture(QString text, PGE_Rect rectangle, int alignFla
     GLuint fontTexture;
     SDL_string_texture_create(*defaultFont,rectangle, alignFlags, qRgba(255,255,255,255), text, &fontTexture, borders);
     return fontTexture;
-    //SDL_string_render2D(x, y, &textTexture );
-    //glDisable(GL_TEXTURE_2D);
-    //glDeleteTextures(1, &textTexture );
 }
 
 
