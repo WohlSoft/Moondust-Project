@@ -23,11 +23,13 @@
 AdvNpcAnimator::AdvNpcAnimator()
 {
     isValid=false;
+    manual_ticks=0;
 }
 
 AdvNpcAnimator::AdvNpcAnimator(PGE_Texture &sprite, obj_npc &config)
 {
     isValid=false;
+    manual_ticks=0;
     construct(sprite, config);
 }
 
@@ -243,6 +245,7 @@ void AdvNpcAnimator::start()
 
     frameCurrentL = frameFirstL;
     frameCurrentR = frameFirstR;
+    manual_ticks=frameSpeed;
 
     isEnabled=true;
 }
@@ -257,13 +260,13 @@ void AdvNpcAnimator::stop()
 
 void AdvNpcAnimator::manualTick(int ticks)
 {
-    if(speed<1) return; //Idling animation
+    if(frameSpeed<1) return; //Idling animation
 
     manual_ticks-=abs(ticks);
         while(manual_ticks<=0)
         {
             nextFrame();
-            manual_ticks+=speed;
+            manual_ticks+=frameSpeed;
         }
 }
 

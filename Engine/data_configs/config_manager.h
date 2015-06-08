@@ -22,6 +22,7 @@
 #include "../common_features/app_path.h"
 #include "../common_features/pge_texture.h"
 #include "../common_features/simple_animator.h"
+#include "../common_features/npc_animator.h"
 #include "../common_features/matrix_animator.h"
 
 #include "setup_load_screen.h"
@@ -31,6 +32,7 @@
 
 #include "obj_block.h"
 #include "obj_bgo.h"
+#include "obj_npc.h"
 #include "obj_bg.h"
 #include "obj_player.h"
 #include "obj_effect.h"
@@ -227,6 +229,19 @@ public:
     static CustomDirManager Dir_BGO;
     static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
+
+    /*****Level NPC************/
+    static bool loadLevelNPC();
+    static void loadNpcTxtConfig(long npcID);
+    static long getNpcTexture(long npcID);
+    /*****************************/
+    static QMap<long, obj_npc>   lvl_npc_indexes;
+    static npc_Markers           marker_npc;
+    static CustomDirManager Dir_NPC;
+    static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
+    /*****Level NPC************/
+
+
 
 
     /*****Level Backgrounds************/
