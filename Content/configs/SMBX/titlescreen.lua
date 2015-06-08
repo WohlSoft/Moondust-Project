@@ -1,26 +1,19 @@
 
-local function dbg_func4()
-    error("Sample Error", 2)
+local deb_i = 0
+
+function onLoop()
+    deb_i = deb_i + 1
+    Renderer.printText("A TEST STRING FROM LUA", 100, 100)
+    Renderer.printText("Ticks passed: "..deb_i, 100, 130)
 end
 
-local function dbg_func3()
-    dbg_func4()
-end
-
-local function dbg_func2()
-    dbg_func3()
-end
-
-local function dbg_func1()
-    dbg_func2()
-end
 
 function __native_event(eventObj, ...)
-    local args = {...}
-    local i = 0
-    Logger.debug("Event called "..eventObj.eventName)
-    Logger.debug("Throwing test error!")
-    dbg_func1()
+    local eventFuncToFind = "on"..eventObj.eventName:sub(0, 1):upper()..eventObj.eventName:sub(2)
+    Logger.debug(eventFuncToFind)
+    if(type(_G[eventFuncToFind]) == "function")then
+        _G[eventFuncToFind](...)
+    end
 end
 
 

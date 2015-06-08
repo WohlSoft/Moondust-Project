@@ -19,7 +19,8 @@ LuaEngine::LuaEngine() : L(nullptr), m_coreFile("")
 
 LuaEngine::~LuaEngine()
 {
-    shutdown();
+    if(isValid())
+        shutdown();
 }
 
 void LuaEngine::init()
