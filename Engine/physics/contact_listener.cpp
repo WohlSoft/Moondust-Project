@@ -202,25 +202,35 @@ void PGEContactListener::BeginContact(b2Contact *contact)
             }
         }
 
-        if(npc->collide==PGE_Phys_Object::COLLISION_ANY)
-        {
             if(npc->killed)
             {
                     contact->SetEnabled(false);
                     return;
             }
 
-            if(  ( (chr->bottom()<=npc->top()-0.1) ||
-                    ((chr->bottom() >= npc->top())&&
-                    (chr->bottom()<=npc->top()+2)) )
-
-                 &&( !( (bodyChar->left()>=bodyBlock->right()) || (bodyChar->right() <= bodyBlock->left()) ) )//prevent wall climbing
-                  )
+            if((!npc->data.friendly)&&(npc->setup->takable))
+                chr->kill_npc(npc, LVL_Player::NPC_Taked_Coin);
+            else
             {
-                chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
-                chr->onGround=(!chr->foot_contacts_map.isEmpty());
+                if(  ( (chr->bottom()<=npc->top()-0.1) ||
+                        ((chr->bottom() >= npc->top())&&
+                        (chr->bottom()<=npc->top()+2)) )
+
+                     &&( !( (bodyChar->left()>=bodyBlock->right()) || (bodyChar->right() <= bodyBlock->left()) ) )//prevent wall climbing
+                      )
+                {
+                    if((!npc->data.friendly)&&(npc->setup->kill_on_jump))
+                    {
+                        chr->kill_npc(npc, LVL_Player::NPC_Stomped);
+                    }
+                    if((npc->collide==PGE_Phys_Object::COLLISION_ANY) || (npc->collide==PGE_Phys_Object::COLLISION_TOP))
+                    {
+                    chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
+                    chr->onGround=(!chr->foot_contacts_map.isEmpty());
+                    }
+                }
             }
-        }
+
         return;
     }
 
@@ -451,6 +461,85 @@ void PGEContactListener::BeginContact(b2Contact *contact)
                     bodyChar->_player_moveup = true;
                     contact->SetEnabled(false);
                 }
+                else
+                if( bodyChar->left() >= bodyBlock->right() )
+                {
+                    chr->blocks_left[(intptr_t)bodyBlock]=1;
+                }
+                else
+                if( bodyChar->right() <= bodyBlock->left() )
+                {
+                    chr->blocks_right[(intptr_t)bodyBlock]=1;
+                }
+            }
+        }
+    }
+
+
+    /***********************************NPC & NPC***********************************/
+    if ( (bodyA->type == PGE_Phys_Object::LVLNPC) && (bodyB->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( (bodyB->type == PGE_Phys_Object::LVLNPC) && (bodyA->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        if(bodyBlock->collide==PGE_Phys_Object::COLLISION_ANY)
+        {
+            LVL_Npc *blk=dynamic_cast<LVL_Npc *>(bodyBlock);
+            LVL_Npc *chr=dynamic_cast<LVL_Npc *>(bodyChar);
+            if(!chr) return;
+            if(!blk) return;
+
+            if(blk->killed)
+            {
+                    contact->SetEnabled(false);
+                    return;
+            }
+            if(!blk->isActivated)
+            {
+                contact->SetEnabled(false);
+                return;
+            }
+
+            if(bodyBlock->isRectangle)
+            {
+                if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
+                {
+                    //if stay on block
+                }
+                else
+                if( (bodyChar->bottom() > bodyBlock->top()) &&
+                        (bodyChar->bottom() < bodyBlock->top()+2)
+                       && (fabs(bodyChar->physBody->GetLinearVelocity().x)>0))
+                {
+                    bodyChar->_player_moveup = true;
+                    contact->SetEnabled(false);
+                }
+                else
+                if( bodyChar->left() >= bodyBlock->right() )
+                {
+                    chr->blocks_left[(intptr_t)bodyBlock]=1;
+                }
+                else
+                if( bodyChar->right() <= bodyBlock->left() )
+                {
+                    chr->blocks_right[(intptr_t)bodyBlock]=1;
+                }
             }
         }
     }
@@ -618,6 +707,77 @@ void PGEContactListener::EndContact(b2Contact *contact)
         }
         return;
     }
+
+    /***********************************Block & NPC***********************************/
+    if ( (bodyA->type == PGE_Phys_Object::LVLBlock) && (bodyB->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( (bodyB->type == PGE_Phys_Object::LVLBlock) && (bodyA->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        LVL_Npc *chr=dynamic_cast<LVL_Npc *>(bodyChar);
+        if(!chr) return;
+        if(chr->blocks_left.contains((intptr_t)bodyBlock))
+        {
+            chr->blocks_left.remove((intptr_t)bodyBlock);
+        }
+        if(chr->blocks_right.contains((intptr_t)bodyBlock))
+        {
+            chr->blocks_right.remove((intptr_t)bodyBlock);
+        }
+        return;
+    }
+
+    /***********************************NPC & NPC***********************************/
+    if ( (bodyA->type == PGE_Phys_Object::LVLNPC) && (bodyB->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( (bodyB->type == PGE_Phys_Object::LVLNPC) && (bodyA->type == PGE_Phys_Object::LVLNPC) )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        LVL_Npc *chr=dynamic_cast<LVL_Npc *>(bodyChar);
+        if(!chr) return;
+        if(chr->blocks_left.contains((intptr_t)bodyBlock))
+        {
+            chr->blocks_left.remove((intptr_t)bodyBlock);
+        }
+        if(chr->blocks_right.contains((intptr_t)bodyBlock))
+        {
+            chr->blocks_right.remove((intptr_t)bodyBlock);
+        }
+        return;
+    }
+
 
     /***********************************Npc & Player***********************************/
     if ( (bodyA->type == PGE_Phys_Object::LVLNPC) && (bodyB->type == PGE_Phys_Object::LVLPlayer) )
@@ -814,6 +974,134 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
         }
 
 
+        /************************************Player and NPC***************************************************/
+        if ( bodyA->type == PGE_Phys_Object::LVLNPC && bodyB->type == PGE_Phys_Object::LVLPlayer )
+        {
+            platformFixture = fixtureA;
+            //otherFixture = fixtureB;
+            bodyBlock = bodyA;
+            bodyChar = bodyB;
+        }
+        else if ( bodyB->type == PGE_Phys_Object::LVLNPC && bodyA->type == PGE_Phys_Object::LVLPlayer )
+        {
+            platformFixture = fixtureB;
+            //otherFixture = fixtureA;
+            bodyBlock = bodyB;
+            bodyChar = bodyA;
+        }
+        else
+        {
+            platformFixture=NULL;
+        }
+
+        if(platformFixture)
+        {
+            LVL_Player *chr=dynamic_cast<LVL_Player *>(bodyChar);
+            if(!chr) return;
+
+            if(bodyBlock->type == PGE_Phys_Object::LVLNPC)
+            {
+                LVL_Npc *blk=dynamic_cast<LVL_Npc *>(bodyBlock);
+                if(!blk) return;
+                if(blk->killed)
+                {
+                    contact->SetEnabled(false);
+                    return;
+                }
+            }
+
+            /*************************No collisions check*****************************/
+            if ( bodyBlock->collide == PGE_Phys_Object::COLLISION_NONE )
+            {
+                contact->SetEnabled(false);
+                return;
+            }
+            else
+            /*************************Top collisions check*****************************/
+            if( bodyBlock->collide == PGE_Phys_Object::COLLISION_TOP )
+            {
+                if(
+                        (
+                            (bodyChar->physBody->GetLinearVelocity().y > 0.1)
+                            &&
+                            (bodyChar->bottom() < bodyBlock->top()+1)
+                            &&
+                            (
+                                 (bodyChar->left()<bodyBlock->right()-1 ) &&
+                                 (bodyChar->right()>bodyBlock->left()+1 )
+                             )
+                         )
+                        ||
+                        (bodyChar->bottom() < bodyBlock->top())
+                        )
+                {
+                    contact->SetEnabled(true);
+                    chr->foot_contacts_map[(intptr_t)bodyBlock] = 1;
+                    chr->onGround  =
+                            (!chr->foot_contacts_map.isEmpty());
+
+                    if(chr->keys.down)
+                        chr->climbing=false;
+                    if(bodyBlock->slippery_surface)
+                        chr->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
+
+                }
+                else //if( (bodyChar->bottom() > bodyBlock->top()+2) )
+                {
+                    contact->SetEnabled(false);
+                }
+                return;
+            }
+            else
+            if( bodyBlock->collide == PGE_Phys_Object::COLLISION_ANY )
+            /***********************Collision with any-side************************/
+            {
+                if(bodyBlock->type == PGE_Phys_Object::LVLBlock)
+                {
+                    LVL_Block *blk=dynamic_cast<LVL_Block *>(bodyBlock);
+                    if(!blk) return;
+                    if(blk->destroyed)
+                    {
+                            contact->SetEnabled(false);
+                            return;
+                    }
+
+                    if(blk->isHidden)
+                    {
+                        contact->SetEnabled(false);
+                        return;
+                    }
+                }
+
+                if( (bodyChar->left()>bodyBlock->right()) || (bodyChar->right() < bodyBlock->left()) )
+                    return;
+
+                if(
+                    ( (bodyChar->bottom() <= bodyBlock->top()-0.1)
+                        ||
+                      (
+                            (bodyChar->bottom() >= bodyBlock->top())&&
+                         (bodyChar->bottom()<=bodyBlock->top()+2)
+                      )
+                      )
+                   )
+                {
+                    chr->foot_contacts_map[(intptr_t)bodyBlock]=1;
+                    chr->onGround  =
+                            (!chr->foot_contacts_map.isEmpty());
+                    if(chr->keys.down)
+                        chr->climbing=false;
+
+                    if(bodyBlock->slippery_surface)
+                        chr->foot_sl_contacts_map[(intptr_t)bodyBlock] = 1;
+                }
+
+                return;
+            }
+
+        }
+
+
         /************************************NPC and Block***************************************************/
         if ( bodyA->type == PGE_Phys_Object::LVLBlock && bodyB->type == PGE_Phys_Object::LVLNPC )
         {
@@ -839,6 +1127,11 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             LVL_Npc *chr=dynamic_cast<LVL_Npc *>(bodyChar);
             if(!chr) return;
 
+            if(!chr->setup->collision_with_blocks)
+            {
+                contact->SetEnabled(false);
+                return;
+            }
             if(bodyBlock->type == PGE_Phys_Object::LVLBlock)
             {
                 LVL_Block *blk=dynamic_cast<LVL_Block *>(bodyBlock);

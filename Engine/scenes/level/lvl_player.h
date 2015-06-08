@@ -21,6 +21,7 @@
 
 #include "lvl_camera.h"
 #include "lvl_warp.h"
+#include "lvl_npc.h"
 
 #include "../../physics/base_object.h"
 #include "../../controls/controllable_object.h"
@@ -29,6 +30,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/event_queue.h>
 #include <QMap>
+
 
 class LVL_Section;
 
@@ -56,6 +58,19 @@ class LVL_Player :
         QHash<int, obj_player_state > states;
         int     stateID;
         obj_player_state state_cur;
+
+
+        enum kill_npc_reasons
+        {
+            NPC_Unknown=-1,
+            NPC_Stomped=0,
+            NPC_Kicked,
+            NPC_Taked_Coin,
+            NPC_Taked_Powerup
+        };
+
+        void kill_npc(LVL_Npc*target, kill_npc_reasons reason);
+        QQueue<LVL_Npc*> npc_queue;
 
         /*******************Environmept*********************/
         QHash<int, obj_player_physics > physics;

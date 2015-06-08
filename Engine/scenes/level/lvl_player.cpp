@@ -202,6 +202,9 @@ void LVL_Player::update(float ticks)
     if(!section) return;
     PGE_Phys_Object::update(ticks);
 
+    while(!npc_queue.isEmpty())
+        npc_queue.dequeue()->kill();
+
     event_queue.processEvents(ticks);
     if(isWarping)
     {
@@ -1360,6 +1363,27 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
         }
     }
     LvlSceneP::s->setExiting(2000, LvlExit::EXIT_Warp);
+}
+
+
+
+void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
+{
+    if(!target) return;
+    npc_queue.enqueue(target);
+    switch(reason)
+    {
+        case NPC_Unknown:
+            break;
+        case NPC_Stomped:
+            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp); break;
+        case NPC_Kicked:
+            break;
+        case NPC_Taked_Coin:
+            PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin); break;
+        case NPC_Taked_Powerup:
+            break;
+    }
 }
 
 

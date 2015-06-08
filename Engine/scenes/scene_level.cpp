@@ -319,6 +319,9 @@ void LevelScene::tickAnimations(float ticks)
     for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_BG.begin();
         it!=ConfigManager::Animator_BG.end(); it++)
         it->manualTick(ticks);
+    for(QList<AdvNpcAnimator>::iterator it=ConfigManager::Animator_NPC.begin();
+        it!=ConfigManager::Animator_NPC.end(); it++)
+        it->manualTick(ticks);
 }
 
 

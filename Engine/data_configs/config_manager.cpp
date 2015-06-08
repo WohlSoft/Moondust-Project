@@ -219,6 +219,7 @@ bool ConfigManager::unloadLevelConfigs()
     /***************Clear animators*************/
     Animator_Blocks.clear();
     Animator_BGO.clear();
+    Animator_NPC.clear();
     Animator_BG.clear();
     Animator_EFFECT.clear();
     /***************Clear settings*************/

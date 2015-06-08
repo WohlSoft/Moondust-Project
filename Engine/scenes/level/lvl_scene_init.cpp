@@ -235,6 +235,8 @@ bool LevelScene::loadConfigs()
         loaderStep();
     success = ConfigManager::loadLevelBGO();    //!< BGO
         loaderStep();
+    success = ConfigManager::loadLevelNPC();  //!< NPC
+        loaderStep();
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
         loaderStep();
     success = ConfigManager::loadLevelEffects();  //!< Effects
@@ -242,6 +244,7 @@ bool LevelScene::loadConfigs()
     //Set paths
     ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
     ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
+    ConfigManager::Dir_NPC.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelNPC() );
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
     ConfigManager::Dir_EFFECT.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelEffect() );
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
