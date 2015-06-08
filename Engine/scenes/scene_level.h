@@ -49,6 +49,8 @@
 
 #include <data_configs/custom_data.h>
 
+#include <script/lualevelengine.h>
+
 #include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
@@ -289,6 +291,8 @@ private:
 
     b2World *world;
     QList<PGE_Texture > textures_bank;
+
+    LuaLevelEngine luaEngine;
 };
 
 #endif // SCENE_LEVEL_H

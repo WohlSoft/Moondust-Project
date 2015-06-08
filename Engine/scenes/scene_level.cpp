@@ -47,7 +47,7 @@
 DebugDraw dbgDraw;
 
 LevelScene::LevelScene()
-    : Scene(Level)
+    : Scene(Level), luaEngine(this)
 {
     LvlSceneP::s = this;
 

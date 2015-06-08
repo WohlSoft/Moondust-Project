@@ -29,7 +29,7 @@
 #include "scene_title.h"
 #include <QtDebug>
 
-TitleScene::TitleScene() : Scene(Title)
+TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
     doExit=false;
     mousePos.setX(-300);

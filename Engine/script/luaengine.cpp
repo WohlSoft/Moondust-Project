@@ -2,6 +2,7 @@
 
 #include "luaevent.h"
 #include "luautils.h"
+#include "luaglobal.h"
 
 //Core libraries:
 #include "bindings/core/globalfuncs/luafuncs_logger.h"
@@ -12,7 +13,9 @@
 
 
 LuaEngine::LuaEngine() : L(nullptr), m_coreFile("")
-{}
+{
+
+}
 
 LuaEngine::~LuaEngine()
 {
@@ -29,6 +32,9 @@ void LuaEngine::init()
 
     //Create our new lua state
     L = luaL_newstate();
+
+    //Add it as global
+    LuaGlobal::add(L, this);
 
     //Open up "safe" standard lua libraries
     // FIXME: Add more accurate sandbox
@@ -111,6 +117,7 @@ void LuaEngine::forceShutdown()
         return;
     }
 
+    LuaGlobal::remove(L);
     lua_close(L);
     L = nullptr;
 }
