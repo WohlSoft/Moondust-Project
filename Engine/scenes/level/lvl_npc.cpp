@@ -56,9 +56,7 @@ void LVL_Npc::init()
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
 
-    direction=data.direct;
-    motionSpeed = ((!data.nomove)&&(setup->movement)) ? setup->speed : 0.0f;
-    is_scenery  = setup->scenery;
+    setDefaults();
 
         b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
@@ -73,7 +71,7 @@ void LVL_Npc::init()
     physBody = worldPtr->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
+    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient-0.01), PhysUtil::pix2met(posY_coefficient-0.01) );
     if(setup->block_player)
         collide = COLLISION_ANY;
     else
@@ -82,28 +80,53 @@ void LVL_Npc::init()
     else
         collide = COLLISION_NONE;
 
-    b2Fixture * npc = physBody->CreateFixture(&shape, 1.0f);
-    npc->SetSensor( false );
-    npc->SetDensity(1.0);
-    npc->SetFriction(0.3f);
+    f_npc = physBody->CreateFixture(&shape, 1.0f);
+    f_npc->SetSensor( false );
+    f_npc->SetDensity(1.0);
+    f_npc->SetFriction(0.3f);
+
+    b2EdgeShape edgeShape;
+    edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.01), PhysUtil::pix2met(-posY_coefficient-0.01)),
+                   b2Vec2(PhysUtil::pix2met(posX_coefficient+0.01), PhysUtil::pix2met(-posY_coefficient-0.01)) );
+
+    if(collide!=COLLISION_TOP)
+    {
+        edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.01), PhysUtil::pix2met(posY_coefficient+0.01) );
+        edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.01), PhysUtil::pix2met(posY_coefficient+0.01) );
+    }
+    else
+    {
+        edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+        edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
+    }
+    edgeShape.m_hasVertex0 = true;
+    edgeShape.m_hasVertex3 = true;
+    f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
+    f_edge->SetFriction( 0.04f );
+    if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
+        f_edge->SetSensor(true);
 }
 
 void LVL_Npc::kill()
 {
     killed=true;
     sct()->unregisterElement(this);
-    if(physBody && worldPtr)
-    {
-      worldPtr->DestroyBody(physBody);
-      physBody->SetUserData(NULL);
-      physBody = NULL;
-    }
     LvlSceneP::s->dead_npcs.push_back(this);
 }
 
 void LVL_Npc::update(float ticks)
 {
-    if(killed) return;
+    if(killed)
+    {
+        if(physBody && worldPtr)
+        {
+          physBody->SetAwake(false);
+          physBody->SetType(b2_staticBody);
+          f_npc->SetSensor(true);
+          f_edge->SetSensor(true);
+        }
+        return;
+    }
     PGE_Phys_Object::update(ticks);
     timeout-=ticks;
     animator.manualTick(ticks);
@@ -175,7 +198,16 @@ void LVL_Npc::render(double camX, double camY)
 //    GlRenderer::renderRect(posX()-camX,
 //                           posY()-camY,
 //                           width+1,
-//                           height+1);
+    //                           height+1);
+}
+
+void LVL_Npc::setDefaults()
+{
+    direction=data.direct;
+
+    if(!setup) return;
+    motionSpeed = ((!data.nomove)&&(setup->movement)) ? setup->speed : 0.0f;
+    is_scenery  = setup->scenery;
 }
 
 void LVL_Npc::Activate()
@@ -203,6 +235,7 @@ void LVL_Npc::deActivate()
     physBody->SetAwake(false);
     if(!is_scenery)
     {
+        setDefaults();
         if(physBody->GetType()!=b2_staticBody)
             physBody->SetType(b2_staticBody);
         setPos(data.x, data.y);

@@ -70,7 +70,7 @@ class LVL_Player :
         };
 
         void kill_npc(LVL_Npc*target, kill_npc_reasons reason);
-        QQueue<LVL_Npc*> npc_queue;
+        //QQueue<LVL_Npc*> npc_queue;
 
         /*******************Environmept*********************/
         QHash<int, obj_player_physics > physics;
