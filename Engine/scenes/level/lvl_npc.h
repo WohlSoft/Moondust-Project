@@ -25,6 +25,9 @@ public:
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
+    b2Fixture *f_npc;
+    b2Fixture *f_edge;
+
     int direction;
     QHash<int, int> blocks_left;
     QHash<int, int> blocks_right;
@@ -42,6 +45,7 @@ public:
     //float posY();
     void update(float ticks);
     void render(double camX, double camY);
+    void setDefaults();
     void Activate();
     void deActivate();
 

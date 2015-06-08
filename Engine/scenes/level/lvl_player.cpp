@@ -202,8 +202,8 @@ void LVL_Player::update(float ticks)
     if(!section) return;
     PGE_Phys_Object::update(ticks);
 
-    while(!npc_queue.isEmpty())
-        npc_queue.dequeue()->kill();
+//    while(!npc_queue.isEmpty())
+//        npc_queue.dequeue()->kill();
 
     event_queue.processEvents(ticks);
     if(isWarping)
@@ -1370,7 +1370,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 {
     if(!target) return;
-    npc_queue.enqueue(target);
+    //npc_queue.enqueue(target);
     switch(reason)
     {
         case NPC_Unknown:
