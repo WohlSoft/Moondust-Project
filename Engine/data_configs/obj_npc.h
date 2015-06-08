@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <common_features/size.h>
 
 #include "../graphics/graphics.h"
 
@@ -44,6 +45,7 @@ struct obj_npc
     GLuint textureID;
     long textureArrayId;
     long animator_ID;
+    PGE_Size      image_size;
     /*   OpenGL    */
 
     int algorithm;              //    algorithm="0"	;NPC's alhoritm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)

@@ -20,6 +20,8 @@
 #include <QPainter>
 #include <QImage>
 
+#include "size.h"
+
 #undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
@@ -37,7 +39,7 @@ public:
     static QImage loadQImage(QString file);
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
-    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr);
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize=0);
 };
 
 #endif // GRAPHICS_FUNCS_H

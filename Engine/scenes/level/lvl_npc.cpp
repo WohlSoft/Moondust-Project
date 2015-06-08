@@ -47,8 +47,20 @@ LVL_Npc::~LVL_Npc()
 void LVL_Npc::init()
 {
     if(!worldPtr) return;
-    setSize(32, 32);
-    b2BodyDef bodyDef;
+    setSize(setup->width, setup->height);
+
+
+    int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
+    int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
+    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
+    frameSize.setSize(setup->gfx_w, setup->gfx_h);
+    animator.construct(texture, *setup);
+
+    direction=data.direct;
+    motionSpeed = ((!data.nomove)&&(setup->movement)) ? setup->speed : 0.0f;
+    is_scenery  = setup->scenery;
+
+        b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
     bodyDef.fixedRotation=true;
     bodyDef.awake=false;
@@ -57,15 +69,23 @@ void LVL_Npc::init()
         PhysUtil::pix2met(data.y + posY_coefficient ) );
     bodyDef.linearDamping = 2.0;
     bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
+    bodyDef.gravityScale = setup->gravity ? 1.0f : 0.f;
     physBody = worldPtr->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
     shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
-    collide = COLLISION_ANY;
+    if(setup->block_player)
+        collide = COLLISION_ANY;
+    else
+    if(setup->block_player_top)
+        collide = COLLISION_TOP;
+    else
+        collide = COLLISION_NONE;
+
     b2Fixture * npc = physBody->CreateFixture(&shape, 1.0f);
+    npc->SetSensor( false );
     npc->SetDensity(1.0);
     npc->SetFriction(0.3f);
-    npc->SetSensor(false);
 }
 
 void LVL_Npc::kill()
@@ -86,6 +106,17 @@ void LVL_Npc::update(float ticks)
     if(killed) return;
     PGE_Phys_Object::update(ticks);
     timeout-=ticks;
+    animator.manualTick(ticks);
+
+    if(motionSpeed!=0)
+    {
+        if(!blocks_left.isEmpty())
+            direction=1;
+        else
+        if(!blocks_right.isEmpty())
+            direction=-1;
+        physBody->SetLinearVelocity(b2Vec2(PhysUtil::pix2met((motionSpeed)*direction),  physBody->GetLinearVelocity().y));
+    }
 
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
@@ -120,14 +151,28 @@ void LVL_Npc::render(double camX, double camY)
             physBody->SetType(b2_dynamicBody);
     }
 
+    AniPos x(0,1);
+    if(animated)
+    {
+        if(is_scenery)
+            x=ConfigManager::Animator_NPC[animator_ID].image(direction);
+        else
+            x=animator.image(direction);
+    }
+
+    GlRenderer::renderTexture(&texture, posX()-camX+offset.w(),
+                              posY()-camY+offset.h(),
+                              frameSize.w(),
+                              frameSize.h(),
+                              x.first, x.second);
     //AniPos x(0,1);
 
     //if(animated) //Get current animated frame
     //    x = ConfigManager::Animator_BGO[animator_ID].image();
-    GlRenderer::renderRect(posX()-camX,
-                           posY()-camY,
-                           width+1,
-                           height+1);
+//    GlRenderer::renderRect(posX()-camX,
+//                           posY()-camY,
+//                           width+1,
+//                           height+1);
 }
 
 void LVL_Npc::Activate()
@@ -136,17 +181,28 @@ void LVL_Npc::Activate()
     {
         physBody->SetAwake(true);
     }
-    if(physBody->GetType()!=b2_dynamicBody)
-        physBody->SetType(b2_dynamicBody);
+
+    if(!is_scenery)
+    {
+        if(physBody->GetType()!=b2_dynamicBody)
+            physBody->SetType(b2_dynamicBody);
+        timeout=4000;
+    }
+    else
+        timeout=150;
     isActivated=true;
-    timeout=4000;
+    animator.start();
 }
 
 void LVL_Npc::deActivate()
 {
     isActivated=false;
     physBody->SetAwake(false);
-    if(physBody->GetType()!=b2_staticBody)
-        physBody->SetType(b2_staticBody);
-    setPos(data.x, data.y);
+    if(!is_scenery)
+    {
+        if(physBody->GetType()!=b2_staticBody)
+            physBody->SetType(b2_staticBody);
+        setPos(data.x, data.y);
+    }
+    animator.stop();
 }

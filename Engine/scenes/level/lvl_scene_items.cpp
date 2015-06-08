@@ -140,17 +140,15 @@ void LevelScene::placeNPC(LevelNPC npcData)
 {
     LVL_Npc * npc;
     npc = new LVL_Npc();
-
-    /*
-    if(ConfigManager::lvl_npc_indexes.contains(bgoData.id))
-        npc->setup = ConfigManager::lvl_bgo_indexes[bgoData.id];
+    if(ConfigManager::lvl_npc_indexes.contains(npcData.id))
+        npc->setup = &ConfigManager::lvl_npc_indexes[npcData.id];
     else
     {
-        //Wrong BGO!
+        //Wrong NPC!
         delete npc;
         return;
     }
-    */
+
 
     npc->worldPtr = world;
     npc->data = npcData;
@@ -163,16 +161,14 @@ void LevelScene::placeNPC(LevelNPC npcData)
     zCounter += 0.00000001;
     npc->z_index += zCounter;
 
-    //long tID = ConfigManager::getNpcTexture(bgoData.id);
-    /*
-     * if( tID >= 0 )
+    long tID = ConfigManager::getNpcTexture(npcData.id);
+    if( tID >= 0 )
     {
         npc->texId = ConfigManager::level_textures[tID].texture;
         npc->texture = ConfigManager::level_textures[tID];
-        npc->animated = npc->setup->animated;
+        npc->animated = ((npc->setup->frames>1) || (npc->setup->framestyle>0));
         npc->animator_ID = npc->setup->animator_ID;
     }
-    */
     npc->init();
 
     int sID = findNearSection(npc->posX(), npc->posY());

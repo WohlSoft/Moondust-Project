@@ -40,18 +40,10 @@ long  ConfigManager::getBlockTexture(long blockID)
         QString imgFile = Dir_Blocks.getCustomFile(blkSetup->image_n);
         QString maskFile = Dir_Blocks.getCustomFile(blkSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = level_textures.size();
-
         blkSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         level_textures.push_back(texture);
 
         GlRenderer::loadTextureP( level_textures[id],
@@ -144,16 +136,9 @@ long  ConfigManager::getBgoTexture(long bgoID)
         QString imgFile = Dir_BGO.getCustomFile(bgoSetup->image_n);
         QString maskFile = Dir_BGO.getCustomFile(bgoSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = level_textures.size();
 
+        PGE_Texture texture;
         bgoSetup->textureArrayId = id;
 
         level_textures.push_back(texture);
@@ -201,6 +186,59 @@ long  ConfigManager::getBgoTexture(long bgoID)
 }
 
 
+long  ConfigManager::getNpcTexture(long npcID)
+{
+    if(!lvl_npc_indexes.contains(npcID))
+    {
+        return -1;
+    }
+
+    obj_npc* npcSetup=&lvl_npc_indexes[npcID];
+
+    if(npcSetup->isInit)
+    {
+
+        if(npcSetup->textureArrayId < level_textures.size())
+            return npcSetup->textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_NPC.getCustomFile(npcSetup->image_n);
+        QString maskFile = Dir_NPC.getCustomFile(npcSetup->mask_n);
+
+        long id = level_textures.size();
+        npcSetup->textureArrayId = id;
+
+        PGE_Texture texture;
+        level_textures.push_back(texture);
+
+        GlRenderer::loadTextureP( level_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        npcSetup->image = &(level_textures[id]);
+        npcSetup->textureID = level_textures[id].texture;
+        npcSetup->isInit = true;
+
+        loadNpcTxtConfig(npcID);
+
+        //Also, load and init animator
+        if( (npcSetup->scenery)&&((npcSetup->frames > 1)||(npcSetup->framestyle > 0)) )
+        {
+            AdvNpcAnimator animator(*(npcSetup->image), *npcSetup);
+            Animator_NPC.push_back(animator);
+            Animator_NPC.last().start();
+            npcSetup->animator_ID = Animator_NPC.size()-1;
+        }
+        return id;
+    }
+}
+
+
+
 
 long ConfigManager::getEffectTexture(long effectID)
 {
@@ -224,18 +262,10 @@ long ConfigManager::getEffectTexture(long effectID)
         QString imgFile = Dir_EFFECT.getCustomFile(effSetup->image_n);
         QString maskFile = Dir_EFFECT.getCustomFile(effSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = level_textures.size();
-
         effSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         level_textures.push_back(texture);
 
         GlRenderer::loadTextureP( level_textures[id],
@@ -336,18 +366,10 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
         if(isDefault)
             maskFile  = playerLvlPath+plr.sprite_folder+"/"+state.mask_n;
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = level_textures.size();
-
         state.textureArrayId = id;
 
+        PGE_Texture texture;
         level_textures.push_back(texture);
 
         GlRenderer::loadTextureP( level_textures[id],
@@ -400,18 +422,11 @@ long  ConfigManager::getWldPlayerTexture(long playerID, int stateID)
         if(isDefault)
             maskFile  = playerWldPath+plr.mask_wld_n;
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = world_textures.size();
 
         plr.textureArrayId_wld = id;
 
+        PGE_Texture texture;
         world_textures.push_back(texture);
 
         GlRenderer::loadTextureP( world_textures[id],
@@ -466,14 +481,6 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         else
             imgFile = Dir_BG.getCustomFile(bgSetup->image_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = level_textures.size();
 
         if(isSecond)
@@ -481,6 +488,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
         else
             bgSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         level_textures.push_back(texture);
 
         GlRenderer::loadTextureP( level_textures[id], imgFile );
@@ -573,18 +581,11 @@ long  ConfigManager::getTileTexture(long tileID)
         QString imgFile = Dir_Tiles.getCustomFile(tileSetup->image_n);
         QString maskFile = Dir_Tiles.getCustomFile(tileSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = world_textures.size();
 
         tileSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         world_textures.push_back(texture);
 
         GlRenderer::loadTextureP( world_textures[id],
@@ -651,18 +652,10 @@ long  ConfigManager::getSceneryTexture(long sceneryID)
         QString imgFile = Dir_Scenery.getCustomFile(scenerySetup->image_n);
         QString maskFile = Dir_Scenery.getCustomFile(scenerySetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = world_textures.size();
-
         scenerySetup->textureArrayId = id;
 
+        PGE_Texture texture;
         world_textures.push_back(texture);
 
         GlRenderer::loadTextureP( world_textures[id],
@@ -729,18 +722,10 @@ long  ConfigManager::getWldPathTexture(long pathID)
         QString imgFile = Dir_WldPaths.getCustomFile(pathSetup->image_n);
         QString maskFile = Dir_WldPaths.getCustomFile(pathSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = world_textures.size();
-
         pathSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         world_textures.push_back(texture);
 
         GlRenderer::loadTextureP( world_textures[id],
@@ -808,18 +793,10 @@ long  ConfigManager::getWldLevelTexture(long levelID)
         QString imgFile = Dir_WldLevel.getCustomFile(lvlSetup->image_n);
         QString maskFile = Dir_WldLevel.getCustomFile(lvlSetup->mask_n);
 
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
         long id = world_textures.size();
-
         lvlSetup->textureArrayId = id;
 
+        PGE_Texture texture;
         world_textures.push_back(texture);
 
         GlRenderer::loadTextureP( world_textures[id],
