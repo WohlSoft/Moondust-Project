@@ -8,7 +8,8 @@
 #include "bindings/core/events/luaevents_engine.h"
 
 #include <QFile>
-#include <tuple>
+#include <sstream>
+
 
 LuaEngine::LuaEngine() : L(nullptr), m_coreFile("")
 {}
@@ -47,6 +48,9 @@ void LuaEngine::init()
     //Activate Luabind for out state
     luabind::open(L);
 
+    //Add error handler
+    luabind::set_pcall_callback(&push_pcall_handler);
+
     //Now let's bind our functions
     bindCore();
 
@@ -66,7 +70,7 @@ void LuaEngine::init()
     QString luaCoreCode = QTextStream(&luaCoreFile).readAll();
 
     //Now load our code by lua and check for common compile errors
-    int errorCode = luautil_loadlua(L, luaCoreCode.toLocal8Bit().data(), luaCoreCode.length(), m_coreFile.toLocal8Bit().data());
+    int errorCode = luautil_loadlua(L, luaCoreCode.toLocal8Bit().data(), luaCoreCode.length(), m_coreFile.section('/', -1).section('\\', -1).toLocal8Bit().data());
     //If we get an error, then handle it
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
@@ -139,17 +143,16 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
         obj.push(L);
     }
 
-    if (lua_pcall(L, argsNum + 1, 0, 0) != 0) {
+    if (luabind::detail::pcall(L, argsNum + 1, 0) != 0) {
         onReportError(lua_tostring(L, -1));
         shutdown();
         return;
     }
-
 }
 
 void LuaEngine::onReportError(const QString &errMsg)
 {
-    qWarning() << "Lua-Error: ";
+    qWarning() << "Runtime Lua-Error: ";
     qWarning() << errMsg;
 }
 
@@ -168,3 +171,57 @@ void LuaEngine::error()
 }
 
 
+int pcall_handler(lua_State *L)
+{
+    std::string msg = "\n";
+
+
+    int level = 1;
+    lua_Debug d;
+    while(lua_getstack(L, level, &d)){
+        lua_getinfo(L, "Sln", &d);
+        if(level == 1){
+            std::string err = lua_tostring(L, -1);
+            lua_pop(L, 1);
+            msg += err + "\n";
+        }else{
+            std::string nextEntry = "\tat ";
+
+            if(util::strempty(d.short_src)){
+                nextEntry += std::string(d.short_src) + " ";
+            }else{
+                nextEntry += "[unknown codefile] ";
+            }
+            if(util::strempty(d.what)){
+                nextEntry += std::string(d.what) + " ";
+            }else{
+                nextEntry += "[unknown source] ";
+            }
+            if(util::strempty(d.namewhat)){
+                nextEntry += std::string(d.namewhat) + " ";
+            }else{
+                nextEntry += "[unknown type] ";
+            }
+            if(util::strempty(d.name)){
+                nextEntry += std::string(d.name) + " ";
+            }else{
+                nextEntry += "[unknown name] ";
+            }
+            nextEntry += std::string("at line ") + std::to_string(d.currentline) + std::string("\n");
+
+            msg += nextEntry;
+        }
+
+        level++;
+    }
+    msg.erase(msg.end()-1, msg.end());
+
+    lua_pushstring(L, msg.c_str());
+    return 1;
+}
+
+
+void push_pcall_handler(lua_State *L)
+{
+    lua_pushcfunction(L, pcall_handler);
+}

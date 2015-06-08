@@ -71,4 +71,7 @@ private:
     QString m_coreFile;
 };
 
+extern void push_pcall_handler(lua_State* L);
+extern int pcall_handler(lua_State* L);
+
 #endif // LUAENGINE_H

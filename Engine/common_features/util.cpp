@@ -113,3 +113,12 @@ QString util::filePath(QString s)
     t.replace('|', '_');
     return t;
 }
+
+bool util::strempty(const char *str)
+{
+    if(str){
+        if(strlen(str))
+            return true;
+    }
+    return false;
+}

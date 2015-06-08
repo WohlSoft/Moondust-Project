@@ -35,6 +35,7 @@ public:
     static void clearLayoutItems(QLayout* layout);
     static bool contains(const QComboBox* b, const QString &s);
     static QString filePath(QString s);
+    static bool strempty(const char* str);
 };
 
 namespace varadic_util
