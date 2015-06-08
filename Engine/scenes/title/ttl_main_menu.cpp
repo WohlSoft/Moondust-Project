@@ -243,6 +243,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
                                     []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
+                menu.addIntMenuItem(&AppSettings.volume_sound, 0, 128, "vlm_sound", "Sound volume", false);
                 menu.addBoolMenuItem(&AppSettings.fullScreen, "full_screen", "Full Screen mode",
                                      []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
                                      );
