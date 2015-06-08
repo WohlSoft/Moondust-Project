@@ -112,8 +112,6 @@ bool GlRenderer::init()
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
 
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
 

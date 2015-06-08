@@ -146,6 +146,7 @@ namespace luabind { namespace
   static meta::index<1> _1;
   static meta::index<2> _2;
   static meta::index<3> _3;
+  inline void _unused_stuff() { _unused(return_value); _unused(result); _unused(_1); _unused(_2); _unused(_3); }
 }}
 
 #endif // LUABIND_POLICY_HPP_INCLUDED
