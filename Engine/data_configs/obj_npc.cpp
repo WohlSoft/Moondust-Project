@@ -126,7 +126,14 @@ bool ConfigManager::loadLevelNPC()
         snpc.gravity =              npcset.value("gravity", "0").toBool();
         snpc.adhesion =             npcset.value("adhesion", "0").toBool();
 
-        snpc.container =            npcset.value("container", "0").toBool();
+        snpc.container =                  npcset.value("container", "0").toBool();
+        snpc.container_elastic =          npcset.value("container-elastic", "0").toBool();
+        snpc.container_elastic_border_w = npcset.value("container-elastic-border-w", "4").toInt();
+        snpc.container_show_contents    = npcset.value("container-show-contents", "1").toBool();
+        snpc.container_content_z_offset = npcset.value("container-content-z-offset", "-0.00001").toFloat();
+        snpc.container_crop_contents    = npcset.value("container-crop-contents", "0").toBool();
+        snpc.container_align_contents   = npcset.value("container-align-contents", "0").toInt();
+
         snpc.no_npc_collions =      npcset.value("no-npc-collisions", "0").toBool();
 
         //Graphics
@@ -259,6 +266,7 @@ bool ConfigManager::loadLevelNPC()
 
 
         snpc.score =        npcset.value("score", "0").toInt();
+        snpc.coins =        npcset.value("coins", "0").toInt();
         snpc.speed =        npcset.value("speed", "64").toInt();
         snpc.movement =     npcset.value("moving", "1").toBool();
         snpc.scenery =      npcset.value("scenery", "0").toBool();
@@ -266,6 +274,8 @@ bool ConfigManager::loadLevelNPC()
         snpc.can_be_eaten = npcset.value("can-be-eaten", "0").toBool();
         snpc.can_be_eaten = npcset.value("yoshicaneat", snpc.can_be_eaten).toBool();
         snpc.takable =      npcset.value("takable", "0").toBool();
+        snpc.takable_snd =  npcset.value("takable-sound-id", "0").toInt();
+
         snpc.grab_side =    npcset.value("grab-side", "0").toBool();
         snpc.grab_top =     npcset.value("grab-top", "0").toBool();
         snpc.grab_any =     npcset.value("grab-any", "0").toBool();
@@ -302,6 +312,15 @@ bool ConfigManager::loadLevelNPC()
         snpc.lava_protect =         npcset.value("lava-protection", "0").toBool();
 
         snpc.is_star =              npcset.value("is-star", "0").toBool();
+
+        snpc.exit_is =              npcset.value("is-exit", "0").toBool();
+        snpc.exit_walk_direction =  npcset.value("exit-direction", "0").toInt();
+        snpc.exit_code       =      npcset.value("exit-code", "0").toInt();
+        snpc.exit_delay      =      npcset.value("exit-delay", "0").toInt();
+        snpc.exit_snd        =      npcset.value("exit-sound-id", "0").toInt();
+
+        snpc.climbable       =      npcset.value("is-climbable", "0").toBool();
+
 
         //Editor specific flags
         long iTmp;

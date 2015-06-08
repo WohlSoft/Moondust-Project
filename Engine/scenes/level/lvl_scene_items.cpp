@@ -149,17 +149,23 @@ void LevelScene::placeNPC(LevelNPC npcData)
         return;
     }
 
-
     npc->worldPtr = world;
     npc->data = npcData;
 
     double targetZ = 0;
-    targetZ = Z_npcStd;
+    if(npc->setup->foreground)
+        targetZ = Z_npcFore;
+    else
+    if(npc->setup->background)
+        targetZ = Z_npcBack;
+    else
+        targetZ = Z_npcStd;
 
     npc->z_index += targetZ;
 
     zCounter += 0.00000001;
     npc->z_index += zCounter;
+
 
     long tID = ConfigManager::getNpcTexture(npcData.id);
     if( tID >= 0 )
