@@ -5,6 +5,8 @@
 #include <QString>
 #include <QtDebug>
 
+#include <functional>
+
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
@@ -54,19 +56,17 @@ public:
     void setCoreFile(const QString &coreFile);
 
     void dispatchEvent(LuaEvent& toDispatchEvent);
-
-
+    void setErrorReporterFunc(const std::function<void (const QString &)> &func);
 protected:
     virtual void onBindAll() {}
-    virtual void onReportError(const QString& errMsg);
 
     lua_State* getNativeState() {return L; }
 
 private:
-
     void bindCore();
     void error();
 
+    std::function<void (const QString &)> m_errorReporterFunc;
     lua_State* L;
     QString m_coreFile;
 };

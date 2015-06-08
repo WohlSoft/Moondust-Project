@@ -10,8 +10,6 @@ private:
 public:
     LuaTitleScreenEngine();
     ~LuaTitleScreenEngine();
-protected:
-    void onReportError(const QString& errMsg);
 };
 
 #endif // LUATITLESCREENENGINE_H
