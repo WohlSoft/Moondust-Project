@@ -147,8 +147,11 @@ void LVL_Npc::render(double camX, double camY)
         {
             physBody->SetAwake(true);
         }
-        if(physBody->GetType()!=b2_dynamicBody)
-            physBody->SetType(b2_dynamicBody);
+        if(!is_scenery)
+        {
+            if(physBody->GetType()!=b2_dynamicBody)
+                physBody->SetType(b2_dynamicBody);
+        }
     }
 
     AniPos x(0,1);
