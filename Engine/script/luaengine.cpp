@@ -52,10 +52,13 @@ void LuaEngine::init()
     luabind::set_pcall_callback(&push_pcall_handler);
 
     //Add error reporter
-    m_errorReporterFunc = [this](const QString& errMsg) {
-        qWarning() << "Runtime Lua-Error: ";
-        qWarning() << errMsg;
-    };
+    if(!m_errorReporterFunc){
+        m_errorReporterFunc = [this](const QString& errMsg, const QString& stacktrace) {
+            qWarning() << "Lua-Error: ";
+            qWarning() << "Error Message: " << errMsg;
+            qWarning() << "Stacktrace: \n" << stacktrace;
+        };
+    }
 
     //Now let's bind our functions
     bindCore();
@@ -80,7 +83,7 @@ void LuaEngine::init()
     //If we get an error, then handle it
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
-        m_errorReporterFunc(QString(lua_tostring(L, -1)));
+        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
         shutdown();
         return;
     }
@@ -150,7 +153,8 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
     }
 
     if (luabind::detail::pcall(L, argsNum + 1, 0) != 0) {
-        m_errorReporterFunc(QString(lua_tostring(L, -1)));
+        QString runtimeErrorMsg = QString(lua_tostring(L, -1));
+        m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
         shutdown();
         return;
     }
@@ -170,7 +174,7 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
-void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &)> &value)
+void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &, const QString &)> &value)
 {
     m_errorReporterFunc = value;
 }
@@ -179,8 +183,7 @@ void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &)>
 
 int pcall_handler(lua_State *L)
 {
-    std::string msg = "\n";
-
+    std::string msg = "";
 
     int level = 1;
     lua_Debug d;

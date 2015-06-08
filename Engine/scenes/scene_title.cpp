@@ -167,6 +167,13 @@ bool TitleScene::init()
     qDebug() << "set Lua file "<<ConfigManager::config_dir+"titlescreen.lua";
 
     luaEngine.setCoreFile(ConfigManager::config_dir+"titlescreen.lua");
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
     qDebug() << "Attempt to init...";
     luaEngine.init();
     qDebug() << "done!";
