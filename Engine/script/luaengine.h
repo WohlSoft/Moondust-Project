@@ -56,7 +56,7 @@ public:
     void setCoreFile(const QString &coreFile);
 
     void dispatchEvent(LuaEvent& toDispatchEvent);
-    void setErrorReporterFunc(const std::function<void (const QString &)> &func);
+    void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func);
 protected:
     virtual void onBindAll() {}
 
@@ -66,7 +66,7 @@ private:
     void bindCore();
     void error();
 
-    std::function<void (const QString &)> m_errorReporterFunc;
+    std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
     lua_State* L;
     QString m_coreFile;
 };
