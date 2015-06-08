@@ -23,13 +23,12 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "0.0.10.1"
+#define _FILE_VERSION "0.0.11"
 #define _FILE_RELEASE " pre-alpha"
 
 #define _VF1 0
 #define _VF2 0
-#define _VF3 10
-#define _VF4 1
+#define _VF3 11
 
 #define _FILE_DESC "Game Engine"
 
