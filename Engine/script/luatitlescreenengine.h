@@ -16,6 +16,11 @@ public:
     ~LuaTitleScreenEngine();
 
     TitleScene* getScene();
+
+protected:
+    void onBindAll();
+
+
 private:
     TitleScene* m_scene;
 };
