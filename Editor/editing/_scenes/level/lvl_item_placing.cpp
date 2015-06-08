@@ -319,8 +319,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         long imgOffsetY = (int)round( - (double)mergedSet.gfx_h +
                                       (double)mergedSet.height +
-                                      (double)mergedSet.gfx_offset_y
-                                      -((pConfigs->marker_npc.buried == LvlPlacingItems::npcSet.id)? (double)mergedSet.gfx_h : 0) );
+                                      (double)mergedSet.gfx_offset_y );
 
         LvlPlacingItems::npcGfxOffsetX1 = imgOffsetX;
         LvlPlacingItems::npcGfxOffsetX2 = (-((double)mergedSet.gfx_offset_x));
