@@ -210,7 +210,9 @@ SOURCES += \
     script/luatitlescreenengine.cpp \
     ../_common/PGE_File_Formats/file_rw_savx.cpp \
     common_features/pge_texture.cpp \
-    data_configs/obj_npc.cpp
+    data_configs/obj_npc.cpp \
+    script/lualevelengine.cpp \
+    script/luaglobal.cpp
 
 
 HEADERS  += \
@@ -324,7 +326,9 @@ HEADERS  += \
     gui/pge_menubox.h \
     script/luaevent.h \
     script/bindings/core/events/luaevents_engine.h \
-    script/luatitlescreenengine.h
+    script/luatitlescreenengine.h \
+    script/lualevelengine.h \
+    script/luaglobal.h
 
 FORMS    += \
     data_configs/select_config.ui

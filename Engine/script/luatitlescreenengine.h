@@ -3,13 +3,21 @@
 
 #include "luaengine.h"
 
+class TitleScene;
+
+
+
 class LuaTitleScreenEngine : public LuaEngine
 {
 private:
     Q_DISABLE_COPY(LuaTitleScreenEngine)
 public:
-    LuaTitleScreenEngine();
+    LuaTitleScreenEngine(TitleScene* scene);
     ~LuaTitleScreenEngine();
+
+    TitleScene* getScene();
+private:
+    TitleScene* m_scene;
 };
 
 #endif // LUATITLESCREENENGINE_H
