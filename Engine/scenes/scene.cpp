@@ -21,6 +21,9 @@
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 
+#include <script/lua_event.h>
+#include <script/bindings/core/events/luaevents_core_engine.h>
+
 void Scene::construct()
 {
     fader.setFull();
@@ -129,8 +132,20 @@ void Scene::processEvents()
     }
 }
 
+LuaEngine *Scene::getLuaEngine()
+{
+    return nullptr;
+}
+
 void Scene::update()
 {
+    LuaEngine* sceneLuaEngine = getLuaEngine();
+    if(sceneLuaEngine){
+        if(sceneLuaEngine->isValid()){
+            LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
+            sceneLuaEngine->dispatchEvent(loopEvent);
+        }
+    }
     fader.tickFader(uTickf);
 }
 

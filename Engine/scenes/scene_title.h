@@ -67,6 +67,7 @@ public:
     void onMouseMoved(SDL_MouseMotionEvent &mmevent);
     void onMousePressed(SDL_MouseButtonEvent &mbevent);
     void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+    LuaEngine* getLuaEngine();
 
     void processEvents();
 
