@@ -24,6 +24,7 @@
 #include <SDL2/SDL_scancode.h>
 #include <SDL2/SDL_events.h>
 #include <common_features/fader.h>
+#include <script/lua_engine.h>
 
 #include <functional>
 #include <QList>
@@ -58,6 +59,7 @@ public:
     virtual void onMouseReleased(SDL_MouseButtonEvent &mbevent);
     virtual void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
     virtual void processEvents();
+    virtual LuaEngine* getLuaEngine();
 
     virtual void update();
     virtual void render();

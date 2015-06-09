@@ -281,6 +281,11 @@ void TitleScene::onMouseWheel(SDL_MouseWheelEvent &wheelevent)
     }
 }
 
+LuaEngine *TitleScene::getLuaEngine()
+{
+    return &luaEngine;
+}
+
 void TitleScene::processEvents()
 {
     if(PGE_Window::showDebugInfo)
@@ -308,11 +313,6 @@ void TitleScene::processEvents()
 void TitleScene::update()
 {
     Scene::update();
-
-    if(luaEngine.isValid()){
-        LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(&luaEngine, uTickf);
-        luaEngine.dispatchEvent(loopEvent);
-    }
 
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);

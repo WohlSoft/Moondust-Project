@@ -99,6 +99,7 @@ public:
     bool loadConfigs();
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    LuaEngine* getLuaEngine();
 
     void update();
     void processEvents();
