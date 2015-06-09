@@ -17,6 +17,8 @@
  */
 
 #include <QFontDatabase>
+#include <QFontMetrics>
+#include <QScrollBar>
 
 #include "itemmsgbox.h"
 #include <ui_itemmsgbox.h>
@@ -36,13 +38,22 @@ ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *pare
     if(!title.isEmpty())
         this->setWindowTitle(title);
 
-#ifdef Q_OS_MACX
-    ui->msgTextBox->setFont(QFont("Press Start 2P", 32));
-#else
-    ui->msgTextBox->setFont(QFont("Press Start 2P", 11));
-#endif
+//#ifdef Q_OS_MACX
+//    QFont theFont("Press Start 2P", 11);
+//#else
+//    QFont theFont("Press Start 2P", 11);
+//#endif
+    QFont theFont("Press Start 2P");
+    theFont.setPixelSize(8);
+    ui->msgTextBox->setFont(theFont);
     ui->msgTextBox->clear();
+    QFontMetrics meter(ui->msgTextBox->font());
+    int w_width = meter.size(Qt::TextSingleLine, "XXXXXXXXXXXXXXXXXXXXXXXXXXX").width();
+    int scrW = ui->msgTextBox->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+    ui->msgTextBox->setMaximumWidth(w_width+scrW+12);
+    ui->msgTextBox->setMinimumWidth(w_width+scrW+12);
     ui->msgTextBox->appendPlainText(currentText);
+    updateGeometry();
 }
 
 ItemMsgBox::~ItemMsgBox()
