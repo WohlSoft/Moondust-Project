@@ -1,8 +1,8 @@
-#include "luaengine.h"
+#include "lua_engine.h"
 
-#include "luaevent.h"
-#include "luautils.h"
-#include "luaglobal.h"
+#include "lua_event.h"
+#include "lua_utils.h"
+#include "lua_global.h"
 
 //Core libraries:
 #include "bindings/core/globalfuncs/luafuncs_logger.h"

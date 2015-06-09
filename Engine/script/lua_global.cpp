@@ -1,4 +1,4 @@
-#include "luaglobal.h"
+#include "lua_global.h"
 
 namespace LuaGlobal {
     std::map<lua_State *, LuaEngine *> engines;
