@@ -6,7 +6,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
-class Binding_Title_Renderer
+class Binding_Core_GlobalFuncs_Renderer
 {
 public:
     static void printText(std::string text, int x, int y, lua_State* L);

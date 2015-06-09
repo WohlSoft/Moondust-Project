@@ -118,7 +118,6 @@ public:
 
     Controller *controller;
 
-    void addRenderFunction(const std::function<void()>& renderFunc);
 
 private:
     int ret;//!< Exit code
@@ -139,7 +138,6 @@ private:
     int debug_joy_keyid;
     int debug_joy_keytype;
 
-    QList<std::function<void()> > renderFunctions;
 
     LuaTitleScreenEngine luaEngine;
 };

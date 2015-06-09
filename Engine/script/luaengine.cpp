@@ -5,17 +5,19 @@
 #include "luaglobal.h"
 
 //Core libraries:
-#include "bindings/core/globalfuncs/luafuncs_logger.h"
-#include "bindings/core/events/luaevents_engine.h"
+#include "bindings/core/globalfuncs/luafuncs_core_logger.h"
+#include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
+#include "bindings/core/events/luaevents_core_engine.h"
 
 #include <QFile>
 #include <sstream>
 
 
-LuaEngine::LuaEngine() : L(nullptr), m_coreFile("")
-{
+LuaEngine::LuaEngine() : LuaEngine(nullptr)
+{}
 
-}
+LuaEngine::LuaEngine(Scene *scene) : m_baseScene(scene), L(nullptr), m_coreFile("")
+{}
 
 LuaEngine::~LuaEngine()
 {
@@ -173,8 +175,11 @@ void LuaEngine::bindCore()
 {
     luabind::module(L)[
         LuaEvent::bindToLua(),
-        BindingCore_GlobalFuncs_Logger::bindToLua()
+        Binding_Core_GlobalFuncs_Logger::bindToLua()
     ];
+    if(m_baseScene){
+        luabind::module(L)[Binding_Core_GlobalFuncs_Renderer::bindToLua()];
+    }
 }
 
 void LuaEngine::error()
@@ -182,6 +187,12 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
+
+Scene *LuaEngine::getBaseScene() const
+{
+    return m_baseScene;
+}
+
 void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &, const QString &)> &value)
 {
     m_errorReporterFunc = value;
