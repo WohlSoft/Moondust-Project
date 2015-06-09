@@ -17,8 +17,6 @@ public:
 
 protected:
     void onBindAll();
-private:
-    LevelScene* m_scene;
 };
 
 #endif // LUALEVELENGINE_H

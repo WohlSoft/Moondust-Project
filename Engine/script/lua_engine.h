@@ -10,6 +10,7 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
+class Scene;
 class LuaEvent;
 #include "../common_features/util.h"
 
@@ -29,6 +30,7 @@ private:
 
 public:
     LuaEngine();
+    LuaEngine(Scene* scene);
     virtual ~LuaEngine();
 
     ///
@@ -57,6 +59,8 @@ public:
 
     void dispatchEvent(LuaEvent& toDispatchEvent);
     void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func);
+
+    Scene *getBaseScene() const;
 protected:
     virtual void onBindAll() {}
 
@@ -67,6 +71,7 @@ private:
     void error();
 
     std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
+    Scene* m_baseScene;
     lua_State* L;
     QString m_coreFile;
 };

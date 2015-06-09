@@ -25,6 +25,9 @@
 #include <SDL2/SDL_events.h>
 #include <common_features/fader.h>
 
+#include <functional>
+#include <QList>
+
 class Scene
 {
     void construct();
@@ -62,6 +65,8 @@ public:
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
+    void addRenderFunction(const std::function<void()>& renderFunc);
+
     bool isExiting();
     bool doShutDown();
     /**************Fader**************/
@@ -83,6 +88,8 @@ protected:
 private:
     TypeOfScene sceneType;
     float __waiting_step;
+
+    QList<std::function<void()> > renderFunctions;
 };
 
 #endif // SCENE_H
