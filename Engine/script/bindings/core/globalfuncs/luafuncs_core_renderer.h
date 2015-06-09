@@ -10,6 +10,9 @@ class Binding_Core_GlobalFuncs_Renderer
 {
 public:
     static void printText(std::string text, int x, int y, lua_State* L);
+    static void printText(std::string text, int x, int y, int fontType, lua_State* L);
+    static void printText(std::string text, int x, int y, int fontType, int size, lua_State* L);
+    static void printText(std::string text, int x, int y, int fontType, int size, unsigned int rgba, lua_State* L);
 
     static luabind::scope bindToLua();
 };
