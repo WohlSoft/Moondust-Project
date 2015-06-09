@@ -254,7 +254,6 @@ bool LevelScene::loadConfigs()
     return success;
 }
 
-
 bool LevelScene::init()
 {
     //Load File
@@ -429,8 +428,19 @@ bool LevelScene::init()
 //        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
-    isInit = true;
 
+
+    luaEngine.setCoreFile(ConfigManager::config_dir+"script/main_level.lua");
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
+    luaEngine.init();
+
+    isInit = true;
     return true;
 }
 
