@@ -26,7 +26,7 @@
 #include <fontman/font_manager.h>
 #include <controls/controller_joystick.h>
 
-#include <script/bindings/core/events/luaevents_engine.h>
+#include <script/bindings/core/events/luaevents_core_engine.h>
 
 #include "scene_title.h"
 #include <QtDebug>
@@ -387,10 +387,6 @@ void TitleScene::render()
 
     menu.render();
 
-    while(!renderFunctions.isEmpty()){
-        renderFunctions.takeFirst()(); //Call all render functions
-    }
-
     Scene::render();
 }
 
@@ -462,7 +458,3 @@ void TitleScene::resetController()
     controller = AppSettings.openController(1);
 }
 
-void TitleScene::addRenderFunction(const std::function<void ()> &renderFunc)
-{
-    renderFunctions << renderFunc;
-}

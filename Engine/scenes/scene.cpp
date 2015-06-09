@@ -140,6 +140,10 @@ void Scene::render()
     {
         GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
+
+    while(!renderFunctions.isEmpty()){
+        renderFunctions.takeFirst()(); //Call all render functions
+    }
 }
 
 void Scene::renderMouse()
@@ -153,6 +157,11 @@ int Scene::exec()
 Scene::TypeOfScene Scene::type()
 {
     return sceneType;
+}
+
+void Scene::addRenderFunction(const std::function<void ()> &renderFunc)
+{
+    renderFunctions << renderFunc;
 }
 
 bool Scene::isExiting()
