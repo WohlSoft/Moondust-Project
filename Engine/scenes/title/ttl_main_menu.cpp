@@ -238,7 +238,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         break;
             case menu_options:
                 menu.setPos(260,284);
-                menu.setItemsNumber(8);
+                menu.setItemsNumber(9);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
@@ -248,7 +248,6 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                                      []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
                                      );
                 menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
-                menu.addBoolMenuItem(&AppSettings.enableDummyNpc, "dummy_npcs", "Enable dummy NPC's");
                 menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
                 menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
                 menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step", false,

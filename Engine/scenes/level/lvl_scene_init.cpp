@@ -326,48 +326,18 @@ bool LevelScene::init()
     {
         loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
-        if(!isLevelContinues) return false;
         placeBGO(data.bgo[i]);
     }
 
     qDebug()<<"Init NPCs";
-    if(AppSettings.enableDummyNpc)
+
+    //NPC
+    for(int i=0; i<data.npc.size(); i++)
     {
-        //NPC
-        for(int i=0; i<data.npc.size(); i++)
-        {
-            loaderStep();
-            if(!isLevelContinues) return false;//!< quit from game if window was closed
-            if(!isLevelContinues) return false;
-            placeNPC(data.npc[i]);
-        }
+        loaderStep();
+        if(!isLevelContinues) return false;//!< quit from game if window was closed
+        placeNPC(data.npc[i]);
     }
-    else
-    {
-        //NPC
-        for(int i=0; i<data.npc.size(); i++)
-        {
-            if(
-               (data.npc[i].id!=11)&&
-
-               (data.npc[i].id!=15)&&
-               (data.npc[i].id!=86)&&
-               (data.npc[i].id!=39)&&
-
-               (data.npc[i].id!=41)&&
-               (data.npc[i].id!=16)&&
-               (data.npc[i].id!=97)&&
-               (data.npc[i].id!=197)
-                    )
-                continue;
-            loaderStep();
-            if(!isLevelContinues) return false;//!< quit from game if window was closed
-            if(!isLevelContinues) return false;
-            placeNPC(data.npc[i]);
-        }
-    }
-
-
 
 
     qDebug()<<"Init Warps";
