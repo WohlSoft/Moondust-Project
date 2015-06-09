@@ -1,7 +1,7 @@
 #ifndef BINDINGCORE_EVENTS_ENGINE_H
 #define BINDINGCORE_EVENTS_ENGINE_H
 
-#include "../../../luaevent.h"
+#include "../../../lua_event.h"
 
 class BindingCore_Events_Engine
 {

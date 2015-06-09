@@ -1,5 +1,5 @@
-#include "luaevent.h"
-#include "luaengine.h"
+#include "lua_event.h"
+#include "lua_engine.h"
 
 lua_State *LuaEvent::getNativeState()
 {

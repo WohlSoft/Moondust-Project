@@ -49,7 +49,7 @@
 
 #include <data_configs/custom_data.h>
 
-#include <script/lualevelengine.h>
+#include <script/lua_level_engine.h>
 
 #include <PGE_File_Formats/file_formats.h>
 #include <Box2D/Box2D.h>

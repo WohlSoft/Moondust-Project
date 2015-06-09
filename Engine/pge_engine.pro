@@ -199,21 +199,21 @@ SOURCES += \
     common_features/size.cpp \
     common_features/fader.cpp \
     data_configs/setup_credits_screen.cpp \
-    script/luaengine.cpp \
     script/bindings/core/globalfuncs/luafuncs_logger.cpp \
     scenes/title/ttl_main_menu.cpp \
     scenes/world/wld_tilebox.cpp \
     scenes/level/lvl_scene_rtree.cpp \
     gui/pge_menubox.cpp \
-    script/luaevent.cpp \
     script/bindings/core/events/luaevents_engine.cpp \
-    script/luatitlescreenengine.cpp \
     ../_common/PGE_File_Formats/file_rw_savx.cpp \
     common_features/pge_texture.cpp \
     data_configs/obj_npc.cpp \
-    script/lualevelengine.cpp \
-    script/luaglobal.cpp \
-    script/bindings/title/globalfuncs/luafuncs_title_renderer.cpp
+    script/bindings/title/globalfuncs/luafuncs_title_renderer.cpp \
+    script/lua_titlescreen_engine.cpp \
+    script/lua_global.cpp \
+    script/lua_event.cpp \
+    script/lua_engine.cpp \
+    script/lua_level_engine.cpp
 
 
 HEADERS  += \
@@ -321,16 +321,17 @@ HEADERS  += \
     common_features/size.h \
     common_features/fader.h \
     data_configs/setup_credits_screen.h \
-    script/luaengine.h \
-    script/luautils.h \
+    script/lua_engine.h \
     script/bindings/core/globalfuncs/luafuncs_logger.h \
     gui/pge_menubox.h \
-    script/luaevent.h \
     script/bindings/core/events/luaevents_engine.h \
-    script/luatitlescreenengine.h \
-    script/lualevelengine.h \
-    script/luaglobal.h \
-    script/bindings/title/globalfuncs/luafuncs_title_renderer.h
+    script/lua_titlescreen_engine.h \
+    script/bindings/title/globalfuncs/luafuncs_title_renderer.h \
+    script/lua_engine.h \
+    script/lua_event.h \
+    script/lua_level_engine.h \
+    script/lua_global.h \
+    script/lua_utils.h
 
 FORMS    += \
     data_configs/select_config.ui

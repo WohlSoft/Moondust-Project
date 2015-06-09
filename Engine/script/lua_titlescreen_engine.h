@@ -1,7 +1,7 @@
 #ifndef LUATITLESCREENENGINE_H
 #define LUATITLESCREENENGINE_H
 
-#include "luaengine.h"
+#include "lua_engine.h"
 
 class TitleScene;
 

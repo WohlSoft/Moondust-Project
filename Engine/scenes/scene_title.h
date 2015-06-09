@@ -29,7 +29,7 @@
 #include <common_features/point.h>
 #include <controls/controller.h>
 
-#include <script/luatitlescreenengine.h>
+#include <script/lua_titlescreen_engine.h>
 
 typedef QPair<int, int > menustate;
 
