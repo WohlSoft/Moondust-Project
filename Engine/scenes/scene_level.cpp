@@ -361,6 +361,7 @@ void LevelScene::update()
         processPauseMenu();
     } else {//Update physics is not pause menu
 
+        updateLua();//Process LUA code
         system_events.processEvents(uTickf);
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event

@@ -312,7 +312,7 @@ void TitleScene::processEvents()
 void TitleScene::update()
 {
     Scene::update();
-
+    updateLua();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
