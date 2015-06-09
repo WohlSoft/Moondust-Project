@@ -443,11 +443,11 @@ void FontManager::init()
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
     defaultFont->setFamily(family);//font.setWeight(14);
-#ifdef __APPLE__
-    defaultFont->setPointSize(18);
-#else
-    defaultFont->setPointSize(12);
-#endif
+//#ifdef __APPLE__
+//    defaultFont->setPixelSize(16);
+//#else
+    defaultFont->setPixelSize(16);
+//#endif
     defaultFont->setStyleStrategy(QFont::PreferBitmap);
     defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
