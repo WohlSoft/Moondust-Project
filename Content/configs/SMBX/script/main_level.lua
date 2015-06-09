@@ -3,8 +3,7 @@ local deb_i = 0
 
 function onLoop()
     deb_i = deb_i + 1
-    Renderer.printText("A TEST STRING FROM LUA", 100, 100)
-    Renderer.printText("Ticks passed: "..deb_i, 100, 130)
+    Renderer.printText("Ticks passed: "..deb_i, 100, 130, -1, 15, 0xFFFF0055)
 end
 
 
