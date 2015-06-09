@@ -54,7 +54,6 @@ void GlobalSettings::load()
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
-    enableDummyNpc=setup.value("enable-dummy-npc", enableDummyNpc).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
 
@@ -111,7 +110,6 @@ void GlobalSettings::save()
         setup.setValue("max-fps", MaxFPS);
         setup.setValue("phys-step", PhysStep);
         setup.setValue("show-debug-info", showDebugInfo);
-        setup.setValue("enable-dummy-npc", enableDummyNpc);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
         setup.setValue("player1-controller", player1_controller);
@@ -145,8 +143,6 @@ void GlobalSettings::resetDefaults()
     PhysStep=65;
 
     showDebugInfo=false;
-
-    enableDummyNpc=false;
 
     frameSkip=true;
 

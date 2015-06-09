@@ -37,8 +37,6 @@ public:
     bool showDebugInfo;
     bool testJoystickController;
 
-    bool enableDummyNpc;
-
     bool frameSkip;
 
     int volume_sound;
