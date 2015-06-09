@@ -139,14 +139,19 @@ LuaEngine *Scene::getLuaEngine()
 
 void Scene::update()
 {
+    fader.tickFader(uTickf);
+}
+
+void Scene::updateLua()
+{
     LuaEngine* sceneLuaEngine = getLuaEngine();
+    clearRenderFunctions();//Clean up last rendered stuff
     if(sceneLuaEngine){
         if(sceneLuaEngine->isValid()){
             LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
             sceneLuaEngine->dispatchEvent(loopEvent);
         }
     }
-    fader.tickFader(uTickf);
 }
 
 void Scene::render()
@@ -156,8 +161,8 @@ void Scene::render()
         GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
 
-    while(!renderFunctions.isEmpty()){
-        renderFunctions.takeFirst()(); //Call all render functions
+    for(QList<std::function<void()> >::iterator it=renderFunctions.begin(); it!=renderFunctions.end(); it++){//Call all render functions
+        (*it)();
     }
 }
 
@@ -177,6 +182,11 @@ Scene::TypeOfScene Scene::type()
 void Scene::addRenderFunction(const std::function<void ()> &renderFunc)
 {
     renderFunctions << renderFunc;
+}
+
+void Scene::clearRenderFunctions()
+{
+    renderFunctions.clear();
 }
 
 bool Scene::isExiting()

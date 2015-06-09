@@ -62,12 +62,14 @@ public:
     virtual LuaEngine* getLuaEngine();
 
     virtual void update();
+    virtual void updateLua();
     virtual void render();
     virtual void renderMouse();
     virtual int exec(); //scene's loop
     TypeOfScene type();
 
     void addRenderFunction(const std::function<void()>& renderFunc);
+    void clearRenderFunctions();
 
     bool isExiting();
     bool doShutDown();
