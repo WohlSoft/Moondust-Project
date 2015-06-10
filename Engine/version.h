@@ -29,6 +29,7 @@
 #define _VF1 0
 #define _VF2 0
 #define _VF3 11
+#define _VF4 0
 
 #define _FILE_DESC "Game Engine"
 
