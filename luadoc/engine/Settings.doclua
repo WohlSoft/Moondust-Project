@@ -37,9 +37,9 @@
 
 -------------------------------------------------------------------------------
 -- This is the configuration-field "Physics Step" can be found in the options menu.
--- Returns the physics step speed of the game. The higher the value is, the faster the game loop is running.
--- @function [parent=#Settings] getPhysicsStep
--- @return #number The physics step speed of the game.
+-- Returns the TPS speed of the game. The higher the value is, the faster the game loop is running.
+-- @function [parent=#Settings] getTicksPerSecond
+-- @return #number The TPS speed of the game.
 
 -------------------------------------------------------------------------------
 -- This is the configuration-field "Enable Frameskip" can be found in the options menu.

@@ -11,7 +11,7 @@ public:
     static int getScreenWidth();
     static int getScreenHeight();
     static int getMaxFPS();
-    static int getPhysicsStep();
+    static int getTicksPerSecond();
     static bool useFrameSkip();
     static int getSoundVolume();
     static int getMusicVolume();

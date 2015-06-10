@@ -22,7 +22,7 @@ int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
     return AppSettings.MaxFPS;
 }
 
-int Binding_Core_GlobalFuncs_Settings::getPhysicsStep()
+int Binding_Core_GlobalFuncs_Settings::getTicksPerSecond()
 {
     return AppSettings.PhysStep;
 }
@@ -61,7 +61,7 @@ luabind::scope Binding_Core_GlobalFuncs_Settings::bindToLua()
             def("getScreenWidth", &getScreenWidth),
             def("getScreenHeight", &getScreenHeight),
             def("getMaxFPS", &getMaxFPS),
-            def("getPhysicsStep", &getPhysicsStep),
+            def("getTicksPerSecond", &getTicksPerSecond),
             def("useFrameSkip", &useFrameSkip),
             def("getSoundVolume", &getSoundVolume),
             def("getMusicVolume", &getMusicVolume),
