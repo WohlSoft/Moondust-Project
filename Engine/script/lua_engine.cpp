@@ -7,6 +7,7 @@
 //Core libraries:
 #include "bindings/core/globalfuncs/luafuncs_core_logger.h"
 #include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
+#include "bindings/core/globalfuncs/luafuncs_core_settings.h"
 #include "bindings/core/events/luaevents_core_engine.h"
 
 #include <QFile>
@@ -175,7 +176,8 @@ void LuaEngine::bindCore()
 {
     luabind::module(L)[
         LuaEvent::bindToLua(),
-        Binding_Core_GlobalFuncs_Logger::bindToLua()
+        Binding_Core_GlobalFuncs_Logger::bindToLua(),
+        Binding_Core_GlobalFuncs_Settings::bindToLua()
     ];
     if(m_baseScene){
         luabind::module(L)[Binding_Core_GlobalFuncs_Renderer::bindToLua()];
