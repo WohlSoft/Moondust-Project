@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+-- @module Settings
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Show Debug Info" found in the options menu.
+-- You can check if you want to show debug info depending on this field.
+-- @function [parent=#Settings] isDebugInfoShown
+-- @return #boolean If the debug info should be shown.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Show Debug Info" found in the options menu.
+-- You can manually set this field to show all of the debug info.
+-- @function [parent=#Settings] setDebugInfoShown
+-- @param #boolean showDebugInfo If the debug info should be shown.
+
+
+return nil

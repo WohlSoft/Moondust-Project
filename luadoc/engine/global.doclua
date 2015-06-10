@@ -22,8 +22,13 @@
 -- @field[parent = #global] Logger#Logger Logger
 
 -------------------------------------------------------------------------------
--- This is the namespace for logging into the log file.
+-- This is the namespace for rendering text, graphics and other items on the screen.
 -- @field[parent = #global] Renderer#Renderer Renderer
+
+-------------------------------------------------------------------------------
+-- This is the namespace for game settings. Mostly of these settings can be set by the user under "Main Menu > Options". You can get or set the options.
+-- @field[parent = #global] Settings#Settings Settings
+
 
 
 
