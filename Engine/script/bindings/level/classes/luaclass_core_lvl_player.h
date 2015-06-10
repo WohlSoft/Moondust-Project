@@ -13,6 +13,10 @@ public:
 
     virtual void lua_onLoop();
     static void def_lua_onLoop(LVL_Player* base) { base->LVL_Player::lua_onLoop(); }
+
+    static luabind::scope bindToLuaBase();
+    static luabind::scope bindToLua();
+
 };
 
 #endif // LUACLASS_CORE_LVL_PLAYER_H
