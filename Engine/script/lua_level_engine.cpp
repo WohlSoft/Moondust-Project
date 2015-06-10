@@ -1,6 +1,7 @@
 #include "lua_level_engine.h"
 
 #include <scenes/scene_level.h>
+#include "bindings/level/classes/luaclass_core_lvl_player.h"
 
 LuaLevelEngine::LuaLevelEngine(LevelScene *scene) : LuaEngine(scene)
 {
@@ -19,6 +20,9 @@ LevelScene *LuaLevelEngine::getScene()
 
 void LuaLevelEngine::onBindAll()
 {
-
+    luabind::module(getNativeState())[
+        Binding_Level_ClassWrapper_LVL_Player::bindToLuaBase(),
+        Binding_Level_ClassWrapper_LVL_Player::bindToLua()
+        ];
 }
 

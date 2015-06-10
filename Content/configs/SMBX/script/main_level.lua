@@ -1,15 +1,11 @@
 
+local peachPlayer_class = require("player/peach.lua")
+
 local deb_i = 0
-
 function onLoop()
-
     deb_i = deb_i + 1
-    if(Settings.isDebugInfoShown())then
-		Renderer.printText("Ticks: "..deb_i, 20, 400, -1, 15, 0xFFFF0055)
-	end
-	
+    Renderer.printText("Ticks passed: "..deb_i, 100, 130, -1, 15, 0xFFFF0055)
 end
-
 
 function __native_event(eventObj, ...)
     local eventFuncToFind = "on"..eventObj.eventName:sub(0, 1):upper()..eventObj.eventName:sub(2)
@@ -18,5 +14,11 @@ function __native_event(eventObj, ...)
         _G[eventFuncToFind](...)
     end
 end
+
+function __create_luaplayer()
+    
+end
+
+
 
 
