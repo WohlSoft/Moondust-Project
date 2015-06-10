@@ -61,6 +61,10 @@ public:
     void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func);
 
     Scene *getBaseScene() const;
+
+    QString getLuaScriptPath() const;
+    void setLuaScriptPath(const QString &luaScriptPath);
+
 protected:
     virtual void onBindAll() {}
 
@@ -70,6 +74,7 @@ private:
     void bindCore();
     void error();
 
+    QString m_luaScriptPath;
     std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
     Scene* m_baseScene;
     lua_State* L;
