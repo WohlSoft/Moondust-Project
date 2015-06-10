@@ -151,8 +151,6 @@ void GlobalSettings::resetDefaults()
     volume_sound=128;
     volume_music=64;
 
-    testJoystickController=true;
-
     player1_controller=-1;
     player2_controller=-1;
 

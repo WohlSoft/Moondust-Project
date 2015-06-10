@@ -131,7 +131,6 @@ int main(int argc, char *argv[])
     episode.worldfile="";
     AppSettings.debugMode=false; //enable debug mode
     AppSettings.interprocessing=false; //enable interprocessing
-    AppSettings.testJoystickController=false;
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
