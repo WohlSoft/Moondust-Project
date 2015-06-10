@@ -12,12 +12,12 @@
 
 #include <QFile>
 #include <sstream>
-
+#include <QFileInfo>
 
 LuaEngine::LuaEngine() : LuaEngine(nullptr)
 {}
 
-LuaEngine::LuaEngine(Scene *scene) : m_baseScene(scene), L(nullptr), m_coreFile("")
+LuaEngine::LuaEngine(Scene *scene) : m_luaScriptPath(""), m_baseScene(scene), L(nullptr), m_coreFile("")
 {}
 
 LuaEngine::~LuaEngine()
@@ -61,6 +61,19 @@ void LuaEngine::init()
     //Add error handler
     luabind::set_pcall_callback(&push_pcall_handler);
 
+    //Complete the lua script path
+    if(!m_luaScriptPath.endsWith("/"))
+        m_luaScriptPath += "/";
+
+    //Add config package path
+    if(m_luaScriptPath != ""){
+        luabind::object _G = luabind::globals(L);
+        luabind::object package = _G["package"];
+        std::string allPaths = luabind::object_cast<std::string>(package["path"]);
+        allPaths += m_luaScriptPath.toStdString() + "?.lua";
+        package["path"] = allPaths;
+    }
+
     //Add error reporter
     if(!m_errorReporterFunc){
         m_errorReporterFunc = [this](const QString& errMsg, const QString& stacktrace) {
@@ -78,9 +91,18 @@ void LuaEngine::init()
 
     //Now read the core file. This file should manage incoming events
     //and process them to all other files.
-    QFile luaCoreFile(m_coreFile);
+    QString coreFilePath;
+    if(QFileInfo(m_coreFile).isAbsolute()){
+        coreFilePath = m_coreFile;
+    }else{
+        if(m_luaScriptPath != ""){
+            coreFilePath = m_luaScriptPath + m_coreFile;
+        }
+    }
+
+    QFile luaCoreFile(coreFilePath);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
-        qWarning() << "Failed to load up \"" << m_coreFile << "\"! Wrong path or insufficient access?";
+        qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
         shutdown();
         return;
     }
@@ -189,6 +211,15 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
+QString LuaEngine::getLuaScriptPath() const
+{
+    return m_luaScriptPath;
+}
+
+void LuaEngine::setLuaScriptPath(const QString &luaScriptPath)
+{
+    m_luaScriptPath = luaScriptPath;
+}
 
 Scene *LuaEngine::getBaseScene() const
 {
@@ -199,8 +230,6 @@ void LuaEngine::setErrorReporterFunc(const std::function<void (const QString &, 
 {
     m_errorReporterFunc = value;
 }
-
-
 
 int pcall_handler(lua_State *L)
 {

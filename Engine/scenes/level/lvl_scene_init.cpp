@@ -430,7 +430,8 @@ bool LevelScene::init()
     stopLoaderAnimation();
 
 
-    luaEngine.setCoreFile(ConfigManager::config_dir+"script/main_level.lua");
+    luaEngine.setLuaScriptPath(ConfigManager::config_dir+"script/");
+    luaEngine.setCoreFile("main_level.lua");
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;
