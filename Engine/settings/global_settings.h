@@ -35,7 +35,6 @@ public:
     int  PhysStep;
 
     bool showDebugInfo;
-    bool testJoystickController;
 
     bool frameSkip;
 
