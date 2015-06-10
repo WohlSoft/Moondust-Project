@@ -7,6 +7,15 @@
 class Binding_Core_GlobalFuncs_Settings
 {
 public:
+    static bool isFullscreenActive();
+    static int getScreenWidth();
+    static int getScreenHeight();
+    static int getMaxFPS();
+    static int getPhysicsStep();
+    static bool useFrameSkip();
+    static int getSoundVolume();
+    static int getMusicVolume();
+
     static bool isDebugInfoShown();
     static void setDebugInfoShown(bool debugInfoShown);
 

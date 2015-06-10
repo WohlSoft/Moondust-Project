@@ -2,16 +2,62 @@
 -- @module Settings
 
 -------------------------------------------------------------------------------
--- This is the configuration-field "Show Debug Info" found in the options menu.
+-- This is the configuration-field "Show Debug Info" can be found in the options menu.
 -- You can check if you want to show debug info depending on this field.
 -- @function [parent=#Settings] isDebugInfoShown
 -- @return #boolean If the debug info should be shown.
 
 -------------------------------------------------------------------------------
--- This is the configuration-field "Show Debug Info" found in the options menu.
+-- This is the configuration-field "Show Debug Info" can be found in the options menu.
 -- You can manually set this field to show all of the debug info.
 -- @function [parent=#Settings] setDebugInfoShown
 -- @param #boolean showDebugInfo If the debug info should be shown.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Full Screen Mode" can be found in the options menu.
+-- You can check if the game is running in fullscreen mode.
+-- @function [parent=#Settings] isFullscreenActive
+-- @return #boolean If the game is running in fullscreen mode.
+
+-------------------------------------------------------------------------------
+-- Returns the width resolution of the game.
+-- @function [parent=#Settings] getScreenWidth
+-- @return #number The width resolution of the game.
+
+-------------------------------------------------------------------------------
+-- Returns the height resolution of the game.
+-- @function [parent=#Settings] getScreenHeight
+-- @return #number The height resolution of the game.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Max FPS" can be found in the options menu.
+-- Returns the max FPS the game is running in.
+-- @function [parent=#Settings] getMaxFPS
+-- @return #number The max FPS the game in running.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Physics Step" can be found in the options menu.
+-- Returns the physics step speed of the game. The higher the value is, the faster the game loop is running.
+-- @function [parent=#Settings] getPhysicsStep
+-- @return #number The physics step speed of the game.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Enable Frameskip" can be found in the options menu.
+-- Returns if frameskip is active.
+-- @function [parent=#Settings] useFrameSkip
+-- @return #boolean If frameskip is active.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Sound Volume" can be found in the options menu.
+-- Returns the volume of sounds.
+-- @function [parent=#Settings] getSoundVolume
+-- @return #number The volume of sounds.
+
+-------------------------------------------------------------------------------
+-- This is the configuration-field "Music Volume" can be found in the options menu.
+-- Returns the volume of music.
+-- @function [parent=#Settings] getMusicVolume
+-- @return #number The volume of music.
 
 
 return nil

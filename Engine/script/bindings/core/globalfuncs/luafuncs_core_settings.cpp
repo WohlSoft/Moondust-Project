@@ -2,6 +2,46 @@
 
 #include <settings/global_settings.h>
 
+bool Binding_Core_GlobalFuncs_Settings::isFullscreenActive()
+{
+    return AppSettings.fullScreen;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getScreenWidth()
+{
+    return AppSettings.ScreenWidth;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getScreenHeight()
+{
+    return AppSettings.ScreenHeight;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
+{
+    return AppSettings.MaxFPS;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getPhysicsStep()
+{
+    return AppSettings.PhysStep;
+}
+
+bool Binding_Core_GlobalFuncs_Settings::useFrameSkip()
+{
+    return AppSettings.frameSkip;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getSoundVolume()
+{
+    return AppSettings.volume_sound;
+}
+
+int Binding_Core_GlobalFuncs_Settings::getMusicVolume()
+{
+    return AppSettings.volume_music;
+}
+
 bool Binding_Core_GlobalFuncs_Settings::isDebugInfoShown()
 {
     return AppSettings.showDebugInfo;
@@ -17,6 +57,14 @@ luabind::scope Binding_Core_GlobalFuncs_Settings::bindToLua()
     using namespace luabind;
     return
         namespace_("Settings")[
+            def("isFullscreenActive", &isFullscreenActive),
+            def("getScreenWidth", &getScreenWidth),
+            def("getScreenHeight", &getScreenHeight),
+            def("getMaxFPS", &getMaxFPS),
+            def("getPhysicsStep", &getPhysicsStep),
+            def("useFrameSkip", &useFrameSkip),
+            def("getSoundVolume", &getSoundVolume),
+            def("getMusicVolume", &getMusicVolume),
             def("isDebugInfoShown", &isDebugInfoShown),
             def("setDebugInfoShown", &setDebugInfoShown)
         ];
