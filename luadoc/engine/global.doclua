@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------
+-- @module global
+
+
+-- Values:
+
+
+
+-- TODO Hardcoded funcs/fields
+-- -- Fields
+
+-------------------------------------------------------------------------------
+-- 
+
+-- -- Functions
+
+
+-- Hardcoded namespaces
+
+-------------------------------------------------------------------------------
+-- This is the namespace for logging into the log file.
+-- @field[parent = #global] Logger#Logger Logger
+
+-------------------------------------------------------------------------------
+-- This is the namespace for logging into the log file.
+-- @field[parent = #global] Renderer#Renderer Renderer
+
+
+
+-- Hardcoded classes
+-- -- PGE Classes
+
+
+
+
+-- -- Misc Classes
+
+
+
+
+
+
+
+-- Hardcoded funcs
+
+
+
+
+
+
+
+
+-- Softcoded funcs/fields
+
+
+
+
+return nil
