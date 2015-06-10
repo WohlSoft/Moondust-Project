@@ -200,6 +200,18 @@ class LVL_Player :
         bool locked();
         void setLocked(bool lock);
 
+        /********************Lua Stuff*******************
+                            .-""""-
+                           F   .-'
+                          F   J
+                         I    I
+                          L   `.
+                           L    `-._,
+                            `-.__.-'
+         ***********************************************/
+        virtual void lua_onLoop(){}
+        /********************Lua Stuff******************/
+
 private:
         bool isLocked;
         bool isInited;
