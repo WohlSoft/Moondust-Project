@@ -29,7 +29,7 @@ int PGE_Window::Width=800;
 int PGE_Window::Height=600;
 
 int PGE_Window::MaxFPS=250;
-int PGE_Window::PhysStep=65;
+int PGE_Window::TicksPerSecond=65;
 
 bool PGE_Window::showDebugInfo=false;
 

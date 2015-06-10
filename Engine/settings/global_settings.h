@@ -32,7 +32,7 @@ public:
     int  ScreenHeight;
 
     int  MaxFPS;
-    int  PhysStep;
+    int  TicksPerSecond;
 
     bool showDebugInfo;
 

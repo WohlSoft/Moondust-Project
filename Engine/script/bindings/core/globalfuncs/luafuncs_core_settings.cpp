@@ -24,7 +24,7 @@ int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
 
 int Binding_Core_GlobalFuncs_Settings::getTicksPerSecond()
 {
-    return AppSettings.PhysStep;
+    return AppSettings.TicksPerSecond;
 }
 
 bool Binding_Core_GlobalFuncs_Settings::useFrameSkip()
