@@ -49,8 +49,8 @@ void GlobalSettings::load()
     setup.beginGroup("Main");
     MaxFPS=setup.value("max-fps", MaxFPS).toUInt();
         if(MaxFPS<65) MaxFPS=65;
-    PhysStep=setup.value("phys-step", PhysStep).toUInt();
-        if(PhysStep<65) PhysStep=65;
+    TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
+        if(TicksPerSecond<65) TicksPerSecond=65;
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
@@ -108,7 +108,7 @@ void GlobalSettings::save()
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
         setup.setValue("max-fps", MaxFPS);
-        setup.setValue("phys-step", PhysStep);
+        setup.setValue("phys-step", TicksPerSecond);
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
@@ -140,7 +140,7 @@ void GlobalSettings::resetDefaults()
     ScreenHeight=600;
 
     MaxFPS=250;
-    PhysStep=65;
+    TicksPerSecond=65;
 
     showDebugInfo=false;
 
@@ -168,7 +168,7 @@ void GlobalSettings::resetDefaults()
 
 void GlobalSettings::apply()
 {
-    PGE_Window::PhysStep=PhysStep;
+    PGE_Window::TicksPerSecond=TicksPerSecond;
     PGE_Window::MaxFPS=MaxFPS;
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;

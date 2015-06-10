@@ -215,7 +215,8 @@ SOURCES += \
     script/lua_engine.cpp \
     script/lua_level_engine.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_settings.cpp \
-    script/bindings/level/classes/luaclass_core_lvl_player.cpp
+    script/bindings/level/classes/luaclass_core_lvl_player.cpp \
+    common_features/number_limiter.cpp
 
 
 HEADERS  += \
@@ -335,7 +336,8 @@ HEADERS  += \
     script/bindings/core/events/luaevents_core_engine.h \
     script/bindings/core/globalfuncs/luafuncs_core_renderer.h \
     script/bindings/core/globalfuncs/luafuncs_core_settings.h \
-    script/bindings/level/classes/luaclass_core_lvl_player.h
+    script/bindings/level/classes/luaclass_core_lvl_player.h \
+    common_features/number_limiter.h
 
 FORMS    += \
     data_configs/select_config.ui

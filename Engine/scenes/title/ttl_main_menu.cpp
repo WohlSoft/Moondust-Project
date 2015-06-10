@@ -250,9 +250,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
                 menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
                 menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                menu.addIntMenuItem(&AppSettings.PhysStep, 65, 80, "phys_step", "Physics step", false,
+                menu.addIntMenuItem(&AppSettings.TicksPerSecond, 65, 80, "phys_step", "Physics steps per second", false,
                                     [this]()->void{
-                                        PGE_Window::PhysStep = AppSettings.PhysStep;
+                                        PGE_Window::TicksPerSecond = AppSettings.TicksPerSecond;
                                         this->updateTickValue();
                                     }
                                     );

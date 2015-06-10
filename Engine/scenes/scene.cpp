@@ -37,7 +37,7 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTickf = 1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick = round(uTickf);
     if(uTick<=0) uTick=1;
     if(uTickf<=0) uTickf=1.0;
