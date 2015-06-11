@@ -110,15 +110,15 @@ bool ConfigManager::loadLevelBGO()
             sbgo.climbing = (bgoset.value("climbing", 0).toBool());
             sbgo.animated = (bgoset.value("animated", 0).toBool());
             sbgo.frames = bgoset.value("frames", "1").toInt();
-                NumberLimiter::apply(sbgo.frames, 1);
+                NumberLimiter::apply(sbgo.frames, 1u);
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
-                NumberLimiter::apply(sbgo.framespeed, 1);
+                NumberLimiter::apply(sbgo.framespeed, 1u);
 
             sbgo.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
-                NumberLimiter::apply(sbgo.frame_h, 0);
+                NumberLimiter::apply(sbgo.frame_h, 0u);
 
             sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
-                NumberLimiter::apply(sbgo.display_frame, 0);
+                NumberLimiter::apply(sbgo.display_frame, 0u);
             sbgo.id = i;
             //lvl_bgo.push_back(sbgo);
 

@@ -149,7 +149,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
                 sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
-                    NumberLimiter::apply(sblock.frames, 1);
+                    NumberLimiter::apply(sblock.frames, 1u);
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
                     NumberLimiter::apply(sblock.framespeed, 1);
 
