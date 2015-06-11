@@ -19,6 +19,7 @@
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
+#include <common_features/number_limiter.h>
 
 /*****Level BGO************/
 QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
@@ -109,11 +110,15 @@ bool ConfigManager::loadLevelBGO()
             sbgo.climbing = (bgoset.value("climbing", 0).toBool());
             sbgo.animated = (bgoset.value("animated", 0).toBool());
             sbgo.frames = bgoset.value("frames", "1").toInt();
+                NumberLimiter::apply(sbgo.frames, 1);
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
+                NumberLimiter::apply(sbgo.framespeed, 1);
 
             sbgo.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
+                NumberLimiter::apply(sbgo.frame_h, 0);
 
             sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
+                NumberLimiter::apply(sbgo.display_frame, 0);
             sbgo.id = i;
             //lvl_bgo.push_back(sbgo);
 
