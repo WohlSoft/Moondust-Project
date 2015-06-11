@@ -32,6 +32,8 @@ int PGE_Window::MaxFPS=250;
 int PGE_Window::TicksPerSecond=65;
 
 bool PGE_Window::showDebugInfo=false;
+bool PGE_Window::showPhysicsDebug=false;
+
 
 SDL_Window *PGE_Window::window;
 SDL_GLContext PGE_Window::glcontext;
@@ -257,6 +259,10 @@ int PGE_Window::processEvents(SDL_Event &event)
                     AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
                     return 2;
                  }
+              break;
+              case SDLK_F2:
+                  PGE_Window::showPhysicsDebug=!PGE_Window::showPhysicsDebug;
+                  return 2;
               break;
               case SDLK_F3:
                   PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

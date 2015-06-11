@@ -191,14 +191,6 @@ void LVL_Npc::render(double camX, double camY)
                               frameSize.w(),
                               frameSize.h(),
                               x.first, x.second);
-    //AniPos x(0,1);
-
-    //if(animated) //Get current animated frame
-    //    x = ConfigManager::Animator_BGO[animator_ID].image();
-//    GlRenderer::renderRect(posX()-camX,
-//                           posY()-camY,
-//                           width+1,
-    //                           height+1);
 }
 
 void LVL_Npc::setDefaults()
