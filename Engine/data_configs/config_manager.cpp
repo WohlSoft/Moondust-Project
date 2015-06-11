@@ -71,20 +71,6 @@ QString ConfigManager::imgFile, ConfigManager::imgFileM;
 QString ConfigManager::tmpstr;
 QStringList ConfigManager::tmp;
 
-QString ConfigManager::bgoPath;
-QString ConfigManager::BGPath;
-QString ConfigManager::blockPath;
-QString ConfigManager::npcPath;
-QString ConfigManager::effectPath;
-QString ConfigManager::playerLvlPath;
-QString ConfigManager::playerWldPath;
-
-QString ConfigManager::tilePath;
-QString ConfigManager::scenePath;
-QString ConfigManager::pathPath;
-QString ConfigManager::wlvlPath;
-
-QString ConfigManager::commonGPath;
 
 
 

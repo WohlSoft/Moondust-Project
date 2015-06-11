@@ -256,8 +256,8 @@ bool LevelScene::loadConfigs()
 
 bool LevelScene::init()
 {
-    luaEngine.setLuaScriptPath(ConfigManager::config_dir+"script/");
-    luaEngine.setCoreFile("main_level.lua");
+    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    luaEngine.setCoreFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;
@@ -441,9 +441,6 @@ bool LevelScene::init()
 //        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
-
-
-
 
     isInit = true;
     return true;

@@ -27,6 +27,7 @@
 
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
+#include "setup_lvl_scene.h"
 #include "setup_title_screen.h"
 #include "setup_credits_screen.h"
 
@@ -163,6 +164,10 @@ public:
     //World map data
     friend struct WorldMapSetup;
     static WorldMapSetup setup_WorldMap;
+
+    //Level data
+    friend struct LevelSetup;
+    static LevelSetup setup_Level;
 
     //Credits Screen
     friend struct CreditsScreenSetup;
@@ -336,6 +341,8 @@ public:
 
     static QString PathCommonGFX();
 
+    static QString PathScript();
+
     static QString PathWorldTiles();
     static QString PathWorldScenery();
     static QString PathWorldPaths();
@@ -367,6 +374,8 @@ private:
     static QString wlvlPath;
 
     static QString commonGPath;
+
+    static QString scriptPath;
 
     static void refreshPaths();
     static bool loadEngineSettings(); //!< Load engine.ini file
