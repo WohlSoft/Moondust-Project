@@ -310,7 +310,7 @@ LoadingScreen:
 CreditsScreen:
 {
     CreditsScene *ttl = new CreditsScene;
-    ttl->setWaitTime(15000);
+    ttl->setWaitTime(30000);
 
     ttl->init();
     ttl->fader.setFade(10, 0.0f, 0.01f);

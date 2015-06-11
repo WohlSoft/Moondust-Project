@@ -219,7 +219,9 @@ SOURCES += \
     common_features/number_limiter.cpp \
     graphics/b2d_render.cpp \
     scenes/level/lvl_effect.cpp \
-    data_configs/setup_lvl_scene.cpp
+    data_configs/setup_lvl_scene.cpp \
+    script/lua_world_engine.cpp \
+    script/lua_credits_engine.cpp
 
 
 HEADERS  += \
@@ -343,7 +345,9 @@ HEADERS  += \
     common_features/number_limiter.h \
     graphics/b2d_render.h \
     scenes/level/lvl_effect.h \
-    data_configs/setup_lvl_scene.h
+    data_configs/setup_lvl_scene.h \
+    script/lua_world_engine.h \
+    script/lua_credits_engine.h
 
 FORMS    += \
     data_configs/select_config.ui

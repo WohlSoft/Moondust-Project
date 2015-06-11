@@ -36,7 +36,7 @@
 #include <unordered_map>
 
 WorldScene::WorldScene()
-    : Scene(World)
+    : Scene(World), luaEngine(this)
 {
     wld_events.abort();
 
@@ -254,6 +254,17 @@ void WorldScene::setGameState(EpisodeState *_state)
 
 bool WorldScene::init()
 {
+    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    luaEngine.setCoreFile(ConfigManager::setup_WorldMap.luaFile);
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
+    luaEngine.init();
+
     _indexTable.clean();
     wldItems.clear();
     _itemsToRender.clear();
@@ -545,6 +556,7 @@ void WorldScene::update()
 {
     tickAnimations(uTickf);
     Scene::update();
+    updateLua();
 
     if(doExit)
     {
@@ -1011,6 +1023,11 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         break;
         default: break;
     }
+}
+
+LuaEngine *WorldScene::getLuaEngine()
+{
+    return &luaEngine;
 }
 
 void WorldScene::processEvents()
