@@ -28,7 +28,7 @@ class NumberLimiter
 {
 public:
     template<typename T>
-    static void apply(T &value, T min = std::numeric_limits<T>::min, T max = std::numeric_limits<T>::max){
+    static void apply(T &value, T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max()){
         static_assert(std::is_arithmetic<T>::value, "The value for \"apply\" must be arithemtic");
         if(value<min)
             value=min;
@@ -37,7 +37,7 @@ public:
     }
 
     template<typename T>
-    static void applyD(T &value, T defvalue, T min = std::numeric_limits<T>::min, T max = std::numeric_limits<T>::max){
+    static void applyD(T &value, T defvalue, T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max()){
         static_assert(std::is_arithmetic<T>::value, "The value for \"applyD\" must be arithemtic");
         if((value<min)||(value>max))
         {
