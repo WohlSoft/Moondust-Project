@@ -222,10 +222,8 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     player->worldPtr = world;
     player->z_index = Z_Player;
-    player->data = playerData;
 
-    player->initSize();
-
+    player->setPlayerPointInfo(playerData);
     player->init();
     players.push_back(player);
 

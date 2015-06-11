@@ -368,6 +368,18 @@ MainMenu:
         case TitleScene::ANSWER_PLAYEPISODE_2P:
             end_level_jump=RETURN_TO_WORLDMAP;
             _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
+            PlayerState plr;
+            plr._chsetup = FileFormats::dummySavCharacterState();
+            plr.characterID=1;
+            plr.stateID=1;
+            plr._chsetup.id=1;
+            plr._chsetup.state=1;
+            _game_state.setPlayerState(1, plr);
+            plr.characterID=2;
+            plr.stateID=1;
+            plr._chsetup.id=2;
+            plr._chsetup.state=1;
+            _game_state.setPlayerState(2, plr);
             _game_state.isEpisode=true;
             episode = res_episode;
             _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";

@@ -222,6 +222,7 @@ public:
 
     EventQueue<LevelScene > system_events;
     LVL_Section *getSection(int sct);
+    EpisodeState *getGameState();
 
 private:
     bool isInit;

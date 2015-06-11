@@ -128,6 +128,7 @@ void ConfigManager::refreshPaths()
     pathPath =  dirs.gworld +  "path/";
     wlvlPath =  dirs.gworld +  "level/";
 
-    scriptPath = config_dir + "script/";
     commonGPath = dirs.gcommon + "/";
+
+    scriptPath = config_dir + "script/";
 }

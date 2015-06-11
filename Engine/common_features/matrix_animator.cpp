@@ -23,6 +23,9 @@ MatrixAnimator::MatrixAnimator()
     framespeed=128;
     delay_wait=framespeed;
     direction=1;
+    current_sequance=Idle;
+    backup_sequance=Idle;
+    curFrameI=0;
     once=false;
     buildRect();
 }
@@ -164,6 +167,11 @@ MatrixAnimator::MatrixAnimates MatrixAnimator::curAnimation()
     return current_sequance;
 }
 
+int MatrixAnimator::curFramespeed()
+{
+    return framespeed;
+}
+
 void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
 {
     s_bank_left.clear();
@@ -203,6 +211,32 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             s_bank_right[seq].push_back(frame);
         }
     }
+
+    if(!s_bank_left.contains(current_sequance))
+        current_sequance=Idle;
+    if(!s_bank_right.contains(current_sequance))
+        current_sequance=Idle;
+
+    /*Update sequence settings*/
+    if(direction<0)
+    {//left
+        sequence = s_bank_left[current_sequance];
+    }
+    else
+    {//right
+        sequence = s_bank_right[current_sequance];
+    }
+
+    if(curFrameI>(sequence.size()-1))
+    {
+        curFrameI=0;
+        if(once)
+        {
+            once=false;
+            switchAnimation(backup_sequance, direction, framespeed);
+        }
+    }
+    buildRect();
 }
 
 void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed)
