@@ -138,7 +138,7 @@ void LVL_Npc::update(float ticks)
         else
         if(!blocks_right.isEmpty())
             direction=-1;
-        physBody->SetLinearVelocity(b2Vec2(PhysUtil::pix2met((motionSpeed)*direction),  physBody->GetLinearVelocity().y));
+        setSpeedX(PhysUtil::pix2met((motionSpeed)*direction));
     }
 
     LVL_Section *section=sct();
@@ -147,15 +147,10 @@ void LVL_Npc::update(float ticks)
     if(section->isWarp())
     {
         if(posX() < sBox.left()-width-1 )
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
-                 physBody->GetPosition().y), 0.0f);
+            setPosX(sBox.right()+posX_coefficient-1);
         else
         if(posX() > sBox.right() + 1 )
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
-                 physBody->GetPosition().y), 0.0f
-                                   );
+            setPosX(sBox.left()-posX_coefficient+1);
     }
 }
 

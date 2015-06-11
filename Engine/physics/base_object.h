@@ -43,7 +43,19 @@ public:
     double right();
 
     void setSize(float w, float h);
+
     virtual void setPos(double x, double y);
+    void setPosX(double x);
+    void setPosY(double y);
+    double speedX();
+    double speedY();
+    void setSpeed(double x, double y);
+    void setSpeedX(double x);
+    void setSpeedY(double y);
+    void setDecelX(double x);
+
+    double gravityScale();
+    void setGravityScale(double scl);
 
     void doPhysics();
     void _syncBox2dWithPos();

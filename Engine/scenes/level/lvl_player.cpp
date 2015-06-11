@@ -279,7 +279,7 @@ void LVL_Player::update(float ticks)
     event_queue.processEvents(ticks);
     if(isWarping)
     {
-        physBody->SetLinearVelocity(b2Vec2(0, 0));
+        setSpeed(0, 0);
         animator.tickAnimation(ticks);
         updateCamera();
         return;
@@ -287,9 +287,7 @@ void LVL_Player::update(float ticks)
 
     if(_player_moveup)
     {
-        physBody->SetTransform(b2Vec2(
-             physBody->GetPosition().x,
-             physBody->GetPosition().y-0.2), 0.0f);
+        setPosY(posY()-0.2);
         _player_moveup = false;
     }
 
@@ -301,7 +299,7 @@ void LVL_Player::update(float ticks)
         isLive = false;
         if(physBody)
         {
-            physBody->SetGravityScale(0);
+            setGravityScale(0);
             physBody->SetAwake(false);
             physBody->SetActive(false);
         }
@@ -313,7 +311,7 @@ void LVL_Player::update(float ticks)
     {
         if(gscale_Backup != 1)
         {
-            physBody->SetGravityScale(0);
+            setGravityScale(0);
             gscale_Backup = 1;
         }
     }
@@ -321,27 +319,27 @@ void LVL_Player::update(float ticks)
     {
         if(gscale_Backup != 0.f)
         {
-            physBody->SetGravityScale(physics_cur.gravity_scale);
+            setGravityScale(physics_cur.gravity_scale);
             gscale_Backup = 0.f;
         }
     }
 
     if(environment==LVL_PhysEnv::Env_Quicksand)
     {
-        physBody->SetLinearVelocity(b2Vec2(0, 0));
+        setSpeed(0,0);
     }
 
     if(climbing)
     {
-        physBody->SetLinearVelocity(b2Vec2(0, 0));
+        setSpeed(0,0);
     }
     else
     {
-        if(physBody->GetLinearVelocity().y > physics_cur.MaxSpeed_down)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, physics_cur.MaxSpeed_down));
+        if(speedY() > physics_cur.MaxSpeed_down)
+            setSpeedY(physics_cur.MaxSpeed_down);
         else
-        if(physBody->GetLinearVelocity().y < -physics_cur.MaxSpeed_up)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -physics_cur.MaxSpeed_up));
+        if(speedY() < -physics_cur.MaxSpeed_up)
+            setSpeedY(-physics_cur.MaxSpeed_up);
     }
 
 
@@ -376,13 +374,13 @@ void LVL_Player::update(float ticks)
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
+            setSpeedY(0);
 
         if(physics_cur.slow_speed_x_on_enter)
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x/2, physBody->GetLinearVelocity().y));
+            setSpeedX(speedX()/2);
 
-        physBody->SetLinearDamping(physics_cur.damping);
-        physBody->SetGravityScale(physics_cur.gravity_scale);
+        setDecelX(physics_cur.damping);
+        setGravityScale(physics_cur.gravity_scale);
         curHMaxSpeed = isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk;
@@ -453,8 +451,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                               -physics_cur.velocity_climb));
+            setSpeedY(-physics_cur.velocity_climb);
         }
         else
         if(climbable_map.size()>0)
@@ -468,8 +465,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                               physics_cur.velocity_climb));
+            setSpeedY(physics_cur.velocity_climb);
         }
         else
         if(climbable_map.size()>0)
@@ -510,12 +506,11 @@ void LVL_Player::update(float ticks)
             {
                 if(climbing)
                 {
-                    physBody->SetLinearVelocity(b2Vec2(physics_cur.velocity_climb,
-                                                       physBody->GetLinearVelocity().y));
+                    setSpeedX(physics_cur.velocity_climb);
                 }
                 else
                 {
-                if(physBody->GetLinearVelocity().x <= curHMaxSpeed)
+                if(speedX() <= curHMaxSpeed)
                     physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
                 }
             }
@@ -524,12 +519,11 @@ void LVL_Player::update(float ticks)
             {
                 if(climbing)
                 {
-                    physBody->SetLinearVelocity(b2Vec2(-physics_cur.velocity_climb,
-                                                       physBody->GetLinearVelocity().y));
+                    setSpeedX(-physics_cur.velocity_climb);
                 }
                 else
                 {
-                    if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
+                    if(speedX() >= -curHMaxSpeed)
                         physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
                 }
             }
@@ -539,8 +533,7 @@ void LVL_Player::update(float ticks)
     if( keys.alt_jump )
     {
         //Temporary it is ability to fly up!
-        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                           -physics_cur.velocity_jump));
+        setSpeedY(-physics_cur.velocity_jump);
     }
 
     if( keys.jump )
@@ -572,9 +565,7 @@ void LVL_Player::update(float ticks)
                 JumpPressed=true;
                 jumpForce=jumpForce_default;
                 floating_timer = floating_maxtime;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   physBody->GetLinearVelocity().y
-                                                  -physics_cur.velocity_jump));
+                setSpeedY(speedY()-physics_cur.velocity_jump);
             }
         }
         else
@@ -586,9 +577,7 @@ void LVL_Player::update(float ticks)
                 climbing=false;
                 jumpForce=jumpForce_default;
                 floating_timer = floating_maxtime;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   -physics_cur.velocity_jump
-                                                   -fabs(physBody->GetLinearVelocity().x/6)));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -596,10 +585,10 @@ void LVL_Player::update(float ticks)
                 floating_isworks=true;
 
                 //if true - do floating with sin, if false - do with cos.
-                floating_start_type=(physBody->GetLinearVelocity().y<0);
+                floating_start_type=(speedY()<0);
 
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 0));
-                physBody->SetGravityScale(0);
+                setSpeedY(0);
+                setGravityScale(0);
             }
         }
         else
@@ -607,25 +596,21 @@ void LVL_Player::update(float ticks)
             if(jumpForce>0)
             {
                 jumpForce -= ticks;
-                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   -physics_cur.velocity_jump
-                                                   -fabs(physBody->GetLinearVelocity().x/6)));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
             }
 
             if(floating_isworks)
             {
                 floating_timer -= ticks;
                 if(floating_start_type)
-                    physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*(-cos(floating_timer/80.0)) ) );
+                    setSpeedY( 3.5*(-cos(floating_timer/80.0)) );
                 else
-                    physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x,
-                                                   3.5*cos(floating_timer/80.0)) );
+                    setSpeedY( 3.5*cos(floating_timer/80.0) );
                 if(floating_timer<=0)
                 {
                     floating_timer=0;
                     floating_isworks=false;
-                    physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
+                    setGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }
         }
@@ -642,7 +627,7 @@ void LVL_Player::update(float ticks)
                 {
                     floating_timer=0;
                     floating_isworks=false;
-                    physBody->SetGravityScale(climbing?0:physics_cur.gravity_scale);
+                    setGravityScale(climbing?0:physics_cur.gravity_scale);
                 }
             }
         }
@@ -662,18 +647,13 @@ void LVL_Player::update(float ticks)
     if(bumpDown)
     {
         bumpDown=false;
-        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, bumpVelocity));
+        setSpeedY(bumpVelocity);
     }
     else
     if(bumpUp)
     {
         bumpUp=false;
-        physBody->SetLinearVelocity(
-                                b2Vec2(physBody->GetLinearVelocity().x,
-                                (keys.jump?(-75.f-fabs(physBody->GetLinearVelocity().x/6))
-                                                                                    :-32.5f)
-                                           )
-                                    );
+        setSpeedY( (keys.jump?(-75.f-fabs(physBody->GetLinearVelocity().x/6)) : -32.5f) );
     }
 
 
@@ -681,15 +661,10 @@ void LVL_Player::update(float ticks)
     if(section->isWarp())
     {
         if(posX() < sBox.left()-width-1 )
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(sBox.right()+posX_coefficient-1),
-                 physBody->GetPosition().y), 0.0f);
+            setPosX( sBox.right()+posX_coefficient-1 );
         else
         if(posX() > sBox.right() + 1 )
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(sBox.left()-posX_coefficient+1 ),
-                 physBody->GetPosition().y), 0.0f
-                                   );
+            setPosX( sBox.left()-posX_coefficient+1 );
     }
     else
     {
@@ -700,11 +675,8 @@ void LVL_Player::update(float ticks)
             {
                 if( posX() < sBox.left())
                 {
-                    physBody->SetTransform(b2Vec2(
-                         PhysUtil::pix2met(sBox.left() + posX_coefficient),
-                            physBody->GetPosition().y), 0.0f);
-
-                    physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+                    setPosX(sBox.left() + posX_coefficient);
+                    setSpeedX(0);
                 }
             }
 
@@ -712,7 +684,7 @@ void LVL_Player::update(float ticks)
             {
                 isInited=false;
                 physBody->SetAwake(false);
-                physBody->SetGravityScale(0);
+                setGravityScale(0);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -722,20 +694,14 @@ void LVL_Player::update(float ticks)
             //Prevent moving of player away from screen
             if( posX() < sBox.left())
             {
-                physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(sBox.left() + posX_coefficient),
-                        physBody->GetPosition().y), 0.0f);
-
-                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+                setPosX(sBox.left() + posX_coefficient );
+                setSpeedX(0);
             }
             else
             if( posX()+width > sBox.right())
             {
-                physBody->SetTransform(b2Vec2(
-                     PhysUtil::pix2met(sBox.right()-posX_coefficient ),
-                        physBody->GetPosition().y), 0.0f
-                                       );
-                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+                setPosX(sBox.right()-posX_coefficient);
+                setSpeedX(0);
             }
         }
     }
@@ -865,7 +831,7 @@ void LVL_Player::refreshAnimation()
     /**********************************Animation switcher**********************************/
         if(climbing)
         {
-            if((physBody->GetLinearVelocity().y<0.0)||(physBody->GetLinearVelocity().x!=0.0))
+            if((speedY()<0.0)||(speedX()!=0.0))
                 animator.switchAnimation(MatrixAnimator::Climbing, direction, 128);
             else
                 animator.switchAnimation(MatrixAnimator::Climbing, direction, -1);
@@ -890,9 +856,9 @@ void LVL_Player::refreshAnimation()
             }
             else
             {
-                if(physBody->GetLinearVelocity().y<0)
+                if(speedY()<0)
                     animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
-                else if(physBody->GetLinearVelocity().y>0)
+                else if(speedY()>0)
                     animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
             }
         }
@@ -900,7 +866,7 @@ void LVL_Player::refreshAnimation()
         {
             bool busy=false;
 
-            if((physBody->GetLinearVelocity().x<-1)&&(direction>0))
+            if((speedX()<-1)&&(direction>0))
                 if(keys.right)
                 {
                     if(SDL_GetTicks()-slideTicks>100)
@@ -914,7 +880,7 @@ void LVL_Player::refreshAnimation()
 
             if(!busy)
             {
-                if((physBody->GetLinearVelocity().x>1)&&(direction<0))
+                if((speedX()>1)&&(direction<0))
                     if(keys.left)
                     {
                         if(SDL_GetTicks()-slideTicks>100)
@@ -929,7 +895,7 @@ void LVL_Player::refreshAnimation()
 
             if(!busy)
             {
-                float velX = physBody->GetLinearVelocity().x;
+                float velX = speedX();
                 if( ((!slippery_surface)&&(velX>0.0))||((slippery_surface)&&(keys.right)&&(velX>0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
                 else if( ((!slippery_surface)&& (velX<0.0))||((slippery_surface)&&(keys.left)&&(velX<0.0)) )
@@ -959,8 +925,8 @@ void LVL_Player::bump(bool _up)
         bumpUp=true;
     else
         bumpDown=true;
-    if(physBody)
-        bumpVelocity = fabs(physBody->GetLinearVelocity().y)/4;
+
+    bumpVelocity = fabs(speedY())/4.0;
 }
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
@@ -1083,8 +1049,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
     {
         case 2://door
         {
-                physBody->SetGravityScale(0);
-                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                setGravityScale(0);
+                setSpeed(0, 0);
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this,x,y]()->void{
                                       isWarping=true;
@@ -1106,7 +1072,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                 EventQueueEntry<LVL_Player >event3;
                 event3.makeCaller([this]()->void{
                                       isWarping=false;
-                                      physBody->SetLinearVelocity(b2Vec2(0, -0.00001));
+                                      setSpeed(0, -0.00001);
                                       last_environment=-1;//!< Forcing to refresh physical environment
                                   }, 200);
                 event_queue.events.push_back(event3);
@@ -1115,8 +1081,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
     case 1://Pipe
         {
             // Exit direction: [1] down [3] up [4] left [2] right
-            physBody->SetGravityScale(0);
-            physBody->SetLinearVelocity(b2Vec2(0, 0));
+            setGravityScale(0);
+            setSpeed(0, 0);
 
             EventQueueEntry<LVL_Player >eventPipeEnter;
             eventPipeEnter.makeCaller([this,warpDirection]()->void{
@@ -1204,7 +1170,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
             EventQueueEntry<LVL_Player >endWarping;
             endWarping.makeCaller([this]()->void{
                                   isWarping=false;
-                                  physBody->SetLinearVelocity(b2Vec2(0, -0.00001));
+                                  setSpeed(0, -0.00001);
                                   last_environment=-1;//!< Forcing to refresh physical environment
                               }, 0);
             event_queue.events.push_back(endWarping);
@@ -1229,16 +1195,16 @@ void LVL_Player::WarpTo(LevelDoor warp)
     {
         case 1:/*******Pipe!*******/
         {
-            physBody->SetLinearVelocity(b2Vec2(0, 0));
+            setSpeed(0, 0);
 
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
-                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                setSpeed(0, 0);
                                 isWarping=true;
                                 warpPipeOffset=0.0f;
                                 setDuck(false);
-                                physBody->SetGravityScale(0);
+                                setGravityScale(0);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);                                
                               }, 0);
             event_queue.events.push_back(event1);
@@ -1343,12 +1309,12 @@ void LVL_Player::WarpTo(LevelDoor warp)
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
-                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                setSpeed(0, 0);
                                 isWarping=true;
                                 warpPipeOffset=0.0;
                                 warpDirectO=0;
                                 setDuck(false);
-                                physBody->SetGravityScale(0);
+                                setGravityScale(0);
                                 animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
                               }, 0);
@@ -1418,7 +1384,6 @@ void LVL_Player::teleport(float x, float y)
 void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long wY)
 {
     isLive = false;
-    //physBody->SetActive(false);
     if(!levelFile.isEmpty())
     {
         LvlSceneP::s->warpToLevelFile =
