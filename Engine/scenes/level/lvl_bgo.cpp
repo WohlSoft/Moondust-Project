@@ -39,16 +39,6 @@ LVL_Bgo::~LVL_Bgo()
     }
 }
 
-//float LVL_Bgo::posX()
-//{
-//    return data->x;
-//}
-
-//float LVL_Bgo::posY()
-//{
-//    return data->y;
-//}
-
 void LVL_Bgo::init()
 {
     if(!worldPtr) return;
