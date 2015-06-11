@@ -115,6 +115,67 @@ void PGE_Phys_Object::setPos(double x, double y)
     _syncBox2dWithPos();
 }
 
+void PGE_Phys_Object::setPosX(double x)
+{
+    physBody->SetTransform(
+                b2Vec2(
+                PhysUtil::pix2met( x+posX_coefficient),
+                physBody->GetPosition().y
+                    ), 0.0f);
+    _syncBox2dWithPos();
+}
+
+void PGE_Phys_Object::setPosY(double y)
+{
+    physBody->SetTransform(
+                b2Vec2(
+                physBody->GetPosition().x,
+                PhysUtil::pix2met( y+posY_coefficient)
+                    ), 0.0f);
+    _syncBox2dWithPos();
+}
+
+double PGE_Phys_Object::speedX()
+{
+    return physBody->GetLinearVelocity().x;
+}
+
+double PGE_Phys_Object::speedY()
+{
+    return physBody->GetLinearVelocity().y;
+}
+
+void PGE_Phys_Object::setSpeed(double x, double y)
+{
+    physBody->SetLinearVelocity(b2Vec2(x, y));
+}
+
+void PGE_Phys_Object::setSpeedX(double x)
+{
+    physBody->SetLinearVelocity(b2Vec2(x, physBody->GetLinearVelocity().y));
+}
+
+void PGE_Phys_Object::setSpeedY(double y)
+{
+    physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, y));
+}
+
+void PGE_Phys_Object::setDecelX(double x)
+{
+    physBody->SetLinearDamping(x);
+}
+
+double PGE_Phys_Object::gravityScale()
+{
+    return physBody->GetGravityScale();
+}
+
+void PGE_Phys_Object::setGravityScale(double scl)
+{
+    return physBody->SetGravityScale(scl);
+}
+
+
 void PGE_Phys_Object::doPhysics()
 {
 
