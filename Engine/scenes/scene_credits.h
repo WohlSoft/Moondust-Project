@@ -25,6 +25,8 @@
 
 #include "scene.h"
 
+#include <script/lua_credits_engine.h>
+
 class CreditsScene_misc_img
 {
 public:
@@ -50,6 +52,7 @@ public:
     void exitFromScene();
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    LuaEngine* getLuaEngine();
     void update();
     void render();
     int exec();
@@ -59,6 +62,8 @@ private:
 
     PGE_Texture background;
     QVector<CreditsScene_misc_img > imgs;
+
+    LuaCreditsEngine luaEngine;
 };
 
 #endif // SCENE_CREDITS_H
