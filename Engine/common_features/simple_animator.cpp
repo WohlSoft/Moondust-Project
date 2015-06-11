@@ -38,6 +38,7 @@ SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
     this->manual_ticks = animator.manual_ticks;
     this->onceMode = animator.onceMode;
     this->animationFinished = animator.animationFinished;
+    this->onceMode_loops = animator.onceMode_loops;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
@@ -58,6 +59,7 @@ void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First,
 
     onceMode=false;
     animationFinished=false;
+    onceMode_loops=1;
 
     isEnabled=false;
 
@@ -78,6 +80,7 @@ void SimpleAnimator::setFrameSequance(QList<int> sequance)
     frame_sequance=sequance;
     frame_sequance_enabled=true;
     frame_sequance_cur=0;
+    animationFinished=false;
     if(!frame_sequance.isEmpty())
     {
         CurrentFrame = frame_sequance[frame_sequance_cur];
@@ -121,6 +124,10 @@ SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &animator)
               animator.frameLast,
               animator.reverce,
               animator.bidirectional);
+    this->manual_ticks = animator.manual_ticks;
+    this->onceMode = animator.onceMode;
+    this->animationFinished = animator.animationFinished;
+    this->onceMode_loops = animator.onceMode_loops;
     return *this;
 }
 
@@ -137,13 +144,23 @@ AniPos SimpleAnimator::image(double frame)
 //Animation process
 void SimpleAnimator::nextFrame()
 {
+    if(animationFinished) return;
+
     if(frame_sequance_enabled)
     {
         frame_sequance_cur++;
         if(frame_sequance_cur<0)
             frame_sequance_cur=0;
         if(frame_sequance_cur>=frame_sequance.size())
+        {
             frame_sequance_cur=0;
+            if(onceMode)
+            {
+                onceMode_loops--;
+                if(onceMode_loops<=0)
+                    animationFinished=true;
+            }
+        }
         if(!frame_sequance.isEmpty())
             CurrentFrame = frame_sequance[frame_sequance_cur];
         goto makeFrame;
@@ -158,7 +175,12 @@ void SimpleAnimator::nextFrame()
             {
                 reverce=!reverce; // change direction on first frame
                 CurrentFrame+=2;
-                if(onceMode) animationFinished=true;
+                if(onceMode)
+                {
+                    onceMode_loops--;
+                    if(onceMode_loops<=0)
+                        animationFinished=true;
+                }
             }
             else
             {
@@ -167,7 +189,12 @@ void SimpleAnimator::nextFrame()
                     CurrentFrame=framesQ-1;
                 else
                     CurrentFrame=frameLast;
-                if(onceMode) animationFinished=true;
+                if(onceMode)
+                {
+                    onceMode_loops--;
+                    if(onceMode_loops<=0)
+                        animationFinished=true;
+                }
             }
         }
 
@@ -186,7 +213,12 @@ void SimpleAnimator::nextFrame()
             else
             {
                 CurrentFrame=frameFirst; // Return to first frame;
-                if(onceMode) animationFinished=true;
+                if(onceMode)
+                {
+                    onceMode_loops--;
+                    if(onceMode_loops<=0)
+                        animationFinished=true;
+                }
             }
         }
     }
@@ -245,9 +277,10 @@ unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
     return 0;
 }
 
-void SimpleAnimator::setOnceMode(bool once)
+void SimpleAnimator::setOnceMode(bool once, int loops)
 {
     onceMode=once;
+    onceMode_loops=loops;
     animationFinished=false;
     if(once)
         setFrame(frameFirst);
