@@ -37,6 +37,7 @@ LVL_Player::LVL_Player()
     playerID = 0;
     isLocked = true;
     isInited = false;
+    isLuaPlayer = false;
 
     direction = 1;
 
@@ -200,6 +201,7 @@ void LVL_Player::update(float ticks)
     if(!camera) return;
     LVL_Section* section = sct();
     if(!section) return;
+    lua_onLoop();
     PGE_Phys_Object::update(ticks);
 
 //    while(!npc_queue.isEmpty())
@@ -778,6 +780,7 @@ void LVL_Player::update(float ticks)
 
 void LVL_Player::update()
 {
+
     update(1.0);
 }
 

@@ -1,5 +1,7 @@
 
-local peachPlayer_class = require("player/peach.lua")
+local peachPlayer_class = require("player/peach")
+
+local players = {}
 
 local deb_i = 0
 function onLoop()
@@ -16,7 +18,9 @@ function __native_event(eventObj, ...)
 end
 
 function __create_luaplayer()
-    
+    local newPlayer = peachPlayer_class()
+	table.insert(players, newPlayer) --Be sure that the garbage collector doesn't destory our object
+	return newPlayer
 end
 
 

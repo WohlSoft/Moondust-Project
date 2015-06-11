@@ -70,7 +70,7 @@ void LuaEngine::init()
         luabind::object _G = luabind::globals(L);
         luabind::object package = _G["package"];
         std::string allPaths = luabind::object_cast<std::string>(package["path"]);
-        allPaths += m_luaScriptPath.toStdString() + "?.lua";
+        allPaths += std::string(";") +  m_luaScriptPath.toStdString() + "?.lua";
         package["path"] = allPaths;
     }
 

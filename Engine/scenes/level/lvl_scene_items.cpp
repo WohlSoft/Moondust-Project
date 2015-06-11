@@ -200,7 +200,11 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     //if(effect==2) //Entered from door
 
     LVL_Player * player;
-    player = new LVL_Player();
+    if(luaEngine.isValid()){
+        player = luaEngine.createLuaPlayer();
+    }else{
+        player = new LVL_Player();
+    }
 
     if(players.size()==0)
         player->camera = &cameras.first();
