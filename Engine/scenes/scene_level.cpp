@@ -505,6 +505,15 @@ void LevelScene::render()
             }
         }
 
+        if(PGE_Window::showPhysicsDebug)
+        {
+            for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+            {
+                PGE_Phys_Object*&item=(*it);
+                item->renderDebug(cam->posX(), cam->posY());
+            }
+        }
+
         cam->drawForeground();
 
         if(numberOfPlayers>1)

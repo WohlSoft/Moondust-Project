@@ -180,7 +180,7 @@ void PGE_LevelCamera::update(float ticks)
             }
         }
 
-        if(!renderable)
+        if(!PGE_Window::showPhysicsDebug && !renderable)
         {
             objects_to_render.removeAt(i); i--;
         }

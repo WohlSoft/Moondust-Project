@@ -378,6 +378,7 @@ bool LevelScene::init()
         physesP->worldPtr = world;
         physesP->data = data.physez[i];
         physesP->init();
+        physesP->_syncBox2dWithPos();
         physenvs.push_back(physesP);
     }
 

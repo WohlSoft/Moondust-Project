@@ -47,6 +47,7 @@ public:
 
     void doPhysics();
     void _syncBox2dWithPos();
+    void renderDebug(float _camX, float _camY);
 
     double _posX;
     double _posY;

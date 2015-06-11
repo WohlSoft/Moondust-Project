@@ -19,6 +19,8 @@
 #include "base_object.h"
 #include <scenes/level/lvl_scene_ptr.h>
 
+#include <graphics/b2d_render.h>
+
 PGE_Phys_Object::PGE_Phys_Object()
 {
     physBody = NULL;
@@ -124,6 +126,25 @@ void PGE_Phys_Object::_syncBox2dWithPos()
     _posX= PhysUtil::met2pix(physBody->GetPosition().x)-posX_coefficient;
     _posY= PhysUtil::met2pix(physBody->GetPosition().y)-posY_coefficient;
     if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+}
+
+void PGE_Phys_Object::renderDebug(float _camX, float _camY)
+{
+    if(physBody)
+    {
+        switch(type)
+        {
+        case LVLUnknown: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 1.0, 1.0); break;
+        case LVLBlock: b2d_render::DrawBody(physBody, _camX, _camY, 0.0, 1.0, 0.0); break;
+        case LVLBGO: b2d_render::DrawBody(physBody, _camX, _camY, 0.0, 0.0, 1.0); break;
+        case LVLNPC: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.0, 1.0); break;
+        case LVLPlayer: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.5, 0.5); break;
+        case LVLEffect: b2d_render::DrawBody(physBody, _camX, _camY, 0.5, 0.5, 0.5); break;
+        case LVLWarp: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.0, 0.0, 0.5f, 4.f, true); break;
+        case LVLSpecial: b2d_render::DrawBody(physBody, _camX, _camY); break;
+        case LVLPhysEnv: b2d_render::DrawBody(physBody, _camX, _camY, 1.0f, 1.0f, 0.0f, 0.5f, 2.f, true); break;
+        }
+    }
 }
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)

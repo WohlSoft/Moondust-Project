@@ -34,6 +34,7 @@ public:
     static int MaxFPS;
     static int TicksPerSecond;
     static bool showDebugInfo;
+    static bool showPhysicsDebug;
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
     static bool uninit();
     static bool isReady();
