@@ -32,6 +32,7 @@ void LoadingScreenSetup::init(QSettings &engine_ini)
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
 
         updateDelay = engine_ini.value("updating-time", 128).toInt();
+        luaFile = engine_ini.value("script", "main_loading.lua").toString();
         LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
     engine_ini.endGroup();
 

@@ -39,6 +39,7 @@ struct LoadingScreenSetup
     QString backgroundImg;
     QColor backgroundColor;
     int updateDelay;
+    QString luaFile;
     QList<LoadingScreenAdditionalImage > AdditionalImages;
 };
 

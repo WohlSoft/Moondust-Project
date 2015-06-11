@@ -50,6 +50,7 @@ public:
     static PGE_PointF MapToGl(float x, float y);
     static PGE_Point  MapToScr(PGE_Point point);
     static PGE_Point  MapToScr(int x, int y);
+    static int  alignToCenter(int x, int w);
     static void setViewport(int x, int y, int w, int h);
     static void resetViewport();
     static void setViewportSize(int w, int h);

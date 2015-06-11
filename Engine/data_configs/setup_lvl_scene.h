@@ -1,11 +1,11 @@
-#ifndef SETUP_WLD_SCENE_H
-#define SETUP_WLD_SCENE_H
+#ifndef SETUP_LVL_SCENE_H
+#define SETUP_LVL_SCENE_H
 
 #include <QString>
 #include <graphics/gl_color.h>
 class QSettings;
 
-struct WorldAdditionalImage
+struct LevelAdditionalImage
 {
     QString imgFile;
     bool animated;
@@ -13,31 +13,13 @@ struct WorldAdditionalImage
     int framedelay;
     int x;
     int y;
+    bool from_center;
 };
 
-struct WorldMapSetup
+struct LevelSetup
 {
     void init(QSettings &engine_ini);
     void initFonts();
-    QString backgroundImg;
-    int viewport_x; //World map view port
-    int viewport_y;
-    int viewport_w;
-    int viewport_h;
-    enum titleAlign{
-        align_left=0,
-        align_center,
-        align_right
-    };
-
-    int         title_x; //Title of level
-    int         title_y;
-    int         title_w; //max width of title
-    QString     title_color;
-    GlColor     title_rgba;
-    titleAlign  title_align;
-    QString     title_font_name;
-    int         title_fontID;
 
     bool    points_en;
     int     points_x;
@@ -46,6 +28,7 @@ struct WorldMapSetup
     int     points_fontID;
     QString points_color;
     GlColor points_rgba;
+    bool    points_from_center;
 
     bool    health_en;
     int     health_x;
@@ -54,6 +37,7 @@ struct WorldMapSetup
     int     health_fontID;
     QString health_color;
     GlColor health_rgba;
+    bool    health_from_center;
 
     bool    star_en;
     int     star_x;
@@ -62,6 +46,7 @@ struct WorldMapSetup
     int     star_fontID;
     QString star_color;
     GlColor star_rgba;
+    bool    star_from_center;
 
     bool    coin_en;
     int     coin_x;
@@ -70,17 +55,19 @@ struct WorldMapSetup
     int     coin_fontID;
     QString coin_color;
     GlColor coin_rgba;
+    bool    coin_from_center;
 
-    bool    portrait_en;
-    int     portrait_x;
-    int     portrait_y;
-    int     portrait_frame_delay;
-    QString portrait_animation;
-    int     portrait_direction;
-    QList<WorldAdditionalImage > AdditionalImages;
+    bool    itemslot_en;
+    int     itemslot_x;
+    int     itemslot_y;
+    int     itemslot_w;
+    int     itemslot_h;
+    bool    itemslot_to_center;
+    QList<LevelAdditionalImage > AdditionalImages;
 
     QString luaFile;
 };
 
-#endif // SETUP_WLD_SCENE_H
+
+#endif // SETUP_LVL_SCENE_H
 

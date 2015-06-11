@@ -13,7 +13,7 @@ void TitleScreenSetup::init(QSettings &engine_ini)
         backgroundImg = engine_ini.value("background", "").toString();
         backgroundColor.setNamedColor(engine_ini.value("bg-color", "#000000").toString());
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
-        luaFile = ConfigManager::config_dir+"/"+engine_ini.value("script", "title.lua").toString();
+        luaFile = engine_ini.value("script", "main_title.lua").toString();
         TitleScreenImages = engine_ini.value("additional-images", 0).toInt();
     engine_ini.endGroup();
 

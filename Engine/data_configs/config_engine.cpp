@@ -83,6 +83,9 @@ bool ConfigManager::loadEngineSettings()
     ////// World map settings
     setup_WorldMap.init(engineset);
 
+    ////// Level settings
+    setup_Level.init(engineset);
+
     ////////// Loading scene settings
     setup_LoadingScreen.init(engineset);
 
