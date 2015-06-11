@@ -75,6 +75,11 @@ LVL_Section *LevelScene::getSection(int sct)
     return NULL;
 }
 
+EpisodeState *LevelScene::getGameState()
+{
+    return gameState;
+}
+
 
 
 

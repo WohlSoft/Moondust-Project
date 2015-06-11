@@ -407,7 +407,7 @@ bool LevelScene::init()
             loaderStep();
             if(!isLevelContinues) return false;//!< quit from game if window was closed
             PlayerPoint startPoint = getStartLocation(i);
-
+            startPoint.id=i;
             //Don't place player if point is null!
             if(startPoint.w==0 && startPoint.h==0) continue;
 
