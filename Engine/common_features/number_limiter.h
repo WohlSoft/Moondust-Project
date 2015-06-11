@@ -21,26 +21,31 @@
 
 #include <climits>
 #include <cfloat>
+#include <type_traits>
+
 
 class NumberLimiter
 {
 public:
-    static void apply(short &value, short min=SHRT_MIN, short max=SHRT_MAX);
-    static void applyD(short &value, short defvalue, short min=SHRT_MIN, short max=SHRT_MAX);
-    static void apply(unsigned short &value, unsigned short min=0, unsigned short max=USHRT_MAX);
-    static void applyD(unsigned short &value, unsigned short defvalue, unsigned short min=0, unsigned short max=USHRT_MAX);
-    static void apply(int &value, int min=INT_MIN, int max=INT_MAX);
-    static void applyD(int &value, int defvalue, int min=INT_MIN, int max=INT_MAX);
-    static void apply(unsigned int &value, unsigned int min=0, unsigned int max=UINT_MAX);
-    static void applyD(unsigned int &value, unsigned int defvalue, unsigned int min=0, unsigned int max=UINT_MAX);
-    static void apply(long &value, long min=LONG_MIN, long max=LONG_MAX);
-    static void applyD(long &value, long defvalue, long min=LONG_MIN, long max=LONG_MAX);
-    static void apply(unsigned long &value, unsigned long min=0, unsigned long max=ULONG_MAX);
-    static void applyD(unsigned long &value, unsigned long defvalue, unsigned long min=0, unsigned long max=ULONG_MAX);
-    static void apply(float &value, float min=FLT_MIN, float max=FLT_MAX);
-    static void applyD(float &value, float defvalue, float min=FLT_MIN, float max=FLT_MAX);
-    static void apply(double &value, double min=FLT_MIN, double max=FLT_MAX);
-    static void applyD(double &value, double defvalue, double min=FLT_MIN, double max=FLT_MAX);
+    template<typename T>
+    static void apply(T &value, T min = SHRT_MIN, T max = SHRT_MAX){
+        static_assert(std::is_arithmetic<T>::value, "The value for \"apply\" must be arithemtic");
+        if(value<min)
+            value=min;
+        else if(value>max)
+            value=max;
+    }
+
+    template<typename T>
+    static void applyD(T &value, T defvalue, T min=SHRT_MIN, T max=SHRT_MAX){
+        static_assert(std::is_arithmetic<T>::value, "The value for \"applyD\" must be arithemtic");
+        if((value<min)||(value>max))
+        {
+            value=defvalue;
+            apply(value, min, max);
+        }
+    }
+
 };
 
 #endif // NUMBER_LIMITER_H
