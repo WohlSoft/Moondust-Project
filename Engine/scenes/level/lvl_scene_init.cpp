@@ -256,9 +256,21 @@ bool LevelScene::loadConfigs()
 
 bool LevelScene::init()
 {
+    luaEngine.setLuaScriptPath(ConfigManager::config_dir+"script/");
+    luaEngine.setCoreFile("main_level.lua");
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
+    luaEngine.init();
+
     //Load File
 
     //Set Entrance  (int entr=0)
+
 
     //Init Physics
     b2Vec2 gravity(0.0f, 150.0f);
@@ -431,16 +443,7 @@ bool LevelScene::init()
     stopLoaderAnimation();
 
 
-    luaEngine.setLuaScriptPath(ConfigManager::config_dir+"script/");
-    luaEngine.setCoreFile("main_level.lua");
-    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
-        qWarning() << "Lua-Error: ";
-        qWarning() << "Error Message: " << errorMessage;
-        qWarning() << "Stacktrace: \n" << stacktrace;
-        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
-        msgBox.exec();
-    });
-    luaEngine.init();
+
 
     isInit = true;
     return true;

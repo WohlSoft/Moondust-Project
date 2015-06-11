@@ -6,15 +6,15 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
-class Binding_Level_ClassWrapper_LVL_Player : public LVL_Player, luabind::wrap_base
+class Binding_Level_ClassWrapper_LVL_Player : public LVL_Player, public luabind::wrap_base
 {
 public:
     Binding_Level_ClassWrapper_LVL_Player();
+    virtual ~Binding_Level_ClassWrapper_LVL_Player();
 
     virtual void lua_onLoop();
     static void def_lua_onLoop(LVL_Player* base) { base->LVL_Player::lua_onLoop(); }
 
-    static luabind::scope bindToLuaBase();
     static luabind::scope bindToLua();
 
 };

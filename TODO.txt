@@ -13,6 +13,9 @@ Engine
 - Playable character and it's state switching support
 - Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
 
+Engine: Lua
+- Better Memory Management, either transfere ownership to C++ or use smart pointers.
+
 Engine: New level physics
 - R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
 - Support of speed-adding of items which makes stack

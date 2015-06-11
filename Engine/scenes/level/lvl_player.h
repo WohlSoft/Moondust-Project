@@ -40,7 +40,7 @@ class LVL_Player :
 {
     public:
         LVL_Player();
-        ~LVL_Player();
+        virtual ~LVL_Player();
         void init();
         void initSize();
         void update(float ticks);
@@ -210,6 +210,7 @@ class LVL_Player :
                             `-.__.-'
          ***********************************************/
         virtual void lua_onLoop(){}
+        bool isLuaPlayer;
         /********************Lua Stuff******************/
 
 private:

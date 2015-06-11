@@ -207,6 +207,7 @@ void LevelScene::processPauseMenu()
 
 LevelScene::~LevelScene()
 {
+
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -237,7 +238,11 @@ LevelScene::~LevelScene()
         tmp = players.last();
         players.pop_back();
         player1Controller->removeFromControl(tmp);
-        if(tmp) delete tmp;
+        if(tmp)
+        {
+            if(!tmp->isLuaPlayer)
+                delete tmp;
+        }
     }
 
     qDebug() << "Destroy blocks";
@@ -291,6 +296,8 @@ LevelScene::~LevelScene()
     qDebug() << "Destroy sections";
     sections.clear();
 
+    luaEngine.shutdown();
+
     delete player1Controller;
     delete player2Controller;
 
@@ -304,6 +311,7 @@ LevelScene::~LevelScene()
     //destroy BGO's
 
     textures_bank.clear();
+
 }
 
 
