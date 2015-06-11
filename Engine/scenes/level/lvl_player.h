@@ -41,7 +41,10 @@ class LVL_Player :
     public:
         LVL_Player();
         virtual ~LVL_Player();
+        void setCharacter(int CharacterID, int _stateID);
+        void setPlayerPointInfo(PlayerPoint pt);
         void init();
+        void updateBox();
         void initSize();
         void update(float ticks);
         void update();
@@ -56,6 +59,7 @@ class LVL_Player :
         void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         QHash<int, obj_player_state > states;
+        int     characterID;
         int     stateID;
         obj_player_state state_cur;
 

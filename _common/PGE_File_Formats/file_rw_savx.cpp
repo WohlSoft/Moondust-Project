@@ -44,6 +44,9 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         FileData.path = in_1.absoluteDir().absolutePath();
     }
 
+    FileData.characterStates.clear();
+    FileData.currentCharacter.clear();
+
     FileData.untitled = false;
     FileData.modified = false;
 

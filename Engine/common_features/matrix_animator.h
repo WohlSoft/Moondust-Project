@@ -90,6 +90,7 @@ public:
     PGE_RectF curFrame();
     PGE_PointF curOffset();
     MatrixAnimates curAnimation();
+    int curFramespeed();
 
     void installAnimationSet(obj_player_calibration &calibration);
     void playOnce(MatrixAnimates aniName, int _direction, int speed=-1);

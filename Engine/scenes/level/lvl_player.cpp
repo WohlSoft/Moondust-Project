@@ -30,10 +30,13 @@
 
 #include <QtDebug>
 
+#include <fontman/font_manager.h>
+
 LVL_Player::LVL_Player()
 {
     camera = NULL;
     worldPtr = NULL;
+    f_player = NULL;
     playerID = 0;
     isLocked = true;
     isInited = false;
@@ -46,48 +49,8 @@ LVL_Player::LVL_Player()
     frameW=100;
     frameH=100;
 
-    int CharacterID = 1;
-    stateID=1;
-
-    setup = ConfigManager::playable_characters[CharacterID];
-    physics = setup.phys_default;
-    states =   ConfigManager::playable_characters[CharacterID].states;
-    state_cur = states[stateID];
-    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, stateID);
-    if( tID >= 0 )
-    {
-        texId = ConfigManager::level_textures[tID].texture;
-        texture = ConfigManager::level_textures[tID];
-        frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
-        frameH = ConfigManager::level_textures[tID].h / setup.matrix_height;
-    }
-
-    animator.setSize(setup.matrix_width, setup.matrix_height);
-    animator.installAnimationSet(state_cur.sprite_setup);
-    animator.switchAnimation(MatrixAnimator::Idle, direction, 100);
-    animator.tickAnimation(0.f);
-
-    environment = LVL_PhysEnv::Env_Air;
-    last_environment = LVL_PhysEnv::Env_Air;
-    physics_cur = physics[environment];
-
-    /********************floating************************/
-    floating_allow=state_cur.allow_floating;
-    floating_maxtime=state_cur.floating_max_time; //!< Max time to float
-    floating_isworks=false;                         //!< Is character currently floating in air
-    floating_timer=0;                            //!< Milliseconds to float
-    floating_start_type=false;
-    /********************floating************************/
-
-    /********************Attack************************/
-    attack_enabled=true;
-    attack_pressed=false;
-    /********************Attack************************/
-
-    /********************duck**************************/
-    duck_allow= state_cur.duck_allow;
-    ducking=false;
-    /********************duck**************************/
+    stateID     =1;
+    characterID =1;
 
     JumpPressed=false;
     onGround=false;
@@ -95,6 +58,9 @@ LVL_Player::LVL_Player()
     climbing=false;
 
     collide = PGE_Phys_Object::COLLISION_ANY;
+
+    environment = LVL_PhysEnv::Env_Air;
+    last_environment = LVL_PhysEnv::Env_Air;
 
     bumpDown=false;
     bumpUp=false;
@@ -113,7 +79,7 @@ LVL_Player::LVL_Player()
     doKill = false;
     kill_reason=DEAD_fall;
 
-    curHMaxSpeed = physics_cur.MaxSpeed_walk;
+    curHMaxSpeed = 1200;
     isRunning = false;
 
     contactedWithWarp = false;
@@ -130,6 +96,22 @@ LVL_Player::LVL_Player()
     warpWaitTicks=0;
 
     gscale_Backup=0.f;//!< BackUP of last gravity scale
+
+    duck_allow=false;
+    ducking=false;
+
+    /********************Attack************************/
+    attack_enabled=true;
+    attack_pressed=false;
+    /********************Attack************************/
+
+    /********************floating************************/
+    floating_allow=false;
+    floating_maxtime=1000; //!< Max time to float
+    floating_isworks=false;                         //!< Is character currently floating in air
+    floating_timer=0;                            //!< Milliseconds to float
+    floating_start_type=false;
+    /********************floating************************/
 }
 
 LVL_Player::~LVL_Player()
@@ -144,10 +126,87 @@ LVL_Player::~LVL_Player()
     }
 }
 
+void LVL_Player::setCharacter(int CharacterID, int _stateID)
+{
+    if(!ConfigManager::playable_characters.contains(CharacterID))
+    {
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerSpring);
+        return;
+    }
+    else
+        setup = ConfigManager::playable_characters[CharacterID];
+
+    states =   ConfigManager::playable_characters[CharacterID].states;
+    if(!states.contains(_stateID))
+    {
+        PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
+        return;
+    }
+    else
+        state_cur = states[_stateID];
+
+    physics = setup.phys_default;
+    physics_cur = physics[environment];
+
+    long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        frameW = ConfigManager::level_textures[tID].w / setup.matrix_width;
+        frameH = ConfigManager::level_textures[tID].h / setup.matrix_height;
+    }
+
+    animator.setSize(setup.matrix_width, setup.matrix_height);
+    animator.installAnimationSet(state_cur.sprite_setup);
+
+    curHMaxSpeed = isRunning? physics_cur.MaxSpeed_run : physics_cur.MaxSpeed_walk;
+
+    /********************floating************************/
+    floating_allow=state_cur.allow_floating;
+    floating_maxtime=state_cur.floating_max_time; //!< Max time to float
+    if(isInited)
+    {
+        if(!floating_allow && floating_isworks)
+            floating_timer=0;
+    }
+    /********************floating************************/
+
+    /********************duck**************************/
+    duck_allow= state_cur.duck_allow;
+    /********************duck**************************/
+
+    characterID = CharacterID;
+    stateID = _stateID;
+
+    if(isInited)
+    {
+        initSize();
+        updateBox();
+        PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
+        x.characterID    = characterID;
+        x.stateID        = stateID;
+        x._chsetup.state = stateID;
+        LvlSceneP::s->getGameState()->setPlayerState(playerID, x);
+    }
+}
+
+void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
+{
+    data = pt;
+    playerID=pt.id;
+    PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
+    characterID = x.characterID;
+    stateID     = x._chsetup.state;
+    if(isInited) setCharacter(characterID, stateID);
+}
+
 void LVL_Player::init()
 {
     if(!worldPtr) return;
-    playerID = data.id;
+    setCharacter(characterID, stateID);
+
+    initSize();
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -156,27 +215,12 @@ void LVL_Player::init()
                 PhysUtil::pix2met((float)data.x + posX_coefficient),
                 PhysUtil::pix2met((float)data.y + posY_coefficient)
             );
-    //PhysUtil::pix2met((float)(data.x-((data.w-posX_coefficient)/2)-1) + posX_coefficient),
-    //PhysUtil::pix2met((float)(data.y-(data.h-(height+2))-1) + posY_coefficient-0.1)
-
-//    bodyDef.position.Set(PhysUtil::pix2met((float)data.x + ((float)data.w/2)),
-//            PhysUtil::pix2met((float)data.y + ((float)data.w/2) ) );
-
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
     bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-
     physBody = worldPtr->CreateBody(&bodyDef);
 
-    b2PolygonShape shape;
-    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
-                   PhysUtil::pix2met(posY_coefficient));
-
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &shape;
-    fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-
-    f_player = physBody->CreateFixture(&fixtureDef);
+    updateBox();
 
     animator.tickAnimation(0.f);
     //qDebug() <<"Start position is " << posX() << posY();
@@ -184,13 +228,38 @@ void LVL_Player::init()
     isInited=true;
 }
 
+void LVL_Player::updateBox()
+{
+    if(ducking)
+    {
+        if(f_player) physBody->DestroyFixture(f_player);
+        b2PolygonShape shape;
+        setSize(state_cur.width-state_cur.width%2, state_cur.duck_height-state_cur.duck_height%2);
+        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                       PhysUtil::pix2met(posY_coefficient));
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
+        f_player = physBody->CreateFixture(&fixtureDef);
+    } else {
+        if(f_player) physBody->DestroyFixture(f_player);
+        b2PolygonShape shape;
+        setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
+        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                       PhysUtil::pix2met(posY_coefficient));
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
+        f_player = physBody->CreateFixture(&fixtureDef);
+    }
+}
+
 void LVL_Player::initSize()
 {
-    obj_player_state state = states[stateID];
-    setSize(state.width-state.width%2, state.height-state.height%2);
-    data.x = data.x+(data.w/2)-(state.width/2);
-    data.y = data.y+data.h-state.height;
-    direction = data.direction;
+    setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
+    data.x = data.x+(data.w/2)-(state_cur.width/2);
+    data.y = data.y+data.h-state_cur.height;
+    if(!isInited) direction = data.direction;
 }
 
 void LVL_Player::update(float ticks)
@@ -1469,6 +1538,12 @@ void LVL_Player::render(double camX, double camY)
                               tPos.bottom(),
                               tPos.left(),
                               tPos.right());
+
+    if(PGE_Window::showDebugInfo)
+    {
+        FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), posX()-camX, posY()-camY);
+    }
+
 }
 
 bool LVL_Player::locked()
