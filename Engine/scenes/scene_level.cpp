@@ -364,6 +364,8 @@ void LevelScene::update()
         updateLua();//Process LUA code
         system_events.processEvents(uTickf);
 
+        processEffects(uTickf);
+
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //Make world step
@@ -505,6 +507,12 @@ void LevelScene::render()
             }
         }
 
+        for(SceneEffectsArray::iterator it=WorkingEffects.begin();it!=WorkingEffects.end(); it++ )
+        {
+             Scene_Effect &item=(*it);
+             item.render(cam->posX(), cam->posY());
+        }
+
         if(PGE_Window::showPhysicsDebug)
         {
             for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
@@ -574,6 +582,29 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
               if(doExit || isPauseMenu) break;
               isPauseMenu = true;
           }
+      break;
+      case SDLK_1:
+      {
+        if(!players.isEmpty())
+        launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 0, 0, 0);
+      }
+      break;
+      case SDLK_2:
+      {
+         if(!players.isEmpty())
+          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 6, -20, 12);
+      }
+      break;
+      case SDLK_3:
+      {
+         if(!players.isEmpty())
+         {
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, -3, -17, 9);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, -4, -20, 9);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -17, 9);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 4, -20, 9);
+         }
+      }
       break;
       case SDLK_F5:
         {

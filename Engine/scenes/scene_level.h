@@ -39,6 +39,8 @@
 #include "level/lvl_bgo.h"
 #include "level/lvl_npc.h"
 
+#include "level/lvl_effect.h"
+
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
@@ -237,6 +239,16 @@ private:
     LVL_CameraList      cameras;
     LVL_SectionsList    sections;
 
+
+    /*  Effects engine   */
+    typedef QList<Scene_Effect>    SceneEffectsArray;
+    SceneEffectsArray  WorkingEffects;
+    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity);
+    void processEffects(float ticks);
+    /*  Effects engine   */
+
+
+
     typedef QVector<LVL_Player* >  LVL_PlayersArray;
     typedef QVector<LVL_Block* >   LVL_BlocksArray;
     typedef QVector<LVL_Bgo* >     LVL_BgosArray;
@@ -295,5 +307,6 @@ private:
 
     LuaLevelEngine luaEngine;
 };
+
 
 #endif // SCENE_LEVEL_H
