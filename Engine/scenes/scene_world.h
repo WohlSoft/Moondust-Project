@@ -35,6 +35,8 @@
 #include "world/wld_tilebox.h"
 #include "world/wld_player_portrait.h"
 
+#include <script/lua_world_engine.h>
+
 struct WorldScene_misc_img
 {
     int x;
@@ -56,6 +58,7 @@ public:
     bool loadConfigs();
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    LuaEngine* getLuaEngine();
 
     void processEvents();
     void update();
@@ -191,6 +194,8 @@ private:
     int     debug_render_delay;
     int     debug_phys_delay;
     int     debug_event_delay;
+
+    LuaWorldEngine luaEngine;
 };
 
 #endif // SCENE_WORLD_H

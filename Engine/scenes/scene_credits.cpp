@@ -46,7 +46,7 @@ CreditsScene_misc_img::CreditsScene_misc_img(const CreditsScene_misc_img &im)
 }
 
 
-CreditsScene::CreditsScene() : Scene(Credits)
+CreditsScene::CreditsScene() : Scene(Credits), luaEngine(this)
 {
     _waitTimer=30000;
 }
@@ -103,6 +103,15 @@ void CreditsScene::init()
 
     /*****************************Load LUA stuff*******************************/
     // onLoad() <- Gives ability to load/init custom stuff
+    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    luaEngine.setCoreFile(ConfigManager::setup_CreditsScreen.luaFile);
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        // Do not show error message box in credits
+    });
+    luaEngine.init();
 
 
     /*****************************Load LUA stuff*******************************/
@@ -136,6 +145,11 @@ void CreditsScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+LuaEngine *CreditsScene::getLuaEngine()
+{
+    return &luaEngine;
+}
+
 void CreditsScene::update()
 {
     if(doExit)
@@ -149,6 +163,7 @@ void CreditsScene::update()
 
     /******************Update built-in faders and animators*********************/
     Scene::update();
+    updateLua();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
     /******************Update built-in faders and animators*********************/
