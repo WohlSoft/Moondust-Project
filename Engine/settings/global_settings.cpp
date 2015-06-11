@@ -4,6 +4,7 @@
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>
 #include <common_features/logger.h>
+#include <common_features/number_limiter.h>
 
 #include <QSettings>
 
@@ -48,9 +49,9 @@ void GlobalSettings::load()
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
     MaxFPS=setup.value("max-fps", MaxFPS).toUInt();
-        if(MaxFPS<65) MaxFPS=65;
+        NumberLimiter::apply(MaxFPS, 65, 1000);
     TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
-        if(TicksPerSecond<65) TicksPerSecond=65;
+        NumberLimiter::apply(TicksPerSecond, 65, 180);
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
@@ -58,9 +59,9 @@ void GlobalSettings::load()
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
 
     volume_sound=setup.value("volume-sfx", 128).toInt();
-        if((volume_sound<0)||(volume_sound>128)) volume_sound=128;
-    volume_music=setup.value("volume-mus", 64).toInt();
-        if((volume_music<0)||(volume_music>128)) volume_music=128;
+        NumberLimiter::applyD(volume_sound, 128, 0, 128);
+    volume_music=setup.value("volume-mus", 45).toInt();
+        NumberLimiter::applyD(volume_sound, 45, 0, 128);
 
     setup.endGroup();
     loadKeyMap(player1_keyboard, setup, "player-1-keyboard");
