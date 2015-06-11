@@ -25,6 +25,17 @@
 
 #include <PGE_File_Formats/file_formats.h>
 
+struct Scene_Effect_Phys
+{
+    Scene_Effect_Phys();
+    float mix_vel_x;
+    float mix_vel_y;
+    float max_vel_x;
+    float max_vel_y;
+    float decelerate_x;
+    float decelerate_y;
+};
+
 class Scene_Effect
 {
 public:
@@ -48,6 +59,7 @@ public:
     float m_velocityY;
 
     float gravity;
+    Scene_Effect_Phys phys_setup;
 
     float m_posX;
     float m_posY;

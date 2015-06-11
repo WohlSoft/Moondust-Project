@@ -26,7 +26,7 @@
 #include <gui/pge_msgbox.h>
 #include <fontman/font_manager.h>
 
-void LevelScene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity)
+void LevelScene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys)
 {
     Scene_Effect _effect;
     if(ConfigManager::lvl_effects_indexes.contains(effectID))
@@ -47,6 +47,7 @@ void LevelScene::launchStaticEffect(long effectID, float startX, float startY, i
     _effect.m_posY = startY;
     _effect.m_velocityX = velocityX;
     _effect.m_velocityY = velocityY;
+    _effect.phys_setup=phys;
     _effect.gravity = gravity;
     _effect.animated=_effect.setup->animated;
     _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, 0, -1);
@@ -56,9 +57,10 @@ void LevelScene::launchStaticEffect(long effectID, float startX, float startY, i
         _effect._limit_delay=true;
         _effect._delay=delay;
     }
-    else if(animationLoops>0)
+
+    if(animationLoops>0)
     {
-        _effect.animator.setOnceMode(true);
+        _effect.animator.setOnceMode(true, animationLoops);
     }
 
     _effect.init();
@@ -117,6 +119,7 @@ Scene_Effect::Scene_Effect(const Scene_Effect &e)
 
     m_velocityX=e.m_velocityX;
     m_velocityY=e.m_velocityY;
+    phys_setup=e.phys_setup;
     gravity = e.gravity;
 
     m_posX=e.m_posX;
@@ -168,9 +171,35 @@ void Scene_Effect::iterateStep(float ticks)
 {
     m_posX+= m_velocityX * (timeStep/ticks);
     m_posY+= m_velocityY * (timeStep/ticks);
-    m_velocityY+= (gravity*(timeStep/ticks))*0.2;
-    if(m_velocityY>gravity)
-       m_velocityY=gravity;
+
+    if(phys_setup.decelerate_x!=0)
+    {
+        if(m_velocityX>0)
+        {
+            m_velocityX -= phys_setup.decelerate_x;
+        } else if(m_velocityX<0) {
+            m_velocityX += phys_setup.decelerate_x;
+        }
+    }
+    if(phys_setup.decelerate_y!=0)
+    {
+        if(m_velocityY>0)
+        {
+            m_velocityY -= phys_setup.decelerate_y;
+        } else if(m_velocityY<0) {
+            m_velocityY += phys_setup.decelerate_y;
+        }
+    }
+
+    if(gravity!=0.0f)
+    {
+        m_velocityY+= gravity/timeStep;
+    }
+
+    if((phys_setup.max_vel_x!=0)&&(m_velocityX>phys_setup.max_vel_x)) m_velocityX=phys_setup.max_vel_x;
+    if((phys_setup.mix_vel_x!=0)&&(m_velocityX<phys_setup.mix_vel_x)) m_velocityX=phys_setup.mix_vel_x;
+    if((phys_setup.max_vel_y!=0)&&(m_velocityY>phys_setup.max_vel_y)) m_velocityY=phys_setup.max_vel_y;
+    if((phys_setup.mix_vel_y!=0)&&(m_velocityY<phys_setup.mix_vel_y)) m_velocityY=phys_setup.mix_vel_y;
 }
 
 void Scene_Effect::render(double camX, double camY)
@@ -183,3 +212,14 @@ void Scene_Effect::render(double camX, double camY)
 
 
 
+
+
+Scene_Effect_Phys::Scene_Effect_Phys()
+{
+    mix_vel_x=0;
+    mix_vel_y=0;
+    max_vel_x=0;
+    max_vel_y=0;
+    decelerate_x=0;
+    decelerate_y=0;
+}

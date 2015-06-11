@@ -243,7 +243,7 @@ private:
     /*  Effects engine   */
     typedef QList<Scene_Effect>    SceneEffectsArray;
     SceneEffectsArray  WorkingEffects;
-    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity);
+    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
     void processEffects(float ticks);
     /*  Effects engine   */
 
