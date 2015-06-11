@@ -432,6 +432,9 @@ void LevelScene::update()
         while(!dead_npcs.isEmpty())
         {
             LVL_Npc *corpse = dead_npcs.last();
+            launchStaticEffect(corpse->setup->effect_1,
+                               corpse->posX(), corpse->posY(),
+                               1, 0, 0,0,0);
             dead_npcs.pop_back();
             npcs.removeAll(corpse);
             delete corpse;
@@ -599,10 +602,31 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
       {
          if(!players.isEmpty())
          {
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, -3, -17, 9);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, -4, -20, 9);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -17, 9);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 4, -20, 9);
+            Scene_Effect_Phys p;
+            p.decelerate_x=0.02;
+            p.max_vel_y=12;
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, p);
+         }
+      }
+      break;
+      case SDLK_4:
+      {
+         if(!players.isEmpty())
+         {
+            Scene_Effect_Phys p;
+            p.max_vel_y=12;
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, p);
+         }
+      }
+      break;
+      case SDLK_5:
+      {
+         if(!players.isEmpty())
+         {
+            launchStaticEffect(10, players.first()->posX(), players.first()->posY(), 1, 0, 0, 0, 0);
          }
       }
       break;
