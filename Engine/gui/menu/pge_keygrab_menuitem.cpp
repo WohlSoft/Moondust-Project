@@ -81,6 +81,11 @@ void PGE_KeyGrabMenuItem::grabKey()
 
 void PGE_KeyGrabMenuItem::pushKey(int scancode)
 {
+    //The first inital "Enter" - press by the keyboard should be ignored.
+    if(menu->isKeygrabViaKey()){
+        menu->setKeygrabViaKey(false);
+        return;
+    }
     if(joystick_mode && (scancode>=0))
         return;
     chosing=false;
