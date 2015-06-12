@@ -371,6 +371,7 @@ void PGE_Menu::acceptItem()
     {
         PGE_Audio::playSoundByRole(obj_sound_role::PlayerClimb);
         static_cast<PGE_KeyGrabMenuItem*>(_items[_currentItem])->grabKey();
+        setKeygrabViaKey(true);
     }
     else
     {
@@ -681,6 +682,16 @@ void PGE_Menu::refreshRect()
     if(menuRect.width()>_width_limit)
         menuRect.setWidth(_width_limit);
 }
+bool PGE_Menu::isKeygrabViaKey() const
+{
+    return is_keygrabViaKey;
+}
+
+void PGE_Menu::setKeygrabViaKey(bool value)
+{
+    is_keygrabViaKey = value;
+}
+
 
 PGE_Rect PGE_Menu::rect()
 {
