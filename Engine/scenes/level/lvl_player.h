@@ -50,6 +50,8 @@ class LVL_Player :
         void update();
         void updateCamera();
 
+        void solveCollision(PGE_Phys_Object *collided);
+
         int playerID;
         obj_player setup;
         PlayerPoint data;
@@ -86,7 +88,6 @@ class LVL_Player :
         /*******************Environmept*********************/
 
         /*******************Motion*************************/
-        float32 curHMaxSpeed; //!< Current moving max speed
         bool    isRunning;
         int     direction;
         /*******************Motion*************************/
@@ -117,8 +118,8 @@ class LVL_Player :
         int     foot_contacts;
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
-        float   jumpForce;
-        float   jumpForce_default;
+        float   jumpTime;
+        float   jumpTime_default;
         /********************Jumps***************************/
 
         /********************Bump***************************/

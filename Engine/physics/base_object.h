@@ -24,6 +24,22 @@
 #include "phys_util.h"
 #include "../graphics/graphics.h"
 
+#include <common_features/rectf.h>
+
+
+struct PGE_Phys_Object_Phys
+{
+    PGE_Phys_Object_Phys();
+    float min_vel_x;
+    float mix_vel_y;
+    float max_vel_x;
+    float max_vel_y;
+    float decelerate_x;
+    float grd_dec_x;
+    float decelerate_y;
+    float gravityScale;
+};
+
 class LVL_Section;
 ///
 /// \brief The PGE_Phys_Object class
@@ -53,19 +69,29 @@ public:
     void setSpeedX(double x);
     void setSpeedY(double y);
     void setDecelX(double x);
+    void applyAccel(double x, double y);
 
     double gravityScale();
     void setGravityScale(double scl);
 
-    void doPhysics();
     void _syncBox2dWithPos();
     void renderDebug(float _camX, float _camY);
 
+    void iterateStep(float ticks);
+    void updateCollisions();
+    virtual void solveCollision(PGE_Phys_Object *collided);
+
+    float timeStep;
+    PGE_Phys_Object_Phys phys_setup;
+    PGE_RectF posRect;
+    double _accelX;
+    double _accelY;
+
+    double _velocityX;
+    double _velocityY;
+
     double _posX;
     double _posY;
-
-    double _velX;
-    double _velY;
 
     double width;  //!< Width
     double height; //!< Height

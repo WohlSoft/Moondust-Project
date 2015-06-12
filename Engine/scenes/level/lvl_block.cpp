@@ -33,6 +33,8 @@ LVL_Block::LVL_Block()
     sizable=false;
     animator_ID=0;
 
+    shape=0;
+
     offset_x = 0.f;
     offset_y = 0.f;
 
@@ -116,6 +118,8 @@ void LVL_Block::init()
     }
 
     b2PolygonShape shape;
+
+    this->shape = setup->phys_shape;
 
     switch(setup->phys_shape)
     {
@@ -215,6 +219,8 @@ void LVL_Block::init()
             f_block->SetSensor(true);
             ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
         }
+
+    setPos(data.x, data.y);
 
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
         f_block->SetSensor(true);

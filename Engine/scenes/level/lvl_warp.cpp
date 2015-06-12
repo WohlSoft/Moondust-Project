@@ -52,4 +52,7 @@ void LVL_Warp::init()
     b2Fixture * bgo = physBody->CreateFixture(&shape, 1.0f);
     bgo->SetSensor(true);
     bgo->SetFriction( 0 );
+
+    setPos(data.ix, data.iy);
+    collide = COLLISION_NONE;
 }
