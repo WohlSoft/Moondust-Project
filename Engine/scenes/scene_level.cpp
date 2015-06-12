@@ -59,10 +59,6 @@ LevelScene::LevelScene()
     cameraStartDirected=false;
     cameraStartDirection=0;
 
-    /*********Physics**********/
-    gravity=26;
-    /**************************/
-
     /*********Exit*************/
     isLevelContinues=true;
 
@@ -207,40 +203,6 @@ void LevelScene::processPauseMenu()
     }
 }
 
-void LevelScene::processPhysics(float ticks)
-{
-    //Iterate
-    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
-    {
-        LVL_Player*plr=(*it);
-        plr->iterateStep(ticks);
-        plr->_syncBox2dWithPos();
-    }
-    for(int i=0;i<active_npcs.size();i++)
-    {
-        active_npcs[i]->iterateStep(ticks);
-        active_npcs[i]->_syncBox2dWithPos();
-    }
-
-    //Collide!
-    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
-    {
-        LVL_Player*plr=(*it);
-        plr->foot_contacts_map.clear();
-        plr->onGround=false;
-        plr->foot_sl_contacts_map.clear();
-        plr->contactedWarp = NULL;
-        plr->contactedWithWarp=false;
-        plr->climbable_map.clear();
-        plr->environments_map.clear();
-        plr->updateCollisions();
-    }
-    for(int i=0;i<active_npcs.size();i++)
-    {
-        active_npcs[i]->updateCollisions();
-    }
-
-}
 
 
 
@@ -416,10 +378,8 @@ void LevelScene::update()
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //Make world step
-            //world->Step(uTickf/1000.f, 1, 1);
+            world->Step(uTickf/1000.f, 1, 1);
         }
-
-        processPhysics(uTickf);
 
         while(!block_transforms.isEmpty())
         {
