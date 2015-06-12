@@ -874,6 +874,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             )
                     {
                         foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                        if(blk->slippery) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                         posRect.setY(collided->posRect.top()-posRect.height());
                         setSpeedY(0);
                         if((blk->setup->bounce)&&(c1.x()>=rc.left())&&(c1.x()<=rc.right()))
@@ -903,6 +904,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             )
                     {
                             foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                            if(blk->slippery) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                             posRect.setY(rc.top()-r1.height());
                             setSpeedY(0);
                             if((blk->setup->bounce)&&(c1.x()>=rc.left())&&(c1.x()<=rc.right()))
@@ -913,9 +915,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Bottom****************************/
                     else if( (
-                                 (speedY() < 0.01)
+                                 (speedY() < 0.00)
                                  &&
-                                 (r1.top() > rc.bottom()-speedY())
+                                 (r1.top() >= rc.bottom()-speedY())
                                  &&
                                  (
                                       (r1.left()<rc.right()+1 ) &&
@@ -927,7 +929,6 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                              )
                     {
                         posRect.setY(rc.bottom()+1);
-                        setSpeedY(0);
                         blk->hit();
                         bump();
                     }
