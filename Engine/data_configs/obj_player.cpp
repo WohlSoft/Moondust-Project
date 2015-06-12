@@ -19,6 +19,7 @@
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
+#include <common_features/number_limiter.h>
 #include <scenes/level/lvl_physenv.h>
 
 /*****Playable Characters************/
@@ -30,30 +31,48 @@ CustomDirManager ConfigManager::Dir_PlayerLvl;
 void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString grp)
 {
     set.beginGroup(grp);
-        t.walk_force = set.value("walk_force", 900.0).toFloat();
-    //    walk_force = 900.0
-        t.slippery_c = set.value("slippery_c", 3.0).toFloat();
-    //    slippery_c = 3.0
-        t.gravity_scale = set.value("gravity_scale", 1.0).toFloat();
-    //    gravity_scale = 1.0
-        t.velocity_jump = set.value("velocity_jump", 37.0).toFloat();
-    //    velocity_jump = 37.0
-        t.velocity_climb = set.value("velocity_climb", 15.0).toFloat();
-    //    velocity_climb = 15.0
-        t.MaxSpeed_walk = set.value("MaxSpeed_walk", 20.0).toFloat();
-    //    MaxSpeed_walk = 20.0
-        t.MaxSpeed_run = set.value("MaxSpeed_run", 38.0).toFloat();
-    //    MaxSpeed_run = 38.0
-        t.MaxSpeed_up = set.value("MaxSpeed_up", 74.0).toFloat();
-    //    MaxSpeed_up = 74.0
-        t.MaxSpeed_down = set.value("MaxSpeed_down", 72.0).toFloat();
-    //    MaxSpeed_down = 72.0
-        t.damping = set.value("damping", 0.0).toFloat();
-    //    damping = 0.0
+        t.walk_force = set.value("walk_force", t.walk_force).toFloat();
+            NumberLimiter::applyD(t.walk_force, 6.5f, 0.0f);
+        t.run_force = set.value("run_force", t.run_force).toFloat();
+            NumberLimiter::applyD(t.run_force, 3.25f, 0.0f);
+
+        t.decelerate_stop= set.value("decelerate_stop", t.decelerate_stop).toFloat();
+            NumberLimiter::applyD(t.decelerate_stop, 4.55f, 0.0f);
+        t.decelerate_run = set.value("decelerate_run", t.decelerate_run).toFloat();
+            NumberLimiter::applyD(t.decelerate_run, 10.88f, 0.0f);
+        t.decelerate_turn= set.value("decelerate_turn", t.decelerate_turn).toFloat();
+            NumberLimiter::applyD(t.decelerate_turn, 18.2f, 0.0f);
+        t.decelerate_air = set.value("decelerate_air", t.decelerate_air).toFloat();
+            NumberLimiter::applyD(t.decelerate_air, 0.0f, 0.0f);
+
+        t.slippery_c = set.value("slippery_c", t.slippery_c).toFloat();
+            NumberLimiter::applyD(t.slippery_c, 0.0f, 0.0f);
+
+        t.gravity_scale = set.value("gravity_scale", t.gravity_scale ).toFloat();
+        t.velocity_jump = set.value("velocity_jump", t.velocity_jump).toFloat();
+            NumberLimiter::applyD(t.velocity_jump, 5.2f, 0.0f);
+
+        t.jump_time     = set.value("jump_time", t.jump_time).toInt();
+            NumberLimiter::applyD(t.jump_time, 260, 0);
+
+        t.velocity_climb_x = set.value("velocity_climb_x", t.velocity_climb_x).toFloat();
+            NumberLimiter::applyD(t.velocity_climb_x, 1.5f, 0.0f);
+        t.velocity_climb_y_up = set.value("velocity_climb_y_up", t.velocity_climb_y_up).toFloat();
+            NumberLimiter::applyD(t.velocity_climb_y_up, 2.0f, 0.0f);
+        t.velocity_climb_y_down = set.value("velocity_climb_y_down", t.velocity_climb_y_down).toFloat();
+            NumberLimiter::applyD(t.velocity_climb_y_down, 3.0f, 0.0f);
+
+        t.MaxSpeed_walk = set.value("MaxSpeed_walk", t.MaxSpeed_walk).toFloat();
+            NumberLimiter::applyD(t.velocity_climb_x, 3.0f, 0.0f);
+        t.MaxSpeed_run = set.value("MaxSpeed_run", t.MaxSpeed_run).toFloat();
+            NumberLimiter::applyD(t.MaxSpeed_run, 6.0f, 0.0f);
+        t.MaxSpeed_up = set.value("MaxSpeed_up", t.MaxSpeed_up).toFloat();
+            NumberLimiter::applyD(t.MaxSpeed_up, 74.0f, 0.0f);
+        t.MaxSpeed_down = set.value("MaxSpeed_down", t.MaxSpeed_down).toFloat();
+            NumberLimiter::applyD(t.MaxSpeed_down, 12.0f, 0.0f);
+
         t.zero_speed_y_on_enter = set.value("zero_speed_y_on_enter", false).toBool();
-    //    zero_speed_y_on_enter=false
         t.slow_speed_x_on_enter = set.value("slow_speed_x_on_enter", false).toBool();
-    //    slow_speed_x_on_enter=false
     set.endGroup();
 }
 
@@ -133,10 +152,12 @@ bool ConfigManager::loadPlayableCharacters()
             {//States
                 bool default_duck=false;
                 int floating_max_time=1500;
+                float floating_amplutude=0.8;
                 playerset.beginGroup( QString("character-%1-physics-common").arg(i) );
                     default_duck =  playerset.value("duck-allow", false ).toBool();
                     splayer.allowFloating =  playerset.value("allow-floating", false ).toBool();
                     floating_max_time = playerset.value("floating-max-time", 1500 ).toInt();
+                    floating_amplutude = playerset.value("floating-amplitude", 0.8).toFloat();
                 playerset.endGroup();
 
 
@@ -202,7 +223,8 @@ bool ConfigManager::loadPlayableCharacters()
                         }
                         pstate.duck_allow = playerset.value("duck-allow", default_duck).toBool();
                         pstate.allow_floating = playerset.value("allow-floating", splayer.allowFloating).toBool();
-                        pstate.floating_max_time = playerset.value("floating-max-time", floating_max_time).toInt();
+                        pstate.floating_max_time  = playerset.value("floating-max-time", floating_max_time).toInt();
+                        pstate.floating_amplitude = playerset.value("floating-amplitude", floating_amplutude).toFloat();
                         pstate.duck_height = playerset.value("default-duck-height", 30).toInt();
                         pstate.height = playerset.value("default-height", 54).toInt();
                         pstate.width = playerset.value("default-width", 24).toInt();
@@ -256,3 +278,33 @@ bool ConfigManager::loadPlayableCharacters()
        return true;
 }
 
+
+
+obj_player_physics::obj_player_physics()
+{
+    walk_force = 6.5; //!< Move force
+    run_force  = 3.25;  //!< Running force
+
+    decelerate_stop = 4.55; //!< Deceleration while stopping
+    decelerate_run  = 10.88;  //!< Deceleration running while speed higher than walking
+    decelerate_turn = 18.2 ; //!< Deceleration while turning
+    decelerate_air  = 0.0;  //!< Decelerate in air
+
+    slippery_c      = 4.0; //!< Slippery coefficien
+    gravity_scale   = 1.0; //!< Gravity scale
+    velocity_jump   = 5.2; //!< Jump velocity
+    jump_time       = 260;     //!< Time to jump
+
+    velocity_climb_x     = 1.5; //!< Climbing velocity
+    velocity_climb_y_up  = 2.0; //!< Climbing velocity
+    velocity_climb_y_down= 3.0; //!< Climbing velocity
+
+    MaxSpeed_walk       = 3.0; //!< Max walk speed
+    MaxSpeed_run        = 6.0;  //!< Max run speed
+
+    MaxSpeed_up         = 74.0;   //!< Fly UP Max fall speed
+    MaxSpeed_down       = 12.0; //!< Max fall down speed
+
+    zero_speed_y_on_enter=false;
+    slow_speed_x_on_enter=false;
+}

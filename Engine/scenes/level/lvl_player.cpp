@@ -25,6 +25,7 @@
 
 #include <common_features/rectf.h>
 #include <common_features/pointf.h>
+#include <common_features/maths.h>
 
 #include "lvl_scene_ptr.h"
 
@@ -71,15 +72,14 @@ LVL_Player::LVL_Player()
     doHarm_damage=0;
 
     foot_contacts=0;
-    jumpForce=0;
+    jumpTime=0;
 
-    jumpForce_default=260;
+    jumpTime_default=260;
 
     isLive = true;
     doKill = false;
     kill_reason=DEAD_fall;
 
-    curHMaxSpeed = 1200;
     isRunning = false;
 
     contactedWithWarp = false;
@@ -148,6 +148,11 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     physics = setup.phys_default;
     physics_cur = physics[environment];
 
+    phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
+    phys_setup.min_vel_x =-physics_cur.MaxSpeed_walk;
+
+    jumpTime_default = physics_cur.jump_time;
+
     long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
     if( tID >= 0 )
     {
@@ -160,7 +165,14 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
 
-    curHMaxSpeed = isRunning? physics_cur.MaxSpeed_run : physics_cur.MaxSpeed_walk;
+    phys_setup.max_vel_x = isRunning ?
+                physics_cur.MaxSpeed_run :
+                physics_cur.MaxSpeed_walk;
+    phys_setup.min_vel_x = -(isRunning ?
+                physics_cur.MaxSpeed_run :
+                physics_cur.MaxSpeed_walk);
+
+    phys_setup.grd_dec_x = physics_cur.walk_force;
 
     /********************floating************************/
     floating_allow=state_cur.allow_floating;
@@ -222,6 +234,9 @@ void LVL_Player::init()
 
     updateBox();
 
+    setPos(data.x, data.y);
+    phys_setup.max_vel_y=12;
+
     animator.tickAnimation(0.f);
     //qDebug() <<"Start position is " << posX() << posY();
     isLocked=false;
@@ -271,10 +286,6 @@ void LVL_Player::update(float ticks)
     LVL_Section* section = sct();
     if(!section) return;
     lua_onLoop();
-    PGE_Phys_Object::update(ticks);
-
-//    while(!npc_queue.isEmpty())
-//        npc_queue.dequeue()->kill();
 
     event_queue.processEvents(ticks);
     if(isWarping)
@@ -292,6 +303,12 @@ void LVL_Player::update(float ticks)
     }
 
     onGround = !foot_contacts_map.isEmpty();
+    slippery_surface = !foot_sl_contacts_map.isEmpty();
+
+    if(onGround)
+        phys_setup.decelerate_x = slippery_surface ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop;
+    else
+        phys_setup.decelerate_x = physics_cur.decelerate_air;
 
     if(doKill)
     {
@@ -333,15 +350,6 @@ void LVL_Player::update(float ticks)
     {
         setSpeed(0,0);
     }
-    else
-    {
-        if(speedY() > physics_cur.MaxSpeed_down)
-            setSpeedY(physics_cur.MaxSpeed_down);
-        else
-        if(speedY() < -physics_cur.MaxSpeed_up)
-            setSpeedY(-physics_cur.MaxSpeed_up);
-    }
-
 
     if(environments_map.isEmpty())
     {
@@ -379,12 +387,15 @@ void LVL_Player::update(float ticks)
         if(physics_cur.slow_speed_x_on_enter)
             setSpeedX(speedX()/2);
 
-        setDecelX(physics_cur.damping);
+        setDecelX(physics_cur.decelerate_air);
+
         setGravityScale(physics_cur.gravity_scale);
-        curHMaxSpeed = isRunning ?
+        phys_setup.max_vel_x = isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk;
-
+        phys_setup.min_vel_x = -(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk);
         floating_isworks=false;//< Reset floating on re-entering into another physical envirinment
     }
 
@@ -401,7 +412,8 @@ void LVL_Player::update(float ticks)
     {
         if(!isRunning)
         {
-            curHMaxSpeed = physics_cur.MaxSpeed_run;
+            phys_setup.max_vel_x = physics_cur.MaxSpeed_run;
+            phys_setup.min_vel_x = -physics_cur.MaxSpeed_run;
             isRunning=true;
         }
     }
@@ -409,7 +421,8 @@ void LVL_Player::update(float ticks)
     {
         if(isRunning)
         {
-            curHMaxSpeed = physics_cur.MaxSpeed_walk;
+            phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
+            phys_setup.min_vel_x = -physics_cur.MaxSpeed_walk;
             isRunning=false;
         }
     }
@@ -451,7 +464,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            setSpeedY(-physics_cur.velocity_climb);
+            setSpeedY(-physics_cur.velocity_climb_y_up);
         }
         else
         if(climbable_map.size()>0)
@@ -465,7 +478,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbing)
         {
-            setSpeedY(physics_cur.velocity_climb);
+            setSpeedY(physics_cur.velocity_climb_y_down);
         }
         else
         if(climbable_map.size()>0)
@@ -487,14 +500,15 @@ void LVL_Player::update(float ticks)
             setDuck(false);
     }
 
-    slippery_surface = !foot_sl_contacts_map.isEmpty();
-
     if( (!keys.left) || (!keys.right) )
     {
-        float32 force = slippery_surface ?
-                               (physics_cur.walk_force/
-                                physics_cur.slippery_c) :
-                                physics_cur.walk_force;
+        bool turning=(((speedX()>0)&&(direction<0))||((speedX()<0)&&(direction>0)));
+
+        float force = turning?
+                    physics_cur.decelerate_turn :
+                    (fabs(speedX())>physics_cur.MaxSpeed_walk)?physics_cur.run_force : physics_cur.walk_force;
+
+        if(slippery_surface) force=force/physics_cur.slippery_c;
 
         if(keys.left) direction=-1;
         if(keys.right) direction=1;
@@ -505,27 +519,17 @@ void LVL_Player::update(float ticks)
             if(keys.right)
             {
                 if(climbing)
-                {
-                    setSpeedX(physics_cur.velocity_climb);
-                }
+                    setSpeedX(physics_cur.velocity_climb_x);
                 else
-                {
-                if(speedX() <= curHMaxSpeed)
-                    physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
-                }
+                    applyAccel(force, 0);
             }
             //If right key is pressed
             if(keys.left)
             {
                 if(climbing)
-                {
-                    setSpeedX(-physics_cur.velocity_climb);
-                }
+                    setSpeedX(-physics_cur.velocity_climb_x);
                 else
-                {
-                    if(speedX() >= -curHMaxSpeed)
-                        physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
-                }
+                    applyAccel(-force, 0);
             }
         }
     }
@@ -563,7 +567,7 @@ void LVL_Player::update(float ticks)
                 }
 
                 JumpPressed=true;
-                jumpForce=jumpForce_default;
+                jumpTime=jumpTime_default;
                 floating_timer = floating_maxtime;
                 setSpeedY(speedY()-physics_cur.velocity_jump);
             }
@@ -575,9 +579,9 @@ void LVL_Player::update(float ticks)
             if(onGround || climbing)
             {
                 climbing=false;
-                jumpForce=jumpForce_default;
+                jumpTime=jumpTime_default;
                 floating_timer = floating_maxtime;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/5.0f));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -593,9 +597,9 @@ void LVL_Player::update(float ticks)
         }
         else
         {
-            if(jumpForce>0)
+            if(jumpTime>0)
             {
-                jumpForce -= ticks;
+                jumpTime -= ticks;
                 setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
             }
 
@@ -603,9 +607,9 @@ void LVL_Player::update(float ticks)
             {
                 floating_timer -= ticks;
                 if(floating_start_type)
-                    setSpeedY( 3.5*(-cos(floating_timer/80.0)) );
+                    setSpeedY( state_cur.floating_amplitude*(-cos(floating_timer/80.0)) );
                 else
-                    setSpeedY( 3.5*cos(floating_timer/80.0) );
+                    setSpeedY( state_cur.floating_amplitude*(cos(floating_timer/80.0)) );
                 if(floating_timer<=0)
                 {
                     floating_timer=0;
@@ -617,7 +621,7 @@ void LVL_Player::update(float ticks)
     }
     else
     {
-        jumpForce=0;
+        jumpTime=0;
         if(JumpPressed)
         {
             JumpPressed=false;
@@ -653,7 +657,7 @@ void LVL_Player::update(float ticks)
     if(bumpUp)
     {
         bumpUp=false;
-        setSpeedY( (keys.jump?(-75.f-fabs(physBody->GetLinearVelocity().x/6)) : -32.5f) );
+        setSpeedY( (keys.jump?(-25.0f-fabs(speedX()/6)) : -physics_cur.velocity_jump) );
     }
 
 
@@ -661,10 +665,10 @@ void LVL_Player::update(float ticks)
     if(section->isWarp())
     {
         if(posX() < sBox.left()-width-1 )
-            setPosX( sBox.right()+posX_coefficient-1 );
+            setPosX( sBox.right()+1 );
         else
         if(posX() > sBox.right() + 1 )
-            setPosX( sBox.left()-posX_coefficient+1 );
+            setPosX( sBox.left()-width-1 );
     }
     else
     {
@@ -675,7 +679,7 @@ void LVL_Player::update(float ticks)
             {
                 if( posX() < sBox.left())
                 {
-                    setPosX(sBox.left() + posX_coefficient);
+                    setPosX( sBox.left() );
                     setSpeedX(0);
                 }
             }
@@ -694,13 +698,13 @@ void LVL_Player::update(float ticks)
             //Prevent moving of player away from screen
             if( posX() < sBox.left())
             {
-                setPosX(sBox.left() + posX_coefficient );
+                setPosX(sBox.left());
                 setSpeedX(0);
             }
             else
             if( posX()+width > sBox.right())
             {
-                setPosX(sBox.right()-posX_coefficient);
+                setPosX(sBox.right()-width);
                 setSpeedX(0);
             }
         }
@@ -825,6 +829,156 @@ void LVL_Player::updateCamera()
                     round(bottom()) - camera->h()/2-state_cur.height/2 );
 }
 
+void LVL_Player::solveCollision(PGE_Phys_Object *collided)
+{
+    if(!collided) return;
+
+    switch(collided->type)
+    {
+        case PGE_Phys_Object::LVLBlock:
+        {
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk)
+            {
+                if(blk->destroyed) break;
+                if(blk->isHidden) break;
+            }
+            else break;
+
+            if(bumpUp||bumpDown) break;
+
+            PGE_PointF c1=posRect.center();
+            PGE_RectF &r1=posRect;
+            PGE_PointF cc=collided->posRect.center();
+            PGE_RectF  rc = collided->posRect;
+
+            switch(collided->collide)
+            {
+                case COLLISION_TOP:
+                {
+                    PGE_RectF &r1=posRect;
+                    PGE_RectF  rc = collided->posRect;
+                    if(
+                            (
+                                (speedY() > 0.01)
+                                &&
+                                (r1.bottom() < rc.top()+speedY())
+                                &&
+                                (
+                                     (r1.left()<rc.right()-1 ) &&
+                                     (r1.right()>rc.left()+1 )
+                                 )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                        foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                        posRect.setY(collided->posRect.top()-posRect.height());
+                        setSpeedY(0);
+                        if((blk->setup->bounce)&&(c1.x()>=rc.left())&&(c1.x()<=rc.right()))
+                        {
+                            blk->hit(LVL_Block::down);
+                            bump(true);
+                        }
+                    }
+                }
+                break;
+                case COLLISION_ANY:
+                {
+                    //*****************************Top****************************/
+                    if(
+                            (
+                                (speedY() > 0.01)
+                                &&
+                                (r1.bottom() < rc.top()+speedY())
+                                &&
+                                (
+                                     (r1.left()<rc.right()+1 ) &&
+                                     (r1.right()>rc.left()-1 )
+                                 )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                            foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                            posRect.setY(rc.top()-r1.height());
+                            setSpeedY(0);
+                            if((blk->setup->bounce)&&(c1.x()>=rc.left())&&(c1.x()<=rc.right()))
+                            {
+                                blk->hit(LVL_Block::down);
+                                bump(true);
+                            }
+                    }
+                    //*****************************Bottom****************************/
+                    else if( (
+                                 (speedY() < 0.01)
+                                 &&
+                                 (r1.top() > rc.bottom()-speedY())
+                                 &&
+                                 (
+                                      (r1.left()<rc.right()+1 ) &&
+                                      (r1.right()>rc.left()-1 )
+                                  )
+                              )
+                             ||
+                             (r1.top() >= rc.bottom())
+                             )
+                    {
+                        posRect.setY(rc.bottom()+1);
+                        setSpeedY(0);
+                        blk->hit();
+                        bump();
+                    }
+                    //*****************************Left****************************/
+                    else if((c1.x() > cc.x()) && (r1.left() < rc.right()) && (( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    {
+                        posRect.setX(rc.right());
+                        setSpeedX(0);
+                    }
+                    //*****************************Right****************************/
+                    else if((c1.x() < cc.x()) && ( r1.right() > rc.left()) && (( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    {
+                        posRect.setX(rc.left()-r1.width());
+                        setSpeedX(0);
+                    }
+                    break;
+                }
+            default: break;
+            }
+            break;
+        }
+        case PGE_Phys_Object::LVLWarp:
+        {
+            contactedWarp = static_cast<LVL_Warp*>(collided);
+            if(contactedWarp)
+                contactedWithWarp=true;
+            break;
+        }
+        case PGE_Phys_Object::LVLBGO:
+        {
+            LVL_Bgo *bgo= static_cast<LVL_Bgo*>(collided);
+            if(bgo)
+            {
+                if(bgo->setup->climbing)
+                    climbable_map[(intptr_t)collided]=(intptr_t)collided;
+            }
+            break;
+        }
+        case PGE_Phys_Object::LVLPhysEnv:
+        {
+            LVL_PhysEnv *env= static_cast<LVL_PhysEnv*>(collided);
+            if(env)
+            {
+                if(env) environments_map[(intptr_t)env]=env->env_type;
+            }
+            break;
+        }
+    default: break;
+    }
+}
+
 Uint32 slideTicks=0;
 void LVL_Player::refreshAnimation()
 {
@@ -897,9 +1051,9 @@ void LVL_Player::refreshAnimation()
             {
                 float velX = speedX();
                 if( ((!slippery_surface)&&(velX>0.0))||((slippery_surface)&&(keys.right)&&(velX>0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*20)<100?velX*10:100)));
                 else if( ((!slippery_surface)&& (velX<0.0))||((slippery_surface)&&(keys.left)&&(velX<0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*4)<100?-velX*4:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*20)<100?-velX*10:100)));
                 else
                     animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
             }

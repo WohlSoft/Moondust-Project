@@ -37,5 +37,8 @@ void LVL_PhysEnv::init()
     b2Fixture * bgo = physBody->CreateFixture(&shape, 1.0f);
     bgo->SetSensor(true);
     bgo->SetFriction( 0 );
+
+    setPos(data.x, data.y);
+    collide = COLLISION_NONE;
 }
 

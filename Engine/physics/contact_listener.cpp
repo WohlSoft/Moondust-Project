@@ -352,7 +352,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
             if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
                     && (bodyChar->physBody->GetLinearVelocity().y < -0.01) )
             {
-                chr->jumpForce=0;
+                chr->jumpTime=0;
 
                 if(blk->setup->hitable)
                 {

@@ -32,7 +32,7 @@ function onLoop()
     else
         curX = curX - 1
     end
-    Renderer.printText("Engine by Wohlstand & Kevsoft", curX, curY, -1, 15, 0xFFFF0055)
+    Renderer.printText("Engine by Wohlstand & Kevsoft", curX, curY, 1, 15, 0xFFFF0077)
 end
 
 

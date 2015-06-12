@@ -294,6 +294,10 @@ private:
     int  debug_event_delay;
 
 public:
+   float gravity;
+   void processPhysics(float ticks);
+
+public:
     void registerElement(PGE_Phys_Object* item);
     void unregisterElement(PGE_Phys_Object* item);
     typedef double RPoint[2];

@@ -70,6 +70,8 @@ void LVL_Npc::init()
     bodyDef.gravityScale = setup->gravity ? 1.0f : 0.f;
     physBody = worldPtr->CreateBody(&bodyDef);
 
+    setGravityScale(setup->gravity ? 1.0f : 0.f);
+
     b2PolygonShape shape;
     shape.SetAsBox(PhysUtil::pix2met(posX_coefficient-0.01), PhysUtil::pix2met(posY_coefficient-0.01) );
     if(setup->block_player)
@@ -103,6 +105,11 @@ void LVL_Npc::init()
     edgeShape.m_hasVertex3 = true;
     f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
     f_edge->SetFriction( 0.04f );
+
+    phys_setup.max_vel_y=10;
+
+    setPos(data.x, data.y);
+
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
         f_edge->SetSensor(true);
 }
@@ -138,7 +145,7 @@ void LVL_Npc::update(float ticks)
         else
         if(!blocks_right.isEmpty())
             direction=-1;
-        setSpeedX(PhysUtil::pix2met((motionSpeed)*direction));
+        setSpeedX((motionSpeed)*direction);
     }
 
     LVL_Section *section=sct();

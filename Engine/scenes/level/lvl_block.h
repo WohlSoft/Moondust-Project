@@ -53,6 +53,24 @@ public:
         down
     };
 
+    enum shapes{
+        shape_rect=0,
+        shape_tr_top_left=1,
+        shape_tr_top_right=-1,
+        shape_tr_bottom_right=2,
+        shape_tr_bottom_left=-2,
+        stape_polygon=3
+    };
+
+    /*
+    case 1: //Top-Right triangle
+    case -1: //Top-Left triangle
+    case 2: //Bottom-Right triangle
+    case -2: //Bottom-Left triangle
+    */
+
+    int shape;
+
     int taskToTransform;
     int taskToTransform_t;
     void transformTo(long id, int type=0);

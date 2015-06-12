@@ -20,6 +20,7 @@
 #include <scenes/level/lvl_scene_ptr.h>
 
 #include <graphics/b2d_render.h>
+#include <graphics/gl_renderer.h>
 
 PGE_Phys_Object::PGE_Phys_Object()
 {
@@ -39,8 +40,13 @@ PGE_Phys_Object::PGE_Phys_Object()
     height = 0.0f;
     _posX=0.0f;
     _posY=0.0f;
-    _velX=0.0f;
-    _velY=0.0f;
+    _velocityX=0.0f;
+    _velocityY=0.0f;
+
+    _accelX=0;
+    _accelY=0;
+
+    timeStep=(1000.f/65.f);
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -56,6 +62,8 @@ PGE_Phys_Object::~PGE_Phys_Object()
 
 double PGE_Phys_Object::posX()
 {
+    return posRect.x();
+
     if(physBody)
     {//PhysUtil::pixMeter
         return PhysUtil::met2pix(physBody->GetPosition().x) - posX_coefficient;
@@ -66,6 +74,8 @@ double PGE_Phys_Object::posX()
 
 double PGE_Phys_Object::posY()
 {
+    return posRect.y();
+
     if(physBody)
     {
 //        b2Vec2 offset = b2Vec2(posX_coefficient, posY_coefficient);
@@ -99,6 +109,7 @@ double PGE_Phys_Object::right()
 
 void PGE_Phys_Object::setSize(float w, float h)
 {
+    posRect.setSize(w, h);
     width = w;
     height = h;
     posX_coefficient = width/2.0f;
@@ -107,6 +118,7 @@ void PGE_Phys_Object::setSize(float w, float h)
 
 void PGE_Phys_Object::setPos(double x, double y)
 {
+    posRect.setPos(x, y);
     physBody->SetTransform(
                 b2Vec2(
                 PhysUtil::pix2met( x+posX_coefficient),
@@ -117,6 +129,7 @@ void PGE_Phys_Object::setPos(double x, double y)
 
 void PGE_Phys_Object::setPosX(double x)
 {
+    posRect.setX(x);
     physBody->SetTransform(
                 b2Vec2(
                 PhysUtil::pix2met( x+posX_coefficient),
@@ -127,6 +140,7 @@ void PGE_Phys_Object::setPosX(double x)
 
 void PGE_Phys_Object::setPosY(double y)
 {
+    posRect.setY(y);
     physBody->SetTransform(
                 b2Vec2(
                 physBody->GetPosition().x,
@@ -137,76 +151,162 @@ void PGE_Phys_Object::setPosY(double y)
 
 double PGE_Phys_Object::speedX()
 {
+    return _velocityX;
     return physBody->GetLinearVelocity().x;
 }
 
 double PGE_Phys_Object::speedY()
 {
+    return _velocityY;
     return physBody->GetLinearVelocity().y;
 }
 
 void PGE_Phys_Object::setSpeed(double x, double y)
 {
+    _velocityX=x;
+    _velocityY=y;
     physBody->SetLinearVelocity(b2Vec2(x, y));
 }
 
 void PGE_Phys_Object::setSpeedX(double x)
 {
+    _velocityX=x;
     physBody->SetLinearVelocity(b2Vec2(x, physBody->GetLinearVelocity().y));
 }
 
 void PGE_Phys_Object::setSpeedY(double y)
 {
+    _velocityY=y;
     physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, y));
 }
 
 void PGE_Phys_Object::setDecelX(double x)
 {
+    phys_setup.decelerate_x=x;
     physBody->SetLinearDamping(x);
+}
+
+void PGE_Phys_Object::applyAccel(double x, double y)
+{
+    _accelX=x;
+    _accelY=y;
+    physBody->ApplyForceToCenter(b2Vec2(x,y), true);
 }
 
 double PGE_Phys_Object::gravityScale()
 {
-    return physBody->GetGravityScale();
+    return phys_setup.gravityScale;//physBody->GetGravityScale();
 }
 
 void PGE_Phys_Object::setGravityScale(double scl)
 {
-    return physBody->SetGravityScale(scl);
+    phys_setup.gravityScale = scl;
 }
 
-
-void PGE_Phys_Object::doPhysics()
-{
-
-}
 
 void PGE_Phys_Object::_syncBox2dWithPos()
 {
     if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
-    _posX= PhysUtil::met2pix(physBody->GetPosition().x)-posX_coefficient;
-    _posY= PhysUtil::met2pix(physBody->GetPosition().y)-posY_coefficient;
+    _posX= posRect.x();//PhysUtil::met2pix(physBody->GetPosition().x)-posX_coefficient;
+    _posY= posRect.y();//PhysUtil::met2pix(physBody->GetPosition().y)-posY_coefficient;
     if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
 }
 
 void PGE_Phys_Object::renderDebug(float _camX, float _camY)
 {
-    if(physBody)
+    switch(type)
     {
-        switch(type)
-        {
-        case LVLUnknown: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 1.0, 1.0); break;
-        case LVLBlock: b2d_render::DrawBody(physBody, _camX, _camY, 0.0, 1.0, 0.0); break;
-        case LVLBGO: b2d_render::DrawBody(physBody, _camX, _camY, 0.0, 0.0, 1.0); break;
-        case LVLNPC: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.0, 1.0); break;
-        case LVLPlayer: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.5, 0.5); break;
-        case LVLEffect: b2d_render::DrawBody(physBody, _camX, _camY, 0.5, 0.5, 0.5); break;
-        case LVLWarp: b2d_render::DrawBody(physBody, _camX, _camY, 1.0, 0.0, 0.0, 0.5f, 4.f, true); break;
-        case LVLSpecial: b2d_render::DrawBody(physBody, _camX, _camY); break;
-        case LVLPhysEnv: b2d_render::DrawBody(physBody, _camX, _camY, 1.0f, 1.0f, 0.0f, 0.5f, 2.f, true); break;
-        }
+    case LVLUnknown: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 1.0, 1.0, 1.0, false); break;
+    case LVLBlock: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 1.0, 0.0, 1.0, false); break;
+    case LVLBGO: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 0.0, 1.0, 1.0, false); break;
+    case LVLNPC: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 1.0, 1.0, false); break;
+    case LVLPlayer: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.5, 0.5, 1.0, false); break;
+    case LVLEffect: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.5, 0.5, 0.5, 1.0, false); break;
+    case LVLWarp: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 0.0, 0.5f, true); break;
+    case LVLSpecial: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0,1.0,0,1.0, true);
+    case LVLPhysEnv: GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0f, 1.0f, 0.0f, 0.5f, true); break;
     }
 }
+
+
+void PGE_Phys_Object::iterateStep(float ticks)
+{
+    posRect.setX(posRect.x()+_velocityX * (ticks/timeStep));
+    posRect.setY(posRect.y()+_velocityY * (ticks/timeStep));
+    float accelCof=ticks/1000.0f;
+    if(_accelX!=0)
+    {
+        _velocityX+= _accelX*accelCof;
+        _accelX=0;
+    }
+    else
+    if(phys_setup.decelerate_x!=0)
+    {
+        float decX=phys_setup.decelerate_x*accelCof;
+        if(_velocityX>0)
+        {
+            if((_velocityX-decX>0.0))
+                _velocityX-=decX;
+            else
+                _velocityX=0;
+        } else if(_velocityX<0) {
+            if((_velocityX+decX<0.0))
+                _velocityX+=decX;
+            else
+                _velocityX=0;
+        }
+    }
+
+    if(_accelY!=0)
+    {
+        _velocityY+= _accelY*accelCof;
+        _accelY=0;
+    }
+
+    if(phys_setup.decelerate_y!=0)
+    {
+        if(_velocityY>0)
+        {
+           _velocityY -= phys_setup.decelerate_y;
+        } else if(_velocityY<0) {
+           _velocityY += phys_setup.decelerate_y;
+        }
+    }
+    if(LvlSceneP::s->gravity!=0.0f)
+    {
+        _velocityY+= (phys_setup.gravityScale*LvlSceneP::s->gravity)*accelCof;
+    }
+    if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) _velocityX-=phys_setup.grd_dec_x*accelCof;
+    if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) _velocityX+=phys_setup.grd_dec_x*accelCof;
+    if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) _velocityY=phys_setup.max_vel_y;
+    if((phys_setup.mix_vel_y!=0)&&(_velocityY<phys_setup.mix_vel_y)) _velocityY=phys_setup.mix_vel_y;
+
+}
+
+void PGE_Phys_Object::updateCollisions()
+{
+    QVector<PGE_Phys_Object*> bodies;
+    PGE_RectF posRectC = posRect;
+    posRectC.setLeft(posRect.left()-2);
+    posRectC.setRight(posRect.right()+2);
+    posRectC.setTop(posRect.top()-2);
+    posRectC.setBottom(posRect.bottom()+2);
+    LvlSceneP::s->queryItems(posRectC, &bodies);
+
+    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    {
+        PGE_Phys_Object*body=*it;
+        solveCollision(body);
+    }
+}
+
+void PGE_Phys_Object::solveCollision(PGE_Phys_Object *)
+{}
+
+
+
+
+
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)
 {
@@ -231,9 +331,8 @@ void PGE_Phys_Object::nextFrame() {}
 
 void PGE_Phys_Object::update() { _syncBox2dWithPos(); }
 
-void PGE_Phys_Object::update(float ticks)
+void PGE_Phys_Object::update(float)
 {
-    Q_UNUSED(ticks);
     _syncBox2dWithPos();
 }
 
@@ -252,4 +351,17 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 bool CollidablesInRegionQueryCallback::ReportFixture(b2Fixture *fixture) {
     foundBodies.push_back( fixture->GetBody() );
     return true;//keep going to find all fixtures in the query area
+}
+
+
+PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
+{
+    min_vel_x=0;
+    mix_vel_y=0;
+    max_vel_x=0;
+    max_vel_y=0;
+    grd_dec_x=0;
+    decelerate_x=0;
+    decelerate_y=0;
+    gravityScale=1.0f;
 }

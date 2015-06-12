@@ -414,7 +414,7 @@ void GlRenderer::setWindowSize(int w, int h)
     resetViewport();
 }
 
-void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
     PGE_PointF point;
         point = MapToGl(x, y);
@@ -424,6 +424,8 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     float right = point.x();
     float bottom = point.y();
 
+    if(filled)
+    {
     glDisable(GL_TEXTURE_2D);
     glColor4f( red, green, blue, alpha);
     glBegin( GL_TRIANGLES );
@@ -435,6 +437,16 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
         glVertex2f( left, bottom);
         glVertex2f( right,  bottom);
     glEnd();
+    } else {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( red, green, blue, alpha);
+        glBegin( GL_LINE_LOOP );
+            glVertex2f( left, top);
+            glVertex2f( right, top);
+            glVertex2f( right,  bottom);
+            glVertex2f( left, bottom);
+        glEnd();
+    }
 }
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
