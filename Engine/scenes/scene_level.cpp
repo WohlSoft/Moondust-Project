@@ -59,6 +59,10 @@ LevelScene::LevelScene()
     cameraStartDirected=false;
     cameraStartDirection=0;
 
+    /*********Physics**********/
+    gravity=26;
+    /**************************/
+
     /*********Exit*************/
     isLevelContinues=true;
 
@@ -201,6 +205,41 @@ void LevelScene::processPauseMenu()
             isPauseMenu=false;
         }
     }
+}
+
+void LevelScene::processPhysics(float ticks)
+{
+    //Iterate
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->iterateStep(ticks);
+        plr->_syncBox2dWithPos();
+    }
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->iterateStep(ticks);
+        active_npcs[i]->_syncBox2dWithPos();
+    }
+
+    //Collide!
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->foot_contacts_map.clear();
+        plr->onGround=false;
+        plr->foot_sl_contacts_map.clear();
+        plr->contactedWarp = NULL;
+        plr->contactedWithWarp=false;
+        plr->climbable_map.clear();
+        plr->environments_map.clear();
+        plr->updateCollisions();
+    }
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->updateCollisions();
+    }
+
 }
 
 
@@ -377,8 +416,10 @@ void LevelScene::update()
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //Make world step
-            world->Step(uTickf/1000.f, 1, 1);
+            //world->Step(uTickf/1000.f, 1, 1);
         }
+
+        processPhysics(uTickf);
 
         while(!block_transforms.isEmpty())
         {
@@ -502,16 +543,17 @@ void LevelScene::render()
 
         cam->drawBackground();
 
-        for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+        const int render_sz = cam->renderObjects().size();
+        PGE_Phys_Object** render_obj = cam->renderObjects().data();
+        for(int i=0; i<render_sz; i++)
         {
-            PGE_Phys_Object*&item=(*it);
-            switch(item->type)
+            switch(render_obj[i]->type)
             {
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
-                item->render(cam->posX(), cam->posY());
+                render_obj[i]->render(cam->posX(), cam->posY());
                 break;
             default:
                 break;
