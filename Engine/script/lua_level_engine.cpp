@@ -22,6 +22,25 @@ LVL_Player *LuaLevelEngine::createLuaPlayer()
     return luabind::call_function<LVL_Player*>(getNativeState(), "__create_luaplayer");
 }
 
+LVL_Npc *LuaLevelEngine::createLuaNpc()
+{
+    return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc");
+}
+
+void LuaLevelEngine::loadNPCClass(int id, const QString &path)
+{
+    if(shouldShutdown())
+        return;
+
+    luabind::object _G = luabind::globals(getNativeState());
+    if(luabind::type(_G["npc_class_table"]) != LUA_TTABLE){
+        _G["npc_class_table"] = luabind::newtable(getNativeState());
+    }
+
+    luabind::object npcClassTable = _G["npc_class_table"];
+    npcClassTable[id] = loadClassAPI(path);
+}
+
 LevelScene *LuaLevelEngine::getScene()
 {
     return dynamic_cast<LevelScene*>(getBaseScene());
