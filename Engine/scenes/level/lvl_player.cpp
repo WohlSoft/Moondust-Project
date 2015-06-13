@@ -327,7 +327,10 @@ void LVL_Player::update(float ticks)
     bool climbableDown= climbableUp && !onGround;
     climbing = (climbableUp && climbing && !onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
     if(onGround)
-        phys_setup.decelerate_x = on_slippery_surface ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop;
+        phys_setup.decelerate_x =
+                (fabs(speedX())<=physics_cur.MaxSpeed_walk)?
+                (on_slippery_surface?physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop):
+                (on_slippery_surface?physics_cur.decelerate_run/physics_cur.slippery_c : physics_cur.decelerate_run);
     else
         phys_setup.decelerate_x = physics_cur.decelerate_air;
 
