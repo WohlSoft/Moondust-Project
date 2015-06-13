@@ -18,8 +18,8 @@
 
 #include "lvl_bgo.h"
 #include "../../data_configs/config_manager.h"
-
 #include <graphics/gl_renderer.h>
+#include "../scene_level.h"
 
 LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
 {
@@ -37,6 +37,53 @@ void LVL_Bgo::init()
     setSize(texture.w, texture.h);
     setPos(data.x, data.y);
     collide=COLLISION_NONE;
+}
+
+void LVL_Bgo::transformTo_x(long id)
+{
+    data.id=id;
+    double targetZ = 0;
+    double zOffset = setup->zOffset;
+    int zMode = data.z_mode;
+
+    if(zMode==LevelBGO::ZDefault)
+    {
+        switch(setup->view)
+        {
+            case -1: zMode = LevelBGO::Background2;break;
+            case 0: zMode = LevelBGO::Background1;break;
+            case 1: zMode = LevelBGO::Foreground1;break;
+            case 2: zMode = LevelBGO::Foreground2;break;
+        }
+    }
+
+    switch(zMode)
+    {
+        case LevelBGO::Background2:
+            targetZ = LevelScene::Z_BGOBack2 + zOffset + data.z_offset; break;
+        case LevelBGO::Background1:
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+        case LevelBGO::Foreground1:
+            targetZ = LevelScene::Z_BGOFore1 + zOffset + data.z_offset; break;
+        case LevelBGO::Foreground2:
+            targetZ = LevelScene::Z_BGOFore2 + zOffset + data.z_offset; break;
+        default:
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+    }
+
+    z_index += targetZ;
+
+    LevelScene::zCounter += 0.00000001;
+    z_index += LevelScene::zCounter;
+
+    long tID = ConfigManager::getBgoTexture(data.id);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        animated = setup->animated;
+        animator_ID = setup->animator_ID;
+    }
 }
 
 void LVL_Bgo::render(double camX, double camY)

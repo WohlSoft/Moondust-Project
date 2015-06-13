@@ -30,6 +30,8 @@ public:
     ~LVL_Bgo();
     void init();
 
+    void transformTo_x(long id);
+
     LevelBGO data; //Local settings
 
     bool animated;

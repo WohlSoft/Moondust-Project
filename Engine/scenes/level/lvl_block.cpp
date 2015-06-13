@@ -55,6 +55,7 @@ LVL_Block::~LVL_Block()
 void LVL_Block::init()
 {
     setSize(data.w, data.h);
+    setPos(data.x, data.y);
 
     sizable = setup->sizable;
     isHidden = data.invisible;
@@ -74,7 +75,6 @@ void LVL_Block::init()
     isRectangle=(setup->phys_shape==0);
     if(setup->algorithm==3)
          ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
-    setPos(data.x, data.y);
 }
 
 
@@ -104,8 +104,8 @@ void LVL_Block::transformTo_x(long id)
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
-                ((double)data.y/(double)100000000000) + 1 -
-                ((double)data.w * (double)0.0000000000000001);
+                ((double)data.y/(double)10000000000) + 1 -
+                ((double)data.w * (double)0.00000000001);
     }
     else
     {
@@ -131,6 +131,8 @@ void LVL_Block::transformTo_x(long id)
         data.w = texture.w;
         data.h = (texture.h/setup->frames);
     }
+
+    setSize(data.w, data.h);
 }
 
 
