@@ -25,6 +25,7 @@
 QMap<long, obj_npc>   ConfigManager::lvl_npc_indexes;
 npc_Markers           ConfigManager::marker_npc;
 CustomDirManager ConfigManager::Dir_NPC;
+CustomDirManager ConfigManager::Dir_NPCScript;
 QList<AdvNpcAnimator > ConfigManager::Animator_NPC;
 /*****Level NPC************/
 

@@ -23,6 +23,7 @@ QString ConfigManager::bgoPath;
 QString ConfigManager::BGPath;
 QString ConfigManager::blockPath;
 QString ConfigManager::npcPath;
+QString ConfigManager::npcScriptPath;
 QString ConfigManager::effectPath;
 QString ConfigManager::playerLvlPath;
 QString ConfigManager::playerWldPath;
@@ -54,6 +55,11 @@ QString ConfigManager::PathLevelBlock()
 QString ConfigManager::PathLevelNPC()
 {
     return npcPath;
+}
+
+QString ConfigManager::PathLevelNPCScript()
+{
+    return npcScriptPath;
 }
 
 QString ConfigManager::PathLevelEffect()
@@ -119,6 +125,7 @@ void ConfigManager::refreshPaths()
     BGPath =    dirs.glevel +  "background2/";
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
+    npcScriptPath = config_dir +  "script/npcs/";
     effectPath= dirs.glevel +  "effect/";
     playerLvlPath = dirs.gplayble;
     playerWldPath = dirs.gworld + "player/";
