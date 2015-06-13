@@ -596,7 +596,7 @@ void LevelScene::render()
     if(isPauseMenu) _pauseMenu.render();
 }
 
-
+bool slowTimeMode=false;
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
@@ -693,6 +693,12 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
           isTimeStopped=!isTimeStopped;
         }
       break;
+        case SDLK_F6:
+          {
+            PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
+            slowTimeMode=!slowTimeMode;
+          }
+        break;
       default:
         break;
     }
@@ -768,7 +774,7 @@ int LevelScene::exec()
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+            wait( uTickf-(float)(SDL_GetTicks()-start_common) +(slowTimeMode?300:0));
         }
     }
     return exitLevelCode;
