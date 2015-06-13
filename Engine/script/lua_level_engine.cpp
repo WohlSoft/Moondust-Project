@@ -2,7 +2,9 @@
 
 #include <scenes/scene_level.h>
 #include <scenes/level/lvl_player.h>
+#include <scenes/level/lvl_npc.h>
 #include "bindings/level/classes/luaclass_level_lvl_player.h"
+#include "bindings/level/classes/luaclass_level_lvl_npc.h"
 #include "bindings/level/classes/luaclass_level_physobj.h"
 
 #include <luabind/adopt_policy.hpp>
@@ -38,6 +40,9 @@ void LuaLevelEngine::loadNPCClass(int id, const QString &path)
     }
 
     luabind::object npcClassTable = _G["npc_class_table"];
+    if(luabind::type(npcClassTable[id]) != LUA_TNIL)
+        return;
+
     npcClassTable[id] = loadClassAPI(path);
 }
 
@@ -50,7 +55,8 @@ void LuaLevelEngine::onBindAll()
 {
     luabind::module(getNativeState())[
         Binding_Level_Class_PhysObj::bindToLua(),
-        Binding_Level_ClassWrapper_LVL_Player::bindToLua()
+        Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
+        Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
         ];
 }
 
