@@ -1,4 +1,4 @@
-#include "luaclass_core_lvl_player.h"
+#include "luaclass_level_lvl_player.h"
 
 
 
@@ -23,7 +23,6 @@ luabind::scope Binding_Level_ClassWrapper_LVL_Player::bindToLua()
         class_<LVL_Player, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_Player>("BasePlayer")
             .def(constructor<>())
             .def("onLoop", &LVL_Player::lua_onLoop, &Binding_Level_ClassWrapper_LVL_Player::def_lua_onLoop);
-
 
 
 }

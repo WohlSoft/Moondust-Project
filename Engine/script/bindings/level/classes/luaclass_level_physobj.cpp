@@ -1,4 +1,4 @@
-#include "luaclass_core_physobj.h"
+#include "luaclass_level_physobj.h"
 
 #include <scenes/level/lvl_base_object.h>
 
