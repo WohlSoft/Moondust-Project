@@ -257,6 +257,15 @@ bool PGE_RectF::collideRect(PGE_RectF &rect)
     return true;
 }
 
+bool PGE_RectF::collideRectDeep(PGE_RectF &rect, float deep)
+{
+    if(rect._r<(_x+deep)) return false;
+    if(rect._b<(_y+deep)) return false;
+    if(rect._x>(_r-deep)) return false;
+    if(rect._y>(_b-deep)) return false;
+    return true;
+}
+
 bool PGE_RectF::collideRect(PGE_Rect &rect)
 {
     if(rect._r<(int)_x) return false;

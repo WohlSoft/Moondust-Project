@@ -36,8 +36,6 @@
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
 
-#include "physics/phys_util.h"
-
 #include "graphics/window.h"
 #include "graphics/gl_renderer.h"
 #undef main
@@ -59,7 +57,6 @@
 #include "scenes/scene_title.h"
 #include "scenes/scene_credits.h"
 
-#include <Box2D/Box2D.h>
 #include <QMessageBox>
 
 #include <iostream>

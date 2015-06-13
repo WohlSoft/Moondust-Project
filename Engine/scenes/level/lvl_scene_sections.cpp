@@ -20,7 +20,7 @@
 
 #include <QtDebug>
 
-int LevelScene::findNearSection(long x, long y)
+int LevelScene::findNearestSection(long x, long y)
 {
 
     bool found=false;

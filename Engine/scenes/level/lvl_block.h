@@ -19,7 +19,7 @@
 #ifndef LVL_BLOCK_H
 #define LVL_BLOCK_H
 
-#include <physics/base_object.h>
+#include "lvl_base_object.h"
 #include <data_configs/obj_block.h>
 #include <common_features/rectf.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -32,7 +32,6 @@ public:
     void init();
 
     LevelBlock data; //Local settings
-    bool slippery;
 
     bool animated;
     bool sizable;
@@ -53,13 +52,21 @@ public:
         down
     };
 
+    enum shapes{
+        shape_rect              = 0,
+        shape_tr_top_left       = 1,
+        shape_tr_top_right      =-1,
+        shape_tr_bottom_right   = 2,
+        shape_tr_bottom_left    =-2,
+        stape_polygon           = 3
+    };
+
+    int shape;
+
     int taskToTransform;
     int taskToTransform_t;
     void transformTo(long id, int type=0);
     void transformTo_x(long id);
-    b2Fixture *f_block;
-    b2Fixture *f_edge;
-
 
     void hit(directions _dir=up);
     directions hitDirection;
@@ -78,8 +85,6 @@ public:
     void fadeStep();
     /**************Fader**************/
 
-    //float posX();
-    //float posY();
     void render(double camX, double camY);
 private:
     void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
