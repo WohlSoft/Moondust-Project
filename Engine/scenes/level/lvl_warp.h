@@ -19,9 +19,7 @@
 #ifndef LVL_WARP_H
 #define LVL_WARP_H
 
-#include "../../physics/base_object.h"
-#include "../../data_configs/obj_bgo.h"
-
+#include "lvl_base_object.h"
 #include <PGE_File_Formats/file_formats.h>
 
 class LVL_Warp : public PGE_Phys_Object

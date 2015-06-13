@@ -25,6 +25,7 @@
 
 #include <common_features/rectf.h>
 #include <common_features/pointf.h>
+#include <common_features/maths.h>
 
 #include "lvl_scene_ptr.h"
 
@@ -32,11 +33,10 @@
 
 #include <fontman/font_manager.h>
 
-LVL_Player::LVL_Player()
+LVL_Player::LVL_Player() : PGE_Phys_Object()
 {
     camera = NULL;
-    worldPtr = NULL;
-    f_player = NULL;
+
     playerID = 0;
     isLocked = true;
     isInited = false;
@@ -54,6 +54,7 @@ LVL_Player::LVL_Player()
 
     JumpPressed=false;
     onGround=false;
+    on_slippery_surface=false;
 
     climbing=false;
 
@@ -71,29 +72,23 @@ LVL_Player::LVL_Player()
     doHarm_damage=0;
 
     foot_contacts=0;
-    jumpForce=0;
+    jumpTime=0;
 
-    jumpForce_default=260;
+    jumpTime_default=260;
 
-    isLive = true;
+    isAlive = true;
     doKill = false;
     kill_reason=DEAD_fall;
 
-    curHMaxSpeed = 1200;
     isRunning = false;
 
     contactedWithWarp = false;
     contactedWarp = NULL;
-    wasTeleported = false;
+    wasEnteredTimeout = 0;
     wasEntered = false;
-    warpsTouched = 0;
     warpDirectO = 0;
     isWarping=false;
     warpPipeOffset=0;
-
-    warpDo=false;
-    warpDirect=0;
-    warpWaitTicks=0;
 
     gscale_Backup=0.f;//!< BackUP of last gravity scale
 
@@ -115,16 +110,7 @@ LVL_Player::LVL_Player()
 }
 
 LVL_Player::~LVL_Player()
-{
-    qDebug() << "Destroy player";
-
-    if(physBody && worldPtr)
-    {
-        worldPtr->DestroyBody(physBody);
-        physBody->SetUserData(NULL);
-        physBody = NULL;
-    }
-}
+{}
 
 void LVL_Player::setCharacter(int CharacterID, int _stateID)
 {
@@ -148,6 +134,11 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     physics = setup.phys_default;
     physics_cur = physics[environment];
 
+    phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
+    phys_setup.min_vel_x =-physics_cur.MaxSpeed_walk;
+
+    jumpTime_default = physics_cur.jump_time;
+
     long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
     if( tID >= 0 )
     {
@@ -160,7 +151,14 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
 
-    curHMaxSpeed = isRunning? physics_cur.MaxSpeed_run : physics_cur.MaxSpeed_walk;
+    phys_setup.max_vel_x = isRunning ?
+                physics_cur.MaxSpeed_run :
+                physics_cur.MaxSpeed_walk;
+    phys_setup.min_vel_x = -(isRunning ?
+                physics_cur.MaxSpeed_run :
+                physics_cur.MaxSpeed_walk);
+
+    phys_setup.grd_dec_x = physics_cur.walk_force;
 
     /********************floating************************/
     floating_allow=state_cur.allow_floating;
@@ -181,8 +179,10 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
 
     if(isInited)
     {
-        initSize();
-        updateBox();
+        float cx = posRect.center().x();
+        float b = posRect.bottom();
+        setSize(state_cur.width, ducking?state_cur.duck_height:state_cur.height);
+        setPos(cx-+width/2, b-height);
         PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
@@ -201,108 +201,66 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
     if(isInited) setCharacter(characterID, stateID);
 }
 
+void LVL_Player::setDuck(bool duck)
+{
+    if(!duck_allow) return;
+    if(duck==ducking) return;
+    float b=posRect.bottom();
+    setSize(state_cur.width, duck? state_cur.duck_height : state_cur.height);
+    setPos(posX(), b-height);
+    ducking=duck;
+}
+
 void LVL_Player::init()
 {
-    if(!worldPtr) return;
     setCharacter(characterID, stateID);
 
-    initSize();
-
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set
-            (
-                PhysUtil::pix2met((float)data.x + posX_coefficient),
-                PhysUtil::pix2met((float)data.y + posY_coefficient)
-            );
-    bodyDef.fixedRotation = true;
-    bodyDef.bullet = true;
-    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-    physBody = worldPtr->CreateBody(&bodyDef);
-
-    updateBox();
+    direction = data.direction;
+    long posX = data.x+(data.w/2)-(state_cur.width/2);
+    long posY = data.y = data.y+data.h-state_cur.height;
+    setSize(state_cur.width, state_cur.height);
+    setPos(posX, posY);
+    phys_setup.max_vel_y=12;
 
     animator.tickAnimation(0.f);
-    //qDebug() <<"Start position is " << posX() << posY();
     isLocked=false;
     isInited=true;
-}
-
-void LVL_Player::updateBox()
-{
-    if(ducking)
-    {
-        if(f_player) physBody->DestroyFixture(f_player);
-        b2PolygonShape shape;
-        setSize(state_cur.width-state_cur.width%2, state_cur.duck_height-state_cur.duck_height%2);
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
-                       PhysUtil::pix2met(posY_coefficient));
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-        f_player = physBody->CreateFixture(&fixtureDef);
-    } else {
-        if(f_player) physBody->DestroyFixture(f_player);
-        b2PolygonShape shape;
-        setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
-                       PhysUtil::pix2met(posY_coefficient));
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-        f_player = physBody->CreateFixture(&fixtureDef);
-    }
-}
-
-void LVL_Player::initSize()
-{
-    setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
-    data.x = data.x+(data.w/2)-(state_cur.width/2);
-    data.y = data.y+data.h-state_cur.height;
-    if(!isInited) direction = data.direction;
 }
 
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
     if(!isInited) return;
-    if(!physBody) return;
     if(!camera) return;
     LVL_Section* section = sct();
     if(!section) return;
-    lua_onLoop();
-    PGE_Phys_Object::update(ticks);
 
-//    while(!npc_queue.isEmpty())
-//        npc_queue.dequeue()->kill();
+    lua_onLoop();
 
     event_queue.processEvents(ticks);
+
     if(isWarping)
     {
-        setSpeed(0, 0);
         animator.tickAnimation(ticks);
         updateCamera();
         return;
     }
 
-    if(_player_moveup)
-    {
-        setPosY(posY()-0.2);
-        _player_moveup = false;
-    }
-
     onGround = !foot_contacts_map.isEmpty();
+    on_slippery_surface = !foot_sl_contacts_map.isEmpty();
+    bool climbableUp  = !climbable_map.isEmpty();
+    bool climbableDown= climbableUp && !onGround;
+    climbing = (climbableUp && climbing && !onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
+    if(onGround)
+        phys_setup.decelerate_x = on_slippery_surface ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop;
+    else
+        phys_setup.decelerate_x = physics_cur.decelerate_air;
 
     if(doKill)
     {
         doKill=false;
-        isLive = false;
-        if(physBody)
-        {
-            setGravityScale(0);
-            physBody->SetAwake(false);
-            physBody->SetActive(false);
-        }
+        isAlive = false;
+        setGravityScale(0);
         LvlSceneP::s->checkPlayers();
         return;
     }
@@ -333,15 +291,6 @@ void LVL_Player::update(float ticks)
     {
         setSpeed(0,0);
     }
-    else
-    {
-        if(speedY() > physics_cur.MaxSpeed_down)
-            setSpeedY(physics_cur.MaxSpeed_down);
-        else
-        if(speedY() < -physics_cur.MaxSpeed_up)
-            setSpeedY(-physics_cur.MaxSpeed_up);
-    }
-
 
     if(environments_map.isEmpty())
     {
@@ -374,17 +323,20 @@ void LVL_Player::update(float ticks)
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
-            setSpeedY(0);
+            setSpeedY(0.0);
 
         if(physics_cur.slow_speed_x_on_enter)
-            setSpeedX(speedX()/2);
+            setSpeedX(speedX()/2.0);
 
-        setDecelX(physics_cur.damping);
+        setDecelX(physics_cur.decelerate_air);
+
         setGravityScale(physics_cur.gravity_scale);
-        curHMaxSpeed = isRunning ?
+        phys_setup.max_vel_x = isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk;
-
+        phys_setup.min_vel_x = -(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk);
         floating_isworks=false;//< Reset floating on re-entering into another physical envirinment
     }
 
@@ -401,7 +353,8 @@ void LVL_Player::update(float ticks)
     {
         if(!isRunning)
         {
-            curHMaxSpeed = physics_cur.MaxSpeed_run;
+            phys_setup.max_vel_x = physics_cur.MaxSpeed_run;
+            phys_setup.min_vel_x = -physics_cur.MaxSpeed_run;
             isRunning=true;
         }
     }
@@ -409,7 +362,8 @@ void LVL_Player::update(float ticks)
     {
         if(isRunning)
         {
-            curHMaxSpeed = physics_cur.MaxSpeed_walk;
+            phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
+            phys_setup.min_vel_x = -physics_cur.MaxSpeed_walk;
             isRunning=false;
         }
     }
@@ -443,32 +397,42 @@ void LVL_Player::update(float ticks)
     //if
     if(!keys.up && !keys.down && !keys.left && !keys.right)
     {
-        if(wasEntered) wasEntered = false;
+        if(wasEntered)
+        {
+            wasEntered = false;
+            wasEnteredTimeout=0;
+        }
     }
 
+    //Reset state
+    if(wasEntered)
+    {
+        wasEnteredTimeout-=ticks;
+        if(wasEnteredTimeout<0)
+        {
+            wasEnteredTimeout=0;
+            wasEntered=false;
+        }
+    }
 
     if(keys.up)
     {
-        if(climbing)
-        {
-            setSpeedY(-physics_cur.velocity_climb);
-        }
-        else
-        if(climbable_map.size()>0)
+        if(climbableUp&&(jumpTime<=0))
         {
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
+        }
+
+        if(climbing)
+        {
+            if(posRect.center().y() >= climbableHeight)
+                setSpeedY(-physics_cur.velocity_climb_y_up);
         }
     }
 
     if(keys.down)
     {
-        if(climbing)
-        {
-            setSpeedY(physics_cur.velocity_climb);
-        }
-        else
-        if(climbable_map.size()>0)
+        if( climbableDown && (jumpTime<=0) )
         {
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
@@ -480,6 +444,11 @@ void LVL_Player::update(float ticks)
                 setDuck(true);
             }
         }
+
+        if(climbing)
+        {
+            setSpeedY(physics_cur.velocity_climb_y_down);
+        }
     }
     else
     {
@@ -487,14 +456,15 @@ void LVL_Player::update(float ticks)
             setDuck(false);
     }
 
-    slippery_surface = !foot_sl_contacts_map.isEmpty();
-
     if( (!keys.left) || (!keys.right) )
     {
-        float32 force = slippery_surface ?
-                               (physics_cur.walk_force/
-                                physics_cur.slippery_c) :
-                                physics_cur.walk_force;
+        bool turning=(((speedX()>0)&&(direction<0))||((speedX()<0)&&(direction>0)));
+
+        float force = turning?
+                    physics_cur.decelerate_turn :
+                    (fabs(speedX())>physics_cur.MaxSpeed_walk)?physics_cur.run_force : physics_cur.walk_force;
+
+        if(on_slippery_surface) force=force/physics_cur.slippery_c;
 
         if(keys.left) direction=-1;
         if(keys.right) direction=1;
@@ -505,27 +475,17 @@ void LVL_Player::update(float ticks)
             if(keys.right)
             {
                 if(climbing)
-                {
-                    setSpeedX(physics_cur.velocity_climb);
-                }
+                    setSpeedX(physics_cur.velocity_climb_x);
                 else
-                {
-                if(speedX() <= curHMaxSpeed)
-                    physBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
-                }
+                    applyAccel(force, 0);
             }
             //If right key is pressed
             if(keys.left)
             {
                 if(climbing)
-                {
-                    setSpeedX(-physics_cur.velocity_climb);
-                }
+                    setSpeedX(-physics_cur.velocity_climb_x);
                 else
-                {
-                    if(speedX() >= -curHMaxSpeed)
-                        physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
-                }
+                    applyAccel(-force, 0);
             }
         }
     }
@@ -563,7 +523,7 @@ void LVL_Player::update(float ticks)
                 }
 
                 JumpPressed=true;
-                jumpForce=jumpForce_default;
+                jumpTime=jumpTime_default;
                 floating_timer = floating_maxtime;
                 setSpeedY(speedY()-physics_cur.velocity_jump);
             }
@@ -575,9 +535,9 @@ void LVL_Player::update(float ticks)
             if(onGround || climbing)
             {
                 climbing=false;
-                jumpForce=jumpForce_default;
+                jumpTime=jumpTime_default;
                 floating_timer = floating_maxtime;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/5.0f));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -593,9 +553,9 @@ void LVL_Player::update(float ticks)
         }
         else
         {
-            if(jumpForce>0)
+            if(jumpTime>0)
             {
-                jumpForce -= ticks;
+                jumpTime -= ticks;
                 setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
             }
 
@@ -603,9 +563,9 @@ void LVL_Player::update(float ticks)
             {
                 floating_timer -= ticks;
                 if(floating_start_type)
-                    setSpeedY( 3.5*(-cos(floating_timer/80.0)) );
+                    setSpeedY( state_cur.floating_amplitude*(-cos(floating_timer/80.0)) );
                 else
-                    setSpeedY( 3.5*cos(floating_timer/80.0) );
+                    setSpeedY( state_cur.floating_amplitude*(cos(floating_timer/80.0)) );
                 if(floating_timer<=0)
                 {
                     floating_timer=0;
@@ -617,7 +577,7 @@ void LVL_Player::update(float ticks)
     }
     else
     {
-        jumpForce=0;
+        jumpTime=0;
         if(JumpPressed)
         {
             JumpPressed=false;
@@ -647,13 +607,14 @@ void LVL_Player::update(float ticks)
     if(bumpDown)
     {
         bumpDown=false;
+        jumpTime=0;
         setSpeedY(bumpVelocity);
     }
     else
     if(bumpUp)
     {
         bumpUp=false;
-        setSpeedY( (keys.jump?(-75.f-fabs(physBody->GetLinearVelocity().x/6)) : -32.5f) );
+        setSpeedY( (keys.jump?(-25.0f-fabs(speedX()/6)) : -physics_cur.velocity_jump) );
     }
 
 
@@ -661,10 +622,10 @@ void LVL_Player::update(float ticks)
     if(section->isWarp())
     {
         if(posX() < sBox.left()-width-1 )
-            setPosX( sBox.right()+posX_coefficient-1 );
+            setPosX( sBox.right()+1 );
         else
         if(posX() > sBox.right() + 1 )
-            setPosX( sBox.left()-posX_coefficient+1 );
+            setPosX( sBox.left()-width-1 );
     }
     else
     {
@@ -675,7 +636,7 @@ void LVL_Player::update(float ticks)
             {
                 if( posX() < sBox.left())
                 {
-                    setPosX(sBox.left() + posX_coefficient);
+                    setPosX( sBox.left() );
                     setSpeedX(0);
                 }
             }
@@ -683,7 +644,7 @@ void LVL_Player::update(float ticks)
             if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 isInited=false;
-                physBody->SetAwake(false);
+                //physBody->SetAwake(false);
                 setGravityScale(0);
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
@@ -694,13 +655,13 @@ void LVL_Player::update(float ticks)
             //Prevent moving of player away from screen
             if( posX() < sBox.left())
             {
-                setPosX(sBox.left() + posX_coefficient );
+                setPosX(sBox.left());
                 setSpeedX(0);
             }
             else
             if( posX()+width > sBox.right())
             {
-                setPosX(sBox.right()-posX_coefficient);
+                setPosX(sBox.right()-width);
                 setSpeedX(0);
             }
         }
@@ -769,6 +730,7 @@ void LVL_Player::update(float ticks)
                         {
                             WarpTo(contactedWarp->data);
                             wasEntered = true;
+                            wasEnteredTimeout=800;
                         }
                     }
 
@@ -778,51 +740,333 @@ void LVL_Player::update(float ticks)
             case 2://door
                 if(keys.up && !wasEntered)
                 {
-                    if(!wasTeleported)
-                    {
-                        WarpTo(contactedWarp->data);
-                        wasEntered = true;
-                    }
+                    WarpTo(contactedWarp->data);
+                    wasEntered = true;
+                    wasEnteredTimeout=800;
                 }
                 break;
             case 0://Instant
             default:
-                if(!wasTeleported && !wasEntered)
+                if(!wasEntered)
                 {
                     WarpTo(contactedWarp->data.ox, contactedWarp->data.oy, contactedWarp->data.type);
-                    wasTeleported = true;
+                    wasEnteredTimeout=800;
                     wasEntered = true;
                 }
                 break;
             }
-            //qDebug()<< "Warp!!!" << contactedWarp->data.ox << contactedWarp->data.oy;
-        }
-        //contactedWithWarp = false;
-        //contactedWarp = NULL;
-    }
-    else
-    {
-        if(wasTeleported)
-        {
-            if(warpsTouched==0)
-                wasTeleported = false;
         }
     }
-
 
     updateCamera();
-}
-
-void LVL_Player::update()
-{
-
-    update(1.0);
 }
 
 void LVL_Player::updateCamera()
 {
     camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
                     round(bottom()) - camera->h()/2-state_cur.height/2 );
+}
+
+void LVL_Player::updateCollisions()
+{
+    foot_contacts_map.clear();
+    onGround=false;
+    foot_sl_contacts_map.clear();
+    contactedWarp = NULL;
+    contactedWithWarp=false;
+    climbable_map.clear();
+    environments_map.clear();
+
+    collided_top.clear();
+    collided_left.clear();
+    collided_right.clear();
+    collided_bottom.clear();
+    collided_center.clear();
+    PGE_Phys_Object::updateCollisions();
+
+    QVector<LVL_Block*> blocks_to_hit;
+    if(!collided_bottom.isEmpty())
+    {
+        for(PlayerColliders::iterator it=collided_bottom.begin(); it!=collided_bottom.end() ; it++)
+        {
+            PGE_Phys_Object *collided= *it;
+            switch(collided->type)
+            {
+                case PGE_Phys_Object::LVLBlock:
+                {
+                    LVL_Block *blk= static_cast<LVL_Block*>(collided);
+                    foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    posRect.setY(blk->posRect.top()-posRect.height());
+                    setSpeedY(0);
+                    if(blk->setup->bounce) blocks_to_hit.push_back(blk);
+                }
+                break;
+                default:break;
+            }
+        }
+
+        if(!blocks_to_hit.isEmpty())
+        {
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                nearest->hit(LVL_Block::down);
+                bump(true);
+            }
+        }
+        blocks_to_hit.clear();
+    }
+
+    if(!collided_top.isEmpty())
+    {
+        for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
+        {
+            PGE_Phys_Object *collided= *it;
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            blocks_to_hit.push_back(blk);
+        }
+
+        if(!blocks_to_hit.isEmpty())
+        {
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                posRect.setY(nearest->posRect.bottom()+1);
+                nearest->hit();
+                bump();
+            }
+        }
+        blocks_to_hit.clear();
+    }
+
+
+
+
+    if(!collided_right.isEmpty())
+    {
+        posRect.setX(collided_right.values().first()->posRect.right());
+        setSpeedX(0);
+    }
+    if(!collided_left.isEmpty())
+    {
+        posRect.setX(collided_left.values().first()->posRect.left()-posRect.width());
+        setSpeedX(0);
+    }
+}
+
+
+LVL_Block *LVL_Player::nearestBlock(QVector<LVL_Block*> &blocks)
+{
+    if(blocks.size()==1)
+        return blocks.first();
+
+    LVL_Block*nearest=NULL;
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(!nearest)
+            nearest=blocks[i];
+        else
+        {
+            if( fabs(blocks[i]->posRect.center().x()-posRect.center().x())<
+                fabs(nearest->posRect.center().x()-posRect.center().x()) )
+                nearest=blocks[i];
+        }
+    }
+    return nearest;
+}
+
+
+void LVL_Player::solveCollision(PGE_Phys_Object *collided)
+{
+    if(!collided) return;
+
+    switch(collided->type)
+    {
+        case PGE_Phys_Object::LVLBlock:
+        {
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk)
+            {
+                if(blk->destroyed) break;
+            }
+            else break;
+
+            if(!collided->posRect.collideRect(posRect)) break;
+
+            if(bumpUp||bumpDown) break;
+
+            PGE_PointF c1=posRect.center();
+            PGE_RectF &r1=posRect;
+            PGE_PointF cc=collided->posRect.center();
+            PGE_RectF  rc = collided->posRect;
+
+            switch(collided->collide)
+            {
+                case COLLISION_TOP:
+                {
+                    PGE_RectF &r1=posRect;
+                    PGE_RectF  rc = collided->posRect;
+                    if(
+                            (
+                                (speedY() >= 0.0)
+                                &&
+                                (r1.bottom() < rc.top()+_velocityY_prev)
+                                &&
+                                (
+                                     (r1.left()<rc.right()-1 ) &&
+                                     (r1.right()>rc.left()+1 )
+                                 )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                        if(blk->isHidden) break;
+                        collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                    }
+                }
+                break;
+                case COLLISION_ANY:
+                {
+                    //*****************************Top****************************/
+                    if(
+                            (
+                                (speedY() >= 0.0)
+                                &&
+                                (floor(r1.bottom()) < rc.top()+_velocityY_prev+fabs(speedX())+1.0)
+                                &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                            if(blk->isHidden) break;
+                            collided_bottom[(intptr_t)collided]=collided;//bottom of player
+
+                    }
+                    //*****************************Bottom****************************/
+                    else if( (
+                                 (speedY()<0.0)
+                                 &&
+                                 (r1.top() > rc.bottom()+_velocityY_prev)
+                                 &&( !( (r1.left()>=rc.right()-2.0) || (r1.right() <= rc.left()+2.0) ) )
+                              )
+                             )
+                    {
+                        collided_top[(intptr_t)collided]=collided;//top of player
+                    }
+                    //*****************************Left****************************/
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() < rc.right()) && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    {
+                        if(blk->isHidden) break;
+                        collided_right[(intptr_t)collided]=collided;//right of player
+                    }
+                    //*****************************Right****************************/
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() > rc.left()) && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    {
+                        if(blk->isHidden) break;
+                        collided_left[(intptr_t)collided]=collided;//left of player
+                    }
+                    //*****************************Center****************************/
+                    if( blk->posRect.collideRectDeep(posRect, 2.0f) )
+                    {
+                        if(blk->isHidden) break;
+                        collided_center[(intptr_t)collided]=collided;
+                    }
+                    break;
+                }
+            default: break;
+            }
+            break;
+        }
+        case PGE_Phys_Object::LVLWarp:
+        {
+            contactedWarp = static_cast<LVL_Warp*>(collided);
+            if(contactedWarp)
+                contactedWithWarp=true;
+            break;
+        }
+        case PGE_Phys_Object::LVLBGO:
+        {
+            LVL_Bgo *bgo= static_cast<LVL_Bgo*>(collided);
+            if(bgo)
+            {
+                if(bgo->setup->climbing)
+                {
+                    bool set=climbable_map.isEmpty();
+                    climbable_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(set)
+                        climbableHeight=collided->posRect.top();
+                    else if(collided->top()<climbableHeight)
+                        climbableHeight=collided->top();
+                }
+            }
+            break;
+        }
+        case PGE_Phys_Object::LVLNPC:
+        {
+            LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
+            if(npc)
+            {
+                if(npc->killed)        break;
+                if(npc->data.friendly) break;
+                if(npc->setup->climbable)
+                {
+                    bool set=climbable_map.isEmpty();
+                    climbable_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(set)
+                        climbableHeight=collided->posRect.top();
+                    else if(collided->top()<climbableHeight)
+                        climbableHeight=collided->top();
+                }
+
+                if(!LvlSceneP::s->isExit())
+                {
+                    if(npc->data.id==11){
+                        LvlSceneP::s->setExiting(4500, 1);
+                    }
+                    else
+                    if((npc->data.id==15)||(npc->data.id==16)){
+                        LvlSceneP::s->setExiting(7000, 2);
+                    }
+                    else
+                    if((npc->data.id==39)||(npc->data.id==41)){
+                        LvlSceneP::s->setExiting(3200, 5);
+                    }
+                    else
+                    if(npc->data.id==97){
+                        LvlSceneP::s->setExiting(4500, 7);
+                    }
+                    else
+                    if(npc->data.id==197){
+                        LvlSceneP::s->setExiting(15000, 8);
+                    }
+                    else
+                    if(npc->data.id==86 )
+                    {
+                        LvlSceneP::s->setExiting(5000, 7);
+                    }
+                }
+                if((!npc->data.friendly)&&(npc->setup->takable))
+                {
+                    kill_npc(npc, LVL_Player::NPC_Taked_Coin);
+                    npc->kill();
+                }
+            }
+            break;
+        }
+        case PGE_Phys_Object::LVLPhysEnv:
+        {
+            LVL_PhysEnv *env= static_cast<LVL_PhysEnv*>(collided);
+            if(env)
+            {
+                if(env) environments_map[(intptr_t)env]=env->env_type;
+            }
+            break;
+        }
+    default: break;
+    }
 }
 
 Uint32 slideTicks=0;
@@ -896,10 +1140,10 @@ void LVL_Player::refreshAnimation()
             if(!busy)
             {
                 float velX = speedX();
-                if( ((!slippery_surface)&&(velX>0.0))||((slippery_surface)&&(keys.right)&&(velX>0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*4)<100?velX*4:100)));
-                else if( ((!slippery_surface)&& (velX<0.0))||((slippery_surface)&&(keys.left)&&(velX<0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*4)<100?-velX*4:100)));
+                if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(keys.right)&&(velX>0.0)) )
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*20)<100?velX*10:100)));
+                else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(keys.left)&&(velX<0.0)) )
+                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*20)<100?-velX*10:100)));
                 else
                     animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
             }
@@ -949,26 +1193,20 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         break;
     }
 
-    CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
-    b2AABB aabb;
-    aabb.lowerBound.Set(PhysUtil::pix2met(attackZone.x()), PhysUtil::pix2met(attackZone.y()));
-    aabb.upperBound.Set(PhysUtil::pix2met(attackZone.right()), PhysUtil::pix2met(attackZone.bottom()));
-    worldPtr->QueryAABB(&cb, aabb);
+
+    QVector<PGE_Phys_Object*> bodies;
+    LvlSceneP::s->queryItems(attackZone, &bodies);
     int contacts = 0;
 
     QList<LVL_Block *> target_blocks;
     QList<LVL_Npc*> target_npcs;
-    for(int i=0; i<cb.foundBodies.size();i++)
+    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
     {
+        PGE_Phys_Object*visibleBody=*it;
         contacts++;
-        PGE_Phys_Object * visibleBody;
-        if(cb.foundBodies[i]==physBody) continue;
-
-        visibleBody = static_cast<PGE_Phys_Object *>(cb.foundBodies[i]->GetUserData());
-
+        if(visibleBody==this) continue;
         if(visibleBody==NULL)
             continue;
-
         switch(visibleBody->type)
         {
             case PGE_Phys_Object::LVLBlock:
@@ -1002,41 +1240,6 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     }
 }
 
-void LVL_Player::setDuck(bool duck)
-{
-    if(!duck_allow) return;
-    if(duck==ducking) return;
-
-    if(duck)
-    {
-        physBody->DestroyFixture(f_player);
-        b2PolygonShape shape;
-        setSize(state_cur.width-state_cur.width%2, state_cur.duck_height-state_cur.duck_height%2);
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
-                       PhysUtil::pix2met(posY_coefficient));
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-        f_player = physBody->CreateFixture(&fixtureDef);
-        this->setPos(posX(), posY()+(state_cur.height/2-state_cur.duck_height/2)-0.01);
-    } else {
-        physBody->DestroyFixture(f_player);
-        b2PolygonShape shape;
-        setSize(state_cur.width-state_cur.width%2, state_cur.height-state_cur.height%2);
-        shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
-                       PhysUtil::pix2met(posY_coefficient));
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &shape;
-        fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
-        f_player = physBody->CreateFixture(&fixtureDef);
-        this->setPos(posX(), posY()+(state_cur.duck_height/2-state_cur.height/2)-0.01);
-    }
-
-    ducking=duck;
-}
-
-
-
 
 //Enter player to level
 void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
@@ -1053,7 +1256,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                 setSpeed(0, 0);
                 EventQueueEntry<LVL_Player >event2;
                 event2.makeCaller([this,x,y]()->void{
-                                      isWarping=true;
+                                      isWarping=true; setPaused(true);
                                       warpPipeOffset=0.0;
                                       warpDirectO=0;
                                       teleport(x+16-posX_coefficient,
@@ -1071,8 +1274,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
                 EventQueueEntry<LVL_Player >event3;
                 event3.makeCaller([this]()->void{
-                                      isWarping=false;
-                                      setSpeed(0, -0.00001);
+                                      isWarping=false; setSpeed(0, 0); setPaused(false);
                                       last_environment=-1;//!< Forcing to refresh physical environment
                                   }, 200);
                 event_queue.events.push_back(event3);
@@ -1086,7 +1288,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
             EventQueueEntry<LVL_Player >eventPipeEnter;
             eventPipeEnter.makeCaller([this,warpDirection]()->void{
-                                    isWarping=true;
+                                    isWarping=true; setPaused(true);
                                     warpDirectO=warpDirection;
                                     warpPipeOffset=1.0;
                               }, 0);
@@ -1169,8 +1371,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
 
             EventQueueEntry<LVL_Player >endWarping;
             endWarping.makeCaller([this]()->void{
-                                  isWarping=false;
-                                  setSpeed(0, -0.00001);
+                                  isWarping=false; setSpeed(0, 0); setPaused(false);
                                   last_environment=-1;//!< Forcing to refresh physical environment
                               }, 0);
             event_queue.events.push_back(endWarping);
@@ -1200,11 +1401,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
-                                setSpeed(0, 0);
+                                setSpeed(0, 0); setPaused(true);
                                 isWarping=true;
                                 warpPipeOffset=0.0f;
                                 setDuck(false);
-                                setGravityScale(0);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpPipe);                                
                               }, 0);
             event_queue.events.push_back(event1);
@@ -1284,7 +1484,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             }
             else
             {
-                int sID = LvlSceneP::s->findNearSection(warp.ox, warp.oy);
+                int sID = LvlSceneP::s->findNearestSection(warp.ox, warp.oy);
                 if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
                 {
                     EventQueueEntry<LVL_Player >event3;
@@ -1309,12 +1509,10 @@ void LVL_Player::WarpTo(LevelDoor warp)
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
-                                setSpeed(0, 0);
-                                isWarping=true;
+                                setSpeed(0, 0); setPaused(true); isWarping=true;
                                 warpPipeOffset=0.0;
                                 warpDirectO=0;
                                 setDuck(false);
-                                setGravityScale(0);
                                 animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
                               }, 0);
@@ -1337,7 +1535,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
             }
             else
             {
-                int sID = LvlSceneP::s->findNearSection(warp.ox, warp.oy);
+                int sID = LvlSceneP::s->findNearestSection(warp.ox, warp.oy);
                 if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
                 {
                     EventQueueEntry<LVL_Player >event3;
@@ -1367,7 +1565,7 @@ void LVL_Player::teleport(float x, float y)
 
     this->setPos(x, y);
 
-    int sID = LvlSceneP::s->findNearSection(x, y);
+    int sID = LvlSceneP::s->findNearestSection(x, y);
     LVL_Section* t_sct = LvlSceneP::s->getSection(sID);
 
     if(t_sct)
@@ -1383,7 +1581,7 @@ void LVL_Player::teleport(float x, float y)
 
 void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long wY)
 {
-    isLive = false;
+    isAlive = false;
     if(!levelFile.isEmpty())
     {
         LvlSceneP::s->warpToLevelFile =
@@ -1427,7 +1625,7 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 
 void LVL_Player::render(double camX, double camY)
 {
-    if(!isLive) return;
+    if(!isAlive) return;
     if(!isInited) return;
 
     PGE_RectF tPos = animator.curFrame();
@@ -1506,7 +1704,7 @@ void LVL_Player::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), posX()-camX, posY()-camY);
+        FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), round(posX()-camX), round(posY()-camY));
     }
 
 }
@@ -1519,9 +1717,6 @@ bool LVL_Player::locked()
 void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
-    if(physBody)
-    {
-        physBody->SetAwake(!lock);
-    }
+    setPaused(lock);
 }
 

@@ -19,8 +19,7 @@
 #ifndef LVL_PHYSENV_H
 #define LVL_PHYSENV_H
 
-#include "../../physics/base_object.h"
-
+#include "lvl_base_object.h"
 #include <PGE_File_Formats/file_formats.h>
 
 class LVL_PhysEnv : public PGE_Phys_Object

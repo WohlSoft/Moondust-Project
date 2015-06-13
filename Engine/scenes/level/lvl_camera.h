@@ -19,7 +19,7 @@
 #ifndef LVL_CAMERA_H
 #define LVL_CAMERA_H
 
-#include <physics/base_object.h>
+#include "lvl_base_object.h"
 #include <graphics/graphics.h>
 #include <common_features/fader.h>
 

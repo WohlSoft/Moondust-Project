@@ -23,15 +23,15 @@
 #include <audio/pge_audio.h>
 #include <graphics/gl_renderer.h>
 
-LVL_Block::LVL_Block()
+LVL_Block::LVL_Block() : PGE_Phys_Object()
 {
     type = LVLBlock;
-    f_block = NULL;
-    f_edge  = NULL;
 
     animated=false;
     sizable=false;
     animator_ID=0;
+
+    shape=0;
 
     offset_x = 0.f;
     offset_y = 0.f;
@@ -49,40 +49,17 @@ LVL_Block::LVL_Block()
 }
 
 LVL_Block::~LVL_Block()
-{
-    if(physBody && worldPtr)
-    {
-      worldPtr->DestroyBody(physBody);
-      physBody->SetUserData(NULL);
-      physBody = NULL;
-    }
-}
+{}
 
-//float LVL_Block::posX()
-//{
-//    return data.x;
-//}
-
-//float LVL_Block::posY()
-//{
-//    return data.y;
-//}
 
 void LVL_Block::init()
 {
-    if(!worldPtr) return;
     setSize(data.w, data.h);
 
-    slippery = data.slippery;
-
     sizable = setup->sizable;
-
     isHidden = data.invisible;
-
     collide = COLLISION_ANY;
-
     slippery_surface = data.slippery;
-
     if((setup->sizable) || (setup->collision==2))
     {
         collide = COLLISION_TOP;
@@ -93,132 +70,11 @@ void LVL_Block::init()
         collide = COLLISION_NONE;
     }
 
-    if(physBody==NULL)
-    {
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_staticBody;
-        bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
-            PhysUtil::pix2met(data.y + posY_coefficient ) );
-        bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-        physBody = worldPtr->CreateBody(&bodyDef);
-    }
-
-    if(f_block!=NULL)
-    {
-        physBody->DestroyFixture(f_block);
-        f_block=NULL;
-    }
-
-    if(f_edge!=NULL)
-    {
-        physBody->DestroyFixture(f_edge);
-        f_edge=NULL;
-    }
-
-    b2PolygonShape shape;
-
-    switch(setup->phys_shape)
-    {
-    //triangles
-    case 1: //Top-Right triangle
-        {
-          b2Vec2 vertices[3];
-          //Left-top
-          vertices[0].Set(PhysUtil::pix2met(-posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //right-bottom
-          vertices[1].Set(PhysUtil::pix2met(posX_coefficient),  PhysUtil::pix2met(posY_coefficient));
-          //left-bottom
-          vertices[2].Set(PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(posY_coefficient));
-          shape.Set(vertices, 3);
-          isRectangle = false;
-          break;
-        }
-    case -1: //Top-Left triangle
-        {
-          b2Vec2 vertices[3];
-          //Left-bottom
-          vertices[0].Set(PhysUtil::pix2met(-posX_coefficient),  PhysUtil::pix2met(posY_coefficient));
-          //right-top
-          vertices[1].Set(PhysUtil::pix2met(posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //right-bottom
-          vertices[2].Set(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient));
-          shape.Set(vertices, 3);
-          isRectangle = false;
-          break;
-        }
-    case 2: //Bottom-Right triangle
-        {
-          b2Vec2 vertices[3];
-          //Left-top
-          vertices[0].Set(PhysUtil::pix2met(-posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //right-top
-          vertices[1].Set(PhysUtil::pix2met(posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //left-bottom
-          vertices[2].Set(PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(posY_coefficient));
-          shape.Set(vertices, 3);
-          isRectangle = false;
-          break;
-        }
-    case -2: //Bottom-Left triangle
-        {
-          b2Vec2 vertices[3];
-          //Left-top
-          vertices[0].Set(PhysUtil::pix2met(-posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //right-top
-          vertices[1].Set(PhysUtil::pix2met(posX_coefficient),  PhysUtil::pix2met(-posY_coefficient));
-          //right-bottom
-          vertices[2].Set(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient));
-          shape.Set(vertices, 3);
-          isRectangle = false;
-          break;
-        }
-    case 3:// map shape from texture
-        //Is not implemented, create the box:
-
-    //rectangle box
-    default: //Rectangle box shape
-        {
-            shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
-            b2EdgeShape edgeShape;
-            edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(-posY_coefficient-0.1)),
-                           b2Vec2(PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(-posY_coefficient-0.1)) );
-
-
-            if(collide!=COLLISION_TOP)
-            {
-                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
-                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.1), PhysUtil::pix2met(posY_coefficient+0.1) );
-            }
-            else
-            {
-                edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
-                edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
-            }
-            edgeShape.m_hasVertex0 = true;
-            edgeShape.m_hasVertex3 = true;
-
-            f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
-            f_edge->SetFriction(slippery_surface? 0.04f : 0.25f );
-            if(setup->algorithm==3)
-            {
-                f_edge->SetSensor(true);
-            }
-            if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
-                f_edge->SetSensor(true);
-        }
-    }
-
-    f_block = physBody->CreateFixture(&shape, 1.0f);
-
+    this->shape = setup->phys_shape;
+    isRectangle=(setup->phys_shape==0);
     if(setup->algorithm==3)
-        {
-            f_block->SetSensor(true);
-            ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
-        }
-
-    if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
-        f_block->SetSensor(true);
-    f_block->SetFriction(slippery_surface? 0.04f : 0.25f );
+         ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
+    setPos(data.x, data.y);
 }
 
 
@@ -245,7 +101,6 @@ void LVL_Block::transformTo_x(long id)
 {
     data.id = id;
 
-    //LevelScene::zCounter;
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
