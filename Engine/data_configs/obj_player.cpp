@@ -141,6 +141,7 @@ bool ConfigManager::loadPlayableCharacters()
                 splayer.state_type =  playerset.value("sprite-folder", 0 ).toInt();
                 splayer.matrix_width = playerset.value("matrix-width", 10 ).toInt();
                 splayer.matrix_height = playerset.value("matrix-height", 10 ).toInt();
+                splayer.event_script = playerset.value("script-file", QString("script/player/%1.lua").arg(splayer.sprite_folder)).toString();
                 total_states = playerset.value("states-number", 0 ).toInt();
                 if(total_states==0)
                 {
@@ -228,7 +229,7 @@ bool ConfigManager::loadPlayableCharacters()
                         pstate.duck_height = playerset.value("default-duck-height", 30).toInt();
                         pstate.height = playerset.value("default-height", 54).toInt();
                         pstate.width = playerset.value("default-width", 24).toInt();
-                        pstate.event_script = playerset.value("events", QString("%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
+                        pstate.event_script = playerset.value("events", QString("script/player/%2-%1.lua").arg(i).arg(splayer.sprite_folder)).toString();
                         QString sprite_settings = playerset.value("sprite-settings", QString("%2-%1.ini").arg(i).arg(splayer.sprite_folder)).toString();
                         pstate.sprite_setup.init(splayer.matrix_width, splayer.matrix_height);
                         if(pstate.sprite_setup.load(config_dir+"characters/"+sprite_settings))
