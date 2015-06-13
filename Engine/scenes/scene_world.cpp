@@ -887,8 +887,10 @@ void WorldScene::render()
         double renderY = posY+16-(viewportRect.height()/2);
 
         //Render items
-        for(QVector<WorldNode*>::iterator it = _itemsToRender.begin(); it!=_itemsToRender.end(); it++)
-            (*it)->render((*it)->x-renderX, (*it)->y-renderY);
+        const int render_sz = _itemsToRender.size();
+        WorldNode** render_obj = _itemsToRender.data();
+        for(int i=0; i<render_sz; i++)
+            render_obj[i]->render(render_obj[i]->x-renderX, render_obj[i]->y-renderY);
 
         //draw our "character"
         AniPos img(0,1); img = mapwalker_ani.image();

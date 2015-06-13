@@ -161,8 +161,10 @@ void Scene::render()
         GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
     }
 
-    for(QList<std::function<void()> >::iterator it=renderFunctions.begin(); it!=renderFunctions.end(); it++){//Call all render functions
-        (*it)();
+    const int sz = renderFunctions.size();
+    const std::function<void()>* fn = renderFunctions.data();
+    for(int i=0;i<sz; i++){//Call all render functions
+        (fn[i])();
     }
 }
 
@@ -181,7 +183,7 @@ Scene::TypeOfScene Scene::type()
 
 void Scene::addRenderFunction(const std::function<void ()> &renderFunc)
 {
-    renderFunctions << renderFunc;
+    renderFunctions.push_back(renderFunc);
 }
 
 void Scene::clearRenderFunctions()
