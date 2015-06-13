@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPlainTextEdit>
+#include <initializer_list>
 
 namespace Ui {
 class DevConsole;
@@ -17,11 +18,14 @@ public:
     static void show();
     static void log(const QString &logText, const QString &channel = QString("System"), bool raise=false);
     static bool isConsoleShown();
+    static void closeIfPossible();
 
     static void retranslate();
 
     void registerCommands();
     void retranslateP();
+public slots:
+    void logMessage(QString text, QString chan);
 
 private slots:
     void on_button_clearAllLogs_clicked();
@@ -31,6 +35,8 @@ private slots:
 
 protected:
     void closeEvent ( QCloseEvent * event);
+    void focusInEvent(QFocusEvent *);
+    void focusOutEvent(QFocusEvent *);
 
 private:
     static DevConsole *currentDevConsole;
@@ -50,12 +56,18 @@ private:
 
     void doHelp(QStringList args);
     void doTest(QStringList args);
+    void doPlayMusic(QStringList args);
     void doVersion(QStringList);
     void doQuit(QStringList);
     void doSavesettings(QStringList);
     void doMd5(QStringList args);
     void doFlood(QStringList args);
     void doValidateStrArray(QStringList args);
+    void doThrowUnhandledException(QStringList);
+    void doSegmentationViolation(QStringList);
+    void doPgeXTest(QStringList args);
+    void doSMBXTest(QStringList args);
+    void doSendCheat(QStringList args);
 };
 
 #endif // DEVCONSOLE_H

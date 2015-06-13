@@ -1,0 +1,87 @@
+	Main files:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+pge_editor.pro		   	Project file of editor
+
+mainwindow.h			Class of Main Window
+mainwindow.cpp			Constructor of main window class and some slots
+mainwindow.ui			Main Window GUI
+
+main.cpp			main() function here!
+
+defines.h			contains a global editor definitions and enums
+version.h			Editor's version number definition
+
+
+
+	Folder		   |		description
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_resources			icons, hardcoded images, fonts, etc.
+
+audio				audio playback features
+
+common_features			Additional classes and functions:
+				grid calculator, logger,
+				global mainwindow callback pointer,
+				themes, etc.
+
+common_features/resizer		Resizer box, has draggable corners and sides.
+				Useful for resizing or defining ranges
+
+data_configs			Provides configuration packages manager
+				Loades and stores data into memory, init settings,
+				checks for errors, etc.
+
+dev_console			Provides a development console box
+
+
+editing				Contains main editor classes
+editing/_dialogs		Additional dialogs (NPC Selection, level list, music list, etc.)
+editing/_scenes/*		Editing scenes for level and world map.
+				Provides an interactive, item-based system which is able
+				to select, drag & drop, move, place, remove, etc.
+
+editing/edit_level		Provides a sub-window of level file
+
+editing/edit_npc		Provides a sub-window of NPC configuration file
+
+editing/edit_world		Provides a sub-window of world map file
+
+file_formats			Provides I/O information and file format templates for data files
+
+languages			Contains locales/translations which are used to translate UI into other languages
+
+main_window			Class of main window. It's the main part of the program, and the most important
+
+main_window/_settings		Provides loading/holding/saving of editor's settings
+
+main_window/about_dialog	Provides "About" dialog.
+
+main_window/dock		Provides functions which are used with dock widgets / tool boxes
+
+main_window/edit		Provides [Edit] menu features
+
+main_window/file		Provides [File] menu features
+
+main_window/level		Provides [Level] menu features
+
+main_window/script		Provides [Script] menu features
+
+main_window/testing		Provides [Testing] menu features
+
+main_window/tools		Additional tools which are included into the main window class
+
+main_window/view		Provides [View] menu features
+
+main_window/world		Provides [World] menu features
+
+networking			Provides the networking system
+
+script				Provides the scripts system
+
+SingleApplication		Special class which prevents running of multiple copies/instances of editor at the same time
+
+tools				Any additional tools
+tools/external_tools		GUI for external PGE tools
+tools/math			Contains special mathematical tools
+tools/smart_import		Provides smart import of custom data
+tools/tilesets			Provides the tilesets system

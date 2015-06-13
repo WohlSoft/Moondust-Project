@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+-- @module Renderer
+
+-------------------------------------------------------------------------------
+-- Writes text to the screen.
+-- Example:
+-- 
+--      Renderer.printText("Hi", 100, 100, -1, 20, 0xFFFF0055)
+-- 
+-- @function [parent=#Renderer] printText
+-- @param #string text The text to be printed on the screen.
+-- @param #number x The x-position of the text on the screen. 
+-- @param #number y The y-position of the text on the screen. 
+-- @param #number fontType [OPTIONAL: Default is 0 (Raster Font)] This is the font type.<br> 0 is Raster font<br> -1 is TTF font<br> Any other value is default SDL font-type.
+-- @param #number size [OPTIONAL: Default is 14] The px size of the font. <b>Depending on the fontType, this may or may not work.<b>
+-- @param #number rgba The color of the font. The color format is passed as 0xRRGGBBAA (hex)
+
+
+return nil

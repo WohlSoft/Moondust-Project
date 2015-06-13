@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/graphics_funcs.h>
+#include <main_window/global_settings.h>
+
 #include "data_configs.h"
-
-#include "../main_window/global_settings.h"
-#include "../common_features/graphics_funcs.h"
-
 
 long dataconfigs::getTileI(unsigned long itemID)
 {
@@ -55,7 +54,7 @@ long dataconfigs::getTileI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
+void dataconfigs::loadWorldTiles()
 {
     unsigned int i;
 
@@ -81,8 +80,8 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
         total_data +=tiles_total;
     tileset.endGroup();
 
-    if(prgs) prgs->setMaximum(tiles_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Tiles..."));
+    emit progressMax(tiles_total);
+    emit progressTitle(QApplication::tr("Loading Tiles..."));
 
     ConfStatus::total_wtile = tiles_total;
 
@@ -104,68 +103,53 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
 
     for(i=1; i<=tiles_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
+        QString errStr;
 
         tileset.beginGroup( QString("tile-"+QString::number(i)) );
-            //stile.name = tileset.value("name", "").toString();
 
-            //   if(stile.name=="")
-            //   {
-            //       addError(QString("TILE-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            stile.group = tileset.value("group", "_NoGroup").toString();
-            stile.category = tileset.value("category", "_Other").toString();
+        stile.group = tileset.value("group", "_NoGroup").toString();
+        stile.category = tileset.value("category", "_Other").toString();
 
-            imgFile = tileset.value("image", "").toString();
-            stile.image_n = imgFile;
-            if( (imgFile!="") )
-            {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                stile.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(tilePath + imgFileM);
-                stile.mask = mask;
-                stile.image = GraphicsHelps::setAlphaMask(QPixmap(tilePath + imgFile), stile.mask);
-                if(stile.image.isNull())
-                {
-                    addError(QString("TILE-%1 Brocken image file").arg(i));
-                    goto skipTile;
-                }
-            }
-            else
-            {
-                addError(QString("TILE-%1 Image filename isn't defined").arg(i));
-                goto skipTile;
-            }
+        stile.image_n = tileset.value("image", "").toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(tilePath,
+           stile.image_n, stile.mask_n,
+           stile.image,   stile.mask,
+           errStr);
 
-            stile.animated = (tileset.value("animated", "0").toString()=="1");
-            stile.frames = tileset.value("frames", "1").toInt();
-            stile.framespeed = tileset.value("frame-speed", "125").toInt();
+        if(!errStr.isEmpty())
+        {
+            addError(QString("TILE-%1 %2").arg(i).arg(errStr));
+            goto skipTile;
+        }
+        /***************Load image*end***************/
 
-            stile.frame_h = (stile.animated? qRound(qreal(stile.image.height())/stile.frames) : stile.image.height());
+        stile.grid =            tileset.value("grid", default_grid).toInt();
 
-            stile.display_frame = tileset.value("display-frame", "0").toInt();
-            stile.row = tileset.value("row", "0").toInt();
-            stile.col = tileset.value("col", "0").toInt();
+        stile.animated =       (tileset.value("animated", "0").toString()=="1");
+        stile.frames =          tileset.value("frames", "1").toInt();
+        stile.framespeed =      tileset.value("frame-speed", "175").toInt();
+
+        stile.frame_h = (stile.animated?
+                             qRound(
+                                 qreal(stile.image.height())/
+                                 stile.frames)
+                            : stile.image.height());
+
+        stile.display_frame =   tileset.value("display-frame", "0").toInt();
+        stile.row =             tileset.value("row", "0").toInt();
+        stile.col =             tileset.value("col", "0").toInt();
 
 
-            stile.id = i;
-            main_wtiles.push_back(stile);
-
-            //Add to Index
-            if(i <= (unsigned int)index_wtiles.size())
-            {
-                index_wtiles[i].i = i-1;
-            }
+        stile.id = i;
+        main_wtiles.push_back(stile);
+        /************Add to Index***************/
+        if(i <= (unsigned int)index_wtiles.size())
+        {
+            index_wtiles[i].i = i-1;
+        }
+        /************Add to Index***************/
 
         skipTile:
         tileset.endGroup();

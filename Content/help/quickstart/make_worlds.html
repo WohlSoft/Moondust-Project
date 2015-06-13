@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>How to make world maps?</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<h1 style="text-align: center">How to make world maps?</h1>
+<img alt="" height="223" src="HowToMakeWorlds.png" style="float: left" width="283" />
+<p>&nbsp;</p>
+<p><strong>World map</strong> - is an interactive list of levels which available 
+to player(s) for play.</p>
+<p>World map - is a key unit of game or episode!</p>
+<p>&nbsp;</p>
+<p>World map also can be a hub-styled, I.e. world map will not be used. Instead 
+of world map you will use the special level, which called as hub. In the hub 
+player can enter into levels though warps.</p>
+<p>&nbsp;</p>
+<p>To start make world map, first of all you need open the "File" -&gt; "New" -&gt; 
+"World" menuitem. When you did it you will see the main editing interface which 
+contains editing space where you will need to place objects.</p>
+<p>&nbsp;</p>
+<p>If you wish to edit exist level, you can open the "File" -&gt; "Open" menu and 
+select necessary file in the explorer. You also can drag&amp;drop file into editor's 
+window directly to open them. You also can associate all supported by PGE Editor 
+files with editor in the "Tools" -&gt; "Application Settings" menu.</p>
+<p></p>
+<p>To make world map you need to place any items which you can found in the 
+special item toolbox. The world map also settings of your episode.</p>
+<p>The important items are levels and paths. Levels are entrances of your 
+levels. Paths giving able to walk between levels or walk over world map. Don't 
+forget, paths are not connectable images, there are simple squares which giving 
+abel to walk between them when they near to each other.</p>
+<p></p>
+<p><strong>Each world map should have:</strong></p>
+<ul>
+	<li><strong>Title of episode</strong> - this is a name of world map which 
+	showing in the main menu. If you will not define it and when you will try to 
+	play it in the SMBX, you will see the blank title of episode!</li>
+	<li><strong>Game start point</strong> - The any level item with "Game start" 
+	flag. If you will not plase it, the player will start game from 0x0 
+	coordinates of world map. If you will put multiple levels with "Game start" 
+	flag, you will start game from oldest of them.</li>
+	<li><strong>All levels should be connected with paths</strong> - if you will 
+	don't connect levels with paths you will not be able walk over world map. 
+	Path items - alone type of items which giving able to walk over world map. 
+	Even if you will build chain of levels which placed together, next level 
+	will be opened only if you will successfully complete it (level is 
+	successful only if player end them by getting of exit item. If player lose 
+	(killed by enemy/boss, fall down into pit, lose level mission, etc), exit is 
+	failed and you should replay level)!</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p style="text-align: center"><em>World map editor interface</em></p>
+<p style="text-align: center">
+<img alt="" src="../screenshots/WorldEditing/WorldEdit_Workspace.png" width="800"/></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>World map items</h2>
+<p><strong><a href="../worldediting/worldedit_items.html#Tiles">Tiles</a></strong> 
+- the main design unit which using for creating of design of the level map. 
+Tiles isn't communicating with other items.</p>
+<p></p>
+<p><strong><a href="../worldediting/worldedit_items.html#Sceneries">Sceneries</a></strong> 
+- the secondary design unit. Sceneries can be hidden when did opened a path 
+which placed over them.<br />
+</p>
+<p><strong><a href="../worldediting/worldedit_items.html#Paths">Paths</a></strong> 
+- allows to player move between level points and map locations. Usually paths 
+are hidden and appearing when player pass the level which placed nearly to them.<br />
+</p>
+<p><strong><a href="../worldediting/worldedit_items.html#Level_entrances">Level 
+entrances</a></strong> - The special units, which allowing to enter into defined 
+level or teleport player to other map coorditates. Levels can have multiple 
+entrances, but can have difference warp points inside a level. Also level point 
+using as game start point. If point is not defined, player will start from 0x0 
+coordinates.<br />
+</p>
+<p><strong><a href="../worldediting/worldedit_items.html#Music_Boxes">Music 
+Boxes</a></strong> - The special units which switching playing music when player 
+character stand on them.&nbsp;<br />
+&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr />
+<p><a class="back_link" href="../Editor_QuickStart.html">&lt;&lt; Back</a></p><br />
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
+Wohlstand project. All rights reserved.</p>
+
+</body>
+
+</html>

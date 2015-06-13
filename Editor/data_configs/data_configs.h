@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,25 +20,23 @@
 #define DATACONFIGS_H
 
 #include <QVector>
+#include <QObject>
 #include <QPixmap>
 #include <QBitmap>
-
 #include <QtWidgets>
 #include <QSettings>
-#include <QProgressDialog>
-#include "../common_features/logger.h"
-
 #include <QDebug>
+
+#include <common_features/logger.h>
 
 #include "obj_block.h"
 #include "obj_bgo.h"
 #include "obj_npc.h"
 #include "obj_BG.h"
-
 #include "obj_wld_items.h"
-
 #include "dc_indexing.h"
 #include "obj_tilesets.h"
+#include "obj_rotation_table.h"
 
 struct DataFolders
 {
@@ -54,7 +52,22 @@ struct DataFolders
     QString gcustom;
 };
 
+struct EngineSetup
+{
+    int screen_w;
+    int screen_h;
+    int wld_viewport_w;
+    int wld_viewport_h;
+};
 
+struct obj_splash_ani
+{
+    QPixmap img;
+    unsigned int frames;
+    unsigned int speed;
+    unsigned int x;
+    unsigned int y;
+};
 
 
 ////////////////////Common items///////////////////////////
@@ -83,57 +96,64 @@ struct obj_playable_character
 
 
 
-class dataconfigs
+class dataconfigs : public QObject
 {
+    Q_OBJECT
 public:
     dataconfigs();
-    bool loadconfigs(QProgressDialog *prgs=NULL);
+    virtual ~dataconfigs();
+    bool loadconfigs();
     DataFolders dirs;
     QString config_dir;
     QString data_dir;
 
     QString splash_logo;
+    QList<obj_splash_ani > animations;
+
+    EngineSetup engine;
 
     //Playable Characters
-    QVector<obj_playable_character > characters;
+    QList<obj_playable_character > characters;
 
     //Level map items
-    QVector<obj_BG > main_bg;
-    QVector<obj_bgo > main_bgo;
-    QVector<obj_block > main_block;
-    QVector<obj_npc > main_npc;
+    QList<obj_BG > main_bg;
+    QList<obj_bgo > main_bgo;
+    QList<obj_block > main_block;
+    QList<obj_npc > main_npc;
     npc_Markers marker_npc;
 
     //Indexes
-    QVector<blocksIndexes > index_blocks;
-    QVector<bgoIndexes > index_bgo;
-    QVector<npcIndexes > index_npc;
+    QList<blocksIndexes > index_blocks;
+    QList<bgoIndexes > index_bgo;
+    QList<npcIndexes > index_npc;
 
     //World map items
-    QVector<obj_w_tile > main_wtiles;
-    QVector<obj_w_path > main_wpaths;
-    QVector<obj_w_scenery > main_wscene;
-    QVector<obj_w_level > main_wlevels;
+    QList<obj_w_tile > main_wtiles;
+    QList<obj_w_path > main_wpaths;
+    QList<obj_w_scenery > main_wscene;
+    QList<obj_w_level > main_wlevels;
     wld_levels_Markers marker_wlvl;
 
     //Indexes
-    QVector<wTileIndexes > index_wtiles;
-    QVector<wPathIndexes > index_wpaths;
-    QVector<wSceneIndexes > index_wscene;
-    QVector<wLevelIndexes > index_wlvl;
+    QList<wTileIndexes > index_wtiles;
+    QList<wPathIndexes > index_wpaths;
+    QList<wSceneIndexes > index_wscene;
+    QList<wLevelIndexes > index_wlvl;
 
     //Common items
     unsigned long music_custom_id;
     unsigned long music_w_custom_id;
-    QVector<obj_music > main_music_lvl;
-    QVector<obj_music > main_music_wld;
-    QVector<obj_music > main_music_spc;
+    QList<obj_music > main_music_lvl;
+    QList<obj_music > main_music_wld;
+    QList<obj_music > main_music_spc;
 
     QVector<obj_sound > main_sound;
 
     //Tilesets
-    QVector<SimpleTileset>      main_tilesets;
-    QVector<SimpleTilesetGroup> main_tilesets_grp;
+    QList<SimpleTileset >      main_tilesets;
+    QList<SimpleTilesetGroup > main_tilesets_grp;
+
+    QList<obj_rotation_table > main_rotation_table;
 
     bool check(); //Returns true, if something config entry is not initialized
 
@@ -166,6 +186,11 @@ public:
     void setConfigPath(QString p);
     void loadBasics();
 
+signals:
+    void progressValue(int);
+    void progressMax(int);
+    void progressTitle(QString);
+
 private:
 
     //Buffers
@@ -186,18 +211,20 @@ private:
     QString pathPath;
     QString wlvlPath;
 
-    void loadLevelBGO(QProgressDialog *prgs=NULL);
-    void loadLevelBlocks(QProgressDialog *prgs=NULL);
-    void loadLevelNPC(QProgressDialog *prgs=NULL);
-    void loadLevelBackgrounds(QProgressDialog *prgs=NULL);
+    void loadLevelBGO();
+    void loadLevelBlocks();
+    void loadLevelNPC();
+    void loadLevelBackgrounds();
 
-    void loadWorldTiles(QProgressDialog *prgs=NULL);
-    void loadWorldScene(QProgressDialog *prgs=NULL);
-    void loadWorldPaths(QProgressDialog *prgs=NULL);
-    void loadWorldLevels(QProgressDialog *prgs=NULL);
+    void loadWorldTiles();
+    void loadWorldScene();
+    void loadWorldPaths();
+    void loadWorldLevels();
 
-    void loadMusic(QProgressDialog *prgs=NULL);
-    void loadSound(QProgressDialog *prgs=NULL);
+    void loadMusic();
+    void loadSound();
+
+    void loadRotationTable();
 
     void addError(QString bug, QtMsgType level=QtWarningMsg);
 };

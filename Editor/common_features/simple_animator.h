@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,16 @@ class SimpleAnimator : public QObject
 {
     Q_OBJECT
 public:
-    SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
-                    bool rev=false, bool bid=false);
+    SimpleAnimator(QObject *parent=0);
+    SimpleAnimator(const SimpleAnimator &a, QObject *parent=0);
+    SimpleAnimator &operator=(const SimpleAnimator& a);
+    explicit SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
+                    bool rev=false, bool bid=false, QObject *parent=0);
     ~SimpleAnimator();
     QPixmap image(int frame=-1);
     QPixmap wholeImage();
+    void setSettings(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
+                   bool rev=false, bool bid=false);
 
     void setFrame(int y);
 
@@ -61,7 +66,7 @@ private:
     bool reverce;
 
     int frameCurrent;
-    QTimer * timer;
+    QTimer timer;
     QPoint framePos;
     int framesQ;
     int frameSize; // size of one frame

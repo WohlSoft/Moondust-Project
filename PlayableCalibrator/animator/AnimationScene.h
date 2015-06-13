@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,7 @@ class AnimationScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    AnimationScene(QPixmap SourceSprite, QList<QVector<frameOpts > >  &framesX,
-                   FrameSets AniFrames, QObject *parent = 0);
+    AnimationScene(QObject *parent = 0);
     QPainter test;
     int mCurrentFrameX;
     int mCurrentFrameY;
@@ -51,14 +50,14 @@ public:
     QPixmap mSpriteImage;
     QPixmap NoAnimate;
 
-    QTimer * timer;
+    QTimer timer;
 
 public slots:
     void nextFrame();
 
 private:
-    QGraphicsPixmapItem * croc;
-    QGraphicsRectItem * sizer;
+    QGraphicsPixmapItem ImageFrame;
+    QGraphicsRectItem GRound;
     QPoint mPos;
     int mXDir;
     int x, y, dir;

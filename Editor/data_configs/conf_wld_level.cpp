@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <common_features/graphics_funcs.h>
+#include <main_window/global_settings.h>
+
 #include "data_configs.h"
-
-#include "../main_window/global_settings.h"
-#include "../common_features/graphics_funcs.h"
-
 
 long dataconfigs::getWLevelI(unsigned long itemID)
 {
@@ -75,7 +74,7 @@ long dataconfigs::getCharacterI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
+void dataconfigs::loadWorldLevels()
 {
     unsigned int i;
 
@@ -90,21 +89,21 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
     }
 
 
-    QSettings tileset(level_ini, QSettings::IniFormat);
-    tileset.setIniCodec("UTF-8");
+    QSettings levelset(level_ini, QSettings::IniFormat);
+    levelset.setIniCodec("UTF-8");
 
     main_wlevels.clear();   //Clear old
     index_wlvl.clear();
 
-    tileset.beginGroup("levels-main");
-        levels_total = tileset.value("total", "0").toInt();
-        marker_wlvl.path = tileset.value("path", "0").toInt();
-        marker_wlvl.bigpath = tileset.value("bigpath", "0").toInt();
+    levelset.beginGroup("levels-main");
+        levels_total = levelset.value("total", "0").toInt();
+        marker_wlvl.path = levelset.value("path", "0").toInt();
+        marker_wlvl.bigpath = levelset.value("bigpath", "0").toInt();
         total_data +=levels_total;
-    tileset.endGroup();
+    levelset.endGroup();
 
-    if(prgs) prgs->setMaximum(levels_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Level images..."));
+    emit progressMax(levels_total);
+    emit progressTitle(QApplication::tr("Loading Level images..."));
 
     ConfStatus::total_wlvl = levels_total;
 
@@ -118,7 +117,7 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             index_wlvl.push_back(levelIndex);
         }
 
-    if(ConfStatus::total_wtile==0)
+    if(ConfStatus::total_wlvl==0)
     {
         addError(QString("ERROR LOADING wld_levels.ini: number of items not define, or empty config"), QtCriticalMsg);
         return;
@@ -126,72 +125,58 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
 
     for(i=0; i<=levels_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
+        emit progressValue(i);
+        QString errStr;
+
+        levelset.beginGroup( QString("level-"+QString::number(i)) );
+
+        slevel.group =      levelset.value("group", "_NoGroup").toString();
+        slevel.category =   levelset.value("category", "_Other").toString();
+
+        slevel.image_n =    levelset.value("image", "").toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(wlvlPath,
+           slevel.image_n, slevel.mask_n,
+           slevel.image,   slevel.mask,
+           errStr);
+
+        if(!errStr.isEmpty())
         {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
+            addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
+            goto skipLevel;
         }
+        /***************Load image*end***************/
 
-        tileset.beginGroup( QString("level-"+QString::number(i)) );
-            //slevel.name = tileset.value("name", "").toString();
+        slevel.grid =       levelset.value("grid", default_grid).toInt();
 
-            //   if(slevel.name=="")
-            //   {
-            //       addError(QString("TILE-%1 Item name isn't defined").arg(i));
-            //       goto skipBGO;
-            //   }
-            slevel.group = tileset.value("group", "_NoGroup").toString();
-            slevel.category = tileset.value("category", "_Other").toString();
+        slevel.animated =  (levelset.value("animated", "0").toString()=="1");
+        slevel.frames =     levelset.value("frames", "1").toInt();
+        slevel.framespeed = levelset.value("frame-speed", "175").toInt();
 
-            imgFile = tileset.value("image", "").toString();
-            slevel.image_n = imgFile;
-            if( (imgFile!="") )
-            {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                slevel.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(wlvlPath + imgFileM);
-                slevel.mask = mask;
-                slevel.image = GraphicsHelps::setAlphaMask(QPixmap(wlvlPath + imgFile), slevel.mask);
-                if(slevel.image.isNull())
-                {
-                    addError(QString("LEVEL-%1 Brocken image file").arg(i));
-                    goto skipLevel;
-                }
+        slevel.frame_h =   (slevel.animated?
+                                qRound(qreal(slevel.image.height())/
+                                             slevel.frames)
+                                    : slevel.image.height());
 
-            }
-            else
-            {
-                addError(QString("LEVEL-%1 Image filename isn't defined").arg(i));
-                goto skipLevel;
-            }
+        slevel.display_frame = levelset.value("display-frame", "0").toInt();
 
-            slevel.animated = (tileset.value("animated", "0").toString()=="1");
-            slevel.frames = tileset.value("frames", "1").toInt();
-            slevel.framespeed = tileset.value("frame-speed", "125").toInt();
 
-            slevel.frame_h = (slevel.animated? qRound(qreal(slevel.image.height())/slevel.frames) : slevel.image.height());
+        slevel.id = i;
+        main_wlevels.push_back(slevel);
 
-            slevel.display_frame = tileset.value("display-frame", "0").toInt();
-            slevel.id = i;
-            main_wlevels.push_back(slevel);
-
-            //Add to Index
-            if(i <= (unsigned int)index_wlvl.size())
-            {
-                index_wlvl[i].i = i-1;
-            }
+        /************Add to Index***************/
+        if(i <= (unsigned int)index_wlvl.size())
+        {
+            index_wlvl[i].i = i;
+        }
+        /************Add to Index***************/
 
         skipLevel:
-        tileset.endGroup();
+        levelset.endGroup();
 
-        if( tileset.status() != QSettings::NoError )
+        if( levelset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(tileset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), QtCriticalMsg);
         }
     }
 

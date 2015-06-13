@@ -1,15 +1,43 @@
-#include "devconsole.h"
-#include "ui_devconsole.h"
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <QScrollBar>
 #include <QSettings>
 #include <QCryptographicHash>
+#include <stdexcept>
+#ifdef Q_OS_WIN
+#include <QtWin>
+#include <QSysInfo>
+#endif
+
+#include <common_features/app_path.h>
+#include <common_features/mainwinconnect.h>
+#include <common_features/logger_sets.h>
+
+#include <PGE_File_Formats/pge_x.h>
+
+#include <audio/music_player.h>
+#include <networking/engine_intproc.h>
+
+#include "devconsole.h"
+#include <ui_devconsole.h>
 
 #include "../version.h"
-
-#include "../common_features/mainwinconnect.h"
-
-#include "../file_formats/file_formats.h"
 
 DevConsole *DevConsole::currentDevConsole = 0;
 
@@ -20,12 +48,14 @@ void DevConsole::init()
 
     currentDevConsole = new DevConsole();
 
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
-    settings.beginGroup("DevConsole");
+    settings.beginGroup("dev-console");
     currentDevConsole->restoreGeometry(settings.value("geometry", currentDevConsole->saveGeometry()).toByteArray());
     settings.endGroup();
+
+    DevConsole::log("Welcome to Development Console of PGE Editor!\nType 'help' to get more about console commands");
 }
 
 void DevConsole::show()
@@ -49,13 +79,18 @@ void DevConsole::retranslateP()
     ui->retranslateUi(this);
 }
 
+void DevConsole::logMessage(QString text, QString chan)
+{
+    logToConsole(text, chan, false);
+}
+
 void DevConsole::log(const QString &logText, const QString &channel, bool raise)
 {
     if(!currentDevConsole)
         init();
 
     if(currentDevConsole)
-        currentDevConsole->logToConsole(logText, channel, raise);
+           currentDevConsole->logToConsole(logText, channel, raise);
 }
 
 bool DevConsole::isConsoleShown()
@@ -66,6 +101,12 @@ bool DevConsole::isConsoleShown()
     return !currentDevConsole->isHidden();
 }
 
+void DevConsole::closeIfPossible()
+{
+    if(isConsoleShown())
+        currentDevConsole->close();
+}
+
 DevConsole::DevConsole(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DevConsole)
@@ -73,18 +114,49 @@ DevConsole::DevConsole(QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(windowFlags() | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     connect(ui->button_cl_sysLog, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
+    connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(update()));
     registerCommands();
+    LogWriter::installConsole(this);
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    {
+        if(QtWin::isCompositionEnabled())
+        {
+            this->setAttribute(Qt::WA_TranslucentBackground, true);
+            QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+            QtWin::enableBlurBehindWindow(this);
+        }
+        else
+        {
+            QtWin::resetExtendedFrame(this);
+            setAttribute(Qt::WA_TranslucentBackground, false);
+        }
+    }
+    #endif
+    if(!hasFocus()) setWindowOpacity(0.9);
 }
 
 DevConsole::~DevConsole()
 {
+    LogWriter::uninstallConsole();
     delete ui;
 }
 
 void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
+    QString target_channel = channel;
+
+    if(channel=="System") //Prevent creation another "system" tab if switched another UI language
+        target_channel = ui->tabWidget->tabText(0);
+
     for(int i = 0; i < ui->tabWidget->count(); ++i){
-        if(ui->tabWidget->tabText(i)==channel){
+        if(ui->tabWidget->tabText(i)==target_channel){
             QPlainTextEdit* tarEdit = getEditByIndex(i);
             if(!tarEdit)
                 return;
@@ -103,12 +175,15 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
     l->addWidget(e,0,0,1,1);
     QPushButton *p = new QPushButton(w);
     l->addWidget(p,1,0,1,1);
-    connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
-    p->setText(tr("Clear %1 Log").arg(channel));
+    p->setFlat(true);
+    p->connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
+    p->setText(tr("Clear %1 Log").arg(target_channel));
     e->setReadOnly(true);
+    e->setStyleSheet(ui->plainTextEdit->styleSheet());
+    e->setFont(ui->plainTextEdit->font());
     e->appendPlainText(logText);
     e->verticalScrollBar()->setValue(e->verticalScrollBar()->maximum());
-    ui->tabWidget->addTab(w,channel);
+    ui->tabWidget->addTab(w, target_channel);
 }
 
 QPlainTextEdit *DevConsole::getEditByIndex(const int &index)
@@ -148,16 +223,25 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
 
-    settings.beginGroup("DevConsole");
+    settings.beginGroup("dev-console");
     settings.setValue("geometry", this->saveGeometry());
     settings.endGroup();
     event->accept();
 }
 
 
+void DevConsole::focusInEvent(QFocusEvent *)
+{
+     setWindowOpacity(1.0);
+}
+
+void DevConsole::focusOutEvent(QFocusEvent *)
+{
+     setWindowOpacity(0.9);
+}
 
 void DevConsole::on_button_send_clicked()
 {
@@ -177,8 +261,14 @@ void DevConsole::registerCommands()
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
-    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
+    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
+    registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
+    registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} testing of PGE-X file format"));
+    registerCommand("smbxtest", &DevConsole::doSMBXTest, tr("[WIP] Attempt to test the level in the SMBX Level Editor!"));
+    registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
+    registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send command or message into running engine"));
 }
 
 void DevConsole::doCommand()
@@ -194,8 +284,13 @@ void DevConsole::doCommand()
     QString baseCommand = cmdList[0];
     cmdList.pop_front();
 
-    if(commands.contains(baseCommand.toLower())){
+    if(commands.contains(baseCommand.toLower()))
+    {
         (this->*(commands[baseCommand].first))(cmdList);
+    }
+    else
+    {
+        log("-> Unknown command. Type 'help' to show available command list", ui->tabWidget->tabText(0));
     }
 }
 
@@ -211,6 +306,33 @@ void DevConsole::doTest(QStringList /*args*/)
 {
     log("-> All good!", ui->tabWidget->tabText(0));
 }
+
+void DevConsole::doPlayMusic(QStringList args)
+{
+    if(args.size()!=2)
+    {
+        log("-> Bad command syntax!", ui->tabWidget->tabText(0));
+        return;
+    }
+    if(args[0]=="lvl")
+        LvlMusPlay::setMusic(LvlMusPlay::LevelMusic, args[1].toLong(), "");
+    else
+    if(args[0]=="wld")
+        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, args[1].toLong(), "");
+    else
+    if(args[0]=="spc")
+        LvlMusPlay::setMusic(LvlMusPlay::SpecialMusic, args[1].toLong(), "");
+    else
+    {
+        log("-> Unknown music type: (types are: lvl wld spc)!", ui->tabWidget->tabText(0));
+        return;
+    }
+
+    MainWinConnect::pMainWin->setMusicButton(true);
+    MainWinConnect::pMainWin->setMusic(true);
+    log(QString("-> Music is playing: %1").arg(LvlMusPlay::currentMusicPath), ui->tabWidget->tabText(0));
+}
+
 
 void DevConsole::doMd5(QStringList args)
 {
@@ -266,5 +388,126 @@ void DevConsole::doFlood(QStringList args)
             log("No memory assigned");
         Q_UNUSED(fl)
     }
+}
+
+void DevConsole::doThrowUnhandledException(QStringList /*args*/)
+{
+    throw std::runtime_error("Test Exception of Toast!");
+}
+
+void DevConsole::doSegmentationViolation(QStringList)
+{
+    int* my_nullptr = 0;
+    *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
+}
+
+
+QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth=1)
+{
+    QString treeView="";
+
+    for(int i=0; i<entry.size(); i++)
+    {
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("=============\n");
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("SubTree name: %1\n").arg(entry[i].name);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Branch type: %1\n").arg(entry[i].type);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Entries: %1\n").arg(entry[i].data.size());
+        if(entry[i].subTree.size()>0)
+        {
+            treeView += ______recourseBuildPGEX_Tree(entry[i].subTree, depth+1);
+        }
+    }
+
+    return treeView;
+}
+
+
+
+void DevConsole::doPgeXTest(QStringList args)
+{
+    if(!args.isEmpty())
+    {
+        QString src;
+
+        foreach(QString s, args)
+            src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+        QFile file(src);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            log(QString("-> Error: Can't open the file."));
+            return;
+        }
+
+        QTextStream in(&file);   //Read File
+        PGEFile pgeX_Data;
+        QString raw = in.readAll();
+        pgeX_Data.setRawData( raw );
+
+        if( pgeX_Data.buildTreeFromRaw() )
+        {
+            QString treeView="";
+            for(int i=0; i<pgeX_Data.dataTree.size(); i++)
+            {
+                treeView += QString("=============\n");
+                treeView += QString("Section Name %1\n").arg(pgeX_Data.dataTree[i].name);
+                treeView += QString("Section type: %1\n").arg(pgeX_Data.dataTree[i].type);
+                treeView += QString("Entries %1\n").arg(pgeX_Data.dataTree[i].data.size());
+
+//                foreach(PGEFile::PGEX_Item x, pgeX_Data.dataTree[i].data)
+//                {
+//                    if(x.values.size()>0)
+//                    {
+//                        treeView += x.values.first().marker + ":"+x.values.first().value + ";\n";
+//                    }
+//                }
+
+                if(pgeX_Data.dataTree[i].subTree.size()>0)
+                {
+                    treeView += ______recourseBuildPGEX_Tree(pgeX_Data.dataTree[i].subTree);
+                }
+            }
+            log(QString("-> File read:\nRaw size is %1\n%2").arg(raw.size()).arg(treeView),
+                ui->tabWidget->tabText(0));
+
+        }
+        else
+        {
+            log(QString("-> File invalid: %1").arg(pgeX_Data.lastError()), ui->tabWidget->tabText(0));
+        }
+
+    }
+
+}
+
+void DevConsole::doSMBXTest(QStringList args)
+{
+    Q_UNUSED(args);
+    MainWinConnect::pMainWin->on_actionRunTestSMBX_triggered();
+}
+
+void DevConsole::doSendCheat(QStringList args)
+{
+    QString src;
+    foreach(QString s, args)
+        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+    if(src.isEmpty())
+    {
+        log(QString("-> Can't run engine command without arguments"), ui->tabWidget->tabText(0));
+        return;
+    }
+
+    src.replace('\n', ' ');
+
+    if(IntEngine::sendCheat(src))
+        log(QString("-> command sent"), ui->tabWidget->tabText(0));
+    else
+        log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));
+
 }
 

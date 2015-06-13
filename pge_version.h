@@ -20,18 +20,20 @@
 #define GLOBAL_PGE_VERSION
 
 //Version of whole project
-#define _VERSION "0.2.0"
+#define _VERSION "0.3.0"
 #define _RELEASE " Alpha" //Developing state (for release this field must be empty)
 
 #define _VP1 0
-#define _VP2 2
+#define _VP2 3
 #define _VP3 0
 #define _VP4 0
 
 
-#define _COPYRIGHT "2014 by Wohlstand"
+#define _COPYRIGHT "2014-2015 by Wohlstand"
 
-#define _COMPANY "Wohlhabend Network System"
+#define _COMPANY "Wohlhabend Networks"
+
+#define _PGE_URL "engine.wohlnet.ru"
 
 #define _PRODUCT_NAME "Platformer Game Engine"
 
@@ -48,6 +50,8 @@
 #else
 	#define OPERATION_SYSTEM "Other"
 #endif
+
+#define _DATE_OF_BUILD __DATE__ " " __TIME__
 
 
 #endif

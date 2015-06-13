@@ -2,7 +2,7 @@
  * LazyFixTool, a free tool for fix lazily-made image masks
  * and also, convert all BMPs into GIF
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include <QCoreApplication>
 #include <QImage>
+#include <QColor>
 #include <QDir>
 #include <QDirIterator>
 #include <QString>
@@ -27,13 +28,23 @@
 #include <QFileInfo>
 #include "version.h"
 
-#include "libs/EasyBMP/EasyBMP.h"
+#include "../_Libs/EasyBMP/EasyBMP.h"
 extern "C"{
-#include "libs/giflib/gif_lib.h"
+#include "../_Libs/giflib/gif_lib.h"
 }
 
 bool noBackUp=false;
-bool DarkGray=false;
+
+QImage setAlphaMask(QImage image, QImage mask);
+QImage setAlphaMask_VB(QImage image, QImage mask);
+
+
+bool toGif(QImage& img, QString& path);
+QImage fromBMP(QString &file);
+QImage loadQImage(QString file);
+
+void doMagicIn(QString path, QString q, QString OPath);
+
 
 QImage setAlphaMask(QImage image, QImage mask)
 {
@@ -50,15 +61,97 @@ QImage setAlphaMask(QImage image, QImage mask)
     {
         newmask = newmask.copy(0,0, target.width(), target.height());
     }
-
-    newmask.invertPixels();
-
-    target.setAlphaChannel(newmask);
+    target = setAlphaMask_VB(target, newmask);
 
     return target;
 }
 
-bool toGif(QImage& img, QString& path){
+//Implementation of VB similar transparency function
+QImage setAlphaMask_VB(QImage image, QImage mask)
+{
+    if(mask.isNull())
+        return image;
+
+    if(image.isNull())
+        return image;
+
+    bool isWhiteMask = true;
+
+    QImage target;
+
+    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
+    target.fill(qRgb(128,128,128));
+
+    QImage newmask = mask;
+    target.convertToFormat(QImage::Format_ARGB32);
+
+    if(target.size()!= newmask.size())
+    {
+        newmask = newmask.copy(0, 0, target.width(), target.height());
+    }
+
+    QImage alphaChannel = image.alphaChannel();
+
+    //vbSrcAnd
+    for(int y=0; y< image.height(); y++ )
+        for(int x=0; x < image.width(); x++ )
+        {
+            QColor Dpix = QColor(target.pixel(x,y));
+            QColor Spix = QColor(newmask.pixel(x,y));
+            QColor Npix;
+
+            Npix.setAlpha(255);
+            Npix.setRed( Dpix.red() & Spix.red());
+            Npix.setGreen( Dpix.green() & Spix.green());
+            Npix.setBlue( Dpix.blue() & Spix.blue());
+            target.setPixel(x, y, Npix.rgba());
+
+            isWhiteMask &= ( (Spix.red()>240) //is almost White
+                             &&(Spix.green()>240)
+                             &&(Spix.blue()>240));
+
+            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
+
+            if( (Spix.red()>240) //is almost White
+                            &&(Spix.green()>240)
+                            &&(Spix.blue()>240))
+            {
+                newAlpha = 0;
+            }
+
+            alphaChannel.setPixel(x,y, newAlpha);
+        }
+
+    //vbSrcPaint
+    for(int y=0; y< image.height(); y++ )
+        for(int x=0; x < image.width(); x++ )
+        {
+            QColor Dpix = QColor(image.pixel(x,y));
+            QColor Spix = QColor(target.pixel(x,y));
+            QColor Npix;
+
+            Npix.setAlpha(255);
+            Npix.setRed( Dpix.red() | Spix.red());
+            Npix.setGreen( Dpix.green() | Spix.green());
+            Npix.setBlue( Dpix.blue() | Spix.blue());
+            target.setPixel(x, y, Npix.rgba());
+
+            //QColor curAlpha;
+            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
+            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
+
+            if(newAlpha>255) newAlpha=255;
+            alphaChannel.setPixel(x,y, newAlpha);
+        }
+
+    target.setAlphaChannel(alphaChannel);
+
+    return target;
+}
+
+
+bool toGif(QImage& img, QString& path)
+{
     int errcode;
 
     if(QFile(path).exists()) // Remove old file
@@ -277,96 +370,51 @@ void doMagicIn(QString path, QString q, QString OPath)
         //mask.save(OPath+tmp[0]+"_mask_before.png");
         QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
 
+        //fix
+        if(image.size()!= mask.size())
+            mask = mask.copy(0,0, image.width(), image.height());
 
-    //fix
-    if(image.size()!= mask.size())
-        mask = mask.copy(0,0, image.width(), image.height());
-    target = mask;
+        mask = target.alphaChannel();
+        mask.invertPixels();
 
-    QList<QRgb > colortable;
+        //Save after fix
+        //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
+        QString saveTo;
 
-    for(int w=0; w< target.width(); w++)
-        for(int h=0; h < target.height(); h++)
+
+        saveTo = QString(OPath+(tmp[0].toLower())+".gif");
+
+        //overwrite source image (convert BMP to GIF)
+        if(toGif(image, saveTo ) ) //Write gif
         {
-            bool cFind=false;
-            foreach(QRgb c, colortable) //Store color into color table
-            { if(target.pixel(w,h)==c) { cFind=true;break;} }
-            if(!cFind) colortable.push_back(target.pixel(w,h));
-
-            if(target.pixel(w,h)==image.pixel(w,h)) //Fill cased pixel color into black
-                target.setPixel(w,h, qRgb(0,0,0));
+            QTextStream(stdout) <<"GIF-1 ";
+        }
+        else
+        {
+            QTextStream(stdout) <<"BMP-1 ";
+            image.save(saveTo, "BMP"); //If failed, write BMP
         }
 
-    bool WhiteExist=false;
-    foreach(QRgb c, colortable) // Find White color in table
-    { if(c==qRgb(0xFF,0xFF,0xFF)) { WhiteExist=true;break;} }
+        saveTo = QString(OPath+(tmp[0].toLower())+"m.gif");
 
-    if(WhiteExist)
-    for(int w=0; w< target.width(); w++)
-        for(int h=0; h < target.height(); h++)
+        //overwrite mask image
+        if( toGif(mask, saveTo ) ) //Write gif
         {
-            if(DarkGray)
-            {
-                //fill white-gray to dark-gray
-                if((target.pixel(w,h) < qRgb(0xFF,0xFF,0xFF)) && (target.pixel(w,h) >= qRgb(0x44,0x44,0x44)))
-                    target.setPixel(w,h, qRgb(0x44,0x44,0x44));
-
-                //fill black-gray to black
-                if((target.pixel(w,h) > qRgb(0x00,0x00,0x00)) && (target.pixel(w,h) < qRgb(0x44,0x44,0x44)))
-                    target.setPixel(w,h, qRgb(0x00,0x00,0x00));
-            }
+            QTextStream(stdout) <<"GIF-2\n";
         }
-    else // If white not exist
-    for(int w=0; w< target.width(); w++)
-        for(int h=0; h < target.height(); h++)
+        else
         {
-            //fill white-gray to white
-            if(target.pixel(w,h) > qRgb(0xF3,0xF3,0xF3))
-                target.setPixel(w,h, qRgb(0xFF,0xFF,0xFF));
-
-            //fill black-gray to black
-            if((target.pixel(w,h) > qRgb(0x00,0x00,0x00)) && (target.pixel(w,h) < qRgb(0x44,0x44,0x44)))
-                target.setPixel(w,h, qRgb(0x00,0x00,0x00));
+            mask.save(saveTo, "BMP"); //If failed, write BMP
+            QTextStream(stdout) <<"BMP-2\n";
         }
-
-    mask = target;
-
-    target = setAlphaMask(image, mask);
-
-    //Save after fix
-    //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
-    QString saveTo;
-
-
-    saveTo = QString(OPath+(tmp[0].toLower())+".gif");
-    //overwrite source image (convert BMP to GIF)
-    if(toGif(image, saveTo ) ) //Write gif
-    {
-        QTextStream(stdout) <<"GIF-1 ";
     }
     else
-    {
-        QTextStream(stdout) <<"BMP-1 ";
-        image.save(saveTo, "BMP"); //If failed, write BMP
-    }
-
-    saveTo = QString(OPath+(tmp[0].toLower())+"m.gif");
-
-    //overwrite mask image
-    if( toGif(mask, saveTo ) ) //Write gif
-    {
-        QTextStream(stdout) <<"GIF-2\n";
-    }
-    else
-    {
-        mask.save(saveTo, "BMP"); //If failed, write BMP
-        QTextStream(stdout) <<"BMP-2\n";
-    }
-
-    }
-    else
-    QTextStream(stderr) << path+q+" - WRONG!\n";
+        QTextStream(stderr) << path+q+" - WRONG!\n";
 }
+
+
+
+
 
 int main(int argc, char *argv[])
 {
@@ -420,11 +468,11 @@ int main(int argc, char *argv[])
         {
             walkSubDirs=true;
         }
-        else
-        if(a.arguments().at(arg)=="-G")
-        {
-            DarkGray=true;
-        }
+//        else
+//        if(a.arguments().at(arg)=="-G")
+//        {
+//            DarkGray=true;
+//        }
         else
         if(a.arguments().at(arg)=="--nopause")
         {
@@ -544,7 +592,7 @@ DisplayHelp:
     QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the new images will be saved\n";
     QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
     QTextStream(stdout) <<" -N                  - Don't create backup\n";
-    QTextStream(stdout) <<" -G                  - Make gray shades on masks darker\n";
+    //QTextStream(stdout) <<" -G                  - Make gray shades on masks darker\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();

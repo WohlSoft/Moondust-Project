@@ -1,0 +1,11 @@
+prefix=/Users/vit9696/Wohlstand/PGE-Project/_Libs/_sources/../_builds/macos
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: FLAC++
+Description: Free Lossless Audio Codec Library (C++ API)
+Version: 1.3.0
+Requires.private: flac
+Libs: -L${libdir} -lFLAC++
+Cflags: -I${includedir}

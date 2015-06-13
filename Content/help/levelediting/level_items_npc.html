@@ -10,19 +10,19 @@
 
 <body>
 <p style="text-align: center">
-<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
+<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
 <h1 style="text-align: left">Level editing &gt; Level items &gt; Non-playable 
 characters</h1>
 <p style="text-align: left"><strong>Non-playable characters</strong> 
-- is a main game unit, what building the game process: theese is a enemies, 
-friends, items, power-ups, sceneries, etc. Each NPC have his algorithm, and can 
+- is a main game unit which building the game process: there are enemies, 
+friends, items, power-ups, sceneries, etc. Each NPC have it's algorithm, and can 
 be programmed.</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Placing of NPC</em></p>
+<p style="text-align: center"><em>Placing of NPC's</em></p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/LevelEditing/Items/PlacingNPC.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>NPC Context menu</em></p>
+<p style="text-align: center"><em>Context menu of NPC</em></p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC_Direction.png" /></p>
 <p style="text-align: left">&nbsp;</p>
@@ -33,35 +33,37 @@ be programmed.</p>
 <ul>
 	<li>
 	<p style="text-align: left"><strong>Default direction</strong> - NPC will 
-	start his movement to defined direction. Direction option can have other 
-	type and values, for example, name "Activate" and values "On"/"Off", etc.</p>
+	start it's movement with defined direction. Direction option can have other 
+	name and values, for example, name "Activation state" and values "On"/"Off", etc. 
+	Dependent to the algorithm and global settings.</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Friendly</strong> - NPC will not 
-	communicate with playable chatacter and with other NPC's. Friendly NPC can'e 
-	be killed, can't hurt to player, can't be taken or grabbed. Playable 
-	character and other NPC's can't stay on top of friendly NPCs.</p>
+	<p style="text-align: left"><strong>Friendly</strong> - NPC won't communicate with playable chatacters and with other NPC's. Friendly NPC's can'e 
+	be killed, can't hurt player, can't be taken or grabbed. Playable 
+	characters and other NPC's can't stay on top of the friendly NPCs.</p>
 	</li>
 	<li>
 	<p style="text-align: left"><strong>Not movable</strong> - NPC will be idle 
 	irrespective of its algorithm.</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Set as boss</strong> - (inside SMBX this 
-	option named as "Legacy Boss") This is a special flag, which automatically 
-	apply special events for the some bosses, what support them. For example: On 
-	activate NPC with this flag will be changed music to boss's own theme, and 
-	if boss was defeat will be spawned the special exit item.<br />
+	<p style="text-align: left"><strong>Set as boss</strong> - (inside of SMBX this 
+	option calling as "Legacy Boss") This is a special flag which automatically 
+	enable special events for some bosses which supports them. For example: if NPC 
+	have the activated "Boss" flag, will be changed background music to the boss's own theme and 
+	when boss will be defeat, will be spawned a special bonus item or game will 
+	be completed.<br />
 	</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Talk message -</strong> The message what 
-	will be displayed if player try to talk with this NPC. After displaying 
-	message will be activated event slot.&nbsp;</p>
+	<p style="text-align: left"><strong>Talk message -</strong> The message 
+	which 
+	will be displayed when player will try to talk with this NPC. After displaying 
+	of this message will be activated event slot.</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Generator</strong> - Make the NPC 
-	generator. From one point will be spawned new NPC's every each defined time 
+	<p style="text-align: left"><strong>Generator</strong> - Making NPC 
+	generator. From the one point will be spawned new NPC's every each defined time 
 	delay.</p>
 	<ul>
 		<li>
@@ -81,53 +83,55 @@ be programmed.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/LevelEditing/MessageBox.png" /></p>
 <p style="text-align: center"><span style="text-decoration: underline">Note:</span> 
-Don't forget: all new-line characters will be removed. Use the extra-spaces for 
-make a new-line.</p>
+Don't forget: all new-line characters will not work correctly with SMBX. Use the extra-spaces 
+to make a pseudo-new-line.</p>
 <p style="text-align: center">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Some NPC can have special values:</p>
+<p style="text-align: left">Some NPCs can have a special values:</p>
 <ul>
 	<li>
-	<p style="text-align: left"><strong>Contents</strong> - this option have a 
-	ID of other NPC, what included in this NPC. Available for NPC with marker 
+	<p style="text-align: left"><strong>Contents</strong> - this option have an 
+	ID of other NPC which included into this NPC. Available for NPCs which marker 
+	as 
 	"containers".</p>
 	</li>
 	<li>
 	<p style="text-align: left"><strong>Spin box with numeric value</strong> - 
-	Some NPC can have the numeric special value, for example, position of 
-	firebar part.</p>
+	Some NPCs can have the numeric special value, for example, position of 
+	firebar segment.</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Special combo-box</strong> - some NPC 
-	can have switched or modes of his working, what available to select from 
-	list of this modes.</p>
+	<p style="text-align: left"><strong>Special combo-box</strong> - some NPCs can have 
+	switchable algorithms which cab set individual NPCs algorithm from the list.</p>
 	</li>
 </ul>
 <p style="text-align: left">&nbsp;</p>
 <ul>
 	<li>
-	<p style="text-align: left"><strong>Layer </strong>- here defined the layer, what is owner of this 
+	<p style="text-align: left"><strong>Layer </strong>- here is defined the layer 
+	which is an owner of this 
 	NPC. 
-All items at first are a members of "Default" layer.</p>
+All items at first are a members of the "Default" layer.</p>
 	</li>
 	<li>
-	<p style="text-align: left"><strong>Attach layer</strong> - This is special 
-	option, will move all items on selected layer with movement of NPC.</p>
+	<p style="text-align: left"><strong>Attach layer</strong> - This is a special 
+	option: all membered statical items of attached layer will move together 
+	with this NPC.</p>
 	</li>
 </ul>
 <p style="text-align: left">
 <em>Each NPC have the event slots:</em></p>
 <p style="text-align: left"><strong>Activate</strong> - This slot activating 
-then NPC will appear on player's screen</p>
+then NPC will appear on the player's visible zone.</p>
 <p style="text-align: left"><strong>Death</strong> - This slot activating then 
 NPC will be defeat, destroyed, kicked or taked (coins, power-ups, etc).</p>
 <p style="text-align: left"><strong>Talk</strong> - This slot activating them 
-player call to talk with this NPC.</p>
+player was talked with this NPC.</p>
 <p style="text-align: left">
 <strong>Layer is empty</strong> - (In SMBX this option named as "<span style="text-decoration: underline">No 
-more objects in layer</span>") this slot activating if was activated the 
-"Death" slot and if on same layer, which is an owner if this NPC, haven't 
-other objects.</p>
+more objects in layer</span>") this slot activating when activated the 
+"Death" slot and when on the same layer which is an owner if this NPC no more 
+another objects.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center"><em>NPC Properties toolbox: Generator, 
@@ -141,82 +145,83 @@ NPC-Container, NPC-Container with spin box special value</em></p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><a name="NPC-Containers:_how_to_use">
 NPC-Containers: how to use</a></h3>
-<p style="text-align: left">All, who working with SMBX know "Egg", "Buried", 
-"Bubble", "Lakuti" flags. This flags including selected item in the special NPC 
-- which named as Container. Container can have included NPC's what can be 
-extracted on destroy of them or will be spawning by container before it will 
+<p style="text-align: left">All, who working with SMBX, know the "Egg", "Buried", 
+"Bubble" and "Lakuti" flags. These flags packing selected item into the special NPC 
+which calling as Container. Container can have included into them NPC's which can be 
+extracted when container will be destroyed, or will be spawned by container before it will 
 destroyed.</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">In SMBX we pressing the "Bubble=Yes" or "Buried=yes" 
-for place "Packed into the herb" or "Packet into the bubble" NPC.</p>
+<p style="text-align: left">In the SMBX we are pressing the "Bubble=Yes" or "Buried=Yes" 
+to place "Packed into the herb" or "Packet into the bubble" NPC.</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">In PGE-Editor you can edit NPC-Containers. And 
-because, for example, Herb will be more useful in SMB2 group, because "The 
-Lakutus are throwing Lakitus!" in SMBX - is a secret tab and inside SMBX need to 
-made a lot of action for open them. Even in PGE-Editor same "tab" is non-secret 
-"group", for place "burred" items, we must select "herb" and set its content 
-before placing or to already placed. In PGE secrets are absence - all Free and 
-Open Source.</p>
+<p style="text-align: left">In PGE-Editor you can edit Containers. And 
+therefore, for example, Herb will be more useful in the SMB2 group, because "The 
+Lakutus are throwing Lakitus!" in the SMBX - is a secret tab which need for a lot of actions 
+to open them. Even in the PGE-Editor same "tab" is a non-secret "group". To place "burred" items, we 
+should select "herb" item and set its content 
+before we will place them or you can set contents to already placed items by 
+editing it's properties. In the PGE secrets are absence - all Free and Open 
+Source!</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">If we selecting NPC's from "Containers" cathegory, 
-we will placing to map them as empty:</p>
+<p style="text-align: left">If we will pick up any NPC from the "Containers" cathegory 
+and they will be placed to the map with empty contents:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/001_placed_containers.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">But how place them with contents?<br />
+<p style="text-align: left">But how to place them with contents?<br />
 <br />
-For already placed containers, we can select single or group NPC-Containers, ans 
-select "Properties":</p>
+For already placed containers we can select alone or a group of NPC-Containers and 
+open "Properties" item of context menu:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/002_Open_props.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">And we must push to "[empty]" button for select NPC 
+<p style="text-align: left">Now we should click to the "[empty]" button to select 
+target NPC 
 as "content" of this container(s):</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/003_choice_included.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Here you can select necessary NPC for include into 
-the container(s):</p>
+<p style="text-align: left">Here you can select necessary NPC which will be included into 
+our container(s):</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/004_select_contain.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Done, now Bubble have "Bob-omb" as content:</p>
-<p style="text-align: left">
-<img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/005_NPC_included.png" /></p>
+<p style="text-align: left">Done, now Bubble have gold key as content:<img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/005_NPC_included.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Same for Lakitu:</p>
+<p style="text-align: left">Same operations to set Lakitu's bullets:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/008_lakitu_with_contains.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">And for Egg:</p>
+<p style="text-align: left">And same to set content of egg:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/009_egg.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><span style="font-weight: bold">But how place 
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><span style="font-weight: bold">But how to place 
 container with already included content?</span><br />
-1) Select necessary NPC in toolbox:</p>
+1) Take necessary NPC from the item toolbox:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/006_placing_container.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">2) Set in the opened Properties window contains, and 
-do placing NPCs on map:</p>
+<p style="text-align: left">2) Set in the opened Properties window contents of 
+NPC and after place them to the map:</p>
 <p style="text-align: left">
 <img alt="" src="../screenshots/LevelEditing/Items/NPC-Container/007_herb_with_contains.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><a name="Generators">Generators</a></h3>
-<p style="text-align: left">Generator flag in the Properties dialog will made 
-selected NPC as generator</p>
+<p style="text-align: left">Generator flag in the Properties dialog will make 
+generator (or respawning point) of selected NPC</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/LevelEditing/Items/Props_NPC_generator.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">NPC will be appeared every time deleay by two 
-method: warp and projectile.</p>
+methods: warp and projectile.</p>
 <p style="text-align: left">Warp - NPC will be appeared smoothy and will start 
 it's movement on appear.</p>
 <p style="text-align: left">Projectile - NPC will be sharply shooted from 
@@ -243,7 +248,7 @@ Editor each generator have his marker as generator direction arrow:</p>
 <p style="text-align: center">&nbsp;</p>
 <hr />
 <p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
-<p style="text-align: center">Copyright © 2014 Platformer Game Engine by 
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
 Wohlstand project. All rights reserved.</p>
 
 </body>

@@ -1,5 +1,28 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "configstatus.h"
-#include "ui_configstatus.h"
+#include <ui_configstatus.h>
+
+#ifdef Q_OS_WIN
+#include <QtWin>
+#include <QSysInfo>
+#endif
 
 ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     QDialog(parent),
@@ -7,6 +30,29 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 {
     configs = &conf;
     ui->setupUi(this);
+
+    #ifdef Q_OS_MAC
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
+    #endif
+    #ifdef Q_OS_WIN
+    this->setWindowIcon(QIcon(":/cat_builder.ico"));
+
+    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    {
+        if(QtWin::isCompositionEnabled())
+        {
+            this->setAttribute(Qt::WA_TranslucentBackground, true);
+            QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+            QtWin::enableBlurBehindWindow(this);
+            ui->gridLayout->setMargin(0);
+        }
+        else
+        {
+            QtWin::resetExtendedFrame(this);
+            setAttribute(Qt::WA_TranslucentBackground, false);
+        }
+    }
+    #endif
 
     //Create Statistics
     ui->ItemsStatus->clear();
@@ -155,6 +201,15 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
     if(configs->main_wlevels.size()<ConfStatus::total_wlvl)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
+    //Rotation rules table
+    item = new QListWidgetItem;
+    item->setText(tr("Default rotation rules (%1)").arg(configs->main_rotation_table.size()));
+    if(configs->main_rotation_table.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));

@@ -1,0 +1,237 @@
+////////////////////////////////////////////////////////
+Hitbox_h_ptr[0] = 30;                       // Mario small
+Hitbox_w_ptr[0] = 24;
+Hitbox_h_d_ptr[0] = 30;
+Hitbox_unk1_widthGrabOffset[0] = 18;
+Hitbox_unk2_heightGrabOffset[0] = -2;
+
+Hitbox_h_ptr[5] = 54;                       // Mario big
+Hitbox_w_ptr[5] = 24;
+Hitbox_h_d_ptr[5] = 30;
+Hitbox_unk1_widthGrabOffset[5] = 18;
+Hitbox_unk2_heightGrabOffset[5] = 16;
+
+Hitbox_h_ptr[10] = 54;                      // Mario fire
+Hitbox_w_ptr[10] = 24;
+Hitbox_h_d_ptr[10] = 30;
+Hitbox_unk1_widthGrabOffset[10] = 18;
+Hitbox_unk2_heightGrabOffset[10] = 16;
+
+Hitbox_h_ptr[15] = 54;                      // Mario leaf
+Hitbox_w_ptr[15] = 24;
+Hitbox_h_d_ptr[15] = 30;
+Hitbox_unk1_widthGrabOffset[15] = 18;
+Hitbox_unk2_heightGrabOffset[15] = 16;
+
+Hitbox_h_ptr[20] = 54;                      // Mario tanuki
+Hitbox_w_ptr[20] = 24;
+Hitbox_h_d_ptr[20] = 30;
+Hitbox_unk1_widthGrabOffset[20] = 18;
+Hitbox_unk2_heightGrabOffset[20] = 16;
+
+Hitbox_h_ptr[25] = 54;                      // Mario hammer
+Hitbox_w_ptr[25] = 24;
+Hitbox_h_d_ptr[25] = 30;
+Hitbox_unk1_widthGrabOffset[25] = 18;
+Hitbox_unk2_heightGrabOffset[25] = 16;
+
+Hitbox_h_ptr[30] = 54;                      // Mario ice
+Hitbox_w_ptr[30] = 24;
+Hitbox_h_d_ptr[30] = 30;
+Hitbox_unk1_widthGrabOffset[30] = 18;
+Hitbox_unk2_heightGrabOffset[30] = 16;
+
+////////////////////////////////////////////////////////
+Hitbox_h_ptr[1] = 30;                       // Luigi small
+Hitbox_w_ptr[1] = 24;
+Hitbox_h_d_ptr[1] = 30;
+Hitbox_unk1_widthGrabOffset[1] = 16;
+Hitbox_unk2_heightGrabOffset[1] = -4;
+
+Hitbox_h_ptr[6] = 60;                       // Luigi big
+Hitbox_w_ptr[6] = 24;
+Hitbox_h_d_ptr[6] = 30;
+Hitbox_unk1_widthGrabOffset[6] = 18;
+Hitbox_unk2_heightGrabOffset[6] = 16;
+
+Hitbox_h_ptr[11] = 60;                      // Luigi fire
+Hitbox_w_ptr[11] = 24;
+Hitbox_h_d_ptr[11] = 30;
+Hitbox_unk1_widthGrabOffset[11] = 18;
+Hitbox_unk2_heightGrabOffset[11] = 16;
+
+Hitbox_h_ptr[16] = 60;                      // Luigi leaf
+Hitbox_w_ptr[16] = 24;
+Hitbox_h_d_ptr[16] = 30;
+Hitbox_unk1_widthGrabOffset[16] = 18;
+Hitbox_unk2_heightGrabOffset[16] = 16;
+
+Hitbox_h_ptr[21] = 60;                      // Luigi tanooki
+Hitbox_w_ptr[21] = 24;
+Hitbox_h_d_ptr[21] = 30;
+Hitbox_unk1_widthGrabOffset[21] = 18;
+Hitbox_unk2_heightGrabOffset[21] = 16;
+
+Hitbox_h_ptr[26] = 60;                      // Luigi hammer
+Hitbox_w_ptr[26] = 24;
+Hitbox_h_d_ptr[26] = 30;
+Hitbox_unk1_widthGrabOffset[26] = 18;
+Hitbox_unk2_heightGrabOffset[26] = 16;
+
+Hitbox_h_ptr[31] = 60;                      // Luigi ice flower
+Hitbox_w_ptr[31] = 24;
+Hitbox_h_d_ptr[31] = 30;
+Hitbox_unk1_widthGrabOffset[31] = 18;
+Hitbox_unk2_heightGrabOffset[31] = 16;
+
+
+////////////////////////////////////////////////////////
+Hitbox_h_ptr[2] = 38;                      // Peach small
+Hitbox_w_ptr[2] = 24;
+Hitbox_h_d_ptr[2] = 26;
+Hitbox_unk1_widthGrabOffset[2] = 0;
+Hitbox_unk2_heightGrabOffset[2] = 0;
+
+Hitbox_h_ptr[7] = 60;                       // Peach big
+Hitbox_w_ptr[7] = 24;
+Hitbox_h_d_ptr[7] = 30;
+Hitbox_unk1_widthGrabOffset[7] = 0;
+Hitbox_unk2_heightGrabOffset[7] = 0;
+
+Hitbox_h_ptr[12] = 60;                       // Peach fire
+Hitbox_w_ptr[12] = 24;
+Hitbox_h_d_ptr[12] = 30;
+Hitbox_unk1_widthGrabOffset[12] = 18;
+Hitbox_unk2_heightGrabOffset[12] = 16;
+
+Hitbox_h_ptr[17] = 60;                       // Peach leaf
+Hitbox_w_ptr[17] = 24;
+Hitbox_h_d_ptr[17] = 30;
+Hitbox_unk1_widthGrabOffset[17] = 18;
+Hitbox_unk2_heightGrabOffset[17] = 16;
+
+
+Hitbox_h_ptr[22] = 60;                       // Peach tanooki
+Hitbox_w_ptr[22] = 24;
+Hitbox_h_d_ptr[22] = 30;
+Hitbox_unk1_widthGrabOffset[22] = 18;
+Hitbox_unk2_heightGrabOffset[22] = 16;
+
+
+Hitbox_h_ptr[27] = 60;                       // Peach hammer
+Hitbox_w_ptr[27] = 24;
+Hitbox_h_d_ptr[27] = 30;
+Hitbox_unk1_widthGrabOffset[27] = 18;
+Hitbox_unk2_heightGrabOffset[27] = 16;
+
+Hitbox_h_ptr[32] = 60;                       // Peach ice
+Hitbox_w_ptr[32] = 24;
+Hitbox_h_d_ptr[32] = 30;
+Hitbox_unk1_widthGrabOffset[32] = 18;
+Hitbox_unk2_heightGrabOffset[32] = 16;
+////////////////////////////////////////////////////////
+
+
+Hitbox_h_ptr[3] = 30;                       // Toad small
+Hitbox_w_ptr[3] = 24;
+Hitbox_h_d_ptr[3] = 26;
+Hitbox_unk1_widthGrabOffset[3] = 18;
+Hitbox_unk2_heightGrabOffset[3] = -2;
+
+Hitbox_h_ptr[8] = 50;                       // Toad big
+Hitbox_w_ptr[8] = 24;
+Hitbox_h_d_ptr[8] = 30;
+Hitbox_unk1_widthGrabOffset[8] = 18;
+Hitbox_unk2_heightGrabOffset[8] = 16;
+
+Hitbox_h_ptr[13] = 50;                       // Toad fire
+Hitbox_w_ptr[13] = 24;
+Hitbox_h_d_ptr[13] = 30;
+Hitbox_unk1_widthGrabOffset[13] = 18;
+Hitbox_unk2_heightGrabOffset[13] = 16;
+
+Hitbox_h_ptr[18] = 50;                       // Toad leaf
+Hitbox_w_ptr[18] = 24;
+Hitbox_h_d_ptr[18] = 30;
+Hitbox_unk1_widthGrabOffset[18] = 18;
+Hitbox_unk2_heightGrabOffset[18] = 16;
+
+Hitbox_h_ptr[23] = 50;                       // Toad tanooki
+Hitbox_w_ptr[23] = 24;
+Hitbox_h_d_ptr[23] = 30;
+Hitbox_unk1_widthGrabOffset[23] = 18;
+Hitbox_unk2_heightGrabOffset[23] = 16;
+
+Hitbox_h_ptr[28] = 50;                       // Toad hammer
+Hitbox_w_ptr[28] = 24;
+Hitbox_h_d_ptr[28] = 30;
+Hitbox_unk1_widthGrabOffset[28] = 18;
+Hitbox_unk2_heightGrabOffset[28] = 16;
+
+
+Hitbox_h_ptr[33] = 50;                       // Toad ice
+Hitbox_w_ptr[33] = 24;
+Hitbox_h_d_ptr[33] = 30;
+Hitbox_unk1_widthGrabOffset[33] = 18;
+Hitbox_unk2_heightGrabOffset[33] = 16;
+
+////////////////////////////////////////////////////////
+
+Hitbox_h_ptr[4] = 54;                       // Link small
+Hitbox_w_ptr[4] = 22;
+Hitbox_h_d_ptr[4] = 44;
+Hitbox_unk1_widthGrabOffset[4] = 18;
+Hitbox_unk2_heightGrabOffset[4] = 16;
+
+Hitbox_h_ptr[9] = 54;                       // Link big
+Hitbox_w_ptr[9] = 22;
+Hitbox_h_d_ptr[9] = 44;
+Hitbox_unk1_widthGrabOffset[9] = 18;
+Hitbox_unk2_heightGrabOffset[9] = 16;
+
+Hitbox_h_ptr[14] = 54;                       // Link fire
+Hitbox_w_ptr[14] = 22;
+Hitbox_h_d_ptr[14] = 44;
+Hitbox_unk1_widthGrabOffset[14] = 18;
+Hitbox_unk2_heightGrabOffset[14] = 16;
+
+Hitbox_h_ptr[19] = 54;                       // Link leaf
+Hitbox_w_ptr[19] = 22;
+Hitbox_h_d_ptr[19] = 44;
+Hitbox_unk1_widthGrabOffset[19] = 18;
+Hitbox_unk2_heightGrabOffset[19] = 16;
+
+Hitbox_h_ptr[24] = 54;                       // Link tanooki
+Hitbox_w_ptr[24] = 22;
+Hitbox_h_d_ptr[24] = 44;
+Hitbox_unk1_widthGrabOffset[24] = 18;
+Hitbox_unk2_heightGrabOffset[24] = 16;
+
+Hitbox_h_ptr[29] = 54;                       // Link hammer
+Hitbox_h_d_ptr[29] = 44;
+Hitbox_w_ptr[29] = 22;
+Hitbox_unk1_widthGrabOffset[29] = 18;
+Hitbox_unk2_heightGrabOffset[29] = 16;
+
+Hitbox_h_ptr[34] = 54;                       // Link ice
+Hitbox_w_ptr[34] = 22;
+Hitbox_h_d_ptr[34] = 44;
+Hitbox_unk1_widthGrabOffset[34] = 18;
+Hitbox_unk2_heightGrabOffset[34] = 16;
+
+////////////////////////////////////////////////////////
+
+
+word_B2C85C = 30;
+
+result = 1048911544;
+
+unkOffscreenCounter = 180;
+dword_B2C860 = 1088631603;
+dword_B2C864 = 1093664768;
+bufferY_block_npc_collisionCheck = 1048911544;
+dword_B2C878 = 1048911544;
+dword_B2C868 = 1067030938;
+dword_B2C86C = 1065353216;
+dword_B2C870 = 1072064102;
+pswitchLength = 777;

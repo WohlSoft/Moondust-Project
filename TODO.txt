@@ -1,0 +1,32 @@
+Editor
++ Add function to refresh warp's entry XY coordninates inside combobox
+- Improve detector of unused custom data to provide clean-up of unused data.
+- New custom stuff indexing system to have more convenient usage of customized stuff.
+  It's a big work, but in result we will have much more convenient system to manage a custom stuff
++ Add "Replace all Item-ID in a current section" feature
+- Provide ability to define NPC's "friendly" flag from message editing dialog
++ Add multi-selection into ItemSelection dialog which needed for some cases
+
+Engine
++ Raster fonts support
++ Textures support for world map items
+- Playable character and it's state switching support
+- Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
+
+Engine: Lua
+- Better Memory Management, either transfere ownership to C++ or use smart pointers.
+
+Engine: New level physics
+- R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
+- Support of speed-adding of items which makes stack
+- Walkhable slopes
+
+
+GIFs2PNG
+- Use editor's unmasking code insead of alphachannel
+- Add support of looking for a masks in given data directory.
+  (some custom foreground are presented without mask image and uses default mask.
+  After conversion those images will be without transparency).
+
+Common
+- Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "npc_animator.h"
-
 #include "logger.h"
+#include "npc_animator.h"
 
 AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
 {
@@ -168,7 +167,9 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
         }
     }
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("NPC-%1, framestyle is %2").arg(setup.id).arg(setup.framestyle));
+    #endif
 
     //curDirect  = dir;
     //setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
@@ -193,16 +194,23 @@ AdvNpcAnimator::~AdvNpcAnimator()
 
 QPixmap AdvNpcAnimator::image(int dir, int frame)
 {
-   if((frame<0)||(frame>=frames.size()))
-   {
+    if(frames.isEmpty())
+    {   //If animator haven't frames, return red sqare
+        QPixmap tmp = QPixmap(QSize(32,32));
+        tmp.fill(QColor(Qt::red));
+        return tmp;
+    }
+
+    if((frame<0)||(frame>=frames.size()))
+    {
         if(dir<0)
             return frames[CurrentFrameL];
         else if(dir==0)
             return frames[CurrentFrameL];
         else
             return frames[CurrentFrameR];
-   }
-   else return frames[frame];
+    }
+    else return frames[frame];
 }
 
 QPixmap AdvNpcAnimator::wholeImage()
@@ -213,21 +221,22 @@ QPixmap AdvNpcAnimator::wholeImage()
 void AdvNpcAnimator::setFrameL(int y)
 {
     if(frames.isEmpty()) return;
-    //frameCurrent = frameSize * y;
-    CurrentFrameL = y;
+
     //Out of range protection
-    if( CurrentFrameL >= frames.size()) CurrentFrameL = (frameFirstL<frames.size()) ? frameFirstL : 0;
-    if( CurrentFrameL < frameFirstL) CurrentFrameL = (frameLastL<0)? frames.size()-1 : frameLastL;
+    if( y < frameFirstL) y = (frameLastL<0)? frames.size()-1 : frameLastL;
+    if( y >= frames.size()) y = (frameFirstL<frames.size()) ? frameFirstL : 0;
+    CurrentFrameL = y;
 }
 
 void AdvNpcAnimator::setFrameR(int y)
 {
     if(frames.isEmpty()) return;
-    //frameCurrent = frameSize * y;
-    CurrentFrameR = y;
+
     //Out of range protection
-    if( CurrentFrameR >= frames.size()) CurrentFrameR = (frameFirstR<frames.size()) ? frameFirstR : 0;
-    if( CurrentFrameR < frameFirstR) CurrentFrameR = (frameLastR<0)? frames.size()-1 : frameLastR;
+    if( y < frameFirstR) y = (frameLastR<0)? frames.size()-1 : frameLastR;
+    if( y >= frames.size()) y = (frameFirstR<frames.size()) ? frameFirstR : 0;
+
+    CurrentFrameR = y;
 }
 
 void AdvNpcAnimator::start()

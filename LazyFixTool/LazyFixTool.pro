@@ -26,36 +26,63 @@ QT       += core gui
 
 DESTDIR = ../bin
 
+android:{
+    LANGUAGES_TARGET=/assets/languages
+    ARCH=android_arm
+} else {
+    !contains(QMAKE_TARGET.arch, x86_64) {
+    ARCH=x32
+    } else {
+    ARCH=x64
+    }
+    LANGUAGES_TARGET=$$PWD/../bin/languages
+}
+static: {
+LINKTYPE=static
+} else {
+LINKTYPE=dynamic
+}
+debug: BUILDTP=debug
+release: BUILDTP=release
+OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
+MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
+RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
+UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
+message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+
 TARGET = LazyFixTool
 CONFIG   += console
 CONFIG   -= app_bundle
 CONFIG   += static
+CONFIG   -= import_plugins
 
 TEMPLATE = app
 
-QMAKE_CFLAGS += -Wno-sign-compare
+#QMAKE_CFLAGS += -Wno-sign-compare
+
+macx: QMAKE_CXXFLAGS += -Wno-header-guard
 
 RC_FILE = _resources/lazyfix_tool.rc
 
 SOURCES += \
     LazyFixTool.cpp \
-    libs/giflib/dgif_lib.c \
-    libs/giflib/egif_lib.c \
-    libs/giflib/gif_err.c \
-    libs/giflib/gif_font.c \
-    libs/giflib/gif_hash.c \
-    libs/giflib/gifalloc.c \
-    libs/giflib/quantize.c \
-    libs/EasyBMP/EasyBMP.cpp
+    ../_Libs/giflib/dgif_lib.c \
+    ../_Libs/giflib/egif_lib.c \
+    ../_Libs/giflib/gif_err.c \
+    ../_Libs/giflib/gif_font.c \
+    ../_Libs/giflib/gif_hash.c \
+    ../_Libs/giflib/gifalloc.c \
+    ../_Libs/giflib/quantize.c \
+    ../_Libs/EasyBMP/EasyBMP.cpp
 
 HEADERS += \
-    libs/giflib/gif_hash.h \
-    libs/giflib/gif_lib.h \
-    libs/giflib/gif_lib_private.h \
-    libs/EasyBMP/EasyBMP.h \
-    libs/EasyBMP/EasyBMP_BMP.h \
-    libs/EasyBMP/EasyBMP_DataStructures.h \
-    libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
+    ../_Libs/giflib/gif_hash.h \
+    ../_Libs/giflib/gif_lib.h \
+    ../_Libs/giflib/gif_lib_private.h \
+    ../_Libs/EasyBMP/EasyBMP.h \
+    ../_Libs/EasyBMP/EasyBMP_BMP.h \
+    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
+    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
     version.h
 
 RESOURCES += \

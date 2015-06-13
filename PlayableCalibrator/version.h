@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "0.5.0"
-#define _FILE_RELEASE " Alpha"
+#define _FILE_VERSION "2.0.2.0"
+#define _FILE_RELEASE ""
 
-#define _VF1 0
-#define _VF2 5
-#define _VF3 0
+#define _VF1 2
+#define _VF2 0
+#define _VF3 2
 #define _VF4 0
 
 #define _FILE_DESC "Playble Character Sprite Calibrator"

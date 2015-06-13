@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <main_window/global_settings.h>
+#include <common_features/graphics_funcs.h>
+
 #include "data_configs.h"
-
-#include "../main_window/global_settings.h"
-#include "../common_features/graphics_funcs.h"
-
 
 long dataconfigs::getBgoI(unsigned long itemID)
 {
@@ -55,7 +54,7 @@ long dataconfigs::getBgoI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
+void dataconfigs::loadLevelBGO()
 {
     unsigned int i;
 
@@ -69,7 +68,6 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
         return;
     }
 
-
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     bgoset.setIniCodec("UTF-8");
 
@@ -81,8 +79,8 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
         total_data +=bgo_total;
     bgoset.endGroup();
 
-    if(prgs) prgs->setMaximum(bgo_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading BGOs..."));
+    emit progressMax(bgo_total);
+    emit progressTitle(QApplication::tr("Loading BGOs..."));
 
     ConfStatus::total_bgo = bgo_total;
 
@@ -104,94 +102,79 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
 
     for(i=1; i<=bgo_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
+        emit progressValue(i);
+        QString errStr;
+        bgoset.beginGroup( QString("background-"+QString::number(i)) );
+
+        sbgo.name = bgoset.value("name", "").toString();
+        if(sbgo.name=="")
         {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
+            addError(QString("BGO-%1 Item name isn't defined").arg(i));
+            goto skipBGO;
         }
 
-        bgoset.beginGroup( QString("background-"+QString::number(i)) );
-            sbgo.name = bgoset.value("name", "").toString();
+        sbgo.group =    bgoset.value("group", "_NoGroup").toString();
+        sbgo.category = bgoset.value("category", "_Other").toString();
+        sbgo.grid =     bgoset.value("grid", default_grid).toInt();
 
-                if(sbgo.name=="")
-                {
-                    addError(QString("BGO-%1 Item name isn't defined").arg(i));
-                    goto skipBGO;
-                }
-            sbgo.group = bgoset.value("group", "_NoGroup").toString();
-            sbgo.category = bgoset.value("category", "_Other").toString();
-            sbgo.grid = bgoset.value("grid", default_grid).toInt();
+        {
+            QString tmpStr=bgoset.value("view", "background").toString();
 
-            {
-                QString tmpStr=bgoset.value("view", "background").toString();
-
-                if(tmpStr=="foreground2")
-                    sbgo.view = 2;
-                else
-                if(tmpStr=="foreground")
-                    sbgo.view = 1;
-                else
-                if(tmpStr=="background")
-                    sbgo.view = 0;
-                else
-                if(tmpStr=="background2")
-                    sbgo.view = -1;
-                else
-                    sbgo.view = 0;
-            }
-
-            sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
-            sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
-            sbgo.zOffset = bgoset.value("z-offset", "0").toInt();
-            imgFile = bgoset.value("image", "").toString();
-            sbgo.image_n = imgFile;
-            if( (imgFile!="") )
-            {
-                tmp = imgFile.split(".", QString::SkipEmptyParts);
-                if(tmp.size()==2)
-                    imgFileM = tmp[0] + "m." + tmp[1];
-                else
-                    imgFileM = "";
-                sbgo.mask_n = imgFileM;
-                mask = QPixmap();
-                if(tmp.size()==2) mask = QPixmap(bgoPath + imgFileM);
-                sbgo.mask = mask;
-                sbgo.image = GraphicsHelps::setAlphaMask(QPixmap(bgoPath + imgFile), sbgo.mask);
-                if(sbgo.image.isNull())
-                {
-                    addError(QString("BGO-%1 Brocken image file").arg(i));
-                    goto skipBGO;
-                }
-
-            }
+            if(tmpStr=="foreground2")
+                sbgo.view = 2;
             else
-            {
-                addError(QString("BGO-%1 Image filename isn't defined").arg(i));
-                goto skipBGO;
-            }
-                /*
-                {
-                    sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-                    sbgo.mask_n = "";
-                }*/
-            sbgo.climbing = (bgoset.value("climbing", "0").toString()=="1");
-            sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
-            sbgo.frames = bgoset.value("frames", "1").toInt();
-            sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
+            if(tmpStr=="foreground")
+                sbgo.view = 1;
+            else
+            if(tmpStr=="background")
+                sbgo.view = 0;
+            else
+            if(tmpStr=="background2")
+                sbgo.view = -1;
+            else
+                sbgo.view = 0;
+        }
 
-            sbgo.frame_h = (sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
+        sbgo.offsetX =      bgoset.value("offset-x", "0").toInt();
+        sbgo.offsetY =      bgoset.value("offset-y", "0").toInt();
+        sbgo.zOffset =      bgoset.value("z-offset", "0").toInt();
 
-            sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
-            sbgo.id = i;
-            main_bgo.push_back(sbgo);
+        sbgo.image_n =      bgoset.value("image", "").toString();
+        /***************Load image*******************/
+        GraphicsHelps::loadMaskedImage(bgoPath,
+           sbgo.image_n, sbgo.mask_n,
+           sbgo.image,   sbgo.mask,
+           errStr);
 
-            //Add to Index
-            if(i <= (unsigned int)index_bgo.size())
-            {
-                index_bgo[i].i = i-1;
-                index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priority", "0").toLongLong();
-                //WriteToLog(QtDebugMsg, QString("Got SMBX64 BGO Sorting priority -> %1").arg( index_bgo[i].smbx64_sp ) );
-            }
+        if(!errStr.isEmpty())
+        {
+            addError(QString("BGO-%1 %2").arg(i).arg(errStr));
+            goto skipBGO;
+        }
+        /***************Load image*end***************/
+
+        sbgo.climbing =     (bgoset.value("climbing", "0").toString()=="1");
+        sbgo.animated =     (bgoset.value("animated", "0").toString()=="1");
+        sbgo.frames =        bgoset.value("frames", "1").toInt();
+        sbgo.framespeed =    bgoset.value("frame-speed", "125").toInt();
+
+        sbgo.frame_h =      (sbgo.animated?
+                                 qRound(
+                                     qreal(sbgo.image.height())/
+                                     sbgo.frames)
+                               : sbgo.image.height());
+
+        sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
+        sbgo.id = i;
+        main_bgo.push_back(sbgo);
+
+        /**********************Add to Index************************/
+        if(i <= (unsigned int)index_bgo.size())
+        {
+            index_bgo[i].i = i-1;
+            index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priority", "0").toLongLong();
+        }
+        /************Add to Index***************/
 
         skipBGO:
         bgoset.endGroup();

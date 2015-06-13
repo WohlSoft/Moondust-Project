@@ -1,88 +1,109 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-<meta content="en-us" http-equiv="Content-Language" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Platformer Game Engine - Editor &gt; Level editing &gt; Editing properties of items &gt; Context menu features</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />
+  <meta content="en-us" http-equiv="Content-Language" />
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Platformer Game Engine - Editor &gt; Level editing &gt; Editing
+  properties of items &gt; Context menu features</title>
+  <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 
 <body>
-<p style="text-align: center">
-<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
-<h1 style="text-align: left">Level editing &gt; Editing properties of items &gt; Context menu features</h1>
-<p style="text-align: left">With personaly by type context menu features there 
+<p style="text-align: center"><a title="Contents"
+href="../manual_editor.html"><img alt="Editor splash"
+src="../images/splash_editor.png" /></a></p>
+
+<h1 style="text-align: left">Level editing &gt; Editing properties of items
+&gt; Context menu features</h1>
+
+<p style="text-align: left">With personaly by type context menu features there
 are have the common features, what available for any item-type</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">
-<img alt="" height="279" src="../screenshots/LevelEditing/Items/BlockContext.png" width="287" />
-<img alt="" height="218" src="../screenshots/LevelEditing/Items/BGO_Context.png" width="236" />
-<img alt="" height="306" src="../screenshots/LevelEditing/Items/NPC_Direction.png" width="288" />
-<img alt="" height="221" src="../screenshots/LevelEditing/Physics/06_change_type.png" width="351" />
-<img alt="" height="221" src="../screenshots/LevelEditing/Warps/WarpContextMenu.png" width="184" /></p>
-<p style="text-align: center">
-&nbsp;</p>
-<h3 style="text-align: left">
-Common Features</h3>
-<p style="text-align: left">
-Apply to item group by same type</p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: center"><img alt=""
+src="../screenshots/LevelEditing/Items/BlockContext.png" /> <img alt=""
+src="../screenshots/LevelEditing/Items/BGO_Context.png" /> <img alt=""
+src="../screenshots/LevelEditing/Items/NPC_Direction.png" /> <img alt=""
+src="../screenshots/LevelEditing/Physics/06_change_type.png" /> <img alt=""
+src="../screenshots/LevelEditing/Warps/WarpContextMenu.png" /></p>
+
+<p style="text-align: center"> </p>
+
+<h3 style="text-align: left">Common Features</h3>
+
+<p style="text-align: left">Apply to item group by same type</p>
 <ul>
-	<li>
-	<p style="text-align: left"><strong>Layer</strong> - Displaying the current 
-	layer owner of selected item. With this sub-menu you can change layer of 
-	this item or create new for selected item group.</p>
-	</li>
-	<li>
-	<p style="text-align: left"><strong>Copy</strong> - Copy selected items into 
-	internal clipboard [Not support for warp points]</p>
-	</li>
-	<li>
-	<p style="text-align: left"><strong>Cut</strong> - Copy selected items into 
-	internal clipboard and remove them&nbsp; [Not support for warp points]</p>
-	</li>
-	<li>
-	<p style="text-align: left"><strong>Remove</strong> - Selected items will be 
-	removed</p>
-	</li>
-	<li>
-	<p style="text-align: left"><strong>Properties</strong> - will open the item 
-	properties dialog for selected item group.</p>
-	</li>
+  <li><p style="text-align: left"><strong>Layer</strong> - Displaying the
+    current layer owner of selected item. With this sub-menu you can change
+    layer of this item or create new for selected item group.</p>
+  </li>
+  <li><p style="text-align: left"><strong>Copy</strong> - Copy selected items
+    into internal clipboard [Not support for warp points]</p>
+  </li>
+  <li><p style="text-align: left"><strong>Cut</strong> - Copy selected items
+    into internal clipboard and remove them  [Not support for warp points]</p>
+  </li>
+  <li><p style="text-align: left"><strong>Remove</strong> - Selected items will
+    be removed</p>
+  </li>
+  <li><strong>Transform into</strong> - gives ability to replace type of item
+    (for example one block wiht another). Available for Blocks, BGO's and
+    NPC's, Tiles, Sceneries, Paths, Levels.</li>
+  <li><strong>Transform all ITEM-X into</strong> - gives ability to replace
+    type of all items with same ID on the map. Available for Blocks, BGO's and
+    NPC's, Tiles, Sceneries, Paths, Levels.</li>
+  <li><p style="text-align: left"><strong>Properties</strong> - will open the
+    item properties dialog for selected item group.</p>
+  </li>
 </ul>
-<p style="text-align: left">&nbsp;</p>
+
+<p style="text-align: left"> </p>
+
 <h3 style="text-align: left">Individual item Features</h3>
+
 <p style="text-align: left">Applying to only one item</p>
 <ul>
-	<li>
-	<p style="text-align: left"><strong>Resize</strong> - Will switch into 
-	resizing mode of one seleted item. Not apply to item group, only for single 
-	item.<br />
-	Supported by some blocks (sizable blocs) and by physic environments zones.</p>
-	</li>
-	<li>
-	<p style="text-align: left"><strong>Jump to Exit/Entrance</strong> - You 
-	will jump to opposite warp point, if it already placed on the map.</p>
-	</li>
+  <li><p style="text-align: left"><strong>Resize</strong> - Will switch into
+    resizing mode of one seleted item. Not apply to item group, only for single
+    item.<br />
+    Supported by some blocks (sizable blocs) and by physic environments
+    zones.</p>
+  </li>
+  <li><p style="text-align: left"><strong>Jump to Exit/Entrance</strong> - You
+    will jump to opposite warp point, if it already placed on the map.</p>
+  </li>
 </ul>
-<p style="text-align: left">&nbsp;</p>
+
+<p style="text-align: left"> </p>
+
 <p style="text-align: left; text-decoration: underline;">See also:</p>
-<p style="text-align: left"><a href="level_items_context_menu.html">Personal by 
-item type context menu</a></p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
 
+<p style="text-align: left"><a href="level_items_context_menu.html">Item type
+specific context menu</a></p>
 
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: center"> </p>
+
+<p style="text-align: left"> </p>
+
+<p style="text-align: center"> </p>
 <hr />
-<p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
-<p style="text-align: center">Copyright © 2014 Platformer Game Engine by 
+
+<p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p>
+<br />
+
+
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by
 Wohlstand project. All rights reserved.</p>
-
 </body>
-
 </html>

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,18 @@ class GraphicsHelps
 {
 public:
     static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
+    static QImage setAlphaMask_VB(QImage image, QImage mask);
+    static bool EnableVBEmulate;
+    static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QPixmap &out_Mask, QString &out_errStr);
+
     static QImage fromBMP(QString& file);
+    static QImage fromGIF(QString& file);
     static QPixmap loadPixmap(QString file);
     static QImage loadQImage(QString file);
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static QPixmap drawDegitFont(int number);
+
+    static bool toGif(QImage& img, QString& path);
 };
 
 #endif // GRAPHICS_FUNCS_H

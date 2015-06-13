@@ -4,11 +4,23 @@
 *.lo
 *.o
 *.a
+!_Libs/_builds/*/*/*.a
 *.la
+!_Libs/_builds/*/*/*.la
 *.lai
+!_Libs/_builds/*/*/*.lai
 *.so
+!_Libs/_builds/*/*/*.so
 *.dll
+!_Libs/_builds/*/*/*.dll
 *.dylib
+!_Libs/_builds/*/*/*.dylib
+_Libs/_builds/linux/*
+!_Libs/_builds/macos/*
+_Libs/_builds/sdl2_mixer_mod/*
+
+#Mac OS's junk
+.DS_Store
 
 # Qt-es
 
@@ -18,9 +30,19 @@ moc_*.cpp
 ui_*.h
 qrc_*.cpp
 Makefile
+Makefile.*
+*/Makefile.*
 *-build-*
 *build-*
-bin
+/bin
+/android-build
+/Editor/app_process
+/Editor/android-build
+/Editor/android-libpge_editor.so*
+
+#compiled translation
+editor_*.qm
+
 
 # ignore Qt-Makefile
 *.Debug
@@ -31,3 +53,21 @@ bin
 +*.swp
 *.db
 *_plugin_import.cpp
+
+#unpacked libraries sources
+/_Libs/_sources/SDL/*
+/_Libs/_sources/SDL_android/*
+!/_Libs/_sources
+
+#Temp files of LibreOffice
+.~lock.*
+
+#Paths config files in the root
+/_paths.bat
+/_paths.sh
+
+
+#Notepad++ Backup files
+*.bak
+
+.qmake.stash

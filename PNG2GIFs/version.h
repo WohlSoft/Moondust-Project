@@ -1,7 +1,7 @@
 /*
  * PNG2GIFs, a free tool for convert PNG into GIF images with his masks
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "1.0.0"
+#define _FILE_VERSION "1.1.0"
 #define _FILE_RELEASE ""
 
 #define _VF1 1
-#define _VF2 0
+#define _VF2 1
 #define _VF3 0
 #define _VF4 0
 

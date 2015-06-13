@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,46 +16,85 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../ui_mainwindow.h"
-#include "../../mainwindow.h"
+#include <common_features/util.h>
+#include <common_features/items.h>
+#include <common_features/graphics_funcs.h>
+#include <data_configs/custom_data.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
+#include <PGE_File_Formats/file_formats.h>
 
-#include "../../level_scene/lvl_item_placing.h"
-#include "../../file_formats/file_formats.h"
-#include "../../common_features/util.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
-#include "../../data_configs/custom_data.h"
+#include "lvl_item_toolbox.h"
+#include "ui_lvl_item_toolbox.h"
 
-#include "../../common_features/items.h"
-
-#include "../../common_features/graphics_funcs.h"
-
-
-QString allLabel = "[all]";
-QString customLabel = "[custom]";
-
-bool lock_grp=false;
-bool lock_cat=false;
-
-
-void MainWindow::UpdateLvlCustomItems()
+LevelItemBox::LevelItemBox(QWidget *parent) :
+    QDockWidget(parent),
+    MWDock_Base(parent),
+    ui(new Ui::LevelItemBox)
 {
-    setLvlItemBoxes(true, true);
-    setWldItemBoxes(true, true);
+    setVisible(false);
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    ui->setupUi(this);
+    this->setAttribute(Qt::WA_X11DoNotAcceptFocus, true);
+
+    allLabel = "[all]";
+    customLabel = "[custom]";
+
+    lock_grp=false;
+    lock_cat=false;
+
+    grp_blocks = "";
+    grp_bgo = "";
+    grp_npc = "";
+
+    mw()->addDockWidget(Qt::LeftDockWidgetArea, this);
+    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+
+    mw()->docks_level.
+          addState(this, &GlobalSettings::LevelItemBoxVis);
 }
 
-static QString grp_blocks = "";
-static QString grp_bgo = "";
-static QString grp_npc = "";
-
-void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
+LevelItemBox::~LevelItemBox()
 {
-    if((setGrp)&&(activeChildWindow()!=1)) return;
+    delete ui;
+}
+
+QTabWidget *LevelItemBox::tabWidget()
+{
+    return ui->LevelToolBoxTabs;
+}
+
+void LevelItemBox::re_translate()
+{
+    ui->retranslateUi(this);
+    setLvlItemBoxes();
+}
+
+void MainWindow::on_actionLVLToolBox_triggered(bool checked)
+{
+    dock_LvlItemBox->setVisible(checked);
+    if(checked) dock_LvlItemBox->raise();
+}
+
+// Level tool box show/hide
+void LevelItemBox::on_LevelItemBox_visibilityChanged(bool visible)
+{
+    mw()->ui->actionLVLToolBox->setChecked(visible);
+}
+
+
+
+void LevelItemBox::setLvlItemBoxes(bool setGrp, bool setCat)
+{
+    if((setGrp)&&(mw()->activeChildWindow()!=1)) return;
 
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
-    ui->menuNew->setEnabled(false);
-    ui->actionNew->setEnabled(false);
+    mw()->ui->menuNew->setEnabled(false);
+    mw()->ui->actionNew->setEnabled(false);
 
     if(!setCat)
     {
@@ -92,12 +131,12 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(activeChildWindow()==1)
+        if(mw()->activeChildWindow()==1)
         {
             long j=0;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = mw()->activeLvlEditWin();
 
-            if(activeLvlEditWin()->sceneCreated)
+            if((edit!=NULL) &&(edit->sceneCreated))
             foreach(UserBlocks block, edit->scene->uBlocks)
             {
 
@@ -112,13 +151,11 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
 
                 ui->BlockItemsList->addItem( item );
             }
-
         }
-
     }
     else
     //set Block item box from global configs
-    foreach(obj_block blockItem, configs.main_block)
+    foreach(obj_block blockItem, mw()->configs.main_block)
     {
         //Add Group
         found = false;
@@ -189,13 +226,13 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(activeChildWindow()==1)
+        if(mw()->activeChildWindow()==1)
         {
             long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = mw()->activeLvlEditWin();
 
-            if(edit->sceneCreated)
+            if((edit!=NULL) && (edit->sceneCreated))
             foreach(UserBGOs bgo, edit->scene->uBGOs)
             {
                 tmpI = GraphicsHelps::squareImage(
@@ -215,7 +252,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set BGO item box from global array
-    foreach(obj_bgo bgoItem, configs.main_bgo)
+    foreach(obj_bgo bgoItem, mw()->configs.main_bgo)
     {
         //Add Group
         found = false;
@@ -287,12 +324,12 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
     //set custom NPC items from loaded level
     if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
-        if(activeChildWindow()==1)
+        if(mw()->activeChildWindow()==1)
         {
             //long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
-            if(edit->sceneCreated)
+            LevelEdit * edit = mw()->activeLvlEditWin();
+            if((edit!=NULL)&&(edit->sceneCreated))
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 
@@ -315,7 +352,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
     }
     else
     //set NPC item box from global config
-    foreach(obj_npc npcItem, configs.main_npc)
+    foreach(obj_npc npcItem, mw()->configs.main_npc)
     {
         //Add Group
         found = false;
@@ -384,26 +421,26 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
 
     updateFilters();
 
-    ui->menuNew->setEnabled(true);
-    ui->actionNew->setEnabled(true);
+    mw()->ui->menuNew->setEnabled(true);
+    mw()->ui->actionNew->setEnabled(true);
 }
 
 // ///////////////////////////////////
-void MainWindow::on_BlockGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_blocks=arg1;
     setLvlItemBoxes(true);
 }
 
-void MainWindow::on_BGOGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_bgo=arg1;
     setLvlItemBoxes(true);
 }
 
-void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_npc=arg1;
@@ -411,7 +448,7 @@ void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 }
 
 // ///////////////////////////////////
-void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_blocks=arg1;
@@ -419,7 +456,7 @@ void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
 }
 
 
-void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_bgos=arg1;
@@ -427,7 +464,7 @@ void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
 }
 
 
-void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
+void LevelItemBox::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_npcs=arg1;
@@ -439,20 +476,20 @@ void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
 
 // ///////////////////////////////////
 
-void MainWindow::on_BGOUniform_clicked(bool checked)
+void LevelItemBox::on_BGOUniform_clicked(bool checked)
 {
     ui->BGOItemsList->setUniformItemSizes(checked);
     setLvlItemBoxes(true, true);
 }
 
-void MainWindow::on_BlockUniform_clicked(bool checked)
+void LevelItemBox::on_BlockUniform_clicked(bool checked)
 {
     ui->BlockItemsList->setUniformItemSizes(checked);
     setLvlItemBoxes(true, true);
 }
 
 
-void MainWindow::on_NPCUniform_clicked(bool checked)
+void LevelItemBox::on_NPCUniform_clicked(bool checked)
 {
     ui->NPCItemsList->setUniformItemSizes(checked);
     setLvlItemBoxes(true, true);
@@ -461,37 +498,34 @@ void MainWindow::on_NPCUniform_clicked(bool checked)
 
 // ///////////////////////////////////
 
-void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
+void LevelItemBox::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 {
-   //placeBlock
-
-    if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
+    //placeBlock
+    if ((mw()->activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::LVL_Block, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_Block, item->data(3).toInt());
     }
 }
 
-void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
+void LevelItemBox::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 {
     //placeBGO
-    if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
+    if ((mw()->activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(3).toInt());
     }
-
 }
 
-void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
+void LevelItemBox::on_NPCItemsList_itemClicked(QListWidgetItem *item)
 {
     //placeNPC
-    if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
+    if ((mw()->activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
     {
-        SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(3).toInt());
+        mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(3).toInt());
     }
-
 }
 
-void MainWindow::updateFilters()
+void LevelItemBox::updateFilters()
 {
     int current = ui->LevelToolBoxTabs->currentIndex();
     if(current == 0){
@@ -503,7 +537,7 @@ void MainWindow::updateFilters()
     }
 }
 
-void MainWindow::clearFilter()
+void LevelItemBox::clearFilter()
 {
     ui->BlockFilterField->setText("");
     ui->BGOFilterField->setText("");
@@ -511,37 +545,38 @@ void MainWindow::clearFilter()
     updateFilters();
 }
 
-void MainWindow::on_BlockFilterField_textChanged(const QString &arg1)
+void LevelItemBox::on_BlockFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
 
     if(arg1.isEmpty()) return; //Dummy
 }
 
-void MainWindow::on_BlockFilterType_currentIndexChanged(int /*index*/)
+void LevelItemBox::on_BlockFilterType_currentIndexChanged(int /*index*/)
 {
     updateFilters();
 }
 
-void MainWindow::on_BGOFilterField_textChanged(const QString &arg1)
+void LevelItemBox::on_BGOFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
 
     if(arg1.isEmpty()) return; //Dummy
 }
 
-void MainWindow::on_BGOFilterType_currentIndexChanged(int /*index*/)
+void LevelItemBox::on_BGOFilterType_currentIndexChanged(int /*index*/)
 {
     updateFilters();
 }
 
-void MainWindow::on_NPCFilterField_textChanged(const QString &arg1)
+void LevelItemBox::on_NPCFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
     if(arg1.isEmpty()) return; //Dummy
 }
 
-void MainWindow::on_NPCFilterType_currentIndexChanged(int /*index*/)
+void LevelItemBox::on_NPCFilterType_currentIndexChanged(int /*index*/)
 {
     updateFilters();
 }
+

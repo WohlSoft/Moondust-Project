@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
-#include "../mainwindow.h"
-
-
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 {
@@ -35,22 +33,27 @@ void MainWindow::dropEvent(QDropEvent *e)
 
     foreach (const QUrl &url, e->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
+
         //qDebug() << "Dropped file:" << fileName;
         OpenFile(fileName);
     }
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     ui->centralWidget->closeAllSubWindows();
 
-    if (ui->centralWidget->currentSubWindow()) {
+    if (ui->centralWidget->currentSubWindow())
+    {
         event->ignore();
     }
     else
     {
         saveSettings();
+        qApp->processEvents();
         closeEditor();
+        qApp->processEvents();
         event->accept();
     }
 }

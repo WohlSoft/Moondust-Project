@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Platformer Game Engine - Editor &gt; theme.ini referance</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+<p style="text-align: center">
+<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
+<h1 style="text-align: left">theme.ini referance</h1>
+<p style="text-align: left">theme.ini is a theme configuration file. Theme can 
+be detected only by this file.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">All parameters writing under sections [] and have 
+simple syntax: name=value. For example:</p>
+<p style="text-align: left; font-family: 'Courier New', Courier, monospace; font-size:10pt;">
+&nbsp;</p>
+<p style="text-align: left; font-family: 'Courier New', Courier, monospace; font-size:10pt;">
+[main]</p>
+<p style="text-align: left">
+<span style="font-family: 'Courier New', Courier, monospace">
+<span style="font-size: 10pt;">theme-name</span><span style="font-size: 10pt">="My 
+mega theme!"</span></span></p>
+<p style="text-align: left">
+<span style="font-family: 'Courier New', Courier, monospace"><a/>
+<span style="font-size: 10pt;">default-splash</span></a><span style="font-size: 1.73403e-039">="xxx.png"</span></span></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<table align="center" style="border-collapse: collapse; width: 594px">
+	<tr>
+		<td style="text-align: center; width: 136px"><strong>[main]</strong></td>
+		<td><strong>Is a main section of file</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px">theme-name</td>
+		<td style="height: 21px">The understandable name of theme</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">default-splash</td>
+		<td>The default splash image which will be used if config pack is not 
+		have own</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px"></td>
+		<td style="height: 21px"></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[file-icons]</strong></td>
+		<td><strong><a/>Replace some window and file type icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">level-16</td>
+		<td>New -&gt; Level</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">level-24</td>
+		<td>Level icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-16</td>
+		<td>New -&gt; World</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-24</td>
+		<td>World icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">npc-16</td>
+		<td>New -&gt; NPC, NPC Editor, NPC dialog, etc.</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center; height: 21px;"><strong>[file-io]</strong></td>
+		<td style="height: 21px"><a/><strong>Icons of file I/O toolbar icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">file-open</td>
+		<td style="height: 21px">Open exist file</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">file-new</td>
+		<td>Create new file</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">file-save</td>
+		<td>Save file</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">file-save-as</td>
+		<td>Save file as</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">file-reload</td>
+		<td>Reload current file</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;"></td>
+		<td style="height: 21px"></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[icons]</strong></td>
+		<td><strong>Replacement of icons of some tools</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">debugger</td>
+		<td>Debugger tool (inside View menu)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">bookmarks</td>
+		<td style="height: 21px">Bookmarks item box</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">tileset-box</td>
+		<td>Tileset item box</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;"></td>
+		<td style="height: 21px"></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[cursors]</strong></td>
+		<td><strong>Scene special cursors</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">normal</td>
+		<td>Normal arrow cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">normal-x</td>
+		<td>Normal cursor hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">normal-y</td>
+		<td>Normal cursor hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">resizing</td>
+		<td style="height: 21px">Cursor of resizing mode</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">resizing-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">resizing-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">pasting</td>
+		<td>Pasting mode cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">pasting-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">pasting-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">placing</td>
+		<td style="height: 21px">Placing mode cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">placing-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">placing-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">erasing</td>
+		<td>Rubber, this cursor displaying when enabled erasing mode</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">erasing-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">erasing-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">flood-fill</td>
+		<td>Flood fill cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">flood-fill-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">flood-fill-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">square-fill</td>
+		<td style="height: 21px">Rectangle drawing cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">square-fill-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">square-fill-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">line-fill</td>
+		<td>Line drawing cursor</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">line-fill-x</td>
+		<td>hot spot x (from 0 to width-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">line-fill-y</td>
+		<td>hot spot y (from 0 to height-1)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;"></td>
+		<td style="height: 21px"></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[edit-common]</strong></td>
+		<td><strong>Common edit process tools</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">playmusic</td>
+		<td>Music player icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">grid-snap</td>
+		<td>Grid snap switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">animation</td>
+		<td>Animation switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">search</td>
+		<td>Search icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">pencil</td>
+		<td>Edit of custom tileset in the tileset item box</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[edit-clipboard]</strong></td>
+		<td><strong>Clipboard icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">copy</td>
+		<td>Copy (toolbar icon)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">copy-16</td>
+		<td>Duplicate layer icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">cut</td>
+		<td>Cut (toolbar icon)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">paste</td>
+		<td>Paste (toolbar icon)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[edit-history]</strong></td>
+		<td><strong>History manager icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">undo</td>
+		<td>Cancel last action</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">redo</td>
+		<td>Repeat canceled action</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[edit-mode]</strong></td>
+		<td><strong>Editing mode switch icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">selection</td>
+		<td>Switch into default selecting mode</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">selection-only</td>
+		<td>Switch into selecting mode without grabbing and moving of items</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">hand-drag</td>
+		<td>Scroll screen by hand drag</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">erasing</td>
+		<td>Erazing mode, remove all clicked or selected by rectangle items</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px; text-align: center">
+		<strong>[edit-resizing]</strong></td>
+		<td style="height: 21px"><strong>Those icons appearing when you resize 
+		something</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">accept</td>
+		<td>Accept current size and position</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">cancel</td>
+		<td>Cancel resizing process, leave current settings</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px; text-align: center"><strong>[edit-place]</strong></td>
+		<td style="height: 21px"><strong>Those icons appearing when placing mode 
+		in process</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">square-fill</td>
+		<td>Square fill mode switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">line-tool</td>
+		<td style="height: 21px">Line draw mode switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">flood-fill</td>
+		<td>Flood fill mode switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">overwrite-mode</td>
+		<td>Overwrite mode switch</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">properties</td>
+		<td>Show properties icon</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px; text-align: center"><strong>[edit-zoom]</strong></td>
+		<td style="height: 21px"><strong>Toolbar icons</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">zoom-reset</td>
+		<td>Reset zoom to 1:1</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">zoom-in</td>
+		<td>Increase zoom</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">zoom-out</td>
+		<td>Decrease zoom</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center; height: 21px;"><strong>[level]</strong></td>
+		<td style="height: 21px"><strong>Level specific tools</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">section-settings</td>
+		<td>Show/hide section settings</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">section-settings-16</td>
+		<td>Section settings toolbox icon (old)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">doors</td>
+		<td>Warps and doors toolbox</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">layers</td>
+		<td>Layers toolbox</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">events</td>
+		<td>Events toolbox</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">water</td>
+		<td>Draw physic environment "Water"</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">quicksand</td>
+		<td><a/>Draw physic environment "Quicksand"</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">player1</td>
+		<td>Switch into placing of start point of first player</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">player2</td>
+		<td><a/>Switch into placing of start point of second player</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[level-items]</strong></td>
+		<td><strong>Replacing of player point images. You can display any 
+		available image (in PNG-format) of any size, image will be attached to 
+		bottom-center automatically.</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">player-point</td>
+		<td>Common start point of player</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">player1</td>
+		<td>Start point of firts player</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">player2</td>
+		<td>Start point of second player</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[section-numbers]</strong></td>
+		<td><strong>Switch of current sections. Section switch is a line of 
+		numbers of available to using sections</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">section-*-selected</td>
+		<td>Selected section number (Replace "*" by number from 1 to 21)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">section-<a/>*</a>-default</td>
+		<td><a/>Normal section number (Replace "*" by number from 1 to 21)</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[locks-level]</strong></td>
+		<td><strong>Level specific locks by item type</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">blocks-free</td>
+		<td>Default state of all blocks</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">blocks-locked</td>
+		<td>Locked state<a/> of all blocks</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">bgo-free</td>
+		<td><a/>Default state</a> of all BGO</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">bgo-locked</td>
+		<td><a/>Locked state</a> of BGO</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">npc-free</td>
+		<a/>
+		<td><a/>Default state</a> of all NPC</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">npc-locked</td>
+		<a/>
+		<td><a/>Locked state</a> of NPC</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">warps-free</td>
+		<a/>
+		<td><a/>Default state</a> of all warps</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">warps-locked</td>
+		<a/>
+		<td><a/>Locked state</a> of warps</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">physenv-free</td>
+		<a/>
+		<td><a/>Default state</a> of all physics environment zones</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">physenv-locked</td>
+		<a/>
+		<td><a/>Locked state</a> of <a/>physics environment</a> zones</td>
+		</a>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;"></td>
+		<td style="height: 21px"></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[locks-world]</strong></td>
+		<td><strong>World map specific locks by item type</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">tiles-free</td>
+		<td style="height: 21px">Default state of all tiles</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">tiles-locked</td>
+		<td>Locked state<a/> of all t</a><span style="color: #000080">iles</span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">scenery-free</td>
+		<td>Default state of all sceneries</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">scenery-locked</td>
+		<td>Locked state<a/> of all </a>sceneries</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">paths-free</td>
+		<td>Default state of all paths</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">paths-locked</td>
+		<td>Locked state<a/> of all p</a><span style="color: #000080">aths</span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">levels-free</td>
+		<td>Default state of all levels</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">levels-locked</td>
+		<td>Locked state<a/> of all l</a><span style="color: #000080">evels</span></td>
+	</tr>
+	<tr>
+		<td style="width: 136px">musicboxes-free</td>
+		<td>Default state of all music boxes</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">musicboxes-locked</td>
+		<td>Locked state<a/> of all </a>music boxes</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; text-align: center"><strong>[items]</strong></td>
+		<td><strong>Overwrite default dummy images of items</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">level-background</td>
+		<td style="height: 21px">Dummy background image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">level-bgo</td>
+		<td>Dummy background object image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">level-block</td>
+		<td>Dummy block image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">level-npc</td>
+		<td>Dummy NPC image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px; height: 21px;">world-path</td>
+		<td style="height: 21px">Dummy path image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-scenery</td>
+		<td>Dummy scenery image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-tile</td>
+		<td>Dummy tile image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-level</td>
+		<td>Dummy level image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">world-musicbox</td>
+		<td>Music box item image</td>
+	</tr>
+	<tr>
+		<td style="width: 136px">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+
+
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: center">&nbsp;</p>
+<hr />
+<p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
+Wohlstand project. All rights reserved.</p>
+
+</body>
+
+</html>
