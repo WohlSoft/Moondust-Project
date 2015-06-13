@@ -1042,6 +1042,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             else break;
 
             if(!collided->posRect.collideRect(posRect)) break;
+            #ifdef COLLIDE_DEBUG
+            qDebug() << "Collided item! "<<collided->type<<" " <<collided->posRect.center().x()<<collided->posRect.center().y();
+            #endif
 
             if(bumpUp||bumpDown) break;
 
