@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <main_window/global_settings.h>
 
-#include "../main_window/global_settings.h"
+#include "data_configs.h"
 
 long dataconfigs::getBgI(unsigned long itemID)
 {
@@ -38,7 +40,7 @@ long dataconfigs::getBgI(unsigned long itemID)
     return j;
 }
 
-void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
+void dataconfigs::loadLevelBackgrounds()
 {
     unsigned int i;
     obj_BG sbg;
@@ -62,8 +64,8 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
         total_data +=bg_total;
     bgset.endGroup();
 
-    if(prgs) prgs->setMaximum(bg_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Backgrounds..."));
+    emit progressMax(bg_total);
+    emit progressTitle(QApplication::tr("Loading Backgrounds..."));
 
     ConfStatus::total_bg = bg_total;
 
@@ -75,11 +77,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
     for(i=1; i<=bg_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         bgset.beginGroup( QString("background2-"+QString::number(i)) );
             sbg.name = bgset.value("name", "").toString();
@@ -97,10 +95,8 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                    sbg.type = 2;
                 else sbg.type = 0;
 
-//                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
-//                           .arg(i).arg(tmpstr).arg(sbg.type));
 
-            sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
+            sbg.repeat_h = qFabs(bgset.value("repeat-h", "2").toFloat());
             tmpstr = bgset.value("repeat-v", "NR").toString();
                 if(tmpstr=="NR")
                     sbg.repead_v = 0;
@@ -129,17 +125,18 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                 goto skipBG;
             }
 
-            sbg.attached = (int)(bgset.value("attached", "bottom").toString()=="top");
-            sbg.editing_tiled = (bgset.value("tiled-in-editor", "0").toString()=="1");
+            sbg.attached =    (int)(bgset.value("attached", "bottom").toString()=="top");
+            sbg.editing_tiled =    (bgset.value("tiled-in-editor", "0").toString()=="1");
 
-            sbg.magic = (bgset.value("magic", "0").toString()=="1");
-            sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
-            sbg.magic_splits = bgset.value("magic-splits", "0").toString();
-            sbg.magic_speeds = bgset.value("magic-speeds", "0").toString();
+            sbg.magic =            (bgset.value("magic", "0").toString()=="1");
+            sbg.magic_strips =      bgset.value("magic-strips", "1").toInt();
+            sbg.magic_splits =      bgset.value("magic-splits", "0").toString();
+            sbg.magic_speeds =      bgset.value("magic-speeds", "0").toString();
 
-            sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
-            sbg.frames = bgset.value("frames", "1").toInt();
-            sbg.display_frame = bgset.value("display-frame", "0").toInt();
+            sbg.animated =         (bgset.value("animated", "0").toString()=="1");//animated
+            sbg.frames =            bgset.value("frames", "1").toInt();
+            sbg.framespeed =        bgset.value("framespeed", "128").toInt();
+            sbg.display_frame =     bgset.value("display-frame", "0").toInt();
             //frames
 
             if(sbg.type==1)
@@ -149,13 +146,13 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                     sbg.second_image_n = imgFile;
                     if( (imgFile!="") )
                     {
-                        sbg.second_image = QPixmap(BGPath + imgFile);
+                        sbg.second_image = QPixmap(BGPath  + imgFile);
                     }
                     else
                     {
-                        sbg.second_image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+                        sbg.second_image = Themes::Image(Themes::dummy_bg);
                     }
-                    sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
+                    sbg.second_repeat_h = qFabs(bgset.value("second-repeat-h", "2").toFloat());
                     tmpstr = bgset.value("second-repeat-v", "NR").toString();
                         if(tmpstr=="NR")
                             sbg.second_repeat_v = 0;
@@ -178,8 +175,11 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
             if(sbg.animated)
             {
-                sbg.image=sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
+                sbg.image = sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
             }
+
+
+
             sbg.id = i;
             main_bg.push_back(sbg);
 

@@ -1,0 +1,31 @@
+
+
+    OOLUA::Table t;
+    OOLUA::Script vm;
+    OOLUA::new_table(vm, t);
+    OOLUA::set_global(vm.state(), "say", l_say);
+
+    if(!
+    vm.load_chunk("\
+                     lua_testclass = {}\n\
+                     lua_testclass.__index = lua_testclass\n\
+                     function lua_testclass.create(xxx)\n\
+                         local acnt = {}             -- our new object\n\
+                         setmetatable(acnt, lua_testclass)  -- make lua_testclass handle lookup\n\
+                         acnt.name = xxx      -- initialize our object\n\
+                         return acnt\n\
+                     end\n\
+                     function lua_testclass:print()\n\
+                         say(self.name)\n\
+                     end\n\
+                     function onLoad()\n\
+                        a = lua_testclass.create('Hi-hi-hi, class is works!')\na:print()\n\
+                     end\n\
+                     "))
+                     QMessageBox::warning(NULL, QString("fail"),
+                     QString("PGE Lua failed\n\n%1").arg(OOLUA::get_last_error(vm.state()).c_str()));
+
+    if(!vm.run_chunk("onLoad()"))
+                  QMessageBox::warning(NULL, QString("fail"),
+                  QString("PGE Lua failed\n\n%1").arg(OOLUA::get_last_error(vm.state()).c_str()));
+

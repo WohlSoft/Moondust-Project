@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include <QDialog>
-#include "../animator/SpriteScene.h"
 #include "../calibrationmain.h"
-#include "MatrixScene.h"
 
 namespace Ui {
 class Matrix;
@@ -34,13 +34,14 @@ class Matrix : public QDialog
     Q_OBJECT
     
 public:
-    explicit Matrix(QList<QVector<frameOpts> > &framesX, SpriteScene *Scene, QWidget *parent = 0);
+    explicit Matrix(QWidget *parent = 0);
     ~Matrix();
-    MatrixScene * MatrixS;
+    QGraphicsScene *MatrixS;
     QList<QVector<frameOpts > > FrameConfig;
     int frameX;
     int frameY;
     void setFrame(int x, int y);
+    void drawGrid();
 
 private slots:
     void on_EnFrame_0_0_clicked(bool checked);
@@ -285,6 +286,8 @@ private slots:
 
 
 private:
+    QGraphicsPixmapItem image;
+    QPixmap scaledImage;
     Ui::Matrix *ui;
 };
 

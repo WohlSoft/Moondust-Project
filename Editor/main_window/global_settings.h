@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,11 @@
 
 struct LevelEditingSettings
 {
+    //Common
     bool animationEnabled;
     bool collisionsEnabled;
+    //World map only
+    bool semiTransparentPaths;
 };
 
 class GlobalSettings
@@ -42,29 +45,39 @@ public:
     static QString savePath_npctxt;
     static QString openPath;
 
+    //External tools
+    static QString tools_sox_bin_path;
+
     //Music player
     static bool autoPlayMusic;
     static int musicVolume;
 
     //Toolboxes visibly states
-    static bool LevelToolBoxVis;
-    static bool SectionToolBoxVis;
+    static bool LevelItemBoxVis;
+    static bool LevelSectionBoxVis;
     static bool LevelDoorsBoxVis;
     static bool LevelLayersBoxVis;
     static bool LevelEventsBoxVis;
     static bool LevelSearchBoxVis;
 
-    static bool WorldToolBoxVis;
+    static bool WorldItemBoxVis;
     static bool WorldSettingsToolboxVis;
     static bool WorldSearchBoxVis;
 
     static bool TilesetBoxVis;
     static bool DebuggerBoxVis;
+    static bool BookmarksBoxVis;
 
     // Editor flags
     static bool MidMouse_allowDuplicate;
     static bool MidMouse_allowSwitchToPlace;
     static bool MidMouse_allowSwitchToDrag;
+
+    //Placing mode flahs
+    static bool Placing_dontShowPropertiesBox;
+
+    //Max Limit if history elements
+    static int historyLimit;
 
     //Last active file type state
     static int lastWinType;
@@ -72,6 +85,8 @@ public:
     static QMdiArea::ViewMode MainWindowView;
     static QTabWidget::TabPosition LVLToolboxPos;
     static QTabWidget::TabPosition WLDToolboxPos;
+    static QTabWidget::TabPosition TSTToolboxPos;
+    static QString currentTheme;
 
 };
 
@@ -96,6 +111,7 @@ public:
     static long total_sound;
 
     static QString configName;
+    static QString defaultTheme;
     static QString configPath;
 
 };

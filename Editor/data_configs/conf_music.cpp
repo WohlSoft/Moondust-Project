@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <main_window/global_settings.h>
 
-#include "../main_window/global_settings.h"
+#include "data_configs.h"
 
 long dataconfigs::getMusLvlI(unsigned long itemID)
 {
@@ -75,7 +75,7 @@ long dataconfigs::getMusSpcI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadMusic(QProgressDialog *prgs)
+void dataconfigs::loadMusic()
 {
     unsigned int i;
 
@@ -108,13 +108,14 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
         music_spc_total = musicset.value("total-special", "0").toInt();
 
         music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
+        music_w_custom_id = musicset.value("world-custom-music-id", "17").toInt();
         total_data +=music_lvl_total;
         total_data +=music_wld_total;
         total_data +=music_spc_total;
     musicset.endGroup();
 
-    if(prgs) prgs->setMaximum(music_lvl_total+music_wld_total+music_spc_total);
-    if(prgs) prgs->setLabelText(QApplication::tr("Loading Music..."));
+    emit progressMax(music_lvl_total+music_wld_total+music_spc_total);
+    emit progressTitle(QApplication::tr("Loading Music..."));
 
     ConfStatus::total_music_lvl = music_lvl_total;
     ConfStatus::total_music_wld = music_wld_total;
@@ -139,11 +140,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
             smusic_wld.name = musicset.value("name", "").toString();
@@ -173,11 +170,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
             smusic_spc.name = musicset.value("name", "").toString();
@@ -208,11 +201,7 @@ void dataconfigs::loadMusic(QProgressDialog *prgs)
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
-        qApp->processEvents();
-        if(prgs)
-        {
-            if(!prgs->wasCanceled()) prgs->setValue(i);
-        }
+        emit progressValue(i);
 
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
             smusic_lvl.name = musicset.value("name", "").toString();

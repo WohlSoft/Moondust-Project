@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@
 #include <QString>
 #include <QPixmap>
 
-struct obj_block{
+struct obj_block
+{
     unsigned long id;
         QString image_n;
         QString mask_n;
@@ -37,19 +38,34 @@ struct obj_block{
     int danger;
     int collision;
     bool slopeslide;
-    int fixture;
+    int phys_shape;
+    enum shapes
+    {
+        SHAPE_rect=0,
+        SHAPE_triangle_top_left=-1,
+        SHAPE_triangle_top_right=1,
+        SHAPE_triangle_bottom_left=-2,
+        SHAPE_triangle_bottom_right=2,
+        SHAPE_polygonal=3,
+        SHAPE_cyrcle=4
+    };
     bool lava;
-    bool destruct;
-    bool dest_bomb;
-    bool dest_fire;
+    bool destroyable;
+    bool destroyable_by_bomb;
+    bool destroyable_by_fireball;
     bool spawn; //split string by "-" in != "0"
         int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
+        enum spawnes{
+            SPAWN_Nothing=0,
+            SPAWN_NPC=1,
+            SPAWN_Block=2,
+            SPAWN_BGO=3
+        };
         unsigned long spawn_obj_id;
     unsigned long effect;
     bool bounce;
     bool hitable;
-    bool onhit;
-    unsigned long onhit_block;
+    unsigned long transfororm_on_hit_into;
     unsigned long algorithm;
 
     unsigned int view;

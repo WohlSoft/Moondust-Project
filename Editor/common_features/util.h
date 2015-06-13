@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,13 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <qlineedit.h>
-#include <qlistwidget.h>
-#include <qcombobox.h>
-#include <QListWidget>
-#include <qtablewidget.h>
+#include <QString>
+class QDialog;
+class QLayout;
+class QLineEdit;
+class QListWidget;
+class QTableWidget;
+class QComboBox;
 
 class util
 {
@@ -35,6 +37,7 @@ public:
     static void clearLayoutItems(QLayout* layout);
     static bool contains(const QComboBox* b, const QString &s);
     static QString filePath(QString s);
+    static void DialogToCenter(QDialog *dialog, bool CloseButtonOnly=false);
 };
 
 #endif // UTIL_H

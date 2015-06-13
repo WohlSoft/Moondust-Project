@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,18 @@
  */
 
 #include "animationedit.h"
-#include "ui_animationedit.h"
+#include <ui_animationedit.h>
 #include "../frame_matrix/matrix.h"
+#include "../main/globals.h"
+#include "../main/mw.h"
 
-AnimationEdit::AnimationEdit(QList<QVector<frameOpts> > &framesX, SpriteScene *Scene,FrameSets &frmConfs, QWidget *parent) :
+AnimationEdit::AnimationEdit(FrameSets &frmConfs, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
     SrcFrames = framesX;
-    SrcScene = Scene;
     frameList = frmConfs;
+
     ui->setupUi(this);
 
     ui->FramesSets->clear();
@@ -48,7 +50,7 @@ void AnimationEdit::on_AddLeft_clicked()
     int x=-1;
     int y=-1;
 
-    Matrix dialog(SrcFrames, SrcScene);
+    Matrix dialog;
 
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(dialog.exec()==QDialog::Accepted)
@@ -72,18 +74,20 @@ void AnimationEdit::on_SetLeft_clicked()
 
     QList<QListWidgetItem *> selected = ui->FramesL->selectedItems();
 
-    Matrix dialog(SrcFrames, SrcScene);
+    Matrix dialog;
 
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(1, QPoint(x,y));
+            item->setData(3, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
+            showFrame(x, y);
             return;
         }
         else
@@ -104,7 +108,7 @@ void AnimationEdit::on_AddRight_clicked()
     int x=-1;
     int y=-1;
 
-    Matrix dialog(SrcFrames, SrcScene);
+    Matrix dialog;
 
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(dialog.exec()==QDialog::Accepted)
@@ -126,18 +130,19 @@ void AnimationEdit::on_SetRight_clicked()
 
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
 
-    Matrix dialog(SrcFrames, SrcScene);
-
+    Matrix dialog;
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(1, QPoint(x,y));
+            item->setData(3, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
+            showFrame(x, y);
             return;
         }
         else
@@ -156,7 +161,7 @@ void AnimationEdit::on_DelRight_clicked()
 void AnimationEdit::addFrameL(int x, int y)
 {
     QListWidgetItem * test1 = new QListWidgetItem;
-    test1->setData(1, QPoint(x, y));
+    test1->setData(3, QPoint(x, y));
     test1->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
     ui->FramesL->addItem(test1);
 }
@@ -164,7 +169,7 @@ void AnimationEdit::addFrameL(int x, int y)
 void AnimationEdit::addFrameR(int x, int y)
 {
     QListWidgetItem * test2 = new QListWidgetItem;
-    test2->setData(1, QPoint(x, y));
+    test2->setData(3, QPoint(x, y));
     test2->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
     ui->FramesR->addItem(test2);
 }
@@ -186,8 +191,8 @@ void  AnimationEdit::applyFrameSet()
                 items = ui->FramesL->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
                 foreach(QListWidgetItem * item, items)
                 {
-                    frameAdd.x = item->data(1).toPoint().x();
-                    frameAdd.y = item->data(1).toPoint().y();
+                    frameAdd.x = item->data(3).toPoint().x();
+                    frameAdd.y = item->data(3).toPoint().y();
                     frameList.set[i].L.push_back(frameAdd);
                 }
 
@@ -195,8 +200,8 @@ void  AnimationEdit::applyFrameSet()
                 items = ui->FramesR->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
                 foreach(QListWidgetItem * item, items)
                 {
-                    frameAdd.x = item->data(1).toPoint().x();
-                    frameAdd.y = item->data(1).toPoint().y();
+                    frameAdd.x = item->data(3).toPoint().x();
+                    frameAdd.y = item->data(3).toPoint().y();
                     frameList.set[i].R.push_back(frameAdd);
                 }
 
@@ -235,4 +240,47 @@ void AnimationEdit::on_FramesSets_itemClicked(QListWidgetItem *item)
         }
     }
 
+}
+
+void AnimationEdit::showFrame(int x, int y)
+{
+    qDebug() << x << y;
+    current_frame = MW::sprite().copy(x*100, y*100, 100,100);
+    ui->img->setPixmap(current_frame);
+}
+
+void AnimationEdit::on_FramesL_itemSelectionChanged()
+{
+    if(ui->FramesL->selectedItems().isEmpty()) return;
+
+    showFrame(
+              ui->FramesL->selectedItems().first()->data(3).toPoint().x(),
+              ui->FramesL->selectedItems().first()->data(3).toPoint().y()
+              );
+}
+
+void AnimationEdit::on_FramesR_itemSelectionChanged()
+{
+    if(ui->FramesR->selectedItems().isEmpty()) return;
+
+    showFrame(
+              ui->FramesR->selectedItems().first()->data(3).toPoint().x(),
+              ui->FramesR->selectedItems().first()->data(3).toPoint().y()
+              );
+}
+
+void AnimationEdit::on_FramesL_itemClicked(QListWidgetItem *item)
+{
+    showFrame(
+              item->data(3).toPoint().x(),
+              item->data(3).toPoint().y()
+              );
+}
+
+void AnimationEdit::on_FramesR_itemClicked(QListWidgetItem *item)
+{
+    showFrame(
+              item->data(3).toPoint().x(),
+              item->data(3).toPoint().y()
+              );
 }

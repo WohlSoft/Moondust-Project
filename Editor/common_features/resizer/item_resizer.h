@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
+
 #include "corner_grabber.h"
 
 class ItemResizer : public QGraphicsRectItem
@@ -39,6 +40,7 @@ public:
 
     int type; //Resizer Type: 0 - Section, 1 - selecting of position, 2 - item size
     QSizeF _minSize;
+    QSizeF _minSize_backup;
     QGraphicsItem * targetItem;
 
     private:
@@ -61,6 +63,10 @@ public:
     QPointF _location;
 
     int _grid;
+    int _grid_backup;
+
+    bool _no_grid;
+    bool _no_limit;
 
     QPointF _dragStart;
 
@@ -72,6 +78,10 @@ public:
     qreal   _drawingHeight;
     qreal   _drawingOrigenX;
     qreal   _drawingOrigenY;
+
+    QPointF ____lastLocation;
+    QPointF ____lastCurLocation;
+    QPointF ____offset;
 
     CornerGrabber*  _corners[8];// 0,1,2,3  - starting at x=0,y=0 and moving clockwise around the box
 

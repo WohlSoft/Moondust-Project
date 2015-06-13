@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui_mainwindow.h"
-#include "../mainwindow.h"
+#include <common_features/util.h>
+#include <tools/tilesets/tilesetconfiguredialog.h>
+#include <tools/tilesets/tilesetgroupeditor.h>
+#include <tools/external_tools/lazyfixtool_gui.h>
+#include <tools/external_tools/gifs2png_gui.h>
+#include <tools/external_tools/png2gifs_gui.h>
+#include <tools/external_tools/audiocvt_sox_gui.h>
+#include <editing/_dialogs/npcdialog.h>
+#include <dev_console/devconsole.h>
 
-#include "../tilesets/tilesetconfiguredialog.h"
-#include "../tilesets/tilesetgroupeditor.h"
-#include "../npc_dialog/npcdialog.h"
-#include <QDesktopServices>
-#include "../dev_console/devconsole.h"
+#include <main_window/dock/lvl_sctc_props.h>
 
-#include "../external_tools/lazyfixtool_gui.h"
-#include "../external_tools/gifs2png_gui.h"
-#include "../external_tools/png2gifs_gui.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
     TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
+    util::DialogToCenter(tilesetConfDia);
     tilesetConfDia->exec();
     delete tilesetConfDia;
 
@@ -49,6 +52,8 @@ void MainWindow::on_actionTileset_groups_editor_triggered()
         groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
     else
         groupDialog = new TilesetGroupEditor(NULL, this);
+
+    util::DialogToCenter(groupDialog);
     groupDialog->exec();
     delete groupDialog;
 
@@ -60,7 +65,6 @@ void MainWindow::on_actionTileset_groups_editor_triggered()
 void MainWindow::on_actionShow_Development_Console_triggered()
 {
     DevConsole::show();
-    DevConsole::log("Showing DevConsole!","View");
 }
 
 LazyFixTool_gui * lazyfixGUI;
@@ -74,8 +78,7 @@ void MainWindow::on_actionLazyFixTool_triggered()
         return;
     }
     lazyfixGUI = new LazyFixTool_gui;
-    lazyfixGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    lazyfixGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, lazyfixGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(lazyfixGUI, true);
     lazyfixGUI->show();
 }
 
@@ -90,8 +93,7 @@ void MainWindow::on_actionGIFs2PNG_triggered()
         return;
     }
     gifToPngGUI = new gifs2png_gui;
-    gifToPngGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    gifToPngGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, gifToPngGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(gifToPngGUI, true);
     gifToPngGUI->show();
 }
 
@@ -106,8 +108,39 @@ void MainWindow::on_actionPNG2GIFs_triggered()
         return;
     }
     pngToGifGUI = new png2gifs_gui;
-    pngToGifGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    pngToGifGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pngToGifGUI->size(), qApp->desktop()->availableGeometry()));
+    util::DialogToCenter(pngToGifGUI, true);
     pngToGifGUI->show();
 }
+
+
+
+void MainWindow::on_actionAudioCvt_triggered()
+{
+    AudioCvt_Sox_gui sox_cvt(this);
+    util::DialogToCenter(&sox_cvt, true);
+    sox_cvt.exec();
+
+    if(activeChildWindow()==1)
+        dock_LvlSectionProps->setLevelSectionData();
+}
+
+
+
+
+void MainWindow::on_actionSprite_editor_triggered()
+{
+    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

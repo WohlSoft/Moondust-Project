@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,94 +16,168 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui_mainwindow.h"
+#include <common_features/app_path.h>
+#include <common_features/themes.h>
+#include <common_features/spash_screen.h>
+#include <data_configs/config_manager.h>
+#include <main_window/dock/toolboxes.h>
+#include <common_features/logger_sets.h>
+
+#include <ui_mainwindow.h>
 #include "mainwindow.h"
 
-#include "npc_dialog/npcdialog.h"
-#include "data_configs/config_manager.h"
-
-#include <QDesktopServices>
+#include <QtConcurrent>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    //thread1 = new QThread;
+    continueLoad = false;
+
     this->setAttribute(Qt::WA_QuitOnClose, true);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
-
+    this->hide();
     setDefaults(); // Apply default common settings
-
-    //Create empty config directory if not exists
-    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
-
-    // Config manager
-    ConfigManager *cmanager = new ConfigManager();
-    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
-    QString configPath = cmanager->isPreLoaded();
-    //If application runned first time or target configuration is not exist
-    if(configPath.isEmpty())
-    {
-        //Ask for configuration
-        if(cmanager->exec()==QDialog::Accepted)
-        {
-            configPath = cmanager->currentConfig;
-        }
-        else
-        {
-            delete cmanager;
-            ui->setupUi(this);
-            setDefLang();
-            setUiDefults(); //Apply default UI settings
-            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
-            this->close();
-            return;
-        }
-    }
-
-    currentConfigDir = configPath;
-
-    delete cmanager;
-
-    configs.setConfigPath(configPath);
-    configs.loadBasics();
-
-    QPixmap splashimg(configs.splash_logo);
-
-    QSplashScreen splash(splashimg);
-    splash.setCursor(Qt::ArrowCursor);
-    splash.setDisabled(true);
-    splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
-    splash.show();
-
-    bool ok=configs.loadconfigs();
-
-    splash.finish(this);
 
     WriteToLog(QtDebugMsg, QString("Set UI..."));
     ui->setupUi(this);
 
     WriteToLog(QtDebugMsg, QString("Setting Lang..."));
     setDefLang();
+
     setUiDefults(); //Apply default UI settings
 
-    if(!ok)
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(false);
+#endif
+
+    //Create empty config directory if not exists
+    if(!QDir(AppPathManager::userAppDir() + "/" +  "configs").exists())
+        QDir().mkdir(AppPathManager::userAppDir() + "/" +  "configs");
+
+
+    // Config manager
+    ConfigManager *cmanager;
+    cmanager = new ConfigManager();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+    QString configPath = cmanager->isPreLoaded();
+    currentConfigDir = configPath;
+
+    askConfigAgain = cmanager->askAgain;
+
+    QString tPack = cmanager->themePack;
+    //If application runned first time or target configuration is not exist
+    if( (askConfigAgain) || ( configPath.isEmpty() ) )
     {
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        //Ask for configuration
+        if(cmanager->exec()==QDialog::Accepted)
+        {
+            configPath = cmanager->currentConfigPath;
+        }
+        else
+        {
+            delete cmanager;
+            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            continueLoad = false;
+            return;
+        }
+    }
+    //continueLoad = true;
+    askConfigAgain = cmanager->askAgain;
+    currentConfigDir = cmanager->currentConfigPath;
+
+    delete cmanager;
+
+    configs.setConfigPath(configPath);
+
+    configs.loadBasics();
+    Themes::loadTheme(tPack);
+
+    /*********************Splash Screen**********************/
+    QPixmap splashimg(configs.splash_logo.isEmpty()?
+                      Themes::Image(Themes::splash) :
+                      configs.splash_logo);
+
+    EditorSpashScreen splash(splashimg);
+    splash.setCursor(Qt::ArrowCursor);
+    splash.setDisabled(true);
+    splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
+
+
+    for(int a=0; a<configs.animations.size();a++)
+    {
+        //QPoint pt(416,242);
+        QPoint pt(configs.animations[a].x, configs.animations[a].y);
+        //QPixmap img = QPixmap("coin.png");
+        splash.addAnimation(pt,
+                            configs.animations[a].img,
+                            configs.animations[a].frames,
+                            configs.animations[a].speed);
+    }
+    splash.startAnimations();
+
+    #ifndef Q_OS_ANDROID
+    splash.show();
+    #else
+    splash.showFullScreen();
+    #endif
+
+    /*********************Loading of config pack**********************/
+    // Do the loading in a thread
+    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+    /*********************Loading of config pack**********************/
+
+    /*********************Splash Screen**********************/
+    // And meanwhile load the settings in the main thread
+    loadSettings();
+
+    // Now wait until the config load in finished.
+    while(!isOk.isFinished()) qApp->processEvents();
+
+    /*********************Splash Screen end**********************/
+    splash.finish(this);
+    /*********************Splash Screen end**********************/
+    if(!isOk.result())
+    {
+        QMessageBox::critical(this, tr("Configuration error"),
+                              tr("Configuration can't be loaded.\nSee in %1 for more information.").arg(LogWriter::DebugLogFile), QMessageBox::Ok);
         WriteToLog(QtFatalMsg, "<Error, application closed>");
-        this->close();
+        continueLoad = false;
         return;
     }
+
+    if(configs.check())
+    {
+        QMessageBox::warning(this, tr("Configuration error"),
+            tr("Configuration package is loaded with errors."), QMessageBox::Ok);
+        on_actionCurConfig_triggered();
+    }
+
+    continueLoad = true;
+
+    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
+
+#ifdef Q_OS_MACX
+    ui->menuBar->setEnabled(true);
+#endif
+
+    //Apply objects into tools
+    dock_LvlSectionProps->setLevelSectionData();
+    dock_LvlItemBox->setLvlItemBoxes();
+    dock_WldItemBox->setWldItemBoxes();
+    dock_LvlEvents->setSoundList();
+    dock_WldItemProps->WldLvlExitTypeListReset();
+    dock_TilesetBox->setTileSetBox(true);
 }
 
 MainWindow::~MainWindow()
 {
-    MusicPlayer->stop();
+#ifdef Q_OS_WIN
+    if(pge_thumbbar)
+        delete pge_thumbbar;
+#endif
     delete ui;
-    delete MusicPlayer;
-    WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
 
@@ -113,21 +187,11 @@ MainWindow::~MainWindow()
 //Exit from application
 void MainWindow::on_Exit_triggered()
 {
-    //ui->centralWidget->closeAllSubWindows();
     if(!MainWindow::close())
         return;
-    //qApp->quit();
-    //exit(0);
 }
 
-//Open About box
-void MainWindow::on_actionAbout_triggered()
-{
-    aboutDialog about;
-    about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
-    about.exec();
-}
+
 
 
 //Toolbar context menu
@@ -144,7 +208,6 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
     test3->setEnabled(false);
 
     cu->exec(pos);
-
 }
 
 
@@ -154,33 +217,9 @@ void MainWindow::showStatusMsg(QString msg, int time)
 }
 
 
-void MainWindow::refreshHistoryButtons()
+void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
 {
-    if(activeChildWindow()==1)
-    {
-        if(activeLvlEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-        }
-    }else if(activeChildWindow()==3){
-        if(activeWldEditWin()->sceneCreated)
-        {
-            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
-            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
-        }
-    }
-
-}
-
-void MainWindow::on_actionContents_triggered()
-{
-    QDesktopServices::openUrl( QUrl::fromLocalFile( QApplication::applicationDirPath() + "/help/manual_editor.html" ) );
-}
-
-void MainWindow::on_actionNew_triggered()
-{
-    ui->menuNew->exec( this->cursor().pos() );
+    QToolTip::showText(pos, msg, this, QRect(), time);
 }
 
 
@@ -188,18 +227,4 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
-
-
-void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
-{
-    if(checked){
-        //this->hide();
-        this->showFullScreen();
-    }else{
-        //this->hide();
-        this->showNormal();
-    }
-}
-
 

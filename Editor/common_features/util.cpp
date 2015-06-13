@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#include "util.h"
 #include <QLayout>
 #include <QWidgetItem>
+#include <QDialog>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QTableWidget>
+#include <QComboBox>
+
+#include "util.h"
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
 {
@@ -112,4 +119,13 @@ QString util::filePath(QString s)
     t.replace('>', '_');
     t.replace('|', '_');
     return t;
+}
+
+
+void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
+{
+    if(CloseButtonOnly)
+        dialog->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    dialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+    dialog->size(), qApp->desktop()->availableGeometry(0)));
 }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,6 @@
 #include <QtMsgHandler>
 
 void LoadLogSettings();
-void WriteToLog(QtMsgType type, QString msg);
+void WriteToLog(QtMsgType type, QString msg, bool noConsole=false);
 
 #endif // LOGGER_H

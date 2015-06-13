@@ -1,0 +1,60 @@
+This is a little test of developing engine part.
+
+What's need to run level play:
+==============================================
+Preparing:
+==============================================
+1) Download & unpack PGE Editor (need a libraries)
+2) Install any 'full' configuration package into editor
+==============================================
+Launching:
+==============================================
+3) Drag any SMBX LVL file or PGE LVLX file and drop them into engine .exe file
+   (like you drop file into folder icon) to run engine with opening of dropped file.
+----------------------------------------------
+4) from 0.0.4 engine have a main menu.
+You can copy your levels into worlds folder or into %UserProfile%\.PGE_Project\worlds
+or into ~/.PGE_Project/worlds folder and you can play than levels from "Battle game" menu
+==============================================
+Note: If you want have everything in SAME folder like in the SMBX, create "pge_engine.ini" file with next contents:
+----------------------------
+[Main]
+force-portable=true
+----------------------------
+and everything: worlds, screenshots, logs will be stored in same folder where pge_engine application is located.
+[will not work with Mac version. Use "Data Directory" symlink to get data folder!]
+==============================================
+
+You should be up to date with any configuration packages,
+there are in dev-state: I fixing old mistakes, misses, adding new important features which
+should be presented in your ini files of each config pack. Else you may get wrongs and more bugs
+because wrong config settings.
+
+==============================================
+Controlls: <can be cusetomized in the controllers menu>
+==============================================
+Arrows:
+--------------------
+left-right - walk
+Up/Down - enter into door/pipe
+--------------------
+Z - (jump) / enter to level from world map [on German keyboard will work Y key instead by unknown for me reasons :P]
+X - (run)
+A - (alt-jump) (Temporary, fly up, use it to get inaccessible heights without vines!)
+S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
+    S+UP - destroy blocks over head,
+    S+Down - destroy blocks under self)
+
+Ctrl+F - Toggle fullscreen mode
+
+F2 - enable/disable drawing a debug rectangles of physical engine (render hitboxes)
+F3 - enable/disable printing of debug information
+F5 - pause/resume physical loopsteps. (with stopped physics you can make
+     mega-boosted run while you holds arrow+"run" keys)
+F12 - take screenshot (will be saved in the 'screenshots' folder which will be in PGE folder or in the %UserProfile%\.PGE_Project).
+Screenshots will be written into PNG format and will have timedate based filename.
+
+i - disable/enable walkable zone limit on the world map (you will have able to walk anywhere)
+
+Enter, Esc - pause/resume game, show pause menu
+

@@ -1,0 +1,12 @@
+prefix=/Users/vit9696/Wohlstand/PGE-Project/_Libs/_sources/../_builds/macos
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libmikmod
+Description: Library for playing Module Files and for Sound Effects
+Version: 3.3.7
+URL: http://mikmod.sourceforge.net/
+Libs: -L${libdir} -lmikmod
+Libs.private: -lm
+Cflags: -I${includedir}

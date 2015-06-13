@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ struct obj_w_tile{
         unsigned long row;
         unsigned long col;
 
+    unsigned int grid;
     QString group;
     QString category;
     bool animated;
@@ -47,6 +48,7 @@ struct obj_w_scenery{
         QString mask_n;
         QPixmap image;
         QPixmap mask;
+    unsigned int grid;
     QString group;
     QString category;
     bool animated;
@@ -62,6 +64,7 @@ struct obj_w_level{
         QString mask_n;
         QPixmap image;
         QPixmap mask;
+    unsigned int grid;
     QString group;
     QString category;
     bool animated;
@@ -79,6 +82,7 @@ struct obj_w_path{
         QPixmap mask;
         unsigned long row;
         unsigned long col;
+    unsigned int grid;
     QString group;
     QString category;
     bool animated;

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ public:
     qreal mouseDownY;
 
     enum {kMouseReleased=0, kMouseDown, kMouseMoving}; ///< define the mouse states
+    void setSize(qreal width, qreal height);
 
 private:
 

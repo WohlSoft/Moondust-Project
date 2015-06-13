@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>464</height>
+    <width>572</width>
+    <height>636</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,438 +17,332 @@
    <iconset resource="../_resourses/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
-  <widget class="QGraphicsView" name="AnimateView">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>80</y>
-     <width>221</width>
-     <height>371</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Direction</string>
-   </property>
-   <widget class="QRadioButton" name="directLeft">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>41</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Left</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="directRight">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>10</y>
-      <width>51</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Right</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>70</y>
-     <width>321</width>
-     <height>381</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Animation</string>
-   </property>
-   <widget class="QRadioButton" name="Idle">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Idle</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Run">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Run</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Jump">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jump/float</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Sliding">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sliding</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Fire">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>130</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Fire</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="SitDown">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Crouch/Duck</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Dig">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Dig</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RacoonRun">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>250</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Racoon run</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RacoonFloat">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>270</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Racoon float</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RacoonFly">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>290</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Racoon fly</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RacoonTail">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>310</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Racoon tail</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="GrabRun">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Grab run</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="GrabJump">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>210</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Grab jump</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="GrabSit">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Grab sit down</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Swin">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>330</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Swim</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Spin">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>82</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Spin jump</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Climbing">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>82</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Climbing</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="TanookiStatue">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>350</y>
-      <width>111</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tanooki statue</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="SwordAttak">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>90</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sword attack</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="JumpSwordUp">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>110</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jump - sword up</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="DownSword">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>150</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Down+Sword attack</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="JumpSwordDown">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>130</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Jump - sword down</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="Hurted">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>170</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Hurt</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RideOnYoshi">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>10</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ride on Yoshi</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RideOnYoshiSit">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>30</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ride on Yoshi (sit)</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="RideOnYoshiSit_2">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>50</y>
-      <width>131</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pipe up/down</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="SlopeSlide">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>70</y>
-      <width>121</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Slope-Slide</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="EditAnimationBtn">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>30</y>
-     <width>151</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Edit animations</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0,0,0" columnstretch="80,0,0,0">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Direction</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="directLeft">
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="directRight">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Right</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QSpinBox" name="FrameSpeed">
+     <property name="minimum">
+      <number>32</number>
+     </property>
+     <property name="maximum">
+      <number>1024</number>
+     </property>
+     <property name="value">
+      <number>128</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>47</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="EditAnimationBtn">
+     <property name="text">
+      <string>Edit animations</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>106</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Frame speed:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="2">
+    <widget class="QGraphicsView" name="AnimateView">
+     <property name="minimumSize">
+      <size>
+       <width>256</width>
+       <height>326</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="3" colspan="2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Animation</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="17" column="0">
+       <widget class="QRadioButton" name="RacoonTail">
+        <property name="text">
+         <string>Racoon tail</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QRadioButton" name="RideOnYoshiSit">
+        <property name="text">
+         <string>Ride on Yoshi (sit)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QRadioButton" name="PipeUpDownRear">
+        <property name="text">
+         <string>Pipe up/down (rear)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QRadioButton" name="PipeUpDown">
+        <property name="text">
+         <string>Pipe up/down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
+       <widget class="QRadioButton" name="GrabRun">
+        <property name="text">
+         <string>Grab run</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QRadioButton" name="JumpSwordUp">
+        <property name="text">
+         <string>Jump - sword up</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QRadioButton" name="Sliding">
+        <property name="text">
+         <string>Sliding</string>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="0">
+       <widget class="QRadioButton" name="GrabSit">
+        <property name="text">
+         <string>Grab sit down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="0">
+       <widget class="QRadioButton" name="RacoonFloat">
+        <property name="text">
+         <string>Racoon float</string>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="0">
+       <widget class="QRadioButton" name="RacoonRun">
+        <property name="text">
+         <string>Racoon run</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="0">
+       <widget class="QRadioButton" name="RacoonFly">
+        <property name="text">
+         <string>Racoon fly</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QRadioButton" name="Fire">
+        <property name="text">
+         <string>Fire</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QRadioButton" name="Spin">
+        <property name="text">
+         <string>Spin jump</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="0">
+       <widget class="QRadioButton" name="GrabJump">
+        <property name="text">
+         <string>Grab jump</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="Run">
+        <property name="text">
+         <string>Run</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QRadioButton" name="SitDown">
+        <property name="text">
+         <string>Crouch/Duck</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QRadioButton" name="SwordAttak">
+        <property name="text">
+         <string>Sword attack</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QRadioButton" name="Climbing">
+        <property name="text">
+         <string>Climbing</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QRadioButton" name="SwimUp">
+        <property name="text">
+         <string>Swim Up</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="Idle">
+        <property name="text">
+         <string>Idle</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="fall">
+        <property name="text">
+         <string>Fall down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QRadioButton" name="Dig">
+        <property name="text">
+         <string>Dig</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QRadioButton" name="RideOnYoshi">
+        <property name="text">
+         <string>Ride on Yoshi</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QRadioButton" name="Jump">
+        <property name="text">
+         <string>Jump up</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="Swim">
+        <property name="text">
+         <string>Swim</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QRadioButton" name="SlopeSlide">
+        <property name="text">
+         <string>Slope-Slide</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QRadioButton" name="TanookiStatue">
+        <property name="text">
+         <string>Tanooki statue</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QRadioButton" name="GrabIdle">
+        <property name="text">
+         <string>Grab Idle</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QRadioButton" name="JumpSwordDown">
+        <property name="text">
+         <string>Jump - sword down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QRadioButton" name="DownSword">
+        <property name="text">
+         <string>Down+Sword attack</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QRadioButton" name="Hurted">
+        <property name="text">
+         <string>Hurt</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <tabstops>
   <tabstop>directLeft</tabstop>
@@ -457,6 +351,7 @@
   <tabstop>Idle</tabstop>
   <tabstop>Run</tabstop>
   <tabstop>Jump</tabstop>
+  <tabstop>fall</tabstop>
   <tabstop>Spin</tabstop>
   <tabstop>Sliding</tabstop>
   <tabstop>Climbing</tabstop>
@@ -470,13 +365,7 @@
   <tabstop>RacoonFloat</tabstop>
   <tabstop>RacoonFly</tabstop>
   <tabstop>RacoonTail</tabstop>
-  <tabstop>Swin</tabstop>
-  <tabstop>TanookiStatue</tabstop>
-  <tabstop>SwordAttak</tabstop>
-  <tabstop>JumpSwordUp</tabstop>
-  <tabstop>JumpSwordDown</tabstop>
-  <tabstop>DownSword</tabstop>
-  <tabstop>Hurted</tabstop>
+  <tabstop>FrameSpeed</tabstop>
   <tabstop>AnimateView</tabstop>
  </tabstops>
  <resources>

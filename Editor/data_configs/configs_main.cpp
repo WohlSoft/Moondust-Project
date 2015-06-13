@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "data_configs.h"
+#include <common_features/app_path.h>
+#include <main_window/global_settings.h>
 
-#include "../main_window/global_settings.h"
+#include "data_configs.h"
 
 long ConfStatus::total_blocks=0;
 long ConfStatus::total_bgo=0;
@@ -38,11 +39,22 @@ long ConfStatus::total_sound=0;
 QString ConfStatus::configName="";
 QString ConfStatus::configPath="";
 
+QString ConfStatus::defaultTheme="";
+
 
 dataconfigs::dataconfigs()
 {
     default_grid=0;
+
+    engine.screen_w=800;
+    engine.screen_h=600;
+
+    engine.wld_viewport_w=668;
+    engine.wld_viewport_h=403;
 }
+
+dataconfigs::~dataconfigs()
+{}
 
 /*
 [background-1]
@@ -65,7 +77,7 @@ void dataconfigs::addError(QString bug, QtMsgType level)
 
 void dataconfigs::setConfigPath(QString p)
 {
-    config_dir = QApplication::applicationDirPath() + "/" +  "configs/" + p + "/";
+    config_dir = p;
 }
 
 void dataconfigs::loadBasics()
@@ -74,30 +86,50 @@ void dataconfigs::loadBasics()
     QSettings guiset(gui_ini, QSettings::IniFormat);
     guiset.setIniCodec("UTF-8");
 
+    int Animations=0;
     guiset.beginGroup("gui");
-        splash_logo = guiset.value("editor-splash", "").toString();
+        splash_logo =               guiset.value("editor-splash", "").toString();
+        ConfStatus::defaultTheme =  guiset.value("default-theme", "").toString();
+        Animations     =            guiset.value("animations", 0).toInt();
     guiset.endGroup();
 
     guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                        ApplicationPath + "/" : config_dir + "data/" );
     guiset.endGroup();
 
-    //Default splash image
-    if(splash_logo .isEmpty())
-        splash_logo = ":/images/splash_editor.png";
-    else
+    if(!splash_logo .isEmpty())
     {
         splash_logo = data_dir + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
             WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
-            splash_logo = ":/images/splash_editor.png";
+            splash_logo = "";//Themes::Image(Themes::splash);
+        }
+
+        obj_splash_ani tempAni;
+
+        animations.clear();
+        for(;Animations>0;Animations--)
+        {
+            guiset.beginGroup(QString("splash-animation-%1").arg(Animations));
+                QString img =   guiset.value("image", "").toString();
+                    if(img.isEmpty()) goto skip;
+                    tempAni.img = QPixmap(data_dir + img);
+                    if(tempAni.img.isNull()) goto skip;
+                tempAni.frames= guiset.value("frames", 1).toInt();
+                tempAni.speed = guiset.value("speed", 128).toInt();
+                tempAni.x =     guiset.value("x", 0).toInt();
+                tempAni.y =     guiset.value("y", 0).toInt();
+
+                animations.push_front(tempAni);
+            skip:
+            guiset.endGroup();
         }
     }
 }
 
-bool dataconfigs::loadconfigs(QProgressDialog *prgs)
+bool dataconfigs::loadconfigs()
 {
     //unsigned long i;//, prgs=0;
 
@@ -112,53 +144,75 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
         return false;
     }
 
-    QString dirs_ini = config_dir + "main.ini";
-    QSettings dirset(dirs_ini, QSettings::IniFormat);
-    dirset.setIniCodec("UTF-8");
+    QString main_ini = config_dir + "main.ini";
+    QSettings mainset(main_ini, QSettings::IniFormat);
+    mainset.setIniCodec("UTF-8");
 
-    dirset.beginGroup("main");
+    QString customAppPath = ApplicationPath;
 
-        data_dir = (dirset.value("application-dir", false).toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+    mainset.beginGroup("main");
+        customAppPath = mainset.value("application-path", ApplicationPath).toString();
+        customAppPath.replace('\\', '/');
+        data_dir = (mainset.value("application-dir", false).toBool() ?
+                        customAppPath + "/" : config_dir + "data/" );
 
-        ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
+        ConfStatus::configName = mainset.value("config_name", QDir(config_dir).dirName()).toString();
 
-        dirs.worlds = data_dir + dirset.value("worlds", "worlds").toString() + "/";
+        dirs.worlds = data_dir + mainset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music = data_dir + dirset.value("music", "data/music").toString() + "/";
-        dirs.sounds = data_dir + dirset.value("sound", "data/sound").toString() + "/";
+        dirs.music = data_dir +  mainset.value("music", "data/music").toString() + "/";
+        dirs.sounds = data_dir + mainset.value("sound", "data/sound").toString() + "/";
 
-        dirs.glevel = data_dir + dirset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld= data_dir + dirset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = data_dir + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.glevel = data_dir + mainset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld= data_dir +  mainset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dir+mainset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcustom = data_dir + dirset.value("custom-data", "data-custom").toString() + "/";
-    dirset.endGroup();
+        dirs.gcustom = data_dir+ mainset.value("custom-data", "data-custom").toString() + "/";
+    mainset.endGroup();
 
     ConfStatus::configPath = config_dir;
 
-    dirset.beginGroup("graphics");
-        default_grid = dirset.value("default-grid", 32).toInt();
-    dirset.endGroup();
+    mainset.beginGroup("graphics");
+        default_grid = mainset.value("default-grid", 32).toInt();
+    mainset.endGroup();
 
-    if( dirset.status() != QSettings::NoError )
+    if( mainset.status() != QSettings::NoError )
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(dirset.status()));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(mainset.status()));
     }
 
 
     characters.clear();
 
-    dirset.beginGroup("characters");
-        int characters_q = dirset.value("characters", 0).toInt();
+    mainset.beginGroup("characters");
+        int characters_q = mainset.value("characters", 0).toInt();
         for(int i=1; i<= characters_q; i++)
         {
             obj_playable_character pchar;
             pchar.id = i;
-            pchar.name = dirset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
+            pchar.name = mainset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
             characters.push_back(pchar);
         }
-    dirset.endGroup();
+    mainset.endGroup();
+
+
+    //Basic settings of engine
+    QString engine_ini = config_dir + "engine.ini";
+    if(QFile::exists(engine_ini)) //Load if exist, is not required
+    {
+        QSettings engineset(engine_ini, QSettings::IniFormat);
+        engineset.setIniCodec("UTF-8");
+
+        engineset.beginGroup("common");
+        engine.screen_w = engineset.value("screen-width", engine.screen_w).toInt();
+        engine.screen_h = engineset.value("screen-height", engine.screen_h).toInt();
+        engineset.endGroup();
+
+        engineset.beginGroup("world-map");
+        engine.wld_viewport_w = engineset.value("viewport-width", engine.wld_viewport_w).toInt();
+        engine.wld_viewport_h = engineset.value("viewport-height", engine.wld_viewport_h).toInt();
+        engineset.endGroup();
+    }
 
 
     ////////////////////////////////Preparing////////////////////////////////////////
@@ -175,52 +229,38 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     //////////////////////////////////////////////////////////////////////////////////
 
 
-    //QProgressDialog progress("Loading BackGround Data", "Abort", 0, total_data);
-
-    /*
-    if(!nobar)
-        {
-             progress.setWindowTitle("Loading config...");
-             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
-             progress.setFixedSize(progress.size());
-             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(),
-                    qApp->desktop()->availableGeometry()));
-             progress.setCancelButton(0);
-        ////////////////////////////////Preparing////////////////////////////////////////
-
-         progress.setLabelText("Loading BackGround Data");
-        }
-        else progress.close();
-    */
-
     ///////////////////////////////////////Level items////////////////////////////////////////////
-    loadLevelBackgrounds(prgs);
-    loadLevelBGO(prgs);
-    loadLevelBlocks(prgs);
-    loadLevelNPC(prgs);
+    loadLevelBackgrounds();
+    loadLevelBGO();
+    loadLevelBlocks();
+    loadLevelNPC();
     ///////////////////////////////////////Level items////////////////////////////////////////////
 
     ///////////////////////////////////////World map items////////////////////////////////////////
-    loadWorldTiles(prgs);
-    loadWorldScene(prgs);
-    loadWorldPaths(prgs);
-    loadWorldLevels(prgs);
+    loadWorldTiles();
+    loadWorldScene();
+    loadWorldPaths();
+    loadWorldLevels();
     ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
     ///////////////////////////////////////Music////////////////////////////////////////////
-    loadMusic(prgs);
+    loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
     ///////////////////////////////////////Sound////////////////////////////////////////////
-    loadSound(prgs);
+    loadSound();
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
 
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
     loadTilesets();
     ///////////////////////////////////////Tilesets////////////////////////////////////////////
+
+    ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
+    loadRotationTable();
+    ///////////////////////////////////////Rotation rules table////////////////////////////////////////////
 
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/

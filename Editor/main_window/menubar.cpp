@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui_mainwindow.h"
-#include "../mainwindow.h"
+#include <common_features/graphicsworkspace.h>
+#include <audio/music_player.h>
+#include <main_window/global_settings.h>
+#include <main_window/dock/toolboxes.h>
 
-#include "global_settings.h"
-#include "music_player.h"
-#include "../common_features/graphicsworkspace.h"
+#include <ui_mainwindow.h>
+#include <mainwindow.h>
+#include <ui_lvl_sctc_props.h>
 
 void MainWindow::updateMenus(bool force)
 {
-    if(!force) if(!this->isActiveWindow()) return;
+    if(!force)
+    {
+        //Don't update if window is not active
+        if(this->isMinimized()) return;
+
+        if(!this->isActiveWindow())
+            qApp->setActiveWindow(this);
+        this->update();
+        //Don't update if this is - same subWindow
+        if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
+    }
+    else
+    {
+        if(ui->centralWidget->subWindowList().isEmpty())
+            LastActiveSubWindow=NULL;
+        qApp->setActiveWindow(this);
+    }
+
+    LastActiveSubWindow=ui->centralWidget->activeSubWindow();
 
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
-    int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
+    LevelEdit *lvlWin = activeLvlEditWin(LastActiveSubWindow);
+    //NpcEdit *npcWin = activeNpcEditWin(LastActiveSubWindow);
+    WorldEdit *wldWin = activeWldEditWin(LastActiveSubWindow);
+
+
+    int WinType = activeChildWindow(LastActiveSubWindow); // 1 lvledit, 2 npcedit, 3 wldedit
     bool hasSWindow = (WinType != 0);
 
     ui->PlacingToolbar->setVisible(false);
@@ -55,81 +80,35 @@ void MainWindow::updateMenus(bool force)
     ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
+    ui->menuTest->setEnabled( (WinType==1)||(WinType==3) );
+    ui->action_doTest->setEnabled( (WinType==1) );
+    ui->action_doSafeTest->setEnabled( (WinType==1) || (WinType==3) );
+    #ifdef Q_OS_WIN
+    ui->actionRunTestSMBX->setEnabled( (WinType==1) );
+    #endif
+
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 
-    ui->ItemProperties->setVisible(false);
-    ui->WLD_ItemProps->setVisible(false);
+    dock_LvlItemProps->setVisible(false);
+    dock_WldItemProps->setVisible(false);
 
+    //Change visibility of toolboxes
+    /***************Level specific toolboxes****************/
+    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )   { docks_level.hideAll(); }
+    if((GlobalSettings::lastWinType !=1) && (WinType==1))       { docks_level.showAll(); }
 
+    /***************World specific toolboxes****************/
+    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )   { docks_world.hideAll(); }
+    if((GlobalSettings::lastWinType !=3) && (WinType==3))       { docks_world.showAll(); }
 
-    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
-    {
-        GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
-        GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
-
-        GlobalSettings::LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
-        GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
-        GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
-
-        GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
-
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-
-        ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
-        ui->LevelSectionSettings->setVisible( 0 );
-        ui->DoorsToolbox->setVisible( 0 );
-        ui->LevelLayers->setVisible( 0 );
-        ui->LevelEventsToolBox->setVisible( 0 );
-        ui->FindDock->setVisible( 0 );
-    }
-    if((GlobalSettings::lastWinType !=1) && (WinType==1))
-    {
-        ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
-        ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
-        ui->DoorsToolbox->setVisible( GlobalSettings::LevelDoorsBoxVis );
-        ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
-        ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
-        ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
-
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-    }
-
-    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
-    {
-        GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
-        GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
-        GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-
-        ui->WorldToolBox->setVisible( 0 );
-        ui->WorldSettings->setVisible( 0 );
-        ui->WorldFindDock->setVisible( 0 );
-    }
-    if((GlobalSettings::lastWinType !=3) && (WinType==3))
-    {
-        ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
-        ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
-        ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
-
-        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
-        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
-    }
-
+    /***************World and Level specific toolboxes****************/
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
-    {
-        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
-        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
-        ui->Tileset_Item_Box->setVisible( 0 );
-        ui->debuggerBox->setVisible( 0 );
-    }
-
+    { docks_level_and_world.hideAll(); }
+    if( (!(GlobalSettings::lastWinType==1))&&(!(GlobalSettings::lastWinType==3)) && (WinType == 1 || WinType == 3) )
+    { docks_level_and_world.showAll(); }
 
     GlobalSettings::lastWinType =   WinType;
-
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
@@ -140,9 +119,15 @@ void MainWindow::updateMenus(bool force)
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionLVLSearchBox->setVisible( (WinType==1) );
 
+    ui->actionTilesetBox->setVisible( (WinType==1) || (WinType==3));
+    ui->actionBookmarkBox->setVisible( (WinType==1) || (WinType==3));
+    ui->actionDebugger->setVisible( (WinType==1) || (WinType==3));
+
     ui->actionWLDToolBox->setVisible( (WinType==3) );
     ui->actionWorld_settings->setVisible( (WinType==3) );
     ui->actionWLD_SearchBox->setVisible( (WinType==3) );
+
+    ui->actionSemi_transparent_paths->setVisible( (WinType==3) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
@@ -156,6 +141,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelProp->setEnabled( (WinType==1) );
 
     ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionExport_to_image_section->setVisible( (WinType==1) );
 
     ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
@@ -189,67 +175,103 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
 
+    ui->actionFixWrongMasks->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_clear_unused->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_Import->setEnabled( (WinType==1)|| (WinType==3) );
+
+    ui->actionAlign_selected->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipHorizontal->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipVertical->setEnabled(  (WinType==1)|| (WinType==3)  );
+
+    ui->actionRotateLeft->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionRotateRight->setEnabled(  (WinType==1)|| (WinType==3)  );
+
+    ui->actionCloneSectionTo->setEnabled( (WinType==1) );
+    ui->actionSCT_Delete->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipHorizontal->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipVertical->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateLeft->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateRight->setEnabled( (WinType==1) );
+
+    ui->actionAdditional_Settings->setEnabled( (WinType==1) );
+
+    ui->menuScript->setEnabled( WinType == 1 );
+    ui->actionCompile_To->setEnabled( false );
+    ui->menuSwitch_Compiler->setEnabled( false );
+
     if(WinType==1)
     {
+        if(lvlWin->LvlData.metaData.script)
+        {
+            Script::CompilerType ct = lvlWin->LvlData.metaData.script->usingCompilerType();
+            if(ct == Script::COMPILER_LUNALUA){
+                ui->actionCompile_To->setText(tr("Compile To: LunaLua"));
+                ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }else if(ct == Script::COMPILER_AUTOCODE){
+                ui->actionCompile_To->setText(tr("Compile To: Autocode [Lunadll Original Language]"));
+                ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }else{
+                ui->actionCompile_To->setText(tr("Compile To:"));
+                ui->actionCompile_To->setEnabled( false );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }
+            ui->actionAutocode_Lunadll_Original_Language->setChecked(ct==Script::COMPILER_AUTOCODE);
+            ui->actionLunaLua->setChecked(ct==Script::COMPILER_LUNALUA);
+        }
+        else
+        {
+            ui->actionCompile_To->setText(tr("Compile To:"));
+            ui->actionCompile_To->setEnabled( false );
+        }
+
         if( configs.check() )
         {
             WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
             return;
         }
 
-        if(activeLvlEditWin()->sceneCreated)
+        if(lvlWin->sceneCreated)
         {
-            if(activeLvlEditWin()->scene->pResizer==NULL)
-            {
-                ui->ResizeSection->setVisible(true);
-                ui->applyResize->setVisible(false);
-                ui->cancelResize->setVisible(false);
-            }
-            else
-            {
-                if(activeLvlEditWin()->scene->pResizer->type == 0)
-                {
-                    ui->ResizeSection->setVisible(false);
-                    ui->applyResize->setVisible(true);
-                    ui->cancelResize->setVisible(true);
-                }
-            }
+            dock_LvlSectionProps->switchResizeMode(
+                 (lvlWin->scene->pResizer!=NULL)&&(lvlWin->scene->pResizer->type==0)
+                        );
         }
 
-        zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
+        zoom->setText(QString::number(lvlWin->getZoom()));
 
         SetCurrentLevelSection(0, 1);
 
-        setDoorsToolbox();
-        setLayersBox();
-        setEventsBox();
+        dock_LvlWarpProps->init();
+        dock_LvlLayers->setLayersBox();
+        dock_LvlEvents->setEventsBox();
 
         //Sync lists in properties windows
         EventListsSync();
-        setLayerLists();
+        LayerListsSync();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
-        setLevelSectionData();
-
-        if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
-        setMusic( ui->actionPlayMusic->isChecked() );
+        dock_LvlSectionProps->setLevelSectionData();
         ui->actionSelect->trigger();
 
-
-        if(activeLvlEditWin()->sceneCreated)
+        if(lvlWin->sceneCreated)
         {
-            ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
-            ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
-            ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
-            ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
-            ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+            LvlScene * scn = lvlWin->scene;
+            ui->actionLockBlocks->setChecked(scn->lock_block);
+            ui->actionLockBGO->setChecked(scn->lock_bgo);
+            ui->actionLockNPC->setChecked(scn->lock_npc);
+            ui->actionLockWaters->setChecked(scn->lock_water);
+            ui->actionLockDoors->setChecked(scn->lock_door);
 
-            ui->actionGridEn->setChecked(activeLvlEditWin()->scene->grid);
+            ui->actionGridEn->setChecked(scn->grid);
 
-            GlobalSettings::LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
-            ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
-            ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+            GlobalSettings::LvlOpts = scn->opts;
+
+            ui->actionUndo->setEnabled(scn->canUndo());
+            ui->actionRedo->setEnabled(scn->canRedo());
+
+            scn->Debugger_updateItemList();
         }
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -265,38 +287,37 @@ void MainWindow::updateMenus(bool force)
 
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
-        setCurrentWorldSettings();
+        dock_WldSettingsBox->setCurrentWorldSettings();
+        dock_BookmarksBox->updateBookmarkBoxByData();
 
-        WriteToLog(QtDebugMsg, "-> Music Player");
-
-        if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
-        LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
-        setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 
-        if(activeWldEditWin()->sceneCreated)
+        if(wldWin->sceneCreated)
         {
+            WldScene *scn = wldWin->scene;
             WriteToLog(QtDebugMsg, "-> Get scene flags: locks");
-            ui->actionLockTiles->setChecked(activeWldEditWin()->scene->lock_tile);
-            ui->actionLockScenes->setChecked(activeWldEditWin()->scene->lock_scene);
-            ui->actionLockPaths->setChecked(activeWldEditWin()->scene->lock_path);
-            ui->actionLockLevels->setChecked(activeWldEditWin()->scene->lock_level);
-            ui->actionLockMusicBoxes->setChecked(activeWldEditWin()->scene->lock_musbox);
+            ui->actionLockTiles->setChecked(scn->lock_tile);
+            ui->actionLockScenes->setChecked(scn->lock_scene);
+            ui->actionLockPaths->setChecked(scn->lock_path);
+            ui->actionLockLevels->setChecked(scn->lock_level);
+            ui->actionLockMusicBoxes->setChecked(scn->lock_musbox);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
-            ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
+            ui->actionGridEn->setChecked(scn->grid);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
-            GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
-            ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
-            ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
+            GlobalSettings::LvlOpts = scn->opts;
+            ui->actionUndo->setEnabled(scn->canUndo());
+            ui->actionRedo->setEnabled(scn->canRedo());
+
+            scn->Debugger_updateItemList();
         }
 
-        zoom->setText(QString::number(activeWldEditWin()->getZoom()));
+        zoom->setText(QString::number(wldWin->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+        ui->actionSemi_transparent_paths->setChecked( GlobalSettings::LvlOpts.semiTransparentPaths );
 
     }
     else
@@ -305,30 +326,24 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
+    WriteToLog(QtDebugMsg, "-> Music Player");
+    LvlMusPlay::updateMusic();
+
     setTileSetBox();
-    UpdateLvlCustomItems();
+    UpdateCustomItems();
     updateWindowMenu();
+
+    //Update debugger's custom counters
+    dock_DebuggerBox->on_DEBUG_RefreshCoutners_clicked();
+
+    qApp->setActiveWindow(this);
 }
 
-
-//QList<QMenu * > menu_delete_list;
-//QList<QAction * > action_delete_list;
 
 void MainWindow::updateWindowMenu()
 {
     //Window menu
     ui->menuWindow->clear();
-
-//    while(!action_delete_list.isEmpty())
-//    {
-//        QAction *tmp = action_delete_list.first();
-//        action_delete_list.pop_back();
-//        if(tmp!=NULL) {
-//            WriteToLog(QtDebugMsg, QString("->>>>Removed trash!<<<<-"));
-//            WriteToLog(QtDebugMsg, QString(tmp->text()));
-//            delete tmp;
-//        }
-//    }
 
     QAction * SubView = ui->menuWindow->addAction(tr("Sub Windows"));
     connect(SubView, SIGNAL(triggered()), this, SLOT(setSubView()));
@@ -336,50 +351,35 @@ void MainWindow::updateWindowMenu()
     if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)
         SubView->setChecked(true);
 
-    //action_delete_list.push_back(SubView);
-
-
     QAction * TabView = ui->menuWindow->addAction(tr("Tab Windows"));
     connect(TabView, SIGNAL(triggered()), this, SLOT(setTabView()));
     TabView->setCheckable(true);
     if(GlobalSettings::MainWindowView==QMdiArea::TabbedView)
         TabView->setChecked(true);
 
-    //action_delete_list.push_back(TabView);
-
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
         closeC->setEnabled( !windows.isEmpty() );
 
-    //action_delete_list.push_back(closeC);
-
-
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * cascade = ui->menuWindow->addAction(tr("Cascade"));
         connect(cascade, SIGNAL(triggered()), this, SLOT( SWCascade() ) );
         cascade->setEnabled( !windows.isEmpty() );
-    //action_delete_list.push_back(cascade);
 
     QAction * tiledW = ui->menuWindow->addAction(tr("Tiled"));
         connect(tiledW, SIGNAL(triggered()), this, SLOT( SWTile() ) );
         tiledW->setEnabled( !windows.isEmpty() );
-    //action_delete_list.push_back(tiledW);
 
     ui->menuWindow->addSeparator();
-    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
 
         empty->setVisible( windows.isEmpty() );
-    //action_delete_list.push_back(empty);
-
 
     for (int i = 0; i < windows.size(); ++i) {
         QString text;
@@ -387,23 +387,15 @@ void MainWindow::updateWindowMenu()
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
-        //action_delete_list.push_back(action);
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
     }
 }
 
-void MainWindow::applyTextZoom(){
-    bool ok = false;
-    int zoomPercent = 100;
-    zoomPercent = zoom->text().toInt(&ok);
-    if(!ok)
-        return;
 
-    if(activeChildWindow()==1){
-        activeLvlEditWin()->setZoom(zoomPercent);
-    }else if(activeChildWindow()==3){
-        activeWldEditWin()->setZoom(zoomPercent);
-    }
+void MainWindow::UpdateCustomItems()
+{
+    dock_LvlItemBox->setLvlItemBoxes(true, true);
+    dock_WldItemBox->setWldItemBoxes(true, true);
 }

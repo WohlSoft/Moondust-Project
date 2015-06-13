@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,74 @@
  */
 
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include <QApplication>
 #include <QSettings>
-#include <QDebug>
+#include <QtDebug>
+#include <QDate>
 
+#include <dev_console/devconsole.h>
+
+#include "app_path.h"
 #include "logger_sets.h"
-#include "../dev_console/devconsole.h"
 
 QString     LogWriter::DebugLogFile;
 QtMsgType   LogWriter::logLevel;
 bool        LogWriter::enabled;
 
+LogWriterSignal::LogWriterSignal(QObject *parent) : QObject(parent)
+{}
+
+LogWriterSignal::LogWriterSignal(DevConsole *console, QObject *parent) : QObject(parent)
+{
+    setup(console);
+}
+
+void LogWriterSignal::setup(DevConsole *console)
+{
+    connect(this, SIGNAL(logToConsole(QString, QString)), console, SLOT(logMessage(QString,QString)));
+}
+
+LogWriterSignal::~LogWriterSignal()
+{}
+
+void LogWriterSignal::log(QString msg, QString chan)
+{
+    emit logToConsole(msg, chan);
+}
+
+
+
+LogWriterSignal *LogWriter::consoleConnector=NULL;
+
 void LogWriter::LoadLogSettings()
 {
-    DebugLogFile="PGE_debug_log.txt";
+    QString logFileName = QString("PGE_Editor_log_%1-%2-%3_%4-%5-%6.txt")
+            .arg(QDate().currentDate().year())
+            .arg(QDate().currentDate().month())
+            .arg(QDate().currentDate().day())
+            .arg(QTime().currentTime().hour())
+            .arg(QTime().currentTime().minute())
+            .arg(QTime().currentTime().second());
     logLevel = QtDebugMsg;
 
-    QString mainIniFile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString mainIniFile = AppPathManager::settingsFile();
     QSettings logSettings(mainIniFile, QSettings::IniFormat);
 
+    QDir defLogDir(AppPathManager::userAppDir()+"/logs");
+    if(!defLogDir.exists())
+        if(!defLogDir.mkpath(AppPathManager::userAppDir()+"/logs"))
+            defLogDir.setPath(AppPathManager::userAppDir());
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", QApplication::applicationDirPath()+"/PGE_debug_log.txt").toString();
+        DebugLogFile = logSettings.value("log-path", defLogDir.absolutePath()+"/"+logFileName).toString();
+        if(!QFileInfo(DebugLogFile).absoluteDir().exists())
+            DebugLogFile = defLogDir.absolutePath()+"/"+logFileName;
+        DebugLogFile = QFileInfo(DebugLogFile).absoluteDir().absolutePath()+"/"+logFileName;
+
         enabled = true;
-        switch( logSettings.value("log-level", "4").toInt() )
+        switch( logSettings.value("log-level", "3").toInt() )
         {
             case 4:
                 logLevel=QtDebugMsg; break;
@@ -59,6 +102,7 @@ void LogWriter::LoadLogSettings()
 
     logSettings.endGroup();
     qDebug()<< QString("LogLevel %1, log file %2").arg(logLevel).arg(DebugLogFile);
+    qInstallMessageHandler(logMessageHandler);
 }
 
 void LogWriter::WriteToLog(QtMsgType type, QString msg)
@@ -101,34 +145,131 @@ ts << txt << endl;
 outFile.close();
 }
 
+void LogWriter::logMessageHandler(QtMsgType type,
+                  const QMessageLogContext& context,
+                             const QString& msg)
+{
+    switch (type)
+    {
+        case QtDebugMsg:
+            if(logLevel==QtWarningMsg) return;
+        case QtWarningMsg:
+            if(logLevel==QtCriticalMsg) return;
+        case QtCriticalMsg:
+            if(logLevel==QtFatalMsg) return;
+        case QtFatalMsg:
+            break;
+    }
+
+    QByteArray lMessage = msg.toLocal8Bit();
+    QString txt = NULL;
+    switch (type)
+    {
+        case QtDebugMsg:
+        txt = QString("Debug (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtWarningMsg:
+        txt = QString("Warning: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtCriticalMsg:
+        txt = QString("Critical: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+        break;
+        case QtFatalMsg:
+        txt = QString("Fatal: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
+    }
+
+    QFile outFile(DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+    outFile.close();
+
+    if(type == QtFatalMsg)
+        abort();
+
+    if(!LogWriter::consoleConnector)
+        return;
+
+    switch (type) {
+    case QtDebugMsg:
+        LogWriter::consoleConnector->log(msg, QString("Debug"));
+        break;
+    case QtWarningMsg:
+        LogWriter::consoleConnector->log(msg, QString("Warning"));
+        break;
+    case QtCriticalMsg:
+        LogWriter::consoleConnector->log(msg, QString("Critical"));
+        break;
+    case QtFatalMsg:
+        LogWriter::consoleConnector->log(msg, QString("Fatal"));
+        break;
+    default:
+        LogWriter::consoleConnector->log(msg, QString("System"));
+        break;
+    }
+}
+
+void LogWriter::installConsole(DevConsole* console)
+{
+    if(consoleConnector)
+        delete consoleConnector;
+    consoleConnector = new LogWriterSignal;
+    consoleConnector->setup(console);
+}
+
+void LogWriter::uninstallConsole()
+{
+    if(consoleConnector)
+        delete consoleConnector;
+    consoleConnector=NULL;
+}
 
 void LoadLogSettings()
 {
     LogWriter::LoadLogSettings();
 }
 
-void WriteToLog(QtMsgType type, QString msg)
+void WriteToLog(QtMsgType type, QString msg, bool noConsole)
 {
     LogWriter::WriteToLog(type, msg);
 
-    if(!DevConsole::isConsoleShown())
+    if(noConsole)
+        return;
+    if(!LogWriter::consoleConnector)
         return;
 
     switch (type) {
     case QtDebugMsg:
-        DevConsole::log(msg, QString("Debug"));
+        LogWriter::consoleConnector->log(msg, QString("Debug"));
         break;
     case QtWarningMsg:
-        DevConsole::log(msg, QString("Warning"));
+        LogWriter::consoleConnector->log(msg, QString("Warning"));
         break;
     case QtCriticalMsg:
-        DevConsole::log(msg, QString("Critical"));
+        LogWriter::consoleConnector->log(msg, QString("Critical"));
         break;
     case QtFatalMsg:
-        DevConsole::log(msg, QString("Fatal"));
+        LogWriter::consoleConnector->log(msg, QString("Fatal"));
         break;
     default:
-        DevConsole::log(msg);
+        LogWriter::consoleConnector->log(msg, QString("System"));
         break;
     }
 }
+

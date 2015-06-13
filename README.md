@@ -1,7 +1,6 @@
-PlatGEnWohl
+Platform Game Engine by Wohlstand
 ===========
-
-Platformer Game Engine by Wohlstand
+[![Build Status](https://travis-ci.org/Wohlhabend-Networks/PGE-Project.svg?branch=master)](https://travis-ci.org/Wohlhabend-Networks/PGE-Project)
 
 a free platform for game making
 

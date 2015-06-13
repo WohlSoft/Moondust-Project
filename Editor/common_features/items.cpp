@@ -1,5 +1,26 @@
-#include "items.h"
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+#include <common_features/mainwinconnect.h>
+#include <common_features/themes.h>
+
+#include "items.h"
+#include "app_path.h"
 
 QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  *confId, QGraphicsScene *scene)
 {
@@ -180,7 +201,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 if((noimage)||(tImg.isNull()))
                 {
-                    tImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+                    tImg = Themes::Image(Themes::dummy_npc);
                 }
                 else
                 {
@@ -437,4 +458,51 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
     }
     //return null if wrong item
     return QPixmap();
+}
+
+
+
+int Items::getItemType(QString type)
+{
+    int target=0;
+
+    if(type.toLower()=="block")
+        target=ItemTypes::LVL_Block;
+    else
+    if(type.toLower()=="bgo")
+        target=ItemTypes::LVL_BGO;
+    else
+    if(type.toLower()=="npc")
+        target=ItemTypes::LVL_NPC;
+    else
+    if((type.toLower()=="physenv")||(type.toLower()=="water"))
+        target=ItemTypes::LVL_PhysEnv;
+    else
+    if((type.toLower()=="warp")||(type.toLower()=="door"))
+        target=ItemTypes::LVL_Door;
+    else
+    if((type.toLower()=="character")||(type.toLower()=="player"))
+        target=ItemTypes::LVL_Player;
+    else
+    if(type.toLower()=="tile")
+        target=ItemTypes::WLD_Tile;
+    else
+    if(type.toLower()=="scenery")
+        target=ItemTypes::WLD_Scenery;
+    else
+    if(type.toLower()=="path")
+        target=ItemTypes::WLD_Path;
+    else
+    if(type.toLower()=="level")
+        target=ItemTypes::WLD_Level;
+    else
+    if(type.toLower()=="musicbix")
+        target=ItemTypes::WLD_MusicBox;
+    else
+    {
+        bool ok=true;
+        target = type.toInt(&ok);
+        if(!ok) target=-1;
+    }
+    return target;
 }

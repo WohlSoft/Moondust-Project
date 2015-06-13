@@ -1,0 +1,10 @@
+--- configure.orig	2004-02-05 15:34:07 +0600
++++ configure	2014-09-20 12:39:45 +0700
+@@ -19099,7 +19099,6 @@
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+ 	    optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"

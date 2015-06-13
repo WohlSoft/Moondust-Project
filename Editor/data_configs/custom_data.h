@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
 #ifndef CUSTOM_DATA_H
 #define CUSTOM_DATA_H
 
-#include "../file_formats/npc_filedata.h"
-#include "../data_configs/obj_npc.h"
 #include <QPixmap>
 #include <QBitmap>
+
+#include <PGE_File_Formats/npc_filedata.h>
+#include <data_configs/obj_npc.h>
 
 struct UserIMGs
 {
@@ -64,6 +65,32 @@ struct UserBGs
     unsigned long id;
     unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
 };
+
+
+///
+/// \brief The CustomDirManager class This is a capturer of custom files from level/world custom directories
+///
+class CustomDirManager
+{
+public:
+    CustomDirManager();
+    CustomDirManager(QString path, QString name);
+    ///
+    /// \brief getCustomFile Get custom file path if exist.
+    /// \param name Target file name which need to found
+    /// \return empty string if not exist
+    ///
+    QString getCustomFile(QString name);
+    void setCustomDirs(QString path, QString name);
+    void createDirIfNotExsist();
+    void import(QStringList &files, bool local = true);
+
+private:
+    QString dirEpisode;
+    QString dirCustom;
+
+};
+
 
 
 #endif // CUSTOM_DATA_H

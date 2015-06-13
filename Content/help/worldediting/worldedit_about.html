@@ -10,7 +10,7 @@
 
 <body style="max-width: 1200px;">
 <p style="text-align: center">
-<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
+<a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /></a></p>
 <h1 style="text-align: left">World Editor &gt; About</h1>
 <p style="text-align: left"><strong>World map</strong> - the interactive list of 
 levels which available to player(s) for play. World map - is a key unit of game 
@@ -40,7 +40,26 @@ which switching playing music when player character stand on them.&nbsp;</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/WorldEditing/WorldEdit_Workspace.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
+<p><strong>Each world map should have:</strong></p>
+<ul>
+	<li><strong>Title of episode</strong> - this is a name of world map which 
+	showing in the main menu. If you will not define it and when you will try to 
+	play it in the SMBX, you will see the blank title of episode!</li>
+	<li><strong>Game start point</strong> - The any level item with "Game start" 
+	flag. If you will not plase it, the player will start game from 0x0 
+	coordinates of world map. If you will put multiple levels with "Game start" 
+	flag, you will start game from oldest of them.</li>
+	<li><strong>All levels should be connected with paths</strong> - if you will 
+	don't connect levels with paths you will not be able walk over world map. 
+	Path items - alone type of items which giving able to walk over world map. 
+	Even if you will build chain of levels which placed together, next level 
+	will be opened only if you will successfully complete it (level is 
+	successful only if player end them by getting of exit item. If player lose 
+	(killed by enemy/boss, fall down into pit, lose level mission, etc), exit is 
+	failed and you should replay level)!</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 
 
@@ -48,7 +67,7 @@ which switching playing music when player character stand on them.&nbsp;</p>
 <p style="text-align: center">&nbsp;</p>
 <hr />
 <p><a class="back_link" href="../manual_editor.html">&lt;&lt; Back</a></p><br />
-<p style="text-align: center">Copyright © 2014 Platformer Game Engine by 
+<p style="text-align: center">Copyright © 2014-2015 Platformer Game Engine by 
 Wohlstand project. All rights reserved.</p>
 
 </body>

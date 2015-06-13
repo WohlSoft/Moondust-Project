@@ -1,0 +1,151 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "lvl_npc.h"
+#include "../../data_configs/config_manager.h"
+#include <graphics/gl_renderer.h>
+
+#include "lvl_section.h"
+
+#include "lvl_scene_ptr.h"
+
+LVL_Npc::LVL_Npc() : PGE_Phys_Object()
+{
+    type = LVLNPC;
+    data = FileFormats::dummyLvlNpc();
+    animated=false;
+    animator_ID=0;
+    killed=false;
+    isActivated=false;
+}
+
+LVL_Npc::~LVL_Npc()
+{}
+
+void LVL_Npc::init()
+{
+    setSize(setup->width, setup->height);
+
+    int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
+    int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
+    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
+    frameSize.setSize(setup->gfx_w, setup->gfx_h);
+    animator.construct(texture, *setup);
+
+    setDefaults();
+    setGravityScale(setup->gravity ? 1.0f : 0.f);
+
+    if(setup->block_player)
+        collide = COLLISION_ANY;
+    else
+    if(setup->block_player_top)
+        collide = COLLISION_TOP;
+    else
+        collide = COLLISION_NONE;
+    phys_setup.max_vel_y=10;
+    setPos(data.x, data.y);
+}
+
+void LVL_Npc::kill()
+{
+    killed=true;
+    sct()->unregisterElement(this);
+    LvlSceneP::s->dead_npcs.push_back(this);
+}
+
+void LVL_Npc::update(float ticks)
+{
+    float accelCof=ticks/1000.0f;
+    if(killed) return;
+
+    PGE_Phys_Object::update(ticks);
+    timeout-=ticks;
+    animator.manualTick(ticks);
+
+    if(motionSpeed!=0)
+    {
+        if(!blocks_left.isEmpty())
+            direction=1;
+        else
+        if(!blocks_right.isEmpty())
+            direction=-1;
+        setSpeedX((motionSpeed*accelCof)*direction);
+    }
+
+    LVL_Section *section=sct();
+    PGE_RectF sBox = section->sectionRect();
+
+    if(section->isWarp())
+    {
+        if(posX() < sBox.left()-width-1 )
+            setPosX(sBox.right()+posX_coefficient-1);
+        else
+        if(posX() > sBox.right() + 1 )
+            setPosX(sBox.left()-posX_coefficient+1);
+    }
+}
+
+void LVL_Npc::render(double camX, double camY)
+{
+    if(killed) return;
+    if(!isActivated) return;
+
+    AniPos x(0,1);
+    if(animated)
+    {
+        if(is_scenery)
+            x=ConfigManager::Animator_NPC[animator_ID].image(direction);
+        else
+            x=animator.image(direction);
+    }
+
+    GlRenderer::renderTexture(&texture, posX()-camX+offset.w(),
+                              posY()-camY+offset.h(),
+                              frameSize.w(),
+                              frameSize.h(),
+                              x.first, x.second);
+}
+
+void LVL_Npc::setDefaults()
+{
+    direction=data.direct;
+    if(!setup) return;
+    motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
+    is_scenery  = setup->scenery;
+}
+
+void LVL_Npc::Activate()
+{
+    if(!is_scenery)
+        timeout=4000;
+    else
+        timeout=150;
+    isActivated=true;
+    animator.start();
+}
+
+void LVL_Npc::deActivate()
+{
+    isActivated=false;
+    if(!is_scenery)
+    {
+        setDefaults();
+        setPos(data.x, data.y);
+    }
+    animator.stop();
+}

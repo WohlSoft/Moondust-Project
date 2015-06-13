@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+ <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<!-- Internal PGE file formats-->
+   <mime-type type="application/x-pgex-level">
+      <icon name="x-application-pgex-level"/>
+      <comment>PGE Level file</comment>
+      <comment xml:lang="ru">Файл Уровня PGE</comment>
+      <glob pattern="*.lvlx"/>
+   </mime-type>
+   <mime-type type="application/x-pgex-world">
+      <icon name="x-application-pgex-world"/>
+      <comment>PGE World Map file</comment>
+      <comment xml:lang="ru">Файл Карты Мира PGE</comment>
+      <glob pattern="*.wldx"/>
+   </mime-type>
+	<!-- Legacy SMBX file formats-->
+   <mime-type type="application/x-smbx64-level">
+      <icon name="x-application-smbx64-level"/>
+      <comment>SMBX Level file</comment>
+      <comment xml:lang="ru">Файл Уровня SMBX</comment>
+      <glob pattern="*.lvl"/>
+   </mime-type>
+   <mime-type type="application/x-smbx64-world">
+      <icon name="x-application-smbx64-world"/>
+      <comment>SMBX World Map file</comment>
+      <comment xml:lang="ru">Файл Карты Мира SMBX</comment>
+      <glob pattern="*.wld"/>
+   </mime-type>
+</mime-info>

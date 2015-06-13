@@ -86,7 +86,6 @@
         <file>images/set_point.png</file>
         <file>cat_builder.icns</file>
         <file>cat_builder.ico</file>
-        <file>cat_builder.hqx</file>
         <file>images/cat_builder/cat_builder_16.png</file>
         <file>images/cat_builder/cat_builder_32.png</file>
         <file>images/cat_builder/cat_builder_48.png</file>
@@ -103,6 +102,26 @@
         <file>images/pencil_16x16.png</file>
         <file>images/copy_16x16.png</file>
         <file alias="player.png">images/player_point.png</file>
+        <file>images/cat_beaten/cat_beaten_16.png</file>
+        <file>images/cat_beaten/cat_beaten_24.png</file>
+        <file>images/cat_beaten/cat_beaten_32.png</file>
+        <file>images/cat_beaten/cat_beaten_48.png</file>
+        <file>images/cat_beaten/cat_beaten_128.png</file>
+        <file>images/cat_beaten/cat_beaten_256.png</file>
+        <file>images/cur_flood_fill.png</file>
+        <file>images/flood_fill.png</file>
+        <file>images/properties.png</file>
+        <file>images/bookmarks.png</file>
+        <file>images/tileset_box.png</file>
+        <file>images/lock_open.png</file>
+        <file>images/lock_closed.png</file>
+        <file>warn.png</file>
+        <file>question.png</file>
+        <file>images/goto_left_bottom.png</file>
+        <file>images/goto_left_top.png</file>
+        <file>images/cat_builder/cat_builder_256_logo.png</file>
+        <file>images/cat_builder/cat_builder_128_logo.png</file>
+        <file>credits.html</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
@@ -147,5 +166,51 @@
         <file>sections/20_n.png</file>
         <file>sections/21.png</file>
         <file>sections/21_n.png</file>
+    </qresource>
+    <qresource prefix="/dummies">
+        <file>dummies/dummy-bg.png</file>
+        <file>dummies/music_box.png</file>
+        <file>dummies/unknown_bgo.png</file>
+        <file>dummies/unknown_block.png</file>
+        <file>dummies/unknown_npc.png</file>
+        <file>dummies/unknown_path.png</file>
+        <file>dummies/unknown_scene.png</file>
+        <file>dummies/unknown_tile.png</file>
+        <file>dummies/unknown_wlvl.png</file>
+    </qresource>
+    <qresource prefix="/arrows">
+        <file>arrows/black_down.png</file>
+        <file>arrows/black_left.png</file>
+        <file>arrows/black_right.png</file>
+        <file>arrows/black_up.png</file>
+        <file>arrows/box.png</file>
+        <file>arrows/green_down.png</file>
+        <file>arrows/green_left.png</file>
+        <file>arrows/green_right.png</file>
+        <file>arrows/green_up.png</file>
+        <file>arrows/red_down.png</file>
+        <file>arrows/red_left.png</file>
+        <file>arrows/red_right.png</file>
+        <file>arrows/red_up.png</file>
+    </qresource>
+    <qresource prefix="/_files">
+        <file>_files/pge-project-mimeinfo.xml</file>
+        <file>_files/file_lvl/file_lvl_16.png</file>
+        <file>_files/file_lvl/file_lvl_32.png</file>
+        <file>_files/file_lvl/file_lvl_48.png</file>
+        <file>_files/file_lvl/file_lvl_256.png</file>
+        <file>_files/file_lvlx/file_lvlx_16.png</file>
+        <file>_files/file_lvlx/file_lvlx_32.png</file>
+        <file>_files/file_lvlx/file_lvlx_48.png</file>
+        <file>_files/file_lvlx/file_lvlx_256.png</file>
+        <file>_files/file_wld/file_wld_16.png</file>
+        <file>_files/file_wld/file_wld_32.png</file>
+        <file>_files/file_wld/file_wld_48.png</file>
+        <file>_files/file_wld/file_wld_256.png</file>
+        <file>_files/file_wldx/file_wldx_16.png</file>
+        <file>_files/file_wldx/file_wldx_32.png</file>
+        <file>_files/file_wldx/file_wldx_48.png</file>
+        <file>_files/file_wldx/file_wldx_256.png</file>
+        <file>_files/pge_editor.desktop</file>
     </qresource>
 </RCC>

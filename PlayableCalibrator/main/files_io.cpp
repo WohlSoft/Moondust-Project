@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "ui_calibrationmain.h"
 #include "globals.h"
 #include "graphics.h"
+#include "app_path.h"
 
 
 void CalibrationMain::OpenFile(QString fileName)
@@ -33,10 +34,6 @@ void CalibrationMain::OpenFile(QString fileName)
 
     LastOpenDir = ourFile.absoluteDir().path();
 
-    int x, y;
-    x = ui->FrameX->value();
-    y = ui->FrameY->value();
-
     tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
     if(tmp.size()==2)
         imgFileM = tmp[0] + "m." + tmp[1];
@@ -44,26 +41,24 @@ void CalibrationMain::OpenFile(QString fileName)
         imgFileM = "";
     //mask = ;
 
-    //Scene->mSpriteImage = QPixmap(fileName);
-    Scene->mSpriteImage = QPixmap::fromImage(
-                    Graphics::setAlphaMask(
-                        Graphics::loadQImage( fileName )
-                        ,Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM ))
-                    );
-    //Scene->mSpriteImage.setMask(mask);
+    QImage maskImg;
+
+    if(QFile::exists(ourFile.absoluteDir().path() + "/" + imgFileM))
+        maskImg = Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM );
+    else
+        maskImg = QImage();
+
+    x_imageSprite = QPixmap::fromImage(
+                Graphics::setAlphaMask(
+                    Graphics::loadQImage( fileName )
+                    , maskImg )
+                );
 
     loadConfig(fileName);
 
-    Scene->draw();
-
-    ui->Height->setValue(framesX[x][y].H);
-    ui->Width->setValue(framesX[x][y].W);
-    ui->OffsetX->setValue(framesX[x][y].offsetX);
-    ui->OffsetY->setValue(framesX[x][y].offsetY);
-    ui->EnableFrame->setChecked(framesX[x][y].used);
-
-    Scene->setFrame(ui->FrameX->value(), ui->FrameY->value());
-    Scene->setSquare(ui->OffsetX->value(), ui->OffsetY->value(), ui->Height->value(), ui->Width->value());
+    initScene();
+    updateControls();
+    updateScene();
 }
 
 
@@ -77,8 +72,8 @@ void CalibrationMain::on_MakeTemplateB_clicked()
     createDirs();
 
     QFileInfo ourFile(currentFile);
-    QString targetFile =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
-    QString targetFile2 =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
+    QString targetFile =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
+    QString targetFile2 =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
 
     temp1->setBackgroundBrush(QBrush(Qt::black));
     temp2->setBackgroundBrush(QBrush(Qt::white));
@@ -89,9 +84,11 @@ void CalibrationMain::on_MakeTemplateB_clicked()
             if(framesX[i][j].used)
             {
                 temp1->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              framesX[i][j].W-1, framesX[i][j].H-1, QPen(Qt::yellow, 1),Qt::transparent);
+                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
+                               QPen(Qt::yellow, 1),Qt::transparent);
                 temp2->addRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                              framesX[i][j].W-1, framesX[i][j].H-1, QPen(Qt::black, 1),Qt::transparent);
+                              frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1,
+                               QPen(Qt::black, 1),Qt::transparent);
             }
         }
 

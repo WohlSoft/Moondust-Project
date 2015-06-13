@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,110 +16,157 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef USE_SDL_MIXER
+#undef main
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#undef main
+#endif
+#include <QFileInfo>
+#include <QDir>
+
+#include <common_features/logger.h>
+#include <common_features/proxystyle.h>
+#include <common_features/app_path.h>
+#include <common_features/installer.h>
+#include <common_features/themes.h>
+#include <common_features/crashhandler.h>
+#include <SingleApplication/singleapplication.h>
+
+#include <networking/engine_intproc.h>
+#include <audio/sdl_music_player.h>
+
 #include "mainwindow.h"
 
-#include <QSharedMemory>
-#include <QSystemSemaphore>
-
-
-#include "common_features/logger.h"
-#include "common_features/proxystyle.h"
-
-#include "SingleApplication/singleapplication.h"
-
-#include <iostream>
-#include <stdlib.h>
-
-namespace PGECrashHandler {
-    void crashByFlood(){
-        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
-                                                                                  "To prevent this, try closing other uneccessary programs to free up more memory."));
-
-        std::exit(1);
-    }
-}
 
 int main(int argc, char *argv[])
 {
-    std::set_new_handler(PGECrashHandler::crashByFlood);
-    QApplication::addLibraryPath(".");
+    CrashHandler::initCrashHandlers();
 
+    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
     QApplication *a = new QApplication(argc, argv);
+    QStringList args=a->arguments();
 
-    SingleApplication *as = new SingleApplication(argc, argv);
+#ifdef Q_OS_MAC
+    QDir dir(QApplication::applicationDirPath());
+    dir.cdUp();
+    QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
+#endif
 
+    SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
     {
-        std::cout << "Editor already runned!\n";
+        QTextStream(stdout) << "Editor already runned!\n";
         return 0;
     }
 
-    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
+    a->setStyle(new PGE_ProxyStyle);
 
-//    //Check if application is already running//////////////////
-//    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
-//    bool isRunning;
+    QFont fnt = a->font();
 
-//    if(sema.acquire())
-//    {
-//        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//        shmem.attach();
-//    }
+    fnt.setPointSize(PGEDefaultFontSize);
+    a->setFont(fnt);
 
-//    QString sendToMem;
-//    foreach(QString str, a->arguments())
-//    {
-//        sendToMem+= str + "|";
-//    }
+    //Init system paths
+    AppPathManager::initAppPath();
 
-//    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//    if (shmem.attach())
-//    {
-//        isRunning = true;
-//    }
-//    else
-//    {
-//        shmem.create(1);
-//        isRunning = false;
-//    }
-//    sema.release();
+    foreach(QString arg, args)
+    {
+        if(arg=="--install")
+        {
+            AppPathManager::install();
+            AppPathManager::initAppPath();
 
-//    shmem.disconnect();
+            Installer::moveFromAppToUser();
+            Installer::associateFiles();
 
-//    if(isRunning)
-//    {
-//        QApplication::quit();
-//        QApplication::exit();
-//        delete a;
-//        return 0;
-//    }
+            QApplication::quit();
+            QApplication::exit();
+            delete a;
+            delete as;
+            return 0;
+        }
+    }
 
+    //Init themes engine
+    Themes::init();
+
+    //Init log writer
     LoadLogSettings();
 
-    // ////////////////////////////////////////////////////
-    a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
+    #ifdef USE_SDL_MIXER
+    //Init SDL Audio subsystem
+    if(SDL_Init(SDL_INIT_AUDIO)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Error of loading SDL: %1").arg(SDL_GetError()));
+    }
+
+    if(Mix_Init(MIX_INIT_FLAC|MIX_INIT_MOD|MIX_INIT_MP3|MIX_INIT_OGG)<0)
+    {
+        WriteToLog(QtWarningMsg, QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
+    }
+    #endif
+
+    int ret=0;
+    //Init Main Window class
     MainWindow *w = new MainWindow;
-    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
+    if(!w->continueLoad)
+    {
+
+        delete w;
+        goto QuitFromEditor;
+    }
 
     a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
 
-    w->showNormal();
-    w->activateWindow();
+    #ifndef Q_OS_ANDROID
+    w->show();
+    w->setWindowState(w->windowState()|Qt::WindowActive);
     w->raise();
+    #else
+    w->showFullScreen();
+    #endif
+    QApplication::setActiveWindow(w);
 
-    w->openFilesByArgs(a->arguments());
+    //Open files saved by Crashsave (if any)
+    CrashHandler::checkCrashsaves();
 
+    //Open files which opened by command line
+    w->openFilesByArgs(args);
+
+    //Set acception of external file openings
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
-    int ret=a->exec();
+#ifdef Q_OS_WIN
+    w->initWindowsThumbnail();
+#endif
 
+    //Run main loop
+    ret=a->exec();
+
+QuitFromEditor:
+        WriteToLog(QtDebugMsg, "Closing interprocess communicator...");
+    IntEngine::destroy();
+    #ifdef USE_SDL_MIXER
+        WriteToLog(QtDebugMsg, "Free music buffer...");
+    PGE_MusPlayer::MUS_freeStream();
+        WriteToLog(QtDebugMsg, "Free sound buffer...");
+    PGE_Sounds::freeBuffer();
+        WriteToLog(QtDebugMsg, "Closing audio...");
+    Mix_CloseAudio();
+        WriteToLog(QtDebugMsg, "Closing SDL...");
+    SDL_Quit();
+    #endif
+
+    WriteToLog(QtDebugMsg, "--> Application closed <--");
     QApplication::quit();
     QApplication::exit();
     delete a;
     delete as;
+
     return ret;
 }

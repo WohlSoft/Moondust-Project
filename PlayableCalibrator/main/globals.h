@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 #define GLOBALS_H
 
 #include <QList>
+#include <QPair>
+#include <QPixmap>
 #include "animator/aniFrames.h"
 #include "animator/AnimationScene.h"
 
@@ -30,10 +32,20 @@ public:
     Globals();
 };
 
-extern QList<QVector<frameOpts > > framesX;
+extern QList<QVector<frameOpts > > imgOffsets; //!< Image offsets
+extern QList<QVector<frameOpts > > framesX;    //!< Collision boxes settings
+extern int frameWidth;
+extern int frameHeight;
+extern int frameHeightDuck;
+extern int frameGrabOffsetX;
+extern int frameGrabOffsetY;
+extern bool frameOverTopGrab;
+extern FrameSets AniFrames;                    //!< Animation settings
+
 extern frameOpts buffer;
+
 extern QString LastOpenDir;
 extern QString currentFile;
-extern int CurFRMx, CurFRMy;
+extern int CurFrame_X, CurFrame_Y;
 
 #endif // GLOBALS_H

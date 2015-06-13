@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
+    <width>615</width>
     <height>285</height>
    </rect>
   </property>
@@ -187,6 +187,35 @@
    <property name="text">
     <string>Del</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>30</y>
+     <width>121</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Preview</string>
+   </property>
+   <widget class="QLabel" name="img">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>100</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string notr="true"/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../_resourses/images.qrc">:/images/NoAni.png</pixmap>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

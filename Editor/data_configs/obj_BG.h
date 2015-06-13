@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2015 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 #ifndef OBJ_BG_H
 #define OBJ_BG_H
 
+#include <QString>
+#include <QPixmap>
 
 struct obj_BG{
 
@@ -35,6 +37,7 @@ struct obj_BG{
     bool editing_tiled;
     bool animated;
     unsigned int frames;
+    unsigned int framespeed;
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     unsigned int display_frame;
