@@ -24,7 +24,7 @@
 
 #include "lvl_scene_ptr.h"
 
-LVL_Npc::LVL_Npc()
+LVL_Npc::LVL_Npc() : PGE_Phys_Object()
 {
     type = LVLNPC;
     data = FileFormats::dummyLvlNpc();
@@ -35,20 +35,11 @@ LVL_Npc::LVL_Npc()
 }
 
 LVL_Npc::~LVL_Npc()
-{
-    if(physBody && worldPtr)
-    {
-      worldPtr->DestroyBody(physBody);
-      physBody->SetUserData(NULL);
-      physBody = NULL;
-    }
-}
+{}
 
 void LVL_Npc::init()
 {
-    if(!worldPtr) return;
     setSize(setup->width, setup->height);
-
 
     int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
     int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
@@ -57,21 +48,8 @@ void LVL_Npc::init()
     animator.construct(texture, *setup);
 
     setDefaults();
+    setGravityScale(setup->gravity ? 1.0f : 0.f);
 
-        b2BodyDef bodyDef;
-    bodyDef.type = b2_staticBody;
-    bodyDef.fixedRotation=true;
-    bodyDef.awake=false;
-    bodyDef.allowSleep=true;
-    bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
-        PhysUtil::pix2met(data.y + posY_coefficient ) );
-    bodyDef.linearDamping = 2.0;
-    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-    bodyDef.gravityScale = setup->gravity ? 1.0f : 0.f;
-    physBody = worldPtr->CreateBody(&bodyDef);
-
-    b2PolygonShape shape;
-    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient-0.01), PhysUtil::pix2met(posY_coefficient-0.01) );
     if(setup->block_player)
         collide = COLLISION_ANY;
     else
@@ -79,32 +57,8 @@ void LVL_Npc::init()
         collide = COLLISION_TOP;
     else
         collide = COLLISION_NONE;
-
-    f_npc = physBody->CreateFixture(&shape, 1.0f);
-    f_npc->SetSensor( false );
-    f_npc->SetDensity(1.0);
-    f_npc->SetFriction(0.3f);
-
-    b2EdgeShape edgeShape;
-    edgeShape.Set( b2Vec2(PhysUtil::pix2met(-posX_coefficient-0.01), PhysUtil::pix2met(-posY_coefficient-0.01)),
-                   b2Vec2(PhysUtil::pix2met(posX_coefficient+0.01), PhysUtil::pix2met(-posY_coefficient-0.01)) );
-
-    if(collide!=COLLISION_TOP)
-    {
-        edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient-0.01), PhysUtil::pix2met(posY_coefficient+0.01) );
-        edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient+0.01), PhysUtil::pix2met(posY_coefficient+0.01) );
-    }
-    else
-    {
-        edgeShape.m_vertex0.Set( PhysUtil::pix2met(-posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
-        edgeShape.m_vertex3.Set( PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(-posY_coefficient) );
-    }
-    edgeShape.m_hasVertex0 = true;
-    edgeShape.m_hasVertex3 = true;
-    f_edge = physBody->CreateFixture(&edgeShape, 1.0f);
-    f_edge->SetFriction( 0.04f );
-    if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
-        f_edge->SetSensor(true);
+    phys_setup.max_vel_y=10;
+    setPos(data.x, data.y);
 }
 
 void LVL_Npc::kill()
@@ -116,17 +70,9 @@ void LVL_Npc::kill()
 
 void LVL_Npc::update(float ticks)
 {
-    if(killed)
-    {
-        if(physBody && worldPtr)
-        {
-          physBody->SetAwake(false);
-          physBody->SetType(b2_staticBody);
-          f_npc->SetSensor(true);
-          f_edge->SetSensor(true);
-        }
-        return;
-    }
+    float accelCof=ticks/1000.0f;
+    if(killed) return;
+
     PGE_Phys_Object::update(ticks);
     timeout-=ticks;
     animator.manualTick(ticks);
@@ -138,7 +84,7 @@ void LVL_Npc::update(float ticks)
         else
         if(!blocks_right.isEmpty())
             direction=-1;
-        setSpeedX(PhysUtil::pix2met((motionSpeed)*direction));
+        setSpeedX((motionSpeed*accelCof)*direction);
     }
 
     LVL_Section *section=sct();
@@ -159,19 +105,6 @@ void LVL_Npc::render(double camX, double camY)
     if(killed) return;
     if(!isActivated) return;
 
-    if(physBody)
-    {
-        if(!physBody->IsAwake())
-        {
-            physBody->SetAwake(true);
-        }
-        if(!is_scenery)
-        {
-            if(physBody->GetType()!=b2_dynamicBody)
-                physBody->SetType(b2_dynamicBody);
-        }
-    }
-
     AniPos x(0,1);
     if(animated)
     {
@@ -191,25 +124,15 @@ void LVL_Npc::render(double camX, double camY)
 void LVL_Npc::setDefaults()
 {
     direction=data.direct;
-
     if(!setup) return;
-    motionSpeed = ((!data.nomove)&&(setup->movement)) ? setup->speed : 0.0f;
+    motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
     is_scenery  = setup->scenery;
 }
 
 void LVL_Npc::Activate()
 {
-    if(!physBody->IsAwake())
-    {
-        physBody->SetAwake(true);
-    }
-
     if(!is_scenery)
-    {
-        if(physBody->GetType()!=b2_dynamicBody)
-            physBody->SetType(b2_dynamicBody);
         timeout=4000;
-    }
     else
         timeout=150;
     isActivated=true;
@@ -219,12 +142,9 @@ void LVL_Npc::Activate()
 void LVL_Npc::deActivate()
 {
     isActivated=false;
-    physBody->SetAwake(false);
     if(!is_scenery)
     {
         setDefaults();
-        if(physBody->GetType()!=b2_staticBody)
-            physBody->SetType(b2_staticBody);
         setPos(data.x, data.y);
     }
     animator.stop();

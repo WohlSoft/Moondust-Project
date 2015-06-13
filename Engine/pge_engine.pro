@@ -48,7 +48,6 @@ CONFIG += thread
 CONFIG += static
 
 DEPENDPATH += "$$PWD/../_Libs/oolua/project"
-DEPENDPATH += "$$PWD/../_Libs/Box2D/project"
 
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
@@ -58,7 +57,7 @@ LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 DEFINES += PGE_ENGINE
 
-LIBS += -lluabind -lluajit-5.1 -lbox2d
+LIBS += -lluabind -lluajit-5.1
 android: {
     LIBS += -L../_Libs/_builds/android/lib
     INCLUDEPATH += ../_Libs/_builds/android/include
@@ -90,8 +89,6 @@ RC_FILE = _resources/engine.rc
 
 SOURCES += \
     main.cpp \
-    physics/base_object.cpp \
-    physics/phys_util.cpp \
     graphics/graphics.cpp \
     scenes/scene_level.cpp \
     scenes/scene.cpp \
@@ -120,7 +117,6 @@ SOURCES += \
     data_configs/obj_bgo.cpp \
     scenes/level/lvl_bgo.cpp \
     data_configs/obj_bg.cpp \
-    physics/contact_listener.cpp \
     scenes/level/lvl_warp.cpp \
     scenes/level/lvl_scene_ptr.cpp \
     scenes/level/lvl_scene_items.cpp \
@@ -128,9 +124,6 @@ SOURCES += \
     scenes/level/lvl_scene_timers.cpp \
     scenes/level/lvl_scene_files_io.cpp \
     scenes/level/lvl_scene_init.cpp \
-    physics/engine/pge_phys_world.cpp \
-    physics/engine/Quadtree.cpp \
-    physics/engine/pge_phys_body.cpp \
     gui/pge_msgbox.cpp \
     gui/pge_boxbase.cpp \
     fontman/font_manager.cpp \
@@ -160,7 +153,6 @@ SOURCES += \
     scenes/level/lvl_player_def.cpp \
     data_configs/obj_player.cpp \
     scenes/level/lvl_z_constants.cpp \
-    physics/phys_debug_draw.cpp \
     data_configs/obj_effect.cpp \
     scenes/level/gfx_effects.cpp \
     common_features/episode_state.cpp \
@@ -217,17 +209,15 @@ SOURCES += \
     script/bindings/core/globalfuncs/luafuncs_core_settings.cpp \
     script/bindings/level/classes/luaclass_core_lvl_player.cpp \
     common_features/number_limiter.cpp \
-    graphics/b2d_render.cpp \
     scenes/level/lvl_effect.cpp \
     data_configs/setup_lvl_scene.cpp \
     script/lua_world_engine.cpp \
     script/lua_credits_engine.cpp \
-    script/bindings/level/classes/luaclass_core_physobj.cpp
+    scenes/level/lvl_base_object.cpp \
+    script/bindings/level/classes/luaclass_core_physobj.cpp \
 
 
 HEADERS  += \
-    physics/base_object.h \
-    physics/phys_util.h \
     graphics/graphics.h \
     scenes/scene_level.h \
     scenes/scene.h \
@@ -259,12 +249,8 @@ HEADERS  += \
     scenes/level/lvl_bgo.h \
     data_configs/obj_bg.h \
     version.h \
-    physics/contact_listener.h \
     scenes/level/lvl_warp.h \
     scenes/level/lvl_scene_ptr.h \
-    physics/engine/pge_phys_world.h \
-    physics/engine/Quadtree.h \
-    physics/engine/pge_phys_body.h \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
     fontman/font_manager.h \
@@ -289,7 +275,6 @@ HEADERS  += \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
     data_configs/obj_npc.h \
-    physics/phys_debug_draw.h \
     scenes/level/gfx_effects.h \
     common_features/episode_state.h \
     common_features/event_queue.h \
@@ -344,11 +329,11 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_settings.h \
     script/bindings/level/classes/luaclass_core_lvl_player.h \
     common_features/number_limiter.h \
-    graphics/b2d_render.h \
     scenes/level/lvl_effect.h \
     data_configs/setup_lvl_scene.h \
     script/lua_world_engine.h \
     script/lua_credits_engine.h \
+    scenes/level/lvl_base_object.h \
     script/bindings/level/classes/luaclass_core_physobj.h
 
 FORMS    += \

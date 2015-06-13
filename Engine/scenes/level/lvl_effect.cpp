@@ -17,14 +17,13 @@
  */
 
 #include "lvl_effect.h"
-#include "../../data_configs/config_manager.h"
-
+#include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
+#include <gui/pge_msgbox.h>
 
 #include "../scene_level.h"
 
-#include <gui/pge_msgbox.h>
-#include <fontman/font_manager.h>
+
 
 void LevelScene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys)
 {
@@ -172,28 +171,44 @@ void Scene_Effect::iterateStep(float ticks)
     m_posX+= m_velocityX * (timeStep/ticks);
     m_posY+= m_velocityY * (timeStep/ticks);
 
+    float accelCof=ticks/1000.0f;
     if(phys_setup.decelerate_x!=0)
     {
+        float decX=phys_setup.decelerate_x*accelCof;
         if(m_velocityX>0)
         {
-            m_velocityX -= phys_setup.decelerate_x;
+            if((m_velocityX-decX>0.0))
+                m_velocityX-=decX;
+            else
+                m_velocityX=0;
         } else if(m_velocityX<0) {
-            m_velocityX += phys_setup.decelerate_x;
+            if((m_velocityX+decX<0.0))
+                m_velocityX+=decX;
+            else
+                m_velocityX=0;
         }
     }
+
     if(phys_setup.decelerate_y!=0)
     {
+        float decY=phys_setup.decelerate_y*accelCof;
         if(m_velocityY>0)
         {
-            m_velocityY -= phys_setup.decelerate_y;
+            if((m_velocityY-decY>0.0))
+                m_velocityY-=decY;
+            else
+                m_velocityY=0;
         } else if(m_velocityY<0) {
-            m_velocityY += phys_setup.decelerate_y;
+            if((m_velocityY+decY<0.0))
+                m_velocityY+=decY;
+            else
+                m_velocityY=0;
         }
     }
 
     if(gravity!=0.0f)
     {
-        m_velocityY+= gravity/timeStep;
+        m_velocityY+= gravity*accelCof;
     }
 
     if((phys_setup.max_vel_x!=0)&&(m_velocityX>phys_setup.max_vel_x)) m_velocityX=phys_setup.max_vel_x;

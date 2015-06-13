@@ -13,7 +13,7 @@ function peachPlayer:onLoop()
         Renderer.printText("Player y: "..tostring(self.y), 100, 300, -1, 15, 0xFFFF0055)
         i = i + 1
         if(i % 100 == 0)then
-            self.speedY = -50
+            self.speedY = -15
         end
         BasePlayer.onLoop(self)
     end

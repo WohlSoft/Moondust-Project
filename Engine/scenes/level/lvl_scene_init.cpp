@@ -17,11 +17,9 @@
  */
 
 #include "../scene_level.h"
-#include "../../data_configs/config_manager.h"
-#include "../../physics/contact_listener.h"
+#include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
-
-#include "../../gui/pge_msgbox.h"
+#include <gui/pge_msgbox.h>
 
 #include <QDebug>
 
@@ -29,28 +27,35 @@
 bool LevelScene::setEntrance(int entr)
 {
     player_defs.clear();
-
+    int plr=1;
     foreach(int xxx, gameState->game_state.currentCharacter)
     {
         LVL_PlayerDef def;
+        def.setPlayerID(plr);
         def.setCharacterID(xxx);
-        if(gameState->game_state.characterStates.size()-1 > xxx-1)
-            def.setState(gameState->game_state.characterStates[xxx].state+1);
-        else
-            def.setState(1);
-        player_defs.push_back(def);
+        for(int j=0; j<gameState->game_state.characterStates.size(); j++)
+        {
+            if(gameState->game_state.characterStates[j].id==xxx)
+            {
+                def.setState(gameState->game_state.characterStates[j].state);
+                break;
+            }
+        }
+        player_defs[plr] = def;
+        plr++;
     }
 
     if((entr<=0) || (entr>data.doors.size()))
     {
         isWarpEntrance=false;
         bool found=false;
-        for(int i=0;i<data.players.size(); i++)
+        for(int i=0; i<data.players.size(); i++)
         {
             if(data.players[i].w==0 && data.players[i].h==0)
                 continue; //Skip empty points
-            cameraStart.setX( data.players[i].x+(data.players[i].w/2)-(player_defs.first().width()/2) );
-            cameraStart.setY( data.players[i].y+data.players[i].w-player_defs.first().height() );
+            LVL_PlayerDef d = player_defs[data.players[i].id];
+            cameraStart.setX( data.players[i].x+(data.players[i].w/2)-(d.width()/2) );
+            cameraStart.setY( data.players[i].y+data.players[i].h-d.height() );
             found=true;
             break;
         }
@@ -74,49 +79,23 @@ bool LevelScene::setEntrance(int entr)
             if(data.doors[i].array_id==(unsigned int)entr)
             {
                 isWarpEntrance = true;
-
                 startWarp = data.doors[i];
-
-                cameraStart.setX( startWarp.ox+16-(player_defs.first().width()/2) );
-                cameraStart.setY( startWarp.oy+32-player_defs.first().height() );
 
                 cameraStartDirected = (startWarp.type==1);
                 cameraStartDirection = startWarp.odirect;
-                if(cameraStartDirected)
-                {
-                    switch(startWarp.odirect)
-                    {
-                        case 2://right
-                            cameraStart.setX(startWarp.ox);
-                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
-                            break;
-                        case 1://down
-                            cameraStart.setX(startWarp.ox+16-player_defs.first().width()/2);
-                            cameraStart.setY(startWarp.oy);
-                            break;
-                        case 4://left
-                            cameraStart.setX(startWarp.ox+32-player_defs.first().width());
-                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
-                            break;
-                        case 3://up
-                            cameraStart.setX(startWarp.ox+16-player_defs.first().width()/2);
-                            cameraStart.setY(startWarp.oy+32-player_defs.first().height());
-                            break;
-                        default:
-                            break;
-                    }
-                }
 
                 for(int i=1; i<=numberOfPlayers; i++)
                 {
+                    LVL_PlayerDef d = player_defs[i];
+                    int w=d.width(), h=d.height();
                     EventQueueEntry<LevelScene >event3;
-                    event3.makeCaller([this, i]()->void{
+                    event3.makeCaller([this, i, w, h]()->void{
                                           PlayerPoint newPoint = getStartLocation(i);
                                           newPoint.id = i;
                                           newPoint.x=startWarp.ox;
                                           newPoint.y=startWarp.oy;
-                                          newPoint.w = this->player_defs.first().width();
-                                          newPoint.h = this->player_defs.first().height();
+                                          newPoint.w = w;
+                                          newPoint.h = h;
                                           newPoint.direction=1;
                                           this->addPlayer(newPoint, true, startWarp.type, startWarp.odirect);
                                           isWarpEntrance=false;
@@ -267,22 +246,6 @@ bool LevelScene::init()
     });
     luaEngine.init();
 
-    //Load File
-
-    //Set Entrance  (int entr=0)
-
-
-    //Init Physics
-    b2Vec2 gravity(0.0f, 150.0f);
-    world = new b2World(gravity);
-    world->SetAllowSleeping(true);
-
-    PGEContactListener *contactListener;
-
-    contactListener = new PGEContactListener();
-    world->SetContactListener(contactListener);
-
-    int sID = findNearSection(cameraStart.x(), cameraStart.y());
 
     qDebug()<<"Build sections";
     for(int i=0;i<data.sections.size();i++)
@@ -293,8 +256,6 @@ bool LevelScene::init()
         sections.last().setMusicRoot(data.path);
     }
 
-    LVL_Section *t_sct = getSection(sID);
-
     qDebug()<<"Create cameras";
     loaderStep();
     //quit from game if window was closed
@@ -302,11 +263,44 @@ bool LevelScene::init()
 
     for(int i=0; i<numberOfPlayers; i++)
     {
-        int x=cameraStart.x();
-        int y=cameraStart.y();
         int width  = PGE_Window::Width;
         int height = PGE_Window::Height/numberOfPlayers;
 
+        LVL_PlayerDef d = player_defs[i+1];
+        if(isWarpEntrance)
+        {
+            cameraStart.setX( startWarp.ox+16-(d.width()/2) );
+            cameraStart.setY( startWarp.oy+32-d.height() );
+            if(cameraStartDirected)
+            {
+                switch(startWarp.odirect)
+                {
+                    case 2://right
+                        cameraStart.setX(startWarp.ox);
+                        cameraStart.setY(startWarp.oy+32-d.height());
+                        break;
+                    case 1://down
+                        cameraStart.setX(startWarp.ox+16-d.width()/2);
+                        cameraStart.setY(startWarp.oy);
+                        break;
+                    case 4://left
+                        cameraStart.setX(startWarp.ox+32-d.width());
+                        cameraStart.setY(startWarp.oy+32-d.height());
+                        break;
+                    case 3://up
+                        cameraStart.setX(startWarp.ox+16-d.width()/2);
+                        cameraStart.setY(startWarp.oy+32-d.height());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        int sID = findNearestSection(cameraStart.x(), cameraStart.y());
+        LVL_Section *t_sct = getSection(sID);
+        int x=cameraStart.x();
+        int y=cameraStart.y();
         //Init Cameras
         PGE_LevelCamera camera;
         camera.init(
@@ -315,8 +309,8 @@ bool LevelScene::init()
                         (float)width, (float)height
                     );
         camera.changeSection(t_sct);
-        camera.setPos(cameraStart.x()-camera.w()/2 + player_defs.first().width()/2,
-                       cameraStart.y()-camera.h()/2 + player_defs.first().height()/2);
+        camera.setPos(x-camera.w()/2 + d.width()/2,
+                      y-camera.h()/2 + d.height()/2);
         cameras.push_back(camera);
     }
 
@@ -363,17 +357,17 @@ bool LevelScene::init()
 
         LVL_Warp * warpP;
         warpP = new LVL_Warp();
-        warpP->worldPtr = world;
+        //warpP->worldPtr = world;
         warpP->data = data.doors[i];
         warpP->init();
 
-        int sID = findNearSection(warpP->posX(), warpP->posY());
+        int sID = findNearestSection(warpP->posX(), warpP->posY());
         LVL_Section *sct = getSection(sID);
         if(sct)
         {
             warpP->setParentSection(sct);
         }
-        warpP->_syncBox2dWithPos();
+        warpP->_syncPosition();
 
         warps.push_back(warpP);
     }
@@ -387,18 +381,16 @@ bool LevelScene::init()
 
         LVL_PhysEnv * physesP;
         physesP = new LVL_PhysEnv();
-        physesP->worldPtr = world;
+        //physesP->worldPtr = world;
         physesP->data = data.physez[i];
         physesP->init();
-        physesP->_syncBox2dWithPos();
+        physesP->_syncPosition();
         physenvs.push_back(physesP);
     }
 
+    qDebug() << "Total textures loaded: " << ConfigManager::level_textures.size();
 
-    qDebug() << "textures " << ConfigManager::level_textures.size();
-
-
-    qDebug()<<"Add players";
+    qDebug() << "Add players";
 
     int added_players=0;
     if(!isWarpEntrance) //Dont place players if entered through warp
@@ -431,14 +423,6 @@ bool LevelScene::init()
             switch_blocks[blocks[i]->setup->switch_ID].push_back(blocks[i]);
         }
     }
-
-//    //start animation
-//    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-//        ConfigManager::Animator_Blocks[i].start();
-//    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-//        ConfigManager::Animator_BGO[i].start();
-//    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-//        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
 

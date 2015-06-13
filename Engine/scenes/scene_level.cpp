@@ -25,11 +25,7 @@
 
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
-
-#include "level/lvl_scene_ptr.h"
-
 #include <data_configs/config_manager.h>
-
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
@@ -39,12 +35,9 @@
 #include <audio/SdlMusPlayer.h>
 
 #include <QtDebug>
-
-#include <physics/phys_debug_draw.h>
-
 #include <settings/global_settings.h>
 
-DebugDraw dbgDraw;
+#include "level/lvl_scene_ptr.h"
 
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
@@ -58,6 +51,10 @@ LevelScene::LevelScene()
     isWarpEntrance=false;
     cameraStartDirected=false;
     cameraStartDirection=0;
+
+    /*********Physics**********/
+    gravity=26;
+    /**************************/
 
     /*********Exit*************/
     isLevelContinues=true;
@@ -75,8 +72,6 @@ LevelScene::LevelScene()
     /*********Default players number*************/
     numberOfPlayers=2;
     /*********Default players number*************/
-
-    world=NULL;
 
     /*********Loader*************/
     IsLoaderWorks=false;
@@ -203,6 +198,35 @@ void LevelScene::processPauseMenu()
     }
 }
 
+void LevelScene::processPhysics(float ticks)
+{
+    //Iterate
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->iterateStep(ticks);
+        plr->_syncPosition();
+    }
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->iterateStep(ticks);
+        active_npcs[i]->_syncPosition();
+    }
+
+    //Collide!
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->updateCollisions();
+    }
+
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->updateCollisions();
+    }
+
+}
+
 
 
 
@@ -301,18 +325,7 @@ LevelScene::~LevelScene()
 
     delete player1Controller;
     delete player2Controller;
-
-    qDebug() << "Destroy world";
-    if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
-    world = NULL;
-
-    //destroy players
-    //destroy blocks
-    //destroy NPC's
-    //destroy BGO's
-
     textures_bank.clear();
-
 }
 
 
@@ -378,7 +391,7 @@ void LevelScene::update()
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //Make world step
-            world->Step(uTickf/1000.f, 1, 1);
+            processPhysics(uTickf);
         }
 
         while(!block_transforms.isEmpty())
@@ -406,13 +419,13 @@ void LevelScene::update()
         for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
         {
             LVL_Player*plr=(*it);
+            plr->update(uTickf);
             if(PGE_Window::showDebugInfo)
             {
                 debug_player_jumping = plr->JumpPressed;
                 debug_player_onground= plr->onGround;
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
-            plr->update(uTickf);
         }
 
         for(int i=0;i<fading_blocks.size();i++)
@@ -692,10 +705,6 @@ int LevelScene::exec()
     doExit=false;
     running=true;
 
-    dbgDraw.c = &cameras.first();
-    world->SetDebugDraw(&dbgDraw);
-    dbgDraw.SetFlags( dbgDraw.e_shapeBit | dbgDraw.e_jointBit );
-
     //Level scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
@@ -832,28 +841,27 @@ int LevelScene::exitType()
 
 void LevelScene::checkPlayers()
 {
-    bool haveLivePlayers=false;
-
+    bool haveAlivePlayers=false;
     for(int i=0; i<players.size(); i++)
     {
-        if(players[i]->isLive)
-            haveLivePlayers = true;
+        if(players[i]->isAlive)
+            haveAlivePlayers = true;
     }
 
     for(int i=0; i<players.size(); i++)
     {
-        if((!players[i]->isLive) && (!players[i]->locked()))
+        if((!players[i]->isAlive) && (!players[i]->locked()))
         {
             switch(players[i]->kill_reason)
             {
             case LVL_Player::deathReason::DEAD_burn:
                 PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
-                if(!haveLivePlayers)
+                if(!haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
                 break;
             case LVL_Player::deathReason::DEAD_fall:
             case LVL_Player::deathReason::DEAD_killed:
-                if(haveLivePlayers)
+                if(haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
                 else
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
@@ -863,7 +871,7 @@ void LevelScene::checkPlayers()
         }
     }
 
-    if(!haveLivePlayers)
+    if(!haveAlivePlayers)
     {
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);

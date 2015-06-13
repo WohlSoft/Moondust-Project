@@ -41,19 +41,19 @@ void LevelScene::placeBlock(LevelBlock blockData)
         return;
     }
 
-    block->worldPtr = world;
+    //block->worldPtr = world;
     block->data = blockData;
 
     block->transformTo_x(blockData.id);
     block->init();
 
-    int sID = findNearSection(block->posX(), block->posY());
+    int sID = findNearestSection(block->posX(), block->posY());
     LVL_Section *sct = getSection(sID);
     if(sct)
     {
         block->setParentSection(sct);
     }
-    block->_syncBox2dWithPos();
+    block->_syncPosition();
 
     blocks.push_back(block);
 
@@ -78,7 +78,7 @@ void LevelScene::placeBGO(LevelBGO bgoData)
         return;
     }
 
-    bgo->worldPtr = world;
+    //bgo->worldPtr = world;
     bgo->data = bgoData;
 
     double targetZ = 0;
@@ -125,13 +125,13 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     }
     bgo->init();
 
-    int sID = findNearSection(bgo->posX(), bgo->posY());
+    int sID = findNearestSection(bgo->posX(), bgo->posY());
     LVL_Section *sct = getSection(sID);
     if(sct)
     {
         bgo->setParentSection(sct);
     }
-    bgo->_syncBox2dWithPos();
+    bgo->_syncPosition();
 
     bgos.push_back(bgo);
 }
@@ -149,7 +149,7 @@ void LevelScene::placeNPC(LevelNPC npcData)
         return;
     }
 
-    npc->worldPtr = world;
+    //npc->worldPtr = world;
     npc->data = npcData;
 
     double targetZ = 0;
@@ -177,13 +177,13 @@ void LevelScene::placeNPC(LevelNPC npcData)
     }
     npc->init();
 
-    int sID = findNearSection(npc->posX(), npc->posY());
+    int sID = findNearestSection(npc->posX(), npc->posY());
     LVL_Section *sct = getSection(sID);
     if(sct)
     {
         npc->setParentSection(sct);
     }
-    npc->_syncBox2dWithPos();
+    npc->_syncPosition();
 
     npcs.push_back(npc);
 }
@@ -195,10 +195,6 @@ void LevelScene::placeNPC(LevelNPC npcData)
 
 void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, int warpDirect)
 {
-    //if(effect==0) //Simple Appear
-    //if(effect==1) //Entered from pipe
-    //if(effect==2) //Entered from door
-
     LVL_Player * player;
     if(luaEngine.isValid()){
         player = luaEngine.createLuaPlayer();
@@ -211,7 +207,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     else if(players.size()==1)
         player->camera = &cameras.last();
 
-    int sID = findNearSection(playerData.x, playerData.y);
+    int sID = findNearestSection(playerData.x, playerData.y);
     LVL_Section *sct = getSection(sID);
     if(!sct)
     {
@@ -219,10 +215,7 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
         return;
     }
     player->setParentSection(sct);
-
-    player->worldPtr = world;
     player->z_index = Z_Player;
-
     player->setPlayerPointInfo(playerData);
     player->init();
     players.push_back(player);
@@ -234,12 +227,12 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
 
     if(byWarp)
     {
+        player->setPaused(true);
         player->WarpTo(playerData.x, playerData.y, warpType, warpDirect);
         if(warpType==2)
             PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
         else if(warpType==0)
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
-
     }
 }
 
