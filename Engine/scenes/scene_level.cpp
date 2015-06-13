@@ -419,13 +419,13 @@ void LevelScene::update()
         for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
         {
             LVL_Player*plr=(*it);
+            plr->update(uTickf);
             if(PGE_Window::showDebugInfo)
             {
                 debug_player_jumping = plr->JumpPressed;
                 debug_player_onground= plr->onGround;
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
-            plr->update(uTickf);
         }
 
         for(int i=0;i<fading_blocks.size();i++)
