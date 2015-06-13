@@ -36,6 +36,8 @@ PGE_Phys_Object::PGE_Phys_Object()
     _parentSection=NULL;
     width = 0.0f;
     height = 0.0f;
+    _realWidth=0.0f;
+    _realHeight=0.0f;
     _posX=0.0f;
     _posY=0.0f;
     _velocityX=0.0f;
@@ -180,7 +182,7 @@ void PGE_Phys_Object::_syncPositionAndSize()
     _posX= posRect.x();
     _posY= posRect.y();
     width=_realWidth;
-    height=_realWidth;
+    height=_realHeight;
     if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
 }
 
