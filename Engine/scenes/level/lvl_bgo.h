@@ -37,8 +37,6 @@ public:
 
     obj_bgo * setup;//Global config
 
-    //float posX();
-    //float posY();
     void render(double camX, double camY);
 };
 
