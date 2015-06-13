@@ -32,6 +32,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     animator_ID=0;
     killed=false;
     isActivated=false;
+    _isInited=false;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -39,6 +40,66 @@ LVL_Npc::~LVL_Npc()
 
 void LVL_Npc::init()
 {
+    if(_isInited) return;
+    transformTo_x(data.id);
+    setPos(data.x, data.y);
+    _syncSection();
+    _isInited=true;
+}
+
+void LVL_Npc::kill()
+{
+    killed=true;
+    sct()->unregisterElement(this);
+    LvlSceneP::s->dead_npcs.push_back(this);
+}
+
+void LVL_Npc::transformTo(long id, int type)
+{
+    if(id<=0) return;
+
+    if(type==2)//block
+    {
+    //        transformTask_block t;
+    //        t.block = this;
+    //        t.id=id;
+    //        t.type=type;
+
+        //LvlSceneP::s->block_transforms.push_back(t);
+    }
+    if(type==1)//Other NPC
+    {
+        // :-P
+    }
+}
+
+void LVL_Npc::transformTo_x(long id)
+{
+    data.id=id;
+
+    double targetZ = 0;
+    if(setup->foreground)
+        targetZ = LevelScene::Z_npcFore;
+    else
+    if(setup->background)
+        targetZ = LevelScene::Z_npcBack;
+    else
+        targetZ = LevelScene::Z_npcStd;
+
+    z_index += targetZ;
+
+    LevelScene::zCounter += 0.00000001;
+    z_index += LevelScene::zCounter;
+
+    long tID = ConfigManager::getNpcTexture(data.id);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        animated = ((setup->frames>1) || (setup->framestyle>0));
+        animator_ID = setup->animator_ID;
+    }
+
     setSize(setup->width, setup->height);
 
     int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
@@ -58,14 +119,17 @@ void LVL_Npc::init()
     else
         collide = COLLISION_NONE;
     phys_setup.max_vel_y=10;
-    setPos(data.x, data.y);
-}
 
-void LVL_Npc::kill()
-{
-    killed=true;
-    sct()->unregisterElement(this);
-    LvlSceneP::s->dead_npcs.push_back(this);
+    //if(isInited) {
+        //do some stuff only when NPC already inited (for example, cleanup stuff of previous NPC)
+    //} else
+    //Load LUA script
+    QString script = ConfigManager::Dir_NPCScript.getCustomFile(setup->algorithm_script);
+    if((!script.isEmpty())&&QFileInfo(script).exists())
+    {
+        //Init lua stuff
+
+    }
 }
 
 void LVL_Npc::update(float ticks)
@@ -148,4 +212,9 @@ void LVL_Npc::deActivate()
         setPos(data.x, data.y);
     }
     animator.stop();
+}
+
+bool LVL_Npc::isInited()
+{
+    return _isInited;
 }

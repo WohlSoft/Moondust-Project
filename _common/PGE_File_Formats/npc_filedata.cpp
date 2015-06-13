@@ -56,6 +56,8 @@ NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
     FileData.en_nohammer=false;
     FileData.en_noshell=false;
     FileData.en_name=false;
+    FileData.en_image=false;
+    FileData.en_script=false;
     return FileData;
 }
 
@@ -73,6 +75,10 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
     merged.name = (local.en_name)?local.name:global.name;
 
+    merged.image_n = (local.en_image)?local.image:global.image_n;
+    #if defined(PGE_ENGINE)
+    merged.algorithm_script = (local.en_script)?local.script:global.algorithm_script;
+    #endif
     merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
     merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
 

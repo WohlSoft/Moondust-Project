@@ -17,7 +17,7 @@ class LVL_Npc : public PGE_Phys_Object
 {
 public:
     LVL_Npc();
-    ~LVL_Npc();
+    virtual ~LVL_Npc();
     void init();
 
     LevelNPC data; //Local settings
@@ -38,8 +38,11 @@ public:
     bool killed;
     void kill();
 
-    //float posX();
-    //float posY();
+    int taskToTransform;
+    int taskToTransform_t;
+    void transformTo(long id, int type=0);
+    void transformTo_x(long id);
+
     void update(float ticks);
     void render(double camX, double camY);
     void setDefaults();
@@ -48,6 +51,12 @@ public:
 
     bool isActivated;
     int timeout;
+    virtual void lua_onLoop() {}
+
+    bool isInited();
+private:
+    bool _isInited;
+
 };
 
 #endif // LVL_NPC_H

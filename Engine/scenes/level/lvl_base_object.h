@@ -70,6 +70,8 @@ public:
     void setGravityScale(double scl);
 
     void _syncPosition();
+    void _syncPositionAndSize();
+    void _syncSection();
     void renderDebug(float _camX, float _camY);
 
     void iterateStep(float ticks);
@@ -93,6 +95,9 @@ public:
 
     double width;  //!< Width
     double height; //!< Height
+
+    double _realWidth;  //!< need to sync with tree
+    double _realHeight; //!< need to sync with tree
 
     double posX_coefficient;
     double posY_coefficient;
