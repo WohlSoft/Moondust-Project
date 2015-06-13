@@ -132,6 +132,8 @@ struct obj_player
     QHash<int, obj_player_state > states;
     QHash<int, obj_player_physics > phys_default;
 
+    QString event_script;//!< Global player's LUA-Script with events
+
     bool allowFloating;
 };
 
