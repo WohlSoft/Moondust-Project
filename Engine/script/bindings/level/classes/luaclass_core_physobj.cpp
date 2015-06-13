@@ -1,7 +1,6 @@
 #include "luaclass_core_physobj.h"
 
-#include <physics/base_object.h>
-
+#include <scenes/level/lvl_base_object.h>
 
 luabind::scope Binding_Level_Class_PhysObj::bindToLua()
 {
