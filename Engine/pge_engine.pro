@@ -214,7 +214,8 @@ SOURCES += \
     script/lua_credits_engine.cpp \
     scenes/level/lvl_base_object.cpp \
     script/bindings/level/classes/luaclass_level_lvl_player.cpp \
-    script/bindings/level/classes/luaclass_level_physobj.cpp
+    script/bindings/level/classes/luaclass_level_physobj.cpp \
+    script/bindings/level/classes/luaclass_level_lvl_npc.cpp
 
 
 HEADERS  += \
@@ -334,7 +335,8 @@ HEADERS  += \
     script/lua_credits_engine.h \
     scenes/level/lvl_base_object.h \
     script/bindings/level/classes/luaclass_level_lvl_player.h \
-    script/bindings/level/classes/luaclass_level_physobj.h
+    script/bindings/level/classes/luaclass_level_physobj.h \
+    script/bindings/level/classes/luaclass_level_lvl_npc.h
 
 FORMS    += \
     data_configs/select_config.ui
