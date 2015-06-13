@@ -40,8 +40,9 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     camera = NULL;
 
     playerID = 0;
-    isLocked = true;
-    isInited = false;
+    isLocked = false;
+    _no_render = false;
+    _isInited = false;
     isLuaPlayer = false;
 
     direction = 1;
@@ -163,7 +164,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     /********************floating************************/
     floating_allow=state_cur.allow_floating;
     floating_maxtime=state_cur.floating_max_time; //!< Max time to float
-    if(isInited)
+    if(_isInited)
     {
         if(!floating_allow && floating_isworks)
             floating_timer=0;
@@ -177,7 +178,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     characterID = CharacterID;
     stateID = _stateID;
 
-    if(isInited)
+    if(_isInited)
     {
         float cx = posRect.center().x();
         float b = posRect.bottom();
@@ -198,7 +199,7 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
     PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
     characterID = x.characterID;
     stateID     = x._chsetup.state;
-    if(isInited) setCharacter(characterID, stateID);
+    if(_isInited) setCharacter(characterID, stateID);
 }
 
 void LVL_Player::setDuck(bool duck)
@@ -294,10 +295,9 @@ void LVL_Player::init()
     setSize(state_cur.width, state_cur.height);
     setPos(posX, posY);
     phys_setup.max_vel_y=12;
-
     animator.tickAnimation(0.f);
     isLocked=false;
-    isInited=true;
+    _isInited=true;
 
     _syncSection();
 }
@@ -305,7 +305,7 @@ void LVL_Player::init()
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
-    if(!isInited) return;
+    if(!_isInited) return;
     if(!camera) return;
     LVL_Section* section = sct();
     if(!section) return;
@@ -314,7 +314,7 @@ void LVL_Player::update(float ticks)
 
     event_queue.processEvents(ticks);
 
-    if(isWarping)
+    if((isWarping) || (!isAlive))
     {
         animator.tickAnimation(ticks);
         updateCamera();
@@ -721,9 +721,8 @@ void LVL_Player::update(float ticks)
 
             if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
-                isInited=false;
-                //physBody->SetAwake(false);
-                setGravityScale(0);
+                setLocked(true);
+                _no_render=true;
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -1414,7 +1413,6 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
     warpFrameW = texture.w;
     warpFrameH = texture.h;
 
-    isInited=true;
     switch(warpType)
     {
         case 2://door
@@ -1793,7 +1791,8 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 void LVL_Player::render(double camX, double camY)
 {
     if(!isAlive) return;
-    if(!isInited) return;
+    if(!_isInited) return;
+    if(_no_render) return;
 
     PGE_RectF tPos = animator.curFrame();
     PGE_PointF Ofs = animator.curOffset();
@@ -1885,5 +1884,10 @@ void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
     setPaused(lock);
+}
+
+bool LVL_Player::isInited()
+{
+    return _isInited;
 }
 
