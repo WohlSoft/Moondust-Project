@@ -93,8 +93,8 @@ void PGE_Phys_Object::setSize(float w, float h)
     posRect.setSize(w, h);
     _realWidth=w;
     _realHeight=h;
-    posX_coefficient = width/2.0f;
-    posY_coefficient = height/2.0f;
+    posX_coefficient = _realWidth/2.0f;
+    posY_coefficient = _realHeight/2.0f;
     _syncPositionAndSize();
 }
 

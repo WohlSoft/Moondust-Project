@@ -227,9 +227,11 @@ class LVL_Player :
         bool isLuaPlayer;
         /********************Lua Stuff******************/
 
+        bool isInited();
 private:
+        bool _no_render;
         bool isLocked;
-        bool isInited;
+        bool _isInited;
         void refreshAnimation();
 };
 
