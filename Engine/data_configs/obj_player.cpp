@@ -124,7 +124,7 @@ bool ConfigManager::loadPlayableCharacters()
             splayer.animator_ID_wld = 0;
             splayer.wld_offset_y = 0;
 
-            //Default size of frame is 100x100
+            //Default size of frame is 100x100, but re-calculates from matrix size and size of target sprite
             splayer.frame_width=100;
             splayer.frame_height=100;
 
