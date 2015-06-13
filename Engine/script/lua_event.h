@@ -31,6 +31,7 @@ public:
     void addParameter(T par){
         objList.emplace_back(getNativeState(), par);
     }
+    void cleanupAllParams();
 
     static luabind::scope bindToLua();
 

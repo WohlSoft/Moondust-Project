@@ -349,6 +349,9 @@ void LevelScene::tickAnimations(float ticks)
 
 void LevelScene::update()
 {
+    if(luaEngine.shouldShutdown()){
+        setExiting(0, LvlExit::EXIT_MenuExit);
+    }
     Scene::update();
     tickAnimations(uTickf);
 
@@ -384,6 +387,7 @@ void LevelScene::update()
     } else {//Update physics is not pause menu
 
         updateLua();//Process LUA code
+
         system_events.processEvents(uTickf);
 
         processEffects(uTickf);
