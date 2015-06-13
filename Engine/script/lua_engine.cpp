@@ -17,7 +17,7 @@
 LuaEngine::LuaEngine() : LuaEngine(nullptr)
 {}
 
-LuaEngine::LuaEngine(Scene *scene) : m_luaScriptPath(""), m_baseScene(scene), L(nullptr), m_coreFile("")
+LuaEngine::LuaEngine(Scene *scene) : m_lateShutdown(false), m_luaScriptPath(""), m_baseScene(scene), L(nullptr), m_coreFile("")
 {}
 
 LuaEngine::~LuaEngine()
@@ -148,7 +148,7 @@ void LuaEngine::forceShutdown()
     L = nullptr;
 }
 
-luabind::adl::object LuaEngine::loadClassAPI(const QString &path)
+luabind::object LuaEngine::loadClassAPI(const QString &path)
 {
     QFile luaCoreFile(path);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
@@ -171,7 +171,7 @@ luabind::adl::object LuaEngine::loadClassAPI(const QString &path)
     }
 
     luabind::object tReturn(luabind::from_stack(L, -1));
-    if(luabind::type(tReturn) != LUA_TTABLE){
+    if(luabind::type(tReturn) != LUA_TUSERDATA){
         qWarning() << "Invalid return type of loading class";
         return luabind::object();
     }
@@ -180,7 +180,7 @@ luabind::adl::object LuaEngine::loadClassAPI(const QString &path)
 
 void LuaEngine::loadClassAPI(const QString &nameInGlobal, const QString &path)
 {
-    luabind::globals(L)[nameInGlobal.toLocal8Bit().data()] = loadClassAPI(path);
+    luabind::globals(L)[nameInGlobal.toStdString()] = loadClassAPI(path);
 }
 
 QString LuaEngine::coreFile() const
@@ -199,6 +199,9 @@ void LuaEngine::setCoreFile(const QString &coreFile)
 
 void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
 {
+    if(m_lateShutdown)
+        return;
+
     if(!isValid()){
         qWarning() << "Dispatching events while engine is invalid!";
         return;
@@ -221,10 +224,12 @@ void LuaEngine::dispatchEvent(LuaEvent &toDispatchEvent)
     }
 
     if (luabind::detail::pcall(L, argsNum + 1, 0) != 0) {
+        //Be sure to cleanup all objects
+        toDispatchEvent.cleanupAllParams();
+
         QString runtimeErrorMsg = QString(lua_tostring(L, -1));
         m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
-        shutdown();
-        return;
+        m_lateShutdown = true;
     }
 }
 
@@ -246,6 +251,16 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
+bool LuaEngine::shouldShutdown() const
+{
+    return m_lateShutdown;
+}
+
+void LuaEngine::setLateShutdown(bool value)
+{
+    m_lateShutdown = value;
+}
+
 QString LuaEngine::getLuaScriptPath() const
 {
     return m_luaScriptPath;

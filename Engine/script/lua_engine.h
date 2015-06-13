@@ -68,6 +68,9 @@ public:
     QString getLuaScriptPath() const;
     void setLuaScriptPath(const QString &luaScriptPath);
 
+    bool shouldShutdown() const;
+    void setLateShutdown(bool value);
+
 protected:
     virtual void onBindAll() {}
 
@@ -77,6 +80,7 @@ private:
     void bindCore();
     void error();
 
+    bool m_lateShutdown; //!< If true, then the lua engine will shutdown as soon as possible
     QString m_luaScriptPath;
     std::function<void (const QString & /*error message*/, const QString& /*stack trace*/)> m_errorReporterFunc;
     Scene* m_baseScene;
