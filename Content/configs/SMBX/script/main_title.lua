@@ -9,7 +9,7 @@ end
 
 function __native_event(eventObj, ...)
     local eventFuncToFind = "on"..eventObj.eventName:sub(0, 1):upper()..eventObj.eventName:sub(2)
-    Logger.debug(eventFuncToFind)
+    -- Logger.debug(eventFuncToFind)
     if(type(_G[eventFuncToFind]) == "function")then
         _G[eventFuncToFind](...)
     end
