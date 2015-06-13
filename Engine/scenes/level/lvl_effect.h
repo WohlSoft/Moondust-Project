@@ -19,8 +19,7 @@
 #ifndef LVL_EFFECT_H
 #define LVL_EFFECT_H
 
-#include "../../physics/base_object.h"
-#include "../../data_configs/obj_effect.h"
+#include <data_configs/obj_effect.h>
 #include <common_features/simple_animator.h>
 
 #include <PGE_File_Formats/file_formats.h>

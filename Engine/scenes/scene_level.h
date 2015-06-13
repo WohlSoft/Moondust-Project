@@ -54,7 +54,6 @@
 #include <script/lua_level_engine.h>
 
 #include <PGE_File_Formats/file_formats.h>
-#include <Box2D/Box2D.h>
 #include <QString>
 #include <QList>
 #include <QVector>
@@ -96,7 +95,7 @@ private:
 public:
     PlayerPoint getStartLocation(int playerID);
 
-    QList<LVL_PlayerDef > player_defs;
+    QHash<int, LVL_PlayerDef > player_defs;
 
     bool loadConfigs();
 
@@ -113,7 +112,7 @@ public:
     QString getLastError();
 
 
-    int findNearSection(long x, long y);
+    int findNearestSection(long x, long y);
 
     bool isExit();
 
@@ -307,7 +306,6 @@ private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;
 
-    b2World *world;
     QList<PGE_Texture > textures_bank;
 
     LuaLevelEngine luaEngine;
