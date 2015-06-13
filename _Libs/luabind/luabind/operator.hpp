@@ -334,6 +334,7 @@ namespace luabind {
 
         self_type self;
         const_self_type const_self;
+        inline void __unused_stuff() { _unused(self); _unused(const_self); }
 
     } // namespace unnamed
     

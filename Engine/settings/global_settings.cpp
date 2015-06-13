@@ -4,6 +4,7 @@
 #include <controls/controller_joystick.h>
 #include <controls/controller_keyboard.h>
 #include <common_features/logger.h>
+#include <common_features/number_limiter.h>
 
 #include <QSettings>
 
@@ -48,20 +49,19 @@ void GlobalSettings::load()
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
     MaxFPS=setup.value("max-fps", MaxFPS).toUInt();
-        if(MaxFPS<65) MaxFPS=65;
-    PhysStep=setup.value("phys-step", PhysStep).toUInt();
-        if(PhysStep<65) PhysStep=65;
+        NumberLimiter::apply(MaxFPS, 65, 1000);
+    TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
+        NumberLimiter::apply(TicksPerSecond, 65, 180);
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
-    enableDummyNpc=setup.value("enable-dummy-npc", enableDummyNpc).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
 
     volume_sound=setup.value("volume-sfx", 128).toInt();
-        if((volume_sound<0)||(volume_sound>128)) volume_sound=128;
-    volume_music=setup.value("volume-mus", 64).toInt();
-        if((volume_music<0)||(volume_music>128)) volume_music=128;
+        NumberLimiter::applyD(volume_sound, 128, 0, 128);
+    volume_music=setup.value("volume-mus", 45).toInt();
+        NumberLimiter::applyD(volume_sound, 45, 0, 128);
 
     setup.endGroup();
     loadKeyMap(player1_keyboard, setup, "player-1-keyboard");
@@ -109,9 +109,8 @@ void GlobalSettings::save()
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("Main");
         setup.setValue("max-fps", MaxFPS);
-        setup.setValue("phys-step", PhysStep);
+        setup.setValue("phys-step", TicksPerSecond);
         setup.setValue("show-debug-info", showDebugInfo);
-        setup.setValue("enable-dummy-npc", enableDummyNpc);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
         setup.setValue("player1-controller", player1_controller);
@@ -142,11 +141,9 @@ void GlobalSettings::resetDefaults()
     ScreenHeight=600;
 
     MaxFPS=250;
-    PhysStep=65;
+    TicksPerSecond=65;
 
     showDebugInfo=false;
-
-    enableDummyNpc=false;
 
     frameSkip=true;
 
@@ -154,8 +151,6 @@ void GlobalSettings::resetDefaults()
 
     volume_sound=128;
     volume_music=64;
-
-    testJoystickController=true;
 
     player1_controller=-1;
     player2_controller=-1;
@@ -174,7 +169,7 @@ void GlobalSettings::resetDefaults()
 
 void GlobalSettings::apply()
 {
-    PGE_Window::PhysStep=PhysStep;
+    PGE_Window::TicksPerSecond=TicksPerSecond;
     PGE_Window::MaxFPS=MaxFPS;
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;

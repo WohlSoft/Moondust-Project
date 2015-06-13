@@ -168,7 +168,7 @@ SDL_Surface* GraphicsHelps::QImage_toSDLSurface(const QImage &sourceImage)
         rmask, gmask, bmask, amask);
 }
 
-void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr)
+void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QString &out_errStr, PGE_Size* imgSize)
 {
     if( in_imgName.isEmpty() )
     {
@@ -198,4 +198,13 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
         out_maskName = "";
     }
     out_errStr = "";
+
+    if(imgSize)
+    {
+        QImage img = loadQImage(rootDir+in_imgName);
+        if(img.isNull())
+            out_errStr="Invalid image file!";
+        else
+            imgSize->setSize(img.width(), img.height());
+    }
 }

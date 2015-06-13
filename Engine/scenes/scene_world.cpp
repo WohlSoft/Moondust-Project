@@ -36,7 +36,7 @@
 #include <unordered_map>
 
 WorldScene::WorldScene()
-    : Scene(World)
+    : Scene(World), luaEngine(this)
 {
     wld_events.abort();
 
@@ -73,7 +73,7 @@ WorldScene::WorldScene()
     fader.setFull();
     /*********Fader*************/
 
-    move_speed = 125/(float)PGE_Window::PhysStep;
+    move_speed = 125/(float)PGE_Window::TicksPerSecond;
     move_steps_count=0;
 
     ConfigManager::setup_WorldMap.initFonts();
@@ -254,6 +254,17 @@ void WorldScene::setGameState(EpisodeState *_state)
 
 bool WorldScene::init()
 {
+    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    luaEngine.setCoreFile(ConfigManager::setup_WorldMap.luaFile);
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
+    luaEngine.init();
+
     _indexTable.clean();
     wldItems.clear();
     _itemsToRender.clear();
@@ -545,6 +556,7 @@ void WorldScene::update()
 {
     tickAnimations(uTickf);
     Scene::update();
+    updateLua();
 
     if(doExit)
     {
@@ -875,8 +887,10 @@ void WorldScene::render()
         double renderY = posY+16-(viewportRect.height()/2);
 
         //Render items
-        for(QVector<WorldNode*>::iterator it = _itemsToRender.begin(); it!=_itemsToRender.end(); it++)
-            (*it)->render((*it)->x-renderX, (*it)->y-renderY);
+        const int render_sz = _itemsToRender.size();
+        WorldNode** render_obj = _itemsToRender.data();
+        for(int i=0; i<render_sz; i++)
+            render_obj[i]->render(render_obj[i]->x-renderX, render_obj[i]->y-renderY);
 
         //draw our "character"
         AniPos img(0,1); img = mapwalker_ani.image();
@@ -1013,6 +1027,11 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+LuaEngine *WorldScene::getLuaEngine()
+{
+    return &luaEngine;
+}
+
 void WorldScene::processEvents()
 {
     player1Controller->update();
@@ -1065,13 +1084,15 @@ int WorldScene::exec()
         {
             start_render = SDL_GetTicks();
             render();
-            PGE_Window::rePaint();
             stop_render = SDL_GetTicks();
             doUpdate_render = frameSkip ? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
         if(stop_render < start_render) {stop_render=0; start_render=0; }
+
+        glFlush();
+        PGE_Window::rePaint();
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {

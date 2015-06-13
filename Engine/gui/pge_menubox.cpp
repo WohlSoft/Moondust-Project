@@ -219,7 +219,8 @@ void PGE_MenuBox::update(float ticks)
         case 1: processLoader(ticks); break;
         case 2: processBox(ticks); break;
         case 3: processUnLoader(ticks); break;
-        case 4: running=false; break;
+        case 4:
+        default: running=false; break;
     }
 }
 
@@ -289,6 +290,7 @@ void PGE_MenuBox::exec()
         updateControllers();
         PGE_BoxBase::render();
         render();
+        glFlush();
         PGE_Window::rePaint();
 
         if(uTick > (signed)(SDL_GetTicks() - start_render))

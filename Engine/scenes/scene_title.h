@@ -29,7 +29,7 @@
 #include <common_features/point.h>
 #include <controls/controller.h>
 
-#include <script/luatitlescreenengine.h>
+#include <script/lua_titlescreen_engine.h>
 
 typedef QPair<int, int > menustate;
 
@@ -67,6 +67,7 @@ public:
     void onMouseMoved(SDL_MouseMotionEvent &mmevent);
     void onMousePressed(SDL_MouseButtonEvent &mbevent);
     void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+    LuaEngine* getLuaEngine();
 
     void processEvents();
 
@@ -118,6 +119,7 @@ public:
 
     Controller *controller;
 
+
 private:
     int ret;//!< Exit code
     PGE_Point mousePos;
@@ -136,6 +138,7 @@ private:
     int debug_joy_keyval;
     int debug_joy_keyid;
     int debug_joy_keytype;
+
 
     LuaTitleScreenEngine luaEngine;
 };

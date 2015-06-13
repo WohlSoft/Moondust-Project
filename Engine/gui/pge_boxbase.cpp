@@ -127,7 +127,7 @@ void PGE_BoxBase::loadTexture(QString path)
 
 void PGE_BoxBase::updateTickValue()
 {
-    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTickf = 1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick = round(uTickf);
     if(uTick<=0) uTick=1;
     if(uTickf<=0) uTickf=1.0;
@@ -298,17 +298,19 @@ void PGE_BoxBase::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture
     blockG.setTopLeft( GlRenderer::MapToGl(target.x()+block.x(), target.y()+block.y()) );
     blockG.setBottomRight( GlRenderer::MapToGl(target.x()+block.x()+block.width(), target.y()+block.y()+block.height() ) );
 
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glTexCoord2f( tx.left(), tx.top() );
         glVertex2f( blockG.left(), blockG.top());
-
         glTexCoord2f( tx.right(), tx.top() );
         glVertex2f(  blockG.right(), blockG.top());
-
         glTexCoord2f( tx.right(), tx.bottom() );
         glVertex2f(  blockG.right(),  blockG.bottom());
 
+        glTexCoord2f( tx.left(), tx.top() );
+        glVertex2f( blockG.left(), blockG.top());
         glTexCoord2f( tx.left(), tx.bottom() );
         glVertex2f( blockG.left(),  blockG.bottom());
+        glTexCoord2f( tx.right(), tx.bottom() );
+        glVertex2f(  blockG.right(),  blockG.bottom());
     glEnd();
 }

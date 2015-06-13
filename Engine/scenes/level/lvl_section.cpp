@@ -17,7 +17,7 @@
  */
 
 #include "lvl_section.h"
-#include <physics/base_object.h>
+#include "lvl_base_object.h"
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/SdlMusPlayer.h>
 #include <data_configs/config_manager.h>

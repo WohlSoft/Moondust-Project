@@ -105,6 +105,9 @@ public:
     void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(int maxlen, bool strict=false);
 
+    bool isKeygrabViaKey() const;
+    void setKeygrabViaKey(bool value);
+
 private:
     void refreshRect();
     PGE_Rect menuRect;
@@ -112,6 +115,8 @@ private:
     /*******Key grabbing********/
     PGE_KeyGrabMenuItem *m_item;
     bool is_keygrab;
+    //This is needed, because the first inital keypress should not be prossesed.
+    bool is_keygrabViaKey;
     /*******Key grabbing********/
 
     int _itemsOnScreen;

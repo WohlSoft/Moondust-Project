@@ -17,9 +17,7 @@
  */
 
 #include "config_manager.h"
-
-//#include <QtDebug>
-
+#include <common_features/number_limiter.h>
 
 /*****Level BG************/
 QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
@@ -83,7 +81,9 @@ bool ConfigManager::loadLevelBackG()
 //                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
 //                           .arg(i).arg(tmpstr).arg(sbg.type));
 
-            sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
+            sbg.repeat_h = bgset.value("repeat-h", "2").toFloat();
+            NumberLimiter::applyD(sbg.repeat_h, 1.f, 0.f);
+
             tmpstr = bgset.value("repeat-v", "NR").toString();
                 if(tmpstr=="NR")
                     sbg.repead_v = 0;
@@ -103,6 +103,7 @@ bool ConfigManager::loadLevelBackG()
 
             sbg.magic = (bgset.value("magic", "0").toString()=="1");
             sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
+            NumberLimiter::applyD(sbg.magic_strips, 1u, 1u);
 
             sbg.magic_splits = bgset.value("magic-splits", "0").toString();
             tmp.clear();
@@ -122,8 +123,11 @@ bool ConfigManager::loadLevelBackG()
 
             sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
             sbg.frames = bgset.value("frames", "1").toInt();
+                NumberLimiter::apply(sbg.frames, 1u);
             sbg.framespeed = bgset.value("framespeed", "128").toInt();
+                NumberLimiter::apply(sbg.framespeed, 1u);
             sbg.display_frame = bgset.value("display-frame", "0").toInt();
+                NumberLimiter::apply(sbg.display_frame, 0u);
             //frames
 
             if(sbg.type==1)

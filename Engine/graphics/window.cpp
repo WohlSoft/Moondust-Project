@@ -29,9 +29,11 @@ int PGE_Window::Width=800;
 int PGE_Window::Height=600;
 
 int PGE_Window::MaxFPS=250;
-int PGE_Window::PhysStep=65;
+int PGE_Window::TicksPerSecond=65;
 
 bool PGE_Window::showDebugInfo=false;
+bool PGE_Window::showPhysicsDebug=false;
+
 
 SDL_Window *PGE_Window::window;
 SDL_GLContext PGE_Window::glcontext;
@@ -60,13 +62,9 @@ bool PGE_Window::init(QString WindowTitle)
 {
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-
-    // Устанавливаем версию использованной OpenGL (2.1)
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 
     GlRenderer::setViewportSize(Width, Height);
 
@@ -151,13 +149,13 @@ void PGE_Window::clean()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
     glLoadIdentity();
+    glFlush();
     rePaint();
 }
 
 void PGE_Window::rePaint()
 {
     if(window==NULL) return;
-    glFlush();
     SDL_GL_SwapWindow(window);
 }
 
@@ -261,6 +259,10 @@ int PGE_Window::processEvents(SDL_Event &event)
                     AppSettings.fullScreen=(PGE_Window::SDL_ToggleFS(PGE_Window::window)==1);
                     return 2;
                  }
+              break;
+              case SDLK_F2:
+                  PGE_Window::showPhysicsDebug=!PGE_Window::showPhysicsDebug;
+                  return 2;
               break;
               case SDLK_F3:
                   PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;

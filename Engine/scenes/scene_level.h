@@ -39,6 +39,8 @@
 #include "level/lvl_bgo.h"
 #include "level/lvl_npc.h"
 
+#include "level/lvl_effect.h"
+
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
@@ -49,8 +51,9 @@
 
 #include <data_configs/custom_data.h>
 
+#include <script/lua_level_engine.h>
+
 #include <PGE_File_Formats/file_formats.h>
-#include <Box2D/Box2D.h>
 #include <QString>
 #include <QList>
 #include <QVector>
@@ -92,11 +95,12 @@ private:
 public:
     PlayerPoint getStartLocation(int playerID);
 
-    QList<LVL_PlayerDef > player_defs;
+    QHash<int, LVL_PlayerDef > player_defs;
 
     bool loadConfigs();
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    LuaEngine* getLuaEngine();
 
     void update();
     void processEvents();
@@ -108,7 +112,7 @@ public:
     QString getLastError();
 
 
-    int findNearSection(long x, long y);
+    int findNearestSection(long x, long y);
 
     bool isExit();
 
@@ -217,6 +221,7 @@ public:
 
     EventQueue<LevelScene > system_events;
     LVL_Section *getSection(int sct);
+    EpisodeState *getGameState();
 
 private:
     bool isInit;
@@ -233,6 +238,16 @@ private:
 
     LVL_CameraList      cameras;
     LVL_SectionsList    sections;
+
+
+    /*  Effects engine   */
+    typedef QList<Scene_Effect>    SceneEffectsArray;
+    SceneEffectsArray  WorkingEffects;
+    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    void processEffects(float ticks);
+    /*  Effects engine   */
+
+
 
     typedef QVector<LVL_Player* >  LVL_PlayersArray;
     typedef QVector<LVL_Block* >   LVL_BlocksArray;
@@ -278,6 +293,10 @@ private:
     int  debug_event_delay;
 
 public:
+   float gravity;
+   void processPhysics(float ticks);
+
+public:
     void registerElement(PGE_Phys_Object* item);
     void unregisterElement(PGE_Phys_Object* item);
     typedef double RPoint[2];
@@ -287,8 +306,10 @@ private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;
 
-    b2World *world;
     QList<PGE_Texture > textures_bank;
+
+    LuaLevelEngine luaEngine;
 };
+
 
 #endif // SCENE_LEVEL_H

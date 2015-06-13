@@ -546,14 +546,9 @@ void ItemNPC::changeDirection(int dir)
             direction=((0==qrand()%2)?-1:1); //set randomly 1 or -1
         }
         curDirect = direction;
-        double BurriedOffset = 0;
-
-        if(!DisableScene)
-            BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
 
         imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
-        imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
-                                 - BurriedOffset);
+        imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y);
 
         setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 

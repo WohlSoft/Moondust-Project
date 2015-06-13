@@ -26,10 +26,12 @@
 #include <fontman/font_manager.h>
 #include <controls/controller_joystick.h>
 
+#include <script/bindings/core/events/luaevents_core_engine.h>
+
 #include "scene_title.h"
 #include <QtDebug>
 
-TitleScene::TitleScene() : Scene(Title)
+TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
     doExit=false;
     mousePos.setX(-300);
@@ -164,9 +166,16 @@ bool TitleScene::init()
         ConfigManager::loadDefaultSounds();
         ConfigManager::buildSoundIndex();
     }
-    qDebug() << "set Lua file "<<ConfigManager::config_dir+"titlescreen.lua";
 
-    luaEngine.setCoreFile(ConfigManager::config_dir+"titlescreen.lua");
+    luaEngine.setLuaScriptPath(ConfigManager::PathScript());
+    luaEngine.setCoreFile(ConfigManager::setup_TitleScreen.luaFile);
+    luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
+        qWarning() << "Lua-Error: ";
+        qWarning() << "Error Message: " << errorMessage;
+        qWarning() << "Stacktrace: \n" << stacktrace;
+        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
+        msgBox.exec();
+    });
     qDebug() << "Attempt to init...";
     luaEngine.init();
     qDebug() << "done!";
@@ -272,6 +281,11 @@ void TitleScene::onMouseWheel(SDL_MouseWheelEvent &wheelevent)
     }
 }
 
+LuaEngine *TitleScene::getLuaEngine()
+{
+    return &luaEngine;
+}
+
 void TitleScene::processEvents()
 {
     if(PGE_Window::showDebugInfo)
@@ -299,6 +313,7 @@ void TitleScene::processEvents()
 void TitleScene::update()
 {
     Scene::update();
+    updateLua();
     for(int i=0;i<imgs.size(); i++)
         imgs[i].a.manualTick(uTickf);
 
@@ -419,6 +434,7 @@ int TitleScene::exec()
         render();
         renderMouse();
 
+        glFlush();
         PGE_Window::rePaint();
 
         if( uTickf > (float)(SDL_GetTicks()-start_render) )
@@ -441,3 +457,4 @@ void TitleScene::resetController()
         delete controller;
     controller = AppSettings.openController(1);
 }
+

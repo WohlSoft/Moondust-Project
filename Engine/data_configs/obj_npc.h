@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <common_features/size.h>
 
 #include "../graphics/graphics.h"
 
@@ -44,6 +45,7 @@ struct obj_npc
     GLuint textureID;
     long textureArrayId;
     long animator_ID;
+    PGE_Size      image_size;
     /*   OpenGL    */
 
     int algorithm;              //    algorithm="0"	;NPC's alhoritm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
@@ -89,6 +91,12 @@ struct obj_npc
     QList<int> frames_right;    //Frame srquence for right
 
     bool container;// container=0; NPC can containing inside other NPC (need enable special option type 2)
+    bool container_elastic; //Elastic sprite of container (like sizable block)
+    int  container_elastic_border_w; //Width of border to draw elastic container
+    bool container_show_contents; //Show contents of container
+   float container_content_z_offset; //Render target sprite with next offset
+    bool container_crop_contents;    //Crop contents GFX size to the size of an item
+    int container_align_contents;    //align contents to center-0 or top-1
 
     unsigned int display_frame;
 
@@ -124,12 +132,15 @@ struct obj_npc
     int score;//    score=2				; Add scores to player (value 0-13)
               //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
 
+    int coins; //Add number of coins
+
     int speed;     //    speed=64			; Default movement speed in px/s
     bool movement; //    moving=1			; NPC simply moving right/left
     bool scenery;  //    scenery=0			; NPC as block
     bool immortal; //    immortal=0			; NPC Can't be destroy
     bool can_be_eaten; //    yoshicaneat=1			; NPC can be eaten by yoshi
     bool takable;  //    takeble=0			; NPC destroyble on contact with player
+    int  takable_snd; //Play sound-id on take
     bool grab_side;//    grab-side=0			; NPC can be grabbed on side
     bool grab_top; //    grab-top=0			; NPC can be grabbed on top
     bool grab_any; //    grab-any=0			; NPC can be grabbed on any collisions
@@ -180,6 +191,14 @@ struct obj_npc
 
     bool is_star; //If this marker was set, this NPC will be markered as "star"
                   //Quantity placed NPC's with marker "star" will be save in LVL-file
+
+    bool exit_is;               //This NPC is an exit
+    int  exit_walk_direction;   //Direction to walk offscreen (if 0 - player will don't walk
+    int  exit_code;             //Trigger exit code
+    int  exit_delay;            //Time to wait after triggering of exit
+    int  exit_snd;              //Custom exit sound if code more than 10
+
+    bool climbable;             //this is a climbable NPC
 
     //Editor defaults
     bool default_friendly;

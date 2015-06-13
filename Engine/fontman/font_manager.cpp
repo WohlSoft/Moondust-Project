@@ -337,11 +337,14 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             float bottom = point.y();
 
             glColor4f( Red, Green, Blue, Alpha);
-            glBegin(GL_QUADS);
+            glBegin(GL_TRIANGLES);
+                glTexCoord2f(rch.l,rch.t);glVertex3f(left, top, 0.0);
+                glTexCoord2f(rch.r,rch.t);glVertex3f(right, top, 0.0);
+                glTexCoord2f(rch.r,rch.b);glVertex3f(right, bottom, 0.0);
+
                 glTexCoord2f(rch.l,rch.t);glVertex3f(left, top, 0.0);
                 glTexCoord2f(rch.l,rch.b);glVertex3f(left, bottom, 0.0) ;
                 glTexCoord2f(rch.r,rch.b);glVertex3f(right, bottom, 0.0);
-                glTexCoord2f(rch.r,rch.t);glVertex3f(right, top, 0.0);
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
@@ -363,11 +366,14 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             float bottom = point.y();
 
             glColor4f( Red, Green, Blue, Alpha);
-            glBegin(GL_QUADS);
+            glBegin(GL_TRIANGLES);
+                glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+                glTexCoord2f(0.0,0.0);glVertex3f(right, bottom, 0.0);
+
                 glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
                 glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
                 glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
-                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
@@ -437,11 +443,11 @@ void FontManager::init()
     if(!QFontDatabase::applicationFontFamilies(fontID).isEmpty())
         family = QFontDatabase::applicationFontFamilies(fontID).at(0);
     defaultFont->setFamily(family);//font.setWeight(14);
-#ifdef __APPLE__
-    defaultFont->setPointSize(18);
-#else
-    defaultFont->setPointSize(12);
-#endif
+//#ifdef __APPLE__
+//    defaultFont->setPixelSize(16);
+//#else
+    defaultFont->setPixelSize(16);
+//#endif
     defaultFont->setStyleStrategy(QFont::PreferBitmap);
     defaultFont->setLetterSpacing(QFont::AbsoluteSpacing, 1);
     //defaultFont = buildFont_RW(":/PressStart2P.ttf", 14);
@@ -648,11 +654,14 @@ void FontManager::printText(QString text, int x, int y, int font, float Red, flo
             float bottom = point.y();
 
             glColor4f(Red, Green, Blue, Alpha);
-            glBegin(GL_QUADS);
+            glBegin(GL_TRIANGLES);
+                glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+                glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
+
                 glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
                 glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
                 glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
-                glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
             glEnd();
 
             glDisable(GL_TEXTURE_2D);
@@ -954,11 +963,13 @@ void FontManager::SDL_string_render2D( GLuint x, GLuint y, GLuint *texture )
     float bottom = point.y();
 
     glColor4f( 1.f, 1.f, 1.f, 1.f);
-    glBegin(GL_QUADS);
+    glBegin(GL_TRIANGLES);
+        glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
+        glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+        glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
         glTexCoord2f(0.0,1.0);glVertex3f(left, top, 0.0);
         glTexCoord2f(0.0,0.0);glVertex3f(left, bottom, 0.0) ;
-        glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);
-        glTexCoord2f(1.0,1.0);glVertex3f(right, top, 0.0);
+        glTexCoord2f(1.0,0.0);glVertex3f(right, bottom, 0.0);        
     glEnd();
 
     glDisable(GL_TEXTURE_2D);

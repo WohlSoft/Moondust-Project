@@ -24,6 +24,10 @@
 #include <SDL2/SDL_scancode.h>
 #include <SDL2/SDL_events.h>
 #include <common_features/fader.h>
+#include <script/lua_engine.h>
+
+#include <functional>
+#include <QList>
 
 class Scene
 {
@@ -55,12 +59,17 @@ public:
     virtual void onMouseReleased(SDL_MouseButtonEvent &mbevent);
     virtual void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
     virtual void processEvents();
+    virtual LuaEngine* getLuaEngine();
 
     virtual void update();
+    virtual void updateLua();
     virtual void render();
     virtual void renderMouse();
     virtual int exec(); //scene's loop
     TypeOfScene type();
+
+    void addRenderFunction(const std::function<void()>& renderFunc);
+    void clearRenderFunctions();
 
     bool isExiting();
     bool doShutDown();
@@ -83,6 +92,8 @@ protected:
 private:
     TypeOfScene sceneType;
     float __waiting_step;
+
+    QVector<std::function<void()> > renderFunctions;
 };
 
 #endif // SCENE_H

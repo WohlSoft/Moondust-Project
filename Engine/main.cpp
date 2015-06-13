@@ -36,8 +36,6 @@
 #include "data_configs/select_config.h"
 #include "data_configs/config_manager.h"
 
-#include "physics/phys_util.h"
-
 #include "graphics/window.h"
 #include "graphics/gl_renderer.h"
 #undef main
@@ -59,7 +57,6 @@
 #include "scenes/scene_title.h"
 #include "scenes/scene_credits.h"
 
-#include <Box2D/Box2D.h>
 #include <QMessageBox>
 
 #include <iostream>
@@ -131,7 +128,6 @@ int main(int argc, char *argv[])
     episode.worldfile="";
     AppSettings.debugMode=false; //enable debug mode
     AppSettings.interprocessing=false; //enable interprocessing
-    AppSettings.testJoystickController=false;
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -311,7 +307,7 @@ LoadingScreen:
 CreditsScreen:
 {
     CreditsScene *ttl = new CreditsScene;
-    ttl->setWaitTime(15000);
+    ttl->setWaitTime(30000);
 
     ttl->init();
     ttl->fader.setFade(10, 0.0f, 0.01f);
@@ -369,6 +365,18 @@ MainMenu:
         case TitleScene::ANSWER_PLAYEPISODE_2P:
             end_level_jump=RETURN_TO_WORLDMAP;
             _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
+            PlayerState plr;
+            plr._chsetup = FileFormats::dummySavCharacterState();
+            plr.characterID=1;
+            plr.stateID=1;
+            plr._chsetup.id=1;
+            plr._chsetup.state=1;
+            _game_state.setPlayerState(1, plr);
+            plr.characterID=2;
+            plr.stateID=1;
+            plr._chsetup.id=2;
+            plr._chsetup.state=1;
+            _game_state.setPlayerState(2, plr);
             _game_state.isEpisode=true;
             episode = res_episode;
             _game_state._episodePath = QFileInfo(episode.worldfile).absoluteDir().absolutePath()+"/";

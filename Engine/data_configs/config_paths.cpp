@@ -18,6 +18,24 @@
 
 #include "config_manager.h"
 
+
+QString ConfigManager::bgoPath;
+QString ConfigManager::BGPath;
+QString ConfigManager::blockPath;
+QString ConfigManager::npcPath;
+QString ConfigManager::effectPath;
+QString ConfigManager::playerLvlPath;
+QString ConfigManager::playerWldPath;
+
+QString ConfigManager::tilePath;
+QString ConfigManager::scenePath;
+QString ConfigManager::pathPath;
+QString ConfigManager::wlvlPath;
+
+QString ConfigManager::commonGPath;
+QString ConfigManager::scriptPath;
+
+
 QString ConfigManager::PathLevelBGO()
 {
     return bgoPath;
@@ -51,6 +69,11 @@ QString ConfigManager::PathLevelPlayable()
 QString ConfigManager::PathCommonGFX()
 {
     return commonGPath;
+}
+
+QString ConfigManager::PathScript()
+{
+    return scriptPath;
 }
 
 
@@ -106,4 +129,6 @@ void ConfigManager::refreshPaths()
     wlvlPath =  dirs.gworld +  "level/";
 
     commonGPath = dirs.gcommon + "/";
+
+    scriptPath = config_dir + "script/";
 }
