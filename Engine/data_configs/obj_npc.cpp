@@ -110,7 +110,7 @@ bool ConfigManager::loadLevelNPC()
         }
         /***************Load image*end***************/
 
-        snpc.algorithm =    npcset.value("algorithm", "0").toInt();
+        snpc.algorithm =    npcset.value("algorithm-id", "0").toInt();
         snpc.algorithm_script = npcset.value("algorithm", QString("npc-%1.lua").arg(i) ).toString();
         snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
         snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
