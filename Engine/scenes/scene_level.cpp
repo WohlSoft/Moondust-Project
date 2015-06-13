@@ -349,6 +349,9 @@ void LevelScene::tickAnimations(float ticks)
 
 void LevelScene::update()
 {
+    if(luaEngine.shouldShutdown()){
+        setExiting(0, LvlExit::EXIT_MenuExit);
+    }
     Scene::update();
     tickAnimations(uTickf);
 
@@ -384,6 +387,7 @@ void LevelScene::update()
     } else {//Update physics is not pause menu
 
         updateLua();//Process LUA code
+
         system_events.processEvents(uTickf);
 
         processEffects(uTickf);
@@ -406,8 +410,6 @@ void LevelScene::update()
             }
             x.block->data.id = block_transforms.first().id;
             x.block->transformTo_x(x.id);
-            x.block->init();
-
             block_transforms.pop_front();
         }
 
@@ -592,7 +594,7 @@ void LevelScene::render()
     if(isPauseMenu) _pauseMenu.render();
 }
 
-
+bool slowTimeMode=false;
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
@@ -689,6 +691,12 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
           isTimeStopped=!isTimeStopped;
         }
       break;
+        case SDLK_F6:
+          {
+            PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
+            slowTimeMode=!slowTimeMode;
+          }
+        break;
       default:
         break;
     }
@@ -764,7 +772,7 @@ int LevelScene::exec()
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+            wait( uTickf-(float)(SDL_GetTicks()-start_common) +(slowTimeMode?300:0));
         }
     }
     return exitLevelCode;

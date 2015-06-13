@@ -52,6 +52,9 @@ class LVL_Player :
         void updateCollisions();
         void solveCollision(PGE_Phys_Object *collided);
         LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
+        LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
+        bool isWall(QVector<LVL_Block *> &blocks);
+        bool forceCollideCenter;//!< collide with invizible blocks at center
 
         /*****************NPC's and blocks******************/
         typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
@@ -224,9 +227,11 @@ class LVL_Player :
         bool isLuaPlayer;
         /********************Lua Stuff******************/
 
+        bool isInited();
 private:
+        bool _no_render;
         bool isLocked;
-        bool isInited;
+        bool _isInited;
         void refreshAnimation();
 };
 

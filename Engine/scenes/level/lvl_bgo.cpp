@@ -18,8 +18,8 @@
 
 #include "lvl_bgo.h"
 #include "../../data_configs/config_manager.h"
-
 #include <graphics/gl_renderer.h>
+#include "../scene_level.h"
 
 LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
 {
@@ -27,38 +27,68 @@ LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
     data=FileFormats::dummyLvlBgo();
     animated=false;
     animator_ID=0;
+    _isInited=false;
 }
 
 LVL_Bgo::~LVL_Bgo()
-{
-//    if(physBody && worldPtr)
-//    {
-//      worldPtr->DestroyBody(physBody);
-//      physBody->SetUserData(NULL);
-//      physBody = NULL;
-//    }
-}
+{}
 
 void LVL_Bgo::init()
 {
-    //if(!worldPtr) return;
-    setSize(texture.w, texture.h);
+    if(_isInited) return;
+    transformTo_x(data.id);
     setPos(data.x, data.y);
     collide=COLLISION_NONE;
-//    b2BodyDef bodyDef;
-//    bodyDef.type = b2_staticBody;
-//    bodyDef.position.Set( PhysUtil::pix2met( data.x+posX_coefficient ),
-//        PhysUtil::pix2met(data.y + posY_coefficient ) );
-//    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
-//    physBody = worldPtr->CreateBody(&bodyDef);
 
-//    b2PolygonShape shape;
+    _isInited=true;
+}
 
-//    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient), PhysUtil::pix2met(posY_coefficient) );
+void LVL_Bgo::transformTo_x(long id)
+{
+    data.id=id;
+    double targetZ = 0;
+    double zOffset = setup->zOffset;
+    int zMode = data.z_mode;
 
-//    b2Fixture * bgo = physBody->CreateFixture(&shape, 1.0f);
-//    bgo->SetSensor(true);
-//    bgo->SetFriction( 0 );
+    if(zMode==LevelBGO::ZDefault)
+    {
+        switch(setup->view)
+        {
+            case -1: zMode = LevelBGO::Background2;break;
+            case 0: zMode = LevelBGO::Background1;break;
+            case 1: zMode = LevelBGO::Foreground1;break;
+            case 2: zMode = LevelBGO::Foreground2;break;
+        }
+    }
+
+    switch(zMode)
+    {
+        case LevelBGO::Background2:
+            targetZ = LevelScene::Z_BGOBack2 + zOffset + data.z_offset; break;
+        case LevelBGO::Background1:
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+        case LevelBGO::Foreground1:
+            targetZ = LevelScene::Z_BGOFore1 + zOffset + data.z_offset; break;
+        case LevelBGO::Foreground2:
+            targetZ = LevelScene::Z_BGOFore2 + zOffset + data.z_offset; break;
+        default:
+            targetZ = LevelScene::Z_BGOBack1 + zOffset + data.z_offset; break;
+    }
+
+    z_index += targetZ;
+
+    LevelScene::zCounter += 0.00000001;
+    z_index += LevelScene::zCounter;
+
+    long tID = ConfigManager::getBgoTexture(data.id);
+    if( tID >= 0 )
+    {
+        texId = ConfigManager::level_textures[tID].texture;
+        texture = ConfigManager::level_textures[tID];
+        animated = setup->animated;
+        animator_ID = setup->animator_ID;
+    }
+    setSize(texture.w, texture.h);
 }
 
 void LVL_Bgo::render(double camX, double camY)
@@ -68,4 +98,9 @@ void LVL_Bgo::render(double camX, double camY)
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
     GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
+}
+
+bool LVL_Bgo::isInited()
+{
+    return _isInited;
 }

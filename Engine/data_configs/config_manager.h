@@ -243,6 +243,7 @@ public:
     static QMap<long, obj_npc>   lvl_npc_indexes;
     static npc_Markers           marker_npc;
     static CustomDirManager Dir_NPC;
+    static CustomDirManager Dir_NPCScript;
     static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
     /*****Level NPC************/
 
@@ -336,6 +337,7 @@ public:
     static QString PathLevelBG();
     static QString PathLevelBlock();
     static QString PathLevelNPC();
+    static QString PathLevelNPCScript();
     static QString PathLevelEffect();
     static QString PathLevelPlayable();
 
@@ -364,6 +366,7 @@ private:
     static QString BGPath;
     static QString blockPath;
     static QString npcPath;
+    static QString npcScriptPath;
     static QString effectPath;
     static QString playerLvlPath;
     static QString playerWldPath;

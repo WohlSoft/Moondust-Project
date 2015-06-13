@@ -22,6 +22,11 @@ void LuaEvent::setEventName(const std::string &eventName)
     m_eventName = eventName;
 }
 
+void LuaEvent::cleanupAllParams()
+{
+    objList.clear();
+}
+
 luabind::scope LuaEvent::bindToLua()
 {
     using namespace luabind;

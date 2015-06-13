@@ -74,6 +74,7 @@ public:
     bool collideRect(double x, double y, double w, double h);
     bool collideRect(PGE_RectF &rect);
     bool collideRectDeep(PGE_RectF &rect, float deep);
+    bool collideRectDeep(PGE_RectF &rect, float deepX, float deepY);
     bool collideRect(PGE_Rect &rect);
 private:
     double _x;

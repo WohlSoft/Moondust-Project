@@ -92,7 +92,6 @@ namespace luabind
 			return detail::call_member_impl<R>(L,std::is_void<R>(), meta::index_range<1,sizeof...(Args)+1>(), std::forward<Args>(args)... );
 		}
 
-	private:
 		wrapped_self_t m_self;
 	};
 

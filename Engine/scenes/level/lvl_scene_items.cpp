@@ -41,22 +41,9 @@ void LevelScene::placeBlock(LevelBlock blockData)
         return;
     }
 
-    //block->worldPtr = world;
     block->data = blockData;
-
-    block->transformTo_x(blockData.id);
     block->init();
-
-    int sID = findNearestSection(block->posX(), block->posY());
-    LVL_Section *sct = getSection(sID);
-    if(sct)
-    {
-        block->setParentSection(sct);
-    }
-    block->_syncPosition();
-
     blocks.push_back(block);
-
 }
 
 
@@ -78,60 +65,8 @@ void LevelScene::placeBGO(LevelBGO bgoData)
         return;
     }
 
-    //bgo->worldPtr = world;
     bgo->data = bgoData;
-
-    double targetZ = 0;
-    double zOffset = bgo->setup->zOffset;
-    int zMode = bgo->data.z_mode;
-
-    if(zMode==LevelBGO::ZDefault)
-    {
-        switch(bgo->setup->view)
-        {
-            case -1: zMode = LevelBGO::Background2;break;
-            case 0: zMode = LevelBGO::Background1;break;
-            case 1: zMode = LevelBGO::Foreground1;break;
-            case 2: zMode = LevelBGO::Foreground2;break;
-        }
-    }
-
-    switch(zMode)
-    {
-        case LevelBGO::Background2:
-            targetZ = Z_BGOBack2 + zOffset + bgo->data.z_offset; break;
-        case LevelBGO::Background1:
-            targetZ = Z_BGOBack1 + zOffset + bgo->data.z_offset; break;
-        case LevelBGO::Foreground1:
-            targetZ = Z_BGOFore1 + zOffset + bgo->data.z_offset; break;
-        case LevelBGO::Foreground2:
-            targetZ = Z_BGOFore2 + zOffset + bgo->data.z_offset; break;
-        default:
-            targetZ = Z_BGOBack1 + zOffset + bgo->data.z_offset; break;
-    }
-
-    bgo->z_index += targetZ;
-
-    zCounter += 0.00000001;
-    bgo->z_index += zCounter;
-
-    long tID = ConfigManager::getBgoTexture(bgoData.id);
-    if( tID >= 0 )
-    {
-        bgo->texId = ConfigManager::level_textures[tID].texture;
-        bgo->texture = ConfigManager::level_textures[tID];
-        bgo->animated = bgo->setup->animated;
-        bgo->animator_ID = bgo->setup->animator_ID;
-    }
     bgo->init();
-
-    int sID = findNearestSection(bgo->posX(), bgo->posY());
-    LVL_Section *sct = getSection(sID);
-    if(sct)
-    {
-        bgo->setParentSection(sct);
-    }
-    bgo->_syncPosition();
 
     bgos.push_back(bgo);
 }
@@ -149,41 +84,8 @@ void LevelScene::placeNPC(LevelNPC npcData)
         return;
     }
 
-    //npc->worldPtr = world;
     npc->data = npcData;
-
-    double targetZ = 0;
-    if(npc->setup->foreground)
-        targetZ = Z_npcFore;
-    else
-    if(npc->setup->background)
-        targetZ = Z_npcBack;
-    else
-        targetZ = Z_npcStd;
-
-    npc->z_index += targetZ;
-
-    zCounter += 0.00000001;
-    npc->z_index += zCounter;
-
-
-    long tID = ConfigManager::getNpcTexture(npcData.id);
-    if( tID >= 0 )
-    {
-        npc->texId = ConfigManager::level_textures[tID].texture;
-        npc->texture = ConfigManager::level_textures[tID];
-        npc->animated = ((npc->setup->frames>1) || (npc->setup->framestyle>0));
-        npc->animator_ID = npc->setup->animator_ID;
-    }
     npc->init();
-
-    int sID = findNearestSection(npc->posX(), npc->posY());
-    LVL_Section *sct = getSection(sID);
-    if(sct)
-    {
-        npc->setParentSection(sct);
-    }
-    npc->_syncPosition();
 
     npcs.push_back(npc);
 }
@@ -220,9 +122,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player->init();
     players.push_back(player);
 
-    if(players.size()==1)
+    if(playerData.id==1)
         player1Controller->registerInControl(player);
-    else if(players.size()==2)
+    else if(playerData.id==2)
         player2Controller->registerInControl(player);
 
     if(byWarp)

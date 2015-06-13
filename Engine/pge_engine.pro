@@ -207,14 +207,15 @@ SOURCES += \
     script/lua_engine.cpp \
     script/lua_level_engine.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_settings.cpp \
-    script/bindings/level/classes/luaclass_core_lvl_player.cpp \
     common_features/number_limiter.cpp \
     scenes/level/lvl_effect.cpp \
     data_configs/setup_lvl_scene.cpp \
     script/lua_world_engine.cpp \
     script/lua_credits_engine.cpp \
     scenes/level/lvl_base_object.cpp \
-    script/bindings/level/classes/luaclass_core_physobj.cpp \
+    script/bindings/level/classes/luaclass_level_lvl_player.cpp \
+    script/bindings/level/classes/luaclass_level_physobj.cpp \
+    script/bindings/level/classes/luaclass_level_lvl_npc.cpp
 
 
 HEADERS  += \
@@ -327,14 +328,15 @@ HEADERS  += \
     script/bindings/core/events/luaevents_core_engine.h \
     script/bindings/core/globalfuncs/luafuncs_core_renderer.h \
     script/bindings/core/globalfuncs/luafuncs_core_settings.h \
-    script/bindings/level/classes/luaclass_core_lvl_player.h \
     common_features/number_limiter.h \
     scenes/level/lvl_effect.h \
     data_configs/setup_lvl_scene.h \
     script/lua_world_engine.h \
     script/lua_credits_engine.h \
     scenes/level/lvl_base_object.h \
-    script/bindings/level/classes/luaclass_core_physobj.h
+    script/bindings/level/classes/luaclass_level_lvl_player.h \
+    script/bindings/level/classes/luaclass_level_physobj.h \
+    script/bindings/level/classes/luaclass_level_lvl_npc.h
 
 FORMS    += \
     data_configs/select_config.ui

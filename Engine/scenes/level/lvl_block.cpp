@@ -46,6 +46,7 @@ LVL_Block::LVL_Block() : PGE_Phys_Object()
 
     taskToTransform=-1;
     taskToTransform_t=0;
+    _isInited=false;
 }
 
 LVL_Block::~LVL_Block()
@@ -54,29 +55,11 @@ LVL_Block::~LVL_Block()
 
 void LVL_Block::init()
 {
-    setSize(data.w, data.h);
-
-    sizable = setup->sizable;
-    isHidden = data.invisible;
-    collide = COLLISION_ANY;
-    slippery_surface = data.slippery;
-    if((setup->sizable) || (setup->collision==2))
-    {
-        collide = COLLISION_TOP;
-    }
-    else
-    if(setup->collision==0)
-    {
-        collide = COLLISION_NONE;
-    }
-
-    this->shape = setup->phys_shape;
-    isRectangle=(setup->phys_shape==0);
-    if(setup->algorithm==3)
-         ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
+    if(_isInited) return;
+    transformTo_x(data.id);
     setPos(data.x, data.y);
+    _isInited=true;
 }
-
 
 void LVL_Block::transformTo(long id, int type)
 {
@@ -104,8 +87,8 @@ void LVL_Block::transformTo_x(long id)
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
-                ((double)data.y/(double)100000000000) + 1 -
-                ((double)data.w * (double)0.0000000000000001);
+                ((double)data.y/(double)10000000000) + 1 -
+                ((double)data.w * (double)0.00000000001);
     }
     else
     {
@@ -131,6 +114,27 @@ void LVL_Block::transformTo_x(long id)
         data.w = texture.w;
         data.h = (texture.h/setup->frames);
     }
+
+    setSize(data.w, data.h);
+
+    sizable = setup->sizable;
+    isHidden = data.invisible;
+    collide = COLLISION_ANY;
+    slippery_surface = data.slippery;
+    if((setup->sizable) || (setup->collision==2))
+    {
+        collide = COLLISION_TOP;
+    }
+    else
+    if(setup->collision==0)
+    {
+        collide = COLLISION_NONE;
+    }
+
+    this->shape = setup->phys_shape;
+    isRectangle=(setup->phys_shape==0);
+    if(setup->algorithm==3)
+         ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
 }
 
 
@@ -298,6 +302,11 @@ void LVL_Block::render(double camX, double camY)
     }
 
     glDisable(GL_TEXTURE_2D);
+}
+
+bool LVL_Block::isInited()
+{
+    return _isInited;
 }
 
 void LVL_Block::drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture)

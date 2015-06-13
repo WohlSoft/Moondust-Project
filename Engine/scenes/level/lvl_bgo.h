@@ -30,6 +30,8 @@ public:
     ~LVL_Bgo();
     void init();
 
+    void transformTo_x(long id);
+
     LevelBGO data; //Local settings
 
     bool animated;
@@ -37,9 +39,10 @@ public:
 
     obj_bgo * setup;//Global config
 
-    //float posX();
-    //float posY();
     void render(double camX, double camY);
+    bool isInited();
+private:
+    bool _isInited;
 };
 
 

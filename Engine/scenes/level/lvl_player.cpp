@@ -33,13 +33,16 @@
 
 #include <fontman/font_manager.h>
 
+//#define COLLIDE_DEBUG
+
 LVL_Player::LVL_Player() : PGE_Phys_Object()
 {
     camera = NULL;
 
     playerID = 0;
-    isLocked = true;
-    isInited = false;
+    isLocked = false;
+    _no_render = false;
+    _isInited = false;
     isLuaPlayer = false;
 
     direction = 1;
@@ -55,6 +58,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     JumpPressed=false;
     onGround=false;
     on_slippery_surface=false;
+    forceCollideCenter=false;
 
     climbing=false;
 
@@ -134,9 +138,6 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     physics = setup.phys_default;
     physics_cur = physics[environment];
 
-    phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
-    phys_setup.min_vel_x =-physics_cur.MaxSpeed_walk;
-
     jumpTime_default = physics_cur.jump_time;
 
     long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
@@ -163,7 +164,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     /********************floating************************/
     floating_allow=state_cur.allow_floating;
     floating_maxtime=state_cur.floating_max_time; //!< Max time to float
-    if(isInited)
+    if(_isInited)
     {
         if(!floating_allow && floating_isworks)
             floating_timer=0;
@@ -177,7 +178,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     characterID = CharacterID;
     stateID = _stateID;
 
-    if(isInited)
+    if(_isInited)
     {
         float cx = posRect.center().x();
         float b = posRect.bottom();
@@ -198,7 +199,7 @@ void LVL_Player::setPlayerPointInfo(PlayerPoint pt)
     PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
     characterID = x.characterID;
     stateID     = x._chsetup.state;
-    if(isInited) setCharacter(characterID, stateID);
+    if(_isInited) setCharacter(characterID, stateID);
 }
 
 void LVL_Player::setDuck(bool duck)
@@ -209,6 +210,79 @@ void LVL_Player::setDuck(bool duck)
     setSize(state_cur.width, duck? state_cur.duck_height : state_cur.height);
     setPos(posX(), b-height);
     ducking=duck;
+    if(!duck)
+    {
+        _syncPosition();
+
+        //Detect collidable blocks!
+        QVector<PGE_Phys_Object*> bodies;
+        PGE_RectF posRectC = posRect;
+        posRectC.setTop(posRectC.top()+4.0f);
+        posRectC.setLeft(posRectC.left()-4.0f);
+        posRectC.setRight(posRectC.right()+4.0f);
+        posRectC.setBottom(posRectC.bottom()+4.0f);
+        LvlSceneP::s->queryItems(posRectC, &bodies);
+
+        #ifdef COLLIDE_DEBUG
+        //Freeze time to check out what happening at moment
+        GlRenderer::makeShot();
+        LvlSceneP::s->isTimeStopped=true;
+        #endif
+
+        forceCollideCenter=true;
+        for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+        {
+            PGE_Phys_Object*body=*it;
+            if(body==this) continue;
+            if(body->isPaused()) continue;
+            solveCollision(body);
+        }
+        forceCollideCenter=false;
+
+        #ifdef COLLIDE_DEBUG
+        int hited=0;
+        PGE_RectF nearestRect;
+        #endif
+        if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
+        {
+            QVector<LVL_Block*> blocks_to_hit;
+            for(PlayerColliders::iterator it=collided_center.begin(); it!=collided_center.end() ; it++)
+            {
+                PGE_Phys_Object *collided= *it;
+                LVL_Block *blk= static_cast<LVL_Block*>(collided);
+                if(blk) blocks_to_hit.push_back(blk);
+            }
+            for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
+            {
+                PGE_Phys_Object *collided= *it;
+                LVL_Block *blk= static_cast<LVL_Block*>(collided);
+                if(blk) blocks_to_hit.push_back(blk);
+            }
+            if(!blocks_to_hit.isEmpty())
+            {
+                LVL_Block*nearest = nearestBlockY(blocks_to_hit);
+                if(nearest)
+                {
+                    posRect.setY(nearest->posRect.bottom()+1);
+                }
+                nearest = nearestBlock(blocks_to_hit);
+                if(nearest) {
+                    #ifdef COLLIDE_DEBUG
+                    nearestRect=nearest->posRect;
+                    #endif
+                    nearest->hit();
+                    bump();
+                }
+            }
+            #ifdef COLLIDE_DEBUG
+            hited=blocks_to_hit.size();
+            blocks_to_hit.clear();
+            #endif
+        }
+        #ifdef COLLIDE_DEBUG
+        qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
+        #endif
+    }
 }
 
 void LVL_Player::init()
@@ -221,16 +295,17 @@ void LVL_Player::init()
     setSize(state_cur.width, state_cur.height);
     setPos(posX, posY);
     phys_setup.max_vel_y=12;
-
     animator.tickAnimation(0.f);
     isLocked=false;
-    isInited=true;
+    _isInited=true;
+
+    _syncSection();
 }
 
 void LVL_Player::update(float ticks)
 {
     if(isLocked) return;
-    if(!isInited) return;
+    if(!_isInited) return;
     if(!camera) return;
     LVL_Section* section = sct();
     if(!section) return;
@@ -239,7 +314,7 @@ void LVL_Player::update(float ticks)
 
     event_queue.processEvents(ticks);
 
-    if(isWarping)
+    if((isWarping) || (!isAlive))
     {
         animator.tickAnimation(ticks);
         updateCamera();
@@ -252,7 +327,10 @@ void LVL_Player::update(float ticks)
     bool climbableDown= climbableUp && !onGround;
     climbing = (climbableUp && climbing && !onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
     if(onGround)
-        phys_setup.decelerate_x = on_slippery_surface ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop;
+        phys_setup.decelerate_x =
+                (fabs(speedX())<=physics_cur.MaxSpeed_walk)?
+                (on_slippery_surface?physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop):
+                (on_slippery_surface?physics_cur.decelerate_run/physics_cur.slippery_c : physics_cur.decelerate_run);
     else
         phys_setup.decelerate_x = physics_cur.decelerate_air;
 
@@ -260,7 +338,7 @@ void LVL_Player::update(float ticks)
     {
         doKill=false;
         isAlive = false;
-        setGravityScale(0);
+        setPaused(true);
         LvlSceneP::s->checkPlayers();
         return;
     }
@@ -472,7 +550,7 @@ void LVL_Player::update(float ticks)
         if(!ducking || !onGround)
         {
             //If left key is pressed
-            if(keys.right)
+            if(keys.right && collided_right.isEmpty())
             {
                 if(climbing)
                     setSpeedX(physics_cur.velocity_climb_x);
@@ -480,7 +558,7 @@ void LVL_Player::update(float ticks)
                     applyAccel(force, 0);
             }
             //If right key is pressed
-            if(keys.left)
+            if(keys.left && collided_left.isEmpty())
             {
                 if(climbing)
                     setSpeedX(-physics_cur.velocity_climb_x);
@@ -643,9 +721,8 @@ void LVL_Player::update(float ticks)
 
             if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
             {
-                isInited=false;
-                //physBody->SetAwake(false);
-                setGravityScale(0);
+                setLocked(true);
+                _no_render=true;
                 LvlSceneP::s->setExiting(1000, LvlExit::EXIT_OffScreen);
                 return;
             }
@@ -795,6 +872,7 @@ void LVL_Player::updateCollisions()
                 case PGE_Phys_Object::LVLBlock:
                 {
                     LVL_Block *blk= static_cast<LVL_Block*>(collided);
+                    if(!blk) continue;
                     foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     posRect.setY(blk->posRect.top()-posRect.height());
@@ -824,7 +902,7 @@ void LVL_Player::updateCollisions()
         {
             PGE_Phys_Object *collided= *it;
             LVL_Block *blk= static_cast<LVL_Block*>(collided);
-            blocks_to_hit.push_back(blk);
+            if(blk) blocks_to_hit.push_back(blk);
         }
 
         if(!blocks_to_hit.isEmpty())
@@ -841,18 +919,69 @@ void LVL_Player::updateCollisions()
     }
 
 
-
+    bool wall=false;
 
     if(!collided_right.isEmpty())
     {
-        posRect.setX(collided_right.values().first()->posRect.right());
-        setSpeedX(0);
+        for(PlayerColliders::iterator it=collided_right.begin(); it!=collided_right.end() ; it++)
+        {
+            PGE_Phys_Object *collided= *it;
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk) blocks_to_hit.push_back(blk);
+        }
+        if(isWall(blocks_to_hit))
+        {
+            wall=true;
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                posRect.setX(nearest->posRect.right());
+                setSpeedX(0);
+            }
+        }
+        blocks_to_hit.clear();
     }
     if(!collided_left.isEmpty())
     {
-        posRect.setX(collided_left.values().first()->posRect.left()-posRect.width());
-        setSpeedX(0);
+        for(PlayerColliders::iterator it=collided_left.begin(); it!=collided_left.end() ; it++)
+        {
+            PGE_Phys_Object *collided= *it;
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk) blocks_to_hit.push_back(blk);
+        }
+        if(isWall(blocks_to_hit))
+        {
+            wall=true;
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                posRect.setX(nearest->posRect.left()-posRect.width());
+                setSpeedX(0);
+            }
+        }
+        blocks_to_hit.clear();
     }
+
+    if( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) )
+        posRect.setX(posRect.x()-direction);
+}
+
+bool LVL_Player::isWall(QVector<LVL_Block*> &blocks)
+{
+    if(blocks.isEmpty())
+        return false;
+    float higher=blocks.first()->posRect.top();
+    float lower=blocks.first()->posRect.bottom();
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(blocks[i]->posRect.bottom()>lower)
+            lower=blocks[i]->posRect.bottom();
+        if(blocks[i]->posRect.top()<higher)
+            higher=blocks[i]->posRect.top();
+    }
+    if(posRect.top() >= lower) return false;
+    if(posRect.bottom() <= higher) return false;
+    return true;
 }
 
 
@@ -876,6 +1005,26 @@ LVL_Block *LVL_Player::nearestBlock(QVector<LVL_Block*> &blocks)
     return nearest;
 }
 
+LVL_Block *LVL_Player::nearestBlockY(QVector<LVL_Block *> &blocks)
+{
+    if(blocks.size()==1)
+        return blocks.first();
+
+    LVL_Block*nearest=NULL;
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(!nearest)
+            nearest=blocks[i];
+        else
+        {
+            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
+                fabs(nearest->posRect.center().y()-posRect.center().y()) )
+                nearest=blocks[i];
+        }
+    }
+    return nearest;
+}
+
 
 void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 {
@@ -893,12 +1042,15 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             else break;
 
             if(!collided->posRect.collideRect(posRect)) break;
+            #ifdef COLLIDE_DEBUG
+            qDebug() << "Collided item! "<<collided->type<<" " <<collided->posRect.center().x()<<collided->posRect.center().y();
+            #endif
 
             if(bumpUp||bumpDown) break;
 
-            PGE_PointF c1=posRect.center();
-            PGE_RectF &r1=posRect;
-            PGE_PointF cc=collided->posRect.center();
+            PGE_PointF c1 = posRect.center();
+            PGE_RectF &r1 = posRect;
+            PGE_PointF cc = collided->posRect.center();
             PGE_RectF  rc = collided->posRect;
 
             switch(collided->collide)
@@ -957,21 +1109,38 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         collided_top[(intptr_t)collided]=collided;//top of player
                     }
                     //*****************************Left****************************/
-                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() < rc.right()) && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() < rc.right()+_velocityX_prev)
+                             && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
                     {
                         if(blk->isHidden) break;
                         collided_right[(intptr_t)collided]=collided;//right of player
                     }
                     //*****************************Right****************************/
-                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() > rc.left()) && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() > rc.left()+_velocityX_prev)
+                             && (!( (r1.top()>rc.bottom())||(r1.bottom()<rc.top()))) )
                     {
                         if(blk->isHidden) break;
                         collided_left[(intptr_t)collided]=collided;//left of player
                     }
+
+
+                    float c=forceCollideCenter? 0.0f : 1.0f;
                     //*****************************Center****************************/
-                    if( blk->posRect.collideRectDeep(posRect, 2.0f) )
+                    #ifdef COLLIDE_DEBUG
+                    qDebug() << "block" <<posRect.top()<<":"<<blk->posRect.bottom()
+                             << "block" <<posRect.bottom()<<":"<<blk->posRect.top()<<" collide?"<<
+                                blk->posRect.collideRectDeep(posRect,
+                                                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                                                     fabs(_velocityY_prev)*c+c*2.0) <<
+                                "depths: "<< fabs(_velocityX_prev)*c+c*2.0 <<
+                            fabs(_velocityY_prev)*c+c;
+                    #endif
+                    if( blk->posRect.collideRectDeep(posRect,
+                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                     fabs(_velocityY_prev)*c+c*2.0)
+                            )
                     {
-                        if(blk->isHidden) break;
+                        if(blk->isHidden && !forceCollideCenter) break;
                         collided_center[(intptr_t)collided]=collided;
                     }
                     break;
@@ -1247,7 +1416,6 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
     warpFrameW = texture.w;
     warpFrameH = texture.h;
 
-    isInited=true;
     switch(warpType)
     {
         case 2://door
@@ -1626,7 +1794,8 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 void LVL_Player::render(double camX, double camY)
 {
     if(!isAlive) return;
-    if(!isInited) return;
+    if(!_isInited) return;
+    if(_no_render) return;
 
     PGE_RectF tPos = animator.curFrame();
     PGE_PointF Ofs = animator.curOffset();
@@ -1718,5 +1887,10 @@ void LVL_Player::setLocked(bool lock)
 {
     isLocked=lock;
     setPaused(lock);
+}
+
+bool LVL_Player::isInited()
+{
+    return _isInited;
 }
 
