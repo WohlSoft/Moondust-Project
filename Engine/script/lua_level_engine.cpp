@@ -2,8 +2,8 @@
 
 #include <scenes/scene_level.h>
 #include <scenes/level/lvl_player.h>
-#include "bindings/level/classes/luaclass_core_lvl_player.h"
-#include "bindings/level/classes/luaclass_core_physobj.h"
+#include "bindings/level/classes/luaclass_level_lvl_player.h"
+#include "bindings/level/classes/luaclass_level_physobj.h"
 
 #include <luabind/adopt_policy.hpp>
 
