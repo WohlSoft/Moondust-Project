@@ -38,8 +38,11 @@ public:
     bool killed;
     void kill();
 
-    //float posX();
-    //float posY();
+    int taskToTransform;
+    int taskToTransform_t;
+    void transformTo(long id, int type=0);
+    void transformTo_x(long id);
+
     void update(float ticks);
     void render(double camX, double camY);
     void setDefaults();

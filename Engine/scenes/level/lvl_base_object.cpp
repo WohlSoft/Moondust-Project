@@ -89,10 +89,11 @@ double PGE_Phys_Object::right()
 void PGE_Phys_Object::setSize(float w, float h)
 {
     posRect.setSize(w, h);
-    width = w;
-    height = h;
+    _realWidth=w;
+    _realHeight=h;
     posX_coefficient = width/2.0f;
     posY_coefficient = height/2.0f;
+    _syncPositionAndSize();
 }
 
 void PGE_Phys_Object::setPos(double x, double y)
@@ -171,6 +172,27 @@ void PGE_Phys_Object::_syncPosition()
     _posX= posRect.x();
     _posY= posRect.y();
     if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+}
+
+void PGE_Phys_Object::_syncPositionAndSize()
+{
+    if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
+    _posX= posRect.x();
+    _posY= posRect.y();
+    width=_realWidth;
+    height=_realWidth;
+    if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
+}
+
+void PGE_Phys_Object::_syncSection()
+{
+    int sID = LvlSceneP::s->findNearestSection(posX(), posY());
+    LVL_Section *sct = LvlSceneP::s->getSection(sID);
+    if(sct)
+    {
+        setParentSection(sct);
+    }
+    _syncPosition();
 }
 
 void PGE_Phys_Object::renderDebug(float _camX, float _camY)
