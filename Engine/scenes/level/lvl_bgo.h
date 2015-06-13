@@ -40,6 +40,9 @@ public:
     obj_bgo * setup;//Global config
 
     void render(double camX, double camY);
+    bool isInited();
+private:
+    bool _isInited;
 };
 
 

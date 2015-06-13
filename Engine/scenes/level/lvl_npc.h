@@ -51,8 +51,12 @@ public:
 
     bool isActivated;
     int timeout;
-
     virtual void lua_onLoop() {}
+
+    bool isInited();
+private:
+    bool _isInited;
+
 };
 
 #endif // LVL_NPC_H

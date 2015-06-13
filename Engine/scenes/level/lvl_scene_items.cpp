@@ -42,9 +42,7 @@ void LevelScene::placeBlock(LevelBlock blockData)
     }
 
     block->data = blockData;
-    block->transformTo_x(blockData.id);
     block->init();
-
     blocks.push_back(block);
 }
 
@@ -68,7 +66,6 @@ void LevelScene::placeBGO(LevelBGO bgoData)
     }
 
     bgo->data = bgoData;
-    bgo->transformTo_x(bgoData.id);
     bgo->init();
 
     bgos.push_back(bgo);
@@ -88,7 +85,6 @@ void LevelScene::placeNPC(LevelNPC npcData)
     }
 
     npc->data = npcData;
-    npc->transformTo_x(npcData.id);
     npc->init();
 
     npcs.push_back(npc);
@@ -126,9 +122,9 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     player->init();
     players.push_back(player);
 
-    if(players.size()==1)
+    if(playerData.id==1)
         player1Controller->registerInControl(player);
-    else if(players.size()==2)
+    else if(playerData.id==2)
         player2Controller->registerInControl(player);
 
     if(byWarp)
