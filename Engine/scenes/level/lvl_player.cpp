@@ -57,6 +57,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     JumpPressed=false;
     onGround=false;
     on_slippery_surface=false;
+    forceCollideCenter=false;
 
     climbing=false;
 
@@ -1124,14 +1125,14 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     qDebug() << "block" <<posRect.top()<<":"<<blk->posRect.bottom()
                              << "block" <<posRect.bottom()<<":"<<blk->posRect.top()<<" collide?"<<
                                 blk->posRect.collideRectDeep(posRect,
-                                                                                     fabs(_velocityX_prev)*c+c,
-                                                                                     fabs(_velocityY_prev)*c+c) <<
-                                "depths: "<< fabs(_velocityX_prev)*c+c <<
+                                                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                                                     fabs(_velocityY_prev)*c+c*2.0) <<
+                                "depths: "<< fabs(_velocityX_prev)*c+c*2.0 <<
                             fabs(_velocityY_prev)*c+c;
                     #endif
                     if( blk->posRect.collideRectDeep(posRect,
-                                                     fabs(_velocityX_prev)*c+c,
-                                                     fabs(_velocityY_prev)*c+c)
+                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                     fabs(_velocityY_prev)*c+c*2.0)
                             )
                     {
                         if(blk->isHidden && !forceCollideCenter) break;
