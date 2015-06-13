@@ -505,6 +505,24 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
                FileData.en_name=true;
         }
        else
+       if(Params[0]=="image")
+        {
+           if(!SMBX64::qStr(Params[1]))
+               FileData.image = removeQuotes(Params[1]);
+           else
+               FileData.image= Params[1];
+               FileData.en_image=true;
+        }
+       else
+       if(Params[0]=="script")
+        {
+           if(!SMBX64::qStr(Params[1]))
+               FileData.script = removeQuotes(Params[1]);
+           else
+               FileData.script= Params[1];
+               FileData.en_script=true;
+        }
+       else
        {
               //errStr = "Unknown value";
               //if(!IgnoreBad) goto badfile;
@@ -671,6 +689,14 @@ QString FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     if(FileData.en_name)
     {
         TextData += "name=" + SMBX64::qStrS(FileData.name);
+    }
+    if(FileData.en_image)
+    {
+        TextData += "image=" + SMBX64::qStrS(FileData.image);
+    }
+    if(FileData.en_script)
+    {
+        TextData += "script=" + SMBX64::qStrS(FileData.script);
     }
 
     return TextData;
