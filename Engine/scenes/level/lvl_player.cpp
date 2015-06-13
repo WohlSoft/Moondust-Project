@@ -1065,7 +1065,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         collided_left[(intptr_t)collided]=collided;//left of player
                     }
                     //*****************************Center****************************/
-                    if( blk->posRect.collideRectDeep(posRect, (fabs(speedX())+fabs(speedY()))/2.0 ) )
+                    if( blk->posRect.collideRectDeep(posRect, fabs(_velocityX_prev), fabs(_velocityY_prev) ))
                     {
                         if(blk->isHidden&&!forceCollideCenter) break;
                         collided_center[(intptr_t)collided]=collided;
