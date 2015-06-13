@@ -3,6 +3,7 @@
 #include <scenes/scene_level.h>
 #include <scenes/level/lvl_player.h>
 #include "bindings/level/classes/luaclass_core_lvl_player.h"
+#include "bindings/level/classes/luaclass_core_physobj.h"
 
 #include <luabind/adopt_policy.hpp>
 
@@ -29,6 +30,7 @@ LevelScene *LuaLevelEngine::getScene()
 void LuaLevelEngine::onBindAll()
 {
     luabind::module(getNativeState())[
+        Binding_Level_Class_PhysObj::bindToLua(),
         Binding_Level_ClassWrapper_LVL_Player::bindToLua()
         ];
 }
