@@ -213,8 +213,9 @@ SOURCES += \
     data_configs/setup_lvl_scene.cpp \
     script/lua_world_engine.cpp \
     script/lua_credits_engine.cpp \
-    script/level/lvl_base_object.cpp \
-    script/bindings/level/classes/luaclass_core_physobj.cpp
+    scenes/level/lvl_base_object.cpp \
+    script/bindings/level/classes/luaclass_core_physobj.cpp \
+
 
 HEADERS  += \
     graphics/graphics.h \
