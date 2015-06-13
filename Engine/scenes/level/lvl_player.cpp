@@ -248,7 +248,9 @@ void LVL_Player::update(float ticks)
 
     onGround = !foot_contacts_map.isEmpty();
     on_slippery_surface = !foot_sl_contacts_map.isEmpty();
-    climbing = (!climbable_map.isEmpty()&& climbing);
+    bool climbableUp  = !climbable_map.isEmpty();
+    bool climbableDown= climbableUp && !onGround;
+    climbing = (climbableUp && climbing && !onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
     if(onGround)
         phys_setup.decelerate_x = on_slippery_surface ? physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop;
     else
@@ -321,10 +323,10 @@ void LVL_Player::update(float ticks)
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
-            setSpeedY(0);
+            setSpeedY(0.0);
 
         if(physics_cur.slow_speed_x_on_enter)
-            setSpeedX(speedX()/2);
+            setSpeedX(speedX()/2.0);
 
         setDecelX(physics_cur.decelerate_air);
 
@@ -415,27 +417,22 @@ void LVL_Player::update(float ticks)
 
     if(keys.up)
     {
+        if(climbableUp&&(jumpTime<=0))
+        {
+            climbing=true;
+            floating_isworks=false;//!< Reset floating on climbing start
+        }
+
         if(climbing)
         {
             if(posRect.center().y() >= climbableHeight)
                 setSpeedY(-physics_cur.velocity_climb_y_up);
         }
-        else
-        if((climbable_map.size()>0)&&(jumpTime<=0))
-        {
-            climbing=true;
-            floating_isworks=false;//!< Reset floating on climbing start
-        }
     }
 
     if(keys.down)
     {
-        if(climbing)
-        {
-            setSpeedY(physics_cur.velocity_climb_y_down);
-        }
-        else
-        if((climbable_map.size()>0)&&(jumpTime<=0))
+        if( climbableDown && (jumpTime<=0) )
         {
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
@@ -446,6 +443,11 @@ void LVL_Player::update(float ticks)
             {
                 setDuck(true);
             }
+        }
+
+        if(climbing)
+        {
+            setSpeedY(physics_cur.velocity_climb_y_down);
         }
     }
     else
