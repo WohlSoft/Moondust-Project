@@ -21,16 +21,20 @@
 
 #include "lvl_camera.h"
 #include "lvl_warp.h"
+#include "lvl_npc.h"
 
-#include "../../physics/base_object.h"
-#include "../../controls/controllable_object.h"
+#include "lvl_base_object.h"
+#include <controls/controllable_object.h>
 #include <data_configs/obj_player.h>
 #include <common_features/matrix_animator.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/event_queue.h>
-#include <QMap>
+
+#include <QHash>
+#include <QVector>
 
 class LVL_Section;
+class LVL_Block;
 
 class LVL_Player :
         public PGE_Phys_Object,
@@ -38,12 +42,25 @@ class LVL_Player :
 {
     public:
         LVL_Player();
-        ~LVL_Player();
+        virtual ~LVL_Player();
+        void setCharacter(int CharacterID, int _stateID);
+        void setPlayerPointInfo(PlayerPoint pt);
         void init();
-        void initSize();
         void update(float ticks);
-        void update();
         void updateCamera();
+
+        void updateCollisions();
+        void solveCollision(PGE_Phys_Object *collided);
+        LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
+
+        /*****************NPC's and blocks******************/
+        typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
+        QHash<int, PGE_Phys_Object*> collided_top;
+        QHash<int, PGE_Phys_Object*> collided_left;
+        QHash<int, PGE_Phys_Object*> collided_right;
+        QHash<int, PGE_Phys_Object*> collided_bottom;
+        QHash<int, PGE_Phys_Object*> collided_center;
+        /***************************************************/
 
         int playerID;
         obj_player setup;
@@ -54,8 +71,22 @@ class LVL_Player :
         void exitFromLevel(QString levelFile, int targetWarp, long wX=-1, long wY=-1);
 
         QHash<int, obj_player_state > states;
+        int     characterID;
         int     stateID;
         obj_player_state state_cur;
+
+
+        enum kill_npc_reasons
+        {
+            NPC_Unknown=-1,
+            NPC_Stomped=0,
+            NPC_Kicked,
+            NPC_Taked_Coin,
+            NPC_Taked_Powerup
+        };
+
+        void kill_npc(LVL_Npc*target, kill_npc_reasons reason);
+        //QQueue<LVL_Npc*> npc_queue;
 
         /*******************Environmept*********************/
         QHash<int, obj_player_physics > physics;
@@ -67,13 +98,12 @@ class LVL_Player :
         /*******************Environmept*********************/
 
         /*******************Motion*************************/
-        float32 curHMaxSpeed; //!< Current moving max speed
         bool    isRunning;
         int     direction;
         /*******************Motion*************************/
 
         /*******************Life and Death*****************/
-        bool isLive;
+        bool isAlive;
         enum deathReason
         {
             DEAD_fall=0,
@@ -90,16 +120,17 @@ class LVL_Player :
         void harm(int _damage=1);
         /*******************Life and Death*****************/
 
-        float32 gscale_Backup; //!< BackUP of last gravity scale
+        float   gscale_Backup; //!< BackUP of last gravity scale
 
         /********************Jumps***************************/
         bool    JumpPressed;
         bool    onGround;
         int     foot_contacts;
+        bool    on_slippery_surface;
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
-        float   jumpForce;
-        float   jumpForce_default;
+        float   jumpTime;
+        float   jumpTime_default;
         /********************Jumps***************************/
 
         /********************Bump***************************/
@@ -111,23 +142,19 @@ class LVL_Player :
 
         /********************Climbing***************************/
         QHash<int, int > climbable_map;
-        bool climbing;
+        bool      climbing;
+        double    climbableHeight;
         /********************Climbing***************************/
 
         /*******************Warps*********************/
         bool    contactedWithWarp;
         LVL_Warp * contactedWarp;
-        bool    wasTeleported;
         bool    wasEntered;
-        int     warpsTouched;
+        int     wasEnteredTimeout;
         bool    isWarping;
-        bool    warpDo;
-
-        int     warpDirect;
 
         int     warpDirectO;
         float   warpPipeOffset;
-        uint32  warpWaitTicks;
         float   warpFrameW;
         float   warpFrameH;
 
@@ -175,7 +202,6 @@ class LVL_Player :
         bool duck_allow;
         bool ducking;
         void setDuck(bool duck);
-        b2Fixture     *f_player;
         /******************Duck*************************/
 
         void render(double camX, double camY);
@@ -184,6 +210,19 @@ class LVL_Player :
         int frameH;
         bool locked();
         void setLocked(bool lock);
+
+        /********************Lua Stuff*******************
+                            .-""""-
+                           F   .-'
+                          F   J
+                         I    I
+                          L   `.
+                           L    `-._,
+                            `-.__.-'
+         ***********************************************/
+        virtual void lua_onLoop(){}
+        bool isLuaPlayer;
+        /********************Lua Stuff******************/
 
 private:
         bool isLocked;

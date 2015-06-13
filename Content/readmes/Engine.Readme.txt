@@ -47,6 +47,7 @@ S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
 
 Ctrl+F - Toggle fullscreen mode
 
+F2 - enable/disable drawing a debug rectangles of physical engine (render hitboxes)
 F3 - enable/disable printing of debug information
 F5 - pause/resume physical loopsteps. (with stopped physics you can make
      mega-boosted run while you holds arrow+"run" keys)

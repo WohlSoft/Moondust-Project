@@ -1,5 +1,5 @@
 
-QMAKE_CXXFLAGS += -Wno-unused-local-typedefs -Wno-unused-variable -Wno-unused-parameter -Wno-write-strings -Wno-ignored-qualifiers -Wno-deprecated-declarations
+#QMAKE_CXXFLAGS += -Wno-unused-local-typedefs -Wno-unused-variable -Wno-unused-parameter -Wno-write-strings -Wno-ignored-qualifiers -Wno-deprecated-declarations
 
 TARGET = luabind
 TEMPLATE = lib

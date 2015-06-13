@@ -132,7 +132,8 @@ void PGE_MsgBox::update(float ticks)
         case 1: processLoader(ticks); break;
         case 2: processBox(ticks); break;
         case 3: processUnLoader(ticks); break;
-        case 4: running=false; break;
+        case 4:
+        default: running=false; break;
     }
 }
 
@@ -199,6 +200,7 @@ void PGE_MsgBox::exec()
         update(uTickf);
         PGE_BoxBase::render();
         render();
+        glFlush();
         PGE_Window::rePaint();
 
         if(uTick > (signed)(SDL_GetTicks() - start_render))
@@ -235,7 +237,7 @@ void PGE_MsgBox::processBox(float)
         switch(event.type)
         {
             case SDL_QUIT:
-                _page++;
+                _page++; setFade(10, 0.0f, 0.05f);
             break;
             case SDL_KEYDOWN: // If pressed key
                 switch(event.key.keysym.sym)

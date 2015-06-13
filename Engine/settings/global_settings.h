@@ -32,12 +32,9 @@ public:
     int  ScreenHeight;
 
     int  MaxFPS;
-    int  PhysStep;
+    int  TicksPerSecond;
 
     bool showDebugInfo;
-    bool testJoystickController;
-
-    bool enableDummyNpc;
 
     bool frameSkip;
 

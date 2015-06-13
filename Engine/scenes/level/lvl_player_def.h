@@ -8,8 +8,11 @@ class LVL_PlayerDef
 public:
     LVL_PlayerDef();
     ~LVL_PlayerDef();
+    LVL_PlayerDef(const LVL_PlayerDef &d);
     void setCharacterID(int _id);
     void setState(int _state);
+    void setPlayerID(int id);
+    int playerID();
     int characterID();
     int currentState();
     int width();
@@ -17,6 +20,7 @@ public:
     int heightDuck();
 
 private:
+    int _playerID;
     int _currentState;
     int _characterID;
 };

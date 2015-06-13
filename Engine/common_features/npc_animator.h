@@ -46,7 +46,6 @@ public:
     void start();
     void stop();
 
-    int speed;
     void manualTick(int ticks);
 
 private:

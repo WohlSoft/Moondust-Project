@@ -19,6 +19,7 @@
 #include "config_manager.h"
 #include <gui/pge_msgbox.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/number_limiter.h>
 
 /*****Level blocks************/
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
@@ -148,7 +149,9 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
                 sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
+                    NumberLimiter::apply(sblock.frames, 1u);
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
+                    NumberLimiter::apply(sblock.framespeed, 1);
 
                 static int switchID=0;
                 sblock.switch_Button    = blockset.value("switch-button", false).toBool();

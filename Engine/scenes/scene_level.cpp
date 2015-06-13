@@ -25,11 +25,7 @@
 
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
-
-#include "level/lvl_scene_ptr.h"
-
 #include <data_configs/config_manager.h>
-
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
@@ -39,15 +35,12 @@
 #include <audio/SdlMusPlayer.h>
 
 #include <QtDebug>
-
-#include <physics/phys_debug_draw.h>
-
 #include <settings/global_settings.h>
 
-DebugDraw dbgDraw;
+#include "level/lvl_scene_ptr.h"
 
 LevelScene::LevelScene()
-    : Scene(Level)
+    : Scene(Level), luaEngine(this)
 {
     LvlSceneP::s = this;
 
@@ -58,6 +51,10 @@ LevelScene::LevelScene()
     isWarpEntrance=false;
     cameraStartDirected=false;
     cameraStartDirection=0;
+
+    /*********Physics**********/
+    gravity=26;
+    /**************************/
 
     /*********Exit*************/
     isLevelContinues=true;
@@ -75,8 +72,6 @@ LevelScene::LevelScene()
     /*********Default players number*************/
     numberOfPlayers=2;
     /*********Default players number*************/
-
-    world=NULL;
 
     /*********Loader*************/
     IsLoaderWorks=false;
@@ -203,10 +198,41 @@ void LevelScene::processPauseMenu()
     }
 }
 
+void LevelScene::processPhysics(float ticks)
+{
+    //Iterate
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->iterateStep(ticks);
+        plr->_syncPosition();
+    }
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->iterateStep(ticks);
+        active_npcs[i]->_syncPosition();
+    }
+
+    //Collide!
+    for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
+    {
+        LVL_Player*plr=(*it);
+        plr->updateCollisions();
+    }
+
+    for(int i=0;i<active_npcs.size();i++)
+    {
+        active_npcs[i]->updateCollisions();
+    }
+
+}
+
+
 
 
 LevelScene::~LevelScene()
 {
+
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
     //Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -237,7 +263,11 @@ LevelScene::~LevelScene()
         tmp = players.last();
         players.pop_back();
         player1Controller->removeFromControl(tmp);
-        if(tmp) delete tmp;
+        if(tmp)
+        {
+            if(!tmp->isLuaPlayer)
+                delete tmp;
+        }
     }
 
     qDebug() << "Destroy blocks";
@@ -291,18 +321,10 @@ LevelScene::~LevelScene()
     qDebug() << "Destroy sections";
     sections.clear();
 
+    luaEngine.shutdown();
+
     delete player1Controller;
     delete player2Controller;
-
-    qDebug() << "Destroy world";
-    if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
-    world = NULL;
-
-    //destroy players
-    //destroy blocks
-    //destroy NPC's
-    //destroy BGO's
-
     textures_bank.clear();
 }
 
@@ -318,6 +340,9 @@ void LevelScene::tickAnimations(float ticks)
         it->manualTick(ticks);
     for(QList<SimpleAnimator>::iterator it=ConfigManager::Animator_BG.begin();
         it!=ConfigManager::Animator_BG.end(); it++)
+        it->manualTick(ticks);
+    for(QList<AdvNpcAnimator>::iterator it=ConfigManager::Animator_NPC.begin();
+        it!=ConfigManager::Animator_NPC.end(); it++)
         it->manualTick(ticks);
 }
 
@@ -358,12 +383,15 @@ void LevelScene::update()
         processPauseMenu();
     } else {//Update physics is not pause menu
 
+        updateLua();//Process LUA code
         system_events.processEvents(uTickf);
+
+        processEffects(uTickf);
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
         {
             //Make world step
-            world->Step(uTickf/1000.f, 1, 1);
+            processPhysics(uTickf);
         }
 
         while(!block_transforms.isEmpty())
@@ -391,13 +419,13 @@ void LevelScene::update()
         for(LVL_PlayersArray::iterator it=players.begin(); it!=players.end(); it++)
         {
             LVL_Player*plr=(*it);
+            plr->update(uTickf);
             if(PGE_Window::showDebugInfo)
             {
                 debug_player_jumping = plr->JumpPressed;
                 debug_player_onground= plr->onGround;
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
-            plr->update(uTickf);
         }
 
         for(int i=0;i<fading_blocks.size();i++)
@@ -426,6 +454,9 @@ void LevelScene::update()
         while(!dead_npcs.isEmpty())
         {
             LVL_Npc *corpse = dead_npcs.last();
+            launchStaticEffect(corpse->setup->effect_1,
+                               corpse->posX(), corpse->posY(),
+                               1, 0, 0,0,0);
             dead_npcs.pop_back();
             npcs.removeAll(corpse);
             delete corpse;
@@ -472,7 +503,7 @@ void LevelScene::render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Reset modelview matrix
-    glLoadIdentity();
+    //glLoadIdentity();
     int c=0;
 
     if(!isInit) goto renderBlack;
@@ -485,19 +516,35 @@ void LevelScene::render()
 
         cam->drawBackground();
 
-        for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+        const int render_sz = cam->renderObjects().size();
+        PGE_Phys_Object** render_obj = cam->renderObjects().data();
+        for(int i=0; i<render_sz; i++)
         {
-            PGE_Phys_Object*&item=(*it);
-            switch(item->type)
+            switch(render_obj[i]->type)
             {
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
-                item->render(cam->posX(), cam->posY());
+                render_obj[i]->render(cam->posX(), cam->posY());
                 break;
             default:
                 break;
+            }
+        }
+
+        for(SceneEffectsArray::iterator it=WorkingEffects.begin();it!=WorkingEffects.end(); it++ )
+        {
+             Scene_Effect &item=(*it);
+             item.render(cam->posX(), cam->posY());
+        }
+
+        if(PGE_Window::showPhysicsDebug)
+        {
+            for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+            {
+                PGE_Phys_Object*&item=(*it);
+                item->renderDebug(cam->posX(), cam->posY());
             }
         }
 
@@ -562,6 +609,80 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
               isPauseMenu = true;
           }
       break;
+      case SDLK_1:
+      {
+        if(!players.isEmpty())
+        launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 0, 0, 0);
+      }
+      break;
+      case SDLK_2:
+      {
+         if(!players.isEmpty())
+          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 6, -20, 12);
+      }
+      break;
+      case SDLK_3:
+      {
+         if(!players.isEmpty())
+         {
+            Scene_Effect_Phys p;
+            p.decelerate_x=0.02;
+            p.max_vel_y=12;
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, p);
+         }
+      }
+      break;
+      case SDLK_4:
+      {
+         if(!players.isEmpty())
+         {
+            Scene_Effect_Phys p;
+            p.max_vel_y=12;
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, p);
+         }
+      }
+      break;
+      case SDLK_5:
+      {
+         if(!players.isEmpty())
+         {
+            launchStaticEffect(10, players.first()->posX(), players.first()->posY(), 1, 0, 0, 0, 0);
+         }
+      }
+      break;
+
+        case SDLK_7:
+        {
+            if(players.size()>=1)
+                players[0]->setCharacter(1, 1);
+        }
+        break;
+        case SDLK_8:
+        {
+            if(players.size()>=1)
+              players[0]->setCharacter(1, 2);
+        }
+        break;
+        case SDLK_9:
+        {
+           if(players.size()>=2)
+            players[1]->setCharacter(2, 1);
+           else if(players.size()>=1)
+            players[0]->setCharacter(2, 1);
+        }
+        break;
+        case SDLK_0:
+        {
+           if(players.size()>=2)
+            players[1]->setCharacter(2, 2);
+           else if(players.size()>=1)
+            players[0]->setCharacter(2, 2);
+        }
+        break;
+
       case SDLK_F5:
         {
           PGE_Audio::playSoundByRole(obj_sound_role::PlayerMagic);
@@ -573,15 +694,16 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+LuaEngine *LevelScene::getLuaEngine()
+{
+    return &luaEngine;
+}
+
 int LevelScene::exec()
 {
     isLevelContinues=true;
     doExit=false;
     running=true;
-
-    dbgDraw.c = &cameras.first();
-    world->SetDebugDraw(&dbgDraw);
-    dbgDraw.SetFlags( dbgDraw.e_shapeBit | dbgDraw.e_jointBit );
 
     //Level scene's Loop
  Uint32 start_render=0;
@@ -629,7 +751,7 @@ int LevelScene::exec()
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
-            PGE_Window::rePaint();
+            glFlush();
             stop_render=SDL_GetTicks();
             doUpdate_render = frameSkip? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
@@ -637,6 +759,8 @@ int LevelScene::exec()
         doUpdate_render -= uTickf;
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
+
+        PGE_Window::rePaint();
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
@@ -717,28 +841,27 @@ int LevelScene::exitType()
 
 void LevelScene::checkPlayers()
 {
-    bool haveLivePlayers=false;
-
+    bool haveAlivePlayers=false;
     for(int i=0; i<players.size(); i++)
     {
-        if(players[i]->isLive)
-            haveLivePlayers = true;
+        if(players[i]->isAlive)
+            haveAlivePlayers = true;
     }
 
     for(int i=0; i<players.size(); i++)
     {
-        if((!players[i]->isLive) && (!players[i]->locked()))
+        if((!players[i]->isAlive) && (!players[i]->locked()))
         {
             switch(players[i]->kill_reason)
             {
             case LVL_Player::deathReason::DEAD_burn:
                 PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
-                if(!haveLivePlayers)
+                if(!haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
                 break;
             case LVL_Player::deathReason::DEAD_fall:
             case LVL_Player::deathReason::DEAD_killed:
-                if(haveLivePlayers)
+                if(haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
                 else
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
@@ -748,7 +871,7 @@ void LevelScene::checkPlayers()
         }
     }
 
-    if(!haveLivePlayers)
+    if(!haveAlivePlayers)
     {
         PGE_MusPlayer::MUS_stopMusic();
         setExiting(4000, LvlExit::EXIT_PlayerDeath);

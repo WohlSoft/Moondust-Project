@@ -76,18 +76,25 @@ bool EpisodeState::save()
 
 PlayerState EpisodeState::getPlayerState(int playerID)
 {
-        PlayerState ch;
-        ch.characterID=1;
-        ch.stateID=1;
-        ch._chsetup = FileFormats::dummySavCharacterState();
+    PlayerState ch;
+    ch.characterID=1;
+    ch.stateID=1;
+    ch._chsetup = FileFormats::dummySavCharacterState();
+    ch._chsetup.id=1;
+    ch._chsetup.state=1;
 
-        if(!game_state.currentCharacter.isEmpty() && (playerID>0) && (playerID<=game_state.currentCharacter.size()) )
-            ch.characterID = game_state.currentCharacter[playerID-1];
-        if(!game_state.characterStates.isEmpty() && (ch.characterID>0) && (ch.characterID<=game_state.characterStates.size()) )
+    if(!game_state.currentCharacter.isEmpty() && (playerID>0) && (playerID<=game_state.currentCharacter.size()) )
+        ch.characterID = game_state.currentCharacter[playerID-1];
+
+    for(int i=0;i<game_state.characterStates.size(); i++)
+    {
+        if(game_state.characterStates[i].id==ch.characterID)
         {
-            ch.stateID = game_state.characterStates[ch.characterID-1].state;
-            ch._chsetup = game_state.characterStates[ch.characterID-1];
+            ch.stateID=game_state.characterStates[i].state;
+            ch._chsetup=game_state.characterStates[i];
+            break;
         }
+    }
         return ch;
 }
 
@@ -97,14 +104,26 @@ void EpisodeState::setPlayerState(int playerID, PlayerState &state)
     if(state.characterID<1) return;
     if(state.stateID<1) return;
 
+    state._chsetup.id=state.characterID;
+    state._chsetup.state=state.stateID;
+
     if(playerID>game_state.currentCharacter.size())
-        game_state.currentCharacter.push_back(state.characterID);
+    {
+        while(playerID>game_state.currentCharacter.size())
+            game_state.currentCharacter.push_back(state.characterID);
+    }
     else
         game_state.currentCharacter[playerID-1]=state.characterID;
 
-    if(state.characterID>game_state.characterStates.size())
-        game_state.characterStates.push_back(state._chsetup);
-    else
-        game_state.characterStates[state.characterID-1] = state._chsetup;
+    bool found=false;
+    for(int i=0;i<game_state.characterStates.size(); i++)
+    {
+        if(game_state.characterStates[i].id==state.characterID)
+        {
+            game_state.characterStates[i]=state._chsetup;
+            found=true;
+            break;
+        }
+    } if(!found) game_state.characterStates.push_back(state._chsetup);
 }
 

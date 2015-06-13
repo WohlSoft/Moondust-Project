@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+-- @module Logger
+
+-------------------------------------------------------------------------------
+-- Writes text to the logfile as "debug" log-level.
+-- @function [parent=#Logger] debug
+-- @param #string text The text to be logged. 
+
+-------------------------------------------------------------------------------
+-- Writes text to the logfile as "warning" log-level.
+-- @function [parent=#Logger] warning
+-- @param #string text The text to be logged. 
+
+-------------------------------------------------------------------------------
+-- Writes text to the logfile as "critical" log-level.
+-- @function [parent=#Logger] critical
+-- @param #string text The text to be logged. 
+
+
+
+
+return nil

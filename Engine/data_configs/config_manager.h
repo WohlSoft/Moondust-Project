@@ -22,15 +22,18 @@
 #include "../common_features/app_path.h"
 #include "../common_features/pge_texture.h"
 #include "../common_features/simple_animator.h"
+#include "../common_features/npc_animator.h"
 #include "../common_features/matrix_animator.h"
 
 #include "setup_load_screen.h"
 #include "setup_wld_scene.h"
+#include "setup_lvl_scene.h"
 #include "setup_title_screen.h"
 #include "setup_credits_screen.h"
 
 #include "obj_block.h"
 #include "obj_bgo.h"
+#include "obj_npc.h"
 #include "obj_bg.h"
 #include "obj_player.h"
 #include "obj_effect.h"
@@ -162,6 +165,10 @@ public:
     friend struct WorldMapSetup;
     static WorldMapSetup setup_WorldMap;
 
+    //Level data
+    friend struct LevelSetup;
+    static LevelSetup setup_Level;
+
     //Credits Screen
     friend struct CreditsScreenSetup;
     static CreditsScreenSetup setup_CreditsScreen;
@@ -227,6 +234,19 @@ public:
     static CustomDirManager Dir_BGO;
     static QList<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
+
+    /*****Level NPC************/
+    static bool loadLevelNPC();
+    static void loadNpcTxtConfig(long npcID);
+    static long getNpcTexture(long npcID);
+    /*****************************/
+    static QMap<long, obj_npc>   lvl_npc_indexes;
+    static npc_Markers           marker_npc;
+    static CustomDirManager Dir_NPC;
+    static QList<AdvNpcAnimator > Animator_NPC;//!< Global NPC Animators (just for a coins, vines, not for activing NPC's!)
+    /*****Level NPC************/
+
+
 
 
     /*****Level Backgrounds************/
@@ -321,6 +341,8 @@ public:
 
     static QString PathCommonGFX();
 
+    static QString PathScript();
+
     static QString PathWorldTiles();
     static QString PathWorldScenery();
     static QString PathWorldPaths();
@@ -352,6 +374,8 @@ private:
     static QString wlvlPath;
 
     static QString commonGPath;
+
+    static QString scriptPath;
 
     static void refreshPaths();
     static bool loadEngineSettings(); //!< Load engine.ini file

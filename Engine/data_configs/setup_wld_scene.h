@@ -78,6 +78,8 @@ struct WorldMapSetup
     QString portrait_animation;
     int     portrait_direction;
     QList<WorldAdditionalImage > AdditionalImages;
+
+    QString luaFile;
 };
 
 #endif // SETUP_WLD_SCENE_H

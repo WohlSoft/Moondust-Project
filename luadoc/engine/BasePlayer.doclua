@@ -1,0 +1,26 @@
+-------------------------------------------------------------------------------
+-- @module BasePlayer
+-- @extends PhysBase#PhysBase 
+
+
+-------------------------------------------------------------------------------
+-- Constructs a new BasePlayer
+-- It is recommended to NOT use the function.
+-- @callof #PhysBase
+
+-------------------------------------------------------------------------------
+-- The init event for the player. 
+-- This event is called when a new player is beeing constructed and placed on the scene.<br>
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BasePlayer] __init
+-- @param self
+
+
+-------------------------------------------------------------------------------
+-- This loop event for the player.
+-- This event is called for every update-loop of the player.<br>
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BasePlayer] onLoop
+-- @param self
+
+return nil

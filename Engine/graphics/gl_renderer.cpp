@@ -77,14 +77,11 @@ bool GlRenderer::init()
 
     // Initializing OpenGL
     glMatrixMode( GL_PROJECTION );
-    //glPushMatrix();
     glLoadIdentity();
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
-    //glOrtho( 0.0, PGE_Window::Width, PGE_Window::Heightб 0.0, 1.0, -1.0 );
 
     //Initialize Modelview Matrix
     glMatrixMode( GL_MODELVIEW );
-    //glPushMatrix();
     glLoadIdentity();
 
     //Initialize clear color
@@ -94,14 +91,13 @@ bool GlRenderer::init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glEnable( GL_BLEND );
     glDisable( GL_DEPTH_TEST );
-    glDisable( GL_LIGHTING );
-
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
     glDepthFunc(GL_NEVER);// Ignore depth values (Z) to cause drawing bottom to top
 
+    glDisable( GL_LIGHTING );
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     //Check for error
     GLenum error = glGetError();
@@ -115,8 +111,6 @@ bool GlRenderer::init()
     }
 
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     ScreenshotPath = AppPathManager::userAppDir()+"/screenshots/";
     _isReady=true;
@@ -278,6 +272,7 @@ void GlRenderer::makeShot()
     h=h-offset_y*2;
 
     uchar* pixels = new uchar[4*w*h];
+    glLoadIdentity();
     glReadPixels(offset_x, offset_y, w, h, GL_RGB, GL_UNSIGNED_BYTE, pixels);
     PGE_GL_shoot *shoot=new PGE_GL_shoot();
     shoot->pixels=pixels;
@@ -358,6 +353,11 @@ PGE_Point GlRenderer::MapToScr(int x, int y)
     return PGE_Point(((float(x))/viewport_scale_x)-offset_x, ((float(y))/viewport_scale_y)-offset_y);
 }
 
+int GlRenderer::alignToCenter(int x, int w)
+{
+    return x+(viewport_w_half-(w/2));
+}
+
 void GlRenderer::setViewport(int x, int y, int w, int h)
 {
     glViewport(offset_x+x*viewport_scale_x,
@@ -414,7 +414,7 @@ void GlRenderer::setWindowSize(int w, int h)
     resetViewport();
 }
 
-void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
+void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
 {
     PGE_PointF point;
         point = MapToGl(x, y);
@@ -424,15 +424,29 @@ void GlRenderer::renderRect(float x, float y, float w, float h, GLfloat red, GLf
     float right = point.x();
     float bottom = point.y();
 
+    if(filled)
+    {
     glDisable(GL_TEXTURE_2D);
     glColor4f( red, green, blue, alpha);
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glVertex2f( left, top);
-        glVertex2f(  right, top);
-        glVertex2f(  right, bottom);
-        glVertex2f( left,  bottom);
+        glVertex2f( right, top);
+        glVertex2f( right, bottom);
+
+        glVertex2f( left, top);
+        glVertex2f( left, bottom);
+        glVertex2f( right,  bottom);
     glEnd();
-    glDisable(GL_TEXTURE_2D);
+    } else {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( red, green, blue, alpha);
+        glBegin( GL_LINE_LOOP );
+            glVertex2f( left, top);
+            glVertex2f( right, top);
+            glVertex2f( right,  bottom);
+            glVertex2f( left, bottom);
+        glEnd();
+    }
 }
 
 void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bottom, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha)
@@ -447,13 +461,15 @@ void GlRenderer::renderRectBR(float _left, float _top, float _right, float _bott
 
     glDisable(GL_TEXTURE_2D);
     glColor4f( red, green, blue, alpha);
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glVertex2f( left, top);
-        glVertex2f(  right, top);
-        glVertex2f(  right, bottom);
-        glVertex2f( left,  bottom);
+        glVertex2f( right, top);
+        glVertex2f( right, bottom);
+
+        glVertex2f( left, top);
+        glVertex2f( left, bottom);
+        glVertex2f( right,  bottom);
     glEnd();
-    glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -478,18 +494,20 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y)
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     glBindTexture( GL_TEXTURE_2D, texture->texture );
 
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glTexCoord2f( 0, 0 );
         glVertex2f( left, top);
-
         glTexCoord2f( 1, 0 );
         glVertex2f(  right, top);
-
         glTexCoord2f( 1, 1 );
         glVertex2f(  right, bottom);
 
+        glTexCoord2f( 0, 0 );
+        glVertex2f( left, top);
         glTexCoord2f( 0, 1 );
         glVertex2f( left,  bottom);
+        glTexCoord2f( 1, 1 );
+        glVertex2f(  right, bottom);
         glEnd();
     glDisable(GL_TEXTURE_2D);
 }
@@ -514,19 +532,21 @@ void GlRenderer::renderTexture(PGE_Texture *texture, float x, float y, float w, 
     glColor4f( color_level_red, color_level_green, color_level_blue, color_level_alpha);
     glBindTexture( GL_TEXTURE_2D, texture->texture );
 
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glTexCoord2f( ani_left, ani_top );
         glVertex2f( left, top);
-
         glTexCoord2f( ani_right, ani_top );
         glVertex2f(  right, top);
-
         glTexCoord2f( ani_right, ani_bottom );
         glVertex2f(  right, bottom);
 
+        glTexCoord2f( ani_left, ani_top );
+        glVertex2f( left, top);
         glTexCoord2f( ani_left, ani_bottom );
         glVertex2f( left,  bottom);
-        glEnd();
+        glTexCoord2f( ani_right, ani_bottom );
+        glVertex2f(  right, bottom);
+    glEnd();
     glDisable(GL_TEXTURE_2D);
 }
 
@@ -540,18 +560,20 @@ void GlRenderer::renderTextureCur(float x, float y, float w, float h, float ani_
     float right = point.x();
     float bottom = point.y();
 
-    glBegin( GL_QUADS );
+    glBegin( GL_TRIANGLES );
         glTexCoord2f( ani_left, ani_top );
         glVertex2f( left, top);
-
         glTexCoord2f( ani_right, ani_top );
         glVertex2f(  right, top);
-
         glTexCoord2f( ani_right, ani_bottom );
         glVertex2f(  right, bottom);
 
+        glTexCoord2f( ani_left, ani_top );
+        glVertex2f( left, top);
         glTexCoord2f( ani_left, ani_bottom );
         glVertex2f( left,  bottom);
+        glTexCoord2f( ani_right, ani_bottom );
+        glVertex2f(  right, bottom);
     glEnd();
 }
 

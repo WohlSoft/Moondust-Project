@@ -61,6 +61,7 @@ namespace luabind {
 			template<class T>
 			T* to_cpp(lua_State*, by_pointer<T>, int index)
 			{
+                _unused(index);
 				return static_cast<T*>(result);
 			}
 
@@ -81,7 +82,7 @@ namespace luabind {
 
 			template<class T>
 			void converter_postcall(lua_State*, by_pointer<T>, int index)
-			{}
+            { _unused(index); }
 		};
 
 		struct const_pointer_converter

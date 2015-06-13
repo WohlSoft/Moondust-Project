@@ -10,6 +10,8 @@
 # include <luabind/typeid.hpp>
 # include <stdexcept>
 
+#include "___unused.h"
+
 namespace luabind { 
 	namespace detail {
 
@@ -89,7 +91,7 @@ namespace luabind {
 			// No need for dynamic_id / dynamic_ptr, since we always get the most derived type
 			value_holder(lua_State* L, ValueType val)
 				: instance_holder(false), val_(std::move(val))
-			{}
+            { _unused(L); }
 
 			explicit operator bool() const
 			{

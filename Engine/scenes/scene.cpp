@@ -21,6 +21,9 @@
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
 
+#include <script/lua_event.h>
+#include <script/bindings/core/events/luaevents_core_engine.h>
+
 void Scene::construct()
 {
     fader.setFull();
@@ -34,7 +37,7 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = 1000.0f/(float)PGE_Window::PhysStep;
+    uTickf = 1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick = round(uTickf);
     if(uTick<=0) uTick=1;
     if(uTickf<=0) uTickf=1.0;
@@ -129,9 +132,26 @@ void Scene::processEvents()
     }
 }
 
+LuaEngine *Scene::getLuaEngine()
+{
+    return nullptr;
+}
+
 void Scene::update()
 {
     fader.tickFader(uTickf);
+}
+
+void Scene::updateLua()
+{
+    LuaEngine* sceneLuaEngine = getLuaEngine();
+    clearRenderFunctions();//Clean up last rendered stuff
+    if(sceneLuaEngine){
+        if(sceneLuaEngine->isValid()){
+            LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
+            sceneLuaEngine->dispatchEvent(loopEvent);
+        }
+    }
 }
 
 void Scene::render()
@@ -139,6 +159,12 @@ void Scene::render()
     if(!fader.isNull())
     {
         GlRenderer::renderRect(0, 0, PGE_Window::Width, PGE_Window::Height, 0.f, 0.f, 0.f, fader.fadeRatio());
+    }
+
+    const int sz = renderFunctions.size();
+    const std::function<void()>* fn = renderFunctions.data();
+    for(int i=0;i<sz; i++){//Call all render functions
+        (fn[i])();
     }
 }
 
@@ -153,6 +179,16 @@ int Scene::exec()
 Scene::TypeOfScene Scene::type()
 {
     return sceneType;
+}
+
+void Scene::addRenderFunction(const std::function<void ()> &renderFunc)
+{
+    renderFunctions.push_back(renderFunc);
+}
+
+void Scene::clearRenderFunctions()
+{
+    renderFunctions.clear();
 }
 
 bool Scene::isExiting()

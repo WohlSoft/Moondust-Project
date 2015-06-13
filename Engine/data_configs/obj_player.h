@@ -30,17 +30,31 @@
 /****************Definition of playable character state*******************/
 struct obj_player_physics
 {
+    obj_player_physics();
     inline void make() {} //!< Dummy function
     float walk_force; //!< Move force
+    float run_force;  //!< Running force
+
+    float decelerate_stop; //!< Deceleration while stopping
+    float decelerate_run;  //!< Deceleration running while speed higher than walking
+    float decelerate_turn; //!< Deceleration while turning
+    float decelerate_air;  //!< Decelerate in air
+
     float slippery_c; //!< Slippery coefficien
     float gravity_scale; //!< Gravity scale
     float velocity_jump; //!< Jump velocity
-    float velocity_climb; //!< Climbing velocity
+    int   jump_time;     //!< Time to jump
+
+    float velocity_climb_x; //!< Climbing velocity
+    float velocity_climb_y_up; //!< Climbing velocity
+    float velocity_climb_y_down; //!< Climbing velocity
+
     float MaxSpeed_walk; //!< Max walk speed
-    float MaxSpeed_run; //!< Max run speed
-    float MaxSpeed_up; //!< Fly UP Max fall speed
+    float MaxSpeed_run;  //!< Max run speed
+
+    float MaxSpeed_up;   //!< Fly UP Max fall speed
     float MaxSpeed_down; //!< Max fall down speed
-    float damping;
+
     bool    zero_speed_y_on_enter;
     bool    slow_speed_x_on_enter;
 };
@@ -53,7 +67,8 @@ struct obj_player_state
    bool duck_allow;
     int duck_height;
     bool allow_floating;
-    int floating_max_time;
+      int floating_max_time;
+    float floating_amplitude;
     QHash<int, obj_player_physics > phys;
     QString event_script;//!< LUA-Script with events
 

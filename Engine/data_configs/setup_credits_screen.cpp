@@ -32,7 +32,7 @@ void CreditsScreenSetup::init(QSettings &engine_ini)
         ConfigManager::checkForImage(backgroundImg, ConfigManager::dirs.gcommon);
 
         updateDelay = engine_ini.value("updating-time", 128).toInt();
-        luaFile = ConfigManager::config_dir+"/"+engine_ini.value("script", "credits.lua").toString();
+        luaFile = engine_ini.value("script", "main_credits.lua").toString();
         LoadScreenImages = engine_ini.value("additional-images", 0).toInt();
     engine_ini.endGroup();
 
