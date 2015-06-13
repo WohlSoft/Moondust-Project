@@ -205,6 +205,7 @@ void LevelScene::processPauseMenu()
 
 
 
+
 LevelScene::~LevelScene()
 {
 
@@ -502,16 +503,17 @@ void LevelScene::render()
 
         cam->drawBackground();
 
-        for(PGE_RenderList::iterator it=cam->renderObjects().begin();it!=cam->renderObjects().end(); it++ )
+        const int render_sz = cam->renderObjects().size();
+        PGE_Phys_Object** render_obj = cam->renderObjects().data();
+        for(int i=0; i<render_sz; i++)
         {
-            PGE_Phys_Object*&item=(*it);
-            switch(item->type)
+            switch(render_obj[i]->type)
             {
             case PGE_Phys_Object::LVLBlock:
             case PGE_Phys_Object::LVLBGO:
             case PGE_Phys_Object::LVLNPC:
             case PGE_Phys_Object::LVLPlayer:
-                item->render(cam->posX(), cam->posY());
+                render_obj[i]->render(cam->posX(), cam->posY());
                 break;
             default:
                 break;

@@ -93,7 +93,7 @@ private:
     TypeOfScene sceneType;
     float __waiting_step;
 
-    QList<std::function<void()> > renderFunctions;
+    QVector<std::function<void()> > renderFunctions;
 };
 
 #endif // SCENE_H
