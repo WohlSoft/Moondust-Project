@@ -56,6 +56,8 @@ struct NPCConfigFile
     bool en_nohammer;
     bool en_noshell;
     bool en_name;
+    bool en_image;
+    bool en_script;
     /* Using options flags END */
 
     int gfxoffsetx;
@@ -88,6 +90,8 @@ struct NPCConfigFile
     bool nohammer;
     bool noshell;
     QString name;
+    QString image;
+    QString script;
 };
 
 #endif // NPC_FILEDATA_H
