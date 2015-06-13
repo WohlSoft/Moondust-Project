@@ -27,6 +27,7 @@ LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
     data=FileFormats::dummyLvlBgo();
     animated=false;
     animator_ID=0;
+    _isInited=false;
 }
 
 LVL_Bgo::~LVL_Bgo()
@@ -34,9 +35,12 @@ LVL_Bgo::~LVL_Bgo()
 
 void LVL_Bgo::init()
 {
-    setSize(texture.w, texture.h);
+    if(_isInited) return;
+    transformTo_x(data.id);
     setPos(data.x, data.y);
     collide=COLLISION_NONE;
+
+    _isInited=true;
 }
 
 void LVL_Bgo::transformTo_x(long id)
@@ -84,6 +88,7 @@ void LVL_Bgo::transformTo_x(long id)
         animated = setup->animated;
         animator_ID = setup->animator_ID;
     }
+    setSize(texture.w, texture.h);
 }
 
 void LVL_Bgo::render(double camX, double camY)
@@ -93,4 +98,9 @@ void LVL_Bgo::render(double camX, double camY)
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
     GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
+}
+
+bool LVL_Bgo::isInited()
+{
+    return _isInited;
 }

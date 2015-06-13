@@ -86,8 +86,11 @@ public:
     /**************Fader**************/
 
     void render(double camX, double camY);
+
+    bool isInited();
 private:
     void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
+    bool _isInited;
 };
 
 #endif // LVL_BLOCK_H

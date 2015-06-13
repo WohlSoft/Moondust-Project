@@ -32,6 +32,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     animator_ID=0;
     killed=false;
     isActivated=false;
+    _isInited=false;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -39,27 +40,11 @@ LVL_Npc::~LVL_Npc()
 
 void LVL_Npc::init()
 {
-    setSize(setup->width, setup->height);
-
-    int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
-    int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
-    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
-    frameSize.setSize(setup->gfx_w, setup->gfx_h);
-    animator.construct(texture, *setup);
-
-    setDefaults();
-    setGravityScale(setup->gravity ? 1.0f : 0.f);
-
-    if(setup->block_player)
-        collide = COLLISION_ANY;
-    else
-    if(setup->block_player_top)
-        collide = COLLISION_TOP;
-    else
-        collide = COLLISION_NONE;
-    phys_setup.max_vel_y=10;
+    if(_isInited) return;
+    transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
+    _isInited=true;
 }
 
 void LVL_Npc::kill()
@@ -115,6 +100,29 @@ void LVL_Npc::transformTo_x(long id)
         animator_ID = setup->animator_ID;
     }
 
+    setSize(setup->width, setup->height);
+
+    int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
+    int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
+    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
+    frameSize.setSize(setup->gfx_w, setup->gfx_h);
+    animator.construct(texture, *setup);
+
+    setDefaults();
+    setGravityScale(setup->gravity ? 1.0f : 0.f);
+
+    if(setup->block_player)
+        collide = COLLISION_ANY;
+    else
+    if(setup->block_player_top)
+        collide = COLLISION_TOP;
+    else
+        collide = COLLISION_NONE;
+    phys_setup.max_vel_y=10;
+
+    //if(isInited) {
+        //do some stuff only when NPC already inited (for example, cleanup stuff of previous NPC)
+    //} else
     //Load LUA script
     QString script = ConfigManager::Dir_NPCScript.getCustomFile(setup->algorithm_script);
     if((!script.isEmpty())&&QFileInfo(script).exists())
@@ -204,4 +212,9 @@ void LVL_Npc::deActivate()
         setPos(data.x, data.y);
     }
     animator.stop();
+}
+
+bool LVL_Npc::isInited()
+{
+    return _isInited;
 }

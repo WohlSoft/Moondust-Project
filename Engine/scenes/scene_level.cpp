@@ -410,8 +410,6 @@ void LevelScene::update()
             }
             x.block->data.id = block_transforms.first().id;
             x.block->transformTo_x(x.id);
-            x.block->init();
-
             block_transforms.pop_front();
         }
 
