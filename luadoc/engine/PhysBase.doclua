@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+-- This is the class for object with physics. 
+-- This class cannot be constructed.
+-- @module PhysBase
+
+-------------------------------------------------------------------------------
+-- The x-position of the object
+-- @field [parent=#PhysBase] #number x The x-position.
+
+-------------------------------------------------------------------------------
+-- The y-position of the object
+-- @field [parent=#PhysBase] #number y The y-position.
+
+-------------------------------------------------------------------------------
+-- The x-speed of the object
+-- @field [parent=#PhysBase] #number speedX The x-speed.
+
+-------------------------------------------------------------------------------
+-- The y-speed of the object
+-- @field [parent=#PhysBase] #number speedY The y-speed.
+
+-------------------------------------------------------------------------------
+-- The gravity of the object
+-- @field [parent=#PhysBase] #number gravity The gravity.
+
+
+return nil
