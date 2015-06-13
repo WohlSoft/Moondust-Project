@@ -29,6 +29,10 @@
 -- This is the namespace for game settings. Mostly of these settings can be set by the user under "Main Menu > Options". You can get or set the options.
 -- @field[parent = #global] Settings#Settings Settings
 
+-------------------------------------------------------------------------------
+-- This is the base class for all players on the scene.
+-- @field[parent = #global] BasePlayer#BasePlayer BasePlayer
+
 
 
 
