@@ -205,8 +205,11 @@ class LVL_Player :
         bool duck_allow;
         bool ducking;
         void setDuck(bool duck);
+private:
+        void _collideUnduck(bool preVelocity=false);//!< Re-checks collisions after player disabled duck.
+                                                    //!< Pre-velocity needs if you call "setCharacter" function before iterate physics
         /******************Duck*************************/
-
+public:
         void render(double camX, double camY);
         MatrixAnimator animator;
         int frameW;
