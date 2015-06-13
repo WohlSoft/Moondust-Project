@@ -33,6 +33,8 @@
 
 #include <fontman/font_manager.h>
 
+//#define COLLIDE_DEBUG
+
 LVL_Player::LVL_Player() : PGE_Phys_Object()
 {
     camera = NULL;
@@ -208,11 +210,22 @@ void LVL_Player::setDuck(bool duck)
     ducking=duck;
     if(!duck)
     {
+        _syncPosition();
+
         //Detect collidable blocks!
         QVector<PGE_Phys_Object*> bodies;
         PGE_RectF posRectC = posRect;
-        posRectC.setBottom(posRect.bottom()-(state_cur.height-state_cur.duck_height));
+        posRectC.setTop(posRectC.top()+4.0f);
+        posRectC.setLeft(posRectC.left()-4.0f);
+        posRectC.setRight(posRectC.right()+4.0f);
+        posRectC.setBottom(posRectC.bottom()+4.0f);
         LvlSceneP::s->queryItems(posRectC, &bodies);
+
+        #ifdef COLLIDE_DEBUG
+        //Freeze time to check out what happening at moment
+        GlRenderer::makeShot();
+        LvlSceneP::s->isTimeStopped=true;
+        #endif
 
         forceCollideCenter=true;
         for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
@@ -224,6 +237,10 @@ void LVL_Player::setDuck(bool duck)
         }
         forceCollideCenter=false;
 
+        #ifdef COLLIDE_DEBUG
+        int hited=0;
+        PGE_RectF nearestRect;
+        #endif
         if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
         {
             QVector<LVL_Block*> blocks_to_hit;
@@ -239,19 +256,30 @@ void LVL_Player::setDuck(bool duck)
                 LVL_Block *blk= static_cast<LVL_Block*>(collided);
                 if(blk) blocks_to_hit.push_back(blk);
             }
-
             if(!blocks_to_hit.isEmpty())
             {
-                LVL_Block*nearest = nearestBlock(blocks_to_hit);
+                LVL_Block*nearest = nearestBlockY(blocks_to_hit);
                 if(nearest)
                 {
                     posRect.setY(nearest->posRect.bottom()+1);
+                }
+                nearest = nearestBlock(blocks_to_hit);
+                if(nearest) {
+                    #ifdef COLLIDE_DEBUG
+                    nearestRect=nearest->posRect;
+                    #endif
                     nearest->hit();
                     bump();
                 }
             }
+            #ifdef COLLIDE_DEBUG
+            hited=blocks_to_hit.size();
             blocks_to_hit.clear();
+            #endif
         }
+        #ifdef COLLIDE_DEBUG
+        qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
+        #endif
     }
 }
 
@@ -269,6 +297,8 @@ void LVL_Player::init()
     animator.tickAnimation(0.f);
     isLocked=false;
     isInited=true;
+
+    _syncSection();
 }
 
 void LVL_Player::update(float ticks)
@@ -516,7 +546,7 @@ void LVL_Player::update(float ticks)
         if(!ducking || !onGround)
         {
             //If left key is pressed
-            if(keys.right)
+            if(keys.right && collided_right.isEmpty())
             {
                 if(climbing)
                     setSpeedX(physics_cur.velocity_climb_x);
@@ -524,7 +554,7 @@ void LVL_Player::update(float ticks)
                     applyAccel(force, 0);
             }
             //If right key is pressed
-            if(keys.left)
+            if(keys.left && collided_left.isEmpty())
             {
                 if(climbing)
                     setSpeedX(-physics_cur.velocity_climb_x);
@@ -886,7 +916,7 @@ void LVL_Player::updateCollisions()
     }
 
 
-
+    bool wall=false;
 
     if(!collided_right.isEmpty())
     {
@@ -898,6 +928,7 @@ void LVL_Player::updateCollisions()
         }
         if(isWall(blocks_to_hit))
         {
+            wall=true;
             LVL_Block*nearest = nearestBlock(blocks_to_hit);
             if(nearest)
             {
@@ -917,6 +948,7 @@ void LVL_Player::updateCollisions()
         }
         if(isWall(blocks_to_hit))
         {
+            wall=true;
             LVL_Block*nearest = nearestBlock(blocks_to_hit);
             if(nearest)
             {
@@ -927,7 +959,7 @@ void LVL_Player::updateCollisions()
         blocks_to_hit.clear();
     }
 
-    if( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) )
+    if( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) )
         posRect.setX(posRect.x()-direction);
 }
 
@@ -944,8 +976,8 @@ bool LVL_Player::isWall(QVector<LVL_Block*> &blocks)
         if(blocks[i]->posRect.top()<higher)
             higher=blocks[i]->posRect.top();
     }
-    if(posRect.top() > lower) return false;
-    if(posRect.bottom() < higher) return false;
+    if(posRect.top() >= lower) return false;
+    if(posRect.bottom() <= higher) return false;
     return true;
 }
 
@@ -964,6 +996,26 @@ LVL_Block *LVL_Player::nearestBlock(QVector<LVL_Block*> &blocks)
         {
             if( fabs(blocks[i]->posRect.center().x()-posRect.center().x())<
                 fabs(nearest->posRect.center().x()-posRect.center().x()) )
+                nearest=blocks[i];
+        }
+    }
+    return nearest;
+}
+
+LVL_Block *LVL_Player::nearestBlockY(QVector<LVL_Block *> &blocks)
+{
+    if(blocks.size()==1)
+        return blocks.first();
+
+    LVL_Block*nearest=NULL;
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(!nearest)
+            nearest=blocks[i];
+        else
+        {
+            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
+                fabs(nearest->posRect.center().y()-posRect.center().y()) )
                 nearest=blocks[i];
         }
     }
@@ -1064,10 +1116,25 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         if(blk->isHidden) break;
                         collided_left[(intptr_t)collided]=collided;//left of player
                     }
+
+
+                    float c=forceCollideCenter? 0.0f : 1.0f;
                     //*****************************Center****************************/
-                    if( blk->posRect.collideRectDeep(posRect, fabs(_velocityX_prev), fabs(_velocityY_prev) ))
+                    #ifdef COLLIDE_DEBUG
+                    qDebug() << "block" <<posRect.top()<<":"<<blk->posRect.bottom()
+                             << "block" <<posRect.bottom()<<":"<<blk->posRect.top()<<" collide?"<<
+                                blk->posRect.collideRectDeep(posRect,
+                                                                                     fabs(_velocityX_prev)*c+c,
+                                                                                     fabs(_velocityY_prev)*c+c) <<
+                                "depths: "<< fabs(_velocityX_prev)*c+c <<
+                            fabs(_velocityY_prev)*c+c;
+                    #endif
+                    if( blk->posRect.collideRectDeep(posRect,
+                                                     fabs(_velocityX_prev)*c+c,
+                                                     fabs(_velocityY_prev)*c+c)
+                            )
                     {
-                        if(blk->isHidden&&!forceCollideCenter) break;
+                        if(blk->isHidden && !forceCollideCenter) break;
                         collided_center[(intptr_t)collided]=collided;
                     }
                     break;
