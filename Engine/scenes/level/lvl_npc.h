@@ -17,7 +17,7 @@ class LVL_Npc : public PGE_Phys_Object
 {
 public:
     LVL_Npc();
-    ~LVL_Npc();
+    virtual ~LVL_Npc();
     void init();
 
     LevelNPC data; //Local settings
@@ -48,6 +48,8 @@ public:
 
     bool isActivated;
     int timeout;
+
+    virtual void lua_onLoop() {}
 };
 
 #endif // LVL_NPC_H
