@@ -148,6 +148,41 @@ void LuaEngine::forceShutdown()
     L = nullptr;
 }
 
+luabind::adl::object LuaEngine::loadClassAPI(const QString &path)
+{
+    QFile luaCoreFile(path);
+    if(!luaCoreFile.open(QIODevice::ReadOnly)){
+        qWarning() << "Failed to load up \"" << path << "\"! Wrong path or insufficient access?";
+        shutdown();
+        return luabind::object();
+    }
+
+    //Now read our code.
+    QString luaCoreCode = QTextStream(&luaCoreFile).readAll();
+
+    //Now load our code by lua and check for common compile errors
+    int errorCode = luautil_loadclass(L, luaCoreCode.toLocal8Bit().data(), luaCoreCode.length(), m_coreFile.section('/', -1).section('\\', -1).toLocal8Bit().data());
+    //If we get an error, then handle it
+    if(errorCode){
+        qWarning() << "Got lua error, reporting...";
+        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+        shutdown();
+        return luabind::object();
+    }
+
+    luabind::object tReturn(luabind::from_stack(L, -1));
+    if(luabind::type(tReturn) != LUA_TTABLE){
+        qWarning() << "Invalid return type of loading class";
+        return luabind::object();
+    }
+    return tReturn;
+}
+
+void LuaEngine::loadClassAPI(const QString &nameInGlobal, const QString &path)
+{
+    luabind::globals(L)[nameInGlobal.toLocal8Bit().data()] = loadClassAPI(path);
+}
+
 QString LuaEngine::coreFile() const
 {
     return m_coreFile;

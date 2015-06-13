@@ -54,6 +54,9 @@ public:
     ///
     inline bool isValid() { return L != nullptr; }
 
+    luabind::object loadClassAPI(const QString& path);
+    void loadClassAPI(const QString& nameInGlobal, const QString& path);
+
     QString coreFile() const;
     void setCoreFile(const QString &coreFile);
 
