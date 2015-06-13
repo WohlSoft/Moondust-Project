@@ -1,8 +1,8 @@
 #ifndef LVL_NPC_H
 #define LVL_NPC_H
 
-#include "../../physics/base_object.h"
-#include "../../data_configs/obj_npc.h"
+#include "lvl_base_object.h"
+#include <data_configs/obj_npc.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
 
@@ -24,9 +24,6 @@ public:
     PGE_Size offset;
     PGE_Size frameSize;
     AdvNpcAnimator animator;
-
-    b2Fixture *f_npc;
-    b2Fixture *f_edge;
 
     int direction;
     QHash<int, int> blocks_left;

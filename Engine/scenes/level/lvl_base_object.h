@@ -19,13 +19,8 @@
 #ifndef BASE_OBJECT_H
 #define BASE_OBJECT_H
 
-#include <QVector>
-#include <Box2D/Box2D.h>
-#include "phys_util.h"
-#include "../graphics/graphics.h"
-
 #include <common_features/rectf.h>
-
+#include <common_features/pge_texture.h>
 
 struct PGE_Phys_Object_Phys
 {
@@ -74,11 +69,11 @@ public:
     double gravityScale();
     void setGravityScale(double scl);
 
-    void _syncBox2dWithPos();
+    void _syncPosition();
     void renderDebug(float _camX, float _camY);
 
     void iterateStep(float ticks);
-    void updateCollisions();
+    virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
     float timeStep;
@@ -89,6 +84,9 @@ public:
 
     double _velocityX;
     double _velocityY;
+
+    double _velocityX_prev;
+    double _velocityY_prev;
 
     double _posX;
     double _posY;
@@ -115,31 +113,12 @@ public:
 
     bool slippery_surface;
     bool isRectangle;
-    bool _player_moveup; //Protection from wrong collision
-
-    b2Body* physBody;
-    b2World * worldPtr;
 
     PGE_Texture texture;
     GLuint texId;
     virtual GLdouble zIndex();
     GLdouble z_index;
 
-    virtual void nextFrame();
-    //Later add animator here
-    /*
-    glTexCoord2i( 0, AnimationPos );
-    glVertex2f( blockG.left(), blockG.top());
-
-    glTexCoord2i( 1, 0 );
-    glVertex2f(  blockG.right(), blockG.top());
-
-    glTexCoord2i( 1, AnimationPos+1/frames );
-    glVertex2f(  blockG.right(),  blockG.bottom());
-
-    glTexCoord2i( 0, AnimationPos+1/frames );
-    glVertex2f( blockG.left(),  blockG.bottom());
-    */
 public:
 
     enum types
@@ -158,18 +137,15 @@ public:
     virtual void update();
     virtual void update(float ticks);
     virtual void render(double x, double y);
+
+    bool isPaused();
+    void setPaused(bool p);
+private:
+    bool _paused;
+
 };
 
 bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
-
-
-//subclass b2QueryCallback
-class CollidablesInRegionQueryCallback : public b2QueryCallback
-{
-public:
-      QVector<b2Body*> foundBodies;
-      bool ReportFixture(b2Fixture* fixture);
-};
 
 #endif // BASE_OBJECT_H
