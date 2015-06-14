@@ -26,7 +26,7 @@ struct PGE_Phys_Object_Phys
 {
     PGE_Phys_Object_Phys();
     float min_vel_x;
-    float mix_vel_y;
+    float min_vel_y;
     float max_vel_x;
     float max_vel_y;
     float decelerate_x;

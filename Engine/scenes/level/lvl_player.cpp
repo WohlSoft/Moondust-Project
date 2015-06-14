@@ -152,14 +152,17 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
 
-    phys_setup.max_vel_x = isRunning ?
-                physics_cur.MaxSpeed_run :
-                physics_cur.MaxSpeed_walk;
-    phys_setup.min_vel_x = -(isRunning ?
+    phys_setup.max_vel_x = fabs(isRunning ?
                 physics_cur.MaxSpeed_run :
                 physics_cur.MaxSpeed_walk);
-
-    phys_setup.grd_dec_x = physics_cur.walk_force;
+    phys_setup.min_vel_x = -fabs(isRunning ?
+                physics_cur.MaxSpeed_run :
+                physics_cur.MaxSpeed_walk);
+    phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
+    phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
+    phys_setup.decelerate_x = physics_cur.decelerate_air;
+    phys_setup.gravityScale = physics_cur.gravity_scale;
+    phys_setup.grd_dec_x    = physics_cur.walk_force;
 
     /********************floating************************/
     floating_allow=state_cur.allow_floating;
@@ -321,8 +324,6 @@ void LVL_Player::update(float ticks)
     LVL_Section* section = sct();
     if(!section) return;
 
-    lua_onLoop();
-
     event_queue.processEvents(ticks);
 
     if((isWarping) || (!isAlive))
@@ -338,10 +339,21 @@ void LVL_Player::update(float ticks)
     bool climbableDown= climbableUp && !onGround;
     climbing = (climbableUp && climbing && !onGround && (posRect.center().y()>=(climbableHeight-physics_cur.velocity_climb_y_up)) );
     if(onGround)
+    {
         phys_setup.decelerate_x =
                 (fabs(speedX())<=physics_cur.MaxSpeed_walk)?
                 (on_slippery_surface?physics_cur.decelerate_stop/physics_cur.slippery_c : physics_cur.decelerate_stop):
                 (on_slippery_surface?physics_cur.decelerate_run/physics_cur.slippery_c : physics_cur.decelerate_run);
+
+        if(physics_cur.strict_max_speed_on_ground)
+        {
+            if((speedX()>0)&&(speedX()>phys_setup.max_vel_x))
+                setSpeedX(phys_setup.max_vel_x);
+            else
+            if((speedX()<0)&&(speedX()<phys_setup.min_vel_x))
+                setSpeedX(phys_setup.min_vel_x);
+        }
+    }
     else
         phys_setup.decelerate_x = physics_cur.decelerate_air;
 
@@ -404,7 +416,6 @@ void LVL_Player::update(float ticks)
         }
     }
 
-
     if((last_environment!=environment)||(last_environment==-1))
     {
         physics_cur = physics[environment];
@@ -415,17 +426,20 @@ void LVL_Player::update(float ticks)
             setSpeedY(0.0);
 
         if(physics_cur.slow_speed_x_on_enter)
-            setSpeedX(speedX()/2.0);
+            setSpeedX( speedX()*physics_cur.slow_speed_x_coeff );
 
-        setDecelX(physics_cur.decelerate_air);
+        phys_setup.max_vel_x = fabs(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
+        phys_setup.min_vel_x = -fabs(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
+        phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
+        phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
+        phys_setup.decelerate_x = physics_cur.decelerate_air;
+        phys_setup.gravityScale = physics_cur.gravity_scale;
+        phys_setup.grd_dec_x    = physics_cur.walk_force;
 
-        setGravityScale(physics_cur.gravity_scale);
-        phys_setup.max_vel_x = isRunning ?
-                    physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk;
-        phys_setup.min_vel_x = -(isRunning ?
-                    physics_cur.MaxSpeed_run :
-                    physics_cur.MaxSpeed_walk);
         floating_isworks=false;//< Reset floating on re-entering into another physical envirinment
     }
 
@@ -456,6 +470,16 @@ void LVL_Player::update(float ticks)
             isRunning=false;
         }
     }
+    if((physics_cur.ground_c_max!=1.0f))
+    {
+        phys_setup.max_vel_x = fabs(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
+        phys_setup.min_vel_x = -fabs(isRunning ?
+                    physics_cur.MaxSpeed_run :
+                    physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
+    }
+
 
     if(keys.alt_run)
     {
@@ -554,6 +578,7 @@ void LVL_Player::update(float ticks)
                     (fabs(speedX())>physics_cur.MaxSpeed_walk)?physics_cur.run_force : physics_cur.walk_force;
 
         if(on_slippery_surface) force=force/physics_cur.slippery_c;
+        else if((onGround)&&(physics_cur.ground_c!=1.0f)) force=force*physics_cur.ground_c;
 
         if(keys.left) direction=-1;
         if(keys.right) direction=1;
@@ -626,7 +651,7 @@ void LVL_Player::update(float ticks)
                 climbing=false;
                 jumpTime=jumpTime_default;
                 floating_timer = floating_maxtime;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/5.0f));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -645,7 +670,7 @@ void LVL_Player::update(float ticks)
             if(jumpTime>0)
             {
                 jumpTime -= ticks;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/6));
+                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
             }
 
             if(floating_isworks)
@@ -703,7 +728,8 @@ void LVL_Player::update(float ticks)
     if(bumpUp)
     {
         bumpUp=false;
-        setSpeedY( (keys.jump?(-25.0f-fabs(speedX()/6)) : -physics_cur.velocity_jump) );
+        if(keys.jump) jumpTime=jumpTime_default;
+        setSpeedY( (keys.jump?(-fabs(physics_cur.velocity_jump)-fabs(speedX()/physics_cur.velocity_jump_c)) : -fabs(physics_cur.velocity_jump)) );
     }
 
 
@@ -770,24 +796,24 @@ void LVL_Player::update(float ticks)
                     switch(contactedWarp->data.idirect)
                     {
                         case 4://right
-                            if(this->right() >= contactedWarp->right()-1 &&
-                               this->right() <= contactedWarp->right() &&
-                               this->bottom() >= contactedWarp->bottom()-1 &&
-                               this->bottom() <= contactedWarp->bottom()  ) isContacted = true;
+                            if(posRect.right() >= contactedWarp->right()-1.0 &&
+                               posRect.right() <= contactedWarp->right()+speedX() &&
+                               posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                               posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                             break;
                         case 3://down
-                            if(this->bottom() >= contactedWarp->bottom()-1 &&
-                               this->bottom() <= contactedWarp->bottom()) isContacted = true;
+                            if(posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                               posRect.bottom() <= contactedWarp->bottom()) isContacted = true;
                             break;
                         case 2://left
-                            if(this->left() <= contactedWarp->left()+1 &&
-                               this->left() >= contactedWarp->left() &&
-                               this->bottom() >= contactedWarp->bottom()-1 &&
-                               this->bottom() <= contactedWarp->bottom()  ) isContacted = true;
+                            if(posRect.left() <= contactedWarp->left()+1.0 &&
+                               posRect.left() >= contactedWarp->left()+speedX() &&
+                               posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                               posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                             break;
                         case 1://up
-                            if(this->top() <= contactedWarp->top()+1 &&
-                               this->top() >= contactedWarp->top()) isContacted = true;
+                            if(posRect.top() <= contactedWarp->top()+1.0 &&
+                               posRect.top() >= contactedWarp->top()) isContacted = true;
                             break;
                         default:
                             break;
@@ -799,13 +825,13 @@ void LVL_Player::update(float ticks)
                         switch(contactedWarp->data.idirect)
                         {
                             case 4://right
-                                if(keys.right && !wasEntered) doTeleport=true;
+                                if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
                                 break;
                             case 3://down
                                 if(keys.down && !wasEntered) doTeleport=true;
                                 break;
                             case 2://left
-                                if(keys.left && !wasEntered) doTeleport=true;
+                                if(keys.left && !wasEntered) { setPosX(contactedWarp->left()); doTeleport=true; }
                                 break;
                             case 1://up
                                 if(keys.up && !wasEntered) doTeleport=true;
@@ -846,6 +872,7 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    lua_onLoop();
     updateCamera();
 }
 

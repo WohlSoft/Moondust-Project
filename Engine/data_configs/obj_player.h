@@ -40,9 +40,13 @@ struct obj_player_physics
     float decelerate_turn; //!< Deceleration while turning
     float decelerate_air;  //!< Decelerate in air
 
-    float slippery_c; //!< Slippery coefficien
+    float ground_c_max; //!< On-Ground max speed     coefficient
+    float ground_c;     //!< On-Ground accelerations coefficient
+    float slippery_c;   //!< Slippery accelerations coefficien
+
     float gravity_scale; //!< Gravity scale
     float velocity_jump; //!< Jump velocity
+    float velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed
     int   jump_time;     //!< Time to jump
 
     float velocity_climb_x; //!< Climbing velocity
@@ -55,8 +59,11 @@ struct obj_player_physics
     float MaxSpeed_up;   //!< Fly UP Max fall speed
     float MaxSpeed_down; //!< Max fall down speed
 
+    bool  strict_max_speed_on_ground;//!< reduce speed to max if faster than allowed on ground
+
     bool    zero_speed_y_on_enter;
     bool    slow_speed_x_on_enter;
+    float   slow_speed_x_coeff; //!< Coefficient to slow speed
 };
 
 struct obj_player_state

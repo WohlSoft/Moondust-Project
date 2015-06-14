@@ -45,12 +45,19 @@ void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString gr
         t.decelerate_air = set.value("decelerate_air", t.decelerate_air).toFloat();
             NumberLimiter::applyD(t.decelerate_air, 0.0f, 0.0f);
 
+        t.ground_c = set.value("ground_c", t.ground_c).toFloat();
+            NumberLimiter::applyD(t.ground_c, 0.0f, 0.0f);
+        t.ground_c_max = set.value("ground_c_max", t.ground_c_max).toFloat();
+            NumberLimiter::applyD(t.ground_c_max, 0.0f, 0.0f);
+
         t.slippery_c = set.value("slippery_c", t.slippery_c).toFloat();
             NumberLimiter::applyD(t.slippery_c, 0.0f, 0.0f);
 
         t.gravity_scale = set.value("gravity_scale", t.gravity_scale ).toFloat();
         t.velocity_jump = set.value("velocity_jump", t.velocity_jump).toFloat();
             NumberLimiter::applyD(t.velocity_jump, 5.2f, 0.0f);
+        t.velocity_jump_c = set.value("velocity_jump_c", t.velocity_jump_c).toFloat();
+            NumberLimiter::applyD(t.velocity_jump_c, 5.8f, 0.0f);
 
         t.jump_time     = set.value("jump_time", t.jump_time).toInt();
             NumberLimiter::applyD(t.jump_time, 260, 0);
@@ -71,10 +78,48 @@ void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString gr
         t.MaxSpeed_down = set.value("MaxSpeed_down", t.MaxSpeed_down).toFloat();
             NumberLimiter::applyD(t.MaxSpeed_down, 12.0f, 0.0f);
 
+        t.strict_max_speed_on_ground = set.value("strict_max_speed_on_ground", false).toBool();
         t.zero_speed_y_on_enter = set.value("zero_speed_y_on_enter", false).toBool();
         t.slow_speed_x_on_enter = set.value("slow_speed_x_on_enter", false).toBool();
+        t.slow_speed_x_coeff = set.value("slow_speed_x_coeff", t.slow_speed_x_coeff).toFloat();
+            NumberLimiter::applyD(t.slow_speed_x_coeff, 0.125f, 0.0f);
     set.endGroup();
 }
+
+obj_player_physics::obj_player_physics()
+{
+    walk_force = 6.5; //!< Move force
+    run_force  = 3.25;  //!< Running force
+
+    decelerate_stop = 4.55; //!< Deceleration while stopping
+    decelerate_run  = 10.88;  //!< Deceleration running while speed higher than walking
+    decelerate_turn = 18.2 ; //!< Deceleration while turning
+    decelerate_air  = 0.0;  //!< Decelerate in air
+
+    ground_c_max    = 1.0; //!< On-Ground max speed     coefficient
+    ground_c        = 1.0; //!< On-Ground accelerations coefficient
+    slippery_c      = 4.0; //!< Slippery coefficien
+    gravity_scale   = 1.0; //!< Gravity scale
+    velocity_jump   = 5.2; //!< Jump velocity
+    velocity_jump_c = 5.8; //!< Jump coefficient which provides increzed jump height dependent to speed
+    jump_time       = 260;     //!< Time to jump
+
+    velocity_climb_x     = 1.5; //!< Climbing velocity
+    velocity_climb_y_up  = 2.0; //!< Climbing velocity
+    velocity_climb_y_down= 3.0; //!< Climbing velocity
+
+    MaxSpeed_walk       = 3.0; //!< Max walk speed
+    MaxSpeed_run        = 6.0;  //!< Max run speed
+
+    MaxSpeed_up         = 74.0;   //!< Fly UP Max fall speed
+    MaxSpeed_down       = 12.0; //!< Max fall down speed
+
+    zero_speed_y_on_enter=false;
+    slow_speed_x_on_enter=false;
+    slow_speed_x_coeff=0.125f;
+}
+
+
 
 
 bool ConfigManager::loadPlayableCharacters()
@@ -279,33 +324,3 @@ bool ConfigManager::loadPlayableCharacters()
        return true;
 }
 
-
-
-obj_player_physics::obj_player_physics()
-{
-    walk_force = 6.5; //!< Move force
-    run_force  = 3.25;  //!< Running force
-
-    decelerate_stop = 4.55; //!< Deceleration while stopping
-    decelerate_run  = 10.88;  //!< Deceleration running while speed higher than walking
-    decelerate_turn = 18.2 ; //!< Deceleration while turning
-    decelerate_air  = 0.0;  //!< Decelerate in air
-
-    slippery_c      = 4.0; //!< Slippery coefficien
-    gravity_scale   = 1.0; //!< Gravity scale
-    velocity_jump   = 5.2; //!< Jump velocity
-    jump_time       = 260;     //!< Time to jump
-
-    velocity_climb_x     = 1.5; //!< Climbing velocity
-    velocity_climb_y_up  = 2.0; //!< Climbing velocity
-    velocity_climb_y_down= 3.0; //!< Climbing velocity
-
-    MaxSpeed_walk       = 3.0; //!< Max walk speed
-    MaxSpeed_run        = 6.0;  //!< Max run speed
-
-    MaxSpeed_up         = 74.0;   //!< Fly UP Max fall speed
-    MaxSpeed_down       = 12.0; //!< Max fall down speed
-
-    zero_speed_y_on_enter=false;
-    slow_speed_x_on_enter=false;
-}

@@ -279,7 +279,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
     if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) _velocityX-=phys_setup.grd_dec_x*accelCof;
     if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) _velocityX+=phys_setup.grd_dec_x*accelCof;
     if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) _velocityY=phys_setup.max_vel_y;
-    if((phys_setup.mix_vel_y!=0)&&(_velocityY<phys_setup.mix_vel_y)) _velocityY=phys_setup.mix_vel_y;
+    if((phys_setup.min_vel_y!=0)&&(_velocityY<phys_setup.min_vel_y)) _velocityY=phys_setup.min_vel_y;
 
 }
 
@@ -359,7 +359,7 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
 {
     min_vel_x=0;
-    mix_vel_y=0;
+    min_vel_y=0;
     max_vel_x=0;
     max_vel_y=0;
     grd_dec_x=0;
