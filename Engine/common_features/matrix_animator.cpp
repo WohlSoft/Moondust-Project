@@ -27,6 +27,7 @@ MatrixAnimator::MatrixAnimator()
     backup_sequance=Idle;
     curFrameI=0;
     once=false;
+    once_fixed_speed=false;
     buildRect();
 }
 
@@ -40,6 +41,7 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     delay_wait=framespeed;
     direction=1;
     once=false;
+    once_fixed_speed=false;
     buildRect();
 }
 
@@ -55,6 +57,7 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     sequence=a.sequence;
     direction=a.direction;
     once=a.once;
+    once_fixed_speed=a.once_fixed_speed;
     backup_sequance=a.backup_sequance;
     s_bank_left = a.s_bank_left;
     s_bank_right = a.s_bank_right;
@@ -74,6 +77,7 @@ void MatrixAnimator::setFrameSequance(QList<MatrixAnimatorFrame> _sequence)
 
 void MatrixAnimator::setFrameSpeed(int speed)
 {
+    if(once && once_fixed_speed ) return;
     if(framespeed==speed) return;
     if(speed<=0)
     {
@@ -110,7 +114,7 @@ void MatrixAnimator::tickAnimation(float frametime)
         while(delay_wait<=0.0f)
         {
             nextFrame();
-            delay_wait+=framespeed;
+            delay_wait+=once ? framespeed_once : framespeed;
         }
 }
 
@@ -239,13 +243,15 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
     buildRect();
 }
 
-void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed)
+void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed)
 {
     if(once)
     {
         if(current_sequance==aniName)
             return;
     }
+
+    once_fixed_speed = fixed_speed;
 
     if(_direction<0)
     {//left
@@ -272,7 +278,7 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
     {
         if(backup_sequance==aniName)
         {
-            setFrameSpeed(speed);
+            if(!once_fixed_speed) setFrameSpeed(speed);
             return;
         }
     }

@@ -277,7 +277,7 @@ void LVL_Player::_collideUnduck(bool preVelocity)
             LVL_Block*nearest = nearestBlockY(blocks_to_hit);
             if(nearest)
             {
-                posRect.setY(nearest->posRect.bottom()+(preVelocity?fabs(speedY()):0.f)+1.f);
+                posRect.setY(nearest->posRect.bottom()+(preVelocity?fabs(speedY())+1.0f:0.f)+1.f);
                 _syncPosition();
             }
             nearest = nearestBlock(blocks_to_hit);
@@ -496,7 +496,7 @@ void LVL_Player::update(float ticks)
             {
                 attack(Attack_Forward);
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
-                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75);
+                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75, true);
             }
         }
     }
@@ -1367,6 +1367,8 @@ void LVL_Player::refreshAnimation()
         else
         {
             bool busy=false;
+
+            if(animator.curAnimation()==MatrixAnimator::RacoonTail) return;
 
             if((speedX()<-1)&&(direction>0))
                 if(keys.right)
