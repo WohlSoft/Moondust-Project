@@ -189,6 +189,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         x.stateID        = stateID;
         x._chsetup.state = stateID;
         LvlSceneP::s->getGameState()->setPlayerState(playerID, x);
+        _collideUnduck(true);
     }
 }
 
@@ -212,77 +213,87 @@ void LVL_Player::setDuck(bool duck)
     ducking=duck;
     if(!duck)
     {
-        _syncPosition();
+        _collideUnduck();
+    }
+}
 
-        //Detect collidable blocks!
-        QVector<PGE_Phys_Object*> bodies;
-        PGE_RectF posRectC = posRect;
-        posRectC.setTop(posRectC.top()+4.0f);
-        posRectC.setLeft(posRectC.left()-4.0f);
-        posRectC.setRight(posRectC.right()+4.0f);
-        posRectC.setBottom(posRectC.bottom()+4.0f);
-        LvlSceneP::s->queryItems(posRectC, &bodies);
+void LVL_Player::_collideUnduck(bool preVelocity)
+{
+    _syncPosition();
 
-        #ifdef COLLIDE_DEBUG
-        //Freeze time to check out what happening at moment
-        GlRenderer::makeShot();
-        LvlSceneP::s->isTimeStopped=true;
-        #endif
+    #ifdef COLLIDE_DEBUG
+    qDebug() << "do unduck!";
+    #endif
 
-        forceCollideCenter=true;
-        for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    //Detect collidable blocks!
+    QVector<PGE_Phys_Object*> bodies;
+    PGE_RectF posRectC = posRect;
+    posRectC.setTop(posRectC.top()+4.0f);
+    posRectC.setLeft(posRectC.left()-4.0f);
+    posRectC.setRight(posRectC.right()+4.0f);
+    posRectC.setBottom(posRectC.bottom()+4.0f);
+    LvlSceneP::s->queryItems(posRectC, &bodies);
+
+    #ifdef COLLIDE_DEBUG
+    //Freeze time to check out what happening at moment
+    GlRenderer::makeShot();
+    LvlSceneP::s->isTimeStopped=true;
+    #endif
+
+    forceCollideCenter=true;
+    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    {
+        PGE_Phys_Object*body=*it;
+        if(body==this) continue;
+        if(body->isPaused()) continue;
+        solveCollision(body);
+    }
+    forceCollideCenter=false;
+
+    #ifdef COLLIDE_DEBUG
+    int hited=0;
+    PGE_RectF nearestRect;
+    #endif
+    if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
+    {
+        QVector<LVL_Block*> blocks_to_hit;
+        for(PlayerColliders::iterator it=collided_center.begin(); it!=collided_center.end() ; it++)
         {
-            PGE_Phys_Object*body=*it;
-            if(body==this) continue;
-            if(body->isPaused()) continue;
-            solveCollision(body);
+            PGE_Phys_Object *collided= *it;
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk) blocks_to_hit.push_back(blk);
         }
-        forceCollideCenter=false;
-
-        #ifdef COLLIDE_DEBUG
-        int hited=0;
-        PGE_RectF nearestRect;
-        #endif
-        if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
+        for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
         {
-            QVector<LVL_Block*> blocks_to_hit;
-            for(PlayerColliders::iterator it=collided_center.begin(); it!=collided_center.end() ; it++)
+            PGE_Phys_Object *collided= *it;
+            LVL_Block *blk= static_cast<LVL_Block*>(collided);
+            if(blk) blocks_to_hit.push_back(blk);
+        }
+        if(!blocks_to_hit.isEmpty())
+        {
+            LVL_Block*nearest = nearestBlockY(blocks_to_hit);
+            if(nearest)
             {
-                PGE_Phys_Object *collided= *it;
-                LVL_Block *blk= static_cast<LVL_Block*>(collided);
-                if(blk) blocks_to_hit.push_back(blk);
+                posRect.setY(nearest->posRect.bottom()+(preVelocity?fabs(speedY()):0.f)+1.f);
+                _syncPosition();
             }
-            for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
-            {
-                PGE_Phys_Object *collided= *it;
-                LVL_Block *blk= static_cast<LVL_Block*>(collided);
-                if(blk) blocks_to_hit.push_back(blk);
+            nearest = nearestBlock(blocks_to_hit);
+            if(nearest) {
+                #ifdef COLLIDE_DEBUG
+                nearestRect=nearest->posRect;
+                #endif
+                nearest->hit();
+                bump();
             }
-            if(!blocks_to_hit.isEmpty())
-            {
-                LVL_Block*nearest = nearestBlockY(blocks_to_hit);
-                if(nearest)
-                {
-                    posRect.setY(nearest->posRect.bottom()+1);
-                }
-                nearest = nearestBlock(blocks_to_hit);
-                if(nearest) {
-                    #ifdef COLLIDE_DEBUG
-                    nearestRect=nearest->posRect;
-                    #endif
-                    nearest->hit();
-                    bump();
-                }
-            }
-            #ifdef COLLIDE_DEBUG
-            hited=blocks_to_hit.size();
-            blocks_to_hit.clear();
-            #endif
         }
         #ifdef COLLIDE_DEBUG
-        qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
+        hited=blocks_to_hit.size();
+        blocks_to_hit.clear();
         #endif
     }
+    #ifdef COLLIDE_DEBUG
+    qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
+    #endif
 }
 
 void LVL_Player::init()
@@ -1034,19 +1045,47 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
     {
         case PGE_Phys_Object::LVLBlock:
         {
+
+            #ifdef COLLIDE_DEBUG
+            qDebug() << "Player:"<<posRect.x()<<posRect.y()<<posRect.width()<<posRect.height();
+            #endif
             LVL_Block *blk= static_cast<LVL_Block*>(collided);
             if(blk)
             {
-                if(blk->destroyed) break;
+                if(blk->destroyed)
+                {
+                    #ifdef COLLIDE_DEBUG
+                    qDebug() << "Destroyed!";
+                    #endif
+                    break;
+                }
             }
-            else break;
+            else
+            {
+                #ifdef COLLIDE_DEBUG
+                qDebug() << "Wrong cast";
+                #endif
+                break;
+            }
 
-            if(!collided->posRect.collideRect(posRect)) break;
+            if(!collided->posRect.collideRect(posRect))
+            {
+                #ifdef COLLIDE_DEBUG
+                qDebug() << "No, is not collidng";
+                #endif
+                break;
+            }
             #ifdef COLLIDE_DEBUG
             qDebug() << "Collided item! "<<collided->type<<" " <<collided->posRect.center().x()<<collided->posRect.center().y();
             #endif
 
-            if(bumpUp||bumpDown) break;
+            if((bumpUp||bumpDown)&&(!forceCollideCenter))
+            {
+                #ifdef COLLIDE_DEBUG
+                qDebug() << "Bump? U'r dumb!";
+                #endif
+                break;
+            }
 
             PGE_PointF c1 = posRect.center();
             PGE_RectF &r1 = posRect;
@@ -1076,6 +1115,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Top of block";
+                        #endif
                     }
                 }
                 break;
@@ -1095,7 +1137,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                             if(blk->isHidden) break;
                             collided_bottom[(intptr_t)collided]=collided;//bottom of player
-
+                            #ifdef COLLIDE_DEBUG
+                            qDebug() << "Top of block";
+                            #endif
                     }
                     //*****************************Bottom****************************/
                     else if( (
@@ -1107,6 +1151,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                              )
                     {
                         collided_top[(intptr_t)collided]=collided;//top of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Bottom of block";
+                        #endif
                     }
                     //*****************************Left****************************/
                     else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() < rc.right()+_velocityX_prev)
@@ -1114,6 +1161,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_right[(intptr_t)collided]=collided;//right of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Right of block";
+                        #endif
                     }
                     //*****************************Right****************************/
                     else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() > rc.left()+_velocityX_prev)
@@ -1121,6 +1171,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_left[(intptr_t)collided]=collided;//left of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Left of block";
+                        #endif
                     }
 
 
@@ -1142,6 +1195,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden && !forceCollideCenter) break;
                         collided_center[(intptr_t)collided]=collided;
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Center of block";
+                        #endif
                     }
                     break;
                 }
