@@ -93,7 +93,7 @@ public:
     int curFramespeed();
 
     void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1);
+    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1, bool fixed_speed=false);
     void switchAnimation(MatrixAnimates aniName, int _direction, int speed=-1);
 
     MatrixAnimates toEnum(QString aniName);
@@ -115,6 +115,7 @@ private:
 
     int direction;
     bool once;
+    bool once_fixed_speed;
     MatrixAnimates backup_sequance;
     MatrixAnimates current_sequance;
     AniSequence sequence;//!< Current frame sequance
