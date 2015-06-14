@@ -62,6 +62,7 @@ struct obj_player_physics
     bool  strict_max_speed_on_ground;//!< reduce speed to max if faster than allowed on ground
 
     bool    zero_speed_y_on_enter;
+    float   slow_up_speed_y_coeff; //!< Coefficient to slow speed if it going up
     bool    slow_speed_x_on_enter;
     float   slow_speed_x_coeff; //!< Coefficient to slow speed
 };

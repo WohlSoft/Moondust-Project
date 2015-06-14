@@ -80,6 +80,8 @@ void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString gr
 
         t.strict_max_speed_on_ground = set.value("strict_max_speed_on_ground", false).toBool();
         t.zero_speed_y_on_enter = set.value("zero_speed_y_on_enter", false).toBool();
+        t.slow_up_speed_y_coeff = set.value("slow_up_speed_y_coeff", t.slow_up_speed_y_coeff).toFloat();
+            NumberLimiter::applyD(t.slow_up_speed_y_coeff, 0.325f, 0.0f);
         t.slow_speed_x_on_enter = set.value("slow_speed_x_on_enter", false).toBool();
         t.slow_speed_x_coeff = set.value("slow_speed_x_coeff", t.slow_speed_x_coeff).toFloat();
             NumberLimiter::applyD(t.slow_speed_x_coeff, 0.125f, 0.0f);
@@ -115,6 +117,7 @@ obj_player_physics::obj_player_physics()
     MaxSpeed_down       = 12.0; //!< Max fall down speed
 
     zero_speed_y_on_enter=false;
+    slow_up_speed_y_coeff=0.325f;
     slow_speed_x_on_enter=false;
     slow_speed_x_coeff=0.125f;
 }
