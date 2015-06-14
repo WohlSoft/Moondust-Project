@@ -383,11 +383,6 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    if(environment==LVL_PhysEnv::Env_Quicksand)
-    {
-        setSpeed(0,0);
-    }
-
     if(climbing)
     {
         setSpeed(0,0);
@@ -423,10 +418,15 @@ void LVL_Player::update(float ticks)
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
-            setSpeedY(0.0);
+        {
+            if(speedY()>0)
+                setSpeedY(0.0);
+            else
+                setSpeedY(speedY()*(physics_cur.slow_up_speed_y_coeff));
+        }
 
         if(physics_cur.slow_speed_x_on_enter)
-            setSpeedX( speedX()*physics_cur.slow_speed_x_coeff );
+            setSpeedX( speedX()*(physics_cur.slow_speed_x_coeff) );
 
         phys_setup.max_vel_x = fabs(isRunning ?
                     physics_cur.MaxSpeed_run :
@@ -1344,11 +1344,17 @@ void LVL_Player::refreshAnimation()
 
             if(environment==LVL_PhysEnv::Env_Water)
             {
-                animator.switchAnimation(MatrixAnimator::Swim, direction, 128);
+                if(speedY()>=0)
+                    animator.switchAnimation(MatrixAnimator::Swim, direction, 128);
+                else
+                    animator.switchAnimation(MatrixAnimator::SwimUp, direction, 128);
             }
             else if(environment==LVL_PhysEnv::Env_Quicksand)
             {
-                animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+                if(speedY()<0)
+                    animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+                else if(speedY()>0)
+                    animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
             }
             else
             {
