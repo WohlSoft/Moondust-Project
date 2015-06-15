@@ -120,6 +120,7 @@ private:
     bool once_locked;
     bool once_play_again;
     int  once_play_again_skip_last_frames;
+    int  once_play_again_direction;
     MatrixAnimates backup_sequance;
     MatrixAnimates current_sequance;
     AniSequence sequence;//!< Current frame sequance
