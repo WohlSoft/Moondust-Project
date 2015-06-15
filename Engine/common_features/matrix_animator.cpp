@@ -31,6 +31,7 @@ MatrixAnimator::MatrixAnimator()
     once_locked=false;
     once_play_again=false;
     once_play_again_skip_last_frames=0;
+    once_play_again_direction=0;
     buildRect();
 }
 
@@ -48,6 +49,7 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     once_locked=false;
     once_play_again=false;
     once_play_again_skip_last_frames=0;
+    once_play_again_direction=0;
     buildRect();
 }
 
@@ -67,6 +69,7 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     once_locked=a.once_locked;
     once_play_again=a.once_play_again;
     once_play_again_skip_last_frames=a.once_play_again_skip_last_frames;
+    once_play_again_direction=a.once_play_again_direction;
     backup_sequance=a.backup_sequance;
     s_bank_left = a.s_bank_left;
     s_bank_right = a.s_bank_right;
@@ -144,6 +147,7 @@ void MatrixAnimator::nextFrame()
             {
                 once_play_again=false;
                 once_play_again_skip_last_frames=0;
+                direction=once_play_again_direction;
             }
             else
             {
@@ -273,6 +277,7 @@ void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed,
             if(current_sequance==aniName)
             {
                 once_play_again=true;
+                once_play_again_direction=_direction;
                 once_play_again_skip_last_frames=(skipLastFrames>=0) ? skipLastFrames : 0;
             }
             return;
