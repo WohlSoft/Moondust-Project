@@ -243,7 +243,7 @@ void LVL_Player::setDuck(bool duck)
     setSize(state_cur.width, duck? state_cur.duck_height : state_cur.height);
     setPos(posX(), b-height);
     ducking=duck;
-    if(!duck)
+    if(!duck && !isWarping)
     {
         _collideUnduck();
     }
@@ -252,6 +252,7 @@ void LVL_Player::setDuck(bool duck)
 void LVL_Player::_collideUnduck(bool preVelocity)
 {
     _syncPosition();
+    if(isWarping) return;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "do unduck!";
@@ -833,8 +834,8 @@ void LVL_Player::update(float ticks)
                                posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                             break;
                         case 3://down
-                            if(posRect.bottom() >= contactedWarp->bottom()+speedY() &&
-                               posRect.bottom() <= contactedWarp->bottom()-1.0 &&
+                            if(posRect.bottom() >= contactedWarp->bottom()-1.0 &&
+                               posRect.bottom() <= contactedWarp->bottom()+speedY() &&
                                posRect.center().x() >= contactedWarp->left() &&
                                posRect.center().x() <= contactedWarp->right()
                                     ) isContacted = true;
@@ -846,8 +847,8 @@ void LVL_Player::update(float ticks)
                                posRect.bottom() <= contactedWarp->bottom()+32.0  ) isContacted = true;
                             break;
                         case 1://up
-                            if(posRect.top() <= contactedWarp->top()+speedY() &&
-                               posRect.top() >= contactedWarp->top()+1.0 &&
+                            if(posRect.top() <= contactedWarp->top()+1.0 &&
+                               posRect.top() >= contactedWarp->top()+speedY() &&
                                posRect.center().x() >= contactedWarp->left() &&
                                posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
                             break;
@@ -864,13 +865,13 @@ void LVL_Player::update(float ticks)
                                 if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
                                 break;
                             case 3://down
-                                if(keys.down && !wasEntered) doTeleport=true;
+                                if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()+posRect.height()); doTeleport=true;}
                                 break;
                             case 2://left
                                 if(keys.left && !wasEntered) { setPosX(contactedWarp->left()); doTeleport=true; }
                                 break;
                             case 1://up
-                                if(keys.up && !wasEntered) doTeleport=true;
+                                if(keys.up && !wasEntered) {  setPosY(contactedWarp->top()); doTeleport=true;}
                                 break;
                             default:
                                 break;
@@ -892,8 +893,8 @@ void LVL_Player::update(float ticks)
                 {
                     bool isContacted=false;
 
-                    if(posRect.bottom() <= contactedWarp->bottom()+speedY() &&
-                       posRect.bottom() >= contactedWarp->bottom()+speedY() &&
+                    if(posRect.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
+                       posRect.bottom() >= contactedWarp->bottom()-fabs(speedY()) &&
                        posRect.center().x() >= contactedWarp->left() &&
                        posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
 
