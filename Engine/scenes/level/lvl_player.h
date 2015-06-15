@@ -44,6 +44,10 @@ class LVL_Player :
         LVL_Player();
         virtual ~LVL_Player();
         void setCharacter(int CharacterID, int _stateID);
+        void setCharacterSafe(int CharacterID, int _stateID);
+    private:
+        bool _doSafeSwitchCharacter;
+    public:
         void setPlayerPointInfo(PlayerPoint pt);
         void init();
         void update(float ticks);
@@ -54,6 +58,7 @@ class LVL_Player :
         LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
         LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
         bool isWall(QVector<LVL_Block *> &blocks);
+        bool isFloor(QVector<LVL_Block *> &blocks);
         bool forceCollideCenter;//!< collide with invizible blocks at center
 
         /*****************NPC's and blocks******************/
