@@ -147,7 +147,20 @@ void MatrixAnimator::nextFrame()
             {
                 once_play_again=false;
                 once_play_again_skip_last_frames=0;
-                direction=once_play_again_direction;
+                if(direction!=once_play_again_direction)
+                {
+                    direction=once_play_again_direction;
+                    if(direction<0)
+                    {//left
+                        if(!s_bank_left.contains(current_sequance)) return;
+                        sequence = s_bank_left[current_sequance];
+                    }
+                    else
+                    {//right
+                        if(!s_bank_right.contains(current_sequance)) return;
+                        sequence = s_bank_right[current_sequance];
+                    }
+                }
             }
             else
             {
