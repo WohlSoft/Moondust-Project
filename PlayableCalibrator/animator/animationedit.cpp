@@ -297,6 +297,16 @@ void AnimationEdit::on_FramesR_currentItemChanged(QListWidgetItem *item, QListWi
                 );
 }
 
+void AnimationEdit::on_FramesL_itemClicked(QListWidgetItem *item)
+{
+    on_FramesL_currentItemChanged(item, NULL);
+}
+
+void AnimationEdit::on_FramesR_itemClicked(QListWidgetItem *item)
+{
+    on_FramesR_currentItemChanged(item, NULL);
+}
+
 void AnimationEdit::nextFrame()
 {
     if(!frames.isEmpty())

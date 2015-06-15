@@ -63,7 +63,8 @@ private slots:
     void on_FramesR_itemSelectionChanged();
     void on_FramesL_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
     void on_FramesR_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
-
+    void on_FramesL_itemClicked(QListWidgetItem *item);
+    void on_FramesR_itemClicked(QListWidgetItem *item);
     void nextFrame();
 
     void play();
