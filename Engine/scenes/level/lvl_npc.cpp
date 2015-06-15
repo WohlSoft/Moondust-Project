@@ -124,12 +124,7 @@ void LVL_Npc::transformTo_x(long id)
         //do some stuff only when NPC already inited (for example, cleanup stuff of previous NPC)
     //} else
     //Load LUA script
-    QString script = ConfigManager::Dir_NPCScript.getCustomFile(setup->algorithm_script);
-    if((!script.isEmpty())&&QFileInfo(script).exists())
-    {
-        //Init lua stuff
 
-    }
 }
 
 void LVL_Npc::update(float ticks)
