@@ -41,45 +41,17 @@ public:
     QString aniStyle;
     int aniDir;
     void aniFindSet();
-    
+protected:
+    void keyPressEvent(QKeyEvent *e);
 private slots:
     void on_EditAnimationBtn_clicked();
-    void on_Idle_clicked();
-    void on_Run_clicked();
-    void on_Jump_clicked();
-    void on_fall_clicked();
-    void on_Spin_clicked();
-    void on_Sliding_clicked();
-    void on_Climbing_clicked();
-    void on_Fire_clicked();
-    void on_SitDown_clicked();
-    void on_Dig_clicked();
-    void on_GrabIdle_clicked();
-    void on_GrabRun_clicked();
-    void on_GrabJump_clicked();
-    void on_GrabSit_clicked();
-    void on_RacoonRun_clicked();
-    void on_RacoonFloat_clicked();
-    void on_RacoonFly_clicked();
-    void on_RacoonTail_clicked();
-    void on_Swim_clicked();
-    void on_SwimUp_clicked();
-    void on_TanookiStatue_clicked();
-    void on_SwordAttak_clicked();
-    void on_JumpSwordUp_clicked();
-    void on_JumpSwordDown_clicked();
-    void on_DownSword_clicked();
-    void on_Hurted_clicked();
 
     void on_directLeft_clicked();
     void on_directRight_clicked();
-    void on_RideOnYoshi_clicked();
-    void on_RideOnYoshiSit_clicked();
-    void on_PipeUpDown_clicked();
-    void on_PipeUpDownRear_clicked();
-    void on_SlopeSlide_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
+    void on_animationsList_itemClicked(QListWidgetItem *item);
+    void on_animationsList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
 
 private:
     Ui::Animate *ui;

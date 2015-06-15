@@ -61,6 +61,7 @@ public:
         RacoonRun,
         RacoonFloat,
         RacoonFly,
+        RacoonFlyDown,
         RacoonTail,
         Swim,
         SwimUp,

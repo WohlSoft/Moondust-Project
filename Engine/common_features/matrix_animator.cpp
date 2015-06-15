@@ -372,6 +372,7 @@ void MatrixAnimator::buildEnums()
     StrToEnum["RacoonRun"]=         MatrixAnimates::RacoonRun;
     StrToEnum["RacoonFloat"]=       MatrixAnimates::RacoonFloat;
     StrToEnum["RacoonFly"]=         MatrixAnimates::RacoonFly;
+    StrToEnum["RacoonFlyDown"]=     MatrixAnimates::RacoonFlyDown;
     StrToEnum["RacoonTail"]=        MatrixAnimates::RacoonTail;
     StrToEnum["Swim"]=              MatrixAnimates::Swim;
     StrToEnum["SwimUp"]=            MatrixAnimates::SwimUp;
