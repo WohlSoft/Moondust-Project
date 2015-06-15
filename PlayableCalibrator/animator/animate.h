@@ -50,8 +50,7 @@ private slots:
     void on_directRight_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
-    void on_animationsList_itemClicked(QListWidgetItem *item);
-    void on_animationsList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
+    void on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
 
 private:
     Ui::Animate *ui;

@@ -71,10 +71,6 @@ void Animate::keyPressEvent(QKeyEvent *e)
         on_directRight_clicked();
         ui->directRight->setChecked(true);
         break;
-    case Qt::Key_Up:
-    case Qt::Key_Down:
-        if(!ui->animationsList->selectedItems().isEmpty())
-            on_animationsList_itemClicked(ui->animationsList->selectedItems().first());
     default:
         break;
     }
@@ -129,15 +125,9 @@ void Animate::on_FrameSpeed_valueChanged(int arg1)
     AniScene->timer.setInterval(arg1);
 }
 
-
-void Animate::on_animationsList_itemClicked(QListWidgetItem *item)
+void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
     if(!item) return;
     aniStyle=item->text();
     aniFindSet();
-}
-
-void Animate::on_animationsList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *)
-{
-    on_animationsList_itemClicked(current);
 }
