@@ -30,6 +30,7 @@ MatrixAnimator::MatrixAnimator()
     once_fixed_speed=false;
     once_locked=false;
     once_play_again=false;
+    once_play_again_skip_last_frames=0;
     buildRect();
 }
 
@@ -46,6 +47,7 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     once_fixed_speed=false;
     once_locked=false;
     once_play_again=false;
+    once_play_again_skip_last_frames=0;
     buildRect();
 }
 
@@ -64,6 +66,7 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     once_fixed_speed=a.once_fixed_speed;
     once_locked=a.once_locked;
     once_play_again=a.once_play_again;
+    once_play_again_skip_last_frames=a.once_play_again_skip_last_frames;
     backup_sequance=a.backup_sequance;
     s_bank_left = a.s_bank_left;
     s_bank_right = a.s_bank_right;
@@ -132,13 +135,22 @@ void MatrixAnimator::nextFrame()
         return;
     }
     curFrameI++;
-    if(curFrameI>(sequence.size()-1))
+    if(curFrameI>(sequence.size()-1-once_play_again_skip_last_frames))
     {
         curFrameI=0;
         if(once)
         {
-            once=false;
-            switchAnimation(backup_sequance, direction, framespeed);
+            if(once_play_again)
+            {
+                once_play_again=false;
+                once_play_again_skip_last_frames=0;
+            }
+            else
+            {
+                once=false;
+                once_play_again_skip_last_frames=0;
+                switchAnimation(backup_sequance, direction, framespeed);
+            }
         }
     }
     buildRect();
@@ -242,32 +254,35 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         curFrameI=0;
         if(once)
         {
-            if(once_play_again)
-                once_play_again=false;
-            else
-            {
-                once=false;
-                switchAnimation(backup_sequance, direction, framespeed);
-            }
+            once=false;
+            once_fixed_speed=false;
+            once_locked=false;
+            once_play_again_skip_last_frames=false;
+            switchAnimation(backup_sequance, direction, framespeed);
         }
     }
     buildRect();
 }
 
-void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed, bool locked)
+void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed, bool locked, int skipLastFrames)
 {
     if(once)
     {
         if(once_locked || (current_sequance==aniName))
         {
             if(current_sequance==aniName)
+            {
                 once_play_again=true;
+                once_play_again_skip_last_frames=(skipLastFrames>=0) ? skipLastFrames : 0;
+            }
             return;
         }
     }
 
     once_fixed_speed = fixed_speed;
     once_locked=locked;
+    once_play_again=false;
+    once_play_again_skip_last_frames=0;
 
     if(_direction<0)
     {//left

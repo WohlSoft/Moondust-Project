@@ -93,7 +93,7 @@ public:
     int curFramespeed();
 
     void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1, bool fixed_speed=false, bool locked=false);
+    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1, bool fixed_speed=false, bool locked=false, int skipLastFrames=0);
     void unlock();
     void switchAnimation(MatrixAnimates aniName, int _direction, int speed=-1);
 
@@ -119,6 +119,7 @@ private:
     bool once_fixed_speed;
     bool once_locked;
     bool once_play_again;
+    int  once_play_again_skip_last_frames;
     MatrixAnimates backup_sequance;
     MatrixAnimates current_sequance;
     AniSequence sequence;//!< Current frame sequance
