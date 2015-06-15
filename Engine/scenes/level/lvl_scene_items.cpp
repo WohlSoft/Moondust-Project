@@ -73,17 +73,20 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 void LevelScene::placeNPC(LevelNPC npcData)
 {
-    LVL_Npc * npc;
-    npc = new LVL_Npc();
-    if(ConfigManager::lvl_npc_indexes.contains(npcData.id))
-        npc->setup = &ConfigManager::lvl_npc_indexes[npcData.id];
-    else
-    {
-        //Wrong NPC!
-        delete npc;
+    if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;
+
+    LVL_Npc * npc;
+
+    obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
+    if(!curNpcData->algorithm_script.isEmpty()){
+        npc = luaEngine.createLuaNpc(curNpcData->id);
+    }else{
+        npc = new LVL_Npc();
     }
 
+
+    npc->setup = curNpcData;
     npc->data = npcData;
     npc->init();
 

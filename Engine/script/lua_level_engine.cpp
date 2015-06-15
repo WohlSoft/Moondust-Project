@@ -24,9 +24,9 @@ LVL_Player *LuaLevelEngine::createLuaPlayer()
     return luabind::call_function<LVL_Player*>(getNativeState(), "__create_luaplayer");
 }
 
-LVL_Npc *LuaLevelEngine::createLuaNpc()
+LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned int id)
 {
-    return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc");
+    return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc", id);
 }
 
 void LuaLevelEngine::loadNPCClass(int id, const QString &path)
