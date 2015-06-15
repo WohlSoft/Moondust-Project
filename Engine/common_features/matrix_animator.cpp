@@ -28,6 +28,8 @@ MatrixAnimator::MatrixAnimator()
     curFrameI=0;
     once=false;
     once_fixed_speed=false;
+    once_locked=false;
+    once_play_again=false;
     buildRect();
 }
 
@@ -42,6 +44,8 @@ MatrixAnimator::MatrixAnimator(int _width, int _height)
     direction=1;
     once=false;
     once_fixed_speed=false;
+    once_locked=false;
+    once_play_again=false;
     buildRect();
 }
 
@@ -58,6 +62,8 @@ MatrixAnimator::MatrixAnimator(const MatrixAnimator &a)
     direction=a.direction;
     once=a.once;
     once_fixed_speed=a.once_fixed_speed;
+    once_locked=a.once_locked;
+    once_play_again=a.once_play_again;
     backup_sequance=a.backup_sequance;
     s_bank_left = a.s_bank_left;
     s_bank_right = a.s_bank_right;
@@ -108,13 +114,13 @@ PGE_SizeF MatrixAnimator::sizeOfFrame()
 
 void MatrixAnimator::tickAnimation(float frametime)
 {
-    if(framespeed<1) return; //Idling animation
+    if((!once) && (framespeed<1)) return; //Idling animation
 
     delay_wait-=fabs(frametime);
         while(delay_wait<=0.0f)
         {
             nextFrame();
-            delay_wait+=once ? framespeed_once : framespeed;
+            delay_wait+= once?framespeed_once : framespeed;
         }
 }
 
@@ -236,22 +242,32 @@ void MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
         curFrameI=0;
         if(once)
         {
-            once=false;
-            switchAnimation(backup_sequance, direction, framespeed);
+            if(once_play_again)
+                once_play_again=false;
+            else
+            {
+                once=false;
+                switchAnimation(backup_sequance, direction, framespeed);
+            }
         }
     }
     buildRect();
 }
 
-void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed)
+void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed, bool fixed_speed, bool locked)
 {
     if(once)
     {
-        if(current_sequance==aniName)
+        if(once_locked || (current_sequance==aniName))
+        {
+            if(current_sequance==aniName)
+                once_play_again=true;
             return;
+        }
     }
 
     once_fixed_speed = fixed_speed;
+    once_locked=locked;
 
     if(_direction<0)
     {//left
@@ -264,7 +280,7 @@ void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed,
         sequence = s_bank_right[aniName];
     }
     once=true;
-    framespeed_once = speed;
+    framespeed_once = (speed>0) ? speed : 0;
     direction = _direction;
     curFrameI = 0;
     backup_sequance = current_sequance;
@@ -272,15 +288,23 @@ void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed,
     buildRect();
 }
 
+void MatrixAnimator::unlock()
+{
+    once_locked=false;
+}
+
 void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int speed)
 {
     if(once)
     {
-        if(backup_sequance==aniName)
+        if(once_locked || (backup_sequance==aniName))
         {
-            if(!once_fixed_speed) setFrameSpeed(speed);
+            if(!once_fixed_speed)
+                framespeed_once = (speed>0) ? speed : 1;
+            setFrameSpeed(speed);
+            backup_sequance=aniName;
             return;
-        }
+        } else backup_sequance=aniName;
     }
     else
     if((current_sequance==aniName)&&(direction==_direction))
@@ -301,7 +325,8 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
     }
     setFrameSpeed(speed);
     direction = _direction;
-    curFrameI = 0;
+    if((current_sequance!=aniName) || (curFrameI>(sequence.size()-1)))
+        curFrameI = 0;
     current_sequance = aniName;
     once=false;
     buildRect();
