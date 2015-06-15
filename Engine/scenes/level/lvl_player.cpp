@@ -496,7 +496,7 @@ void LVL_Player::update(float ticks)
             {
                 attack(Attack_Forward);
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
-                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75, true, true);
+                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75, true, true, 1);
             }
         }
     }
