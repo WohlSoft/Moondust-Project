@@ -30,17 +30,13 @@
 
 void LevelScene::placeBlock(LevelBlock blockData)
 {
+    if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
+        return;
+
     LVL_Block * block;
     block = new LVL_Block();
-    if(ConfigManager::lvl_block_indexes.contains(blockData.id))
-        block->setup = &ConfigManager::lvl_block_indexes[blockData.id];
-    else
-    {
-        //Wrong block!
-        delete block;
-        return;
-    }
 
+    block->setup = &ConfigManager::lvl_block_indexes[blockData.id];
     block->data = blockData;
     block->init();
     blocks.push_back(block);
@@ -54,17 +50,13 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
 void LevelScene::placeBGO(LevelBGO bgoData)
 {
+    if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
+        return;
+
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
-    if(ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
-        bgo->setup = &ConfigManager::lvl_bgo_indexes[bgoData.id];
-    else
-    {
-        //Wrong BGO!
-        delete bgo;
-        return;
-    }
 
+    bgo->setup = &ConfigManager::lvl_bgo_indexes[bgoData.id];
     bgo->data = bgoData;
     bgo->init();
 
@@ -79,8 +71,11 @@ void LevelScene::placeNPC(LevelNPC npcData)
     LVL_Npc * npc;
 
     obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
-    if(!curNpcData->algorithm_script.isEmpty()){
+    QString script = ConfigManager::Dir_NPCScript.getCustomFile(curNpcData->algorithm_script);
+    if((!script.isEmpty())&&QFileInfo(script).exists()){
         npc = luaEngine.createLuaNpc(curNpcData->id);
+        if(!npc)
+            return;
     }else{
         npc = new LVL_Npc();
     }
