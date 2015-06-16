@@ -964,7 +964,11 @@ void LVL_Player::update(float ticks)
 
     if(_doSafeSwitchCharacter) setCharacter(characterID, stateID);
 
-    lua_onLoop();
+    try {
+        lua_onLoop();
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    }
     updateCamera();
 }
 

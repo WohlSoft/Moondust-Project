@@ -71,6 +71,8 @@ public:
     bool shouldShutdown() const;
     void setLateShutdown(bool value);
 
+    void postLateShutdownError(luabind::error& error);
+
 protected:
     virtual void onBindAll() {}
 

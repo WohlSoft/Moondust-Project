@@ -103,7 +103,7 @@ void LuaEngine::init()
     QFile luaCoreFile(coreFilePath);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
         qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
-        setLateShutdown(true);
+        m_lateShutdown = true;
         shutdown();
         return;
     }
@@ -117,7 +117,7 @@ void LuaEngine::init()
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
-        setLateShutdown(true);
+        m_lateShutdown = true;
         shutdown();
         return;
     }
@@ -168,7 +168,7 @@ luabind::object LuaEngine::loadClassAPI(const QString &path)
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
-        shutdown();
+        m_lateShutdown = true;
         return luabind::object();
     }
 
@@ -261,6 +261,13 @@ bool LuaEngine::shouldShutdown() const
 void LuaEngine::setLateShutdown(bool value)
 {
     m_lateShutdown = value;
+}
+
+void LuaEngine::postLateShutdownError(luabind::error &error)
+{
+    QString runtimeErrorMsg = error.what();
+    m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
+    m_lateShutdown = true;
 }
 
 QString LuaEngine::getLuaScriptPath() const

@@ -44,6 +44,14 @@ void LVL_Npc::init()
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
+    if(isLuaNPC){
+        try{
+            lua_onInit();
+        } catch (luabind::error& e) {
+            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        }
+    }
+
     _isInited=true;
 }
 
@@ -165,6 +173,13 @@ void LVL_Npc::update(float ticks)
         if(posX() > sBox.right() + 1 )
             setPosX(sBox.left()-posX_coefficient+1);
     }
+
+    try{
+        lua_onLoop();
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    }
+
 }
 
 void LVL_Npc::render(double camX, double camY)

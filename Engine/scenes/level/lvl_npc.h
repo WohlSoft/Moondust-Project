@@ -51,7 +51,13 @@ public:
 
     bool isActivated;
     int timeout;
+
+    //Addition lua functions
     virtual void lua_onLoop() {}
+    virtual void lua_onInit() {}
+    inline int getID() { return setup->id; }
+    bool isLuaNPC;
+
 
     bool isInited();
 private:

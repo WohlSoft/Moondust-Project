@@ -13,7 +13,10 @@ public:
     virtual ~Binding_Level_ClassWrapper_LVL_NPC();
 
     virtual void lua_onLoop();
+    virtual void lua_onInit();
+
     static void def_lua_onLoop(LVL_Npc* base) { base->LVL_Npc::lua_onLoop(); }
+    static void def_lua_onInit(LVL_Npc* base) { base->LVL_Npc::lua_onInit(); }
 
     static luabind::scope bindToLua();
 };
