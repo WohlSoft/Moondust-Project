@@ -24,7 +24,7 @@
 
 //Version of this program
 #define _FILE_VERSION "0.1"
-#define _FILE_RELEASE " alpha"
+#define _FILE_RELEASE "-dev-alpha"
 
 #define _VF1 0
 #define _VF2 1
