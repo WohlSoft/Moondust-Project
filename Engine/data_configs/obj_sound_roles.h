@@ -34,6 +34,7 @@ struct obj_sound_role
         PlayerClimb,
         PlayerTail,
         PlayerMagic,
+        PlayerWaterSwim,
 
         BonusCoin,
         Bonus1up,
