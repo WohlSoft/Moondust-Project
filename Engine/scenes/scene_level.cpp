@@ -455,7 +455,10 @@ void LevelScene::update()
                                1, 0, 0,0,0);
             dead_npcs.pop_back();
             npcs.removeAll(corpse);
-            delete corpse;
+            if(!corpse->isLuaNPC)
+                delete corpse;
+            else
+                luaEngine.destoryLuaNpc(corpse);
         }
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event

@@ -29,6 +29,11 @@ LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned int id)
     return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc", id);
 }
 
+void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
+{
+    luabind::call_function<void>(getNativeState(), "__destroy_luanpc", npc);
+}
+
 void LuaLevelEngine::loadNPCClass(int id, const QString &path)
 {
     if(shouldShutdown())
