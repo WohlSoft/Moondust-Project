@@ -46,6 +46,8 @@ void MainWindow::setDefaults()
 
     askConfigAgain=false;
 
+    _is_reloading=false;
+
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
     LvlMusPlay::musicButtonChecked = false;

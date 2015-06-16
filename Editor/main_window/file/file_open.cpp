@@ -23,6 +23,7 @@
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_layers_box.h>
 #include <main_window/dock/wld_settings_box.h>
+#include <common_features/bool_reseter.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -68,6 +69,11 @@ void MainWindow::on_OpenFile_triggered()
 
 void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 {
+    if(_is_reloading) return;
+    _is_reloading=true;
+    BoolReseter rst(&_is_reloading);
+    Q_UNUSED(rst);
+
     if(!continueLoad) return;
     qApp->setActiveWindow(this);
 
