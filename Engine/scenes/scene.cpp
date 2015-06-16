@@ -147,7 +147,7 @@ void Scene::updateLua()
     LuaEngine* sceneLuaEngine = getLuaEngine();
     clearRenderFunctions();//Clean up last rendered stuff
     if(sceneLuaEngine){
-        if(sceneLuaEngine->isValid()){
+        if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown()){
             LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
             sceneLuaEngine->dispatchEvent(loopEvent);
         }

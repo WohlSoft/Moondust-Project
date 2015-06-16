@@ -294,7 +294,9 @@ LevelScene::~LevelScene()
         LVL_Npc* tmp;
         tmp = npcs.last();
         npcs.pop_back();
-        if(tmp) delete tmp;
+        if(tmp)
+            if(!tmp->isLuaNPC)
+                delete tmp;
     }
 
 
