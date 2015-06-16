@@ -33,6 +33,7 @@ struct EventQueueEntry
         call=NULL;
         call_t=NULL;
         delay=0;
+        instant=false;
         flag_var=NULL;
         flag_func=NULL;
         flag_func_t=NULL;
@@ -52,6 +53,7 @@ struct EventQueueEntry
         type=caller;
         call = _caller;
         delay = _delay;
+        instant=(delay==0);
     }
 
     ///
@@ -67,6 +69,7 @@ struct EventQueueEntry
         type=caller_t;
         call_t = _caller;
         delay = _delay;
+        instant=(delay==0);
     }
 
     ///
@@ -81,6 +84,7 @@ struct EventQueueEntry
         type=caller_func;
         call_func=_call_func;
         delay = _delay;
+        instant=(delay==0);
     }
 
     ///
@@ -92,6 +96,7 @@ struct EventQueueEntry
     void makeTimer(int _delay)
     {
         delay=_delay;
+        instant=(delay==0);
         type=timer;
     }
 
@@ -106,6 +111,7 @@ struct EventQueueEntry
     {
         flag_var=_flag;
         delay=_delay;
+        instant=(delay==0);
         type=wait_flag_var;
         flag_target=target;
     }
@@ -120,6 +126,7 @@ struct EventQueueEntry
     {
         flag_func=_flag;
         delay=_delay;
+        instant=(delay==0);
         type=wait_flag_func;
         flag_target=target;
     }
@@ -136,6 +143,7 @@ struct EventQueueEntry
         obj=_obj;
         flag_func_t=_flag;
         delay=_delay;
+        instant=(delay==0);
         type=wait_flag_func_t;
         flag_target=target;
     }
@@ -151,6 +159,7 @@ struct EventQueueEntry
     {
         condition = _condition;
         delay=_delay;
+        instant=(delay==0);
         type=wait_condition;
         flag_target=target;
     }
@@ -225,6 +234,7 @@ struct EventQueueEntry
     std::function<void()> call_func;
     //for caller, function and for waiting timer
     float delay;
+    bool instant;
     //for a flag waiter
     bool *flag_var;
     bool (*flag_func)();
@@ -284,15 +294,14 @@ public:
 
     void processEvents(float timeStep=1.0f)
     {
-        int appendTime=0;
-        process_event:
+        left_time = 0;
+      process_event:
         if(events.isEmpty()) { left_time=0; return; }
-        left_time = events.first().trigger(timeStep+appendTime);
+        left_time = events.first().trigger(timeStep);
         if(left_time<=0)
         {
             events.pop_front();
-            left_time=0.0f;
-            appendTime=left_time*-1;
+            timeStep = fabs(left_time);
             goto process_event;
         }
     }

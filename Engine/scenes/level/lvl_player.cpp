@@ -865,7 +865,7 @@ void LVL_Player::update(float ticks)
                                 if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
                                 break;
                             case 3://down
-                                if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()+posRect.height()); doTeleport=true;}
+                                if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height); doTeleport=true;}
                                 break;
                             case 2://left
                                 if(keys.left && !wasEntered) { setPosX(contactedWarp->left()); doTeleport=true; }
@@ -1822,6 +1822,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
         case 1:/*******Pipe!*******/
         {
             setSpeed(0, 0);
+            setPaused(true);
 
             //Create events
             EventQueueEntry<LVL_Player >event1;
@@ -1850,7 +1851,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         event_queue.events.push_back(eventX);
                     }
                 break;
-                case 3:
+                case 3: //Down
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -1875,7 +1876,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         event_queue.events.push_back(eventX);
                     }
                 break;
-                case 1:
+                case 1: //Up
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
@@ -1935,6 +1936,8 @@ void LVL_Player::WarpTo(LevelDoor warp)
         break;
         case 2:/*******Door!*******/
         {
+            setSpeed(0, 0);
+            setPaused(true);
             //Create events
             EventQueueEntry<LVL_Player >event1;
             event1.makeCaller([this]()->void{
