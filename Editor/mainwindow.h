@@ -193,6 +193,9 @@ public:
         /// \brief on_actionReload_triggered - Reload/Reopen current file
         ///
         void on_actionReload_triggered();
+    private:
+        bool _is_reloading;
+    public slots:
 
         ///
         /// \brief on_actionRefresh_menu_and_toolboxes_triggered - Refresh item boxes
@@ -466,6 +469,7 @@ public:
         void on_actionSprite_editor_triggered();
 
         void on_actionFixWrongMasks_triggered();
+        void on_actionClear_NPC_garbadge_triggered();
 // ////////////////////////////////////////////////////////
 
 
@@ -733,6 +737,7 @@ public:
 public slots:
     protected:
     private slots:
+
 
 signals:
     void closeEditor();

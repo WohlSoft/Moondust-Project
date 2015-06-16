@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -313,6 +313,7 @@
      <addaction name="actionCDATA_Import"/>
      <addaction name="separator"/>
      <addaction name="actionFixWrongMasks"/>
+     <addaction name="actionClear_NPC_garbadge"/>
     </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
@@ -2644,6 +2645,11 @@
   <action name="actionAudioCvt">
    <property name="text">
     <string>Convert Audio (SoX)...</string>
+   </property>
+  </action>
+  <action name="actionClear_NPC_garbadge">
+   <property name="text">
+    <string>Clear NPC garbadge...</string>
    </property>
   </action>
  </widget>
