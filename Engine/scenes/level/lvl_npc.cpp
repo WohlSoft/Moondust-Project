@@ -33,6 +33,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     killed=false;
     isActivated=false;
     _isInited=false;
+    isLuaNPC=false;
 }
 
 LVL_Npc::~LVL_Npc()
