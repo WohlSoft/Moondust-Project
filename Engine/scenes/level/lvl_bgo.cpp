@@ -45,7 +45,14 @@ void LVL_Bgo::init()
 
 void LVL_Bgo::transformTo_x(long id)
 {
+    if(_isInited)
+    {
+        if(data.id==(unsigned)abs(id)) return;
+        if(!ConfigManager::lvl_bgo_indexes.contains(id))
+            return;
+    }
     data.id=id;
+    setup = &ConfigManager::lvl_bgo_indexes[data.id];
     double targetZ = 0;
     double zOffset = setup->zOffset;
     int zMode = data.z_mode;

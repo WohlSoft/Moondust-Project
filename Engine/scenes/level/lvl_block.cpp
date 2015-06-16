@@ -82,7 +82,27 @@ void LVL_Block::transformTo(long id, int type)
 
 void LVL_Block::transformTo_x(long id)
 {
+    obj_block *newSetup=NULL;
+    if(_isInited)
+    {
+        if(data.id==(unsigned)abs(id)) return;
+
+        if(!ConfigManager::lvl_block_indexes.contains(id)) return;
+
+        newSetup = &ConfigManager::lvl_block_indexes[id];
+
+        //Remove registration of switch block
+        if(setup->switch_Block &&
+                ( ((setup->switch_ID != newSetup->switch_ID) && (newSetup->switch_Block)) || (!newSetup->switch_Block) ) )
+        {
+            if(LvlSceneP::s->switch_blocks.contains(setup->switch_ID))
+                LvlSceneP::s->switch_blocks[setup->switch_ID].removeAll(this);
+        }
+    } else
+        newSetup = &ConfigManager::lvl_block_indexes[data.id];
     data.id = id;
+
+    setup = newSetup;
 
     if(setup->sizable)
     {
@@ -135,6 +155,14 @@ void LVL_Block::transformTo_x(long id)
     isRectangle=(setup->phys_shape==0);
     if(setup->algorithm==3)
          ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
+
+    // Register switch block
+    if(setup->switch_Block)
+    {
+        if(!LvlSceneP::s->switch_blocks.contains(setup->switch_ID) )
+            LvlSceneP::s->switch_blocks[setup->switch_ID].clear();
+        LvlSceneP::s->switch_blocks[setup->switch_ID].push_back(this);
+    }
 }
 
 

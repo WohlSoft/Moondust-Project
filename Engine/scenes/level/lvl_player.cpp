@@ -1037,7 +1037,7 @@ void LVL_Player::updateCollisions()
             {
                 resolveTop=true;
                 nearest->hit();
-                if(nearest->setup->hitable)
+                if( nearest->setup->hitable || (nearest->data.npc_id!=0) || (nearest->destroyed) )
                 {
                     bump();
                 }
@@ -1561,9 +1561,9 @@ void LVL_Player::refreshAnimation()
             if(!busy)
             {
                 float velX = speedX();
-                if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(keys.right)&&(velX>0.0)) )
+                if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(_accelX>0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*20)<100?velX*10:100)));
-                else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(keys.left)&&(velX<0.0)) )
+                else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(_accelX<0.0)) )
                     animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*20)<100?-velX*10:100)));
                 else
                     animator.switchAnimation(MatrixAnimator::Idle, direction, 64);

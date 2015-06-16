@@ -200,7 +200,7 @@ public:
 
     QQueue<transformTask_block > block_transforms;
 
-    QMap<int, QList<LVL_Block* > > switch_blocks;
+    QHash<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
 
     QVector<LVL_Npc* > active_npcs;
