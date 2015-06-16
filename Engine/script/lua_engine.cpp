@@ -103,6 +103,7 @@ void LuaEngine::init()
     QFile luaCoreFile(coreFilePath);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
         qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
+        setLateShutdown(true);
         shutdown();
         return;
     }
@@ -116,6 +117,7 @@ void LuaEngine::init()
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+        setLateShutdown(true);
         shutdown();
         return;
     }

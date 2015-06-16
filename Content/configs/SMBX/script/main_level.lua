@@ -4,11 +4,14 @@ local peachPlayer_class = require("player/peach")
 local players = {}
 
 local deb_i = 0
+
+local function temp_count(t) local i = 0 for _,__ in pairs(t) do i = i + 1 end return i end
+
 function onLoop()
     deb_i = deb_i + 1
     Renderer.printText("Ticks passed: "..deb_i, 100, 130, -1, 15, 0xFFFF0055)
 	if(npc_class_table)then
-		Renderer.printText(#npc_class_table.." Npc registered!", 100, 160, -1, 15, 0xFFFF0055)	
+		Renderer.printText(temp_count(npc_class_table).." Npc registered!", 100, 160, -1, 15, 0xFFFF0055)	
 	else
 		Renderer.printText("No Npc registered!", 100, 160, -1, 15, 0xFFFF0055)
 	
