@@ -296,7 +296,9 @@ int pcall_handler(lua_State *L)
 
     int level = 1;
     lua_Debug d;
+    bool gotInfoStacktrace = false;
     while(lua_getstack(L, level, &d)){
+        gotInfoStacktrace = true;
         lua_getinfo(L, "Sln", &d);
         if(level == 1){
             std::string err = lua_tostring(L, -1);
@@ -332,7 +334,15 @@ int pcall_handler(lua_State *L)
 
         level++;
     }
-    msg.erase(msg.end()-1, msg.end());
+
+    if(msg.size() > 0)
+        msg.erase(msg.end()-1, msg.end());
+
+    if(!gotInfoStacktrace){
+        if(lua_gettop(L) > 0)
+            if(lua_type(L, -1) == LUA_TSTRING)
+                msg = lua_tostring(L, -1);
+    }
 
     lua_pushstring(L, msg.c_str());
     return 1;
