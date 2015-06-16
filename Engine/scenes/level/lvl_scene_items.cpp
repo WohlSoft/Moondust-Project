@@ -92,6 +92,8 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     LVL_Player * player;
     if(luaEngine.isValid()){
         player = luaEngine.createLuaPlayer();
+        if(player == nullptr)
+            player = new LVL_Player();
     }else{
         player = new LVL_Player();
     }
