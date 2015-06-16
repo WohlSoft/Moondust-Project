@@ -21,17 +21,32 @@ LuaLevelEngine::~LuaLevelEngine()
 
 LVL_Player *LuaLevelEngine::createLuaPlayer()
 {
-    return luabind::call_function<LVL_Player*>(getNativeState(), "__create_luaplayer");
+    try {
+        return luabind::call_function<LVL_Player*>(getNativeState(), "__create_luaplayer");
+    } catch (luabind::error& error){
+        postLateShutdownError(error);
+        return nullptr;
+    }
 }
 
 LVL_Npc *LuaLevelEngine::createLuaNpc(unsigned int id)
 {
-    return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc", id);
+    try {
+        return luabind::call_function<LVL_Npc*>(getNativeState(), "__create_luanpc", id);
+    } catch (luabind::error& error){
+        postLateShutdownError(error);
+        return nullptr;
+    }
 }
 
 void LuaLevelEngine::destoryLuaNpc(LVL_Npc *npc)
 {
-    luabind::call_function<void>(getNativeState(), "__destroy_luanpc", npc);
+    try {
+        luabind::call_function<void>(getNativeState(), "__destroy_luanpc", npc);
+    } catch (luabind::error& error){
+        postLateShutdownError(error);
+        return;
+    }
 }
 
 void LuaLevelEngine::loadNPCClass(int id, const QString &path)
