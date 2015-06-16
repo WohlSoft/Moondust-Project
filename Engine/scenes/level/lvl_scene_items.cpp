@@ -35,8 +35,6 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
     LVL_Block * block;
     block = new LVL_Block();
-
-    block->setup = &ConfigManager::lvl_block_indexes[blockData.id];
     block->data = blockData;
     block->init();
     blocks.push_back(block);
@@ -55,8 +53,6 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
-
-    bgo->setup = &ConfigManager::lvl_bgo_indexes[bgoData.id];
     bgo->data = bgoData;
     bgo->init();
 
@@ -69,18 +65,16 @@ void LevelScene::placeNPC(LevelNPC npcData)
         return;
 
     LVL_Npc * npc;
-
     obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
     QString script = ConfigManager::Dir_NPCScript.getCustomFile(curNpcData->algorithm_script);
-    if((!script.isEmpty())&&QFileInfo(script).exists()){
+    if( (!script.isEmpty()) && (QFileInfo(script).exists()) )
+    {
         npc = luaEngine.createLuaNpc(curNpcData->id);
         if(!npc)
             return;
-    }else{
+    } else {
         npc = new LVL_Npc();
     }
-
-
     npc->setup = curNpcData;
     npc->data = npcData;
     npc->init();
@@ -157,7 +151,7 @@ void LevelScene::toggleSwitch(int switch_id)
                 list[x]->transformTo(list[x]->setup->switch_transform, 2);
             else
             {
-                list.removeAt(x); x--; //Remove blocks which no more is a switch block
+                list.removeAt(x); x--; //Remove blocks which is not fits into specific Switch-ID
             }
         }
     }

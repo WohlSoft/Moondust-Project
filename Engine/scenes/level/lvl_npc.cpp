@@ -75,6 +75,14 @@ void LVL_Npc::transformTo(long id, int type)
 
 void LVL_Npc::transformTo_x(long id)
 {
+    if(_isInited)
+    {
+        if(data.id==(unsigned)abs(id)) return;
+        if(!ConfigManager::lvl_npc_indexes.contains(id))
+            return;
+        setup = &ConfigManager::lvl_npc_indexes[id];
+    }
+
     data.id=id;
 
     double targetZ = 0;

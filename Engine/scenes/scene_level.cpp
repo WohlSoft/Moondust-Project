@@ -401,14 +401,6 @@ void LevelScene::update()
         while(!block_transforms.isEmpty())
         {
             transformTask_block x = block_transforms.first();
-            if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = &ConfigManager::lvl_block_indexes[x.id];
-            else
-            {
-                block_transforms.pop_front();
-                continue;
-            }
-            x.block->data.id = block_transforms.first().id;
             x.block->transformTo_x(x.id);
             block_transforms.pop_front();
         }
