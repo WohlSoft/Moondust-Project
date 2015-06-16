@@ -29,6 +29,7 @@ CustomDirManager::CustomDirManager(QString path, QString name, QString stuffPath
 
 QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
 {
+    if(name.isEmpty()) return "";
     QString target="";
     if((QFile::exists(dirCustom) ) &&
             (QFile::exists(dirCustom+"/" + name)) )
