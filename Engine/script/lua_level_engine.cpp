@@ -39,11 +39,10 @@ void LuaLevelEngine::loadNPCClass(int id, const QString &path)
         _G["npc_class_table"] = luabind::newtable(getNativeState());
     }
 
-    luabind::object npcClassTable = _G["npc_class_table"];
-    if(luabind::type(npcClassTable[id]) != LUA_TNIL)
+    if(luabind::type(_G["npc_class_table"][id]) != LUA_TNIL)
         return;
 
-    npcClassTable[id] = loadClassAPI(path);
+    _G["npc_class_table"][id] = loadClassAPI(path);
 }
 
 LevelScene *LuaLevelEngine::getScene()
