@@ -1,6 +1,7 @@
 #include "luafuncs_core_settings.h"
 
 #include <settings/global_settings.h>
+#include <graphics/window.h>
 
 bool Binding_Core_GlobalFuncs_Settings::isFullscreenActive()
 {
@@ -44,12 +45,14 @@ int Binding_Core_GlobalFuncs_Settings::getMusicVolume()
 
 bool Binding_Core_GlobalFuncs_Settings::isDebugInfoShown()
 {
-    return AppSettings.showDebugInfo;
+    return PGE_Window::showDebugInfo;
 }
 
 void Binding_Core_GlobalFuncs_Settings::setDebugInfoShown(bool debugInfoShown)
 {
-    AppSettings.showDebugInfo = debugInfoShown;
+    PGE_Window::showDebugInfo = debugInfoShown; //Actual usable flag is here!
+    AppSettings.showDebugInfo = debugInfoShown; //this flag holds to be saved/loaded from config file
+                                                //(but later I will move from PGE Window into settings to don't have this confusion)
 }
 
 luabind::scope Binding_Core_GlobalFuncs_Settings::bindToLua()
