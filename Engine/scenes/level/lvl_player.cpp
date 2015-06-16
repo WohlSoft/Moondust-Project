@@ -1151,12 +1151,12 @@ void LVL_Player::updateCollisions()
         posRect.setPos(backupX, _floorY);
         _iswall=isWall(wall_blocks);
         posRect.setX(backupX);
-        if(!_iswall)
+        if(!_iswall && _isfloor)
         {
             resolveLeft=false;
             resolveRight=false;
         }
-        if(!_isfloor)
+        if(!_isfloor && _iswall)
         {
             resolveTop=false;
             resolveBottom=false;
