@@ -936,7 +936,7 @@ void LVL_Player::update(float ticks)
                     bool isContacted=false;
 
                     if(posRect.bottom() <= contactedWarp->bottom()+fabs(speedY()) &&
-                       posRect.bottom() >= contactedWarp->bottom()-fabs(speedY()) &&
+                       posRect.bottom() >= contactedWarp->bottom()-fabs(speedY())-4.0 &&
                        posRect.center().x() >= contactedWarp->left() &&
                        posRect.center().x() <= contactedWarp->right()  ) isContacted = true;
 
@@ -2035,6 +2035,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
         break;
         }
     }
+    event_queue.processEvents(0);
 }
 
 
