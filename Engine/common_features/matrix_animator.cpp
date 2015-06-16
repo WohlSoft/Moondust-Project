@@ -17,6 +17,7 @@
  */
 
 #include "matrix_animator.h"
+#include "maths.h"
 
 MatrixAnimator::MatrixAnimator()
 {
@@ -100,6 +101,21 @@ void MatrixAnimator::setFrameSpeed(int speed)
     framespeed=abs(speed);
 }
 
+void MatrixAnimator::setDirection(int _direction)
+{
+    direction=Maths::sgn(_direction);
+    if(direction<0)
+    {//left
+        if(!s_bank_left.contains(current_sequance)) return;
+        sequence = s_bank_left[current_sequance];
+    }
+    else
+    {//right
+        if(!s_bank_right.contains(current_sequance)) return;
+        sequence = s_bank_right[current_sequance];
+    }
+}
+
 void MatrixAnimator::setSize(int _width, int _height)
 {
     width=abs(_width);
@@ -148,19 +164,7 @@ void MatrixAnimator::nextFrame()
                 once_play_again=false;
                 once_play_again_skip_last_frames=0;
                 if(direction!=once_play_again_direction)
-                {
-                    direction=once_play_again_direction;
-                    if(direction<0)
-                    {//left
-                        if(!s_bank_left.contains(current_sequance)) return;
-                        sequence = s_bank_left[current_sequance];
-                    }
-                    else
-                    {//right
-                        if(!s_bank_right.contains(current_sequance)) return;
-                        sequence = s_bank_right[current_sequance];
-                    }
-                }
+                    setDirection(once_play_again_direction);
             }
             else
             {
@@ -302,16 +306,8 @@ void MatrixAnimator::playOnce(MatrixAnimates aniName, int _direction, int speed,
     once_play_again=false;
     once_play_again_skip_last_frames=0;
 
-    if(_direction<0)
-    {//left
-        if(!s_bank_left.contains(aniName)) return;
-        sequence = s_bank_left[aniName];
-    }
-    else
-    {//right
-        if(!s_bank_right.contains(aniName)) return;
-        sequence = s_bank_right[aniName];
-    }
+    setDirection(_direction);
+
     once=true;
     framespeed_once = (speed>0) ? speed : 0;
     direction = _direction;
@@ -338,6 +334,13 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
             backup_sequance=aniName;
             return;
         } else backup_sequance=aniName;
+
+        if(direction!=_direction)
+        {
+            setDirection(_direction);
+            if(curFrameI>(sequence.size()-1))
+                curFrameI=0;
+        }
     }
     else
     if((current_sequance==aniName)&&(direction==_direction))
@@ -346,16 +349,7 @@ void MatrixAnimator::switchAnimation(MatrixAnimates aniName, int _direction, int
         return;
     }
 
-    if(_direction<0)
-    {//left
-        if(!s_bank_left.contains(aniName)) return;
-        sequence = s_bank_left[aniName];
-    }
-    else
-    {//right
-        if(!s_bank_right.contains(aniName)) return;
-        sequence = s_bank_right[aniName];
-    }
+    setDirection(_direction);
     setFrameSpeed(speed);
     direction = _direction;
     if((current_sequance!=aniName) || (curFrameI>(sequence.size()-1)))
