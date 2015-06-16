@@ -248,6 +248,15 @@ bool LevelScene::init()
     luaEngine.init();
 
 
+    for(QMap<long, obj_npc>::const_iterator it = ConfigManager::lvl_npc_indexes.cbegin(); it != ConfigManager::lvl_npc_indexes.cend(); ++it){
+        QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile((*it).algorithm_script);
+        if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
+        {
+            luaEngine.loadNPCClass((*it).id, scriptPath);
+        }
+    }
+
+
     qDebug()<<"Build sections";
     for(int i=0;i<data.sections.size();i++)
     {
