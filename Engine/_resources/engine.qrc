@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>cat.hqx</file>
         <file>cat.icns</file>
         <file>cat.ico</file>
         <file>engine.rc</file>
