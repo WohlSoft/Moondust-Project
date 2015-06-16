@@ -201,15 +201,15 @@ void PGE_Phys_Object::renderDebug(float _camX, float _camY)
 {
     switch(type)
     {
-    case LVLUnknown:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 1.0, 1.0, 1.0, false); break;
-    case LVLBlock:      GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 1.0, 0.0, 1.0, false); break;
-    case LVLBGO:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 0.0, 1.0, 1.0, false); break;
-    case LVLNPC:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 1.0, 1.0, false); break;
-    case LVLPlayer:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.5, 0.5, 1.0, false); break;
-    case LVLEffect:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.5, 0.5, 0.5, 1.0, false); break;
-    case LVLWarp:       GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 0.0, 0.5f, true); break;
-    case LVLSpecial:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0,1.0,0,1.0, true);
-    case LVLPhysEnv:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0f, 1.0f, 0.0f, 0.5f, true); break;
+    case LVLUnknown:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 1.0, 1.0, 1.0, false); break;
+    case LVLBlock:      GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 1.0, 0.0, 1.0, false); break;
+    case LVLBGO:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 0.0, 1.0, 1.0, false); break;
+    case LVLNPC:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 1.0, 1.0, false); break;
+    case LVLPlayer:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.5, 0.5, 1.0, false); break;
+    case LVLEffect:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.5, 0.5, 0.5, 1.0, false); break;
+    case LVLWarp:       GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 0.0, 0.5f, true); break;
+    case LVLSpecial:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0,1.0,0,1.0, true);
+    case LVLPhysEnv:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0f, 1.0f, 0.0f, 0.5f, true); break;
     }
 }
 
