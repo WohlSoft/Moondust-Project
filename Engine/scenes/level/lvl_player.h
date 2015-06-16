@@ -60,6 +60,7 @@ class LVL_Player :
         bool isWall(QVector<LVL_Block *> &blocks);
         bool isFloor(QVector<LVL_Block *> &blocks);
         bool forceCollideCenter;//!< collide with invizible blocks at center
+        float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
         /*****************NPC's and blocks******************/
         typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
@@ -68,6 +69,7 @@ class LVL_Player :
         QHash<int, PGE_Phys_Object*> collided_right;
         QHash<int, PGE_Phys_Object*> collided_bottom;
         QHash<int, PGE_Phys_Object*> collided_center;
+        bool _stucked;
         /***************************************************/
 
         int playerID;
@@ -211,7 +213,7 @@ class LVL_Player :
         bool ducking;
         void setDuck(bool duck);
 private:
-        void _collideUnduck(bool preVelocity=false);//!< Re-checks collisions after player disabled duck.
+        void _collideUnduck();//!< Re-checks collisions after player disabled duck.
                                                     //!< Pre-velocity needs if you call "setCharacter" function before iterate physics
         /******************Duck*************************/
 public:

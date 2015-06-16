@@ -23,7 +23,7 @@ public:
     template <typename T>
     static int sgn(T val) {
         static_assert(std::is_arithmetic<T>::value, "The value for \"val\" must be arithemtic");
-        return (T(0) < val) - (val < T(0));
+        return int(T(0) < val) - int(val < T(0));
     }
 };
 
