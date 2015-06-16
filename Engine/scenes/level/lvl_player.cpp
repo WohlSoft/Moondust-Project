@@ -56,7 +56,11 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     stateID     =1;
     characterID =1;
 
+    _heightDelta=0;
+
     _doSafeSwitchCharacter=false;
+
+    _stucked=false;
 
     JumpPressed=false;
     onGround=false;
@@ -121,6 +125,9 @@ LVL_Player::~LVL_Player()
 
 void LVL_Player::setCharacter(int CharacterID, int _stateID)
 {
+    #ifdef COLLIDE_DEBUG
+    qDebug() << "==================TOGGLE=CHARACTER=============================";
+    #endif
     if(!_doSafeSwitchCharacter)
     {
         if(!ConfigManager::playable_characters.contains(CharacterID))
@@ -189,16 +196,23 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
 
     if(_isInited)
     {
+        ducking = (ducking & state_cur.duck_allow);
         float cx = posRect.center().x();
         float b = posRect.bottom();
         setSize(state_cur.width, ducking?state_cur.duck_height:state_cur.height);
-        setPos(cx-+width/2, b-height);
+        setPos(cx-width/2, b-height);
         PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
         x._chsetup.state = stateID;
         LvlSceneP::s->getGameState()->setPlayerState(playerID, x);
-        _collideUnduck(true);
+        _collideUnduck();
+
+        #ifdef COLLIDE_DEBUG
+        //Freeze time to check out what happening at moment
+        //GlRenderer::makeShot();
+        //LvlSceneP::s->isTimeStopped=true;
+        #endif
     }
 }
 
@@ -212,6 +226,9 @@ void LVL_Player::setCharacterSafe(int CharacterID, int _stateID)
     else
         setup = ConfigManager::playable_characters[CharacterID];
     states =   ConfigManager::playable_characters[CharacterID].states;
+
+    float oldHeight = posRect.height();
+
     if(!states.contains(_stateID))
     {
         PGE_Audio::playSoundByRole(obj_sound_role::CameraSwitch);
@@ -220,6 +237,9 @@ void LVL_Player::setCharacterSafe(int CharacterID, int _stateID)
     else
         state_cur = states[_stateID];
     _doSafeSwitchCharacter=true;
+
+    _heightDelta=oldHeight-( (ducking&&state_cur.duck_allow) ? state_cur.duck_height : state_cur.height);
+    if(_heightDelta>0.0f) _heightDelta=0.0f;
 
     characterID = CharacterID;
     stateID = _stateID;
@@ -245,11 +265,13 @@ void LVL_Player::setDuck(bool duck)
     ducking=duck;
     if(!duck && !isWarping)
     {
+        _heightDelta = state_cur.duck_height-state_cur.height;
+        if(_heightDelta>0.0f) _heightDelta=0.0f;
         _collideUnduck();
     }
 }
 
-void LVL_Player::_collideUnduck(bool preVelocity)
+void LVL_Player::_collideUnduck()
 {
     _syncPosition();
     if(isWarping) return;
@@ -261,17 +283,11 @@ void LVL_Player::_collideUnduck(bool preVelocity)
     //Detect collidable blocks!
     QVector<PGE_Phys_Object*> bodies;
     PGE_RectF posRectC = posRect;
-    posRectC.setTop(posRectC.top()+4.0f);
+    posRectC.setTop(posRectC.top()-4.0f);
     posRectC.setLeft(posRectC.left()+1.0f);
     posRectC.setRight(posRectC.right()-1.0f);
-    posRectC.setBottom(posRectC.bottom()+ (ducking ? 0.0:((-posRect.height()/2.0)+4.0)) );
+    posRectC.setBottom(posRectC.bottom()+ (ducking ? 0.0:(-posRect.height()/2.0))+4.0 );
     LvlSceneP::s->queryItems(posRectC, &bodies);
-
-    #ifdef COLLIDE_DEBUG
-    //Freeze time to check out what happening at moment
-//    GlRenderer::makeShot();
-//    LvlSceneP::s->isTimeStopped=true;
-    #endif
 
     forceCollideCenter=true;
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
@@ -287,6 +303,9 @@ void LVL_Player::_collideUnduck(bool preVelocity)
     int hited=0;
     PGE_RectF nearestRect;
     #endif
+
+    bool resolveTop=false;
+    double _floorY=0;
     if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
     {
         QVector<LVL_Block*> blocks_to_hit;
@@ -302,28 +321,41 @@ void LVL_Player::_collideUnduck(bool preVelocity)
             LVL_Block *blk= static_cast<LVL_Block*>(collided);
             if(blk) blocks_to_hit.push_back(blk);
         }
-        if(!blocks_to_hit.isEmpty())
+        if(isFloor(blocks_to_hit))
         {
             LVL_Block*nearest = nearestBlockY(blocks_to_hit);
             if(nearest)
             {
-                posRect.setY(nearest->posRect.bottom()+(preVelocity?fabs(Maths::max(speedX(), _velocityY_prev))+1.0f:0.f)+1.f);
-                _syncPosition();
-            }
-            nearest = nearestBlock(blocks_to_hit);
-            if(nearest) {
-                #ifdef COLLIDE_DEBUG
-                nearestRect=nearest->posRect;
-                #endif
-                nearest->hit();
-                bump();
+                _floorY=nearest->posRect.bottom()+1.0;
+                resolveTop=true;
             }
         }
-        #ifdef COLLIDE_DEBUG
-        hited=blocks_to_hit.size();
-        blocks_to_hit.clear();
-        #endif
+
+        if(!blocks_to_hit.isEmpty())
+        {
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                resolveTop=true;
+                long npcid=nearest->data.npc_id;
+                nearest->hit();
+                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) )
+                {
+                    bump();
+                }
+            }
+        }
+        //blocks_to_hit.clear();
     }
+
+    if(resolveTop)
+    {
+        posRect.setY(_floorY);
+        setSpeedY(0.0);
+        _syncPosition();
+    }
+
+    _heightDelta = 0.0;
     #ifdef COLLIDE_DEBUG
     qDebug() << "unduck: blocks to hit"<< hited << " Nearest: "<<nearestRect.top() << nearestRect.bottom() << "are bottom empty: " << collided_bottom.isEmpty() << "bodies found: "<<bodies.size() << "bodies at center: "<<collided_center.size();
     #endif
@@ -362,8 +394,6 @@ void LVL_Player::update(float ticks)
         updateCamera();
         return;
     }
-
-    if(_doSafeSwitchCharacter) setCharacter(characterID, stateID);
 
     onGround = !foot_contacts_map.isEmpty();
     on_slippery_surface = !foot_sl_contacts_map.isEmpty();
@@ -639,7 +669,9 @@ void LVL_Player::update(float ticks)
     if( keys.alt_jump )
     {
         //Temporary it is ability to fly up!
-        setSpeedY(-physics_cur.velocity_jump);
+        if(!bumpDown && !bumpUp) {
+            setSpeedY(-physics_cur.velocity_jump);
+        }
     }
 
     if( keys.jump )
@@ -650,7 +682,7 @@ void LVL_Player::update(float ticks)
                 { if(climbing || onGround || (environment==LVL_PhysEnv::Env_Quicksand))
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerJump); }
             else
-                PGE_Audio::playSound(72);//temporary!
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerWaterSwim);
         }
 
         if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
@@ -813,6 +845,12 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if(_stucked)
+    {
+        posRect.setX(posRect.x()-direction*2);
+        applyAccel(0, 0);
+    }
+
     if(contactedWithWarp)
     {
         if(contactedWarp)
@@ -865,13 +903,17 @@ void LVL_Player::update(float ticks)
                                 if(keys.right && !wasEntered) { setPosX(contactedWarp->right()-posRect.width()); doTeleport=true; }
                                 break;
                             case 3://down
-                                if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height); doTeleport=true;}
+                                if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height);
+                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                    doTeleport=true;}
                                 break;
                             case 2://left
                                 if(keys.left && !wasEntered) { setPosX(contactedWarp->left()); doTeleport=true; }
                                 break;
                             case 1://up
-                                if(keys.up && !wasEntered) {  setPosY(contactedWarp->top()); doTeleport=true;}
+                                if(keys.up && !wasEntered) {  setPosY(contactedWarp->top());
+                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                    doTeleport=true;}
                                 break;
                             default:
                                 break;
@@ -920,6 +962,8 @@ void LVL_Player::update(float ticks)
         }
     }
 
+    if(_doSafeSwitchCharacter) setCharacter(characterID, stateID);
+
     lua_onLoop();
     updateCamera();
 }
@@ -956,9 +1000,11 @@ void LVL_Player::updateCollisions()
     bool resolveTop=false;
     bool resolveLeft=false;
     bool resolveRight=false;
-    PGE_RectF backup=posRect;
-    PGE_RectF _wall=posRect;
-    PGE_RectF _floor=posRect;
+
+    double backupX=posRect.x();
+    double backupY=posRect.y();
+    double _wallX=posRect.x();
+    double _floorY=posRect.y();
 
     QVector<LVL_Block*> floor_blocks;
     QVector<LVL_Block*> wall_blocks;
@@ -988,7 +1034,7 @@ void LVL_Player::updateCollisions()
             LVL_Block*nearest = nearestBlockY(floor_blocks);
             if(nearest)
             {
-                _floor.setY(nearest->posRect.top()-posRect.height());
+                _floorY = nearest->posRect.top()-posRect.height();
                 resolveBottom=true;
             }
         }
@@ -1025,7 +1071,7 @@ void LVL_Player::updateCollisions()
             LVL_Block*nearest = nearestBlockY(blocks_to_hit);
             if(nearest)
             {
-                if(!resolveBottom) _floor.setY(nearest->posRect.bottom()+1);
+                if(!resolveBottom) _floorY = nearest->posRect.bottom()+1;
                 resolveTop=true;
             }
         }
@@ -1036,8 +1082,9 @@ void LVL_Player::updateCollisions()
             if(nearest)
             {
                 resolveTop=true;
+                long npcid=nearest->data.npc_id;
                 nearest->hit();
-                if( nearest->setup->hitable || (nearest->data.npc_id!=0) || (nearest->destroyed) )
+                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) )
                 {
                     bump();
                 }
@@ -1060,9 +1107,8 @@ void LVL_Player::updateCollisions()
             LVL_Block*nearest = nearestBlock(blocks_to_hit);
             if(nearest)
             {
-                _wall.setX(nearest->posRect.right());
+                _wallX = nearest->posRect.right();
                 resolveLeft=true;
-
                 wall=true;
             }
         }
@@ -1082,7 +1128,7 @@ void LVL_Player::updateCollisions()
             LVL_Block*nearest = nearestBlock(blocks_to_hit);
             if(nearest)
             {
-                _wall.setX(nearest->posRect.left()-posRect.width());
+                _wallX = nearest->posRect.left()-posRect.width();
                 resolveRight=true;
                 wall=true;
             }
@@ -1096,11 +1142,11 @@ void LVL_Player::updateCollisions()
         //check if on floor or in air
         bool _iswall=false;
         bool _isfloor=false;
-        posRect.setX(_wall.x());
+        posRect.setX(_wallX);
         _isfloor=isFloor(floor_blocks);
-        posRect.setPos(backup.x(), _floor.y());
+        posRect.setPos(backupX, _floorY);
         _iswall=isWall(wall_blocks);
-        posRect.setX(backup.x());
+        posRect.setX(backupX);
         if(!_iswall)
         {
             resolveLeft=false;
@@ -1115,23 +1161,22 @@ void LVL_Player::updateCollisions()
 
     if(resolveLeft || resolveRight)
     {
-        posRect.setX(_wall.x());
+        posRect.setX(_wallX);
         setSpeedX(0);
     }
     if(resolveBottom || resolveTop)
     {
-        posRect.setY(_floor.y());
+        posRect.setY(_floorY);
         setSpeedY(0);
         if(resolveTop && !bumpUp && !bumpDown )
             jumpTime=0;
     }
     else
     {
-        posRect.setY(backup.y());
+        posRect.setY(backupY);
     }
 
-    if( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) )
-        posRect.setX(posRect.x()-direction);
+    _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve end======";
@@ -1246,7 +1291,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                 break;
             }
 
-            if(!collided->posRect.collideRect(posRect))
+            if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
+                ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )
             {
                 #ifdef COLLIDE_DEBUG
                 qDebug() << "No, is not collidng";
@@ -1304,8 +1350,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     #ifdef COLLIDE_DEBUG
                     bool found=false;
                     #endif
-                    double xSpeed = Maths::max(speedX(), _velocityX_prev);
-                    double ySpeed = Maths::max(speedY(), _velocityY_prev);
+                    double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
+                    double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
                     //*****************************Feet of player****************************/
                     if(
                             (
@@ -1327,9 +1373,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of player****************************/
                     else if( (
-                                 (speedY()<0.0)
+                                 (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
                                  &&
-                                 (r1.top() > rc.bottom()+ySpeed-1.0)
+                                 (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
                                  &&( !( (r1.left()>=rc.right()-2.0) || (r1.right() <= rc.left()+2.0) ) )
                               )
                              )

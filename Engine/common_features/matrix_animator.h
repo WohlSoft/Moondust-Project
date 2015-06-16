@@ -84,7 +84,7 @@ public:
     ~MatrixAnimator();
     void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
     void setFrameSpeed(int speed);
-    void setDirection(int _direction);
+    void setDirection(int _direction, bool force=false);
     void setSize(int _width, int _height);
     PGE_SizeF size();
     PGE_SizeF sizeOfFrame();
