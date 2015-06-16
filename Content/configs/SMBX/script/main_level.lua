@@ -33,14 +33,18 @@ end
 
 function __create_luaplayer()
     local newPlayer = peachPlayer_class()
-	table.insert(players, newPlayer) --Be sure that the garbage collector doesn't destory our object
-	return newPlayer
+	players[newPlayer] = true --Be sure that the garbage collector doesn't destory our object
+    return newPlayer
 end
 
 function __create_luanpc()
     local newNPC = npcBase_class()
-    table.insert(npcs, newNPC)
+    npcs[newNPC] = true --Be sure that the garbage collector doesn't destory our object
     return newNPC
+end
+
+function __destroy_luanpc(theNPC)
+    npcs[theNPC] = nil --Let the garbage collector destory our object
 end
 
 
