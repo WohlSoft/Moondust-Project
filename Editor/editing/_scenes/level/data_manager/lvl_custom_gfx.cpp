@@ -359,9 +359,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uNPC.withTxt = true;
                 }
              }
+             QString imgFileName = (uNPC.withTxt && uNPC.sets.en_image) ? uNPC.sets.image : pConfigs->main_npc[i].image_n;
 
              // ///////////////////////Looking for user's GFX
-             QString CustomImg=uLVL.getCustomFile(pConfigs->main_npc[i].image_n);
+             QString CustomImg=uLVL.getCustomFile(imgFileName);
+             if(CustomImg.isEmpty())
+                CustomImg=uLVL.getCustomFile(pConfigs->main_npc[i].image_n);
+
              if(!CustomImg.isEmpty())
              {
                  QString CustomMask=uLVL.getCustomFile(pConfigs->main_npc[i].mask_n);
@@ -414,7 +418,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }
-
 
              AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
                          ((uNPC.withImg)?
