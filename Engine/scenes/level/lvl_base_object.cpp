@@ -22,7 +22,7 @@
 
 #include <QVector>
 
-PGE_Phys_Object::PGE_Phys_Object()
+PGE_Phys_Object::PGE_Phys_Object() : _smbxTickTime(1000.f/65.f)
 {
     posX_coefficient = 0.0f;
     posY_coefficient = 0.0f;
@@ -49,8 +49,6 @@ PGE_Phys_Object::PGE_Phys_Object()
 
     _accelX=0;
     _accelY=0;
-
-    timeStep=(1000.f/65.f);
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -218,8 +216,8 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
-    posRect.setX(posRect.x()+_velocityX * (ticks/timeStep));
-    posRect.setY(posRect.y()+_velocityY * (ticks/timeStep));
+    posRect.setX(posRect.x()+_velocityX * (ticks/_smbxTickTime));
+    posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
 
     _velocityX_prev=_velocityX;
     _velocityY_prev=_velocityY;
@@ -308,6 +306,10 @@ void PGE_Phys_Object::updateCollisions()
 void PGE_Phys_Object::solveCollision(PGE_Phys_Object *)
 {}
 
+float PGE_Phys_Object::SMBXTicksToTime(float ticks)
+{
+    return ticks*_smbxTickTime;
+}
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)
 {
