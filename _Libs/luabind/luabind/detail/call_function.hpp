@@ -105,7 +105,7 @@ namespace luabind
 				push_arguments<PolicyList, 1>(L, std::forward<Args>(args)...);
 
 				if(Function(L, sizeof...(Args), 0)) {
-					assert(lua_gettop(L)==top-NumParams+1);
+                    assert(lua_gettop(L)==top-(signed)NumParams+1);
 					call_error(L);
 				}
 				// pops the return values from the function call
