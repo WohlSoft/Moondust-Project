@@ -306,9 +306,10 @@ void LVL_Player::_collideUnduck()
 
     bool resolveTop=false;
     double _floorY=0;
+    QVector<LVL_Block*> blocks_to_hit;
+
     if((!collided_center.isEmpty())&&(collided_bottom.isEmpty()))
     {
-        QVector<LVL_Block*> blocks_to_hit;
         for(PlayerColliders::iterator it=collided_center.begin(); it!=collided_center.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
@@ -330,7 +331,11 @@ void LVL_Player::_collideUnduck()
                 resolveTop=true;
             }
         }
+    }
 
+    if(resolveTop)
+    {
+        posRect.setY(_floorY);
         if(!blocks_to_hit.isEmpty())
         {
             LVL_Block*nearest = nearestBlock(blocks_to_hit);
@@ -339,18 +344,12 @@ void LVL_Player::_collideUnduck()
                 resolveTop=true;
                 long npcid=nearest->data.npc_id;
                 nearest->hit();
-                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) )
+                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || (nearest->setup->bounce) )
                 {
-                    bump();
+                    bump(false, speedY());
                 }
             }
         }
-        //blocks_to_hit.clear();
-    }
-
-    if(resolveTop)
-    {
-        posRect.setY(_floorY);
         setSpeedY(0.0);
         _syncPosition();
     }
@@ -816,7 +815,7 @@ void LVL_Player::update(float ticks)
                 if( posX() < sBox.left())
                 {
                     setPosX( sBox.left() );
-                    setSpeedX(0);
+                    setSpeedX(0.0);
                 }
             }
 
@@ -834,13 +833,13 @@ void LVL_Player::update(float ticks)
             if( posX() < sBox.left())
             {
                 setPosX(sBox.left());
-                setSpeedX(0);
+                setSpeedX(0.0);
             }
             else
             if( posX()+width > sBox.right())
             {
                 setPosX(sBox.right()-width);
-                setSpeedX(0);
+                setSpeedX(0.0);
             }
         }
     }
@@ -1047,22 +1046,11 @@ void LVL_Player::updateCollisions()
             foot_contacts_map.clear();
             foot_sl_contacts_map.clear();
         }
-
-        if(!blocks_to_hit.isEmpty())
-        {
-            LVL_Block*nearest = nearestBlock(blocks_to_hit);
-            if(nearest)
-            {
-                resolveBottom=true;
-                nearest->hit(LVL_Block::down);
-                bump(true);
-            }
-        }
-        blocks_to_hit.clear();
     }
 
     if(!collided_top.isEmpty())
     {
+        blocks_to_hit.clear();
         for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
@@ -1070,7 +1058,7 @@ void LVL_Player::updateCollisions()
             if(blk) blocks_to_hit.push_back(blk);
             if(blk) floor_blocks.push_back(blk);
         }
-        if(isFloor(blocks_to_hit))
+        if(isFloor(floor_blocks))
         {
             LVL_Block*nearest = nearestBlockY(blocks_to_hit);
             if(nearest)
@@ -1079,22 +1067,6 @@ void LVL_Player::updateCollisions()
                 resolveTop=true;
             }
         }
-
-        if(!blocks_to_hit.isEmpty())
-        {
-            LVL_Block*nearest = nearestBlock(blocks_to_hit);
-            if(nearest)
-            {
-                resolveTop=true;
-                long npcid=nearest->data.npc_id;
-                nearest->hit();
-                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) )
-                {
-                    bump();
-                }
-            }
-        }
-        blocks_to_hit.clear();
     }
 
     bool wall=false;
@@ -1104,11 +1076,11 @@ void LVL_Player::updateCollisions()
         {
             PGE_Phys_Object *collided= *it;
             LVL_Block *blk= static_cast<LVL_Block*>(collided);
-            if(blk) blocks_to_hit.push_back(blk);
+            if(blk) wall_blocks.push_back(blk);
         }
-        if(isWall(blocks_to_hit))
+        if(isWall(wall_blocks))
         {
-            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            LVL_Block*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
                 _wallX = nearest->posRect.right();
@@ -1116,20 +1088,20 @@ void LVL_Player::updateCollisions()
                 wall=true;
             }
         }
-        wall_blocks=blocks_to_hit;
-        blocks_to_hit.clear();
     }
+
     if(!collided_right.isEmpty())
     {
+        wall_blocks.clear();
         for(PlayerColliders::iterator it=collided_right.begin(); it!=collided_right.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
             LVL_Block *blk= static_cast<LVL_Block*>(collided);
-            if(blk) blocks_to_hit.push_back(blk);
+            if(blk) wall_blocks.push_back(blk);
         }
-        if(isWall(blocks_to_hit))
+        if(isWall(wall_blocks))
         {
-            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            LVL_Block*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
                 _wallX = nearest->posRect.left()-posRect.width();
@@ -1137,8 +1109,6 @@ void LVL_Player::updateCollisions()
                 wall=true;
             }
         }
-        wall_blocks=blocks_to_hit;
-        blocks_to_hit.clear();
     }
 
     if((resolveLeft||resolveRight) && (resolveTop||resolveBottom))
@@ -1171,7 +1141,19 @@ void LVL_Player::updateCollisions()
     if(resolveBottom || resolveTop)
     {
         posRect.setY(_floorY);
+        float bumpSpeed=speedY();
         setSpeedY(0);
+        if(!blocks_to_hit.isEmpty())
+        {
+            LVL_Block*nearest = nearestBlock(blocks_to_hit);
+            if(nearest)
+            {
+                long npcid=nearest->data.npc_id;
+                if(resolveBottom) nearest->hit(LVL_Block::down); else nearest->hit();
+                if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || nearest->setup->bounce )
+                    bump(resolveBottom, bumpSpeed);
+            }
+        }
         if(resolveTop && !bumpUp && !bumpDown )
             jumpTime=0;
     }
@@ -1179,7 +1161,6 @@ void LVL_Player::updateCollisions()
     {
         posRect.setY(backupY);
     }
-
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
     #ifdef COLLIDE_DEBUG
@@ -1380,7 +1361,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                  (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
                                  &&
                                  (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
-                                 &&( !( (r1.left()>=rc.right()-2.0) || (r1.right() <= rc.left()+2.0) ) )
+                                 &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
                               )
                              )
                     {
@@ -1391,7 +1372,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Left****************************/
-                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (floor(r1.left()) >= rc.right()+xSpeed-1.0)
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -1401,7 +1382,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Right****************************/
-                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( ceil(r1.right()) <= rc.left()+xSpeed+1.0)
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -1634,14 +1615,13 @@ void LVL_Player::harm(int _damage)
     doHarm_damage=_damage;
 }
 
-void LVL_Player::bump(bool _up)
+void LVL_Player::bump(bool _up, double bounceSpeed)
 {
     if(_up)
         bumpUp=true;
     else
         bumpDown=true;
-
-    bumpVelocity = fabs(speedY())/4.0;
+    bumpVelocity = fabs(bounceSpeed)/4.0;
 }
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
