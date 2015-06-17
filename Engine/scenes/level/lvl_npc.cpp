@@ -45,6 +45,7 @@ void LVL_Npc::init()
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
+
     if(isLuaNPC){
         try{
             lua_onInit();
@@ -176,8 +177,7 @@ void LVL_Npc::update(float tickTime)
     }
 
     try{
-        lua_onLoop();
-        lua_onLoopTimed(tickTime);
+        lua_onLoop(tickTime);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
@@ -225,7 +225,7 @@ void LVL_Npc::Activate()
 
     if(isLuaNPC){
         try{
-            lua_onInit();
+            lua_onActivated();
         } catch (luabind::error& e) {
             LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
         }
