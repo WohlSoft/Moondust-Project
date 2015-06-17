@@ -207,6 +207,7 @@ void LVL_Npc::render(double camX, double camY)
 void LVL_Npc::setDefaults()
 {
     direction=data.direct;
+    if(direction==0) direction = (rand()%2) ? -1 : 1;
     if(!setup) return;
     motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
     is_scenery  = setup->scenery;
