@@ -63,16 +63,16 @@ else
 fi
 cd ..
 }
-
-UnArch 'SDL2-2.0.3'
-UnArch 'SDL2_mixer-2.0.0'
+LatestSDL='SDL-2.0.4-9723'
+UnArch $LatestSDL
+#UnArch 'SDL2_mixer-2.0.0'
 UnArch 'libogg-1.3.2'
 UnArch 'libvorbis-1.3.4'
 UnArch 'flac-1.3.0'
 UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
-UnArch 'luajit-2.0-fromgit.tar.gz'
+UnArch 'luajit-2.0-fromgit'
 cp ../libmad-0.15.1b.patched_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
@@ -80,7 +80,7 @@ cp ../libmad-0.15.1b.patched_configure.txt .
 
 ###########SDL2###########
 echo "=======SDL2========="
-BuildSrc 'SDL2-2.0.3' $SDL_ARGS'--prefix='$InstallTo
+BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
 
 #apply fix of SDL2 bug
 cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
