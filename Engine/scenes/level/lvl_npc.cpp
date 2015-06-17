@@ -144,14 +144,14 @@ void LVL_Npc::transformTo_x(long id)
 
 }
 
-void LVL_Npc::update(float ticks)
+void LVL_Npc::update(float tickTime)
 {
-    float accelCof=ticks/1000.0f;
+    float accelCof=tickTime/1000.0f;
     if(killed) return;
 
-    PGE_Phys_Object::update(ticks);
-    timeout-=ticks;
-    animator.manualTick(ticks);
+    PGE_Phys_Object::update(tickTime);
+    timeout-=tickTime;
+    animator.manualTick(tickTime);
 
     if(motionSpeed!=0)
     {
@@ -177,6 +177,7 @@ void LVL_Npc::update(float ticks)
 
     try{
         lua_onLoop();
+        lua_onLoopTimed(tickTime);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
@@ -221,6 +222,14 @@ void LVL_Npc::Activate()
         timeout=150;
     isActivated=true;
     animator.start();
+
+    if(isLuaNPC){
+        try{
+            lua_onInit();
+        } catch (luabind::error& e) {
+            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        }
+    }
 }
 
 void LVL_Npc::deActivate()
