@@ -28,6 +28,8 @@ DESTDIR = ../../_builds/commonlibs
 DESTDIR = ../../_builds/android/lib
 }
 
+include(../../../_common/build_props.pri)
+
 SOURCES += \
     ../class_from_stack.cpp \
     ../oolua.cpp \

@@ -19,6 +19,8 @@ DESTDIR = ../../_builds/commonlibs
 DESTDIR = ../../_builds/android/lib
 }
 
+include(../../../_common/build_props.pri)
+
 INCLUDEPATH += $$PWD/../ $$PWD/../lua/
 
 SOURCES +=  ../lua/lapi.c \

@@ -11,29 +11,6 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-static: {
-release:OBJECTS_DIR = ../../bin/_build/sdl2mixermod/_release/.obj
-release:MOC_DIR     = ../../bin/_build/sdl2mixermod/_release/.moc
-release:RCC_DIR     = ../../bin/_build/sdl2mixermod/_release/.rcc
-release:UI_DIR      = ../../bin/_build/sdl2mixermod/_release/.ui
-
-debug:OBJECTS_DIR   = ../../bin/_build/sdl2mixermod/_debug/.obj
-debug:MOC_DIR       = ../../bin/_build/sdl2mixermod/_debug/.moc
-debug:RCC_DIR       = ../../bin/_build/sdl2mixermod/_debug/.rcc
-debug:UI_DIR        = ../../bin/_build/sdl2mixermod/_debug/.ui
-} else {
-release:OBJECTS_DIR = ../../bin/_build/_dynamic/sdl2mixermod/_release/.obj
-release:MOC_DIR     = ../../bin/_build/_dynamic/sdl2mixermod/_release/.moc
-release:RCC_DIR     = ../../bin/_build/_dynamic/sdl2mixermod/_release/.rcc
-release:UI_DIR      = ../../bin/_build/_dynamic/sdl2mixermod/_release/.ui
-
-debug:OBJECTS_DIR   = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.obj
-debug:MOC_DIR       = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.moc
-debug:RCC_DIR       = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.rcc
-debug:UI_DIR        = ../../bin/_build/_dynamic/sdl2mixermod/_debug/.ui
-}
-
-
 static:{
 DESTDIR = ../_builds/sdl2_mixer_mod
 TARGET = SDL2_mixer
@@ -41,6 +18,8 @@ TARGET = SDL2_mixer
 DESTDIR = ../_builds/sdl2_mixer_mod
 TARGET = SDL2_mixer
 }
+
+include(../../_common/build_props.pri)
 
 win32:{
 LIBS += -L../_builds/win32/lib

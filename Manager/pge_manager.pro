@@ -14,11 +14,7 @@ QT += winextras
 QT -= winextras
 }
 
-android:{
-DESTDIR = $$PWD/../bin/_android
-} else {
-DESTDIR = $$PWD/../bin
-}
+include(../_common/dest_dir.pri)
 
 TARGET = pge_manager
 TEMPLATE = app
@@ -35,27 +31,11 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 android:{
     LANGUAGES_TARGET=/assets/languages
-    ARCH=android_arm
 } else {
-    !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x32
-    } else {
-    ARCH=x64
-    }
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
-static: {
-LINKTYPE=static
-} else {
-LINKTYPE=dynamic
-}
-debug: BUILDTP=debug
-release: BUILDTP=release
-OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
-MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
-RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
-UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
-message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+
+include(../_common/build_props.pri)
 
 INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
