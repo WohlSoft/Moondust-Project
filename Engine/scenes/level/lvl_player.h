@@ -147,7 +147,7 @@ class LVL_Player :
         bool    bumpDown;
         bool    bumpUp;
         float   bumpVelocity;
-        void    bump(bool _up=false);
+        void    bump(bool _up=false, double bounceSpeed=0.0);
         /********************Bump***************************/
 
         /********************Climbing***************************/
