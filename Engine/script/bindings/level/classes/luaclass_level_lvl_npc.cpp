@@ -10,16 +10,16 @@ Binding_Level_ClassWrapper_LVL_NPC::Binding_Level_ClassWrapper_LVL_NPC() : LVL_N
 Binding_Level_ClassWrapper_LVL_NPC::~Binding_Level_ClassWrapper_LVL_NPC()
 {}
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop()
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onActivated()
 {
     if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
-        call<void>("onLoop");
+        call<void>("onActivated");
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoopTimed(float tickTime)
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onLoop(float tickTime)
 {
     if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
-        call<void>("onLoopTimed", tickTime);
+        call<void>("onLoop", tickTime);
 }
 
 void Binding_Level_ClassWrapper_LVL_NPC::lua_onInit()
@@ -34,8 +34,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
     return
         class_<LVL_Npc, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
             .def(constructor<>())
+            .def("onActivated", &LVL_Npc::lua_onActivated, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onActivated)
             .def("onLoop", &LVL_Npc::lua_onLoop, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onLoop)
-            .def("onLoopTimed", &LVL_Npc::lua_onLoopTimed, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onLoopTimed)
             .def("onInit", &LVL_Npc::lua_onInit, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onInit)
             .property("id", &LVL_Npc::getID);
 

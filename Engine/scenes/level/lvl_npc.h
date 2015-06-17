@@ -53,8 +53,8 @@ public:
     int timeout;
 
     //Addition lua functions
-    virtual void lua_onLoop() {}
-    virtual void lua_onLoopTimed(float) {}
+    virtual void lua_onActivated() {}
+    virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
     inline int getID() { return setup->id; }
     bool isLuaNPC;
