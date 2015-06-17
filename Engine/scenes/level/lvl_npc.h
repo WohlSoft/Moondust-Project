@@ -43,7 +43,7 @@ public:
     void transformTo(long id, int type=0);
     void transformTo_x(long id);
 
-    void update(float ticks);
+    void update(float tickTime);
     void render(double camX, double camY);
     void setDefaults();
     void Activate();
@@ -54,6 +54,7 @@ public:
 
     //Addition lua functions
     virtual void lua_onLoop() {}
+    virtual void lua_onLoopTimed(float) {}
     virtual void lua_onInit() {}
     inline int getID() { return setup->id; }
     bool isLuaNPC;

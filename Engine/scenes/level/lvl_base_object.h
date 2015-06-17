@@ -78,8 +78,8 @@ public:
     virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
-    const float _smbxTickTime;
-    float SMBXTicksToTime(float ticks);
+    static const float _smbxTickTime;
+    static float SMBXTicksToTime(float ticks);
 
     PGE_Phys_Object_Phys phys_setup;
     PGE_RectF posRect;
