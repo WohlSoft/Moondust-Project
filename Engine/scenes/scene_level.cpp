@@ -769,7 +769,10 @@ int LevelScene::exec()
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            wait( uTickf-(float)(SDL_GetTicks()-start_common) +(slowTimeMode?300:0));
+            if(!slowTimeMode)
+                wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+            else
+                SDL_Delay( uTick-(SDL_GetTicks()-start_common)+300 );
         }
     }
     return exitLevelCode;
