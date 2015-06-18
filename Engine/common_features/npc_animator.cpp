@@ -38,7 +38,6 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     mainImage = sprite;
     setup = config;
 
-    animated = false;
     aniBiDirect=false;
     frameStep = 1;
     frameSize=1;
@@ -115,16 +114,16 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
         frameFirstL = custom_frameFL;
         switch(customAniAlg)
         {
-        case 2:
+        case ANI_CustomSequence:
             frameSequance = true;
             frames_listL = setup.frames_left;
             frameFirstL = 0;
             frameLastL = frames_listL.size()-1;
             break;
-        case 1:
+        case ANI_FrameJump:
             frameStep = custom_frameEL;
             frameLastL = -1; break;
-        case 0:
+        case ANI_DefaultSequence:
         default:
             frameLastL = custom_frameEL; break;
         }
@@ -133,15 +132,15 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
         frameFirstR = custom_frameFR;
         switch(customAniAlg)
         {
-        case 2:
+        case ANI_CustomSequence:
             frameSequance = true;
             frames_listR = setup.frames_right;
             frameFirstR = 0;
             frameLastR = frames_listR.size()-1; break;
-        case 1:
+        case ANI_FrameJump:
             frameStep = custom_frameER;
             frameLastR = -1; break;
-        case 0:
+        case ANI_DefaultSequence:
         default:
             frameLastR = custom_frameER; break;
         }
@@ -218,6 +217,8 @@ AniPos AdvNpcAnimator::wholeImage()
 
 void AdvNpcAnimator::setSequenceL(QList<int> _frames)
 {
+    if(_frames.isEmpty()) return;
+    customAniAlg=ANI_CustomSequence;
     frameSequance = true;
     frames_listL = _frames;
     frameFirstL = 0;
@@ -226,6 +227,8 @@ void AdvNpcAnimator::setSequenceL(QList<int> _frames)
 
 void AdvNpcAnimator::setSequenceR(QList<int> _frames)
 {
+    if(_frames.isEmpty()) return;
+    customAniAlg=ANI_CustomSequence;
     frameSequance = true;
     frames_listR =  _frames;
     frameFirstR = 0;
@@ -236,6 +239,7 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
 {
     if(_frames.isEmpty()) return;
 
+    customAniAlg=ANI_CustomSequence;
     frameSequance = true;
     switch(frameStyle)
     {
@@ -281,6 +285,32 @@ void AdvNpcAnimator::setFrameR(int y)
     if( y >= frames.size()) y = (frameFirstR<frames.size()) ? frameFirstR : 0;
 
     CurrentFrameR = y;
+}
+
+void AdvNpcAnimator::setFrameSpeed(int ms)
+{
+    if(ms<=0) return;
+    frameSpeed=ms;
+}
+
+void AdvNpcAnimator::setBidirectional(bool bid)
+{
+    aniBiDirect=bid;
+}
+
+void AdvNpcAnimator::setDirectedSequence(bool dd)
+{
+    setup.ani_directed_direct=dd;
+    if(dd)
+    {
+        aniDirectL = (true) ^ (setup.ani_direct);
+        aniDirectR = (false) ^ (setup.ani_direct);
+    }
+    else
+    {
+        aniDirectL = setup.ani_direct;
+        aniDirectR = setup.ani_direct;
+    }
 }
 
 void AdvNpcAnimator::start()
