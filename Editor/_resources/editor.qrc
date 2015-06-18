@@ -52,7 +52,6 @@
         <file>images/edit_undo.png</file>
         <file alias="npc/proj.png">images/generator_proj.png</file>
         <file alias="npc/warp.png">images/generator_warp.png</file>
-        <file alias="images/mac/mushroom.hqx">mushroom.hqx</file>
         <file alias="images/mac/mushroom.icns">mushroom.icns</file>
         <file>splash.png</file>
         <file>images/events.png</file>
