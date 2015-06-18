@@ -46,9 +46,9 @@ translates.files += $$PWD/languages/*.qm
 translates.files += $$PWD/languages/*.png
 
 #DEFINES += USE_QMEDIAPLAYER
-!android:{
+#!android:{
 DEFINES += USE_SDL_MIXER
-}
+#}
 DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES
 
 INSTALLS = translates
@@ -90,6 +90,12 @@ win32: {
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+}
+
+android: {
+    LIBS += -L$$PWD/../_Libs/_builds/android/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/android/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 

@@ -68,7 +68,7 @@ UnArch $LatestSDL
 #UnArch 'SDL2_mixer-2.0.0'
 UnArch 'libogg-1.3.2'
 UnArch 'libvorbis-1.3.4'
-UnArch 'flac-1.3.0'
+UnArch 'flac-1.3.1'
 UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
@@ -97,7 +97,7 @@ BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
 
 ###########FLAC###########
 echo "==========FLAC========="
-BuildSrc 'flac-1.3.0' '--disable-xmms-plugin --prefix='$InstallTo
+BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --prefix='$InstallTo
 
 
 ###########MIKMOD###########
