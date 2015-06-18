@@ -627,10 +627,10 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             Scene_Effect_Phys p;
             p.decelerate_x=0.02;
             p.max_vel_y=12;
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, 0, p);
          }
       }
       break;
@@ -640,7 +640,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
          {
             Scene_Effect_Phys p;
             p.max_vel_y=12;
-            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, p);
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, 0, p);
          }
       }
       break;

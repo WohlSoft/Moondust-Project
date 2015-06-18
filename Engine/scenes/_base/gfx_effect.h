@@ -21,7 +21,7 @@
 
 #include <data_configs/obj_effect.h>
 #include <common_features/simple_animator.h>
-
+#include <common_features/rectf.h>
 #include <PGE_File_Formats/file_formats.h>
 
 struct Scene_Effect_Phys
@@ -48,6 +48,9 @@ public:
     float posY();
     bool finished();
 
+    int direction;
+    int frameStyle;
+
     bool animated;
     long animator_ID;
 
@@ -60,11 +63,7 @@ public:
     float gravity;
     Scene_Effect_Phys phys_setup;
 
-    float m_posX;
-    float m_posY;
-
-    float width;
-    float height;
+    PGE_RectF posRect;
 
     bool _finished;
     obj_effect * setup;//Global config
@@ -75,7 +74,7 @@ public:
     void iterateStep(float ticks);
     float timeStep;
 
-    void render(double camX, double camY);
+    void render(double camX=0.0, double camY=0.0);
 };
 
 #endif // LVL_EFFECT_H

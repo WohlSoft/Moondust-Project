@@ -16,17 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_effect.h"
+#include "gfx_effect.h"
 #include <data_configs/config_manager.h>
 #include <graphics/gl_renderer.h>
 #include <gui/pge_msgbox.h>
 
-#include "../scene_level.h"
-#include "lvl_scene_ptr.h"
-#include "lvl_camera.h"
-
-
-void LevelScene::launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys)
+void Scene::launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction, Scene_Effect_Phys phys)
 {
     Scene_Effect _effect;
     if(ConfigManager::lvl_effects_indexes.contains(effectID))
@@ -43,14 +38,37 @@ void LevelScene::launchStaticEffectC(long effectID, float startX, float startY, 
     {
         _effect.texture = ConfigManager::level_textures[tID];
     }
-    _effect.m_posX = startX-_effect.texture.w/2;
-    _effect.m_posY = startY-_effect.texture.h/2;
+    _effect.posRect.setX(startX-_effect.texture.w/2);
+    _effect.posRect.setY(startY-_effect.texture.h/2);
     _effect.m_velocityX = velocityX;
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
     _effect.gravity = gravity;
     _effect.animated=_effect.setup->animated;
-    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, 0, -1);
+    if(direction==0) direction = (rand()%2) ? -1 : 1;
+    _effect.direction=direction;
+    _effect.frameStyle = _effect.setup->framestyle;
+    int frame1=0;
+    int frameE=-1;
+    int frms=0;
+    switch(_effect.frameStyle)
+    {
+    case 0: break;
+        frame1=0;
+        frameE=-1;
+        frms=_effect.setup->frames;
+    case 1: break;
+        frms=_effect.setup->frames*2;
+        frame1= direction<0 ? 0 : _effect.setup->frames;
+        frameE= direction<0 ? _effect.setup->frames-1 : -1;
+    case 2: break;
+        frms=_effect.setup->frames*4;
+        frame1= direction<0 ? 0 : _effect.setup->frames;
+        frameE= direction<0 ? _effect.setup->frames-1 : (_effect.setup->frames*2)-1;
+    case 3: break;
+    default: break;
+    }
+    _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
 
     if(delay>0)
     {
@@ -69,7 +87,7 @@ void LevelScene::launchStaticEffectC(long effectID, float startX, float startY, 
 
 
 
-void LevelScene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys)
+void Scene::launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, int direction, Scene_Effect_Phys phys)
 {
     Scene_Effect _effect;
     if(ConfigManager::lvl_effects_indexes.contains(effectID))
@@ -86,14 +104,37 @@ void LevelScene::launchStaticEffect(long effectID, float startX, float startY, i
     {
         _effect.texture = ConfigManager::level_textures[tID];
     }
-    _effect.m_posX = startX;
-    _effect.m_posY = startY;
+    _effect.posRect.setX(startX);
+    _effect.posRect.setY(startY);
     _effect.m_velocityX = velocityX;
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
     _effect.gravity = gravity;
     _effect.animated=_effect.setup->animated;
-    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, 0, -1);
+    if(direction==0) direction = (rand()%2) ? -1 : 1;
+    _effect.direction=direction;
+    _effect.frameStyle = _effect.setup->framestyle;
+    int frame1=0;
+    int frameE=-1;
+    int frms=0;
+    switch(_effect.frameStyle)
+    {
+    case 0: break;
+        frame1=0;
+        frameE=-1;
+        frms=_effect.setup->frames;
+    case 1: break;
+        frms=_effect.setup->frames*2;
+        frame1= direction<0 ? 0 : _effect.setup->frames;
+        frameE= direction<0 ? _effect.setup->frames-1 : -1;
+    case 2: break;
+        frms=_effect.setup->frames*4;
+        frame1= direction<0 ? 0 : _effect.setup->frames;
+        frameE= direction<0 ? _effect.setup->frames-1 : (_effect.setup->frames*2)-1;
+    case 3: break;
+    default: break;
+    }
+    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, frame1, frameE);
 
     if(delay>0)
     {
@@ -110,12 +151,12 @@ void LevelScene::launchStaticEffect(long effectID, float startX, float startY, i
     WorkingEffects.push_back(_effect);
 }
 
-void LevelScene::processEffects(float ticks)
+void Scene::processEffects(float ticks)
 {
     for(int i=0; i<WorkingEffects.size(); i++)
     {
         WorkingEffects[i].update(ticks);
-        if(WorkingEffects[i].finished())
+        if(WorkingEffects[i].finished() || !isVizibleOnScreen(WorkingEffects[i].posRect))
         {
             WorkingEffects.removeAt(i);
             i--;
@@ -132,6 +173,9 @@ Scene_Effect::Scene_Effect()
      animated=false;
      animator_ID=0;
 
+     direction=0;
+     frameStyle=0;
+
      _limit_delay=false;
      _delay=0;
 
@@ -140,10 +184,6 @@ Scene_Effect::Scene_Effect()
 
      gravity=0;
 
-     m_posX=0;
-     m_posY=0;
-     width=0;
-     height=0;
      _finished=false;
      setup=NULL;
      timeStep=(1000.f/65.f);
@@ -165,10 +205,8 @@ Scene_Effect::Scene_Effect(const Scene_Effect &e)
     phys_setup=e.phys_setup;
     gravity = e.gravity;
 
-    m_posX=e.m_posX;
-    m_posY=e.m_posY;
-    width=e.width;
-    height=e.height;
+    posRect=e.posRect;
+
     _finished=e._finished;
     timeStep= (1000.f/65.f);//(1000.f/(float)PGE_Window::TicksPerSecond);
 }
@@ -178,18 +216,17 @@ Scene_Effect::~Scene_Effect()
 
 void Scene_Effect::init()
 {
-    width=texture.w;
-    height=texture.h;
+    posRect.setSize(texture.w, texture.h);
 }
 
 float Scene_Effect::posX()
 {
-    return m_posX;
+    return posRect.x();
 }
 
 float Scene_Effect::posY()
 {
-    return m_posY;
+    return posRect.y();
 }
 
 bool Scene_Effect::finished()
@@ -212,8 +249,8 @@ void Scene_Effect::update(float ticks)
 
 void Scene_Effect::iterateStep(float ticks)
 {
-    m_posX+= m_velocityX * (timeStep/ticks);
-    m_posY+= m_velocityY * (timeStep/ticks);
+    posRect.setX(posRect.x()+m_velocityX * (timeStep/ticks));
+    posRect.setY(posRect.y()+m_velocityY * (timeStep/ticks));
 
     float accelCof=ticks/1000.0f;
     if(phys_setup.decelerate_x!=0)
@@ -266,10 +303,8 @@ void Scene_Effect::render(double camX, double camY)
     AniPos x(0,1);
     if(animated) //Get current animated frame
         x = animator.image();
-    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, posRect.width(), posRect.height(), x.first, x.second);
 }
-
-
 
 
 
