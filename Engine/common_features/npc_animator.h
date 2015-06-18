@@ -40,12 +40,23 @@ public:
     AniPos image(int dir, int frame=-1);
     AniPos wholeImage();
 
+    enum CustomAnimationAlgorithms
+    {
+        ANI_DefaultSequence=0,
+        ANI_FrameJump=1,
+        ANI_CustomSequence=2
+    };
+
     void setSequenceL(QList<int> _frames);
     void setSequenceR(QList<int> _frames);
     void setSequence(QList<int> _frames);
 
     void setFrameL(int y);
     void setFrameR(int y);
+
+    void setFrameSpeed(int ms);
+    void setBidirectional(bool bid);
+    void setDirectedSequence(bool dd);
 
     void start();
     void stop();
