@@ -10,7 +10,9 @@ class Binding_Core_GlobalFuncs_Audio
 public:
     static void playSound(long soundID);
     static void playSoundByRole(int role);
+
     static luabind::scope bindToLua();
+    static void bindConstants(lua_State* L);
 };
 
 #endif // BINDING_CORE_GLOBALFUNCS_AUDIO_H

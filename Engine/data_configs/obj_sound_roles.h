@@ -9,6 +9,8 @@
 ///
 struct obj_sound_role
 {
+    // Note to the devs: Please updating Binding_Core_GlobalFuncs_Audio::bindConstants
+    // When updating this enum!
     enum roles
     {
         Greeting=0,

@@ -248,6 +248,9 @@ void LuaEngine::bindCore()
     if(m_baseScene){
         luabind::module(L)[Binding_Core_GlobalFuncs_Renderer::bindToLua()];
     }
+
+    //Bind constants
+    Binding_Core_GlobalFuncs_Audio::bindConstants(L);
 }
 
 void LuaEngine::error()
