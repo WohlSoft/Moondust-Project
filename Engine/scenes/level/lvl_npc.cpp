@@ -45,7 +45,6 @@ void LVL_Npc::init()
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
-
     if(isLuaNPC){
         try{
             lua_onInit();
@@ -122,7 +121,7 @@ void LVL_Npc::transformTo_x(long id)
 
     int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
     int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
-    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
+    offset.setPoint(imgOffsetX, imgOffsetY);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
 
@@ -198,8 +197,8 @@ void LVL_Npc::render(double camX, double camY)
             x=animator.image(direction);
     }
 
-    GlRenderer::renderTexture(&texture, posX()-camX+offset.w(),
-                              posY()-camY+offset.h(),
+    GlRenderer::renderTexture(&texture, posX()-camX+(offset.x()+(-((double)setup->gfx_offset_x)*direction)),
+                              posY()-camY+offset.y(),
                               frameSize.w(),
                               frameSize.h(),
                               x.first, x.second);
@@ -220,9 +219,9 @@ void LVL_Npc::Activate()
         timeout=4000;
     else
         timeout=150;
-    isActivated=true;
-    animator.start();
+    if(isActivated) return;
 
+    animator.start();
     if(isLuaNPC){
         try{
             lua_onActivated();
@@ -230,6 +229,7 @@ void LVL_Npc::Activate()
             LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
         }
     }
+    isActivated=true;
 }
 
 void LVL_Npc::deActivate()

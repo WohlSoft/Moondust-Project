@@ -5,6 +5,7 @@
 #include <data_configs/obj_npc.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
+#include <common_features/pointf.h>
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -24,7 +25,7 @@ public:
     void init();
 
     LevelNPC data; //Local settings
-    PGE_Size offset;
+    PGE_PointF offset;
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
