@@ -134,7 +134,7 @@ void Scene::launchStaticEffect(long effectID, float startX, float startY, int an
     case 3: break;
     default: break;
     }
-    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, frame1, frameE);
+    _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
 
     if(delay>0)
     {
