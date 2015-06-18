@@ -6,7 +6,7 @@ local AI_IDLE = 2
 local SMBXTickTime = 1000.0/65.0
 
 function ticksToTime(ticks)
-	return ticks*SMBXTickTime
+    return ticks*SMBXTickTime
 end
 
 function initProps(thenpc)
@@ -61,10 +61,10 @@ function podoboo:onLoop(tickTime)
     elseif(self.cur_mode == AI_FALLING)then
         --Renderer.printText("AI_FALLING", 20, 400)
         self.cur_idleTicks = self.cur_idleTicks + tickTime
-	if((self.animation_flying==true) and (self.npc_obj.speedY >= 0.0)) then
-		self.npc_obj:setSequence(self.animateFall)
-		self.animation_flying = false
-	end
+        if((self.animation_flying==true) and (self.npc_obj.speedY >= 0.0)) then
+            self.npc_obj:setSequence(self.animateFall)
+            self.animation_flying = false
+        end
 
         if(self.npc_obj.y > self.startingY)then
             self.npc_obj.speedY = 0
@@ -76,7 +76,7 @@ function podoboo:onLoop(tickTime)
         --Renderer.printText("AI_IDLE", 20, 400)
         if(self.cur_idleTicks >= self.def_idleTicks)then
             self.cur_idleTicks = 0
-	    self.npc_obj:setSequence(self.animateJump)
+            self.npc_obj:setSequence(self.animateJump)
             self.animation_flying = true
             self.cur_mode = AI_JUMPING
         else
