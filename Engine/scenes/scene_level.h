@@ -223,6 +223,9 @@ public:
     LVL_Section *getSection(int sct);
     EpisodeState *getGameState();
 
+    bool isVizibleOnScreen(PGE_RectF &rect);
+    bool isVizibleOnScreen(double x, double y, double w, double h);
+
 private:
     bool isInit;
 
@@ -243,7 +246,35 @@ private:
     /*  Effects engine   */
     typedef QList<Scene_Effect>    SceneEffectsArray;
     SceneEffectsArray  WorkingEffects;
-    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
+    ///
+    /// \brief launchStaticEffect
+    /// Starts static effect by ID at position X,Y relative to left-top corner of effect picture
+    /// \param effectID ID of effect from lvl_effects.ini
+    /// \param startX X position relative to left side of effect picture
+    /// \param startY Y position relative to top side of effect picture
+    /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
+    /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
+    /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param gravity Y-gravitation will cause falling of effect picture
+    /// \param phys Additional physical settings
+    ///
+    void  launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
+
+    ///
+    /// \brief launchStaticEffectC
+    /// Starts static effect by ID at position X,Y relative to center of effect picture
+    /// \param effectID ID of effect from lvl_effects.ini
+    /// \param startX X position relative to center of effect picture
+    /// \param startY Y position relative to center of effect picture
+    /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
+    /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
+    /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param gravity Y-gravitation will cause falling of effect picture
+    /// \param phys Additional physical settings
+    ///
+    void launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
     void processEffects(float ticks);
     /*  Effects engine   */
 

@@ -24,6 +24,7 @@
 #include <SDL2/SDL_scancode.h>
 #include <SDL2/SDL_events.h>
 #include <common_features/fader.h>
+#include <common_features/rectf.h>
 #include <script/lua_engine.h>
 
 #include <functional>
@@ -70,6 +71,9 @@ public:
 
     void addRenderFunction(const std::function<void()>& renderFunc);
     void clearRenderFunctions();
+
+    virtual bool isVizibleOnScreen(PGE_RectF &rect);
+    virtual bool isVizibleOnScreen(double x, double y, double w, double h);
 
     bool isExiting();
     bool doShutDown();
