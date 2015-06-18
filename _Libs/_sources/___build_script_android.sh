@@ -158,7 +158,9 @@ buildOgg()
 	export LIBS="-lc "
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtbegin_so.o 'libogg-1.3.2/src'
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtend_so.o 'libogg-1.3.2/src'
-	BuildSrcOnly 'libogg-1.3.2' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
+	BuildCnfOnly 'libogg-1.3.2' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
+	sed  -i 's/-version-info [^ ]\+/-avoid-version /g' src/Makefile
+	BuildMakeOnly
 	cp -a 'libogg-1.3.2/src/.libs/'*.so* $InstallTo"/lib"
 	cp -a 'libogg-1.3.2/src/.libs/'*.a $InstallTo"/lib"
 	mkdir -p $InstallTo"/include/ogg"
@@ -172,7 +174,9 @@ buildVorbis()
 	export LIBS="-lc -lgcc -logg "
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtbegin_so.o 'libvorbis-1.3.4/lib'
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtend_so.o 'libvorbis-1.3.4/lib'
-	BuildSrcOnly 'libvorbis-1.3.4' $CONFIGURE_ARGS'--prefix='$InstallTo' --enable-docs=no CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
+	BuildCnfOnly 'libvorbis-1.3.4' $CONFIGURE_ARGS'--prefix='$InstallTo' --enable-docs=no CFLAGS="-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16"'
+	sed  -i 's/-version-info [^ ]\+/-avoid-version /g' lib/Makefile
+	BuildMakeOnly
 	cp -a 'libvorbis-1.3.4/lib/.libs/'*.so* $InstallTo"/lib"
 	cp -a 'libvorbis-1.3.4/lib/.libs/'*.a $InstallTo"/lib"
 	mkdir -p $InstallTo"/include/vorbis"
@@ -289,7 +293,9 @@ buildMAD()
 	cd ..
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtbegin_so.o 'libmad-0.15.1b'
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtend_so.o 'libmad-0.15.1b'
-	BuildSrcOnly 'libmad-0.15.1b' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
+	BuildCnfOnly 'libmad-0.15.1b' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
+	sed  -i 's/-version-info \\$(version_info)/-avoid-version/g' ./Makefile
+	BuildMakeOnly
 	cp -a 'libmad-0.15.1b/.libs/'*.a* $InstallTo"/lib"
 	cp -a 'libmad-0.15.1b/.libs/'*.so* $InstallTo"/lib"
 	cp -a 'libmad-0.15.1b/'mad.h $InstallTo"/include/"
@@ -324,12 +330,12 @@ buildLuaJit()
 
 #BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
-buildSDL
-buildOgg
-buildVorbis
-buildTremor
+#buildSDL
+#buildOgg
+#buildVorbis
+#buildTremor
 #buildFlac # don't wanna :P
-buildModPlug
+#buildModPlug
 buildMAD
 #buildLuaJit
 
