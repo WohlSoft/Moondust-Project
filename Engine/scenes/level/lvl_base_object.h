@@ -47,6 +47,8 @@ public:
     virtual ~PGE_Phys_Object();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
+    double posCenterX(); //!< Position X
+    double posCenterY(); //!< Position Y
 
     double top();
     double bottom();

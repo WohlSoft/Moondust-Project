@@ -24,12 +24,18 @@ function initProps(thenpc)
     thenpc.npc_obj.y = thenpc.startingY
     thenpc.npc_obj:setSequence(thenpc.animateJump)
     thenpc.animation_flying = true
+
+    thenpc.left_sparks =thenpc.def_sparks;
+    thenpc.next_spark =thenpc.def_sparks_time;
 end
 
 function podoboo:__init(npc_obj)
     self.npc_obj = npc_obj
     -- Config
     self.def_init_posY=self.npc_obj.y
+    self.def_sparks = 5
+    self.def_sparks_time = ticksToTime(5)
+
     self.def_jumpingUpTicks = ticksToTime(30)         -- The ticks where podoboo def_jumpingUpSpeed is beeing forced. (jumping up)
     self.def_idleTicks = ticksToTime(150)             -- The ticks where podoboo is idleing
     self.def_gravity = 0.73              -- The gravity which is used for the podoboo
@@ -55,8 +61,19 @@ function podoboo:onLoop(tickTime)
         -- Play sound
         if((self.soundPlayd==false) and (self.npc_obj.y <= self.def_init_posY+16)) then
                 Audio.playSound(16)
+                Effect.runStaticEffectCentered(13, self.npc_obj.center_x, self.npc_obj.bottom-16)
                 self.soundPlayd=true
         end
+        -- Sparks
+        if(self.left_sparks>=0)then
+                self.next_spark = self.next_spark - tickTime
+                if(self.next_spark<=0) then
+                Effect.runStaticEffectCentered(12, self.npc_obj.center_x, self.npc_obj.bottom)
+                        self.next_spark = self.def_sparks_time
+                        self.left_sparks=self.left_sparks-1
+                end
+        end
+
         if(self.def_jumpingUpTicks > self.cur_jumpingUpTicks)then
             self.npc_obj.speedY = self.def_jumpingUpSpeed
             self.cur_jumpingUpTicks = self.cur_jumpingUpTicks + tickTime
@@ -78,6 +95,7 @@ function podoboo:onLoop(tickTime)
         -- Play sound
         if((self.soundPlayd==false) and (self.npc_obj.y >= self.def_init_posY-16)) then
                 Audio.playSound(16)
+                Effect.runStaticEffectCentered(13, self.npc_obj.center_x, self.npc_obj.bottom)
                 self.soundPlayd=true
         end
 
@@ -94,6 +112,8 @@ function podoboo:onLoop(tickTime)
             self.npc_obj:setSequence(self.animateJump)
             self.animation_flying = true
             self.soundPlayd=false
+            self.left_sparks = self.def_sparks;
+            self.next_spark =  self.def_sparks_time;
             self.cur_mode = AI_JUMPING
         else
             self.cur_idleTicks = self.cur_idleTicks + tickTime
