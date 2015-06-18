@@ -6,6 +6,9 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
 
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
+
 #include <QHash>
 
 /*********************Dummy NPC*************************
@@ -52,10 +55,16 @@ public:
     bool isActivated;
     int timeout;
 
-    //Addition lua functions
+    //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+    //Additional lua functions
+    void lua_setSequenceLeft(luabind::object frames);
+    void lua_setSequenceRight(luabind::object frames);
+    void lua_setSequence(luabind::object frames);
+
+
     inline int getID() { return setup->id; }
     bool isLuaNPC;
 

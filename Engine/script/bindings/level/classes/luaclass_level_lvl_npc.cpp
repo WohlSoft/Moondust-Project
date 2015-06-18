@@ -34,9 +34,17 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
     return
         class_<LVL_Npc, PGE_Phys_Object, detail::null_type, Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
             .def(constructor<>())
+            //Events
             .def("onActivated", &LVL_Npc::lua_onActivated, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onActivated)
             .def("onLoop", &LVL_Npc::lua_onLoop, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onLoop)
             .def("onInit", &LVL_Npc::lua_onInit, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onInit)
+
+            //Functions
+            .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)
+            .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)
+            .def("setSequence", &LVL_Npc::lua_setSequence)
+
+            //Properties
             .property("id", &LVL_Npc::getID);
 
 }
