@@ -73,6 +73,16 @@ double PGE_Phys_Object::posY()
     return posRect.y();
 }
 
+double PGE_Phys_Object::posCenterX()
+{
+    return posRect.center().x();
+}
+
+double PGE_Phys_Object::posCenterY()
+{
+    return posRect.center().y();
+}
+
 double PGE_Phys_Object::top()
 {
     return posY();
