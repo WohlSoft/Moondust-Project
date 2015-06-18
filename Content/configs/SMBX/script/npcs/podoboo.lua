@@ -14,7 +14,8 @@ function initProps(thenpc)
     thenpc.animateJump = {0, 1}
     thenpc.animateFall = {2, 3}
     thenpc.animation_flying = false
-
+    -- Sound
+    thenpc.soundPlayd = false
     -- Currents
     thenpc.cur_jumpingUpTicks = 0          -- The tick counter from 0 to 30 when forcing 
     thenpc.cur_idleTicks = 0               -- The idle timer from 0 to 150
@@ -28,11 +29,12 @@ end
 function podoboo:__init(npc_obj)
     self.npc_obj = npc_obj
     -- Config
+    self.def_init_posY=self.npc_obj.y
     self.def_jumpingUpTicks = ticksToTime(30)         -- The ticks where podoboo def_jumpingUpSpeed is beeing forced. (jumping up)
     self.def_idleTicks = ticksToTime(150)             -- The ticks where podoboo is idleing
     self.def_gravity = 0.73              -- The gravity which is used for the podoboo
     self.def_jumpingUpSpeed = -6         -- The speed when the podoboo is jumping up.
-    self.startingY = self.npc_obj.y+48.0   -- The starting y position, this is needed for detecting, when idleing is needed.
+    self.startingY = self.def_init_posY+48.0   -- The starting y position, this is needed for detecting, when idleing is needed.
     initProps(self)
 end
 
@@ -50,20 +52,33 @@ function podoboo:onLoop(tickTime)
         if(self.cur_jumpingUpTicks <= 0)then
             self.npc_obj.gravity = self.def_gravity
         end
+        -- Play sound
+        if((self.soundPlayd==false) and (self.npc_obj.y <= self.def_init_posY+16)) then
+                Audio.playSound(16)
+                self.soundPlayd=true
+        end
         if(self.def_jumpingUpTicks > self.cur_jumpingUpTicks)then
             self.npc_obj.speedY = self.def_jumpingUpSpeed
             self.cur_jumpingUpTicks = self.cur_jumpingUpTicks + tickTime
             if(self.def_jumpingUpTicks <= self.cur_jumpingUpTicks)then
                 self.cur_mode = AI_FALLING
                 self.cur_jumpingUpTicks = 0
+                self.soundPlayd=false
             end
         end
     elseif(self.cur_mode == AI_FALLING)then
         --Renderer.printText("AI_FALLING", 20, 400)
         self.cur_idleTicks = self.cur_idleTicks + tickTime
+
+        -- Toggle animation when Podoboo do falling
         if((self.animation_flying==true) and (self.npc_obj.speedY >= 0.0)) then
             self.npc_obj:setSequence(self.animateFall)
             self.animation_flying = false
+        end
+        -- Play sound
+        if((self.soundPlayd==false) and (self.npc_obj.y >= self.def_init_posY-16)) then
+                Audio.playSound(16)
+                self.soundPlayd=true
         end
 
         if(self.npc_obj.y > self.startingY)then
@@ -78,6 +93,7 @@ function podoboo:onLoop(tickTime)
             self.cur_idleTicks = 0
             self.npc_obj:setSequence(self.animateJump)
             self.animation_flying = true
+            self.soundPlayd=false
             self.cur_mode = AI_JUMPING
         else
             self.cur_idleTicks = self.cur_idleTicks + tickTime
