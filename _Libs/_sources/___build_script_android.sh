@@ -325,12 +325,12 @@ buildLuaJit()
 #BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
 buildSDL
-#buildOgg
-#buildVorbis
-#buildTremor
+buildOgg
+buildVorbis
+buildTremor
 #buildFlac # don't wanna :P
-#buildModPlug
-#buildMAD
+buildModPlug
+buildMAD
 #buildLuaJit
 
 #Copy header of SDL Mixer into target path
