@@ -216,6 +216,52 @@ AniPos AdvNpcAnimator::wholeImage()
     return AniPos(0, 1);
 }
 
+void AdvNpcAnimator::setSequenceL(QList<int> _frames)
+{
+    frameSequance = true;
+    frames_listL = _frames;
+    frameFirstL = 0;
+    frameLastL = _frames.size()-1;
+}
+
+void AdvNpcAnimator::setSequenceR(QList<int> _frames)
+{
+    frameSequance = true;
+    frames_listR =  _frames;
+    frameFirstR = 0;
+    frameLastR = _frames.size()-1;
+}
+
+void AdvNpcAnimator::setSequence(QList<int> _frames)
+{
+    if(_frames.isEmpty()) return;
+
+    frameSequance = true;
+    switch(frameStyle)
+    {
+    case 2:
+    case 1:
+        frames_listL = _frames;
+        frameFirstL = 0;
+        frameLastL = _frames.size()-1;
+        frames_listR.clear();
+        for(int i=0;i<_frames.size();i++)
+            frames_listR.push_back(_frames[i]+framesQ);
+        frameFirstR = 0;
+        frameLastR = _frames.size()-1;
+        break;
+    case 0:
+    default:
+        frames_listL = _frames;
+        frameFirstL = 0;
+        frameLastL = _frames.size()-1;
+        frames_listR =  _frames;
+        frameFirstR = 0;
+        frameLastR = _frames.size()-1;
+        break;
+    }
+}
+
 void AdvNpcAnimator::setFrameL(int y)
 {
     if(frames.isEmpty()) return;
