@@ -158,6 +158,8 @@ buildOgg()
 	export LIBS="-lc "
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtbegin_so.o 'libogg-1.3.2/src'
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtend_so.o 'libogg-1.3.2/src'
+	sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
+	sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
 	BuildCnfOnly 'libogg-1.3.2' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
 	sed  -i 's/-version-info [^ ]\+/-avoid-version /g' src/Makefile
 	BuildMakeOnly
@@ -266,6 +268,8 @@ buildModPlug()
 	./autogen.sh
 	cd ..
 	#BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
+	sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
+	sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
 	BuildCnfOnly 'libmodplug-0.8.8.5' $CONFIGURE_ARGS' CC='$CC' CXX='$CXX' CXXFLAGS="'$CPPFLAGS' -DHAVE_SETENV=1" CFLAGS='$CFLAGS' LDFLAGS='$LDFLAGS' LIBS='$LIBS' -DHAVE_SETENV=0 --prefix='$InstallTo
     sed -i 's/\/\* #undef HAVE_SETENV \*\//#define HAVE_SETENV  1/g' src/config.h
     sed -i 's/\/\* #undef HAVE_SINF \*\//#define HAVE_SINF  1/g' src/config.h
@@ -293,8 +297,9 @@ buildMAD()
 	cd ..
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtbegin_so.o 'libmad-0.15.1b'
 	ln -s $AN_ROOT/platforms/$ANDR_PLTF/arch-arm/usr/lib/crtend_so.o 'libmad-0.15.1b'
+	sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
+	sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
 	BuildCnfOnly 'libmad-0.15.1b' $CONFIGURE_ARGS'--prefix='$InstallTo' CFLAGS=-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16'
-	sed  -i 's/-version-info \\$(version_info)/-avoid-version/g' ./Makefile
 	BuildMakeOnly
 	cp -a 'libmad-0.15.1b/.libs/'*.a* $InstallTo"/lib"
 	cp -a 'libmad-0.15.1b/.libs/'*.so* $InstallTo"/lib"
@@ -330,12 +335,12 @@ buildLuaJit()
 
 #BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
-#buildSDL
-#buildOgg
-#buildVorbis
-#buildTremor
+buildSDL
+buildOgg
+buildVorbis
+buildTremor
 #buildFlac # don't wanna :P
-#buildModPlug
+buildModPlug
 buildMAD
 #buildLuaJit
 
