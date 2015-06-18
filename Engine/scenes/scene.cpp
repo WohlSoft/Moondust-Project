@@ -191,6 +191,18 @@ void Scene::clearRenderFunctions()
     renderFunctions.clear();
 }
 
+bool Scene::isVizibleOnScreen(PGE_RectF &rect)
+{
+    PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
+    return screen.collideRect(rect);
+}
+
+bool Scene::isVizibleOnScreen(double x, double y, double w, double h)
+{
+    PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
+    return screen.collideRect(x, y, w, h);
+}
+
 bool Scene::isExiting()
 {
     return doExit;

@@ -273,3 +273,27 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct)
     cur_section->playMusic();//Play current section music
     cur_section->initBG();   //Init background if not initialized
 }
+
+
+
+bool LevelScene::isVizibleOnScreen(PGE_RectF &rect)
+{
+    PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
+    for(LevelScene::LVL_CameraList::iterator it=LvlSceneP::s->cameras.begin();it!=LvlSceneP::s->cameras.end();it++)
+    {
+        screen.setPos((*it).posX(), (*it).posY());
+        if(screen.collideRect(rect)) return true;
+    }
+    return false;
+}
+
+bool LevelScene::isVizibleOnScreen(double x, double y, double w, double h)
+{
+    PGE_RectF screen(0, 0, PGE_Window::Width, PGE_Window::Height);
+    for(LevelScene::LVL_CameraList::iterator it=LvlSceneP::s->cameras.begin();it!=LvlSceneP::s->cameras.end();it++)
+    {
+        screen.setPos((*it).posX(), (*it).posY());
+        if(screen.collideRect(x, y, w, h)) return true;
+    }
+    return false;
+}
