@@ -38,8 +38,6 @@ void Scene::launchStaticEffectC(long effectID, float startX, float startY, int a
     {
         _effect.texture = ConfigManager::level_textures[tID];
     }
-    _effect.posRect.setX(startX-_effect.texture.w/2);
-    _effect.posRect.setY(startY-_effect.texture.h/2);
     _effect.m_velocityX = velocityX;
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
@@ -52,28 +50,31 @@ void Scene::launchStaticEffectC(long effectID, float startX, float startY, int a
     int frameE=-1;
     int frms=0;
     frms=_effect.setup->frames;
+
     switch(_effect.frameStyle)
     {
     case 0:
+        frms=_effect.setup->frames;
         frame1=0;
         frameE=-1;
-        frms=_effect.setup->frames;
         break;
     case 1:
         frms=_effect.setup->frames*2;
-        frame1= direction<0 ? 0 : _effect.setup->frames-1;
-        frameE= direction<0 ? _effect.setup->frames : -1;
+        frame1= _effect.direction<0? 0 : _effect.setup->frames  -1;
+        frameE= _effect.direction<0 ?    _effect.setup->frames: -1;
         break;
     case 2:
         frms=_effect.setup->frames*4;
-        frame1= direction<0 ? 0 : _effect.setup->frames-1;
-        frameE= direction<0 ? _effect.setup->frames : (_effect.setup->frames*2)-1;
+        frame1= _effect.direction<0 ? 0 : (int)(frms-(_effect.setup->frames)*3)-1;
+        frameE= _effect.direction<0 ?     (int)(frms-(_effect.setup->frames)*3) : (frms/2)-1;
         break;
     case 3:
         break;
     default: break;
     }
-    _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
+    _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);
+    _effect.posRect.setSize(_effect.texture.w, _effect.texture.h/frms);
+    _effect.posRect.setPos(startX-_effect.posRect.width()/2, startY-_effect.posRect.height()/2);
 
     if(delay>0)
     {
@@ -109,8 +110,6 @@ void Scene::launchStaticEffect(long effectID, float startX, float startY, int an
     {
         _effect.texture = ConfigManager::level_textures[tID];
     }
-    _effect.posRect.setX(startX);
-    _effect.posRect.setY(startY);
     _effect.m_velocityX = velocityX;
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
@@ -123,28 +122,31 @@ void Scene::launchStaticEffect(long effectID, float startX, float startY, int an
     int frameE=-1;
     int frms=0;
     frms=_effect.setup->frames;
+
     switch(_effect.frameStyle)
     {
     case 0:
+        frms=_effect.setup->frames;
         frame1=0;
         frameE=-1;
-        frms=_effect.setup->frames;
         break;
     case 1:
         frms=_effect.setup->frames*2;
-        frame1= direction<0 ? 0 : _effect.setup->frames-1;
-        frameE= direction<0 ? _effect.setup->frames : -1;
+        frame1= _effect.direction<0? 0 : _effect.setup->frames  -1;
+        frameE= _effect.direction<0 ?    _effect.setup->frames: -1;
         break;
     case 2:
         frms=_effect.setup->frames*4;
-        frame1= direction<0 ? 0 : _effect.setup->frames-1;
-        frameE= direction<0 ? _effect.setup->frames : (_effect.setup->frames*2)-1;
+        frame1= _effect.direction<0 ? 0 : (int)(frms-(_effect.setup->frames)*3)-1;
+        frameE= _effect.direction<0 ?     (int)(frms-(_effect.setup->frames)*3) : (frms/2)-1;
         break;
     case 3:
         break;
     default: break;
     }
-    _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
+    _effect.animator.construct(true, frms, _effect.setup->framespeed, frame1, frameE);
+    _effect.posRect.setSize(_effect.texture.w, _effect.texture.h/frms);
+    _effect.posRect.setPos(startX, startY);
 
     if(delay>0)
     {
@@ -225,9 +227,7 @@ Scene_Effect::~Scene_Effect()
 {}
 
 void Scene_Effect::init()
-{
-    posRect.setSize(texture.w, texture.h);
-}
+{}
 
 float Scene_Effect::posX()
 {

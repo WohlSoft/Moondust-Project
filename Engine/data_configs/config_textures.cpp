@@ -289,7 +289,7 @@ long ConfigManager::getEffectTexture(long effectID)
                                /double(effSetup->frames));
 
             //store animated texture value back
-            level_textures[id].h = effSetup->frame_h;
+            //level_textures[id].h = effSetup->frame_h;
 
             SimpleAnimator animator(
                             true,

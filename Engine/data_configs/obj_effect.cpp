@@ -89,7 +89,7 @@ bool ConfigManager::loadLevelEffects()
             }
             seffect.frames = effectset.value("frames", "1").toInt();
             seffect.animated = (seffect.frames>1);
-            seffect.framestyle = effectset.value("frame-style", "125").toInt();
+            seffect.framestyle = effectset.value("frame-style", "0").toInt();
             seffect.framespeed = effectset.value("frame-speed", "125").toInt();
 
             seffect.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
