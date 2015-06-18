@@ -306,6 +306,7 @@ void AdvNpcAnimator::stop()
 
 void AdvNpcAnimator::manualTick(int ticks)
 {
+    if(!isEnabled) return;
     if(frameSpeed<1) return; //Idling animation
 
     manual_ticks-=abs(ticks);
