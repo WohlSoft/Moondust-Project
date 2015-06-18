@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>cat_glasses.hqx</file>
         <file>cat_glasses.icns</file>
         <file>cat_glasses.ico</file>
     </qresource>

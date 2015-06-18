@@ -724,8 +724,7 @@ OTHER_FILES += \
     images/warp_exit.png \
     images/world.png \
     images/world16.png \
-    _resources/mushroom.icns \
-    _resources/mushroom.hqx
+    _resources/mushroom.icns
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \
