@@ -57,6 +57,7 @@ android:{
     themes.path = /assets/themes
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
+    PRE_TARGETDEPS += $$PWD/../_Libs/_builds/android/lib/*.so*
 }
 
 
