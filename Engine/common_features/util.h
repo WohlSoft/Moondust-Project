@@ -29,6 +29,12 @@
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
+#ifdef Q_CC_GNU
+#define gcc_force_inline __attribute__((always_inline, gnu_inline))
+#else
+#define gcc_force_inline
+#endif
+
 class util
 {
 public:
@@ -59,7 +65,7 @@ namespace varadic_util
 
 namespace luabind_utils {
     template<typename T>
-    static inline QList<T> convArrayTo(luabind::object& obj){
+    static inline gcc_force_inline QList<T> convArrayTo(luabind::object& obj){
         QList<T> container;
         for (luabind::iterator it(obj), end; it != end; ++it)
         {
