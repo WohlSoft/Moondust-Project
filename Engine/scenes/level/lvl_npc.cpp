@@ -243,6 +243,36 @@ void LVL_Npc::deActivate()
     animator.stop();
 }
 
+void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequenceLeft exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequenceL(luabind_utils::convArrayTo<int>(frames));
+}
+
+void LVL_Npc::lua_setSequenceRight(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequenceRight exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequenceR(luabind_utils::convArrayTo<int>(frames));
+}
+
+void LVL_Npc::lua_setSequence(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequence exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequence(luabind_utils::convArrayTo<int>(frames));
+}
+
 bool LVL_Npc::isInited()
 {
     return _isInited;

@@ -26,6 +26,9 @@
 #include <QListWidget>
 #include <qtablewidget.h>
 
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
+
 class util
 {
 public:
@@ -50,6 +53,22 @@ namespace varadic_util
     struct gens<0, S...> {
         typedef seq<S...> type;
     };
+}
+
+
+
+namespace luabind_utils {
+    template<typename T>
+    static inline QList<T> convArrayTo(luabind::object& obj){
+        QList<T> container;
+        for (luabind::iterator it(obj), end; it != end; ++it)
+        {
+            try{
+                container << luabind::object_cast<T>(*it);
+            } catch (luabind::cast_failed& e) { }
+        }
+        return container;
+    }
 }
 
 #endif // UTIL_H
