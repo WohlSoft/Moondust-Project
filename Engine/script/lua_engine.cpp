@@ -5,6 +5,7 @@
 #include "lua_global.h"
 
 //Core libraries:
+#include "bindings/core/globalfuncs/luafuncs_core_audio.h"
 #include "bindings/core/globalfuncs/luafuncs_core_logger.h"
 #include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
 #include "bindings/core/globalfuncs/luafuncs_core_settings.h"
@@ -241,11 +242,15 @@ void LuaEngine::bindCore()
     luabind::module(L)[
         LuaEvent::bindToLua(),
         Binding_Core_GlobalFuncs_Logger::bindToLua(),
-        Binding_Core_GlobalFuncs_Settings::bindToLua()
+        Binding_Core_GlobalFuncs_Settings::bindToLua(),
+        Binding_Core_GlobalFuncs_Audio::bindToLua()
     ];
     if(m_baseScene){
         luabind::module(L)[Binding_Core_GlobalFuncs_Renderer::bindToLua()];
     }
+
+    //Bind constants
+    Binding_Core_GlobalFuncs_Audio::bindConstants(L);
 }
 
 void LuaEngine::error()

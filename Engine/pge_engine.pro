@@ -190,7 +190,8 @@ SOURCES += \
     scenes/level/lvl_base_object.cpp \
     script/bindings/level/classes/luaclass_level_lvl_player.cpp \
     script/bindings/level/classes/luaclass_level_physobj.cpp \
-    script/bindings/level/classes/luaclass_level_lvl_npc.cpp
+    script/bindings/level/classes/luaclass_level_lvl_npc.cpp \
+    script/bindings/core/globalfuncs/luafuncs_core_audio.cpp
 
 
 HEADERS  += \
@@ -311,7 +312,8 @@ HEADERS  += \
     scenes/level/lvl_base_object.h \
     script/bindings/level/classes/luaclass_level_lvl_player.h \
     script/bindings/level/classes/luaclass_level_physobj.h \
-    script/bindings/level/classes/luaclass_level_lvl_npc.h
+    script/bindings/level/classes/luaclass_level_lvl_npc.h \
+    script/bindings/core/globalfuncs/luafuncs_core_audio.h
 
 FORMS    += \
     data_configs/select_config.ui
