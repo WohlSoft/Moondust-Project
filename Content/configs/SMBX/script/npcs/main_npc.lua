@@ -20,6 +20,13 @@ function luaNPC:onInit()
     BaseNPC.onInit(self)
 end
 
+function luaNPC:onActivated()
+    if(not self.isInvalid and self.controller)then
+        self.controller:onActivated()
+    end
+    BaseNPC.onActivated(self)
+end
+
 function luaNPC:onLoop(tickTime)
     if(not self.isInvalid and self.controller)then
         self.controller:onLoop(tickTime)
