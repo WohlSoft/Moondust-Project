@@ -22,6 +22,50 @@
 #include <gui/pge_msgbox.h>
 
 #include "../scene_level.h"
+#include "lvl_scene_ptr.h"
+#include "lvl_camera.h"
+
+
+void LevelScene::launchStaticEffectC(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys)
+{
+    Scene_Effect _effect;
+    if(ConfigManager::lvl_effects_indexes.contains(effectID))
+        _effect.setup = &ConfigManager::lvl_effects_indexes[effectID];
+    else
+    {
+        PGE_MsgBox oops(this, QString("Can't launch effect %1").arg(effectID), PGE_MsgBox::msg_error);
+        oops.exec();
+        return;
+    }
+
+    long tID = ConfigManager::getEffectTexture(effectID);
+    if( tID >= 0 )
+    {
+        _effect.texture = ConfigManager::level_textures[tID];
+    }
+    _effect.m_posX = startX-_effect.texture.w/2;
+    _effect.m_posY = startY-_effect.texture.h/2;
+    _effect.m_velocityX = velocityX;
+    _effect.m_velocityY = velocityY;
+    _effect.phys_setup=phys;
+    _effect.gravity = gravity;
+    _effect.animated=_effect.setup->animated;
+    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, 0, -1);
+
+    if(delay>0)
+    {
+        _effect._limit_delay=true;
+        _effect._delay=delay;
+    }
+
+    if(animationLoops>0)
+    {
+        _effect.animator.setOnceMode(true, animationLoops);
+    }
+
+    _effect.init();
+    WorkingEffects.push_back(_effect);
+}
 
 
 
