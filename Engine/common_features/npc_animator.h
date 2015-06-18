@@ -40,6 +40,10 @@ public:
     AniPos image(int dir, int frame=-1);
     AniPos wholeImage();
 
+    void setSequenceL(QList<int> _frames);
+    void setSequenceR(QList<int> _frames);
+    void setSequence(QList<int> _frames);
+
     void setFrameL(int y);
     void setFrameR(int y);
 
