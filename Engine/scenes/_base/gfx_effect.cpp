@@ -51,21 +51,26 @@ void Scene::launchStaticEffectC(long effectID, float startX, float startY, int a
     int frame1=0;
     int frameE=-1;
     int frms=0;
+    frms=_effect.setup->frames;
     switch(_effect.frameStyle)
     {
-    case 0: break;
+    case 0:
         frame1=0;
         frameE=-1;
         frms=_effect.setup->frames;
-    case 1: break;
+        break;
+    case 1:
         frms=_effect.setup->frames*2;
-        frame1= direction<0 ? 0 : _effect.setup->frames;
-        frameE= direction<0 ? _effect.setup->frames-1 : -1;
-    case 2: break;
+        frame1= direction<0 ? 0 : _effect.setup->frames-1;
+        frameE= direction<0 ? _effect.setup->frames : -1;
+        break;
+    case 2:
         frms=_effect.setup->frames*4;
-        frame1= direction<0 ? 0 : _effect.setup->frames;
-        frameE= direction<0 ? _effect.setup->frames-1 : (_effect.setup->frames*2)-1;
-    case 3: break;
+        frame1= direction<0 ? 0 : _effect.setup->frames-1;
+        frameE= direction<0 ? _effect.setup->frames : (_effect.setup->frames*2)-1;
+        break;
+    case 3:
+        break;
     default: break;
     }
     _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
@@ -117,24 +122,29 @@ void Scene::launchStaticEffect(long effectID, float startX, float startY, int an
     int frame1=0;
     int frameE=-1;
     int frms=0;
+    frms=_effect.setup->frames;
     switch(_effect.frameStyle)
     {
-    case 0: break;
+    case 0:
         frame1=0;
         frameE=-1;
         frms=_effect.setup->frames;
-    case 1: break;
+        break;
+    case 1:
         frms=_effect.setup->frames*2;
-        frame1= direction<0 ? 0 : _effect.setup->frames;
-        frameE= direction<0 ? _effect.setup->frames-1 : -1;
-    case 2: break;
+        frame1= direction<0 ? 0 : _effect.setup->frames-1;
+        frameE= direction<0 ? _effect.setup->frames : -1;
+        break;
+    case 2:
         frms=_effect.setup->frames*4;
-        frame1= direction<0 ? 0 : _effect.setup->frames;
-        frameE= direction<0 ? _effect.setup->frames-1 : (_effect.setup->frames*2)-1;
-    case 3: break;
+        frame1= direction<0 ? 0 : _effect.setup->frames-1;
+        frameE= direction<0 ? _effect.setup->frames : (_effect.setup->frames*2)-1;
+        break;
+    case 3:
+        break;
     default: break;
     }
-    _effect.animator.construct(_effect.setup->animated, _effect.setup->frames, _effect.setup->framespeed, frame1, frameE);
+    _effect.animator.construct(_effect.setup->animated, frms, _effect.setup->framespeed, frame1, frameE);
 
     if(delay>0)
     {
