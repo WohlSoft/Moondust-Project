@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
+CONFIG -= app_bundle
 SUBDIRS = PGEServerAPI SDL2MixerModded OOLua LuaBind
 
 PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
