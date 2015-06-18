@@ -57,7 +57,14 @@ android:{
     themes.path = /assets/themes
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
-    PRE_TARGETDEPS += $$PWD/../_Libs/_builds/android/lib/*.so*
+    ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
+                          $$PWD/../_Libs/_builds/android/lib/libogg.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmad.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 
 
