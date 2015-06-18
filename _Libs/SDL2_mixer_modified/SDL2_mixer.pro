@@ -53,7 +53,7 @@ USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES SPC_M
 DEFINES += MODPLUG_MUSIC
 
 android: {
-DEFINES += OGG_USE_TREMOR HAVE_STRCASECMP HAVE_STRNCASECMP
+DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP #OGG_USE_TREMOR
 DEFINES -= FLAC_MUSIC #temopary with no FLAC, because I wasn't built it because compilation bug
 }
 
@@ -72,7 +72,7 @@ LIBS += -L../_builds/sdl2_mixer_mod
         LIBS += -lvorbisfile -lvorbis -lmodplug -lFLAC -logg
     }
 } else {
-    LIBS += -lvorbisfile -lvorbis -lvorbisidec -lmodplug -logg
+    LIBS += -lvorbisfile -lvorbis -lmodplug -logg #-lvorbisidec
 }
 
 LIBS += -lmad -lm
