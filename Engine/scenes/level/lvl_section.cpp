@@ -92,6 +92,8 @@ void LVL_Section::playMusic()
         PGE_MusPlayer::MUS_openFile(musFile);
         PGE_MusPlayer::MUS_playMusic();
     }
+    else
+        PGE_MusPlayer::MUS_stopMusic();
 }
 
 void LVL_Section::resetMusic()

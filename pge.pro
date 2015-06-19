@@ -1,3 +1,4 @@
+
 TEMPLATE = subdirs
 SUBDIRS = DependentLibs \
     Editor \
@@ -30,7 +31,7 @@ calibrator_cnfs.files  = Content/calibrator/*
 INSTALLS += configs helps themes calibrator_cnfs
 
 android:{
-SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager DependentLibs
+SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager
 INSTALLS -= configs helps themes calibrator_cnfs
 }
 

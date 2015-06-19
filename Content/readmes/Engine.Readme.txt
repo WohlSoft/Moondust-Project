@@ -44,15 +44,21 @@ A - (alt-jump) (Temporary, fly up, use it to get inaccessible heights without vi
 S - (alt-run) (Temporary, tail-whipping to destroy any blocks over face,
     S+UP - destroy blocks over head,
     S+Down - destroy blocks under self)
-
+==============================================
+Engine reserved keys and key combinations
+==============================================
 Ctrl+F - Toggle fullscreen mode
 
-F2 - enable/disable drawing a debug rectangles of physical engine (render hitboxes)
+F2 - enable/disable drawing a debug rectangles of physical engine (render all hitboxes)
 F3 - enable/disable printing of debug information
-F5 - pause/resume physical loopsteps. (with stopped physics you can make
-     mega-boosted run while you holds arrow+"run" keys)
+F5 - pause/resume physical loopsteps. Used while collisions are debugged
+F6 - enable slow mode of physical loopsteps. Everything will go slow. Used while collisions are debugged.
+
 F12 - take screenshot (will be saved in the 'screenshots' folder which will be in PGE folder or in the %UserProfile%\.PGE_Project).
 Screenshots will be written into PNG format and will have timedate based filename.
+
+1, 2, 3, 4, 5 degits keys - spawn something effect (made temporary while effects system are debugged)
+7, 8, 9, 0 - toggle character and it's state: 7 - Small Peach, 8 - Raccoon Peach, 9 - Small Mario, 0 - Raccoon Mario
 
 i - disable/enable walkable zone limit on the world map (you will have able to walk anywhere)
 

@@ -22,15 +22,21 @@
 #include <main_window/global_settings.h>
 #include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/lvl_item_toolbox.h>
-
 #include <main_window/dock/wld_settings_box.h>
+#include <common_features/bool_reseter.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
 {
+    if(_is_reloading) return;
+    _is_reloading=true;
+    BoolReseter rst(&_is_reloading);
+    Q_UNUSED(rst);
+
     QString filePath;
     QRect wnGeom;
 

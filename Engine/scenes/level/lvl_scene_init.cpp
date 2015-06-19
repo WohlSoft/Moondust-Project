@@ -248,6 +248,15 @@ bool LevelScene::init()
     luaEngine.init();
 
 
+    for(QMap<long, obj_npc>::const_iterator it = ConfigManager::lvl_npc_indexes.cbegin(); it != ConfigManager::lvl_npc_indexes.cend(); ++it){
+        QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile((*it).algorithm_script);
+        if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
+        {
+            luaEngine.loadNPCClass((*it).id, scriptPath);
+        }
+    }
+
+
     qDebug()<<"Build sections";
     for(int i=0;i<data.sections.size();i++)
     {
@@ -401,6 +410,7 @@ bool LevelScene::init()
             if(!isLevelContinues) return false;//!< quit from game if window was closed
             PlayerPoint startPoint = getStartLocation(i);
             startPoint.id=i;
+
             //Don't place player if point is null!
             if(startPoint.w==0 && startPoint.h==0) continue;
 
@@ -412,17 +422,6 @@ bool LevelScene::init()
     {
         qDebug()<<"No defined players!";
         return false;
-    }
-
-    //Build switch blocks structure
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->setup->switch_Block)
-        {
-            if(!switch_blocks.contains(blocks[i]->setup->switch_ID) )
-                switch_blocks[blocks[i]->setup->switch_ID].clear();
-            switch_blocks[blocks[i]->setup->switch_ID].push_back(blocks[i]);
-        }
     }
 
     stopLoaderAnimation();

@@ -40,13 +40,44 @@ Animate::Animate(QWidget *parent) :
     aniStyle = "Idle";
     aniDir = 1; //0 - left, 1 - right
 
+    foreach(AniFrameSet frms, AniFrames.set)
+        ui->animationsList->addItem(frms.name);
+    QList<QListWidgetItem*> items=ui->animationsList->findItems("*", Qt::MatchWildcard);
+    if(!items.isEmpty())
+        items.first()->setSelected(true);
+
     AniScene->setAnimation(AniFrames.set[0].R);
 }
 
 Animate::~Animate()
 {
+      int j = ui->animationsList->count() - 1;
+      for(; j>=0; j--) {
+        QListWidgetItem *it = ui->animationsList->item(j);
+            delete it;
+      }
     delete ui;
 }
+
+void Animate::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+    case Qt::Key_Left:
+        on_directLeft_clicked();
+        ui->directLeft->setChecked(true);
+        break;
+    case Qt::Key_Right:
+        on_directRight_clicked();
+        ui->directRight->setChecked(true);
+        break;
+    default:
+        break;
+    }
+
+    QDialog::keyPressEvent(e);
+}
+
 
 void Animate::aniFindSet()
 {
@@ -76,229 +107,6 @@ void Animate::on_EditAnimationBtn_clicked()
     aniFindSet();
 }
 
-
-///////////////////////////////////////////////////////////////////////////
-//AnimateSwitches
-/*
-getSpriteAniData(conf, "Idle");
-getSpriteAniData(conf, "Run");
-getSpriteAniData(conf, "JumpFloat");
-getSpriteAniData(conf, "SpinJump");
-getSpriteAniData(conf, "Sliding");
-getSpriteAniData(conf, "Climbing");
-getSpriteAniData(conf, "Fire");
-getSpriteAniData(conf, "SitDown");
-getSpriteAniData(conf, "Dig");
-getSpriteAniData(conf, "GrabRun");
-getSpriteAniData(conf, "GrabJump");
-getSpriteAniData(conf, "GrabSitDown");
-getSpriteAniData(conf, "RacoonRun");
-getSpriteAniData(conf, "RacoonFloat");
-getSpriteAniData(conf, "RacoonFly");
-getSpriteAniData(conf, "RacoonTail");
-getSpriteAniData(conf, "Swim");
-getSpriteAniData(conf, "TanookiStatue");
-
-getSpriteAniData(conf, "OnYoshi");
-getSpriteAniData(conf, "OnYoshiSit");
-getSpriteAniData(conf, "PipeUpDown");
-getSpriteAniData(conf, "SlopeSlide");
-
-getSpriteAniData(conf, "SwordAttak");
-getSpriteAniData(conf, "JumpSwordUp");
-getSpriteAniData(conf, "JumpSwordDown");
-getSpriteAniData(conf, "DownSwordAttak");
-getSpriteAniData(conf, "Hurted");
-*/
-void Animate::on_Idle_clicked()
-{
-    aniStyle="Idle";
-    aniFindSet();
-}
-
-
-void Animate::on_Run_clicked()
-{
-    aniStyle="Run";
-    aniFindSet();
-}
-
-void Animate::on_Jump_clicked()
-{
-    aniStyle="JumpFloat";
-    aniFindSet();
-}
-
-void Animate::on_fall_clicked()
-{
-    aniStyle="JumpFall";
-    aniFindSet();
-}
-
-void Animate::on_Spin_clicked()
-{
-    aniStyle="SpinJump";
-    aniFindSet();
-}
-
-void Animate::on_Sliding_clicked()
-{
-    aniStyle="Sliding";
-    aniFindSet();
-}
-
-void Animate::on_Climbing_clicked()
-{
-    aniStyle="Climbing";
-    aniFindSet();
-}
-
-void Animate::on_Fire_clicked()
-{
-    aniStyle="Fire";
-    aniFindSet();
-}
-
-void Animate::on_SitDown_clicked()
-{
-    aniStyle="SitDown";
-    aniFindSet();
-}
-
-void Animate::on_Dig_clicked()
-{
-    aniStyle="Dig";
-    aniFindSet();
-}
-
-void Animate::on_GrabIdle_clicked()
-{
-    aniStyle="GrabIdle";
-    aniFindSet();
-}
-
-void Animate::on_GrabRun_clicked()
-{
-    aniStyle="GrabRun";
-    aniFindSet();
-}
-
-void Animate::on_GrabJump_clicked()
-{
-    aniStyle="GrabJump";
-    aniFindSet();
-}
-
-void Animate::on_GrabSit_clicked()
-{
-    aniStyle="GrabSitDown";
-    aniFindSet();
-}
-
-void Animate::on_RacoonRun_clicked()
-{
-    aniStyle="RacoonRun";
-    aniFindSet();
-}
-
-void Animate::on_RacoonFloat_clicked()
-{
-    aniStyle="RacoonFloat";
-    aniFindSet();
-}
-
-void Animate::on_RacoonFly_clicked()
-{
-    aniStyle="RacoonFly";
-    aniFindSet();
-}
-
-void Animate::on_RacoonTail_clicked()
-{
-    aniStyle="RacoonTail";
-    aniFindSet();
-}
-
-void Animate::on_Swim_clicked()
-{
-    aniStyle="Swim";
-    aniFindSet();
-}
-
-void Animate::on_SwimUp_clicked()
-{
-    aniStyle="SwimUp";
-    aniFindSet();
-}
-
-void Animate::on_TanookiStatue_clicked()
-{
-    aniStyle="TanookiStatue";
-    aniFindSet();
-}
-
-void Animate::on_RideOnYoshi_clicked()
-{
-    aniStyle="OnYoshi";
-    aniFindSet();
-}
-
-void Animate::on_RideOnYoshiSit_clicked()
-{
-    aniStyle="OnYoshiSit";
-    aniFindSet();
-}
-
-void Animate::on_PipeUpDown_clicked()
-{
-    aniStyle="PipeUpDown";
-    aniFindSet();
-}
-
-void Animate::on_PipeUpDownRear_clicked()
-{
-    aniStyle="PipeUpDownRear";
-    aniFindSet();
-}
-
-
-void Animate::on_SlopeSlide_clicked()
-{
-    aniStyle="SlopeSlide";
-    aniFindSet();
-}
-
-
-void Animate::on_SwordAttak_clicked()
-{
-    aniStyle="SwordAttak";
-    aniFindSet();
-}
-
-void Animate::on_JumpSwordUp_clicked()
-{
-    aniStyle="JumpSwordUp";
-    aniFindSet();
-}
-
-void Animate::on_JumpSwordDown_clicked()
-{
-    aniStyle="JumpSwordDown";
-    aniFindSet();
-}
-
-void Animate::on_DownSword_clicked()
-{
-    aniStyle="DownSwordAttak";
-    aniFindSet();
-}
-
-void Animate::on_Hurted_clicked()
-{
-    aniStyle="Hurted";
-    aniFindSet();
-}
-
 //Set Direction
 void Animate::on_directLeft_clicked()
 {
@@ -317,3 +125,9 @@ void Animate::on_FrameSpeed_valueChanged(int arg1)
     AniScene->timer.setInterval(arg1);
 }
 
+void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
+{
+    if(!item) return;
+    aniStyle=item->text();
+    aniFindSet();
+}

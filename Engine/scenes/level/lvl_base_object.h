@@ -26,7 +26,7 @@ struct PGE_Phys_Object_Phys
 {
     PGE_Phys_Object_Phys();
     float min_vel_x;
-    float mix_vel_y;
+    float min_vel_y;
     float max_vel_x;
     float max_vel_y;
     float decelerate_x;
@@ -47,6 +47,8 @@ public:
     virtual ~PGE_Phys_Object();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
+    double posCenterX(); //!< Position X
+    double posCenterY(); //!< Position Y
 
     double top();
     double bottom();
@@ -78,7 +80,9 @@ public:
     virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
-    float timeStep;
+    static const float _smbxTickTime;
+    static float SMBXTicksToTime(float ticks);
+
     PGE_Phys_Object_Phys phys_setup;
     PGE_RectF posRect;
     double _accelX;

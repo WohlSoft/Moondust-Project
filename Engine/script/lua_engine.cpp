@@ -5,6 +5,8 @@
 #include "lua_global.h"
 
 //Core libraries:
+#include "bindings/core/globalfuncs/luafuncs_core_audio.h"
+#include "bindings/core/globalfuncs/luafuncs_core_effect.h"
 #include "bindings/core/globalfuncs/luafuncs_core_logger.h"
 #include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
 #include "bindings/core/globalfuncs/luafuncs_core_settings.h"
@@ -103,6 +105,7 @@ void LuaEngine::init()
     QFile luaCoreFile(coreFilePath);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
         qWarning() << "Failed to load up \"" << coreFilePath << "\"! Wrong path or insufficient access?";
+        m_lateShutdown = true;
         shutdown();
         return;
     }
@@ -116,6 +119,7 @@ void LuaEngine::init()
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+        m_lateShutdown = true;
         shutdown();
         return;
     }
@@ -166,7 +170,7 @@ luabind::object LuaEngine::loadClassAPI(const QString &path)
     if(errorCode){
         qWarning() << "Got lua error, reporting...";
         m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
-        shutdown();
+        m_lateShutdown = true;
         return luabind::object();
     }
 
@@ -239,11 +243,18 @@ void LuaEngine::bindCore()
     luabind::module(L)[
         LuaEvent::bindToLua(),
         Binding_Core_GlobalFuncs_Logger::bindToLua(),
-        Binding_Core_GlobalFuncs_Settings::bindToLua()
+        Binding_Core_GlobalFuncs_Settings::bindToLua(),
+        Binding_Core_GlobalFuncs_Audio::bindToLua()
     ];
     if(m_baseScene){
-        luabind::module(L)[Binding_Core_GlobalFuncs_Renderer::bindToLua()];
+        luabind::module(L)[
+            Binding_Core_GlobalFuncs_Renderer::bindToLua(),
+            Binding_Core_GlobalFuncs_Effect::bindToLua()
+        ];
     }
+
+    //Bind constants
+    Binding_Core_GlobalFuncs_Audio::bindConstants(L);
 }
 
 void LuaEngine::error()
@@ -259,6 +270,13 @@ bool LuaEngine::shouldShutdown() const
 void LuaEngine::setLateShutdown(bool value)
 {
     m_lateShutdown = value;
+}
+
+void LuaEngine::postLateShutdownError(luabind::error &error)
+{
+    QString runtimeErrorMsg = error.what();
+    m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
+    m_lateShutdown = true;
 }
 
 QString LuaEngine::getLuaScriptPath() const
@@ -287,7 +305,9 @@ int pcall_handler(lua_State *L)
 
     int level = 1;
     lua_Debug d;
+    bool gotInfoStacktrace = false;
     while(lua_getstack(L, level, &d)){
+        gotInfoStacktrace = true;
         lua_getinfo(L, "Sln", &d);
         if(level == 1){
             std::string err = lua_tostring(L, -1);
@@ -323,7 +343,15 @@ int pcall_handler(lua_State *L)
 
         level++;
     }
-    msg.erase(msg.end()-1, msg.end());
+
+    if(msg.size() > 0)
+        msg.erase(msg.end()-1, msg.end());
+
+    if(!gotInfoStacktrace){
+        if(lua_gettop(L) > 0)
+            if(lua_type(L, -1) == LUA_TSTRING)
+                msg = lua_tostring(L, -1);
+    }
 
     lua_pushstring(L, msg.c_str());
     return 1;

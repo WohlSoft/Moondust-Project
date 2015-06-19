@@ -37,9 +37,7 @@ struct obj_npc
     QString mask_n;
     QPixmap image;
     QPixmap mask;
-    int algorithm;              //    algorithm="0"	;NPC's alhoritm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
-    QString algorithm_script;   //    ;If algorithm = 0, will using basic parametric alhorythm.
-                                //    ;Else, get alhorythm from list
+    QString algorithm_script;   //    ; Filename of the lua algorithm
     unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC
 

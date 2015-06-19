@@ -28,6 +28,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
     {
         QStringList filesForRemove;
         LevelEdit * box = activeLvlEditWin();
+        if(!box) return;
         if(!box->sceneCreated) return;
         if(box->isUntitled)
         {

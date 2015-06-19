@@ -59,9 +59,9 @@
 
 #include <QMessageBox>
 
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
-using namespace std;
-
 
 LevelScene* lScene;
 enum Level_returnTo
@@ -89,11 +89,9 @@ struct cmdArgs
 
 int main(int argc, char *argv[])
 {
-
+    srand( std::time(NULL) );
     QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
-
     QApplication a(argc, argv);
-
 
     ///Generating application path
 

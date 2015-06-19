@@ -30,17 +30,11 @@
 
 void LevelScene::placeBlock(LevelBlock blockData)
 {
+    if(!ConfigManager::lvl_block_indexes.contains(blockData.id))
+        return;
+
     LVL_Block * block;
     block = new LVL_Block();
-    if(ConfigManager::lvl_block_indexes.contains(blockData.id))
-        block->setup = &ConfigManager::lvl_block_indexes[blockData.id];
-    else
-    {
-        //Wrong block!
-        delete block;
-        return;
-    }
-
     block->data = blockData;
     block->init();
     blocks.push_back(block);
@@ -54,17 +48,11 @@ void LevelScene::placeBlock(LevelBlock blockData)
 
 void LevelScene::placeBGO(LevelBGO bgoData)
 {
+    if(!ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
+        return;
+
     LVL_Bgo * bgo;
     bgo = new LVL_Bgo();
-    if(ConfigManager::lvl_bgo_indexes.contains(bgoData.id))
-        bgo->setup = &ConfigManager::lvl_bgo_indexes[bgoData.id];
-    else
-    {
-        //Wrong BGO!
-        delete bgo;
-        return;
-    }
-
     bgo->data = bgoData;
     bgo->init();
 
@@ -73,17 +61,21 @@ void LevelScene::placeBGO(LevelBGO bgoData)
 
 void LevelScene::placeNPC(LevelNPC npcData)
 {
-    LVL_Npc * npc;
-    npc = new LVL_Npc();
-    if(ConfigManager::lvl_npc_indexes.contains(npcData.id))
-        npc->setup = &ConfigManager::lvl_npc_indexes[npcData.id];
-    else
-    {
-        //Wrong NPC!
-        delete npc;
+    if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;
-    }
 
+    LVL_Npc * npc;
+    obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
+    QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(curNpcData->algorithm_script);
+    if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
+    {
+        npc = luaEngine.createLuaNpc(curNpcData->id);
+        if(!npc)
+            return;
+    } else {
+        npc = new LVL_Npc();
+    }
+    npc->setup = curNpcData;
     npc->data = npcData;
     npc->init();
 
@@ -100,6 +92,8 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp, int warpType, in
     LVL_Player * player;
     if(luaEngine.isValid()){
         player = luaEngine.createLuaPlayer();
+        if(player == nullptr)
+            player = new LVL_Player();
     }else{
         player = new LVL_Player();
     }
@@ -159,7 +153,7 @@ void LevelScene::toggleSwitch(int switch_id)
                 list[x]->transformTo(list[x]->setup->switch_transform, 2);
             else
             {
-                list.removeAt(x); x--; //Remove blocks which no more is a switch block
+                list.removeAt(x); x--; //Remove blocks which is not fits into specific Switch-ID
             }
         }
     }

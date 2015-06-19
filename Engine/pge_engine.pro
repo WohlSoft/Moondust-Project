@@ -12,33 +12,8 @@ QMAKE_CXXFLAGS += -Wstrict-aliasing=0
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx: QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
-android:{
-DESTDIR = $$PWD/../bin/_android
-} else {
-DESTDIR = $$PWD/../bin
-}
-
-android:{
-    ARCH=android_arm
-} else {
-    !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x32
-    } else {
-    ARCH=x64
-    }
-}
-static: {
-LINKTYPE=static
-} else {
-LINKTYPE=dynamic
-}
-debug: BUILDTP=debug
-release: BUILDTP=release
-OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
-MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
-RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
-UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
-message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+include(../_common/dest_dir.pri)
+include(../_common/build_props.pri)
 
 TARGET = pge_engine
 TEMPLATE = app
@@ -154,7 +129,6 @@ SOURCES += \
     data_configs/obj_player.cpp \
     scenes/level/lvl_z_constants.cpp \
     data_configs/obj_effect.cpp \
-    scenes/level/gfx_effects.cpp \
     common_features/episode_state.cpp \
     common_features/event_queue.cpp \
     common_features/matrix_animator.cpp \
@@ -208,14 +182,16 @@ SOURCES += \
     script/lua_level_engine.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_settings.cpp \
     common_features/number_limiter.cpp \
-    scenes/level/lvl_effect.cpp \
     data_configs/setup_lvl_scene.cpp \
     script/lua_world_engine.cpp \
     script/lua_credits_engine.cpp \
     scenes/level/lvl_base_object.cpp \
     script/bindings/level/classes/luaclass_level_lvl_player.cpp \
     script/bindings/level/classes/luaclass_level_physobj.cpp \
-    script/bindings/level/classes/luaclass_level_lvl_npc.cpp
+    script/bindings/level/classes/luaclass_level_lvl_npc.cpp \
+    script/bindings/core/globalfuncs/luafuncs_core_audio.cpp \
+    scenes/_base/gfx_effect.cpp \
+    script/bindings/core/globalfuncs/luafuncs_core_effect.cpp
 
 
 HEADERS  += \
@@ -276,7 +252,6 @@ HEADERS  += \
     scenes/level/lvl_player_def.h \
     data_configs/obj_effect.h \
     data_configs/obj_npc.h \
-    scenes/level/gfx_effects.h \
     common_features/episode_state.h \
     common_features/event_queue.h \
     common_features/matrix_animator.h \
@@ -329,14 +304,16 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_renderer.h \
     script/bindings/core/globalfuncs/luafuncs_core_settings.h \
     common_features/number_limiter.h \
-    scenes/level/lvl_effect.h \
     data_configs/setup_lvl_scene.h \
     script/lua_world_engine.h \
     script/lua_credits_engine.h \
     scenes/level/lvl_base_object.h \
     script/bindings/level/classes/luaclass_level_lvl_player.h \
     script/bindings/level/classes/luaclass_level_physobj.h \
-    script/bindings/level/classes/luaclass_level_lvl_npc.h
+    script/bindings/level/classes/luaclass_level_lvl_npc.h \
+    script/bindings/core/globalfuncs/luafuncs_core_audio.h \
+    scenes/_base/gfx_effect.h \
+    script/bindings/core/globalfuncs/luafuncs_core_effect.h
 
 FORMS    += \
     data_configs/select_config.ui

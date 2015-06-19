@@ -31,44 +31,24 @@ QT += winextras
 QT -= winextras
 }
 
-android:{
-DESTDIR = $$PWD/../bin/_android
-} else {
-DESTDIR = $$PWD/../bin
-}
+include(../_common/dest_dir.pri)
 
 android:{
     LANGUAGES_TARGET=/assets/languages
-    ARCH=android_arm
 } else {
-    !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x32
-    } else {
-    ARCH=x64
-    }
     LANGUAGES_TARGET=$$PWD/../bin/languages
 }
-static: {
-LINKTYPE=static
-} else {
-LINKTYPE=dynamic
-}
-debug: BUILDTP=debug
-release: BUILDTP=release
-OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
-MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
-RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
-UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
-message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+
+include(../_common/build_props.pri)
 
 translates.path = $$LANGUAGES_TARGET
 translates.files += $$PWD/languages/*.qm
 translates.files += $$PWD/languages/*.png
 
 #DEFINES += USE_QMEDIAPLAYER
-!android:{
+#!android:{
 DEFINES += USE_SDL_MIXER
-}
+#}
 DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES
 
 INSTALLS = translates
@@ -77,6 +57,14 @@ android:{
     themes.path = /assets/themes
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
+    ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
+                          $$PWD/../_Libs/_builds/android/lib/libvorbisidec.so \
+                          $$PWD/../_Libs/_builds/android/lib/libogg.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmad.so \
+                          $$PWD/../_Libs/_builds/android/lib/libmodplug.so
 }
 
 
@@ -110,6 +98,12 @@ win32: {
 linux-g++||unix:!macx:!android: {
     LIBS += -L$$PWD/../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+}
+
+android: {
+    LIBS += -L$$PWD/../_Libs/_builds/android/lib
+    INCLUDEPATH += $$PWD/../_Libs/_builds/android/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
 
@@ -417,7 +411,9 @@ SOURCES += main.cpp\
     common_features/dir_copy.cpp \
     tools/async/asyncstarcounter.cpp \
     ../_common/StackWalker/StackWalker.cpp \
-    ../_common/PGE_File_Formats/file_rw_savx.cpp
+    ../_common/PGE_File_Formats/file_rw_savx.cpp \
+    main_window/tools/main_clean_npc_gargage.cpp \
+    common_features/bool_reseter.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -601,7 +597,8 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
     common_features/dir_copy.h \
     tools/async/asyncstarcounter.h \
-    ../_common/StackWalker/StackWalker.h
+    ../_common/StackWalker/StackWalker.h \
+    common_features/bool_reseter.h
 
 
 FORMS    += \
@@ -741,8 +738,7 @@ OTHER_FILES += \
     images/warp_exit.png \
     images/world.png \
     images/world16.png \
-    _resources/mushroom.icns \
-    _resources/mushroom.hqx
+    _resources/mushroom.icns
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \

@@ -16,7 +16,8 @@ public:
     ~LuaLevelEngine();
 
     LVL_Player* createLuaPlayer();
-    LVL_Npc* createLuaNpc();
+    LVL_Npc* createLuaNpc(unsigned int id);
+    void destoryLuaNpc(LVL_Npc* npc);
 
     void loadNPCClass(int id, const QString& path);
 

@@ -39,8 +39,6 @@
 #include "level/lvl_bgo.h"
 #include "level/lvl_npc.h"
 
-#include "level/lvl_effect.h"
-
 #include "level/lvl_physenv.h"
 
 #include "level/lvl_warp.h"
@@ -200,7 +198,7 @@ public:
 
     QQueue<transformTask_block > block_transforms;
 
-    QMap<int, QList<LVL_Block* > > switch_blocks;
+    QHash<int, QList<LVL_Block* > > switch_blocks;
     void toggleSwitch(int switch_id);
 
     QVector<LVL_Npc* > active_npcs;
@@ -223,6 +221,9 @@ public:
     LVL_Section *getSection(int sct);
     EpisodeState *getGameState();
 
+    bool isVizibleOnScreen(PGE_RectF &rect);
+    bool isVizibleOnScreen(double x, double y, double w, double h);
+
 private:
     bool isInit;
 
@@ -238,16 +239,6 @@ private:
 
     LVL_CameraList      cameras;
     LVL_SectionsList    sections;
-
-
-    /*  Effects engine   */
-    typedef QList<Scene_Effect>    SceneEffectsArray;
-    SceneEffectsArray  WorkingEffects;
-    void launchStaticEffect(long effectID, float startX, float startY, int animationLoops, int delay, float velocityX, float velocityY, float gravity, Scene_Effect_Phys phys=Scene_Effect_Phys());
-    void processEffects(float ticks);
-    /*  Effects engine   */
-
-
 
     typedef QVector<LVL_Player* >  LVL_PlayersArray;
     typedef QVector<LVL_Block* >   LVL_BlocksArray;

@@ -22,6 +22,13 @@
 
 #include <QVector>
 
+const float PGE_Phys_Object::_smbxTickTime=1000.f/65.f;
+
+float PGE_Phys_Object::SMBXTicksToTime(float ticks)
+{
+    return ticks*_smbxTickTime;
+}
+
 PGE_Phys_Object::PGE_Phys_Object()
 {
     posX_coefficient = 0.0f;
@@ -49,8 +56,6 @@ PGE_Phys_Object::PGE_Phys_Object()
 
     _accelX=0;
     _accelY=0;
-
-    timeStep=(1000.f/65.f);
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -66,6 +71,16 @@ double PGE_Phys_Object::posX()
 double PGE_Phys_Object::posY()
 {
     return posRect.y();
+}
+
+double PGE_Phys_Object::posCenterX()
+{
+    return posRect.center().x();
+}
+
+double PGE_Phys_Object::posCenterY()
+{
+    return posRect.center().y();
 }
 
 double PGE_Phys_Object::top()
@@ -201,15 +216,15 @@ void PGE_Phys_Object::renderDebug(float _camX, float _camY)
 {
     switch(type)
     {
-    case LVLUnknown:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 1.0, 1.0, 1.0, false); break;
-    case LVLBlock:      GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 1.0, 0.0, 1.0, false); break;
-    case LVLBGO:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.0, 0.0, 1.0, 1.0, false); break;
-    case LVLNPC:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 1.0, 1.0, false); break;
-    case LVLPlayer:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.5, 0.5, 1.0, false); break;
-    case LVLEffect:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 0.5, 0.5, 0.5, 1.0, false); break;
-    case LVLWarp:       GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0, 0.0, 0.0, 0.5f, true); break;
-    case LVLSpecial:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0,1.0,0,1.0, true);
-    case LVLPhysEnv:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width(), posRect.height(), 1.0f, 1.0f, 0.0f, 0.5f, true); break;
+    case LVLUnknown:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 1.0, 1.0, 1.0, false); break;
+    case LVLBlock:      GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 1.0, 0.0, 1.0, false); break;
+    case LVLBGO:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.0, 0.0, 1.0, 1.0, false); break;
+    case LVLNPC:        GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 1.0, 1.0, false); break;
+    case LVLPlayer:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.5, 0.5, 1.0, false); break;
+    case LVLEffect:     GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 0.5, 0.5, 0.5, 1.0, false); break;
+    case LVLWarp:       GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0, 0.0, 0.0, 0.5f, true); break;
+    case LVLSpecial:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0,1.0,0,1.0, true);
+    case LVLPhysEnv:    GlRenderer::renderRect(posRect.x()-_camX, posRect.y()-_camY, posRect.width()-1.0, posRect.height()-1.0, 1.0f, 1.0f, 0.0f, 0.5f, true); break;
     }
 }
 
@@ -218,8 +233,8 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
-    posRect.setX(posRect.x()+_velocityX * (ticks/timeStep));
-    posRect.setY(posRect.y()+_velocityY * (ticks/timeStep));
+    posRect.setX(posRect.x()+_velocityX * (ticks/_smbxTickTime));
+    posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
 
     _velocityX_prev=_velocityX;
     _velocityY_prev=_velocityY;
@@ -279,7 +294,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
     if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) _velocityX-=phys_setup.grd_dec_x*accelCof;
     if((phys_setup.min_vel_x!=0)&&(_velocityX<phys_setup.min_vel_x)) _velocityX+=phys_setup.grd_dec_x*accelCof;
     if((phys_setup.max_vel_y!=0)&&(_velocityY>phys_setup.max_vel_y)) _velocityY=phys_setup.max_vel_y;
-    if((phys_setup.mix_vel_y!=0)&&(_velocityY<phys_setup.mix_vel_y)) _velocityY=phys_setup.mix_vel_y;
+    if((phys_setup.min_vel_y!=0)&&(_velocityY<phys_setup.min_vel_y)) _velocityY=phys_setup.min_vel_y;
 
 }
 
@@ -359,7 +374,7 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
 {
     min_vel_x=0;
-    mix_vel_y=0;
+    min_vel_y=0;
     max_vel_x=0;
     max_vel_y=0;
     grd_dec_x=0;
