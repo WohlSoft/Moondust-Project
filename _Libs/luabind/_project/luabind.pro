@@ -13,11 +13,8 @@ unix:{
 DEFINES += LUA_USE_LINUX
 }
 
-!android:{
-DESTDIR = ../../_builds/commonlibs
-} else {
-DESTDIR = ../../_builds/android/lib
-}
+include (../../../_common/lib_destdir.pri)
+DESTDIR = ../_builds/$$TARGETOS/lib
 
 include(../../../_common/build_props.pri)
 

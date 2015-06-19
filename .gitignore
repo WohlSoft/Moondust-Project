@@ -16,6 +16,7 @@
 *.dylib
 !_Libs/_builds/*/*/*.dylib
 _Libs/_builds/linux/*
+_Libs/_builds/android/*
 !_Libs/_builds/macos/*
 _Libs/_builds/sdl2_mixer_mod/*
 
@@ -71,3 +72,7 @@ editor_*.qm
 *.bak
 
 .qmake.stash
+libSDL2_mixer.so
+libSDL2_mixer.dll
+libSDL2_mixer.dylib
+

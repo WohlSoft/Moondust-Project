@@ -144,6 +144,7 @@ buildSDL()
 	fi
 
 	mkdir -p $InstallTo/include/SDL2/
+	mkdir -p $InstallTo/lib
 	cp include/* $InstallTo/include/SDL2/
 	cp obj/local/armeabi/libSDL2.so $InstallTo/lib/
 	cd ..
@@ -332,9 +333,9 @@ buildLuaJit()
 	cd ..
 }
 
-
-#BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
-
+mkdir -p $InstallTo
+mkdir -p $InstallTo/include
+mkdir -p $InstallTo/lib
 buildSDL
 buildOgg
 buildVorbis

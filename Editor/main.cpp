@@ -96,6 +96,9 @@ int main(int argc, char *argv[])
 
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
+    #ifdef Q_OS_ANDROID
+    SDL_SetMainReady();
+    #endif
     #ifdef USE_SDL_MIXER
     //Init SDL Audio subsystem
     if(SDL_Init(SDL_INIT_AUDIO)<0)

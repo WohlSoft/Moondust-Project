@@ -58,6 +58,7 @@ android:{
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
+                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
@@ -82,12 +83,15 @@ QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
+include ($$PWD/../_common/lib_destdir.pri)
+
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+
 INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
+INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 win32: {
-    LIBS += -L$$PWD/../_Libs/_builds/win32/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/win32/include
     contains(DEFINES, USE_SDL_MIXER):{
         LIBS += -lSDL2 -lSDL2_mixer
         LIBS += -lSDL2main
@@ -96,27 +100,17 @@ win32: {
 }
 
 linux-g++||unix:!macx:!android: {
-    LIBS += -L$$PWD/../_Libs/_builds/linux/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/linux/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
-
 android: {
-    LIBS += -L$$PWD/../_Libs/_builds/android/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/android/include
     contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
 }
-
 macx: {
-    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
     contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
-
-INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 contains(DEFINES, USE_QMEDIAPLAYER): {
     QT += multimedia

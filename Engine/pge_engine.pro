@@ -28,31 +28,28 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
-LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
 DEFINES += PGE_ENGINE
 
+
+include ($$PWD/../_common/lib_destdir.pri)
+
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+
 LIBS += -lluabind -lluajit-5.1
 android: {
-    LIBS += -L../_Libs/_builds/android/lib
-    INCLUDEPATH += ../_Libs/_builds/android/include
     LIBS += -lSDL2 -lglut -lGLU
 }
 win32: {
-    LIBS += -L../_Libs/_builds/win32/lib
-    INCLUDEPATH += ../_Libs/_builds/win32/include
     LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
-    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
-    LIBS += -L ../_Libs/_builds/linux/lib
-    INCLUDEPATH += ../_Libs/_builds/linux/include
     LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
