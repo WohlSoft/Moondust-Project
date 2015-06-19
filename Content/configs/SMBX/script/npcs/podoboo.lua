@@ -27,6 +27,7 @@ function initProps(thenpc)
 
     thenpc.left_sparks =thenpc.def_sparks;
     thenpc.next_spark =thenpc.def_sparks_time;
+    thenpc.spark_rand_offset = math.random(4);
 end
 
 function podoboo:__init(npc_obj)
@@ -63,12 +64,15 @@ function podoboo:onLoop(tickTime)
                 Audio.playSound(16)
                 Effect.runStaticEffectCentered(13, self.npc_obj.center_x, self.npc_obj.bottom-16)
                 self.soundPlayd=true
+                self.left_sparks = self.def_sparks;
+                self.next_spark =  self.def_sparks_time-ticksToTime(4);
+                self.spark_rand_offset = math.random(4);
         end
         -- Sparks
         if(self.left_sparks>=0)then
                 self.next_spark = self.next_spark - tickTime
                 if(self.next_spark<=0) then
-                Effect.runStaticEffectCentered(12, self.npc_obj.center_x, self.npc_obj.bottom)
+                Effect.runStaticEffectCentered(12, self.npc_obj.center_x+math.sin( (self.spark_rand_offset+self.npc_obj.y)*8)*5, self.npc_obj.bottom+8)
                         self.next_spark = self.def_sparks_time
                         self.left_sparks=self.left_sparks-1
                 end
@@ -112,8 +116,6 @@ function podoboo:onLoop(tickTime)
             self.npc_obj:setSequence(self.animateJump)
             self.animation_flying = true
             self.soundPlayd=false
-            self.left_sparks = self.def_sparks;
-            self.next_spark =  self.def_sparks_time;
             self.cur_mode = AI_JUMPING
         else
             self.cur_idleTicks = self.cur_idleTicks + tickTime
