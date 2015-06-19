@@ -44,6 +44,10 @@ class LVL_Player :
         LVL_Player();
         virtual ~LVL_Player();
         void setCharacter(int CharacterID, int _stateID);
+        void setCharacterSafe(int CharacterID, int _stateID);
+    private:
+        bool _doSafeSwitchCharacter;
+    public:
         void setPlayerPointInfo(PlayerPoint pt);
         void init();
         void update(float ticks);
@@ -54,7 +58,9 @@ class LVL_Player :
         LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
         LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
         bool isWall(QVector<LVL_Block *> &blocks);
+        bool isFloor(QVector<LVL_Block *> &blocks);
         bool forceCollideCenter;//!< collide with invizible blocks at center
+        float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
         /*****************NPC's and blocks******************/
         typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
@@ -63,6 +69,7 @@ class LVL_Player :
         QHash<int, PGE_Phys_Object*> collided_right;
         QHash<int, PGE_Phys_Object*> collided_bottom;
         QHash<int, PGE_Phys_Object*> collided_center;
+        bool _stucked;
         /***************************************************/
 
         int playerID;
@@ -140,7 +147,7 @@ class LVL_Player :
         bool    bumpDown;
         bool    bumpUp;
         float   bumpVelocity;
-        void    bump(bool _up=false);
+        void    bump(bool _up=false, double bounceSpeed=0.0);
         /********************Bump***************************/
 
         /********************Climbing***************************/
@@ -206,7 +213,7 @@ class LVL_Player :
         bool ducking;
         void setDuck(bool duck);
 private:
-        void _collideUnduck(bool preVelocity=false);//!< Re-checks collisions after player disabled duck.
+        void _collideUnduck();//!< Re-checks collisions after player disabled duck.
                                                     //!< Pre-velocity needs if you call "setCharacter" function before iterate physics
         /******************Duck*************************/
 public:

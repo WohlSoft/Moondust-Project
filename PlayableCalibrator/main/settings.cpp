@@ -124,6 +124,7 @@ void CalibrationMain::loadConfig(QString fileName)
     getSpriteAniData(conf, "RacoonRun");
     getSpriteAniData(conf, "RacoonFloat");
     getSpriteAniData(conf, "RacoonFly");
+    getSpriteAniData(conf, "RacoonFlyDown");
     getSpriteAniData(conf, "RacoonTail");
     getSpriteAniData(conf, "Swim");
     getSpriteAniData(conf, "SwimUp");

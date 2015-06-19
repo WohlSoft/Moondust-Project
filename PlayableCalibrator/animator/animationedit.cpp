@@ -30,6 +30,8 @@ AnimationEdit::AnimationEdit(FrameSets &frmConfs, QWidget *parent) :
     SrcFrames = framesX;
     frameList = frmConfs;
 
+    direction = 1;
+
     ui->setupUi(this);
 
     ui->FramesSets->clear();
@@ -38,6 +40,8 @@ AnimationEdit::AnimationEdit(FrameSets &frmConfs, QWidget *parent) :
         ui->FramesSets->addItem(frameList.set[i].name);
     }
 
+    ticker.connect(&ticker, SIGNAL(timeout()), this, SLOT(nextFrame()) );
+    ticker.setInterval(ui->frameSpeed->value());
 }
 
 AnimationEdit::~AnimationEdit()
@@ -79,12 +83,12 @@ void AnimationEdit::on_SetLeft_clicked()
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
+        dialog.setFrame(item->data(Qt::UserRole).toPoint().x(), item->data(Qt::UserRole).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(3, QPoint(x,y));
+            item->setData(Qt::UserRole, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
             showFrame(x, y);
@@ -134,12 +138,12 @@ void AnimationEdit::on_SetRight_clicked()
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
+        dialog.setFrame(item->data(Qt::UserRole).toPoint().x(), item->data(Qt::UserRole).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(3, QPoint(x,y));
+            item->setData(Qt::UserRole, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
             showFrame(x, y);
@@ -161,7 +165,7 @@ void AnimationEdit::on_DelRight_clicked()
 void AnimationEdit::addFrameL(int x, int y)
 {
     QListWidgetItem * test1 = new QListWidgetItem;
-    test1->setData(3, QPoint(x, y));
+    test1->setData(Qt::UserRole, QPoint(x, y));
     test1->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
     ui->FramesL->addItem(test1);
 }
@@ -169,7 +173,7 @@ void AnimationEdit::addFrameL(int x, int y)
 void AnimationEdit::addFrameR(int x, int y)
 {
     QListWidgetItem * test2 = new QListWidgetItem;
-    test2->setData(3, QPoint(x, y));
+    test2->setData(Qt::UserRole, QPoint(x, y));
     test2->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
     ui->FramesR->addItem(test2);
 }
@@ -191,8 +195,8 @@ void  AnimationEdit::applyFrameSet()
                 items = ui->FramesL->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
                 foreach(QListWidgetItem * item, items)
                 {
-                    frameAdd.x = item->data(3).toPoint().x();
-                    frameAdd.y = item->data(3).toPoint().y();
+                    frameAdd.x = item->data(Qt::UserRole).toPoint().x();
+                    frameAdd.y = item->data(Qt::UserRole).toPoint().y();
                     frameList.set[i].L.push_back(frameAdd);
                 }
 
@@ -200,8 +204,8 @@ void  AnimationEdit::applyFrameSet()
                 items = ui->FramesR->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
                 foreach(QListWidgetItem * item, items)
                 {
-                    frameAdd.x = item->data(3).toPoint().x();
-                    frameAdd.y = item->data(3).toPoint().y();
+                    frameAdd.x = item->data(Qt::UserRole).toPoint().x();
+                    frameAdd.y = item->data(Qt::UserRole).toPoint().y();
                     frameList.set[i].R.push_back(frameAdd);
                 }
 
@@ -213,8 +217,10 @@ void  AnimationEdit::applyFrameSet()
 }
 
 
-void AnimationEdit::on_FramesSets_itemClicked(QListWidgetItem *item)
+void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
+    if(!item) return;
+
     ui->FramesL->setEnabled(true);
     ui->FramesR->setEnabled(true);
 
@@ -245,7 +251,9 @@ void AnimationEdit::on_FramesSets_itemClicked(QListWidgetItem *item)
 void AnimationEdit::showFrame(int x, int y)
 {
     qDebug() << x << y;
-    current_frame = MW::sprite().copy(x*100, y*100, 100,100);
+    int fW = MW::sprite().width()/10;
+    int fH = MW::sprite().height()/10;
+    current_frame = MW::sprite().copy(x*fW, y*fH, fW, fH);
     ui->img->setPixmap(current_frame);
 }
 
@@ -254,8 +262,8 @@ void AnimationEdit::on_FramesL_itemSelectionChanged()
     if(ui->FramesL->selectedItems().isEmpty()) return;
 
     showFrame(
-              ui->FramesL->selectedItems().first()->data(3).toPoint().x(),
-              ui->FramesL->selectedItems().first()->data(3).toPoint().y()
+              ui->FramesL->selectedItems().first()->data(Qt::UserRole).toPoint().x(),
+              ui->FramesL->selectedItems().first()->data(Qt::UserRole).toPoint().y()
               );
 }
 
@@ -264,23 +272,90 @@ void AnimationEdit::on_FramesR_itemSelectionChanged()
     if(ui->FramesR->selectedItems().isEmpty()) return;
 
     showFrame(
-              ui->FramesR->selectedItems().first()->data(3).toPoint().x(),
-              ui->FramesR->selectedItems().first()->data(3).toPoint().y()
+              ui->FramesR->selectedItems().first()->data(Qt::UserRole).toPoint().x(),
+              ui->FramesR->selectedItems().first()->data(Qt::UserRole).toPoint().y()
               );
+}
+
+void AnimationEdit::on_FramesL_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
+{
+    if(!item) return;
+    pause();
+    showFrame(
+              item->data(Qt::UserRole).toPoint().x(),
+              item->data(Qt::UserRole).toPoint().y()
+              );
+}
+
+void AnimationEdit::on_FramesR_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
+{
+    if(!item) return;
+    pause();
+    showFrame(
+              item->data(Qt::UserRole).toPoint().x(),
+              item->data(Qt::UserRole).toPoint().y()
+                );
 }
 
 void AnimationEdit::on_FramesL_itemClicked(QListWidgetItem *item)
 {
-    showFrame(
-              item->data(3).toPoint().x(),
-              item->data(3).toPoint().y()
-              );
+    on_FramesL_currentItemChanged(item, NULL);
 }
 
 void AnimationEdit::on_FramesR_itemClicked(QListWidgetItem *item)
 {
-    showFrame(
-              item->data(3).toPoint().x(),
-              item->data(3).toPoint().y()
-              );
+    on_FramesR_currentItemChanged(item, NULL);
+}
+
+void AnimationEdit::nextFrame()
+{
+    if(!frames.isEmpty())
+    {
+        showFrame(frames[currentFrame].x, frames[currentFrame].y);
+        currentFrame++;
+        if(currentFrame>=frames.size())
+            currentFrame=0;
+    }
+}
+
+void AnimationEdit::play()
+{
+    if(!ui->FramesSets->currentItem()) return;
+
+    foreach(AniFrameSet framesets, frameList.set)
+    {
+        if(framesets.name==ui->FramesSets->currentItem()->text())
+        {
+            if(direction<0)
+                frames=framesets.L;
+            else
+                frames=framesets.R;
+        break;
+        }
+    }
+    currentFrame = 0;
+    nextFrame();
+    ticker.start();
+}
+
+void AnimationEdit::pause()
+{
+    ticker.stop();
+}
+
+void AnimationEdit::on_playLeft_clicked()
+{
+    direction=-1;
+    play();
+}
+
+void AnimationEdit::on_playRight_clicked()
+{
+    direction=1;
+    play();
+}
+
+void AnimationEdit::on_frameSpeed_valueChanged(int arg1)
+{
+    ticker.setInterval(arg1);
 }

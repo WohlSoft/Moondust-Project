@@ -24,31 +24,8 @@
 
 QT       += gui widgets
 
-DESTDIR = $$PWD/../bin
-
-android:{
-    LANGUAGES_TARGET=/assets/languages
-    ARCH=android_arm
-} else {
-    !contains(QMAKE_TARGET.arch, x86_64) {
-    ARCH=x32
-    } else {
-    ARCH=x64
-    }
-    LANGUAGES_TARGET=$$PWD/../bin/languages
-}
-static: {
-LINKTYPE=static
-} else {
-LINKTYPE=dynamic
-}
-debug: BUILDTP=debug
-release: BUILDTP=release
-OBJECTS_DIR = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
-MOC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
-RCC_DIR     = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
-UI_DIR      = $$DESTDIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
-message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+include(../_common/dest_dir.pri)
+include(../_common/build_props.pri)
 
 TARGET = PNG2GIFs
 CONFIG   += console

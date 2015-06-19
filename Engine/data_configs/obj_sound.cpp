@@ -243,6 +243,7 @@ bool ConfigManager::loadSoundRolesTable()
         main_sound_table[obj_sound_role::PlayerClimb]=soundset.value("playerclimb", 0).toInt();
         main_sound_table[obj_sound_role::PlayerTail]=soundset.value("playertail", 0).toInt();
         main_sound_table[obj_sound_role::PlayerMagic]=soundset.value("playermagic", 0).toInt();
+        main_sound_table[obj_sound_role::PlayerWaterSwim]=soundset.value("playerwaterswim", 0).toInt();
         main_sound_table[obj_sound_role::BonusCoin]=soundset.value("bonuscoin", 0).toInt();
         main_sound_table[obj_sound_role::Bonus1up]=soundset.value("bonus1up", 0).toInt();
         main_sound_table[obj_sound_role::WeaponHammer]=soundset.value("weaponhammer", 0).toInt();

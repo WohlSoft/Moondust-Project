@@ -26,6 +26,8 @@
 #include "../frame_matrix/matrix.h"
 #include "../animator/aniFrames.h"
 
+#include <QTimer>
+
 namespace Ui {
 class AnimationEdit;
 }
@@ -55,15 +57,31 @@ private slots:
     void on_SetRight_clicked();
     void on_DelRight_clicked();
 
-    void on_FramesSets_itemClicked(QListWidgetItem *item);
+    void on_FramesSets_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
 
     void on_FramesL_itemSelectionChanged();
     void on_FramesR_itemSelectionChanged();
+    void on_FramesL_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
+    void on_FramesR_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
     void on_FramesL_itemClicked(QListWidgetItem *item);
     void on_FramesR_itemClicked(QListWidgetItem *item);
+    void nextFrame();
+
+    void play();
+    void pause();
+
+    void on_playLeft_clicked();
+
+    void on_playRight_clicked();
+
+    void on_frameSpeed_valueChanged(int arg1);
 
 private:
     void showFrame(int x, int y);
+    int direction;
+    QVector<AniFrame > frames;
+    int currentFrame;
+    QTimer ticker;
     QPixmap current_frame;
     Ui::AnimationEdit *ui;
 };

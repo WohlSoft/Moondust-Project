@@ -293,7 +293,8 @@ static int ReadMIDIFile(MIDIFile *mididata, SDL_RWops *src)
 
     /* Make sure this is really a MIDI file */
     SDL_RWread(src, &ID, 1, 4);
-    if (BE_LONG(ID) != 'MThd')
+    //if (BE_LONG(ID) != 'MThd')
+    if(BE_LONG(ID) != (Uint32)1684558925)
         return 0;
 
     /* Header size must be 6 */

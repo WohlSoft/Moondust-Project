@@ -5,6 +5,10 @@
 #include <data_configs/obj_npc.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
+#include <common_features/pointf.h>
+
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
 
 #include <QHash>
 
@@ -21,7 +25,7 @@ public:
     void init();
 
     LevelNPC data; //Local settings
-    PGE_Size offset;
+    PGE_PointF offset;
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
@@ -43,7 +47,7 @@ public:
     void transformTo(long id, int type=0);
     void transformTo_x(long id);
 
-    void update(float ticks);
+    void update(float tickTime);
     void render(double camX, double camY);
     void setDefaults();
     void Activate();
@@ -51,7 +55,20 @@ public:
 
     bool isActivated;
     int timeout;
-    virtual void lua_onLoop() {}
+
+    //Additional lua events
+    virtual void lua_onActivated() {}
+    virtual void lua_onLoop(float) {}
+    virtual void lua_onInit() {}
+    //Additional lua functions
+    void lua_setSequenceLeft(luabind::object frames);
+    void lua_setSequenceRight(luabind::object frames);
+    void lua_setSequence(luabind::object frames);
+
+
+    inline int getID() { return setup->id; }
+    bool isLuaNPC;
+
 
     bool isInited();
 private:

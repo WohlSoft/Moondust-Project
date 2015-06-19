@@ -294,7 +294,9 @@ LevelScene::~LevelScene()
         LVL_Npc* tmp;
         tmp = npcs.last();
         npcs.pop_back();
-        if(tmp) delete tmp;
+        if(tmp)
+            if(!tmp->isLuaNPC)
+                delete tmp;
     }
 
 
@@ -401,14 +403,6 @@ void LevelScene::update()
         while(!block_transforms.isEmpty())
         {
             transformTask_block x = block_transforms.first();
-            if(ConfigManager::lvl_block_indexes.contains(x.id))
-                x.block->setup = &ConfigManager::lvl_block_indexes[x.id];
-            else
-            {
-                block_transforms.pop_front();
-                continue;
-            }
-            x.block->data.id = block_transforms.first().id;
             x.block->transformTo_x(x.id);
             block_transforms.pop_front();
         }
@@ -461,7 +455,10 @@ void LevelScene::update()
                                1, 0, 0,0,0);
             dead_npcs.pop_back();
             npcs.removeAll(corpse);
-            delete corpse;
+            if(!corpse->isLuaNPC)
+                delete corpse;
+            else
+                luaEngine.destoryLuaNpc(corpse);
         }
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
@@ -630,10 +627,10 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             Scene_Effect_Phys p;
             p.decelerate_x=0.02;
             p.max_vel_y=12;
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, p);
-            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -3, -6, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, -4, -7, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 3, -6, 5, 0, p);
+            launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 5000, 4, -7, 5, 0, p);
          }
       }
       break;
@@ -643,7 +640,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
          {
             Scene_Effect_Phys p;
             p.max_vel_y=12;
-            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, p);
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, 0, p);
          }
       }
       break;
@@ -659,29 +656,29 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         case SDLK_7:
         {
             if(players.size()>=1)
-                players[0]->setCharacter(1, 1);
+                players[0]->setCharacterSafe(1, 1);
         }
         break;
         case SDLK_8:
         {
             if(players.size()>=1)
-              players[0]->setCharacter(1, 2);
+              players[0]->setCharacterSafe(1, 2);
         }
         break;
         case SDLK_9:
         {
            if(players.size()>=2)
-            players[1]->setCharacter(2, 1);
+            players[1]->setCharacterSafe(2, 1);
            else if(players.size()>=1)
-            players[0]->setCharacter(2, 1);
+            players[0]->setCharacterSafe(2, 1);
         }
         break;
         case SDLK_0:
         {
            if(players.size()>=2)
-            players[1]->setCharacter(2, 2);
+            players[1]->setCharacterSafe(2, 2);
            else if(players.size()>=1)
-            players[0]->setCharacter(2, 2);
+            players[0]->setCharacterSafe(2, 2);
         }
         break;
 
@@ -772,7 +769,10 @@ int LevelScene::exec()
 
         if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
-            wait( uTickf-(float)(SDL_GetTicks()-start_common) +(slowTimeMode?300:0));
+            if(!slowTimeMode)
+                wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+            else
+                SDL_Delay( uTick-(SDL_GetTicks()-start_common)+300 );
         }
     }
     return exitLevelCode;

@@ -284,15 +284,14 @@ public:
 
     void processEvents(float timeStep=1.0f)
     {
-        int appendTime=0;
-        process_event:
+        left_time = 0;
+      process_event:
         if(events.isEmpty()) { left_time=0; return; }
-        left_time = events.first().trigger(timeStep+appendTime);
+        left_time = events.first().trigger(timeStep);
         if(left_time<=0)
         {
             events.pop_front();
-            left_time=0.0f;
-            appendTime=left_time*-1;
+            timeStep = fabs(left_time);
             goto process_event;
         }
     }

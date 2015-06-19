@@ -33,6 +33,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     killed=false;
     isActivated=false;
     _isInited=false;
+    isLuaNPC=false;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -44,6 +45,14 @@ void LVL_Npc::init()
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
+    if(isLuaNPC){
+        try{
+            lua_onInit();
+        } catch (luabind::error& e) {
+            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        }
+    }
+
     _isInited=true;
 }
 
@@ -75,6 +84,14 @@ void LVL_Npc::transformTo(long id, int type)
 
 void LVL_Npc::transformTo_x(long id)
 {
+    if(_isInited)
+    {
+        if(data.id==(unsigned)abs(id)) return;
+        if(!ConfigManager::lvl_npc_indexes.contains(id))
+            return;
+        setup = &ConfigManager::lvl_npc_indexes[id];
+    }
+
     data.id=id;
 
     double targetZ = 0;
@@ -104,7 +121,7 @@ void LVL_Npc::transformTo_x(long id)
 
     int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
     int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
-    offset.setSize(imgOffsetX+(-((double)setup->gfx_offset_x)*data.direct), imgOffsetY);
+    offset.setPoint(imgOffsetX, imgOffsetY);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
 
@@ -124,22 +141,17 @@ void LVL_Npc::transformTo_x(long id)
         //do some stuff only when NPC already inited (for example, cleanup stuff of previous NPC)
     //} else
     //Load LUA script
-    QString script = ConfigManager::Dir_NPCScript.getCustomFile(setup->algorithm_script);
-    if((!script.isEmpty())&&QFileInfo(script).exists())
-    {
-        //Init lua stuff
 
-    }
 }
 
-void LVL_Npc::update(float ticks)
+void LVL_Npc::update(float tickTime)
 {
-    float accelCof=ticks/1000.0f;
+    float accelCof=tickTime/1000.0f;
     if(killed) return;
 
-    PGE_Phys_Object::update(ticks);
-    timeout-=ticks;
-    animator.manualTick(ticks);
+    PGE_Phys_Object::update(tickTime);
+    timeout-=tickTime;
+    animator.manualTick(tickTime);
 
     if(motionSpeed!=0)
     {
@@ -156,12 +168,19 @@ void LVL_Npc::update(float ticks)
 
     if(section->isWarp())
     {
-        if(posX() < sBox.left()-width-1 )
-            setPosX(sBox.right()+posX_coefficient-1);
+        if(posX()<sBox.left()-width-1 )
+            setPosX(sBox.right()+width-1);
         else
-        if(posX() > sBox.right() + 1 )
-            setPosX(sBox.left()-posX_coefficient+1);
+        if(posX()>sBox.right() + 1 )
+            setPosX(sBox.left()-width+1);
     }
+
+    try{
+        lua_onLoop(tickTime);
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    }
+
 }
 
 void LVL_Npc::render(double camX, double camY)
@@ -178,8 +197,8 @@ void LVL_Npc::render(double camX, double camY)
             x=animator.image(direction);
     }
 
-    GlRenderer::renderTexture(&texture, posX()-camX+offset.w(),
-                              posY()-camY+offset.h(),
+    GlRenderer::renderTexture(&texture, posX()-camX+(offset.x()+(-((double)setup->gfx_offset_x)*direction)),
+                              posY()-camY+offset.y(),
                               frameSize.w(),
                               frameSize.h(),
                               x.first, x.second);
@@ -188,6 +207,7 @@ void LVL_Npc::render(double camX, double camY)
 void LVL_Npc::setDefaults()
 {
     direction=data.direct;
+    if(direction==0) direction = (rand()%2) ? -1 : 1;
     if(!setup) return;
     motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
     is_scenery  = setup->scenery;
@@ -199,8 +219,17 @@ void LVL_Npc::Activate()
         timeout=4000;
     else
         timeout=150;
-    isActivated=true;
+    if(isActivated) return;
+
     animator.start();
+    if(isLuaNPC){
+        try{
+            lua_onActivated();
+        } catch (luabind::error& e) {
+            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        }
+    }
+    isActivated=true;
 }
 
 void LVL_Npc::deActivate()
@@ -212,6 +241,36 @@ void LVL_Npc::deActivate()
         setPos(data.x, data.y);
     }
     animator.stop();
+}
+
+void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequenceLeft exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequenceL(luabind_utils::convArrayTo<int>(frames));
+}
+
+void LVL_Npc::lua_setSequenceRight(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequenceRight exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequenceR(luabind_utils::convArrayTo<int>(frames));
+}
+
+void LVL_Npc::lua_setSequence(luabind::object frames)
+{
+    int ltype = luabind::type(frames);
+    if(luabind::type(frames) != LUA_TTABLE){
+        luaL_error(frames.interpreter(), "setSequence exptected int-array, got %s", lua_typename(frames.interpreter(), ltype));
+        return;
+    }
+    animator.setSequence(luabind_utils::convArrayTo<int>(frames));
 }
 
 bool LVL_Npc::isInited()

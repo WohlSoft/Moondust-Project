@@ -61,6 +61,7 @@ public:
         RacoonRun,
         RacoonFloat,
         RacoonFly,
+        RacoonFlyDown,
         RacoonTail,
         Swim,
         SwimUp,
@@ -83,6 +84,7 @@ public:
     ~MatrixAnimator();
     void setFrameSequance(QList<MatrixAnimatorFrame > _sequence);
     void setFrameSpeed(int speed);
+    void setDirection(int _direction, bool force=false);
     void setSize(int _width, int _height);
     PGE_SizeF size();
     PGE_SizeF sizeOfFrame();
@@ -93,7 +95,8 @@ public:
     int curFramespeed();
 
     void installAnimationSet(obj_player_calibration &calibration);
-    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1);
+    void playOnce(MatrixAnimates aniName, int _direction, int speed=-1, bool fixed_speed=false, bool locked=false, int skipLastFrames=0);
+    void unlock();
     void switchAnimation(MatrixAnimates aniName, int _direction, int speed=-1);
 
     MatrixAnimates toEnum(QString aniName);
@@ -115,6 +118,11 @@ private:
 
     int direction;
     bool once;
+    bool once_fixed_speed;
+    bool once_locked;
+    bool once_play_again;
+    int  once_play_again_skip_last_frames;
+    int  once_play_again_direction;
     MatrixAnimates backup_sequance;
     MatrixAnimates current_sequance;
     AniSequence sequence;//!< Current frame sequance
