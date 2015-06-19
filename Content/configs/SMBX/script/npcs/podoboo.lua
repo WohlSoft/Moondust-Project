@@ -4,36 +4,36 @@ local AI_JUMPING = 0
 local AI_FALLING = 1
 local AI_IDLE = 2
 
-function initProps(thenpc)
+function podoboo:initProps()
 
     -- Animation properties
     -- [[AI_JUMPING]] --
-    thenpc.animateJump = {0, 1}                     -- Animation set for jumping/flying up
+    self.animateJump = {0, 1}                     -- Animation set for jumping/flying up
     -- [[AI_FALLING]] --
-    thenpc.animateFall = {2, 3}                     -- Animation set for falling
-    thenpc.animation_flying = false
+    self.animateFall = {2, 3}                     -- Animation set for falling
+    self.animation_flying = false
     
     -- Sound
-    thenpc.soundPlayed = false
+    self.soundPlayed = false
     
     -- Currents
     -- [[AI_JUMPING]] --
-    thenpc.cur_jumpingUpTicks = 0                   -- The tick counter from 0 to 30 when forcing
+    self.cur_jumpingUpTicks = 0                   -- The tick counter from 0 to 30 when forcing
     -- [[AI_FALLING]] --
-    thenpc.cur_idleTicks = 0                        -- The idle timer from 0 to 150
+    self.cur_idleTicks = 0                        -- The idle timer from 0 to 150
     -- [[AI_IDLE]] --
-    thenpc.npc_obj.gravity = 0                      -- The gravity of the npc object 
-    thenpc.npc_obj.y = thenpc.startingY             -- The starting position for AI_JUMPING
-    thenpc.npc_obj:setSequence(thenpc.animateJump)  -- The Animation for AI_JUMPING
-    thenpc.animation_flying = true                  -- True, if the "flying" animation should be drawn
+    self.npc_obj.gravity = 0                      -- The gravity of the npc object 
+    self.npc_obj.y = self.startingY             -- The starting position for AI_JUMPING
+    self.npc_obj:setSequence(self.animateJump)  -- The Animation for AI_JUMPING
+    self.animation_flying = true                  -- True, if the "flying" animation should be drawn
     
 
     -- [[AI_JUMPING]] --
-    thenpc.left_sparks = thenpc.def_sparks;
-    thenpc.next_spark = thenpc.def_sparks_time;
-    thenpc.spark_rand_offset = math.random(4);
+    self.left_sparks = self.def_sparks;
+    self.next_spark = self.def_sparks_time;
+    self.spark_rand_offset = math.random(4);
     
-    thenpc.cur_mode = AI_JUMPING           -- The current "AI"-Mode
+    self.cur_mode = AI_JUMPING           -- The current "AI"-Mode
 end
 
 function podoboo:__init(npc_obj)
@@ -56,11 +56,11 @@ function podoboo:__init(npc_obj)
     self.def_podobooSplashEffectID = 13
     self.def_sparkleEffectID = 12
 
-    initProps(self)
+    self:initProps(self)
 end
 
 function podoboo:onActivated()
-    initProps(self)
+    self:initProps(self)
 end
 
 function podoboo:onLoop(tickTime)
@@ -74,7 +74,7 @@ function podoboo:onLoop(tickTime)
         if((self.soundPlayed == false) and (cur_npc.y <= self.def_init_posY+16)) then
             Audio.playSound(self.def_podobooSoundID)
             Effect.runStaticEffectCentered(self.def_podobooSplashEffectID, cur_npc.center_x, cur_npc.bottom-16)
-            self.soundPlayed=true
+            self.soundPlayed = true
             self.left_sparks = self.def_sparks;
             self.next_spark =  self.def_sparks_time - smbx_utils.ticksToTime(4);
             self.spark_rand_offset = math.random(4);
@@ -83,9 +83,9 @@ function podoboo:onLoop(tickTime)
         if(self.left_sparks >= 0)then
             self.next_spark = self.next_spark - tickTime
             if(self.next_spark <= 0) then
-                Effect.runStaticEffectCentered(self.def_sparkleEffectID, cur_npc.center_x + math.sin( (self.spark_rand_offset+cur_npc.y)*8)*5, cur_npc.bottom+8)
+                Effect.runStaticEffectCentered(self.def_sparkleEffectID, cur_npc.center_x + math.sin((self.spark_rand_offset + cur_npc.y) * 8) * 5, cur_npc.bottom + 8)
                 self.next_spark = self.def_sparks_time
-                self.left_sparks = self.left_sparks-1
+                self.left_sparks = self.left_sparks - 1
             end
         end
 
@@ -95,22 +95,22 @@ function podoboo:onLoop(tickTime)
             if(self.def_jumpingUpTicks <= self.cur_jumpingUpTicks)then
                 self.cur_mode = AI_FALLING
                 self.cur_jumpingUpTicks = 0
-                self.soundPlayed=false
+                self.soundPlayed = false
             end
         end
     elseif(self.cur_mode == AI_FALLING)then
         self.cur_idleTicks = self.cur_idleTicks + tickTime
 
         -- Toggle animation when Podoboo do falling
-        if((self.animation_flying==true) and (cur_npc.speedY >= 0.0)) then
+        if((self.animation_flying == true) and (cur_npc.speedY >= 0.0)) then
             cur_npc:setSequence(self.animateFall)
             self.animation_flying = false
         end
         -- Play sound
-        if((self.soundPlayed==false) and (cur_npc.y >= self.def_init_posY-16)) then
+        if((self.soundPlayed == false) and (cur_npc.y >= self.def_init_posY - 16)) then
             Audio.playSound(self.def_podobooSoundID)
             Effect.runStaticEffectCentered(self.def_podobooSplashEffectID, cur_npc.center_x, cur_npc.bottom)
-            self.soundPlayed=true
+            self.soundPlayed = true
         end
 
         if(cur_npc.y > self.startingY)then
@@ -124,7 +124,7 @@ function podoboo:onLoop(tickTime)
             self.cur_idleTicks = 0
             cur_npc:setSequence(self.animateJump)
             self.animation_flying = true
-            self.soundPlayed=false
+            self.soundPlayed = false
             self.cur_mode = AI_JUMPING
         else
             self.cur_idleTicks = self.cur_idleTicks + tickTime
