@@ -339,7 +339,7 @@ mkdir -p $InstallTo/lib
 buildSDL
 buildOgg
 buildVorbis
-buildTremor
+#buildTremor
 #buildFlac # don't wanna :P
 buildModPlug
 buildMAD
