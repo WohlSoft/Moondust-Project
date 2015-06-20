@@ -7,6 +7,9 @@ function smbx_utils.ticksToTime(ticks)
     return ticks * SMBXTickTime
 end
 
-
+function smbx_utils.speedConv(speed, timeTicks)
+        return speed * (timeTicks/SMBXTickTime)
+end
 
 return smbx_utils
+
