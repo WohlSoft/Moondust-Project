@@ -56,6 +56,27 @@ public:
     bool isActivated;
     int timeout;
 
+    /*****Warp*Sprite*****/
+    ///
+    /// \brief setSpriteWarp Changes warping state of a sprite
+    /// \param depth
+    /// \param direction
+    ///
+    void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM);
+    bool    isWarping;
+    enum WarpingSide{
+        WARP_TOP=1,
+        WARP_LEFT=2,
+        WARP_BOTTOM=3,
+        WARP_RIGHT=4,
+    };
+
+    int     warpDirectO;
+    float   warpSpriteOffset;
+    float   warpFrameW;
+    float   warpFrameH;
+    /*********************/
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
