@@ -140,14 +140,16 @@ class LVL_Player :
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
         float   jumpTime;
-        float   jumpTime_default;
+        float   jumpVelocity;
         /********************Jumps***************************/
 
         /********************Bump***************************/
         bool    bumpDown;
         bool    bumpUp;
-        float   bumpVelocity;
-        void    bump(bool _up=false, double bounceSpeed=0.0);
+        float   bumpVelocity;//!< down velocity
+        float   bumpJumpVelocity;//! Up jump velocity
+        int     bumpJumpTime;    //!< Up jump time
+        void    bump(bool _up=false, double bounceSpeed=0.0, int timeToJump=0);
         /********************Bump***************************/
 
         /********************Climbing***************************/

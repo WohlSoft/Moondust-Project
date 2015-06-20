@@ -78,14 +78,16 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     bumpUp=false;
     bumpVelocity=0.0f;
 
+    bumpJumpVelocity=0.0f;
+    bumpJumpTime=0.0f;
+
     health=3;
     doHarm=false;
     doHarm_damage=0;
 
     foot_contacts=0;
     jumpTime=0;
-
-    jumpTime_default=260;
+    jumpVelocity=5.3f;
 
     isAlive = true;
     doKill = false;
@@ -150,8 +152,6 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
 
     physics = setup.phys_default;
     physics_cur = physics[environment];
-
-    jumpTime_default = physics_cur.jump_time;
 
     long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
     if( tID >= 0 )
@@ -691,8 +691,7 @@ void LVL_Player::update(float ticks)
             {
                 if(environment==LVL_PhysEnv::Env_Water)
                 {
-                    if(!ducking)
-                        animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                    if(!ducking) animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
                 }
                 else
                 if(environment==LVL_PhysEnv::Env_Quicksand)
@@ -701,9 +700,10 @@ void LVL_Player::update(float ticks)
                 }
 
                 JumpPressed=true;
-                jumpTime=jumpTime_default;
+                jumpTime = physics_cur.jump_time;
+                jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                setSpeedY(speedY()-physics_cur.velocity_jump);
+                setSpeedY(speedY()-jumpVelocity);
             }
         }
         else
@@ -713,9 +713,9 @@ void LVL_Player::update(float ticks)
             if(onGround || climbing)
             {
                 climbing=false;
-                jumpTime=jumpTime_default;
+                jumpTime=physics_cur.jump_time;
                 floating_timer = floating_maxtime;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
+                setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -734,7 +734,7 @@ void LVL_Player::update(float ticks)
             if(jumpTime>0)
             {
                 jumpTime -= ticks;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
+                setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
 
             if(floating_isworks)
@@ -792,8 +792,14 @@ void LVL_Player::update(float ticks)
     if(bumpUp)
     {
         bumpUp=false;
-        if(keys.jump) jumpTime=jumpTime_default;
-        setSpeedY( (keys.jump?(-fabs(physics_cur.velocity_jump)-fabs(speedX()/physics_cur.velocity_jump_c)) : -fabs(physics_cur.velocity_jump)) );
+        if(keys.jump)
+        {
+            jumpTime=bumpJumpTime;
+            jumpVelocity=bumpJumpVelocity;
+        }
+        setSpeedY( (keys.jump ?
+                        (-fabs(bumpJumpVelocity)-fabs(speedX()/physics_cur.velocity_jump_c)):
+                         -fabs(bumpJumpVelocity)) );
     }
 
 
@@ -1151,7 +1157,9 @@ void LVL_Player::updateCollisions()
                 long npcid=nearest->data.npc_id;
                 if(resolveBottom) nearest->hit(LVL_Block::down); else nearest->hit();
                 if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || nearest->setup->bounce )
-                    bump(resolveBottom, bumpSpeed);
+                    bump(resolveBottom,
+                         (resolveBottom ? physics_cur.velocity_jump_bounce : bumpSpeed),
+                         physics_cur.jump_time_bounce);
             }
         }
         if(resolveTop && !bumpUp && !bumpDown )
@@ -1615,13 +1623,19 @@ void LVL_Player::harm(int _damage)
     doHarm_damage=_damage;
 }
 
-void LVL_Player::bump(bool _up, double bounceSpeed)
+void LVL_Player::bump(bool _up, double bounceSpeed, int timeToJump)
 {
     if(_up)
+    {
         bumpUp=true;
+        bumpJumpTime = (timeToJump>0) ? timeToJump: physics_cur.jump_time_bounce ;
+        bumpJumpVelocity = (bounceSpeed>0) ? bounceSpeed : physics_cur.velocity_jump_bounce;
+    }
     else
+    {
         bumpDown=true;
-    bumpVelocity = fabs(bounceSpeed)/4.0;
+        bumpVelocity = fabs(bounceSpeed)/4.0;
+    }
 }
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
