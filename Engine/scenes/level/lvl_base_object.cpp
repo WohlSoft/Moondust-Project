@@ -41,8 +41,8 @@ PGE_Phys_Object::PGE_Phys_Object()
     collide = COLLISION_ANY;
 
     _parentSection=NULL;
-    width = 0.0f;
-    height = 0.0f;
+    _width = 0.0f;
+    _height = 0.0f;
     _realWidth=0.0f;
     _realHeight=0.0f;
     _posX=0.0f;
@@ -83,14 +83,50 @@ double PGE_Phys_Object::posCenterY()
     return posRect.center().y();
 }
 
+void PGE_Phys_Object::setCenterX(double x)
+{
+    setPosX(x-posX_coefficient);
+}
+
+void PGE_Phys_Object::setCenterY(double y)
+{
+    setPosY(y-posY_coefficient);
+}
+
+double PGE_Phys_Object::width()
+{
+    return posRect.width();
+}
+
+double PGE_Phys_Object::height()
+{
+    return posRect.height();
+}
+
 double PGE_Phys_Object::top()
 {
     return posY();
 }
 
+void PGE_Phys_Object::setTop(double tp)
+{
+    posRect.setTop(tp);
+    _realHeight=posRect.height();
+    posY_coefficient = _realHeight/2.0f;
+    _syncPositionAndSize();
+}
+
 double PGE_Phys_Object::bottom()
 {
-    return posY()+height;
+    return posY()+_height;
+}
+
+void PGE_Phys_Object::setBottom(double btm)
+{
+    posRect.setBottom(btm);
+    _realHeight=posRect.height();
+    posY_coefficient = _realHeight/2.0f;
+    _syncPositionAndSize();
 }
 
 double PGE_Phys_Object::left()
@@ -98,9 +134,25 @@ double PGE_Phys_Object::left()
     return posX();
 }
 
+void PGE_Phys_Object::setLeft(double lf)
+{
+    posRect.setLeft(lf);
+    _realWidth=posRect.width();
+    posY_coefficient = _realWidth/2.0f;
+    _syncPositionAndSize();
+}
+
 double PGE_Phys_Object::right()
 {
-    return posX()+width;
+    return posX()+_width;
+}
+
+void PGE_Phys_Object::setRight(double rt)
+{
+    posRect.setLeft(rt);
+    _realWidth=posRect.width();
+    posY_coefficient = _realWidth/2.0f;
+    _syncPositionAndSize();
 }
 
 void PGE_Phys_Object::setSize(float w, float h)
@@ -109,6 +161,22 @@ void PGE_Phys_Object::setSize(float w, float h)
     _realWidth=w;
     _realHeight=h;
     posX_coefficient = _realWidth/2.0f;
+    posY_coefficient = _realHeight/2.0f;
+    _syncPositionAndSize();
+}
+
+void PGE_Phys_Object::setWidth(float w)
+{
+    posRect.setWidth(w);
+    _realWidth=w;
+    posX_coefficient = _realWidth/2.0f;
+    _syncPositionAndSize();
+}
+
+void PGE_Phys_Object::setHeight(float w)
+{
+    posRect.setHeight(h);
+    _realHeight=h;
     posY_coefficient = _realHeight/2.0f;
     _syncPositionAndSize();
 }
@@ -129,6 +197,11 @@ void PGE_Phys_Object::setPosY(double y)
 {
     posRect.setY(y);
     _syncPosition();
+}
+
+void PGE_Phys_Object::setCenterPos(double x, double y)
+{
+    setPos(x-posX_coefficient, y-posY_coefficient);
 }
 
 double PGE_Phys_Object::speedX()
@@ -196,8 +269,8 @@ void PGE_Phys_Object::_syncPositionAndSize()
     if(LvlSceneP::s) LvlSceneP::s->unregisterElement(this);
     _posX= posRect.x();
     _posY= posRect.y();
-    width=_realWidth;
-    height=_realHeight;
+    _width=_realWidth;
+    _height=_realHeight;
     if(LvlSceneP::s) LvlSceneP::s->registerElement(this);
 }
 

@@ -47,19 +47,31 @@ public:
     virtual ~PGE_Phys_Object();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
-    double posCenterX(); //!< Position X
-    double posCenterY(); //!< Position Y
+    double posCenterX(); //!< Centered Position X
+    double posCenterY(); //!< Centered Position Y
+    double width();
+    double height();
 
     double top();
+    void setTop(double tp);
     double bottom();
+    void setBottom(double btm);
     double left();
+    void setLeft(double lf);
     double right();
+    void setRight(double rt);
 
     void setSize(float w, float h);
+    void setWidth(float w);
+    void setHeight(float w);
 
     virtual void setPos(double x, double y);
     void setPosX(double x);
     void setPosY(double y);
+    void setCenterPos(double x, double y);
+    void setCenterX(double x);
+    void setCenterY(double y);
+
     double speedX();
     double speedY();
     void setSpeed(double x, double y);
@@ -97,8 +109,8 @@ public:
     double _posX;
     double _posY;
 
-    double width;  //!< Width
-    double height; //!< Height
+    double _width;  //!< Width
+    double _height; //!< Height
 
     double _realWidth;  //!< need to sync with tree
     double _realHeight; //!< need to sync with tree
@@ -153,6 +165,8 @@ private:
     bool _paused;
 
 };
+
+
 
 bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
