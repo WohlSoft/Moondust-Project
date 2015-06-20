@@ -104,7 +104,7 @@ void LVL_Bgo::render(double camX, double camY)
 
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
-    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, _width, _height, x.first, x.second);
 }
 
 bool LVL_Bgo::isInited()
