@@ -388,11 +388,7 @@ void PGE_Phys_Object::updateCollisions()
     if(_paused) return;
 
     QVector<PGE_Phys_Object*> bodies;
-    PGE_RectF posRectC = posRect;
-    posRectC.setLeft(posRect.left()-2);
-    posRectC.setRight(posRect.right()+2);
-    posRectC.setTop(posRect.top()-2);
-    posRectC.setBottom(posRect.bottom()+2);
+    PGE_RectF posRectC = posRect.withMargin(2.0);
     LvlSceneP::s->queryItems(posRectC, &bodies);
 
     for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )

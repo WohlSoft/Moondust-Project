@@ -40,6 +40,8 @@ public:
     void setRight(double r);
     void setTop(double t);
     void setBottom(double b);
+    PGE_RectF withMargin(double margin);
+    PGE_RectF withMargin(double marginX, double marginY);
 
     void setX(double x);
     void setY(double y);
