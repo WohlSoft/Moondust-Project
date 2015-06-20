@@ -407,7 +407,8 @@ SOURCES += main.cpp\
     ../_common/StackWalker/StackWalker.cpp \
     ../_common/PGE_File_Formats/file_rw_savx.cpp \
     main_window/tools/main_clean_npc_gargage.cpp \
-    common_features/bool_reseter.cpp
+    common_features/bool_reseter.cpp \
+    common_features/version_cmp.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -592,7 +593,8 @@ HEADERS  += defines.h \
     common_features/dir_copy.h \
     tools/async/asyncstarcounter.h \
     ../_common/StackWalker/StackWalker.h \
-    common_features/bool_reseter.h
+    common_features/bool_reseter.h \
+    common_features/version_cmp.h
 
 
 FORMS    += \
