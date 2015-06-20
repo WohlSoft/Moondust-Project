@@ -57,6 +57,12 @@ public:
     int timeout;
 
     /*****Warp*Sprite*****/
+    enum WarpingSide{
+        WARP_TOP=1,
+        WARP_LEFT=2,
+        WARP_BOTTOM=3,
+        WARP_RIGHT=4,
+    };
     ///
     /// \brief setSpriteWarp Changes warping state of a sprite
     /// \param depth
@@ -64,13 +70,6 @@ public:
     ///
     void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM);
     bool    isWarping;
-    enum WarpingSide{
-        WARP_TOP=1,
-        WARP_LEFT=2,
-        WARP_BOTTOM=3,
-        WARP_RIGHT=4,
-    };
-
     int     warpDirectO;
     float   warpSpriteOffset;
     float   warpFrameW;
