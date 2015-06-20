@@ -189,7 +189,8 @@ SOURCES += \
     script/bindings/core/globalfuncs/luafuncs_core_audio.cpp \
     scenes/_base/gfx_effect.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_effect.cpp \
-    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp
 
 
 HEADERS  += \
@@ -312,7 +313,8 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_audio.h \
     scenes/_base/gfx_effect.h \
     script/bindings/core/globalfuncs/luafuncs_core_effect.h \
-    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h
 
 FORMS    += \
     data_configs/select_config.ui
