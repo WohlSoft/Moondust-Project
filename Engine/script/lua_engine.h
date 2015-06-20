@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QtDebug>
+#include <QHash>
 
 #include <functional>
 
@@ -83,6 +84,7 @@ protected:
 private:
     void bindCore();
     void error();
+    QHash<QString, luabind::object > loadedFiles;
 
     bool m_lateShutdown; //!< If true, then the lua engine will shutdown as soon as possible
     QString m_luaScriptPath;
