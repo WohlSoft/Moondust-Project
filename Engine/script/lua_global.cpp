@@ -29,7 +29,7 @@ namespace LuaGlobal {
 
     LuaLevelEngine *getLevelEngine(lua_State *L)
     {
-        return dynamic_cast<LuaLevelEngine*>(getLevelEngine(L));
+        return dynamic_cast<LuaLevelEngine*>(getEngine(L));
     }
 
 }
