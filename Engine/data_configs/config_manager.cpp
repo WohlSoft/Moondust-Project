@@ -127,7 +127,7 @@ bool ConfigManager::loadBasics()
         QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
         QString version = mainset.value("pge-engine-version", "0.0").toString();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
-        if(ver_notify && (QString("%1").arg(_LATEST_STABLE) != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
+        if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
         {
             QMessageBox box;
             box.setWindowTitle( "Legacy configuration package" );
