@@ -8,7 +8,10 @@ local AI_HIDING_IDLE = 3
 function piranha_plant:initProps()
     -- Animation properties
 
-    -- Sound
+    -- Top position (reset size to initial)
+    self.npc_obj.top    = self.def_top
+    self.npc_obj.bottom = self.def_bottom
+    self.npc_obj.top    = self.npc_obj.bottom+1
 
     -- Currents
     self.cur_mode = AI_HIDING_IDLE
@@ -29,9 +32,11 @@ end
 
 function piranha_plant:__init(npc_obj)
     self.npc_obj = npc_obj
-    self.def_top = self.npc_obj.top
+    self.def_top = npc_obj.top
+    self.def_bottom = npc_obj.bottom
     self.speed = 1
     -- Config
+    self.def_top = npc_obj.top
     -- FOR AI_SHOWING_UP
     self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.height)
 
@@ -44,7 +49,6 @@ function piranha_plant:__init(npc_obj)
     -- FOR AI_HIDING_IDLE
     self.def_hidingIdleTicks = smbx_utils.ticksToTime(42)
 
-    npc_obj.top = npc_obj.bottom+1
     npc_obj.gravity = 0
 
     self:initProps()
