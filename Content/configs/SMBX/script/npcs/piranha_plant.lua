@@ -5,8 +5,12 @@ local AI_SHOWING_IDLE = 1
 local AI_HIDING_DOWN = 2
 local AI_HIDING_IDLE = 3
 
+function piranha_plant:hideSprite()
+        self.npc_obj:setSpriteWarp(1.0, 3, true)
+end
+
 function piranha_plant:updateWarp()
-        self.npc_obj:setSpriteWarp(1.0-(self.npc_obj.height/self.def_height), 3);
+        self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.top-self.npc_obj.bottom)/self.def_height), 3, true)
 end
 
 
@@ -16,7 +20,7 @@ function piranha_plant:initProps()
     -- Top position (reset size to initial)
     self.npc_obj.top    = self.def_top
     self.npc_obj.bottom = self.def_bottom
-    self.npc_obj.top    = self.npc_obj.bottom+1
+    self.npc_obj.top    = self.npc_obj.bottom
 
     -- Currents
     self.cur_mode = AI_HIDING_IDLE
@@ -70,8 +74,8 @@ function piranha_plant:onLoop(tickTime)
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
             self.cur_showingUpTicks = self.cur_showingUpTicks + tickTime
-            self:updateWarp()
             self.npc_obj.top = self.npc_obj.top - smbx_utils.speedConv(self.speed, tickTime)
+            self:updateWarp()
         else
             self.cur_mode = AI_SHOWING_IDLE
             self.npc_obj.top = self.def_top
@@ -88,11 +92,11 @@ function piranha_plant:onLoop(tickTime)
     elseif(self.cur_mode == AI_HIDING_DOWN)then
         if(self.def_hidingDownTicks > self.cur_hidingDownTicks)then
             self.cur_hidingDownTicks = self.cur_hidingDownTicks + tickTime
-            self:updateWarp()
             self.npc_obj.top = self.npc_obj.top + smbx_utils.speedConv(self.speed, tickTime)
+            self:updateWarp()
         else
             self.cur_mode = AI_HIDING_IDLE
-            -- self.npc_obj.top = self.def_bottom
+            self:hideSprite()
             self.cur_hidingDownTicks = 0
             self.npc_obj.paused_physics=true
         end
