@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../common_features/pge_texture.h"
+#include <common_features/pge_texture.h>
+#include <common_features/version_cmp.h>
 #include "config_manager.h"
-
 #include <graphics/gl_renderer.h>
+#include "../version.h"
 
 #include <QMessageBox>
 #include <QDir>
@@ -122,6 +123,26 @@ bool ConfigManager::loadBasics()
         customAppPath.replace('\\', '/');
         bool appDir = mainset.value("application-dir", false).toBool();
         data_dir = (appDir ? customAppPath + "/" : config_dir + "data/" );
+
+        QString url     = mainset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+        QString version = mainset.value("pge-engine-version", "0.0").toString();
+        bool ver_notify = mainset.value("enable-version-notify", true).toBool();
+        if(ver_notify && (QString("%1").arg(_LATEST_STABLE) != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
+        {
+            QMessageBox box;
+            box.setWindowTitle( "Legacy configuration package" );
+            box.setTextFormat(Qt::RichText);
+            box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+            box.setText(QString("You have a legacy configuration package.\n<br>"
+                                "Game will be started, but you may have a some problems with gameplay.\n<br>\n<br>"
+                                "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
+                                "Note: most of config packs are updates togeter with PGE,<br>\n"
+                                "therefore you can use same link to get updated version")
+                                .arg("<a href=\"%1\">%1</a>").arg(url));
+            box.setStandardButtons(QMessageBox::Ok);
+            box.setIcon(QMessageBox::Warning);
+            box.exec();
+        }
 
         if(appDir)
             dirs.worlds = customAppPath+"/"+mainset.value("worlds", config_id+"_worlds").toString() + "/";
