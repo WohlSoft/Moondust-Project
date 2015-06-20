@@ -28,17 +28,33 @@ SimpleAnimator::SimpleAnimator()
 
 SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
 {
-    construct(animator.animated,
-              animator.framesQ,
-              animator.speed,
-              animator.frameFirst,
-              animator.frameLast,
-              animator.reverce,
-              animator.bidirectional);
-    this->manual_ticks = animator.manual_ticks;
-    this->onceMode = animator.onceMode;
-    this->animationFinished = animator.animationFinished;
-    this->onceMode_loops = animator.onceMode_loops;
+    speed=animator.speed;
+    pos1=animator.pos1;
+    pos2=animator.pos2;
+    manual_ticks=animator.manual_ticks;
+    onceMode=animator.onceMode;
+    onceMode_loops=animator.onceMode_loops;
+    animationFinished=animator.animationFinished;
+
+    frame_sequance_enabled=animator.frame_sequance_enabled;
+    frame_sequance=animator.frame_sequance;
+    frame_sequance_cur=animator.frame_sequance_cur;
+
+    CurrentFrame=animator.CurrentFrame;
+
+    animated=animator.animated;
+
+    bidirectional=animator.bidirectional;
+    reverce=animator.reverce;
+
+    isEnabled=animator.isEnabled;
+    timer_id=animator.timer_id;
+
+    framesQ=animator.framesQ;
+
+    //Animation alhorithm
+    frameFirst=animator.frameFirst;
+    frameLast=animator.frameLast;
 }
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)

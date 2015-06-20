@@ -84,15 +84,10 @@ private:
     SDL_TimerID timer_id;
 
     double framesQ;
-    int frameSize; // size of one frame
-    int frameWidth; // sprite width
-    int frameHeight; //sprite height
 
     //Animation alhorithm
     int frameFirst;
     int frameLast;
-
-
 };
 
 #endif // SIMPLE_ANIMATOR_H
