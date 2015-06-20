@@ -11,5 +11,5 @@ function smbx_utils.speedConv(speed, timeTicks)
         return speed * (timeTicks/SMBXTickTime)
 end
 
-return smbx_utils
 
+return smbx_utils

@@ -284,14 +284,14 @@ private:
     int  debug_event_delay;
 
 public:
-   float gravity;
+   float globalGravity;
    void processPhysics(float ticks);
 
 public:
     void registerElement(PGE_Phys_Object* item);
     void unregisterElement(PGE_Phys_Object* item);
     typedef double RPoint[2];
-    void queryItems(PGE_RectF zone, QVector<PGE_Phys_Object* > *resultList);
+    void queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object* > *resultList);
     void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;

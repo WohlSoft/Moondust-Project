@@ -175,6 +175,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
     phys_setup.decelerate_x = physics_cur.decelerate_air;
     phys_setup.gravityScale = physics_cur.gravity_scale;
+    phys_setup.gravityAccel = physics_cur.gravity_accel;
     phys_setup.grd_dec_x    = physics_cur.walk_force;
 
     /********************floating************************/
@@ -973,8 +974,7 @@ void LVL_Player::update(float ticks)
 
 void LVL_Player::updateCamera()
 {
-    camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
-                    round(bottom()) - camera->h()/2-state_cur.height/2 );
+    camera->setCenterPos( round(posCenterX()), round(bottom())-state_cur.height/2 );
 }
 
 void LVL_Player::updateCollisions()
@@ -1631,10 +1631,10 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     switch(_dir)
     {
         case Attack_Up:
-            attackZone.setRect(left()+posX_coefficient-5, top()-17, 10, 5);
+            attackZone.setRect(left()+_width_half-5, top()-17, 10, 5);
         break;
         case Attack_Down:
-            attackZone.setRect(left()+posX_coefficient-5, bottom(), 10, 5);
+            attackZone.setRect(left()+_width_half-5, bottom(), 10, 5);
         break;
         case Attack_Forward:
             if(direction>=0)
@@ -1709,7 +1709,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                       isWarping=true; setPaused(true);
                                       warpPipeOffset=0.0;
                                       warpDirectO=0;
-                                      teleport(x+16-posX_coefficient,
+                                      teleport(x+16-_width_half,
                                                      y+32-_height);
                                       animator.unlock();
                                       animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
@@ -1766,7 +1766,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
-                                teleport(x+16-posX_coefficient, y);
+                                teleport(x+16-_width_half, y);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1789,7 +1789,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
-                                teleport(x+16-posX_coefficient,
+                                teleport(x+16-_width_half,
                                          y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1833,7 +1833,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
         }
         break;
     case 0://Instant
-        teleport(x+16-posX_coefficient,
+        teleport(x+16-_width_half,
                      y+32-_height);
         break;
     default:

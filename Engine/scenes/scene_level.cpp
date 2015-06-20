@@ -53,7 +53,7 @@ LevelScene::LevelScene()
     cameraStartDirection=0;
 
     /*********Physics**********/
-    gravity=26;
+    globalGravity=1.0;
     /**************************/
 
     /*********Exit*************/

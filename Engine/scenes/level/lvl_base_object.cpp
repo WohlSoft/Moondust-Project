@@ -31,8 +31,8 @@ float PGE_Phys_Object::SMBXTicksToTime(float ticks)
 
 PGE_Phys_Object::PGE_Phys_Object()
 {
-    posX_coefficient = 0.0f;
-    posY_coefficient = 0.0f;
+    _width_half = 0.0f;
+    _height_half = 0.0f;
 
     z_index = 0.0;
     isRectangle = true;
@@ -85,12 +85,12 @@ double PGE_Phys_Object::posCenterY()
 
 void PGE_Phys_Object::setCenterX(double x)
 {
-    setPosX(x-posX_coefficient);
+    setPosX(x-_width_half);
 }
 
 void PGE_Phys_Object::setCenterY(double y)
 {
-    setPosY(y-posY_coefficient);
+    setPosY(y-_height_half);
 }
 
 double PGE_Phys_Object::width()
@@ -112,7 +112,7 @@ void PGE_Phys_Object::setTop(double tp)
 {
     posRect.setTop(tp);
     _realHeight=posRect.height();
-    posY_coefficient = _realHeight/2.0f;
+    _height_half = _realHeight/2.0f;
     _syncPositionAndSize();
 }
 
@@ -125,7 +125,7 @@ void PGE_Phys_Object::setBottom(double btm)
 {
     posRect.setBottom(btm);
     _realHeight=posRect.height();
-    posY_coefficient = _realHeight/2.0f;
+    _height_half = _realHeight/2.0f;
     _syncPositionAndSize();
 }
 
@@ -138,7 +138,7 @@ void PGE_Phys_Object::setLeft(double lf)
 {
     posRect.setLeft(lf);
     _realWidth=posRect.width();
-    posY_coefficient = _realWidth/2.0f;
+    _height_half = _realWidth/2.0f;
     _syncPositionAndSize();
 }
 
@@ -151,7 +151,7 @@ void PGE_Phys_Object::setRight(double rt)
 {
     posRect.setLeft(rt);
     _realWidth=posRect.width();
-    posY_coefficient = _realWidth/2.0f;
+    _height_half = _realWidth/2.0f;
     _syncPositionAndSize();
 }
 
@@ -160,8 +160,8 @@ void PGE_Phys_Object::setSize(float w, float h)
     posRect.setSize(w, h);
     _realWidth=w;
     _realHeight=h;
-    posX_coefficient = _realWidth/2.0f;
-    posY_coefficient = _realHeight/2.0f;
+    _width_half = _realWidth/2.0f;
+    _height_half = _realHeight/2.0f;
     _syncPositionAndSize();
 }
 
@@ -169,7 +169,7 @@ void PGE_Phys_Object::setWidth(float w)
 {
     posRect.setWidth(w);
     _realWidth=w;
-    posX_coefficient = _realWidth/2.0f;
+    _width_half = _realWidth/2.0f;
     _syncPositionAndSize();
 }
 
@@ -177,7 +177,7 @@ void PGE_Phys_Object::setHeight(float h)
 {
     posRect.setHeight(h);
     _realHeight=h;
-    posY_coefficient = _realHeight/2.0f;
+    _height_half = _realHeight/2.0f;
     _syncPositionAndSize();
 }
 
@@ -201,7 +201,7 @@ void PGE_Phys_Object::setPosY(double y)
 
 void PGE_Phys_Object::setCenterPos(double x, double y)
 {
-    setPos(x-posX_coefficient, y-posY_coefficient);
+    setPos(x-_width_half, y-_height_half);
 }
 
 double PGE_Phys_Object::speedX()
@@ -253,6 +253,16 @@ double PGE_Phys_Object::gravityScale()
 void PGE_Phys_Object::setGravityScale(double scl)
 {
     phys_setup.gravityScale = scl;
+}
+
+float PGE_Phys_Object::gravityAccel()
+{
+    return phys_setup.gravityAccel;
+}
+
+void PGE_Phys_Object::setGravityAccel(float acl)
+{
+    phys_setup.gravityAccel=fabs(acl);
 }
 
 
@@ -312,7 +322,9 @@ void PGE_Phys_Object::iterateStep(float ticks)
     _velocityX_prev=_velocityX;
     _velocityY_prev=_velocityY;
 
+    float G = phys_setup.gravityScale * LvlSceneP::s->globalGravity;
     float accelCof=ticks/1000.0f;
+
     if(_accelX!=0)
     {
         _velocityX+= _accelX*accelCof;
@@ -338,7 +350,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
 
     if(_accelY!=0)
     {
-        _velocityY+= _accelY*accelCof;
+        _velocityY+= _accelY*accelCof*G;
         _accelY=0;
     }
 
@@ -359,9 +371,9 @@ void PGE_Phys_Object::iterateStep(float ticks)
         }
     }
 
-    if(LvlSceneP::s->gravity!=0.0f)
+    if(phys_setup.gravityAccel != 0.0f)
     {
-        _velocityY+= (phys_setup.gravityScale*LvlSceneP::s->gravity)*accelCof;
+        _velocityY+= (G*phys_setup.gravityAccel)*accelCof;
     }
 
     if((phys_setup.max_vel_x!=0)&&(_velocityX>phys_setup.max_vel_x)) _velocityX-=phys_setup.grd_dec_x*accelCof;
@@ -446,12 +458,13 @@ bool operator>(const PGE_Phys_Object &lhs, const PGE_Phys_Object &rhs)
 
 PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
 {
-    min_vel_x=0;
-    min_vel_y=0;
-    max_vel_x=0;
-    max_vel_y=0;
-    grd_dec_x=0;
-    decelerate_x=0;
-    decelerate_y=0;
+    min_vel_x=0.f;
+    min_vel_y=0.f;
+    max_vel_x=0.f;
+    max_vel_y=0.f;
+    grd_dec_x=0.f;
+    decelerate_x=0.f;
+    decelerate_y=0.f;
     gravityScale=1.0f;
+    gravityAccel=26.0f;
 }

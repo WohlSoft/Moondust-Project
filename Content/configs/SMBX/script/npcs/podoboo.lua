@@ -45,7 +45,7 @@ function podoboo:__init(npc_obj)
 
     self.def_jumpingUpTicks = smbx_utils.ticksToTime(30)        -- The ticks where podoboo def_jumpingUpSpeed is beeing forced. (jumping up)
     self.def_idleTicks = smbx_utils.ticksToTime(150)            -- The ticks where podoboo is idleing
-    self.def_gravity = 0.73                                     -- The gravity which is used for the podoboo
+    self.def_gravity = 19                                       -- The gravity which is used for the podoboo
     self.def_jumpingUpSpeed = -6                                -- The speed when the podoboo is jumping up.
     self.startingY = self.def_init_posY+48.0                    -- The starting y position, this is needed for detecting, when idleing is needed.
 
@@ -68,7 +68,8 @@ function podoboo:onLoop(tickTime)
     if(self.cur_mode == AI_JUMPING)then
         -- Renderer.printText("AI_JUMPING", 20, 400)
         if(self.cur_jumpingUpTicks <= 0)then
-            cur_npc.gravity = self.def_gravity
+            cur_npc.gravity = 1.0
+            cur_npc.gravity_accel = self.def_gravity
         end
         -- Play sound
         if((self.soundPlayed == false) and (cur_npc.y <= self.def_init_posY+16)) then

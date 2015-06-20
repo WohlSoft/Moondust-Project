@@ -53,6 +53,8 @@ void loadPlayerPhysicsSettings(QSettings &set, obj_player_physics &t, QString gr
         t.slippery_c = set.value("slippery_c", t.slippery_c).toFloat();
             NumberLimiter::applyD(t.slippery_c, 0.0f, 0.0f);
 
+        t.gravity_accel = set.value("gravity_accel", t.gravity_accel ).toFloat();
+            NumberLimiter::applyD(t.gravity_accel, 26.0f, 0.0f);
         t.gravity_scale = set.value("gravity_scale", t.gravity_scale ).toFloat();
         t.velocity_jump = set.value("velocity_jump", t.velocity_jump).toFloat();
             NumberLimiter::applyD(t.velocity_jump, 5.2f, 0.0f);
@@ -101,6 +103,7 @@ obj_player_physics::obj_player_physics()
     ground_c_max    = 1.0; //!< On-Ground max speed     coefficient
     ground_c        = 1.0; //!< On-Ground accelerations coefficient
     slippery_c      = 4.0; //!< Slippery coefficien
+    gravity_accel   = 26.0;//!< Gravity acceleration
     gravity_scale   = 1.0; //!< Gravity scale
     velocity_jump   = 5.2; //!< Jump velocity
     velocity_jump_c = 5.8; //!< Jump coefficient which provides increzed jump height dependent to speed

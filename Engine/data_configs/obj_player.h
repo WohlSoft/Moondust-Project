@@ -44,6 +44,7 @@ struct obj_player_physics
     float ground_c;     //!< On-Ground accelerations coefficient
     float slippery_c;   //!< Slippery accelerations coefficien
 
+    float gravity_accel; //!< Gravity acceleration
     float gravity_scale; //!< Gravity scale
     float velocity_jump; //!< Jump velocity
     float velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed

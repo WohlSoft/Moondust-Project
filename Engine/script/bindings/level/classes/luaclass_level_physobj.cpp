@@ -22,8 +22,9 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             .property("bottom", &PGE_Phys_Object::bottom, &PGE_Phys_Object::setBottom)
 
             //Physics
-            .property("paused", &PGE_Phys_Object::isPaused, &PGE_Phys_Object::setPaused)
+            .property("paused_physics", &PGE_Phys_Object::isPaused, &PGE_Phys_Object::setPaused)
             .property("speedX", &PGE_Phys_Object::speedX, &PGE_Phys_Object::setSpeedX)
             .property("speedY", &PGE_Phys_Object::speedY, &PGE_Phys_Object::setSpeedY)
-            .property("gravity", &PGE_Phys_Object::gravityScale, &PGE_Phys_Object::setGravityScale);
+            .property("gravity", &PGE_Phys_Object::gravityScale, &PGE_Phys_Object::setGravityScale)
+            .property("gravity_accel", &PGE_Phys_Object::gravityAccel, &PGE_Phys_Object::setGravityAccel);
 }

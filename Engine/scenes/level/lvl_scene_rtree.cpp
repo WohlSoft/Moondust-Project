@@ -46,7 +46,7 @@ namespace LevelScene_space
     }
 }
 
-void LevelScene::queryItems(PGE_RectF zone, QVector<PGE_Phys_Object *> *resultList)
+void LevelScene::queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object *> *resultList)
 {
     RPoint lt={zone.left(), zone.top()};
     RPoint rb={zone.right(), zone.bottom()};
