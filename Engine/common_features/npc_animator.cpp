@@ -315,7 +315,7 @@ void AdvNpcAnimator::setDirectedSequence(bool dd)
 
 PGE_SizeF AdvNpcAnimator::sizeOfFrame()
 {
-    return PGE_SizeF(1.0,  1.0/double(frames.size()) );
+    return PGE_SizeF(1.0, frameSize/frameHeight );
 }
 
 void AdvNpcAnimator::start()

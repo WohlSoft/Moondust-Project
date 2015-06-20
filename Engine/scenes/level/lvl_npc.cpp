@@ -264,11 +264,20 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     float hOfs =  offset.y()/warpFrameH;               //Relative Y offset
                     float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
-                    float hOfHB = _height/warpFrameH;                //Relative height of hitbox
+                    float hOfHB = frameSize.h()/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
-                    tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
-                    npc.setTop( npc.top()+(warpSpriteOffset*_height) );
-                    npc.setBottom( npc.bottom()-(hHAbs-offset.y()-_height) );
+                    if(!warpResizedBody)
+                    {
+                        tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
+                        npc.setTop( npc.top()+(warpSpriteOffset*frameSize.h()) );
+                        npc.setBottom( npc.bottom()-(hHAbs-offset.y()-frameSize.h()) );
+                    }
+                    else
+                    {
+                        tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
+                        npc.setTop( npc.top()+offset.y() );
+                        npc.setBottom( npc.bottom()-(hHAbs-offset.y()-frameSize.h()*(1.0-warpSpriteOffset) ) );
+                    }
                 }
                 break;
             default:
@@ -326,17 +335,19 @@ void LVL_Npc::deActivate()
     animator.stop();
 }
 
-void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction)
+void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction, bool resizedBody)
 {
     NumberLimiter::apply(depth, 0.0f, 1.0f);
     isWarping=(depth>0.0f);
     warpSpriteOffset=depth;
+    warpResizedBody=resizedBody;
     warpDirectO=direction;
 }
 
 void LVL_Npc::resetSpriteWarp()
 {
     warpSpriteOffset=0.0f;
+    warpResizedBody=false;
     isWarping=false;
 }
 

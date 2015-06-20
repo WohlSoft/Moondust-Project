@@ -68,10 +68,11 @@ public:
     /// \param depth
     /// \param direction
     ///
-    void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM);
+    void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM, bool resizedBody=false);
     void resetSpriteWarp();
     bool    isWarping;
     int     warpDirectO;
+    bool    warpResizedBody;
     float   warpSpriteOffset;
     float   warpFrameW;
     float   warpFrameH;
