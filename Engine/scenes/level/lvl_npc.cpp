@@ -139,14 +139,8 @@ void LVL_Npc::transformTo_x(long id)
         collide = COLLISION_TOP;
     else
         collide = COLLISION_NONE;
-    phys_setup.max_vel_y=10;
-
-    //if(isInited) {
-        //do some stuff only when NPC already inited (for example, cleanup stuff of previous NPC)
-    //} else
-    //Load LUA script
-
 }
+
 
 void LVL_Npc::update(float tickTime)
 {
