@@ -32,12 +32,10 @@
 
 PGE_LevelCamera::PGE_LevelCamera()
 {
-    width=800;
-    height=600;
+    posRect.setWidth(800);
+    posRect.setHeight(600);
     offset_x=0;
     offset_y=0;
-    pos_x=0;
-    pos_y=0;
     section = 0;
     cur_section = NULL;
     fader.setNull();
@@ -45,12 +43,10 @@ PGE_LevelCamera::PGE_LevelCamera()
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
 {
-    width=cam.width;
-    height=cam.height;
     offset_x=cam.offset_x;
     offset_y=cam.offset_y;
-    pos_x=cam.pos_x;
-    pos_y=cam.pos_y;
+
+    posRect = cam.posRect;
 
     objects_to_render = cam.objects_to_render;
 
@@ -65,66 +61,45 @@ PGE_LevelCamera::~PGE_LevelCamera()
 
 void PGE_LevelCamera::init(float x, float y, float w, float h)
 {
-    pos_x = x;
-    pos_y = y;
-    width = w;
-    height = h;
+    posRect.setRect(x, y, w, h);
 }
 
 
 int PGE_LevelCamera::w()
 {
-    return width;
+    return posRect.width();
 }
 
 int PGE_LevelCamera::h()
 {
-    return height;
+    return posRect.height();
 }
 
 qreal PGE_LevelCamera::posX()
 {
-    return pos_x;
+    return posRect.x()+offset_x;
 }
 
 qreal PGE_LevelCamera::posY()
 {
-    return pos_y;
+    return posRect.y()+offset_y;
 }
 
 void PGE_LevelCamera::setPos(float x, float y)
 {
-    pos_x = x;
-    pos_y = y;
+    posRect.setPos(round(x), round(y));
+    _applyLimits();
+}
 
-    if(!cur_section) return;
-
-    if(pos_x < cur_section->limitBox.left())
-        pos_x = cur_section->limitBox.left();
-
-    if((pos_x+width) > cur_section->limitBox.right())
-        pos_x = cur_section->limitBox.right()-width;
-
-    if(pos_y < cur_section->limitBox.top())
-        pos_y = cur_section->limitBox.top();
-
-    if((pos_y+height) > cur_section->limitBox.bottom())
-        pos_y = cur_section->limitBox.bottom()-height;
-
-    if(cur_section->RightOnly())
-    {
-        if(pos_x>cur_section->limitBox.left())
-            cur_section->limitBox.setLeft(pos_x);
-    }
-
-    pos_x = round(pos_x);
-    pos_y = round(pos_y);
+void PGE_LevelCamera::setCenterPos(float x, float y)
+{
+    posRect.setPos(round(x-posRect.width()/2.0), round(y-posRect.height()/2.0));
+    _applyLimits();
 }
 
 void PGE_LevelCamera::setSize(int w, int h)
 {
-    width = w;
-    height = h;
+    posRect.setSize(w, h);
 }
 
 void PGE_LevelCamera::setOffset(int x, int y)
@@ -138,13 +113,8 @@ void PGE_LevelCamera::update(float ticks)
     objects_to_render.clear();
 
     if(!cur_section) return;
-//    CollidablesInRegionQueryCallback cb = CollidablesInRegionQueryCallback();
-//    b2AABB aabb;
-//    aabb.lowerBound.Set(PhysUtil::pix2met(pos_x), PhysUtil::pix2met(pos_y));
-//    aabb.upperBound.Set(PhysUtil::pix2met(pos_x+width), PhysUtil::pix2met(pos_y+height));
-//    worldPtr->QueryAABB(&cb, aabb);
     fader.tickFader(ticks);
-    LvlSceneP::s->queryItems(PGE_RectF(pos_x, pos_y, width, height), &objects_to_render);
+    LvlSceneP::s->queryItems(posRect, &objects_to_render);
 
     int contacts = 0;
     for(int i=0; i<objects_to_render.size();i++)
@@ -246,21 +216,41 @@ PGE_RenderList &PGE_LevelCamera::renderObjects()
     return objects_to_render;
 }
 
+void PGE_LevelCamera::_applyLimits()
+{
+    if(!cur_section) return;
+    if(posRect.left() < cur_section->limitBox.left())
+        posRect.setX(cur_section->limitBox.left());
+
+    if(posRect.right() > cur_section->limitBox.right())
+        posRect.setX(cur_section->limitBox.right()-posRect.width());
+
+    if(posRect.top() < cur_section->limitBox.top())
+        posRect.setY(cur_section->limitBox.top());
+
+    if(posRect.bottom()>cur_section->limitBox.bottom())
+        posRect.setY(cur_section->limitBox.bottom()-posRect.height());
+
+    if(cur_section->RightOnly())
+    {
+        if(posRect.left() > cur_section->limitBox.left())
+            cur_section->limitBox.setLeft(posRect.left());
+    }
+}
+
 
 void PGE_LevelCamera::drawBackground()
 {
     if(cur_section)
     {
-        cur_section->renderBG(posX(), posY(), width, height);
+        cur_section->renderBG(posRect.x(), posRect.y(), posRect.width(), posRect.height());
     }
 }
 
 void PGE_LevelCamera::drawForeground()
 {
     if(!fader.isNull())
-    {
-        GlRenderer::renderRect(0, 0, width, height, 0.0f, 0.0f, 0.0f, fader.fadeRatio());
-    }
+        GlRenderer::renderRect(0, 0, posRect.width(), posRect.height(), 0.0f, 0.0f, 0.0f, fader.fadeRatio());
 }
 
 
