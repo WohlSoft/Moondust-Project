@@ -243,10 +243,10 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_TOP://Up entrance, down exit
                 {
                     float hOfs = offset.y()/warpFrameH;//Relative Y offset
-                    float hOfsF = _height/warpFrameH; //Relative hitbox Height
+                    float hOfsF = frameSize.h()/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpSpriteOffset*hOfsF));
                     npc.setTop( npc.top()+offset.y() );
-                    npc.setBottom( npc.bottom()-(warpSpriteOffset*_height) );
+                    npc.setBottom( npc.bottom()-(warpSpriteOffset*frameSize.h()) );
                 }
                 break;
             case WARP_RIGHT://right emtramce. left exit
