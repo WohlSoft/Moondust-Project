@@ -24,15 +24,16 @@
 
 struct PGE_Phys_Object_Phys
 {
+    float min_vel_x;//!< Min allowed X velocity
+    float min_vel_y;//!< Min allowed Y velocity
+    float max_vel_x;//!< Max allowed X velocity
+    float max_vel_y;//!< Max allowed Y velocity
+    float decelerate_x;//!< Deceleration of X velocity in each second
+    float grd_dec_x;   //!< Soft deceleration if max X speed limit exited
+    float decelerate_y;//!< Deceleration of Y velocity in each second
+    float gravityScale;//!< Item specific gravity scaling
+    float gravityAccel;//!< Item gravity acceleration
     PGE_Phys_Object_Phys();
-    float min_vel_x;
-    float min_vel_y;
-    float max_vel_x;
-    float max_vel_y;
-    float decelerate_x;
-    float grd_dec_x;
-    float decelerate_y;
-    float gravityScale;
 };
 
 class LVL_Section;
@@ -82,6 +83,8 @@ public:
 
     double gravityScale();
     void setGravityScale(double scl);
+    float gravityAccel();
+    void setGravityAccel(float acl);
 
     void _syncPosition();
     void _syncPositionAndSize();
@@ -95,28 +98,28 @@ public:
     static const float _smbxTickTime;
     static float SMBXTicksToTime(float ticks);
 
-    PGE_Phys_Object_Phys phys_setup;
-    PGE_RectF posRect;
-    double _accelX;
-    double _accelY;
+    PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
+    PGE_RectF posRect;//!< Real body geometry and position
+    double _accelX; //!<Delta of X velocity in a second
+    double _accelY; //!<Delta of Y velocity in a second
 
-    double _velocityX;
-    double _velocityY;
+    double _velocityX;//!< current X speed (pixels per 1/65 of second)
+    double _velocityY;//!< current Y speed (pixels per 1/65 of second)
 
-    double _velocityX_prev;
-    double _velocityY_prev;
+    double _velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
+    double _velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
-    double _posX;
-    double _posY;
+    double _posX; //!< Synchronized with R-Tree position
+    double _posY; //!< Synchronized with R-Tree position
 
-    double _width;  //!< Width
-    double _height; //!< Height
+    double _width;  //!< Synchronized with R-Tree Width
+    double _height; //!< Synchronized with R-Tree Height
+    double _width_half;//!< Half of width
+    double _height_half;//!< Half of height
 
-    double _realWidth;  //!< need to sync with tree
-    double _realHeight; //!< need to sync with tree
+    double _realWidth;  //!< Width prepared to synchronize with R-Tree
+    double _realHeight; //!< Height prepared to synchronize with R-Tree
 
-    double posX_coefficient;
-    double posY_coefficient;
     void setParentSection(LVL_Section* sct);
     LVL_Section* sct();
     LVL_Section *_parentSection;

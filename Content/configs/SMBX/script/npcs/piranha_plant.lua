@@ -12,8 +12,8 @@ function piranha_plant:initProps()
 
     -- Currents
     self.cur_mode = AI_HIDING_IDLE
-    -- if npc-obj paused, physics iterations and collisions are disabled. Paused objects will NOT be detected by other
-    self.npc_obj.paused = true
+    -- if physics are paused, than iterations and collisions are disabled. Paused objects will NOT be detected by other
+    self.npc_obj.paused_physics = true
     -- FOR AI_SHOWING_UP
     self.cur_showingUpTicks = 0
     
@@ -78,14 +78,14 @@ function piranha_plant:onLoop(tickTime)
         else
             self.cur_mode = AI_HIDING_IDLE
             self.cur_hidingDownTicks = 0
-            cur_npc.paused=true
+            cur_npc.paused_physics=true
         end
     elseif(self.cur_mode == AI_HIDING_IDLE)then
         if(self.def_hidingIdleTicks >= self.cur_hidingIdleTicks)then
             self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
         else
             self.cur_mode = AI_SHOWING_UP
-            cur_npc.paused=false
+            cur_npc.paused_physics=false
             self.cur_hidingIdleTicks = 0
         end
     end
