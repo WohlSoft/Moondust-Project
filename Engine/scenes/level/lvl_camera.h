@@ -22,6 +22,7 @@
 #include "lvl_base_object.h"
 #include <graphics/graphics.h>
 #include <common_features/fader.h>
+#include <common_features/rectf.h>
 
 #include <QList>
 #include <PGE_File_Formats/file_formats.h>
@@ -48,6 +49,7 @@ public:
     void init(float x, float y, float w, float h);
 
     void setPos(float x, float y);
+    void setCenterPos(float x, float y);
     void setSize(int w, int h);
     void setOffset(int x, int y);
     void update(float ticks);
@@ -63,21 +65,18 @@ public:
     LevelSection* section;
     LVL_Section * cur_section;
 
-    int offset_x;
-    int offset_y;
+    PGE_RectF posRect;
 
-    float pos_x;
-    float pos_y;
+    float offset_x;
+    float offset_y;
 
     /**************Fader**************/
     PGE_Fader fader;
     /**************Fader**************/
 private:
+    void _applyLimits();
     void sortElements();
     PGE_RenderList objects_to_render;
-
-    int width;
-    int height;
 };
 
 #endif // LVL_CAMERA_H
