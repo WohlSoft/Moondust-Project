@@ -899,4 +899,9 @@ void LevelScene::setGameState(EpisodeState *_gameState)
             initPauseMenu1();
     }
 }
+LevelScene::LVL_PlayersArray& LevelScene::getPlayers()
+{
+    return players;
+}
+
 
