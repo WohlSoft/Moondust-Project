@@ -14,10 +14,10 @@ DEFINES += LUA_USE_LINUX
 }
 
 include (../../../_common/lib_destdir.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
+DESTDIR = ../../_builds/$$TARGETOS/lib
 
 include(../../../_common/build_props.pri)
-INCLUDEPATH += $$PWD/../ $$PWD/../lua/ $$PWD/../_builds/$$TARGETOS
+INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include $$PWD/../../_builds/$$TARGETOS/include/luajit-2.0/
 
 SOURCES += ../src/class.cpp \
     ../src/class_info.cpp \
@@ -137,5 +137,4 @@ HEADERS += ../luabind/detail/conversion_policies/conversion_base.hpp \
     ../luabind/version.hpp \
     ../luabind/weak_ref.hpp \
     ../luabind/wrapper_base.hpp \
-    ../luabind/yield_policy.hpp \
-    ../lua_inclues/lua.hpp
+    ../luabind/yield_policy.hpp
