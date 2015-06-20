@@ -5,6 +5,11 @@ local AI_SHOWING_IDLE = 1
 local AI_HIDING_DOWN = 2
 local AI_HIDING_IDLE = 3
 
+function piranha_plant:updateWarp()
+        self.npc_obj:setSpriteWarp(1.0-(self.npc_obj.height/self.def_height), 3);
+end
+
+
 function piranha_plant:initProps()
     -- Animation properties
 
@@ -28,11 +33,14 @@ function piranha_plant:initProps()
 
     -- FOR AI_HIDING_IDLE
     self.cur_hidingIdleTicks = 0
+
+    self:updateWarp()
 end
 
 function piranha_plant:__init(npc_obj)
     self.npc_obj = npc_obj
     self.def_top = npc_obj.top
+    self.def_height = npc_obj.height
     self.def_bottom = npc_obj.bottom
     self.speed = 1
     -- Config
@@ -59,13 +67,15 @@ function piranha_plant:onActivated()
 end
 
 function piranha_plant:onLoop(tickTime)
-    local cur_npc = self.npc_obj    
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
             self.cur_showingUpTicks = self.cur_showingUpTicks + tickTime
-            cur_npc.top = cur_npc.top - smbx_utils.speedConv(self.speed, tickTime)
+            self:updateWarp()
+            self.npc_obj.top = self.npc_obj.top - smbx_utils.speedConv(self.speed, tickTime)
         else
             self.cur_mode = AI_SHOWING_IDLE
+            self.npc_obj.top = self.def_top
+            self.npc_obj:resetSpriteWarp()
             self.cur_showingUpTicks = 0
         end
     elseif(self.cur_mode == AI_SHOWING_IDLE)then
@@ -78,11 +88,13 @@ function piranha_plant:onLoop(tickTime)
     elseif(self.cur_mode == AI_HIDING_DOWN)then
         if(self.def_hidingDownTicks > self.cur_hidingDownTicks)then
             self.cur_hidingDownTicks = self.cur_hidingDownTicks + tickTime
-            cur_npc.top = cur_npc.top + smbx_utils.speedConv(self.speed, tickTime)
+            self:updateWarp()
+            self.npc_obj.top = self.npc_obj.top + smbx_utils.speedConv(self.speed, tickTime)
         else
             self.cur_mode = AI_HIDING_IDLE
+            -- self.npc_obj.top = self.def_bottom
             self.cur_hidingDownTicks = 0
-            cur_npc.paused_physics=true
+            self.npc_obj.paused_physics=true
         end
     elseif(self.cur_mode == AI_HIDING_IDLE)then
         if(self.def_hidingIdleTicks >= self.cur_hidingIdleTicks)then
@@ -91,14 +103,14 @@ function piranha_plant:onLoop(tickTime)
             local players = Player.get()
             local goUp = true
             for _, player in pairs(players) do
-                if(math.abs(player.center_x - cur_npc.center_x) <= 44)then
+                if(math.abs(player.center_x - self.npc_obj.center_x) <= 44)then
                     goUp = false
                     self.cur_hidingIdleTicks = 0 -- NOTE: Unknown if it resets
                 end
             end
             if(goUp)then
                 self.cur_mode = AI_SHOWING_UP
-                cur_npc.paused_physics = false
+                self.npc_obj.paused_physics = false
                 self.cur_hidingIdleTicks = 0
             end
         end
