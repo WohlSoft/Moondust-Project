@@ -129,14 +129,15 @@ void LVL_Npc::transformTo_x(long id)
         animator_ID = setup->animator_ID;
     }
 
+    warpFrameW = texture.w;
+    warpFrameH = texture.h;
+
     setSize(setup->width, setup->height);
 
     int imgOffsetX = (int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) );
     int imgOffsetY = (int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
     offset.setPoint(imgOffsetX, imgOffsetY);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
-    warpFrameW = frameSize.w();
-    warpFrameH = frameSize.h();
     animator.construct(texture, *setup);
 
     setDefaults();
@@ -251,7 +252,7 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_RIGHT://right emtramce. left exit
                 {
                     float wOfs =  offset.x()/warpFrameW;               //Relative X offset
-                    float fWw =   frameSize.w();   //Relative width of frame
+                    float fWw =   1.0;   //Relative width of frame
                     float wOfHB = _width/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
@@ -262,7 +263,7 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_BOTTOM://down entrance, up exit
                 {
                     float hOfs =  offset.y()/warpFrameH;               //Relative Y offset
-                    float fHh =   frameSize.h();  //Relative height of frame
+                    float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
                     float hOfHB = _height/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpSpriteOffset*hOfHB));
