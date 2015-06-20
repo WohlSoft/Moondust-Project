@@ -63,7 +63,6 @@
 #include <ctime>
 #include <iostream>
 
-LevelScene* lScene;
 enum Level_returnTo
 {
     RETURN_TO_MAIN_MENU=0,
@@ -476,6 +475,7 @@ PlayLevel:
 {
     bool playAgain = true;
     int entranceID = 0;
+    LevelScene* lScene;
     while(playAgain)
     {
         entranceID = _game_state.LevelTargetWarp;
@@ -544,12 +544,12 @@ PlayLevel:
 
             if(sceneResult)
                 sceneResult = lScene->init();
-            lScene->stopLoaderAnimation();
-
-            lScene->fader.setFade(10, 0.0f, 0.02f);
 
             if(sceneResult)
-                ExitCode = lScene->exec();
+            {
+                lScene->fader.setFade(10, 0.0f, 0.02f);
+                ExitCode = lScene->exec();                
+            }
 
             if(!sceneResult)
                 ExitCode = LvlExit::EXIT_Error;
