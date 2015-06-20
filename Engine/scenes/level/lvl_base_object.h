@@ -63,7 +63,7 @@ public:
 
     void setSize(float w, float h);
     void setWidth(float w);
-    void setHeight(float w);
+    void setHeight(float h);
 
     virtual void setPos(double x, double y);
     void setPosX(double x);
