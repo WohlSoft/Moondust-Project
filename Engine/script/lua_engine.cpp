@@ -279,6 +279,11 @@ void LuaEngine::postLateShutdownError(luabind::error &error)
     m_lateShutdown = true;
 }
 
+void LuaEngine::runGarbageCollector()
+{
+    lua_gc(L, LUA_GCCOLLECT,0);
+}
+
 QString LuaEngine::getLuaScriptPath() const
 {
     return m_luaScriptPath;
