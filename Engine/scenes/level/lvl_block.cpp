@@ -175,8 +175,8 @@ void LVL_Block::render(double camX, double camY)
     PGE_RectF blockG;
     blockG.setRect(posX()-camX+offset_x,
                          posY()-camY+offset_y,
-                         width,
-                         height);
+                         _width,
+                         _height);
 
 
     AniPos x(0,1);
@@ -193,8 +193,8 @@ void LVL_Block::render(double camX, double camY)
 
     if(sizable)
     {
-        int w = width;
-        int h = height;
+        int w = _width;
+        int h = _height;
 
         int x,y, x2, y2, i, j;
         int hc, wc;
