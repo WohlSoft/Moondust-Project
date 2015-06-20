@@ -333,6 +333,12 @@ void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction)
     warpDirectO=direction;
 }
 
+void LVL_Npc::resetSpriteWarp()
+{
+    warpSpriteOffset=0.0f;
+    isWarping=false;
+}
+
 void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
 {
     int ltype = luabind::type(frames);
