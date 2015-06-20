@@ -234,7 +234,7 @@ void LVL_Npc::render(double camX, double camY)
             case WARP_LEFT://Left entrance, right Exit
                 {
                     float wOfs = offset.x()/warpFrameW;//Relative X offset
-                    float wOfsF = _width/warpFrameW; //Relative hitbox width
+                    float wOfsF = frameSize.w()/warpFrameW; //Relative hitbox width
                     tPos.setLeft(tPos.left()+wOfs+(warpSpriteOffset*wOfsF));
                     npc.setLeft( npc.left()+offset.x() );
                     npc.setRight( npc.right()-(warpSpriteOffset*_width) );
@@ -253,11 +253,20 @@ void LVL_Npc::render(double camX, double camY)
                 {
                     float wOfs =  offset.x()/warpFrameW;               //Relative X offset
                     float fWw =   1.0;   //Relative width of frame
-                    float wOfHB = _width/warpFrameW;                 //Relative width of hitbox
+                    float wOfHB = frameSize.w()/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
-                    tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
-                    npc.setLeft( npc.left()+(warpSpriteOffset*_width) );
-                    npc.setRight( npc.right()-(wWAbs-offset.x()-_width) );
+                    if(!warpResizedBody)
+                    {
+                        tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
+                        npc.setLeft( npc.left()+(warpSpriteOffset*frameSize.w()) );
+                        npc.setRight( npc.right()-(wWAbs-offset.x()-frameSize.w()) );
+                    }
+                    else
+                    {
+                        tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpSpriteOffset*wOfHB));
+                        npc.setLeft( npc.left()+offset.x() );
+                        npc.setRight( npc.right()-(wWAbs-offset.x()-frameSize.w()*(1.0-warpSpriteOffset) ) );
+                    }
                 }
                 break;
             case WARP_BOTTOM://down entrance, up exit
