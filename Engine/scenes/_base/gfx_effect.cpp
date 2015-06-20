@@ -203,23 +203,26 @@ Scene_Effect::Scene_Effect()
 
 Scene_Effect::Scene_Effect(const Scene_Effect &e)
 {
-    animated=e.animated;
-    animator_ID=e.animator_ID;
-    animator=e.animator;
-    texture = e.texture;
-    setup = e.setup;
+    animated    = e.animated;
+    animator_ID = e.animator_ID;
+    animator    = e.animator;
+    texture     = e.texture;
+    setup       = e.setup;
+    direction   = e.direction;
 
-    _limit_delay=e._limit_delay;
-    _delay=e._delay;
+    _limit_delay= e._limit_delay;
+    _delay      = e._delay;
 
-    m_velocityX=e.m_velocityX;
-    m_velocityY=e.m_velocityY;
-    phys_setup=e.phys_setup;
-    gravity = e.gravity;
+    m_velocityX = e.m_velocityX;
+    m_velocityY = e.m_velocityY;
+    phys_setup  = e.phys_setup;
+    gravity     = e.gravity;
 
-    posRect=e.posRect;
+    frameStyle  = e.frameStyle;
 
-    _finished=e._finished;
+    posRect     = e.posRect;
+    _finished   = e._finished;
+
     timeStep= (1000.f/65.f);//(1000.f/(float)PGE_Window::TicksPerSecond);
 }
 
