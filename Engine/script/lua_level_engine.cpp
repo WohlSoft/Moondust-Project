@@ -8,6 +8,7 @@
 #include "bindings/level/classes/luaclass_level_lvl_npc.h"
 #include "bindings/level/classes/luaclass_level_physobj.h"
 
+#include "bindings/level/globalfuncs/luafuncs_level_lvl_npc.h"
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_player.h"
 
 #include <luabind/adopt_policy.hpp>
@@ -79,7 +80,11 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_Class_PhysObj::bindToLua(),
         Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
         Binding_Level_ClassWrapper_LVL_NPC::bindToLua(),
-        Binding_Level_GlobalFuncs_Player::bindToLua()
-        ];
+        Binding_Level_GlobalFuncs_Player::bindToLua(),
+        Binding_Level_GlobalFuncs_NPC::bindToLua()
+
+
+
+    ];
 }
 

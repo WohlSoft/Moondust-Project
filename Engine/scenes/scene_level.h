@@ -297,6 +297,7 @@ public:
     void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
 
     LVL_PlayersArray& getPlayers();
+    LVL_NpcsArray& getNpcs();
 
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
