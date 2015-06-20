@@ -55,13 +55,7 @@ function piranha_plant:onActivated()
 end
 
 function piranha_plant:onLoop(tickTime)
-    local cur_npc = self.npc_obj
-    
-    local players = Player.get()
-    Renderer.printText("Player count: ".. #players, 20, 20)
-    Renderer.printText("Player offset: ".. math.abs(players[1].center_x - cur_npc.center_x), 20, 50)
-    
-    
+    local cur_npc = self.npc_obj    
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
             self.cur_showingUpTicks = self.cur_showingUpTicks + tickTime
@@ -91,7 +85,6 @@ function piranha_plant:onLoop(tickTime)
             self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
         else
             local players = Player.get()
-            --Renderer.printText("Player count: ".. #players, 20, 20)
             local goUp = true
             for _, player in pairs(players) do
                 if(math.abs(player.center_x - cur_npc.center_x) <= 44)then
