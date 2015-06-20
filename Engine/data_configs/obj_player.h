@@ -47,8 +47,12 @@ struct obj_player_physics
     float gravity_accel; //!< Gravity acceleration
     float gravity_scale; //!< Gravity scale
     float velocity_jump; //!< Jump velocity
+    float velocity_jump_bounce; //!< Boubce velocity
+    float velocity_jump_spring; //!< Jump velocity on spring
     float velocity_jump_c; //!< Jump coefficient which provides increzed jump height dependent to speed
     int   jump_time;     //!< Time to jump
+    int   jump_time_bounce;//!< Time to bounce
+    int   jump_time_spring;     //!< Time to jump
 
     float velocity_climb_x; //!< Climbing velocity
     float velocity_climb_y_up; //!< Climbing velocity
