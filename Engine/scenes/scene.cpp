@@ -149,7 +149,7 @@ void Scene::updateLua()
     if(sceneLuaEngine)
     {
         if(sceneLuaEngine->isValid() && !sceneLuaEngine->shouldShutdown()){
-            sceneLuaEngine->runGarbageCollector();
+            //sceneLuaEngine->runGarbageCollector();
             LuaEvent loopEvent = BindingCore_Events_Engine::createLoopEvent(sceneLuaEngine, uTickf);
             sceneLuaEngine->dispatchEvent(loopEvent);
         }
