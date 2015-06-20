@@ -135,6 +135,8 @@ void LuaEngine::shutdown()
         return;
     }
 
+    loadedFiles.clear();
+
     // FIXME: Add shutdown event
 
     forceShutdown();
@@ -154,6 +156,11 @@ void LuaEngine::forceShutdown()
 
 luabind::object LuaEngine::loadClassAPI(const QString &path)
 {
+    if(loadedFiles.contains(path))
+    {
+        return loadedFiles[path];
+    }
+
     QFile luaCoreFile(path);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
         qWarning() << "Failed to load up \"" << path << "\"! Wrong path or insufficient access?";
@@ -179,6 +186,8 @@ luabind::object LuaEngine::loadClassAPI(const QString &path)
         qWarning() << "Invalid return type of loading class";
         return luabind::object();
     }
+
+    loadedFiles[path]=tReturn;
     return tReturn;
 }
 
