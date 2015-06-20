@@ -233,6 +233,7 @@ struct npc_Markers
 
     // some physics settings
             float phs_gravity_accel;
+            float phs_max_fall_speed;
     //effects
     unsigned long eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
 };
