@@ -65,6 +65,7 @@ void LVL_Npc::kill()
     killed=true;
     sct()->unregisterElement(this);
     LvlSceneP::s->dead_npcs.push_back(this);
+    LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, direction);
 }
 
 void LVL_Npc::transformTo(long id, int type)
