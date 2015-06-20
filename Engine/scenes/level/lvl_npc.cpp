@@ -42,6 +42,10 @@ LVL_Npc::~LVL_Npc()
 void LVL_Npc::init()
 {
     if(_isInited) return;
+
+    phys_setup.gravityAccel=ConfigManager::marker_npc.phs_gravity_accel;
+    phys_setup.max_vel_y=   ConfigManager::marker_npc.phs_max_fall_speed;
+
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();

@@ -65,7 +65,8 @@ bool ConfigManager::loadLevelNPC()
         marker_npc.boomerang =      npcset.value("boomerang", "292").toInt();
         marker_npc.coin_in_block =  npcset.value("coin-in-block", "10").toInt();
 
-      marker_npc.phs_gravity_accel= npcset.value("gravity-acceleration", 26).toFloat();
+      marker_npc.phs_gravity_accel= npcset.value("physics-gravity-acceleration", 16.25).toFloat();
+      marker_npc.phs_max_fall_speed=npcset.value("physics-max-fall-speed", 8).toFloat();
 
         marker_npc.eff_lava_burn =  npcset.value("effect-lava-burn", "13").toInt();
     npcset.endGroup();
