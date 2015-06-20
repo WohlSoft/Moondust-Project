@@ -17,8 +17,8 @@ luabind::scope Binding_Level_Class_PhysObj::bindToLua()
             .property("width", &PGE_Phys_Object::width, &PGE_Phys_Object::setWidth)
             .property("height", &PGE_Phys_Object::height, &PGE_Phys_Object::setHeight)
             .property("top", &PGE_Phys_Object::top, &PGE_Phys_Object::setTop)
-            .property("left", &PGE_Phys_Object::left&PGE_Phys_Object::setLeft)
-            .property("right", &PGE_Phys_Object::right&PGE_Phys_Object::setRight)
+            .property("left", &PGE_Phys_Object::left, &PGE_Phys_Object::setLeft)
+            .property("right", &PGE_Phys_Object::right, &PGE_Phys_Object::setRight)
             .property("bottom", &PGE_Phys_Object::bottom, &PGE_Phys_Object::setBottom)
 
             //Physics

@@ -173,7 +173,7 @@ void PGE_Phys_Object::setWidth(float w)
     _syncPositionAndSize();
 }
 
-void PGE_Phys_Object::setHeight(float w)
+void PGE_Phys_Object::setHeight(float h)
 {
     posRect.setHeight(h);
     _realHeight=h;
