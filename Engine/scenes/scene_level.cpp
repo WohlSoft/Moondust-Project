@@ -39,6 +39,8 @@
 
 #include "level/lvl_scene_ptr.h"
 
+#include <common_features/logger.h>
+
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
 {
@@ -67,6 +69,14 @@ LevelScene::LevelScene()
     warpToArrayID = 0;
     warpToWorld=false;
     NewPlayerID = 1;
+    /**************************/
+
+    /**************************/
+    placingMode=false;
+    placingMode_item_type=0;
+    placingMode_block=FileFormats::dummyLvlBlock();
+    placingMode_bgo  =FileFormats::dummyLvlBgo();
+    placingMode_npc  =FileFormats::dummyLvlNpc();
     /**************************/
 
     /*********Default players number*************/
@@ -473,13 +483,59 @@ void LevelScene::update()
     }
 
     //Recive external commands!
-    if(IntProc::enabled && IntProc::cmd_accepted)
+    if(IntProc::enabled && IntProc::hasCommand())
     {
-        PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
-                          PGE_MsgBox::msg_info, PGE_Point(-1, -1),
-                           ConfigManager::setup_message_box.box_padding,
-                           ConfigManager::setup_message_box.sprite);
-        msgBox.exec();
+        switch(IntProc::commandType())
+        {
+            case IntProc::MessageBox:
+            {
+                PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
+                                  PGE_MsgBox::msg_info, PGE_Point(-1, -1),
+                                   ConfigManager::setup_message_box.box_padding,
+                                   ConfigManager::setup_message_box.sprite);
+                msgBox.exec(); break;
+            }
+            case IntProc::Cheat:
+                break;
+            case IntProc::PlaceItem:
+            {
+                QString raw = IntProc::getCMD();
+                WriteToLog(QtDebugMsg, raw);
+                LevelData got=FileFormats::ReadExtendedLvlFile(raw, ".", true);
+                if(!got.ReadFileValid)
+                {
+                    WriteToLog(QtDebugMsg, FileFormats::errorString);
+                    return;
+                }
+
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
+
+                if(raw.startsWith("BLOCK_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.blocks.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=0;
+                    placingMode_block=got.blocks[0];
+                } else
+                if(raw.startsWith("BGO_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.bgo.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=1;
+                    placingMode_bgo=got.bgo[0];
+                } else
+                if(raw.startsWith("NPC_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.npc.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=2;
+                    placingMode_npc=got.npc[0];
+                }
+                else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+
+                break;
+            }
+        }
     }
 
 }
@@ -579,7 +635,10 @@ void LevelScene::render()
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTickf), 10, 155, 0, 1.0, 0, 0, 1.0);
-        //world->DrawDebugData();
+
+        if(placingMode)
+            FontManager::printText(QString("Placing! %1")
+                        .arg(placingMode_item_type), 10, 10, 0);
     }
     renderBlack:
     Scene::render();
@@ -693,6 +752,19 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
         break;
       default:
         break;
+    }
+}
+
+void LevelScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
+{
+    if(!placingMode) return;
+    PGE_Point mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
+    if( mbevent.button==SDL_BUTTON_LEFT )
+    {
+        placeItemByMouse(mousePos.x(), mousePos.y());
+    }else if( mbevent.button==SDL_BUTTON_RIGHT )
+    {
+        placingMode=false;
     }
 }
 

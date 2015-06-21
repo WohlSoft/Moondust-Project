@@ -98,6 +98,7 @@ public:
     bool loadConfigs();
 
     void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier);
+    void onMousePressed(SDL_MouseButtonEvent &mbevent);
     LuaEngine* getLuaEngine();
 
     void update();
@@ -207,12 +208,42 @@ public:
     QVector<LVL_Block* > fading_blocks;
 
     /*********************Item placing**********************/
+    /*********************Initial*placing*******************/
     void placeBlock(LevelBlock blockData);
     void placeBGO(LevelBGO bgoData);
-    void placeNPC(LevelNPC npcData);
-
+    void placeNPC(LevelNPC npcData);    
     void addPlayer(PlayerPoint playerData, bool byWarp=false, int warpType=0, int warpDirect=0);
-    /*********************Item placing**********************/
+    /*******************************************************/
+
+    /*********************Dynamical*spawn*******************/
+    enum NpcSpawnType
+    {
+        GENERATOR_APPEAR=0,
+        GENERATOR_WARP,
+        GENERATOR_PROJECTILE
+    };
+    enum NpcSpawnDirection
+    {
+        SPAWN_LEFT=2,
+        SPAWN_RIGHT=4,
+        SPAWN_UP=1,
+        SPAWN_DOWN=3,
+    };
+    LVL_Block *spawnBlock(LevelBlock blockData);
+    LVL_Bgo   *spawnBGO(LevelBGO bgoData);
+    LVL_Npc   *spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir);
+    /*******************************************************/
+
+    /********************Interprocess Stuff*****************/
+    bool       placingMode;
+    int        placingMode_item_type;
+    LevelBlock placingMode_block;
+    LevelBGO   placingMode_bgo;
+    LevelNPC   placingMode_npc;
+    void       placeItemByMouse(int x, int y);
+    /*******************************************************/
+
+    /*********************Item placing**end*****************/
 
     void destroyBlock(LVL_Block *&_block);
     void setGameState(EpisodeState *_gameState);
@@ -298,7 +329,6 @@ public:
 
     LVL_PlayersArray& getPlayers();
     LVL_NpcsArray& getNpcs();
-
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;

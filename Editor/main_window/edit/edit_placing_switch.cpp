@@ -28,6 +28,8 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include <networking/engine_intproc.h>
+
 
 void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
 {
@@ -187,6 +189,15 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();
 
+                   if(IntEngine::isWorking())
+                   {
+                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       buffer.blocks.push_back(LvlPlacingItems::blockSet);
+                       buffer.layers.clear();
+                       buffer.events.clear();
+                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
+                       IntEngine::sendItemPlacing("BLOCK_PLACE\nBLOCK_PLACE_END\n"+encoded);
+                   }
                    break;
                }
            case ItemTypes::LVL_BGO:
@@ -200,6 +211,16 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();
+
+                   if(IntEngine::isWorking())
+                   {
+                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       buffer.bgo.push_back(LvlPlacingItems::bgoSet);
+                       buffer.layers.clear();
+                       buffer.events.clear();
+                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
+                       IntEngine::sendItemPlacing("BGO_PLACE\nBGO_PLACE_END\n"+encoded);
+                   }
 
                    break;
                }
@@ -217,6 +238,16 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();
+
+                   if(IntEngine::isWorking())
+                   {
+                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       buffer.npc.push_back(LvlPlacingItems::npcSet);
+                       buffer.layers.clear();
+                       buffer.events.clear();
+                       QString encoded=FileFormats::WriteExtendedLvlFile(buffer);
+                       IntEngine::sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n"+encoded);
+                   }
 
                    break;
                }
