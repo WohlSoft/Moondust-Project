@@ -1573,10 +1573,10 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     switch(_dir)
     {
         case Attack_Up:
-            attackZone.setRect(left()+_width_half-5, top()-17, 10, 5);
+            attackZone.setRect(posCenterX()-5, top()-17, 10, 5);
         break;
         case Attack_Down:
-            attackZone.setRect(left()+_width_half-5, bottom(), 10, 5);
+            attackZone.setRect(posCenterX()-5, bottom(), 10, 5);
         break;
         case Attack_Forward:
             if(_direction>=0)
