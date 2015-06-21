@@ -104,8 +104,11 @@ class LVL_Player :
         /*******************Environmept*********************/
 
         /*******************Motion*************************/
-        bool    isRunning;
-        int     direction;
+        bool isRunning();
+        bool    _isRunning;
+
+        int  direction();
+        int     _direction;
         /*******************Motion*************************/
 
         /*******************Life and Death*****************/

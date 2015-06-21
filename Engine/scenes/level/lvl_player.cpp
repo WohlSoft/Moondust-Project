@@ -46,7 +46,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     isLuaPlayer = false;
 
 
-    direction = 1;
+    _direction = 1;
 
     type = LVLPlayer;
 
@@ -93,7 +93,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     doKill = false;
     kill_reason=DEAD_fall;
 
-    isRunning = false;
+    _isRunning = false;
 
     contactedWithWarp = false;
     contactedWarp = NULL;
@@ -165,10 +165,10 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     animator.setSize(setup.matrix_width, setup.matrix_height);
     animator.installAnimationSet(state_cur.sprite_setup);
 
-    phys_setup.max_vel_x = fabs(isRunning ?
+    phys_setup.max_vel_x = fabs(_isRunning ?
                 physics_cur.MaxSpeed_run :
                 physics_cur.MaxSpeed_walk);
-    phys_setup.min_vel_x = -fabs(isRunning ?
+    phys_setup.min_vel_x = -fabs(_isRunning ?
                 physics_cur.MaxSpeed_run :
                 physics_cur.MaxSpeed_walk);
     phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
@@ -365,7 +365,7 @@ void LVL_Player::init()
 {
     setCharacter(characterID, stateID);
 
-    direction = data.direction;
+    _direction = data.direction;
     long posX = data.x+(data.w/2)-(state_cur.width/2);
     long posY = data.y = data.y+data.h-state_cur.height;
     setSize(state_cur.width, state_cur.height);
@@ -491,10 +491,10 @@ void LVL_Player::update(float ticks)
 
         if(JumpPressed) jumpVelocity=physics_cur.velocity_jump;
 
-        phys_setup.max_vel_x = fabs(isRunning ?
+        phys_setup.max_vel_x = fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
-        phys_setup.min_vel_x = -fabs(isRunning ?
+        phys_setup.min_vel_x = -fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
         phys_setup.max_vel_y = fabs(physics_cur.MaxSpeed_down);
@@ -517,28 +517,28 @@ void LVL_Player::update(float ticks)
     //Running key
     if(keys.run)
     {
-        if(!isRunning)
+        if(!_isRunning)
         {
             phys_setup.max_vel_x = physics_cur.MaxSpeed_run;
             phys_setup.min_vel_x = -physics_cur.MaxSpeed_run;
-            isRunning=true;
+            _isRunning=true;
         }
     }
     else
     {
-        if(isRunning)
+        if(_isRunning)
         {
             phys_setup.max_vel_x = physics_cur.MaxSpeed_walk;
             phys_setup.min_vel_x = -physics_cur.MaxSpeed_walk;
-            isRunning=false;
+            _isRunning=false;
         }
     }
     if((physics_cur.ground_c_max!=1.0f))
     {
-        phys_setup.max_vel_x = fabs(isRunning ?
+        phys_setup.max_vel_x = fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
-        phys_setup.min_vel_x = -fabs(isRunning ?
+        phys_setup.min_vel_x = -fabs(_isRunning ?
                     physics_cur.MaxSpeed_run :
                     physics_cur.MaxSpeed_walk) *(onGround?physics_cur.ground_c_max:1.0f);
     }
@@ -559,7 +559,7 @@ void LVL_Player::update(float ticks)
             {
                 attack(Attack_Forward);
                 PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
-                animator.playOnce(MatrixAnimator::RacoonTail, direction, 75, true, true, 1);
+                animator.playOnce(MatrixAnimator::RacoonTail, _direction, 75, true, true, 1);
             }
         }
     }
@@ -636,7 +636,7 @@ void LVL_Player::update(float ticks)
 
     if( (!keys.left) || (!keys.right) )
     {
-        bool turning=(((speedX()>0)&&(direction<0))||((speedX()<0)&&(direction>0)));
+        bool turning=(((speedX()>0)&&(_direction<0))||((speedX()<0)&&(_direction>0)));
 
         float force = turning?
                     physics_cur.decelerate_turn :
@@ -645,8 +645,8 @@ void LVL_Player::update(float ticks)
         if(on_slippery_surface) force=force/physics_cur.slippery_c;
         else if((onGround)&&(physics_cur.ground_c!=1.0f)) force=force*physics_cur.ground_c;
 
-        if(keys.left) direction=-1;
-        if(keys.right) direction=1;
+        if(keys.left) _direction=-1;
+        if(keys.right) _direction=1;
 
         if(!ducking || !onGround)
         {
@@ -694,12 +694,12 @@ void LVL_Player::update(float ticks)
             {
                 if(environment==LVL_PhysEnv::Env_Water)
                 {
-                    if(!ducking) animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                    if(!ducking) animator.playOnce(MatrixAnimator::SwimUp, _direction, 75);
                 }
                 else
                 if(environment==LVL_PhysEnv::Env_Quicksand)
                 {
-                    if(!ducking) animator.playOnce(MatrixAnimator::JumpFloat, direction, 64);
+                    if(!ducking) animator.playOnce(MatrixAnimator::JumpFloat, _direction, 64);
                 }
 
                 JumpPressed=true;
@@ -857,7 +857,7 @@ void LVL_Player::update(float ticks)
 
     if(_stucked)
     {
-        posRect.setX(posRect.x()-direction*2);
+        posRect.setX(posRect.x()-_direction*2);
         applyAccel(0, 0);
     }
 
@@ -914,7 +914,7 @@ void LVL_Player::update(float ticks)
                                 break;
                             case 3://down
                                 if(keys.down && !wasEntered) { setPosY(contactedWarp->bottom()-state_cur.height);
-                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                     doTeleport=true;}
                                 break;
                             case 2://left
@@ -922,7 +922,7 @@ void LVL_Player::update(float ticks)
                                 break;
                             case 1://up
                                 if(keys.up && !wasEntered) {  setPosY(contactedWarp->top());
-                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                    animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                     doTeleport=true;}
                                 break;
                             default:
@@ -1461,14 +1461,14 @@ void LVL_Player::refreshAnimation()
         {
             animator.unlock();
             if((speedY()<0.0)||(speedX()!=0.0))
-                animator.switchAnimation(MatrixAnimator::Climbing, direction, 128);
+                animator.switchAnimation(MatrixAnimator::Climbing, _direction, 128);
             else
-                animator.switchAnimation(MatrixAnimator::Climbing, direction, -1);
+                animator.switchAnimation(MatrixAnimator::Climbing, _direction, -1);
         }
         else
         if(ducking)
         {
-            animator.switchAnimation(MatrixAnimator::SitDown, direction, 128);
+            animator.switchAnimation(MatrixAnimator::SitDown, _direction, 128);
         }
         else
         if(!onGround)
@@ -1476,29 +1476,29 @@ void LVL_Player::refreshAnimation()
             if(environment==LVL_PhysEnv::Env_Water)
             {
                 if(speedY()>=0)
-                    animator.switchAnimation(MatrixAnimator::Swim, direction, 128);
+                    animator.switchAnimation(MatrixAnimator::Swim, _direction, 128);
                 else
-                    animator.switchAnimation(MatrixAnimator::SwimUp, direction, 128);
+                    animator.switchAnimation(MatrixAnimator::SwimUp, _direction, 128);
             }
             else if(environment==LVL_PhysEnv::Env_Quicksand)
             {
                 if(speedY()<0)
-                    animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::JumpFloat, _direction, 64);
                 else if(speedY()>0)
-                    animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::Idle, _direction, 64);
             }
             else
             {
                 if(speedY()<0)
-                    animator.switchAnimation(MatrixAnimator::JumpFloat, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::JumpFloat, _direction, 64);
                 else if(speedY()>0)
-                    animator.switchAnimation(MatrixAnimator::JumpFall, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::JumpFall, _direction, 64);
             }
         }
         else
         {
             bool busy=false;
-            if((speedX()<-1)&&(direction>0))
+            if((speedX()<-1)&&(_direction>0))
                 if(keys.right)
                 {
                     if(SDL_GetTicks()-slideTicks>100)
@@ -1506,13 +1506,13 @@ void LVL_Player::refreshAnimation()
                         PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
                         slideTicks=SDL_GetTicks();
                     }
-                    animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::Sliding, _direction, 64);
                     busy=true;
                 }
 
             if(!busy)
             {
-                if((speedX()>1)&&(direction<0))
+                if((speedX()>1)&&(_direction<0))
                     if(keys.left)
                     {
                         if(SDL_GetTicks()-slideTicks>100)
@@ -1520,7 +1520,7 @@ void LVL_Player::refreshAnimation()
                             PGE_Audio::playSoundByRole(obj_sound_role::PlayerSlide);
                             slideTicks=SDL_GetTicks();
                         }
-                        animator.switchAnimation(MatrixAnimator::Sliding, direction, 64);
+                        animator.switchAnimation(MatrixAnimator::Sliding, _direction, 64);
                         busy=true;
                     }
             }
@@ -1529,11 +1529,11 @@ void LVL_Player::refreshAnimation()
             {
                 float velX = speedX();
                 if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(_accelX>0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((velX*20)<100?velX*10:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, _direction, (128-((velX*20)<100?velX*10:100)));
                 else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(_accelX<0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, direction, (128-((-velX*20)<100?-velX*10:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, _direction, (128-((-velX*20)<100?-velX*10:100)));
                 else
-                    animator.switchAnimation(MatrixAnimator::Idle, direction, 64);
+                    animator.switchAnimation(MatrixAnimator::Idle, _direction, 64);
             }
         }
     /**********************************Animation switcher**********************************/
@@ -1579,7 +1579,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
             attackZone.setRect(left()+_width_half-5, bottom(), 10, 5);
         break;
         case Attack_Forward:
-            if(direction>=0)
+            if(_direction>=0)
                 attackZone.setRect(right(), bottom()-32, 10, 10);
             else
                 attackZone.setRect(left()-10, bottom()-32, 10, 10);
@@ -1654,7 +1654,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                       teleport(x+16-_width_half,
                                                      y+32-_height);
                                       animator.unlock();
-                                      animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                      animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                   }, 0);
                 event_queue.events.push_back(event2);
 
@@ -1694,9 +1694,9 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
-                                direction=1;
+                                _direction=1;
                                 animator.unlock();
-                                animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
                                 teleport(x, y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1707,7 +1707,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
-                                animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                 teleport(x+16-_width_half, y);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1717,9 +1717,9 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                     {
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x, y]()->void{
-                                direction=-1;
+                                _direction=-1;
                                 animator.unlock();
-                                animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
                                 teleport(x+32-_width, y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1730,7 +1730,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
-                                animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                 teleport(x+16-_width_half,
                                          y+32-_height);
                                           }, 0);
@@ -1815,9 +1815,9 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
                                   warpDirectO=4;
-                                  direction=1;
+                                  _direction=1;
                                   animator.unlock();
-                                  animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                  animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
                                   setPos(warp.ix+32-_width, posY());
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1829,7 +1829,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         eventX.makeCaller([this,warp]()->void{
                                   warpDirectO=3;
                                   animator.unlock();
-                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                   setPos(posX(), warp.iy+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1840,9 +1840,9 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         EventQueueEntry<LVL_Player >eventX;
                         eventX.makeCaller([this,warp]()->void{
                                   warpDirectO=2;
-                                  direction=-1;
+                                  _direction=-1;
                                   animator.unlock();
-                                  animator.switchAnimation(MatrixAnimator::Run, direction, 115);
+                                  animator.switchAnimation(MatrixAnimator::Run, _direction, 115);
                                   setPos(warp.ix, posY());
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1854,7 +1854,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                         eventX.makeCaller([this,warp]()->void{
                                   warpDirectO=1;
                                   animator.unlock();
-                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
+                                  animator.switchAnimation(MatrixAnimator::PipeUpDown, _direction, 115);
                                   setPos(posX(), warp.iy);
                                           }, 0);
                         event_queue.events.push_back(eventX);
@@ -1918,7 +1918,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                 warpDirectO=0;
                                 setDuck(false);
                                 animator.unlock();
-                                animator.switchAnimation(MatrixAnimator::PipeUpDownRear, direction, 115);
+                                animator.switchAnimation(MatrixAnimator::PipeUpDownRear, _direction, 115);
                                 PGE_Audio::playSoundByRole(obj_sound_role::WarpDoor);
                               }, 0);
             event_queue.events.push_back(event1);
@@ -2027,6 +2027,16 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
     }
 }
 
+bool LVL_Player::isRunning()
+{
+    return _isRunning;
+}
+
+
+int LVL_Player::direction()
+{
+    return _direction;
+}
 
 
 void LVL_Player::render(double camX, double camY)
