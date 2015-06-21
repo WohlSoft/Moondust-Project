@@ -814,12 +814,11 @@ void LVL_Player::update(float ticks)
     //Connection of section opposite sides
     if(isExiting) // Allow walk offscreen if exiting
     {
-        if(posX() < sBox.left()-_width-1 )
-            setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
-        else
-        if(posX() > sBox.right() + 1 )
-            setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
-
+        if((posX() < sBox.left()-_width-1 )||(posX() > sBox.right() + 1 ))
+        {
+            setGravityScale(0.0);//Prevent falling [we anyway exited from this level, isn't it?]
+            setSpeedY(0.0);
+        }
         if(keys.left||keys.right)
         {
             if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
@@ -1635,6 +1634,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     foreach(LVL_Npc *x, target_npcs)
     {
         if(!x) continue;
+        if(x->isPaused()) continue; //Don't attak NPC with paused physics!
         if(x->isKilled()) continue;
         x->harm();
         LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
