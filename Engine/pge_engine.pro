@@ -35,9 +35,12 @@ DEFINES += PGE_ENGINE
 include ($$PWD/../_common/lib_destdir.pri)
 
 INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
-LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/liajit-2.0
 
-LIBS += -lluabind -lluajit-5.1
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+LIBS += -lluabind
+contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
+
 android: {
     LIBS += -lSDL2 -lglut -lGLU
 }

@@ -69,10 +69,10 @@ UnArch $LatestSDL
 UnArch 'libogg-1.3.2'
 UnArch 'libvorbis-1.3.4'
 UnArch 'flac-1.3.1'
-UnArch 'libmikmod-3.3.7'
+#UnArch 'libmikmod-3.3.7'
 UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
-UnArch 'luajit-2.0-fromgit'
+UnArch 'luajit-2.0'
 cp ../libmad-0.15.1b.patched_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
@@ -80,6 +80,8 @@ cp ../libmad-0.15.1b.patched_configure.txt .
 
 ###########SDL2###########
 echo "=======SDL2========="
+#sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/src/Makefile.am'
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' $LatestSDL'/Makefile.in'
 BuildSrc $LatestSDL $SDL_ARGS'--prefix='$InstallTo
 
 #apply fix of SDL2 bug
@@ -88,24 +90,34 @@ cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
 
 ###########OGG###########
 echo "=========OGG==========="
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.am'
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libogg-1.3.2/src/Makefile.in'
 BuildSrc 'libogg-1.3.2' '--prefix='$InstallTo
 
 
 ###########VORBIS###########
 echo "============VORBIS=========="
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.am'
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'libvorbis-1.3.4/lib/Makefile.in'
 BuildSrc 'libvorbis-1.3.4' '--prefix='$InstallTo
 
 ###########FLAC###########
 echo "==========FLAC========="
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.in'
+sed  -i 's/-version-info [^ ]\+/-avoid-version /g' 'flac-1.3.1/src/libFLAC++/Makefile.am'
+sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.in'
+sed  -i 's/-version-info 11:0:3/-avoid-version /g' 'flac-1.3.1/src/libFLAC/Makefile.am'
 BuildSrc 'flac-1.3.1' '--disable-xmms-plugin --prefix='$InstallTo
 
 
 ###########MIKMOD###########
-echo "=============MIKMOD=========="
-BuildSrc 'libmikmod-3.3.7' '--prefix='$InstallTo
+#echo "=============MIKMOD=========="
+#BuildSrc 'libmikmod-3.3.7' '--prefix='$InstallTo
 
 ###########MODPLUG###########
 echo "==========MODPLUG=========="
+sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.am'
+sed -i 's/-version-info \$(MODPLUG_LIBRARY_VERSION)/-avoid-version/g' 'libmodplug-0.8.8.5/src/Makefile.in'
 BuildSrc 'libmodplug-0.8.8.5' '--prefix='$InstallTo
 
 ###########LibMAD###########
@@ -118,6 +130,8 @@ then
 	chmod u+x ./configure
 fi
 cd ..
+sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
+sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
 BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
 
 ###########LuaJIT###########
