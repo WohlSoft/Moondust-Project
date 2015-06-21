@@ -435,7 +435,7 @@ void LevelScene::update()
         for(int i=0;i<active_npcs.size();i++)
         {
             active_npcs[i]->update(uTickf);
-            if(active_npcs[i]->killed)
+            if(active_npcs[i]->isKilled())
             {
                 active_npcs.removeAt(i); i--;
             }

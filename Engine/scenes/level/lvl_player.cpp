@@ -1422,7 +1422,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
             if(npc)
             {
-                if(npc->killed)        break;
+                if(npc->isKilled())        break;
                 if(npc->data.friendly) break;
                 if(npc->setup->climbable)
                 {
@@ -1635,7 +1635,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     foreach(LVL_Npc *x, target_npcs)
     {
         if(!x) continue;
-        if(x->killed) continue;
+        if(x->isKilled()) continue;
         x->harm();
         LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
         kill_npc(x, NPC_Kicked);
@@ -2020,7 +2020,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 {
     if(!target) return;
-    if(!target->killed) return;
+    if(!target->isKilled()) return;
 
     switch(reason)
     {
