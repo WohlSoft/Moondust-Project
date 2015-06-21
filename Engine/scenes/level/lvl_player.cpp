@@ -69,7 +69,8 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
 
     climbing=false;
 
-    collide = PGE_Phys_Object::COLLISION_ANY;
+    collide_player = COLLISION_ANY;
+    collide_npc    = COLLISION_NONE;
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
@@ -85,7 +86,6 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     doHarm=false;
     doHarm_damage=0;
 
-    foot_contacts=0;
     jumpTime=0;
     jumpVelocity=5.3f;
 
@@ -1176,82 +1176,6 @@ void LVL_Player::updateCollisions()
     #endif
 }
 
-bool LVL_Player::isWall(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.isEmpty())
-        return false;
-    float higher=blocks.first()->posRect.top();
-    float lower=blocks.first()->posRect.bottom();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->posRect.bottom()>lower)
-            lower=blocks[i]->posRect.bottom();
-        if(blocks[i]->posRect.top()<higher)
-            higher=blocks[i]->posRect.top();
-    }
-    if(posRect.top() >= lower) return false;
-    if(posRect.bottom() <= higher) return false;
-    return true;
-}
-
-bool LVL_Player::isFloor(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.isEmpty())
-        return false;
-    float lefter=blocks.first()->posRect.left();
-    float righter=blocks.first()->posRect.right();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->posRect.right()>righter)
-            righter=blocks[i]->posRect.right();
-        if(blocks[i]->posRect.left()<lefter)
-            lefter=blocks[i]->posRect.left();
-    }
-    if(posRect.left() >= righter) return false;
-    if(posRect.right() <= lefter) return false;
-    return true;
-}
-
-LVL_Block *LVL_Player::nearestBlock(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    LVL_Block*nearest=NULL;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            if( fabs(blocks[i]->posRect.center().x()-posRect.center().x())<
-                fabs(nearest->posRect.center().x()-posRect.center().x()) )
-                nearest=blocks[i];
-        }
-    }
-    return nearest;
-}
-
-LVL_Block *LVL_Player::nearestBlockY(QVector<LVL_Block *> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    LVL_Block*nearest=NULL;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
-                fabs(nearest->posRect.center().y()-posRect.center().y()) )
-                nearest=blocks[i];
-        }
-    }
-    return nearest;
-}
-
 
 void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 {
@@ -1309,7 +1233,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             PGE_PointF cc = collided->posRect.center();
             PGE_RectF  rc = collided->posRect;
 
-            switch(collided->collide)
+            switch(collided->collide_player)
             {
                 case COLLISION_TOP:
                 {

@@ -29,9 +29,8 @@ public:
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
+    void setDirection(int dir);
     int direction;
-    QHash<int, int> blocks_left;
-    QHash<int, int> blocks_right;
     float motionSpeed;
     bool  is_scenery;
 
@@ -52,6 +51,37 @@ public:
     void setDefaults();
     void Activate();
     void deActivate();
+
+    void updateCollisions();
+    void solveCollision(PGE_Phys_Object *collided);
+    bool forceCollideCenter;//!< collide with invizible blocks at center
+    float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
+
+    /*****************NPC's and blocks******************/
+    bool             onGround;
+    QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
+    QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
+
+    QHash<int, PGE_Phys_Object*> contacted_bgos;
+
+    typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
+    QHash<int, PGE_Phys_Object*> collided_top;
+    QHash<int, PGE_Phys_Object*> collided_left;
+    QHash<int, PGE_Phys_Object*> collided_right;
+    QHash<int, PGE_Phys_Object*> collided_bottom;
+    QHash<int, PGE_Phys_Object*> collided_center;
+    bool _stucked;
+
+    bool    bumpDown;
+    bool    bumpUp;
+    /***************************************************/
+    /*******************Environmept*********************/
+    //QHash<int, obj_player_physics > physics;
+    QHash<int, int > environments_map;
+    //obj_player_physics physics_cur;
+    int     environment;
+    int     last_environment;
+    /*******************Environmept*********************/
 
     bool isActivated;
     int timeout;
