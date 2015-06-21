@@ -594,6 +594,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbableUp&&(jumpTime<=0))
         {
+            setDuck(false);
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
         }
@@ -609,6 +610,7 @@ void LVL_Player::update(float ticks)
     {
         if( climbableDown && (jumpTime<=0) )
         {
+            setDuck(false);
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
         }
