@@ -231,7 +231,7 @@ public:
     };
     LVL_Block *spawnBlock(LevelBlock blockData);
     LVL_Bgo   *spawnBGO(LevelBGO bgoData);
-    LVL_Npc   *spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir);
+    LVL_Npc   *spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable=false);
     /*******************************************************/
 
     /********************Interprocess Stuff*****************/

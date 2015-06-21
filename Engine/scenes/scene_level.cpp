@@ -450,10 +450,18 @@ void LevelScene::update()
                 active_npcs.removeAt(i); i--;
             }
             else
-            if(active_npcs[i]->timeout<=0)
+            if(active_npcs[i]->activationTimeout<=0)
             {
-                active_npcs[i]->deActivate();
-                active_npcs.removeAt(i); i--;
+                if(!active_npcs[i]->warpSpawing)
+                    active_npcs[i]->deActivate();
+                if(active_npcs[i]->wasDeactivated)
+                {
+                    if(!isVizibleOnScreen(active_npcs[i]->posRect))
+                    {
+                        active_npcs[i]->wasDeactivated=false;
+                        active_npcs.removeAt(i); i--;
+                    }
+                }
             }
         }
 
@@ -461,6 +469,7 @@ void LevelScene::update()
         {
             LVL_Npc *corpse = dead_npcs.last();
             dead_npcs.pop_back();
+            active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
             if(!corpse->isLuaNPC)
                 delete corpse;

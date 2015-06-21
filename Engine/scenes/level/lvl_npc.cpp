@@ -34,7 +34,14 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     animated=false;
     animator_ID=0;
     killed=false;
+
     isActivated=false;
+    deActivatable=true;
+    reSpawnable=true;
+    wasDeactivated=false;
+    activationTimeout=4000;
+    warpSpawing=false;
+
     _isInited=false;
     isLuaNPC=false;
     isWarping=false;
@@ -55,6 +62,11 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     _heightDelta=0.0f;
 
     health = 1;
+
+    isGenerator=false;
+    generatorTimeLeft=0;
+    generatorType=0;
+    generatorDirection=0;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -110,7 +122,10 @@ void LVL_Npc::harm(int damage)
 {
     health-=damage;
     if(health<=0)
+    {
         kill();
+        LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
+    }
     else
         PGE_Audio::playSound(39);
 }
@@ -120,7 +135,6 @@ void LVL_Npc::kill()
     killed=true;
     sct()->unregisterElement(this);
     LvlSceneP::s->dead_npcs.push_back(this);
-    LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
 }
 
 void LVL_Npc::transformTo(long id, int type)
@@ -182,6 +196,21 @@ void LVL_Npc::transformTo_x(long id)
 
     setSize(setup->width, setup->height);
 
+    if(data.generator)
+    {
+        isGenerator=true;
+        generatorDirection=data.generator_direct;
+        generatorTimeLeft= data.generator_period*100;
+        generatorType    = data.generator_type;
+
+        deActivatable    = true;
+        activationTimeout= 150;
+        return;
+    }
+
+    deActivatable    = setup->deactivation;
+    activationTimeout= setup->deactivetionDelay;
+
     setDirection(_direction);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
@@ -219,9 +248,20 @@ void LVL_Npc::update(float tickTime)
 {
     float accelCof=tickTime/1000.0f;
     if(killed) return;
+    if(wasDeactivated) return;
+
+    if(isGenerator)
+    {
+        updateGenerator(tickTime);
+        return;
+    }
+
+    event_queue.processEvents(tickTime);
+
+    if(warpSpawing) return;
 
     PGE_Phys_Object::update(tickTime);
-    timeout-=tickTime;
+    if(deActivatable) activationTimeout-=tickTime;
     animator.manualTick(tickTime);
 
     if(motionSpeed!=0)
@@ -256,7 +296,8 @@ void LVL_Npc::update(float tickTime)
 void LVL_Npc::render(double camX, double camY)
 {
     if(killed) return;
-    if(!isActivated) return;
+    if(isGenerator) return;
+    if((!isActivated)&&(!warpSpawing)) return;
 
     AniPos x(0,1);
     if(animated)
@@ -377,10 +418,15 @@ void LVL_Npc::setDefaults()
 void LVL_Npc::Activate()
 {
     if(!is_scenery)
-        timeout=4000;
+        activationTimeout = setup->deactivetionDelay;
     else
-        timeout=150;
+        activationTimeout = 150;
+
     if(isActivated) return;
+    setPaused(false);
+
+    deActivatable = setup->deactivation; //!< Allow deactivation of this NPC when it going offscreen
+    wasDeactivated=false;
 
     animator.start();
     if(isLuaNPC){
@@ -395,13 +441,24 @@ void LVL_Npc::Activate()
 
 void LVL_Npc::deActivate()
 {
+    if(!deActivatable) return;
+
+    if(!wasDeactivated)
+    {
+        wasDeactivated=true;
+    }
+    if(!isActivated) return;
+
     isActivated=false;
     if(!is_scenery)
     {
         setDefaults();
         setPos(data.x, data.y);
     }
+    setPaused(true);
     animator.stop();
+
+    if(!reSpawnable) kill();
 }
 
 void LVL_Npc::setSpriteWarp(float depth, LVL_Npc::WarpingSide direction, bool resizedBody)
@@ -418,6 +475,46 @@ void LVL_Npc::resetSpriteWarp()
     warpSpriteOffset=0.0f;
     warpResizedBody=false;
     isWarping=false;
+}
+
+void LVL_Npc::setWarpSpawn(LVL_Npc::WarpingSide side)
+{
+    setSpriteWarp(1.0f, side);
+    warpSpawing=true;
+    float pStep = 1.5f/((float)PGE_Window::TicksPerSecond);
+    EventQueueEntry<LVL_Npc >warpOut;
+    warpOut.makeWaiterCond([this, pStep]()->bool{
+                            setSpriteWarp(warpSpriteOffset-pStep, (WarpingSide)warpDirectO, false);
+                              return warpSpriteOffset<=0.0f;
+                          }, false, 0);
+    event_queue.events.push_back(warpOut);
+
+    EventQueueEntry<LVL_Npc >endWarping;
+    endWarping.makeCaller([this, side]()->void{
+                          setSpriteWarp(0.0f, side);
+                          warpSpawing=false;
+                          last_environment=-1;//!< Forcing to refresh physical environment
+                      }, 0);
+    event_queue.events.push_back(endWarping);
+}
+
+void LVL_Npc::updateGenerator(float tickTime)
+{
+    if(!isGenerator) return;
+    generatorTimeLeft-=tickTime;
+    if(generatorTimeLeft<=0)
+    {
+        LevelNPC def = data;
+        def.x=round(posX());
+        def.y=round(posY());
+        def.generator=false;
+        def.layer="Spawned NPCs";
+        LvlSceneP::s->spawnNPC(def,
+                               (LevelScene::NpcSpawnType)generatorType,
+                               (LevelScene::NpcSpawnDirection)generatorDirection, false);
+        generatorTimeLeft += data.generator_period*100;
+    }
+
 }
 
 void LVL_Npc::lua_setSequenceLeft(luabind::object frames)

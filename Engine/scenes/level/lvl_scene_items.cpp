@@ -108,7 +108,7 @@ void LevelScene::placeNPC(LevelNPC npcData)
     npcs.push_back(npc);
 }
 
-LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir)
+LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDirection sp_dir, bool reSpawnable)
 {
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return NULL;
@@ -126,8 +126,32 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     }
     npcData.array_id= ++data.npc_array_id;
     npc->setup = curNpcData;
+    npc->reSpawnable=reSpawnable;
     npc->data = npcData;
     npc->init();
+    npc->Activate();
+    switch(sp_type)
+    {
+        case GENERATOR_WARP:
+        switch(sp_dir)
+        {
+            case SPAWN_DOWN:
+                npc->setWarpSpawn(LVL_Npc::WARP_TOP); break;
+            case SPAWN_UP:
+                npc->setWarpSpawn(LVL_Npc::WARP_BOTTOM); break;
+            case SPAWN_LEFT:
+                npc->setWarpSpawn(LVL_Npc::WARP_RIGHT); break;
+            case SPAWN_RIGHT:
+                npc->setWarpSpawn(LVL_Npc::WARP_LEFT); break;
+        }
+        break;
+        case GENERATOR_PROJECTILE:
+
+        break;
+        default:
+            break;
+    }
+    active_npcs.push_back(npc);
     npcs.push_back(npc);
     return npc;
 }
