@@ -476,7 +476,6 @@ void LVL_Player::update(float ticks)
     if((last_environment!=environment)||(last_environment==-1))
     {
         physics_cur = physics[environment];
-
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
@@ -489,6 +488,8 @@ void LVL_Player::update(float ticks)
 
         if(physics_cur.slow_speed_x_on_enter)
             setSpeedX( speedX()*(physics_cur.slow_speed_x_coeff) );
+
+        if(JumpPressed) jumpVelocity=physics_cur.velocity_jump;
 
         phys_setup.max_vel_x = fabs(isRunning ?
                     physics_cur.MaxSpeed_run :
@@ -716,6 +717,7 @@ void LVL_Player::update(float ticks)
             {
                 climbing=false;
                 jumpTime=physics_cur.jump_time;
+                jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
