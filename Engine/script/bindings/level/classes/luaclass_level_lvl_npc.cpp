@@ -48,7 +48,10 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
 
             //Properties
-            .property("id", &LVL_Npc::getID);
+            .property("id", &LVL_Npc::getID)
+
+            //States
+            .def_readonly("onGround", &LVL_Npc::onGround);
 
 }
 
