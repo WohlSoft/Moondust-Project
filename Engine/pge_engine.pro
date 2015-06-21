@@ -39,7 +39,6 @@ contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS
 
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
-contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
 
 android: {
     LIBS += -lSDL2 -lglut -lGLU
@@ -56,6 +55,8 @@ macx: {
 linux-g++: {
     LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
+
+contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
 
 macx {
     ICON = _resources/cat.icns
