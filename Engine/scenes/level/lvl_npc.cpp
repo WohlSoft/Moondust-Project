@@ -21,6 +21,7 @@
 #include <graphics/gl_renderer.h>
 #include <common_features/number_limiter.h>
 #include <common_features/maths.h>
+#include <audio/pge_audio.h>
 
 #include "lvl_section.h"
 
@@ -52,6 +53,8 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
 
     forceCollideCenter=true;
     _heightDelta=0.0f;
+
+    health = 1;
 }
 
 LVL_Npc::~LVL_Npc()
@@ -91,6 +94,15 @@ void LVL_Npc::setDirection(int dir)
 int LVL_Npc::direction()
 {
     return _direction;
+}
+
+void LVL_Npc::harm(int damage)
+{
+    health-=damage;
+    if(health<=0)
+        kill();
+    else
+        PGE_Audio::playSound(39);
 }
 
 void LVL_Npc::kill()
@@ -182,6 +194,14 @@ void LVL_Npc::transformTo_x(long id)
         collide_npc = COLLISION_TOP;
     else
         collide_npc = COLLISION_NONE;
+
+    if(_isInited)
+    {
+       int leftHealth=setup->health-(setup->health-health);
+       health=(leftHealth>0)? leftHealth : 1;
+    }
+    else
+       health=(setup->health>0)?setup->health : 1;
 }
 
 

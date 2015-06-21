@@ -19,13 +19,18 @@
 #ifndef BASICDETECTOR_H
 #define BASICDETECTOR_H
 
+class LVL_Npc;
 class BasicDetector
 {
+    friend class LVL_Npc;
 public:
     BasicDetector();
+    BasicDetector(LVL_Npc* parent);
     virtual ~BasicDetector();
     virtual void processDetector();
     virtual bool detected();
+private:
+    LVL_Npc* _parentNPC;
 };
 
 #endif // BASICDETECTOR_H

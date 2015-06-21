@@ -1621,14 +1621,19 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
             continue;
         x->hit();
         if(!x->destroyed)
+        {
+            LvlSceneP::s->launchStaticEffectC(69, x->posCenterX(), x->posCenterY(), 1, 0, 0, 0, 0);
             PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+        }
         x->destroyed=true;
     }
     foreach(LVL_Npc *x, target_npcs)
     {
         if(!x) continue;
         if(x->killed) continue;
-        x->kill();
+        x->harm();
+        LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
+        if(x->killed)
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
     }
 }
