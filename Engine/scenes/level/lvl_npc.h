@@ -25,6 +25,8 @@ public:
     virtual ~LVL_Npc();
     void init();
 
+    LevelNPC getData();
+
     LevelNPC data; //Local settings
     PGE_PointF offset;
     PGE_Size frameSize;
@@ -40,6 +42,7 @@ public:
     long animator_ID;
 
     obj_npc *setup;//Global config
+    bool isKilled();
     bool killed;
     void harm(int damage=1);
     void kill();

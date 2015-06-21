@@ -81,6 +81,11 @@ void LVL_Npc::init()
     _isInited=true;
 }
 
+LevelNPC LVL_Npc::getData()
+{
+    return data;
+}
+
 void LVL_Npc::setDirection(int dir)
 {
     if(dir==0) dir=(rand()%2) ? -1 : 1;
@@ -94,6 +99,11 @@ void LVL_Npc::setDirection(int dir)
 int LVL_Npc::direction()
 {
     return _direction;
+}
+
+bool LVL_Npc::isKilled()
+{
+    return killed;
 }
 
 void LVL_Npc::harm(int damage)
