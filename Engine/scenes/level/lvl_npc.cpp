@@ -26,6 +26,10 @@
 
 #include "lvl_scene_ptr.h"
 
+#include <QElapsedTimer>
+#include <common_features/logger.h>
+QElapsedTimer tick_tack;
+
 LVL_Npc::LVL_Npc() : PGE_Phys_Object()
 {
     type = LVLNPC;
@@ -186,7 +190,10 @@ void LVL_Npc::update(float tickTime)
     float accelCof=tickTime/1000.0f;
     if(killed) return;
 
+    tick_tack.restart();
     PGE_Phys_Object::update(tickTime);
+    WriteToLog(QtDebugMsg, QString("PGE_Phys_Object::update(tickTime): time: %1 ns; NPC-%2 (%3) ArrayID-%4").arg(tick_tack.nsecsElapsed()).arg(data.id).arg(setup->name).arg(data.array_id) );
+
     timeout-=tickTime;
     animator.manualTick(tickTime);
 
@@ -217,7 +224,6 @@ void LVL_Npc::update(float tickTime)
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
-
 }
 
 void LVL_Npc::render(double camX, double camY)
