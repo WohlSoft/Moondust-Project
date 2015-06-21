@@ -7,53 +7,28 @@ CONFIG += staticlib
 CONFIG -= qt
 CONFIG += c++11
 
-DEFINES += _LIBLUABIND
+DEFINES += _LIBLUABIND USE_LUA_JIT
 
 unix:{
 DEFINES += LUA_USE_LINUX
 }
 
-!android:{
-DESTDIR = ../../_builds/commonlibs
+contains(DEFINES, USE_LUA_JIT):{
+message("Luabind will be built with LuaJIT!")
 } else {
-DESTDIR = ../../_builds/android/lib
+warning("LuaJIT is not connected!!!")
 }
 
+LIBS += -lluajit-5.1
+
+include (../../../_common/lib_destdir.pri)
+DESTDIR = ../../_builds/$$TARGETOS/lib
+
 include(../../../_common/build_props.pri)
+INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include \
+               $$PWD/../../_builds/$$TARGETOS/include/luajit-2.0/
 
-INCLUDEPATH += $$PWD/../ $$PWD/../lua/
-
-SOURCES +=  ../lua/lapi.c \
-    ../lua/lauxlib.c \
-    ../lua/lbaselib.c \
-    ../lua/lcode.c \
-    ../lua/ldblib.c \
-    ../lua/ldebug.c \
-    ../lua/ldo.c \
-    ../lua/ldump.c \
-    ../lua/lfunc.c \
-    ../lua/lgc.c \
-    ../lua/linit.c \
-    ../lua/liolib.c \
-    ../lua/llex.c \
-    ../lua/lmathlib.c \
-    ../lua/lmem.c \
-    ../lua/loadlib.c \
-    ../lua/lobject.c \
-    ../lua/lopcodes.c \
-    ../lua/loslib.c \
-    ../lua/lparser.c \
-    ../lua/lstate.c \
-    ../lua/lstring.c \
-    ../lua/lstrlib.c \
-    ../lua/ltable.c \
-    ../lua/ltablib.c \
-    ../lua/ltm.c \
-    ../lua/lundump.c \
-    ../lua/lvm.c \
-    ../lua/lzio.c \
-    ../lua/print.c \
-    ../src/class.cpp \
+SOURCES += ../src/class.cpp \
     ../src/class_info.cpp \
     ../src/class_registry.cpp \
     ../src/class_rep.cpp \
@@ -75,30 +50,7 @@ SOURCES +=  ../lua/lapi.c \
     ../src/weak_ref.cpp \
     ../src/wrapper_base.cpp
 
-HEADERS += ../lua/lapi.h \
-    ../lua/lauxlib.h \
-    ../lua/lcode.h \
-    ../lua/ldebug.h \
-    ../lua/ldo.h \
-    ../lua/lfunc.h \
-    ../lua/lgc.h \
-    ../lua/llex.h \
-    ../lua/llimits.h \
-    ../lua/lmem.h \
-    ../lua/lobject.h \
-    ../lua/lopcodes.h \
-    ../lua/lparser.h \
-    ../lua/lstate.h \
-    ../lua/lstring.h \
-    ../lua/ltable.h \
-    ../lua/ltm.h \
-    ../lua/lua.h \
-    ../lua/luaconf.h \
-    ../lua/lualib.h \
-    ../lua/lundump.h \
-    ../lua/lvm.h \
-    ../lua/lzio.h \
-    ../luabind/detail/conversion_policies/conversion_base.hpp \
+HEADERS += ../luabind/detail/conversion_policies/conversion_base.hpp \
     ../luabind/detail/conversion_policies/conversion_policies.hpp \
     ../luabind/detail/conversion_policies/enum_converter.hpp \
     ../luabind/detail/conversion_policies/function_converter.hpp \

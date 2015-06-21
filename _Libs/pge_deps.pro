@@ -1,11 +1,18 @@
 TEMPLATE = subdirs
 CONFIG -= app_bundle
-SUBDIRS = PGEServerAPI SDL2MixerModded OOLua LuaBind
+SUBDIRS = SDL2MixerModded OOLua LuaBind
 
-PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
+#PGEServerAPI.file = $$PWD/../ServerLib/ServerAPI/ServerAPI.pro
 SDL2MixerModded.file = SDL2_mixer_modified/SDL2_mixer.pro
 OOLua.file = oolua/project/oolua.pro
+
+!android: DEFINES+=USE_LUA_JIT
+
+!android:{
 LuaBind.file = luabind/_project/luabind.pro
+} else {
+#LuaBind.file = luabind/_project/luabind_nojit.pro
+}
 
 deplibs.path = bin
 linux-g++: {

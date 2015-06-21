@@ -21,14 +21,18 @@
 void LevelScene::registerElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->width, item->_posY+item->height};
+    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
+    if(item->_width<=0) { rb[0]=item->_posX+1;}
+    if(item->_height<=0) { rb[1]=item->_posY+1;}
     tree.Insert(lt, rb, item);
 }
 
 void LevelScene::unregisterElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->width, item->_posY+item->height};
+    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
+    if(item->_width<=0) { rb[0]=item->_posX+1;}
+    if(item->_height<=0) { rb[1]=item->_posY+1;}
     tree.Remove(lt, rb, item);
 }
 
@@ -46,7 +50,7 @@ namespace LevelScene_space
     }
 }
 
-void LevelScene::queryItems(PGE_RectF zone, QVector<PGE_Phys_Object *> *resultList)
+void LevelScene::queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object *> *resultList)
 {
     RPoint lt={zone.left(), zone.top()};
     RPoint rb={zone.right(), zone.bottom()};

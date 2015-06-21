@@ -69,7 +69,8 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
 
     climbing=false;
 
-    collide = PGE_Phys_Object::COLLISION_ANY;
+    collide_player = COLLISION_ANY;
+    collide_npc    = COLLISION_NONE;
 
     environment = LVL_PhysEnv::Env_Air;
     last_environment = LVL_PhysEnv::Env_Air;
@@ -78,14 +79,15 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     bumpUp=false;
     bumpVelocity=0.0f;
 
+    bumpJumpVelocity=0.0f;
+    bumpJumpTime=0.0f;
+
     health=3;
     doHarm=false;
     doHarm_damage=0;
 
-    foot_contacts=0;
     jumpTime=0;
-
-    jumpTime_default=260;
+    jumpVelocity=5.3f;
 
     isAlive = true;
     doKill = false;
@@ -151,8 +153,6 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     physics = setup.phys_default;
     physics_cur = physics[environment];
 
-    jumpTime_default = physics_cur.jump_time;
-
     long tID = ConfigManager::getLvlPlayerTexture(CharacterID, _stateID);
     if( tID >= 0 )
     {
@@ -175,6 +175,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
     phys_setup.min_vel_y = -fabs(physics_cur.MaxSpeed_up);
     phys_setup.decelerate_x = physics_cur.decelerate_air;
     phys_setup.gravityScale = physics_cur.gravity_scale;
+    phys_setup.gravityAccel = physics_cur.gravity_accel;
     phys_setup.grd_dec_x    = physics_cur.walk_force;
 
     /********************floating************************/
@@ -200,7 +201,7 @@ void LVL_Player::setCharacter(int CharacterID, int _stateID)
         float cx = posRect.center().x();
         float b = posRect.bottom();
         setSize(state_cur.width, ducking?state_cur.duck_height:state_cur.height);
-        setPos(cx-width/2, b-height);
+        setPos(cx-_width/2, b-_height);
         PlayerState x = LvlSceneP::s->getGameState()->getPlayerState(playerID);
         x.characterID    = characterID;
         x.stateID        = stateID;
@@ -261,7 +262,7 @@ void LVL_Player::setDuck(bool duck)
     if(duck==ducking) return;
     float b=posRect.bottom();
     setSize(state_cur.width, duck? state_cur.duck_height : state_cur.height);
-    setPos(posX(), b-height);
+    setPos(posX(), b-_height);
     ducking=duck;
     if(!duck && !isWarping)
     {
@@ -475,7 +476,6 @@ void LVL_Player::update(float ticks)
     if((last_environment!=environment)||(last_environment==-1))
     {
         physics_cur = physics[environment];
-
         last_environment=environment;
 
         if(physics_cur.zero_speed_y_on_enter)
@@ -488,6 +488,8 @@ void LVL_Player::update(float ticks)
 
         if(physics_cur.slow_speed_x_on_enter)
             setSpeedX( speedX()*(physics_cur.slow_speed_x_coeff) );
+
+        if(JumpPressed) jumpVelocity=physics_cur.velocity_jump;
 
         phys_setup.max_vel_x = fabs(isRunning ?
                     physics_cur.MaxSpeed_run :
@@ -593,6 +595,7 @@ void LVL_Player::update(float ticks)
     {
         if(climbableUp&&(jumpTime<=0))
         {
+            setDuck(false);
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
         }
@@ -608,6 +611,7 @@ void LVL_Player::update(float ticks)
     {
         if( climbableDown && (jumpTime<=0) )
         {
+            setDuck(false);
             climbing=true;
             floating_isworks=false;//!< Reset floating on climbing start
         }
@@ -690,8 +694,7 @@ void LVL_Player::update(float ticks)
             {
                 if(environment==LVL_PhysEnv::Env_Water)
                 {
-                    if(!ducking)
-                        animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
+                    if(!ducking) animator.playOnce(MatrixAnimator::SwimUp, direction, 75);
                 }
                 else
                 if(environment==LVL_PhysEnv::Env_Quicksand)
@@ -700,9 +703,10 @@ void LVL_Player::update(float ticks)
                 }
 
                 JumpPressed=true;
-                jumpTime=jumpTime_default;
+                jumpTime = physics_cur.jump_time;
+                jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                setSpeedY(speedY()-physics_cur.velocity_jump);
+                setSpeedY(speedY()-jumpVelocity);
             }
         }
         else
@@ -712,9 +716,10 @@ void LVL_Player::update(float ticks)
             if(onGround || climbing)
             {
                 climbing=false;
-                jumpTime=jumpTime_default;
+                jumpTime=physics_cur.jump_time;
+                jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
+                setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
             if((floating_allow)&&(floating_timer>0))
@@ -733,7 +738,7 @@ void LVL_Player::update(float ticks)
             if(jumpTime>0)
             {
                 jumpTime -= ticks;
-                setSpeedY(-physics_cur.velocity_jump-fabs(speedX()/physics_cur.velocity_jump_c));
+                setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
 
             if(floating_isworks)
@@ -776,7 +781,7 @@ void LVL_Player::update(float ticks)
     PGE_RectF sBox = section->sectionLimitBox();
 
     //Return player to start position on fall down
-    if( posY() > sBox.bottom()+height )
+    if( posY() > sBox.bottom()+_height )
     {
         kill(DEAD_fall);
     }
@@ -791,19 +796,25 @@ void LVL_Player::update(float ticks)
     if(bumpUp)
     {
         bumpUp=false;
-        if(keys.jump) jumpTime=jumpTime_default;
-        setSpeedY( (keys.jump?(-fabs(physics_cur.velocity_jump)-fabs(speedX()/physics_cur.velocity_jump_c)) : -fabs(physics_cur.velocity_jump)) );
+        if(keys.jump)
+        {
+            jumpTime=bumpJumpTime;
+            jumpVelocity=bumpJumpVelocity;
+        }
+        setSpeedY( (keys.jump ?
+                        (-fabs(bumpJumpVelocity)-fabs(speedX()/physics_cur.velocity_jump_c)):
+                         -fabs(bumpJumpVelocity)) );
     }
 
 
     //Connection of section opposite sides
     if(section->isWarp())
     {
-        if(posX() < sBox.left()-width-1 )
+        if(posX() < sBox.left()-_width-1 )
             setPosX( sBox.right()+1 );
         else
         if(posX() > sBox.right() + 1 )
-            setPosX( sBox.left()-width-1 );
+            setPosX( sBox.left()-_width-1 );
     }
     else
     {
@@ -819,7 +830,7 @@ void LVL_Player::update(float ticks)
                 }
             }
 
-            if((posX() < sBox.left()-width-1 ) || (posX() > sBox.right() + 1 ))
+            if((posX() < sBox.left()-_width-1 ) || (posX() > sBox.right() + 1 ))
             {
                 setLocked(true);
                 _no_render=true;
@@ -836,9 +847,9 @@ void LVL_Player::update(float ticks)
                 setSpeedX(0.0);
             }
             else
-            if( posX()+width > sBox.right())
+            if( posX()+_width > sBox.right())
             {
-                setPosX(sBox.right()-width);
+                setPosX(sBox.right()-_width);
                 setSpeedX(0.0);
             }
         }
@@ -973,8 +984,7 @@ void LVL_Player::update(float ticks)
 
 void LVL_Player::updateCamera()
 {
-    camera->setPos( round(posX()) - camera->w()/2 + posX_coefficient,
-                    round(bottom()) - camera->h()/2-state_cur.height/2 );
+    camera->setCenterPos( round(posCenterX()), round(bottom())-state_cur.height/2 );
 }
 
 void LVL_Player::updateCollisions()
@@ -1151,7 +1161,9 @@ void LVL_Player::updateCollisions()
                 long npcid=nearest->data.npc_id;
                 if(resolveBottom) nearest->hit(LVL_Block::down); else nearest->hit();
                 if( nearest->setup->hitable || (npcid!=0) || (nearest->destroyed) || nearest->setup->bounce )
-                    bump(resolveBottom, bumpSpeed);
+                    bump(resolveBottom,
+                         (resolveBottom ? physics_cur.velocity_jump_bounce : bumpSpeed),
+                         physics_cur.jump_time_bounce);
             }
         }
         if(resolveTop && !bumpUp && !bumpDown )
@@ -1166,82 +1178,6 @@ void LVL_Player::updateCollisions()
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve end======";
     #endif
-}
-
-bool LVL_Player::isWall(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.isEmpty())
-        return false;
-    float higher=blocks.first()->posRect.top();
-    float lower=blocks.first()->posRect.bottom();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->posRect.bottom()>lower)
-            lower=blocks[i]->posRect.bottom();
-        if(blocks[i]->posRect.top()<higher)
-            higher=blocks[i]->posRect.top();
-    }
-    if(posRect.top() >= lower) return false;
-    if(posRect.bottom() <= higher) return false;
-    return true;
-}
-
-bool LVL_Player::isFloor(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.isEmpty())
-        return false;
-    float lefter=blocks.first()->posRect.left();
-    float righter=blocks.first()->posRect.right();
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(blocks[i]->posRect.right()>righter)
-            righter=blocks[i]->posRect.right();
-        if(blocks[i]->posRect.left()<lefter)
-            lefter=blocks[i]->posRect.left();
-    }
-    if(posRect.left() >= righter) return false;
-    if(posRect.right() <= lefter) return false;
-    return true;
-}
-
-LVL_Block *LVL_Player::nearestBlock(QVector<LVL_Block*> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    LVL_Block*nearest=NULL;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            if( fabs(blocks[i]->posRect.center().x()-posRect.center().x())<
-                fabs(nearest->posRect.center().x()-posRect.center().x()) )
-                nearest=blocks[i];
-        }
-    }
-    return nearest;
-}
-
-LVL_Block *LVL_Player::nearestBlockY(QVector<LVL_Block *> &blocks)
-{
-    if(blocks.size()==1)
-        return blocks.first();
-
-    LVL_Block*nearest=NULL;
-    for(int i=0; i<blocks.size(); i++)
-    {
-        if(!nearest)
-            nearest=blocks[i];
-        else
-        {
-            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
-                fabs(nearest->posRect.center().y()-posRect.center().y()) )
-                nearest=blocks[i];
-        }
-    }
-    return nearest;
 }
 
 
@@ -1301,7 +1237,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             PGE_PointF cc = collided->posRect.center();
             PGE_RectF  rc = collided->posRect;
 
-            switch(collided->collide)
+            switch(collided->collide_player)
             {
                 case COLLISION_TOP:
                 {
@@ -1615,13 +1551,19 @@ void LVL_Player::harm(int _damage)
     doHarm_damage=_damage;
 }
 
-void LVL_Player::bump(bool _up, double bounceSpeed)
+void LVL_Player::bump(bool _up, double bounceSpeed, int timeToJump)
 {
     if(_up)
+    {
         bumpUp=true;
+        bumpJumpTime = (timeToJump>0) ? timeToJump: physics_cur.jump_time_bounce ;
+        bumpJumpVelocity = (bounceSpeed>0) ? bounceSpeed : physics_cur.velocity_jump_bounce;
+    }
     else
+    {
         bumpDown=true;
-    bumpVelocity = fabs(bounceSpeed)/4.0;
+        bumpVelocity = fabs(bounceSpeed)/4.0;
+    }
 }
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
@@ -1631,10 +1573,10 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     switch(_dir)
     {
         case Attack_Up:
-            attackZone.setRect(left()+posX_coefficient-5, top()-17, 10, 5);
+            attackZone.setRect(left()+_width_half-5, top()-17, 10, 5);
         break;
         case Attack_Down:
-            attackZone.setRect(left()+posX_coefficient-5, bottom(), 10, 5);
+            attackZone.setRect(left()+_width_half-5, bottom(), 10, 5);
         break;
         case Attack_Forward:
             if(direction>=0)
@@ -1709,8 +1651,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                       isWarping=true; setPaused(true);
                                       warpPipeOffset=0.0;
                                       warpDirectO=0;
-                                      teleport(x+16-posX_coefficient,
-                                                     y+32-height);
+                                      teleport(x+16-_width_half,
+                                                     y+32-_height);
                                       animator.unlock();
                                       animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
                                   }, 0);
@@ -1755,7 +1697,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                 direction=1;
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::Run, direction, 115);
-                                teleport(x, y+32-height);
+                                teleport(x, y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1766,7 +1708,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
-                                teleport(x+16-posX_coefficient, y);
+                                teleport(x+16-_width_half, y);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1778,7 +1720,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                 direction=-1;
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::Run, direction, 115);
-                                teleport(x+32-width, y+32-height);
+                                teleport(x+32-_width, y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1789,8 +1731,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                         eventX.makeCaller([this,x,y]()->void{
                                 animator.unlock();
                                 animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
-                                teleport(x+16-posX_coefficient,
-                                         y+32-height);
+                                teleport(x+16-_width_half,
+                                         y+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1833,8 +1775,8 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
         }
         break;
     case 0://Instant
-        teleport(x+16-posX_coefficient,
-                     y+32-height);
+        teleport(x+16-_width_half,
+                     y+32-_height);
         break;
     default:
         break;
@@ -1876,7 +1818,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                   direction=1;
                                   animator.unlock();
                                   animator.switchAnimation(MatrixAnimator::Run, direction, 115);
-                                  setPos(warp.ix+32-width, posY());
+                                  setPos(warp.ix+32-_width, posY());
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -1888,7 +1830,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                                   warpDirectO=3;
                                   animator.unlock();
                                   animator.switchAnimation(MatrixAnimator::PipeUpDown, direction, 115);
-                                  setPos(posX(), warp.iy+32-height);
+                                  setPos(posX(), warp.iy+32-_height);
                                           }, 0);
                         event_queue.events.push_back(eventX);
                     }
@@ -2114,41 +2056,41 @@ void LVL_Player::render(double camX, double camY)
             case 2://Left entrance, right Exit
                 {
                     float wOfs = Ofs.x()/warpFrameW;//Relative X offset
-                    float wOfsF = width/warpFrameW; //Relative hitbox width
+                    float wOfsF = _width/warpFrameW; //Relative hitbox width
                     tPos.setLeft(tPos.left()+wOfs+(warpPipeOffset*wOfsF));
                     player.setLeft( player.left()+Ofs.x() );
-                    player.setRight( player.right()-(warpPipeOffset*width) );
+                    player.setRight( player.right()-(warpPipeOffset*_width) );
                 }
                 break;
             case 1://Up entrance, down exit
                 {
                     float hOfs = Ofs.y()/warpFrameH;//Relative Y offset
-                    float hOfsF = height/warpFrameH; //Relative hitbox Height
+                    float hOfsF = _height/warpFrameH; //Relative hitbox Height
                     tPos.setTop(tPos.top()+hOfs+(warpPipeOffset*hOfsF));
                     player.setTop( player.top()+Ofs.y() );
-                    player.setBottom( player.bottom()-(warpPipeOffset*height) );
+                    player.setBottom( player.bottom()-(warpPipeOffset*_height) );
                 }
                 break;
             case 4://right emtramce. left exit
                 {
                     float wOfs =  Ofs.x()/warpFrameW;               //Relative X offset
                     float fWw =   animator.sizeOfFrame().w();   //Relative width of frame
-                    float wOfHB = width/warpFrameW;                 //Relative width of hitbox
+                    float wOfHB = _width/warpFrameW;                 //Relative width of hitbox
                     float wWAbs = warpFrameW*fWw;                   //Absolute width of frame
                     tPos.setRight(tPos.right()-(fWw-wOfHB-wOfs)-(warpPipeOffset*wOfHB));
-                    player.setLeft( player.left()+(warpPipeOffset*width) );
-                    player.setRight( player.right()-(wWAbs-Ofs.x()-width) );
+                    player.setLeft( player.left()+(warpPipeOffset*_width) );
+                    player.setRight( player.right()-(wWAbs-Ofs.x()-_width) );
                 }
                 break;
             case 3://down entrance, up exit
                 {
                     float hOfs =  Ofs.y()/warpFrameH;               //Relative Y offset
                     float fHh =   animator.sizeOfFrame().h();  //Relative height of frame
-                    float hOfHB = height/warpFrameH;                //Relative height of hitbox
+                    float hOfHB = _height/warpFrameH;                //Relative height of hitbox
                     float hHAbs = warpFrameH*fHh;                   //Absolute height of frame
                     tPos.setBottom(tPos.bottom()-(fHh-hOfHB-hOfs)-(warpPipeOffset*hOfHB));
-                    player.setTop( player.top()+(warpPipeOffset*height) );
-                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-height) );
+                    player.setTop( player.top()+(warpPipeOffset*_height) );
+                    player.setBottom( player.bottom()-(hHAbs-Ofs.y()-_height) );
                 }
                 break;
             default:

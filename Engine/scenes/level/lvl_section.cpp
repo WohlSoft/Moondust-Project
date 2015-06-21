@@ -180,14 +180,14 @@ int LVL_Section::getPhysicalEnvironment()
 void LVL_Section::registerElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->width, item->_posY+item->height};
+    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
     tree.Insert(lt, rb, item);
 }
 
 void LVL_Section::unregisterElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
-    RPoint rb={item->_posX+item->width, item->_posY+item->height};
+    RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
     tree.Remove(lt, rb, item);
 }
 

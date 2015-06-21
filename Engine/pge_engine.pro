@@ -28,33 +28,35 @@ INCLUDEPATH += -$$PWD/../_Libs/SDL2_mixer_modified
 INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
-LIBS+= -L$$PWD/../_Libs/_builds/sdl2_mixer_mod
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
-DEFINES += PGE_ENGINE
+DEFINES += PGE_ENGINE USE_LUA_JIT
 
-LIBS += -lluabind -lluajit-5.1
+
+include ($$PWD/../_common/lib_destdir.pri)
+
+INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include
+contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS/include/liajit-2.0
+
+LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
+LIBS += -lluabind
+
 android: {
-    LIBS += -L../_Libs/_builds/android/lib
-    INCLUDEPATH += ../_Libs/_builds/android/include
     LIBS += -lSDL2 -lglut -lGLU
+    DEFINES -= USE_LUA_JIT
 }
 win32: {
-    LIBS += -L../_Libs/_builds/win32/lib
-    INCLUDEPATH += ../_Libs/_builds/win32/include
     LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion
 }
 macx: {
-    LIBS += -L$$PWD/../_Libs/_builds/macos/lib
-    INCLUDEPATH += $$PWD/../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++: {
-    LIBS += -L ../_Libs/_builds/linux/lib
-    INCLUDEPATH += ../_Libs/_builds/linux/include
     LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
+
+contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
 
 macx {
     ICON = _resources/cat.icns
@@ -191,7 +193,10 @@ SOURCES += \
     script/bindings/level/classes/luaclass_level_lvl_npc.cpp \
     script/bindings/core/globalfuncs/luafuncs_core_audio.cpp \
     scenes/_base/gfx_effect.cpp \
-    script/bindings/core/globalfuncs/luafuncs_core_effect.cpp
+    script/bindings/core/globalfuncs/luafuncs_core_effect.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp \
+    common_features/version_cmp.cpp
 
 
 HEADERS  += \
@@ -313,7 +318,10 @@ HEADERS  += \
     script/bindings/level/classes/luaclass_level_lvl_npc.h \
     script/bindings/core/globalfuncs/luafuncs_core_audio.h \
     scenes/_base/gfx_effect.h \
-    script/bindings/core/globalfuncs/luafuncs_core_effect.h
+    script/bindings/core/globalfuncs/luafuncs_core_effect.h \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
+    script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
+    common_features/version_cmp.h
 
 FORMS    += \
     data_configs/select_config.ui

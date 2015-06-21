@@ -240,6 +240,7 @@ private:
     LVL_CameraList      cameras;
     LVL_SectionsList    sections;
 
+public:
     typedef QVector<LVL_Player* >  LVL_PlayersArray;
     typedef QVector<LVL_Block* >   LVL_BlocksArray;
     typedef QVector<LVL_Bgo* >     LVL_BgosArray;
@@ -247,6 +248,7 @@ private:
     typedef QVector<LVL_Warp* >    LVL_WarpsArray;
     typedef QVector<LVL_PhysEnv* > LVL_PhysEnvsArray;
 
+private:
     LVL_PlayersArray    players;
     LVL_BlocksArray     blocks;
     LVL_BgosArray       bgos;
@@ -284,15 +286,19 @@ private:
     int  debug_event_delay;
 
 public:
-   float gravity;
+   float globalGravity;
    void processPhysics(float ticks);
 
 public:
     void registerElement(PGE_Phys_Object* item);
     void unregisterElement(PGE_Phys_Object* item);
     typedef double RPoint[2];
-    void queryItems(PGE_RectF zone, QVector<PGE_Phys_Object* > *resultList);
+    void queryItems(PGE_RectF &zone, QVector<PGE_Phys_Object* > *resultList);
     void queryItems(double x, double y, QVector<PGE_Phys_Object* > *resultList);
+
+    LVL_PlayersArray& getPlayers();
+    LVL_NpcsArray& getNpcs();
+
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;

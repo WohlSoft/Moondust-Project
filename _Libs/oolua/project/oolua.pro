@@ -22,11 +22,8 @@ macx: DEFINES += OOLUA_USE_EXCEPTIONS=1 OOLUA_STORE_LAST_ERROR=0 MAC_BUILD
 
 DEFINES += OOLUA_STD_STRING_IS_INTEGRAL=1
 
-!android:{
-DESTDIR = ../../_builds/commonlibs
-} else {
-DESTDIR = ../../_builds/android/lib
-}
+include (../../../_common/lib_destdir.pri)
+DESTDIR = ../_builds/$$TARGETOS/lib
 
 include(../../../_common/build_props.pri)
 

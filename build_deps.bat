@@ -12,7 +12,7 @@ echo %PATH%
 cd _Libs
 
 rem build all components
-%QtDir%\qmake.exe CONFIG+=release CONFIG-=debug
+%QtDir%\qmake.exe CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
 if ERRORLEVEL 1 goto error
 
 %MinGW%\mingw32-make

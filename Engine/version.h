@@ -23,6 +23,8 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
+#define _LATEST_STABLE "0.1-alpha"
+
 #define _FILE_VERSION "0.1"
 #define _FILE_RELEASE "-dev-alpha"
 

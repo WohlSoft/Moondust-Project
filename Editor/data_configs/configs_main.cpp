@@ -17,7 +17,9 @@
  */
 
 #include <common_features/app_path.h>
+#include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>
+#include "../version.h"
 
 #include "data_configs.h"
 
@@ -96,6 +98,26 @@ void dataconfigs::loadBasics()
     guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
                         ApplicationPath + "/" : config_dir + "data/" );
+
+        QString url     = guiset.value("home-page", "http://engine.wohlnet.ru/config_packs/").toString();
+        QString version = guiset.value("pge-editor-version", "0.0").toString();
+        bool ver_notify = guiset.value("enable-version-notify", true).toBool();
+        if(ver_notify && (version != VersionCmp::compare(QString("%1").arg(_LATEST_STABLE), version)))
+        {
+            QMessageBox box;
+            box.setWindowTitle( "Legacy configuration package" );
+            box.setTextFormat(Qt::RichText);
+            box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+            box.setText(tr("You have a legacy configuration package.\n<br>"
+                           "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
+                           "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"
+                           "Note: most of config packs are updates togeter with PGE,<br>\n"
+                           "therefore you can use same link to get updated version")
+                                .arg("<a href=\"%1\">%1</a>").arg(url));
+            box.setStandardButtons(QMessageBox::Ok);
+            box.setIcon(QMessageBox::Warning);
+            box.exec();
+        }
     guiset.endGroup();
 
     if(!splash_logo .isEmpty())

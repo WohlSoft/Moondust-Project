@@ -30,5 +30,6 @@ void LVL_Warp::init()
 {
     setSize(32, 32);
     setPos(data.ix, data.iy);
-    collide = COLLISION_NONE;
+    collide_player = COLLISION_NONE;
+    collide_npc = COLLISION_NONE;
 }

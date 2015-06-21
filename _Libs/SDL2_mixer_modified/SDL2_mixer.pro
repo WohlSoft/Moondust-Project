@@ -11,13 +11,9 @@ macx: QMAKE_CXXFLAGS += -Wno-header-guard
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-static:{
-DESTDIR = ../_builds/sdl2_mixer_mod
+include (../../_common/lib_destdir.pri)
+DESTDIR = ../_builds/$$TARGETOS/lib
 TARGET = SDL2_mixer
-}else{
-DESTDIR = ../_builds/sdl2_mixer_mod
-TARGET = SDL2_mixer
-}
 
 include(../../_common/build_props.pri)
 
@@ -29,6 +25,7 @@ INCLUDEPATH += ../_builds/win32/include
 linux-g++||unix:!macx:!android:{
 LIBS += -L../_builds/linux/lib
 INCLUDEPATH += ../_builds/linux/include
+CONFIG += unversioned_libname
 }
 android:{
 LIBS += -L../_builds/android/lib

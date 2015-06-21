@@ -3,6 +3,9 @@ local peachPlayer_class = require("player/peach")
 
 local npcBase_class = require("npcs/main_npc")
 
+-- utils
+smbx_utils = require("utils/smbx_utils")
+
 -- We need to reference all placed objects with lua or the garbage collector will hit it
 local players = {}
 local npcs = {}

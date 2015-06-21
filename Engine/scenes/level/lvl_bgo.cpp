@@ -38,8 +38,8 @@ void LVL_Bgo::init()
     if(_isInited) return;
     transformTo_x(data.id);
     setPos(data.x, data.y);
-    collide=COLLISION_NONE;
-
+    collide_player=COLLISION_NONE;
+    collide_npc = COLLISION_NONE;
     _isInited=true;
 }
 
@@ -104,7 +104,7 @@ void LVL_Bgo::render(double camX, double camY)
 
     if(animated) //Get current animated frame
         x = ConfigManager::Animator_BGO[animator_ID].image();
-    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, width, height, x.first, x.second);
+    GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, _width, _height, x.first, x.second);
 }
 
 bool LVL_Bgo::isInited()
