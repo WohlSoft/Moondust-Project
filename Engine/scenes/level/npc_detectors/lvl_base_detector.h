@@ -23,7 +23,7 @@ class BasicDetector
 {
 public:
     BasicDetector();
-    ~BasicDetector();
+    virtual ~BasicDetector();
     virtual void processDetector();
     virtual bool detected();
 };
