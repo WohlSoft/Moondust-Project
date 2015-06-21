@@ -84,7 +84,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     bumpJumpVelocity=0.0f;
     bumpJumpTime=0.0f;
 
-    _exiting_swimTimer=500;
+    _exiting_swimTimer=50;
 
     health=3;
     doHarm=false;
@@ -812,7 +812,7 @@ void LVL_Player::update(float ticks)
 
 
     //Connection of section opposite sides
-    if(isExiting) // Allow walk offscreen
+    if(isExiting) // Allow walk offscreen if exiting
     {
         if(posX() < sBox.left()-_width-1 )
             setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
@@ -827,11 +827,10 @@ void LVL_Player::update(float ticks)
             else
             if(_exiting_swimTimer<0 && keys.jump)
             {
-                keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1:500;
+                keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1 : 200;
             }
-        }
-        else
             _exiting_swimTimer-= ticks;
+        }
     }
     else
     if(section->isWarp())
