@@ -223,6 +223,8 @@ public:
         int frameH;
         bool locked();
         void setLocked(bool lock);
+        bool isExiting;
+        int  _exiting_swimTimer;
 
         /********************Lua Stuff*******************
                             .-""""-

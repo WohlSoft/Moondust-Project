@@ -24,6 +24,7 @@ struct obj_sound_role
 
         PlayerJump,  //Hey, i'm flying in air! :D
         PlayerStomp, //Pha!
+        PlayerKick,
         PlayerShrink,//Ouch!
         PlayerGrow,  //from small to big
         PlayerDied,  //player died 2

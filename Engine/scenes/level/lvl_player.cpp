@@ -22,6 +22,7 @@
 #include <graphics/gl_renderer.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <audio/SdlMusPlayer.h>
 
 #include <common_features/rectf.h>
 #include <common_features/pointf.h>
@@ -45,6 +46,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     _isInited = false;
     isLuaPlayer = false;
 
+    isExiting = false;
 
     _direction = 1;
 
@@ -81,6 +83,8 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
 
     bumpJumpVelocity=0.0f;
     bumpJumpTime=0.0f;
+
+    _exiting_swimTimer=500;
 
     health=3;
     doHarm=false;
@@ -808,6 +812,28 @@ void LVL_Player::update(float ticks)
 
 
     //Connection of section opposite sides
+    if(isExiting) // Allow walk offscreen
+    {
+        if(posX() < sBox.left()-_width-1 )
+            setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
+        else
+        if(posX() > sBox.right() + 1 )
+            setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
+
+        if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
+        {
+            if(_exiting_swimTimer<0 && !keys.jump)
+                keys.jump=true;
+            else
+            if(_exiting_swimTimer<0 && keys.jump)
+            {
+                keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1:500;
+            }
+        }
+        else
+            _exiting_swimTimer-= ticks;
+    }
+    else
     if(section->isWarp())
     {
         if(posX() < sBox.left()-_width-1 )
@@ -1405,38 +1431,12 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         climbableHeight=collided->top();
                 }
 
-                if(!LvlSceneP::s->isExit())
-                {
-                    if(npc->data.id==11){
-                        LvlSceneP::s->setExiting(4500, 1);
-                    }
-                    else
-                    if((npc->data.id==15)||(npc->data.id==16)){
-                        LvlSceneP::s->setExiting(7000, 2);
-                    }
-                    else
-                    if((npc->data.id==39)||(npc->data.id==41)){
-                        LvlSceneP::s->setExiting(3200, 5);
-                    }
-                    else
-                    if(npc->data.id==97){
-                        LvlSceneP::s->setExiting(4500, 7);
-                    }
-                    else
-                    if(npc->data.id==197){
-                        LvlSceneP::s->setExiting(15000, 8);
-                    }
-                    else
-                    if(npc->data.id==86 )
-                    {
-                        LvlSceneP::s->setExiting(5000, 7);
-                    }
-                }
                 if((!npc->data.friendly)&&(npc->setup->takable))
                 {
+                    npc->harm();
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
-                    npc->kill();
                 }
+
             }
             break;
         }
@@ -1633,6 +1633,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(x->killed) continue;
         x->harm();
         LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
+        kill_npc(x, NPC_Kicked);
         if(x->killed)
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
     }
@@ -2016,7 +2017,8 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp, long wX, long 
 void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 {
     if(!target) return;
-    //npc_queue.enqueue(target);
+    if(!target->killed) return;
+
     switch(reason)
     {
         case NPC_Unknown:
@@ -2024,11 +2026,53 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
         case NPC_Stomped:
             PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp); break;
         case NPC_Kicked:
-            break;
+            PGE_Audio::playSoundByRole(obj_sound_role::PlayerKick); break;
         case NPC_Taked_Coin:
             PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin); break;
         case NPC_Taked_Powerup:
             break;
+    }
+
+    if(target->setup->exit_is)
+    {
+        long snd=target->setup->exit_snd;
+        if(snd<=0)
+        {
+            switch(target->setup->exit_code)
+            {
+                case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
+                case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
+                case  3: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit03); break;
+                case  4: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit04); break;
+                case  5: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit05); break;
+                case  6: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit06); break;
+                case  7: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit07); break;
+                case  8: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit08); break;
+                case  9: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit09); break;
+                case 10: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit10); break;
+                default: break;
+            }
+        }
+        if(snd>0)
+        {
+            PGE_MusPlayer::MUS_stopMusic();
+            PGE_Audio::playSound(snd);
+        }
+        /***********************Reset and unplug controllers************************/
+        LvlSceneP::s->player1Controller->resetControls();
+        LvlSceneP::s->player1Controller->sendControls();
+        LvlSceneP::s->player1Controller->removeFromControl(this);
+        LvlSceneP::s->player2Controller->resetControls();
+        LvlSceneP::s->player2Controller->sendControls();
+        LvlSceneP::s->player2Controller->removeFromControl(this);
+        /***********************Reset and unplug controllers*end********************/
+        if(target->setup->exit_walk_direction<0)
+            keys.left=true;
+        else
+        if(target->setup->exit_walk_direction>0)
+            keys.right=true;
+        isExiting=true;
+        LvlSceneP::s->setExiting(target->setup->exit_delay, target->setup->exit_code);
     }
 }
 

@@ -793,29 +793,6 @@ void LevelScene::setExiting(int delay, int reason)
 {
     exitLevelDelay   = delay;
     exitLevelCode    = reason;
-    if(isLevelContinues)
-    {
-        long snd=0;
-        switch(exitLevelCode)
-        {
-            case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
-            case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
-            case  3: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit03); break;
-            case  4: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit04); break;
-            case  5: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit05); break;
-            case  6: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit06); break;
-            case  7: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit07); break;
-            case  8: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit08); break;
-            case  9: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit09); break;
-            case 10: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit10); break;
-            default: break;
-        }
-        if(snd>0)
-        {
-            PGE_MusPlayer::MUS_stopMusic();
-            PGE_Audio::playSound(snd);
-        }
-    }
     isLevelContinues = false;
 }
 
