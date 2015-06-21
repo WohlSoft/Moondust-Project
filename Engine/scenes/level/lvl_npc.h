@@ -5,6 +5,7 @@
 #include <data_configs/obj_npc.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
+#include <common_features/event_queue.h>
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
 
@@ -90,8 +91,11 @@ public:
     int     last_environment;
     /*******************Environmept*********************/
 
+    bool reSpawnable;
     bool isActivated;
-    int  timeout;
+    bool deActivatable;
+    bool wasDeactivated;
+    int  activationTimeout;
 
     /********************Detectors**********************/
     QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
@@ -119,6 +123,21 @@ public:
     float   warpFrameW;
     float   warpFrameH;
     /*********************/
+
+    /***************************************************/
+    void setWarpSpawn(WarpingSide side=WARP_TOP);
+    bool warpSpawing;
+    EventQueue<LVL_Npc> event_queue;
+    /***************************************************/
+
+    /***********************Generator*******************/
+    bool  isGenerator;
+    float generatorTimeLeft;
+    int   generatorType;
+    int   generatorDirection;
+    void  updateGenerator(float tickTime);
+    /***************************************************/
+
 
     //Additional lua events
     virtual void lua_onActivated() {}

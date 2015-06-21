@@ -137,15 +137,17 @@ void PGE_LevelCamera::update(float ticks)
             LVL_Npc *npc = dynamic_cast<LVL_Npc*>(visibleBody);
             if(npc)
             {
-                if(!npc->isActivated)
+                if(!npc->isActivated && !npc->wasDeactivated)
                 {
                     npc->Activate();
-                    npc->timeout=4000;
                     LvlSceneP::s->active_npcs.push_back(npc);
                 }
                 else
                 {
-                    npc->timeout=4000;
+                    if(npc->wasDeactivated)
+                        npc->activationTimeout=0;
+                    else
+                        npc->activationTimeout=npc->setup->deactivetionDelay;
                 }
             }
         }

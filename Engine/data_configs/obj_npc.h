@@ -171,6 +171,8 @@ struct obj_npc
 
 //    ;Events
     bool deactivation;  //deactivate=1		; Deactivate on state offscreen > 4 sec ago
+    int  deactivetionDelay;
+
     bool kill_slide_slope;  //    kill-slside=1		; Kill on Slope slide
     bool kill_on_jump;  //    kill-onjump=1		; Kill on jump on NPC's head
     bool kill_by_npc;   //    kill-bynpc=1		; Kill by contact with other NPC with hurt-npc
