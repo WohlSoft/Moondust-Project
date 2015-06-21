@@ -43,7 +43,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     warpFrameW=0.0f;
     warpFrameH=0.0f;
 
-    onGround=false;
+    _onGround=false;
 
     _stucked=false;
 
@@ -81,12 +81,16 @@ void LVL_Npc::init()
 void LVL_Npc::setDirection(int dir)
 {
     if(dir==0) dir=(rand()%2) ? -1 : 1;
-    direction=Maths::sgn(dir);
-    //direction*
+    _direction=Maths::sgn(dir);
     int imgOffsetX = -((int)round( - ( ( (double)setup->gfx_w - (double)setup->width ) / 2 ) )
-                        +(-((double)setup->gfx_offset_x)*direction));
+                        +(-((double)setup->gfx_offset_x)*_direction));
     int imgOffsetY = -(int)round( - (double)setup->gfx_h + (double)setup->height + (double)setup->gfx_offset_y);
     offset.setPoint(imgOffsetX, imgOffsetY);
+}
+
+int LVL_Npc::direction()
+{
+    return _direction;
 }
 
 void LVL_Npc::kill()
@@ -94,7 +98,7 @@ void LVL_Npc::kill()
     killed=true;
     sct()->unregisterElement(this);
     LvlSceneP::s->dead_npcs.push_back(this);
-    LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, direction);
+    LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
 }
 
 void LVL_Npc::transformTo(long id, int type)
@@ -156,7 +160,7 @@ void LVL_Npc::transformTo_x(long id)
 
     setSize(setup->width, setup->height);
 
-    setDirection(direction);
+    setDirection(_direction);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);
     animator.construct(texture, *setup);
 
@@ -197,7 +201,7 @@ void LVL_Npc::update(float tickTime)
         else
         if(!collided_right.isEmpty())
             setDirection(-1);
-        setSpeedX((motionSpeed*accelCof)*direction);
+        setSpeedX((motionSpeed*accelCof)*_direction);
     }
 
     LVL_Section *section=sct();
@@ -228,9 +232,9 @@ void LVL_Npc::render(double camX, double camY)
     if(animated)
     {
         if(is_scenery)
-            x=ConfigManager::Animator_NPC[animator_ID].image(direction);
+            x=ConfigManager::Animator_NPC[animator_ID].image(_direction);
         else
-            x=animator.image(direction);
+            x=animator.image(_direction);
     }
 
     /*
@@ -432,7 +436,7 @@ bool LVL_Npc::isInited()
 void LVL_Npc::updateCollisions()
 {
     foot_contacts_map.clear();
-    onGround=false;
+    _onGround=false;
     foot_sl_contacts_map.clear();
     //contactedWarp = NULL;
     //contactedWithWarp=false;
@@ -872,4 +876,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
         }
     default: break;
     }
+}
+
+void LVL_Npc::onGround()
+{
+    return _onGround;
 }
