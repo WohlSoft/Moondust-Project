@@ -22,6 +22,8 @@
 #include <common_features/rectf.h>
 #include <common_features/pge_texture.h>
 
+#include <QVector>
+
 struct PGE_Phys_Object_Phys
 {
     float min_vel_x;//!< Min allowed X velocity
@@ -37,6 +39,7 @@ struct PGE_Phys_Object_Phys
 };
 
 class LVL_Section;
+class LVL_Block;
 ///
 /// \brief The PGE_Phys_Object class
 ///
@@ -95,6 +98,11 @@ public:
     virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
+    LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
+    LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
+    bool isWall(QVector<LVL_Block *> &blocks);
+    bool isFloor(QVector<LVL_Block *> &blocks);
+
     static const float _smbxTickTime;
     static float SMBXTicksToTime(float ticks);
 
@@ -133,7 +141,8 @@ public:
         COLLISION_BOTTOM = 3
     };
 
-    int collide;
+    int collide_player;
+    int collide_npc;
 
     bool slippery_surface;
     bool isRectangle;

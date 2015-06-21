@@ -38,7 +38,8 @@ PGE_Phys_Object::PGE_Phys_Object()
     isRectangle = true;
 
     slippery_surface = false;
-    collide = COLLISION_ANY;
+    collide_player = COLLISION_ANY;
+    collide_npc = COLLISION_ANY;
 
     _parentSection=NULL;
     _width = 0.0f;
@@ -403,6 +404,86 @@ void PGE_Phys_Object::updateCollisions()
 
 void PGE_Phys_Object::solveCollision(PGE_Phys_Object *)
 {}
+
+
+
+bool PGE_Phys_Object::isWall(QVector<LVL_Block*> &blocks)
+{
+    if(blocks.isEmpty())
+        return false;
+    float higher=blocks.first()->posRect.top();
+    float lower=blocks.first()->posRect.bottom();
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(blocks[i]->posRect.bottom()>lower)
+            lower=blocks[i]->posRect.bottom();
+        if(blocks[i]->posRect.top()<higher)
+            higher=blocks[i]->posRect.top();
+    }
+    if(posRect.top() >= lower) return false;
+    if(posRect.bottom() <= higher) return false;
+    return true;
+}
+
+bool PGE_Phys_Object::isFloor(QVector<LVL_Block*> &blocks)
+{
+    if(blocks.isEmpty())
+        return false;
+    float lefter=blocks.first()->posRect.left();
+    float righter=blocks.first()->posRect.right();
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(blocks[i]->posRect.right()>righter)
+            righter=blocks[i]->posRect.right();
+        if(blocks[i]->posRect.left()<lefter)
+            lefter=blocks[i]->posRect.left();
+    }
+    if(posRect.left() >= righter) return false;
+    if(posRect.right() <= lefter) return false;
+    return true;
+}
+
+LVL_Block *PGE_Phys_Object::nearestBlock(QVector<LVL_Block*> &blocks)
+{
+    if(blocks.size()==1)
+        return blocks.first();
+
+    LVL_Block*nearest=NULL;
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(!nearest)
+            nearest=blocks[i];
+        else
+        {
+            if( fabs(blocks[i]->posRect.center().x()-posRect.center().x())<
+                fabs(nearest->posRect.center().x()-posRect.center().x()) )
+                nearest=blocks[i];
+        }
+    }
+    return nearest;
+}
+
+LVL_Block *PGE_Phys_Object::nearestBlockY(QVector<LVL_Block *> &blocks)
+{
+    if(blocks.size()==1)
+        return blocks.first();
+
+    LVL_Block*nearest=NULL;
+    for(int i=0; i<blocks.size(); i++)
+    {
+        if(!nearest)
+            nearest=blocks[i];
+        else
+        {
+            if( fabs(blocks[i]->posRect.center().y()-posRect.center().y())<
+                fabs(nearest->posRect.center().y()-posRect.center().y()) )
+                nearest=blocks[i];
+        }
+    }
+    return nearest;
+}
+
+
 
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)

@@ -139,16 +139,16 @@ void LVL_Block::transformTo_x(long id)
 
     sizable = setup->sizable;
     isHidden = data.invisible;
-    collide = COLLISION_ANY;
+    collide_player = COLLISION_ANY;
     slippery_surface = data.slippery;
     if((setup->sizable) || (setup->collision==2))
     {
-        collide = COLLISION_TOP;
+        collide_player = COLLISION_TOP;
     }
     else
     if(setup->collision==0)
     {
-        collide = COLLISION_NONE;
+        collide_player = COLLISION_NONE;
     }
 
     this->shape = setup->phys_shape;
@@ -163,6 +163,8 @@ void LVL_Block::transformTo_x(long id)
             LvlSceneP::s->switch_blocks[setup->switch_ID].clear();
         LvlSceneP::s->switch_blocks[setup->switch_ID].push_back(this);
     }
+
+    collide_npc=collide_player;
 }
 
 

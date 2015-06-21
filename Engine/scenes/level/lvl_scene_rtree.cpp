@@ -22,6 +22,8 @@ void LevelScene::registerElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
     RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
+    if(item->_width<=0) { rb[0]=item->_posX+1;}
+    if(item->_height<=0) { rb[1]=item->_posY+1;}
     tree.Insert(lt, rb, item);
 }
 
@@ -29,6 +31,8 @@ void LevelScene::unregisterElement(PGE_Phys_Object *item)
 {
     RPoint lt={item->_posX, item->_posY};
     RPoint rb={item->_posX+item->_width, item->_posY+item->_height};
+    if(item->_width<=0) { rb[0]=item->_posX+1;}
+    if(item->_height<=0) { rb[1]=item->_posY+1;}
     tree.Remove(lt, rb, item);
 }
 

@@ -14,6 +14,7 @@ void LVL_PhysEnv::init()
     setSize(data.w, data.h);
     setPos(data.x, data.y);
     env_type = data.quicksand ? Env_Quicksand : Env_Water;
-    collide = COLLISION_NONE;
+    collide_player = COLLISION_NONE;
+    collide_npc = COLLISION_NONE;
 }
 
