@@ -42,7 +42,6 @@ void Scene::launchStaticEffectC(long effectID, float startX, float startY, int a
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
     _effect.gravity = gravity;
-    _effect.animated=_effect.setup->animated;
     if(direction==0) direction = (rand()%2) ? -1 : 1;
     _effect.direction=direction;
     _effect.frameStyle = _effect.setup->framestyle;
@@ -114,7 +113,6 @@ void Scene::launchStaticEffect(long effectID, float startX, float startY, int an
     _effect.m_velocityY = velocityY;
     _effect.phys_setup=phys;
     _effect.gravity = gravity;
-    _effect.animated=_effect.setup->animated;
     if(direction==0) direction = (rand()%2) ? -1 : 1;
     _effect.direction=direction;
     _effect.frameStyle = _effect.setup->framestyle;
@@ -182,9 +180,6 @@ void Scene::processEffects(float ticks)
 
 Scene_Effect::Scene_Effect()
 {
-     animated=false;
-     animator_ID=0;
-
      direction=0;
      frameStyle=0;
 
@@ -203,10 +198,6 @@ Scene_Effect::Scene_Effect()
 
 Scene_Effect::Scene_Effect(const Scene_Effect &e)
 {
-    animated    = e.animated;
-    animator_ID = e.animator_ID;
-    animator    = e.animator;
-    texture     = e.texture;
     setup       = e.setup;
     direction   = e.direction;
 
@@ -314,8 +305,7 @@ void Scene_Effect::iterateStep(float ticks)
 void Scene_Effect::render(double camX, double camY)
 {
     AniPos x(0,1);
-    if(animated) //Get current animated frame
-        x = animator.image();
+    x = animator.image();
     GlRenderer::renderTexture(&texture, posX()-camX, posY()-camY, posRect.width(), posRect.height(), x.first, x.second);
 }
 

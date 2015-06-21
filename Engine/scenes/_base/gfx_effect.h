@@ -51,9 +51,6 @@ public:
     int direction;
     int frameStyle;
 
-    bool animated;
-    long animator_ID;
-
     bool _limit_delay;
     float _delay;
 
