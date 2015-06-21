@@ -277,34 +277,6 @@ long ConfigManager::getEffectTexture(long effectID)
         effSetup->textureID = level_textures[id].texture;
         effSetup->isInit = true;
 
-        //Also, load and init animator
-        if(effSetup->animated)
-        {
-            int frameFirst = 0;
-            int frameLast = -1;
-
-            //calculate height of frame
-            effSetup->frame_h =
-                    (int)round(double(level_textures[id].h)
-                               /double(effSetup->frames));
-
-            //store animated texture value back
-            //level_textures[id].h = effSetup->frame_h;
-
-            SimpleAnimator animator(
-                            true,
-                            effSetup->frames,
-                            effSetup->framespeed,
-                            frameFirst,
-                            frameLast,
-                            false,
-                            false
-                        );
-
-            Animator_EFFECT.push_back(animator);
-            effSetup->animator_ID = Animator_EFFECT.size()-1;
-        }
-
         return id;
     }
 }

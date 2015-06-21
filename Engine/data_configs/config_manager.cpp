@@ -228,7 +228,6 @@ bool ConfigManager::unloadLevelConfigs()
     Animator_BGO.clear();
     Animator_NPC.clear();
     Animator_BG.clear();
-    Animator_EFFECT.clear();
     /***************Clear settings*************/
 
     lvl_block_indexes.clear();

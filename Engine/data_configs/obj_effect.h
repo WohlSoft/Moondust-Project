@@ -37,12 +37,10 @@ struct obj_effect
     PGE_Texture * image;
     GLuint textureID;
     long textureArrayId;
-    long animator_ID;
     /*   OpenGL    */
 
     QString name;
 
-    bool animated;
     unsigned int frames;
     int framespeed;
     int framestyle;
