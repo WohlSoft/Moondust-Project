@@ -17,9 +17,17 @@
  */
 
 #include "lvl_base_detector.h"
+#include "../lvl_npc.h"
 
 BasicDetector::BasicDetector()
-{}
+{
+    _parentNPC=NULL;
+}
+
+BasicDetector::BasicDetector(LVL_Npc *parent)
+{
+    _parentNPC=parent;
+}
 
 BasicDetector::~BasicDetector()
 {}

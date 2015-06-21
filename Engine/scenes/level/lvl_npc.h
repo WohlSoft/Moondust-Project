@@ -41,6 +41,7 @@ public:
 
     obj_npc *setup;//Global config
     bool killed;
+    void harm(int damage=1);
     void kill();
 
     int taskToTransform;
@@ -128,6 +129,8 @@ public:
 
     inline int getID() { return setup->id; }
     bool isLuaNPC;
+
+    int health;
 
 
     bool isInited();
