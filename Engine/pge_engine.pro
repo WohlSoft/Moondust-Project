@@ -196,7 +196,8 @@ SOURCES += \
     script/bindings/core/globalfuncs/luafuncs_core_effect.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp \
-    common_features/version_cmp.cpp
+    common_features/version_cmp.cpp \
+    scenes/level/npc_detectors/lvl_base_detector.cpp
 
 
 HEADERS  += \
@@ -321,7 +322,8 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_effect.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
-    common_features/version_cmp.h
+    common_features/version_cmp.h \
+    scenes/level/npc_detectors/lvl_base_detector.h
 
 FORMS    += \
     data_configs/select_config.ui

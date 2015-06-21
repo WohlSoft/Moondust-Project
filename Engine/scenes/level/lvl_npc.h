@@ -6,6 +6,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
 #include <common_features/pointf.h>
+#include "npc_detectors/lvl_base_detector.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -30,7 +31,8 @@ public:
     AdvNpcAnimator animator;
 
     void setDirection(int dir);
-    int direction;
+    int  direction();
+    int _direction;
     float motionSpeed;
     bool  is_scenery;
 
@@ -58,7 +60,8 @@ public:
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
     /*****************NPC's and blocks******************/
-    bool             onGround;
+    void  onGround();
+    bool  _onGround;
     QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
     QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
 
@@ -84,7 +87,12 @@ public:
     /*******************Environmept*********************/
 
     bool isActivated;
-    int timeout;
+    int  timeout;
+
+    /********************Detectors**********************/
+    QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
+    QVector<BasicDetector* > detectors;       //!< Entire list of all detectors
+    /***************************************************/
 
     /*****Warp*Sprite*****/
     enum WarpingSide{
@@ -98,7 +106,7 @@ public:
     /// \param depth
     /// \param direction
     ///
-    void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM, bool resizedBody=false);
+    void setSpriteWarp(float depth, WarpingSide _direction=WARP_BOTTOM, bool resizedBody=false);
     void resetSpriteWarp();
     bool    isWarping;
     int     warpDirectO;
