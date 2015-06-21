@@ -5,6 +5,8 @@ bool IntProc::enabled=false;
 QString IntProc::state="";
 
 bool IntProc::cmd_accepted=false;
+IntProc::ExternalCommands IntProc::command=IntProc::MessageBox;
+
 QString IntProc::cmd="";
 
 IntProc::IntProc(QObject *parent) :
@@ -44,6 +46,16 @@ void IntProc::quit()
 bool IntProc::isWorking()
 {
     return (editor!=NULL);
+}
+
+bool IntProc::hasCommand()
+{
+    return cmd_accepted;
+}
+
+IntProc::ExternalCommands IntProc::commandType()
+{
+    return command;
 }
 
 QString IntProc::getCMD()
