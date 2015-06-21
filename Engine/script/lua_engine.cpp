@@ -16,6 +16,12 @@
 #include <sstream>
 #include <QFileInfo>
 
+#ifdef USE_LUA_JIT
+extern "C" {
+#include <luajit-2.0/lualib.h>
+}
+#endif
+
 LuaEngine::LuaEngine() : LuaEngine(nullptr)
 {}
 
@@ -56,6 +62,12 @@ void LuaEngine::init()
     lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_package);
     lua_call(L,0,0);
+    #ifdef USE_LUA_JIT
+    lua_pushcfunction(L, luaopen_jit);
+    lua_call(L,0,0);
+    lua_pushcfunction(L, luaopen_bit);
+    lua_call(L,0,0);
+    #endif
 
     //Activate Luabind for out state
     luabind::open(L);
@@ -135,6 +147,8 @@ void LuaEngine::shutdown()
         return;
     }
 
+    loadedFiles.clear();
+
     // FIXME: Add shutdown event
 
     forceShutdown();
@@ -154,6 +168,11 @@ void LuaEngine::forceShutdown()
 
 luabind::object LuaEngine::loadClassAPI(const QString &path)
 {
+    if(loadedFiles.contains(path))
+    {
+        return loadedFiles[path];
+    }
+
     QFile luaCoreFile(path);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
         qWarning() << "Failed to load up \"" << path << "\"! Wrong path or insufficient access?";
@@ -179,6 +198,8 @@ luabind::object LuaEngine::loadClassAPI(const QString &path)
         qWarning() << "Invalid return type of loading class";
         return luabind::object();
     }
+
+    loadedFiles[path]=tReturn;
     return tReturn;
 }
 
@@ -277,6 +298,11 @@ void LuaEngine::postLateShutdownError(luabind::error &error)
     QString runtimeErrorMsg = error.what();
     m_errorReporterFunc(runtimeErrorMsg.section('\n', 0, 0), runtimeErrorMsg.section('\n', 1));
     m_lateShutdown = true;
+}
+
+void LuaEngine::runGarbageCollector()
+{
+    lua_gc(L, LUA_GCCOLLECT,0);
 }
 
 QString LuaEngine::getLuaScriptPath() const

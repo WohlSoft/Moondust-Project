@@ -283,13 +283,14 @@ ConfigManager::ConfigManager(QWidget *parent) :
         QMessageBox msgBox(this);
         msgBox.setWindowTitle(tr("Config packs are not found"));
         msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
+        msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
         msgBox.setText(
                     tr("Available configuration packages are not found!<br>\n"
                        "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
                        "You can take any configuration package here:<br>%2")
                     .arg(AppPathManager::userAppDir()+"/configs")
-                    .arg("<a href=\"http://engine.wohlnet.ru/config_packs.php\">"
-                         "http://engine.wohlnet.ru/config_packs.php"
+                    .arg("<a href=\"http://engine.wohlnet.ru/config_packs/\">"
+                         "http://engine.wohlnet.ru/config_packs/"
                          "</a>")
                     );
         QSize mSize = msgBox.sizeHint();

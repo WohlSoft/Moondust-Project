@@ -19,6 +19,7 @@
 #include "../scene_level.h"
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
+#include <common_features/logger.h>
 #include <gui/pge_msgbox.h>
 
 #include <QDebug>
@@ -239,14 +240,16 @@ bool LevelScene::init()
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     luaEngine.setCoreFile(ConfigManager::setup_Level.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
-        qWarning() << "Lua-Error: ";
-        qWarning() << "Error Message: " << errorMessage;
-        qWarning() << "Stacktrace: \n" << stacktrace;
+        WriteToLog(QtWarningMsg, "Lua-Error: ");
+        WriteToLog(QtWarningMsg, "Error Message: "+errorMessage);
+        WriteToLog(QtWarningMsg, "Stacktrace: \n"+stacktrace);
         PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
         msgBox.exec();
     });
     luaEngine.init();
 
+    if(luaEngine.shouldShutdown())
+        return false;
 
     for(QMap<long, obj_npc>::const_iterator it = ConfigManager::lvl_npc_indexes.cbegin(); it != ConfigManager::lvl_npc_indexes.cend(); ++it){
         QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile((*it).algorithm_script);

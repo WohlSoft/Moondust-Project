@@ -22,20 +22,24 @@
 #include <common_features/rectf.h>
 #include <common_features/pge_texture.h>
 
+#include <QVector>
+
 struct PGE_Phys_Object_Phys
 {
+    float min_vel_x;//!< Min allowed X velocity
+    float min_vel_y;//!< Min allowed Y velocity
+    float max_vel_x;//!< Max allowed X velocity
+    float max_vel_y;//!< Max allowed Y velocity
+    float decelerate_x;//!< Deceleration of X velocity in each second
+    float grd_dec_x;   //!< Soft deceleration if max X speed limit exited
+    float decelerate_y;//!< Deceleration of Y velocity in each second
+    float gravityScale;//!< Item specific gravity scaling
+    float gravityAccel;//!< Item gravity acceleration
     PGE_Phys_Object_Phys();
-    float min_vel_x;
-    float min_vel_y;
-    float max_vel_x;
-    float max_vel_y;
-    float decelerate_x;
-    float grd_dec_x;
-    float decelerate_y;
-    float gravityScale;
 };
 
 class LVL_Section;
+class LVL_Block;
 ///
 /// \brief The PGE_Phys_Object class
 ///
@@ -47,19 +51,31 @@ public:
     virtual ~PGE_Phys_Object();
     virtual double posX(); //!< Position X
     virtual double posY(); //!< Position Y
-    double posCenterX(); //!< Position X
-    double posCenterY(); //!< Position Y
+    double posCenterX(); //!< Centered Position X
+    double posCenterY(); //!< Centered Position Y
+    double width();
+    double height();
 
     double top();
+    void setTop(double tp);
     double bottom();
+    void setBottom(double btm);
     double left();
+    void setLeft(double lf);
     double right();
+    void setRight(double rt);
 
     void setSize(float w, float h);
+    void setWidth(float w);
+    void setHeight(float h);
 
     virtual void setPos(double x, double y);
     void setPosX(double x);
     void setPosY(double y);
+    void setCenterPos(double x, double y);
+    void setCenterX(double x);
+    void setCenterY(double y);
+
     double speedX();
     double speedY();
     void setSpeed(double x, double y);
@@ -70,6 +86,8 @@ public:
 
     double gravityScale();
     void setGravityScale(double scl);
+    float gravityAccel();
+    void setGravityAccel(float acl);
 
     void _syncPosition();
     void _syncPositionAndSize();
@@ -80,31 +98,36 @@ public:
     virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
+    LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
+    LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
+    bool isWall(QVector<LVL_Block *> &blocks);
+    bool isFloor(QVector<LVL_Block *> &blocks);
+
     static const float _smbxTickTime;
     static float SMBXTicksToTime(float ticks);
 
-    PGE_Phys_Object_Phys phys_setup;
-    PGE_RectF posRect;
-    double _accelX;
-    double _accelY;
+    PGE_Phys_Object_Phys phys_setup;//!< Settings of physics
+    PGE_RectF posRect;//!< Real body geometry and position
+    double _accelX; //!<Delta of X velocity in a second
+    double _accelY; //!<Delta of Y velocity in a second
 
-    double _velocityX;
-    double _velocityY;
+    double _velocityX;//!< current X speed (pixels per 1/65 of second)
+    double _velocityY;//!< current Y speed (pixels per 1/65 of second)
 
-    double _velocityX_prev;
-    double _velocityY_prev;
+    double _velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
+    double _velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
-    double _posX;
-    double _posY;
+    double _posX; //!< Synchronized with R-Tree position
+    double _posY; //!< Synchronized with R-Tree position
 
-    double width;  //!< Width
-    double height; //!< Height
+    double _width;  //!< Synchronized with R-Tree Width
+    double _height; //!< Synchronized with R-Tree Height
+    double _width_half;//!< Half of width
+    double _height_half;//!< Half of height
 
-    double _realWidth;  //!< need to sync with tree
-    double _realHeight; //!< need to sync with tree
+    double _realWidth;  //!< Width prepared to synchronize with R-Tree
+    double _realHeight; //!< Height prepared to synchronize with R-Tree
 
-    double posX_coefficient;
-    double posY_coefficient;
     void setParentSection(LVL_Section* sct);
     LVL_Section* sct();
     LVL_Section *_parentSection;
@@ -118,7 +141,8 @@ public:
         COLLISION_BOTTOM = 3
     };
 
-    int collide;
+    int collide_player;
+    int collide_npc;
 
     bool slippery_surface;
     bool isRectangle;
@@ -153,6 +177,8 @@ private:
     bool _paused;
 
 };
+
+
 
 bool operator< (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);
 bool operator> (const PGE_Phys_Object& lhs, const PGE_Phys_Object& rhs);

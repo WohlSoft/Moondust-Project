@@ -25,6 +25,7 @@
 #include <SDL2/SDL_timer.h>
 #include <utility>
 
+#include <common_features/sizef.h>
 #include <data_configs/obj_npc.h>
 
 typedef std::pair<double, double > AniPos;
@@ -57,6 +58,7 @@ public:
     void setFrameSpeed(int ms);
     void setBidirectional(bool bid);
     void setDirectedSequence(bool dd);
+    PGE_SizeF sizeOfFrame();
 
     void start();
     void stop();

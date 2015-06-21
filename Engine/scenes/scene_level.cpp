@@ -53,7 +53,7 @@ LevelScene::LevelScene()
     cameraStartDirection=0;
 
     /*********Physics**********/
-    gravity=26;
+    globalGravity=1.0;
     /**************************/
 
     /*********Exit*************/
@@ -450,9 +450,6 @@ void LevelScene::update()
         while(!dead_npcs.isEmpty())
         {
             LVL_Npc *corpse = dead_npcs.last();
-            launchStaticEffect(corpse->setup->effect_1,
-                               corpse->posX(), corpse->posY(),
-                               1, 0, 0,0,0);
             dead_npcs.pop_back();
             npcs.removeAll(corpse);
             if(!corpse->isLuaNPC)
@@ -899,4 +896,15 @@ void LevelScene::setGameState(EpisodeState *_gameState)
             initPauseMenu1();
     }
 }
+
+LevelScene::LVL_NpcsArray &LevelScene::getNpcs()
+{
+    return npcs;
+}
+
+LevelScene::LVL_PlayersArray& LevelScene::getPlayers()
+{
+    return players;
+}
+
 

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QtDebug>
+#include <QHash>
 
 #include <functional>
 
@@ -54,16 +55,16 @@ public:
     ///
     inline bool isValid() { return L != nullptr; }
 
-    luabind::object loadClassAPI(const QString& path);
-    void loadClassAPI(const QString& nameInGlobal, const QString& path);
+    luabind::object loadClassAPI(const QString& path); //!< Reads a lua class and returns the object
+    void loadClassAPI(const QString& nameInGlobal, const QString& path); //!< Reads a lua class and puts it in a global object
 
-    QString coreFile() const;
-    void setCoreFile(const QString &coreFile);
+    QString coreFile() const; //!< The core lua filename
+    void setCoreFile(const QString &coreFile); //!< The core lua filename
 
-    void dispatchEvent(LuaEvent& toDispatchEvent);
-    void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func);
+    void dispatchEvent(LuaEvent& toDispatchEvent); //!< Dispatches a lua event
+    void setErrorReporterFunc(const std::function<void (const QString &, const QString&)> &func); //!< The error reporter function
 
-    Scene *getBaseScene() const;
+    Scene *getBaseScene() const; //!< The base-scene for the lua engine (may need for interacting with current scene)
 
     QString getLuaScriptPath() const;
     void setLuaScriptPath(const QString &luaScriptPath);
@@ -73,6 +74,8 @@ public:
 
     void postLateShutdownError(luabind::error& error);
 
+    void runGarbageCollector();
+
 protected:
     virtual void onBindAll() {}
 
@@ -81,6 +84,7 @@ protected:
 private:
     void bindCore();
     void error();
+    QHash<QString, luabind::object > loadedFiles;
 
     bool m_lateShutdown; //!< If true, then the lua engine will shutdown as soon as possible
     QString m_luaScriptPath;

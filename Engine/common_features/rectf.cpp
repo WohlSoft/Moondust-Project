@@ -104,6 +104,30 @@ void PGE_RectF::setBottom(double b)
     _h=_b-_y;
 }
 
+PGE_RectF PGE_RectF::withMargin(double margin)
+{
+    PGE_RectF rect;
+    rect._x=_x-margin;
+    rect._y=_y-margin;
+    rect._b=_b+margin;
+    rect._r=_r+margin;
+    rect._w=_w+margin*2.0;
+    rect._h=_h+margin*2.0;
+    return rect;
+}
+
+PGE_RectF PGE_RectF::withMargin(double marginX, double marginY)
+{
+    PGE_RectF rect;
+    rect._x=_x-marginX;
+    rect._y=_y-marginY;
+    rect._b=_b+marginX;
+    rect._r=_r+marginY;
+    rect._w=_w+marginX*2.0;
+    rect._h=_h+marginY*2.0;
+    return rect;
+}
+
 
 void PGE_RectF::setX(double x)
 {

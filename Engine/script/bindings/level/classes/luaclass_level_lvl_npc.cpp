@@ -44,6 +44,9 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)
             .def("setSequence", &LVL_Npc::lua_setSequence)
 
+            .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
+            .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
+
             //Properties
             .property("id", &LVL_Npc::getID);
 

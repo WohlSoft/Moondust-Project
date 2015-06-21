@@ -55,10 +55,6 @@ class LVL_Player :
 
         void updateCollisions();
         void solveCollision(PGE_Phys_Object *collided);
-        LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
-        LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
-        bool isWall(QVector<LVL_Block *> &blocks);
-        bool isFloor(QVector<LVL_Block *> &blocks);
         bool forceCollideCenter;//!< collide with invizible blocks at center
         float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
@@ -135,19 +131,20 @@ class LVL_Player :
         /********************Jumps***************************/
         bool    JumpPressed;
         bool    onGround;
-        int     foot_contacts;
         bool    on_slippery_surface;
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
         float   jumpTime;
-        float   jumpTime_default;
+        float   jumpVelocity;
         /********************Jumps***************************/
 
         /********************Bump***************************/
         bool    bumpDown;
         bool    bumpUp;
-        float   bumpVelocity;
-        void    bump(bool _up=false, double bounceSpeed=0.0);
+        float   bumpVelocity;//!< down velocity
+        float   bumpJumpVelocity;//! Up jump velocity
+        int     bumpJumpTime;    //!< Up jump time
+        void    bump(bool _up=false, double bounceSpeed=0.0, int timeToJump=0);
         /********************Bump***************************/
 
         /********************Climbing***************************/
