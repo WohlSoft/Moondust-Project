@@ -69,7 +69,7 @@ public:
 
     void update(float ticks);
     void iterateStep(float ticks);
-    float timeStep;
+    static const float timeStep;
 
     void render(double camX=0.0, double camY=0.0);
 };

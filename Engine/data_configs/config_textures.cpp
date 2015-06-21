@@ -251,7 +251,6 @@ long ConfigManager::getEffectTexture(long effectID)
 
     if(effSetup->isInit)
     {
-
         if(effSetup->textureArrayId < level_textures.size())
             return effSetup->textureArrayId;
         else
@@ -264,7 +263,6 @@ long ConfigManager::getEffectTexture(long effectID)
 
         long id = level_textures.size();
         effSetup->textureArrayId = id;
-
         PGE_Texture texture;
         level_textures.push_back(texture);
 
@@ -272,10 +270,10 @@ long ConfigManager::getEffectTexture(long effectID)
              imgFile,
              maskFile
              );
-
         effSetup->image = &(level_textures[id]);
         effSetup->textureID = level_textures[id].texture;
-        effSetup->isInit = true;
+        effSetup->isInit=true;
+        effSetup->frame_h = level_textures[id].h;
 
         return id;
     }
