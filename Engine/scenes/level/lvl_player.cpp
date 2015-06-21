@@ -84,7 +84,7 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     bumpJumpVelocity=0.0f;
     bumpJumpTime=0.0f;
 
-    _exiting_swimTimer=50;
+    _exiting_swimTimer=700;
 
     health=3;
     doHarm=false;
@@ -820,16 +820,20 @@ void LVL_Player::update(float ticks)
         if(posX() > sBox.right() + 1 )
             setGravityScale(0);//Prevent falling [we anyway exited from this level, isn't it?]
 
-        if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
+        if(keys.left||keys.right)
         {
-            if(_exiting_swimTimer<0 && !keys.jump)
-                keys.jump=true;
-            else
-            if(_exiting_swimTimer<0 && keys.jump)
+            if((environment==LVL_PhysEnv::Env_Water)||(environment==LVL_PhysEnv::Env_Quicksand))
             {
-                keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1 : 200;
-            }
-            _exiting_swimTimer-= ticks;
+                keys.run=true;
+                if(_exiting_swimTimer<0 && !keys.jump)
+                    keys.jump=true;
+                else
+                if(_exiting_swimTimer<0 && keys.jump)
+                {
+                    keys.jump=false; _exiting_swimTimer=(environment==LVL_PhysEnv::Env_Quicksand)? 1 : 500;
+                }
+                _exiting_swimTimer-= ticks;
+            } else keys.run=false;
         }
     }
     else
@@ -1528,9 +1532,11 @@ void LVL_Player::refreshAnimation()
             {
                 float velX = speedX();
                 if( ((!on_slippery_surface)&&(velX>0.0))||((on_slippery_surface)&&(_accelX>0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, _direction, (128-((velX*20)<100?velX*10:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, _direction,
+                                               (100-((velX*12)<85 ? velX*12 : 85)) );
                 else if( ((!on_slippery_surface)&& (velX<0.0))||((on_slippery_surface)&&(_accelX<0.0)) )
-                    animator.switchAnimation(MatrixAnimator::Run, _direction, (128-((-velX*20)<100?-velX*10:100)));
+                    animator.switchAnimation(MatrixAnimator::Run, _direction,
+                                             (100-((-velX*12)<85 ? -velX*12 : 85)) );
                 else
                     animator.switchAnimation(MatrixAnimator::Idle, _direction, 64);
             }
@@ -1633,8 +1639,6 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         x->harm();
         LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
         kill_npc(x, NPC_Kicked);
-        if(x->killed)
-            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
     }
 }
 
