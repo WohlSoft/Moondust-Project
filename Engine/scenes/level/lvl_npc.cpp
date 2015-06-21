@@ -878,7 +878,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
     }
 }
 
-void LVL_Npc::onGround()
+bool LVL_Npc::onGround()
 {
     return _onGround;
 }

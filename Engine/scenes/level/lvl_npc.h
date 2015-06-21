@@ -60,7 +60,7 @@ public:
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
     /*****************NPC's and blocks******************/
-    void  onGround();
+    bool onGround();
     bool  _onGround;
     QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
     QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
