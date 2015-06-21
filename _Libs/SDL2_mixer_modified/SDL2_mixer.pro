@@ -25,6 +25,7 @@ INCLUDEPATH += ../_builds/win32/include
 linux-g++||unix:!macx:!android:{
 LIBS += -L../_builds/linux/lib
 INCLUDEPATH += ../_builds/linux/include
+CONFIG += unversioned_libname
 }
 android:{
 LIBS += -L../_builds/android/lib

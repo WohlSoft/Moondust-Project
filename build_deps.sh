@@ -68,7 +68,7 @@ fi
 
 cd "$PrjPath/_Libs"
 
-$QMake CONFIG+=release CONFIG-=debug
+$QMake CONFIG+=release CONFIG-=debug DEFINES+=USE_LUA_JIT
 checkState
 
 #=======================================================================

@@ -9,6 +9,8 @@ SUBDIRS = DependentLibs \
     LazyFixTool \
     Manager
 
+DEFINES += USE_LUA_JIT
+
 DependentLibs.file = _Libs/pge_deps.pro
 
 Editor.file	 = Editor/pge_editor.pro
@@ -31,6 +33,7 @@ calibrator_cnfs.files  = Content/calibrator/*
 INSTALLS += configs helps themes calibrator_cnfs
 
 android:{
+DEFINES -= USE_LUA_JIT
 SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager
 INSTALLS -= configs helps themes calibrator_cnfs
 }
