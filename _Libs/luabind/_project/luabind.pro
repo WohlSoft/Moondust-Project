@@ -7,17 +7,26 @@ CONFIG += staticlib
 CONFIG -= qt
 CONFIG += c++11
 
-DEFINES += _LIBLUABIND
+DEFINES += _LIBLUABIND USE_LUA_JIT
 
 unix:{
 DEFINES += LUA_USE_LINUX
 }
 
+contains(DEFINES, USE_LUA_JIT):{
+message("Luabind will be built with LuaJIT!")
+} else {
+warning("LuaJIT is not connected!!!")
+}
+
+LIBS += -lluajit-5.1
+
 include (../../../_common/lib_destdir.pri)
 DESTDIR = ../../_builds/$$TARGETOS/lib
 
 include(../../../_common/build_props.pri)
-INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include $$PWD/../../_builds/$$TARGETOS/include/luajit-2.0/
+INCLUDEPATH += $$PWD/../ $$PWD/../../ $$PWD/../../_builds/$$TARGETOS/include \
+               $$PWD/../../_builds/$$TARGETOS/include/luajit-2.0/
 
 SOURCES += ../src/class.cpp \
     ../src/class_info.cpp \
@@ -137,4 +146,5 @@ HEADERS += ../luabind/detail/conversion_policies/conversion_base.hpp \
     ../luabind/version.hpp \
     ../luabind/weak_ref.hpp \
     ../luabind/wrapper_base.hpp \
-    ../luabind/yield_policy.hpp
+    ../luabind/yield_policy.hpp \
+    ../lua_inclues/lua.hpp

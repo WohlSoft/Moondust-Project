@@ -8,10 +8,10 @@ OOLua.file = oolua/project/oolua.pro
 
 !android: DEFINES+=USE_LUA_JIT
 
-contains(DEFINES, USE_LUA_JIT):{
+!android:{
 LuaBind.file = luabind/_project/luabind.pro
 } else {
-LuaBind.file = luabind/_project/luabind_nojit.pro
+#LuaBind.file = luabind/_project/luabind_nojit.pro
 }
 
 deplibs.path = bin
