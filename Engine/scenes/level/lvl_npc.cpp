@@ -850,38 +850,6 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 if(npc->killed)        break;
                 if(npc->data.friendly) break;
 
-                if(!LvlSceneP::s->isExit())
-                {
-                    if(npc->data.id==11){
-                        LvlSceneP::s->setExiting(4500, 1);
-                    }
-                    else
-                    if((npc->data.id==15)||(npc->data.id==16)){
-                        LvlSceneP::s->setExiting(7000, 2);
-                    }
-                    else
-                    if((npc->data.id==39)||(npc->data.id==41)){
-                        LvlSceneP::s->setExiting(3200, 5);
-                    }
-                    else
-                    if(npc->data.id==97){
-                        LvlSceneP::s->setExiting(4500, 7);
-                    }
-                    else
-                    if(npc->data.id==197){
-                        LvlSceneP::s->setExiting(15000, 8);
-                    }
-                    else
-                    if(npc->data.id==86 )
-                    {
-                        LvlSceneP::s->setExiting(5000, 7);
-                    }
-                }
-//                if((!npc->data.friendly)&&(npc->setup->takable))
-//                {
-//                    kill_npc(npc, LVL_Player::NPC_Taked_Coin);
-//                    npc->kill();
-//                }
             }
             break;
         }
