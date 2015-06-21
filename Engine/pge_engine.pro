@@ -29,7 +29,7 @@ INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
-DEFINES += PGE_ENGINE
+DEFINES += PGE_ENGINE USE_LUA_JIT
 
 
 include ($$PWD/../_common/lib_destdir.pri)
@@ -43,6 +43,7 @@ contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
 
 android: {
     LIBS += -lSDL2 -lglut -lGLU
+    DEFINES -= USE_LUA_JIT
 }
 win32: {
     LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion

@@ -16,8 +16,9 @@
 #include <sstream>
 #include <QFileInfo>
 
+#ifdef USE_LUA_JIT
 #include <luajit-2.0/lualib.h>
-
+#endif
 
 LuaEngine::LuaEngine() : LuaEngine(nullptr)
 {}
@@ -59,10 +60,12 @@ void LuaEngine::init()
     lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_package);
     lua_call(L,0,0);
+    #ifdef USE_LUA_JIT
     lua_pushcfunction(L, luaopen_jit);
     lua_call(L,0,0);
     lua_pushcfunction(L, luaopen_bit);
     lua_call(L,0,0);
+    #endif
 
     //Activate Luabind for out state
     luabind::open(L);
