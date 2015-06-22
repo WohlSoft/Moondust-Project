@@ -148,6 +148,7 @@ void MainWindow::LayerListsSync()
     QString curSearchLayerBlock = dock_LvlSearchBox->cbox_layer_block()->currentText();
     QString curSearchLayerBGO = dock_LvlSearchBox->cbox_layer_bgo()->currentText();
     QString curSearchLayerNPC = dock_LvlSearchBox->cbox_layer_npc()->currentText();
+    QString curSearchLayerAttachedNPC = dock_LvlSearchBox->cbox_layer_attached_npc()->currentText();
 
     QString curWarpLayer = dock_LvlWarpProps->cbox_layer()->currentText();
 
@@ -169,6 +170,8 @@ void MainWindow::LayerListsSync()
     dock_LvlSearchBox->cbox_layer_block()->clear();
     dock_LvlSearchBox->cbox_layer_bgo()->clear();
     dock_LvlSearchBox->cbox_layer_npc()->clear();
+    dock_LvlSearchBox->cbox_layer_attached_npc()->clear();
+    dock_LvlSearchBox->cbox_layer_attached_npc()->addItem(tr("[None]"));
 
     if(WinType==1)
     {
@@ -184,6 +187,7 @@ void MainWindow::LayerListsSync()
             dock_LvlSearchBox->cbox_layer_block()->addItem(layer.name);
             dock_LvlSearchBox->cbox_layer_bgo()->addItem(layer.name);
             dock_LvlSearchBox->cbox_layer_npc()->addItem(layer.name);
+            dock_LvlSearchBox->cbox_layer_attached_npc()->addItem(layer.name);
             dock_LvlEvents->cbox_layer_to_move()->addItem(layer.name);
             dock_LvlWarpProps->cbox_layer()->addItem(layer.name, QVariant(layer.name));
         }
@@ -194,6 +198,7 @@ void MainWindow::LayerListsSync()
     dock_LvlSearchBox->cbox_layer_block()->setCurrentText(curSearchLayerBlock);
     dock_LvlSearchBox->cbox_layer_bgo()->setCurrentText(curSearchLayerBGO);
     dock_LvlSearchBox->cbox_layer_npc()->setCurrentText(curSearchLayerNPC);
+    dock_LvlSearchBox->cbox_layer_attached_npc()->setCurrentText(curSearchLayerAttachedNPC);
     dock_LvlWarpProps->lockWarpSetSettings = false;
     dock_LvlItemProps->LvlItemPropsLock = false;
     dock_LvlEvents->LvlEventBoxLock = false;
