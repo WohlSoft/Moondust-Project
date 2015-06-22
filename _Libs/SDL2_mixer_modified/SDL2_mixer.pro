@@ -91,20 +91,20 @@ SDL2MixerH.files += SDL_mixer.h
 linux-g++||unix:!macx:!android:{
 SDL2MixerSO.path = ../_builds/linux/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+INSTALLS =  SDL2MixerSO
 }
 android:{
 SDL2MixerSO.path = ../_builds/android/lib
 SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+INSTALLS =  SDL2MixerSO
 }
 win32: {
 SDL2MixerSO.path = ../_builds/win32/bin
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dll
-}
-macx: {
-SDL2MixerSO.path = ../_builds/macos/lib
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib
+SDL2MixerSO.files += ../_builds/win32/lib/*.dll
+INSTALLS =  SDL2MixerSO
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
+
 
 
 HEADERS += \
