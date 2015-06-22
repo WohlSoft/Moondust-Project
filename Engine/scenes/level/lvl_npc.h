@@ -77,6 +77,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_bottom;
     QHash<int, PGE_Phys_Object*> collided_center;
     bool  disableBlockCollision;
+    bool  disableNpcCollision;
     bool _stucked;
 
     bool    bumpDown;
