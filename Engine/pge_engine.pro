@@ -39,10 +39,13 @@ contains(DEFINES, USE_LUA_JIT): INCLUDEPATH += $$PWD/../_Libs/_builds/$$TARGETOS
 
 LIBS += -L$$PWD/../_Libs/_builds/$$TARGETOS/lib
 LIBS += -lluabind
+debug: LIBS += -ldl
+android {
+ DEFINES -= USE_LUA_JIT
+}
 
 android: {
     LIBS += -lSDL2 -lglut -lGLU
-    DEFINES -= USE_LUA_JIT
 }
 win32: {
     LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion
@@ -196,7 +199,26 @@ SOURCES += \
     script/bindings/core/globalfuncs/luafuncs_core_effect.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp \
-    common_features/version_cmp.cpp
+    common_features/version_cmp.cpp \
+    scenes/level/npc_detectors/lvl_base_detector.cpp \
+    scenes/level/npc/lvl_npc_throwned_by.cpp \
+    scenes/level/npc/lvl_npc_collisions.cpp \
+    scenes/level/npc/lvl_npc_setup.cpp \
+    scenes/level/npc/lvl_npc_lua.cpp \
+    scenes/level/npc/lvl_npc_generator.cpp \
+    scenes/level/npc/lvl_npc_kill.cpp \
+    scenes/level/npc/lvl_npc_spritewarp.cpp \
+    scenes/level/npc/lvl_npc_activate.cpp \
+    scenes/level/npc/lvl_npc_update.cpp \
+    scenes/level/npc/lvl_npc_render.cpp \
+    scenes/level/player/lvl_player_collisions.cpp \
+    scenes/level/player/lvl_player_setup.cpp \
+    scenes/level/player/lvl_player_attaks_and_kills.cpp \
+    scenes/level/player/lvl_player_animation.cpp \
+    scenes/level/player/lvl_player_warps_and_teleports.cpp \
+    scenes/level/player/lvl_player_update.cpp \
+    scenes/level/player/lvl_player_physics.cpp \
+    scenes/level/player/lvl_player_render.cpp
 
 
 HEADERS  += \
@@ -321,7 +343,8 @@ HEADERS  += \
     script/bindings/core/globalfuncs/luafuncs_core_effect.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
-    common_features/version_cmp.h
+    common_features/version_cmp.h \
+    scenes/level/npc_detectors/lvl_base_detector.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -22,7 +22,6 @@
 /*****Level BGO************/
 QMap<long, obj_effect>   ConfigManager::lvl_effects_indexes;
 CustomDirManager ConfigManager::Dir_EFFECT;
-QList<SimpleAnimator > ConfigManager::Animator_EFFECT;
 /*****Level BGO************/
 
 
@@ -59,7 +58,6 @@ bool ConfigManager::loadLevelEffects()
         seffect.isInit = false;
         seffect.image = NULL;
         seffect.textureArrayId = 0;
-        seffect.animator_ID = 0;
 
         effectset.beginGroup( QString("effect-"+QString::number(i)) );
 
@@ -88,11 +86,10 @@ bool ConfigManager::loadLevelEffects()
                 goto skipEffect;
             }
             seffect.frames = effectset.value("frames", "1").toInt();
-            seffect.animated = (seffect.frames>1);
             seffect.framestyle = effectset.value("frame-style", "0").toInt();
             seffect.framespeed = effectset.value("frame-speed", "125").toInt();
 
-            seffect.frame_h = 0;//(sbgo.animated? qRound(qreal(sbgo.image.height())/sbgo.frames) : sbgo.image.height());
+            seffect.frame_h = 0;
             seffect.id = i;
 
             //Add to Index

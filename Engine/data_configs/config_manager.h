@@ -308,7 +308,6 @@ public:
     /*****************************/
     static QMap<long, obj_effect>   lvl_effects_indexes;
     static CustomDirManager Dir_EFFECT;
-    static QList<SimpleAnimator > Animator_EFFECT;
     /*****Level Effects************/
 
 

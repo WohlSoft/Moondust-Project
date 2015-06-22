@@ -340,11 +340,30 @@ void EditorPipe::icomingData(QString in)
         levelAccepted=true;
     }
     else
+    if(in.startsWith("PLACEITEM: ", Qt::CaseSensitive))
+    {
+        qDebug() << "Accepted Placing item!";
+        in.remove("PLACEITEM: ");
+        IntProc::cmd = in;
+        IntProc::command = IntProc::PlaceItem;
+        IntProc::cmd_accepted=true;
+    }
+    else
+    if(in.startsWith("MSGBOX: ", Qt::CaseSensitive))
+    {
+        qDebug() << "Accepted Message box";
+        in.remove("MSGBOX: ");
+        IntProc::cmd = in.replace("\\n", "\n");
+        IntProc::command = IntProc::MessageBox;
+        IntProc::cmd_accepted=true;
+    }
+    else
     if(in.startsWith("CHEAT: ", Qt::CaseSensitive))
     {
         qDebug() << "Accepted cheat code";
         in.remove("CHEAT: ");
-        IntProc::cmd = in;
+        IntProc::cmd = in.replace("\\n", "\n");
+        IntProc::command = IntProc::Cheat;
         IntProc::cmd_accepted=true;
     }
     else

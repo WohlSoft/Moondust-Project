@@ -407,7 +407,7 @@ void PGE_Phys_Object::solveCollision(PGE_Phys_Object *)
 
 
 
-bool PGE_Phys_Object::isWall(QVector<LVL_Block*> &blocks)
+bool PGE_Phys_Object::isWall(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.isEmpty())
         return false;
@@ -425,7 +425,7 @@ bool PGE_Phys_Object::isWall(QVector<LVL_Block*> &blocks)
     return true;
 }
 
-bool PGE_Phys_Object::isFloor(QVector<LVL_Block*> &blocks)
+bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks)
 {
     if(blocks.isEmpty())
         return false;
@@ -443,12 +443,12 @@ bool PGE_Phys_Object::isFloor(QVector<LVL_Block*> &blocks)
     return true;
 }
 
-LVL_Block *PGE_Phys_Object::nearestBlock(QVector<LVL_Block*> &blocks)
+PGE_Phys_Object *PGE_Phys_Object::nearestBlock(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.size()==1)
         return blocks.first();
 
-    LVL_Block*nearest=NULL;
+    PGE_Phys_Object*nearest=NULL;
     for(int i=0; i<blocks.size(); i++)
     {
         if(!nearest)
@@ -463,12 +463,12 @@ LVL_Block *PGE_Phys_Object::nearestBlock(QVector<LVL_Block*> &blocks)
     return nearest;
 }
 
-LVL_Block *PGE_Phys_Object::nearestBlockY(QVector<LVL_Block *> &blocks)
+PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &blocks)
 {
     if(blocks.size()==1)
         return blocks.first();
 
-    LVL_Block*nearest=NULL;
+    PGE_Phys_Object*nearest=NULL;
     for(int i=0; i<blocks.size(); i++)
     {
         if(!nearest)

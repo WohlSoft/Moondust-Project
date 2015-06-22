@@ -116,11 +116,36 @@ bool IntEngine::sendCheat(QString _args)
 {
     if(isWorking())
     {
+        if(_args.isEmpty()) return false;
+        _args=_args.replace('\n', "\\n");
         return engineSocket->sendCommand(QString("CHEAT: %1\n\n").arg(_args));
     }
     else
         return false;
 }
+
+bool IntEngine::sendMessageBox(QString _args)
+{
+    if(isWorking())
+    {
+        if(_args.isEmpty()) return false;
+        _args=_args.replace('\n', "\\n");
+        return engineSocket->sendCommand(QString("MSGBOX: %1\n\n").arg(_args));
+    }
+    else
+        return false;
+}
+
+bool IntEngine::sendItemPlacing(QString _args)
+{
+    if(isWorking())
+    {
+        return engineSocket->sendCommand(QString("PLACEITEM: %1\n").arg(_args));
+    }
+    else
+        return false;
+}
+
 
 void IntEngine::sendLevelBuffer()
 {

@@ -231,6 +231,7 @@ bool ConfigManager::loadSoundRolesTable()
         main_sound_table[obj_sound_role::CameraSwitch]=soundset.value("cameraswitch", 0).toInt();
         main_sound_table[obj_sound_role::PlayerJump]=soundset.value("playerjump", 0).toInt();
         main_sound_table[obj_sound_role::PlayerStomp]=soundset.value("playerstomp", 0).toInt();
+        main_sound_table[obj_sound_role::PlayerKick]=soundset.value("playerkick", 0).toInt();
         main_sound_table[obj_sound_role::PlayerShrink]=soundset.value("playershrink", 0).toInt();
         main_sound_table[obj_sound_role::PlayerGrow]=soundset.value("playergrow", 0).toInt();
         main_sound_table[obj_sound_role::PlayerDied]=soundset.value("playerdied", 0).toInt();
