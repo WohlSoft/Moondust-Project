@@ -14,11 +14,7 @@
 
 #include <QHash>
 
-/*********************Dummy NPC*************************
- * Before new physical engine will be implemented, this pseudo-NPC will provide
- * level event control system and exit items
- */
-
+class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
 {
 public:
@@ -71,6 +67,8 @@ public:
     QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
 
     QHash<int, PGE_Phys_Object*> contacted_bgos;
+    QHash<int, PGE_Phys_Object*> contacted_npc;
+    QHash<int, PGE_Phys_Object*> contacted_players;
 
     typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
     QHash<int, PGE_Phys_Object*> collided_top;
@@ -78,6 +76,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_right;
     QHash<int, PGE_Phys_Object*> collided_bottom;
     QHash<int, PGE_Phys_Object*> collided_center;
+    bool  disableBlockCollision;
     bool _stucked;
 
     bool    bumpDown;
@@ -138,16 +137,29 @@ public:
     void  updateGenerator(float tickTime);
     /***************************************************/
 
+    /*******************Throwned*by*********************/
+    void        resetThrowned();
+    void        setThrownedByNpc(long npcID,    LVL_Npc *npcObj);
+    void        setThrownedByPlayer(long playerID, LVL_Player *npcObj);
+    long        thrownedByNpc();
+    LVL_Npc    *thrownedByNpcObj();
+    long        thrownedByPlayer();
+    LVL_Player *thrownedByPlayerObj();
+    long        throwned_by_npc;
+    LVL_Npc    *throwned_by_npc_obj;
+    long        throwned_by_player;
+    LVL_Player *throwned_by_player_obj;
+    /***************************************************/
 
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);
     void lua_setSequenceRight(luabind::object frames);
     void lua_setSequence(luabind::object frames);
-
 
     inline int getID() { return setup->id; }
     bool isLuaNPC;
