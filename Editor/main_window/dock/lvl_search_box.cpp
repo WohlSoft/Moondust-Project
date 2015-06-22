@@ -93,6 +93,7 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Check_BossNPC, SIGNAL(toggled(bool)), ui->Find_Check_BossActiveNPC, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Edit_MsgNPC, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Check_MsgSensitiveNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_Layer_AttachedNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Layer_AttachedNPC, SLOT(setEnabled(bool)));
 
     //reset if modify
     connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -116,6 +117,7 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Check_BossActiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Edit_MsgNPC, SIGNAL(textEdited(QString)), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgSensitiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Combo_Layer_AttachedNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
 
     //also checkboxes
     connect(ui->Find_Check_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -137,6 +139,7 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Check_NotMoveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_BossNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_Layer_AttachedNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
 
     connect(mw()->ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
 }
@@ -161,6 +164,12 @@ QComboBox *LvlSearchBox::cbox_layer_npc()
 {
     return ui->Find_Combo_LayerNPC;
 }
+
+QComboBox *LvlSearchBox::cbox_layer_attached_npc()
+{
+    return ui->Find_Combo_Layer_AttachedNPC;
+}
+
 QComboBox *LvlSearchBox::cbox_event_block_dest()
 {
     return ui->Find_Combo_EventDestoryedBlock;
@@ -404,6 +413,7 @@ void LvlSearchBox::on_Find_Button_ResetNPC_clicked()
         ui->Find_Check_BossActiveNPC->setChecked(false);
         ui->Find_Edit_MsgNPC->setText("");
         ui->Find_Check_MsgSensitiveNPC->setChecked(false);
+        ui->Find_Check_Layer_AttachedNPC->setChecked(false);
     }else{
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -570,6 +580,9 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                 if(ui->Find_Check_MsgNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.msg.contains(ui->Find_Edit_MsgNPC->text(),
                                                                         (ui->Find_Check_MsgSensitiveNPC->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
+                }
+                if(ui->Find_Check_Layer_AttachedNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
