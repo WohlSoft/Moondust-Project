@@ -98,10 +98,10 @@ public:
     virtual void updateCollisions();
     virtual void solveCollision(PGE_Phys_Object *collided);
 
-    LVL_Block *nearestBlock(QVector<LVL_Block *> &blocks);
-    LVL_Block *nearestBlockY(QVector<LVL_Block *> &blocks);
-    bool isWall(QVector<LVL_Block *> &blocks);
-    bool isFloor(QVector<LVL_Block *> &blocks);
+    PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
+    PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);
+    bool isWall(QVector<PGE_Phys_Object *> &blocks);
+    bool isFloor(QVector<PGE_Phys_Object *> &blocks);
 
     static const float _smbxTickTime;
     static float SMBXTicksToTime(float ticks);

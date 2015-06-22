@@ -205,6 +205,9 @@ void LVL_Npc::transformTo_x(long id)
 
         deActivatable    = true;
         activationTimeout= 150;
+        collide_npc=COLLISION_NONE;
+        collide_player=COLLISION_NONE;
+        setGravityScale(0.0f);
         return;
     }
 
@@ -233,6 +236,8 @@ void LVL_Npc::transformTo_x(long id)
         collide_npc = COLLISION_TOP;
     else
         collide_npc = COLLISION_NONE;
+    if(setup->no_npc_collions)
+        collide_npc=COLLISION_NONE;
 
     if(_isInited)
     {
@@ -252,6 +257,7 @@ void LVL_Npc::update(float tickTime)
 
     if(isGenerator)
     {
+        activationTimeout-=tickTime;
         updateGenerator(tickTime);
         return;
     }
@@ -593,8 +599,8 @@ void LVL_Npc::updateCollisions()
     double _wallX=posRect.x();
     double _floorY=posRect.y();
 
-    QVector<LVL_Block*> floor_blocks;
-    QVector<LVL_Block*> wall_blocks;
+    QVector<PGE_Phys_Object*> floor_blocks;
+    QVector<PGE_Phys_Object*> wall_blocks;
     //QVector<LVL_Block*> blocks_to_hit;
     if(!collided_bottom.isEmpty())
     {
@@ -612,13 +618,22 @@ void LVL_Npc::updateCollisions()
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(blk);
                 }
+                case PGE_Phys_Object::LVLNPC:
+                {
+                    LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
+                    if(!npc) continue;
+                    foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
+                    floor_blocks.push_back(npc);
+                }
                 break;
                 default:break;
             }
         }
         if(isFloor(floor_blocks))
         {
-            LVL_Block*nearest = nearestBlockY(floor_blocks);
+            PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
             {
                 _floorY = nearest->posRect.top()-posRect.height();
@@ -638,13 +653,12 @@ void LVL_Npc::updateCollisions()
         for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
-            LVL_Block *blk= static_cast<LVL_Block*>(collided);
             //if(blk) blocks_to_hit.push_back(blk);
-            if(blk) floor_blocks.push_back(blk);
+            if(collided) floor_blocks.push_back(collided);
         }
         if(isFloor(floor_blocks))
         {
-            LVL_Block*nearest = nearestBlockY(floor_blocks);
+            PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
             {
                 if(!resolveBottom) _floorY = nearest->posRect.bottom()+1;
@@ -659,12 +673,11 @@ void LVL_Npc::updateCollisions()
         for(PlayerColliders::iterator it=collided_left.begin(); it!=collided_left.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
-            LVL_Block *blk= static_cast<LVL_Block*>(collided);
-            if(blk) wall_blocks.push_back(blk);
+            if(collided) wall_blocks.push_back(collided);
         }
         if(isWall(wall_blocks))
         {
-            LVL_Block*nearest = nearestBlock(wall_blocks);
+            PGE_Phys_Object*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
                 _wallX = nearest->posRect.right();
@@ -680,12 +693,11 @@ void LVL_Npc::updateCollisions()
         for(PlayerColliders::iterator it=collided_right.begin(); it!=collided_right.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
-            LVL_Block *blk= static_cast<LVL_Block*>(collided);
-            if(blk) wall_blocks.push_back(blk);
+            if(collided) wall_blocks.push_back(collided);
         }
         if(isWall(wall_blocks))
         {
-            LVL_Block*nearest = nearestBlock(wall_blocks);
+            PGE_Phys_Object*nearest = nearestBlock(wall_blocks);
             if(nearest)
             {
                 _wallX = nearest->posRect.left()-posRect.width();
@@ -956,8 +968,144 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
             {
                 if(npc->killed)        break;
                 if(npc->data.friendly) break;
-
+                if(npc->isGenerator) break;
             }
+
+            if( ((!forceCollideCenter)&&(!collided->posRect.collideRect(posRect)))||
+                ((forceCollideCenter)&&(!collided->posRect.collideRectDeep(posRect, 1.0, -3.0))) )
+            {
+                break;
+            }
+
+            if(!npc->isActivated) break;
+
+            PGE_PointF c1 = posRect.center();
+            PGE_RectF &r1 = posRect;
+            PGE_PointF cc = collided->posRect.center();
+            PGE_RectF  rc = collided->posRect;
+
+            switch(collided->collide_npc)
+            {
+                case COLLISION_TOP:
+                {
+                    PGE_RectF &r1=posRect;
+                    PGE_RectF  rc = collided->posRect;
+                    if(
+                            (
+                                (speedY() >= 0.0)
+                                &&
+                                (r1.bottom() < rc.top()+_velocityY_prev)
+                                &&
+                                (
+                                     (r1.left()<rc.right()-1 ) &&
+                                     (r1.right()>rc.left()+1 )
+                                 )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                        collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Top of block";
+                        #endif
+                    }
+                }
+                break;
+                case COLLISION_ANY:
+                {
+                    #ifdef COLLIDE_DEBUG
+                    bool found=false;
+                    #endif
+                    double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
+                    double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+                    //*****************************Feet of NPC****************************/
+                    if(
+                            (
+                                (speedY() >= 0.0)
+                                &&
+                                (floor(r1.bottom()) < rc.top()+ySpeed)
+                                &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
+                             )
+                            ||
+                            (r1.bottom() <= rc.top())
+                            )
+                    {
+                            collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                            #ifdef COLLIDE_DEBUG
+                            qDebug() << "Top of block";
+                            found=true;
+                            #endif
+                    }
+                    //*****************************Head of NPC****************************/
+                    else if( (
+                                 (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                                 &&
+                                 (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
+                                 &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
+                              )
+                             )
+                    {
+                        collided_top[(intptr_t)collided]=collided;//top of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Bottom of block";
+                        found=true;
+                        #endif
+                    }
+                    //*****************************Left****************************/
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
+                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
+                    {
+                        collided_left[(intptr_t)collided]=collided;//right of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Right of block";
+                        #endif
+                    }
+                    //*****************************Right****************************/
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
+                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
+                    {
+                        collided_right[(intptr_t)collided]=collided;//left of player
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Left of block";
+                        found=true;
+                        #endif
+                    }
+
+
+                    float c=forceCollideCenter? 0.0f : 1.0f;
+                    //*****************************Center****************************/
+                    #ifdef COLLIDE_DEBUG
+                    qDebug() << "block" <<posRect.top()<<":"<<blk->posRect.bottom()
+                             << "block" <<posRect.bottom()<<":"<<blk->posRect.top()<<" collide?"<<
+                                blk->posRect.collideRectDeep(posRect,
+                                                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                                                     fabs(_velocityY_prev)*c+c*2.0) <<
+                                "depths: "<< fabs(_velocityX_prev)*c+c*2.0 <<
+                            fabs(_velocityY_prev)*c+c;
+                    #endif
+                    if( npc->posRect.collideRectDeep(posRect,
+                                                     fabs(_velocityX_prev)*c+c*2.0,
+                                                     fabs(_velocityY_prev)*c+c*2.0)
+                            )
+                    {
+                        if(!forceCollideCenter) break;
+                        collided_center[(intptr_t)collided]=collided;
+                        #ifdef COLLIDE_DEBUG
+                        qDebug() << "Center of block";
+                        found=true;
+                        #endif
+                    }
+
+                    #ifdef COLLIDE_DEBUG
+                    qDebug() << "---checked---" << (found?"and found!": "but nothing..." )<<
+                                r1.left()<< "<="<< rc.right()<<"+"<<xSpeed ;
+                    #endif
+                    break;
+                }
+            default: break;
+            }
+
             break;
         }
         case PGE_Phys_Object::LVLPhysEnv:
