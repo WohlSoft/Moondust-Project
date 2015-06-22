@@ -200,7 +200,25 @@ SOURCES += \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.cpp \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.cpp \
     common_features/version_cmp.cpp \
-    scenes/level/npc_detectors/lvl_base_detector.cpp
+    scenes/level/npc_detectors/lvl_base_detector.cpp \
+    scenes/level/npc/lvl_npc_throwned_by.cpp \
+    scenes/level/npc/lvl_npc_collisions.cpp \
+    scenes/level/npc/lvl_npc_setup.cpp \
+    scenes/level/npc/lvl_npc_lua.cpp \
+    scenes/level/npc/lvl_npc_generator.cpp \
+    scenes/level/npc/lvl_npc_kill.cpp \
+    scenes/level/npc/lvl_npc_spritewarp.cpp \
+    scenes/level/npc/lvl_npc_activate.cpp \
+    scenes/level/npc/lvl_npc_update.cpp \
+    scenes/level/npc/lvl_npc_render.cpp \
+    scenes/level/player/lvl_player_collisions.cpp \
+    scenes/level/player/lvl_player_setup.cpp \
+    scenes/level/player/lvl_player_attaks_and_kills.cpp \
+    scenes/level/player/lvl_player_animation.cpp \
+    scenes/level/player/lvl_player_warps_and_teleports.cpp \
+    scenes/level/player/lvl_player_update.cpp \
+    scenes/level/player/lvl_player_physics.cpp \
+    scenes/level/player/lvl_player_render.cpp
 
 
 HEADERS  += \

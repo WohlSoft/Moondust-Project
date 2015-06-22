@@ -53,6 +53,8 @@ class LVL_Player :
         void update(float ticks);
         void updateCamera();
 
+        void refreshEnvironmentState();
+
         void updateCollisions();
         void solveCollision(PGE_Phys_Object *collided);
         bool forceCollideCenter;//!< collide with invizible blocks at center
@@ -133,7 +135,8 @@ class LVL_Player :
 
         /********************Jumps***************************/
         bool    JumpPressed;
-        bool    onGround;
+        bool    onGround();
+        bool    _onGround;
         bool    on_slippery_surface;
         QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
         QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
@@ -169,6 +172,7 @@ class LVL_Player :
         float   warpFrameH;
 
         EventQueue<LVL_Player > event_queue;
+        void    processWarpChecking();
         void    WarpTo(float x, float y, int warpType, int warpDirection=1);
         void    WarpTo(LevelDoor warp);
         /*******************Warps*********************/\
@@ -240,6 +244,7 @@ public:
         /********************Lua Stuff******************/
 
         bool isInited();
+
 private:
         bool _no_render;
         bool isLocked;

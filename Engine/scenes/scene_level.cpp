@@ -429,7 +429,7 @@ void LevelScene::update()
             if(PGE_Window::showDebugInfo)
             {
                 debug_player_jumping = plr->JumpPressed;
-                debug_player_onground= plr->onGround;
+                debug_player_onground= plr->onGround();
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
         }
