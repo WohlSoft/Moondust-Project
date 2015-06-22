@@ -21,6 +21,7 @@
 #include "../lvl_block.h"
 #include "../lvl_physenv.h"
 #include "../lvl_bgo.h"
+#include <data_configs/config_manager.h>
 #include <common_features/number_limiter.h>
 #include <common_features/maths.h>
 
@@ -441,8 +442,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
             if(!npc->isActivated) break;
 
             contacted_npc[(intptr_t)collided]=collided;
-            if(isGenerator) break;
 
+            if(isGenerator) break;
+            if(disableNpcCollision) break;
             PGE_PointF c1 = posRect.center();
             PGE_RectF &r1 = posRect;
             PGE_PointF cc = collided->posRect.center();
