@@ -19,6 +19,7 @@
 #include "config_manager.h"
 #include "../gui/pge_msgbox.h"
 #include <common_features/graphics_funcs.h>
+#include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
 
 /*****Level NPC************/
@@ -122,22 +123,25 @@ bool ConfigManager::loadLevelNPC()
         //Physics
         snpc.height =               npcset.value("fixture-height", "0").toInt();//Leaved for compatibility
         snpc.height =               npcset.value("physical-height", snpc.height).toInt();
+            NumberLimiter::apply(snpc.height, 1u);
         snpc.width =                npcset.value("fixture-width", "0").toInt();//Leaved for compatibility
         snpc.width =                npcset.value("physical-width", snpc.width).toInt();
-        snpc.block_npc =            npcset.value("block-npc", "0").toBool();
-        snpc.block_npc_top =        npcset.value("block-npc-top", "0").toBool();
-        snpc.block_player =         npcset.value("block-player", "0").toBool();
-        snpc.block_player_top =     npcset.value("block-player-top", "0").toBool();
-        snpc.collision_with_blocks= npcset.value("collision-blocks", "0").toBool();
-        snpc.gravity =              npcset.value("gravity", "0").toBool();
-        snpc.adhesion =             npcset.value("adhesion", "0").toBool();
+            NumberLimiter::apply(snpc.width, 1u);
+        snpc.block_npc =            npcset.value("block-npc", false).toBool();
+        snpc.block_npc_top =        npcset.value("block-npc-top", false).toBool();
+        snpc.block_player =         npcset.value("block-player", false).toBool();
+        snpc.block_player_top =     npcset.value("block-player-top", false).toBool();
+        snpc.collision_with_blocks= npcset.value("collision-blocks", false).toBool();
+        snpc.gravity =              npcset.value("gravity", false).toBool();
+        snpc.adhesion =             npcset.value("adhesion", false).toBool();
 
-        snpc.container =                  npcset.value("container", "0").toBool();
-        snpc.container_elastic =          npcset.value("container-elastic", "0").toBool();
+        snpc.container =                  npcset.value("container", false).toBool();
+        snpc.container_elastic =          npcset.value("container-elastic", false).toBool();
         snpc.container_elastic_border_w = npcset.value("container-elastic-border-w", "4").toInt();
-        snpc.container_show_contents    = npcset.value("container-show-contents", "1").toBool();
+            NumberLimiter::apply(snpc.container_elastic_border_w, 0);
+        snpc.container_show_contents    = npcset.value("container-show-contents", true).toBool();
         snpc.container_content_z_offset = npcset.value("container-content-z-offset", "-0.00001").toFloat();
-        snpc.container_crop_contents    = npcset.value("container-crop-contents", "0").toBool();
+        snpc.container_crop_contents    = npcset.value("container-crop-contents", false).toBool();
         snpc.container_align_contents   = npcset.value("container-align-contents", "0").toInt();
 
         snpc.no_npc_collions =      npcset.value("no-npc-collisions", "0").toBool();
@@ -146,7 +150,9 @@ bool ConfigManager::loadLevelNPC()
         snpc.gfx_offset_x = npcset.value("gfx-offset-x", "0").toInt();
         snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
         snpc.framestyle = npcset.value("frame-style", "0").toInt();
+            NumberLimiter::apply(snpc.framestyle, 0, 4);
         snpc.frames = npcset.value("frames", "1").toInt();
+            NumberLimiter::apply(snpc.frames, 1u);
 
         /****************Calculating of default frame height******************/
         switch(snpc.framestyle)
@@ -160,18 +166,22 @@ bool ConfigManager::loadLevelNPC()
         }
         /****************Calculating of default frame height**end*************/
 
-        snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", "1").toBool();
+        snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", true).toBool();
         snpc.gfx_h =                npcset.value("gfx-height", QString::number(defGFX_h) ).toInt();
+            NumberLimiter::apply(snpc.gfx_h, 1);
         snpc.gfx_w =                npcset.value("gfx-width", QString::number(snpc.image_size.w()) ).toInt();
+            NumberLimiter::apply(snpc.gfx_w, 1);
         snpc.framespeed =           npcset.value("frame-speed", "128").toInt();
+            NumberLimiter::apply(snpc.framespeed, 1u);
         snpc.display_frame =        npcset.value("display-frame", "0").toInt();
-        snpc.foreground =           npcset.value("foreground", "0").toBool();
-        snpc.background =           npcset.value("background", "0").toBool();
-        snpc.ani_directed_direct =  npcset.value("animation-directed-direction", "0").toBool();
-        snpc.ani_direct =           npcset.value("animation-direction", "0").toBool();
-        snpc.ani_bidir =            npcset.value("animation-bidirectional", "0").toBool();
+            NumberLimiter::apply(snpc.display_frame, 0u);
+        snpc.foreground =           npcset.value("foreground", false).toBool();
+        snpc.background =           npcset.value("background", false).toBool();
+        snpc.ani_directed_direct =  npcset.value("animation-directed-direction", false).toBool();
+        snpc.ani_direct =           npcset.value("animation-direction", false).toBool();
+        snpc.ani_bidir =            npcset.value("animation-bidirectional", false).toBool();
 
-        snpc.custom_animate =   npcset.value("custom-animation", "0").toBool();
+        snpc.custom_animate =   npcset.value("custom-animation", false).toBool();
         snpc.custom_ani_alg =   npcset.value("custom-animation-alg", "0").toInt();
         snpc.custom_ani_fl =    npcset.value("custom-animation-fl", "0").toInt();
         snpc.custom_ani_el =    npcset.value("custom-animation-el", "-1").toInt();
@@ -198,7 +208,9 @@ bool ConfigManager::loadLevelNPC()
 
         /***************GRID And snap*********************************/
         snpc.grid = npcset.value("grid", default_grid).toInt();
+            NumberLimiter::apply(snpc.grid, 1);
         snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
+            NumberLimiter::apply(snpc.grid_attach_style, 0);
 
         /***************Calculate the grid offset********************/
         if(((int)snpc.width>=(int)snpc.grid))
@@ -302,24 +314,26 @@ bool ConfigManager::loadLevelNPC()
         snpc.allow_buried = npcset.value("allow-buried", "0").toBool();
 
         //Events
-        snpc.deactivation =         npcset.value("deactivate", "0").toBool();
-        snpc.kill_slide_slope =     npcset.value("kill-slside", "0").toBool();
-        snpc.kill_on_jump =         npcset.value("kill-onjump", "0").toBool();
-        snpc.kill_by_npc =          npcset.value("kill-bynpc", "0").toBool();
-        snpc.kill_by_fireball =     npcset.value("kill-fireball", "0").toBool();
-        snpc.freeze_by_iceball =    npcset.value("kill-iceball", "0").toBool();
-        snpc.kill_hammer =          npcset.value("kill-hammer", "0").toBool();
-        snpc.kill_tail =            npcset.value("kill-tail", "0").toBool();
-        snpc.kill_by_spinjump =     npcset.value("kill-spin", "0").toBool();
-        snpc.kill_by_statue =       npcset.value("kill-statue", "0").toBool();
-        snpc.kill_by_mounted_item = npcset.value("kill-with-mounted", "0").toBool();
-        snpc.kill_on_eat =          npcset.value("kill-on-eat", "0").toBool();
-        snpc.turn_on_cliff_detect = npcset.value("cliffturn", "0").toBool();
-        snpc.lava_protect =         npcset.value("lava-protection", "0").toBool();
+        snpc.deactivation =         npcset.value("deactivate", false).toBool();
+        snpc.deactivetionDelay =    npcset.value("deactivate-delay", 4000).toInt();
+            NumberLimiter::applyD(snpc.deactivetionDelay, 4000, 0);
+        snpc.kill_slide_slope =     npcset.value("kill-slside", false).toBool();
+        snpc.kill_on_jump =         npcset.value("kill-onjump", false).toBool();
+        snpc.kill_by_npc =          npcset.value("kill-bynpc", false).toBool();
+        snpc.kill_by_fireball =     npcset.value("kill-fireball", false).toBool();
+        snpc.freeze_by_iceball =    npcset.value("kill-iceball", false).toBool();
+        snpc.kill_hammer =          npcset.value("kill-hammer", false).toBool();
+        snpc.kill_tail =            npcset.value("kill-tail", false).toBool();
+        snpc.kill_by_spinjump =     npcset.value("kill-spin", false).toBool();
+        snpc.kill_by_statue =       npcset.value("kill-statue", false).toBool();
+        snpc.kill_by_mounted_item = npcset.value("kill-with-mounted", false).toBool();
+        snpc.kill_on_eat =          npcset.value("kill-on-eat", false).toBool();
+        snpc.turn_on_cliff_detect = npcset.value("cliffturn", false).toBool();
+        snpc.lava_protect =         npcset.value("lava-protection", false).toBool();
 
-        snpc.is_star =              npcset.value("is-star", "0").toBool();
+        snpc.is_star =              npcset.value("is-star", false).toBool();
 
-        snpc.exit_is =              npcset.value("is-exit", "0").toBool();
+        snpc.exit_is =              npcset.value("is-exit", false).toBool();
         snpc.exit_walk_direction =  npcset.value("exit-direction", "0").toInt();
         snpc.exit_code       =      npcset.value("exit-code", "0").toInt();
         snpc.exit_delay      =      npcset.value("exit-delay", "0").toInt();

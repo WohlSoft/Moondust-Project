@@ -37,6 +37,8 @@ public:
     static EngineClient * engineSocket;
     static bool isWorking();
     static bool sendCheat(QString _args);
+    static bool sendMessageBox(QString _args);
+    static bool sendItemPlacing(QString _args);
     static void sendLevelBuffer();
 
     static void setTestLvlBuffer(LevelData &buffer);

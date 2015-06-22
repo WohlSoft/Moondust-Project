@@ -16,7 +16,7 @@ DEFINES += LUA_USE_LINUX
 message("Luabind will be built with regular LUA 5.1!")
 
 include (../../../_common/lib_destdir.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
+DESTDIR = ../../_builds/$$TARGETOS/lib
 
 include(../../../_common/build_props.pri)
 

@@ -39,6 +39,8 @@
 
 #include "level/lvl_scene_ptr.h"
 
+#include <common_features/logger.h>
+
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
 {
@@ -67,6 +69,14 @@ LevelScene::LevelScene()
     warpToArrayID = 0;
     warpToWorld=false;
     NewPlayerID = 1;
+    /**************************/
+
+    /**************************/
+    placingMode=false;
+    placingMode_item_type=0;
+    placingMode_block=FileFormats::dummyLvlBlock();
+    placingMode_bgo  =FileFormats::dummyLvlBgo();
+    placingMode_npc  =FileFormats::dummyLvlNpc();
     /**************************/
 
     /*********Default players number*************/
@@ -419,7 +429,7 @@ void LevelScene::update()
             if(PGE_Window::showDebugInfo)
             {
                 debug_player_jumping = plr->JumpPressed;
-                debug_player_onground= plr->onGround;
+                debug_player_onground= plr->onGround();
                 debug_player_foots   = plr->foot_contacts_map.size();
             }
         }
@@ -435,15 +445,23 @@ void LevelScene::update()
         for(int i=0;i<active_npcs.size();i++)
         {
             active_npcs[i]->update(uTickf);
-            if(active_npcs[i]->killed)
+            if(active_npcs[i]->isKilled())
             {
                 active_npcs.removeAt(i); i--;
             }
             else
-            if(active_npcs[i]->timeout<=0)
+            if(active_npcs[i]->activationTimeout<=0)
             {
-                active_npcs[i]->deActivate();
-                active_npcs.removeAt(i); i--;
+                if(!active_npcs[i]->warpSpawing)
+                    active_npcs[i]->deActivate();
+                if(active_npcs[i]->wasDeactivated)
+                {
+                    if(!isVizibleOnScreen(active_npcs[i]->posRect))
+                    {
+                        active_npcs[i]->wasDeactivated=false;
+                        active_npcs.removeAt(i); i--;
+                    }
+                }
             }
         }
 
@@ -451,6 +469,7 @@ void LevelScene::update()
         {
             LVL_Npc *corpse = dead_npcs.last();
             dead_npcs.pop_back();
+            active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
             if(!corpse->isLuaNPC)
                 delete corpse;
@@ -473,13 +492,59 @@ void LevelScene::update()
     }
 
     //Recive external commands!
-    if(IntProc::enabled && IntProc::cmd_accepted)
+    if(IntProc::enabled && IntProc::hasCommand())
     {
-        PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
-                          PGE_MsgBox::msg_info, PGE_Point(-1, -1),
-                           ConfigManager::setup_message_box.box_padding,
-                           ConfigManager::setup_message_box.sprite);
-        msgBox.exec();
+        switch(IntProc::commandType())
+        {
+            case IntProc::MessageBox:
+            {
+                PGE_MsgBox msgBox = PGE_MsgBox(this, IntProc::getCMD(),
+                                  PGE_MsgBox::msg_info, PGE_Point(-1, -1),
+                                   ConfigManager::setup_message_box.box_padding,
+                                   ConfigManager::setup_message_box.sprite);
+                msgBox.exec(); break;
+            }
+            case IntProc::Cheat:
+                break;
+            case IntProc::PlaceItem:
+            {
+                QString raw = IntProc::getCMD();
+                WriteToLog(QtDebugMsg, raw);
+                LevelData got=FileFormats::ReadExtendedLvlFile(raw, ".", true);
+                if(!got.ReadFileValid)
+                {
+                    WriteToLog(QtDebugMsg, FileFormats::errorString);
+                    return;
+                }
+
+                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrab2);
+
+                if(raw.startsWith("BLOCK_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.blocks.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=0;
+                    placingMode_block=got.blocks[0];
+                } else
+                if(raw.startsWith("BGO_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.bgo.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=1;
+                    placingMode_bgo=got.bgo[0];
+                } else
+                if(raw.startsWith("NPC_PLACE", Qt::CaseInsensitive))
+                {
+                    if(got.npc.isEmpty()) break;
+                    placingMode=true;
+                    placingMode_item_type=2;
+                    placingMode_npc=got.npc[0];
+                }
+                else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
+
+                break;
+            }
+        }
     }
 
 }
@@ -579,7 +644,10 @@ void LevelScene::render()
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
                                    .arg(uTickf), 10, 155, 0, 1.0, 0, 0, 1.0);
-        //world->DrawDebugData();
+
+        if(placingMode)
+            FontManager::printText(QString("Placing! %1")
+                        .arg(placingMode_item_type), 10, 10, 0);
     }
     renderBlack:
     Scene::render();
@@ -696,6 +764,19 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     }
 }
 
+void LevelScene::onMousePressed(SDL_MouseButtonEvent &mbevent)
+{
+    if(!placingMode) return;
+    PGE_Point mousePos = GlRenderer::MapToScr(mbevent.x, mbevent.y);
+    if( mbevent.button==SDL_BUTTON_LEFT )
+    {
+        placeItemByMouse(mousePos.x(), mousePos.y());
+    }else if( mbevent.button==SDL_BUTTON_RIGHT )
+    {
+        placingMode=false;
+    }
+}
+
 LuaEngine *LevelScene::getLuaEngine()
 {
     return &luaEngine;
@@ -793,29 +874,6 @@ void LevelScene::setExiting(int delay, int reason)
 {
     exitLevelDelay   = delay;
     exitLevelCode    = reason;
-    if(isLevelContinues)
-    {
-        long snd=0;
-        switch(exitLevelCode)
-        {
-            case  1: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit01); break;
-            case  2: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit02); break;
-            case  3: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit03); break;
-            case  4: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit04); break;
-            case  5: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit05); break;
-            case  6: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit06); break;
-            case  7: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit07); break;
-            case  8: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit08); break;
-            case  9: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit09); break;
-            case 10: snd=ConfigManager::getSoundByRole(obj_sound_role::LevelExit10); break;
-            default: break;
-        }
-        if(snd>0)
-        {
-            PGE_MusPlayer::MUS_stopMusic();
-            PGE_Audio::playSound(snd);
-        }
-    }
     isLevelContinues = false;
 }
 

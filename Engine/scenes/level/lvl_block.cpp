@@ -392,11 +392,22 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     {
         //NPC!
         PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
-        data.npc_id=0;
         doFade=true;
         if((!setup->bounce)&&(!setup->switch_Button))
         {
             transformTo(setup->transfororm_on_hit_into, 2);
+        }
+        LevelNPC npcDef = FileFormats::dummyLvlNpc();
+        npcDef.id=data.npc_id;
+          data.npc_id=0;
+        npcDef.direct = 0;
+        npcDef.x=data.x;
+        npcDef.y=data.y-(hitDirection==up?data.h:(-data.h*2));
+        LVL_Npc * npc = LvlSceneP::s->spawnNPC(npcDef, LevelScene::GENERATOR_WARP, hitDirection==up?LevelScene::SPAWN_UP:LevelScene::SPAWN_DOWN, false);
+        if(npc)
+        {
+            npc->setCenterX(posRect.center().x());
+            npc->setPosY(posRect.top()-npc->height());
         }
     }
 

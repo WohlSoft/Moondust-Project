@@ -501,10 +501,10 @@ void DevConsole::doSendCheat(QStringList args)
         log(QString("-> Can't run engine command without arguments"), ui->tabWidget->tabText(0));
         return;
     }
-
     src.replace('\n', ' ');
+    src.replace("\\n", "\n");
 
-    if(IntEngine::sendCheat(src))
+    if(IntEngine::sendMessageBox(src))
         log(QString("-> command sent"), ui->tabWidget->tabText(0));
     else
         log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));

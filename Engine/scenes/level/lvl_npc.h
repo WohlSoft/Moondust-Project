@@ -5,18 +5,16 @@
 #include <data_configs/obj_npc.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/npc_animator.h>
+#include <common_features/event_queue.h>
 #include <common_features/pointf.h>
+#include "npc_detectors/lvl_base_detector.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
 
 #include <QHash>
 
-/*********************Dummy NPC*************************
- * Before new physical engine will be implemented, this pseudo-NPC will provide
- * level event control system and exit items
- */
-
+class LVL_Player;
 class LVL_Npc : public PGE_Phys_Object
 {
 public:
@@ -24,13 +22,16 @@ public:
     virtual ~LVL_Npc();
     void init();
 
+    LevelNPC getData();
+
     LevelNPC data; //Local settings
     PGE_PointF offset;
     PGE_Size frameSize;
     AdvNpcAnimator animator;
 
     void setDirection(int dir);
-    int direction;
+    int  direction();
+    int _direction;
     float motionSpeed;
     bool  is_scenery;
 
@@ -38,7 +39,9 @@ public:
     long animator_ID;
 
     obj_npc *setup;//Global config
+    bool isKilled();
     bool killed;
+    void harm(int damage=1);
     void kill();
 
     int taskToTransform;
@@ -58,11 +61,14 @@ public:
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
 
     /*****************NPC's and blocks******************/
-    bool             onGround;
+    bool onGround();
+    bool  _onGround;
     QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
     QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
 
     QHash<int, PGE_Phys_Object*> contacted_bgos;
+    QHash<int, PGE_Phys_Object*> contacted_npc;
+    QHash<int, PGE_Phys_Object*> contacted_players;
 
     typedef QHash<int, PGE_Phys_Object*> PlayerColliders;
     QHash<int, PGE_Phys_Object*> collided_top;
@@ -70,6 +76,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_right;
     QHash<int, PGE_Phys_Object*> collided_bottom;
     QHash<int, PGE_Phys_Object*> collided_center;
+    bool  disableBlockCollision;
     bool _stucked;
 
     bool    bumpDown;
@@ -83,8 +90,16 @@ public:
     int     last_environment;
     /*******************Environmept*********************/
 
+    bool reSpawnable;
     bool isActivated;
-    int timeout;
+    bool deActivatable;
+    bool wasDeactivated;
+    int  activationTimeout;
+
+    /********************Detectors**********************/
+    QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
+    QVector<BasicDetector* > detectors;       //!< Entire list of all detectors
+    /***************************************************/
 
     /*****Warp*Sprite*****/
     enum WarpingSide{
@@ -98,7 +113,7 @@ public:
     /// \param depth
     /// \param direction
     ///
-    void setSpriteWarp(float depth, WarpingSide direction=WARP_BOTTOM, bool resizedBody=false);
+    void setSpriteWarp(float depth, WarpingSide _direction=WARP_BOTTOM, bool resizedBody=false);
     void resetSpriteWarp();
     bool    isWarping;
     int     warpDirectO;
@@ -108,18 +123,48 @@ public:
     float   warpFrameH;
     /*********************/
 
+    /***************************************************/
+    void setWarpSpawn(WarpingSide side=WARP_TOP);
+    bool warpSpawing;
+    EventQueue<LVL_Npc> event_queue;
+    /***************************************************/
+
+    /***********************Generator*******************/
+    bool  isGenerator;
+    float generatorTimeLeft;
+    int   generatorType;
+    int   generatorDirection;
+    void  updateGenerator(float tickTime);
+    /***************************************************/
+
+    /*******************Throwned*by*********************/
+    void        resetThrowned();
+    void        setThrownedByNpc(long npcID,    LVL_Npc *npcObj);
+    void        setThrownedByPlayer(long playerID, LVL_Player *npcObj);
+    long        thrownedByNpc();
+    LVL_Npc    *thrownedByNpcObj();
+    long        thrownedByPlayer();
+    LVL_Player *thrownedByPlayerObj();
+    long        throwned_by_npc;
+    LVL_Npc    *throwned_by_npc_obj;
+    long        throwned_by_player;
+    LVL_Player *throwned_by_player_obj;
+    /***************************************************/
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);
     void lua_setSequenceRight(luabind::object frames);
     void lua_setSequence(luabind::object frames);
 
-
     inline int getID() { return setup->id; }
     bool isLuaNPC;
+
+    int health;
 
 
     bool isInited();

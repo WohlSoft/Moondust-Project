@@ -13,7 +13,17 @@ public:
     static void quit();
     static bool isWorking();
     static QString state;
+    enum ExternalCommands
+    {
+        MessageBox=0,
+        Cheat=1,
+        PlaceItem=2
+    };
+    static ExternalCommands command;
+
     static    bool cmd_accepted;
+    static bool hasCommand();
+    static ExternalCommands  commandType();
     static QString getCMD();
     static QString cmd;
 
