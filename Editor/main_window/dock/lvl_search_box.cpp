@@ -60,14 +60,14 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     lockReset = false;
 
     curSearchBlock.id = 0;
-    curSearchBlock.index = 0;
+    curSearchBlock.index = -1; //When incrementing then starting with 0
     curSearchBlock.npc_id = 0;
 
     curSearchBGO.id = 0;
-    curSearchBGO.index = 0;
+    curSearchBGO.index = -1; //When incrementing then starting with 0
 
     curSearchNPC.id = 0;
-    curSearchNPC.index = 0;
+    curSearchNPC.index = -1; //When incrementing then starting with 0
 
     currentSearches=0;
 
@@ -380,7 +380,7 @@ void LvlSearchBox::on_Find_Button_ResetBlock_clicked()
         currentSearches ^= SEARCH_BLOCK;
         ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
         ui->FindStartBlock->setText(tr("Search Block"));
-        curSearchBlock.index = 0;
+        curSearchBlock.index = -1; //When incrementing then starting with 0
     }
 }
 
@@ -396,7 +396,7 @@ void LvlSearchBox::on_Find_Button_ResetBGO_clicked()
         currentSearches ^= SEARCH_BGO;
         ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
         ui->FindStartBGO->setText(tr("Search BGO"));
-        curSearchBGO.index = 0;
+        curSearchBGO.index = -1; //When incrementing then starting with 0
     }
 }
 
@@ -418,7 +418,7 @@ void LvlSearchBox::on_Find_Button_ResetNPC_clicked()
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
         ui->FindStartNPC->setText(tr("Search NPC"));
-        curSearchNPC.index = 0;
+        curSearchNPC.index = -1; //When incrementing then starting with 0
     }
 }
 
@@ -468,6 +468,7 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchBlock.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchBlock.index+1; i < gr.size(); ++i){
+            qDebug() << "Next Index: " << i;
             if(gr[i]->data(0).toString()=="Block"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBlock->isChecked()&&curSearchBlock.id!=0&&toBeFound){
@@ -508,7 +509,7 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
         }
     }
     //end search
-    curSearchBlock.index = 0;
+    curSearchBlock.index = -1; //When incrementing then starting with 0
     return true;
 }
 
@@ -542,7 +543,7 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
         }
     }
     //end search
-    curSearchBGO.index = 0;
+    curSearchBGO.index = -1; //When incrementing then starting with 0
     return true;
 }
 
@@ -598,7 +599,7 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
         }
     }
     //end search
-    curSearchNPC.index = 0;
+    curSearchNPC.index = -1; //When incrementing then starting with 0
     return true;
 }
 
