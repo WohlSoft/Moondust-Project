@@ -43,6 +43,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)
             .def("setSequenceRight", &LVL_Npc::lua_setSequenceRight)
             .def("setSequence", &LVL_Npc::lua_setSequence)
+            .def("setOnceAnimationMode", &LVL_Npc::lua_setOnceAnimation)
 
             .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
             .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
@@ -51,7 +52,8 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .property("id", &LVL_Npc::getID)
 
             //States
-            .def_readonly("onGround", &LVL_Npc::onGround);
+            .def_readonly("onGround", &LVL_Npc::onGround)
+            .def_readonly("animationIsFinished", &LVL_Npc::lua_animationIsFinished);
 
 }
 
