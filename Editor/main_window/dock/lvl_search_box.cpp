@@ -583,7 +583,8 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                                                                         (ui->Find_Check_MsgSensitiveNPC->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
                 }
                 if(ui->Find_Check_Layer_AttachedNPC->isChecked()&&toBeFound){
-                    toBeFound = ((ItemNPC*)gr[i])->npcData.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText();
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.attach_layer == "" && ui->Find_Combo_Layer_AttachedNPC->currentText() == "[None]");
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
