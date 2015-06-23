@@ -161,6 +161,8 @@ public:
     void lua_setSequenceLeft(luabind::object frames);
     void lua_setSequenceRight(luabind::object frames);
     void lua_setSequence(luabind::object frames);
+    void lua_setOnceAnimation(bool en);
+    bool lua_animationIsFinished();
 
     inline int getID() { return setup->id; }
     bool isLuaNPC;
