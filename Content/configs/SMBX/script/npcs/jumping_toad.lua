@@ -19,7 +19,7 @@ function jumping_toad:initProps()
     self.cur_beganJump = false
     -- FOR AI_IDLE
     self.cur_idleChargingTicks = 0
-    self.npc_obj:setSequence(self.animateCharge)
+    self.npc_obj:setSequence(self.animateJumpInAir)
     self.cur_charged = false
 
 end
