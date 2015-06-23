@@ -225,7 +225,7 @@ void AdvNpcAnimator::setSequenceL(QList<int> _frames)
     frameLastL = _frames.size()-1;
     onceMode=false;
     _animationFinished=false;
-    nextFrame();
+    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
 }
 
 void AdvNpcAnimator::setSequenceR(QList<int> _frames)
@@ -238,7 +238,7 @@ void AdvNpcAnimator::setSequenceR(QList<int> _frames)
     frameLastR = _frames.size()-1;
     onceMode=false;
     _animationFinished=false;
-    nextFrame();
+    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
 }
 
 void AdvNpcAnimator::setSequence(QList<int> _frames)
@@ -272,7 +272,8 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
     }
     onceMode=false;
     _animationFinished=false;
-    nextFrame();
+    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
 }
 
 void AdvNpcAnimator::setFrameL(int y)
@@ -328,8 +329,10 @@ void AdvNpcAnimator::setOnceMode(bool en)
     if(en&&_animationFinished)
     {
         _animationFinished=false;
-        setFrameL(frameFirstL);
-        setFrameR(frameFirstR);
+        frameCurrentL = frameFirstL;
+        frameCurrentR = frameFirstR;
+        setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+        setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
     }
 }
 
