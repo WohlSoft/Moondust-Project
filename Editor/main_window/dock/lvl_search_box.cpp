@@ -94,6 +94,10 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Edit_MsgNPC, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Check_MsgSensitiveNPC, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_Layer_AttachedNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Layer_AttachedNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_Event_ActivateNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Event_ActivateNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_Event_DeathNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Event_DeathNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_Event_TalkNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Event_TalkNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_Event_Empty_LayerNPC, SIGNAL(toggled(bool)), ui->Find_Combo_Event_Empty_LayerNPC, SLOT(setEnabled(bool)));
 
     //reset if modify
     connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -118,6 +122,10 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Edit_MsgNPC, SIGNAL(textEdited(QString)), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgSensitiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Combo_Layer_AttachedNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Combo_Event_ActivateNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Combo_Event_DeathNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Combo_Event_TalkNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Combo_Event_Empty_LayerNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
 
     //also checkboxes
     connect(ui->Find_Check_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -140,6 +148,10 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     connect(ui->Find_Check_BossNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_Layer_AttachedNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_Event_ActivateNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_Event_DeathNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_Event_TalkNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_Event_Empty_LayerNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
 
     connect(mw()->ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
 }
@@ -183,6 +195,26 @@ QComboBox *LvlSearchBox::cbox_event_block_hit()
 QComboBox *LvlSearchBox::cbox_event_block_le()
 {
     return ui->Find_Combo_EventLayerEmptyBlock;
+}
+
+QComboBox *LvlSearchBox::cbox_event_npc_activate()
+{
+    return ui->Find_Combo_Event_ActivateNPC;
+}
+
+QComboBox *LvlSearchBox::cbox_event_npc_death()
+{
+    return ui->Find_Combo_Event_DeathNPC;
+}
+
+QComboBox *LvlSearchBox::cbox_event_npc_talk()
+{
+    return ui->Find_Combo_Event_TalkNPC;
+}
+
+QComboBox *LvlSearchBox::cbox_event_npc_empty_layer()
+{
+    return ui->Find_Combo_Event_Empty_LayerNPC;
 }
 
 //QComboBox *LvlSearchBox::cbox_event_npc_act()
@@ -585,6 +617,22 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                 if(ui->Find_Check_Layer_AttachedNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText()
                                 || (((ItemNPC*)gr[i])->npcData.attach_layer == "" && ui->Find_Combo_Layer_AttachedNPC->currentText() == "[None]");
+                }
+                if(ui->Find_Check_Event_ActivateNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_activate == ui->Find_Combo_Event_ActivateNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.event_activate == "" && ui->Find_Combo_Event_ActivateNPC->currentText() == "[None]");
+                }
+                if(ui->Find_Check_Event_DeathNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_die == ui->Find_Combo_Event_DeathNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.event_die == "" && ui->Find_Combo_Event_DeathNPC->currentText() == "[None]");
+                }
+                if(ui->Find_Check_Event_TalkNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_talk == ui->Find_Combo_Event_TalkNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.event_talk == "" && ui->Find_Combo_Event_TalkNPC->currentText() == "[None]");
+                }
+                if(ui->Find_Check_Event_Empty_LayerNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_nomore == ui->Find_Combo_Event_Empty_LayerNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.event_nomore == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())

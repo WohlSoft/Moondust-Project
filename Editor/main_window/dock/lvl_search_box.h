@@ -31,6 +31,11 @@ public:
     QComboBox *cbox_event_block_hit();
     QComboBox *cbox_event_block_le();
 
+    QComboBox *cbox_event_npc_activate();
+    QComboBox *cbox_event_npc_death();
+    QComboBox *cbox_event_npc_talk();
+    QComboBox *cbox_event_npc_empty_layer();
+
 public slots:
     void re_translate();
     void resetAllSearches();
