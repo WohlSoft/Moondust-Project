@@ -187,11 +187,21 @@ void MainWindow::EventListsSync()
     QComboBox * _sb_block_h = dock_LvlSearchBox->cbox_event_block_hit();
     QComboBox * _sb_block_l = dock_LvlSearchBox->cbox_event_block_le();
 
+    QComboBox * _sb_npc_a = dock_LvlSearchBox->cbox_event_npc_activate();
+    QComboBox * _sb_npc_d = dock_LvlSearchBox->cbox_event_npc_death();
+    QComboBox * _sb_npc_t = dock_LvlSearchBox->cbox_event_npc_talk();
+    QComboBox * _sb_npc_el = dock_LvlSearchBox->cbox_event_npc_empty_layer();
+
     QComboBox * _eb_trigger = dock_LvlEvents->cbox_event_trigger();
 
     QString curDestroyedBlock  = _sb_block_d->currentText();
     QString curHitedBlock      = _sb_block_h->currentText();
     QString curLayerEmptyBlock = _sb_block_l->currentText();
+
+    QString curActivateNpc = _sb_npc_a->currentText();
+    QString curDeathNpc = _sb_npc_d->currentText();
+    QString curTalkNpc = _sb_npc_t->currentText();
+    QString curEmptyLayerNpc = _sb_npc_el->currentText();
 
     int WinType = activeChildWindow();
 
@@ -209,6 +219,11 @@ void MainWindow::EventListsSync()
     _sb_block_h->clear();
     _sb_block_l->clear();
 
+    _sb_npc_a->clear();
+    _sb_npc_d->clear();
+    _sb_npc_t->clear();
+    _sb_npc_el->clear();
+
     QString noEvent = tr("[None]");
     _ip_block_d->addItem(noEvent);
     _ip_block_h->addItem(noEvent);
@@ -220,6 +235,10 @@ void MainWindow::EventListsSync()
     _ip_npc_l->addItem(noEvent);
     _eb_trigger->addItem(noEvent);
 
+    _sb_npc_a->addItem(noEvent);
+    _sb_npc_d->addItem(noEvent);
+    _sb_npc_t->addItem(noEvent);
+    _sb_npc_el->addItem(noEvent);
 
     if (WinType==1)
     {
@@ -238,12 +257,22 @@ void MainWindow::EventListsSync()
             _sb_block_d->addItem(event.name);
             _sb_block_h->addItem(event.name);
             _sb_block_l->addItem(event.name);
+
+            _sb_npc_a->addItem(event.name);
+            _sb_npc_d->addItem(event.name);
+            _sb_npc_t->addItem(event.name);
+            _sb_npc_el->addItem(event.name);
         }
     }
 
     _sb_block_d->setCurrentText(curDestroyedBlock);
     _sb_block_h->setCurrentText(curHitedBlock);
     _sb_block_l->setCurrentText(curLayerEmptyBlock);
+
+    _sb_npc_a->setCurrentText(curActivateNpc);
+    _sb_npc_d->setCurrentText(curDeathNpc);
+    _sb_npc_t->setCurrentText(curTalkNpc);
+    _sb_npc_el->setCurrentText(curEmptyLayerNpc);
 
     dock_LvlEvents->lockSetEventSettings=false;
 
