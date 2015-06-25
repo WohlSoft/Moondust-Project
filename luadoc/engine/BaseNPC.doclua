@@ -33,6 +33,44 @@
 -- @function [parent=#BaseNPC] onLoop
 -- @param self
 
+-------------------------------------------------------------------------------
+-- The animation sequence for the left direction.
+-- @function [parent=#BaseNPC] setSequenceLeft Sets the animation sequence for the left direction.
+-- @param #list<#number> frames The animation frames for the left direction.
+
+-------------------------------------------------------------------------------
+-- The animation sequence for the right direction.
+-- @function [parent=#BaseNPC] setSequenceRight Sets the animation sequence for the right direction.
+-- @param #list<#number> frames The animation frames for the right direction.
+
+-------------------------------------------------------------------------------
+-- The default animation sequence.
+-- @function [parent=#BaseNPC] setSequence Sets the default animation sequence.
+-- @param #list<#number> frames The animation frames.
+
+-------------------------------------------------------------------------------
+-- TODO: Write description here
+-- @function [parent=#BaseNPC] setSpriteWarp
+-- @param #number depth
+-- @param #number direction
+-- @param #boolean resizedBody
+
+-------------------------------------------------------------------------------
+-- TODO: Write description here
+-- @function [parent=#BaseNPC] resetSpriteWarp
+
+-------------------------------------------------------------------------------
+-- The id of the npc.
+-- @field [parent=#BaseNPC] #number id The id of the npc.
+
+-------------------------------------------------------------------------------
+-- If the npc is touching the ground.
+-- @field [parent=#BaseNPC] #number onGround True, if the npc is touching the ground.
+
+-------------------------------------------------------------------------------
+-- If the npc animation is finished.
+-- @field [parent=#BaseNPC] #number animtionIsFinished True, if the npc animation is finished.
+
 
 
 return nil
