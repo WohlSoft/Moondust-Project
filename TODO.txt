@@ -10,6 +10,7 @@ Editor
   spawned by SMBX Editor bug (such a vines and ladders): function anready finds junk NPC's
   but it doesn't removes them. Need to find and delete listed NPCs from scene and store the remove history entry.
 - Add R-Tree from engine into editor to increase performance of collision detection.
+- Add re-configurable hot-keys
 
 Engine
 + Raster fonts support
