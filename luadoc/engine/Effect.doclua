@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+-- <b>This class is available for every Scene</b>
+-- @module Effect
+
+-------------------------------------------------------------------------------
+-- Runs a static effect.
+-- @function [parent=#Effect] runStaticEffect Runs a static effect.
+-- @param #number effectID The effect id of the effect.
+-- @param #number startX The starting x-position of the effect.
+-- @param #number startY The starting y-position of the effect.
+
+-------------------------------------------------------------------------------
+-- Runs a static centered effect.
+-- @function [parent=#Effect] runStaticEffectCentered Runs a static centered effect.
+-- @param #number effectID The effect id of the effect.
+-- @param #number startX The starting centered x-position of the effect.
+-- @param #number startY The starting centered y-position of the effect.
+
+
+return nil

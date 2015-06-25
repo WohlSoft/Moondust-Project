@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+-- <b>This class is available for every Scene</b>
+-- @module Audio
+
+-------------------------------------------------------------------------------
+-- Plays a sound file given by a sound ID.
+-- @function [parent=#Audio] playSound Plays a sound by id.
+-- @param #number soundID The given sound id of the audio file.
+
+-------------------------------------------------------------------------------
+-- Plays a sound file given by a role ID.
+-- @function [parent=#Audio] playSoundByRole Plays a sound by a role id.
+-- @param #number role The given role id of the audio file.
+
+
+return nil

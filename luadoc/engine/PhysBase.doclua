@@ -1,6 +1,7 @@
 -------------------------------------------------------------------------------
 -- This is the class for object with physics. 
--- This class cannot be constructed.
+-- This class cannot be constructed nor be deriveded.
+-- <b>This class is available for Level-Code</b>
 -- @module PhysBase
 
 -------------------------------------------------------------------------------
@@ -10,6 +11,42 @@
 -------------------------------------------------------------------------------
 -- The y-position of the object
 -- @field [parent=#PhysBase] #number y The y-position.
+
+-------------------------------------------------------------------------------
+-- The center x-position of the object
+-- @field [parent=#PhysBase] #number center_x The x-position.
+
+-------------------------------------------------------------------------------
+-- The center y-position of the object
+-- @field [parent=#PhysBase] #number center_y The y-position.
+
+-------------------------------------------------------------------------------
+-- The width of the object
+-- @field [parent=#PhysBase] #number width The width.
+
+-------------------------------------------------------------------------------
+-- The height of the object
+-- @field [parent=#PhysBase] #number height The height.
+
+-------------------------------------------------------------------------------
+-- The top position of the object
+-- @field [parent=#PhysBase] #number top The top-position.
+
+-------------------------------------------------------------------------------
+-- The left position of the object
+-- @field [parent=#PhysBase] #number left The left-position.
+
+-------------------------------------------------------------------------------
+-- The right position of the object
+-- @field [parent=#PhysBase] #number right The right-position.
+
+-------------------------------------------------------------------------------
+-- The bottom position of the object
+-- @field [parent=#PhysBase] #number bottom The bottom-position.
+
+-------------------------------------------------------------------------------
+-- If the physics update gets ignored on this object
+-- @field [parent=#PhysBase] #number paused_physics If true, then the physics update won't be run on this object.
 
 -------------------------------------------------------------------------------
 -- The x-speed of the object
@@ -22,6 +59,10 @@
 -------------------------------------------------------------------------------
 -- The gravity of the object
 -- @field [parent=#PhysBase] #number gravity The gravity.
+
+-------------------------------------------------------------------------------
+-- The gravity acceleration of the object
+-- @field [parent=#PhysBase] #number gravity_accel The gravity acceleration.
 
 
 return nil

@@ -1,0 +1,38 @@
+-------------------------------------------------------------------------------
+-- <b>This class is available for Level-Code</b>
+-- @module BaseNPC
+-- @extends PhysBase#PhysBase 
+
+-------------------------------------------------------------------------------
+-- The init event for the npc. 
+-- This event is called when a new npc is beeing constructed and placed on the scene.<br>
+-- However, some properties of the NPC may not be initialized. 
+-- To access inizialized properties of the NPC you may want to use onInit-event.
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BaseNPC] __init
+-- @param self
+
+-------------------------------------------------------------------------------
+-- The post-init event for the npc. 
+-- This event is called when is finished with initiaizing and has all its properties set.<br>
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BaseNPC] __init
+-- @param self
+
+-------------------------------------------------------------------------------
+-- This activated event for the npc.
+-- This event is called every time the npc goes on-screen on the level scene.<br>
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BaseNPC] onActivated
+-- @param self
+
+-------------------------------------------------------------------------------
+-- This loop event for the npc.
+-- This event is called for every update-loop of the npc.<br>
+-- <b>Note: This function/event should be overwritten and <u>not</u> be called directly!</b>
+-- @function [parent=#BaseNPC] onLoop
+-- @param self
+
+
+
+return nil
