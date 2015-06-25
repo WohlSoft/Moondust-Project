@@ -105,14 +105,8 @@ void LuaEngine::init()
 
     //Now read the core file. This file should manage incoming events
     //and process them to all other files.
-    QString coreFilePath;
-    if(QFileInfo(m_coreFile).isAbsolute()){
-        coreFilePath = m_coreFile;
-    }else{
-        if(m_luaScriptPath != ""){
-            coreFilePath = m_luaScriptPath + m_coreFile;
-        }
-    }
+    QString coreFilePath = util::resolveRelativeOrAbsolute(m_coreFile, {m_luaScriptPath});
+    QString userFilePath = util::resolveRelativeOrAbsolute(m_userFile, {m_luaScriptPath});
 
     QFile luaCoreFile(coreFilePath);
     if(!luaCoreFile.open(QIODevice::ReadOnly)){
@@ -121,19 +115,14 @@ void LuaEngine::init()
         shutdown();
         return;
     }
+    loadMultiRet(&luaCoreFile);
+    luaCoreFile.close();
 
-    //Now read our code.
-    QString luaCoreCode = QTextStream(&luaCoreFile).readAll();
-
-    //Now load our code by lua and check for common compile errors
-    int errorCode = luautil_loadlua(L, luaCoreCode.toLocal8Bit().data(), luaCoreCode.length(), m_coreFile.section('/', -1).section('\\', -1).toLocal8Bit().data());
-    //If we get an error, then handle it
-    if(errorCode){
-        qWarning() << "Got lua error, reporting...";
-        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
-        m_lateShutdown = true;
-        shutdown();
-        return;
+    // OPTIONAL: User code file
+    QFile luaUserFile(userFilePath);
+    if(luaUserFile.open(QIODevice::ReadOnly)){
+        loadMultiRet(&luaUserFile);
+        luaUserFile.close();
     }
 
     LuaEvent initEvent = BindingCore_Events_Engine::createInitEngineEvent(this);
@@ -283,6 +272,33 @@ void LuaEngine::error()
     qWarning() << "Runtime Lua Error, shutting down";
     shutdown();
 }
+QString LuaEngine::getUserFile() const
+{
+    return m_userFile;
+}
+
+void LuaEngine::setUserFile(const QString &userFile)
+{
+    m_userFile = userFile;
+}
+
+void LuaEngine::loadMultiRet(QFile *file)
+{
+    //Now read our code.
+    QString luaCode = QTextStream(file).readAll();
+
+    //Now load our code by lua and check for common compile errors
+    int errorCode = luautil_loadlua(L, luaCode.toLocal8Bit().data(), luaCode.length(), luaCode.section('/', -1).section('\\', -1).toLocal8Bit().data());
+    //If we get an error, then handle it
+    if(errorCode){
+        qWarning() << "Got lua error, reporting...";
+        m_errorReporterFunc(QString(lua_tostring(L, -1)), QString(""));
+        m_lateShutdown = true;
+        shutdown();
+        return;
+    }
+}
+
 bool LuaEngine::shouldShutdown() const
 {
     return m_lateShutdown;

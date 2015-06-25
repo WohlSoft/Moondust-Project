@@ -23,7 +23,16 @@ public:
 
     LevelScene* getScene();
 
+    QString getNpcBaseClassPath() const;
+    void setNpcBaseClassPath(const QString &npcBaseClassPath);
+
+    QString getPlayerBaseClassPath() const;
+    void setPlayerBaseClassPath(const QString &playerBaseClassPath);
+
 protected:
+    QString m_npcBaseClassPath;
+    QString m_playerBaseClassPath;
+
     void onBindAll();
 };
 

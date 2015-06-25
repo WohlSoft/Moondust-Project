@@ -5,6 +5,7 @@
 #include <QString>
 #include <QtDebug>
 #include <QHash>
+#include <QFile>
 
 #include <functional>
 
@@ -55,8 +56,11 @@ public:
     ///
     inline bool isValid() { return L != nullptr; }
 
+    // ///////  LOADING FUCS ///////////// //
     luabind::object loadClassAPI(const QString& path); //!< Reads a lua class and returns the object
     void loadClassAPI(const QString& nameInGlobal, const QString& path); //!< Reads a lua class and puts it in a global object
+
+    // ///////  LOADING FUCS END ///////////// //
 
     QString coreFile() const; //!< The core lua filename
     void setCoreFile(const QString &coreFile); //!< The core lua filename
@@ -76,8 +80,12 @@ public:
 
     void runGarbageCollector();
 
+    QString getUserFile() const;
+    void setUserFile(const QString &userFile);
+
 protected:
     virtual void onBindAll() {}
+    void loadMultiRet(QFile *file);
 
     lua_State* getNativeState() {return L; }
 
@@ -92,6 +100,7 @@ private:
     Scene* m_baseScene;
     lua_State* L;
     QString m_coreFile;
+    QString m_userFile;
 };
 
 extern void push_pcall_handler(lua_State* L);

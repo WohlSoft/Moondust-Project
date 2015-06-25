@@ -104,7 +104,8 @@ void CreditsScene::init()
     /*****************************Load LUA stuff*******************************/
     // onLoad() <- Gives ability to load/init custom stuff
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
-    luaEngine.setCoreFile(ConfigManager::setup_CreditsScreen.luaFile);
+    luaEngine.setCoreFile(":/script/maincore_credits.lua");
+    luaEngine.setUserFile(ConfigManager::setup_CreditsScreen.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;
