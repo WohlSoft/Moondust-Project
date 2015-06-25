@@ -168,7 +168,8 @@ bool TitleScene::init()
     }
 
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
-    luaEngine.setCoreFile(ConfigManager::setup_TitleScreen.luaFile);
+    luaEngine.setCoreFile(":/script/maincore_title.lua");
+    luaEngine.setUserFile(ConfigManager::setup_TitleScreen.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;

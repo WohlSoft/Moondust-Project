@@ -45,6 +45,8 @@ public:
     static bool contains(const QComboBox* b, const QString &s);
     static QString filePath(QString s);
     static bool strempty(const char* str);
+
+    static QString resolveRelativeOrAbsolute(const QString &path, const QStringList& relativeLookup);
 };
 
 namespace varadic_util

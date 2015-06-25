@@ -238,7 +238,10 @@ bool LevelScene::loadConfigs()
 bool LevelScene::init()
 {
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
-    luaEngine.setCoreFile(ConfigManager::setup_Level.luaFile);
+    luaEngine.setCoreFile(":/script/maincore_level.lua");
+    luaEngine.setUserFile(ConfigManager::setup_Level.luaFile);
+    luaEngine.setNpcBaseClassPath(":/script/npcs/maincore_npc.lua");
+    luaEngine.setPlayerBaseClassPath(":/script/player/maincore_player.lua");
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         WriteToLog(QtWarningMsg, "Lua-Error: ");
         WriteToLog(QtWarningMsg, "Error Message: "+errorMessage);
