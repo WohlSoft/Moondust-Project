@@ -299,14 +299,13 @@ LevelScene::~LevelScene()
     }
 
     qDebug() << "Destroy NPC";
-    while(!npcs.isEmpty())
-    {
-        LVL_Npc* tmp;
-        tmp = npcs.last();
-        npcs.pop_back();
-    }
-
-
+    npcs.clear();
+//    while(!npcs.isEmpty())
+//    {
+//        LVL_Npc* tmp;
+//        tmp = npcs.last();
+//        npcs.pop_back();
+//    }
 
 
     qDebug() << "Destroy Warps";

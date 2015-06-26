@@ -85,10 +85,11 @@ bool PGE_Window::init(QString WindowTitle)
     }
 
 #ifdef Q_OS_MACX
-    SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(QImage(":/icon/cat_256.png")));
+    QImage icon(":/icon/cat_256.png");
 #else
-    SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(QImage(":/icon/cat_16.png")));
+    QImage icon(":/icon/cat_16.png");
 #endif
+    SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
     glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     checkSDLError();

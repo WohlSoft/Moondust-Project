@@ -39,3 +39,6 @@ INSTALLS -= configs helps themes calibrator_cnfs
 }
 
 #CONFIG+=release CONFIG-=debug QTPLUGIN.platforms=qxcb
+
+DISTFILES += \
+    pge_engine.supp
