@@ -299,17 +299,13 @@ LevelScene::~LevelScene()
     }
 
     qDebug() << "Destroy NPC";
-    while(!npcs.isEmpty())
-    {
-        LVL_Npc* tmp;
-        tmp = npcs.last();
-        npcs.pop_back();
-        if(tmp)
-            if(!tmp->isLuaNPC)
-                delete tmp;
-    }
-
-
+    npcs.clear();
+//    while(!npcs.isEmpty())
+//    {
+//        LVL_Npc* tmp;
+//        tmp = npcs.last();
+//        npcs.pop_back();
+//    }
 
 
     qDebug() << "Destroy Warps";
@@ -471,10 +467,7 @@ void LevelScene::update()
             dead_npcs.pop_back();
             active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
-            if(!corpse->isLuaNPC)
-                delete corpse;
-            else
-                luaEngine.destoryLuaNpc(corpse);
+            luaEngine.destoryLuaNpc(corpse);
         }
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event

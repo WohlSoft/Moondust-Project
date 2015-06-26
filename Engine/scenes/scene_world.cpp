@@ -255,7 +255,8 @@ void WorldScene::setGameState(EpisodeState *_state)
 bool WorldScene::init()
 {
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
-    luaEngine.setCoreFile(ConfigManager::setup_WorldMap.luaFile);
+    luaEngine.setCoreFile(":/script/maincore_world.lua");
+    luaEngine.setUserFile(ConfigManager::setup_WorldMap.luaFile);
     luaEngine.setErrorReporterFunc([this](const QString& errorMessage, const QString& stacktrace){
         qWarning() << "Lua-Error: ";
         qWarning() << "Error Message: " << errorMessage;

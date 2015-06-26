@@ -73,18 +73,46 @@ LevelScene *LuaLevelEngine::getScene()
 {
     return dynamic_cast<LevelScene*>(getBaseScene());
 }
+QString LuaLevelEngine::getNpcBaseClassPath() const
+{
+    return m_npcBaseClassPath;
+}
+
+void LuaLevelEngine::setNpcBaseClassPath(const QString &npcBaseClassPath)
+{
+    m_npcBaseClassPath = npcBaseClassPath;
+}
+QString LuaLevelEngine::getPlayerBaseClassPath() const
+{
+    return m_playerBaseClassPath;
+}
+
+void LuaLevelEngine::setPlayerBaseClassPath(const QString &playerBaseClassPath)
+{
+    m_playerBaseClassPath = playerBaseClassPath;
+}
+
+
 
 void LuaLevelEngine::onBindAll()
 {
     luabind::module(getNativeState())[
-        Binding_Level_Class_PhysObj::bindToLua(),
-        Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
-        Binding_Level_ClassWrapper_LVL_NPC::bindToLua(),
+            Binding_Level_Class_PhysObj::bindToLua(),
+            Binding_Level_ClassWrapper_LVL_Player::bindToLua(),
+            Binding_Level_ClassWrapper_LVL_NPC::bindToLua(),
         Binding_Level_GlobalFuncs_Player::bindToLua(),
         Binding_Level_GlobalFuncs_NPC::bindToLua()
-
-
-
     ];
+
+    {
+        luabind::object _G = luabind::globals(getNativeState());
+        if(luabind::type(_G["bases"]) != LUA_TTABLE){
+            _G["bases"] = luabind::newtable(getNativeState());
+        }
+
+        _G["bases"]["npc"] = loadClassAPI(m_npcBaseClassPath);
+        _G["bases"]["player"] = loadClassAPI(m_playerBaseClassPath);
+    }
+
 }
 

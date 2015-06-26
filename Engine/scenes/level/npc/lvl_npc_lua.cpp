@@ -48,3 +48,13 @@ void LVL_Npc::lua_setSequence(luabind::object frames)
     }
     animator.setSequence(luabind_utils::convArrayTo<int>(frames));
 }
+
+void LVL_Npc::lua_setOnceAnimation(bool en)
+{
+    animator.setOnceMode(en);
+}
+
+bool LVL_Npc::lua_animationIsFinished()
+{
+    return animator.animationFinished();
+}

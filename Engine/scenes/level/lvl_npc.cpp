@@ -45,6 +45,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     _onGround=false;
 
     disableBlockCollision=false;
+    disableNpcCollision=false;
     _stucked=false;
 
     bumpDown=false;

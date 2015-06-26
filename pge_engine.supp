@@ -1,0 +1,17 @@
+{
+   lua_pushcclosure[Memcheck:Addr4]
+   Memcheck:Addr4
+   fun:lua_pushcclosure
+   fun:_ZN9LuaEngine4initEv
+   fun:_ZN10TitleScene4initEv
+   fun:main
+}
+{
+   calloc[Memcheck:Leak]
+   Memcheck:Leak
+   fun:calloc
+   obj:/home/vitaly/_git_repos/PGE-Project/bin/libSDL2-2.0.so
+   fun:_ZN13GraphicsHelps19QImage_toSDLSurfaceERK6QImage
+   fun:_ZN10PGE_Window4initE7QString
+   fun:main
+}

@@ -26,6 +26,8 @@ void LVL_Npc::update(float tickTime)
     if(killed) return;
     if(wasDeactivated) return;
 
+    _onGround = !collided_bottom.isEmpty();
+
     if(isGenerator)
     {
         updateCollisions();

@@ -20,6 +20,7 @@
 #include "util.h"
 #include <QLayout>
 #include <QWidgetItem>
+#include <QFileInfo>
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
 {
@@ -121,4 +122,19 @@ bool util::strempty(const char *str)
             return true;
     }
     return false;
+}
+
+QString util::resolveRelativeOrAbsolute(const QString& path, const QStringList &relativeLookup)
+{
+    if(QFileInfo(path).isAbsolute()){
+        if(QFileInfo(path).exists())
+            return path;
+    }else{
+        foreach(QString nextpath, relativeLookup){
+            QString newCompletePath = nextpath + "/" + path;
+            if(QFileInfo(newCompletePath).exists())
+                return newCompletePath;
+        }
+    }
+    return "";
 }

@@ -58,6 +58,8 @@ public:
     void setFrameSpeed(int ms);
     void setBidirectional(bool bid);
     void setDirectedSequence(bool dd);
+    void setOnceMode(bool en);
+    bool animationFinished();
     PGE_SizeF sizeOfFrame();
 
     void start();
@@ -76,7 +78,7 @@ private:
 
     int manual_ticks;
     bool onceMode;
-    bool animationFinished;
+    bool _animationFinished;
 
     bool isEnabled;
     SDL_TimerID timer_id;

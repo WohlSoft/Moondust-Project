@@ -1,9 +1,11 @@
 -------------------------------------------------------------------------------
+-- <b>This class is available for Level-Code</b>
 -- @module BasePlayer
 -- @extends PhysBase#PhysBase 
 
 
--------------------------------------------------------------------------------
+-- Not implemented
+-- -----------------------------------------------------------------------------
 -- Constructs a new BasePlayer
 -- It is recommended to NOT use the function.
 -- @callof #PhysBase

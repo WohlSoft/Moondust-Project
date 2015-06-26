@@ -18,16 +18,13 @@ LuaBindnoJit.file = luabind/_project/luabind_nojit.pro
 deplibs.path = bin
 linux-g++: {
 deplibs.files += $$PWD/_builds/linux/lib/*.so*
-deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.so*
 }
 win32: {
 deplibs.files += $$PWD/_builds/win32/bin/*.dll
-deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.dll
 }
 macx: {
 deplibs.files += $$PWD/_builds/macos/lib/*.dylib
 deplibs.files += $$PWD/_builds/macos/frameworks/*
-deplibs.files += $$PWD/_builds/sdl2_mixer_mod/*.dylib
 }
 
 !macx: {

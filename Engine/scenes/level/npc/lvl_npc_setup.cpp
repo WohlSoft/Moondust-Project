@@ -151,10 +151,11 @@ void LVL_Npc::transformTo_x(long id)
         return;
     }
 
-    deActivatable    = setup->deactivation;
+    deActivatable    = (setup->deactivation) && (!setup->scenery);
     activationTimeout= setup->deactivetionDelay;
 
     disableBlockCollision=!setup->collision_with_blocks;
+    disableNpcCollision  = setup->no_npc_collions;
 
     setDirection(_direction);
     frameSize.setSize(setup->gfx_w, setup->gfx_h);

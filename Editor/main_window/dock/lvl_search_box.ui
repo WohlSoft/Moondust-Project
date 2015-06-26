@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>454</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -43,7 +43,7 @@
     <item row="0" column="0">
      <widget class="QToolBox" name="FindToolbox">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="tabSpacing">
        <number>0</number>
@@ -53,8 +53,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>265</width>
-         <height>369</height>
+         <width>211</width>
+         <height>250</height>
         </rect>
        </property>
        <attribute name="label">
@@ -430,8 +430,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>219</width>
-         <height>289</height>
+         <width>265</width>
+         <height>429</height>
         </rect>
        </property>
        <attribute name="label">
@@ -453,11 +453,12 @@
         <property name="spacing">
          <number>3</number>
         </property>
-        <item row="10" column="0" colspan="2" alignment="Qt::AlignHCenter">
-         <widget class="QCheckBox" name="Find_Check_NotMoveNPC"/>
-        </item>
-        <item row="11" column="0" colspan="2" alignment="Qt::AlignHCenter">
-         <widget class="QCheckBox" name="Find_Check_BossNPC"/>
+        <item row="12" column="3">
+         <widget class="QLabel" name="label_51">
+          <property name="text">
+           <string>Contains Msg:</string>
+          </property>
+         </widget>
         </item>
         <item row="4" column="0" colspan="2" alignment="Qt::AlignHCenter">
          <widget class="QCheckBox" name="Find_Check_TypeNPC">
@@ -466,62 +467,23 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="0" colspan="2" alignment="Qt::AlignHCenter">
-         <widget class="QCheckBox" name="Find_Check_LayerNPC"/>
+        <item row="11" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_BossNPC"/>
         </item>
-        <item row="16" column="0" colspan="6">
-         <widget class="QPushButton" name="Find_Button_ResetNPC">
+        <item row="10" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_NotMoveNPC"/>
+        </item>
+        <item row="11" column="3">
+         <widget class="QLabel" name="label_50">
           <property name="text">
-           <string>Reset Search Fields</string>
+           <string>Set as Boss</string>
           </property>
          </widget>
         </item>
-        <item row="17" column="0" colspan="6">
-         <widget class="QPushButton" name="FindStartNPC">
+        <item row="9" column="3">
+         <widget class="QLabel" name="label_48">
           <property name="text">
-           <string>Search NPC</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="4" colspan="2">
-         <widget class="QPushButton" name="Find_Button_TypeNPC">
-          <property name="text">
-           <string>[empty]</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label_33">
-          <property name="text">
-           <string>Search?</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="Line" name="line_7">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="6">
-         <widget class="Line" name="line_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_34">
-          <property name="text">
-           <string>Data</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QLabel" name="label_40">
-          <property name="text">
-           <string>Type:</string>
+           <string>Friendly</string>
           </property>
          </widget>
         </item>
@@ -532,15 +494,15 @@
           </property>
          </widget>
         </item>
+        <item row="7" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_DirNPC"/>
+        </item>
         <item row="5" column="4" colspan="2">
          <widget class="QComboBox" name="Find_Combo_LayerNPC">
           <property name="enabled">
            <bool>false</bool>
           </property>
          </widget>
-        </item>
-        <item row="7" column="0" colspan="2" alignment="Qt::AlignHCenter">
-         <widget class="QCheckBox" name="Find_Check_DirNPC"/>
         </item>
         <item row="9" column="0" colspan="2" alignment="Qt::AlignHCenter">
          <widget class="QCheckBox" name="Find_Check_FriendlyNPC"/>
@@ -552,36 +514,44 @@
           </property>
          </widget>
         </item>
-        <item row="9" column="3">
-         <widget class="QLabel" name="label_48">
-          <property name="text">
-           <string>Friendly</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="3">
-         <widget class="QLabel" name="label_50">
-          <property name="text">
-           <string>Set as Boss</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="4" colspan="2">
-         <widget class="QCheckBox" name="Find_Check_FriendlyActiveNPC">
+        <item row="14" column="4">
+         <widget class="QComboBox" name="Find_Combo_Layer_AttachedNPC">
           <property name="enabled">
            <bool>false</bool>
           </property>
+          <property name="currentText">
+           <string>[None]</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>[None]</string>
+           </property>
+          </item>
          </widget>
         </item>
-        <item row="10" column="4" colspan="2">
-         <widget class="QCheckBox" name="Find_Check_NotMoveActiveNPC">
-          <property name="enabled">
-           <bool>false</bool>
+        <item row="14" column="3">
+         <widget class="QLabel" name="label_52">
+          <property name="text">
+           <string>Attached layer:</string>
           </property>
          </widget>
         </item>
-        <item row="11" column="4" colspan="2">
-         <widget class="QCheckBox" name="Find_Check_BossActiveNPC">
+        <item row="14" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_Layer_AttachedNPC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_Event_ActivateNPC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="4">
+         <widget class="QLineEdit" name="Find_Edit_MsgNPC">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -590,15 +560,25 @@
         <item row="12" column="0" colspan="2" alignment="Qt::AlignHCenter">
          <widget class="QCheckBox" name="Find_Check_MsgNPC"/>
         </item>
-        <item row="12" column="3">
-         <widget class="QLabel" name="label_51">
-          <property name="text">
-           <string>Contains Msg:</string>
+        <item row="9" column="4" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_FriendlyActiveNPC">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
-        <item row="12" column="4">
-         <widget class="QLineEdit" name="Find_Edit_MsgNPC">
+        <item row="13" column="4">
+         <widget class="QCheckBox" name="Find_Check_MsgSensitiveNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Case Sensitive?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="4" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_BossActiveNPC">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -658,17 +638,170 @@
           </layout>
          </widget>
         </item>
-        <item row="13" column="4">
-         <widget class="QCheckBox" name="Find_Check_MsgSensitiveNPC">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Case Sensitive?</string>
+        <item row="0" column="2">
+         <widget class="Line" name="line_7">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
-        <item row="14" column="0" colspan="4">
+        <item row="5" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_LayerNPC"/>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_33">
+          <property name="text">
+           <string>Search?</string>
+          </property>
+         </widget>
+        </item>
+        <item row="22" column="0" colspan="6">
+         <widget class="QPushButton" name="FindStartNPC">
+          <property name="text">
+           <string>Search NPC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="4" colspan="2">
+         <widget class="QPushButton" name="Find_Button_TypeNPC">
+          <property name="text">
+           <string>[empty]</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3">
+         <widget class="QLabel" name="label_40">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="6">
+         <widget class="Line" name="line_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_34">
+          <property name="text">
+           <string>Data</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="4" colspan="2">
+         <widget class="QCheckBox" name="Find_Check_NotMoveActiveNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="21" column="0" colspan="6">
+         <widget class="QPushButton" name="Find_Button_ResetNPC">
+          <property name="text">
+           <string>Reset Search Fields</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_Event_DeathNPC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_Event_TalkNPC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="0" colspan="2" alignment="Qt::AlignHCenter">
+         <widget class="QCheckBox" name="Find_Check_Event_Empty_LayerNPC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="3">
+         <widget class="QLabel" name="label_53">
+          <property name="text">
+           <string>Evt activate:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="3">
+         <widget class="QLabel" name="label_54">
+          <property name="text">
+           <string>Evt death:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="17" column="3">
+         <widget class="QLabel" name="label_55">
+          <property name="text">
+           <string>Evt talk:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="18" column="3">
+         <widget class="QLabel" name="label_56">
+          <property name="text">
+           <string>Evt empty layer:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="4">
+         <widget class="QComboBox" name="Find_Combo_Event_ActivateNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>[None]</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="16" column="4">
+         <widget class="QComboBox" name="Find_Combo_Event_DeathNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>[None]</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="17" column="4">
+         <widget class="QComboBox" name="Find_Combo_Event_TalkNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>[None]</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="18" column="4">
+         <widget class="QComboBox" name="Find_Combo_Event_Empty_LayerNPC">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>[None]</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="19" column="0" rowspan="2" colspan="4">
          <spacer name="verticalSpacer_13">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
