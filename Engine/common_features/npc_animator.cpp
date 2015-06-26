@@ -53,7 +53,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
     frameLastR=-1; //to unlimited frameset
 
     onceMode=false;
-    animationFinished=false;
+    _animationFinished=false;
 
     isEnabled=false;
 
@@ -223,6 +223,10 @@ void AdvNpcAnimator::setSequenceL(QList<int> _frames)
     frames_listL = _frames;
     frameFirstL = 0;
     frameLastL = _frames.size()-1;
+    onceMode=false;
+    _animationFinished=false;
+    if(frameCurrentL > frames_listL.size()-1) frameCurrentL=frameFirstL;
+    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
 }
 
 void AdvNpcAnimator::setSequenceR(QList<int> _frames)
@@ -233,6 +237,10 @@ void AdvNpcAnimator::setSequenceR(QList<int> _frames)
     frames_listR =  _frames;
     frameFirstR = 0;
     frameLastR = _frames.size()-1;
+    onceMode=false;
+    _animationFinished=false;
+    if(frameCurrentR > frames_listR.size()-1) frameCurrentR=frameFirstR;
+    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
 }
 
 void AdvNpcAnimator::setSequence(QList<int> _frames)
@@ -250,7 +258,7 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
         frameLastL = _frames.size()-1;
         frames_listR.clear();
         for(int i=0;i<_frames.size();i++)
-            frames_listR.push_back(_frames[i]+framesQ);
+            frames_listR.push_back(_frames[i]+setup.frames);
         frameFirstR = 0;
         frameLastR = _frames.size()-1;
         break;
@@ -264,6 +272,12 @@ void AdvNpcAnimator::setSequence(QList<int> _frames)
         frameLastR = _frames.size()-1;
         break;
     }
+    onceMode=false;
+    _animationFinished=false;
+    if(frameCurrentL > frames_listL.size()-1) frameCurrentL=frameFirstL;
+    if(frameCurrentR > frames_listR.size()-1) frameCurrentR=frameFirstR;
+    setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+    setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
 }
 
 void AdvNpcAnimator::setFrameL(int y)
@@ -313,6 +327,24 @@ void AdvNpcAnimator::setDirectedSequence(bool dd)
     }
 }
 
+void AdvNpcAnimator::setOnceMode(bool en)
+{
+    onceMode=en;
+    if(en&&_animationFinished)
+    {
+        _animationFinished=false;
+        frameCurrentL = frameFirstL;
+        frameCurrentR = frameFirstR;
+        setFrameL( frameSequance ? frames_listL[frameCurrentL] : frameCurrentL);
+        setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
+    }
+}
+
+bool AdvNpcAnimator::animationFinished()
+{
+    return this->_animationFinished;
+}
+
 PGE_SizeF AdvNpcAnimator::sizeOfFrame()
 {
     return PGE_SizeF(1.0, frameSize/frameHeight );
@@ -356,12 +388,12 @@ void AdvNpcAnimator::nextFrame()
 {
     if(!isEnabled) return;
 
+    if(onceMode&&_animationFinished) return;
+
     //Left
     if(!aniDirectL)
     {
-        //frameCurrent += frameSize * frameStep;
         frameCurrentL += frameStep;
-
         if ( ((frameCurrentL >= frames.size()-(frameStep-1) )&&(frameLastL<=-1)) ||
              ((frameCurrentL > frameLastL )&&(frameLastL>=0)) )
             {
@@ -371,26 +403,33 @@ void AdvNpcAnimator::nextFrame()
                 }
                 else
                 {
+                    if(onceMode) {
+                        frameCurrentL-=frameStep;
+                        _animationFinished=true;
+                    } else {
                     frameCurrentL -= frameStep*2;
-                    aniDirectL=!aniDirectL;
+                    aniDirectL=!aniDirectL;}
                 }
             }
     }
     else
     {
-        //frameCurrent -= frameSize * frameStep;
         frameCurrentL -= frameStep;
-
         if ( frameCurrentL < frameFirstL )
             {
-                if(!aniBiDirect)
-                {
-                    frameCurrentL = ((frameLastL==-1)? frames.size()-1 : frameLastL);
-                }
-                else
-                {
-                    frameCurrentL+=frameStep*2;
-                    aniDirectL=!aniDirectL;
+                if(onceMode) {
+                    frameCurrentL+=frameStep;
+                    _animationFinished=true;
+                } else {
+                    if(!aniBiDirect)
+                    {
+                        frameCurrentL = ((frameLastL==-1)? frames.size()-1 : frameLastL);
+                    }
+                    else
+                    {
+                        frameCurrentL+=frameStep*2;
+                        aniDirectL=!aniDirectL;
+                    }
                 }
             }
     }
@@ -399,9 +438,7 @@ void AdvNpcAnimator::nextFrame()
     //Right
     if(!aniDirectR)
     {
-        //frameCurrent += frameSize * frameStep;
         frameCurrentR += frameStep;
-
         if ( ((frameCurrentR >= frames.size()-(frameStep-1) )&&(frameLastR<=-1)) ||
              ((frameCurrentR > frameLastR )&&(frameLastR>=0)) )
             {
@@ -411,20 +448,29 @@ void AdvNpcAnimator::nextFrame()
                 }
                 else
                 {
-                    frameCurrentR -= frameStep*2;
-                    aniDirectR=!aniDirectR;
+                    if(onceMode) {
+                        frameCurrentR-=frameStep;
+                        _animationFinished=true;
+                    } else {
+                        frameCurrentR -= frameStep*2;
+                        aniDirectR=!aniDirectR;
+                    }
                 }
             }
     }
     else
     {
-        //frameCurrent -= frameSize * frameStep;
         frameCurrentR -= frameStep;
 
         if ( frameCurrentR < frameFirstR )
-            {
+        {
+            if(onceMode) {
+                frameCurrentR+=frameStep;
+                _animationFinished=true;
+            } else {
                 if(!aniBiDirect)
                 {
+
                     frameCurrentR = ((frameLastR==-1)? frames.size()-1 : frameLastR);
                 }
                 else
@@ -433,6 +479,7 @@ void AdvNpcAnimator::nextFrame()
                     aniDirectR=!aniDirectR;
                 }
             }
+        }
     }
     setFrameR( frameSequance ? frames_listR[frameCurrentR] : frameCurrentR);
 }

@@ -13,5 +13,11 @@
         <file>images/coin.png</file>
         <file>PressStart2P.ttf</file>
         <file>images/_broken.png</file>
+        <file>script/maincore_credits.lua</file>
+        <file>script/maincore_level.lua</file>
+        <file>script/maincore_title.lua</file>
+        <file>script/maincore_world.lua</file>
+        <file>script/player/maincore_player.lua</file>
+        <file>script/npcs/maincore_npc.lua</file>
     </qresource>
 </RCC>

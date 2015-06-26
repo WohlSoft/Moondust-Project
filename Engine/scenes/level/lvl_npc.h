@@ -77,6 +77,7 @@ public:
     QHash<int, PGE_Phys_Object*> collided_bottom;
     QHash<int, PGE_Phys_Object*> collided_center;
     bool  disableBlockCollision;
+    bool  disableNpcCollision;
     bool _stucked;
 
     bool    bumpDown;
@@ -160,6 +161,8 @@ public:
     void lua_setSequenceLeft(luabind::object frames);
     void lua_setSequenceRight(luabind::object frames);
     void lua_setSequence(luabind::object frames);
+    void lua_setOnceAnimation(bool en);
+    bool lua_animationIsFinished();
 
     inline int getID() { return setup->id; }
     bool isLuaNPC;

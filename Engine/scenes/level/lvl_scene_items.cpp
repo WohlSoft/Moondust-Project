@@ -90,17 +90,11 @@ void LevelScene::placeNPC(LevelNPC npcData)
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return;
 
-    LVL_Npc * npc;
     obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
-    QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(curNpcData->algorithm_script);
-    if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
-    {
-        npc = luaEngine.createLuaNpc(curNpcData->id);
-        if(!npc)
-            return;
-    } else {
-        npc = new LVL_Npc();
-    }
+    LVL_Npc * npc = luaEngine.createLuaNpc(npcData.id);
+    if(!npc)
+        return;
+
     npc->setup = curNpcData;
     npc->data = npcData;
     npc->init();
