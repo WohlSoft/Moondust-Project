@@ -40,6 +40,7 @@ Makefile.*
 *-build-*
 *build-*
 /bin
+/ServerLib/bin
 /android-build
 /Editor/app_process
 /Editor/android-build
