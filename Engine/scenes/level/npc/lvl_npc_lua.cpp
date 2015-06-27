@@ -58,3 +58,13 @@ bool LVL_Npc::lua_animationIsFinished()
 {
     return animator.animationFinished();
 }
+
+int LVL_Npc::lua_frameDelay()
+{
+    return animator.frameSpeed();
+}
+
+void LVL_Npc::lua_setFrameDelay(int ms)
+{
+    animator.setFrameSpeed(ms);
+}

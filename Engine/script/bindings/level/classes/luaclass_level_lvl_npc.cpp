@@ -50,6 +50,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             //Properties
             .property("id", &LVL_Npc::getID)
+            .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
 
             //States
             .def_readonly("onGround", &LVL_Npc::onGround)
