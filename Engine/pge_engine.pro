@@ -29,7 +29,7 @@ INCLUDEPATH += "$$PWD/../_Libs/" "$$PWD/../_common"
 INCLUDEPATH += "$$PWD/../_Libs/luabind"
 INCLUDEPATH += "$$PWD/../_Libs/luabind/lua"
 LIBS += -L$$PWD/../_Libs/_builds/commonlibs
-DEFINES += PGE_ENGINE USE_LUA_JIT
+DEFINES += PGE_ENGINE USE_LUA_JIT PGE_FILES_QT
 
 
 include ($$PWD/../_common/lib_destdir.pri)
@@ -131,6 +131,7 @@ SOURCES += \
     ../_common/PGE_File_Formats/save_filedata.cpp \
     ../_common/PGE_File_Formats/smbx64.cpp \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
+    ../_common/PGE_File_Formats/pge_file_lib_globs.cpp \
     scenes/level/lvl_physenv.cpp \
     scenes/level/lvl_player_def.cpp \
     data_configs/obj_player.cpp \
@@ -222,7 +223,6 @@ SOURCES += \
     scenes/level/player/lvl_player_physics.cpp \
     scenes/level/player/lvl_player_render.cpp
 
-
 HEADERS  += \
     graphics/graphics.h \
     scenes/scene_level.h \
@@ -275,7 +275,10 @@ HEADERS  += \
     ../_common/PGE_File_Formats/pge_x.h \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
+    ../_common/PGE_File_Formats/smbx64_macro.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
+    ../_common/PGE_File_Formats/pge_file_lib_globs.h \
+    ../_common/PGE_File_Formats/pge_file_lib_sys.h \
     scenes/level/lvl_physenv.h \
     data_configs/obj_player.h \
     scenes/level/lvl_player_def.h \
@@ -347,6 +350,7 @@ HEADERS  += \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
     common_features/version_cmp.h \
     scenes/level/npc_detectors/lvl_base_detector.h
+
 
 FORMS    += \
     data_configs/select_config.ui

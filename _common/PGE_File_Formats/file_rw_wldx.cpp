@@ -28,11 +28,27 @@
 #include <QMessageBox>
 #endif
 
+#define ValidateSection(stype) if(f_section.type!=stype) \
+{ \
+    errorString=PGESTRING("Wrong section data syntax:\nSection ["+f_section.name+"]");\
+    goto badfile;\
+}
+
+#define ValidateItem(stype) if(f_section.data[sdata].type!=stype) \
+{ \
+    errorString=PGESTRING("Wrong data item syntax:\nSection ["+f_section.name+"]\nData line "+fromNum(sdata));\
+    goto badfile;\
+}
+#define ValueErrorNodify() errorString=PGESTRING("Wrong value syntax\nSection ["+f_section.name+ \
+"]\nData line "+fromNum(sdata) \
++"\nMarker "+v.marker+"\nValue "+v.value);
+
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
+WorldData FileFormats::ReadExtendedWorldFile(PGEFILE &inf)
 {
     QTextStream in(&inf);   //Read File
     in.setCodec("UTF-8");
@@ -40,7 +56,7 @@ WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
     return ReadExtendedWldFile( in.readAll(), inf.fileName() );
 }
 
-WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
+WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     WorldData FileData;
@@ -52,7 +68,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
         FileData.ReadFileValid=false;
         return FileData;
     }
-    QString line;
+    PGESTRING line;
     int str_count=0;
     bool valid=false;
     QFileInfo in_1(filePath);
@@ -66,7 +82,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
     str_count++;line = in.readLine();
     }while((line!="HEAD") && (!line.isNull()));
 
-    QStringList header;
+    PGESTRINGList header;
     str_count++;line = in.readLine();
     bool closed=false;
     while((line!="HEAD_END") && (!line.isNull()))
@@ -77,9 +93,9 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
     }
     if(!closed) goto badfile;
 
-    foreach(QString header_line, header)
+    foreach(PGESTRING header_line, header)
     {
-        QList<QStringList >data = PGEFile::splitDataLine(header_line, &valid);
+        QList<PGESTRINGList >data = PGEFile::splitDataLine(header_line, &valid);
 
         for(int i=0;i<data.size();i++)
         {
@@ -111,7 +127,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
             if(data[i][0]=="HB") //Hub Styled
             {
              if(PGEFile::IsBool(data[i][1]))
-                 FileData.HubStyledWorld = (bool)data[i][1].toInt();
+                 FileData.HubStyledWorld = (bool)toInt(data[i][1]);
              else
                  goto badfile;
             }
@@ -119,7 +135,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
             if(data[i][0]=="RL") //Restart level on fail
             {
              if(PGEFile::IsBool(data[i][1]))
-                 FileData.restartlevel = (bool)data[i][1].toInt();
+                 FileData.restartlevel = (bool)toInt(data[i][1]);
              else
                  goto badfile;
             }
@@ -127,7 +143,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(QString filePath)
             if(data[i][0]=="SZ") //Starz number
             {
              if(PGEFile::IsIntU(data[i][1]))
-                 FileData.stars = data[i][1].toInt();
+                 FileData.stars = toInt(data[i][1]);
              else
                  goto badfile;
             }
@@ -158,14 +174,14 @@ badfile:
     return FileData;
 }
 
-WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bool sielent)
+WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
      errorString.clear();
      FileStringList in;
      in.addData( RawData );
 
      int str_count=0;        //Line Counter
-     QString line;           //Current Line data
+     PGESTRING line;           //Current Line data
 
      WorldData FileData = dummyWldDataArray();
 
@@ -212,31 +228,16 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else
          if(f_section.name=="HEAD")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
+             ValidateSection(PGEFile::PGEX_Struct);
+             for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
              {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
-
-             for(int sdata=0;sdata<f_section.data.size();sdata++)
-             {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
 
                  PGEFile::PGEX_Item x = f_section.data[sdata];
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="TL") //Episode Title
                      {
@@ -300,22 +301,11 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else
          if(f_section.name=="META_BOOKMARKS")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
+             ValidateSection(PGEFile::PGEX_Struct);
 
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
-
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
 
                  Bookmark meta_bookmark;
@@ -326,11 +316,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                        if(v.marker=="BM") //Bookmark name
                        {
@@ -343,7 +329,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                        if(v.marker=="X") // Position X
                        {
                            if(PGEFile::IsIntS(v.value))
-                               meta_bookmark.x = v.value.toInt();
+                               meta_bookmark.x = toInt(v.value);
                            else
                                goto badfile;
                        }
@@ -351,7 +337,7 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
                        if(v.marker=="Y") //Position Y
                        {
                            if(PGEFile::IsIntS(v.value))
-                               meta_bookmark.y = v.value.toInt();
+                               meta_bookmark.y = toInt(v.value);
                            else
                                goto badfile;
                        }
@@ -362,32 +348,16 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else
          if(f_section.name=="META_SYS_CRASH")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
-
+             ValidateSection(PGEFile::PGEX_Struct);
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
-
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
 
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                        FileData.metaData.crash.used=true;
 
@@ -437,32 +407,18 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else ///////////////////TILES//////////////////////
          if(f_section.name=="TILES")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
+             ValidateSection(PGEFile::PGEX_Struct);
 
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
 
                  tile = dummyWldTile();
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="ID") //Tile ID
                      {
@@ -496,32 +452,17 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else ///////////////////SCENERY//////////////////////
          if(f_section.name=="SCENERY")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
-
+             ValidateSection(PGEFile::PGEX_Struct);
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
                  scen = dummyWldScen();
 
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="ID") //Scenery ID
                      {
@@ -555,32 +496,18 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else ///////////////////PATHS//////////////////////
          if(f_section.name=="PATHS")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
+             ValidateSection(PGEFile::PGEX_Struct);
 
-             for(int sdata=0;sdata<f_section.data.size();sdata++)
+             for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
                  pathitem = dummyWldPath();
 
-                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                 for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="ID") //PATHS ID
                      {
@@ -614,32 +541,17 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else ///////////////////MUSICBOXES//////////////////////
          if(f_section.name=="MUSICBOXES")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
-
+             ValidateSection(PGEFile::PGEX_Struct);
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
                  musicbox = dummyWldMusic();
 
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="ID") //MISICBOX ID
                      {
@@ -682,32 +594,18 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
          else ///////////////////LEVELS//////////////////////
          if(f_section.name=="LEVELS")
          {
-             if(f_section.type!=PGEFile::PGEX_Struct)
-             {
-                 errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                 goto badfile;
-             }
+             ValidateSection(PGEFile::PGEX_Struct);
 
              for(int sdata=0;sdata<f_section.data.size();sdata++)
              {
-                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                 {
-                     errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                             .arg(f_section.name)
-                             .arg(sdata);
-                     goto badfile;
-                 }
+                 ValidateItem(PGEFile::PGEX_Struct);
                  PGEFile::PGEX_Item x = f_section.data[sdata];
                  lvlitem = dummyWldLevel();
 
                  for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                  {
                      PGEFile::PGEX_Val v = x.values[sval];
-                     errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                             .arg(f_section.name)
-                             .arg(sdata)
-                             .arg(v.marker)
-                             .arg(v.value);
+                     ValueErrorNodify();
 
                      if(v.marker=="ID") //LEVEL IMAGE ID
                      {
@@ -864,9 +762,9 @@ WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath, bo
 //****************WRITE FILE FORMAT************************
 //*********************************************************
 
-QString FileFormats::WriteExtendedWldFile(WorldData FileData)
+PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
 {
-    QString TextData;
+    PGESTRING TextData;
     long i;
     bool addArray=false;
 

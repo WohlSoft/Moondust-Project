@@ -19,16 +19,18 @@
 #ifndef PGE_X_H
 #define PGE_X_H
 
-#include <QPair>
-#include <QString>
-#include <QStringList>
-#include <QObject>
+#include "pge_file_lib_globs.h"
 
-typedef QPair<QString, QStringList> PGEXSct;
+typedef PGEPAIR<PGESTRING, PGESTRINGList> PGEXSct;
 
-class PGEFile: public QObject
+#ifdef PGE_FILES_QT
+class PGEFile: PGE_FILES_INHERED
 {
     Q_OBJECT
+#else
+class PGEFile
+{
+#endif
 
 public:
     enum PGEX_Item_type
@@ -40,81 +42,86 @@ public:
 
     struct PGEX_Val
     {
-        QString marker;
-        QString value;
+        PGESTRING marker;
+        PGESTRING value;
     };
 
     struct PGEX_Item
     {
         PGEX_Item_type type;
-        QList<PGEX_Val > values;
+        PGELIST<PGEX_Val > values;
     };
 
     struct PGEX_Entry
     {
-        QString name;
+        PGESTRING name;
         PGEX_Item_type type;
-        QList<PGEX_Item > data;
-        QList<PGEX_Entry > subTree;
+        PGELIST<PGEX_Item > data;
+        PGELIST<PGEX_Entry > subTree;
     };
 
+    #ifdef PGE_FILES_QT
     PGEFile(QObject *parent=NULL);
     PGEFile(PGEFile &pgeFile, QObject *parent=NULL);
-    PGEFile(QString _rawData);
-    void setRawData(QString _rawData);
+    #else
+    PGEFile();
+    PGEFile(PGEFile &pgeFile);
+    #endif
+    PGEFile(PGESTRING _rawData);
+    void setRawData(PGESTRING _rawData);
     bool buildTreeFromRaw();
-    QString lastError();
+    PGESTRING lastError();
 
     //data tree
-    QList<PGEX_Entry > dataTree;
+    PGELIST<PGEX_Entry > dataTree;
 
 private:
-    QString _lastError;
-    QString rawData;
-    QList<PGEXSct > rawDataTree;
+    PGESTRING _lastError;
+    PGESTRING rawData;
+    PGELIST<PGEXSct > rawDataTree;
 
     //Static functions
 public:
     // /////////////Validators///////////////
-    static bool IsSectionTitle(QString in);//Section Title
+    static bool IsSectionTitle(PGESTRING in);//Section Title
 
-    static PGEX_Entry buildTree(QStringList &src_data, bool *_valid = 0);
+    static PGEX_Entry buildTree(PGESTRINGList &src_data, bool *_valid = 0);
 
     //returns FALSE on valid data
-    static bool IsQStr(QString in);// QUOTED STRING
-    static bool IsHex(QString in);// Hex Encoded String
-    static bool IsIntU(QString in);// UNSIGNED INT
-    static bool IsIntS(QString in);// SIGNED INT
-    static bool IsFloat(QString &in);// FLOAT
-    static bool IsBool(QString in);//BOOL
-    static bool IsBoolArray(QString in);//Boolean array
-    static bool IsIntArray(QString in);//Integer array
-    static bool IsStringArray(QString in);//String array
+    static bool IsQStr(PGESTRING in);// QUOTED STRING
+    static bool IsHex(PGESTRING in);// Hex Encoded String
+    static bool IsIntU(PGESTRING in);// UNSIGNED INT
+    static bool IsIntS(PGESTRING in);// SIGNED INT
+    static bool IsFloat(PGESTRING &in);// FLOAT
+    static bool IsBool(PGESTRING in);//BOOL
+    static bool IsBoolArray(PGESTRING in);//Boolean array
+    static bool IsIntArray(PGESTRING in);//Integer array
+    static bool IsStringArray(PGESTRING in);//String array
 
     //Split string into data values
-    static QList<QStringList> splitDataLine(QString src_data, bool *valid = 0);
+    static PGELIST<PGESTRINGList> splitDataLine(PGESTRING src_data, bool *valid = 0);
 
     //PGE Extended File parameter string generators
-    static QString IntS(long input);
-    static QString BoolS(bool input);
-    static QString FloatS(double input);
-    static QString qStrS(QString input);
-    static QString hStrS(QString input);
-    static QString strArrayS(QStringList input);
-    static QString intArrayS(QList<int > input);
-    static QString BoolArrayS(QList<bool > input);
+    static PGESTRING IntS(long input);
+    static PGESTRING BoolS(bool input);
+    static PGESTRING FloatS(double input);
+    static PGESTRING qStrS(PGESTRING input);
+    static PGESTRING hStrS(PGESTRING input);
+    static PGESTRING strArrayS(PGESTRINGList input);
+    static PGESTRING intArrayS(PGELIST<int > input);
+    static PGESTRING BoolArrayS(PGELIST<bool > input);
 
-    static QString X2STR(QString input);
-    static QStringList X2STRArr(QString src);
-    static QList<bool> X2BollArr(QString src);
+    static PGESTRING X2STR(PGESTRING input);
+    static PGESTRINGList X2STRArr(PGESTRING src);
+    static PGELIST<bool> X2BollArr(PGESTRING src);
 
-    static QString escapeStr(QString input);
-    static QString restoreStr(QString input);
-    static QString encodeEscape(QString input);
-    static QString decodeEscape(QString input);
+    static PGESTRING escapeStr(PGESTRING input);
+    static PGESTRING restoreStr(PGESTRING input);
+    static PGESTRING encodeEscape(PGESTRING input);
+    static PGESTRING decodeEscape(PGESTRING input);
 
-    static QString value(QString marker, QString data);
-    static QString removeQuotes(QString str);
+    static PGESTRING value(PGESTRING marker, PGESTRING data);
+    static PGESTRING removeQuotes(PGESTRING str);
 };
 
 

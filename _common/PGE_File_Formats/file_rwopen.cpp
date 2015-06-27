@@ -20,6 +20,7 @@
 #include <QDir>
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
+#include <QTranslator>
 #endif
 
 

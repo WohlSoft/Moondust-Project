@@ -19,24 +19,39 @@
 #ifndef FILE_STRLIST_H
 #define FILE_STRLIST_H
 
+#ifdef PGE_FILES_QT
+#include <QString>
 #include <QStringList>
+#define PGESTRING QString
+#define PGESTRINGList QStringList
+#else
+#include <vector>
+#include <string>
+#define PGESTRING std::string
+#define PGESTRINGList std::vector<std::string >
+#endif
 
+#ifdef PGE_FILES_QT
 class FileStringList:public QObject
 {
     Q_OBJECT
+#else
+class FileStringList
+{
+#endif
 
 public:
     FileStringList();
 
-    FileStringList(QString fileData);
+    FileStringList(PGESTRING fileData);
     ~FileStringList();
 
-    void addData(QString fileData);
-    QString readLine();
+    void addData(PGESTRING fileData);
+    PGESTRING readLine();
     bool isEOF();
     bool atEnd();
 private:
-    QStringList buffer;
+    PGESTRINGList buffer;
     long lineID;
 };
 

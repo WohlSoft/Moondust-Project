@@ -19,10 +19,7 @@
 #ifndef FILE_FORMATS_H
 #define FILE_FORMATS_H
 
-#include <QString>
-#include <QFile>
-#include <QTextStream>
-#include <QTextCodec>
+#include "pge_file_lib_globs.h"
 #include "lvl_filedata.h"
 #include "npc_filedata.h"
 #include "wld_filedata.h"
@@ -32,34 +29,39 @@
 #include <data_configs/obj_npc.h>
 #endif
 
-class FileFormats: public QObject
+#ifdef PGE_FILES_QT
+class FileFormats: PGE_FILES_INHERED
 {
     Q_OBJECT
+#else
+class FileFormats
+{
+#endif
 
 public:
     //File format read/write functions
 
 
-    static MetaData ReadNonSMBX64MetaData(QString RawData, QString filePath="");
-    static QString WriteNonSMBX64MetaData(MetaData metaData);
+    static MetaData ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePath="");
+    static PGESTRING WriteNonSMBX64MetaData(MetaData metaData);
 
     /******************************Level files***********************************/
-    static LevelData OpenLevelFile(QString filePath, bool silent=false); //!< Open supported level file via direct path
-    static LevelData OpenLevelFileHeader(QString filePath);
+    static LevelData OpenLevelFile(PGESTRING filePath, bool silent=false); //!< Open supported level file via direct path
+    static LevelData OpenLevelFileHeader(PGESTRING filePath);
 
-    static LevelData ReadLevelFile(QFile &inf); //!< Parse SMBX64 Level file by file stream
-    static LevelData ReadExtendedLevelFile(QFile &inf); //!< Parse PGE-X level file by file stream
+    static LevelData ReadLevelFile(PGEFILE &inf); //!< Parse SMBX64 Level file by file stream
+    static LevelData ReadExtendedLevelFile(PGEFILE &inf); //!< Parse PGE-X level file by file stream
     static LevelData dummyLvlDataArray(); //!< Generate empty level map
 
     // SMBX64 LVL File
-    static LevelData ReadSMBX64LvlFileHeader(QString filePath); //!< Read file header only
-    static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath="", bool sielent=false); //!< Parse SMBX1-SMBX64 level
-    static QString WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
+    static LevelData ReadSMBX64LvlFileHeader(PGESTRING filePath); //!< Read file header only
+    static LevelData ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath="", bool sielent=false); //!< Parse SMBX1-SMBX64 level
+    static PGESTRING WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
     // PGE Extended Level File
-    static LevelData ReadExtendedLvlFileHeader(QString filePath); //!< Read file header only
-    static LevelData ReadExtendedLvlFile(QString RawData, QString filePath="", bool sielent=false); //!< Parse PGE-X level file
-    static QString WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
+    static LevelData ReadExtendedLvlFileHeader(PGESTRING filePath); //!< Read file header only
+    static LevelData ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath="", bool sielent=false); //!< Parse PGE-X level file
+    static PGESTRING WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -74,22 +76,22 @@ public:
 
 
     /******************************World file***********************************/
-    static WorldData OpenWorldFile(QString filePath, bool silent=false);
-    static WorldData OpenWorldFileHeader(QString filePath);
+    static WorldData OpenWorldFile(PGESTRING filePath, bool silent=false);
+    static WorldData OpenWorldFileHeader(PGESTRING filePath);
 
-    static WorldData ReadWorldFile(QFile &inf); //!< Parse SMBX64 World file by file stream
-    static WorldData ReadExtendedWorldFile(QFile &inf); //!< Parse PGE-X World file by file stream
+    static WorldData ReadWorldFile(PGEFILE &inf); //!< Parse SMBX64 World file by file stream
+    static WorldData ReadExtendedWorldFile(PGEFILE &inf); //!< Parse PGE-X World file by file stream
     static WorldData dummyWldDataArray(); //!< Generate empty world map
 
     // SMBX64 WLD File
-    static WorldData ReadSMBX64WldFileHeader(QString filePath); //!< Read file header only
-    static WorldData ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent=false); //!< Parse SMBX1-SMBX64 world
-    static QString WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
+    static WorldData ReadSMBX64WldFileHeader(PGESTRING filePath); //!< Read file header only
+    static WorldData ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse SMBX1-SMBX64 world
+    static PGESTRING WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
 
     // PGE Extended World map File
-    static WorldData ReadExtendedWldFileHeader(QString filePath); //!< Read file header only
-    static WorldData ReadExtendedWldFile(QString RawData, QString filePath, bool sielent=false); //!< Parse PGE-X world file
-    static QString WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
+    static WorldData ReadExtendedWldFileHeader(PGESTRING filePath); //!< Read file header only
+    static WorldData ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse PGE-X world file
+    static PGESTRING WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
 
     //Wld Data
     static WorldTiles dummyWldTile();
@@ -99,9 +101,9 @@ public:
     static WorldMusic dummyWldMusic();
 
     /****************************Save of game file********************************/
-    static GamesaveData ReadSMBX64SavFile(QString RawData, QString filePath);  //!< Parse SMBX1-SMBX64 game save
-    static GamesaveData ReadExtendedSaveFile(QString RawData, QString filePath, bool sielent=false);  //!< Parse PGE-X game save
-    static QString      WriteExtendedSaveFile(GamesaveData &FileData);
+    static GamesaveData ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePath);  //!< Parse SMBX1-SMBX64 game save
+    static GamesaveData ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false);  //!< Parse PGE-X game save
+    static PGESTRING      WriteExtendedSaveFile(GamesaveData &FileData);
     static GamesaveData dummySaveDataArray();
 
     //Save Data
@@ -110,8 +112,8 @@ public:
 
     /******************************NPC.txt file***********************************/
     // SMBX64 NPC.TXT File
-    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
-    static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
+    static NPCConfigFile ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad=false); //read
+    static PGESTRING WriteNPCTxtFile(NPCConfigFile FileData);                //write
 
     static NPCConfigFile CreateEmpytNpcTXTArray();
     #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
@@ -119,10 +121,10 @@ public:
     #endif
 
     //common
-    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
-    static QString removeQuotes(QString str); // Remove quotes from begin and end
+    static void BadFileMsg(PGESTRING fileName_DATA, int str_count, PGESTRING line);
+    static PGESTRING removeQuotes(PGESTRING str); // Remove quotes from begin and end
 
-    static QString errorString; //!< String which contains info about last happened error
+    static PGESTRING errorString; //!< String which contains info about last happened error
 private:
     static bool silentMode;
 };

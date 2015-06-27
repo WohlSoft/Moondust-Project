@@ -71,7 +71,7 @@ namespace smbx64Format
 // /////////////Validators///////////////
 //returns TRUE on wrong data
 
-bool SMBX64::Int(QString in) // UNSIGNED INT
+bool SMBX64::uInt(QString in) // UNSIGNED INT
 {
     using namespace smbx64Format;
     return !isValid(in, uint_vc, uint_vc_len);
