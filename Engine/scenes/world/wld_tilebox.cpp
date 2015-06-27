@@ -18,6 +18,8 @@
 
 #include "wld_tilebox.h"
 
+#include <QStack>
+
 WorldNode::WorldNode()
 {
     x=0;

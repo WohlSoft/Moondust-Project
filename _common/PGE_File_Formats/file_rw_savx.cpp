@@ -20,15 +20,19 @@
 #include "file_strlist.h"
 #include "pge_x.h"
 
+#ifdef PGE_FILES_QT
+#include <QDir>
+#include <QFileInfo>
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
+#endif
 
-GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath, bool sielent)
+GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     GamesaveData FileData = dummySaveDataArray();
     PGEFile pgeX_Data( RawData );
-    QString line;
+    PGESTRING line;
 
     saveCharacterState plr_state;
     visibleItem        vz_item;
@@ -78,7 +82,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -86,7 +90,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -96,7 +100,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -189,7 +193,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -197,7 +201,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -208,7 +212,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -270,7 +274,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -278,7 +282,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -289,7 +293,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -311,7 +315,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -319,7 +323,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -331,7 +335,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -361,7 +365,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -369,7 +373,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -381,7 +385,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -411,7 +415,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -419,7 +423,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -431,7 +435,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -461,7 +465,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
+                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
                 goto badfile;
             }
 
@@ -469,7 +473,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
             {
                 if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
+                    errorString=PGESTRING("Wrong data item syntax:\nSection [%1]\nData line %2")
                             .arg(f_section.name)
                             .arg(sdata);
                     goto badfile;
@@ -481,7 +485,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                 for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                 {
                     PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
+                    errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
                             .arg(f_section.name)
                             .arg(sdata)
                             .arg(v.marker)
@@ -522,9 +526,9 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
 
 
 
-QString FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
+PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
 {
-    QString TextData;
+    PGESTRING TextData;
     long i;
 
     TextData += "SAVE_HEADER\n";

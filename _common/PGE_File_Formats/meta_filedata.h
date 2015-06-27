@@ -18,7 +18,7 @@
 #ifndef META_FILEDATA_H
 #define META_FILEDATA_H
 
-#include <QtCore>
+#include "pge_file_lib_globs.h"
 
 //Editor's headers shouldn't appears in the engine
 #ifdef PGE_EDITOR
@@ -27,9 +27,9 @@
 
 struct Bookmark
 {
-    QString bookmarkName;
-    qreal x;
-    qreal y;
+    PGESTRING bookmarkName;
+    double x;
+    double y;
 };
 
 class CrashData
@@ -42,14 +42,14 @@ public:
     bool used;
     bool untitled;
     bool modifyed;
-    QString fullPath;
-    QString path;
-    QString filename;
+    PGESTRING fullPath;
+    PGESTRING path;
+    PGESTRING filename;
 };
 
 struct MetaData
 {
-    QVector<Bookmark> bookmarks;
+    PGEVECTOR<Bookmark> bookmarks;
 
     //Crash backup of special data
     CrashData crash;

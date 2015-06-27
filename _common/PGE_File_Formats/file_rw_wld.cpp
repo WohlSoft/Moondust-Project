@@ -23,6 +23,7 @@
 #include "wld_filedata.h"
 #include "file_strlist.h"
 #include "smbx64.h"
+#include "smbx64_macro.h"
 
 #include <QtDebug>
 
@@ -30,7 +31,7 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-WorldData FileFormats::ReadWorldFile(QFile &inf)
+WorldData FileFormats::ReadWorldFile(PGEFILE &inf)
 {
     errorString.clear();
     QByteArray data;
@@ -137,46 +138,26 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
     //Enable strict mode for SMBX WLD file format
     FileData.smbx64strict = true;
 
-    str_count++;line = in.readLine();   //Read first Line
-    if( SMBX64::Int(line) ) //File format number
+    nextLine();   //Read first Line
+    if( SMBX64::uInt(line) ) //File format number
         goto badfile;
     else file_format=line.toInt();
 
-    str_count++;line = in.readLine();
+    nextLine();
     if( SMBX64::qStr(line) ) //Episode name
         goto badfile;
     else FileData.EpisodeTitle = removeQuotes(line);
 
-    if(file_format >= 55)
+    if(ge(55))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Mario
-            goto badfile;
-        else FileData.nocharacter1 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Luigi
-            goto badfile;
-        else FileData.nocharacter2 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Peach
-            goto badfile;
-        else FileData.nocharacter3 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Toad
-            goto badfile;
-        else FileData.nocharacter4 = SMBX64::wBoolR(line);
-
-        if(file_format >= 56)
+        nextLine(); wBoolVar(FileData.nocharacter1, line);//Edisode without Mario
+        nextLine(); wBoolVar(FileData.nocharacter2, line);//Edisode without Luigi
+        nextLine(); wBoolVar(FileData.nocharacter3, line);//Edisode without Peach
+        nextLine(); wBoolVar(FileData.nocharacter4, line);//Edisode without Toad
+        if(ge(56))
         {
-            str_count++;line = in.readLine();
-            if( SMBX64::wBool(line) ) //Edisode without Link
-                goto badfile;
-            else FileData.nocharacter5 = SMBX64::wBoolR(line);
+            nextLine(); wBoolVar(FileData.nocharacter5, line);//Edisode without Link
         }
-
         //Convert into the bool array
         FileData.nocharacter<<
              FileData.nocharacter1<<
@@ -186,58 +167,25 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
              FileData.nocharacter5;
     }
 
-    if(file_format >= 3)
+    if(ge(3))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Autostart level
-            goto badfile;
-        else FileData.IntroLevel_file = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Don't use world map on this episode
-            goto badfile;
-        else FileData.HubStyledWorld = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Restart level on playable character's death
-            goto badfile;
-        else FileData.restartlevel = SMBX64::wBoolR(line);
+        nextLine(); strVar(FileData.IntroLevel_file, line);//Autostart level
+        nextLine(); wBoolVar(FileData.HubStyledWorld,line);//Don't use world map on this episode
+        nextLine(); wBoolVar(FileData.restartlevel, line);//Restart level on playable character's death
     }
 
-    if(file_format >= 20)
+    if(ge(20))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //Stars number
-            goto badfile;
-        else FileData.stars = line.toInt();
+        nextLine(); UIntVar(FileData.stars, line);//Stars number
     }
 
     if(file_format >= 17)
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 1
-            goto badfile;
-        else FileData.author1 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 2
-            goto badfile;
-        else FileData.author2 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 3
-            goto badfile;
-        else FileData.author3 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 4
-            goto badfile;
-        else FileData.author4 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 5
-            goto badfile;
-        else FileData.author5 = removeQuotes(line);
+        nextLine(); strVar(FileData.author1, line); //Author 1
+        nextLine(); strVar(FileData.author2, line); //Author 2
+        nextLine(); strVar(FileData.author3, line); //Author 3
+        nextLine(); strVar(FileData.author4, line); //Author 4
+        nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
         FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
@@ -288,46 +236,21 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
     WorldLevels lvlitem;
     WorldMusic musicbox;
 
-    str_count++;line = in.readLine();   //Read first Line
-    if( SMBX64::Int(line) ) //File format number
-        goto badfile;
-    else file_format=line.toInt();
+    nextLine();   //Read first line
+    UIntVar(file_format, line);//File format number
 
-    str_count++;line = in.readLine();
-    if( SMBX64::qStr(line) ) //Episode name
-        goto badfile;
-    else FileData.EpisodeTitle = removeQuotes(line);
+    nextLine(); strVar(FileData.EpisodeTitle, line);
 
-    if(file_format >= 55)
+    if(ge(55))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Mario
-            goto badfile;
-        else FileData.nocharacter1 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Luigi
-            goto badfile;
-        else FileData.nocharacter2 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Peach
-            goto badfile;
-        else FileData.nocharacter3 = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Edisode without Toad
-            goto badfile;
-        else FileData.nocharacter4 = SMBX64::wBoolR(line);
-
-        if(file_format >= 56)
+        nextLine(); wBoolVar(FileData.nocharacter1, line);//Edisode without Mario
+        nextLine(); wBoolVar(FileData.nocharacter2, line);//Edisode without Luigi
+        nextLine(); wBoolVar(FileData.nocharacter3, line);//Edisode without Peach
+        nextLine(); wBoolVar(FileData.nocharacter4, line);//Edisode without Toad
+        if(ge(56))
         {
-            str_count++;line = in.readLine();
-            if( SMBX64::wBool(line) ) //Edisode without Link
-                goto badfile;
-            else FileData.nocharacter5 = SMBX64::wBoolR(line);
+            nextLine(); wBoolVar(FileData.nocharacter5, line);//Edisode without Link
         }
-
         //Convert into the bool array
         FileData.nocharacter<<
              FileData.nocharacter1<<
@@ -337,58 +260,25 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
              FileData.nocharacter5;
     }
 
-    if(file_format >= 3)
+    if(ge(3))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Autostart level
-            goto badfile;
-        else FileData.IntroLevel_file = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Don't use world map on this episode
-            goto badfile;
-        else FileData.HubStyledWorld = SMBX64::wBoolR(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::wBool(line) ) //Restart level on playable character's death
-            goto badfile;
-        else FileData.restartlevel = SMBX64::wBoolR(line);
+        nextLine(); strVar(FileData.IntroLevel_file, line);//Autostart level
+        nextLine(); wBoolVar(FileData.HubStyledWorld,line);//Don't use world map on this episode
+        nextLine(); wBoolVar(FileData.restartlevel, line);//Restart level on playable character's death
     }
 
-    if(file_format >= 20)
+    if(ge(20))
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //Stars number
-            goto badfile;
-        else FileData.stars = line.toInt();
+        nextLine(); UIntVar(FileData.stars, line);//Stars number
     }
 
     if(file_format >= 17)
     {
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 1
-            goto badfile;
-        else FileData.author1 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 2
-            goto badfile;
-        else FileData.author2 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 3
-            goto badfile;
-        else FileData.author3 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 4
-            goto badfile;
-        else FileData.author4 = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if( SMBX64::qStr(line) ) //Author 5
-            goto badfile;
-        else FileData.author5 = removeQuotes(line);
+        nextLine(); strVar(FileData.author1, line); //Author 1
+        nextLine(); strVar(FileData.author2, line); //Author 2
+        nextLine(); strVar(FileData.author3, line); //Author 3
+        nextLine(); strVar(FileData.author4, line); //Author 4
+        nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
         FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
@@ -400,51 +290,30 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
 
 
     ////////////Tiles Data//////////
-    str_count++;line = in.readLine();
+    nextLine();
     while(line!="\"next\"")
     {
         tile = dummyWldTile();
-        if(SMBX64::sInt(line)) //Tile x
-            goto badfile;
-        else tile.x = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Tile y
-            goto badfile;
-        else tile.y = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::Int(line)) //Tile ID
-            goto badfile;
-        else tile.id = line.toInt();
+                    SIntVar(tile.x,line);//Tile x
+        nextLine(); SIntVar(tile.y,line);//Tile y
+        nextLine(); UIntVar(tile.id,line);//Tile ID
 
         tile.array_id = FileData.tile_array_id;
         FileData.tile_array_id++;
         tile.index = FileData.tiles.size(); //Apply element index
 
         FileData.tiles.push_back(tile);
-
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     ////////////Scenery Data//////////
-    str_count++;line = in.readLine();
+    nextLine();
     while(line!="\"next\"")
     {
         scen = dummyWldScen();
-        if(SMBX64::sInt(line)) //Scenery x
-            goto badfile;
-        else scen.x = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Scenery y
-            goto badfile;
-        else scen.y = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::Int(line)) //Scenery ID
-            goto badfile;
-        else scen.id = line.toInt();
+                    SIntVar(scen.x,line);//Scenery x
+        nextLine(); SIntVar(scen.y,line);//Scenery y
+        nextLine(); UIntVar(scen.id,line);//Scenery ID
 
         scen.array_id = FileData.scene_array_id;
         FileData.scene_array_id++;
@@ -452,27 +321,17 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
 
         FileData.scenery.push_back(scen);
 
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     ////////////Paths Data//////////
-    str_count++;line = in.readLine();
+    nextLine();
     while(line!="\"next\"")
     {
         pathitem = dummyWldPath();
-        if(SMBX64::sInt(line)) //Path x
-            goto badfile;
-        else pathitem.x = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Path y
-            goto badfile;
-        else pathitem.y = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::Int(line)) //Path ID
-            goto badfile;
-        else pathitem.id = line.toInt();
+                    SIntVar(pathitem.x,line);//Path x
+        nextLine(); SIntVar(pathitem.y,line);//Path y
+        nextLine(); UIntVar(pathitem.id,line);//Path ID
 
         pathitem.array_id = FileData.path_array_id;
         FileData.path_array_id++;
@@ -480,98 +339,34 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
 
         FileData.paths.push_back(pathitem);
 
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     ////////////LevelBox Data//////////
-    str_count++;line = in.readLine();
+    nextLine();
     while(line!="\"next\"")
     {
         lvlitem = dummyWldLevel();
 
-        if(SMBX64::sInt(line)) //Level x
-            goto badfile;
-        else lvlitem.x = line.toInt();
+                    SIntVar(lvlitem.x,line);//Level x
+        nextLine(); SIntVar(lvlitem.y,line);//Level y
+        nextLine(); UIntVar(lvlitem.id,line);//Level ID
+        nextLine(); strVar(lvlitem.lvlfile, line);//Level file
+        nextLine(); strVar(lvlitem.title, line);//Level title
+        nextLine(); SIntVar(lvlitem.top_exit, line);//Top exit
+        nextLine(); SIntVar(lvlitem.left_exit, line);//Left exit
+        nextLine(); SIntVar(lvlitem.bottom_exit, line);//bottom exit
+        nextLine(); SIntVar(lvlitem.right_exit, line);//right exit
+        if(ge(4)) { nextLine(); UIntVar(lvlitem.entertowarp, line);}//Enter via Level's warp
 
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Level y
-            goto badfile;
-        else lvlitem.y = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::Int(line)) //Level ID
-            goto badfile;
-        else lvlitem.id = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::qStr(line)) //Level file
-            goto badfile;
-        else lvlitem.lvlfile = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if(SMBX64::qStr(line)) //Level title
-            goto badfile;
-        else lvlitem.title = removeQuotes(line);
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Top exit
-            goto badfile;
-        else lvlitem.top_exit = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //Left exit
-            goto badfile;
-        else lvlitem.left_exit = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //bottom exit
-            goto badfile;
-        else lvlitem.bottom_exit = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //right exit
-            goto badfile;
-        else lvlitem.right_exit = line.toInt();
-
-        if(file_format >= 4)
+        if(ge(22))
         {
-            str_count++;line = in.readLine();
-            if(SMBX64::Int(line)) //Enter via Level's warp
-                goto badfile;
-            else lvlitem.entertowarp = line.toInt();
-        }
-
-        if(file_format >= 22)
-        {
-            str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //Always Visible
-                goto badfile;
-            else lvlitem.alwaysVisible = SMBX64::wBoolR(line);
-
-            str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //Path background
-                goto badfile;
-            else lvlitem.pathbg = SMBX64::wBoolR(line);
-
-            str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //Game start point
-                goto badfile;
-            else lvlitem.gamestart = SMBX64::wBoolR(line);
-
-            str_count++;line = in.readLine();
-            if(SMBX64::sInt(line)) //Goto x on World map
-                goto badfile;
-            else lvlitem.gotox = line.toInt();
-
-            str_count++;line = in.readLine();
-            if(SMBX64::sInt(line)) //Goto y on World map
-                goto badfile;
-            else lvlitem.gotoy = line.toInt();
-
-            str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //Big Path background
-                goto badfile;
-            else lvlitem.bigpathbg = SMBX64::wBoolR(line);
+            nextLine(); wBoolVar(lvlitem.alwaysVisible, line);//Always Visible
+            nextLine(); wBoolVar(lvlitem.pathbg, line);//Path background
+            nextLine(); wBoolVar(lvlitem.gamestart, line);//Game start point
+            nextLine(); SIntVar(lvlitem.gotox, line);//Goto x on World map
+            nextLine(); SIntVar(lvlitem.gotoy, line);//Goto y on World map
+            nextLine(); wBoolVar(lvlitem.bigpathbg, line);//Big Path background
         }
         else
         {
@@ -586,27 +381,17 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
 
         FileData.levels.push_back(lvlitem);
 
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     ////////////MusicBox Data//////////
-    str_count++;line = in.readLine();
+    nextLine();
     while(line!="\"next\"")
     {
         musicbox = dummyWldMusic();
-        if(SMBX64::sInt(line)) //MusicBox x
-            goto badfile;
-        else musicbox.x = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::sInt(line)) //MusicBox y
-            goto badfile;
-        else musicbox.y = line.toInt();
-
-        str_count++;line = in.readLine();
-        if(SMBX64::Int(line)) //MusicBox ID
-            goto badfile;
-        else musicbox.id = line.toInt();
+                    SIntVar(musicbox.x,line);//MusicBox x
+        nextLine(); SIntVar(musicbox.y,line);//MusicBox y
+        nextLine(); UIntVar(musicbox.id,line);//MusicBox ID
 
         musicbox.array_id = FileData.musicbox_array_id;
         FileData.musicbox_array_id++;
@@ -614,11 +399,11 @@ WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool
 
         FileData.music.push_back(musicbox);
 
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
 
-    str_count++;line = in.readLine(); // Read last line
+    nextLine(); // Read last line
 
     if((line!="")&&(!line.isNull()))
         goto badfile;

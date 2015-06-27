@@ -22,27 +22,36 @@
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "smbx64.h"
+#include "smbx64_macro.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-LevelData FileFormats::ReadLevelFile(QFile &inf)
+LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
 {
     errorString.clear();
-    QByteArray data;
 
+    QByteArray data;
     data = inf.read(7);
     if( (data.size()==0) || (data.size()<7))
     {
         LevelData FileData = dummyLvlDataArray();
         if(data.size()==0)
         BadFileMsg(inf.fileName()+
-            QString("\nFile is empty! (size of file is 0 bytes)"),
+            PGESTRING("\nFile is empty! (size of file is 0 bytes)"),
                    0, "<FILE IS EMPTY>");
         else
+        #ifdef PGE_FILES_QT
         BadFileMsg(inf.fileName()+
-            QString("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
+            PGESTRING("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
                    0, "<FILE IS TOO SMALL>");
+        #else
+        {
+            std::ostringstream badFileMsgText;
+            badFileMsgText <<"\nFile is too small! (size of file is " << data.size() <<  "bytes)";
+            BadFileMsg(inf.fileName()+ badFileMsgText.str(), 0, "<FILE IS TOO SMALL>");
+        }
+        #endif
         FileData.ReadFileValid=false;
         return FileData;
     }
@@ -73,7 +82,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
 }
 
-LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
+LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     LevelData FileData;
@@ -85,7 +94,7 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
         FileData.ReadFileValid=false;
         return FileData;
     }
-    QString line;
+    PGESTRING line;
     int str_count=0; Q_UNUSED(str_count);
     int file_format=0;
     QFileInfo in_1(filePath);
@@ -102,7 +111,7 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
     /*****************Macroses*end*************************/
 
     nextLine();   //Read first line
-    if( SMBX64::Int(line) ) //File format number
+    if( SMBX64::uInt(line) ) //File format number
         goto badfile;
 
     else file_format=line.toInt();
@@ -110,7 +119,7 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(QString filePath)
     if(file_format >= 17)
     {
         nextLine();   //Read second Line
-        if( SMBX64::Int(line) ) //File format number
+        if( SMBX64::uInt(line) ) //File format number
             goto badfile;
         else FileData.stars=line.toInt();   //Number of stars
     } else FileData.stars=0;
@@ -134,7 +143,7 @@ badfile:
     return FileData;
 }
 
-LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool sielent)
+LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     errorString.clear();
     FileStringList in;
@@ -143,7 +152,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
     int str_count=0;        //Line Counter
     int i;                  //counters
     int file_format=0;        //File format number
-    QString line;           //Current Line data
+    PGESTRING line;           //Current Line data
     LevelData FileData;
         FileData.LevelName="";
         FileData.stars=0;
@@ -186,40 +195,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
     #ifdef PGE_EDITOR
     FileData.metaData.script = NULL; //set NULL to pointers in the Meta
     #endif
-
-    /*****************Macroses*****************************/
-    #define nextLine() str_count++;line = in.readLine();
-    #define parseLine(validate, target, converted) if( validate ) \
-                                                    goto badfile;\
-                                                     else target=converted;
-
-    //ValueTypes
-    #define strVar(target, line) parseLine( SMBX64::qStr(line), target, SMBX64::StrToStr(line))
-    #define UIntVar(target, line) parseLine( SMBX64::Int(line), target, line.toInt())
-    #define SIntVar(target, line) parseLine( SMBX64::sInt(line), target, line.toInt())
-    #define wBoolVar(target, line) parseLine( SMBX64::wBool(line), target, SMBX64::wBoolR(line))
-    #define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, line.replace(QChar(','), QChar('.')).toFloat());
-
-    #define strVarMultiLine(target, line) {\
-    bool first=true;\
-    while( (first && (line.size()==1)&&(line=="\""))||(!line.endsWith('\"')))\
-    {\
-        first=false;\
-        line.append('\n');\
-        str_count++;line.append(in.readLine());\
-        if(line.endsWith('\"'))\
-            break;\
-    }\
-    strVar(target, line);\
-    }
-
-    //Version comparison
-    #define ge(v) file_format>=v
-    #define gt(v) file_format>v
-    #define le(v) file_format<=v
-    #define lt(v) file_format<v
-    /*****************Macroses*end*************************/
-
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     nextLine();   //Read first line
@@ -737,7 +712,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
 
     badfile:    //If file format is not correct
     if(!sielent)
-        BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
+        BadFileMsg(filePath+"\nFile format "+PGESTRING::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -754,9 +729,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath, bool
 //*********************************************************
 
 
-QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
+PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 {
-    QString TextData;
+    PGESTRING TextData;
     int i, j;
 
     //Count placed stars on this level
@@ -784,7 +759,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
     if(file_format < 8)
         s_limit=6;
-    qDebug() << "sections "<<s_limit << "format "<<file_format ;
+    //qDebug() << "sections "<<s_limit << "format "<<file_format ;
 
     //Sections settings
     for(i=0; (i<s_limit)&&(i<FileData.sections.size()) ; i++)
@@ -818,7 +793,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     }
         //append dummy section data, if array size is less than 21
 
-    qDebug() << "i="<< i;
+    //qDebug() << "i="<< i;
 
     //Players start point
     int playerpoints=0;

@@ -16,14 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef PGE_FILES_QT
 #include <QMutex>
 #include <QMutexLocker>
+#endif
 
 #include "pge_x.h"
 #include "file_strlist.h"
 
 namespace PGEExtendedFormat
 {
+    #ifdef PGE_FILES_QT
     QMutex locker;
     QRegExp section_title = QRegExp("^[A-Z0-9_]*$");
     QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
@@ -40,6 +43,7 @@ namespace PGEExtendedFormat
     //Arrays
     QRegExp boolArray = QRegExp("^[1|0]+$");
     QRegExp intArray = QRegExp("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
+    #endif
 
     const char *section_title_valid_chars    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
     const int   section_title_valid_chars_len= 38;
@@ -76,16 +80,24 @@ namespace PGEExtendedFormat
     }
 }
 
+
+#ifdef PGE_FILES_QT
 PGEFile::PGEFile(QObject *parent)
     : QObject(parent)
+#else
+PGEFile::PGEFile()
+#endif
 {
     _lastError = "";
     rawData = "";
 }
 
-
+#ifdef PGE_FILES_QT
 PGEFile::PGEFile(PGEFile &pgeFile, QObject *parent)
     : QObject(parent)
+#else
+PGEFile::PGEFile(PGEFile &pgeFile)
+#endif
 {
     rawData = pgeFile.rawData;
     rawDataTree = pgeFile.rawDataTree;

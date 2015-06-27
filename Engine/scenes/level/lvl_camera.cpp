@@ -26,9 +26,10 @@
 #include <audio/SdlMusPlayer.h>
 #include <graphics/gl_renderer.h>
 
-#include <QtDebug>
-
 #include "lvl_scene_ptr.h"
+
+#include <QtDebug>
+#include <QStack>
 
 PGE_LevelCamera::PGE_LevelCamera()
 {

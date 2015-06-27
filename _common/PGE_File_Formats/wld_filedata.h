@@ -19,9 +19,7 @@
 #ifndef WLD_FILEDATA_H
 #define WLD_FILEDATA_H
 
-#include <QString>
-#include <QVector>
-
+#include "pge_file_lib_globs.h"
 #include "meta_filedata.h"
 
 //////////////////////World file Data//////////////////////
@@ -63,8 +61,8 @@ struct WorldLevels
     long x;
     long y;
     unsigned long id;
-    QString lvlfile;
-    QString title;
+    PGESTRING lvlfile;
+    PGESTRING title;
     int top_exit;
     int left_exit;
     int bottom_exit;
@@ -87,7 +85,7 @@ struct WorldMusic
     long x;
     long y;
     unsigned long id;
-    QString music_file;
+    PGESTRING music_file;
 
     //editing
     unsigned int array_id;
@@ -98,37 +96,37 @@ struct WorldData
 {
     bool ReadFileValid;
 
-    QString EpisodeTitle;
+    PGESTRING EpisodeTitle;
     bool nocharacter1;
     bool nocharacter2;
     bool nocharacter3;
     bool nocharacter4;
     bool nocharacter5;
 
-    QList<bool > nocharacter;
+    PGELIST<bool > nocharacter;
 
-    QString IntroLevel_file;
+    PGESTRING IntroLevel_file;
     bool HubStyledWorld;
     bool restartlevel;
 
     unsigned int stars;
 
-    QString authors;
-    QString author1;
-    QString author2;
-    QString author3;
-    QString author4;
-    QString author5;
+    PGESTRING authors;
+    PGESTRING author1;
+    PGESTRING author2;
+    PGESTRING author3;
+    PGESTRING author4;
+    PGESTRING author5;
 
-    QList<WorldTiles > tiles;
+    PGELIST<WorldTiles > tiles;
     unsigned int tile_array_id;
-    QList<WorldScenery > scenery;
+    PGELIST<WorldScenery > scenery;
     unsigned int scene_array_id;
-    QList<WorldPaths > paths;
+    PGELIST<WorldPaths > paths;
     unsigned int path_array_id;
-    QList<WorldLevels > levels;
+    PGELIST<WorldLevels > levels;
     unsigned int level_array_id;
-    QList<WorldMusic > music;
+    PGELIST<WorldMusic > music;
     unsigned int musicbox_array_id;
 
     //meta:
@@ -141,8 +139,8 @@ struct WorldData
     bool modified;
     bool untitled;
     bool smbx64strict;
-    QString filename;
-    QString path;
+    PGESTRING filename;
+    PGESTRING path;
 
 };
 
