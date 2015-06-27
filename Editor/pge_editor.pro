@@ -588,6 +588,7 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/meta_filedata.h \
     ../_common/PGE_File_Formats/npc_filedata.h \
     ../_common/PGE_File_Formats/pge_x.h \
+    ../_common/PGE_File_Formats/pge_x_macro.h \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
     ../_common/PGE_File_Formats/smbx64_macro.h \
