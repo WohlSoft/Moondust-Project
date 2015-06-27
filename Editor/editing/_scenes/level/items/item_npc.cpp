@@ -395,7 +395,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             LevelData selData;
 
-            ItemMsgBox msgBox(npcData.msg);
+            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg);
             util::DialogToCenter(&msgBox, true);
             if(msgBox.exec()==QDialog::Accepted)
             {

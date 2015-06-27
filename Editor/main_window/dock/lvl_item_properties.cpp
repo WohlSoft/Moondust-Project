@@ -1653,9 +1653,11 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
     //modText.push_back(QVariant(npcData.msg));
 
     QString message;
+    bool friendly = false;
     if(npcPtr<0)
     {
         message = LvlPlacingItems::npcSet.msg;
+        friendly = LvlPlacingItems::npcSet.friendly;
     }
     else
     if (mw()->activeChildWindow()==1)
@@ -1665,12 +1667,13 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         {
             if(SelItem->data(ITEM_TYPE).toString()=="NPC")
             {
-                message = ((ItemNPC *) SelItem)->npcData.msg; break;
+                message = ((ItemNPC *) SelItem)->npcData.msg;
+                friendly = ((ItemNPC *) SelItem)->npcData.friendly; break;
             }
         }
     }
 
-    ItemMsgBox * msgBox = new ItemMsgBox(message);
+    ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly);
     util::DialogToCenter(msgBox, true);
 
     if(msgBox->exec()==QDialog::Accepted)
@@ -1679,6 +1682,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         if(npcPtr<1)
         {
             LvlPlacingItems::npcSet.msg = msgBox->currentText;
+            LvlPlacingItems::npcSet.friendly = msgBox->isFriendlyChecked();
         }
         else
         if (mw()->activeChildWindow()==1)
@@ -1690,9 +1694,11 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC"){
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                     ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
+                    ((ItemNPC *) SelItem)->setFriendly( msgBox->isFriendlyChecked() );
                 }
             }
             mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox->currentText));
+            mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(msgBox->isFriendlyChecked()));
         }
 
         QString npcmsg = (msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText);
@@ -1702,6 +1708,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             npcmsg.push_back("...");
         }
         ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
+        ui->PROPS_NpcFri->setChecked( msgBox->isFriendlyChecked() );
     }
     delete msgBox;
 

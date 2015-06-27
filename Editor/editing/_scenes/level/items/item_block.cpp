@@ -313,7 +313,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 goto typeEventAgain;
             if(ok)
             {
-                ItemMsgBox msgBox("", tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
+                ItemMsgBox msgBox(Opened_By::BLOCK, "", false, tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
                 util::DialogToCenter(&msgBox, true);
                 if(msgBox.exec()==QDialog::Accepted)
                 {
