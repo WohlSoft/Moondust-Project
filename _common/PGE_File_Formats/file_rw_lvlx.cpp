@@ -20,6 +20,7 @@
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "pge_x.h"
+#include "pge_x_macro.h"
 
 #ifdef PGE_EDITOR
 #include <script/commands/memorycommand.h>
@@ -27,22 +28,6 @@
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
-
-
-#define ValidateSection(stype) if(f_section.type!=stype) \
-{ \
-    errorString=PGESTRING("Wrong section data syntax:\nSection ["+f_section.name+"]");\
-    goto badfile;\
-}
-
-#define ValidateItem(stype) if(f_section.data[sdata].type!=stype) \
-{ \
-    errorString=PGESTRING("Wrong data item syntax:\nSection ["+f_section.name+"]\nData line "+fromNum(sdata));\
-    goto badfile;\
-}
-#define ValueErrorNodify() errorString=PGESTRING("Wrong value syntax\nSection ["+f_section.name+ \
-"]\nData line "+fromNum(sdata) \
-+"\nMarker "+v.marker+"\nValue "+v.value);
 
 
 //*********************************************************
@@ -160,12 +145,8 @@ badfile:
 LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     errorString.clear();
-    FileStringList in;
-    in.addData( RawData );
+    PGEX_FileBegin();
 
-    int str_count=0;        //Line Counter
-
-    PGESTRING line;           //Current Line data
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
@@ -197,18 +178,14 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     LevelSMBX64Event event;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    PGEFile pgeX_Data(RawData);
-    if( !pgeX_Data.buildTreeFromRaw() )
-    {
-        errorString = pgeX_Data.lastError();
-        goto badfile;
-    }
+    PGEX_FileParseTree(RawData);
 
-    for(int section=0; section<(signed)pgeX_Data.dataTree.size(); section++) //look sections
+    PGEX_FetchSection() //look sections
     {
-        PGEFile::PGEX_Entry &f_section = pgeX_Data.dataTree[section];
+        PGEX_FetchSection_begin()
+
         ///////////////////JOKES//////////////////////
-        if(f_section.name=="JOKES")
+        PGEX_Section("JOKES")
         {
             #ifdef PGE_FILES_USE_MESSAGEBOXES
             if((!silentMode) && (!f_section.data.isEmpty()))
@@ -218,155 +195,75 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                             QMessageBox::Ok);
             #endif
         }//jokes
-        else ///////////////////HEADER//////////////////////
-        if(f_section.name=="HEAD")
+
+        ///////////////////HEADER//////////////////////
+        PGEX_Section("HEAD")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
-
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
-
-                    if(v.marker=="TL") //Level Title
-                    {
-                        if(PGEFile::IsQStr(v.value))
-                            FileData.LevelName = PGEFile::X2STR(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="SZ") //Starz number
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.stars = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_StrVal("TL", FileData.LevelName) //Level Title
+                    PGEX_UIntVal("SZ", FileData.stars) //Starz number
                 }
             }
         }//HEADER
+
         ///////////////////////////////MetaDATA/////////////////////////////////////////////
-        else
-        if(f_section.name=="META_BOOKMARKS")
+        PGEX_Section("META_BOOKMARKS")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                 Bookmark meta_bookmark;
                 meta_bookmark.bookmarkName = "";
                 meta_bookmark.x = 0;
                 meta_bookmark.y = 0;
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
-
-                      if(v.marker=="BM") //Bookmark name
-                      {
-                          if(PGEFile::IsQStr(v.value))
-                              meta_bookmark.bookmarkName = PGEFile::X2STR(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="X") // Position X
-                      {
-                          if(PGEFile::IsIntS(v.value))
-                              meta_bookmark.x = toInt(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="Y") //Position Y
-                      {
-                          if(PGEFile::IsIntS(v.value))
-                              meta_bookmark.y = toInt(v.value);
-                          else
-                              goto badfile;
-                      }
+                    PGEX_ValueBegin()
+                    PGEX_StrVal("BM", meta_bookmark.bookmarkName) //Bookmark name
+                    PGEX_SIntVal("X", meta_bookmark.x) // Position X
+                    PGEX_SIntVal("Y", meta_bookmark.y) // Position Y
                 }
                 FileData.metaData.bookmarks.push_back(meta_bookmark);
             }
-        }//meta bookmarks
+        }
 
-        else
-        if(f_section.name=="META_SYS_CRASH")
+        ////////////////////////meta bookmarks////////////////////////
+        PGEX_Section("META_SYS_CRASH")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                      PGEFile::PGEX_Val v = x.values[sval];
-                      ValueErrorNodify();
+                    FileData.metaData.crash.used=true;
 
-                      FileData.metaData.crash.used=true;
-
-                      if(v.marker=="UT") //Untitled
-                      {
-                          if(PGEFile::IsBool(v.value))
-                              FileData.metaData.crash.untitled = (bool)toInt(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="MD") //Modyfied
-                      {
-                          if(PGEFile::IsBool(v.value))
-                              FileData.metaData.crash.modifyed = (bool)toInt(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="N") //Filename
-                      {
-                          if(PGEFile::IsQStr(v.value))
-                              FileData.metaData.crash.filename = PGEFile::X2STR(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="P") //Path
-                      {
-                          if(PGEFile::IsQStr(v.value))
-                              FileData.metaData.crash.path = PGEFile::X2STR(v.value);
-                          else
-                              goto badfile;
-                      }
-                      else
-                      if(v.marker=="FP") //Full file Path
-                      {
-                          if(PGEFile::IsQStr(v.value))
-                              FileData.metaData.crash.fullPath = PGEFile::X2STR(v.value);
-                          else
-                              goto badfile;
-                      }
+                    PGEX_ValueBegin()
+                    PGEX_BoolVal("UT", FileData.metaData.crash.untitled) //Untitled
+                    PGEX_BoolVal("MD", FileData.metaData.crash.modifyed) //Modyfied
+                    PGEX_StrVal ("N",  FileData.metaData.crash.filename) //Filename
+                    PGEX_StrVal ("P",  FileData.metaData.crash.path) //Path
+                    PGEX_StrVal ("FP", FileData.metaData.crash.fullPath) //Full file Path
                 }
             }
         }//meta sys crash
+
         #ifdef PGE_EDITOR
-        else
-        if(f_section.name=="META_SCRIPT_EVENTS")
+        PGEX_Section("META_SCRIPT_EVENTS")
         {
-            if(f_section.type!=PGEFile::PGEX_Struct)
-            {
-                errorString=PGESTRING("Wrong section data syntax:\nSection [%1]").
-                            arg(f_section.name);
-                goto badfile;
-            }
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
             if(f_section.subTree.size()>0)
             {
@@ -404,13 +301,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                         //Get values
                         for(int sval=0;sval<x.values.size();sval++) //Look markers and values
                         {
-                            PGEFile::PGEX_Val v = x.values[sval];
-                            errorString=PGESTRING("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                                    .arg(f_section.name)
-                                    .arg(sdata)
-                                    .arg(v.marker)
-                                    .arg(v.value);
-
+                            PGEX_ValueBegin()
                             if(v.marker=="TL") //Marker
                             {
                                 if(PGEFile::IsQStr(v.value))
@@ -464,57 +355,15 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                                     double vf=0.0;
 
                                     //Get values
-                                    for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                                    PGEX_Values() //Look markers and values
                                     {
-                                        PGEFile::PGEX_Val v = x.values[sval];
-                                        errorString=PGESTRING("Wrong value syntax\nSubtree [%1]\nData line %2\nMarker %3\nValue %4")
-                                                .arg(f_section.subTree[subtree2].name)
-                                                .arg(sdata)
-                                                .arg(v.marker)
-                                                .arg(v.value);
-
-                                        if(v.marker=="N") //Command name
-                                        {
-                                            if(PGEFile::IsQStr(v.value))
-                                                name = PGEFile::X2STR(v.value);
-                                            else
-                                                goto badfile;
-                                        }
-                                        else
-                                        if(v.marker=="CT") //Command type
-                                        {
-                                            if(PGEFile::IsQStr(v.value))
-                                                commandType = PGEFile::X2STR(v.value);
-                                            else
-                                                goto badfile;
-                                        }
-
-
+                                        PGEX_ValueBegin()
+                                        PGEX_StrVal("N", name) //Command name
+                                        PGEX_StrVal("CT", commandType) //Command type
                                         //MemoryCommand specific values
-                                        else
-                                        if(v.marker=="HX") //Heximal value
-                                        {
-                                            if(PGEFile::IsIntS(v.value))
-                                                hx = toInt(v.value);
-                                            else
-                                                goto badfile;
-                                        }
-                                        else
-                                        if(v.marker=="FT") //Field type
-                                        {
-                                            if(PGEFile::IsIntS(v.value))
-                                                ft = toInt(v.value);
-                                            else
-                                                goto badfile;
-                                        }
-                                        else
-                                        if(v.marker=="V") //Value
-                                        {
-                                            if(PGEFile::IsFloat(v.value))
-                                                vf = v.value.toDouble();
-                                            else
-                                                goto badfile;
-                                        }
+                                        PGEX_SIntVal("HX", hx) //Heximal value
+                                        PGEX_SIntVal("FT", ft) //Field type
+                                        PGEX_FloatVal("V", vf) //Value
                                     }
 
                                     if(commandType=="MEMORY")
@@ -537,124 +386,35 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
         #endif
         ///////////////////////////////MetaDATA//End////////////////////////////////////////
 
-        else ///////////////////SECTION//////////////////////
-        if(f_section.name=="SECTION")
+        ///////////////////SECTION//////////////////////
+        PGEX_Section("SECTION")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 lvl_section = dummyLvlSection();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
-                    if(v.marker=="SC") //Section ID
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            lvl_section.id = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="L") //Left side
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                        {
-                            lvl_section.size_left= toInt(v.value);
-                            lvl_section.PositionX=toInt(v.value)-10;
-                        }
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="R")//Right side
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            lvl_section.size_right= toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="T") //Top side
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                        {
-                            lvl_section.size_top= toInt(v.value);
-                            lvl_section.PositionY=toInt(v.value)-10;
-                        }
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="B")//Bottom side
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            lvl_section.size_bottom= toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MZ")//Stuff music ID
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            lvl_section.music_id= toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="BG")//Stuff music ID
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            lvl_section.background= toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MF")//External music file path
-                    {
-                        if(PGEFile::IsQStr(v.value))
-                            lvl_section.music_file=PGEFile::X2STR(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="CS")//Connect sides
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            lvl_section.IsWarp=(bool)toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="OE")//Offscreen exit
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            lvl_section.OffScreenEn=(bool)toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="SR")//Right-way scroll only (No Turn-back)
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            lvl_section.noback=(bool)toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="UW")//Underwater bit
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            lvl_section.underwater=(bool)toInt(v.value);
-                        else
-                            goto badfile;
-                    }
+                    PGEX_UIntVal("SC", lvl_section.id) //Section ID
+                    PGEX_SIntVal("L", lvl_section.size_left) //Left side
+                    PGEX_SIntVal("R", lvl_section.size_right)//Right side
+                    PGEX_SIntVal("T", lvl_section.size_top) //Top side
+                    PGEX_SIntVal("B", lvl_section.size_bottom)//Bottom side
+                    PGEX_UIntVal("MZ", lvl_section.music_id)//Stuff music ID
+                    PGEX_UIntVal("BG", lvl_section.background)//Stuff music ID
+                    PGEX_StrVal("MF", lvl_section.music_file)//External music file path
+                    PGEX_BoolVal("CS", lvl_section.IsWarp)//Connect sides
+                    PGEX_BoolVal("OE", lvl_section.OffScreenEn)//Offscreen exit
+                    PGEX_BoolVal("SR", lvl_section.noback)//Right-way scroll only (No Turn-back)
+                    PGEX_BoolVal("UW", lvl_section.underwater)//Underwater bit
                 }
+                lvl_section.PositionX=lvl_section.size_left-10;
+                lvl_section.PositionY=lvl_section.size_top-10;
 
                 //add captured value into array
                 bool found=false;
@@ -684,53 +444,26 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 }
             }
         }//SECTION
-        else ///////////////////STARTPOINT//////////////////////
-        if(f_section.name=="STARTPOINT")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+
+
+        ///////////////////STARTPOINT//////////////////////
+        PGEX_Section("STARTPOINT")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 player = dummyLvlPlayerPoint();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
-
-                    if(v.marker=="ID") //ID of player point
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            player.id = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="X")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            player.x = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="Y")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            player.y = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="D")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            player.direction = toInt(v.value);
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", player.id) //ID of player point
+                    PGEX_SIntVal("X", player.x)
+                    PGEX_SIntVal("Y", player.y)
+                    PGEX_SIntVal("D", player.direction)
                 }
 
                 //add captured value into array
@@ -751,21 +484,21 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     FileData.players.push_back(player);
             }
         }//STARTPOINT
-        else ///////////////////BLOCK//////////////////////
-        if(f_section.name=="BLOCK")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+
+        ///////////////////BLOCK//////////////////////
+        PGEX_Section("BLOCK")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 block = dummyLvlBlock();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="ID") //Block ID
                     {
@@ -869,21 +602,21 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 FileData.blocks.push_back(block);
             }
         }//BLOCK
-        else ///////////////////BGO//////////////////////
-        if(f_section.name=="BGO")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+
+        ///////////////////BGO//////////////////////
+        PGEX_Section("BGO")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 bgodata = dummyLvlBgo();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="ID") //BGO ID
                     {
@@ -947,21 +680,21 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 FileData.bgo.push_back(bgodata);
             }
         }//BGO
-        else ///////////////////NPC//////////////////////
-        if(f_section.name=="NPC")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+
+        ///////////////////NPC//////////////////////
+        PGEX_Section("NPC")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 npcdata = dummyLvlNpc();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="ID") //NPC ID
                     {
@@ -1129,21 +862,20 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 FileData.npc.push_back(npcdata);
             }
         }//TILES
-        else ///////////////////PHYSICS//////////////////////
-        if(f_section.name=="PHYSICS")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+        ///////////////////PHYSICS//////////////////////
+        PGEX_Section("PHYSICS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 physiczone = dummyLvlPhysEnv();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="ET") //Environment type
                     {
@@ -1199,21 +931,20 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 FileData.physez.push_back(physiczone);
             }
         }//PHYSICS
-        else ///////////////////DOORS//////////////////////
-        if(f_section.name=="DOORS")
-        {
-            ValidateSection(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+        ///////////////////DOORS//////////////////////
+        PGEX_Section("DOORS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 door = dummyLvlDoor();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="IX") //Input point
                     {
@@ -1369,21 +1100,17 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             }
         }//DOORS
 
-        else ///////////////////LAYERS//////////////////////
-        if(f_section.name=="LAYERS")
+        ///////////////////LAYERS//////////////////////
+        PGEX_Section("LAYERS")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
-                layer = dummyLvlLayer();
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
-
+                    PGEX_ValueBegin()
                     if(v.marker=="LR") //Layer name
                     {
                         if(PGEFile::IsQStr(v.value))
@@ -1453,21 +1180,19 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
 //                    }
 //                }//EVENTS
 
-        else ///////////////////EVENTS_CLASSIC//////////////////////
-        if(f_section.name=="EVENTS_CLASSIC")
+        ///////////////////EVENTS_CLASSIC//////////////////////
+        PGEX_Section("EVENTS_CLASSIC")
         {
-            ValidateSection(PGEFile::PGEX_Struct);
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
-            for(int sdata=0;sdata<(signed)f_section.data.size();sdata++)
+            PGEX_Items()
             {
-                ValidateItem(PGEFile::PGEX_Struct);
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 event = dummyLvlEvent();
 
-                for(int sval=0;sval<(signed)x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    ValueErrorNodify();
+                    PGEX_ValueBegin()
 
                     if(v.marker=="ET") //Event Title
                     {
