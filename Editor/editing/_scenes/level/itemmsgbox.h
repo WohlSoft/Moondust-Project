@@ -25,14 +25,19 @@ namespace Ui {
 class ItemMsgBox;
 }
 
+enum Opened_By { NPC, EVENT, BLOCK };
+
 class ItemMsgBox : public QDialog
 {
     Q_OBJECT
 
 public:
+    Opened_By whoOpened;
     QString currentText;
-    explicit ItemMsgBox(QString text="", QString label="", QString title="", QWidget *parent = 0);
+    explicit ItemMsgBox(Opened_By openedBy, QString text="", bool isFriendly=false, QString label="", QString title="", QWidget *parent = 0);
     ~ItemMsgBox();
+
+    bool isFriendlyChecked();
 
 private slots:
     void on_buttonBox_accepted();
