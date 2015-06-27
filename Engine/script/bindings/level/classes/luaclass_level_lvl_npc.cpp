@@ -50,6 +50,10 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             //Properties
             .property("id", &LVL_Npc::getID)
+            .property("special1", &LVL_Npc::special1)
+            .property("special2", &LVL_Npc::special2)
+            .property("isBoss", &LVL_Npc::isBoss)
+
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
 
             //States
