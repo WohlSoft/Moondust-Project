@@ -94,9 +94,9 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
         FileData.ReadFileValid=false;
         return FileData;
     }
-    PGESTRING line;
-    int str_count=0; Q_UNUSED(str_count);
-    int file_format=0;
+
+    SMBX64_FileBegin();
+
     QFileInfo in_1(filePath);
     FileData.filename = in_1.baseName();
     FileData.path = in_1.absoluteDir().absolutePath();
@@ -146,13 +146,9 @@ badfile:
 LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     errorString.clear();
-    FileStringList in;
-    in.addData( RawData );
+    SMBX64_File( RawData );
 
-    int str_count=0;        //Line Counter
     int i;                  //counters
-    int file_format=0;        //File format number
-    PGESTRING line;           //Current Line data
     LevelData FileData;
         FileData.LevelName="";
         FileData.stars=0;
