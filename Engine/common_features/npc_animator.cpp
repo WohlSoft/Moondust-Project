@@ -59,7 +59,7 @@ void AdvNpcAnimator::construct(PGE_Texture &sprite, obj_npc &config)
 
     animated = true;
     framesQ = setup.frames;
-    frameSpeed = setup.framespeed;
+    _frameSpeed = setup.framespeed;
     frameStyle = setup.framestyle;
     frameStep = 1;
 
@@ -301,10 +301,15 @@ void AdvNpcAnimator::setFrameR(int y)
     CurrentFrameR = y;
 }
 
+int AdvNpcAnimator::frameSpeed()
+{
+    return _frameSpeed;
+}
+
 void AdvNpcAnimator::setFrameSpeed(int ms)
 {
     if(ms<=0) return;
-    frameSpeed=ms;
+    _frameSpeed=ms;
 }
 
 void AdvNpcAnimator::setBidirectional(bool bid)
@@ -358,7 +363,7 @@ void AdvNpcAnimator::start()
 
     frameCurrentL = frameFirstL;
     frameCurrentR = frameFirstR;
-    manual_ticks=frameSpeed;
+    manual_ticks=_frameSpeed;
 
     isEnabled=true;
 }
@@ -374,13 +379,13 @@ void AdvNpcAnimator::stop()
 void AdvNpcAnimator::manualTick(int ticks)
 {
     if(!isEnabled) return;
-    if(frameSpeed<1) return; //Idling animation
+    if(_frameSpeed<1) return; //Idling animation
 
     manual_ticks-=abs(ticks);
         while(manual_ticks<=0)
         {
             nextFrame();
-            manual_ticks+=frameSpeed;
+            manual_ticks+=_frameSpeed;
         }
 }
 
