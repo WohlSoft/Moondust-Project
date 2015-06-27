@@ -1906,7 +1906,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        ItemMsgBox * msgBox = new ItemMsgBox(edit->LvlData.events[i].msg,
+        ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::EVENT, edit->LvlData.events[i].msg, false,
                 tr("Please, enter message\nMessage limits: max line lenth is 28 characters"));
         msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
