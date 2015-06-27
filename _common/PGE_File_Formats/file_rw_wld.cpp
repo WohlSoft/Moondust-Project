@@ -109,6 +109,8 @@ WorldData FileFormats::ReadWorldFile(PGEFILE &inf)
 
 WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
 {
+    SMBX64_FileBegin();
+
     errorString.clear();
     WorldData FileData;
     FileData = dummyWldDataArray();
@@ -119,9 +121,7 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
         FileData.ReadFileValid=false;
         return FileData;
     }
-    QString line;
-    int str_count=0;
-    int file_format=0;
+
     QFileInfo in_1(filePath);
     FileData.filename = in_1.baseName();
     FileData.path = in_1.absoluteDir().absolutePath();
@@ -207,12 +207,7 @@ badfile:
 
 WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent)
 {
-    FileStringList in;
-    in.addData( RawData );
-
-    int str_count=0;        //Line Counter
-    int file_format=0;        //File format number
-    QString line;           //Current Line data
+    SMBX64_File(RawData);
 
     WorldData FileData = dummyWldDataArray();
 

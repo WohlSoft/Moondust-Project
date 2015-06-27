@@ -1,7 +1,53 @@
 #ifndef SMBX64_MACRO_H
 #define SMBX64_MACRO_H
 
+/*
+  There are a special macroses used to organize
+  SMBX64 specific file read functions.
+
+  Skeleton of read file function:
+
+  #include "file_formats.h"
+  #include "file_strlist.h"
+  #include "smbx64.h"
+  #include "smbx64_macro.h"
+  #include <iostream>
+
+  void readFunc(QString rawData)
+  {
+     //Must be at begin of file
+     SMBX64_File(rawData);
+
+     //...
+
+     std::cout << "File parsed!";
+        return;
+  badfile:
+     std::cout << "File format is wrong!\n"<<
+     << "line :" << str_count << ", file format version: "<<file_format
+     << "Line data: "<< line;
+  }
+
+*/
+
+/********************Read function begins***********************/
+//for Header readers.
+//Use it if you want read file partially
+//(you must create QTextStream in(&fstream); !!!)
+#define SMBX64_FileBegin() int str_count=0;/*Line Counter*/\
+                           int file_format=0;   /*File format number*/\
+                           PGESTRING line;      /*Current Line data*/
+
+//for entire data readers.
+//Use it if you want parse entire file data
+#define SMBX64_File(raw) FileStringList in;\
+                         in.addData( raw );\
+                         SMBX64_FileBegin()
+
+//Jump to next line
 #define nextLine() str_count++;line = in.readLine();
+
+
 #define parseLine(validate, target, converted) if( validate ) \
                                                 goto badfile;\
                                                  else target=converted;

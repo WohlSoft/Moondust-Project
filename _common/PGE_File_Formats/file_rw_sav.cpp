@@ -31,14 +31,10 @@
 GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
 {
     errorString.clear();
-    FileStringList in;
-    in.addData( RawData );
+    SMBX64_File( RawData );
 
-    int str_count=0;        //Line Counter
     int i;                  //counters
-    int file_format=0;      //File format number
     int arrayIdCounter=0;
-    QString line;           //Current Line data
     GamesaveData FileData;
     FileData = dummySaveDataArray();
 
