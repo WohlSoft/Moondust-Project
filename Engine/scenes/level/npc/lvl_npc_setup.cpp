@@ -151,7 +151,7 @@ void LVL_Npc::transformTo_x(long id)
         return;
     }
 
-    deActivatable    = (setup->deactivation) && (!setup->scenery);
+    deActivatable = ((setup->deactivation)||(setup->scenery));
     activationTimeout= setup->deactivetionDelay;
 
     disableBlockCollision=!setup->collision_with_blocks;

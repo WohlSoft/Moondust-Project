@@ -148,7 +148,12 @@ void PGE_LevelCamera::update(float ticks)
                     if(npc->wasDeactivated)
                         npc->activationTimeout=0;
                     else
-                        npc->activationTimeout=npc->setup->deactivetionDelay;
+                    {
+                        if(!npc->is_scenery)
+                            npc->activationTimeout = npc->setup->deactivetionDelay;
+                        else
+                            npc->activationTimeout = 150;
+                    }
                 }
             }
         }
