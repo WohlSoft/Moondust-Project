@@ -4,7 +4,7 @@ Editor
 - New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 + Add "Replace all Item-ID in a current section" feature
-- Provide ability to define NPC's "friendly" flag from message editing dialog
++ Provide ability to define NPC's "friendly" flag from message editing dialog
 + Add multi-selection into ItemSelection dialog which needed for some cases
 - Finish incompleted work with garbage NPC clean function which provides removing of a junk NPCs
   spawned by SMBX Editor bug (such a vines and ladders): function anready finds junk NPC's

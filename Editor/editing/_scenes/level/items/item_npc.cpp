@@ -395,7 +395,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             LevelData selData;
 
-            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg);
+            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg, npcData.friendly);
             util::DialogToCenter(&msgBox, true);
             if(msgBox.exec()==QDialog::Accepted)
             {
@@ -407,9 +407,11 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->setMsg( msgBox.currentText );
+                        ((ItemNPC *) SelItem)->setFriendly( msgBox.isFriendlyChecked() );
                     }
                 }
                 scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox.currentText));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(msgBox.isFriendlyChecked()));
             }
             //delete msgBox;
         }
