@@ -165,8 +165,10 @@ public:
     bool lua_animationIsFinished();
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
-
-    inline int getID() { return setup->id; }
+    inline long special1() { return data.special_data; }
+    inline long special2() { return data.special_data2; }
+    inline bool isBoss() { return data.legacyboss; }
+    inline int getID() { return data.id; }
     bool isLuaNPC;
 
     int health;
