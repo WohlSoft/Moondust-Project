@@ -40,12 +40,12 @@ LevelNPC    FileFormats::dummyLvlNpc()
     dummyNPC.msg="";
     dummyNPC.friendly=false;
     dummyNPC.nomove=false;
-    dummyNPC.legacyboss=false;
+    dummyNPC.is_boss=false;
     dummyNPC.layer = "Default";
     dummyNPC.event_activate="";
     dummyNPC.event_die="";
     dummyNPC.event_talk="";
-    dummyNPC.event_nomore="";
+    dummyNPC.event_emptylayer="";
     dummyNPC.attach_layer="";
 
     dummyNPC.array_id=0;
@@ -101,7 +101,7 @@ LevelBlock  FileFormats::dummyLvlBlock()
     dummyBlock.layer = "Default";
     dummyBlock.event_destroy = "";
     dummyBlock.event_hit = "";
-    dummyBlock.event_no_more = "";
+    dummyBlock.event_emptylayer = "";
 
     dummyBlock.array_id = 0;
     dummyBlock.index = 0;
@@ -220,7 +220,7 @@ LevelSection FileFormats::dummyLvlSection()
     dummySection.IsWarp=false;
     dummySection.OffScreenEn=false;
     dummySection.background=0;
-    dummySection.noback=false;
+    dummySection.lock_left_scroll=false;
     dummySection.underwater=false;
     dummySection.music_file="";
     dummySection.PositionX = -10;

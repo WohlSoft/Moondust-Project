@@ -668,7 +668,7 @@ void HistoryElementItemSetting::historyRedoSettingsFriendlyNPC(const LevelNPC &/
 
 void HistoryElementItemSetting::historyUndoSettingsBossNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->setLegacyBoss(sourceNPC.legacyboss);
+    ((ItemNPC*)item)->setLegacyBoss(sourceNPC.is_boss);
 }
 
 void HistoryElementItemSetting::historyRedoSettingsBossNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
@@ -860,25 +860,25 @@ void HistoryElementItemSetting::historyRedoSettingsHitedEventBlocks(const LevelB
 
 void HistoryElementItemSetting::historyUndoSettingsLayerEmptyEventBlocks(const LevelBlock &sourceBlock, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_no_more = sourceBlock.event_no_more;
+    ((ItemBlock*)item)->blockData.event_emptylayer = sourceBlock.event_emptylayer;
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsLayerEmptyEventBlocks(const LevelBlock &/*sourceBlock*/, QGraphicsItem *item)
 {
-    ((ItemBlock*)item)->blockData.event_no_more = m_modData.toString();
+    ((ItemBlock*)item)->blockData.event_emptylayer = m_modData.toString();
     ((ItemBlock*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyUndoSettingsLayerEmptyEventNPC(const LevelNPC &sourceNPC, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_nomore = sourceNPC.event_nomore;
+    ((ItemNPC*)item)->npcData.event_emptylayer = sourceNPC.event_emptylayer;
     ((ItemNPC*)item)->arrayApply();
 }
 
 void HistoryElementItemSetting::historyRedoSettingsLayerEmptyEventNPC(const LevelNPC &/*sourceNPC*/, QGraphicsItem *item)
 {
-    ((ItemNPC*)item)->npcData.event_nomore = m_modData.toString();
+    ((ItemNPC*)item)->npcData.event_emptylayer = m_modData.toString();
     ((ItemNPC*)item)->arrayApply();
 }
 

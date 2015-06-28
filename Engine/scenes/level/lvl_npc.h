@@ -167,7 +167,7 @@ public:
     void lua_setFrameDelay(int ms);
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
-    inline bool isBoss() { return data.legacyboss; }
+    inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
     bool isLuaNPC;
 

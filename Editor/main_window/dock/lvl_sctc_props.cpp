@@ -228,8 +228,8 @@ void LvlSectionProps::setLevelSectionData()
         mw()->ui->actionLevWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
         ui->LVLPropsOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
         mw()->ui->actionLevOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
-        ui->LVLPropsNoTBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
-        mw()->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
+        ui->LVLPropsNoTBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll);
+        mw()->ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll);
         ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
         mw()->ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
 
@@ -309,7 +309,7 @@ void LvlSectionProps::on_LVLPropsNoTBack_clicked(bool checked)
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         mw()->ui->actionLevNoBack->setChecked(checked);
-        edit->LvlData.sections[edit->LvlData.CurSection].noback = checked;
+        edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll = checked;
         edit->LvlData.modified = true;
     }
 }
@@ -322,7 +322,7 @@ void MainWindow::on_actionLevNoBack_triggered(bool checked)
         if(!edit) return;
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECNOBACK, QVariant(checked));
         dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(checked);
-        edit->LvlData.sections[edit->LvlData.CurSection].noback = checked;
+        edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll = checked;
         edit->LvlData.modified = true;
     }
 }

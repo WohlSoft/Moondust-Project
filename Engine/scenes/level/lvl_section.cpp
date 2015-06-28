@@ -164,7 +164,7 @@ bool LVL_Section::isWarp()
 
 bool LVL_Section::RightOnly()
 {
-    return data.noback;
+    return data.lock_left_scroll;
 }
 
 bool LVL_Section::ExitOffscreen()

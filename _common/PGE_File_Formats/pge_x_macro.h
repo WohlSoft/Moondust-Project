@@ -41,13 +41,17 @@ PGEFile::PGEX_Item x = f_section.data[sdata];
                                                 targetValue = PGEFile::X2STR(v.value); \
                                                 else goto badfile; }
 
-#define PGEX_BoolArrVal(Mark, targetValue)  else if(v.marker==Mark) { if(PGEFile::IsBoolArray(v.value)) \
-                                             targetValue = PGEFile::X2BollArr(v.value); \
-                                            else goto badfile; }
+#define PGEX_StrArrVal(Mark, targetValue)  else if(v.marker==Mark) { if(PGEFile::IsStringArray(v.value)) \
+                                                targetValue = PGEFile::X2STRArr(v.value); \
+                                                else goto badfile; }
 
 #define PGEX_BoolVal(Mark, targetValue)  if(v.marker==Mark) { if(PGEFile::IsBool(v.value)) \
                                          targetValue = (bool)toInt(v.value);\
                                          else goto badfile; }
+
+#define PGEX_BoolArrVal(Mark, targetValue)  else if(v.marker==Mark) { if(PGEFile::IsBoolArray(v.value)) \
+                                             targetValue = PGEFile::X2BollArr(v.value); \
+                                            else goto badfile; }
 
 #define PGEX_UIntVal(Mark, targetValue)  if(v.marker==Mark) { if(PGEFile::IsIntU(v.value)) \
                                          targetValue = toInt(v.value);\
