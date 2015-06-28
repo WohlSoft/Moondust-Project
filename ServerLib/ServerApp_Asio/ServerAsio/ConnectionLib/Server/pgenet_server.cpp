@@ -8,13 +8,12 @@ PGENET_Server::PGENET_Server(QObject *parent) :
 
     m_currentState(PGENET_ServerState::Closed),
 
-    _bgWorker_buf(""),
-    _bgWorker_shouldQuit(false),
-
     m_service(new asio::io_service()),
     m_llserver(*m_service, PGENET_Global::Port)
 {
-    m_llserver.setIncomingTextFunc([this](std::string message){_bgWorker_NewMessage(message);});
+    //m_llserver.setIncomingTextFunc([this](std::string message){_bgWorker_NewMessage(message);});
+    m_llserver.setPacketToPush(m_pckDecoder.incomingPacketsQueue());
+    m_fullPackets = m_pckDecoder.fullPacketsQueue();
 }
 
 PGENET_Server::~PGENET_Server()
@@ -59,29 +58,23 @@ void PGENET_Server::_ioService_run()
 void PGENET_Server::_bgWorker_NewMessage(std::string message)
 {
     std::unique_lock<std::mutex> locker(_bgWorker_mutex);
-    _bgWorker_buf = message;
     _bgWorker_alert.notify_all();
 }
 
 void PGENET_Server::_bgWorker_quit()
 {
-    std::unique_lock<std::mutex> locker(_bgWorker_mutex);
-    _bgWorker_shouldQuit.store(true);
-    _bgWorker_alert.notify_all();
+    m_fullPackets->push("_exit_now");
 }
 
 void PGENET_Server::_bgWorker_WaitForIncoming()
 {
-    std::unique_lock<std::mutex> locker(_bgWorker_mutex);
     for (;;) {
-        _bgWorker_alert.wait(locker);
-        if(_bgWorker_shouldQuit.load())
+        std::string nextFullPacket = m_fullPackets->pop();
+
+        if(nextFullPacket == "_exit_now")
             return;
 
-        if(_bgWorker_buf != ""){
-            QString message = QString(_bgWorker_buf.c_str());
-            emit incomingText(message);
-        }
+        emit incomingText(QString(nextFullPacket.c_str()));
     }
 }
 
