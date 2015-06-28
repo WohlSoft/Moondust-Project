@@ -57,6 +57,7 @@ void PGENET_Server::_ioService_run()
 
 void PGENET_Server::_bgWorker_NewMessage(std::string message)
 {
+    Q_UNUSED(message);
     std::unique_lock<std::mutex> locker(_bgWorker_mutex);
     _bgWorker_alert.notify_all();
 }
