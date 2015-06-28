@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFileInfo>
-#include <QDir>
-
+#include "pge_file_lib_sys.h"
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "smbx64.h"
@@ -31,31 +29,40 @@ LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
 {
     errorString.clear();
 
+    #ifdef PGE_FILES_QT
     QByteArray data;
     data = inf.read(7);
     if( (data.size()==0) || (data.size()<7))
     {
+    #else
+    char data[8];
+    inf.read(data, 7);
+    #endif
         LevelData FileData = dummyLvlDataArray();
+        #ifdef PGE_FILES_QT
         if(data.size()==0)
         BadFileMsg(inf.fileName()+
             PGESTRING("\nFile is empty! (size of file is 0 bytes)"),
                    0, "<FILE IS EMPTY>");
         else
-        #ifdef PGE_FILES_QT
         BadFileMsg(inf.fileName()+
             PGESTRING("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
                    0, "<FILE IS TOO SMALL>");
         #else
+        if(inf.eof())
         {
             std::ostringstream badFileMsgText;
-            badFileMsgText <<"\nFile is too small! (size of file is " << data.size() <<  "bytes)";
-            BadFileMsg(inf.fileName()+ badFileMsgText.str(), 0, "<FILE IS TOO SMALL>");
+            badFileMsgText <<"\nFile is too small! (size of file is " << inf.tellg() <<  "bytes)";
+            BadFileMsg("filename.lvl"+ badFileMsgText.str(), 0, "<FILE IS TOO SMALL>");
         }
         #endif
         FileData.ReadFileValid=false;
         return FileData;
+    #ifdef PGE_FILES_QT
     }
+    #endif
 
+    #ifdef PGE_FILES_QT
     //Check magic number: should be number from 0 to 64 and \n character after
     if(
             ((int)data.at(0)>0x39)||
@@ -63,15 +70,13 @@ LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
             ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
              ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
       )
-    {
-        LevelData FileData = dummyLvlDataArray();
-        BadFileMsg(inf.fileName()+
-            "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
-        FileData.ReadFileValid=false;
-        return FileData;
-    }
-
-
+        {
+            LevelData FileData = dummyLvlDataArray();
+            BadFileMsg(inf.fileName()+
+                "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
+            FileData.ReadFileValid=false;
+            return FileData;
+        }
     inf.reset();
     QTextStream in(&inf);   //Read File
 
@@ -80,6 +85,29 @@ LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
     in.setCodec(QTextCodec::codecForLocale());
 
     return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+    #else
+    if(
+            ((int)data[0]>0x39)||
+            ((int)data[0]<0x30)||
+            ( ((int)data[1]!=0x0D && (int)data[1]!=0x0A)&&
+             ((int)data[2]!=0x0D && (int)data[2]!=0x0A) )
+      )
+    {
+        LevelData FileData = dummyLvlDataArray();
+        BadFileMsg(PGESTRING("unknown.lvl")+
+            "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    inf.seekg(std::ios::beg);
+
+    PGESTRING buffer;
+    while(!inf.eof())
+    {
+        buffer.push_back(inf.get());
+    }
+    return ReadSMBX64LvlFile( buffer, "unknown.lvl" );
+    #endif
 }
 
 LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
@@ -88,15 +116,13 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
+    #ifdef PGE_FILES_QT
     QFile inf(filePath);
     if(!inf.open(QIODevice::ReadOnly|QIODevice::Text))
     {
         FileData.ReadFileValid=false;
         return FileData;
     }
-
-    SMBX64_FileBegin();
-
     QFileInfo in_1(filePath);
     FileData.filename = in_1.baseName();
     FileData.path = in_1.absoluteDir().absolutePath();
@@ -105,28 +131,47 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     in.setLocale(QLocale::system());
     in.setCodec(QTextCodec::codecForLocale());
     in.seek(0);
+    #else
+    std::ifstream inf;
+    inf.open(filePath.c_str(), std::ios::in);
+    if(!inf.is_open())
+    {
+        FileData.ReadFileValid=false;
+        return FileData;
+    }
+    FileData.filename = "in_1.baseName()";
+    FileData.path = "in_1.absoluteDir().absolutePath()";
+    inf.seekg(std::ios::beg);
+    #endif
+
+    SMBX64_FileBegin();
+
 
     /*****************Macroses*****************************/
-    #define nextLine() str_count++;line = in.readLine();
+    #ifdef PGE_FILES_QT
+    #define nextLineH() str_count++;line = in.readLine();
+    #else
+    #define nextLineH() str_count++; {line.clear(); char x; while( ((x=inf.get())!='\n') && (!inf.eof()) ) { line.push_back(x); } }
+    #endif
     /*****************Macroses*end*************************/
 
-    nextLine();   //Read first line
+    nextLineH();   //Read first line
     if( SMBX64::uInt(line) ) //File format number
         goto badfile;
 
-    else file_format=line.toInt();
+    else file_format=toInt(line);
 
     if(file_format >= 17)
     {
-        nextLine();   //Read second Line
+        nextLineH();   //Read second Line
         if( SMBX64::uInt(line) ) //File format number
             goto badfile;
-        else FileData.stars=line.toInt();   //Number of stars
+        else FileData.stars=toInt(line);   //Number of stars
     } else FileData.stars=0;
 
     if(file_format >= 60)
     {
-        nextLine();   //Read third line
+        nextLineH();   //Read third line
         if( SMBX64::qStr(line) ) //LevelTitle
             goto badfile;
         else FileData.LevelName = removeQuotes(line); //remove quotes
@@ -147,6 +192,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 {
     errorString.clear();
     SMBX64_File( RawData );
+    (void)sielent;
 
     int i;                  //counters
     LevelData FileData;
@@ -181,11 +227,16 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     LevelEvent_Sets events_sets;
 
     //Add path data
-    if(!filePath.isEmpty())
+    if(!filePath.PGESTRINGisEmpty())
     {
+        #ifdef PGE_FILES_QT
         QFileInfo in_1(filePath);
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
+        #else
+        FileData.filename = "in_1.baseName()";
+        FileData.path = "in_1.absoluteDir().absolutePath()";
+        #endif
     }
 
     #ifdef PGE_EDITOR
@@ -212,8 +263,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     {
         section = dummyLvlSection();
 
-        nextLine(); SIntVar(section.size_left, line); section.PositionX=line.toInt()-10; //left
-        nextLine(); SIntVar(section.size_top,  line); section.PositionY=line.toInt()-10; //top
+        nextLine(); SIntVar(section.size_left, line); section.PositionX=toInt(line)-10; //left
+        nextLine(); SIntVar(section.size_top,  line); section.PositionY=toInt(line)-10; //top
         nextLine(); SIntVar(section.size_bottom, line); //bottom
         nextLine(); SIntVar(section.size_right, line);  //right
 
@@ -341,8 +392,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
          npcdata = dummyLvlNpc();
 
 
-                     parseLine( SMBX64::sFloat(line), npcdata.x, qRound(line.toDouble()));
-         nextLine(); parseLine( SMBX64::sFloat(line), npcdata.y, qRound(line.toDouble()));
+                     parseLine( SMBX64::sFloat(line), npcdata.x, round(toDouble(line)));
+         nextLine(); parseLine( SMBX64::sFloat(line), npcdata.y, round(toDouble(line)));
          nextLine(); SIntVar(npcdata.direct, line); //NPC direction
          nextLine(); UIntVar(npcdata.id, line); //NPC id
 
@@ -448,7 +499,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 
     ////////////Warp and Doors Data//////////
     nextLine();
-    while( ((line!="\"next\"")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!line.isNull())))
+    while( ((line!="\"next\"")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!line.PGESTRINGisEmpty())))
     {
         doors = dummyLvlDoor();
         doors.isSetIn=true;
@@ -519,7 +570,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     if(ge(10)) {
         ////////////Layers Data//////////
         nextLine();
-        while((line!="\"next\"")&&(!line.isNull()))
+        while((line!="\"next\"")&&(!line.PGESTRINGisEmpty()))
         {
 
                           strVar(layers.name, line);     //Layer name
@@ -536,7 +587,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 
         ////////////Events Data//////////
         nextLine();
-        while((line!="")&&(!line.isNull()))
+        while((line!="")&&(!line.PGESTRINGisEmpty()))
         {
             events = dummyLvlEvent();
 
