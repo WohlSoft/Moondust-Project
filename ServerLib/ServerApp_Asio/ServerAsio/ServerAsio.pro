@@ -13,20 +13,23 @@ TEMPLATE = app
 
 CONFIG += c++11
 
-# include(../../../_common/build_props.pri)
+include(../../../_common/dest_dir.pri)
+include(../../../_common/build_props.pri)
 
 INCLUDEPATH += $$PWD/../../../_Libs/asio
 
 DEFINES += ASIO_STANDALONE
-DEFINES += _WIN32_WINNT=0x0501
 DEFINES += ASIO_SEPARATE_COMPILATION
 DEFINES += BOOST_ASIO_HEADER_ONLY
 
-DEFINES += ASIO_HAS_THREADS
-DEFINES += ASIO_WINDOWS
-
 win32:{
+    DEFINES += ASIO_HAS_THREADS
+    DEFINES += _WIN32_WINNT=0x0501
+    DEFINES += ASIO_WINDOWS
     LIBS += -lWs2_32 -lMswsock
+}
+unix:{
+    DEFINES += ASIO_HAS_PTHREADS
 }
 
 SOURCES += main.cpp\
