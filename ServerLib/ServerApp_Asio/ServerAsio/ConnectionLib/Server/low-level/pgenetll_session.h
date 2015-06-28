@@ -15,7 +15,11 @@ public:
     void start();
 
 
+    void setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc);
+
 private:
+    std::function<void(std::string)> m_incomingTextFunc;
+
     void listen();
 
     tcp::socket m_socket;

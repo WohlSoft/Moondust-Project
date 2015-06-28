@@ -37,6 +37,7 @@ DWORD win_tss_ptr_create()
 #endif
 
   DWORD tss_key = ::TlsAlloc();
+  TlsSetValue(tss_key, 0);
   if (tss_key == out_of_indexes)
   {
     DWORD last_error = ::GetLastError();

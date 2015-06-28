@@ -2,6 +2,7 @@
 #define PGENETLL_SERVER_H
 
 #include <asio.hpp>
+#include <functional>
 
 using asio::ip::tcp;
 
@@ -12,7 +13,12 @@ public:
 
     void startAccepting();
 
+
+
+    void setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc);
+
 private:
+    std::function<void(std::string)> m_incomingTextFunc;
     tcp::acceptor m_pgenetll_acceptor;
     tcp::socket m_pgenetll_nextsocket;
 };
