@@ -26,9 +26,10 @@
 #include <audio/SdlMusPlayer.h>
 #include <graphics/gl_renderer.h>
 
-#include <QtDebug>
-
 #include "lvl_scene_ptr.h"
+
+#include <QtDebug>
+#include <QStack>
 
 PGE_LevelCamera::PGE_LevelCamera()
 {
@@ -147,7 +148,12 @@ void PGE_LevelCamera::update(float ticks)
                     if(npc->wasDeactivated)
                         npc->activationTimeout=0;
                     else
-                        npc->activationTimeout=npc->setup->deactivetionDelay;
+                    {
+                        if(!npc->is_scenery)
+                            npc->activationTimeout = npc->setup->deactivetionDelay;
+                        else
+                            npc->activationTimeout = 150;
+                    }
                 }
             }
         }

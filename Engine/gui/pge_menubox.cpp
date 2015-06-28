@@ -30,6 +30,8 @@
 
 #include <QFontMetrics>
 #include <QMessageBox>
+#include <QApplication>
+#include <QTranslator>
 
 
 PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,

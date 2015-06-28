@@ -29,7 +29,7 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
+NPCConfigFile FileFormats::ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad)
 {
     errorString.clear();
     int str_count=0;        //Line Counter
@@ -109,7 +109,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -124,7 +124,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -140,7 +140,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -155,7 +155,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -170,7 +170,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -410,7 +410,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -425,7 +425,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
@@ -440,7 +440,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
         {
            Params[1] = Params[1].simplified();
            Params[1].remove(' '); //Delete spaces
-           if(SMBX64::Int(Params[1]))
+           if(SMBX64::uInt(Params[1]))
            {
                unknownLines += QString::number(str_count)+": "+line+" <Should be from 0 to 3!>\n";
            }

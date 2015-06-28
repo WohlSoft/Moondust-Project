@@ -22,6 +22,9 @@
 #include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
 
+#include <QFileInfo>
+#include <QDir>
+
 /*****Level NPC************/
 QMap<long, obj_npc>   ConfigManager::lvl_npc_indexes;
 npc_Markers           ConfigManager::marker_npc;
@@ -36,12 +39,12 @@ bool ConfigManager::loadLevelNPC()
 
     obj_npc snpc;
     unsigned long npc_total=0;
-    QString npc_ini = config_dir + "lvl_npc.ini";
+    PGESTRING npc_ini = config_dir + "lvl_npc.ini";
 
     if(!QFile::exists(npc_ini))
     {
-        addError(QString("ERROR LOADING lvl_npc.ini: file does not exist"), QtCriticalMsg);
-        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_npc.ini: file does not exist"),
+        addError(PGESTRING("ERROR LOADING lvl_npc.ini: file does not exist"), QtCriticalMsg);
+        PGE_MsgBox msgBox(NULL, PGESTRING("ERROR LOADING lvl_npc.ini: file does not exist"),
                           PGE_MsgBox::msg_fatal);
         msgBox.exec();
         return false;
@@ -79,7 +82,7 @@ bool ConfigManager::loadLevelNPC()
 
     if(npc_total==0)
     {
-        PGE_MsgBox::error(QString("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"));
+        PGE_MsgBox::error(PGESTRING("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"));
         return false;
     }
 
@@ -90,11 +93,11 @@ bool ConfigManager::loadLevelNPC()
         snpc.image = NULL;
         snpc.textureArrayId = 0;
         snpc.animator_ID = 0;
-        npcset.beginGroup( QString("npc-"+QString::number(i)) );
+        npcset.beginGroup( PGESTRING("npc-"+PGESTRING::number(i)) );
         snpc.name =         npcset.value("name", "").toString();
         if(snpc.name.isEmpty())
         {
-            PGE_MsgBox::warn(QString("NPC-%1 Item name isn't defined").arg(i));
+            PGE_MsgBox::warn(PGESTRING("NPC-%1 Item name isn't defined").arg(i));
             goto skipNPC;
         }
 
@@ -105,18 +108,18 @@ bool ConfigManager::loadLevelNPC()
         /***************Load image*******************/
         imgFile = npcset.value("image", "").toString();
         {
-            QString err;
+            PGESTRING err;
             GraphicsHelps::loadMaskedImage(npcPath, imgFile, snpc.mask_n, err, &snpc.image_size);
             snpc.image_n = imgFile;
             if( imgFile=="" )
             {
-                addError(QString("NPC-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
+                addError(PGESTRING("NPC-%1 Image filename isn't defined.\n%2").arg(i).arg(err));
                 goto skipNPC;
             }
         }
         /***************Load image*end***************/
 
-        snpc.algorithm_script = npcset.value("algorithm", QString("npc-%1.lua").arg(i) ).toString();
+        snpc.algorithm_script = npcset.value("algorithm", PGESTRING("npc-%1.lua").arg(i) ).toString();
         snpc.effect_1 =     npcset.value("default-effect", "10").toInt();
         snpc.effect_2 =     npcset.value("shell-effect", "10").toInt();
 
@@ -167,9 +170,9 @@ bool ConfigManager::loadLevelNPC()
         /****************Calculating of default frame height**end*************/
 
         snpc.custom_physics_to_gfx= npcset.value("physics-to-gfx", true).toBool();
-        snpc.gfx_h =                npcset.value("gfx-height", QString::number(defGFX_h) ).toInt();
+        snpc.gfx_h =                npcset.value("gfx-height", PGESTRING::number(defGFX_h) ).toInt();
             NumberLimiter::apply(snpc.gfx_h, 1);
-        snpc.gfx_w =                npcset.value("gfx-width", QString::number(snpc.image_size.w()) ).toInt();
+        snpc.gfx_w =                npcset.value("gfx-width", PGESTRING::number(snpc.image_size.w()) ).toInt();
             NumberLimiter::apply(snpc.gfx_w, 1);
         snpc.framespeed =           npcset.value("frame-speed", "128").toInt();
             NumberLimiter::apply(snpc.framespeed, 1u);
@@ -193,13 +196,13 @@ bool ConfigManager::loadLevelNPC()
         snpc.frames_right.clear();
         if(snpc.custom_ani_alg==2)
         {
-            QStringList tmp;
-            QString common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
+            PGESTRINGList tmp;
+            PGESTRING common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
             tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
-            foreach(QString x, tmp)
+            foreach(PGESTRING x, tmp)
                 snpc.frames_left.push_back(x.toInt());
             tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
-            foreach(QString x, tmp)
+            foreach(PGESTRING x, tmp)
                 snpc.frames_right.push_back(x.toInt());
 
         }
@@ -240,7 +243,7 @@ bool ConfigManager::loadLevelNPC()
         for(int j=0; j<combobox_size; j++)
         {
             snpc.special_combobox_opts.push_back(
-                        npcset.value(QString("special-option-%1").arg(j), "0").toString()
+                        npcset.value(PGESTRING("special-option-%1").arg(j), "0").toString()
                         );
         }
 
@@ -254,18 +257,18 @@ bool ConfigManager::loadLevelNPC()
 
         if(snpc.special_option_2)
         {
-            QStringList tmp1 = npcset.value("special-2-npc-spin-required", "-1").toString().split(QChar(','));
+            PGESTRINGList tmp1 = npcset.value("special-2-npc-spin-required", "-1").toString().split(QChar(','));
 
             if(!tmp1.isEmpty())
                 if(tmp1.first()!="-1")
-                foreach(QString x, tmp1)
+                foreach(PGESTRING x, tmp1)
                     snpc.special_2_npc_spin_required.push_back(x.toInt());
 
-            QStringList tmp2 = npcset.value("special-2-npc-box-required", "-1").toString().split(QChar(','));
+            PGESTRINGList tmp2 = npcset.value("special-2-npc-box-required", "-1").toString().split(QChar(','));
 
             if(!tmp2.isEmpty())
                 if(tmp2.first()!="-1")
-                foreach(QString x, tmp2)
+                foreach(PGESTRING x, tmp2)
                     snpc.special_2_npc_box_required.push_back(x.toInt());
         }
 
@@ -274,7 +277,7 @@ bool ConfigManager::loadLevelNPC()
         for(int j=0; j<combobox_size; j++)
         {
             snpc.special_2_combobox_opts.push_back(
-                        npcset.value(QString("special-2-option-%1").arg(j), "0").toString()
+                        npcset.value(PGESTRING("special-2-option-%1").arg(j), "0").toString()
                         );
         }
         snpc.special_2_spin_min = npcset.value("special-2-spin-min", "0").toInt();
@@ -368,14 +371,14 @@ bool ConfigManager::loadLevelNPC()
     npcset.endGroup();
         if( npcset.status() != QSettings::NoError )
         {
-            PGE_MsgBox::fatal(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
+            PGE_MsgBox::fatal(PGESTRING("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
             return false;
         }
     }
 
     if((unsigned int)lvl_npc_indexes.size()<npc_total)
     {
-        PGE_MsgBox::warn(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(lvl_npc_indexes.size()));
+        PGE_MsgBox::warn(PGESTRING("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(lvl_npc_indexes.size()));
     }
     return true;
 }
@@ -389,7 +392,7 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
         return;
     }
     obj_npc* npcSetup=&lvl_npc_indexes[npcID];
-    QString file = Dir_NPC.getCustomFile(QString("npc-%1.txt").arg(npcID));
+    PGESTRING file = Dir_NPC.getCustomFile(PGESTRING("npc-%1.txt").arg(npcID));
     if(file.isEmpty()) return;
     if(!QFileInfo(file).exists()) return;
     QFile npcFile(file);
