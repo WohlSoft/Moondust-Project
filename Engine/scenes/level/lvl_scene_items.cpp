@@ -110,7 +110,7 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
     LVL_Npc * npc = luaEngine.createLuaNpc(npcData.id);
     if(!npc)
-        return;
+        return NULL;
 
     npcData.array_id= ++data.npc_array_id;
     npc->setup = curNpcData;
