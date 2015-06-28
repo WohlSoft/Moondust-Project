@@ -16,10 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QTranslator>
-#include <QRegExp>
-#include <QFileInfo>
-#include <QtDebug>
+#include "pge_file_lib_sys.h"
+#include "pge_file_lib_globs.h"
 
 #include "file_formats.h"
 #ifdef PGE_EDITOR
@@ -29,10 +27,10 @@
 #include <QMessageBox>
 #endif
 
-QString FileFormats::errorString="";
+PGESTRING FileFormats::errorString="";
 bool FileFormats::silentMode=false;
 
-void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
+void FileFormats::BadFileMsg(PGESTRING fileName_DATA, int str_count, PGESTRING line)
 {
     #ifdef PGE_FILES_USE_MESSAGEBOXES
     if(!silentMode)
@@ -42,7 +40,7 @@ void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
         box->setWindowTitle( QTranslator::tr("Bad File") );
         box->setWindowIcon( Themes::icon(Themes::debugger) );
         box->setText(
-                    QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+                    PGESTRING( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
                               +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
                                +QTranslator::tr("Line Data: %1").arg(line))
                     );
@@ -51,21 +49,37 @@ void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
         box->exec();
     }
     #endif
-    errorString = QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+    #ifdef PGE_FILES_QT
+    errorString = PGESTRING( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
                            +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
                             +QTranslator::tr("Line Data: %1").arg(line));
+    #else
+    std::ostringstream errMsg;
+    errMsg<<"Bad file format\nFile:"<<fileName_DATA<<"\n"<<
+            "Line Number: "<<str_count<<"\n"<<"Line Data: "<< line;
+    errorString = errMsg.str();
+    #endif
 }
 
 
-QString FileFormats::removeQuotes(QString str)
+PGESTRING FileFormats::removeQuotes(PGESTRING str)
 {
-    QString target = str;
+    PGESTRING target = str;
+    #ifdef PGE_FILES_QT
     if(target.isEmpty())
         return target;
     if(target[0]==QChar('\"'))
         target.remove(0,1);
     if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
         target.remove(target.size()-1,1);
+    #else
+        if(target.empty())
+            return target;
+        if(target[0]=='\"')
+            target.erase(target.begin()+0);
+        if((!target.empty()) && (target[target.size()-1]=='\"'))
+            target.erase(target.begin()+target.size()-1);
+    #endif
     return target;
 }
 

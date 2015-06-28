@@ -19,7 +19,7 @@
 #ifndef NPC_FILEDATA_H
 #define NPC_FILEDATA_H
 
-#include <QString>
+#include "pge_file_lib_globs.h"
 
 struct NPCConfigFile
 {
@@ -89,9 +89,9 @@ struct NPCConfigFile
     //Extended
     bool nohammer;
     bool noshell;
-    QString name;
-    QString image;
-    QString script;
+    PGESTRING name;
+    PGESTRING image;
+    PGESTRING script;
 };
 
 #endif // NPC_FILEDATA_H

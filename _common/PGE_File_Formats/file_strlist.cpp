@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "pge_file_lib_globs.h"
 #include "file_strlist.h"
 
 FileStringList::FileStringList()
@@ -23,7 +24,7 @@ FileStringList::FileStringList()
     lineID=0;
 }
 
-FileStringList::FileStringList(QString fileData)
+FileStringList::FileStringList(PGESTRING fileData)
 {
     addData(fileData);
 }
@@ -33,16 +34,20 @@ FileStringList::~FileStringList()
     buffer.clear();
 }
 
-void FileStringList::addData(QString fileData)
+void FileStringList::addData(PGESTRING fileData)
 {
     buffer.clear();
+    #ifdef PGE_FILES_QT
     buffer = fileData.split(QRegExp("[\r\n]"), QString::SkipEmptyParts);
+    #else
+    PGE_SPLITSTR(buffer, fileData, "\n");
+    #endif
     lineID=0;
 }
 
-QString FileStringList::readLine()
+PGESTRING FileStringList::readLine()
 {
-    QString sent;
+    PGESTRING sent;
 
     if(!isEOF())
     {
@@ -54,7 +59,7 @@ QString FileStringList::readLine()
 
 bool FileStringList::isEOF()
 {
-    return (lineID >= buffer.size());
+    return (lineID >= (signed)buffer.size());
 }
 
 bool FileStringList::atEnd()

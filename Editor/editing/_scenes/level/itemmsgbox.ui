@@ -21,7 +21,7 @@
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
-   <item row="0" column="0">
+   <item row="0" column="1">
     <widget class="QLabel" name="NotesLabel">
      <property name="whatsThis">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -32,7 +32,7 @@ Message limits: max line lenth is 27 characters</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="1">
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="minimumSize">
       <size>
@@ -74,13 +74,20 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="checkFriendly">
+     <property name="text">
+      <string>Friendly (Non-friendly npc's can't be talked to)</string>
      </property>
     </widget>
    </item>

@@ -19,12 +19,10 @@
 #ifndef SAVE_FILEDATA_H
 #define SAVE_FILEDATA_H
 
-#include <QVector>
-#include <QString>
-#include <QPair>
+#include "pge_file_lib_globs.h"
 
-typedef QPair<unsigned int, bool > visibleItem; //!< ArrayID, Is Visible
-typedef QPair<QString, int > starOnLevel; //!< Level file, section of level
+typedef PGEPAIR<unsigned int, bool > visibleItem; //!< ArrayID, Is Visible
+typedef PGEPAIR<PGESTRING, int > starOnLevel; //!< Level file, section of level
 
 struct saveCharacterState
 {
@@ -58,25 +56,25 @@ struct GamesaveData
     long last_hub_warp; //!< Last entered/exited warp Array-ID on the HUB-based episodes.
 
     unsigned int musicID; //!< Current world music ID
-    QString musicFile;    //!< Current world music file (custom music)
+    PGESTRING musicFile;    //!< Current world music file (custom music)
 
     bool gameCompleted;   //!< Is episode was completed in last time
 
-    QVector<saveCharacterState > characterStates;
-    QList<int > currentCharacter;
+    PGEVECTOR<saveCharacterState > characterStates;
+    PGELIST<int > currentCharacter;
 
     //Visible state of world map items
-    QVector<visibleItem > visibleLevels;
-    QVector<visibleItem > visiblePaths;
-    QVector<visibleItem > visibleScenery;
-    QVector<starOnLevel > gottenStars;
+    PGEVECTOR<visibleItem > visibleLevels;
+    PGEVECTOR<visibleItem > visiblePaths;
+    PGEVECTOR<visibleItem > visibleScenery;
+    PGEVECTOR<starOnLevel > gottenStars;
 
     //editing:
     bool modified;
     bool untitled;
     bool smbx64strict;
-    QString filename;
-    QString path;
+    PGESTRING filename;
+    PGESTRING path;
 };
 
 #endif // SAVE_FILEDATA_H

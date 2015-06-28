@@ -243,7 +243,7 @@ void ItemNPC::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         ItemMenu.addSeparator();
     QAction *boss = ItemMenu.addAction(tr("Set as Boss"));
         boss->setCheckable(1);
-        boss->setChecked( npcData.legacyboss );
+        boss->setChecked( npcData.is_boss );
         ItemMenu.addSeparator();
     QAction *transform = ItemMenu.addAction(tr("Transform into"));
     QAction *transform_all_s = ItemMenu.addAction(tr("Transform all %1 in this section into").arg("NPC-%1").arg(npcData.id));
@@ -395,7 +395,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             LevelData selData;
 
-            ItemMsgBox msgBox(npcData.msg);
+            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg, npcData.friendly);
             util::DialogToCenter(&msgBox, true);
             if(msgBox.exec()==QDialog::Accepted)
             {
@@ -407,9 +407,11 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                     {
                         selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                         ((ItemNPC *) SelItem)->setMsg( msgBox.currentText );
+                        ((ItemNPC *) SelItem)->setFriendly( msgBox.isFriendlyChecked() );
                     }
                 }
                 scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox.currentText));
+                scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(msgBox.isFriendlyChecked()));
             }
             //delete msgBox;
         }
@@ -519,7 +521,7 @@ void ItemNPC::setNoMovable(bool stat)
 
 void ItemNPC::setLegacyBoss(bool boss)
 {
-    npcData.legacyboss=boss;
+    npcData.is_boss=boss;
     arrayApply();//Apply changes into array
 }
 
