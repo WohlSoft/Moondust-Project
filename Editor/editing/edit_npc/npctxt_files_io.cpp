@@ -68,7 +68,7 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
     //Get NPC-ID from FileName
     QStringList tmp = fileI.baseName().split(QChar('-'));
     if(tmp.size()==2)
-        if(!SMBX64::Int(tmp[1]))
+        if(!SMBX64::uInt(tmp[1]))
         {
             npc_id = tmp[1].toInt();
             setDefaultData( tmp[1].toInt() );

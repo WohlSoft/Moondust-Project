@@ -33,6 +33,7 @@
 #include <settings/global_settings.h>
 
 #include <QHash>
+#include <QFileInfo>
 #include <unordered_map>
 
 WorldScene::WorldScene()

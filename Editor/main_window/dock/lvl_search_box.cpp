@@ -525,7 +525,7 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
                     toBeFound = ((ItemBlock*)gr[i])->blockData.event_hit == ui->Find_Combo_EventHitedBlock->currentText();
                 }
                 if(ui->Find_Check_EventLayerEmptyBlock->isChecked()&&toBeFound){
-                    toBeFound = ((ItemBlock*)gr[i])->blockData.event_no_more == ui->Find_Combo_EventLayerEmptyBlock->currentText();
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.event_emptylayer == ui->Find_Combo_EventLayerEmptyBlock->currentText();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
@@ -608,7 +608,7 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                     toBeFound = ((ItemNPC*)gr[i])->npcData.nomove == ui->Find_Check_NotMoveActiveNPC->isChecked();
                 }
                 if(ui->Find_Check_BossNPC->isChecked()&&toBeFound){
-                    toBeFound = ((ItemNPC*)gr[i])->npcData.legacyboss == ui->Find_Check_BossActiveNPC->isChecked();
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.is_boss == ui->Find_Check_BossActiveNPC->isChecked();
                 }
                 if(ui->Find_Check_MsgNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.msg.contains(ui->Find_Edit_MsgNPC->text(),
@@ -631,8 +631,8 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                                 || (((ItemNPC*)gr[i])->npcData.event_talk == "" && ui->Find_Combo_Event_TalkNPC->currentText() == "[None]");
                 }
                 if(ui->Find_Check_Event_Empty_LayerNPC->isChecked()&&toBeFound){
-                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_nomore == ui->Find_Combo_Event_Empty_LayerNPC->currentText()
-                                || (((ItemNPC*)gr[i])->npcData.event_nomore == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.event_emptylayer == ui->Find_Combo_Event_Empty_LayerNPC->currentText()
+                                || (((ItemNPC*)gr[i])->npcData.event_emptylayer == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())

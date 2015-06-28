@@ -47,7 +47,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
             if(npc.event_activate!=_fine_npcs[j].event_activate) continue;
             if(npc.event_die!=_fine_npcs[j].event_die) continue;
             if(npc.event_talk!=_fine_npcs[j].event_talk) continue;
-            if(npc.event_nomore!=_fine_npcs[j].event_nomore) continue;
+            if(npc.event_emptylayer!=_fine_npcs[j].event_emptylayer) continue;
 
             fine=false;
             _found_garbage.push_back(npc);

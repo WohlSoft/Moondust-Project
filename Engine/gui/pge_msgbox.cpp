@@ -24,11 +24,15 @@
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
 
-#include <QFontMetrics>
-#include <QMessageBox>
 #include <common_features/app_path.h>
 #include <audio/pge_audio.h>
 #include <settings/global_settings.h>
+
+#include <QFontMetrics>
+#include <QMessageBox>
+#include <QFileInfo>
+#include <QTranslator>
+#include <QApplication>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)

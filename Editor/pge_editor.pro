@@ -49,7 +49,7 @@ translates.files += $$PWD/languages/*.png
 #!android:{
 DEFINES += USE_SDL_MIXER
 #}
-DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES
+DEFINES += PGE_EDITOR PGE_FILES_USE_MESSAGEBOXES PGE_FILES_QT
 
 INSTALLS = translates
 
@@ -402,6 +402,7 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/save_filedata.cpp \
     ../_common/PGE_File_Formats/smbx64.cpp \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
+    ../_common/PGE_File_Formats/pge_file_lib_globs.cpp \
     common_features/dir_copy.cpp \
     tools/async/asyncstarcounter.cpp \
     ../_common/StackWalker/StackWalker.cpp \
@@ -587,9 +588,13 @@ HEADERS  += defines.h \
     ../_common/PGE_File_Formats/meta_filedata.h \
     ../_common/PGE_File_Formats/npc_filedata.h \
     ../_common/PGE_File_Formats/pge_x.h \
+    ../_common/PGE_File_Formats/pge_x_macro.h \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
+    ../_common/PGE_File_Formats/smbx64_macro.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
+    ../_common/PGE_File_Formats/pge_file_lib_globs.h \
+    ../_common/PGE_File_Formats/pge_file_lib_sys.h \
     common_features/dir_copy.h \
     tools/async/asyncstarcounter.h \
     ../_common/StackWalker/StackWalker.h \

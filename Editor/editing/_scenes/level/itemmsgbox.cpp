@@ -23,14 +23,20 @@
 #include "itemmsgbox.h"
 #include <ui_itemmsgbox.h>
 
-ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *parent) :
+ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QString label, QString title, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemMsgBox)
 {
     QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
 
+    whoOpened = openedBy;
     currentText = text;
     ui->setupUi(this);
+
+    ui->checkFriendly->setChecked(isFriendly);
+
+    if(whoOpened != NPC)
+        ui->checkFriendly->hide();
 
     if(!label.isEmpty())
         ui->NotesLabel->setText(label);
@@ -59,6 +65,11 @@ ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *pare
 ItemMsgBox::~ItemMsgBox()
 {
     delete ui;
+}
+
+bool ItemMsgBox::isFriendlyChecked()
+{
+    return ui->checkFriendly->isChecked();
 }
 
 void ItemMsgBox::on_buttonBox_accepted()

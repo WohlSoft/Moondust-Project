@@ -19,37 +19,38 @@
 #ifndef SMBX64_H
 #define SMBX64_H
 
-#include <QObject>
-#include <QString>
+#include "pge_file_lib_globs.h"
 
 //SMBX64 standard data
 class SMBX64 : public QObject
 {
+#ifdef PGE_FILES_QT
     Q_OBJECT
+#endif
 
 public:
     inline SMBX64() {}
 
     // /////////////Validators///////////////
     //returns TRUE on wrong data
-    static bool Int(QString in); // UNSIGNED INT
-    static bool sInt(QString in); // SIGNED INT
-    static bool sFloat(QString &in); // SIGNED FLOAT
-    static bool qStr(QString in); // QUOTED STRING
-    static bool wBool(QString in); //Worded BOOL
-    static bool dBool(QString in); //Worded BOOL
+    static bool uInt(PGESTRING in); // UNSIGNED INT
+    static bool sInt(PGESTRING in); // SIGNED INT
+    static bool sFloat(PGESTRING &in); // SIGNED FLOAT
+    static bool qStr(PGESTRING in); // QUOTED STRING
+    static bool wBool(PGESTRING in); //Worded BOOL
+    static bool dBool(PGESTRING in); //Worded BOOL
 
     //Convert from string to internal data
-    static bool wBoolR(QString in);
+    static bool wBoolR(PGESTRING in);
     //Convert from SMBX64 string to internal
-    static QString StrToStr(QString in);
+    static PGESTRING StrToStr(PGESTRING in);
 
     //SMBX64 parameter string generators
-    static QString IntS(long input);
-    static QString BoolS(bool input);
-    static QString qStrS(QString input);
-    static QString FloatS(float input);
-    static QString qStrS_multiline(QString input);
+    static PGESTRING IntS(long input);
+    static PGESTRING BoolS(bool input);
+    static PGESTRING qStrS(PGESTRING input);
+    static PGESTRING FloatS(float input);
+    static PGESTRING qStrS_multiline(PGESTRING input);
 };
 
 

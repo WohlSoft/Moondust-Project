@@ -251,6 +251,9 @@
               <height>25</height>
              </size>
             </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
            </widget>
           </item>
           <item row="2" column="0">
@@ -974,7 +977,11 @@
         </widget>
        </item>
        <item row="2" column="1" colspan="2">
-        <widget class="QSpinBox" name="WarpToExitNu"/>
+        <widget class="QSpinBox" name="WarpToExitNu">
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

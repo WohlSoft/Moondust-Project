@@ -23,6 +23,7 @@
 #include "file_strlist.h"
 #include "save_filedata.h"
 #include "smbx64.h"
+#include "smbx64_macro.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -30,14 +31,10 @@
 GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
 {
     errorString.clear();
-    FileStringList in;
-    in.addData( RawData );
+    SMBX64_File( RawData );
 
-    int str_count=0;        //Line Counter
     int i;                  //counters
-    int file_format=0;      //File format number
     int arrayIdCounter=0;
-    QString line;           //Current Line data
     GamesaveData FileData;
     FileData = dummySaveDataArray();
 
@@ -55,178 +52,97 @@ GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
     FileData.smbx64strict = true;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    str_count++;line = in.readLine();   //Read first line
-    if( SMBX64::Int(line) ) //File format number
-        goto badfile;
-
-    else file_format=line.toInt();
-
+    nextLine(); UIntVar(file_format, line);//File format number
     FileData.version = file_format;
+    nextLine(); UIntVar(FileData.lives, line); //Number of lives
+    nextLine(); UIntVar(FileData.coins, line); //Number of coins
+    nextLine(); SIntVar(FileData.worldPosX, line);  //World map pos X
+    nextLine(); SIntVar(FileData.worldPosY, line);  //World map pos Y
 
-    str_count++;line = in.readLine();   //Read second Line
-    if( SMBX64::Int(line) ) //Number of lives
-        goto badfile;
-    else FileData.lives=line.toInt();
-
-    str_count++;line = in.readLine();
-    if( SMBX64::Int(line) ) //Number of coins
-        goto badfile;
-    else FileData.coins=line.toInt();
-
-    str_count++;line = in.readLine();
-    if( SMBX64::sInt(line) ) //World map pos X
-        goto badfile;
-    else FileData.worldPosX=line.toInt();
-
-    str_count++;line = in.readLine();
-    if( SMBX64::sInt(line) ) //World map pos Y
-        goto badfile;
-    else FileData.worldPosY=line.toInt();
-
-    for(i=0; i< (file_format>=56? 5 : 2) ;i++)
+    for(i=0; i< (ge(56)? 5 : 2) ;i++)
     {
         saveCharacterState charState;
         charState = dummySavCharacterState();
-
-        str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //Character's power up state
-            goto badfile;
-        else charState.state=line.toInt();
-
-        str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //ID of item in the slot
-            goto badfile;
-        else charState.itemID=line.toInt();
-
-        if(file_format>=10)
-        {
-            str_count++;line = in.readLine();
-            if( SMBX64::Int(line) ) //Type of mount
-                goto badfile;
-            else charState.mountType=line.toInt();
-        }
-
-        str_count++;line = in.readLine();
-        if( SMBX64::Int(line) ) //ID of mount
-            goto badfile;
-        else charState.mountID=line.toInt();
-
-        if(file_format<10)
-        {
-            if(charState.mountID>0)
-                charState.mountType=1;
-        }
-
-        if(file_format>=56)
-        {
-            str_count++;line = in.readLine();
-            if( SMBX64::Int(line) ) //ID of mount
-                goto badfile;
-            else charState.health=line.toInt();
-        }
+        nextLine(); UIntVar(charState.state, line);//Character's power up state
+        nextLine(); UIntVar(charState.itemID, line) //ID of item in the slot
+        if(ge(10)) { nextLine();UIntVar(charState.mountType, line); } //Type of mount
+        nextLine(); UIntVar(charState.mountID, line); //ID of mount
+        if(lt(10)) { if(charState.mountID>0) charState.mountType=1; }
+        if(ge(56)) { nextLine(); UIntVar(charState.health, line); } //ID of mount
         FileData.characterStates.push_back(charState);
     }
 
-    str_count++;line = in.readLine();
-    if( SMBX64::Int(line) ) //ID of music
-        goto badfile;
-    else FileData.musicID=line.toInt();
-
-    str_count++;line = in.readLine();
+    nextLine(); UIntVar(FileData.musicID, line);//ID of music
+    nextLine();
     if(line=="" || in.isEOF()) goto successful;
 
-    if(file_format>=56)
-    {
-        if( SMBX64::wBool(line) ) //ID of music
-        goto badfile;
-        else FileData.gameCompleted=SMBX64::wBoolR(line);
-    }
+    if(ge(56)) { wBoolVar(FileData.gameCompleted, line);}//Game was complited
 
     arrayIdCounter=1;
 
-    str_count++;line = in.readLine();
+    nextLine();
     while((line!="\"next\"")&&(!line.isNull()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
         level.second=false;
-
-        if( SMBX64::wBool(line) ) //Is level shown
-            goto badfile;
-        else level.second = SMBX64::wBoolR(line);
+        wBoolVar(level.second, line); //Is level shown
 
         FileData.visibleLevels.push_back(level);
         arrayIdCounter++;
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     arrayIdCounter=1;
-    str_count++;line = in.readLine();
+    nextLine();
     while((line!="\"next\"")&&(!line.isNull()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
         level.second=false;
-
-        if( SMBX64::wBool(line) ) //Is path shown
-            goto badfile;
-        else level.second = SMBX64::wBoolR(line);
+        wBoolVar(level.second, line); //Is path shown
 
         FileData.visiblePaths.push_back(level);
         arrayIdCounter++;
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
     arrayIdCounter=1;
-    str_count++;line = in.readLine();
+    nextLine();
     while((line!="\"next\"")&&(!line.isNull()))
     {
         visibleItem level;
         level.first=arrayIdCounter;
         level.second=false;
-
-        if( SMBX64::wBool(line) ) //Is path shown
-            goto badfile;
-        else level.second = SMBX64::wBoolR(line);
+        wBoolVar(level.second, line); //Is Scenery shown
 
         FileData.visibleScenery.push_back(level);
         arrayIdCounter++;
-        str_count++;line = in.readLine();
+        nextLine();
     }
 
-    if(file_format>=7)
+    if(ge(7))
     {
-        str_count++;line = in.readLine();
+        nextLine();
         while((line!="\"next\"")&&(!line.isNull()))
         {
             starOnLevel gottenStar;
             gottenStar.first="";
             gottenStar.second=0;
 
-            if( SMBX64::qStr(line) ) //Level file
-                goto badfile;
-            else gottenStar.first= removeQuotes(line);
-
-            if(file_format>=16)
-            {
-                str_count++;line = in.readLine();
-                if( SMBX64::Int(line) ) //Section ID
-                    goto badfile;
-                else gottenStar.second= line.toInt();
-            }
+            strVar(gottenStar.first, line);//Level file
+            if(ge(16)) { nextLine(); UIntVar(gottenStar.second, line); } //Section ID
 
             FileData.gottenStars.push_back(gottenStar);
-            str_count++;line = in.readLine();
+            nextLine();
         }
     }
 
-    if(file_format>=21)
+    if(ge(21))
     {
-        str_count++;line = in.readLine();
+        nextLine();
         if(line=="" || in.isEOF()) goto successful;
-        if( SMBX64::Int(line) ) //Total Number of stars
-            goto badfile;
-        else FileData.totalStars = line.toInt();
+        UIntVar(FileData.totalStars, line);//Total Number of stars
     }
 
     successful:
@@ -236,7 +152,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(QString RawData, QString filePath)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
+    BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }

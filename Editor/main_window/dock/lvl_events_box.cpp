@@ -883,8 +883,8 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
                 {((ItemBlock *)(*it))->blockData.event_destroy = newEventName; isMod=true;}
             if( ((ItemBlock *)(*it))->blockData.event_hit ==  eventName)
                 {((ItemBlock *)(*it))->blockData.event_hit = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->blockData.event_no_more ==  eventName)
-                {((ItemBlock *)(*it))->blockData.event_no_more = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->blockData.event_emptylayer ==  eventName)
+                {((ItemBlock *)(*it))->blockData.event_emptylayer = newEventName; isMod=true;}
             if(isMod){ ((ItemBlock *)(*it))->arrayApply(); }
         }
         else
@@ -897,8 +897,8 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
                 {((ItemNPC *)(*it))->npcData.event_die = newEventName; isMod=true;}
             if( ((ItemNPC *)(*it))->npcData.event_talk ==  eventName)
                 {((ItemNPC *)(*it))->npcData.event_talk = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->npcData.event_nomore ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_nomore = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->npcData.event_emptylayer ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_emptylayer = newEventName; isMod=true;}
             if(isMod) {((ItemNPC *)(*it))->arrayApply();}
         }
     }
@@ -1906,7 +1906,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
         long i = getEventArrayIndex();
         if(i<0) return;
 
-        ItemMsgBox * msgBox = new ItemMsgBox(edit->LvlData.events[i].msg,
+        ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::EVENT, edit->LvlData.events[i].msg, false,
                 tr("Please, enter message\nMessage limits: max line lenth is 28 characters"));
         msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));

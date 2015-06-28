@@ -19,22 +19,25 @@
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "pge_x.h"
+#include "pge_x_macro.h"
 
+#ifdef PGE_FILES_QT
+#include <QDir>
+#include <QFileInfo>
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #endif
+#endif
 
-GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath, bool sielent)
+GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     GamesaveData FileData = dummySaveDataArray();
-    PGEFile pgeX_Data( RawData );
-    QString line;
+    errorString.clear();
+    PGEX_FileBegin();
 
     saveCharacterState plr_state;
     visibleItem        vz_item;
     starOnLevel        star_level;
-
-    int str_count=0;
 
     //Add path data
     if(!filePath.isEmpty())
@@ -51,18 +54,12 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
     FileData.modified = false;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    if( !pgeX_Data.buildTreeFromRaw() )
+    PGEX_FileParseTree(RawData);
+    PGEX_FetchSection()
     {
-        errorString = pgeX_Data.lastError();
-        goto badfile;
-    }
-
-
-    for(int section=0; section<pgeX_Data.dataTree.size(); section++) //look sections
-    {
-        PGEFile::PGEX_Entry &f_section = pgeX_Data.dataTree[section];
+        PGEX_FetchSection_begin()
         ///////////////////JOKES//////////////////////
-        if(f_section.name=="JOKES")
+        PGEX_Section("JOKES")
         {
             #ifdef PGE_FILES_USE_MESSAGEBOXES
             if((!silentMode)&&(!f_section.data.isEmpty()))
@@ -72,436 +69,147 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
                             QMessageBox::Ok);
             #endif
         }//jokes
+
         ///////////////////HEADER//////////////////////
-        else
-        if(f_section.name=="SAVE_HEADER")
+        PGEX_Section("SAVE_HEADER")
         {
-            if(f_section.type!=PGEFile::PGEX_Struct)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
-
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
-            {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
+                PGEX_Values() //Look markers and values
                 {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-
-                PGEFile::PGEX_Item x = f_section.data[sdata];
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
-                {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="LV")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.lives= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="CN")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.coins= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="PT")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.points= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="TS")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.totalStars= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="WX")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            FileData.worldPosX= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="WY")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            FileData.worldPosY= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="HW")
-                    {
-                        if(PGEFile::IsIntS(v.value))
-                            FileData.last_hub_warp= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MI")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            FileData.musicID= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MF")
-                    {
-                        if(PGEFile::IsQStr(v.value))
-                            FileData.musicFile= PGEFile::X2STR(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="GC")
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            FileData.gameCompleted= (bool)v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("LV", FileData.lives)
+                    PGEX_UIntVal("CN", FileData.coins)
+                    PGEX_UIntVal("PT", FileData.points)
+                    PGEX_UIntVal("TS", FileData.totalStars)
+                    PGEX_SIntVal("WX", FileData.worldPosX)
+                    PGEX_SIntVal("WY", FileData.worldPosY)
+                    PGEX_SIntVal("HW", FileData.last_hub_warp)
+                    PGEX_UIntVal("MI", FileData.musicID)
+                    PGEX_StrVal ("MF", FileData.musicFile)
+                    PGEX_BoolVal("GC", FileData.gameCompleted)
                 }
             }
         }//Header
-        else ///////////////////CHARACTERS//////////////////////
-        if(f_section.name=="CHARACTERS")
+
+
+        ///////////////////CHARACTERS//////////////////////
+        PGEX_Section("CHARACTERS")
         {
-            if(f_section.type!=PGEFile::PGEX_Struct)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
-
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
-            {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
-
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 plr_state = dummySavCharacterState();
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values()
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="ID")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.id = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="ST")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.state = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="IT")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.itemID = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MT")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.mountType = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="MI")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.mountID= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="HL")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            plr_state.health= v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", plr_state.id)
+                    PGEX_UIntVal("ST", plr_state.state)
+                    PGEX_UIntVal("IT", plr_state.itemID)
+                    PGEX_UIntVal("MT", plr_state.mountType)
+                    PGEX_UIntVal("MI", plr_state.mountID)
+                    PGEX_UIntVal("HL", plr_state.health)
                 }
                 FileData.characterStates.push_back(plr_state);
             }
         }//CHARACTERS
-        else ///////////////////CHARACTERS_PER_PLAYERS//////////////////////
-        if(f_section.name=="CHARACTERS_PER_PLAYERS")
+
+
+        ///////////////////CHARACTERS_PER_PLAYERS//////////////////////
+        PGEX_Section("CHARACTERS_PER_PLAYERS")
         {
-            if(f_section.type!=PGEFile::PGEX_Struct)
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
-
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
-            {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
-
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
                 int character=0;
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values()
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="ID")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            character = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", character)
                 }
                 FileData.currentCharacter.push_back(character);
             }
         }//CHARACTERS_PER_PLAYERS
-        else ///////////////////VIZ_LEVELS//////////////////////
-        if(f_section.name=="VIZ_LEVELS")
-        {
-            if(f_section.type!=PGEFile::PGEX_Struct)
-            {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
 
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
+        ///////////////////VIZ_LEVELS//////////////////////
+        PGEX_Section("VIZ_LEVELS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                 vz_item.first=0;
                 vz_item.second=false;
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="ID")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            vz_item.first = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="V")
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            vz_item.second = (bool)v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", vz_item.first)
+                    PGEX_BoolVal("V", vz_item.second)
                 }
                 FileData.visibleLevels.push_back(vz_item);
             }
         }//VIZ_LEVELS
-        else ///////////////////VIZ_PATHS//////////////////////
-        if(f_section.name=="VIZ_PATHS")
-        {
-            if(f_section.type!=PGEFile::PGEX_Struct)
-            {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
 
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
+        ///////////////////VIZ_PATHS//////////////////////
+        PGEX_Section("VIZ_PATHS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                 vz_item.first=0;
                 vz_item.second=false;
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="ID")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            vz_item.first = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="V")
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            vz_item.second = (bool)v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", vz_item.first)
+                    PGEX_BoolVal("V", vz_item.second)
                 }
                 FileData.visiblePaths.push_back(vz_item);
             }
         }//VIZ_PATHS
-        else ///////////////////VIZ_SCENERY//////////////////////
-        if(f_section.name=="VIZ_SCENERY")
-        {
-            if(f_section.type!=PGEFile::PGEX_Struct)
-            {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
 
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
+        ///////////////////VIZ_SCENERY//////////////////////
+        PGEX_Section("VIZ_SCENERY")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                 vz_item.first=0;
                 vz_item.second=false;
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="ID")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            vz_item.first = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="V")
-                    {
-                        if(PGEFile::IsBool(v.value))
-                            vz_item.second = (bool)v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_UIntVal("ID", vz_item.first)
+                    PGEX_BoolVal("V", vz_item.second)
                 }
                 FileData.visibleScenery.push_back(vz_item);
             }
         }//VIZ_SCENERY
-        else ///////////////////STARS//////////////////////
-        if(f_section.name=="STARS")
-        {
-            if(f_section.type!=PGEFile::PGEX_Struct)
-            {
-                errorString=QString("Wrong section data syntax:\nSection [%1]").arg(f_section.name);
-                goto badfile;
-            }
 
-            for(int sdata=0;sdata<f_section.data.size();sdata++)
+        ///////////////////STARS//////////////////////
+        PGEX_Section("STARS")
+        {
+            PGEX_SectionBegin(PGEFile::PGEX_Struct);
+            PGEX_Items()
             {
-                if(f_section.data[sdata].type!=PGEFile::PGEX_Struct)
-                {
-                    errorString=QString("Wrong data item syntax:\nSection [%1]\nData line %2")
-                            .arg(f_section.name)
-                            .arg(sdata);
-                    goto badfile;
-                }
-                PGEFile::PGEX_Item x = f_section.data[sdata];
+                PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                 star_level.first="";
                 star_level.second=0;
-                for(int sval=0;sval<x.values.size();sval++) //Look markers and values
+                PGEX_Values() //Look markers and values
                 {
-                    PGEFile::PGEX_Val v = x.values[sval];
-                    errorString=QString("Wrong value syntax\nSection [%1]\nData line %2\nMarker %3\nValue %4")
-                            .arg(f_section.name)
-                            .arg(sdata)
-                            .arg(v.marker)
-                            .arg(v.value);
-
-                    if(v.marker=="L")
-                    {
-                        if(PGEFile::IsQStr(v.value))
-                            star_level.first = PGEFile::X2STR(v.value);
-                        else
-                            goto badfile;
-                    }
-                    else
-                    if(v.marker=="S")
-                    {
-                        if(PGEFile::IsIntU(v.value))
-                            star_level.second = v.value.toInt();
-                        else
-                            goto badfile;
-                    }
+                    PGEX_ValueBegin()
+                    PGEX_StrVal("L", star_level.first)
+                    PGEX_UIntVal("S", star_level.second)
                 }
                 FileData.gottenStars.push_back(vz_item);
             }
@@ -522,9 +230,9 @@ GamesaveData FileFormats::ReadExtendedSaveFile(QString RawData, QString filePath
 
 
 
-QString FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
+PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
 {
-    QString TextData;
+    PGESTRING TextData;
     long i;
 
     TextData += "SAVE_HEADER\n";

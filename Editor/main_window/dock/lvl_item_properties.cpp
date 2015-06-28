@@ -301,10 +301,10 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             block.event_hit=LvlPlacingItems::blockSet.event_hit;
 
             if(ui->PROPS_BlkEventLEmptyLock->isChecked())
-                LvlPlacingItems::blockSet.event_no_more=BlockEventLayerEmpty;
+                LvlPlacingItems::blockSet.event_emptylayer=BlockEventLayerEmpty;
             else
-                LvlPlacingItems::blockSet.event_no_more="";
-            block.event_no_more=LvlPlacingItems::blockSet.event_no_more;
+                LvlPlacingItems::blockSet.event_emptylayer="";
+            block.event_emptylayer=LvlPlacingItems::blockSet.event_emptylayer;
         }
 
 
@@ -346,7 +346,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(0);
         for(int i=0; i<ui->PROPS_BlkEventLayerEmpty->count();i++)
         {
-            if(ui->PROPS_BlkEventLayerEmpty->itemText(i)==block.event_no_more)
+            if(ui->PROPS_BlkEventLayerEmpty->itemText(i)==block.event_emptylayer)
             {ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(i); break;}
         }
 
@@ -495,8 +495,8 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             LvlPlacingItems::npcSet.nomove = mw()->configs.main_npc[j].default_nomovable_value;
             npc.nomove = mw()->configs.main_npc[j].default_nomovable_value;
 
-            LvlPlacingItems::npcSet.legacyboss = mw()->configs.main_npc[j].default_boss_value;
-            npc.legacyboss = mw()->configs.main_npc[j].default_boss_value;
+            LvlPlacingItems::npcSet.is_boss = mw()->configs.main_npc[j].default_boss_value;
+            npc.is_boss = mw()->configs.main_npc[j].default_boss_value;
 
             if(mw()->configs.main_npc[j].default_special)
             {
@@ -527,10 +527,10 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             npc.event_talk=LvlPlacingItems::npcSet.event_talk;
 
             if(ui->PROPS_NpcEventLEmptyLock->isChecked())
-                LvlPlacingItems::npcSet.event_nomore=NpcEventLayerEmpty;
+                LvlPlacingItems::npcSet.event_emptylayer=NpcEventLayerEmpty;
             else
-                LvlPlacingItems::npcSet.event_nomore="";
-            npc.event_nomore=LvlPlacingItems::npcSet.event_nomore;
+                LvlPlacingItems::npcSet.event_emptylayer="";
+            npc.event_emptylayer=LvlPlacingItems::npcSet.event_emptylayer;
         }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
@@ -655,7 +655,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
 
         ui->PROPS_NpcFri->setChecked( npc.friendly );
         ui->PROPS_NPCNoMove->setChecked( npc.nomove );
-        ui->PROPS_NpcBoss->setChecked( npc.legacyboss );
+        ui->PROPS_NpcBoss->setChecked( npc.is_boss );
 
         ui->PROPS_NpcGenerator->setChecked( npc.generator );
         ui->PROPS_NPCGenBox->setVisible( npc.generator );
@@ -735,7 +735,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(0);
         for(int i=0; i<ui->PROPS_NpcEventEmptyLayer->count();i++)
         {
-            if(ui->PROPS_NpcEventEmptyLayer->itemText(i)==npc.event_nomore)
+            if(ui->PROPS_NpcEventEmptyLayer->itemText(i)==npc.event_emptylayer)
             {ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(i); break;}
         }
         LvlItemPropsLock=false;
@@ -1275,10 +1275,10 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
     if(blockPtr<0)
     {
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
-            LvlPlacingItems::blockSet.event_no_more = arg1;
+            LvlPlacingItems::blockSet.event_emptylayer = arg1;
         else
-            LvlPlacingItems::blockSet.event_no_more = "";
-        BlockEventLayerEmpty = LvlPlacingItems::blockSet.event_no_more;
+            LvlPlacingItems::blockSet.event_emptylayer = "";
+        BlockEventLayerEmpty = LvlPlacingItems::blockSet.event_emptylayer;
     }
 
     else
@@ -1292,9 +1292,9 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
             {
                 modData.blocks.push_back(((ItemBlock*)item)->blockData);
                 if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
-                    ((ItemBlock*)item)->blockData.event_no_more = arg1;
+                    ((ItemBlock*)item)->blockData.event_emptylayer = arg1;
                 else
-                    ((ItemBlock*)item)->blockData.event_no_more = "";
+                    ((ItemBlock*)item)->blockData.event_emptylayer = "";
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
@@ -1623,7 +1623,7 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
 
     if(npcPtr<0)
     {
-        LvlPlacingItems::npcSet.legacyboss = checked;
+        LvlPlacingItems::npcSet.is_boss = checked;
     }
     else
     if (mw()->activeChildWindow()==1)
@@ -1653,9 +1653,11 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
     //modText.push_back(QVariant(npcData.msg));
 
     QString message;
+    bool friendly = false;
     if(npcPtr<0)
     {
         message = LvlPlacingItems::npcSet.msg;
+        friendly = LvlPlacingItems::npcSet.friendly;
     }
     else
     if (mw()->activeChildWindow()==1)
@@ -1665,12 +1667,13 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         {
             if(SelItem->data(ITEM_TYPE).toString()=="NPC")
             {
-                message = ((ItemNPC *) SelItem)->npcData.msg; break;
+                message = ((ItemNPC *) SelItem)->npcData.msg;
+                friendly = ((ItemNPC *) SelItem)->npcData.friendly; break;
             }
         }
     }
 
-    ItemMsgBox * msgBox = new ItemMsgBox(message);
+    ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly);
     util::DialogToCenter(msgBox, true);
 
     if(msgBox->exec()==QDialog::Accepted)
@@ -1679,6 +1682,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         if(npcPtr<1)
         {
             LvlPlacingItems::npcSet.msg = msgBox->currentText;
+            LvlPlacingItems::npcSet.friendly = msgBox->isFriendlyChecked();
         }
         else
         if (mw()->activeChildWindow()==1)
@@ -1690,9 +1694,11 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
                 if(SelItem->data(ITEM_TYPE).toString()=="NPC"){
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                     ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
+                    ((ItemNPC *) SelItem)->setFriendly( msgBox->isFriendlyChecked() );
                 }
             }
             mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_MESSAGE, QVariant(msgBox->currentText));
+            mw()->activeLvlEditWin()->scene->addChangeSettingsHistory(selData, HistorySettings::SETTING_FRIENDLY, QVariant(msgBox->isFriendlyChecked()));
         }
 
         QString npcmsg = (msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText);
@@ -1702,6 +1708,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
             npcmsg.push_back("...");
         }
         ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
+        ui->PROPS_NpcFri->setChecked( msgBox->isFriendlyChecked() );
     }
     delete msgBox;
 
@@ -2578,10 +2585,10 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
     if(npcPtr<0)
     {
         if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
-            LvlPlacingItems::npcSet.event_nomore = arg1;
+            LvlPlacingItems::npcSet.event_emptylayer = arg1;
         else
-            LvlPlacingItems::npcSet.event_nomore = "";
-        NpcEventLayerEmpty = LvlPlacingItems::npcSet.event_nomore;
+            LvlPlacingItems::npcSet.event_emptylayer = "";
+        NpcEventLayerEmpty = LvlPlacingItems::npcSet.event_emptylayer;
     }
     else
     if (mw()->activeChildWindow()==1)
@@ -2594,9 +2601,9 @@ void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QS
             {
                 modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
-                    ((ItemNPC*)item)->npcData.event_nomore = arg1;
+                    ((ItemNPC*)item)->npcData.event_emptylayer = arg1;
                 else
-                    ((ItemNPC*)item)->npcData.event_nomore = "";
+                    ((ItemNPC*)item)->npcData.event_emptylayer = "";
                 ((ItemNPC*)item)->arrayApply();
             }
         }

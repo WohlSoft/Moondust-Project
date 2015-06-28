@@ -155,7 +155,7 @@
        <item row="11" column="1" colspan="2">
         <widget class="QSpinBox" name="WLD_PROPS_EnterTo">
          <property name="maximum">
-          <number>250</number>
+          <number>10000</number>
          </property>
         </widget>
        </item>
