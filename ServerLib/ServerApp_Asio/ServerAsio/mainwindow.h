@@ -22,6 +22,8 @@ private slots:
 
     void addText(QString text);
 
+    void on_bntSendDbgText_clicked();
+
 private:
     Ui::MainWindow *ui;
     QScopedPointer<PGENET_Server> m_server;

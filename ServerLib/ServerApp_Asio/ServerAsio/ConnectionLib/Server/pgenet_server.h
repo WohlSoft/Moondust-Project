@@ -17,6 +17,7 @@
 #include <QtConcurrent>
 
 #include "low-level/pgenetll_server.h"
+#include <ConnectionLib/Shared/util/rawpacketdecoder.h>
 
 using asio::ip::tcp;
 
@@ -59,17 +60,19 @@ private:
 
 
     // BACKGROUND WORKER MANAGING:
+    // Unused right now
     void _bgWorker_NewMessage(std::string message);
+
     void _bgWorker_quit();
 
     // BACKGROUND WORKER:
     void _bgWorker_WaitForIncoming();
     QFuture<void> _bgWorkerState;
 
-    // Pending variables
-    std::string _bgWorker_buf;
-    std::atomic_bool _bgWorker_shouldQuit;
     // ///////////// SERVER TOOLS /////////////////////////
+
+    RawPacketDecoder m_pckDecoder;
+    std::shared_ptr<ThreadedQueue<std::string> > m_fullPackets;
 
     // SERVICE / SERVER
     QScopedPointer<asio::io_service> m_service;

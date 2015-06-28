@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QTcpSocket>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -25,3 +27,24 @@ void MainWindow::addText(QString text)
 {
     ui->plainTextEdit->appendPlainText(text);
 }
+
+void MainWindow::on_bntSendDbgText_clicked()
+{
+    QtConcurrent::run([this](){
+        QTcpSocket sock;
+        sock.connectToHost("127.0.0.1", 24444);
+        sock.waitForConnected();
+
+        sock.write("1234_You see.... How should I get all the text?");
+        sock.flush();
+
+        QThread::currentThread()->sleep(2);
+
+        sock.write("Closing!");
+        sock.flush();
+
+        sock.close();
+    });
+}
+
+

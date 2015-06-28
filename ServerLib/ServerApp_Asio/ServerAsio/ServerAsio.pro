@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui concurrent
+QT       += core gui concurrent network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     ConnectionLib/Server/low-level/pgenetll_server.cpp \
     ConnectionLib/Server/low-level/pgenetll_session.cpp \
     ../../../_Libs/asio/asio/impl/src.cpp \
-    ConnectionLib/Shared/pgenet_global.cpp
+    ConnectionLib/Shared/pgenet_global.cpp \
+    ConnectionLib/Shared/util/rawpacketdecoder.cpp
 
 HEADERS  += mainwindow.h \
     ConnectionLib/Server/pgenet_server.h \
@@ -393,6 +394,8 @@ HEADERS  += mainwindow.h \
     ../../../_Libs/asio/asio/write_at.hpp \
     ../../../_Libs/asio/asio/yield.hpp \
     ../../../_Libs/asio/asio.hpp \
-    ConnectionLib/Shared/pgenet_global.h
+    ConnectionLib/Shared/pgenet_global.h \
+    ConnectionLib/Shared/util/ThreadedQueue.h \
+    ConnectionLib/Shared/util/rawpacketdecoder.h
 
 FORMS    += mainwindow.ui

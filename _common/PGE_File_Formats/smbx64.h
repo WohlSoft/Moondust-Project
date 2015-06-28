@@ -22,10 +22,13 @@
 #include "pge_file_lib_globs.h"
 
 //SMBX64 standard data
+#ifdef PGE_FILES_QT
 class SMBX64 : public QObject
 {
-#ifdef PGE_FILES_QT
     Q_OBJECT
+#else
+class SMBX64
+{
 #endif
 
 public:
