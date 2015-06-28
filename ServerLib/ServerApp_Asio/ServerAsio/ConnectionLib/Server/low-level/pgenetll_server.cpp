@@ -9,10 +9,11 @@ PGENETLL_Server::PGENETLL_Server(asio::io_service& io_service, short port) :
 
 }
 
-
+#include <iostream>
 
 void PGENETLL_Server::startAccepting()
 {
+    std::cout << "Start listening!" << std::endl;
     m_pgenetll_acceptor.async_accept(m_pgenetll_nextsocket,
         [this](std::error_code ec)
         {
@@ -20,8 +21,18 @@ void PGENETLL_Server::startAccepting()
             {
                 std::shared_ptr<PGENETLL_Session> newSession = std::make_shared<PGENETLL_Session>(std::move(m_pgenetll_nextsocket));
                 newSession->start();
-
+                newSession->setIncomingTextFunc(m_incomingTextFunc);
+                std::cout << "Incoming connection!" << std::endl;
+            }else{
+                std::cout << "Error happened: " << ec.message() << std::endl;
             }
             startAccepting();
         });
 }
+
+
+void PGENETLL_Server::setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc)
+{
+    m_incomingTextFunc = incomingTextFunc;
+}
+
