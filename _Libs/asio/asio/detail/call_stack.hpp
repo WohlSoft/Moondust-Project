@@ -110,11 +110,11 @@ public:
 
 private:
   // The top of the stack of calls for the current thread.
-  static tss_ptr<context> top_;
+  static win_tss_ptr<context> top_;
 };
 
 template <typename Key, typename Value>
-tss_ptr<typename call_stack<Key, Value>::context>
+win_tss_ptr<typename call_stack<Key, Value>::context>
 call_stack<Key, Value>::top_;
 
 } // namespace detail
