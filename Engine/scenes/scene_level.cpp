@@ -359,6 +359,7 @@ void LevelScene::tickAnimations(float ticks)
 void LevelScene::update()
 {
     if(luaEngine.shouldShutdown()){
+        fader.setFade(10, 1.0f, 1.0f);
         setExiting(0, LvlExit::EXIT_MenuExit);
     }
     Scene::update();
@@ -483,6 +484,9 @@ void LevelScene::update()
         //update cameras
         for(QList<PGE_LevelCamera>::iterator cam=cameras.begin();cam!=cameras.end(); cam++)
             cam->update(uTickf);
+
+        //Clear garbage (be careful!)
+        //luaEngine.runGarbageCollector();
     }
 
     //Recive external commands!
