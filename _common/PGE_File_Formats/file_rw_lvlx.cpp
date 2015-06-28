@@ -665,7 +665,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-
+                layer = dummyLvlLayer();
                 PGEX_Values() //Look markers and values
                 {
                     PGEX_ValueBegin()
