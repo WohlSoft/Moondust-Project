@@ -55,6 +55,7 @@ public:
     void setFrameL(int y);
     void setFrameR(int y);
 
+    int  frameSpeed();
     void setFrameSpeed(int ms);
     void setBidirectional(bool bid);
     void setDirectedSequence(bool dd);
@@ -87,7 +88,7 @@ private:
 
     bool animated;
 
-    int frameSpeed;
+    int _frameSpeed;
     int frameStyle;
 
     bool aniBiDirect;

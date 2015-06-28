@@ -23,6 +23,7 @@
 #include <gui/pge_msgbox.h>
 
 #include <QDebug>
+#include <QFileInfo>
 
 
 bool LevelScene::setEntrance(int entr)

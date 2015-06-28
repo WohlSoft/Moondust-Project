@@ -29,7 +29,7 @@ void LVL_Npc::Activate()
     if(isActivated) return;
     setPaused(false);
 
-    deActivatable = setup->deactivation; //!< Allow deactivation of this NPC when it going offscreen
+    deActivatable = ((setup->deactivation)||(setup->scenery)); //!< Allow deactivation of this NPC when it going offscreen
     wasDeactivated=false;
 
     animator.start();
@@ -45,8 +45,6 @@ void LVL_Npc::Activate()
 
 void LVL_Npc::deActivate()
 {
-    if(!deActivatable) return;
-
     if(!wasDeactivated)
     {
         wasDeactivated=true;
@@ -58,10 +56,9 @@ void LVL_Npc::deActivate()
     {
         setDefaults();
         setPos(data.x, data.y);
+        animator.stop();
+        setPaused(true);
+        if(!reSpawnable) kill();
     }
-    setPaused(true);
-    animator.stop();
-
-    if(!reSpawnable) kill();
 }
 

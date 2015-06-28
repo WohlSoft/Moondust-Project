@@ -36,6 +36,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     _isInited=false;
     isLuaNPC=false;
     isWarping=false;
+    is_scenery=false;
 
     warpDirectO=0;
     warpSpriteOffset=1.0f;

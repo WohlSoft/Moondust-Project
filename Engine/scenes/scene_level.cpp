@@ -33,11 +33,12 @@
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
-
-#include <QtDebug>
 #include <settings/global_settings.h>
 
 #include "level/lvl_scene_ptr.h"
+
+#include <QApplication>
+#include <QtDebug>
 
 #include <common_features/logger.h>
 

@@ -19,10 +19,7 @@
 #ifndef LVL_FILEDATA_H
 #define LVL_FILEDATA_H
 
-#include <QVector>
-#include <QString>
-#include <QStringList>
-
+#include "pge_file_lib_globs.h"
 #include "meta_filedata.h"
 
 //////////////////////Level file Data//////////////////////
@@ -40,7 +37,7 @@ struct LevelSection
     unsigned int background;
     bool noback;
     bool underwater;
-    QString music_file;
+    PGESTRING music_file;
 
     //Editing:
     long PositionX;
@@ -67,10 +64,10 @@ struct LevelBlock
     long npc_id;
     bool invisible;
     bool slippery;
-    QString layer;
-    QString event_destroy;
-    QString event_hit;
-    QString event_no_more;
+    PGESTRING layer;
+    PGESTRING event_destroy;
+    PGESTRING event_hit;
+    PGESTRING event_no_more;
 
     //editing
     unsigned int array_id;
@@ -83,7 +80,7 @@ struct LevelBGO
     long x;
     long y;
     unsigned long id; //Block ID
-    QString layer;
+    PGESTRING layer;
 
     //Extended
     enum zmodes{
@@ -95,7 +92,7 @@ struct LevelBGO
     };
 
     int   z_mode;//!< Mode of displaying of BGO
-    qreal z_offset; //Offset of Z-value from default
+    double z_offset; //Offset of Z-value from default
 
     //editing
     long smbx64_sp;
@@ -117,16 +114,16 @@ struct LevelNPC
     int generator_direct;
     int generator_type;
     int generator_period;
-    QString msg;
+    PGESTRING msg;
     bool friendly;
     bool nomove;
     bool legacyboss;
-    QString layer;
-    QString event_activate;
-    QString event_die;
-    QString event_talk;
-    QString event_nomore;
-    QString attach_layer;
+    PGESTRING layer;
+    PGESTRING event_activate;
+    PGESTRING event_die;
+    PGESTRING event_talk;
+    PGESTRING event_nomore;
+    PGESTRING attach_layer;
 
     //editing
     unsigned int array_id;
@@ -147,14 +144,14 @@ struct LevelDoor
     int idirect;
     int odirect;
     int type;
-    QString lname;
+    PGESTRING lname;
     long warpto;
     bool lvl_i;
     bool lvl_o;
     long world_x;
     long world_y;
     int stars;
-    QString layer;
+    PGESTRING layer;
     bool unknown;
     bool novehicles;
     bool allownpc;
@@ -173,7 +170,7 @@ struct LevelPhysEnv
     long w;
     long unknown;
     bool quicksand;
-    QString layer;
+    PGESTRING layer;
 
     //editing
     unsigned int array_id;
@@ -182,7 +179,7 @@ struct LevelPhysEnv
 
 struct LevelLayer
 {
-    QString name;
+    PGESTRING name;
     bool hidden;
     bool locked;
 
@@ -192,9 +189,9 @@ struct LevelLayer
 
 struct LevelEvent_layers
 {
-    QString hide;
-    QString show;
-    QString toggle;
+    PGESTRING hide;
+    PGESTRING show;
+    PGESTRING toggle;
 };
 
 struct LevelEvent_Sets
@@ -209,19 +206,19 @@ struct LevelEvent_Sets
 
 struct LevelSMBX64Event
 {
-    QString name;
-    QString msg;
+    PGESTRING name;
+    PGESTRING msg;
     long sound_id;
     long end_game;
-    QList<LevelEvent_layers > layers;
+    PGELIST<LevelEvent_layers > layers;
 
     bool nosmoke;
-    QStringList layers_hide;
-    QStringList layers_show;
-    QStringList layers_toggle;
+    PGESTRINGList layers_hide;
+    PGESTRINGList layers_show;
+    PGESTRINGList layers_toggle;
 
-    QList<LevelEvent_Sets > sets;
-    QString trigger;
+    PGELIST<LevelEvent_Sets > sets;
+    PGESTRING trigger;
     long trigger_timer;
 
     bool ctrl_up;
@@ -238,7 +235,7 @@ struct LevelSMBX64Event
 
     bool autostart;
 
-    QString movelayer;
+    PGESTRING movelayer;
     float layer_speed_x;
     float layer_speed_y;
     float move_camera_x;
@@ -254,22 +251,22 @@ struct LevelData
 {
     int stars;
     bool ReadFileValid;
-    QString LevelName;
-    QList<LevelSection > sections;       //Sections
-    QList<PlayerPoint > players;         //Players
-    QList<LevelBlock > blocks;           //Blocks
+    PGESTRING LevelName;
+    PGELIST<LevelSection > sections;       //Sections
+    PGELIST<PlayerPoint > players;         //Players
+    PGELIST<LevelBlock > blocks;           //Blocks
     unsigned int blocks_array_id;   //latest array_id
-    QList<LevelBGO > bgo;                //Background objects
+    PGELIST<LevelBGO > bgo;                //Background objects
     unsigned int bgo_array_id;   //latest array_id
-    QList<LevelNPC > npc;                //NPCs
+    PGELIST<LevelNPC > npc;                //NPCs
     unsigned int npc_array_id;   //latest array_id
-    QList<LevelDoor > doors;            //Warps and Doors
+    PGELIST<LevelDoor > doors;            //Warps and Doors
     unsigned int doors_array_id;   //latest array_id
-    QList<LevelPhysEnv > physez;            //Physical Environment zones
+    PGELIST<LevelPhysEnv > physez;            //Physical Environment zones
     unsigned int physenv_array_id;   //latest array_id
-    QList<LevelLayer > layers;          //Layers
+    PGELIST<LevelLayer > layers;          //Layers
     unsigned int layers_array_id;   //latest array_id
-    QList<LevelSMBX64Event > events;          //Events
+    PGELIST<LevelSMBX64Event > events;          //Events
     unsigned int events_array_id;   //latest array_id
 
     //meta:
@@ -281,12 +278,12 @@ struct LevelData
     bool modified;
     bool untitled;
     bool smbx64strict;
-    QString filename;
-    QString path;
+    PGESTRING filename;
+    PGESTRING path;
 
     //Useful functions
-    bool eventIsExist(QString title);
-    bool layerIsExist(QString title);
+    bool eventIsExist(PGESTRING title);
+    bool layerIsExist(PGESTRING title);
 };
 
 

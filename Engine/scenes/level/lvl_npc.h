@@ -163,8 +163,12 @@ public:
     void lua_setSequence(luabind::object frames);
     void lua_setOnceAnimation(bool en);
     bool lua_animationIsFinished();
-
-    inline int getID() { return setup->id; }
+    int  lua_frameDelay();
+    void lua_setFrameDelay(int ms);
+    inline long special1() { return data.special_data; }
+    inline long special2() { return data.special_data2; }
+    inline bool isBoss() { return data.legacyboss; }
+    inline int getID() { return data.id; }
     bool isLuaNPC;
 
     int health;
