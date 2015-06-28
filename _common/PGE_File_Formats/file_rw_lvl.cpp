@@ -222,7 +222,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         nextLine(); wBoolVar(section.IsWarp, line);     //Connect sides of section
         nextLine(); wBoolVar(section.OffScreenEn, line);//Offscreen exit
         nextLine(); UIntVar(section.background, line);  //BackGround id
-        if(ge(1)) {nextLine(); wBoolVar(section.noback, line);} //Don't walk to left (no turn back)
+        if(ge(1)) {nextLine(); wBoolVar(section.lock_left_scroll, line);} //Don't walk to left (no turn back)
         if(ge(30)){nextLine(); wBoolVar(section.underwater, line);}//Underwater
         if(ge(2)) {nextLine(); strVar(section.music_file, line);}//Custom Music
 
@@ -294,7 +294,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         if(ge(14)) {
             nextLine(); strVar(blocks.event_destroy, line);
             nextLine(); strVar(blocks.event_hit, line);
-            nextLine(); strVar(blocks.event_no_more, line); }
+            nextLine(); strVar(blocks.event_emptylayer, line); }
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
@@ -412,7 +412,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 
          if(ge(9))
          {
-             nextLine(); wBoolVar(npcdata.legacyboss, line); //Set as boss flag
+             nextLine(); wBoolVar(npcdata.is_boss, line); //Set as boss flag
          }
          else
          {
@@ -420,7 +420,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
              {
              //set boss flag to TRUE for old file formats automatically
              case 15: case 39: case 86:
-                 npcdata.legacyboss=true;
+                 npcdata.is_boss=true;
              default: break;
              }
          }
@@ -433,7 +433,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
              nextLine(); strVar(npcdata.event_talk, line);
          }
 
-         if(ge(14)) {nextLine(); strVar(npcdata.event_nomore, line);} //No more objects in layer event
+         if(ge(14)) {nextLine(); strVar(npcdata.event_emptylayer, line);} //No more objects in layer event
          if(ge(63)) {nextLine(); strVar(npcdata.attach_layer, line);} //Layer name to attach
 
          npcdata.array_id = FileData.npc_array_id;
@@ -770,7 +770,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         TextData += SMBX64::BoolS(FileData.sections[i].OffScreenEn);
         TextData += SMBX64::IntS(FileData.sections[i].background);
         if(file_format>=1)
-        TextData += SMBX64::BoolS(FileData.sections[i].noback);
+        TextData += SMBX64::BoolS(FileData.sections[i].lock_left_scroll);
         if(file_format>=30)
         TextData += SMBX64::BoolS(FileData.sections[i].underwater);
         if(file_format>=2)
@@ -877,7 +877,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
                 {
                 TextData += SMBX64::qStrS((*block).event_destroy);
                 TextData += SMBX64::qStrS((*block).event_hit);
-                TextData += SMBX64::qStrS((*block).event_no_more);
+                TextData += SMBX64::qStrS((*block).event_emptylayer);
                 }
         }
     }
@@ -973,7 +973,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             TextData += SMBX64::BoolS(FileData.npc[i].nomove);
         }
         if(file_format>=9)
-        TextData += SMBX64::BoolS(FileData.npc[i].legacyboss);
+        TextData += SMBX64::BoolS(FileData.npc[i].is_boss);
 
         if(file_format>=10)
         {
@@ -983,7 +983,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             TextData += SMBX64::qStrS(FileData.npc[i].event_talk);
         }
         if(file_format>=14)
-        TextData += SMBX64::qStrS(FileData.npc[i].event_nomore);
+        TextData += SMBX64::qStrS(FileData.npc[i].event_emptylayer);
         if(file_format>=63)
         TextData += SMBX64::qStrS(FileData.npc[i].attach_layer);
     }

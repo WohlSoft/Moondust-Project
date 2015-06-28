@@ -42,7 +42,7 @@ void HistoryElementSettingsSection::undo()
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECNOBACK){
-        lvlScene->LvlData->sections[sectionID].noback = !extraData.toBool();
+        lvlScene->LvlData->sections[sectionID].lock_left_scroll = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECUNDERWATER){
@@ -87,7 +87,7 @@ void HistoryElementSettingsSection::redo()
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECNOBACK){
-        lvlScene->LvlData->sections[sectionID].noback = extraData.toBool();
+        lvlScene->LvlData->sections[sectionID].lock_left_scroll = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECUNDERWATER){

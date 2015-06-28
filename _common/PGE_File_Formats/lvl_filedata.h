@@ -35,7 +35,7 @@ struct LevelSection
     bool IsWarp;
     bool OffScreenEn;
     unsigned int background;
-    bool noback;
+    bool lock_left_scroll;
     bool underwater;
     PGESTRING music_file;
 
@@ -67,7 +67,7 @@ struct LevelBlock
     PGESTRING layer;
     PGESTRING event_destroy;
     PGESTRING event_hit;
-    PGESTRING event_no_more;
+    PGESTRING event_emptylayer;
 
     //editing
     unsigned int array_id;
@@ -117,12 +117,12 @@ struct LevelNPC
     PGESTRING msg;
     bool friendly;
     bool nomove;
-    bool legacyboss;
+    bool is_boss;
     PGESTRING layer;
     PGESTRING event_activate;
     PGESTRING event_die;
     PGESTRING event_talk;
-    PGESTRING event_nomore;
+    PGESTRING event_emptylayer;
     PGESTRING attach_layer;
 
     //editing

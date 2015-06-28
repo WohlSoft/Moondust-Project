@@ -73,7 +73,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     {
         WriteToLog(QtDebugMsg, "Set Section Data in menu");
         //Set Section Data in menu
-        ui->actionLevNoBack->setChecked(e->LvlData.sections[SectionId].noback);
+        ui->actionLevNoBack->setChecked(e->LvlData.sections[SectionId].lock_left_scroll);
         ui->actionLevOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
         ui->actionLevUnderW->setChecked(e->LvlData.sections[SectionId].underwater);
         ui->actionLevWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
@@ -83,7 +83,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
         dock_LvlSectionProps->ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
 
         WriteToLog(QtDebugMsg, "Set ToolBar data");
-        dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].noback);
+        dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].lock_left_scroll);
         dock_LvlSectionProps->ui->LVLPropsOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
         dock_LvlSectionProps->ui->LVLPropsUnderWater->setChecked(e->LvlData.sections[SectionId].underwater);
         dock_LvlSectionProps->ui->LVLPropsLevelWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);

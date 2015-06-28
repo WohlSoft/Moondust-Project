@@ -883,8 +883,8 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
                 {((ItemBlock *)(*it))->blockData.event_destroy = newEventName; isMod=true;}
             if( ((ItemBlock *)(*it))->blockData.event_hit ==  eventName)
                 {((ItemBlock *)(*it))->blockData.event_hit = newEventName; isMod=true;}
-            if( ((ItemBlock *)(*it))->blockData.event_no_more ==  eventName)
-                {((ItemBlock *)(*it))->blockData.event_no_more = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->blockData.event_emptylayer ==  eventName)
+                {((ItemBlock *)(*it))->blockData.event_emptylayer = newEventName; isMod=true;}
             if(isMod){ ((ItemBlock *)(*it))->arrayApply(); }
         }
         else
@@ -897,8 +897,8 @@ void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
                 {((ItemNPC *)(*it))->npcData.event_die = newEventName; isMod=true;}
             if( ((ItemNPC *)(*it))->npcData.event_talk ==  eventName)
                 {((ItemNPC *)(*it))->npcData.event_talk = newEventName; isMod=true;}
-            if( ((ItemNPC *)(*it))->npcData.event_nomore ==  eventName)
-                {((ItemNPC *)(*it))->npcData.event_nomore = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->npcData.event_emptylayer ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_emptylayer = newEventName; isMod=true;}
             if(isMod) {((ItemNPC *)(*it))->arrayApply();}
         }
     }
