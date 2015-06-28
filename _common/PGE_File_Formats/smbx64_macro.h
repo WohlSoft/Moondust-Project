@@ -47,17 +47,20 @@
 //Jump to next line
 #define nextLine() str_count++;line = in.readLine();
 
-
 #define parseLine(validate, target, converted) if( validate ) \
                                                 goto badfile;\
                                                  else target=converted;
 
 //ValueTypes
 #define strVar(target, line) parseLine( SMBX64::qStr(line), target, SMBX64::StrToStr(line))
-#define UIntVar(target, line) parseLine( SMBX64::uInt(line), target, line.toInt())
-#define SIntVar(target, line) parseLine( SMBX64::sInt(line), target, line.toInt())
+#define UIntVar(target, line) parseLine( SMBX64::uInt(line), target, toInt(line))
+#define SIntVar(target, line) parseLine( SMBX64::sInt(line), target, toInt(line))
 #define wBoolVar(target, line) parseLine( SMBX64::wBool(line), target, SMBX64::wBoolR(line))
+#ifdef PGE_FILES_QT
 #define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, line.replace(QChar(','), QChar('.')).toFloat());
+#else
+#define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, { PGE_FileFormats_misc::replaceAll(line, ",", "."); toFloat(line); } );
+#endif
 
 #define strVarMultiLine(target, line) {\
 bool first=true;\

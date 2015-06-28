@@ -5,7 +5,10 @@
 #include <QTranslator>
 #include <QRegExp>
 #include <QFileInfo>
+#include <QFile>
+#include <QFileInfo>
 #include <QDir>
+#include <QTextStream>
 #include <QtDebug>
 #else
 #include <regex>
