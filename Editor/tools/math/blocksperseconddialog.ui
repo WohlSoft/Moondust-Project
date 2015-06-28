@@ -60,7 +60,7 @@
       <number>5</number>
      </property>
      <property name="minimum">
-      <double>1.000000000000000</double>
+      <double>0.000010000000000</double>
      </property>
      <property name="maximum">
       <double>9999999.000000000000000</double>
@@ -79,10 +79,13 @@
       <string> second</string>
      </property>
      <property name="decimals">
-      <number>5</number>
+      <number>6</number>
      </property>
      <property name="minimum">
-      <double>1.000000000000000</double>
+      <double>0.000001000000000</double>
+     </property>
+     <property name="maximum">
+      <double>99999.990000000005239</double>
      </property>
     </widget>
    </item>
