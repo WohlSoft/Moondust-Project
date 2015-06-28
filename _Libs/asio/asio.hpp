@@ -10,7 +10,6 @@
 
 #ifndef ASIO_HPP
 #define ASIO_HPP
-#define ASIO_SEPARATE_COMPILATION
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma once

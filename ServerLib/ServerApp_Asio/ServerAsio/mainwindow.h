@@ -23,8 +23,8 @@ private slots:
     void addText(QString text);
 
 private:
-    QScopedPointer<PGENET_Server> m_server;
     Ui::MainWindow *ui;
+    QScopedPointer<PGENET_Server> m_server;
 };
 
 #endif // MAINWINDOW_H

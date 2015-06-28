@@ -110,12 +110,35 @@ public:
 
 private:
   // The top of the stack of calls for the current thread.
-  static win_tss_ptr<context> top_;
+
+#if !defined(ASIO_HAS_THREADS)
+static null_tss_ptr<context> top_;
+#elif defined(ASIO_HAS_THREAD_KEYWORD_EXTENSION)
+static keyword_tss_ptr<context> top_;
+#elif defined(ASIO_WINDOWS)
+static win_tss_ptr<context> top_;
+#elif defined(ASIO_HAS_PTHREADS)
+static posix_tss_ptr<context> top_;
+#endif
 };
 
+#if !defined(ASIO_HAS_THREADS)
+template <typename Key, typename Value>
+null_tss_ptr<typename call_stack<Key, Value>::context>
+call_stack<Key, Value>::top_;
+#elif defined(ASIO_HAS_THREAD_KEYWORD_EXTENSION)
+template <typename Key, typename Value>
+keyword_tss_ptr<typename call_stack<Key, Value>::context>
+call_stack<Key, Value>::top_;
+#elif defined(ASIO_WINDOWS)
 template <typename Key, typename Value>
 win_tss_ptr<typename call_stack<Key, Value>::context>
 call_stack<Key, Value>::top_;
+#elif defined(ASIO_HAS_PTHREADS)
+template <typename Key, typename Value>
+posix_tss_ptr<typename call_stack<Key, Value>::context>
+call_stack<Key, Value>::top_;
+#endif
 
 } // namespace detail
 } // namespace asio
