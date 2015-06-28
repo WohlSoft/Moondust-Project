@@ -5,7 +5,7 @@
 class PGENET_Global
 {
 public:
-    static const short Port = 1234;
+    static const short Port = 24444;
 };
 
 #endif // PGENET_GLOBAL_H
