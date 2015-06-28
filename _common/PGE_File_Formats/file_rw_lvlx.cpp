@@ -780,7 +780,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                 for(q=0;q<(signed)event.sets.size() && q<(signed)ssSets.size(); q++)
                 {
                     PGESTRINGList sizes;
-                    PGE_SPLITSTR(sizes, bgSets[q], ",");
+                    PGE_SPLITSTR(sizes, ssSets[q], ",");
                     if(sizes.size()!=4) goto badfile;
                     if(!PGEFile::IsIntS(sizes[0])) goto badfile;
                     event.sets[q].position_left = toInt(sizes[0]);
