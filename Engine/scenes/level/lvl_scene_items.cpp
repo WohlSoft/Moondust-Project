@@ -107,17 +107,11 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     if(!ConfigManager::lvl_npc_indexes.contains(npcData.id))
         return NULL;
 
-    LVL_Npc * npc;
     obj_npc* curNpcData = &ConfigManager::lvl_npc_indexes[npcData.id];
-    QString scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(curNpcData->algorithm_script);
-    if( (!scriptPath.isEmpty()) && (QFileInfo(scriptPath).exists()) )
-    {
-        npc = luaEngine.createLuaNpc(curNpcData->id);
-        if(!npc)
-            return NULL;
-    } else {
-        npc = new LVL_Npc();
-    }
+    LVL_Npc * npc = luaEngine.createLuaNpc(npcData.id);
+    if(!npc)
+        return NULL;
+
     npcData.array_id= ++data.npc_array_id;
     npc->setup = curNpcData;
     npc->reSpawnable=reSpawnable;
