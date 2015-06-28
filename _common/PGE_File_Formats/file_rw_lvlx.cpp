@@ -246,10 +246,9 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
+                FileData.metaData.crash.used=true;
                 PGEX_Values() //Look markers and values
                 {
-                    FileData.metaData.crash.used=true;
-
                     PGEX_ValueBegin()
                     PGEX_BoolVal("UT", FileData.metaData.crash.untitled) //Untitled
                     PGEX_BoolVal("MD", FileData.metaData.crash.modifyed) //Modyfied
