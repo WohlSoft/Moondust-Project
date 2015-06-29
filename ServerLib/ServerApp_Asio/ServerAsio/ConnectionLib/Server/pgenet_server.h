@@ -58,11 +58,6 @@ private:
     std::mutex _bgWorker_mutex;
     std::condition_variable _bgWorker_alert;
 
-
-    // BACKGROUND WORKER MANAGING:
-    // Unused right now
-    void _bgWorker_NewMessage(std::string message);
-
     void _bgWorker_quit();
 
     // BACKGROUND WORKER:

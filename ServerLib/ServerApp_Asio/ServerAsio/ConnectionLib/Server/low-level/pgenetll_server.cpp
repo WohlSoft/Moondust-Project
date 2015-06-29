@@ -23,7 +23,7 @@ void PGENETLL_Server::startAccepting()
                 std::shared_ptr<PGENETLL_Session> newSession = std::make_shared<PGENETLL_Session>(std::move(m_pgenetll_nextsocket));
                 newSession->start();
                 //newSession->setIncomingTextFunc(m_incomingTextFunc);
-                newSession->setPacketToPush(m_packetToPush);
+                newSession->setRawPacketToPush(m_rawPacketToPush);
                 std::cout << "Incoming connection!" << std::endl;
             }else{
                 std::cout << "Error happened: " << ec.message() << std::endl;
@@ -34,13 +34,9 @@ void PGENETLL_Server::startAccepting()
 }
 
 
-void PGENETLL_Server::setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc)
+void PGENETLL_Server::setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush)
 {
-    m_incomingTextFunc = incomingTextFunc;
-}
-void PGENETLL_Server::setPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush)
-{
-    m_packetToPush = packetToPush;
+    m_rawPacketToPush = packetToPush;
 }
 
 
