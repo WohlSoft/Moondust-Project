@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <QTcpSocket>
+#include <iostream>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,13 +37,16 @@ void MainWindow::on_bntSendDbgText_clicked()
         sock.connectToHost("127.0.0.1", 24444);
         sock.waitForConnected();
 
-        sock.write("1234_You see.... How should I get all the text?");
+        std::string buf("Here is some debug Text. How awesome is that?");
+
+        int size = buf.size();
+        sock.write((char*)&size, sizeof(size));
+        sock.write((char*)&buf[0], size);
+
         sock.flush();
+
 
         QThread::currentThread()->sleep(2);
-
-        sock.write("Closing!");
-        sock.flush();
 
         sock.close();
     });
