@@ -20,6 +20,8 @@
 #include "logger.h"
 #include <QElapsedTimer>
 
+#include <editing/_scenes/level/lvl_scene.h>
+
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
 GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
@@ -39,6 +41,9 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     rubberBandSelectionMode = Qt::IntersectsItemBoundingRect;
     this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemBoundingRect);
+
+    movement=MOVE_IDLE;
+
     step=32;
     keyTime=25;
 
@@ -48,10 +53,7 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     scaleMin=0.01;
     scaleMax=20.0;
 
-    connect(&lMover, SIGNAL(timeout()), this, SLOT(moveLeft()));
-    connect(&rMover, SIGNAL(timeout()), this, SLOT(moveRight()));
-    connect(&uMover, SIGNAL(timeout()), this, SLOT(moveUp()));
-    connect(&dMover, SIGNAL(timeout()), this, SLOT(moveDown()));
+    connect(&Mover, SIGNAL(timeout()), this, SLOT(doMove()));
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
 
@@ -114,7 +116,7 @@ void GraphicsWorkspace::moveLeft()
     horizontalScrollBar()->setValue(horizontalScrollBar()->value()-(step+stepSumm));
         int l = t.elapsed();
         if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        lMover.setInterval(keyTime-l);
+        Mover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveRight()
@@ -124,7 +126,7 @@ void GraphicsWorkspace::moveRight()
     horizontalScrollBar()->setValue(horizontalScrollBar()->value()+(step+stepSumm));
         int l = t.elapsed();
         if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        rMover.setInterval(keyTime-l);
+        Mover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveUp()
@@ -134,7 +136,7 @@ void GraphicsWorkspace::moveUp()
     verticalScrollBar()->setValue(verticalScrollBar()->value()-(step+stepSumm));
         int l = t.elapsed();
         if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        uMover.setInterval(keyTime-l);
+        Mover.setInterval(keyTime-l);
 }
 
 void GraphicsWorkspace::moveDown()
@@ -144,7 +146,19 @@ void GraphicsWorkspace::moveDown()
     verticalScrollBar()->setValue(verticalScrollBar()->value()+(step+stepSumm));
         int l = t.elapsed();
         if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        dMover.setInterval(keyTime-l);
+        Mover.setInterval(keyTime-l);
+}
+
+void GraphicsWorkspace::doMove()
+{
+    if((movement&MOVE_LEFT)!=0)
+        moveLeft();
+    if((movement&MOVE_RIGHT)!=0)
+        moveRight();
+    if((movement&MOVE_UP)!=0)
+        moveUp();
+    if((movement&MOVE_DOWN)!=0)
+        moveDown();
 }
 
 void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
@@ -158,20 +172,21 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
     event->accept();
     replayLastMouseEvent();
 
+    int lastMov=movement;
     switch(event->key())
     {
     case Qt::Key_Left:
-        lMover.start(keyTime);
-        return;
+        movement|=MOVE_LEFT;
+        break;
     case Qt::Key_Right:
-        rMover.start(keyTime);
-        return;
+        movement|=MOVE_RIGHT;
+        break;
     case Qt::Key_Up:
-        uMover.start(keyTime);
-        return;
+        movement|=MOVE_UP;
+        break;
     case Qt::Key_Down:
-        dMover.start(keyTime);
-        return;
+        movement|=MOVE_DOWN;
+        break;
     case Qt::Key_Shift:
         keyTime=5;
         updateTimerInterval();
@@ -179,6 +194,11 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
     default:
         break;
     }
+
+    if((movement!=MOVE_IDLE)&&(!Mover.isActive()))
+        Mover.start(keyTime);
+
+    if(lastMov!=movement) return;
 
     QGraphicsView::keyPressEvent(event);
 }
@@ -194,19 +214,20 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
     event->accept();
     replayLastMouseEvent();
     stepSumm=0;
+    int lastMov=movement;
     switch(event->key())
     {
     case Qt::Key_Left:
-        lMover.stop();
+        movement&= ~MOVE_LEFT;
         return;
     case Qt::Key_Right:
-        rMover.stop();
+        movement&= ~MOVE_RIGHT;
         return;
     case Qt::Key_Up:
-        uMover.stop();
+        movement&= ~MOVE_UP;
         return;
     case Qt::Key_Down:
-        dMover.stop();
+        movement&= ~MOVE_DOWN;
         return;
     case Qt::Key_Shift:
         keyTime=25;
@@ -216,25 +237,24 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
         break;
     }
 
+    if((movement==MOVE_IDLE)&&(Mover.isActive()))
+        Mover.stop();
+
+    if(lastMov!=movement) return;
+
     QGraphicsView::keyReleaseEvent(event);
 }
 
 void GraphicsWorkspace::updateTimerInterval()
 {
-    lMover.setInterval(keyTime);
-    rMover.setInterval(keyTime);
-    uMover.setInterval(keyTime);
-    dMover.setInterval(keyTime);
+    Mover.setInterval(keyTime);
     replayLastMouseEvent();
 }
 
 void GraphicsWorkspace::focusOutEvent(QFocusEvent *event)
 {
-    lMover.stop();
-    rMover.stop();
-    uMover.stop();
-    dMover.stop();
-
+    movement=MOVE_IDLE;
+    Mover.stop();
     QGraphicsView::focusOutEvent(event);
 }
 
@@ -482,10 +502,14 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     if(/*scene()->d_func()->allItemsIgnoreHoverEvents && !scene()->d_func()->allItemsUseDefaultCursor
         && */ cachedItemsUnderMouse.isEmpty())
     {
-        cachedItemsUnderMouse = scene()->items(
-                    QRectF(mapToScene(mouseEvent.screenPos()),
-                           mapToScene(mouseEvent.screenPos()+QPoint(1,1))),
-                    Qt::IntersectsItemBoundingRect);
+        QRectF target( mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos()+QPoint(1,1)) );
+        LvlScene* sc=qobject_cast<LvlScene* >(scene());
+        if(sc)
+        {
+            sc->queryItems(target, &cachedItemsUnderMouse);
+        } else {
+            cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
+        }
     }
     // Find the topmost item under the mouse with a cursor.
     foreach (QGraphicsItem *item, cachedItemsUnderMouse)
@@ -524,7 +548,17 @@ void GraphicsWorkspace::_q_setViewportCursor(const QCursor &cursor)
 
 void GraphicsWorkspace::_q_unsetViewportCursor()
 {
-    foreach (QGraphicsItem *item, items(lastMouseEvent.pos())) {
+    QList<QGraphicsItem*> theItems;
+    QRectF target( lastMouseEvent.pos(), lastMouseEvent.pos()+QPoint(1,1) );
+    LvlScene* sc=qobject_cast<LvlScene* >(scene());
+    if(sc)
+    {
+        sc->queryItems(target, &theItems);
+    } else {
+        theItems = scene()->items(target, Qt::IntersectsItemBoundingRect);
+    }
+
+    foreach (QGraphicsItem *item, theItems) {
         if (item->hasCursor())
         {
             _q_setViewportCursor(item->cursor());
