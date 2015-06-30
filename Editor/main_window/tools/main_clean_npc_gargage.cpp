@@ -22,6 +22,7 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 #include <PGE_File_Formats/lvl_filedata.h>
+#include <editing/_scenes/level/lvl_scene.h>
 
 void MainWindow::on_actionClear_NPC_garbadge_triggered()
 {
@@ -59,7 +60,51 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
     if(_found_garbage.isEmpty())
         QMessageBox::information(this, tr("NPC garbage clean-up"), tr("Everything is fine, level has no NPC gargabe!"), QMessageBox::Ok);
     else
-        QMessageBox::information(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's").arg(_found_garbage.size()), QMessageBox::Ok);
+    {
+        QMessageBox::StandardButton x=QMessageBox::question(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's. Are you want to remove them?\nPress to \"Help\" button to show up some found junk NPC's").arg(_found_garbage.size()), QMessageBox::Yes|QMessageBox::No|QMessageBox::Help);
+        if((x!=QMessageBox::Yes)&&(x!=QMessageBox::Help)) return;
+        bool help=(x==QMessageBox::Help);
+        LvlScene *sc = box->scene;
+        sc->clearSelection();
+        LvlScene::PGE_ItemList items=sc->items();
+        LevelData removedItems;
+        QPointF jumpTo;
 
+        for(int i=0; i<items.size(); i++)
+        {
+            if(items[i]->data(ITEM_TYPE).toString()=="NPC")
+            {
+                ItemNPC*npc= qgraphicsitem_cast<ItemNPC*>(items[i]);
+                if(!npc) continue;
+                for(int j=0; j<_found_garbage.size();j++)
+                {
+                    if(npc->npcData.array_id==_found_garbage[j].array_id)
+                    {
+                        if(help) //Select & jump
+                        {
+                            npc->setSelected(true);
+                            jumpTo=npc->scenePos();
+                        } else { //Delete actual NPC
+                            removedItems.npc.push_back(npc->npcData);
+                            npc->removeFromArray();
+                            delete npc;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(!help)
+        {
+            if(!removedItems.npc.isEmpty())
+                sc->addRemoveHistory(removedItems);
+            QMessageBox::information(this, tr("NPC garbage clean-up"), tr("NPC gargabe has been removed!\nThis operation can be undone with Ctrl+Z or Edit/Undo action."), QMessageBox::Ok);
+        }
+        else
+        {
+            box->goTo(jumpTo.x(), jumpTo.y(), true, QPoint(0,0), true);
+        }
+    }
 }
 
