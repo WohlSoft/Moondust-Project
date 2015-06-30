@@ -599,7 +599,8 @@ HEADERS  += defines.h \
     tools/async/asyncstarcounter.h \
     ../_common/StackWalker/StackWalker.h \
     common_features/bool_reseter.h \
-    common_features/version_cmp.h
+    common_features/version_cmp.h \
+    common_features/RTree.h
 
 
 FORMS    += \
