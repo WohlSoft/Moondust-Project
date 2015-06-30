@@ -27,6 +27,8 @@ before_install:
 - make
 - sudo make install
 - cd ..
+- sudo update-alternatives -qq --remove-all gcc g++
+- sudo apt-get install -qq  gcc-4.8 g++-4.8
 - printf "===============================================\n\n"
 - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 - sudo apt-get update -qq
