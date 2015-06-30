@@ -216,13 +216,6 @@ void MainWindow::showStatusMsg(QString msg, int time)
     statusBar()->showMessage(msg, time);
 }
 
-
-void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
-{
-    QToolTip::showText(pos, msg, this, QRect(), time);
-}
-
-
 void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
