@@ -24,6 +24,7 @@
 #include "npc_filedata.h"
 #include "wld_filedata.h"
 #include "save_filedata.h"
+#include "smbx64_cnf_filedata.h"
 
 #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 #include <data_configs/obj_npc.h>
@@ -109,6 +110,9 @@ public:
     //Save Data
     static saveCharacterState dummySavCharacterState();
 
+    /****************************SMBX64 Config file********************************/
+    static SMBX64_ConfigFile ReadSMBX64ConfigFile(PGESTRING RawData, PGESTRING filePath);  //!< Parse SMBX1-SMBX64 Config file
+    static PGESTRING         WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int file_format);
 
     /******************************NPC.txt file***********************************/
     // SMBX64 NPC.TXT File

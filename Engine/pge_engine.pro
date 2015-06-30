@@ -123,6 +123,7 @@ SOURCES += \
     ../_common/PGE_File_Formats/file_rw_sav.cpp \
     ../_common/PGE_File_Formats/file_rw_wld.cpp \
     ../_common/PGE_File_Formats/file_rw_wldx.cpp \
+    ../_common/PGE_File_Formats/file_rw_smbx64_cnf.cpp \
     ../_common/PGE_File_Formats/file_rwopen.cpp \
     ../_common/PGE_File_Formats/file_strlist.cpp \
     ../_common/PGE_File_Formats/lvl_filedata.cpp \
@@ -130,6 +131,7 @@ SOURCES += \
     ../_common/PGE_File_Formats/pge_x.cpp \
     ../_common/PGE_File_Formats/save_filedata.cpp \
     ../_common/PGE_File_Formats/smbx64.cpp \
+    ../_common/PGE_File_Formats/smbx64_cnf_filedata.cpp \
     ../_common/PGE_File_Formats/wld_filedata.cpp \
     ../_common/PGE_File_Formats/pge_file_lib_globs.cpp \
     scenes/level/lvl_physenv.cpp \
@@ -277,6 +279,7 @@ HEADERS  += \
     ../_common/PGE_File_Formats/save_filedata.h \
     ../_common/PGE_File_Formats/smbx64.h \
     ../_common/PGE_File_Formats/smbx64_macro.h \
+    ../_common/PGE_File_Formats/smbx64_cnf_filedata.h \
     ../_common/PGE_File_Formats/wld_filedata.h \
     ../_common/PGE_File_Formats/pge_file_lib_globs.h \
     ../_common/PGE_File_Formats/pge_file_lib_sys.h \
