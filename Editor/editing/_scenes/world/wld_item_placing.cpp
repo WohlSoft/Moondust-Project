@@ -522,6 +522,14 @@ void WldScene::setSquareDrawer()
     pen = QPen(Qt::gray, 2);
     brush = QBrush(Qt::darkGray);
 
+    //Align width and height to fit into item aligning
+    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
+    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
+    if(addW==WldPlacingItems::gridSz) addW=0;
+    if(addH==WldPlacingItems::gridSz) addH=0;
+    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
+    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -547,6 +555,14 @@ void WldScene::setLineDrawer()
     QPen pen;
 
     pen = QPen(Qt::transparent, 2);
+
+    //Align width and height to fit into item aligning
+    long addW=WldPlacingItems::gridSz-WldPlacingItems::itemW%WldPlacingItems::gridSz;
+    long addH=WldPlacingItems::gridSz-WldPlacingItems::itemH%WldPlacingItems::gridSz;
+    if(addW==WldPlacingItems::gridSz) addW=0;
+    if(addH==WldPlacingItems::gridSz) addH=0;
+    WldPlacingItems::itemW = WldPlacingItems::itemW+addW;
+    WldPlacingItems::itemH = WldPlacingItems::itemH+addH;
 
     cursor = addLine(0,0,1,1, pen);
 
