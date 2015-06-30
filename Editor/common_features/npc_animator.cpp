@@ -182,6 +182,8 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
                 this,
                 SLOT( nextFrame() ) );
 
+    timer->setTimerType(Qt::PreciseTimer);
+
     createAnimationFrames();
     setFrameL(frameFirstL);
     setFrameR(frameFirstR);
