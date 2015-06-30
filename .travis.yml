@@ -21,8 +21,8 @@ before_install:
 - printf "===============================================\n"
 - ls /usr/bin/automake-*
 - wget http://ftp.gnu.org/gnu/automake/automake-1.14.1.tar.gz
-- tar -xvf automake-1.14.tar.gz
-- cd automake-1.14
+- tar -xvf automake-1.14.1.tar.gz
+- cd automake-1.14.1
 - bash ./configure
 - make
 - sudo make install
