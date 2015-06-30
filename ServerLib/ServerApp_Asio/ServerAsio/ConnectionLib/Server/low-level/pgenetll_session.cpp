@@ -14,16 +14,10 @@ void PGENETLL_Session::start()
     listen();
 }
 
-void PGENETLL_Session::setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc)
+void PGENETLL_Session::setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush)
 {
-    m_incomingTextFunc = incomingTextFunc;
+    m_rawPacketToPush = packetToPush;
 }
-void PGENETLL_Session::setPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush)
-{
-    m_packetToPush = packetToPush;
-}
-
-
 
 void PGENETLL_Session::listen()
 {
@@ -38,17 +32,18 @@ void PGENETLL_Session::listen()
         }
         if (!ec)
         {
-            std::cout << std::string(m_dataBuf, length);
-            // Do stuff
-            if(m_incomingTextFunc)
-                m_incomingTextFunc(std::string(m_dataBuf, length));
+            int size = 0;
+            memcpy((void*)&size, (void*)&m_dataBuf, 4);
 
-            if(m_packetToPush)
-                m_packetToPush->push(std::string(m_dataBuf, length));
+            std::cout << "[Receive Size] size: " << size << std::endl;
+
+            std::string buf(size, '\0');
+            asio::read(m_socket, asio::buffer(&buf[0], size));
+
+            m_rawPacketToPush->push(buf);
 
             // Listen more
             listen();
-
         }else{
             std::cout << "Error happened: " << ec.message() << std::endl;
         }

@@ -228,13 +228,13 @@ void WldScene::placeItemUnderCursor()
         }
     }
 
-    QList<QGraphicsItem *> * checkZone;
-    if(collisionCheckBuffer.isEmpty())
-        checkZone = NULL;
-    else
-        checkZone = &collisionCheckBuffer;
+//    QList<QGraphicsItem *> * checkZone;
+//    if(collisionCheckBuffer.isEmpty())
+//        checkZone = NULL;
+//    else
+//        checkZone = &collisionCheckBuffer;
 
-    if( !emptyCollisionCheck && itemCollidesWith(cursor, checkZone) )
+    if( itemCollidesWith(cursor) )
     {
         return;
     }

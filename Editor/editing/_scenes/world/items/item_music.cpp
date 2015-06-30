@@ -42,6 +42,7 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     imageSize = QRectF(0, 0, gridSize, gridSize);
     setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
     setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
+    scene->registerElement(this);
 }
 
 void ItemMusic::construct()
@@ -71,6 +72,7 @@ ItemMusic::~ItemMusic()
 {
     //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
     //if(timer) delete timer;
+    scene->unregisterElement(this);
 }
 
 
@@ -307,6 +309,8 @@ void ItemMusic::arrayApply()
             break;
         }
     }
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemMusic::removeFromArray()
@@ -355,6 +359,9 @@ void ItemMusic::setMusicData(WorldMusic inD)
     setPos(musicData.x, musicData.y);
     setData(ITEM_ID, QString::number(musicData.id) );
     setData(ITEM_ARRAY_ID, QString::number(musicData.array_id) );
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

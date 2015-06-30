@@ -145,21 +145,19 @@ void WLD_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             s->cursor->hide();
             return;
         }
-        QPointF p = ((QGraphicsRectItem *)s->cursor)->scenePos();
-        QSizeF sz = ((QGraphicsRectItem *)s->cursor)->rect().size();
+        //QPointF p = ((QGraphicsRectItem *)s->cursor)->scenePos();
+        //QSizeF sz = ((QGraphicsRectItem *)s->cursor)->rect().size();
 
-        s->collisionCheckBuffer = s->items(QRectF(
-                    p.x()-10, p.y()-10,
-                    sz.width()+20, sz.height()+20),
-                    Qt::IntersectsItemBoundingRect);
+//        s->collisionCheckBuffer = s->items(QRectF(
+//                    p.x()-10, p.y()-10,
+//                    sz.width()+20, sz.height()+20),
+//                    Qt::IntersectsItemBoundingRect);
 
-        if(s->collisionCheckBuffer.isEmpty())
-            s->emptyCollisionCheck = true;
-        else
-            s->prepareCollisionBuffer();
-
+//        if(s->collisionCheckBuffer.isEmpty())
+//            s->emptyCollisionCheck = true;
+//        else
+//            s->prepareCollisionBuffer();
         s->placeItemsByRectArray();
-
         s->Debugger_updateItemList();
 
         s->emptyCollisionCheck = false;

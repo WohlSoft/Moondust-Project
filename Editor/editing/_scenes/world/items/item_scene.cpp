@@ -38,6 +38,7 @@ ItemScene::ItemScene(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     scene->addItem(this);
     setZValue(scene->sceneZ);
+    scene->registerElement(this);
 }
 
 
@@ -60,7 +61,9 @@ void ItemScene::construct()
 
 
 ItemScene::~ItemScene()
-{}
+{
+    scene->unregisterElement(this);
+}
 
 void ItemScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -293,6 +296,8 @@ void ItemScene::arrayApply()
             break;
         }
     }
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemScene::removeFromArray()
@@ -349,6 +354,9 @@ void ItemScene::setSceneData(WorldScenery inD, obj_w_scenery *mergedSet, long *a
     }
     if(animator_id)
         setAnimator(*animator_id);
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 
