@@ -47,6 +47,8 @@
 
 #include <editing/_components/history/ihistoryelement.h>
 
+#include <common_features/RTree.h>
+
 class LevelEdit;
 
 class LvlScene : public QGraphicsScene
@@ -220,6 +222,8 @@ public:
         #define ITEM_HEIGHT                  10 //int
         #define ITEM_IS_ITEM                 24 //bool
         #define ITEM_IS_CURSOR               25 //bool
+        #define ITEM_LAST_POS                26 //QPointF
+        #define ITEM_LAST_SIZE                27 //QSizeF
 
         long IncrementingNpcSpecialSpin;
 
@@ -294,9 +298,18 @@ public:
         bool emptyCollisionCheck;
         void prepareCollisionBuffer();
 
-        bool checkGroupCollisions(QList<QGraphicsItem *> *items);
-        QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
+        typedef QList<QGraphicsItem *> PGE_ItemList;
+        bool checkGroupCollisions(PGE_ItemList *items);
+        QGraphicsItem * itemCollidesWith(QGraphicsItem * item, PGE_ItemList *itemgrp = 0);
         QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
+
+        typedef RTree<QGraphicsItem*, double, 2, double > IndexTree;
+        typedef double RPoint[2];
+        IndexTree tree;
+        void queryItems(QRectF &zone, PGE_ItemList *resultList);
+        void queryItems(double x, double y, PGE_ItemList *resultList);
+        void registerElement(QGraphicsItem *item);
+        void unregisterElement(QGraphicsItem *item);
         // //////////////////////////////////
 
 

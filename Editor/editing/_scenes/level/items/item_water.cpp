@@ -39,6 +39,7 @@ ItemWater::ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
     gridSize = scene->pConfigs->default_grid/2;
     setZValue(scene->Z_sys_PhysEnv);
     setLocked(scene->lock_water);
@@ -78,7 +79,9 @@ void ItemWater::construct()
 }
 
 ItemWater::~ItemWater()
-{}
+{
+    scene->unregisterElement(this);
+}
 
 
 void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -371,6 +374,10 @@ void ItemWater::arrayApply()
             break;
         }
     }
+
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemWater::removeFromArray()
@@ -469,6 +476,8 @@ void ItemWater::setWaterData(LevelPhysEnv inD)
     setData(ITEM_ID, QString::number(0) );
     setData(ITEM_ARRAY_ID, QString::number(waterData.array_id) );
     drawWater();
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemWater::drawWater()

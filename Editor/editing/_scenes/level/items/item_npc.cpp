@@ -44,6 +44,7 @@ ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent)
     construct();
     if(!parentScene) return;
     setScenePoint(parentScene);
+    scene->registerElement(this);
     scene->addItem(this);
     setLocked(scene->lock_npc);
 }
@@ -95,6 +96,7 @@ ItemNPC::~ItemNPC()
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
     if(timer) delete timer;
+    if(!DisableScene) scene->unregisterElement(this);
 }
 
 
@@ -770,6 +772,10 @@ void ItemNPC::arrayApply()
             break;
         }
     }
+
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemNPC::removeFromArray()
@@ -885,6 +891,9 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id)
 
     setData(ITEM_WIDTH,  QString::number(localProps.width) ); //width
     setData(ITEM_HEIGHT, QString::number(localProps.height) ); //height
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

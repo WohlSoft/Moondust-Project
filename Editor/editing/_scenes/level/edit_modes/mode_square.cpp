@@ -206,24 +206,24 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 else
                 {
-                    QPointF p = ((QGraphicsRectItem *)(s->cursor))->scenePos();
-                    QSizeF sz = ((QGraphicsRectItem *)(s->cursor))->rect().size();
+                    //QPointF p = ((QGraphicsRectItem *)(s->cursor))->scenePos();
+                    //QSizeF sz = ((QGraphicsRectItem *)(s->cursor))->rect().size();
 
-                    WriteToLog(QtDebugMsg, "Get collision buffer");
+//                    WriteToLog(QtDebugMsg, "Get collision buffer");
 
-                    s->collisionCheckBuffer = s->items(QRectF(
-                                p.x()-10, p.y()-10,
-                                sz.width()+20, sz.height()+20),
-                                Qt::IntersectsItemBoundingRect);
-                    if(s->collisionCheckBuffer.isEmpty())
-                        s->emptyCollisionCheck = true;
-                    else
-                        s->prepareCollisionBuffer();
+//                    s->collisionCheckBuffer = s->items(QRectF(
+//                                p.x()-10, p.y()-10,
+//                                sz.width()+20, sz.height()+20),
+//                                Qt::IntersectsItemBoundingRect);
+//                    if(s->collisionCheckBuffer.isEmpty())
+//                        s->emptyCollisionCheck = true;
+//                    else
+//                        s->prepareCollisionBuffer();
 
                     WriteToLog(QtDebugMsg, "Placing");
                     s->placeItemsByRectArray();
 
-                    WriteToLog(QtDebugMsg, "clear collision buffer");
+                    //WriteToLog(QtDebugMsg, "clear collision buffer");
                     s->emptyCollisionCheck = false;
                     s->collisionCheckBuffer.clear();
                     WriteToLog(QtDebugMsg, "Done");
@@ -234,18 +234,18 @@ void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
             }
         case LvlScene::PLC_BGO:
             {
-                QPointF p = ((QGraphicsRectItem *)(s->cursor))->scenePos();
-                QSizeF sz = ((QGraphicsRectItem *)(s->cursor))->rect().size();
+//                QPointF p = ((QGraphicsRectItem *)(s->cursor))->scenePos();
+//                QSizeF sz = ((QGraphicsRectItem *)(s->cursor))->rect().size();
 
-                s->collisionCheckBuffer = s->items(QRectF(
-                            p.x()-10, p.y()-10,
-                            sz.width()+20, sz.height()+20),
-                            Qt::IntersectsItemBoundingRect);
+//                s->collisionCheckBuffer = s->items(QRectF(
+//                            p.x()-10, p.y()-10,
+//                            sz.width()+20, sz.height()+20),
+//                            Qt::IntersectsItemBoundingRect);
 
-                if(s->collisionCheckBuffer.isEmpty())
-                    s->emptyCollisionCheck = true;
-                else
-                    s->prepareCollisionBuffer();
+//                if(s->collisionCheckBuffer.isEmpty())
+//                    s->emptyCollisionCheck = true;
+//                else
+//                    s->prepareCollisionBuffer();
 
                 s->placeItemsByRectArray();
 

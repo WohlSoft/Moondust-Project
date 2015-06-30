@@ -42,6 +42,7 @@ ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
     setLocked(scene->lock_door);
 }
 
@@ -63,6 +64,7 @@ ItemDoor::~ItemDoor()
 {
     if(doorLabel!=NULL) delete doorLabel;
     if(grp!=NULL) delete grp;
+    scene->unregisterElement(this);
 }
 
 
@@ -457,6 +459,9 @@ void ItemDoor::arrayApply()
 
     }
 
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemDoor::removeFromArray()
@@ -584,6 +589,9 @@ void ItemDoor::setDoorData(LevelDoor inD, int doorDir, bool init)
     {
         arrayApply();
     }
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemDoor::setLocked(bool lock)
