@@ -23,6 +23,8 @@ before_install:
 - printf "===============================================\n\n"
 - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 - sudo apt-get update -qq
+- sudo apt-get autoremove -qq automake
+- sudo apt-get install -qq automake
 - sudo apt-get install -qq "^libxcb.*" libx11-xcb-dev libglu1-mesa-dev libxrender-dev freeglut3-dev libxkbcommon-dev udev mtdev-tools webp
 - sudo apt-get install -qq qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
 - sudo apt-get install -qq qt5-default qttools5-dev-tools
