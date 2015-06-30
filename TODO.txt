@@ -1,22 +1,12 @@
 Editor
-+ Add function to refresh warp's entry XY coordninates inside combobox
 - Improve detector of unused custom data to provide clean-up of unused data.
 - New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
-+ Add "Replace all Item-ID in a current section" feature
-+ Provide ability to define NPC's "friendly" flag from message editing dialog
-+ Add multi-selection into ItemSelection dialog which needed for some cases
-- Finish incompleted work with garbage NPC clean function which provides removing of a junk NPCs
-  spawned by SMBX Editor bug (such a vines and ladders): function anready finds junk NPC's
-  but it doesn't removes them. Need to find and delete listed NPCs from scene and store the remove history entry.
-+ Add R-Tree from engine into editor to increase performance of collision detection.
 - Add re-configurable hot-keys
 
 Engine
-+ Raster fonts support
-+ Textures support for world map items
-+ Playable character and it's state switching support
-+ Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
+- Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
+- Question box
 
 Engine: Lua
 - Better Memory Management, either transfere ownership to C++ or use smart pointers.
@@ -28,6 +18,7 @@ Engine: New level physics
 - Detectors API for NPCs
 - Wall adheasing NPCs support 
 - Walkhable slopes
+- Fix staying of NPC's on a top of other flying NPC's
 
 GIFs2PNG
 - Use editor's unmasking code insead of alphachannel
@@ -37,3 +28,23 @@ GIFs2PNG
 
 Common
 - Porovide ability to use file formats library with std stuff too (Use macroses to use Qt specific or C++ STD things)
+
+
+Completed works
+============================================================
+Editor
++ Add function to refresh warp's entry XY coordninates inside combobox
++ Add "Replace all Item-ID in a current section" feature
++ Provide ability to define NPC's "friendly" flag from message editing dialog
++ Add multi-selection into ItemSelection dialog which needed for some cases
++ Finish incompleted work with garbage NPC clean function which provides removing of a junk NPCs
+  spawned by SMBX Editor bug (such a vines and ladders): function anready finds junk NPC's
+  but it doesn't removes them. Need to find and delete listed NPCs from scene and store the remove history entry.
++ Add R-Tree from engine into editor to increase performance of collision detection.
+
+Engine
++ Raster fonts support
++ Textures support for world map items
++ Playable character and it's state switching support
++ Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
+
