@@ -37,6 +37,7 @@
 #include <common_features/edit_mode_base.h>
 #include <common_features/logger.h>
 #include <common_features/resizer/item_resizer.h>
+#include <common_features/RTree.h>
 #include <main_window/global_settings.h>
 #include <data_configs/data_configs.h>
 #include <data_configs/custom_data.h>
@@ -195,6 +196,8 @@ public:
         #define ITEM_HEIGHT                  10 //int
         #define ITEM_IS_ITEM                 24 //bool
         #define ITEM_IS_CURSOR               25 //bool
+        #define ITEM_LAST_POS                26 //QPointF
+        #define ITEM_LAST_SIZE               27 //QSizeF
 
         void placeTile(WorldTiles &tile, bool toGrid=false);
         void placeScenery(WorldScenery &scenery, bool toGrid=false);
@@ -283,9 +286,18 @@ public:
         bool emptyCollisionCheck;
         void prepareCollisionBuffer();
 
+        typedef QList<QGraphicsItem *> PGE_ItemList;
         bool checkGroupCollisions(QList<QGraphicsItem *> *items);
         QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
         QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
+
+        typedef RTree<QGraphicsItem*, double, 2, double > IndexTree;
+        typedef double RPoint[2];
+        IndexTree tree;
+        void queryItems(QRectF &zone, PGE_ItemList *resultList);
+        void queryItems(double x, double y, PGE_ItemList *resultList);
+        void registerElement(QGraphicsItem *item);
+        void unregisterElement(QGraphicsItem *item);
         // //////////////////////////////////
 
 

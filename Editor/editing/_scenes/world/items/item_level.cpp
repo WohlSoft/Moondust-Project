@@ -36,6 +36,7 @@ ItemLevel::ItemLevel(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
     setZValue(scene->levelZ);
 }
 
@@ -60,7 +61,9 @@ void ItemLevel::construct()
 }
 
 ItemLevel::~ItemLevel()
-{}
+{
+    scene->unregisterElement(this);
+}
 
 
 
@@ -376,6 +379,9 @@ void ItemLevel::arrayApply()
             break;
         }
     }
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemLevel::removeFromArray()
@@ -474,6 +480,8 @@ void ItemLevel::setLevelData(WorldLevels inD, obj_w_level *mergedSet,
     if(animator_id && path_id && bPath_id)
         setAnimator(*animator_id, *path_id, *bPath_id);
 
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

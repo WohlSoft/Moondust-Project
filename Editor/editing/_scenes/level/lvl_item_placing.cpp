@@ -497,6 +497,14 @@ void LvlScene::setSquareDrawer()
         break;
     }
 
+    //Align width and height to fit into item aligning
+    long addW=LvlPlacingItems::gridSz-LvlPlacingItems::itemW%LvlPlacingItems::gridSz;
+    long addH=LvlPlacingItems::gridSz-LvlPlacingItems::itemH%LvlPlacingItems::gridSz;
+    if(addW==LvlPlacingItems::gridSz) addW=0;
+    if(addH==LvlPlacingItems::gridSz) addH=0;
+    LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
+    LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
+
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
@@ -533,6 +541,14 @@ void LvlScene::setLineDrawer()
         pen = QPen(Qt::transparent, 2);
         break;
     }
+
+    //Align width and height to fit into item aligning
+    long addW=LvlPlacingItems::gridSz-LvlPlacingItems::itemW%LvlPlacingItems::gridSz;
+    long addH=LvlPlacingItems::gridSz-LvlPlacingItems::itemH%LvlPlacingItems::gridSz;
+    if(addW==LvlPlacingItems::gridSz) addW=0;
+    if(addH==LvlPlacingItems::gridSz) addH=0;
+    LvlPlacingItems::itemW = LvlPlacingItems::itemW+addW;
+    LvlPlacingItems::itemH = LvlPlacingItems::itemH+addH;
 
     cursor = addLine(0,0,1,1, pen);
 
