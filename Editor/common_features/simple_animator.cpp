@@ -216,6 +216,7 @@ void SimpleAnimator::start()
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
 
+    timer.setTimerType(Qt::PreciseTimer);
     timer.start(speed);
 }
 

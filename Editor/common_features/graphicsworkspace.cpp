@@ -44,6 +44,8 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
 
     movement=MOVE_IDLE;
 
+    Mover.setTimerType(Qt::PreciseTimer);
+
     step=32;
     keyTime=25;
 
@@ -108,45 +110,24 @@ QRubberBand *GraphicsWorkspace::rubberBand() const
         return NULL;
 }
 
-int stepSumm=0;
 void GraphicsWorkspace::moveLeft()
 {
-        QElapsedTimer t;
-        t.start();
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()-(step+stepSumm));
-        int l = t.elapsed();
-        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        Mover.setInterval(keyTime-l);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value()-step);
 }
 
 void GraphicsWorkspace::moveRight()
 {
-        QElapsedTimer t;
-        t.start();
-    horizontalScrollBar()->setValue(horizontalScrollBar()->value()+(step+stepSumm));
-        int l = t.elapsed();
-        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        Mover.setInterval(keyTime-l);
+    horizontalScrollBar()->setValue(horizontalScrollBar()->value()+step);
 }
 
 void GraphicsWorkspace::moveUp()
 {
-        QElapsedTimer t;
-        t.start();
-    verticalScrollBar()->setValue(verticalScrollBar()->value()-(step+stepSumm));
-        int l = t.elapsed();
-        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        Mover.setInterval(keyTime-l);
+    verticalScrollBar()->setValue(verticalScrollBar()->value()-step);
 }
 
 void GraphicsWorkspace::moveDown()
 {
-        QElapsedTimer t;
-        t.start();
-    verticalScrollBar()->setValue(verticalScrollBar()->value()+(step+stepSumm));
-        int l = t.elapsed();
-        if(l>keyTime){ l=l%keyTime; stepSumm=step<<2;} else stepSumm=0;
-        Mover.setInterval(keyTime-l);
+    verticalScrollBar()->setValue(verticalScrollBar()->value()+step);
 }
 
 void GraphicsWorkspace::doMove()
@@ -213,7 +194,6 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
 
     event->accept();
     replayLastMouseEvent();
-    stepSumm=0;
     int lastMov=movement;
     switch(event->key())
     {
