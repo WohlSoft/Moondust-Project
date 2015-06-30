@@ -122,9 +122,6 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
     qreal rightA, rightB;
     qreal topA, topB;
     qreal bottomA, bottomB;
-    //qreal betweenZ;
-
-    //xxx=!xxx;
 
     if(item==NULL)
         return NULL;
@@ -255,7 +252,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, PGE_ItemList *i
           if(it->data(ITEM_BLOCK_IS_SIZABLE).toString()=="sizable") continue; // Don't collide with sizable block
 
           if(item->data(ITEM_TYPE).toString()=="BGO")
-            if(item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt()) continue;
+            if((EditingMode!=MODE_Fill) && (item->data(ITEM_ID).toInt()!=it->data(ITEM_ID).toInt())) continue;
 
           leftA = item->scenePos().x();
           rightA = item->scenePos().x()+item->data(ITEM_WIDTH).toReal();
