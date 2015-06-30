@@ -20,6 +20,13 @@ before_install:
 - echo "Installed automake"
 - printf "===============================================\n"
 - ls /usr/bin/automake-*
+- wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
+- tar -xvf automake-1.14.tar.gz
+- cd automake-1.14
+- bash ./configure
+- make
+- sudo make install
+- cd ..
 - printf "===============================================\n\n"
 - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 - sudo apt-get update -qq
