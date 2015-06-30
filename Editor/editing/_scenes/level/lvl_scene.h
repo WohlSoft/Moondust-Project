@@ -223,7 +223,7 @@ public:
         #define ITEM_IS_ITEM                 24 //bool
         #define ITEM_IS_CURSOR               25 //bool
         #define ITEM_LAST_POS                26 //QPointF
-        #define ITEM_LAST_SIZE                27 //QSizeF
+        #define ITEM_LAST_SIZE               27 //QSizeF
 
         long IncrementingNpcSpecialSpin;
 

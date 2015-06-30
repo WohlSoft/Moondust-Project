@@ -21,6 +21,7 @@
 #include <QElapsedTimer>
 
 #include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_scenes/world/wld_scene.h>
 
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
@@ -483,10 +484,12 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
         && */ cachedItemsUnderMouse.isEmpty())
     {
         QRectF target( mapToScene(mouseEvent.screenPos()), mapToScene(mouseEvent.screenPos()+QPoint(1,1)) );
-        LvlScene* sc=qobject_cast<LvlScene* >(scene());
-        if(sc)
-        {
-            sc->queryItems(target, &cachedItemsUnderMouse);
+        LvlScene* lsc=qobject_cast<LvlScene* >(scene());
+        WldScene* wsc=qobject_cast<WldScene* >(scene());
+        if(lsc) {
+            lsc->queryItems(target, &cachedItemsUnderMouse);
+        } else if(wsc) {
+            wsc->queryItems(target, &cachedItemsUnderMouse);
         } else {
             cachedItemsUnderMouse = scene()->items(target, Qt::IntersectsItemBoundingRect);
         }
@@ -530,10 +533,12 @@ void GraphicsWorkspace::_q_unsetViewportCursor()
 {
     QList<QGraphicsItem*> theItems;
     QRectF target( lastMouseEvent.pos(), lastMouseEvent.pos()+QPoint(1,1) );
-    LvlScene* sc=qobject_cast<LvlScene* >(scene());
-    if(sc)
-    {
-        sc->queryItems(target, &theItems);
+    LvlScene* lsc=qobject_cast<LvlScene* >(scene());
+    WldScene* wsc=qobject_cast<WldScene* >(scene());
+    if(lsc) {
+        lsc->queryItems(target, &theItems);
+    } else if(wsc) {
+        wsc->queryItems(target, &theItems);
     } else {
         theItems = scene()->items(target, Qt::IntersectsItemBoundingRect);
     }
