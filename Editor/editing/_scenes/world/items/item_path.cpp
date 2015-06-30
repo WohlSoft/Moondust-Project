@@ -36,6 +36,7 @@ ItemPath::ItemPath(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
     setZValue(scene->pathZ);
 }
 
@@ -59,7 +60,9 @@ void ItemPath::construct()
 
 
 ItemPath::~ItemPath()
-{}
+{
+    scene->unregisterElement(this);
+}
 
 void ItemPath::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
@@ -295,6 +298,8 @@ void ItemPath::arrayApply()
             break;
         }
     }
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemPath::removeFromArray()
@@ -352,6 +357,9 @@ void ItemPath::setPathData(WorldPaths inD, obj_w_path *mergedSet, long *animator
     }
     if(animator_id)
         setAnimator(*animator_id);
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

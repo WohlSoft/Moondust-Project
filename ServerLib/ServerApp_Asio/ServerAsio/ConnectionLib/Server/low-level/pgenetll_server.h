@@ -16,14 +16,11 @@ public:
     void startAccepting();
 
 
-
-    void setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc);
-    void setPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
+    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
 
 private:
     // Will be forwarded to the session:
-    std::function<void(std::string)> m_incomingTextFunc;
-    std::shared_ptr<ThreadedQueue<std::string> > m_packetToPush;
+    std::shared_ptr<ThreadedQueue<std::string> > m_rawPacketToPush;
 
     tcp::acceptor m_pgenetll_acceptor;
     tcp::socket m_pgenetll_nextsocket;

@@ -33,6 +33,7 @@ ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
 }
 
 void ItemPlayerPoint::construct()
@@ -47,7 +48,9 @@ void ItemPlayerPoint::construct()
 }
 
 ItemPlayerPoint::~ItemPlayerPoint()
-{}
+{
+    scene->unregisterElement(this);
+}
 
 
 
@@ -285,6 +288,9 @@ void ItemPlayerPoint::arrayApply()
         }
     }
 
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemPlayerPoint::removeFromArray()

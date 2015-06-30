@@ -13,14 +13,10 @@ public:
     PGENETLL_Session(tcp::socket socket);
 
     void start();
-
-
-    void setIncomingTextFunc(const std::function<void (std::string)> &incomingTextFunc);
-    void setPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
+    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
 
 private:
-    std::function<void(std::string)> m_incomingTextFunc;
-    std::shared_ptr<ThreadedQueue<std::string> > m_packetToPush;
+    std::shared_ptr<ThreadedQueue<std::string> > m_rawPacketToPush;
 
     void listen();
 

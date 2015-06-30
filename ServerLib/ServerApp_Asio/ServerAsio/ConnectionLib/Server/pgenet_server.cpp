@@ -12,7 +12,7 @@ PGENET_Server::PGENET_Server(QObject *parent) :
     m_llserver(*m_service, PGENET_Global::Port)
 {
     //m_llserver.setIncomingTextFunc([this](std::string message){_bgWorker_NewMessage(message);});
-    m_llserver.setPacketToPush(m_pckDecoder.incomingPacketsQueue());
+    m_llserver.setRawPacketToPush(m_pckDecoder.incomingPacketsQueue());
     m_fullPackets = m_pckDecoder.fullPacketsQueue();
 }
 
@@ -51,15 +51,6 @@ void PGENET_Server::_ioService_run()
     } catch(std::exception& e) {
         std::cout << "Io Service Exception: " << e.what() << std::endl;
     }
-}
-
-
-
-void PGENET_Server::_bgWorker_NewMessage(std::string message)
-{
-    Q_UNUSED(message);
-    std::unique_lock<std::mutex> locker(_bgWorker_mutex);
-    _bgWorker_alert.notify_all();
 }
 
 void PGENET_Server::_bgWorker_quit()

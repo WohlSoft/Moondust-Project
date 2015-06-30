@@ -42,13 +42,19 @@ private slots:
     void moveRight();
     void moveUp();
     void moveDown();
+    void doMove();
     void updateTimerInterval();
 
 private:
-    QTimer lMover;
-    QTimer rMover;
-    QTimer uMover;
-    QTimer dMover;
+    QTimer Mover;
+    enum Movements{
+        MOVE_IDLE=0,
+        MOVE_LEFT=1,
+        MOVE_UP=2,
+        MOVE_DOWN=4,
+        MOVE_RIGHT=8
+    };
+    int movement;
     int step;
     int keyTime;
     qreal zoomValue;

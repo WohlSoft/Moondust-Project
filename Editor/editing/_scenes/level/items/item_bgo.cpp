@@ -43,6 +43,7 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
+    scene->registerElement(this);
     setLocked(scene->lock_bgo);
 }
 
@@ -69,8 +70,7 @@ void ItemBGO::construct()
 
 ItemBGO::~ItemBGO()
 {
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
+    scene->unregisterElement(this);
 }
 
 
@@ -471,6 +471,10 @@ void ItemBGO::arrayApply()
             break;
         }
     }
+
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemBGO::removeFromArray()
@@ -550,6 +554,9 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
 
     setData(ITEM_ID, QString::number(bgoData.id) );
     setData(ITEM_ARRAY_ID, QString::number(bgoData.array_id) );
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemBGO::setZMode(int mode, qreal offset, bool init)

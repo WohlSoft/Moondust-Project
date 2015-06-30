@@ -388,13 +388,13 @@ void LvlScene::placeItemUnderCursor()
         }
     }
 
-    QList<QGraphicsItem *> * checkZone;
-    if(collisionCheckBuffer.isEmpty())
-        checkZone = 0;
-    else
-        checkZone = &collisionCheckBuffer;
+//    QList<QGraphicsItem *> * checkZone;
+//    if(collisionCheckBuffer.isEmpty())
+//        checkZone = 0;
+//    else
+//        checkZone = &collisionCheckBuffer;
 
-    if( !emptyCollisionCheck && itemCollidesWith(cursor, checkZone) )
+    if( itemCollidesWith(cursor) )
     {
         return;
     }
