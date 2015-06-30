@@ -38,6 +38,7 @@ ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     scene->addItem(this);
     setZValue(scene->tileZ);
+    scene->registerElement(this);
 }
 
 void ItemTile::construct()
@@ -58,8 +59,7 @@ void ItemTile::construct()
 
 ItemTile::~ItemTile()
 {
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
+    scene->unregisterElement(this);
 }
 
 
@@ -290,6 +290,8 @@ void ItemTile::arrayApply()
             break;
         }
     }
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemTile::removeFromArray()
@@ -348,6 +350,9 @@ void ItemTile::setTileData(WorldTiles inD, obj_w_tile *mergedSet, long *animator
 
     setData(ITEM_ID, QString::number(tileData.id) );
     setData(ITEM_ARRAY_ID, QString::number(tileData.array_id) );
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

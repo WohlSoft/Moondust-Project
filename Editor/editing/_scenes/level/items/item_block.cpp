@@ -44,6 +44,7 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     parentScene->addItem(this);
+    scene->registerElement(this);
     setLocked(scene->lock_block);
 }
 
@@ -68,11 +69,9 @@ void ItemBlock::construct()
 
 ItemBlock::~ItemBlock()
 {
-   // WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
-
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
-    //if(timer) delete timer;
+    scene->unregisterElement(this);
 }
 
 
@@ -573,6 +572,9 @@ void ItemBlock::arrayApply()
             break;
         }
     }
+    //Update R-tree innex
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 void ItemBlock::removeFromArray()
@@ -694,6 +696,9 @@ void ItemBlock::setBlockData(LevelBlock inD, obj_block *mergedSet, long *animato
     setData(ITEM_ARRAY_ID, QString::number(blockData.array_id) );
     setData(ITEM_WIDTH, QString::number(blockData.w) ); //width
     setData(ITEM_HEIGHT, QString::number(blockData.h) ); //height
+
+    scene->unregisterElement(this);
+    scene->registerElement(this);
 }
 
 

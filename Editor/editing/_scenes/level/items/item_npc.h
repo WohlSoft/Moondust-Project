@@ -112,7 +112,6 @@ protected:
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * mouseEvent);
 
-
 private slots:
     void nextFrame();
 
