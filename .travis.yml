@@ -20,7 +20,7 @@ before_install:
 - echo "Installed automake"
 - printf "===============================================\n"
 - ls /usr/bin/automake-*
-- wget http://ftp.gnu.org/gnu/automake/automake-1.14.tar.gz
+- wget http://ftp.gnu.org/gnu/automake/automake-1.14.1.tar.gz
 - tar -xvf automake-1.14.tar.gz
 - cd automake-1.14
 - bash ./configure
