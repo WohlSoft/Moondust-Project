@@ -3,6 +3,7 @@ Editor 0.3.1
 - Added config pack version notifier (if you have old config pack is old, you will be notified about)
 - Better design of development console box
 - Fixed a crash which possible if you pressing F5 keys too often.
+- Performance of big levels and world maps editing has been improved!
 
 Editor 0.3.0.2
 - Added "Transform all Item-ID's in current section" menuitem
