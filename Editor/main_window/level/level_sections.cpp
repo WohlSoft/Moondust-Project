@@ -283,9 +283,9 @@ void MainWindow::on_actionSectionMore_triggered()
     {
         QAction *item=section.addAction(tr("Section %1").arg(edit->LvlData.sections[i].id));
         if(edit->LvlData.CurSection==i) { item->setCheckable(true); item->setChecked(true); }
-        item->setData(edit->LvlData.sections[i].id);
+        item->setData(i);
     }
-    QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()));
+    QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()+1));
     newSection->setData(edit->LvlData.sections.size());
     QAction *answer = section.exec(QCursor::pos());
     if(!answer) return;

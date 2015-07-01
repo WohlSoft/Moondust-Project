@@ -27,6 +27,7 @@
 #include <common_features/themes.h>
 #include <common_features/mainwinconnect.h>
 #include <editing/_scenes/level/lvl_scene.h>
+#include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/lvl_filedata.h>
 
 #include "level_edit.h"
@@ -186,6 +187,12 @@ void LevelEdit::setCurrentSection(int scId)
 
     //Change Current Section
     LvlData.CurSection = scId;
+    while(LvlData.sections.size()<=scId)
+    {
+        LevelSection newSct= FileFormats::dummyLvlSection();
+        newSct.id=LvlData.sections.size()+1;
+        LvlData.sections.push_back(newSct);
+    }
 
     //allocate new section zone if empty
     if(
@@ -224,7 +231,6 @@ void LevelEdit::setCurrentSection(int scId)
     update();
 
     if(sIsNew) MainWinConnect::pMainWin->on_actionReset_position_triggered();
-
 }
 
 
