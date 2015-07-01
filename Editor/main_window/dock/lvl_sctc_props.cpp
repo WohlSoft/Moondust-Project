@@ -416,11 +416,12 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) return;
+
         QList<QVariant> backData;
         backData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].background);
-        backData.push_back(ui->LVLPropsBackImage->itemData(index).toInt());
+        backData.push_back(ui->LVLPropsBackImage->currentData().toInt());
         edit->scene->addChangeSectionSettingsHistory(edit->LvlData.CurSection, HistorySettings::SETTING_SECBACKGROUNDIMG, QVariant(backData));
-        edit->scene->ChangeSectionBG(ui->LVLPropsBackImage->itemData(index).toInt());
+        edit->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
         edit->LvlData.modified = true;
     }
     ui->LVLPropsBackImage->setEnabled(true);
