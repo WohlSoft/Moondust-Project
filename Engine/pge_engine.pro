@@ -54,7 +54,7 @@ macx: {
     LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
-linux-g++: {
+linux-g++||unix:!macx:!android: {
     LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
 }
 
