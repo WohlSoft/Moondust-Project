@@ -62,7 +62,7 @@ void LevelScene::destroyBlock(LVL_Block *&_block)
         if (cit == ce)
             break;
         const QVector<LVL_Block *>::iterator e = blocks.end(), it = std::remove(blocks.begin() + (cit - blocks.cbegin()), e, _block);
-        active_npcs.erase(it, e);
+        blocks.erase(it, e);
         break;
     }
     #endif
