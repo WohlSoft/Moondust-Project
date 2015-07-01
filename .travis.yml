@@ -30,6 +30,8 @@ before_install:
 - printf "===============================================\n\n"
 - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
 - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+- echo "deb http://ppa.launchpad.net/ubuntu-sdk-team/ppa/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list
+- echo "deb-src http://ppa.launchpad.net/ubuntu-sdk-team/ppa/ubuntu trusty main" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
 - sudo apt-get install gcc-4.8 g++-4.8
 - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 20
