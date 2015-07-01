@@ -186,13 +186,13 @@ void LevelEdit::setCurrentSection(int scId)
     LvlData.sections[LvlData.CurSection].PositionY = target.y();
 
     //Change Current Section
-    LvlData.CurSection = scId;
     while(LvlData.sections.size()<=scId)
     {
         LevelSection newSct= FileFormats::dummyLvlSection();
-        newSct.id=LvlData.sections.size()+1;
+        newSct.id=LvlData.sections.size();
         LvlData.sections.push_back(newSct);
     }
+    LvlData.CurSection = scId;
 
     //allocate new section zone if empty
     if(

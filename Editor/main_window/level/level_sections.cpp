@@ -281,7 +281,7 @@ void MainWindow::on_actionSectionMore_triggered()
     QMenu section;
     for(int i=21; i<edit->LvlData.sections.size(); i++)
     {
-        QAction *item=section.addAction(tr("Section %1").arg(edit->LvlData.sections[i].id));
+        QAction *item=section.addAction(tr("Section %1").arg(i+1));
         if(edit->LvlData.CurSection==i) { item->setCheckable(true); item->setChecked(true); }
         item->setData(i);
     }
