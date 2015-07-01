@@ -467,8 +467,31 @@ void LevelScene::update()
         {
             LVL_Npc *corpse = dead_npcs.last();
             dead_npcs.pop_back();
+            #if (QT_VERSION >= 0x050400)
             active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
+            #else
+            //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
+            while(1)
+            {
+                const QVector<LVL_Npc *>::const_iterator ce = active_npcs.cend(), cit = std::find(active_npcs.cbegin(), ce, corpse);
+                if (cit == ce)
+                    break;
+                const QVector<LVL_Npc *>::iterator e = active_npcs.end(), it = std::remove(active_npcs.begin() + (cit - active_npcs.cbegin()), e, corpse);
+                active_npcs.erase(it, e);
+                break;
+            }
+
+            while(1)
+            {
+                const QVector<LVL_Npc *>::const_iterator ce = npcs.cend(), cit = std::find(npcs.cbegin(), ce, corpse);
+                if (cit == ce)
+                    break;
+                const QVector<LVL_Npc *>::iterator e = npcs.end(), it = std::remove(npcs.begin() + (cit - npcs.cbegin()), e, corpse);
+                npcs.erase(it, e);
+                break;
+            }
+            #endif
             luaEngine.destoryLuaNpc(corpse);
         }
 

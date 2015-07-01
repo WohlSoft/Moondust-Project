@@ -60,7 +60,7 @@ DEFINES += USE_NATIVE_MIDI
 DEFINES -= USE_NATIVE_MIDI
 }
 
-LIBS += -L../_builds/sdl2_mixer_mod
+LIBS += -L../_builds/$$TARGETOS/lib
 
 !android:{
     win32:{
