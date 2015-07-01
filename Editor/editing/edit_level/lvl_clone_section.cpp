@@ -72,7 +72,7 @@ void LvlCloneSection::on_FileList_src_currentIndexChanged(int index)
 {
     ui->SectionList_src->setEnabled(index>=0);
     if(index<0) return;
-    LevelEdit * x = ui->FileList_src->itemData(index).value<LevelEdit *>();
+    LevelEdit * x = ui->FileList_src->currentData().value<LevelEdit *>();
 
     util::memclear(ui->SectionList_src);
     QListWidgetItem * item;
@@ -97,7 +97,7 @@ void LvlCloneSection::on_FileList_dst_currentIndexChanged(int index)
 {
     ui->SectionList_dst->setEnabled(index>=0);
     if(index<0) return;
-    LevelEdit * x = ui->FileList_dst->itemData(index).value<LevelEdit *>();
+    LevelEdit * x = ui->FileList_dst->currentData().value<LevelEdit *>();
 
     util::memclear(ui->SectionList_dst);
     QListWidgetItem * item;
@@ -131,12 +131,11 @@ void LvlCloneSection::on_buttonBox_accepted()
     }
 
     clone_margin= ui->padding_src->value();
-    int index=ui->FileList_src->currentIndex();
 
     LevelSection tmps;
     tmps = FileFormats::dummyLvlSection();
 
-    clone_source = ui->FileList_src->itemData(index).value<LevelEdit *>();
+    clone_source = ui->FileList_src->currentData().value<LevelEdit *>();
     clone_source_id = ui->SectionList_src->selectedItems().first()->data(3).toInt();
 
     foreach(LevelSection x, clone_source->LvlData.sections)
@@ -154,7 +153,7 @@ void LvlCloneSection::on_buttonBox_accepted()
         return;
     }
 
-    clone_target = ui->FileList_dst->itemData(index).value<LevelEdit *>();
+    clone_target = ui->FileList_dst->currentData().value<LevelEdit *>();
     clone_target_id = ui->SectionList_dst->selectedItems().first()->data(3).toInt();
 
     foreach(LevelSection x, clone_target->LvlData.sections)

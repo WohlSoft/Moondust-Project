@@ -481,9 +481,8 @@ void LvlEventsBox::eventSectionSettingsSync()
 
         long i = getEventArrayIndex();
         if(i<0) return;
-        int index= ui->LVLEvent_Sct_list->currentIndex();
 
-        int sectionID = ui->LVLEvent_Sct_list->itemData(index).toInt();
+        int sectionID = ui->LVLEvent_Sct_list->currentData().toInt();
 
         if(sectionID<edit->LvlData.events[i].sets.size())
         {
@@ -1740,14 +1739,13 @@ void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
         lockEventSectionDataList=true;
         long i = getEventArrayIndex();
         if(i<0) return;
-        int index=ui->LVLEvent_SctMus_List->currentIndex();
 
         QList<QVariant> musData;
         musData.push_back((qlonglong)curSectionField);
         musData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].music_id);
-        musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->itemData(index).toInt());
+        musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->currentData().toInt());
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
-        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
+        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
 }
@@ -1850,13 +1848,13 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         lockEventSectionDataList=true;
         long i = getEventArrayIndex();
         if(i<0) return;
-        int index=ui->LVLEvent_SctBg_List->currentIndex();
+
         QList<QVariant> bgData;
         bgData.push_back((qlonglong)curSectionField);
         bgData.push_back((qlonglong)edit->LvlData.events[i].sets[curSectionField].background_id);
-        bgData.push_back((qlonglong)ui->LVLEvent_SctBg_List->itemData(index).toInt());
+        bgData.push_back((qlonglong)ui->LVLEvent_SctBg_List->currentData().toInt());
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
+        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
     }
     lockEventSectionDataList=false;
 
@@ -1948,27 +1946,24 @@ void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 
         long i = getEventArrayIndex();
         if(i<0) return;
-        int index=ui->LVLEvent_Cmn_PlaySnd->currentIndex();
         QList<QVariant> soundData;
         soundData.push_back((qlonglong)edit->LvlData.events[i].sound_id);
-        soundData.push_back((qlonglong)ui->LVLEvent_Cmn_PlaySnd->itemData(index).toInt());
+        soundData.push_back((qlonglong)ui->LVLEvent_Cmn_PlaySnd->currentData().toInt());
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, HistorySettings::SETTING_EV_SOUND, QVariant(soundData));
 
-        edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->itemData(index).toInt();
+        edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->currentData().toInt();
         edit->LvlData.modified=true;
     }
 }
 
 void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 {
-    int index=ui->LVLEvent_Cmn_PlaySnd->currentIndex();
-
-    if(ui->LVLEvent_Cmn_PlaySnd->itemData(index).toInt()==0) return;
+    if(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt()==0) return;
 
     QString sndPath = mw()->configs.dirs.sounds;
     long i;
     bool found=false;
-    i = mw()->configs.getSndI( ui->LVLEvent_Cmn_PlaySnd->itemData(index).toInt() );
+    i = mw()->configs.getSndI( ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() );
     if(i>=0)
     {
         found=true;
