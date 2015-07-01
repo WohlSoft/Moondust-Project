@@ -25,13 +25,31 @@
 #include "musicfilelist.h"
 #include <ui_musicfilelist.h>
 
+#include <QtConcurrent>
 
 MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MusicFileList)
 {
+    parentFolder=Folder;
+    lastCurrentFile=current;
+
+    ui->setupUi(this);
+    connect(this, SIGNAL(itemAdded(QString)), this, SLOT(addItem(QString)));
+    fileWalker = QtConcurrent::run(this, &MusicFileList::buildMusicList);
+}
+
+MusicFileList::~MusicFileList()
+{
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
+    delete ui;
+}
+
+void MusicFileList::buildMusicList()
+{
+    QDir musicDir(parentFolder);
     QStringList filters;
-    QDir musicDir(Folder);
     filters //MPEG 1 Layer III (LibMAD)
             << "*.mp3"
             //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
@@ -49,50 +67,28 @@ MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
 
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
-
-    QStringList fileList;
-    //fileList << Folder;
-    QDirIterator dirsList(Folder, filters,
+    QDirIterator dirsList(parentFolder, filters,
                           QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
                           QDirIterator::Subdirectories);
-
-    TimeCounter limiter;
-    limiter.start();
     while(dirsList.hasNext())
-      {
-            dirsList.next();
-            fileList << musicDir.relativeFilePath(dirsList.filePath());
-            if(limiter.current()>1500)
-            {
-              QMessageBox::StandardButton reply;
-              reply = QMessageBox::question(this, tr("Too many subfolders"), tr("If you contunue this operation, application can be frozen.\nDo you want to continue?"),
-                                            QMessageBox::Yes|QMessageBox::Abort);
-              if (reply == QMessageBox::Abort)
-                  break;
-            }
-      }
-    limiter.stop("", -1);
-
-    ui->setupUi(this);
-    //ui->FileList->insertItems(musicDir.entryList().size(), musicDir.entryList(filters));
-    ui->FileList->insertItems(fileList.size(), fileList);
-
-    // Select current item
-    for(int i=0; i<ui->FileList->count(); i++)
     {
-        if(ui->FileList->item(i)->text()==current)
-        {
-            ui->FileList->item(i)->setSelected(true);
-            ui->FileList->scrollToItem(ui->FileList->item(i));
-         break;
-        }
+        dirsList.next();
+        emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
     }
-
 }
 
-MusicFileList::~MusicFileList()
+void MusicFileList::addItem(QString item)
 {
-    delete ui;
+    ui->FileList->addItem(item);
+    if(lastCurrentFile==item)
+    {
+        QList<QListWidgetItem*> list=ui->FileList->findItems(item, Qt::MatchFixedString);
+        if(!list.isEmpty())
+        {
+            list.first()->setSelected(true);
+            ui->FileList->scrollToItem(list.first());
+        }
+    }
 }
 
 void MusicFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
@@ -112,5 +108,7 @@ void MusicFileList::on_buttonBox_accepted()
 
 void MusicFileList::on_buttonBox_rejected()
 {
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
     reject();
 }
