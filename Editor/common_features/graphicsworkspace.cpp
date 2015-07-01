@@ -19,6 +19,7 @@
 #include "graphicsworkspace.h"
 #include "logger.h"
 #include <QElapsedTimer>
+#include <QRubberBand>
 
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
@@ -588,6 +589,7 @@ QRegion GraphicsWorkspace::rubberBandRegion(const QWidget *widget, const QRect &
 
 void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 {
+    #ifndef QT_NO_RUBBERBAND
     if (dragMode() != QGraphicsView::RubberBandDrag || !isInteractive() || !rubberBanding)
         return;
     // Check for enough drag distance
@@ -650,6 +652,9 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
     }
 
     rubberBandX->setGeometry(rubberBandRect);
+    #else
+    Q_UNUSED(event);
+    #endif
 }
 
 void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
