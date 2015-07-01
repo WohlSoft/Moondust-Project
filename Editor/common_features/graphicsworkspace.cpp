@@ -431,7 +431,7 @@ void GraphicsWorkspace::storeMouseEvent(QMouseEvent *event)
 
 void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
 {
-#ifndef QT_NO_RUBBERBAND
+#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
     updateRubberBand(event);
 #endif
 
@@ -515,9 +515,9 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     }
 #endif
 
-    #ifdef _DEBUG_
+#ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler End");
-    #endif
+#endif
 }
 
 
@@ -589,7 +589,7 @@ QRegion GraphicsWorkspace::rubberBandRegion(const QWidget *widget, const QRect &
 
 void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 {
-    #ifndef QT_NO_RUBBERBAND
+#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
     if (dragMode() != QGraphicsView::RubberBandDrag || !isInteractive() || !rubberBanding)
         return;
     // Check for enough drag distance
@@ -652,15 +652,14 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
     }
 
     rubberBandX->setGeometry(rubberBandRect);
-    #else
+#else
     Q_UNUSED(event);
-    #endif
+#endif
 }
 
 void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
 {
-
-#ifndef QT_NO_RUBBERBAND
+#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
     if (dragMode() == QGraphicsView::RubberBandDrag && isInteractive() && !event->buttons()) {
         if (rubberBanding) {
             if (viewportUpdateMode() != QGraphicsView::NoViewportUpdate){
