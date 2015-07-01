@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtMath>
-
 #include <common_features/mainwinconnect.h>
 #include <common_features/grid.h>
 #include <common_features/item_rectangles.h>
