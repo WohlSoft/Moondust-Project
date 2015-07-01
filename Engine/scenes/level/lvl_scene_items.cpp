@@ -58,10 +58,10 @@ void LevelScene::destroyBlock(LVL_Block *&_block)
     #else
     while(1)
     {
-        const QVector<LVL_Npc *>::const_iterator ce = blocks.cend(), cit = std::find(blocks.cbegin(), ce, _block);
+        const QVector<LVL_Block *>::const_iterator ce = blocks.cend(), cit = std::find(blocks.cbegin(), ce, _block);
         if (cit == ce)
             break;
-        const QVector<LVL_Npc *>::iterator e = blocks.end(), it = std::remove(blocks.begin() + (cit - blocks.cbegin()), e, _block);
+        const QVector<LVL_Block *>::iterator e = blocks.end(), it = std::remove(blocks.begin() + (cit - blocks.cbegin()), e, _block);
         active_npcs.erase(it, e);
         break;
     }
