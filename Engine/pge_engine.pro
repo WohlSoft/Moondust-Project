@@ -60,7 +60,7 @@ linux-g++: {
 
 contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
 unix:{
-contains(CONFIG, debug): LIBS += -ldl
+contains(CONFIG, debug)||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
 
 macx {

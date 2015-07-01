@@ -1,3 +1,5 @@
+lessThan(QT_MAJOR_VERSION, 5): error("You are using an old version of Qt. To build project need a Qt 5.2 and greater!")
+
 android:{
     ARCH=android_arm
 } else {
