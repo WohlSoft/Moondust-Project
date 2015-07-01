@@ -1499,99 +1499,99 @@ Bitte speichere sie sofort ab!.</translation>
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="164"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="163"/>
         <source>Layer: </source>
         <translation>Ebene: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="169"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="168"/>
         <source>Add to new layer...</source>
         <translation>Zu neuer Ebene hinzufügen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="176"/>
         <source> [hidden]</source>
         <translation> [Versteckt]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="187"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="186"/>
         <source>Invisible</source>
         <translation>Unsichtbar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="191"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="190"/>
         <source>Slippery</source>
         <translation>Rutschig</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="194"/>
         <source>Resize</source>
         <translation>Größe ändern</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="201"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="200"/>
         <source>Transform into</source>
         <translation>Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="201"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
         <source>Transform all %1 into</source>
         <translation>Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="264"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="263"/>
         <source>Margin of section</source>
         <translation type="unfinished">Rand vom Bereich</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="265"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="264"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished">Bitte gib an wie viel Rand vom Bereich mitgelöscht werden sollen (in Pixeln)</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="308"/>
         <source>Event name</source>
         <translation>Eventnamen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="310"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="309"/>
         <source>Please enter the name of event:</source>
         <translation>Bitte gib den name für das Event ein:</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="316"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="315"/>
         <source>Please, enter message which will be shown
 Message limits: max line lenth is 27 characters</source>
         <translation>Bitte gib eine Nachricht ein
 Maximal 27 Zeichen pro Zeile</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="316"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="315"/>
         <source>Hit message text</source>
         <translation>Nachrichttext</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="346"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="345"/>
         <source>Event has been created</source>
         <translation>Event wurde erstellt</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="347"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="346"/>
         <source>Message event has been created!</source>
         <translation>Nachrichtenevent wurde erstellt!</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="352"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="351"/>
         <source>&apos;Hit&apos; event slot is used</source>
         <translation>&apos;Hit&apos; event ist schon belegt</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="353"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="352"/>
         <source>Sorry, but &apos;Hit&apos; event slot already used by &apos;%1&apos; event.</source>
         <translation>Sorry, aber &apos;Hit&apos; event ist schon belegt mit &apos;%1&apos; event.</translation>
     </message>
@@ -1604,32 +1604,32 @@ Maximal 27 Zeichen pro Zeile</translation>
         <translation type="vanished">Sorry, aber &apos;Hit&apos; event ist schon belegt mit &apos;%1&apos; event.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="199"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="198"/>
         <source>Change included NPC...</source>
         <translation>Beinhaltende NPC ändern...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="204"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="203"/>
         <source>Make message box...</source>
         <translation>Erstelle Messagebox...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="205"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="207"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="206"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="209"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="208"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_block.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_block.cpp" line="210"/>
         <source>Properties...</source>
         <translation>Einstellungen...</translation>
     </message>
@@ -1637,32 +1637,32 @@ Maximal 27 Zeichen pro Zeile</translation>
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="157"/>
         <source>Open target level: %1</source>
         <translation>Öffne Ziellevel: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="159"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="161"/>
         <source>Layer: </source>
         <translation>Ebene: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="167"/>
         <source>Add to new layer...</source>
         <translation>Zu neuer Ebene hinzufügen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="190"/>
         <source>Jump to exit</source>
         <translation>Springe zu Ausgang</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="195"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="197"/>
         <source>Jump to entrance</source>
         <translation>Springe zu Eingang</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="203"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="205"/>
         <source>No Vehicles</source>
         <translation>Kein Fahrzeug</translation>
     </message>
@@ -1671,17 +1671,17 @@ Maximal 27 Zeichen pro Zeile</translation>
         <translation type="vanished">Kein Yoshi</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="208"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="210"/>
         <source>Allow NPC</source>
         <translation>NPC Zulassen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="213"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="215"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="231"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="233"/>
         <source>Properties...</source>
         <translation>Einstellungen...</translation>
     </message>
@@ -1694,7 +1694,7 @@ Maximal 27 Zeichen pro Zeile</translation>
         <translation type="vanished">Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="227"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="229"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -1702,52 +1702,52 @@ Maximal 27 Zeichen pro Zeile</translation>
 <context>
     <name>ItemLevel</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="154"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="157"/>
         <source>Open target file: %1</source>
         <translation>Öffne Zieldatei: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="158"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="161"/>
         <source>Path background</source>
         <translation>Pfadhintergrund</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="162"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="165"/>
         <source>Big Path background</source>
         <translation>Großer Pfadhintergrund</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="166"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="169"/>
         <source>Always Visible</source>
         <translation>Immer Sichtbar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="170"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="173"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="171"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="174"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="173"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="176"/>
         <source>Transform into</source>
         <translation>Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="174"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="177"/>
         <source>Transform all %1 into</source>
         <translation>Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="176"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="179"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="178"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="181"/>
         <source>Properties...</source>
         <translation>Einstellungen...</translation>
     </message>
@@ -1787,37 +1787,37 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemMusic</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="170"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="172"/>
         <source>&lt;Silence&gt;</source>
         <translation>&lt;Still&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="173"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="175"/>
         <source>Play this</source>
         <translation>Abspielen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="175"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="177"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="176"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="178"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="178"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="180"/>
         <source>Transform into</source>
         <translation type="unfinished">Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="179"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="181"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished">Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="183"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="185"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -1825,67 +1825,67 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="189"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="191"/>
         <source>Layer: </source>
         <translation>Ebene: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="194"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Add to new layer...</source>
         <translation>Zu neuere Ebene hinzufügen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="215"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
         <source>Edit NPC-Configuration</source>
         <translation>Bearbeite NPC Konfiguration</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="217"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="219"/>
         <source>New NPC-Configuration</source>
         <translation>Neue NPC Konfiguration</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="222"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="224"/>
         <source>Set %1</source>
         <translation>Setzte %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="224"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="226"/>
         <source>Direction</source>
         <translation>Richtung</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="225"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="227"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="228"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="230"/>
         <source>Random</source>
         <translation>Zufällig</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="232"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="234"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="236"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="238"/>
         <source>Friendly</source>
         <translation>Freundlich</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="239"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
         <source>Doesn&apos;t move</source>
         <translation>Bewegt Nicht</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="308"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="310"/>
         <source>Margin of section</source>
         <translation type="unfinished">Rand vom Bereich</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="309"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="311"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
         <translation type="unfinished">Bitte gib an wie viel Rand vom Bereich mitgelöscht werden sollen (in Pixeln)</translation>
     </message>
@@ -1894,47 +1894,47 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <translation type="vanished">Nicht Bewegbar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="242"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="244"/>
         <source>Set message...</source>
         <translation>Setzte Nachricht...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="244"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="246"/>
         <source>Set as Boss</source>
         <translation>Als Boss setzten</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="248"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="250"/>
         <source>Transform into</source>
         <translation>Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="249"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
         <source>Transform all %1 in this section into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="250"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
         <source>Transform all %1 into</source>
         <translation>Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="253"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="259"/>
         <source>Properties...</source>
         <translation>Einstellungen...</translation>
     </message>
@@ -1942,27 +1942,27 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemPath</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="150"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="153"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="151"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="154"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="153"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="156"/>
         <source>Transform into</source>
         <translation>Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="154"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="157"/>
         <source>Transform all %1 into</source>
         <translation>Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="156"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="159"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -1970,27 +1970,27 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemPlayerPoint</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="144"/>
         <source>Set %1</source>
         <translation>Setzte %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="144"/>
         <source>Direction</source>
         <translation>Richtung</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="145"/>
+        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="148"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="150"/>
+        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="153"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="160"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -1998,27 +1998,27 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemScene</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="149"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="152"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="150"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="153"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="152"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="155"/>
         <source>Transform into</source>
         <translation>Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="153"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="156"/>
         <source>Transform all %1 into</source>
         <translation>Alle %1 Transformieren zu</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="155"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="158"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -2213,62 +2213,62 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="174"/>
         <source>Layer: </source>
         <translation>Ebene: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="180"/>
         <source>Add to new layer...</source>
         <translation>Zu neuer Ebene hinzufügen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="197"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="200"/>
         <source>Environment type</source>
         <translation>Umgebungs Typ</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="203"/>
         <source>Water</source>
         <translation>Wasser</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="205"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="208"/>
         <source>Quicksand</source>
         <translation>Quicksand</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="211"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="214"/>
         <source>Show zone range data</source>
         <translation>Zeige Zonenbereichsdaten</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="214"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="217"/>
         <source>Resize</source>
         <translation>Größe ändern</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="218"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="221"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="220"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="223"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="224"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="227"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="280"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="283"/>
         <source>Physical environment range</source>
         <translation>Zeige Zonenbereichsdaten</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_water.cpp" line="283"/>
+        <location filename="../editing/_scenes/level/items/item_water.cpp" line="286"/>
         <source>Rectangle X(left), Y(top), Width, Height, Right, Bottom</source>
         <translation>Rechteck: X(links), Y(oben), Breite, Höhe, Rechts, Unten</translation>
     </message>
@@ -7641,19 +7641,27 @@ Siehe in %1 für mehr Informationen.</translation>
         <translation>Keine Dateien geladen!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="60"/>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="62"/>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC garbage clean-up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="60"/>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="62"/>
-        <source>Found %1 junk NPC&apos;s</source>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
+        <source>Found %1 junk NPC&apos;s. Are you want to remove them?
+Press to &quot;Help&quot; button to show up some found junk NPC&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
+        <source>NPC gargabe has been removed!
+This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
