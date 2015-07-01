@@ -283,7 +283,9 @@ ConfigManager::ConfigManager(QWidget *parent) :
         QMessageBox msgBox(this);
         msgBox.setWindowTitle(tr("Config packs are not found"));
         msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
+        #if (QT_VERSION >= 0x050100)
         msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
+        #endif
         msgBox.setText(
                     tr("Available configuration packages are not found!<br>\n"
                        "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"

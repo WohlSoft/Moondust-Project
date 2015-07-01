@@ -431,7 +431,7 @@ void GraphicsWorkspace::storeMouseEvent(QMouseEvent *event)
 
 void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
+#if !defined(QT_NO_RUBBERBAND)
     updateRubberBand(event);
 #endif
 
@@ -589,7 +589,7 @@ QRegion GraphicsWorkspace::rubberBandRegion(const QWidget *widget, const QRect &
 
 void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
+#if !defined(QT_NO_RUBBERBAND)
     if (dragMode() != QGraphicsView::RubberBandDrag || !isInteractive() || !rubberBanding)
         return;
     // Check for enough drag distance
@@ -610,7 +610,9 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
         rubberBanding = false;
         if (!rubberBandRect.isNull()) {
             rubberBandRect = QRect();
+            #if (QT_VERSION >= 0x050100)
             emit rubberBandChanged(rubberBandRect, QPointF(), QPointF());
+            #endif
         }
         return;
     }
@@ -626,7 +628,9 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
     if (rubberBandRect != oldRubberband || lastRubberbandScenePoint != lastMouseMoveScenePoint) {
         lastRubberbandScenePoint = lastMouseMoveScenePoint;
         oldRubberband = rubberBandRect;
+        #if (QT_VERSION >= 0x050100)
         emit rubberBandChanged(rubberBandRect, mousePressScenePoint, lastRubberbandScenePoint);
+        #endif
     }
 
     // Update new rubberband
@@ -659,7 +663,7 @@ void GraphicsWorkspace::updateRubberBand(const QMouseEvent *event)
 
 void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
 {
-#if !defined(QT_NO_RUBBERBAND) && (QT_VERSION >= 0x050200)
+#if !defined(QT_NO_RUBBERBAND)
     if (dragMode() == QGraphicsView::RubberBandDrag && isInteractive() && !event->buttons()) {
         if (rubberBanding) {
             if (viewportUpdateMode() != QGraphicsView::NoViewportUpdate){
@@ -673,7 +677,9 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
             if (!rubberBandRect.isNull())
             {
                 rubberBandRect = QRect();
+                #if (QT_VERSION >= 0x050100)
                 emit rubberBandChanged(rubberBandRect, QPointF(), QPointF());
+                #endif
             }
             rubberBandExtendSelection.clear();
         }
