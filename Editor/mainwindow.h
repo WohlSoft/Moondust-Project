@@ -549,6 +549,7 @@ public:
         void on_actionSection_19_triggered();
         void on_actionSection_20_triggered();
         void on_actionSection_21_triggered();
+        void on_actionSectionMore_triggered();
 
         //Modify actions
         void on_actionCloneSectionTo_triggered();
@@ -736,7 +737,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

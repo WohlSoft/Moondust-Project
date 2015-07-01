@@ -203,6 +203,7 @@
      <addaction name="actionSection_19"/>
      <addaction name="actionSection_20"/>
      <addaction name="actionSection_21"/>
+     <addaction name="actionSectionMore"/>
     </widget>
     <widget class="QMenu" name="menuSection_tools">
      <property name="enabled">
@@ -602,6 +603,7 @@
    <addaction name="actionSection_19"/>
    <addaction name="actionSection_20"/>
    <addaction name="actionSection_21"/>
+   <addaction name="actionSectionMore"/>
   </widget>
   <widget class="QToolBar" name="PlacingToolbar">
    <property name="windowTitle">
@@ -2650,6 +2652,17 @@
   <action name="actionClear_NPC_garbadge">
    <property name="text">
     <string>Clear NPC garbadge...</string>
+   </property>
+  </action>
+  <action name="actionSectionMore">
+   <property name="text">
+    <string>More sections...</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">...</string>
+   </property>
+   <property name="toolTip">
+    <string>More sections...</string>
    </property>
   </action>
  </widget>
