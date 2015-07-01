@@ -230,8 +230,9 @@ void AppSettings::on_buttonBox_accepted()
     else
         TSTToolboxPos = QTabWidget::West;
 
-    Themes::loadTheme(ui->Theme->currentData().toString());
-    selectedTheme = ui->Theme->currentData().toString();
+    int themeIndex=ui->Theme->currentIndex();
+    Themes::loadTheme(ui->Theme->itemData(themeIndex).toString());
+    selectedTheme = ui->Theme->itemData(themeIndex).toString();
 
     logfile = ui->logFileName->text();
 

@@ -2655,6 +2655,9 @@
    </property>
   </action>
   <action name="actionSectionMore">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>More sections...</string>
    </property>

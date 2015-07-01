@@ -223,7 +223,8 @@ QString CustomCounterGUI::makeItemName(long item)
 void CustomCounterGUI::on_ItemType_currentIndexChanged(int)
 {
     if(lockCombobox) return;
-    counterData.type = (ItemTypes::itemTypes)ui->ItemType->currentData(Qt::UserRole).toInt();
+    int index=ui->ItemType->currentIndex();
+    counterData.type = (ItemTypes::itemTypes)ui->ItemType->itemData(index, Qt::UserRole).toInt();
     counterData.items.clear();
     util::memclear(ui->ItemList);
 }
@@ -323,8 +324,9 @@ void CustomCounterGUI::on_ItemList_customContextMenuRequested(const QPoint &pos)
 
 void CustomCounterGUI::on_buttonBox_accepted()
 {
+    int index=ui->ItemType->currentIndex();
     counterData.name = ui->NameOfCounter->text();
-    counterData.type = (ItemTypes::itemTypes)ui->ItemType->currentData(Qt::UserRole).toInt();
+    counterData.type = (ItemTypes::itemTypes)ui->ItemType->itemData(index, Qt::UserRole).toInt();
     this->accept();
 }
 
