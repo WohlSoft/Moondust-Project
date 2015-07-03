@@ -1,0 +1,16 @@
+The general PGE-Packet looks as followed:
+
+
+
++---------------------------------------------------+
+|                      Header                       |
++------------+--------------------------------------+
+|   Length   |              Description             |
++------------+--------------------------------------+
+| int        | PGE-Packet ID                        |
+| int        | Length of Username                   |
+| QString    | Username                             |
+| int        | Session ID                           |
+| int        | Length of Packet data                |
+| char*      | Data of Packet                       |
++------------+--------------------------------------+

@@ -53,7 +53,19 @@ LVL_Block * LevelScene::spawnBlock(LevelBlock blockData)
 
 void LevelScene::destroyBlock(LVL_Block *&_block)
 {
+    #if (QT_VERSION >= 0x050400)
     blocks.removeAll(_block);
+    #else
+    while(1)
+    {
+        const QVector<LVL_Block *>::const_iterator ce = blocks.cend(), cit = std::find(blocks.cbegin(), ce, _block);
+        if (cit == ce)
+            break;
+        const QVector<LVL_Block *>::iterator e = blocks.end(), it = std::remove(blocks.begin() + (cit - blocks.cbegin()), e, _block);
+        blocks.erase(it, e);
+        break;
+    }
+    #endif
     delete _block;
     _block = NULL;
 }

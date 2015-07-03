@@ -303,26 +303,6 @@ void LvlWarpBox::on_WarpList_currentIndexChanged(int index)
     setDoorData(index);
 }
 
-
-/*
-void MainWindow::on_goToWarpDoor_clicked()
-{
-    int WinType = mw()->activeChildWindow();
-    if(WinType==1)
-    {
-        leveledit* edit = mw()->activeLvlEditWin();
-        unsigned int doorID = ui->WarpList->currentData().toInt();
-        foreach (LevelDoors door, edit->LvlData.doors) {
-            if(doorID == door.array_id){
-                if(door.isSetIn) //If enter point was placed
-                    edit->goTo(door.ix, door.iy, true, QPoint(-300, -300)); //Goto entrance point
-            }
-        }
-    }
-}
-*/
-
-
 void LvlWarpBox::on_WarpAdd_clicked()
 {
     int WinType = mw()->activeChildWindow();

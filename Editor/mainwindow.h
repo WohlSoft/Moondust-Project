@@ -141,7 +141,6 @@ public:
         void openFilesByArgs(QStringList args);
 
         void showStatusMsg(QString msg, int time=2000); //Send status message
-        void showToolTipMsg(QString msg, QPoint pos, int time); //Show tooltip msg
 
         void applyTheme(QString themeDir="");
 
@@ -550,6 +549,7 @@ public:
         void on_actionSection_19_triggered();
         void on_actionSection_20_triggered();
         void on_actionSection_21_triggered();
+        void on_actionSectionMore_triggered();
 
         //Modify actions
         void on_actionCloneSectionTo_triggered();
@@ -737,7 +737,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

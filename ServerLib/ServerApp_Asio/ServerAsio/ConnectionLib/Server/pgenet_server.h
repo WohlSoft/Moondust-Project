@@ -17,14 +17,20 @@
 #include <QtConcurrent>
 
 #include "low-level/pgenetll_server.h"
+
 #include <ConnectionLib/Shared/util/rawpacketdecoder.h>
+#include <ConnectionLib/Shared/pgenet_packetmanager.h>
+#include <ConnectionLib/Shared/user/pgenet_usermanager.h>
+
+#include "session/pgenet_globalsession.h"
+
 
 using asio::ip::tcp;
 
-class PGENET_Server : public QObject
+class PGENET_Server : public QObject, public PGENET_PacketManager
 {
     Q_OBJECT
-
+    Q_DISABLE_COPY(PGENET_Server)
 public:
     PGENET_Server(QObject* parent = 0);
     virtual ~PGENET_Server();
@@ -66,8 +72,17 @@ private:
 
     // ///////////// SERVER TOOLS /////////////////////////
 
+
+    // User Manager:
+    PGENET_UserManager m_userManager;
+
+    // Packet Decoder:
     RawPacketDecoder m_pckDecoder;
-    std::shared_ptr<ThreadedQueue<std::string> > m_fullPackets;
+    std::shared_ptr<ThreadedQueue<std::shared_ptr<Packet> > > m_fullPackets;
+
+    // Sessions:
+    PGENET_GlobalSession m_globalSession;
+    QMap<int, std::shared_ptr<PGENET_Session> > m_registeredSessions;
 
     // SERVICE / SERVER
     QScopedPointer<asio::io_service> m_service;
