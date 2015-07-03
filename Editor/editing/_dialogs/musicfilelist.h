@@ -21,6 +21,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QFuture>
 
 namespace Ui {
 class MusicFileList;
@@ -34,15 +35,21 @@ public:
     QString SelectedFile;
     explicit MusicFileList(QString Folder, QString current="", QWidget *parent = 0);
     ~MusicFileList();
+    void buildMusicList();
+    QString parentFolder;
+    QString lastCurrentFile;
+
+signals:
+    void itemAdded(QString item);
 
 private slots:
+    void addItem(QString item);
     void on_FileList_itemDoubleClicked(QListWidgetItem *item);
-
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
 
 private:
+    QFuture<void> fileWalker;
     Ui::MusicFileList *ui;
 };
 

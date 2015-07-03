@@ -62,6 +62,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     ui->actionSection_19->setChecked( (SectionId==18) );
     ui->actionSection_20->setChecked( (SectionId==19) );
     ui->actionSection_21->setChecked( (SectionId==20) );
+    ui->actionSectionMore->setChecked( (SectionId>20) );
 
     if ((e!=NULL) && (open==0))
     {
@@ -273,5 +274,21 @@ void MainWindow::on_actionSection_21_triggered()
     SetCurrentLevelSection(20);
 }
 
+void MainWindow::on_actionSectionMore_triggered()
+{
+    if(activeChildWindow() != 1) return;
+    LevelEdit* edit = activeLvlEditWin();
+    QMenu section;
+    for(int i=21; i<edit->LvlData.sections.size(); i++)
+    {
+        QAction *item=section.addAction(tr("Section %1").arg(i+1));
+        if(edit->LvlData.CurSection==i) { item->setCheckable(true); item->setChecked(true); }
+        item->setData(i);
+    }
+    QAction *newSection = section.addAction(tr("Initialize section %1...").arg(edit->LvlData.sections.size()+1));
+    newSection->setData(edit->LvlData.sections.size());
+    QAction *answer = section.exec(QCursor::pos());
+    if(!answer) return;
 
-
+    SetCurrentLevelSection(answer->data().toInt());
+}

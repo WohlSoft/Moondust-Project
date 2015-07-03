@@ -107,7 +107,9 @@ void dataconfigs::loadBasics()
             QMessageBox box;
             box.setWindowTitle( "Legacy configuration package" );
             box.setTextFormat(Qt::RichText);
+            #if (QT_VERSION >= 0x050100)
             box.setTextInteractionFlags(Qt::TextBrowserInteraction);
+            #endif
             box.setText(tr("You have a legacy configuration package.\n<br>"
                            "Editor will be started, but you may have a some problems with items or settings.\n<br>\n<br>"
                            "Please download and install latest version of a configuration package:\n<br>\n<br>Download: %1\n<br>"

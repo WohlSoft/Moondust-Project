@@ -1,6 +1,6 @@
 Platform Game Engine by Wohlstand
 ===========
-[![Build Status](https://travis-ci.org/Wohlhabend-Networks/PGE-Project.svg?branch=master)](https://travis-ci.org/Wohlhabend-Networks/PGE-Project)
+[![Build Status](https://semaphoreci.com/api/v1/projects/604cbe8f-44de-4754-99a5-28bc11764b39/471601/badge.svg)](https://semaphoreci.com/wohlstand/pge-project)  
 
 a free platform for game making
 

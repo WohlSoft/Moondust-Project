@@ -8,6 +8,10 @@ PGENET_Server::PGENET_Server(QObject *parent) :
 
     m_currentState(PGENET_ServerState::Closed),
 
+    m_pckDecoder(getPacketRegister(), &m_userManager),
+
+    m_globalSession(&m_userManager),
+
     m_service(new asio::io_service()),
     m_llserver(*m_service, PGENET_Global::Port)
 {
@@ -55,18 +59,23 @@ void PGENET_Server::_ioService_run()
 
 void PGENET_Server::_bgWorker_quit()
 {
-    m_fullPackets->push("_exit_now");
+    m_fullPackets->doExit();
 }
 
 void PGENET_Server::_bgWorker_WaitForIncoming()
 {
     for (;;) {
-        std::string nextFullPacket = m_fullPackets->pop();
-
-        if(nextFullPacket == "_exit_now")
+        // TODO: Spread the packet to the diffrent sessions.
+        std::shared_ptr<Packet> nextFullPacket = m_fullPackets->pop();
+        if(m_fullPackets->shouldExit())
             return;
 
-        emit incomingText(QString(nextFullPacket.c_str()));
+        int sessionID = nextFullPacket->getSessionID();
+        if(sessionID == 0){
+
+        }else if(m_registeredSessions.contains(sessionID)){
+
+        }
     }
 }
 

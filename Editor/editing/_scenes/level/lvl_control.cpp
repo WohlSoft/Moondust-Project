@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtMath>
-
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <main_window/dock/debugger.h>
