@@ -61,7 +61,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
         QMessageBox::information(this, tr("NPC garbage clean-up"), tr("Everything is fine, level has no NPC gargabe!"), QMessageBox::Ok);
     else
     {
-        QMessageBox::StandardButton x=QMessageBox::question(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's. Are you want to remove them?\nPress to \"Help\" button to show up some found junk NPC's").arg(_found_garbage.size()), QMessageBox::Yes|QMessageBox::No|QMessageBox::Help);
+        QMessageBox::StandardButton x=QMessageBox::question(this, tr("NPC garbage clean-up"), tr("Found %1 junk NPC's. Do you want to remove them?\nPress to \"Help\" button to show up some found junk NPC's").arg(_found_garbage.size()), QMessageBox::Yes|QMessageBox::No|QMessageBox::Help);
         if((x!=QMessageBox::Yes)&&(x!=QMessageBox::Help)) return;
         bool help=(x==QMessageBox::Help);
         LvlScene *sc = box->scene;
