@@ -22,6 +22,7 @@
 #ifdef PGE_FILES_QT
 #include <QString>
 #include <QStringList>
+#include <QObject>
 #define PGESTRING QString
 #define PGESTRINGList QStringList
 #else
