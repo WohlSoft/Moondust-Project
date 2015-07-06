@@ -47,7 +47,7 @@ android: {
     LIBS += -lSDL2 -lglut -lGLU
 }
 win32: {
-    LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion
+    LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion -lopengl32 -lglu32
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
