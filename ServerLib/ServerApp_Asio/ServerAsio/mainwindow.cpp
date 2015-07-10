@@ -37,11 +37,17 @@ void MainWindow::on_bntSendDbgText_clicked()
         sock.connectToHost("127.0.0.1", 24444);
         sock.waitForConnected();
 
-        std::string buf("Here is some debug Text. How awesome is that?");
+        QByteArray dataToWrite;
+        {
+            QDataStream sockStream(&dataToWrite, QIODevice::ReadWrite);
+            sockStream << (int)0; //packetID
+            sockStream << QString("HI"); //username
+            sockStream << (int)0; //sessionID
+        }
 
-        int size = buf.size();
-        sock.write((char*)&size, sizeof(size));
-        sock.write((char*)&buf[0], size);
+        int lengthOfData = dataToWrite.size();
+        sock.write((char*)&lengthOfData, sizeof(lengthOfData));
+        sock.write(dataToWrite.data(), lengthOfData);
 
         sock.flush();
 

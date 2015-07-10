@@ -1,6 +1,6 @@
 #include "pgenetll_session.h"
 #include <iostream>
-
+#include <memory>
 
 
 PGENETLL_Session::PGENETLL_Session(tcp::socket socket) :
@@ -14,7 +14,7 @@ void PGENETLL_Session::start()
     listen();
 }
 
-void PGENETLL_Session::setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush)
+void PGENETLL_Session::setRawPacketToPush(const std::shared_ptr<ThreadedQueue_RawData> &packetToPush)
 {
     m_rawPacketToPush = packetToPush;
 }
@@ -40,7 +40,7 @@ void PGENETLL_Session::listen()
             std::string buf(size, '\0');
             asio::read(m_socket, asio::buffer(&buf[0], size));
 
-            m_rawPacketToPush->push(buf);
+            m_rawPacketToPush->push(make_pair(self, buf));
 
             // Listen more
             listen();
