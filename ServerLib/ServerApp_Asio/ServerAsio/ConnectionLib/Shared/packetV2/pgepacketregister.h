@@ -10,7 +10,6 @@
 #include <type_traits>
 #include <typeinfo>
 
-#include "pgepacketgloabls.h"
 #include "packets/packet.h"
 
 //To use this class add the friends below.
