@@ -279,6 +279,8 @@ void MainWindow::saveSettings()
                 settings.setValue("log-level", "2"); break;
             case QtFatalMsg:
                 settings.setValue("log-level", "1"); break;
+            default:
+                settings.setValue("log-level", "4"); break;
             }
         else
             settings.setValue("log-level", "0");

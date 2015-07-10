@@ -121,6 +121,8 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
         if(logLevel==QtWarningMsg) return;
     case QtFatalMsg:
         break;
+    default:
+        break;
     }
 
     switch (type)
@@ -136,6 +138,9 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
     break;
     case QtFatalMsg:
         txt = QString("Fatal: %1").arg(msg);
+        break;
+    default:
+        txt = QString("Info: %1").arg(msg);
     }
 
 QFile outFile(DebugLogFile);
@@ -158,6 +163,8 @@ void LogWriter::logMessageHandler(QtMsgType type,
         case QtCriticalMsg:
             if(logLevel==QtFatalMsg) return;
         case QtFatalMsg:
+            break;
+        default:
             break;
     }
 
@@ -192,6 +199,13 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(context.line)
                 .arg(context.function)
                 .arg(lMessage.constData());
+        break;
+        default:
+        txt = QString("Info: (%1:%2, %3): %4")
+                .arg(context.file)
+                .arg(context.line)
+                .arg(context.function)
+                .arg(lMessage.constData());
     }
 
     QFile outFile(DebugLogFile);
@@ -220,7 +234,7 @@ void LogWriter::logMessageHandler(QtMsgType type,
         LogWriter::consoleConnector->log(msg, QString("Fatal"));
         break;
     default:
-        LogWriter::consoleConnector->log(msg, QString("System"));
+        LogWriter::consoleConnector->log(msg, QString("Info"));
         break;
     }
 }
