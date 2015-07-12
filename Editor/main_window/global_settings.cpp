@@ -56,6 +56,8 @@ int  GlobalSettings::historyLimit=300;
 
 QString GlobalSettings::currentTheme="";
 
+bool GlobalSettings::ShowTipOfDay=true;
+
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
 QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
