@@ -15,9 +15,9 @@ PGENET_Server::PGENET_Server(QObject *parent) :
     m_service(new asio::io_service()),
     m_llserver(*m_service, PGENET_Global::Port)
 {
-    //m_llserver.setIncomingTextFunc([this](std::string message){_bgWorker_NewMessage(message);});
     m_llserver.setRawPacketToPush(m_pckDecoder.incomingPacketsQueue());
     m_fullPackets = m_pckDecoder.fullPacketsQueue();
+    m_fullPacketsUnindentified = m_pckDecoder.fullPacketsUnindentified();
 }
 
 PGENET_Server::~PGENET_Server()
@@ -26,7 +26,8 @@ PGENET_Server::~PGENET_Server()
         _bgWorker_quit();
         m_service->stop();
         _ioServiceState.waitForFinished();
-        _bgWorkerState.waitForFinished();
+        _bgWorkerState_FullPackets.waitForFinished();
+        _bgWorkerState_FullPacketsUnindentified.waitForFinished();
     }
 }
 
@@ -38,7 +39,8 @@ void PGENET_Server::start()
     }
     m_llserver.startAccepting();
     _ioServiceState = QtConcurrent::run([this](){ _ioService_run(); });
-    _bgWorkerState = QtConcurrent::run([this](){ _bgWorker_WaitForIncoming(); });
+    _bgWorkerState_FullPackets = QtConcurrent::run([this](){ _bgWorker_WaitForIncomingFullPackets(); });
+    _bgWorkerState_FullPacketsUnindentified = QtConcurrent::run([this](){ _bgWorker_WaitForIncomingFullPacketsUnindentified(); });
     m_currentState = PGENET_ServerState::Running;
 }
 
@@ -60,22 +62,35 @@ void PGENET_Server::_ioService_run()
 void PGENET_Server::_bgWorker_quit()
 {
     m_fullPackets->doExit();
+    m_fullPacketsUnindentified->doExit();
 }
 
-void PGENET_Server::_bgWorker_WaitForIncoming()
+void PGENET_Server::_bgWorker_WaitForIncomingFullPackets()
 {
     for (;;) {
         // TODO: Spread the packet to the diffrent sessions.
-        std::shared_ptr<Packet> nextFullPacket = m_fullPackets->pop();
+        Packet* nextFullPacket = m_fullPackets->pop();
         if(m_fullPackets->shouldExit())
             return;
 
         int sessionID = nextFullPacket->getSessionID();
         if(sessionID == 0){
-
+            m_globalSession.receiveNextPacket(nextFullPacket);
         }else if(m_registeredSessions.contains(sessionID)){
-
+            m_registeredSessions[sessionID]->receiveNextPacket(nextFullPacket);
         }
+    }
+}
+
+void PGENET_Server::_bgWorker_WaitForIncomingFullPacketsUnindentified()
+{
+    for (;;) {
+        // TODO: Spread the packet to the diffrent sessions.
+        std::pair<std::shared_ptr<PGENETLL_Session>, Packet*> nextFullPacket = m_fullPacketsUnindentified->pop();
+        if(m_fullPacketsUnindentified->shouldExit())
+            return;
+
+
     }
 }
 

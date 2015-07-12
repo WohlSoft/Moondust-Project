@@ -21,8 +21,6 @@ public:
     PGENET_UserManager();
 
     PGENET_User* getUserByName(const QString& name);
-    void resolveUserOfPacket(Packet* packet);
-
 
 private:
     std::vector<std::unique_ptr<PGENET_User> > m_regUsers;

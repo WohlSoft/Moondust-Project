@@ -17,9 +17,3 @@ PGENET_User *PGENET_UserManager::getUserByName(const QString &name)
 
     return nullptr;
 }
-
-void PGENET_UserManager::resolveUserOfPacket(Packet *packet)
-{
-
-}
-

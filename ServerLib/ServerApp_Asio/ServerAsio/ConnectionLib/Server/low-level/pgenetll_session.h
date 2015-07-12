@@ -4,7 +4,10 @@
 #include <asio.hpp>
 #include <ConnectionLib/Shared/util/ThreadedQueue.h>
 
+class PGENETLL_Session;
+
 using asio::ip::tcp;
+using ThreadedQueue_RawData = ThreadedQueue<std::pair<std::shared_ptr<PGENETLL_Session>, std::string> >;
 
 class PGENETLL_Session
   : public std::enable_shared_from_this<PGENETLL_Session>
@@ -13,10 +16,10 @@ public:
     PGENETLL_Session(tcp::socket socket);
 
     void start();
-    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
+    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue_RawData> &packetToPush);
 
 private:
-    std::shared_ptr<ThreadedQueue<std::string> > m_rawPacketToPush;
+    std::shared_ptr<ThreadedQueue_RawData> m_rawPacketToPush;
 
     void listen();
 
