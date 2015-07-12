@@ -39,15 +39,21 @@ void MainWindow::on_bntSendDbgText_clicked()
 
         QByteArray dataToWrite;
         {
+            // Write Header
             QDataStream sockStream(&dataToWrite, QIODevice::ReadWrite);
-            sockStream << (int)0; //packetID
-            sockStream << QString("HI"); //username
+            sockStream << (int)PacketID::PGENET_PacketUserAuth; //packetID
+            sockStream << QString(""); //username
             sockStream << (int)0; //sessionID
+
+            sockStream << QString("Kevsoft");
+            sockStream << (int)PGENET_Global::NetworkVersion;
+
         }
 
         int lengthOfData = dataToWrite.size();
         sock.write((char*)&lengthOfData, sizeof(lengthOfData));
         sock.write(dataToWrite.data(), lengthOfData);
+
 
         sock.flush();
 

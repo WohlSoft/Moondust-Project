@@ -1,14 +1,12 @@
 #include "pgenetll_server.h"
 
+#include <iostream>
 
 PGENETLL_Server::PGENETLL_Server(asio::io_service& io_service, short port) :
     m_pgenetll_acceptor(io_service, tcp::endpoint(tcp::v4(), port)),
     m_pgenetll_nextsocket(io_service)
-{
+{}
 
-}
-
-#include <iostream>
 
 void PGENETLL_Server::startAccepting()
 {
@@ -22,6 +20,10 @@ void PGENETLL_Server::startAccepting()
                 newSession->start();
                 newSession->setRawPacketToPush(m_rawPacketToPush);
                 std::cout << "Incoming connection!" << std::endl;
+
+                if(m_incomingConnectionHandler)
+                    m_incomingConnectionHandler(newSession);
+
             }else{
                 std::cout << "Error happened: " << ec.message() << std::endl;
             }
@@ -35,5 +37,10 @@ void PGENETLL_Server::setRawPacketToPush(const std::shared_ptr<ThreadedQueue_Raw
 {
     m_rawPacketToPush = packetToPush;
 }
+void PGENETLL_Server::setIncomingConnectionHandler(const std::function<void (std::shared_ptr<PGENETLL_Session>)> &value)
+{
+    m_incomingConnectionHandler = value;
+}
+
 
 

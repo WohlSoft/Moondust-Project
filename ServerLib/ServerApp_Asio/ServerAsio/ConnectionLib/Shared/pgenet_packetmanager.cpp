@@ -6,8 +6,10 @@
 
 PGENET_PacketManager::PGENET_PacketManager()
 {
-
+    registerAllPackets();
 }
+
+
 PGENET_DefPacketRegister *PGENET_PacketManager::getPacketRegister()
 {
     return &m_packetRegister;

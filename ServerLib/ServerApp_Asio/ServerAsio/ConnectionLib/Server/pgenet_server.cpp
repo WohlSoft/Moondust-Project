@@ -10,7 +10,7 @@ PGENET_Server::PGENET_Server(QObject *parent) :
 
     m_pckDecoder(getPacketRegister(), &m_userManager),
 
-    m_globalSession(&m_userManager),
+    m_globalSession(this),
 
     m_service(new asio::io_service()),
     m_llserver(*m_service, PGENET_Global::Port)
@@ -18,6 +18,9 @@ PGENET_Server::PGENET_Server(QObject *parent) :
     m_llserver.setRawPacketToPush(m_pckDecoder.incomingPacketsQueue());
     m_fullPackets = m_pckDecoder.fullPacketsQueue();
     m_fullPacketsUnindentified = m_pckDecoder.fullPacketsUnindentified();
+
+    //New connection should be handled by the user manager.
+    m_llserver.setIncomingConnectionHandler(m_userManager.getNewIncomingConnectionHandler());
 }
 
 PGENET_Server::~PGENET_Server()
@@ -50,6 +53,11 @@ PGENET_Server::PGENET_ServerState PGENET_Server::currentState() const
     return m_currentState;
 }
 
+PGENET_UserManager *PGENET_Server::getUserManager()
+{
+    return &m_userManager;
+}
+
 void PGENET_Server::_ioService_run()
 {
     try {
@@ -68,7 +76,7 @@ void PGENET_Server::_bgWorker_quit()
 void PGENET_Server::_bgWorker_WaitForIncomingFullPackets()
 {
     for (;;) {
-        // TODO: Spread the packet to the diffrent sessions.
+        // TODO: Spread the packet to the different sessions.
         Packet* nextFullPacket = m_fullPackets->pop();
         if(m_fullPackets->shouldExit())
             return;
@@ -85,12 +93,19 @@ void PGENET_Server::_bgWorker_WaitForIncomingFullPackets()
 void PGENET_Server::_bgWorker_WaitForIncomingFullPacketsUnindentified()
 {
     for (;;) {
-        // TODO: Spread the packet to the diffrent sessions.
+
         std::pair<std::shared_ptr<PGENETLL_Session>, Packet*> nextFullPacket = m_fullPacketsUnindentified->pop();
         if(m_fullPacketsUnindentified->shouldExit())
             return;
 
-
+        int sessionID = nextFullPacket.second->getSessionID();
+        if(sessionID == 0){
+            m_globalSession.receiveNextPacketUnindentified(nextFullPacket);
+        }else if(m_registeredSessions.contains(sessionID)){
+            m_registeredSessions[sessionID]->receiveNextPacketUnindentified(nextFullPacket);
+        }else{
+            delete nextFullPacket.second;
+        }
     }
 }
 
