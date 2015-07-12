@@ -5,6 +5,7 @@
 #include <functional>
 
 #include <ConnectionLib/Shared/util/ThreadedQueue.h>
+#include "pgenetll_session.h"
 
 using asio::ip::tcp;
 
@@ -16,11 +17,11 @@ public:
     void startAccepting();
 
 
-    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue<std::string> > &packetToPush);
+    void setRawPacketToPush(const std::shared_ptr<ThreadedQueue_RawData> &packetToPush);
 
 private:
     // Will be forwarded to the session:
-    std::shared_ptr<ThreadedQueue<std::string> > m_rawPacketToPush;
+    std::shared_ptr<ThreadedQueue_RawData> m_rawPacketToPush;
 
     tcp::acceptor m_pgenetll_acceptor;
     tcp::socket m_pgenetll_nextsocket;

@@ -17,8 +17,8 @@
 #include <QtConcurrent>
 
 #include "low-level/pgenetll_server.h"
+#include "util/rawpacketdecoder.h"
 
-#include <ConnectionLib/Shared/util/rawpacketdecoder.h>
 #include <ConnectionLib/Shared/pgenet_packetmanager.h>
 #include <ConnectionLib/Shared/user/pgenet_usermanager.h>
 
@@ -49,6 +49,8 @@ signals:
 
 private:
 
+
+
     // ///////////// GENERAL STATE ////////////////////////
 
     PGENET_ServerState m_currentState;
@@ -67,8 +69,10 @@ private:
     void _bgWorker_quit();
 
     // BACKGROUND WORKER:
-    void _bgWorker_WaitForIncoming();
-    QFuture<void> _bgWorkerState;
+    void _bgWorker_WaitForIncomingFullPackets();
+    void _bgWorker_WaitForIncomingFullPacketsUnindentified();
+    QFuture<void> _bgWorkerState_FullPackets;
+    QFuture<void> _bgWorkerState_FullPacketsUnindentified;
 
     // ///////////// SERVER TOOLS /////////////////////////
 
@@ -78,7 +82,8 @@ private:
 
     // Packet Decoder:
     RawPacketDecoder m_pckDecoder;
-    std::shared_ptr<ThreadedQueue<std::shared_ptr<Packet> > > m_fullPackets;
+    std::shared_ptr<ThreadedQueue<Packet*> > m_fullPackets;
+    std::shared_ptr<ThreadedQueue_UnindentifedPackets> m_fullPacketsUnindentified;
 
     // Sessions:
     PGENET_GlobalSession m_globalSession;

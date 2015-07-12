@@ -12,6 +12,11 @@ public:
     PGENET_GlobalSession(PGENET_UserManager* userManager);
 private:
     PGENET_UserManager* m_userManager;
+
+
+    // PGENET_Session interface
+protected:
+    void manageNextPacket(std::shared_ptr<Packet> nextPacket);
 };
 
 #endif // PGENET_GLOBALSESSION_H
