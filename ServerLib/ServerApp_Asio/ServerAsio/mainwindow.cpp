@@ -5,6 +5,8 @@
 #include <iostream>
 
 
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -12,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(m_server.data(), SIGNAL(incomingText(QString)), this, SLOT(addText(QString)), Qt::QueuedConnection);
+
+    ThreadedLogger::initStatic();
+    connect(gThreadedLogger.data(), SIGNAL(newIncomingMsg(ThreadedLogger::LoggerLevel,QString)), this, SLOT(newLoggingText(ThreadedLogger::LoggerLevel,QString)), Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()
@@ -19,10 +24,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::newLoggingText(ThreadedLogger::LoggerLevel level, QString msg)
+{
+    addText(QString("[") + ThreadedLogger::LoggerLevelToString(level) + "] " + msg);
+}
+
 void MainWindow::on_bntStartServer_clicked()
 {
-    addText("Server has started!\n");
     m_server->start();
+    gThreadedLogger->logInfo("Server has started!");
 }
 
 void MainWindow::addText(QString text)
@@ -65,3 +75,10 @@ void MainWindow::on_bntSendDbgText_clicked()
 }
 
 
+
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    e->accept();
+    ThreadedLogger::destoryStatic();
+}
