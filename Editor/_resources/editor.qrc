@@ -212,4 +212,7 @@
         <file>_files/file_wldx/file_wldx_256.png</file>
         <file>_files/pge_editor.desktop</file>
     </qresource>
+    <qresource prefix="/tips">
+        <file>tips/tips_en.html</file>
+    </qresource>
 </RCC>
