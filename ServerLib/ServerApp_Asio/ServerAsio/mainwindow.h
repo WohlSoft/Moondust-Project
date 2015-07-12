@@ -18,15 +18,19 @@ public:
     ~MainWindow();
 
 private slots:
+    void newLoggingText(ThreadedLogger::LoggerLevel level, QString msg);
+
     void on_bntStartServer_clicked();
-
     void addText(QString text);
-
     void on_bntSendDbgText_clicked();
 
 private:
     Ui::MainWindow *ui;
     QScopedPointer<PGENET_Server> m_server;
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // MAINWINDOW_H

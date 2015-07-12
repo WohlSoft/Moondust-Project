@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     ConnectionLib/Shared/packetV2/packets/Both/packetmessage.cpp \
     ConnectionLib/Server/util/rawpacketdecoder.cpp \
     ConnectionLib/Server/user/pgenet_user.cpp \
-    ConnectionLib/Server/user/pgenet_usermanager.cpp
+    ConnectionLib/Server/user/pgenet_usermanager.cpp \
+    ConnectionLib/Shared/util/threadedlogger.cpp
 
 HEADERS  += mainwindow.h \
     ConnectionLib/Server/pgenet_server.h \
@@ -412,6 +413,7 @@ HEADERS  += mainwindow.h \
     ConnectionLib/Shared/packetV2/packets/Both/packetmessage.h \
     ConnectionLib/Server/util/rawpacketdecoder.h \
     ConnectionLib/Server/user/pgenet_user.h \
-    ConnectionLib/Server/user/pgenet_usermanager.h
+    ConnectionLib/Server/user/pgenet_usermanager.h \
+    ConnectionLib/Shared/util/threadedlogger.h
 
 FORMS    += mainwindow.ui

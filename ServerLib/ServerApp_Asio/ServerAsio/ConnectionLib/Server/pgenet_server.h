@@ -22,6 +22,8 @@
 #include <ConnectionLib/Shared/pgenet_packetmanager.h>
 #include <ConnectionLib/Server/user/pgenet_usermanager.h>
 
+#include <ConnectionLib/Shared/util/threadedlogger.h>
+
 #include "session/pgenet_globalsession.h"
 
 
