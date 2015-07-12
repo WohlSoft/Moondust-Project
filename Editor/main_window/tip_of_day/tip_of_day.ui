@@ -15,16 +15,22 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/cat_builder.icns</normaloff>:/cat_builder.icns</iconset>
+    <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="label_2">
+     <property name="minimumSize">
+      <size>
+       <width>8</width>
+       <height>50</height>
+      </size>
+     </property>
      <property name="text">
       <string notr="true"/>
      </property>
      <property name="textFormat">
-      <enum>Qt::PlainText</enum>
+      <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
       <pixmap resource="../../../Engine/_resources/engine.qrc">:/icon/cat_48.png</pixmap>
@@ -47,7 +53,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="4">
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="tipText">
      <property name="minimumSize">
       <size>
        <width>390</width>

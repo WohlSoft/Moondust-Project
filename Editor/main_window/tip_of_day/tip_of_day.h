@@ -2,6 +2,7 @@
 #define TIP_OF_DAY_H
 
 #include <QDialog>
+#include <QStringList>
 
 namespace Ui {
 class TipOfDay;
@@ -17,11 +18,13 @@ public:
 
 private slots:
     void on_prevTip_clicked();
-
     void on_nextTip_clicked();
 
 private:
     Ui::TipOfDay *ui;
+    QStringList tips;
+    QStringList tips_viewed;
+    int curTip;
 };
 
 #endif // TIP_OF_DAY_H
