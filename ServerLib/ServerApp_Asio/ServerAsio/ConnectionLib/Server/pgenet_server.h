@@ -20,7 +20,7 @@
 #include "util/rawpacketdecoder.h"
 
 #include <ConnectionLib/Shared/pgenet_packetmanager.h>
-#include <ConnectionLib/Shared/user/pgenet_usermanager.h>
+#include <ConnectionLib/Server/user/pgenet_usermanager.h>
 
 #include "session/pgenet_globalsession.h"
 
@@ -43,6 +43,7 @@ public:
     };
 
     PGENET_ServerState currentState() const;
+    PGENET_UserManager* getUserManager();
 
 signals:
     void incomingText(QString text);

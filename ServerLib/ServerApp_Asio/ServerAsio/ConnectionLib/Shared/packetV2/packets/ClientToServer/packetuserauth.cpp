@@ -11,12 +11,12 @@ PacketUserAuth::PacketUserAuth() : m_username(""), m_networkVersionNumber(PGENET
 
 void PacketUserAuth::encode(QDataStream &stream)
 {
-    stream >> m_username >> m_networkVersionNumber;
+    stream << m_username << m_networkVersionNumber;
 }
 
 void PacketUserAuth::decode(QDataStream &stream)
 {
-    stream << m_username << m_networkVersionNumber;
+    stream >> m_username >> m_networkVersionNumber;
 }
 QString PacketUserAuth::username() const
 {

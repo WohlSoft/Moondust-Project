@@ -18,10 +18,13 @@ public:
 
 
     void setRawPacketToPush(const std::shared_ptr<ThreadedQueue_RawData> &packetToPush);
+    void setIncomingConnectionHandler(const std::function<void (std::shared_ptr<PGENETLL_Session>)> &value);
 
 private:
     // Will be forwarded to the session:
     std::shared_ptr<ThreadedQueue_RawData> m_rawPacketToPush;
+
+    std::function<void(std::shared_ptr<PGENETLL_Session>)> m_incomingConnectionHandler;
 
     tcp::acceptor m_pgenetll_acceptor;
     tcp::socket m_pgenetll_nextsocket;

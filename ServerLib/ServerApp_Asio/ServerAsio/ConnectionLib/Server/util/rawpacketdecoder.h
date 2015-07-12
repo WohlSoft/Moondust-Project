@@ -9,7 +9,7 @@
 #include <ConnectionLib/Shared/util/ThreadedQueue.h>
 #include <ConnectionLib/Shared/packetV2/packets/packet.h>
 #include <ConnectionLib/Shared/pgenet_packetmanager.h>
-#include <ConnectionLib/Shared/user/pgenet_usermanager.h>
+#include <ConnectionLib/Server/user/pgenet_usermanager.h>
 
 #include <ConnectionLib/Server/low-level/pgenetll_session.h>
 

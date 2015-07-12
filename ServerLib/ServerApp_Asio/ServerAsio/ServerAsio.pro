@@ -42,11 +42,11 @@ SOURCES += main.cpp\
     ConnectionLib/Shared/pgenet_packetmanager.cpp \
     ConnectionLib/Server/session/pgenet_session.cpp \
     ConnectionLib/Server/session/pgenet_globalsession.cpp \
-    ConnectionLib/Shared/user/pgenet_user.cpp \
-    ConnectionLib/Shared/user/pgenet_usermanager.cpp \
     ConnectionLib/Shared/packetV2/packets/ClientToServer/packetuserauth.cpp \
     ConnectionLib/Shared/packetV2/packets/Both/packetmessage.cpp \
-    ConnectionLib/Server/util/rawpacketdecoder.cpp
+    ConnectionLib/Server/util/rawpacketdecoder.cpp \
+    ConnectionLib/Server/user/pgenet_user.cpp \
+    ConnectionLib/Server/user/pgenet_usermanager.cpp
 
 HEADERS  += mainwindow.h \
     ConnectionLib/Server/pgenet_server.h \
@@ -406,12 +406,12 @@ HEADERS  += mainwindow.h \
     ConnectionLib/Shared/pgenet_packetmanager.h \
     ConnectionLib/Shared/packetV2/packets/packet.h \
     ConnectionLib/Shared/packetV2/pgepacketregister.h \
-    ConnectionLib/Shared/user/pgenet_user.h \
     ConnectionLib/Server/session/pgenet_session.h \
     ConnectionLib/Server/session/pgenet_globalsession.h \
-    ConnectionLib/Shared/user/pgenet_usermanager.h \
     ConnectionLib/Shared/packetV2/packets/ClientToServer/packetuserauth.h \
     ConnectionLib/Shared/packetV2/packets/Both/packetmessage.h \
-    ConnectionLib/Server/util/rawpacketdecoder.h
+    ConnectionLib/Server/util/rawpacketdecoder.h \
+    ConnectionLib/Server/user/pgenet_user.h \
+    ConnectionLib/Server/user/pgenet_usermanager.h
 
 FORMS    += mainwindow.ui
