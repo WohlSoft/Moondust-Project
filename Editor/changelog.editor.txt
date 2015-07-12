@@ -1,3 +1,6 @@
+Editor 0.3.1.1
+- Added a tool tip to notice about some useful things of the editor
+
 Editor 0.3.1
 - Added tool which provides clean-up of garbage NPC's caused by SMBX bug (any climbabme NPC's such as vines are flooding SMBX)
 - Added config pack version notifier (if you have old config pack is old, you will be notified about)

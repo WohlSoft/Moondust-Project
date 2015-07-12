@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>317</height>
+    <width>511</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,18 +22,18 @@
     <widget class="QLabel" name="label_2">
      <property name="minimumSize">
       <size>
-       <width>8</width>
-       <height>50</height>
+       <width>100</width>
+       <height>55</height>
       </size>
-     </property>
-     <property name="text">
-      <string notr="true"/>
      </property>
      <property name="textFormat">
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../../Engine/_resources/engine.qrc">:/icon/cat_48.png</pixmap>
+      <pixmap resource="../../_resources/editor.qrc">:/images/cat_builder/cat_builder_48.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -103,7 +103,6 @@
  </widget>
  <resources>
   <include location="../../_resources/editor.qrc"/>
-  <include location="../../../Engine/_resources/engine.qrc"/>
  </resources>
  <connections>
   <connection>
