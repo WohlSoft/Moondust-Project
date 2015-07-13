@@ -17,6 +17,8 @@ public:
 
 private slots:
     void on_actionRepositories_triggered();
+    void on_refresh_clicked();
+    void updateConfigPacksList();
 
 private:
     Ui::MainWindow *ui;
