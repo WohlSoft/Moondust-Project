@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <common_features/app_path.h>
+#include "settings.h"
 
 int main(int argc, char *argv[])
 {
@@ -8,8 +9,10 @@ int main(int argc, char *argv[])
 
     AppPathManager::initAppPath();
 
+    ManagerSettings::load();
     MainWindow w;
     w.show();
+    ManagerSettings::save();
 
     return a.exec();
 }
