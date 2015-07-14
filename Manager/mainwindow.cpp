@@ -39,3 +39,14 @@ void MainWindow::updateConfigPacksList()
 
     //enable "update" button
 }
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    ManagerSettings::save();
+    e->accept();
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    this->close();
+}

@@ -55,6 +55,9 @@
    </item>
    <item row="1" column="0" colspan="6">
     <widget class="QListWidget" name="repoList">
+     <property name="movement">
+      <enum>QListView::Snap</enum>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>

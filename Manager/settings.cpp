@@ -7,6 +7,7 @@ void ManagerSettings::load()
 {
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.beginGroup("cpack-repos");
+    cpacks_reposList.clear();
     int repos=setup.value("repos", 0).toInt();
     while(repos>0)
     {

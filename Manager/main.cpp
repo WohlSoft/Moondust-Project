@@ -12,7 +12,5 @@ int main(int argc, char *argv[])
     ManagerSettings::load();
     MainWindow w;
     w.show();
-    ManagerSettings::save();
-
     return a.exec();
 }

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListWidgetItem>
+#include "config_packs.h"
 
 namespace Ui {
 class ConfPacksRepos;
@@ -20,10 +21,12 @@ private slots:
     void on_add_clicked();
     void on_checkRepo_clicked();
     void on_remove_clicked();
-    void on_repoList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void clearList();
+    void on_repoList_itemChanged(QListWidgetItem *item);
 
 private:
+    bool lockAdd;
+    void addItemToList(ConfigPackRepo &rp);
     Ui::ConfPacksRepos *ui;
 };
 
