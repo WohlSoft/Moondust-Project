@@ -19,6 +19,10 @@ private slots:
     void on_actionRepositories_triggered();
     void on_refresh_clicked();
     void updateConfigPacksList();
+    void on_actionExit_triggered();
+
+protected:
+    void closeEvent(QCloseEvent* e);
 
 private:
     Ui::MainWindow *ui;
