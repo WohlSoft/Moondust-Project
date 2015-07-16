@@ -86,7 +86,7 @@ void AppPathManager::initAppPath()
 
     QSettings setup;
     bool userDir;
-    userDir = setup.value("EnableUserDir", false).toBool();
+    userDir = setup.value("EnableUserDir", true).toBool();
 //openUserDir:
 
     if(userDir)

@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -158,6 +158,7 @@
      <addaction name="actionLangEnglish"/>
     </widget>
     <addaction name="actionContents"/>
+    <addaction name="actionTipOfDay"/>
     <addaction name="separator"/>
     <addaction name="actionCheckUpdates"/>
     <addaction name="actionChange_log"/>
@@ -2666,6 +2667,11 @@
    </property>
    <property name="toolTip">
     <string>More sections...</string>
+   </property>
+  </action>
+  <action name="actionTipOfDay">
+   <property name="text">
+    <string>Tip of the day...</string>
    </property>
   </action>
  </widget>

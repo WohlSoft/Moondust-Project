@@ -1,0 +1,36 @@
+- onBlockSpawn() event
+  this event should be triggered when NPC just spawned and inited after kicking of NPC contained block
+- onDead() event
+  this event should be triggered when NPC dies
+
+- Bossedit's idea with flower powerups:
+        <bossedit8> so about my suggestion
+        <bossedit8> remember in NSMBWII that once you play in multiplayers you get even more power ups from one single blocks as default
+        <bossedit8> right?
+        <Wohlstand> I.e. one block contains array of variouse NPC's
+        <Wohlstand> just you can put into it any crap which you wanna include into it, and when you will hit it: everything will appear and... will chaze Mario xD
+        <bossedit8> like once you put a fireflower in one block, in 2 players you get one mushroom and one fireflower if both of the players are small
+        <Wohlstand> Oh, than another thing
+        <Wohlstand> same fireflower, but if two players are detected and second player is small - spawn mushroom too
+        <Wohlstand> I.e. will be spawned TWO npc's: mushroom and flower
+        <Wohlstand> right?
+        <Wohlstand> it will a  small lua-side script
+        <bossedit8> yeah
+        <Wohlstand> is not hard
+        <bossedit8> 1 player's status is small = mushroom
+        <Wohlstand> but a good idea :)
+        <bossedit8> 2 player's status is big = fireflower
+        <Wohlstand> I need to add lua event "onBlockSpawn"
+        <bossedit8> ok
+        <Wohlstand> where I will check common status and will transform NPC into ...mushroom if both players are small
+        <Wohlstand> ..will spawn both flower and mushroom if one of players is small but other - big and more
+        <Wohlstand> and flower only if both players are big or greater
+        <Wohlstand> I think, everything is right :)
+        <Wohlstand> and... especially for NPC suggestions I will make separated todo.txt file directly in the npcs folder where actual scripts are placed
+        <bossedit8> In NSMBWii however, you actually get one greater power up (fireflower) even if all characters are small
+        <bossedit8> everyone except one gets mushrooms
+        <bossedit8> that's how NSMBWii did
+        <bossedit8> aswell
+        <Wohlstand> some lua tricks per NPC will do more wonderful thins even this when I checked out it in my thinks
+        <bossedit8> ok
+

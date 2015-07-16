@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TipOfDay</class>
+ <widget class="QDialog" name="TipOfDay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>511</width>
+    <height>387</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Tip of day</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../_resources/editor.qrc">
+    <normaloff>:/cat_builder.ico</normaloff>:/cat_builder.ico</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>55</height>
+      </size>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../../_resources/editor.qrc">:/images/cat_builder/cat_builder_48.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Did you know...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QCheckBox" name="showEachStart">
+     <property name="text">
+      <string>Show tip at startup</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="prevTip">
+     <property name="text">
+      <string>Previouse tip</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="nextTip">
+     <property name="text">
+      <string>Next tip</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QTextBrowser" name="tipText">
+     <property name="minimumSize">
+      <size>
+       <width>390</width>
+       <height>186</height>
+      </size>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../_resources/editor.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>close</sender>
+   <signal>clicked()</signal>
+   <receiver>TipOfDay</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>295</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

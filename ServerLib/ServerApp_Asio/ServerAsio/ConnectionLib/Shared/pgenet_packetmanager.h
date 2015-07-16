@@ -2,7 +2,7 @@
 #define PGENET_PACKETMANAGER_H
 
 #include "packetV2/pgepacketregister.h"
-#include "packetV2/pgepacketgloabls.h"
+#include "pgenet_global.h"
 
 using PGENET_DefPacketRegister = PGENET_PacketRegister<PacketID>;
 
@@ -13,6 +13,8 @@ public:
     PGENET_PacketManager();
 
     PGENET_DefPacketRegister* getPacketRegister();
+    void registerAllPackets();
+
 
 protected:
     PGENET_DefPacketRegister m_packetRegister;
