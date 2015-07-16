@@ -38,7 +38,6 @@
 
 #include "mainwindow.h"
 
-
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
@@ -61,6 +60,9 @@ int main(int argc, char *argv[])
     }
 
     a->setStyle(new PGE_ProxyStyle);
+    #ifdef Q_OS_LINUX
+    a->setStyle("GTK");
+    #endif
 
     QFont fnt = a->font();
 
