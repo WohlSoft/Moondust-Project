@@ -93,6 +93,8 @@ void MainWindow::loadSettings()
 
         GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
 
+        GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
+
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
         dock_LvlWarpProps->setFloating(settings.value("doors-tool-box-float", FloatDocks).toBool());
@@ -250,6 +252,7 @@ void MainWindow::saveSettings()
     settings.setValue("current-config", currentConfigDir);
     settings.setValue("ask-config-again", askConfigAgain);
     settings.setValue("current-theme", GlobalSettings::currentTheme);
+    settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
     settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
 

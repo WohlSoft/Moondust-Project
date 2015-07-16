@@ -88,6 +88,7 @@ public:
     static QTabWidget::TabPosition TSTToolboxPos;
     static QString currentTheme;
 
+    static bool ShowTipOfDay;
 };
 
 class ConfStatus

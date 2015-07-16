@@ -148,6 +148,9 @@ int main(int argc, char *argv[])
     w->initWindowsThumbnail();
 #endif
 
+    //Show tip of a day
+    w->showTipOfDay();
+
     //Run main loop
     ret=a->exec();
 

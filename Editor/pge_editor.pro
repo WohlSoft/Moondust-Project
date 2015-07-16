@@ -411,7 +411,8 @@ SOURCES += main.cpp\
     ../_common/PGE_File_Formats/file_rw_savx.cpp \
     main_window/tools/main_clean_npc_gargage.cpp \
     common_features/bool_reseter.cpp \
-    common_features/version_cmp.cpp
+    common_features/version_cmp.cpp \
+    main_window/tip_of_day/tip_of_day.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -603,7 +604,8 @@ HEADERS  += defines.h \
     ../_common/StackWalker/StackWalker.h \
     common_features/bool_reseter.h \
     common_features/version_cmp.h \
-    common_features/RTree.h
+    common_features/RTree.h \
+    main_window/tip_of_day/tip_of_day.h
 
 
 FORMS    += \
@@ -652,7 +654,8 @@ FORMS    += \
     main_window/dock/bookmarks_box.ui \
     main_window/dock/debugger.ui \
     main_window/dock/wld_settings_box.ui \
-    main_window/dock/lvl_events_box.ui
+    main_window/dock/lvl_events_box.ui \
+    main_window/tip_of_day/tip_of_day.ui
 
 
 

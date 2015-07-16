@@ -21,6 +21,8 @@
 #include <common_features/util.h>
 #include <main_window/about_dialog/aboutdialog.h>
 #include <main_window/updater/check_updates.h>
+#include <main_window/tip_of_day/tip_of_day.h>
+#include <main_window/global_settings.h>
 
 #include <mainwindow.h>
 #include <ui_mainwindow.h>
@@ -29,6 +31,19 @@
 void MainWindow::on_actionContents_triggered()
 {
     QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
+}
+
+void MainWindow::showTipOfDay()
+{
+    if(GlobalSettings::ShowTipOfDay)
+        on_actionTipOfDay_triggered();
+}
+
+void MainWindow::on_actionTipOfDay_triggered()
+{
+    TipOfDay tod;
+    util::DialogToCenter(&tod, true);
+    tod.exec();
 }
 
 

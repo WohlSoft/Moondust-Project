@@ -433,8 +433,11 @@ public:
 
 
 // /////////////////////// Help ///////////////////////////
+    public slots:
+        void showTipOfDay();
     private slots:
         void on_actionContents_triggered();
+        void on_actionTipOfDay_triggered();
         void on_actionAbout_triggered();
         void on_actionSMBX_like_GUI_triggered();
         void on_actionChange_log_triggered();

@@ -3,7 +3,7 @@
 
 #include <QMetaType>
 
-#include <ConnectionLib/Shared/user/pgenet_user.h>
+#include <ConnectionLib/Server/user/pgenet_user.h>
 
 class Packet
 {
@@ -34,17 +34,20 @@ public:
         sessionID = value;
     }
 
+    int getPacketID() const
+    {
+        return packetID;
+    }
+    void setPacketID(int value)
+    {
+        packetID = value;
+    }
+
 protected:
     PGENET_User* user;
     int sessionID;
+    int packetID;
 };
-
-
-
-
-
-
-
 
 
 

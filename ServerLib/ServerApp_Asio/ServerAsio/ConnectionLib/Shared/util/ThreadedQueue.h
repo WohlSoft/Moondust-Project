@@ -14,6 +14,8 @@ private:
     std::condition_variable mCond;
     std::atomic_bool mDoExit;
 public:
+    ThreadedQueue() : mDoExit(false)
+    {}
 
     inline void doExit(){
         std::unique_lock<std::mutex> lck(mMutex);
@@ -36,6 +38,8 @@ public:
     inline T pop() {
         T cmd;
         std::unique_lock<std::mutex> lck(mMutex);
+        if(mDoExit.load())
+            return T();
 
         while (mQueue.empty()){
             mCond.wait(lck);

@@ -10,7 +10,6 @@
 #include <type_traits>
 #include <typeinfo>
 
-#include "pgepacketgloabls.h"
 #include "packets/packet.h"
 
 //To use this class add the friends below.
@@ -66,6 +65,9 @@ public:
             regId = qRegisterMetaType<T>(typeid(T).name());
         }
 
+        if(!regId)
+            return false;
+
 
         m_registeredPackets[packetID] = regId;
         return true;
@@ -83,7 +85,9 @@ public:
         if(!m_registeredPackets.contains(packetID))
             return nullptr;
 
-        return reinterpret_cast<Packet*>(QMetaType::create(m_registeredPackets[packetID]));
+        Packet* newPacket = reinterpret_cast<Packet*>(QMetaType::create(m_registeredPackets[packetID]));
+        newPacket->setPacketID(static_cast<int>(packetID));
+        return newPacket;
     }
 
 };
