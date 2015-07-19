@@ -34,7 +34,7 @@
 #include <string.h>
 
 #include <SDL2/SDL_endian.h>
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "load_aiff.h"
 
 /*********************************************/

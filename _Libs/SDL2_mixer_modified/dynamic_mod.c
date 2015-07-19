@@ -22,7 +22,7 @@
 #ifdef MOD_MUSIC
 
 #include <SDL2/SDL_loadso.h>
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "dynamic_mod.h"
 
 mikmod_loader mikmod = {

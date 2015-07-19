@@ -21,7 +21,7 @@
 
 #ifdef MODPLUG_MUSIC
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "dynamic_modplug.h"
 #include "music_modplug.h"
 

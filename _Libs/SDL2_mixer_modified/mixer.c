@@ -29,7 +29,7 @@
 #include <SDL2/SDL_endian.h>
 #include <SDL2/SDL_timer.h>
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "load_aiff.h"
 #include "load_voc.h"
 #include "load_mp3.h"
