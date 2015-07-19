@@ -22,7 +22,7 @@
 #ifdef MP3_MUSIC
 
 #include "SDL_loadso.h"
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "dynamic_mp3.h"
 
 smpeg_loader smpeg = {
