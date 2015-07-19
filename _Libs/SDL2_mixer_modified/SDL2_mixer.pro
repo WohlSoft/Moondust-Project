@@ -21,6 +21,7 @@ win32:{
 LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
+DEFINES += USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
 LIBS += -L../_builds/linux/lib
@@ -52,12 +53,6 @@ DEFINES += MODPLUG_MUSIC
 android: {
 DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP #OGG_USE_TREMOR
 DEFINES -= FLAC_MUSIC #temopary with no FLAC, because I wasn't built it because compilation bug
-}
-
-win32: {
-DEFINES += USE_NATIVE_MIDI
-} else {
-DEFINES -= USE_NATIVE_MIDI
 }
 
 LIBS += -L../_builds/$$TARGETOS/lib
