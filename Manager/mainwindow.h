@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <http_downloader/http_downloader.h>
 #include <QQueue>
+#include "config_packs.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,8 +23,9 @@ public:
     enum ActionQueueEnum
     {
         ACT_DOWNLOAD_FILE=0,
-        ACT_PARSE_XML,
+        ACT_PARSE_CPACK_LIST_XML,
         ACT_UNPACK_ZIP,
+        ACT_REBUILD_CPACK_LIST,
         ACT_LOCK_CONFIG_PAGE,
         ACT_UNLOCK_CONFIG_PAGE,
         ACT_SHOWMSG
@@ -59,6 +61,10 @@ protected:
     void closeEvent(QCloseEvent* e);
 
 private:
+    void buildConfigPackList();
+    void clearCPACKList();
+    void addItemToCPACKList(ConfigPackInfo &rp);
+
     Ui::MainWindow *ui;
 };
 

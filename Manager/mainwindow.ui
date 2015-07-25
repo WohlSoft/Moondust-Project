@@ -306,7 +306,7 @@ Platform Game Engine!</string>
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QListWidget" name="listWidget"/>
+            <widget class="QListWidget" name="cpackList"/>
            </item>
            <item row="1" column="0">
             <widget class="QFrame" name="frame_2">
