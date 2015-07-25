@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network widgets concurrent
+QT       += network widgets concurrent xml
 
 win32: {
 QT += winextras
@@ -43,7 +43,8 @@ SOURCES += main.cpp\
     config_packs.cpp \
     settings.cpp \
     config_packs_repos.cpp \
-    http_downloader/http_downloader.cpp
+    http_downloader/http_downloader.cpp \
+    xml_parse/xml_cpack_list.cpp
 
 HEADERS  += mainwindow.h \
     common_features/app_path.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     config_packs.h \
     settings.h \
     config_packs_repos.h \
-    http_downloader/http_downloader.h
+    http_downloader/http_downloader.h \
+    xml_parse/xml_cpack_list.h
 
 FORMS    += mainwindow.ui \
     config_packs_repos.ui

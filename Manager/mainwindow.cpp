@@ -2,8 +2,11 @@
 #include "ui_mainwindow.h"
 #include "settings.h"
 #include "config_packs_repos.h"
+#include "xml_parse/xml_cpack_list.h"
 #include <common_features/app_path.h>
 #include <QtDebug>
+
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&downloader, SIGNAL(canceled()), this, SLOT(downloadAborted()));
     connect(&downloader, SIGNAL(failed(QString)), this, SLOT(downloadFailed(QString)));
     connect(&downloader, SIGNAL(progress(qint64,qint64)), this, SLOT(setProgress(qint64,qint64)));
+    ui->progressBar->hide();
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +39,8 @@ void MainWindow::on_refresh_clicked()
     curstep=0;
     totalSteps=0;
 
+    cpacks_List.clear();
+
     ActionQueueItem act1;
     act1.type=ACT_LOCK_CONFIG_PAGE;
     queue.push_back(act1);
@@ -49,6 +55,11 @@ void MainWindow::on_refresh_clicked()
         act2.param2=tempDir;
         act2.param3="0";//Skip actions on fail
         queue.push_back(act2);
+
+        ActionQueueItem act4;
+        act4.type=ACT_PARSE_CPACK_LIST_XML;
+        act4.param1="configs.index";
+        queue.push_back(act4);
         totalSteps++;
     }
 
@@ -57,6 +68,10 @@ void MainWindow::on_refresh_clicked()
     actmsg.param1="Configuration packages list has been refreshed!";
     actmsg.param2="5000";
     queue.push_back(actmsg);
+
+    ActionQueueItem rebuild;
+    rebuild.type = ACT_REBUILD_CPACK_LIST;
+    queue.push_back(rebuild);
 
     ActionQueueItem act3;
     act3.type=ACT_UNLOCK_CONFIG_PAGE;
@@ -95,6 +110,32 @@ void MainWindow::closeEvent(QCloseEvent *e)
     e->accept();
 }
 
+void MainWindow::buildConfigPackList()
+{
+    clearCPACKList();
+    for(int i=0; i<cpacks_List.size(); i++)
+        addItemToCPACKList(cpacks_List[i]);
+}
+
+void MainWindow::addItemToCPACKList(ConfigPackInfo &rp)
+{
+    //lockAdd=true;
+    int itemFlags = (Qt::ItemIsEnabled|Qt::ItemIsSelectable);
+    QListWidgetItem *x = new QListWidgetItem(ui->cpackList);
+    x->setText(rp.name);
+    x->setFlags((Qt::ItemFlag)itemFlags);
+    x->setData(Qt::UserRole, QVariant::fromValue<void* >(&rp));
+    ui->cpackList->addItem(x);
+    //lockAdd=false;
+}
+
+void MainWindow::clearCPACKList()
+{
+    QList<QListWidgetItem*> items = ui->cpackList->findItems("*", Qt::MatchWildcard);
+    foreach(QListWidgetItem*it, items)
+        delete it;
+}
+
 void MainWindow::on_actionExit_triggered()
 {
     this->close();
@@ -112,6 +153,7 @@ void MainWindow::queueStepBegin()
             qDebug()<<"ACT: lock config page";
             ui->refresh->setEnabled(false);
             statusBar()->clearMessage();
+            ui->progressBar->show();
             queueStepBegin();
         break;
 
@@ -122,9 +164,35 @@ void MainWindow::queueStepBegin()
             statusBar()->showMessage(tr("Step %1/%2 Downloading file %3...").arg(curstep).arg(totalSteps).arg(currentAct.param1));
         break;
 
+        case ACT_PARSE_CPACK_LIST_XML:
+        {
+            qDebug()<<"ACT: parse XML file";
+            XMLCpackList handler;
+            QXmlSimpleReader reader;
+            reader.setContentHandler(&handler);
+            reader.setErrorHandler(&handler);
+
+            QFile file(tempDir+"/configs.index");
+            if (!file.open(QFile::ReadOnly | QFile::Text)) {
+                queueStepBegin();
+                break;
+            }
+            QXmlInputSource xmlInputSource(&file);
+            if (reader.parse(xmlInputSource))
+            {}
+            queueStepBegin();
+        }
+        break;
+
+        case ACT_REBUILD_CPACK_LIST:
+            buildConfigPackList();
+            queueStepBegin();
+        break;
+
         case ACT_UNLOCK_CONFIG_PAGE:
             qDebug()<<"ACT: unlock config page";
             ui->refresh->setEnabled(true);
+            ui->progressBar->hide();
             queueStepBegin();
         break;
 
@@ -135,6 +203,7 @@ void MainWindow::queueStepBegin()
         break;
 
         default:
+            queueStepBegin();
         break;
     }
 }
