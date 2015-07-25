@@ -52,6 +52,8 @@ PGE_Phys_Object::PGE_Phys_Object()
     _velocityY=0.0f;
     _velocityX_prev=0.0f;
     _velocityY_prev=0.0f;
+    _velocityX_add=0.0f;
+    _velocityY_add=0.0f;
 
     _paused=false;
 
@@ -317,7 +319,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
-    posRect.setX(posRect.x()+_velocityX * (ticks/_smbxTickTime));
+    posRect.setX(posRect.x()+(_velocityX+_velocityX_add) * (ticks/_smbxTickTime));
     posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
 
     _velocityX_prev=_velocityX;

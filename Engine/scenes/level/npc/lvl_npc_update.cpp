@@ -64,7 +64,7 @@ void LVL_Npc::update(float tickTime)
     if(section->isWarp())
     {
         if(posX()<sBox.left()-_width-1 )
-            setPosX(sBox.right()+_width-1);
+            setPosX(sBox.right()-1);
         else
         if(posX()>sBox.right() + 1 )
             setPosX(sBox.left()-_width+1);

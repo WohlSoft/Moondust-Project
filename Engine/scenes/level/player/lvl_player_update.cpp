@@ -75,6 +75,17 @@ void LVL_Player::update(float ticks)
 
     if(climbing)
     {
+        PGE_Phys_Object* climbableItem = static_cast<PGE_Phys_Object*>((void*)climbable_map[climbable_map.keys().first()]);
+        if(climbableItem)
+        {
+            _velocityX_add=climbableItem->speedX();
+            _velocityY_add=climbableItem->speedY();
+        } else
+        {
+            _velocityX_add=0.0f;
+            _velocityY_add=0.0f;
+        }
+
         if(gscale_Backup != 1)
         {
             setGravityScale(0);

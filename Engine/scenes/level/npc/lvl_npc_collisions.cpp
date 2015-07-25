@@ -63,7 +63,8 @@ void LVL_Npc::updateCollisions()
 
     QVector<PGE_Phys_Object*> floor_blocks;
     QVector<PGE_Phys_Object*> wall_blocks;
-    //QVector<LVL_Block*> blocks_to_hit;
+    QVector<PGE_Phys_Object*> add_speed_to;
+
     if(!collided_bottom.isEmpty())
     {
         for(PlayerColliders::iterator it=collided_bottom.begin(); it!=collided_bottom.end() ; it++)
@@ -92,6 +93,11 @@ void LVL_Npc::updateCollisions()
                 break;
                 default:break;
             }
+            if(!foot_contacts_map.isEmpty())
+            {
+                _velocityX_add=collided->speedX();
+                //_velocityY=collided->speedY();
+            }
         }
         if(isFloor(floor_blocks))
         {
@@ -115,7 +121,28 @@ void LVL_Npc::updateCollisions()
         for(PlayerColliders::iterator it=collided_top.begin(); it!=collided_top.end() ; it++)
         {
             PGE_Phys_Object *collided= *it;
-            //if(blk) blocks_to_hit.push_back(blk);
+            if(!collided) continue;
+            switch(collided->type)
+            {
+            case PGE_Phys_Object::LVLPlayer:
+                {
+                    add_speed_to.push_back(collided);
+                    continue;
+                }
+            break;
+            case PGE_Phys_Object::LVLNPC:
+                {
+                    LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
+                    if(!npc) continue;
+                    if(!npc->is_scenery)
+                    {
+                        add_speed_to.push_back(collided);
+                        continue;
+                    }
+                }
+            break;
+            default:break;
+            }
             if(collided) floor_blocks.push_back(collided);
         }
         if(isFloor(floor_blocks))
@@ -223,6 +250,14 @@ void LVL_Npc::updateCollisions()
     }
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
+    for(int i=0;i<add_speed_to.size();i++)
+    {
+        if(add_speed_to[i]->_velocityX_add!=0.0f)
+            add_speed_to[i]->setSpeedY(speedY());
+        else
+            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedX(), speedY());
+    }
+
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve end======";
     #endif
@@ -297,7 +332,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                             (
                                 (speedY() >= 0.0)
                                 &&
-                                (r1.bottom() < rc.top()+_velocityY_prev)
+                                (r1.bottom() < rc.top()+_velocityY_prev+collided->_velocityY_prev)
                                 &&
                                 (
                                      (r1.left()<rc.right()-1 ) &&
@@ -323,12 +358,14 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     #endif
                     double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
                     double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+                    double xSpeedO = Maths::max(fabs(collided->speedX()), fabs(collided->_velocityX_prev)) * Maths::sgn(collided->speedX());
+                    double ySpeedO = Maths::max(fabs(collided->speedY()), fabs(collided->_velocityY_prev)) * Maths::sgn(collided->speedY());
                     //*****************************Feet of NPC****************************/
                     if(
                             (
-                                (speedY() >= 0.0)
-                                &&
-                                (floor(r1.bottom()) < rc.top()+ySpeed)
+                                /*(speedY() >= 0.0)
+                                &&*/
+                                (floor(r1.bottom()) < rc.top()+ySpeed+ySpeedO)
                                 &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
                              )
                             ||
@@ -344,9 +381,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of NPC****************************/
                     else if( (
-                                 (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                                 (  ((!forceCollideCenter)&&(-fabs(speedY())<0.0))||(forceCollideCenter&&(-fabs(speedY())<=0.0))   )
                                  &&
-                                 (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
+                                 (r1.top() > rc.bottom()+ySpeed+ySpeedO-1.0+_heightDelta)
                                  &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
                               )
                              )
@@ -358,7 +395,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Left****************************/
-                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed+xSpeedO-1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -368,7 +405,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Right****************************/
-                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+xSpeedO+1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -450,6 +487,8 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
             PGE_PointF cc = collided->posRect.center();
             PGE_RectF  rc = collided->posRect;
 
+            if(disableBlockCollision) break;
+
             switch(collided->collide_npc)
             {
                 case COLLISION_TOP:
@@ -460,7 +499,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                             (
                                 (speedY() >= 0.0)
                                 &&
-                                (r1.bottom() < rc.top()+_velocityY_prev)
+                                (r1.bottom() < rc.top()+_velocityY_prev+collided->_velocityY_prev)
                                 &&
                                 (
                                      (r1.left()<rc.right()-1 ) &&
@@ -485,12 +524,14 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     #endif
                     double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
                     double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+                    double xSpeedO = Maths::max(fabs(collided->speedX()), fabs(collided->_velocityX_prev)) * Maths::sgn(collided->speedX());
+                    double ySpeedO = Maths::max(fabs(collided->speedY()), fabs(collided->_velocityY_prev)) * Maths::sgn(collided->speedY());
                     //*****************************Feet of NPC****************************/
                     if(
                             (
-                                (speedY() >= 0.0)
+                                (fabs(speedY()) >= 0.0)
                                 &&
-                                (floor(r1.bottom()) < rc.top()+ySpeed)
+                                (floor(r1.bottom()) < rc.top()+ySpeed+ySpeedO)
                                 &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
                              )
                             ||
@@ -505,9 +546,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of NPC****************************/
                     else if( (
-                                 (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                                 (  ((!forceCollideCenter)&&(-fabs(speedY())<0.0))||(forceCollideCenter&&(-fabs(speedY())<=0.0))   )
                                  &&
-                                 (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
+                                 (r1.top() > rc.bottom()+ySpeed-1.0+ySpeedO+_heightDelta)
                                  &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
                               )
                              )
@@ -519,7 +560,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Left****************************/
-                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
+                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed+xSpeedO-1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         collided_left[(intptr_t)collided]=collided;//right of player
@@ -528,7 +569,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Right****************************/
-                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
+                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+xSpeedO+1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         collided_right[(intptr_t)collided]=collided;//left of player
@@ -586,6 +627,26 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
     case PGE_Phys_Object::LVLPlayer:
         {
             contacted_players[(intptr_t)collided]=collided;
+
+            //PGE_PointF c1 = posRect.center();
+            PGE_RectF &r1 = posRect;
+            //PGE_PointF cc = collided->posRect.center();
+            PGE_RectF  rc = collided->posRect;
+
+            //double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
+            double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+            //double xSpeedO = Maths::max(fabs(collided->speedX()), fabs(collided->_velocityX_prev)) * Maths::sgn(collided->speedX());
+            double ySpeedO = Maths::max(fabs(collided->speedY()), fabs(collided->_velocityY_prev)) * Maths::sgn(collided->speedY());
+            if( (
+                         (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                         &&
+                         (r1.top() > rc.bottom()+ySpeed-1.0+ySpeedO+_heightDelta)
+                         &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
+                      )
+                     )
+            {
+                collided_top[(intptr_t)collided]=collided;//top of player
+            }
             break;
         }
     default: break;

@@ -52,7 +52,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     bumpDown=false;
     bumpUp=false;
 
-    forceCollideCenter=true;
+    forceCollideCenter=false;
     _heightDelta=0.0f;
 
     health = 1;
