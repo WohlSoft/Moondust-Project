@@ -117,6 +117,9 @@ public:
     double _velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
     double _velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
+    double _velocityX_add; //!< additional X acceleration
+    double _velocityY_add; //!< additional Y acceleration
+
     double _posX; //!< Synchronized with R-Tree position
     double _posY; //!< Synchronized with R-Tree position
 
