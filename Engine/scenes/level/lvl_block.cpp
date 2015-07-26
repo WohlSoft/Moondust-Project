@@ -368,6 +368,10 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     bool doFade=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+    if(!data.event_hit.isEmpty())
+    {
+        LvlSceneP::s->events.triggerEvent(data.event_hit);
+    }
 
     if((setup->destroyable)&&(data.npc_id==0))
     {

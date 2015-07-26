@@ -402,6 +402,7 @@ void LevelScene::update()
         updateLua();//Process LUA code
 
         system_events.processEvents(uTickf);
+        events.processTimers(uTickf);
 
         processEffects(uTickf);
 
