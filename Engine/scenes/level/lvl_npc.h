@@ -152,6 +152,16 @@ public:
     LVL_Player *throwned_by_player_obj;
     /***************************************************/
 
+    /*******************Buddies********************/
+    //Allows communication between neighour NPC's of same type.
+    void             buildBuddieGroup();
+    void             updateBuddies(float tickTime);
+    void             buildLeaf(QList<LVL_Npc*> &needtochec, QList<LVL_Npc*> *&list, LVL_Npc *leader);
+    QList<LVL_Npc*> *buddies_list;//Destroys when was killed last NPC in this group
+    bool             buddies_updated;
+    LVL_Npc*         buddies_leader;
+    /**********************************************/
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
@@ -174,6 +184,9 @@ public:
     bool isLuaNPC;
 
     int health;
+
+    /**Layers***/
+    void hide();
 
 
     bool isInited();

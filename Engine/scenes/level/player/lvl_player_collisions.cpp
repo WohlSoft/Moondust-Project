@@ -266,6 +266,7 @@ void LVL_Player::_collideUnduck()
         PGE_Phys_Object*body=*it;
         if(body==this) continue;
         if(body->isPaused()) continue;
+        if(!body->isVisible()) continue;
         solveCollision(body);
     }
     forceCollideCenter=false;

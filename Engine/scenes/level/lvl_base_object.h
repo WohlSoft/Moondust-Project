@@ -155,6 +155,13 @@ public:
     virtual GLdouble zIndex();
     GLdouble z_index;
 
+    /**************************Layer member****************************/
+    virtual void show();
+    virtual void hide();
+    virtual bool isVisible();
+    bool _is_visible;
+    /******************************************************************/
+
 public:
 
     enum types
