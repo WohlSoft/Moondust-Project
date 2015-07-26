@@ -2,19 +2,57 @@
 #define PACKET_H
 
 #include <QMetaType>
+#include "../../user/pgenet_user.h"
 
-#include <ConnectionLib/Server/user/pgenet_user.h>
+#include <QObject>
+#include <QJsonDocument>
 
-class Packet
+#include "../../util/threadedlogger.h"
+
+class Packet : public QObject
 {
+    Q_OBJECT
 
+    Q_DISABLE_COPY(Packet)
+protected:
+    Packet(QObject* parent = 0) : QObject(parent) {}
 public:
-    Packet() {}
-    Packet(const Packet& obj) {Q_UNUSED(obj)}
     virtual ~Packet() {}
 
-    virtual void encode(QDataStream& stream){Q_UNUSED(stream)}
-    virtual void decode(QDataStream& stream){Q_UNUSED(stream)}
+    void encode(QJsonObject& data)
+    {
+        const QMetaObject* obj = metaObject();
+        QVariantMap dataMap = data.toVariantMap();
+
+        for(int i = 0; i < obj->propertyCount(); ++i){
+            QMetaProperty nextProperty = obj->property(i);
+            dataMap[nextProperty.name()] = nextProperty.read(this);
+        }
+
+        data = QJsonObject::fromVariantMap(dataMap);
+    }
+
+
+    bool decode(QJsonObject& data)
+    {
+        const QMetaObject* obj = metaObject();
+        QVariantMap dataMap = data.toVariantMap();
+
+        for(int i = 0; i < obj->propertyCount(); ++i){
+            QMetaProperty nextProperty = obj->property(i);
+            if(QString(nextProperty.name()) == "objectName") continue;
+            if(!dataMap.contains(nextProperty.name())){
+                gThreadedLogger->logError(QString(nextProperty.name()) + " property for class " + obj->className() + " does not exist in JSON packet!");
+                return false;
+            }
+            if(!nextProperty.write(this, dataMap[nextProperty.name()])){
+                gThreadedLogger->logError(QString("Failed to write ") + QString(nextProperty.name()) + " property for class " + obj->className() + "! Wrong type?");
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     PGENET_User *getUser() const
     {
@@ -48,10 +86,6 @@ protected:
     int sessionID;
     int packetID;
 };
-
-
-
-Q_DECLARE_METATYPE(Packet)
 
 
 #endif // PACKET_H

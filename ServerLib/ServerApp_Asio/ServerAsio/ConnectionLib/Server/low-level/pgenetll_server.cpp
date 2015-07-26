@@ -22,7 +22,7 @@ void PGENETLL_Server::startAccepting()
                 std::cout << "Incoming connection!" << std::endl;
 
                 if(m_incomingConnectionHandler)
-                    m_incomingConnectionHandler(newSession);
+                    m_incomingConnectionHandler(newSession->shared_from_this());
 
             }else{
                 std::cout << "Error happened: " << ec.message() << std::endl;

@@ -1,8 +1,9 @@
 #include "pgenet_globalsession.h"
 
 #include "../pgenet_server.h"
-
 #include <iostream>
+
+#include <ConnectionLib/Shared/util/threadedlogger.h>
 
 PGENET_GlobalSession::PGENET_GlobalSession(PGENET_Server *server) :
     PGENET_Session(PGENET_Session::SESSIONTYPE_PacketAndUnindentifiedPacket),
@@ -14,8 +15,8 @@ void PGENET_GlobalSession::managePacketAuth(std::shared_ptr<PGENETLL_Session> se
     if(!auth) //FIXME: Handle Warning.
         return;
 
-    std::cout << "New Auth Username: " << auth->username().toStdString() << std::endl;
-    std::cout << "New Auth Network Number: " << auth->networkVersionNumber() << std::endl;
+    gThreadedLogger->logDebug(QString("New Auth Username: ") + auth->username());
+    gThreadedLogger->logDebug(QString("New Auth Network Number: ") + QString::number(auth->networkVersionNumber()));
 
     m_server->getUserManager()->registerUser(auth->username(), session);
 }
