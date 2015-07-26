@@ -2,7 +2,8 @@ class 'roto_disk'
 
 function roto_disk:initProps()
     -- Animation properties
-    self.radius = self.npc_obj.special1*self.npc_obj.width
+    self.radius = self.npc_obj.special1*16
+    --self.radius = self.npc_obj.special1*self.npc_obj.width
     self.direction = self.npc_obj.direction
     self.center_x = self.def_initX
     if(self.direction<0) then
