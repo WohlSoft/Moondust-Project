@@ -75,7 +75,7 @@ void LVL_Player::update(float ticks)
 
     if(climbing)
     {
-        PGE_Phys_Object* climbableItem = static_cast<PGE_Phys_Object*>((void*)climbable_map[climbable_map.keys().first()]);
+        PGE_Phys_Object* climbableItem = static_cast<PGE_Phys_Object*>((void*)(intptr_t)climbable_map[climbable_map.keys().first()]);
         if(climbableItem)
         {
             _velocityX_add=climbableItem->speedX();

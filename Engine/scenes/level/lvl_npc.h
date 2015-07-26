@@ -165,6 +165,8 @@ public:
     bool lua_animationIsFinished();
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
+    int lua_activate_neighbours();
+    inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
