@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 #include <iostream>
 
+#include <QJsonDocument>
 
 
 
@@ -47,18 +48,28 @@ void MainWindow::on_bntSendDbgText_clicked()
         sock.connectToHost("127.0.0.1", 24444);
         sock.waitForConnected();
 
-        QByteArray dataToWrite;
+        QJsonObject header
         {
-            // Write Header
-            QDataStream sockStream(&dataToWrite, QIODevice::ReadWrite);
-            sockStream << (int)PacketID::PGENET_PacketUserAuth; //packetID
-            sockStream << QString(""); //username
-            sockStream << (int)0; //sessionID
+            {"packetID", (int)PacketID::PGENET_PacketUserAuth},
+            {"username", ""},
+            {"sessionID", 0}
+        };
 
-            sockStream << QString("Kevsoft");
-            sockStream << (int)PGENET_Global::NetworkVersion;
+        QJsonObject packet
+        {
+            {"username", "Kevsoft"},
+            {"networkVersionNumber", (int)PGENET_Global::NetworkVersion}
+        };
 
-        }
+        QJsonObject fullPacket
+        {
+            {"header", header},
+            {"packet", packet}
+        };
+
+        QJsonDocument doc(fullPacket);
+        QByteArray dataToWrite;
+        dataToWrite = doc.toJson(QJsonDocument::Compact);
 
         int lengthOfData = dataToWrite.size();
         sock.write((char*)&lengthOfData, sizeof(lengthOfData));
