@@ -31,7 +31,7 @@
 #include <SDL2/SDL_rwops.h>
 #include <SDL2/SDL_endian.h>
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "wavestream.h"
 
 /*

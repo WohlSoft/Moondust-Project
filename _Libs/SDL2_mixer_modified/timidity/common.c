@@ -22,6 +22,7 @@
 char current_filename[PATH_MAX];
 
 static PathList *pathlist=NULL;
+char customPath[10240]="";
 
 /* Try to open a file for reading. If the filename ends in one of the 
    defined compressor extensions, pipe the file through the decompressor */
@@ -98,6 +99,8 @@ FILE *open_file(const char *name, int decompress, int noise_mode)
     }
 
   if (pathlist==NULL) {
+    if(customPath[0]!='\0') {
+        add_to_pathlist(customPath); }
     /* Generate path list */
 #ifdef DEFAULT_PATH
     add_to_pathlist(DEFAULT_PATH);
@@ -240,4 +243,9 @@ void free_pathlist(void)
     plp = next_plp;
   }
   pathlist = NULL;
+}
+
+void set_custom_path(const char *s)
+{
+    strcpy(customPath, s);
 }

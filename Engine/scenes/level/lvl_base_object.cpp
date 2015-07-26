@@ -52,8 +52,12 @@ PGE_Phys_Object::PGE_Phys_Object()
     _velocityY=0.0f;
     _velocityX_prev=0.0f;
     _velocityY_prev=0.0f;
+    _velocityX_add=0.0f;
+    _velocityY_add=0.0f;
 
     _paused=false;
+
+    _is_visible=true;
 
     _accelX=0;
     _accelY=0;
@@ -317,7 +321,7 @@ void PGE_Phys_Object::iterateStep(float ticks)
 {
     if(_paused) return;
 
-    posRect.setX(posRect.x()+_velocityX * (ticks/_smbxTickTime));
+    posRect.setX(posRect.x()+(_velocityX+_velocityX_add) * (ticks/_smbxTickTime));
     posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
 
     _velocityX_prev=_velocityX;
@@ -397,6 +401,7 @@ void PGE_Phys_Object::updateCollisions()
         PGE_Phys_Object*body=*it;
         if(body==this) continue;
         if(body->_paused) continue;
+        if(!body->_is_visible) continue;
 
         solveCollision(body);
     }
@@ -488,10 +493,6 @@ PGE_Phys_Object *PGE_Phys_Object::nearestBlockY(QVector<PGE_Phys_Object *> &bloc
 
 void PGE_Phys_Object::setParentSection(LVL_Section *sct)
 {
-    if(_parentSection)
-    {
-        _parentSection->unregisterElement(this);
-    }
     _parentSection=sct;
 }
 
@@ -545,3 +546,23 @@ PGE_Phys_Object_Phys::PGE_Phys_Object_Phys()
     gravityScale=1.0f;
     gravityAccel=26.0f;
 }
+
+
+
+
+void PGE_Phys_Object::show()
+{
+    _is_visible=true;
+}
+
+void PGE_Phys_Object::hide()
+{
+    _is_visible=false;
+}
+
+bool PGE_Phys_Object::isVisible()
+{
+    return _is_visible;
+}
+
+

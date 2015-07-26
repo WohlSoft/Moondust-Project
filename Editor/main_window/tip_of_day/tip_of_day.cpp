@@ -3,17 +3,21 @@
 #include <QFile>
 #include <QTextStream>
 #include <QList>
+#include <QDateTime>
+#include <main_window/global_settings.h>
 
 TipOfDay::TipOfDay(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TipOfDay)
 {
+    qsrand(QDateTime::currentMSecsSinceEpoch());
     ui->setupUi(this);
     QFile ftips(":/tips/tips/tips_en.html");
     ftips.open(QIODevice::ReadOnly|QIODevice::Text);
     QTextStream ts(&ftips);
     QString allTipsRaw = ts.readAll();
     ftips.close();
+    ui->showEachStart->setChecked(GlobalSettings::ShowTipOfDay);
     curTip=0;
     tips.clear();
     tips = allTipsRaw.split("<hr>\n");
@@ -23,6 +27,7 @@ TipOfDay::TipOfDay(QWidget *parent) :
 
 TipOfDay::~TipOfDay()
 {
+    GlobalSettings::ShowTipOfDay=ui->showEachStart->isChecked();
     delete ui;
 }
 
@@ -42,7 +47,7 @@ void TipOfDay::on_nextTip_clicked()
     {
         int random_selector;
         int n = tips.size();
-        random_selector = (rand()%n);
+        random_selector = (qrand()%n);
         tip=tips[random_selector];
         ui->tipText->setText(tip);
         tips_viewed.append(tip);

@@ -280,10 +280,22 @@ static int read_config_file(const char *name)
   return 0;
 }
 
+void Timidity_addToPathList(const char* path)
+{
+    set_custom_path(path);
+}
+
 int Timidity_Init(int rate, int format, int channels, int samples)
 {
   const char *env = getenv("TIMIDITY_CFG");
-  if (!env || read_config_file(env)<0) {
+  if(customPath[0]!='\0')
+  {
+      char tPath[10240]="";
+      strcat(tPath, customPath);
+      strcat(tPath, "/");
+      strcat(tPath, CONFIG_FILE);
+      read_config_file(tPath);
+  } else if (!env || read_config_file(env)<0) {
     if (read_config_file(CONFIG_FILE)<0) {
       if (read_config_file(CONFIG_FILE_ETC)<0) {
         if (read_config_file(CONFIG_FILE_ETC_TIMIDITY_FREEPATS)<0) {

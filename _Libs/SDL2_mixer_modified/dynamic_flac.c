@@ -25,7 +25,7 @@
 #ifdef FLAC_MUSIC
 
 #include <SDL2/SDL_loadso.h>
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "dynamic_flac.h"
 
 flac_loader flac = {
