@@ -84,6 +84,7 @@ int LVL_Npc::lua_activate_neighbours()
         LVL_Npc*body=dynamic_cast<LVL_Npc*>(item);
         if(!body) continue;
         if(body==this) continue;
+        if(!body->isVisible()) continue;
         if(body->killed) continue;
         if(body->data.id!=data.id) continue;
         if(!body->isActivated)
