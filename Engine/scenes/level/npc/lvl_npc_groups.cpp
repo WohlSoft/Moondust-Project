@@ -65,6 +65,7 @@ void LVL_Npc::buildLeaf(QList<LVL_Npc *> &needtochec, QList<LVL_Npc *> *&list, L
         if(item->type!=PGE_Phys_Object::LVLNPC) continue;
         LVL_Npc*body=dynamic_cast<LVL_Npc*>(item);
         if(!body) continue;
+        if(!body->isVisible()) continue;
         if(body->data.id != data.id) continue;
         if(!body->buddies_list)
         {
