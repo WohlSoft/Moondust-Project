@@ -223,7 +223,9 @@ SOURCES += \
     scenes/level/player/lvl_player_warps_and_teleports.cpp \
     scenes/level/player/lvl_player_update.cpp \
     scenes/level/player/lvl_player_physics.cpp \
-    scenes/level/player/lvl_player_render.cpp
+    scenes/level/player/lvl_player_render.cpp \
+    scenes/level/npc/lvl_npc_groups.cpp \
+    scenes/level/lvl_layer_engine.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -353,7 +355,8 @@ HEADERS  += \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
     common_features/version_cmp.h \
-    scenes/level/npc_detectors/lvl_base_detector.h
+    scenes/level/npc_detectors/lvl_base_detector.h \
+    scenes/level/lvl_layer_engine.h
 
 
 FORMS    += \

@@ -251,9 +251,8 @@ LevelScene::~LevelScene()
     glLoadIdentity();
 
     LvlSceneP::s = NULL;
-    //stop animators
 
-    //desroy animators
+    layers.members.clear();
 
     switch_blocks.clear();
     //destroy textures
@@ -287,6 +286,7 @@ LevelScene::~LevelScene()
         LVL_Block* tmp;
         tmp = blocks.last();
         blocks.pop_back();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -296,6 +296,7 @@ LevelScene::~LevelScene()
         LVL_Bgo* tmp;
         tmp = bgos.last();
         bgos.pop_back();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -315,6 +316,7 @@ LevelScene::~LevelScene()
         LVL_Warp* tmp;
         tmp = warps.first();
         warps.pop_front();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -324,6 +326,7 @@ LevelScene::~LevelScene()
         LVL_PhysEnv* tmp;
         tmp = physenvs.first();
         physenvs.pop_front();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -470,6 +473,7 @@ void LevelScene::update()
             #if (QT_VERSION >= 0x050400)
             active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
+            layers.removeRegItem(corpse->data.layer, corpse);
             #else
             //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
             while(1)

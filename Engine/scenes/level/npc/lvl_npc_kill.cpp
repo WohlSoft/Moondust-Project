@@ -41,6 +41,7 @@ void LVL_Npc::harm(int damage)
 void LVL_Npc::kill()
 {
     killed=true;
-    sct()->unregisterElement(this);
+    //sct()->unregisterElement(this);
+    LvlSceneP::s->unregisterElement(this);
     LvlSceneP::s->dead_npcs.push_back(this);
 }

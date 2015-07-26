@@ -56,6 +56,7 @@ LVL_Block::~LVL_Block()
 void LVL_Block::init()
 {
     if(_isInited) return;
+    LvlSceneP::s->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _isInited=true;
@@ -372,6 +373,9 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     {
         PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         destroyed=true;
+        LvlSceneP::s->layers.removeRegItem(data.layer, this);
+        data.layer="Destroyed Blocks";
+        LvlSceneP::s->layers.registerItem(data.layer, this);
         return;
     }
 
