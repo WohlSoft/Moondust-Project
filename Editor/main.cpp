@@ -19,7 +19,7 @@
 #ifdef USE_SDL_MIXER
 #undef main
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_mixer_ext.h>
 #undef main
 #endif
 #include <QFileInfo>
@@ -37,7 +37,6 @@
 #include <audio/sdl_music_player.h>
 
 #include "mainwindow.h"
-
 
 int main(int argc, char *argv[])
 {
@@ -61,6 +60,9 @@ int main(int argc, char *argv[])
     }
 
     a->setStyle(new PGE_ProxyStyle);
+    #ifdef Q_OS_LINUX
+    a->setStyle("GTK");
+    #endif
 
     QFont fnt = a->font();
 
@@ -147,6 +149,9 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     w->initWindowsThumbnail();
 #endif
+
+    //Show tip of a day
+    w->showTipOfDay();
 
     //Run main loop
     ret=a->exec();

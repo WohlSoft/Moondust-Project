@@ -28,7 +28,7 @@
 #error You should not include this file or use these functions.
 #endif
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus

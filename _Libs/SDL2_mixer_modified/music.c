@@ -29,7 +29,7 @@
 #include <SDL2/SDL_audio.h>
 #include <SDL2/SDL_timer.h>
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 
 #ifdef CMD_MUSIC
 #include "music_cmd.h"
@@ -452,7 +452,7 @@ int MIX_string_equals(const char *str1, const char *str2)
             break;
         ++str1;
         ++str2;
-    }
+    }   
     return (!*str1 && !*str2);
 }
 
@@ -599,6 +599,7 @@ Mix_Music *Mix_LoadMUS(const char *file)
      * generic one, so we clear the current one. */
     SDL_ClearError();
     music = Mix_LoadMUSType_RW(src, type, SDL_TRUE);
+
     if ( music == NULL && Mix_GetError()[0] == '\0' ) {
         Mix_SetError("Unrecognized music format");
     }
@@ -1669,3 +1670,12 @@ int Mix_EachSoundFont(int (*function)(const char*, void*), void *data)
     return 1;
 }
 #endif
+
+void MIX_Timidity_addToPathList(const char *path)
+{
+    #ifdef USE_TIMIDITY_MIDI
+    Timidity_addToPathList(path);
+    #else
+    (void*)path;
+    #endif
+}

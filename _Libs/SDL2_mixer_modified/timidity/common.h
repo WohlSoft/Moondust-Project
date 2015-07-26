@@ -16,6 +16,8 @@ extern char *program_name, current_filename[];
 
 extern FILE *msgfp;
 
+extern char customPath[];
+
 extern int num_ochannels;
 
 #define MULTICHANNEL_OUT
@@ -32,6 +34,7 @@ typedef struct {
 #define OF_VERBOSE	2
 
 extern FILE *open_file(const char *name, int decompress, int noise_mode);
+extern void set_custom_path(const char *s);
 extern void add_to_pathlist(const char *s);
 extern void free_pathlist(void);
 extern void close_file(FILE *fp);

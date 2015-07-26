@@ -32,7 +32,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 
 #define __MIX_INTERNAL_EFFECT__
 #include "effects_internal.h"

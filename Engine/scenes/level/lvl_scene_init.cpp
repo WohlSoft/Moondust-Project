@@ -431,6 +431,16 @@ bool LevelScene::init()
         return false;
     }
 
+    loaderStep();
+    qDebug() << "Apply layers";
+    for(int i=0; i<data.layers.size(); i++)
+    {
+        if(data.layers[i].hidden)
+        {
+            layers.hide(data.layers[i].name, false);
+        }
+    }
+
     stopLoaderAnimation();
 
     isInit = true;
