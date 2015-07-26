@@ -33,6 +33,7 @@ void LVL_Npc::Activate()
     wasDeactivated=false;
 
     animator.start();
+    isActivated=true;
     if(isLuaNPC){
         try{
             lua_onActivated();
@@ -40,7 +41,6 @@ void LVL_Npc::Activate()
             LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
         }
     }
-    isActivated=true;
 }
 
 void LVL_Npc::deActivate()

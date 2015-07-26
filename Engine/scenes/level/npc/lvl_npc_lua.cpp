@@ -18,6 +18,7 @@
 
 #include "../lvl_npc.h"
 #include <script/lua_engine.h>
+#include "../lvl_scene_ptr.h"
 
 void LVL_Npc::lua_setSequenceLeft(luabind::object frames)
 {
@@ -67,4 +68,28 @@ int LVL_Npc::lua_frameDelay()
 void LVL_Npc::lua_setFrameDelay(int ms)
 {
     animator.setFrameSpeed(ms);
+}
+
+int LVL_Npc::lua_activate_neighbours()
+{
+    QVector<PGE_Phys_Object*> bodies;
+    PGE_RectF posRectC = posRect.withMargin(2.0);
+    LvlSceneP::s->queryItems(posRectC, &bodies);
+
+    int found=0;
+    for(PGE_RenderList::iterator it=bodies.begin();it!=bodies.end(); it++ )
+    {
+        PGE_Phys_Object* item=*it;
+        if(item->type!=PGE_Phys_Object::LVLNPC) continue;
+        LVL_Npc*body=dynamic_cast<LVL_Npc*>(item);
+        if(!body) continue;
+        if(body==this) continue;
+        if(!body->isActivated)
+        {
+            body->Activate();
+            LvlSceneP::s->active_npcs.push_back(body);
+            found++;
+        }
+    }
+    return found;
 }

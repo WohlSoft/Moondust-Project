@@ -48,8 +48,12 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
             .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
 
+            .def("activateNeighbours", &LVL_Npc::lua_activate_neighbours)
+
             //Properties
             .property("id", &LVL_Npc::getID)
+            .property("direction", &LVL_Npc::direction)
+            .property("not_movable", &LVL_Npc::not_movable)
             .property("special1", &LVL_Npc::special1)
             .property("special2", &LVL_Npc::special2)
             .property("isBoss", &LVL_Npc::isBoss)
