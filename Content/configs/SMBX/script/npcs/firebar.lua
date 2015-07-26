@@ -1,6 +1,6 @@
-class 'roto_disk'
+class 'fire_bar'
 
-function roto_disk:initProps()
+function fire_bar:initProps()
     -- Animation properties
     self.radius = self.npc_obj.special1*16
     --self.radius = self.npc_obj.special1*self.npc_obj.width
@@ -17,7 +17,7 @@ function roto_disk:initProps()
     end
 end
 
-function roto_disk:__init(npc_obj)
+function fire_bar:__init(npc_obj)
     self.npc_obj = npc_obj
     self.def_initX = self.npc_obj.center_x
     self.def_initY = self.npc_obj.center_y
@@ -25,12 +25,12 @@ function roto_disk:__init(npc_obj)
     self:initProps()
 end
 
-function roto_disk:onActivated()
+function fire_bar:onActivated()
     self:initProps()
     self.npc_obj:activateNeighbours()
 end
 
-function roto_disk:onLoop(tickTime)
+function fire_bar:onLoop(tickTime)
     self.angle = self.angle + smbx_utils.speedConv(self.iteration, tickTime)
     if(self.direction<0) then
         if(self.angle<-360-180) then
@@ -49,4 +49,4 @@ function roto_disk:onLoop(tickTime)
     self.npc_obj.center_y = self.radius * math.sin(self.angle * self.def_coeff) + self.center_y;
 end
 
-return roto_disk
+return fire_bar

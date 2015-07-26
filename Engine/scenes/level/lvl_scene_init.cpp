@@ -441,6 +441,14 @@ bool LevelScene::init()
         }
     }
 
+    loaderStep();
+
+    qDebug() << "Apply Events";
+    for(int i=0; i<data.events.size(); i++)
+    {
+        events.addSMBX64Event(data.events[i]);
+    }
+
     stopLoaderAnimation();
 
     isInit = true;
