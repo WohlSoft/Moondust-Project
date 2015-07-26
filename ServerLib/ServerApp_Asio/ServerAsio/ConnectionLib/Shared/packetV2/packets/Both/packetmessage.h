@@ -5,24 +5,33 @@
 
 class PacketMessage : public Packet
 {
-public:
-    PacketMessage(const QString& message);
-    PacketMessage();
+    Q_OBJECT
+    Q_DISABLE_COPY(PacketMessage)
 
-    QString message() const;
-    void setMessage(const QString &message);
+    Q_PROPERTY(QString message READ message WRITE setMessage)
+public:
+    PacketMessage(const QString& message, QObject* parent = 0);
+    Q_INVOKABLE PacketMessage(QObject *parent = 0);
+
 
 
     // Packet interface
 public:
-    void encode(QDataStream &stream);
-    void decode(QDataStream &stream);
 
+
+    QString message() const
+    {
+        return m_message;
+    }
+
+public slots:
+    void setMessage(QString message)
+    {
+        m_message = message;
+    }
 
 private:
     QString m_message;
 };
-
-Q_DECLARE_METATYPE(PacketMessage)
 
 #endif // PACKETMESSAGE_H
