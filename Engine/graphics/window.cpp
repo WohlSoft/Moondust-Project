@@ -66,6 +66,9 @@ bool PGE_Window::init(QString WindowTitle)
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 
+    SDL_GL_SetSwapInterval(0);
+    checkSDLError();
+
     GlRenderer::setViewportSize(Width, Height);
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -92,9 +95,6 @@ bool PGE_Window::init(QString WindowTitle)
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
     glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    checkSDLError();
-
-    SDL_GL_SetSwapInterval(1);
     checkSDLError();
 
     SDL_ShowWindow(window);
