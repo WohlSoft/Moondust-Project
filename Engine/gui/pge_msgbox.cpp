@@ -304,6 +304,7 @@ void PGE_MsgBox::updateControllers()
             if(s)
             {
                 s->tickAnimations(uTickf);
+                s->fader.tickFader(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
@@ -316,6 +317,7 @@ void PGE_MsgBox::updateControllers()
             if(s)
             {
                 s->tickAnimations(uTickf);
+                s->fader.tickFader(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
             }
