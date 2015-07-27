@@ -20,5 +20,6 @@ struct ConfigPackInfo{
 };
 
 extern QList<ConfigPackRepo > cpacks_reposList;
+extern QList<ConfigPackInfo > cpacks_List;
 
 #endif // CONFIG_PACKS_H

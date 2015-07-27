@@ -194,6 +194,7 @@ private:
     int     debug_render_delay;
     int     debug_phys_delay;
     int     debug_event_delay;
+    int     debug_total_delay;
 
     LuaWorldEngine luaEngine;
 };

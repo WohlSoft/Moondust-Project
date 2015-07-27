@@ -16,22 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_warp.h"
-#include "lvl_scene_ptr.h"
+#ifndef LVL_EVENTENGINE_H
+#define LVL_EVENTENGINE_H
 
-LVL_Warp::LVL_Warp() : PGE_Phys_Object()
+#include <PGE_File_Formats/lvl_filedata.h>
+#include <common_features/event_queue.h>
+#include <QHash>
+#include <QList>
+#include <QString>
+
+class LVL_EventAction{
+public:
+    LVL_EventAction();
+    LVL_EventAction(const LVL_EventAction& ea);
+    virtual ~LVL_EventAction();
+
+    QString eventName;
+    EventQueue<LVL_EventAction > action;
+    float timeDelayLeft;
+};
+
+class LVL_EventEngine
 {
-     type = LVLWarp;
-}
+public:
+    LVL_EventEngine();
+    ~LVL_EventEngine();
+    void addSMBX64Event(LevelSMBX64Event &evt);
+    void processTimers(float tickTime);
+    void triggerEvent(QString event);
 
-LVL_Warp::~LVL_Warp()
-{}
+    QList<QList<LVL_EventAction > > workingEvents;
+    QHash<QString, QList<LVL_EventAction >> events;
+};
 
-void LVL_Warp::init()
-{
-    setSize(32, 32);
-    setPos(data.ix, data.iy);
-    collide_player = COLLISION_NONE;
-    collide_npc = COLLISION_NONE;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
-}
+#endif // LVL_EVENTENGINE_H
