@@ -126,7 +126,8 @@ void LVL_Npc::updateCollisions()
             {
             case PGE_Phys_Object::LVLPlayer:
                 {
-                    add_speed_to.push_back(collided);
+                    if((collide_player==COLLISION_ANY)||(collide_player==COLLISION_TOP))
+                        add_speed_to.push_back(collided);
                     continue;
                 }
             break;
