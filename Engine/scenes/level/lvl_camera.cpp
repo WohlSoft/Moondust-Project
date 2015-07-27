@@ -140,9 +140,9 @@ void PGE_LevelCamera::update(float ticks)
         if(visibleBody->type==PGE_Phys_Object::LVLNPC)
         {
             LVL_Npc *npc = dynamic_cast<LVL_Npc*>(visibleBody);
-            if(npc)
+            if(npc && npc->isVisible())
             {
-                if(!npc->isActivated && !npc->wasDeactivated && npc->isVisible())
+                if(!npc->isActivated && !npc->wasDeactivated)
                 {
                     npc->Activate();
                     LvlSceneP::s->active_npcs.push_back(npc);

@@ -76,7 +76,7 @@ LVL_Npc::~LVL_Npc()
 
 void LVL_Npc::hide()
 {
-    deActivate();
+    activationTimeout=-1;
     PGE_Phys_Object::hide();
 }
 
