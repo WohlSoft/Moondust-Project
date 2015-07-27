@@ -28,6 +28,7 @@ void LVL_LayerEngine::hide(QString layer, bool smoke)
     QList<PGE_Phys_Object* > &lyr = members[layer];
     for(int i=0; i<lyr.size(); i++)
     {
+        if(!lyr[i]->isVisible()) continue;
         lyr[i]->hide();
         if(smoke)
         {
@@ -44,6 +45,7 @@ void LVL_LayerEngine::show(QString layer,bool smoke)
     QList<PGE_Phys_Object* > &lyr = members[layer];
     for(int i=0; i<lyr.size(); i++)
     {
+        if(lyr[i]->isVisible()) continue;
         lyr[i]->show();
         if(smoke)
         {

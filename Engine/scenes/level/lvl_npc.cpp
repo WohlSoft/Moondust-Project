@@ -79,3 +79,9 @@ void LVL_Npc::hide()
     deActivate();
     PGE_Phys_Object::hide();
 }
+
+void LVL_Npc::show()
+{
+    wasDeactivated=false;
+    PGE_Phys_Object::show();
+}

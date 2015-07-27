@@ -20,6 +20,7 @@
 #include "lvl_scene_ptr.h"
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
+#include <audio/pge_audio.h>
 
 LVL_EventAction::LVL_EventAction()
 {
@@ -53,17 +54,72 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         evntAct.eventName=evt.name;
         evntAct.timeDelayLeft=0;
 
-        evntAct.timeDelayLeft=100;
-        EventQueueEntry<LVL_EventAction> message;
-        message.makeCaller([this,evt]()->void{
-                               PGE_MsgBox box(LvlSceneP::s, evt.msg,
-                               PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
-                               ConfigManager::setup_message_box.sprite);
-                               box.exec();
+        EventQueueEntry<LVL_EventAction> hideLayers;
+        hideLayers.makeCaller([this,evt]()->void{
+                               foreach(QString ly, evt.layers_hide)
+                                   LvlSceneP::s->layers.hide(ly, !evt.nosmoke);
                            }, 0);
-        evntAct.action.events.push_back(message);
+        evntAct.action.events.push_back(hideLayers);
+
+        EventQueueEntry<LVL_EventAction> showLayers;
+        showLayers.makeCaller([this,evt]()->void{
+                               foreach(QString ly, evt.layers_show)
+                                   LvlSceneP::s->layers.show(ly, !evt.nosmoke);
+                           }, 0);
+        evntAct.action.events.push_back(showLayers);
+
+        EventQueueEntry<LVL_EventAction> toggleLayers;
+        toggleLayers.makeCaller([this,evt]()->void{
+                               foreach(QString ly, evt.layers_toggle)
+                                   LvlSceneP::s->layers.toggle(ly, !evt.nosmoke);
+                           }, 0);
+        evntAct.action.events.push_back(toggleLayers);
+
+        if(evt.sound_id>0)
+        {
+            EventQueueEntry<LVL_EventAction> playsnd;
+            playsnd.makeCaller([this,evt]()->void{
+                                       PGE_Audio::playSound(evt.sound_id);
+                               }, 0);
+            evntAct.action.events.push_back(playsnd);
+        }
+
+        if(!evt.msg.isEmpty())
+        {
+            EventQueueEntry<LVL_EventAction> message;
+            message.makeCaller([this,evt]()->void{
+                EventQueueEntry<LevelScene > msgBox;
+                msgBox.makeCaller(
+                            [this,evt]()->void{
+
+                                   PGE_MsgBox box(LvlSceneP::s, evt.msg,
+                                   PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
+                                   ConfigManager::setup_message_box.sprite);
+                                   box.exec();
+                                }, 100);
+                LvlSceneP::s->system_events.events.push_back(msgBox);
+                               }, 0);
+            evntAct.action.events.push_back(message);
+        }
 
     events[evt.name].push_back(evntAct);
+
+    if(!evt.trigger.isEmpty())
+    {
+        LVL_EventAction trigger;
+        trigger.eventName=evt.name;
+        trigger.timeDelayLeft=0;
+        EventQueueEntry<LVL_EventAction> triggerEvent;
+        triggerEvent.makeCaller([this,evt]()->void{
+                                LvlSceneP::s->events.triggerEvent(evt.trigger);
+                               }, evt.trigger_timer*100);
+        trigger.action.events.push_back(triggerEvent);
+        events[evt.name].push_back(trigger);
+    }
+
+    //Automatically trigger events
+    if((evt.name=="Level - Start")||evt.autostart)
+        workingEvents.push_back(events[evt.name]);
 }
 
 void LVL_EventEngine::processTimers(float tickTime)
