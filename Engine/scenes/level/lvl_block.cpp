@@ -56,6 +56,7 @@ LVL_Block::~LVL_Block()
 void LVL_Block::init()
 {
     if(_isInited) return;
+    LvlSceneP::s->layers.registerItem(data.layer, this);
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _isInited=true;
@@ -367,11 +368,28 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     bool doFade=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
+    if(!data.event_hit.isEmpty())
+    {
+        LvlSceneP::s->events.triggerEvent(data.event_hit);
+    }
 
     if((setup->destroyable)&&(data.npc_id==0))
     {
         PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         destroyed=true;
+        QString oldLayer=data.layer;
+        LvlSceneP::s->layers.removeRegItem(data.layer, this);
+        data.layer="Destroyed Blocks";
+        LvlSceneP::s->layers.registerItem(data.layer, this);
+        if(!data.event_destroy.isEmpty())
+        {
+            LvlSceneP::s->events.triggerEvent(data.event_destroy);
+        }
+        if(!data.event_emptylayer.isEmpty())
+        {
+            if(LvlSceneP::s->layers.isEmpty(oldLayer))
+                LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
+        }
         return;
     }
 

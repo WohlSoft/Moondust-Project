@@ -17,6 +17,7 @@
  */
 
 #include "lvl_physenv.h"
+#include "lvl_scene_ptr.h"
 
 LVL_PhysEnv::LVL_PhysEnv() : PGE_Phys_Object()
 {
@@ -34,5 +35,6 @@ void LVL_PhysEnv::init()
     env_type = data.quicksand ? Env_Quicksand : Env_Water;
     collide_player = COLLISION_NONE;
     collide_npc = COLLISION_NONE;
+    LvlSceneP::s->layers.registerItem(data.layer, this);
 }
 

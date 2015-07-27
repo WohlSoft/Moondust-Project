@@ -58,7 +58,7 @@ android:{
     themes.files = $$PWD/../Content/themes/*
     INSTALLS += themes
     ANDROID_EXTRA_LIBS += $$PWD/../_Libs/_builds/android/lib/libSDL2.so \
-                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer.so \
+                          $$PWD/../_Libs/_builds/android/lib/libSDL2_mixer_ext.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisfile.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbis.so \
                           $$PWD/../_Libs/_builds/android/lib/libvorbisenc.so \
@@ -93,22 +93,22 @@ INCLUDEPATH += $$PWD $$PWD/_includes "$$PWD/../_Libs" "$$PWD/../_common"
 
 win32: {
     contains(DEFINES, USE_SDL_MIXER):{
-        LIBS += -lSDL2 -lSDL2_mixer
+        LIBS += -lSDL2 -lSDL2_mixer_ext
         LIBS += -lSDL2main
     }
     LIBS += libversion -lDbghelp libwinmm
 }
 
 linux-g++||unix:!macx:!android: {
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer_ext
 }
 android: {
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -lSDL2 -lSDL2_mixer_ext
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2_mixer.framework/Headers
-    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
+    contains(DEFINES, USE_SDL_MIXER): LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 

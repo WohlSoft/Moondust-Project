@@ -82,8 +82,11 @@ void LVL_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                            LvlPlacingItems::gridOffset)));
     }
 
-    s->placeItemUnderCursor();
-    s->Debugger_updateItemList();
+    if(s->placingItem != LvlScene::PLC_PlayerPoint)
+    {
+        s->placeItemUnderCursor();
+        s->Debugger_updateItemList();
+    }
 
     s->MousePressEventOnly = true;
     s->mousePressEvent(mouseEvent);
@@ -121,7 +124,7 @@ void LVL_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                                                  LvlPlacingItems::gridOffset)));
                s->cursor->show();
     }
-    if( mouseEvent->buttons() & Qt::LeftButton )
+    if(( mouseEvent->buttons() & Qt::LeftButton ) && (s->placingItem != LvlScene::PLC_PlayerPoint))
     {
         s->placeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -142,6 +145,12 @@ void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
     else
     {
+        if(s->placingItem == LvlScene::PLC_PlayerPoint)
+        {
+            s->placeItemUnderCursor();
+            s->Debugger_updateItemList();
+        }
+
         if(!s->overwritedItems.blocks.isEmpty()||
             !s->overwritedItems.bgo.isEmpty()||
             !s->overwritedItems.npc.isEmpty() )

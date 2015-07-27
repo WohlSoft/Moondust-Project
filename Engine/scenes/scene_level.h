@@ -45,6 +45,9 @@
 #include "level/lvl_section.h"
 #include "level/lvl_backgrnd.h"
 
+#include "level/lvl_layer_engine.h"
+#include "level/lvl_event_engine.h"
+
 #include <controls/controller.h>
 
 #include <data_configs/custom_data.h>
@@ -279,6 +282,8 @@ public:
     typedef QVector<LVL_Warp* >    LVL_WarpsArray;
     typedef QVector<LVL_PhysEnv* > LVL_PhysEnvsArray;
 
+    LVL_LayerEngine     layers;
+    LVL_EventEngine     events;
 private:
     LVL_PlayersArray    players;
     LVL_BlocksArray     blocks;

@@ -47,15 +47,15 @@ android: {
     LIBS += -lSDL2 -lglut -lGLU
 }
 win32: {
-    LIBS += -lSDL2 -lSDL2_mixer -lSDL2main libversion -lopengl32 -lglu32
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lSDL2main libversion -lopengl32 -lglu32
 }
 macx: {
     INCLUDEPATH += $$PWD/../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer
+    LIBS += -F$$PWD/../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
     QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 }
 linux-g++||unix:!macx:!android: {
-    LIBS += -lSDL2 -lSDL2_mixer -lglut -lGLU
+    LIBS += -lSDL2 -lSDL2_mixer_ext -lglut -lGLU
 }
 
 contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
@@ -223,7 +223,10 @@ SOURCES += \
     scenes/level/player/lvl_player_warps_and_teleports.cpp \
     scenes/level/player/lvl_player_update.cpp \
     scenes/level/player/lvl_player_physics.cpp \
-    scenes/level/player/lvl_player_render.cpp
+    scenes/level/player/lvl_player_render.cpp \
+    scenes/level/npc/lvl_npc_groups.cpp \
+    scenes/level/lvl_layer_engine.cpp \
+    scenes/level/lvl_event_engine.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -353,7 +356,9 @@ HEADERS  += \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_player.h \
     script/bindings/level/globalfuncs/luafuncs_level_lvl_npc.h \
     common_features/version_cmp.h \
-    scenes/level/npc_detectors/lvl_base_detector.h
+    scenes/level/npc_detectors/lvl_base_detector.h \
+    scenes/level/lvl_layer_engine.h \
+    scenes/level/lvl_event_engine.h
 
 
 FORMS    += \

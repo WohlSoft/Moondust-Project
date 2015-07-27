@@ -3,12 +3,12 @@
 PGENET_UserManager::PGENET_UserManager()
 {}
 
-PGENET_User *PGENET_UserManager::getUserByName(const QString &name)
+PGENET_ServerUser *PGENET_UserManager::getUserByName(const QString &name)
 {
     QMutexLocker locker(&mutex);
 
     for(unsigned int i = 0; i < m_regUsers.size(); i++){
-        std::unique_ptr<PGENET_User>& nextUser = m_regUsers[i];
+        std::unique_ptr<PGENET_ServerUser>& nextUser = m_regUsers[i];
         if(name.compare(nextUser->getUsername(), Qt::CaseInsensitive))
             return nextUser.get();
     }
@@ -18,7 +18,7 @@ PGENET_User *PGENET_UserManager::getUserByName(const QString &name)
 
 void PGENET_UserManager::registerUser(const QString &name, std::shared_ptr<PGENETLL_Session> sessionObj)
 {
-    std::unique_ptr<PGENET_User> newUser(new PGENET_User(name));
+    std::unique_ptr<PGENET_ServerUser> newUser(new PGENET_ServerUser(name));
     newUser->setSession(sessionObj);
     m_regUsers.push_back(std::move(newUser));
 }

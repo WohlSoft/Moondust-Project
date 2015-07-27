@@ -2,6 +2,7 @@
 
 #include "SdlMusPlayer.h"
 #include <gui/pge_msgbox.h>
+#include <common_features/app_path.h>
 
 /***********************************PGE_MusPlayer********************************************/
 bool PGE_MusPlayer::isLoaded=false;
@@ -22,6 +23,8 @@ int PGE_MusPlayer::initAudio(int sampleRate, int allocateChannels, int bufferSiz
 {
     int ret=0;
     sRate=sampleRate;
+
+    MIX_Timidity_addToPathList(QString(ApplicationPath+"/timidity/").toLocal8Bit().data());
     if(isLoaded) Mix_CloseAudio();
     ret = Mix_OpenAudio(sRate, AUDIO_S16, 2, bufferSize);
     if(ret==-1) return ret;

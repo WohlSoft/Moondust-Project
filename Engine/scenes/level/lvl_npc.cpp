@@ -17,6 +17,7 @@
  */
 
 #include "lvl_npc.h"
+#include "lvl_scene_ptr.h"
 
 LVL_Npc::LVL_Npc() : PGE_Phys_Object()
 {
@@ -52,7 +53,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     bumpDown=false;
     bumpUp=false;
 
-    forceCollideCenter=true;
+    forceCollideCenter=false;
     _heightDelta=0.0f;
 
     health = 1;
@@ -63,15 +64,24 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
     generatorDirection=0;
 
     resetThrowned();
+
+    buddies_list=NULL;
+    buddies_updated=false;
+    buddies_leader=NULL;
 }
 
 LVL_Npc::~LVL_Npc()
 {}
 
 
+void LVL_Npc::hide()
+{
+    activationTimeout=-1;
+    PGE_Phys_Object::hide();
+}
 
-
-
-
-
-
+void LVL_Npc::show()
+{
+    wasDeactivated=false;
+    PGE_Phys_Object::show();
+}

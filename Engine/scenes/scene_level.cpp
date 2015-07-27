@@ -251,9 +251,8 @@ LevelScene::~LevelScene()
     glLoadIdentity();
 
     LvlSceneP::s = NULL;
-    //stop animators
 
-    //desroy animators
+    layers.members.clear();
 
     switch_blocks.clear();
     //destroy textures
@@ -287,6 +286,7 @@ LevelScene::~LevelScene()
         LVL_Block* tmp;
         tmp = blocks.last();
         blocks.pop_back();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -296,6 +296,7 @@ LevelScene::~LevelScene()
         LVL_Bgo* tmp;
         tmp = bgos.last();
         bgos.pop_back();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -315,6 +316,7 @@ LevelScene::~LevelScene()
         LVL_Warp* tmp;
         tmp = warps.first();
         warps.pop_front();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -324,6 +326,7 @@ LevelScene::~LevelScene()
         LVL_PhysEnv* tmp;
         tmp = physenvs.first();
         physenvs.pop_front();
+        layers.removeRegItem(tmp->data.layer, tmp);
         if(tmp) delete tmp;
     }
 
@@ -399,6 +402,7 @@ void LevelScene::update()
         updateLua();//Process LUA code
 
         system_events.processEvents(uTickf);
+        events.processTimers(uTickf);
 
         processEffects(uTickf);
 
@@ -454,7 +458,7 @@ void LevelScene::update()
                     active_npcs[i]->deActivate();
                 if(active_npcs[i]->wasDeactivated)
                 {
-                    if(!isVizibleOnScreen(active_npcs[i]->posRect))
+                    if(!isVizibleOnScreen(active_npcs[i]->posRect)||!active_npcs[i]->isVisible())
                     {
                         active_npcs[i]->wasDeactivated=false;
                         active_npcs.removeAt(i); i--;
@@ -470,6 +474,7 @@ void LevelScene::update()
             #if (QT_VERSION >= 0x050400)
             active_npcs.removeAll(corpse);
             npcs.removeAll(corpse);
+            layers.removeRegItem(corpse->data.layer, corpse);
             #else
             //He-he, it's a great workaround for a Qt less than 5.4 which has QVector without removeAll() function
             while(1)
@@ -821,6 +826,7 @@ int LevelScene::exec()
   Uint32 stop_events=0;
 
   Uint32 start_common=0;
+  bool skipFrame=false;
 
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
@@ -850,6 +856,7 @@ int LevelScene::exec()
         stop_render=0;
         start_render=0;
         /**********************Process rendering of stuff****************************/
+        skipFrame=true;
         if(doUpdate_render<=0.f)
         {
             start_render = SDL_GetTicks();
@@ -857,6 +864,7 @@ int LevelScene::exec()
             render();
             glFlush();
             stop_render=SDL_GetTicks();
+            skipFrame=false;
             doUpdate_render = frameSkip? (stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
@@ -864,9 +872,9 @@ int LevelScene::exec()
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
 
-        PGE_Window::rePaint();
+        if(!skipFrame) PGE_Window::rePaint();
 
-        if( uTickf > (float)(SDL_GetTicks()-start_common) )
+        if( floor(uTickf) > (float)(SDL_GetTicks()-start_common) )
         {
             if(!slowTimeMode)
                 wait( uTickf-(float)(SDL_GetTicks()-start_common) );

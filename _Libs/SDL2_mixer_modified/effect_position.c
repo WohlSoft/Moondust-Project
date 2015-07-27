@@ -31,7 +31,7 @@
 #include <string.h>
 
 #include <SDL2/SDL.h>
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include <SDL2/SDL_endian.h>
 
 #define __MIX_INTERNAL_EFFECT__

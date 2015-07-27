@@ -21,9 +21,13 @@ _Libs/_builds/android/*
 _Libs/_builds/sdl2_mixer_mod/*
 _Libs/_builds/win32/lib/SDL2_mixer.dll
 _Libs/_builds/win32/bin/SDL2_mixer.dll
+_Libs/_builds/win32/lib/SDL2_mixer_ext.dll
+_Libs/_builds/win32/bin/SDL2_mixer_ext.dll
 _Libs/_builds/win32/lib/libluabind.a
 _Libs/_builds/win32/lib/libSDL2_mixer.a
 _Libs/_builds/win32/lib/libSDL2_mixer.la
+_Libs/_builds/win32/lib/libSDL2_mixer_ext.a
+_Libs/_builds/win32/lib/libSDL2_mixer_ext.la
 #Mac OS's junk
 .DS_Store
 

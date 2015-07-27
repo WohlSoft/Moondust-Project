@@ -13,7 +13,7 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 
 include (../../_common/lib_destdir.pri)
 DESTDIR = ../_builds/$$TARGETOS/lib
-TARGET = SDL2_mixer
+TARGET = SDL2_mixer_ext
 
 include(../../_common/build_props.pri)
 
@@ -21,6 +21,7 @@ win32:{
 LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
+#DEFINES += USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
 LIBS += -L../_builds/linux/lib
@@ -40,7 +41,6 @@ INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
 LIBS += -lSDL2
 }
 
-
 win32:{
 LIBS += -lwinmm -lm -lwinmm
 }
@@ -52,12 +52,6 @@ DEFINES += MODPLUG_MUSIC
 android: {
 DEFINES += HAVE_STRCASECMP HAVE_STRNCASECMP #OGG_USE_TREMOR
 DEFINES -= FLAC_MUSIC #temopary with no FLAC, because I wasn't built it because compilation bug
-}
-
-win32: {
-DEFINES += USE_NATIVE_MIDI
-} else {
-DEFINES -= USE_NATIVE_MIDI
 }
 
 LIBS += -L../_builds/$$TARGETOS/lib
@@ -86,7 +80,7 @@ win32: {
 macx: {
     SDL2MixerH.path =  ../_builds/macos/frameworks/SDL2.framework/Headers/SDL2
 }
-SDL2MixerH.files += SDL_mixer.h
+SDL2MixerH.files += SDL_mixer_ext.h
 
 linux-g++||unix:!macx:!android:{
 SDL2MixerSO.path = ../_builds/linux/lib
@@ -129,7 +123,6 @@ HEADERS += \
     music_mod.h \
     music_modplug.h \
     music_ogg.h \
-    SDL_mixer.h \
     wavestream.h \
     native_midi/native_midi.h \
     native_midi/native_midi_common.h \
@@ -158,7 +151,8 @@ HEADERS += \
     music_spc.h \
     resample/audio.h \
     resample/global.h \
-    resample/mad_resample.h
+    resample/mad_resample.h \
+    SDL_mixer_ext.h
 
 SOURCES += \
     dynamic_flac.c \

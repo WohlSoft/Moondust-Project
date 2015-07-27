@@ -5,7 +5,7 @@
 #define SDL_MUS_PLAYER
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <SDL2/SDL_stdinc.h>
 #undef main
 #include <QHash>

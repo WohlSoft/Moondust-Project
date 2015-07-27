@@ -28,7 +28,7 @@
 #elif USE_SDL_MIXER
 #undef main
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_mixer_ext.h>
 #endif
 
 class PGE_MusPlayer : public QObject

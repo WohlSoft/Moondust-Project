@@ -2,7 +2,7 @@
 
 /* This file supports MOD tracker music streams */
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "music_spc.h"
 
 #include "snes_spc/spc.h"

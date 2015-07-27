@@ -619,6 +619,9 @@ extern DECLSPEC Mix_Chunk * SDLCALL Mix_GetChunk(int channel);
 /* Close the mixer, halting all playing audio */
 extern DECLSPEC void SDLCALL Mix_CloseAudio(void);
 
+/* Add additional Timidity bank path */
+extern DECLSPEC void SDLCALL MIX_Timidity_addToPathList(const char *path);
+
 /* We'll use SDL for reporting errors */
 #define Mix_SetError    SDL_SetError
 #define Mix_GetError    SDL_GetError

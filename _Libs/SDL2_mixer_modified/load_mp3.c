@@ -25,7 +25,7 @@
 
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 
 #include "load_mp3.h"
 
