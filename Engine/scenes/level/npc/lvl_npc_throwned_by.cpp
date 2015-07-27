@@ -62,3 +62,4 @@ LVL_Player *LVL_Npc::thrownedByPlayerObj()
 {
     return throwned_by_player_obj;
 }
+

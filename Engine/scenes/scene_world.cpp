@@ -53,6 +53,7 @@ WorldScene::WorldScene()
     debug_render_delay=0;
     debug_phys_delay=0;
     debug_event_delay=0;
+    debug_total_delay=0;
 
     mapwalker_img_h = ConfigManager::default_grid;
     mapwalker_offset_x=0;
@@ -987,10 +988,11 @@ void WorldScene::render()
                                .arg(uTickf)
                                .arg(_itemsToRender.size()), 10,100);
 
-        FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
+        FontManager::printText(QString("Delays E=%1 R=%2 P=%3 {%4}")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
                                .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,120);
+                               .arg(debug_phys_delay, 3, 10, QChar('0'))
+                               .arg(debug_total_delay, 3, 10, QChar('0')), 10,120);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")
@@ -1059,6 +1061,8 @@ int WorldScene::exec()
 
   Uint32 start_common=0;
 
+  bool   skipFrame=false;
+
     running = !doExit;
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
@@ -1082,24 +1086,28 @@ int WorldScene::exec()
 
         stop_render=0;
         start_render=0;
+        skipFrame=true;
         if(doUpdate_render<=0.f)
         {
             start_render = SDL_GetTicks();
             render();
             stop_render = SDL_GetTicks();
             doUpdate_render = frameSkip ? (stop_render-start_render) : 0;
+            skipFrame=false;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
         if(stop_render < start_render) {stop_render=0; start_render=0; }
 
         glFlush();
-        PGE_Window::rePaint();
+        if(!skipFrame) PGE_Window::rePaint();
 
-        if( uTickf > (float)(SDL_GetTicks()-start_common) )
+        if( floor(uTickf) > (float)(SDL_GetTicks()-start_common) )
         {
             wait( uTickf-(float)(SDL_GetTicks()-start_common));
         }
+
+        if(PGE_Window::showDebugInfo) debug_total_delay=SDL_GetTicks()-start_common;
     }
     return exitWorldCode;
 }

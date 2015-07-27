@@ -438,7 +438,7 @@ int TitleScene::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( uTickf > (float)(SDL_GetTicks()-start_render) )
+        if( floor(uTickf) > (float)(SDL_GetTicks()-start_render) )
         {
             wait( uTick-(float)(SDL_GetTicks()-start_render) );
         }

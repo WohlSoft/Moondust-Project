@@ -5,9 +5,10 @@
 #include "ThreadedQueue.h"
 
 #include <QtConcurrent>
+#include <iostream>
 
 class ThreadedLogger;
-static QScopedPointer<ThreadedLogger> gThreadedLogger;
+extern QScopedPointer<ThreadedLogger> gThreadedLogger;
 
 class ThreadedLogger : public QObject
 {
@@ -31,9 +32,11 @@ public:
     }
     static inline void initStatic(){
         gThreadedLogger.reset(new ThreadedLogger());
+        std::cout << "Threaded logger active!" << std::endl;
         qRegisterMetaType<ThreadedLogger::LoggerLevel>("ThreadedLogger::LoggerLevel");
     }
     static inline void destoryStatic(){
+        std::cout << "Threaded logger disabled!" << std::endl;
         gThreadedLogger.reset();
     }
 

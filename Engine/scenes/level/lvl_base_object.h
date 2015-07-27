@@ -117,6 +117,9 @@ public:
     double _velocityX_prev;//!< X speed before last itertion step (pixels per 1/65 of second)
     double _velocityY_prev;//!< Y speed before last itertion step (pixels per 1/65 of second)
 
+    double _velocityX_add; //!< additional X acceleration
+    double _velocityY_add; //!< additional Y acceleration
+
     double _posX; //!< Synchronized with R-Tree position
     double _posY; //!< Synchronized with R-Tree position
 
@@ -151,6 +154,13 @@ public:
     GLuint texId;
     virtual GLdouble zIndex();
     GLdouble z_index;
+
+    /**************************Layer member****************************/
+    virtual void show();
+    virtual void hide();
+    virtual bool isVisible();
+    bool _is_visible;
+    /******************************************************************/
 
 public:
 

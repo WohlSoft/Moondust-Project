@@ -279,6 +279,12 @@ public:
         left_time=0;
     }
 
+    EventQueue(const EventQueue& eq)
+    {
+        left_time=eq.left_time;
+        events=eq.events;
+    }
+
     ~EventQueue()
     {}
 

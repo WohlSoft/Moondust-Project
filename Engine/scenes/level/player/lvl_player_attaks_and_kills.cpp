@@ -58,6 +58,8 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(visibleBody==this) continue;
         if(visibleBody==NULL)
             continue;
+        if(!visibleBody->isVisible()) //Don't whip elements from hidden layers!
+            continue;
         switch(visibleBody->type)
         {
             case PGE_Phys_Object::LVLBlock:

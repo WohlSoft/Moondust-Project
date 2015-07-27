@@ -16,22 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvl_warp.h"
-#include "lvl_scene_ptr.h"
+#ifndef LVL_LAYER_H
+#define LVL_LAYER_H
 
-LVL_Warp::LVL_Warp() : PGE_Phys_Object()
+#include <QHash>
+#include "lvl_base_object.h"
+
+class LVL_LayerEngine
 {
-     type = LVLWarp;
-}
+public:
+    LVL_LayerEngine();
+    void hide(QString layer, bool smoke=true);
+    void show(QString layer, bool smoke=true);
+    void toggle(QString layer, bool smoke=true);
+    void registerItem(QString layer, PGE_Phys_Object* item);
+    void removeRegItem(QString layer, PGE_Phys_Object* item);
+    bool isEmpty(QString layer);
+    QHash<QString, QList<PGE_Phys_Object* > > members;
+};
 
-LVL_Warp::~LVL_Warp()
-{}
-
-void LVL_Warp::init()
-{
-    setSize(32, 32);
-    setPos(data.ix, data.iy);
-    collide_player = COLLISION_NONE;
-    collide_npc = COLLISION_NONE;
-    LvlSceneP::s->layers.registerItem(data.layer, this);
-}
+#endif // LVL_LAYER_H
