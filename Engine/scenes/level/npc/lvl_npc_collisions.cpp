@@ -135,7 +135,9 @@ void LVL_Npc::updateCollisions()
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
                     if(!npc) continue;
-                    if(!npc->is_scenery)
+                    if(!npc->is_scenery && !npc->disableBlockCollision &&
+                            ((collide_npc==COLLISION_ANY)||(collide_npc==COLLISION_TOP))
+                            )
                     {
                         add_speed_to.push_back(collided);
                         continue;
@@ -223,12 +225,14 @@ void LVL_Npc::updateCollisions()
     {
         posRect.setX(_wallX);
         setSpeedX(0);
+        _velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         posRect.setY(_floorY);
         //float bumpSpeed=speedY();
         setSpeedY(0);
+        _velocityY_add=0;
         //if(!blocks_to_hit.isEmpty())
         //{
         //    LVL_Block*nearest = nearestBlock(blocks_to_hit);
