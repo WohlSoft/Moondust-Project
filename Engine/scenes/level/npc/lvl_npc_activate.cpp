@@ -34,6 +34,10 @@ void LVL_Npc::Activate()
 
     animator.start();
     isActivated=true;
+
+    if(!data.event_activate.isEmpty())
+        LvlSceneP::s->events.triggerEvent(data.event_activate);
+
     if(isLuaNPC){
         try{
             lua_onActivated();

@@ -44,4 +44,14 @@ void LVL_Npc::kill()
     //sct()->unregisterElement(this);
     LvlSceneP::s->unregisterElement(this);
     LvlSceneP::s->dead_npcs.push_back(this);
+
+    if(!data.event_die.isEmpty())
+        LvlSceneP::s->events.triggerEvent(data.event_die);
+    LvlSceneP::s->layers.removeRegItem(data.layer, this);
+    if(!data.event_emptylayer.isEmpty())
+    {
+        if(LvlSceneP::s->layers.isEmpty(data.layer))
+            LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
+    }
 }
+

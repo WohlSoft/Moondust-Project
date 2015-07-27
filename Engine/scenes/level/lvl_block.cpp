@@ -377,9 +377,19 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     {
         PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
         destroyed=true;
+        QString oldLayer=data.layer;
         LvlSceneP::s->layers.removeRegItem(data.layer, this);
         data.layer="Destroyed Blocks";
         LvlSceneP::s->layers.registerItem(data.layer, this);
+        if(!data.event_destroy.isEmpty())
+        {
+            LvlSceneP::s->events.triggerEvent(data.event_destroy);
+        }
+        if(!data.event_emptylayer.isEmpty())
+        {
+            if(LvlSceneP::s->layers.isEmpty(oldLayer))
+                LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
+        }
         return;
     }
 

@@ -186,8 +186,8 @@ public:
     int health;
 
     /**Layers***/
+    void show();
     void hide();
-
 
     bool isInited();
 private:
