@@ -5,25 +5,45 @@
 
 class PacketUserAuth : public Packet
 {
+    Q_OBJECT
+    Q_DISABLE_COPY(PacketUserAuth)
+
+    Q_PROPERTY(QString username READ username WRITE setUsername)
+    Q_PROPERTY(int networkVersionNumber READ networkVersionNumber WRITE setNetworkVersionNumber)
 public:
-    PacketUserAuth();
+    Q_INVOKABLE PacketUserAuth(QObject* parent = 0);
 
     // Packet interface
 public:
-    void encode(QDataStream &stream);
-    void decode(QDataStream &stream);
 
-    QString username() const;
-    void setUsername(const QString &username);
+    QString username() const
+    {
+        return m_username;
+    }
 
-    int networkVersionNumber() const;
-    void setNetworkVersionNumber(int networkVersionNumber);
+    int networkVersionNumber() const
+    {
+        return m_networkVersionNumber;
+    }
+
+
+public slots:
+    void setUsername(QString username)
+    {
+        m_username = username;
+    }
+
+    void setNetworkVersionNumber(int networkVersionNumber)
+    {
+        m_networkVersionNumber = networkVersionNumber;
+    }
 
 private:
+//    QString m_username;
+    //    int m_networkVersionNumber;
     QString m_username;
     int m_networkVersionNumber;
 };
 
-Q_DECLARE_METATYPE(PacketUserAuth)
 
 #endif // PACKETUSERAUTH_H

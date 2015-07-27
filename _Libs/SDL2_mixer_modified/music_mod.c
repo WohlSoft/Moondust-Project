@@ -25,7 +25,7 @@
 
 /* This file supports MOD tracker music streams */
 
-#include "SDL_mixer.h"
+#include "SDL_mixer_ext.h"
 #include "dynamic_mod.h"
 #include "music_mod.h"
 

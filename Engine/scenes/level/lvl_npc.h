@@ -152,6 +152,16 @@ public:
     LVL_Player *throwned_by_player_obj;
     /***************************************************/
 
+    /*******************Buddies********************/
+    //Allows communication between neighour NPC's of same type.
+    void             buildBuddieGroup();
+    void             updateBuddies(float tickTime);
+    void             buildLeaf(QList<LVL_Npc*> &needtochec, QList<LVL_Npc*> *&list, LVL_Npc *leader);
+    QList<LVL_Npc*> *buddies_list;//Destroys when was killed last NPC in this group
+    bool             buddies_updated;
+    LVL_Npc*         buddies_leader;
+    /**********************************************/
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
@@ -165,6 +175,8 @@ public:
     bool lua_animationIsFinished();
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
+    int lua_activate_neighbours();
+    inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
@@ -173,6 +185,9 @@ public:
 
     int health;
 
+    /**Layers***/
+    void show();
+    void hide();
 
     bool isInited();
 private:

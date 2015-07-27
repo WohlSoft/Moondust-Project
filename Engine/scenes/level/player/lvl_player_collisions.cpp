@@ -65,6 +65,8 @@ void LVL_Player::updateCollisions()
     QVector<PGE_Phys_Object*> floor_blocks;
     QVector<PGE_Phys_Object*> wall_blocks;
     QVector<PGE_Phys_Object*> blocks_to_hit;
+    QVector<PGE_Phys_Object*> add_speed_to;
+
     if(!collided_bottom.isEmpty())
     {
         for(PlayerColliders::iterator it=collided_bottom.begin(); it!=collided_bottom.end() ; it++)
@@ -91,6 +93,11 @@ void LVL_Player::updateCollisions()
                 }
                 break;
                 default:break;
+            }
+            if(!foot_contacts_map.isEmpty())
+            {
+                _velocityX_add=collided->speedX();
+                //_velocityY=collided->speedY();
             }
         }
         if(isFloor(floor_blocks))
@@ -259,6 +266,7 @@ void LVL_Player::_collideUnduck()
         PGE_Phys_Object*body=*it;
         if(body==this) continue;
         if(body->isPaused()) continue;
+        if(!body->isVisible()) continue;
         solveCollision(body);
     }
     forceCollideCenter=false;

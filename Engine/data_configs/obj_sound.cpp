@@ -4,7 +4,7 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <gui/pge_msgbox.h>
-#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <QVector>
 #include <common_features/logger.h>
 #include <QtDebug>

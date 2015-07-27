@@ -46,6 +46,7 @@ void LVL_Npc::init()
     }
 
     _isInited=true;
+    LvlSceneP::s->layers.registerItem(data.layer, this);
 }
 
 LevelNPC LVL_Npc::getData()

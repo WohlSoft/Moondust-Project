@@ -31,7 +31,7 @@
 #include <AudioToolbox/AudioToolbox.h>
 #include <AvailabilityMacros.h>
 
-#include "../SDL_mixer.h"
+#include "../SDL_mixer_ext.h"
 #include <SDL2/SDL_endian.h>
 #include "native_midi.h"
 

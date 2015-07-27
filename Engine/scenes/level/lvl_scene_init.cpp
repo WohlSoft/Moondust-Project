@@ -431,6 +431,24 @@ bool LevelScene::init()
         return false;
     }
 
+    loaderStep();
+    qDebug() << "Apply layers";
+    for(int i=0; i<data.layers.size(); i++)
+    {
+        if(data.layers[i].hidden)
+        {
+            layers.hide(data.layers[i].name, false);
+        }
+    }
+
+    loaderStep();
+
+    qDebug() << "Apply Events";
+    for(int i=0; i<data.events.size(); i++)
+    {
+        events.addSMBX64Event(data.events[i]);
+    }
+
     stopLoaderAnimation();
 
     isInit = true;
