@@ -202,12 +202,14 @@ void LVL_Player::updateCollisions()
     {
         posRect.setX(_wallX);
         setSpeedX(0);
+        _velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         posRect.setY(_floorY);
         float bumpSpeed=speedY();
         setSpeedY(0);
+        _velocityY_add=0;
         if(!blocks_to_hit.isEmpty())
         {
             PGE_Phys_Object* nearestObj=nearestBlock(blocks_to_hit);
@@ -425,14 +427,14 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     #ifdef COLLIDE_DEBUG
                     bool found=false;
                     #endif
-                    double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
-                    double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+                    double xSpeed = Maths::max(fabs(speedX()+_velocityX_add), fabs(_velocityX_prev+_velocityX_add)) * Maths::sgn(speedX()+_velocityX_add);
+                    double ySpeed = Maths::max(fabs(speedY()+_velocityY_add), fabs(_velocityY_prev+_velocityY_add)) * Maths::sgn(speedY()+_velocityY_add);
                     //*****************************Feet of player****************************/
                     if(
                             (
-                                (speedY() >= 0.0)
+                                (speedY()+_velocityY_add >= 0.0)
                                 &&
-                                (floor(r1.bottom()) < rc.top()+ySpeed+fabs(speedX())+1.0)
+                                (floor(r1.bottom()) < rc.top()+ySpeed+fabs(speedX()+_velocityX_add)+1.0)
                                 &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
                              )
                             ||
@@ -448,7 +450,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of player****************************/
                     else if( (
-                                 (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                                 (  ((!forceCollideCenter)&&(speedY()+_velocityY_add<0.0))||(forceCollideCenter&&(speedY()+_velocityY_add<=0.0))   )
                                  &&
                                  (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
                                  &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
@@ -462,7 +464,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Left****************************/
-                    else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
+                    else if( (speedX()+_velocityX_add<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -472,7 +474,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #endif
                     }
                     //*****************************Right****************************/
-                    else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
+                    else if( (speedX()+_velocityX_add>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
                              && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                     {
                         if(blk->isHidden) break;
@@ -496,8 +498,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             fabs(_velocityY_prev)*c+c;
                     #endif
                     if( blk->posRect.collideRectDeep(posRect,
-                                                     fabs(_velocityX_prev)*c+c*2.0,
-                                                     fabs(_velocityY_prev)*c+c*2.0)
+                                                     fabs(_velocityX_prev+_velocityX_add)*c+c*2.0,
+                                                     fabs(_velocityY_prev+_velocityY_add)*c+c*2.0)
                             )
                     {
                         if(blk->isHidden && !forceCollideCenter) break;
@@ -591,7 +593,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         PGE_RectF  rc = collided->posRect;
                         if(
                                 (
-                                    (speedY() >= 0.0)
+                                    (speedY()+_velocityY_add >= 0.0)
                                     &&
                                     (r1.bottom() < rc.top()+_velocityY_prev)
                                     &&
@@ -616,14 +618,14 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #ifdef COLLIDE_DEBUG
                         bool found=false;
                         #endif
-                        double xSpeed = Maths::max(fabs(speedX()), fabs(_velocityX_prev)) * Maths::sgn(speedX());
-                        double ySpeed = Maths::max(fabs(speedY()), fabs(_velocityY_prev)) * Maths::sgn(speedY());
+                        double xSpeed = Maths::max(fabs(speedX()+_velocityX_add), fabs(_velocityX_prev+_velocityX_add)) * Maths::sgn(speedX()+_velocityX_add);
+                        double ySpeed = Maths::max(fabs(speedY()+_velocityY_add), fabs(_velocityY_prev+_velocityY_add)) * Maths::sgn(speedY()+_velocityY_add);
                         //*****************************Feet of player****************************/
                         if(
                                 (
-                                    (speedY() >= 0.0)
+                                    (speedY()+_velocityY_add >= 0.0)
                                     &&
-                                    (floor(r1.bottom()) < rc.top()+ySpeed+fabs(speedX())+1.0)
+                                    (floor(r1.bottom()) < rc.top()+ySpeed+fabs(speedX()+_velocityX_add)+1.0)
                                     &&( !( (r1.left()>=rc.right()-0.2) || (r1.right() <= rc.left()+0.2) ) )
                                  )
                                 ||
@@ -638,7 +640,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         }
                         //*****************************Head of player****************************/
                         else if( (
-                                     (  ((!forceCollideCenter)&&(speedY()<0.0))||(forceCollideCenter&&(speedY()<=0.0))   )
+                                     (  ((!forceCollideCenter)&&(speedY()+_velocityY_add<0.0))||(forceCollideCenter&&(speedY()+_velocityY_add<=0.0))   )
                                      &&
                                      (r1.top() > rc.bottom()+ySpeed-1.0+_heightDelta)
                                      &&( !( (r1.left()>=rc.right()-0.5 ) || (r1.right() <= rc.left()+0.5 ) ) )
@@ -652,7 +654,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             #endif
                         }
                         //*****************************Left****************************/
-                        else if( (speedX()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
+                        else if( (speedX()+_velocityX_add<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed-1.0)
                                  && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                         {
                             collided_left[(intptr_t)collided]=collided;//right of player
@@ -661,7 +663,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             #endif
                         }
                         //*****************************Right****************************/
-                        else if( (speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
+                        else if( (speedX()+_velocityX_add>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+1.0)
                                  && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                         {
                             collided_right[(intptr_t)collided]=collided;//left of player
