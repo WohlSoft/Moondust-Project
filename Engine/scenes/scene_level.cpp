@@ -947,16 +947,22 @@ void LevelScene::checkPlayers()
             switch(players[i]->kill_reason)
             {
             case LVL_Player::deathReason::DEAD_burn:
-                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
                 if(!haveAlivePlayers)
+                {
+                    Mix_HaltChannel(-1);
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                }
+                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
                 break;
             case LVL_Player::deathReason::DEAD_fall:
             case LVL_Player::deathReason::DEAD_killed:
                 if(haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
                 else
+                {
+                    Mix_HaltChannel(-1);
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                }
                 break;
             }
             players[i]->setLocked(true);
