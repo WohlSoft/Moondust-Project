@@ -230,12 +230,13 @@ void Scene::setFade(int speed, float target, float step)
 /************waiting timer************/
 void Scene::wait(float ms)
 {
-    while(__waiting_step+ms < floor(ms) )
+    if(floor(ms)<=0.0f) return;
+    while(__waiting_step+floor(ms) < ms )
     {
         __waiting_step+=ms;
         SDL_Delay((int)floor(ms));
     }
     while(__waiting_step > 0)
-        __waiting_step-=ms;
+        __waiting_step-=floor(ms);
 }
 /************waiting timer************/
