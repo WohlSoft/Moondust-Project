@@ -874,7 +874,7 @@ int LevelScene::exec()
 
         if(!skipFrame) PGE_Window::rePaint();
 
-        if( floor(uTickf) > (float)(SDL_GetTicks()-start_common) )
+        if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
             if(!slowTimeMode)
                 wait( uTickf-(float)(SDL_GetTicks()-start_common) );

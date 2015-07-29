@@ -1102,7 +1102,7 @@ int WorldScene::exec()
         glFlush();
         if(!skipFrame) PGE_Window::rePaint();
 
-        if( floor(uTickf) > (float)(SDL_GetTicks()-start_common) )
+        if( uTickf > (float)(SDL_GetTicks()-start_common) )
         {
             wait( uTickf-(float)(SDL_GetTicks()-start_common));
         }

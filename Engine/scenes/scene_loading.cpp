@@ -193,7 +193,7 @@ int LoadingScene::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( floor(uTickf) > (float)(SDL_GetTicks()-start_render))
+        if( uTickf > (float)(SDL_GetTicks()-start_render))
         {
             wait( uTickf-(float)(SDL_GetTicks()-start_render) );
         }
