@@ -234,6 +234,13 @@ void PGE_MsgBox::processBox(float)
     #endif
     updateControllers();
 
+    if(keys.jump || keys.run || keys.alt_run)
+    {
+        _page++;
+        setFade(10, 0.0f, 0.05f);
+        return;
+    }
+
     SDL_Event event;
     while ( SDL_PollEvent(&event) )
     {
@@ -309,6 +316,7 @@ void PGE_MsgBox::updateControllers()
                 s->player1Controller->sendControls();
                 s->player2Controller->update();
                 s->player2Controller->sendControls();
+                keys=s->player1Controller->keys;
             }
         }
         else if(parentScene->type()==Scene::World)
@@ -320,6 +328,7 @@ void PGE_MsgBox::updateControllers()
                 s->fader.tickFader(uTickf);
                 s->player1Controller->update();
                 s->player1Controller->sendControls();
+                keys=s->player1Controller->keys;
             }
         }
     }
