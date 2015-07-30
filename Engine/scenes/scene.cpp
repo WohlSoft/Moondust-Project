@@ -233,7 +233,7 @@ void Scene::wait(float ms)
     if(floor(ms)<=0.0f) return;
 
     float totalDelay = floorf(ms+dif);
-    SDL_Delay(totalDelay);
+    SDL_Delay((Uint32)totalDelay);
 
     dif = (ms+dif)-totalDelay;
 }
