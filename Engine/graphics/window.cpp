@@ -62,9 +62,18 @@ bool PGE_Window::init(QString WindowTitle)
 {
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
+    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      8);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    8);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,     8);
+    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    8);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
 
     SDL_GL_SetSwapInterval(0);
     checkSDLError();

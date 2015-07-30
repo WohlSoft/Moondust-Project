@@ -840,9 +840,11 @@ int LevelScene::exec()
 
   Uint32 start_events=0;
   Uint32 stop_events=0;
+  float junkTicks=0.0f;
 
-  Uint32 start_common=0;
   bool skipFrame=false;
+  StTimePt start_common=StClock::now();
+  #define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
 
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
@@ -856,7 +858,7 @@ int LevelScene::exec()
 
     while(running)
     {
-        start_common = SDL_GetTicks();
+        start_common = StClock::now();
 
         debug_TimeCounted+=uTickf;
 
@@ -894,12 +896,14 @@ int LevelScene::exec()
         /****************************************************************************/
 
         if(!skipFrame) PGE_Window::rePaint();
-        if( uTickf > (float)(SDL_GetTicks()-start_common) )
+        //printf("U-%08.5f, P-%08.5f, J-%08.5f", uTickf, PassedTime, junkTicks);
+        //fflush(stdout);
+        if( uTickf > PassedTime )
         {
             if(!slowTimeMode)
-                wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+                wait( uTickf-PassedTime-junkTicks );
             else
-                SDL_Delay( uTick-(SDL_GetTicks()-start_common)+300 );
+                SDL_Delay( uTick-PassedTime+300 );
         }
     }
     return exitLevelCode;
