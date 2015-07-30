@@ -131,7 +131,7 @@ protected:
     /************waiting timer************/
 private:
     TypeOfScene sceneType;
-    float __waiting_step;
+    float dif;
 
     QVector<std::function<void()> > renderFunctions;
 };

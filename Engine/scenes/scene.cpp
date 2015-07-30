@@ -31,7 +31,7 @@ void Scene::construct()
     running=true;
     doExit=false;
     _doShutDown=false;
-    __waiting_step=0;
+    dif = 0;
     updateTickValue();    
 }
 
@@ -231,19 +231,10 @@ void Scene::setFade(int speed, float target, float step)
 void Scene::wait(float ms)
 {
     if(floor(ms)<=0.0f) return;
-    int msf = floor(ms);
-    if(__waiting_step>ms)
-    {
-        while(__waiting_step < ms )
-        {
-            __waiting_step+=msf;
-            SDL_Delay(msf);
-        }
-    }
-    else
-    {
-        while(__waiting_step > 0)
-            __waiting_step-=ms;
-    }
+
+    float totalDelay = floorf(ms+dif);
+    SDL_Delay(totalDelay);
+
+    dif = (ms+dif)-totalDelay;
 }
 /************waiting timer************/
