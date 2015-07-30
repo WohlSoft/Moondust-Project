@@ -233,8 +233,12 @@ void Scene::wait(float ms)
     if(floor(ms)<=0.0f) return;
 
     float totalDelay = floorf(ms+dif);
-    SDL_Delay((Uint32)totalDelay);
-
-    dif = (ms+dif)-totalDelay;
+    StTimePt delayed=StClock::now();//for accuracy
+    //std::this_thread::sleep_for(std::chrono::milliseconds((long)(totalDelay)));
+    if(totalDelay>0.0f) SDL_Delay((Uint32)totalDelay);
+    StTimePt isnow=StClock::now();
+    //printf("%f %f\n", totalDelay, (float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f));
+    //fflush(stdout);
+    dif = (ms+dif)-totalDelay-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f);
 }
 /************waiting timer************/
