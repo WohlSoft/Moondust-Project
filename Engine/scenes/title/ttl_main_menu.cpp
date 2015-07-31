@@ -136,6 +136,12 @@ void TitleScene::processMenu()
                     setMenu(menu_controls);
                 }
                 else
+                if(value=="videosetup")
+                {
+                    menuChain.push(_currentMenu);
+                    setMenu(menu_videosettings);
+                }
+                else
                 {
                     PGE_MsgBox msgBox(this, QString("Dummy"),
                                       PGE_MsgBox::msg_warn);
@@ -241,21 +247,13 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setItemsNumber(9);
                 menu.addMenuItem("tests", "Test of screens");
                 menu.addMenuItem("controls", "Player controlling");
+                menu.addMenuItem("videosetup", "Video settings");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
                                     []()->void{ PGE_MusPlayer::MUS_changeVolume(AppSettings.volume_music); });
                 menu.addIntMenuItem(&AppSettings.volume_sound, 0, 128, "vlm_sound", "Sound volume", false);
                 menu.addBoolMenuItem(&AppSettings.fullScreen, "full_screen", "Full Screen mode",
                                      []()->void{ PGE_Window::setFullScreen(AppSettings.fullScreen); }
                                      );
-                menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
-                menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
-                menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                menu.addIntMenuItem(&AppSettings.TicksPerSecond, 65, 80, "phys_step", "Physics steps per second", false,
-                                    [this]()->void{
-                                        PGE_Window::TicksPerSecond = AppSettings.TicksPerSecond;
-                                        this->updateTickValue();
-                                    }
-                                    );
             break;
                 case menu_tests:
                     menu.setPos(300, 350);
@@ -264,6 +262,22 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
+                    case menu_videosettings:
+                        menu.setPos(300, 350);
+                        menu.setItemsNumber(5);
+                        menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
+                        menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
+                        menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
+                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 10, 20, "phys_step", "Frame time (ms.)", false,
+                                            [this]()->void{
+                                                PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+                                                PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;
+                                                AppSettings.TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+                                                //PGE_Window::TicksPerSecond =AppSettings.TicksPerSecond;
+                                                this->updateTickValue();
+                                            }
+                                            );
+                    break;
                     case menu_controls:
                         menu.setPos(300, 350);
                         menu.setItemsNumber(5);

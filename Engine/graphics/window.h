@@ -32,7 +32,8 @@ public:
     static int Width;
     static int Height;
     static int MaxFPS;
-    static int TicksPerSecond;
+    static float TicksPerSecond;
+    static int TimeOfFrame;
     static bool showDebugInfo;
     static bool showPhysicsDebug;
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");

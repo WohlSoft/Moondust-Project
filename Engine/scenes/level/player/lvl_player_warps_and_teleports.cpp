@@ -257,7 +257,7 @@ void LVL_Player::WarpTo(float x, float y, int warpType, int warpDirection)
                                         },0);
             event_queue.events.push_back(playSnd);
 
-            float pStep = 1.5f/((float)PGE_Window::TicksPerSecond);
+            float pStep = 1.5f/PGE_Window::TicksPerSecond;
 
             EventQueueEntry<LVL_Player >warpOut;
             warpOut.makeWaiterCond([this, pStep]()->bool{
@@ -362,7 +362,7 @@ void LVL_Player::WarpTo(LevelDoor warp)
                 break;
             }
 
-            float pStep = 1.5f/((float)PGE_Window::TicksPerSecond);
+            float pStep = 1.5f/PGE_Window::TicksPerSecond;
             EventQueueEntry<LVL_Player >warpIn;
             warpIn.makeWaiterCond([this, pStep]()->bool{
                                       warpPipeOffset += pStep;

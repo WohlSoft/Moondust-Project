@@ -75,7 +75,7 @@ WorldScene::WorldScene()
     fader.setFull();
     /*********Fader*************/
 
-    move_speed = 125/(float)PGE_Window::TicksPerSecond;
+    move_speed = 125/PGE_Window::TicksPerSecond;
     move_steps_count=0;
 
     ConfigManager::setup_WorldMap.initFonts();

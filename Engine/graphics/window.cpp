@@ -29,7 +29,8 @@ int PGE_Window::Width=800;
 int PGE_Window::Height=600;
 
 int PGE_Window::MaxFPS=250;
-int PGE_Window::TicksPerSecond=65;
+float PGE_Window::TicksPerSecond=1000.0f/15.0f;
+int PGE_Window::TimeOfFrame=15;
 
 bool PGE_Window::showDebugInfo=false;
 bool PGE_Window::showPhysicsDebug=false;
@@ -66,14 +67,16 @@ bool PGE_Window::init(QString WindowTitle)
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
-    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,     8);
-    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    8);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
+//  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,          16);
+//  SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,         32);
+//  SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,      0);
+//  SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    0);
+//  SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,     0);
+//  SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    0);
+//  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
+//  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
+//  SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
+    //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
     SDL_GL_SetSwapInterval(0);
     checkSDLError();

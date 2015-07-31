@@ -50,8 +50,12 @@ void GlobalSettings::load()
     setup.beginGroup("Main");
     MaxFPS=setup.value("max-fps", MaxFPS).toUInt();
         NumberLimiter::apply(MaxFPS, 65, 1000);
-    TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
-        NumberLimiter::apply(TicksPerSecond, 65, 180);
+    //TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
+    //    NumberLimiter::apply(TicksPerSecond, 65, 180);
+    timeOfFrame=setup.value("phys-step-time", TicksPerSecond).toUInt();
+        NumberLimiter::apply(timeOfFrame, 10, 20);
+    TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
@@ -110,6 +114,7 @@ void GlobalSettings::save()
     setup.beginGroup("Main");
         setup.setValue("max-fps", MaxFPS);
         setup.setValue("phys-step", TicksPerSecond);
+        setup.setValue("phys-step-time", timeOfFrame);
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
@@ -142,6 +147,7 @@ void GlobalSettings::resetDefaults()
 
     MaxFPS=250;
     TicksPerSecond=65;
+    timeOfFrame=15;
 
     showDebugInfo=false;
 
@@ -169,7 +175,7 @@ void GlobalSettings::resetDefaults()
 
 void GlobalSettings::apply()
 {
-    PGE_Window::TicksPerSecond=TicksPerSecond;
+    PGE_Window::TicksPerSecond=1000.0f/timeOfFrame;
     PGE_Window::MaxFPS=MaxFPS;
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;
