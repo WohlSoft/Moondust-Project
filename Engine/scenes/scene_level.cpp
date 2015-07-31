@@ -844,7 +844,7 @@ int LevelScene::exec()
 
   bool skipFrame=false;
   StTimePt start_common=StClock::now();
-  #define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
+  #define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000000.0f)
 
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
