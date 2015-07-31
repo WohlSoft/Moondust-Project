@@ -239,6 +239,6 @@ void Scene::wait(float ms)
     StTimePt isnow=StClock::now();
     //printf("%f %f\n", totalDelay, (float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f));
     //fflush(stdout);
-    dif = (ms+dif)-totalDelay-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f);
+    dif = (ms+dif)-totalDelay-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000000.0f);
 }
 /************waiting timer************/
