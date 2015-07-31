@@ -37,7 +37,7 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = 1000.0f/(float)PGE_Window::TicksPerSecond;
+    uTickf = PGE_Window::TimeOfFrame;//1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick = round(uTickf);
     if(uTick<=0) uTick=1;
     if(uTickf<=0) uTickf=1.0;
@@ -231,14 +231,14 @@ void Scene::setFade(int speed, float target, float step)
 void Scene::wait(float ms)
 {
     if(floor(ms)<=0.0f) return;
-
     float totalDelay = floorf(ms+dif);
-    StTimePt delayed=StClock::now();//for accuracy
+    //StTimePt delayed=StClock::now();//for accuracy
     //std::this_thread::sleep_for(std::chrono::milliseconds((long)(totalDelay)));
-    if(totalDelay>0.0f) SDL_Delay((Uint32)totalDelay);
-    StTimePt isnow=StClock::now();
+    //if(totalDelay>0.0f)
+    SDL_Delay((Uint32)totalDelay);
+    //StTimePt isnow=StClock::now();
     //printf("%f %f\n", totalDelay, (float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f));
     //fflush(stdout);
-    dif = (ms+dif)-totalDelay-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000000.0f);
+    //dif = (ms+dif)-totalDelay;//-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f);
 }
 /************waiting timer************/

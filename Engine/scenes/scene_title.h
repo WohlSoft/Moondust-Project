@@ -93,6 +93,7 @@ public:
         menu_controls,
         menu_controls_plr1,
         menu_controls_plr2,
+        menu_videosettings,
         menu_player,
         menu_volume,
         menu_dummy_and_big,//leave it!
