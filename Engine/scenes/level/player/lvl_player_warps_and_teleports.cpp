@@ -113,6 +113,7 @@ void LVL_Player::processWarpChecking()
 
             if(isContacted)
             {
+                setPosX(contactedWarp->posCenterX()-posRect.width()/2.0);
                 setPosY(contactedWarp->bottom()-posRect.height());
                 WarpTo(contactedWarp->data);
                 wasEntered = true;
