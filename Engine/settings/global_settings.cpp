@@ -180,6 +180,7 @@ void GlobalSettings::apply()
     PGE_Window::Width =ScreenWidth;
     PGE_Window::Height=ScreenHeight;
     PGE_Window::showDebugInfo=showDebugInfo;
+    PGE_Window::TimeOfFrame=timeOfFrame;
 }
 
 
