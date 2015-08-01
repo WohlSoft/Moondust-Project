@@ -704,6 +704,37 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         #endif
                         break;
                     }
+                case COLLISION_NONE:
+                    { //Detect top of stompable NPC!
+                        if(!npc->setup->kill_on_jump) break;
+
+                        PGE_RectF &r1=posRect;
+                        PGE_RectF  rc = collided->posRect;
+                        if(
+                                (
+                                    (speedY()+_velocityY_add >= 0.0)
+                                    &&
+                                    (r1.bottom() < rc.top()+_velocityY_prev)
+                                    &&
+                                    (
+                                         (r1.left()<rc.right()-1 ) &&
+                                         (r1.right()>rc.left()+1 )
+                                     )
+                                 )
+                                ||
+                                (r1.bottom() <= rc.top())
+                                )
+                        {
+                            npc->harm();
+                            this->bump(true);
+                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
+                            //collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                            //#ifdef COLLIDE_DEBUG
+                            //qDebug() << "Top of block";
+                            //#endif
+                        }
+                        break;
+                    }//case COLLISION_NONE
                 default: break;
                 }
             }
