@@ -268,7 +268,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                         menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
                         menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
                         menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 10, 20, "phys_step", "Frame time (ms.)", false,
+                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 20, "phys_step", "Frame time (ms.)", false,
                                             [this]()->void{
                                                 PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
                                                 PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;
