@@ -1,0 +1,34 @@
+#Preamble
+
+In order PGE Manager to actually work, a few components need to be developed.
+The functionality of the manager will be similar to the Minecraft launcher.
+
+Users download "PGE-Manager.exe". However, PGE-Manager.exe is but a dummy executable. It will download the latest/necessary components of the real PGE-Manager, similar to bootstrapping.
+
+When the real manager opens, an update check will be done. If an update is found, we notify the user and ask if they want to install. If they decline, we will ask them again on next startup.
+
+
+# First Run
+On first run of the program, users will be asked for their PGE Directory (or, it will be read from the registry if applicable). However, if a PGE directory is not detected, we will install it for them.
+
+The latest release will be downloaded and extracted to the directory of their choice. After this, we will ask them what configuration they want to use. 
+
+# From there on out
+From there on out, users still run PGE-Manager.exe. The flow of the program will look like this.
+
+- User runs PGE-Manager.exe
+- It bootstraps the necessary files
+- Real PGE-Manager.exe is ran
+- Check for updates
+	-If updates are found, ask the user to update
+	-If they decline, ask again on startup
+-Show a simple two tabbed interface
+	-One tab will contain a news/web section
+	-The other tab will manager configurations
+	-At the bottom there will always be a "launch editor" and "launch engine" button. The latest versions will be shown besides that
+	-There will also be a settings menu somewhere, for configuring things.
+-The user launches their program of choice
+	-If the user doesn't want the launcher/manager to close, the launcher will stay open. A new tab will spawn, and program output will be redirected.
+	-However, if they do, the manager will close and their program of choice will launch.
+	-(Maybe) shortcuts to the other programs such as Gif2PNG, Playable Calibrator, etc will be nested in a menu. This is a maybe due to the fact they're already inside of the editor
+
