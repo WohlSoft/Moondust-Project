@@ -37,7 +37,7 @@ void LVL_Npc::init()
     transformTo_x(data.id);
     setPos(data.x, data.y);
     _syncSection();
-    if(isLuaNPC){
+    if(isLuaNPC && !data.generator){
         try{
             lua_onInit();
         } catch (luabind::error& e) {
