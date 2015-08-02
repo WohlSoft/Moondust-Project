@@ -41,8 +41,18 @@ public:
     obj_npc *setup;//Global config
     bool isKilled();
     bool killed;
-    void harm(int damage=1);
-    void kill();
+    enum KillReason{
+        KILL_NOREASON=0,
+        KILL_STOMPED,   //on stomping to head
+        KILL_BY_KICK,   //caused by contact with throwned NPC's
+        KILL_BY_PLAYER_ATTACK, //Caused by attaking by player
+        //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
+        KILL_TAKEN, //is Power up taken
+        KILL_CUSTOM_REASON
+    };
+    void doHarm(int killReason);
+    void harm(int damage=1, int killReason=KILL_NOREASON);
+    void kill(int killReason, bool nolua=false);
 
     int taskToTransform;
     int taskToTransform_t;

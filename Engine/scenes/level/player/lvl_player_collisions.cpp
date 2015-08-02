@@ -564,7 +564,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                 if((!npc->data.friendly)&&(npc->setup->takable))
                 {
-                    npc->harm();
+                    npc->doHarm(LVL_Npc::KILL_TAKEN);
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                 }
 
@@ -725,9 +725,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                 (r1.bottom() <= rc.top())
                                 )
                         {
-                            npc->harm();
+                            npc->doHarm(LVL_Npc::KILL_STOMPED);
                             this->bump(true);
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
+                            kill_npc(npc, NPC_Stomped);
                             //collided_bottom[(intptr_t)collided]=collided;//bottom of player
                             //#ifdef COLLIDE_DEBUG
                             //qDebug() << "Top of block";

@@ -62,7 +62,7 @@ void LVL_Npc::deActivate()
         setPos(data.x, data.y);
         animator.stop();
         setPaused(true);
-        if(!reSpawnable) kill();
+        if(!reSpawnable) kill(KILL_NOREASON, true);
     }
 }
 
