@@ -112,7 +112,7 @@ public:
 
     /********************Detectors**********************/
     QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
-    QList<PlayerPosDetector >       detectors_player_pos; //! Player position detectors
+    PlayerPosDetector               detector_player_pos; //! Player position detectors (should have alone copy!)
     PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
     QList<PlayerInAreaDetector >    detectors_player_inarea; //! Is player touches selected relative area;
     PlayerInAreaDetector * lua_installPlayerInAreaDetector(float left, float top, float right, float bottom);//! Detects is player(s) are enters into specific area relative to NPC's center

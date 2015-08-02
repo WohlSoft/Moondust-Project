@@ -44,10 +44,10 @@ void PlayerPosDetector::processDetector()
             d=d1;
             pos = p->posRect.center();
             _playersDirection=p->direction();
-            if(_parentNPC->posCenterX() > pos.x())
+            if(_parentNPC->posCenterX() < pos.x())
                 _directedTo=1;
             else
-            if(_parentNPC->posCenterX() < pos.x())
+            if(_parentNPC->posCenterX() > pos.x())
                 _directedTo=-1;
             _plrptr=p;
             _plr_id=p->characterID;
