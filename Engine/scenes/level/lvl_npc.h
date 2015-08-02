@@ -9,6 +9,7 @@
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
 #include "npc_detectors/lvl_dtc_player_pos.h"
+#include "npc_detectors/lvl_dtc_player_inarea.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -110,9 +111,12 @@ public:
     int  activationTimeout;
 
     /********************Detectors**********************/
-    QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
-    QList<PlayerPosDetector > detectors_player_pos; //! Player position detectors
-    QVector<BasicDetector* > detectors;       //!< Entire list of all detectors
+    QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
+    QList<PlayerPosDetector >       detectors_player_pos; //! Player position detectors
+    PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
+    QList<PlayerInAreaDetector >    detectors_player_inarea; //! Is player touches selected relative area;
+    PlayerInAreaDetector * lua_installPlayerInAreaDetector(float left, float top, float right, float bottom);//! Detects is player(s) are enters into specific area relative to NPC's center
+    QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
     /***************************************************/
 
     /*****Warp*Sprite*****/
@@ -189,8 +193,6 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
-    //detectors
-    PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
 
     inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }

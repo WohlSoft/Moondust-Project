@@ -227,7 +227,8 @@ SOURCES += \
     scenes/level/npc/lvl_npc_groups.cpp \
     scenes/level/lvl_layer_engine.cpp \
     scenes/level/lvl_event_engine.cpp \
-    scenes/level/npc_detectors/lvl_dtc_player_pos.cpp
+    scenes/level/npc_detectors/lvl_dtc_player_pos.cpp \
+    scenes/level/npc_detectors/lvl_dtc_player_inarea.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -360,7 +361,8 @@ HEADERS  += \
     scenes/level/npc_detectors/lvl_base_detector.h \
     scenes/level/lvl_layer_engine.h \
     scenes/level/lvl_event_engine.h \
-    scenes/level/npc_detectors/lvl_dtc_player_pos.h
+    scenes/level/npc_detectors/lvl_dtc_player_pos.h \
+    scenes/level/npc_detectors/lvl_dtc_player_inarea.h
 
 
 FORMS    += \
