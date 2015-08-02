@@ -333,11 +333,13 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 {
                     PGE_RectF &r1=posRect;
                     PGE_RectF  rc = collided->posRect;
+                    float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
+                    float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
                     if(
                             (
-                                (speedY() >= 0.0)
+                                (summSpeedY >= 0.0)
                                 &&
-                                (r1.bottom() < rc.top()+_velocityY_prev+collided->_velocityY_prev)
+                                (r1.bottom() < rc.top()+summSpeedYprv)
                                 &&
                                 (
                                      (r1.left()<rc.right()-1 ) &&
