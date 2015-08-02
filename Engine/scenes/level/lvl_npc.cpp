@@ -19,7 +19,7 @@
 #include "lvl_npc.h"
 #include "lvl_scene_ptr.h"
 
-LVL_Npc::LVL_Npc() : PGE_Phys_Object()
+LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
 {
     type = LVLNPC;
     data = FileFormats::dummyLvlNpc();

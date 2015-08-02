@@ -219,6 +219,16 @@ double PGE_Phys_Object::speedY()
     return _velocityY;
 }
 
+double PGE_Phys_Object::speedXsum()
+{
+    return _velocityX+_velocityX_add;
+}
+
+double PGE_Phys_Object::speedYsum()
+{
+    return _velocityY+_velocityY_add;
+}
+
 void PGE_Phys_Object::setSpeed(double x, double y)
 {
     _velocityX=x;

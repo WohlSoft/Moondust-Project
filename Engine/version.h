@@ -23,15 +23,15 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _LATEST_STABLE "0.2.2.1-alpha"
+#define _LATEST_STABLE "0.2.2.2-alpha"
 
-#define _FILE_VERSION "0.2.2.1"
+#define _FILE_VERSION "0.2.2.2"
 #define _FILE_RELEASE "-dev-alpha"
 
 #define _VF1 0
 #define _VF2 2
 #define _VF3 2
-#define _VF4 1
+#define _VF4 2
 
 #define _FILE_DESC "Game Engine"
 

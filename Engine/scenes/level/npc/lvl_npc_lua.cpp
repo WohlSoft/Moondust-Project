@@ -100,9 +100,22 @@ int LVL_Npc::lua_activate_neighbours()
 
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
-    PlayerPosDetector detector(this);
-    detectors_player_pos.push_back(detector);
-    detectors.push_back(&detectors_player_pos.last());
-    return &detectors_player_pos.last();
+    if(!detectors.contains(&detector_player_pos))
+        detectors.push_back(&detector_player_pos);
+    return &detector_player_pos;
 }
+
+PlayerInAreaDetector *LVL_Npc::lua_installPlayerInAreaDetector(float left, float top, float right, float bottom)
+{
+    PGE_RectF r;
+        r.setLeft(left);
+        r.setTop(top);
+        r.setRight(right);
+        r.setBottom(bottom);
+    PlayerInAreaDetector detector(this, r);
+    detectors_player_inarea.push_back(detector);
+    detectors.push_back(&detectors_player_inarea.last());
+    return &detectors_player_inarea.last();
+}
+
 
