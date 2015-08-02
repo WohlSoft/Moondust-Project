@@ -96,8 +96,7 @@ void LVL_Npc::updateCollisions()
             }
             if(!foot_contacts_map.isEmpty())
             {
-                _velocityX_add=collided->speedX();
-                //_velocityY=collided->speedY();
+                _velocityX_add=collided->speedXsum();
             }
         }
         if(isFloor(floor_blocks, &cliffDetected))
@@ -259,9 +258,9 @@ void LVL_Npc::updateCollisions()
     for(int i=0;i<add_speed_to.size();i++)
     {
         if(add_speed_to[i]->_velocityX_add!=0.0f)
-            add_speed_to[i]->setSpeedY(speedY());
+            add_speed_to[i]->setSpeedY(speedYsum());
         else
-            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedX(), speedY());
+            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedXsum(), speedYsum());
     }
 
     #ifdef COLLIDE_DEBUG

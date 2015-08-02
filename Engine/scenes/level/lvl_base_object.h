@@ -78,6 +78,8 @@ public:
 
     double speedX();
     double speedY();
+    double speedXsum();
+    double speedYsum();
     void setSpeed(double x, double y);
     void setSpeedX(double x);
     void setSpeedY(double y);
