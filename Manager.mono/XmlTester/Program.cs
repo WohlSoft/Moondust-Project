@@ -3,6 +3,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Microsoft.Win32;
 
 namespace XmlTester
 {
@@ -14,6 +15,14 @@ namespace XmlTester
 
         public static void Main(string[] args)
         {
+            try
+            {
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey("Software\\Wohlhabend Team\\PGE Project");
+                Console.WriteLine("PGE Location: " + rk.GetValue("InstallLocation").ToString());
+            }
+            catch{
+            }
+
             Console.WriteLine("Reading....\n\n");
 
             TestRead2();
