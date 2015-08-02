@@ -67,10 +67,5 @@ float PlayerPosDetector::distance(LVL_Player *plr)
     pow(_parentNPC->posCenterY()-plr->posCenterY(), 2.0));
 }
 
-bool PlayerPosDetector::detected()
-{
-    return false;
-}
-
 
 
