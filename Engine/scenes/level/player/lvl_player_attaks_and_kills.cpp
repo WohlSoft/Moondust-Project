@@ -93,7 +93,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
         if(x->isPaused()) continue; //Don't attak NPC with paused physics!
         if(x->isKilled()) continue;
         if(x->isGenerator) continue;
-        x->harm();
+        x->doHarm(LVL_Npc::KILL_BY_PLAYER_ATTACK);
         LvlSceneP::s->launchStaticEffectC(75, attackZone.center().x(), attackZone.center().y(), 1, 0, 0, 0, 0);
         kill_npc(x, NPC_Kicked);
     }

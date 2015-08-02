@@ -26,19 +26,28 @@ bool LVL_Npc::isKilled()
     return killed;
 }
 
-void LVL_Npc::harm(int damage)
+void LVL_Npc::doHarm(int killReason)
+{
+    int damageLevel=1;
+    //call Lua
+    //onHarm(killReason, out_DamageLevel)
+
+    harm(damageLevel, killReason);
+}
+
+void LVL_Npc::harm(int damage, int killReason)
 {
     health-=damage;
     if(health<=0)
     {
-        kill();
+        kill(killReason);
         LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
     else
         PGE_Audio::playSound(39);
 }
 
-void LVL_Npc::kill()
+void LVL_Npc::kill(int killReason, bool nolua)
 {
     killed=true;
     //sct()->unregisterElement(this);
