@@ -64,6 +64,11 @@ void LVL_Npc::update(float tickTime)
 
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
+    if(not_movable())
+    {
+        detector_player_pos.processDetector();
+        setDirection(detector_player_pos.directedTo());
+    }
 
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
@@ -76,6 +81,9 @@ void LVL_Npc::update(float tickTime)
         if(posX()>sBox.right() + 1 )
             setPosX(sBox.left()-_width+1);
     }
+
+    for(int i=0; i<detectors.size(); i++)
+        detectors[i]->processDetector();
 
     try{
         lua_onLoop(tickTime);
