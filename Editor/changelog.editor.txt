@@ -1,3 +1,6 @@
+Editor 0.3.1.2
+- Fix of a small issue with unreseted NPC parameters on taking new NPC's to place
+
 Editor 0.3.1.1
 - Added a tool tip to notice about some useful things of the editor
 

@@ -96,7 +96,7 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                                    PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
                                    ConfigManager::setup_message_box.sprite);
                                    box.exec();
-                                }, 100);
+                                }, 0);
                 LvlSceneP::s->system_events.events.push_back(msgBox);
                                }, 0);
             evntAct.action.events.push_back(message);

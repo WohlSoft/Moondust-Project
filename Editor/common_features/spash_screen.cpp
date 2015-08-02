@@ -71,7 +71,7 @@ void EditorSpashScreen::startAnimations()
     {
         animations[i].second.start();
     }
-
+    scaler.start();
 }
 
 void EditorSpashScreen::opacityUP()
@@ -82,7 +82,7 @@ void EditorSpashScreen::opacityUP()
     }
     else
     {
-        opacity+=0.025;
+        opacity+=0.09;
     }
     repaint();
 }
@@ -108,8 +108,8 @@ void EditorSpashScreen::construct()
     this->setPixmap(t);
 
     opacity=0.0;
-    scaler.setInterval(10);
+    scaler.setTimerType(Qt::PreciseTimer);
+    scaler.setInterval(64);
     connect(&scaler, SIGNAL(timeout()), this, SLOT(opacityUP()));
-    scaler.start(10);
 }
 

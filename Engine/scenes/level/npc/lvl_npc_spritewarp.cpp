@@ -41,7 +41,7 @@ void LVL_Npc::setWarpSpawn(LVL_Npc::WarpingSide side)
     setSpriteWarp(1.0f, side);
     warpSpawing=true;
     setSpeed(0.0, 0.0);
-    float pStep = 1.5f/((float)PGE_Window::TicksPerSecond);
+    float pStep = 1.5f/PGE_Window::TicksPerSecond;
     EventQueueEntry<LVL_Npc >warpOut;
     warpOut.makeWaiterCond([this, pStep]()->bool{
                             setSpriteWarp(warpSpriteOffset-pStep, (WarpingSide)warpDirectO, false);

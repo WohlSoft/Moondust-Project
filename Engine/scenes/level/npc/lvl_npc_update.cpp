@@ -55,6 +55,13 @@ void LVL_Npc::update(float tickTime)
         else
         if(!collided_right.isEmpty())
             setDirection(-1);
+        else
+        if(setup->turn_on_cliff_detect && cliffDetected)
+        {
+            setDirection(_direction*-1);
+            cliffDetected=false;
+        }
+
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
 
@@ -69,6 +76,9 @@ void LVL_Npc::update(float tickTime)
         if(posX()>sBox.right() + 1 )
             setPosX(sBox.left()-_width+1);
     }
+
+    for(int i=0; i<detectors.size(); i++)
+        detectors[i]->processDetector();
 
     try{
         lua_onLoop(tickTime);

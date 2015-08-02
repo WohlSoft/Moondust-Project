@@ -503,10 +503,18 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
                 LvlPlacingItems::npcSet.special_data = mw()->configs.main_npc[j].default_special_value;
                 npc.special_data = mw()->configs.main_npc[j].default_special_value;
             }
+            LvlPlacingItems::npcSet.special_data2 = 0;
+            npc.special_data2 = 0;
+
+            LvlPlacingItems::npcSet.generator=false;
+            npc.generator=false;
 
             LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             npc.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             LvlPlacingItems::layer = npc.layer;
+
+            npc.attach_layer="";
+            LvlPlacingItems::npcSet.attach_layer="";
 
             if(ui->PROPS_NpcEventActovateLock->isChecked())
                 LvlPlacingItems::npcSet.event_activate=NpcEventActivated;

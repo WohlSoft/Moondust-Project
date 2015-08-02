@@ -116,10 +116,11 @@ void LoadingScene::exitFromScene()
     fader.setFade(10, 1.0f, 0.01f);
 }
 
-void LoadingScene::onKeyboardPressedSDL(SDL_Keycode, Uint16)
+void LoadingScene::onKeyboardPressedSDL(SDL_Keycode code, Uint16)
 {
     if(doExit) return;
-
+    if((code==SDLK_LCTRL)||(code==SDLK_RCTRL)) return;
+    if(code==SDLK_f) return;
     exitFromScene();
 }
 
@@ -193,7 +194,7 @@ int LoadingScene::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( floor(uTickf) > (float)(SDL_GetTicks()-start_render))
+        if( uTickf > (float)(SDL_GetTicks()-start_render))
         {
             wait( uTickf-(float)(SDL_GetTicks()-start_render) );
         }

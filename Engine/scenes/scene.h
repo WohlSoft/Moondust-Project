@@ -31,6 +31,8 @@
 #include <functional>
 #include <QList>
 
+#include <chrono>
+
 class Scene
 {
     void construct();
@@ -127,11 +129,13 @@ protected:
     float       uTickf;
 
     /************waiting timer************/
+    typedef std::chrono::high_resolution_clock StClock;
+    typedef std::chrono::high_resolution_clock::time_point StTimePt;
     void wait(float ms);
     /************waiting timer************/
 private:
     TypeOfScene sceneType;
-    float __waiting_step;
+    float dif;
 
     QVector<std::function<void()> > renderFunctions;
 };

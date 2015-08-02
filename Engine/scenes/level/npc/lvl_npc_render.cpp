@@ -20,6 +20,8 @@
 
 #include <graphics/gl_renderer.h>
 #include <data_configs/config_manager.h>
+#include <graphics/window.h>
+#include <fontman/font_manager.h>
 
 void LVL_Npc::render(double camX, double camY)
 {
@@ -40,7 +42,7 @@ void LVL_Npc::render(double camX, double camY)
     tPos.setTop(x.first); tPos.setBottom(x.second);
 
     PGE_RectF npc;
-    npc.setRect(round(posX()-camX)-offset.x(),
+    npc.setRect(round(posX()-offset.x())-camX,
                    round(posY()-offset.y())-camY,
                    frameSize.w(),
                    frameSize.h()
@@ -125,5 +127,16 @@ void LVL_Npc::render(double camX, double camY)
                               tPos.bottom(),
                               tPos.left(),
                               tPos.right());
+
+    if(PGE_Window::showDebugInfo)
+    {
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6 %7")
+                               .arg(collided_top.size())
+                               .arg(collided_left.size())
+                               .arg(collided_center.size())
+                               .arg(collided_right.size())
+                               .arg(collided_bottom.size())
+                               , round(20+posX()-camX), -50+round(posY()-camY), 3);
+    }
 }
 

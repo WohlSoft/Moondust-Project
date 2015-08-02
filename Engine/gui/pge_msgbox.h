@@ -30,6 +30,8 @@
 #include <common_features/size.h>
 #include <common_features/sizef.h>
 
+#include <controls/control_keys.h>
+
 #include <QColor>
 #include <QString>
 
@@ -78,6 +80,8 @@ private:
     bool    running;
     int     fontID;
     GlColor fontRgba;
+
+    controller_keys keys;
 
     msgType type;
     PGE_Rect _sizeRect;

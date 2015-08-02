@@ -44,6 +44,7 @@ void LVL_Npc::updateCollisions()
     collided_right.clear();
     collided_bottom.clear();
     collided_center.clear();
+    cliffDetected=false;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -99,7 +100,7 @@ void LVL_Npc::updateCollisions()
                 //_velocityY=collided->speedY();
             }
         }
-        if(isFloor(floor_blocks))
+        if(isFloor(floor_blocks, &cliffDetected))
         {
             PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
@@ -126,7 +127,8 @@ void LVL_Npc::updateCollisions()
             {
             case PGE_Phys_Object::LVLPlayer:
                 {
-                    add_speed_to.push_back(collided);
+                    if((collide_player==COLLISION_ANY)||(collide_player==COLLISION_TOP))
+                        add_speed_to.push_back(collided);
                     continue;
                 }
             break;
@@ -134,7 +136,9 @@ void LVL_Npc::updateCollisions()
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
                     if(!npc) continue;
-                    if(!npc->is_scenery)
+                    if(!npc->is_scenery && !npc->disableBlockCollision &&
+                            ((collide_npc==COLLISION_ANY)||(collide_npc==COLLISION_TOP))
+                            )
                     {
                         add_speed_to.push_back(collided);
                         continue;
@@ -202,7 +206,7 @@ void LVL_Npc::updateCollisions()
         bool _iswall=false;
         bool _isfloor=false;
         posRect.setX(_wallX);
-        _isfloor=isFloor(floor_blocks);
+        _isfloor=isFloor(floor_blocks, &cliffDetected);
         posRect.setPos(backupX, _floorY);
         _iswall=isWall(wall_blocks);
         posRect.setX(backupX);
@@ -222,12 +226,14 @@ void LVL_Npc::updateCollisions()
     {
         posRect.setX(_wallX);
         setSpeedX(0);
+        _velocityX_add=0;
     }
     if(resolveBottom || resolveTop)
     {
         posRect.setY(_floorY);
         //float bumpSpeed=speedY();
         setSpeedY(0);
+        _velocityY_add=0;
         //if(!blocks_to_hit.isEmpty())
         //{
         //    LVL_Block*nearest = nearestBlock(blocks_to_hit);
@@ -328,11 +334,13 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 {
                     PGE_RectF &r1=posRect;
                     PGE_RectF  rc = collided->posRect;
+                    float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
+                    float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
                     if(
                             (
-                                (speedY() >= 0.0)
+                                (summSpeedY >= 0.0)
                                 &&
-                                (r1.bottom() < rc.top()+_velocityY_prev+collided->_velocityY_prev)
+                                (r1.bottom() < rc.top()+summSpeedYprv)
                                 &&
                                 (
                                      (r1.left()<rc.right()-1 ) &&

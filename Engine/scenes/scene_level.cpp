@@ -42,6 +42,11 @@
 
 #include <common_features/logger.h>
 
+#include <QElapsedTimer>
+
+QElapsedTimer debug_TimeReal;
+int           debug_TimeCounted=0;
+
 LevelScene::LevelScene()
     : Scene(Level), luaEngine(this)
 {
@@ -653,23 +658,34 @@ void LevelScene::render()
     {
         //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 200,10);
 
+        int dpos=100;
         FontManager::printText(QString("Player J=%1 G=%2 F=%3; TICK-SUB: %4\nNPC's: %5, Active %6")
                                .arg(debug_player_jumping)
                                .arg(debug_player_onground)
                                .arg(debug_player_foots)
                                .arg(uTickf)
                                .arg(npcs.size())
-                               .arg(active_npcs.size()), 10,100);
+                               .arg(active_npcs.size()), 10,dpos);
+        dpos+=35;
 
         FontManager::printText(QString("Delays E=%1 R=%2 P=%3")
                                .arg(debug_event_delay, 3, 10, QChar('0'))
                                .arg(debug_render_delay, 3, 10, QChar('0'))
-                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,135);
+                               .arg(debug_phys_delay, 3, 10, QChar('0')), 10,dpos);
+        dpos+=35;
+
+        FontManager::printText(QString("Time Real:%1\nTime Loop:%2")
+                               .arg(debug_TimeReal.elapsed(), 10, 10, QChar('0'))
+                               .arg(debug_TimeCounted, 10, 10, QChar('0')), 10,dpos);
+        dpos+=35;
 
         if(!isLevelContinues)
+        {
             FontManager::printText(QString("Exit delay %1, %2")
                                    .arg(exitLevelDelay)
-                                   .arg(uTickf), 10, 155, 0, 1.0, 0, 0, 1.0);
+                                   .arg(uTickf), 10, dpos, 0, 1.0, 0, 0, 1.0);
+            dpos+=35;
+        }
 
         if(placingMode)
             FontManager::printText(QString("Placing! %1")
@@ -824,20 +840,30 @@ int LevelScene::exec()
 
   Uint32 start_events=0;
   Uint32 stop_events=0;
+  //float junkTicks=0.0f;
 
-  Uint32 start_common=0;
   bool skipFrame=false;
+  //StTimePt start_common=StClock::now();
+  Uint32 start_common = SDL_GetTicks();
+  //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
+  #define PassedTime (SDL_GetTicks()-start_common)
 
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     player1Controller->resetControls();
     player2Controller->resetControls();
     if(running) update();
+
+    debug_TimeCounted=0;
+    debug_TimeReal.restart();
     /*****************************************************/
 
     while(running)
     {
+        //start_common = StClock::now();
         start_common = SDL_GetTicks();
+
+        debug_TimeCounted+=uTickf;
 
         if(PGE_Window::showDebugInfo) start_events = SDL_GetTicks();
         /**********************Update common events and controllers******************/
@@ -873,13 +899,14 @@ int LevelScene::exec()
         /****************************************************************************/
 
         if(!skipFrame) PGE_Window::rePaint();
-
-        if( floor(uTickf) > (float)(SDL_GetTicks()-start_common) )
+        //printf("U-%08.5f, P-%08.5f, J-%08.5f", uTickf, PassedTime, junkTicks);
+        //fflush(stdout);
+        if( uTick > (signed)PassedTime )
         {
             if(!slowTimeMode)
-                wait( uTickf-(float)(SDL_GetTicks()-start_common) );
+                wait( uTickf-PassedTime );
             else
-                SDL_Delay( uTick-(SDL_GetTicks()-start_common)+300 );
+                SDL_Delay( uTick-PassedTime+300 );
         }
     }
     return exitLevelCode;
@@ -947,16 +974,22 @@ void LevelScene::checkPlayers()
             switch(players[i]->kill_reason)
             {
             case LVL_Player::deathReason::DEAD_burn:
-                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
                 if(!haveAlivePlayers)
+                {
+                    Mix_HaltChannel(-1);
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                }
+                PGE_Audio::playSoundByRole(obj_sound_role::NpcLavaBurn);
                 break;
             case LVL_Player::deathReason::DEAD_fall:
             case LVL_Player::deathReason::DEAD_killed:
                 if(haveAlivePlayers)
                     PGE_Audio::playSoundByRole(obj_sound_role::PlayerDied);
                 else
+                {
+                    Mix_HaltChannel(-1);
                     PGE_Audio::playSoundByRole(obj_sound_role::LevelFailed);
+                }
                 break;
             }
             players[i]->setLocked(true);

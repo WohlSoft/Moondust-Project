@@ -115,13 +115,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
                             configs.animations[a].frames,
                             configs.animations[a].speed);
     }
-    splash.startAnimations();
-
-    #ifndef Q_OS_ANDROID
-    splash.show();
-    #else
-    splash.showFullScreen();
-    #endif
 
     /*********************Loading of config pack**********************/
     // Do the loading in a thread
@@ -132,8 +125,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
     // And meanwhile load the settings in the main thread
     loadSettings();
 
+    #ifndef Q_OS_ANDROID
+    splash.show();
+    #else
+    splash.showFullScreen();
+    #endif
+    splash.startAnimations();
+
     // Now wait until the config load in finished.
-    while(!isOk.isFinished()) qApp->processEvents();
+    while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(64);}
 
     /*********************Splash Screen end**********************/
     splash.finish(this);
