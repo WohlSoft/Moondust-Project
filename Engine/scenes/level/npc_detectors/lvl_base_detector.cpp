@@ -44,5 +44,5 @@ void BasicDetector::processDetector()
 {}
 
 bool BasicDetector::detected()
-{ return false; }
+{ return _detected; }
 

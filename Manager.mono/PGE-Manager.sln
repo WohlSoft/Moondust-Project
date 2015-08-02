@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGE-Manager", "PGE-Manager\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTester", "XmlTester\XmlTester.csproj", "{5923E5B3-8F80-45C0-801B-254E76538B7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIBeta", "UIBeta\UIBeta.csproj", "{A55A6A4A-3933-4F4C-A1A0-C8124CAD016C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{5923E5B3-8F80-45C0-801B-254E76538B7C}.Debug|x86.Build.0 = Debug|x86
 		{5923E5B3-8F80-45C0-801B-254E76538B7C}.Release|x86.ActiveCfg = Release|x86
 		{5923E5B3-8F80-45C0-801B-254E76538B7C}.Release|x86.Build.0 = Release|x86
+		{A55A6A4A-3933-4F4C-A1A0-C8124CAD016C}.Debug|x86.ActiveCfg = Debug|x86
+		{A55A6A4A-3933-4F4C-A1A0-C8124CAD016C}.Debug|x86.Build.0 = Debug|x86
+		{A55A6A4A-3933-4F4C-A1A0-C8124CAD016C}.Release|x86.ActiveCfg = Release|x86
+		{A55A6A4A-3933-4F4C-A1A0-C8124CAD016C}.Release|x86.Build.0 = Release|x86
 		{D60BEA02-B710-4A2C-AC56-5346C75879E9}.Debug|x86.ActiveCfg = Debug|x86
 		{D60BEA02-B710-4A2C-AC56-5346C75879E9}.Debug|x86.Build.0 = Debug|x86
 		{D60BEA02-B710-4A2C-AC56-5346C75879E9}.Release|x86.ActiveCfg = Release|x86
