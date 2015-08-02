@@ -6,6 +6,9 @@ PlayerPosDetector::PlayerPosDetector(LVL_Npc *parent):
 {
     _directedTo=0.0;
     _playersDirection=0;
+    _plrptr=NULL;
+    _plr_id=0;
+    _plr_state=0;
 }
 
 PlayerPosDetector::PlayerPosDetector(const PlayerPosDetector &dtc):
@@ -14,6 +17,9 @@ PlayerPosDetector::PlayerPosDetector(const PlayerPosDetector &dtc):
     pos = dtc.pos;
     _directedTo=dtc._directedTo;
     _playersDirection=dtc._playersDirection;
+    _plrptr=dtc._plrptr;
+    _plr_id=dtc._plr_id;
+    _plr_state=dtc._plr_state;
 }
 
 PlayerPosDetector::~PlayerPosDetector()
@@ -25,6 +31,9 @@ void PlayerPosDetector::processDetector()
     _playersDirection=0;
     pos.setPoint(0.0, 0.0);
     _directedTo=0.0;
+    _plrptr=NULL;
+    _plr_id=0;
+    _plr_state=0;
     float d=0.0f;
     for(int i=0; i<LvlSceneP::s->players.size(); i++)
     {
@@ -40,6 +49,9 @@ void PlayerPosDetector::processDetector()
             else
             if(_parentNPC->posCenterX() < pos.x())
                 _directedTo=-1;
+            _plrptr=p;
+            _plr_id=p->characterID;
+            _plr_state=p->stateID;
         }
     }
 
@@ -58,6 +70,21 @@ int PlayerPosDetector::playersDirection()
 PGE_PointF PlayerPosDetector::position()
 {
     return pos;
+}
+
+int PlayerPosDetector::playersCharID()
+{
+    return _plr_id;
+}
+
+int PlayerPosDetector::playersStateID()
+{
+    return _plr_state;
+}
+
+LVL_Player *PlayerPosDetector::playerPtr()
+{
+    return _plrptr;
 }
 
 float PlayerPosDetector::distance(LVL_Player *plr)
