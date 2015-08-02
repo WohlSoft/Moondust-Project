@@ -26,10 +26,12 @@ class BasicDetector
 public:
     BasicDetector();
     BasicDetector(LVL_Npc* parent);
+    BasicDetector(const BasicDetector &dtc);
     virtual ~BasicDetector();
     virtual void processDetector();
     virtual bool detected();
-private:
+protected:
+    bool _detected;
     LVL_Npc* _parentNPC;
 };
 

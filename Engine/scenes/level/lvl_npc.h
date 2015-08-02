@@ -8,6 +8,7 @@
 #include <common_features/event_queue.h>
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
+#include "npc_detectors/lvl_dtc_player_pos.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -110,6 +111,7 @@ public:
 
     /********************Detectors**********************/
     QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
+    QList<PlayerPosDetector > detectors_player_pos; //! Player position detectors
     QVector<BasicDetector* > detectors;       //!< Entire list of all detectors
     /***************************************************/
 
@@ -187,11 +189,15 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
+    //detectors
+    PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
+
     inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
+
     bool isLuaNPC;
 
     int health;
