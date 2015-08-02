@@ -5,7 +5,10 @@ The functionality of the manager will be similar to the Minecraft launcher.
 
 Users download "PGE-Manager.exe". However, PGE-Manager.exe is but a dummy executable. It will download the latest/necessary components of the real PGE-Manager, similar to bootstrapping.
 
-When the real manager opens, an update check will be done. If an update is found, we notify the user and ask if they want to install. If they decline, we will ask them again on next startup.
+When the real manager opens, 
+
+-Any configs in the install directory will be moved into the user's home folder
+-an update check will be done. If an update is found, we notify the user and ask if they want to install. If they decline, we will ask them again on next startup.
 
 
 # First Run
@@ -57,3 +60,17 @@ config.index - list of available config packs with names of folders where config
 */pge_cpack.xml - information about config pack, images, license, credits, and downloads
 
 
+# Misc Notes
+
+PGE will load configs from the user directory if
+
+Windows
+- Registry key: HKEY_CURRENT_USER\\Software\\Wohlhabend Networks\\PGE Editor\\EnableUserDir=true
+
+Linux
+- ~/.config/Wohlhabend-Networks/PGE Editor.conf has
+  EnableUserDir=true
+
+I need to detect if the user is running portable. This is done by checking if
+-pge configs and executables are in the same directory
+-main INI has force-portable=true enabled
