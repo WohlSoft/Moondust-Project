@@ -64,6 +64,11 @@ void LVL_Npc::update(float tickTime)
 
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
+    if(not_movable())
+    {
+        detector_player_pos.processDetector();
+        setDirection(detector_player_pos.directedTo());
+    }
 
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
