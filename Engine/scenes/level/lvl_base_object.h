@@ -101,7 +101,7 @@ public:
     PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
     PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);
     bool isWall(QVector<PGE_Phys_Object *> &blocks);
-    bool isFloor(QVector<PGE_Phys_Object *> &blocks);
+    bool isFloor(QVector<PGE_Phys_Object *> &blocks, bool *isCliff=0);
 
     static const float _smbxTickTime;
     static float SMBXTicksToTime(float ticks);

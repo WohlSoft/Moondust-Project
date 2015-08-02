@@ -55,6 +55,13 @@ void LVL_Npc::update(float tickTime)
         else
         if(!collided_right.isEmpty())
             setDirection(-1);
+        else
+        if(setup->turn_on_cliff_detect && cliffDetected)
+        {
+            setDirection(_direction*-1);
+            cliffDetected=false;
+        }
+
         setSpeedX((motionSpeed*accelCof)*_direction);
     }
 

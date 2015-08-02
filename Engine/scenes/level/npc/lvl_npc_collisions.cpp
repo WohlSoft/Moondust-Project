@@ -44,6 +44,7 @@ void LVL_Npc::updateCollisions()
     collided_right.clear();
     collided_bottom.clear();
     collided_center.clear();
+    cliffDetected=false;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -99,7 +100,7 @@ void LVL_Npc::updateCollisions()
                 //_velocityY=collided->speedY();
             }
         }
-        if(isFloor(floor_blocks))
+        if(isFloor(floor_blocks, &cliffDetected))
         {
             PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
@@ -205,7 +206,7 @@ void LVL_Npc::updateCollisions()
         bool _iswall=false;
         bool _isfloor=false;
         posRect.setX(_wallX);
-        _isfloor=isFloor(floor_blocks);
+        _isfloor=isFloor(floor_blocks, &cliffDetected);
         posRect.setPos(backupX, _floorY);
         _iswall=isWall(wall_blocks);
         posRect.setX(backupX);
