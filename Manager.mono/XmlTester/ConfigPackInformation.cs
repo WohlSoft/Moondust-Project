@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 namespace XmlTester
 {
+    public enum FilesOS
+    {
+        win32, mac, linux
+    }
+
     public class FilesStruct
     {
         public string Folder {get;set;}
         public string URL {get;set;}
-
+        public string Platform {get;set;}
     }
 
     public class AuthorStruct
@@ -36,18 +41,10 @@ namespace XmlTester
 
         public List<FilesStruct> FilesParts = new List<FilesStruct>();
 
-        //Configurations creators
-        public AuthorStruct[] ConfigCreators { get; set;}
-
-        //Graphics pack creators
-        public AuthorStruct[] GraphicsCreators {get;set;}
-
-        //Music and Sound packs creators
-        public AuthorStruct[] AudioCreators {get;set;}
 
         public bool IsNull()
         {
-            if (Description == null && IconURL == null && ConfigCreators == null && SplashURL == null && License == null)
+            if (Description == null && IconURL == null && SplashURL == null && License == null)
                 return true;
             else
                 return false;
