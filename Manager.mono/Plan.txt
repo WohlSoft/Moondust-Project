@@ -74,3 +74,4 @@ Linux
 I need to detect if the user is running portable. This is done by checking if
 -pge configs and executables are in the same directory
 -main INI has force-portable=true enabled
+If this is the case, install configs to the same directory
