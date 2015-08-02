@@ -77,6 +77,9 @@ void LVL_Npc::update(float tickTime)
             setPosX(sBox.left()-_width+1);
     }
 
+    for(int i=0; i<detectors.size(); i++)
+        detectors[i]->processDetector();
+
     try{
         lua_onLoop(tickTime);
     } catch (luabind::error& e) {

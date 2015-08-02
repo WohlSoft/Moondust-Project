@@ -22,11 +22,19 @@
 BasicDetector::BasicDetector()
 {
     _parentNPC=NULL;
+    _detected=false;
 }
 
 BasicDetector::BasicDetector(LVL_Npc *parent)
 {
     _parentNPC=parent;
+    _detected=false;
+}
+
+BasicDetector::BasicDetector(const BasicDetector &dtc)
+{
+    _parentNPC=dtc._parentNPC;
+    _detected=dtc._detected;
 }
 
 BasicDetector::~BasicDetector()
