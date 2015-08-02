@@ -430,8 +430,11 @@ bool PGE_Phys_Object::isWall(QVector<PGE_Phys_Object *> &blocks)
     return true;
 }
 
-bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks)
+bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks, bool *isCliff)
 {
+    if(isCliff)
+        *isCliff=false;
+
     if(blocks.isEmpty())
         return false;
     float lefter=blocks.first()->posRect.left();
@@ -443,8 +446,18 @@ bool PGE_Phys_Object::isFloor(QVector<PGE_Phys_Object*> &blocks)
         if(blocks[i]->posRect.left()<lefter)
             lefter=blocks[i]->posRect.left();
     }
+
     if(posRect.left() >= righter) return false;
     if(posRect.right() <= lefter) return false;
+
+    if(isCliff)
+    {
+        if((speedX()<0.0f) && ((double)lefter > posRect.center().x()))
+            *isCliff=true;
+        else
+        if((speedX()>0.0f) && ((double)righter<posRect.center().x()))
+            *isCliff=true;
+    }
     return true;
 }
 

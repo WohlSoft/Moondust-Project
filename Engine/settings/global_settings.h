@@ -31,8 +31,9 @@ public:
     int  ScreenWidth;
     int  ScreenHeight;
 
-    int  MaxFPS;
-    int  TicksPerSecond;
+    int    MaxFPS;
+    float  TicksPerSecond;
+    int    timeOfFrame;
 
     bool showDebugInfo;
 

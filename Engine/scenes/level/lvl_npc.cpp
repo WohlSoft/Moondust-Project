@@ -55,6 +55,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object()
 
     forceCollideCenter=false;
     _heightDelta=0.0f;
+    cliffDetected=false;
 
     health = 1;
 
