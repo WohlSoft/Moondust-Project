@@ -9,7 +9,7 @@
     <AssemblyName>PGE-Manager</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseMSBuildEngine>False</UseMSBuildEngine>
-    <StartupObject>PGEManager.MainClass</StartupObject>
+    <StartupObject>PGEManager.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,8 +19,9 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <Commandlineparameters>--install "C:\Program Files (x86)\PGE"</Commandlineparameters>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -54,6 +55,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -70,6 +72,11 @@
     <Compile Include="gtk-gui\PGEManager.InitialRun.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="STA_INIFile.cs" />
+    <Compile Include="LaunchEditorWidget.cs" />
+    <Compile Include="gtk-gui\PGEManager.LaunchEditorWidget.cs" />
+    <Compile Include="Internal\ConfigPack.cs" />
+    <Compile Include="Internal\ConfigPackInformation.cs" />
+    <Compile Include="Internal\WohlNews.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -82,4 +89,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Internal\" />
+  </ItemGroup>
 </Project>
