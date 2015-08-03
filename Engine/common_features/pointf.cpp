@@ -19,60 +19,8 @@
 #include "pointf.h"
 #include "point.h"
 
-PGE_PointF::PGE_PointF()
-{
-    setPoint(0, 0);
-}
-
-PGE_PointF::PGE_PointF(const PGE_PointF &p)
-{
-    _x=p._x;
-    _y=p._y;
-}
-
 PGE_PointF::PGE_PointF(const PGE_Point &p)
 {
     _x=p._x;
     _y=p._y;
 }
-
-PGE_PointF::PGE_PointF(double x, double y)
-{
-    _x=x;
-    _y=y;
-}
-
-PGE_PointF::~PGE_PointF()
-{}
-
-void PGE_PointF::setPoint(double x, double y)
-{
-    _x=x;
-    _y=y;
-}
-
-void PGE_PointF::setX(double x)
-{
-    _x=x;
-}
-
-void PGE_PointF::setY(double y)
-{
-    _y=y;
-}
-
-bool PGE_PointF::isNull()
-{
-    return ((_x==0)&&(_y==0));
-}
-
-double PGE_PointF::x()
-{
-    return _x;
-}
-
-double PGE_PointF::y()
-{
-    return _y;
-}
-
