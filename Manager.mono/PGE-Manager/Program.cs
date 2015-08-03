@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace PGEManager
 {
-	class MainClass
+	public class Program
 	{
         public static Settings ProgramSettings = new Settings();
 
@@ -28,7 +28,7 @@ namespace PGEManager
             Application.Init();
             if (File.Exists(ProgramSettings.ConfigDirectory + System.IO.Path.DirectorySeparatorChar + "Settings.json"))
             {
-                //TODO: load settings
+                LoadSettings();
                 MainWindow win = new MainWindow ();
                 win.Show ();
             }
@@ -38,7 +38,12 @@ namespace PGEManager
                 {
                     //--install "C:\aoisdf"
                     if (args[0] == "--install")
+                    {
                         ProgramSettings.PGEDirectory = args[1].Trim('"');
+                        Console.WriteLine(ProgramSettings.PGEDirectory);
+                        MainWindow win = new MainWindow ();
+                        win.Show ();
+                    }
                 }
                 else
                 {
@@ -48,14 +53,21 @@ namespace PGEManager
                         {
                             RegistryKey rk = Registry.CurrentUser.OpenSubKey("Software\\Wohlhabend Team\\PGE Project");
                             Console.WriteLine("PGE Location: " + rk.GetValue("InstallLocation").ToString());
+                            Console.WriteLine("Show the PGE Manager main window");
+
                         }
                         catch
                         {
+                            //TODO: Initial setup
+                            Console.WriteLine("Show a pretty setup Window :)");
+                            Console.ReadLine();
                         }
                     }
                     else
                     {
                         //TODO: Initial setup
+                        Console.WriteLine("Show a pretty setup Window :)");
+                        Console.ReadLine();
                     }
                 }
             }
@@ -66,6 +78,7 @@ namespace PGEManager
         public static bool SaveSettings()
         {
             JsonSerializer js = new JsonSerializer();
+            js.Formatting = Formatting.Indented;
             using (StreamWriter sw = new StreamWriter(ProgramSettings.ConfigDirectory + System.IO.Path.DirectorySeparatorChar + "Settings.json"))
             {
                 using (JsonWriter jsw = new JsonTextWriter(sw))
@@ -77,7 +90,7 @@ namespace PGEManager
             return false;
         }
 
-        private bool LoadSettings()
+        private static bool LoadSettings()
         {
             if (File.Exists(ProgramSettings.ConfigDirectory + System.IO.Path.DirectorySeparatorChar + "Settings.json"))
             {
