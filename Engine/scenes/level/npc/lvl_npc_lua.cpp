@@ -105,17 +105,37 @@ PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
     return &detector_player_pos;
 }
 
-PlayerInAreaDetector *LVL_Npc::lua_installPlayerInAreaDetector(float left, float top, float right, float bottom)
+InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::object filters)
 {
+    int ltype = luabind::type(filters);
+    if(luabind::type(filters) != LUA_TTABLE){
+        luaL_error(filters.interpreter(), "lua_installPlayerInAreaDetector exptected int-array, got %s", lua_typename(filters.interpreter(), ltype));
+        return NULL;
+    }
+    QList<int> _filters=luabind_utils::convArrayTo<int>(filters);
+    int tfilters=0;
+    foreach(int filter, _filters)
+    {
+        switch(filter)
+        {
+            case 1: tfilters |= InAreaDetector::F_BLOCK; break;
+            case 2: tfilters |= InAreaDetector::F_BGO; break;
+            case 3: tfilters |= InAreaDetector::F_NPC; break;
+            case 4: tfilters |= InAreaDetector::F_PLAYER; break;
+        }
+    }
+
     PGE_RectF r;
         r.setLeft(left);
         r.setTop(top);
         r.setRight(right);
         r.setBottom(bottom);
-    PlayerInAreaDetector detector(this, r);
-    detectors_player_inarea.push_back(detector);
-    detectors.push_back(&detectors_player_inarea.last());
-    return &detectors_player_inarea.last();
+
+    InAreaDetector detector(this, r, tfilters);
+
+    detectors_inarea.push_back(detector);
+    detectors.push_back(&detectors_inarea.last());
+    return &detectors_inarea.last();
 }
 
 
