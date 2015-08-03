@@ -96,7 +96,7 @@ void LVL_Player::updateCollisions()
             }
             if(!foot_contacts_map.isEmpty())
             {
-                _velocityX_add=collided->speedX();
+                _velocityX_add=collided->speedXsum();
                 //_velocityY=collided->speedY();
             }
         }
