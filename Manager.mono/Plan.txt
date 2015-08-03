@@ -85,4 +85,6 @@ I need to detect if the user is running portable. This is done by checking if
 -main INI has force-portable=true enabled
 If this is the case, install configs to the same directory
 
+Mac OS X:
+- Always uses User Directory
 
