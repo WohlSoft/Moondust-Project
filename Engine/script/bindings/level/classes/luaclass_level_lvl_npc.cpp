@@ -60,6 +60,9 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("setSequence", &LVL_Npc::lua_setSequence)
             .def("setOnceAnimationMode", &LVL_Npc::lua_setOnceAnimation)
 
+            .def("installInAreaDetector", &LVL_Npc::lua_installInAreaDetector)
+            .def("installPlayerPosDetector", &LVL_Npc::lua_installPlayerPosDetector)
+
             .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
             .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
 
