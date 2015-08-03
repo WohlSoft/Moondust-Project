@@ -564,7 +564,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                 if((!npc->data.friendly)&&(npc->setup->takable))
                 {
-                    npc->doHarm(LVL_Npc::KILL_TAKEN);
+                    npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                 }
 
@@ -729,7 +729,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                 (r1.bottom() <= rc.top())
                                 )
                         {
-                            npc->doHarm(LVL_Npc::KILL_STOMPED);
+                            npc->doHarm(LVL_Npc::DAMAGE_STOMPED);
                             this->bump(true);
                             //Reset floating state
                             floating_timer = floating_maxtime;
