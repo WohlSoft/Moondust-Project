@@ -25,6 +25,9 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include <iostream>
+#include "version.h"
+
 #include <common_features/logger.h>
 #include <common_features/proxystyle.h>
 #include <common_features/app_path.h>
@@ -82,6 +85,13 @@ int main(int argc, char *argv[])
             Installer::moveFromAppToUser();
             Installer::associateFiles();
 
+            QApplication::quit();
+            QApplication::exit();
+            delete a;
+            delete as;
+            return 0;
+        } else if(arg=="--version") {
+            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE << std::endl;
             QApplication::quit();
             QApplication::exit();
             delete a;
