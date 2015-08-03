@@ -52,29 +52,34 @@ void LVL_Npc::harm(int damage, int damageReason)
         PGE_Audio::playSound(39);
 }
 
-void LVL_Npc::kill(int damageReason, bool nolua)
+void LVL_Npc::kill(int damageReason)
 {
-    if(!nolua)
-    {
-        try{
-            lua_onKill(damageReason);
-        } catch (luabind::error& e) {
-            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
-        }
+    try{
+        lua_onKill(damageReason);
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
-
     killed=true;
-    //sct()->unregisterElement(this);
-    LvlSceneP::s->unregisterElement(this);
-    LvlSceneP::s->dead_npcs.push_back(this);
 
+    //Pre-unregistring event
     if(!data.event_die.isEmpty())
         LvlSceneP::s->events.triggerEvent(data.event_die);
-    LvlSceneP::s->layers.removeRegItem(data.layer, this);
+
+    unregister();
+
+    //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())
     {
         if(LvlSceneP::s->layers.isEmpty(data.layer))
             LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
     }
+}
+
+void LVL_Npc::unregister()
+{
+    killed=true;
+    LvlSceneP::s->unregisterElement(this);
+    LvlSceneP::s->dead_npcs.push_back(this);
+    LvlSceneP::s->layers.removeRegItem(data.layer, this);
 }
 
