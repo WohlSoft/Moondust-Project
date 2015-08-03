@@ -56,28 +56,28 @@ void InAreaDetector::processDetector()
         {
             case PGE_Phys_Object::LVLPlayer: if((_filters&F_PLAYER)==0) continue;
                 {
-                    LVL_Player* p= static_cast<LVL_Player*>(visibleBody);
+                    LVL_Player* p= dynamic_cast<LVL_Player*>(visibleBody);
                     if(!p) continue;
                     detectedPLR[p->data.id]=1;
                     break;
                 }
             case PGE_Phys_Object::LVLBGO:    if((_filters&F_BGO)==0) continue;
                 {
-                    LVL_Bgo* b= static_cast<LVL_Bgo*>(visibleBody);
+                    LVL_Bgo* b= dynamic_cast<LVL_Bgo*>(visibleBody);
                     if(!b) continue;
                     detectedBGO[b->data.id]=1;
                     break;
                 }
             case PGE_Phys_Object::LVLNPC:    if((_filters&F_NPC)==0) continue;
                 {
-                    LVL_Npc* n= static_cast<LVL_Npc*>(visibleBody);
+                    LVL_Npc* n= dynamic_cast<LVL_Npc*>(visibleBody);
                     if(!n) continue;
                     detectedNPC[n->data.id]=1;
                     break;
                 }
             case PGE_Phys_Object::LVLBlock:  if((_filters&F_BLOCK)==0) continue;
                 {
-                    LVL_Block* s= static_cast<LVL_Block*>(visibleBody);
+                    LVL_Block* s= dynamic_cast<LVL_Block*>(visibleBody);
                     if(!s) continue;
                     detectedBLK[s->data.id]=1;
                     break;
@@ -89,16 +89,35 @@ void InAreaDetector::processDetector()
     }
 }
 
+bool InAreaDetector::detected()
+{
+    return _detected;
+}
+
 bool InAreaDetector::detected(long type, long ID)
 {
     if(!_detected) return false;
-    switch(type)
+    if(ID==0)
     {
-        case 1: return detectedBLK.contains(ID); break;
-        case 2: return detectedBGO.contains(ID); break;
-        case 3: return detectedNPC.contains(ID); break;
-        case 4: return detectedPLR.contains(ID); break;
-        default:break;
+        switch(type)
+        {
+            case 1: return !detectedBLK.isEmpty(); break;
+            case 2: return !detectedBGO.isEmpty(); break;
+            case 3: return !detectedNPC.isEmpty(); break;
+            case 4: return !detectedPLR.isEmpty(); break;
+            default:break;
+        }
+    }
+    else
+    {
+        switch(type)
+        {
+            case 1: return detectedBLK.contains(ID); break;
+            case 2: return detectedBGO.contains(ID); break;
+            case 3: return detectedNPC.contains(ID); break;
+            case 4: return detectedPLR.contains(ID); break;
+            default:break;
+        }
     }
     return false;
 }

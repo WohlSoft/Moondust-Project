@@ -19,7 +19,7 @@ public:
     InAreaDetector(const InAreaDetector &dtc);
     ~InAreaDetector();
     void processDetector();
-    //bool detected() //! from base class!
+    bool detected();
     bool detected(long type, long ID);
     int contacts();   //! number of detected items
 

@@ -7,7 +7,7 @@ luabind::scope Binding_Level_Class_InAreaDetector::bindToLua()
     using namespace luabind;
     return
         class_<InAreaDetector>("InAreaDetector")
-            .def("detected", (bool(*)())&InAreaDetector::detected)
-            .def("detected", (bool(*)(long, long))&InAreaDetector::detected)
+            .def("detected", static_cast<bool(InAreaDetector::*)()>(&InAreaDetector::detected))
+            .def("detected", static_cast<bool(InAreaDetector::*)(long, long)>(&InAreaDetector::detected))
             .def("contacts", &InAreaDetector::contacts);
 }
