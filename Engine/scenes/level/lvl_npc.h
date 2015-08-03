@@ -8,6 +8,8 @@
 #include <common_features/event_queue.h>
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
+#include "npc_detectors/lvl_dtc_player_pos.h"
+#include "npc_detectors/lvl_dtc_player_inarea.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -41,8 +43,18 @@ public:
     obj_npc *setup;//Global config
     bool isKilled();
     bool killed;
-    void harm(int damage=1);
-    void kill();
+    enum KillReason{
+        KILL_NOREASON=0,
+        KILL_STOMPED,   //on stomping to head
+        KILL_BY_KICK,   //caused by contact with throwned NPC's
+        KILL_BY_PLAYER_ATTACK, //Caused by attaking by player
+        //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
+        KILL_TAKEN, //is Power up taken
+        KILL_CUSTOM_REASON
+    };
+    void doHarm(int killReason);
+    void harm(int damage=1, int killReason=KILL_NOREASON);
+    void kill(int killReason, bool nolua=false);
 
     int taskToTransform;
     int taskToTransform_t;
@@ -59,6 +71,7 @@ public:
     void solveCollision(PGE_Phys_Object *collided);
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
+    bool cliffDetected;
 
     /*****************NPC's and blocks******************/
     bool onGround();
@@ -98,8 +111,12 @@ public:
     int  activationTimeout;
 
     /********************Detectors**********************/
-    QList<BasicDetector >    detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
-    QVector<BasicDetector* > detectors;       //!< Entire list of all detectors
+    QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
+    PlayerPosDetector               detector_player_pos; //! Player position detectors (should have alone copy!)
+    PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
+    QList<PlayerInAreaDetector >    detectors_player_inarea; //! Is player touches selected relative area;
+    PlayerInAreaDetector * lua_installPlayerInAreaDetector(float left, float top, float right, float bottom);//! Detects is player(s) are enters into specific area relative to NPC's center
+    QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
     /***************************************************/
 
     /*****Warp*Sprite*****/
@@ -180,11 +197,13 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
+
     inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
+
     bool isLuaNPC;
 
 

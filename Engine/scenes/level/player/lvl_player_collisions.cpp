@@ -564,7 +564,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                 if((!npc->data.friendly)&&(npc->setup->takable))
                 {
-                    npc->harm();
+                    npc->doHarm(LVL_Npc::KILL_TAKEN);
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                 }
 
@@ -591,11 +591,13 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         PGE_RectF &r1=posRect;
                         PGE_RectF  rc = collided->posRect;
+                        float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
+                        float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
                         if(
                                 (
-                                    (speedY()+_velocityY_add >= 0.0)
+                                    (summSpeedY >= 0.0)
                                     &&
-                                    (r1.bottom() < rc.top()+_velocityY_prev)
+                                    (r1.bottom() < rc.top()+summSpeedYprv)
                                     &&
                                     (
                                          (r1.left()<rc.right()-1 ) &&
@@ -710,11 +712,13 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                         PGE_RectF &r1=posRect;
                         PGE_RectF  rc = collided->posRect;
+                        float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
+                        float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
                         if(
                                 (
-                                    (speedY()+_velocityY_add >= 0.0)
+                                    (summSpeedY >= 0.0)
                                     &&
-                                    (r1.bottom() < rc.top()+_velocityY_prev)
+                                    (r1.bottom() < rc.top()+summSpeedYprv)
                                     &&
                                     (
                                          (r1.left()<rc.right()-1 ) &&
@@ -725,13 +729,16 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                 (r1.bottom() <= rc.top())
                                 )
                         {
-                            npc->harm();
+                            npc->doHarm(LVL_Npc::KILL_STOMPED);
                             this->bump(true);
-                            PGE_Audio::playSoundByRole(obj_sound_role::PlayerStomp);
-                            //collided_bottom[(intptr_t)collided]=collided;//bottom of player
-                            //#ifdef COLLIDE_DEBUG
-                            //qDebug() << "Top of block";
-                            //#endif
+                            //Reset floating state
+                            floating_timer = floating_maxtime;
+                            if(floating_isworks)
+                            {
+                                floating_isworks=false;
+                                setGravityScale(climbing?0:physics_cur.gravity_scale);
+                            }
+                            kill_npc(npc, NPC_Stomped);
                         }
                         break;
                     }//case COLLISION_NONE

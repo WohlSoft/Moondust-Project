@@ -284,7 +284,7 @@ public:
 
     LVL_LayerEngine     layers;
     LVL_EventEngine     events;
-private:
+
     LVL_PlayersArray    players;
     LVL_BlocksArray     blocks;
     LVL_BgosArray       bgos;
@@ -292,6 +292,7 @@ private:
     LVL_WarpsArray      warps;
     LVL_PhysEnvsArray   physenvs;
 
+private:
     /*****************Pause Menu*******************/
     enum PauseMenuItems_Menu1
     {

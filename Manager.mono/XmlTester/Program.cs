@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Xml;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using Microsoft.Win32;
 
 namespace XmlTester
 {
@@ -12,6 +15,14 @@ namespace XmlTester
 
         public static void Main(string[] args)
         {
+            try
+            {
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey("Software\\Wohlhabend Team\\PGE Project");
+                Console.WriteLine("PGE Location: " + rk.GetValue("InstallLocation").ToString());
+            }
+            catch{
+            }
+
             Console.WriteLine("Reading....\n\n");
 
             TestRead2();
@@ -28,7 +39,9 @@ namespace XmlTester
             if (selection > ConfigList.Count)
                 goto AskAgain;
 
-            ConfigPackInformation cpi = TryReadPackInformation(ConfigList[selection]);
+            //ConfigPackInformation cpi = TryReadPackInformation(ConfigList[selection]);
+            //PrintInformation(cpi);
+            ConfigPackInformation cpi = ReadPackInformation(ConfigList[selection]);
             PrintInformation(cpi);
 
             Console.WriteLine("\nDone :)");
@@ -37,6 +50,8 @@ namespace XmlTester
 
         private static void PrintInformation(ConfigPackInformation cp)
         {
+            Console.Clear();
+
             Console.WriteLine(cp.PackName);
             Console.WriteLine(cp.Description);
             Console.WriteLine(cp.License);
@@ -53,7 +68,9 @@ namespace XmlTester
                         print += ", Website: " + author.Website;
                     if (author.Comment != null)
                         print += "(" + author.Comment + ")";
+                    Console.WriteLine(print);
                 }
+
             }
 
             Console.WriteLine(cp.IconURL + " & " + cp.SplashURL);
@@ -63,9 +80,132 @@ namespace XmlTester
             Console.ReadLine();
         }
 
+        private static ConfigPackInformation ReadPackInformation(ConfigPack selected)
+        {
+            WebClient wc = new WebClient();
+            string fullXmlText = wc.DownloadString(CONFIGDIR + selected.URL + "pge_cpack.xml");
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(fullXmlText);
+
+            ConfigPackInformation cpi = new ConfigPackInformation();
+
+            
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+            {
+                if(cpi.PackName == null)
+                    cpi.PackName = node.ParentNode.Attributes["name"].Value;
+                switch (node.Name)
+                {
+                    case("head"):
+                        cpi = IterateThroughHead(node, cpi);
+                        break;
+                    case("files"):
+                        if (node.HasChildNodes)
+                        {
+                            foreach (XmlNode fileNode in node.ChildNodes)
+                            {
+                                if (fileNode.Name == "file")
+                                {
+                                    FilesStruct temp = new FilesStruct();
+                                    //temp.Platform = (fileNode.Attributes["platform"].Value);
+                                    temp.Folder = (fileNode.Attributes["folder"].Value == null) ? "" : fileNode.Attributes["folder"].Value;
+                                    temp.URL = fileNode.InnerText;
+
+                                    if (temp.URL != null && temp.Folder != null)
+                                        cpi.FilesParts.Add(temp);
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            if (cpi.SplashURL != null && cpi.SplashURL != "")
+                cpi.SplashURL = CONFIGDIR + selected.URL + cpi.SplashURL;
+            if (cpi.IconURL != null && cpi.IconURL != "")
+                cpi.IconURL = CONFIGDIR + selected.URL + cpi.IconURL;
+            return cpi;
+        }
+
+        private static ConfigPackInformation IterateThroughHead(XmlNode node, ConfigPackInformation cpi)
+        {
+            if (node.HasChildNodes)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    switch (child.Name)
+                    {
+                        case("config"):
+                            cpi.PackName = child.Attributes["name"].Value;
+                            break;
+                        case ("description"):
+                            cpi.Description = child.InnerText;
+                            break;
+                        case("icon"):
+                            cpi.IconURL = child.Attributes["img"].Value;
+                            break;
+                        case("splash"):
+                            cpi.SplashURL = child.Attributes["img"].Value;;
+                            break;
+                        case("smbx64"):
+                            if (child.Attributes["true"] != null)
+                                cpi.IsSMBX64 = (child.Attributes["true"].Value == "1") ? true : false;
+                            break;
+                        case("license"):
+                            cpi.License = child.InnerText;
+                            break;
+                        case("credits"):
+                            if (child.HasChildNodes)
+                            {
+                                foreach (XmlNode partNode in child.ChildNodes)
+                                {
+                                    if (partNode.Name == "part")
+                                    {
+                                        string key = "";
+                                        List<AuthorStruct> values = new List<AuthorStruct>();
+
+                                        //XmlNode partNode = node.ChildNodes;
+                                        key = (partNode.Attributes["name"].Value == null) ? "" : partNode.Attributes["name"].Value;
+                                        if (partNode.HasChildNodes)
+                                        {
+                                            foreach (XmlNode childAuthor in partNode.ChildNodes)
+                                            {
+                                                if (childAuthor.Name == "author")
+                                                {
+                                                    AuthorStruct temp = new AuthorStruct();
+                                                    temp.Author = childAuthor.InnerText;
+                                                    temp.Comment = (childAuthor.Attributes["comment"] == null) ? "" : childAuthor.Attributes["comment"].Value;
+                                                    temp.Website = (childAuthor.Attributes["url"] == null) ? "" : childAuthor.Attributes["url"].Value;
+                                                    temp.Email = (childAuthor.Attributes["email"] == null) ? "" : childAuthor.Attributes["email"].Value;
+                                                    values.Add(temp);
+                                                }
+                                            }
+                                        }
+                                        if (values.Count > 0 && key != "")
+                                        {
+                                            KeyValuePair<string, AuthorStruct[]> k = new KeyValuePair<string, AuthorStruct[]>(key, values.ToArray());
+                                            cpi.CreditsParts.Add(k);
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            return cpi;
+        }
+
         private static ConfigPackInformation TryReadPackInformation(ConfigPack selected)
         {
-            XmlTextReader reader = new XmlTextReader(CONFIGDIR + selected.URL + "pge_cpack.xml");
+            XmlTextReader rreader = new XmlTextReader(CONFIGDIR + selected.URL + "pge_cpack.xml");
+
+            string fullXmlText = "";
+            while (rreader.Read())
+                fullXmlText = rreader.ReadOuterXml();
+            string ffullXmlText = fullXmlText.Trim(new char[]{ '\r', '\n', '\t', ' '});
+
+
+            var reader = XmlReader.Create(new StringReader(ffullXmlText.Trim()));
 
             ConfigPackInformation PackInformation = new ConfigPackInformation();
 
@@ -86,7 +226,7 @@ namespace XmlTester
                         if (reader.Name == "smbx64")
                             PackInformation.IsSMBX64 = (reader.GetAttribute("true") == "1") ? true : false;
                         if (reader.Name == "license")
-                            PackInformation.License = reader.Value;
+                            reader.MoveToContent(); PackInformation.License = reader.Value;
                         if (reader.Name == "part")
                         {
                             string key = reader.GetAttribute("name");
@@ -105,7 +245,7 @@ namespace XmlTester
                                             auth.Website = reader.GetAttribute("url");
                                         if (reader.GetAttribute("comment") != null)
                                             auth.Comment = reader.GetAttribute("comment");
-                                        auth.Author = reader.Value;
+                                        reader.MoveToContent(); auth.Author = reader.Value;
 
                                         values.Add(auth);
                                     }
@@ -124,7 +264,7 @@ namespace XmlTester
                                 FilesStruct fs = new FilesStruct();
                                 if (reader.GetAttribute("folder") != null)
                                     fs.Folder = reader.GetAttribute("folder");
-                                fs.URL = reader.Value;
+                                reader.MoveToContent(); fs.URL = reader.Value;
                             }
                         }
                         break;
