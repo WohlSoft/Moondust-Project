@@ -26,36 +26,36 @@ bool LVL_Npc::isKilled()
     return killed;
 }
 
-void LVL_Npc::doHarm(int killReason)
+void LVL_Npc::doHarm(int damageReason)
 {
     int damageLevel=1;
     //call Lua
     //onHarm(killReason, out_DamageLevel)
 
-    harm(damageLevel, killReason);
+    harm(damageLevel, damageReason);
 }
 
-void LVL_Npc::harm(int damage, int killReason)
+void LVL_Npc::harm(int damage, int damageReason)
 {
     try {
-        lua_onHarm(damage);
+        lua_onHarm(damage, damageReason);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
     health-=damage;
     if(health<=0)
     {
-        kill(killReason);
+        kill(damageReason);
         LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
     }
     else
         PGE_Audio::playSound(39);
 }
 
-void LVL_Npc::kill(int killReason, bool nolua)
+void LVL_Npc::kill(int damageReason, bool nolua)
 {
     try{
-        lua_onKill();
+        lua_onKill(damageReason);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }

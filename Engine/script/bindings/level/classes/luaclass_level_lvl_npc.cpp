@@ -28,16 +28,16 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onInit()
         call<void>("onInit");
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill()
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill(int damageReason)
 {
     if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
-        call<void>("onKill");
+        call<void>("onKill", damageReason);
 }
 
-void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage)
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage, int damageReason)
 {
     if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
-        call<void>("onHarm", damage);
+        call<void>("onHarm", damage, damageReason);
 }
 
 luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
