@@ -62,16 +62,27 @@ config.index - list of available config packs with names of folders where config
 
 # Misc Notes
 
-PGE will load configs from the user directory if
+PGE will also load configs from the user directory if
 
 Windows
+Editor:
 - Registry key: HKEY_CURRENT_USER\\Software\\Wohlhabend Networks\\PGE Editor\\EnableUserDir=true
+Engine:
+- Registry key: HKEY_CURRENT_USER\\Software\\Wohlhabend Networks\\PGE Engine\\EnableUserDir=true
+Playable Character Calibrator:
+- Registry key: HKEY_CURRENT_USER\\Software\\Wohlhabend Networks\\Playable Character Calibrator\\EnableUserDir=true
 
 Linux
 - ~/.config/Wohlhabend-Networks/PGE Editor.conf has
+  [General]
   EnableUserDir=true
+same for:
+- ~/.config/Wohlhabend-Networks/PGE Engine.conf
+- ~/.config/Wohlhabend-Networks/Playable Character Calibrator.conf
 
 I need to detect if the user is running portable. This is done by checking if
 -pge configs and executables are in the same directory
 -main INI has force-portable=true enabled
 If this is the case, install configs to the same directory
+
+
