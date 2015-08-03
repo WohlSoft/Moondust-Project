@@ -28,6 +28,18 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onInit()
         call<void>("onInit");
 }
 
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onKill()
+{
+    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+        call<void>("onKill");
+}
+
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage)
+{
+    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+        call<void>("onHarm", damage);
+}
+
 luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 {
     using namespace luabind;
@@ -38,6 +50,9 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("onActivated", &LVL_Npc::lua_onActivated, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onActivated)
             .def("onLoop", &LVL_Npc::lua_onLoop, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onLoop)
             .def("onInit", &LVL_Npc::lua_onInit, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onInit)
+
+            .def("onKill", &LVL_Npc::lua_onKill, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onKill)
+            .def("onHarm", &LVL_Npc::lua_onHarm, &Binding_Level_ClassWrapper_LVL_NPC::def_lua_onHarm)
 
             //Functions
             .def("setSequenceLeft", &LVL_Npc::lua_setSequenceLeft)

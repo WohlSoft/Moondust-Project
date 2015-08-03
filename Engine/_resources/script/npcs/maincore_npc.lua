@@ -34,4 +34,18 @@ function luaNPC:onLoop(tickTime)
     BaseNPC.onLoop(self, tickTime)
 end
 
+function luaNPC:onKill()
+    if(not self.isInvalid and self.controller)then
+        self.controller:onKill()
+    end
+    BaseNPC.onKill(self)
+end
+
+function luaNPC:onHarm(damage)
+    if(not self.isInvalid and self.controller)then
+        self.controller:onHarm(damage)
+    end
+    BaseNPC.onHarm(self, damage)
+end
+
 return luaNPC

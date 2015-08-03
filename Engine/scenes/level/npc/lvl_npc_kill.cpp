@@ -28,6 +28,11 @@ bool LVL_Npc::isKilled()
 
 void LVL_Npc::harm(int damage)
 {
+    try {
+        lua_onHarm(damage);
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    }
     health-=damage;
     if(health<=0)
     {
@@ -40,6 +45,12 @@ void LVL_Npc::harm(int damage)
 
 void LVL_Npc::kill()
 {
+    try{
+        lua_onKill();
+    } catch (luabind::error& e) {
+        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    }
+
     killed=true;
     //sct()->unregisterElement(this);
     LvlSceneP::s->unregisterElement(this);
