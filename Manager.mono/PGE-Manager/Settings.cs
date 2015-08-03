@@ -17,7 +17,8 @@ namespace PGEManager
     {
         public string PGEDirectory { get; set;}
         public string ConfigDirectory {get;set;}
-
+        public string ConfigsRepoURL { get; set; }
+        public string ConfigsIndexURL {get{return ConfigsRepoURL + "configs.index";}}
 
         public bool ForcePortable {get;set;}
 
@@ -27,6 +28,7 @@ namespace PGEManager
 
             ForcePortable = false;
             PGEDirectory = "/";
+            ConfigsRepoURL = "http://download.gna.org/pgewohlstand/configs/";
         }
 
         private void DetectOperatingSystems()
