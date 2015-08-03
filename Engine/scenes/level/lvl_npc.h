@@ -162,10 +162,14 @@ public:
     LVL_Npc*         buddies_leader;
     /**********************************************/
 
+    //Additional lua enums
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+    virtual void lua_onKill() {}
+    virtual void lua_onHarm(int) {}
 
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);
@@ -182,6 +186,8 @@ public:
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
     bool isLuaNPC;
+
+
 
     int health;
 
