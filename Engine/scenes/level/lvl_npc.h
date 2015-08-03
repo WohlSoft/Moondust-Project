@@ -43,18 +43,18 @@ public:
     obj_npc *setup;//Global config
     bool isKilled();
     bool killed;
-    enum KillReason{
-        KILL_NOREASON=0,
-        KILL_STOMPED,   //on stomping to head
-        KILL_BY_KICK,   //caused by contact with throwned NPC's
-        KILL_BY_PLAYER_ATTACK, //Caused by attaking by player
+    enum DamageReason{
+        DAMAGE_NOREASON=0,
+        DAMAGE_STOMPED,   //on stomping to head
+        DAMAGE_BY_KICK,   //caused by contact with throwned NPC's
+        DAMAGE_BY_PLAYER_ATTACK, //Caused by attaking by player
         //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
-        KILL_TAKEN, //is Power up taken
-        KILL_CUSTOM_REASON
+        DAMAGE_TAKEN, //is Power up taken
+        DAMAGE_CUSTOM_REASON
     };
-    void doHarm(int killReason);
-    void harm(int damage=1, int killReason=KILL_NOREASON);
-    void kill(int killReason, bool nolua=false);
+    void doHarm(int damageReason);
+    void harm(int damage=1, int damageReason = DAMAGE_NOREASON);
+    void kill(int damageReason, bool nolua=false);
 
     int taskToTransform;
     int taskToTransform_t;
@@ -179,10 +179,14 @@ public:
     LVL_Npc*         buddies_leader;
     /**********************************************/
 
+    //Additional lua enums
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+    virtual void lua_onKill(int) {}
+    virtual void lua_onHarm(int, int) {}
 
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);
@@ -201,6 +205,8 @@ public:
     inline int getID() { return data.id; }
 
     bool isLuaNPC;
+
+
 
     int health;
 
