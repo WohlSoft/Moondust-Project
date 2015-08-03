@@ -54,10 +54,13 @@ void LVL_Npc::harm(int damage, int damageReason)
 
 void LVL_Npc::kill(int damageReason, bool nolua)
 {
-    try{
-        lua_onKill(damageReason);
-    } catch (luabind::error& e) {
-        LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+    if(!nolua)
+    {
+        try{
+            lua_onKill(damageReason);
+        } catch (luabind::error& e) {
+            LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
+        }
     }
 
     killed=true;
