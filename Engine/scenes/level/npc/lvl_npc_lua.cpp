@@ -97,9 +97,9 @@ int LVL_Npc::lua_activate_neighbours()
     return found;
 }
 
-
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
+
     if(!detectors.contains(&detector_player_pos))
         detectors.push_back(&detector_player_pos);
     return &detector_player_pos;
@@ -108,12 +108,21 @@ PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::object filters)
 {
     int ltype = luabind::type(filters);
-    if(luabind::type(filters) != LUA_TTABLE){
-        luaL_error(filters.interpreter(), "lua_installPlayerInAreaDetector exptected int-array, got %s", lua_typename(filters.interpreter(), ltype));
-        return NULL;
+    QList<int> _filters;
+    if(ltype == LUA_TNIL){
+        _filters = QList<int>({InAreaDetector::F_BLOCK,
+                               InAreaDetector::F_BGO,
+                               InAreaDetector::F_NPC,
+                               InAreaDetector::F_PLAYER});
+    } else {
+        if(ltype != LUA_TTABLE){
+            luaL_error(filters.interpreter(), "installPlayerInAreaDetector exptected int-array, got %s", lua_typename(filters.interpreter(), ltype));
+            return NULL;
+        }
+        _filters = luabind_utils::convArrayTo<int>(filters);
     }
-    QList<int> _filters=luabind_utils::convArrayTo<int>(filters);
-    int tfilters=0;
+
+    int tfilters = 0;
     foreach(int filter, _filters)
     {
         switch(filter)
@@ -131,9 +140,7 @@ InAreaDetector *LVL_Npc::lua_installInAreaDetector(float left, float top, float 
         r.setRight(right);
         r.setBottom(bottom);
 
-    InAreaDetector detector(this, r, tfilters);
-
-    detectors_inarea.push_back(detector);
+    detectors_inarea.push_back(InAreaDetector(this, r, tfilters));
     detectors.push_back(&detectors_inarea.last());
     return &detectors_inarea.last();
 }
