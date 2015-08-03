@@ -9,7 +9,7 @@
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
 #include "npc_detectors/lvl_dtc_player_pos.h"
-#include "npc_detectors/lvl_dtc_player_inarea.h"
+#include "npc_detectors/lvl_dtc_inarea.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -114,8 +114,8 @@ public:
     QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
     PlayerPosDetector               detector_player_pos; //! Player position detectors (should have alone copy!)
     PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
-    QList<PlayerInAreaDetector >    detectors_player_inarea; //! Is player touches selected relative area;
-    PlayerInAreaDetector * lua_installPlayerInAreaDetector(float left, float top, float right, float bottom);//! Detects is player(s) are enters into specific area relative to NPC's center
+    QList<InAreaDetector >    detectors_inarea; //! Is player touches selected relative area;
+    InAreaDetector * lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::adl::object filters);//! Detects is player(s) are enters into specific area relative to NPC's center
     QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
     /***************************************************/
 
