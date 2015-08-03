@@ -24,17 +24,17 @@ class PGE_PointF
 {
     friend class PGE_Point;
 public:
-    PGE_PointF();
-    PGE_PointF(const PGE_PointF &p);
+    inline PGE_PointF() { setPoint(0, 0); }
+    inline PGE_PointF(const PGE_PointF &p) { _x=p._x; _y=p._y; }
     PGE_PointF(const PGE_Point &p);
-    PGE_PointF(double x, double y);
-    ~PGE_PointF();
-    void setPoint(double x, double y);
-    void setX(double x);
-    void setY(double y);
-    bool isNull();
-    double x();
-    double y();
+    inline PGE_PointF(double x, double y) { _x=x; _y=y; }
+    inline ~PGE_PointF() {}
+    inline void setPoint(double x, double y) { _x=x; _y=y; }
+    inline void setX(double x) { _x=x; }
+    inline void setY(double y) { _y=y; }
+    inline bool isNull() { return ((_x==0)&&(_y==0)); }
+    inline double x() { return _x; }
+    inline double y() { return _y; }
 private:
     double _x;
     double _y;
