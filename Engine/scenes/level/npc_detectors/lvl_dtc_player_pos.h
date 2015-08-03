@@ -17,6 +17,8 @@ public:
     int directedTo();       //! where you shold go to be nearer to player
     int playersDirection(); //! self direction of player
     PGE_PointF position();  //! X-Y position of a player's center
+    float positionX();
+    float positionY();
     int playersCharID();    //! returns ID of playable character
     int playersStateID();   //! returns ID of player's state
     LVL_Player * playerPtr();//! returns pointer to detected platable character
