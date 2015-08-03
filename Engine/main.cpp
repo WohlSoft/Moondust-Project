@@ -24,6 +24,7 @@
 
 #include <QtDebug>
 
+#include <iostream>
 #include "version.h"
 
 #include "common_features/app_path.h"
@@ -107,6 +108,11 @@ int main(int argc, char *argv[])
             QApplication::quit();
             QApplication::exit();
 
+            return 0;
+        } else if(arg=="--version") {
+            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE << std::endl;
+            QApplication::quit();
+            QApplication::exit();
             return 0;
         }
     }
