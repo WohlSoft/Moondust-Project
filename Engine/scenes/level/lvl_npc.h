@@ -54,17 +54,8 @@ public:
     };
     void doHarm(int damageReason);
     void harm(int damage=1, int damageReason = DAMAGE_NOREASON);
-    void lua_modifyDamage(int damage=1);    //! for onHarm event! Allows modify level of the damage
-    int  harm_mod_damage;
-    void lua_cancelHarm();
-    bool harm_canceled;
 
     void kill(int damageReason);//! In-Game destroying of NPC with triggering of specific events
-    void lua_cancelKill();      //! Don't kill NPC (killing can be canceled from lua side)
-    bool kill_canceled;
-    void lua_sielentKill();     //! Don't spawn default effect after killing
-    bool kill_sielent;
-
     void unregister();          //! Sielent destroying of NPC without triggering of the events
 
     int taskToTransform;

@@ -37,17 +37,14 @@ void LVL_Npc::doHarm(int damageReason)
 
 void LVL_Npc::harm(int damage, int damageReason)
 {
-    harm_canceled=false;
-    harm_mod_damage=damage;
     try {
         lua_onHarm(damage, damageReason);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
-    if(harm_canceled) return;
 
-    health-=harm_mod_damage;
-    if(health<=0)
+    health -= damage;
+    if(health <= 0)
     {
         kill(damageReason);
         LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 0, 0, 0, 0, _direction);
@@ -56,53 +53,29 @@ void LVL_Npc::harm(int damage, int damageReason)
         PGE_Audio::playSound(39);
 }
 
-void LVL_Npc::lua_modifyDamage(int damage)
-{
-    harm_mod_damage=damage;
-}
-
-void LVL_Npc::lua_cancelHarm()
-{
-    harm_canceled=true;
-}
 
 void LVL_Npc::kill(int damageReason)
 {
-    kill_sielent=false;
-    kill_canceled=false;
     try{
         lua_onKill(damageReason);
     } catch (luabind::error& e) {
         LvlSceneP::s->getLuaEngine()->postLateShutdownError(e);
     }
-    if(kill_canceled) return;
 
-    killed=true;
-    if(!kill_sielent)
+
+    //Pre-unregistring event
+    if(!data.event_die.isEmpty())
+        LvlSceneP::s->events.triggerEvent(data.event_die);
+
+    unregister();
+
+    //Post-unregistring event
+    if(!data.event_emptylayer.isEmpty())
     {
-        //Pre-unregistring event
-        if(!data.event_die.isEmpty())
-            LvlSceneP::s->events.triggerEvent(data.event_die);
-
-        unregister();
-
-        //Post-unregistring event
-        if(!data.event_emptylayer.isEmpty())
-        {
-            if(LvlSceneP::s->layers.isEmpty(data.layer))
-                LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
-        }
+        if(LvlSceneP::s->layers.isEmpty(data.layer))
+            LvlSceneP::s->events.triggerEvent(data.event_emptylayer);
     }
-}
 
-void LVL_Npc::lua_cancelKill()
-{
-    kill_canceled=true;
-}
-
-void LVL_Npc::lua_sielentKill()
-{
-    kill_sielent=true;
 }
 
 void LVL_Npc::unregister()

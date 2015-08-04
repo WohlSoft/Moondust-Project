@@ -68,11 +68,6 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             .def("activateNeighbours", &LVL_Npc::lua_activate_neighbours)
 
-            .def("modifyDamage", &LVL_Npc::lua_modifyDamage) //for onHarm event: changes damage level
-            .def("cancelHarm", &LVL_Npc::lua_cancelHarm)     // for onHarm event: Don't hurt NPC
-
-            .def("cancelKill", &LVL_Npc::lua_cancelKill)     // for onKill event: cancels killing of NPC
-            .def("sielentKill", &LVL_Npc::lua_sielentKill)   // for onKill event: makes sielent destroying of NPC with no events and effects
             .def("unregister", &LVL_Npc::unregister)         // Destroy NPC with no effects and no events
 
             //Properties
