@@ -29,7 +29,17 @@ namespace PGEManager
 
         protected void OnLaunchEngineBtnClicked (object sender, EventArgs e)
         {
-            throw new NotImplementedException ();
+            switch (Internals.CurrentOS)
+            {
+                case(InternalOperatingSystem.Windows):
+                    if(File.Exists(Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar + "pge_engine.exe"))
+                        Process.Start(Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar + "pge_engine.exe");
+                    break;
+                case(InternalOperatingSystem.Linux):
+                    if (File.Exists(Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar + "pge_engine"))
+                        Process.Start(Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar + "pge_engine");
+                    break;
+            }
         }
     }
 }

@@ -74,6 +74,8 @@ public partial class MainWindow: Gtk.Window
         Program.SaveSettings();
 		Application.Quit ();
 		a.RetVal = true;
+
+        Environment.Exit(0);
 	}
 
     private void ReadConfigsIndex()
@@ -121,5 +123,12 @@ public partial class MainWindow: Gtk.Window
             }
 
         }
+    }
+    protected void OnExitActionActivated (object sender, EventArgs e)
+    {
+        Program.SaveSettings();
+        Application.Quit ();
+
+        Environment.Exit(0);
     }
 }

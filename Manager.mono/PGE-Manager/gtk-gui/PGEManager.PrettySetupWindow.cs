@@ -121,7 +121,7 @@ namespace PGEManager
 			this.frame1.Add (this.GtkAlignment);
 			this.GtkLabel2 = new global::Gtk.Label ();
 			this.GtkLabel2.WidthRequest = 123;
-			this.GtkLabel2.HeightRequest = 98;
+			this.GtkLabel2.HeightRequest = 154;
 			this.GtkLabel2.Name = "GtkLabel2";
 			this.GtkLabel2.LabelProp = "<b>PGE Manager Setup</b>";
 			this.GtkLabel2.UseMarkup = true;
@@ -155,9 +155,10 @@ namespace PGEManager
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 491;
-			this.DefaultHeight = 268;
+			this.DefaultHeight = 279;
 			this.Show ();
 			this.browseButton.Clicked += new global::System.EventHandler (this.OnBrowseButtonClicked);
+			this.winRegKeyPath.Toggled += new global::System.EventHandler (this.OnWinRegKeyPathToggled);
 			this.nextButton.Clicked += new global::System.EventHandler (this.OnNextButtonClicked);
 		}
 	}

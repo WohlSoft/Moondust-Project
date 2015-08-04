@@ -24,6 +24,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Exit</property>
         <property name="ShortLabel" translatable="yes">Exit</property>
+        <signal name="Activated" handler="OnExitActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -38,7 +39,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
-            <node name="menubar1" type="Menubar">
+            <node name="__gtksharp_168_Stetic_Editor_ActionMenuBar" type="Menubar">
               <node type="Menu" action="PGEManagerAction">
                 <node type="Menuitem" action="dialogInfoAction" />
                 <node type="Menuitem" action="ExitAction" />
@@ -270,7 +271,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="PGEManager.PrettySetupWindow" design-size="491 268">
+  <widget class="Gtk.Window" id="PGEManager.PrettySetupWindow" design-size="491 279">
     <property name="MemberName" />
     <property name="Title" translatable="yes">PGE Manager Setup</property>
     <property name="TypeHint">Dialog</property>
@@ -317,7 +318,6 @@
                             <property name="WidthRequest">1</property>
                             <property name="CanFocus">True</property>
                             <property name="Label">Here:</property>
-                            <property name="Active">True</property>
                             <property name="DrawIndicator">True</property>
                             <property name="HasLabel">True</property>
                             <property name="UseUnderline">True</property>
@@ -373,6 +373,7 @@
                         <property name="HasLabel">True</property>
                         <property name="UseUnderline">True</property>
                         <property name="Group">group1</property>
+                        <signal name="Toggled" handler="OnWinRegKeyPathToggled" />
                       </widget>
                       <packing>
                         <property name="Position">2</property>
@@ -392,7 +393,7 @@
               <widget class="Gtk.Label" id="GtkLabel2">
                 <property name="MemberName" />
                 <property name="WidthRequest">123</property>
-                <property name="HeightRequest">98</property>
+                <property name="HeightRequest">154</property>
                 <property name="LabelProp" translatable="yes">&lt;b&gt;PGE Manager Setup&lt;/b&gt;</property>
                 <property name="UseMarkup">True</property>
               </widget>
