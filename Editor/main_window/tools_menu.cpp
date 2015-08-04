@@ -67,49 +67,35 @@ void MainWindow::on_actionShow_Development_Console_triggered()
     DevConsole::show();
 }
 
-LazyFixTool_gui * lazyfixGUI;
-void MainWindow::on_actionLazyFixTool_triggered()
-{
-    if(lazyfixGUI)
-    {
-        lazyfixGUI->show();
-        lazyfixGUI->raise();
-        lazyfixGUI->setFocus();
-        return;
+LazyFixTool_gui * lazyfixGUI = nullptr;
+gifs2png_gui * gifToPngGUI = nullptr;
+png2gifs_gui * pngToGifGUI = nullptr;
+
+template<typename T>
+void defConstructObjAndExec(T*& dialogObj, QWidget* parent = 0){
+    static_assert(std::is_base_of<QDialog, T>::value, "dialogObj must be base of QDialog!");
+    if(!dialogObj){
+        dialogObj = new T(parent);
     }
-    lazyfixGUI = new LazyFixTool_gui;
-    util::DialogToCenter(lazyfixGUI, true);
-    lazyfixGUI->show();
+    util::DialogToCenter(dialogObj, true);
+    dialogObj->show();
+    dialogObj->raise();
+    dialogObj->setFocus();
 }
 
-gifs2png_gui * gifToPngGUI;
+void MainWindow::on_actionLazyFixTool_triggered()
+{    
+    defConstructObjAndExec(lazyfixGUI, this);
+}
+
 void MainWindow::on_actionGIFs2PNG_triggered()
 {
-    if(gifToPngGUI)
-    {
-        gifToPngGUI->show();
-        gifToPngGUI->raise();
-        gifToPngGUI->setFocus();
-        return;
-    }
-    gifToPngGUI = new gifs2png_gui;
-    util::DialogToCenter(gifToPngGUI, true);
-    gifToPngGUI->show();
+    defConstructObjAndExec(gifToPngGUI, this);
 }
 
-png2gifs_gui * pngToGifGUI;
 void MainWindow::on_actionPNG2GIFs_triggered()
 {
-    if(pngToGifGUI)
-    {
-        pngToGifGUI->show();
-        pngToGifGUI->raise();
-        pngToGifGUI->setFocus();
-        return;
-    }
-    pngToGifGUI = new png2gifs_gui;
-    util::DialogToCenter(pngToGifGUI, true);
-    pngToGifGUI->show();
+    defConstructObjAndExec(pngToGifGUI, this);
 }
 
 
