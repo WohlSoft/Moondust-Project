@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Win32;
 using Gtk;
+using System.IO;
 
 namespace PGEManager
 {
@@ -17,7 +18,7 @@ namespace PGEManager
         {
             if (Internals.CurrentOS == InternalOperatingSystem.Windows)
             {
-                if (GetPGEFromRegistry() != null || GetPGEFromRegistry() != "")
+                if (GetPGEFromRegistry() != null || GetPGEFromRegistry().Trim() != "")
                     winRegKeyPath.Label = "From Registry: " + GetPGEFromRegistry();
                 else
                 {
@@ -56,14 +57,43 @@ namespace PGEManager
 
         protected void OnNextButtonClicked (object sender, EventArgs e)
         {
-            if (entry1.Text.Trim() != "")
+            if (winRegKeyPath.Active)
             {
-                Program.ProgramSettings.PGEDirectory = entry1.Text;
-                Program.SaveSettings();
+                if(Directory.Exists(GetPGEFromRegistry()))
+                {
+                    Program.ProgramSettings.PGEDirectory = GetPGEFromRegistry();
+                    Program.SaveSettings();
+                    MainWindow mw = new MainWindow();
+                    mw.Show();
+                    this.Destroy();
+                }
             }
-            MainWindow mw = new MainWindow();
-            mw.Show();
-            this.Destroy();
+            else
+            {
+                if (entry1.Text.Trim() != "")
+                {
+                    Program.ProgramSettings.PGEDirectory = entry1.Text;
+                    Program.SaveSettings();
+                    MainWindow mw = new MainWindow();
+                    mw.Show();
+                    this.Destroy();
+                }
+            }
+        }
+
+        protected void OnWinRegKeyPathToggled (object sender, EventArgs e)
+        {
+            if (winRegKeyPath.Active)
+            {
+                entry1.Sensitive = false;
+                browseButton.Sensitive = false;
+            }
+            else
+            {
+                entry1.Sensitive = true;
+                browseButton.Sensitive = true;
+
+            }
         }
     }
 }
