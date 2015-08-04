@@ -59,6 +59,8 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
     fontID  = mb.fontID;
     fontRgba= mb.fontRgba;
 
+    keys    = mb.keys;
+
     type    = mb.type;
     _sizeRect=mb._sizeRect;
     message = mb.message;
@@ -78,6 +80,8 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos
     message = msg;
     type = _type;
     running=false;
+
+    keys = Controller::noKeys();
 
     fontID   = FontManager::getFontID(ConfigManager::setup_message_box.font_name);
     fontRgba = ConfigManager::setup_message_box.font_rgba;
