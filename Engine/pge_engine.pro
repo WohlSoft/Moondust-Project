@@ -230,7 +230,8 @@ SOURCES += \
     scenes/level/npc_detectors/lvl_dtc_player_pos.cpp \
     scenes/level/npc_detectors/lvl_dtc_inarea.cpp \
     script/bindings/level/classes/luaclass_level_inareadetector.cpp \
-    script/bindings/level/classes/luaclass_level_playerposdetector.cpp
+    script/bindings/level/classes/luaclass_level_playerposdetector.cpp \
+    script/bindings/core/classes/luaclass_core_simpleevent.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -366,7 +367,8 @@ HEADERS  += \
     scenes/level/npc_detectors/lvl_dtc_player_pos.h \
     scenes/level/npc_detectors/lvl_dtc_inarea.h \
     script/bindings/level/classes/luaclass_level_inareadetector.h \
-    script/bindings/level/classes/luaclass_level_playerposdetector.h
+    script/bindings/level/classes/luaclass_level_playerposdetector.h \
+    script/bindings/core/classes/luaclass_core_simpleevent.h
 
 
 FORMS    += \
