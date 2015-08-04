@@ -26,6 +26,9 @@ namespace PGEManager
         {
             DetectOperatingSystems();
 
+            if (!System.IO.Directory.Exists(ConfigDirectory))
+                System.IO.Directory.CreateDirectory(ConfigDirectory);
+
             ForcePortable = false;
             PGEDirectory = "/";
             ConfigsRepoURL = "http://download.gna.org/pgewohlstand/configs/";

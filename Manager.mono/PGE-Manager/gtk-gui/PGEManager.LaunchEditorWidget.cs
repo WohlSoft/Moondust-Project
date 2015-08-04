@@ -30,12 +30,11 @@ namespace PGEManager
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox3 = new global::Gtk.VBox ();
-			this.vbox3.Name = "vbox3";
 			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.editorVerLbl = new global::Gtk.Label ();
 			this.editorVerLbl.Name = "editorVerLbl";
-			this.editorVerLbl.LabelProp = "PGE Editor Version: {0}";
+			this.editorVerLbl.LabelProp = "PGE Editor Version: 0.0.0.0";
 			this.vbox3.Add (this.editorVerLbl);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.editorVerLbl]));
 			w1.Position = 0;
@@ -44,7 +43,7 @@ namespace PGEManager
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.engineVerLbl = new global::Gtk.Label ();
 			this.engineVerLbl.Name = "engineVerLbl";
-			this.engineVerLbl.LabelProp = "PGE Engine Version: {0}";
+			this.engineVerLbl.LabelProp = "PGE Engine Version: 0.0.0.0";
 			this.vbox3.Add (this.engineVerLbl);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.engineVerLbl]));
 			w2.Position = 1;
@@ -91,6 +90,8 @@ namespace PGEManager
 				this.Child.ShowAll ();
 			}
 			this.Hide ();
+			this.launchEditorBtn.Clicked += new global::System.EventHandler (this.OnLaunchEditorBtnClicked);
+			this.launchEngineBtn.Clicked += new global::System.EventHandler (this.OnLaunchEngineBtnClicked);
 		}
 	}
 }

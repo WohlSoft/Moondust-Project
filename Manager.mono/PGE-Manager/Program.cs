@@ -11,21 +11,29 @@ namespace PGEManager
 	{
         public static Settings ProgramSettings = new Settings();
 
-        [DllImport ("libx11.so.6")] //necessary for init threads
+        [DllImport ("libX11.so.6")] //necessary for init threads
         static extern int XInitThreads();
 		public static void Main (string[] args)
 		{
+            Application.Init();
             if (Internals.CurrentOS == InternalOperatingSystem.Linux)
             {
                 MessageDialog md = new MessageDialog(null, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
                     "Linux support is coming soon!");
+                //md.Run();
+                //md.Destroy();
+                //Environment.Exit(0);
             }
+            try{
             if (Internals.CurrentOS == InternalOperatingSystem.Linux)
                 XInitThreads();
+            }
+            catch{
+            }
+            
 
             ProgramSettings.ForcePortable = IsPortable();
 
-            Application.Init();
             if (File.Exists(ProgramSettings.ConfigDirectory + System.IO.Path.DirectorySeparatorChar + "Settings.json"))
             {
                 LoadSettings();
@@ -41,33 +49,31 @@ namespace PGEManager
                     {
                         ProgramSettings.PGEDirectory = args[1].Trim('"');
                         Console.WriteLine(ProgramSettings.PGEDirectory);
+                        SaveSettings();
                         MainWindow win = new MainWindow ();
                         win.Show ();
                     }
                 }
                 else
                 {
+                    PrettySetupWindow psw = new PrettySetupWindow();
                     if (Internals.CurrentOS == InternalOperatingSystem.Windows)
                     {
                         try
                         {
-                            RegistryKey rk = Registry.CurrentUser.OpenSubKey("Software\\Wohlhabend Team\\PGE Project");
-                            Console.WriteLine("PGE Location: " + rk.GetValue("InstallLocation").ToString());
-                            Console.WriteLine("Show the PGE Manager main window");
-
+                            //RegistryKey rk = Registry.CurrentUser.OpenSubKey("Software\\Wohlhabend Team\\PGE Project");
+                            //Console.WriteLine("PGE Location: " + rk.GetValue("InstallLocation").ToString());
+                            //Console.WriteLine("Show the PGE Manager main window");
+                            psw.Show();
                         }
                         catch
                         {
-                            //TODO: Initial setup
-                            Console.WriteLine("Show a pretty setup Window :)");
-                            Console.ReadLine();
+                            psw.Show();
                         }
                     }
                     else
                     {
-                        //TODO: Initial setup
-                        Console.WriteLine("Show a pretty setup Window :)");
-                        Console.ReadLine();
+                        psw.Show();
                     }
                 }
             }
@@ -87,7 +93,7 @@ namespace PGEManager
                     return true;
                 }
             }
-            return false;
+
         }
 
         private static bool LoadSettings()
