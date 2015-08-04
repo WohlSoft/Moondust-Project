@@ -3113,7 +3113,7 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="559"/>
         <source>Section settings</source>
-        <translation>Section settings</translation>
+        <translation type="unfinished">Section settings</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="571"/>
@@ -10583,13 +10583,15 @@ therefore you can use same link to get updated version</translation>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="26"/>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>Convert masked GIFs into the PNG</translation>
+        <translatorcomment>Fixed grammar.</translatorcomment>
+        <translation>Convert masked GIFs to PNG</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="53"/>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</translation>
+        <translatorcomment>Not so necessary to convey that the result has its own transparance.</translatorcomment>
+        <translation>This console tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="66"/>
@@ -10616,8 +10618,8 @@ therefore you can use same link to get updated version</translation>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="80"/>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</translation>
+        <translation>Select the output location of the PNG image(s)
+(If an output location isn&apos;t specified, the image(s) will be stored in the input directory)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="101"/>
@@ -10637,22 +10639,22 @@ therefore you can use same link to get updated version</translation>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="152"/>
         <source>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</source>
-        <translation>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</translation>
+        <translation>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="168"/>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</translation>
+        <translation>Select the input location of the SMBX GIF files (*.gif and *m.gif)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="178"/>
         <source>Remove source images after successful conversion</source>
-        <translation>Remove source images after successful conversion</translation>
+        <translation>Remove the original images after a successful conversion</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation>Open Source Directory</translation>
+        <translation>Open Source.Directory</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="56"/>
@@ -10662,17 +10664,17 @@ therefore you can use same link to get updated version</translation>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="69"/>
         <source>Source directory is not set</source>
-        <translation>Source directory is not set</translation>
+        <translation>Input directory not specified</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="69"/>
         <source>Please, set the source directory</source>
-        <translation>Please, set the source directory</translation>
+        <translation>Please specify the input directory</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="83"/>
         <source>Tool is not found</source>
-        <translation>Tool is not found</translation>
+        <translation>Tool not found</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="83"/>
