@@ -3113,7 +3113,7 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="559"/>
         <source>Section settings</source>
-        <translation type="unfinished">Section settings</translation>
+        <translation>Section settings</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="571"/>
@@ -10654,7 +10654,7 @@ therefore you can use same link to get updated version</translation>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation>Open Source.Directory</translation>
+        <translation>Open Source Directory</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.cpp" line="56"/>
