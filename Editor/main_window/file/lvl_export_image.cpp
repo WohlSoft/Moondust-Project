@@ -145,7 +145,7 @@ void LevelEdit::ExportingReady() //slot
         if(!progress.wasCanceled()) progress.setValue(0);
 
         qApp->processEvents();
-        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
+        scene->stopAnimation(); //Reset animation to 0 frame
         if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
         if(forceTiled) scene->setTiledBackground(true);
 
