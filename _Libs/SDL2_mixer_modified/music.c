@@ -953,6 +953,12 @@ const char* Mix_GetMusicTitle(const Mix_Music *music)
                     return music->data.mp3_mad->mus_title;
             break;
         #endif
+        #ifdef MODPLUG_MUSIC
+            case MUS_MODPLUG:
+                if((music->data.modplug->mus_title!=NULL)&&(strlen(music->data.modplug->mus_title)>0))
+                    return music->data.modplug->mus_title;
+            break;
+        #endif
             default:
                 break;
         }

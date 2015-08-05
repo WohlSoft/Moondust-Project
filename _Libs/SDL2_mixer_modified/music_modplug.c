@@ -124,11 +124,13 @@ modplug_data *modplug_new_RW(SDL_RWops *src, int freesrc)
             music = (modplug_data*)SDL_malloc(sizeof(modplug_data));
             if (music) {
                 music->playing = 0;
+                music->mus_title = NULL;
                 music->file = modplug.ModPlug_Load(buf, sz);
                 if (!music->file) {
                     SDL_free(music);
                     music = NULL;
                 }
+                music->mus_title = (char*)ModPlug_GetName(music->file);
             } else {
                 SDL_OutOfMemory();
             }
@@ -252,6 +254,8 @@ void modplug_stop(modplug_data *music)
 void modplug_delete(modplug_data *music)
 {
     modplug.ModPlug_Unload(music->file);
+//    if( music->mus_title )
+//        SDL_free(music->mus_title);
     SDL_free(music);
 }
 
