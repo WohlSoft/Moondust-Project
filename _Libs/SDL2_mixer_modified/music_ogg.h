@@ -48,10 +48,7 @@ typedef struct {
     ogg_int64_t loop_start;
     ogg_int64_t loop_end;
     ogg_int64_t loop_len;
-    ogg_int64_t loop_len_raw;
-    ogg_int64_t loop_end_pos;
     ogg_int64_t loop_len_ch;
-    ogg_int64_t loop_end_raw;
     /* Loop points stuff [by Wohlstand] */
     char *mus_title;
 } OGG_music;
