@@ -62,6 +62,7 @@
 #endif
 #ifdef MP3_MAD_MUSIC
 #include "music_mad.h"
+#include "libid3tag/id3tag.h"
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
@@ -79,6 +80,7 @@ int volatile music_active = 1;
 static int volatile music_stopped = 0;
 static int music_loops = 0;
 static char *music_cmd = NULL;
+static char *music_file = NULL;
 static Mix_Music * volatile music_playing = NULL;
 static int music_volume = MIX_MAX_VOLUME;
 
@@ -538,6 +540,12 @@ Mix_Music *Mix_LoadMUS(const char *file)
     SDL_RWops *src;
     Mix_Music *music;
     Mix_MusicType type;
+
+    if( music_file ) SDL_free(music_file);
+
+    music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
+    strcpy(music_file, (char*)file);
+
     char *ext = strrchr(file, '.');
 
 #ifdef CMD_MUSIC
@@ -697,6 +705,24 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
         music->data.mp3_mad = mad_openFileRW(src, &used_mixer, freesrc);
         if (music->data.mp3_mad) {
             music->error = 0;
+            struct id3_file *tags = id3_file_open(music_file, ID3_FILE_MODE_READONLY);
+            if( tags ) {
+                struct id3_tag  *tag= id3_file_tag(tags);
+                //Search for given frame by frame id
+                struct id3_frame *pFrame = id3_tag_findframe(tag,ID3_FRAME_TITLE,0);
+                if ( pFrame != NULL )
+                {
+                    union id3_field field = pFrame->fields[1];
+                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
+                    id3_latin1_t *pStrLatinl;
+                    if ( pTemp != NULL ) {
+                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
+                        music->data.mp3_mad->mus_title=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
+                        strcpy(music->data.mp3_mad->mus_title, (char*)pStrLatinl);
+                    }
+                }
+                id3_file_close(tags);
+            }
         } else {
             Mix_SetError("Could not initialize MPEG stream.");
         }
@@ -917,14 +943,22 @@ const char* Mix_GetMusicTitle(const Mix_Music *music)
         switch (music->type) {
         #ifdef OGG_MUSIC
             case MUS_OGG:
-            if(music->data.ogg->mus_title!=NULL)
-                return music->data.ogg->mus_title;
+                if((music->data.ogg->mus_title!=NULL)&&(strlen(music->data.ogg->mus_title)>0))
+                    return music->data.ogg->mus_title;
+            break;
+        #endif
+        #ifdef MP3_MAD_MUSIC
+            case MUS_MP3_MAD:
+                if((music->data.mp3_mad->mus_title!=NULL)&&(strlen(music->data.mp3_mad->mus_title)>0))
+                    return music->data.mp3_mad->mus_title;
             break;
         #endif
             default:
                 break;
         }
     }
+    if( music_file != NULL )
+        return music_file;
     return "";
 }
 
@@ -1618,6 +1652,9 @@ void close_music(void)
     Timidity_Close();
 # endif
 #endif
+
+    if( music_file ) SDL_free(music_file);
+    music_file = NULL;
 
     /* rcg06042009 report available decoders at runtime. */
     SDL_free((void *)music_decoders);
