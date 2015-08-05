@@ -690,6 +690,9 @@ void LevelScene::render()
         if(placingMode)
             FontManager::printText(QString("Placing! %1")
                         .arg(placingMode_item_type), 10, 10, 0);
+        else
+            FontManager::printText(QString("%1")
+                        .arg(PGE_MusPlayer::MUS_Title()), 10, 10, 0);
     }
     renderBlack:
     Scene::render();
