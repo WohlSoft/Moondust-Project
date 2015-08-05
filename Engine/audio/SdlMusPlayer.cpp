@@ -76,7 +76,16 @@ void PGE_MusPlayer::MUS_playMusic()
 	else
 	{
 		//MessageBoxA(0, std::string(std::string("Play nothing:")+std::string(Mix_GetError())).c_str(), "Error", 0);
-	}
+    }
+}
+
+QString PGE_MusPlayer::MUS_Title()
+{
+    if(play_mus)
+    {
+        return Mix_GetMusicTitle(play_mus);
+    }
+    return QString();
 }
 
 void  PGE_MusPlayer::MUS_playMusicFadeIn(int ms)
