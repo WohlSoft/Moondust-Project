@@ -113,17 +113,17 @@ struct id3_tag *read_tag(FILE *iofile, id3_length_t size)
  * DESCRIPTION:	update the primary tag with data from a new tag
  */
 static
-int update_primary(struct id3_tag *tag, struct id3_tag const *new)
+int update_primary(struct id3_tag *tag, struct id3_tag const *newf)
 {
   unsigned int i;
   struct id3_frame *frame;
 
-  if (new) {
-    if (!(new->extendedflags & ID3_TAG_EXTENDEDFLAG_TAGISANUPDATE))
+  if (newf) {
+    if (!(newf->extendedflags & ID3_TAG_EXTENDEDFLAG_TAGISANUPDATE))
       id3_tag_clearframes(tag);
 
     i = 0;
-    while ((frame = id3_tag_findframe(new, 0, i++))) {
+    while ((frame = id3_tag_findframe(newf, 0, i++))) {
       if (id3_tag_attachframe(tag, frame) == -1)
 	return -1;
     }
