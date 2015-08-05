@@ -66,6 +66,9 @@
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
+#ifdef _WIN32
+typedef _off_t off_t;
+#endif
 #include <FLAC/metadata.h>
 #endif
 #ifdef SPC_MUSIC
