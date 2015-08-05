@@ -81,6 +81,7 @@ static int volatile music_stopped = 0;
 static int music_loops = 0;
 static char *music_cmd = NULL;
 static char *music_file = NULL;
+static char *music_filename = NULL;
 static Mix_Music * volatile music_playing = NULL;
 static int music_volume = MIX_MAX_VOLUME;
 
@@ -545,6 +546,7 @@ Mix_Music *Mix_LoadMUS(const char *file)
 
     music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
     strcpy(music_file, (char*)file);
+    music_filename = strrchr(music_file, '/');
 
     char *ext = strrchr(file, '.');
 
@@ -963,8 +965,8 @@ const char* Mix_GetMusicTitle(const Mix_Music *music)
                 break;
         }
     }
-    if( music_file != NULL )
-        return music_file;
+    if( music_filename != NULL )
+        return music_filename;
     return "";
 }
 
@@ -1661,6 +1663,7 @@ void close_music(void)
 
     if( music_file ) SDL_free(music_file);
     music_file = NULL;
+    music_filename = NULL;
 
     /* rcg06042009 report available decoders at runtime. */
     SDL_free((void *)music_decoders);
