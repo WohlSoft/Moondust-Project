@@ -66,6 +66,7 @@
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
+#include <FLAC/metadata.h>
 #endif
 #ifdef SPC_MUSIC
 #include "music_spc.h"
@@ -681,6 +682,40 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
         music->data.flac = FLAC_new_RW(src, freesrc);
         if (music->data.flac) {
             music->error = 0;
+            FLAC__StreamMetadata *tags=NULL;
+            if(FLAC__metadata_get_tags(music_file, &tags))
+            {
+                int num=tags->data.vorbis_comment.num_comments;
+                int doValue=0;
+                for(int i=0;i<num;i++)
+                {
+                    FLAC__uint32 len=tags->data.vorbis_comment.comments[i].length;
+                    FLAC__byte* ent=tags->data.vorbis_comment.comments[i].entry;
+                    char argument[len+1];
+                    char value[len+1];
+                    for(int j=0, k=0; j<=len; j++, k++)
+                    {
+                        if(doValue==0)
+                        {
+                            argument[j]=(char)ent[j];
+                            if(argument[j]=='=')
+                            {
+                                argument[j]='\0';
+                                doValue=1;
+                                k=-1;
+                            }
+                        } else {
+                            value[k]=(char)ent[j];
+                        }
+                    }
+                    int isMusicTitle = strcasecmp(argument, "TITLE");
+                    if(isMusicTitle==0) {
+                        music->data.flac->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                        strcpy(music->data.flac->mus_title, value);
+                    }
+                    doValue=0;
+                }
+            }
         }
         break;
 #endif
@@ -957,6 +992,12 @@ const char* Mix_GetMusicTitleTag(const Mix_Music *music)
             case MUS_OGG:
                 if(music->data.ogg->mus_title!=NULL)
                     return music->data.ogg->mus_title;
+            break;
+        #endif
+        #ifdef FLAC_MUSIC
+            case MUS_FLAC:
+                if(music->data.flac->mus_title!=NULL)
+                    return music->data.flac->mus_title;
             break;
         #endif
         #ifdef MP3_MAD_MUSIC
