@@ -160,10 +160,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             music->loop=1;
             vorbis_info *vi;
             vi = vorbis.ov_info(&music->vf, -1);
-            music->loop_len_raw  = music->loop_len*vi->channels;
-            music->loop_end_pos = music->loop_end-(4096/vi->channels);
             music->loop_len_ch = vi->channels;
-            music->loop_end_raw  = music->loop_end*vi->channels;
         }
     } else {
         SDL_OutOfMemory();
@@ -195,31 +192,12 @@ static void OGG_getsome(OGG_music *music)
 #ifdef OGG_USE_TREMOR
     len = vorbis.ov_read(&music->vf, data, sizeof(data), &section);
 #else
-    if( (music->loop==-1) || ( music->loop_end_pos > ov_pcm_tell(&music->vf) ) )
+    len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
+    ogg_int64_t pcmpos=ov_pcm_tell(&music->vf);
+    if( (music->loop==1) && ( pcmpos > music->loop_end ) )
     {
-        len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
-    } else {
-        int endsize = (music->loop_end-ov_pcm_tell(&music->vf))*music->loop_len_ch;
-        char tmp[4096];
-        len = vorbis.ov_read(&music->vf, data, endsize, 0, 2, 1, &section);
-        endsize=len;
+        len -= ((pcmpos-music->loop_end)*music->loop_len_ch)*2;
         ov_pcm_seek(&music->vf, music->loop_start);
-        int len2 = vorbis.ov_read(&music->vf, tmp, sizeof(tmp)-endsize, 0, 2, 1, &section);
-        len += len2;
-        if( (music->loop_end-music->loop_start) >= (4096/music->loop_len_ch) )
-        {
-            for(int i=endsize, j=0;(i<sizeof(data)) && (j<len2); i++,j++)
-                data[i]=tmp[j];
-        } else {
-            while(len<4096)
-            {
-                for(int i=endsize, j=0;(i<sizeof(data)) &&(j<len2); i++,j++)
-                    data[i]=tmp[j];
-                endsize=len;
-                if((len+len2)>4096) break;
-                len+=len2;
-            }
-        }
     }
 #endif
     if ( len <= 0 ) {
