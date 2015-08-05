@@ -1012,6 +1012,7 @@ static int music_internal_play(Mix_Music *music, double position)
 #endif
 #ifdef OGG_MUSIC
         case MUS_OGG:
+            if(music_loops>=0) OGG_IgnoreLoop(music->data.ogg);
         OGG_play(music->data.ogg);
         break;
 #endif

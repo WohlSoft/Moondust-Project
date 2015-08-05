@@ -169,6 +169,13 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
     return(music);
 }
 
+/* Ignore loop points if found */
+void OGG_IgnoreLoop(OGG_music *music)
+{
+    if( music ) music->loop=-1;
+}
+
+
 /* Start playback of a given OGG stream */
 void OGG_play(OGG_music *music)
 {
@@ -299,3 +306,4 @@ void OGG_jump_to_time(OGG_music *music, double time)
 }
 
 #endif /* OGG_MUSIC */
+

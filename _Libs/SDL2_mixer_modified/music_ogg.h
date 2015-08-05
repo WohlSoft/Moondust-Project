@@ -58,6 +58,8 @@ typedef struct {
  */
 extern int OGG_init(SDL_AudioSpec *mixer);
 
+extern void OGG_IgnoreLoop(OGG_music *music);
+
 /* Set the volume for an OGG stream */
 extern void OGG_setvolume(OGG_music *music, int volume);
 
