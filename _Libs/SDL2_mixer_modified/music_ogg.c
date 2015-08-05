@@ -91,10 +91,60 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         OGG_setvolume(music, MIX_MAX_VOLUME);
         music->section = -1;
 
+        music->loop         = -1;
+        music->loop_start   =  0;
+        music->loop_end     =  0;
+        music->loop_len     =  0;
+
         if ( vorbis.ov_open_callbacks(src, &music->vf, NULL, 0, callbacks) < 0 ) {
             SDL_SetError("Not an Ogg Vorbis audio stream");
             SDL_free(music);
             return(NULL);
+        }
+
+        /* Parse comments and extract title and loop points */
+        vorbis_comment *ptr=ov_comment(&music->vf,-1);
+        int doValue=0;
+        for(int i=0;i<ptr->comments;i++)
+        {
+            char argument[ptr->comment_lengths[i]+1];
+            char value[ptr->comment_lengths[i]+1];
+            for(int j=0, k=0; j<=ptr->comment_lengths[i]; j++, k++)
+            {
+                if(doValue==0)
+                {
+                    argument[j]=ptr->user_comments[i][j];
+                    if(argument[j]=='=')
+                    {
+                        argument[j]='\0';
+                        doValue=1;
+                        k=-1;
+                    }
+                } else {
+                    value[k]=ptr->user_comments[i][j];
+                }
+            }
+            int isLoopStart=strcmp(argument, "LOOPSTART");
+            int isLoopLen  =strcmp(argument, "LOOPLENGTH");
+            if(isLoopStart==0) {
+                music->loop_start = atoi(value);
+            } else if(isLoopLen==0) {
+                music->loop_len= atoi(value);//Temporary store lenght as "end"
+            }
+            doValue=0;
+        }
+        music->loop_end +=music->loop_start+music->loop_len;
+        if((music->loop_start<music->loop_end) &&
+           (music->loop_start<ov_pcm_total(&music->vf,-1))&&
+           (music->loop_end<ov_pcm_total(&music->vf,-1)) )
+        {
+            music->loop=1;
+            vorbis_info *vi;
+            vi = vorbis.ov_info(&music->vf, -1);
+            music->loop_len_raw  = music->loop_len*vi->channels;
+            music->loop_end_pos = music->loop_end-(4096/vi->channels);
+            music->loop_len_ch = vi->channels;
+            music->loop_end_raw  = music->loop_end*vi->channels;
         }
     } else {
         SDL_OutOfMemory();
@@ -126,7 +176,32 @@ static void OGG_getsome(OGG_music *music)
 #ifdef OGG_USE_TREMOR
     len = vorbis.ov_read(&music->vf, data, sizeof(data), &section);
 #else
-    len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
+    if( (music->loop==-1) || ( music->loop_end_pos > ov_pcm_tell(&music->vf) ) )
+    {
+        len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
+    } else {
+        int endsize = (music->loop_end-ov_pcm_tell(&music->vf))*music->loop_len_ch;
+        char tmp[4096];
+        len = vorbis.ov_read(&music->vf, data, endsize, 0, 2, 1, &section);
+        endsize=len;
+        ov_pcm_seek(&music->vf, music->loop_start);
+        int len2 = vorbis.ov_read(&music->vf, tmp, sizeof(tmp)-endsize, 0, 2, 1, &section);
+        len += len2;
+        if( (music->loop_end-music->loop_start) >= (4096/music->loop_len_ch) )
+        {
+            for(int i=endsize, j=0;(i<sizeof(data)) && (j<len2); i++,j++)
+                data[i]=tmp[j];
+        } else {
+            while(len<4096)
+            {
+                for(int i=endsize, j=0;(i<sizeof(data)) &&(j<len2); i++,j++)
+                    data[i]=tmp[j];
+                endsize=len;
+                if((len+len2)>4096) break;
+                len+=len2;
+            }
+        }
+    }
 #endif
     if ( len <= 0 ) {
         if ( len == 0 ) {
