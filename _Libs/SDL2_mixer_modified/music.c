@@ -910,6 +910,24 @@ Mix_MusicType Mix_GetMusicType(const Mix_Music *music)
     return(type);
 }
 
+/* Get music title from meta-tag if possible */
+const char* Mix_GetMusicTitle(const Mix_Music *music)
+{
+    if ( music ) {
+        switch (music->type) {
+        #ifdef OGG_MUSIC
+            case MUS_OGG:
+            if(music->data.ogg->mus_title!=NULL)
+                return music->data.ogg->mus_title;
+            break;
+        #endif
+            default:
+                break;
+        }
+    }
+    return "";
+}
+
 /* Play a music chunk.  Returns 0, or -1 if there was an error.
  */
 static int music_internal_play(Mix_Music *music, double position)

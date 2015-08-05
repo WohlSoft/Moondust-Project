@@ -197,6 +197,9 @@ extern DECLSPEC const char * SDLCALL Mix_GetMusicDecoder(int index);
 */
 extern DECLSPEC Mix_MusicType SDLCALL Mix_GetMusicType(const Mix_Music *music);
 
+/* Get music title from meta-tag if possible */
+extern DECLSPEC const char* SDLCALL Mix_GetMusicTitle(const Mix_Music *music);
+
 /* Set a function that is called after all mixing is performed.
    This can be used to provide real-time visual display of the audio stream
    or add a custom mixer filter for the stream data.
