@@ -1102,9 +1102,9 @@ int WorldScene::exec()
         glFlush();
         if(!skipFrame) PGE_Window::rePaint();
 
-        if( uTickf > (float)(SDL_GetTicks()-start_common) )
+        if( uTick > (signed)(SDL_GetTicks()-start_common) )
         {
-            wait( uTickf-(float)(SDL_GetTicks()-start_common));
+            SDL_Delay(uTick-(signed)(SDL_GetTicks()-start_common));
         }
 
         if(PGE_Window::showDebugInfo) debug_total_delay=SDL_GetTicks()-start_common;

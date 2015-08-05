@@ -907,7 +907,7 @@ int LevelScene::exec()
         if( uTick > (signed)PassedTime )
         {
             if(!slowTimeMode)
-                wait( uTickf-PassedTime );
+                SDL_Delay( uTick-PassedTime );
             else
                 SDL_Delay( uTick-PassedTime+300 );
         }
