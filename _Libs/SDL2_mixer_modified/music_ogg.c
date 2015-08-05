@@ -91,6 +91,8 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         OGG_setvolume(music, MIX_MAX_VOLUME);
         music->section = -1;
 
+        music->mus_title=NULL;
+
         music->loop         = -1;
         music->loop_start   =  0;
         music->loop_end     =  0;
@@ -105,6 +107,7 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         /* Parse comments and extract title and loop points */
         vorbis_comment *ptr=ov_comment(&music->vf,-1);
         int doValue=0;
+        int isLength=0;
         for(int i=0;i<ptr->comments;i++)
         {
             char argument[ptr->comment_lengths[i]+1];
@@ -124,19 +127,35 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
                     value[k]=ptr->user_comments[i][j];
                 }
             }
-            int isLoopStart=strcmp(argument, "LOOPSTART");
-            int isLoopLen  =strcmp(argument, "LOOPLENGTH");
+            int isLoopStart  = strcasecmp(argument, "LOOPSTART");
+            int isLoopLen    = strcasecmp(argument, "LOOPLENGTH");
+            int isLoopEnd    = strcasecmp(argument, "LOOPEND");
+            int isMusicTitle = strcasecmp(argument, "TITLE");
             if(isLoopStart==0) {
                 music->loop_start = atoi(value);
             } else if(isLoopLen==0) {
-                music->loop_len= atoi(value);//Temporary store lenght as "end"
+                music->loop_len= atoi(value);
+                isLength=1;
+            } else if(isLoopEnd==0) {
+                isLength=0;
+                music->loop_end= atoi(value);
+            } else if(isMusicTitle==0) {
+                music->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_title, value);
             }
             doValue=0;
         }
-        music->loop_end +=music->loop_start+music->loop_len;
-        if((music->loop_start<music->loop_end) &&
-           (music->loop_start<ov_pcm_total(&music->vf,-1))&&
-           (music->loop_end<ov_pcm_total(&music->vf,-1)) )
+
+        if(isLength==1)
+            music->loop_end=music->loop_start+music->loop_len;
+        else
+            music->loop_len=music->loop_end-music->loop_start;
+
+        if( (music->loop_start > 0)&&
+            (music->loop_end > 0)&&
+            (music->loop_start < music->loop_end) &&
+            (music->loop_start < ov_pcm_total(&music->vf,-1))&&
+            (music->loop_end < ov_pcm_total(&music->vf,-1)) )
         {
             music->loop=1;
             vorbis_info *vi;
@@ -281,6 +300,10 @@ void OGG_delete(OGG_music *music)
         }
         if ( music->freesrc ) {
             SDL_RWclose(music->src);
+        }
+        if( music->mus_title )
+        {
+            SDL_free(music->mus_title);
         }
         vorbis.ov_clear(&music->vf);
         SDL_free(music);
