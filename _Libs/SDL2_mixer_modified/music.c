@@ -941,23 +941,33 @@ Mix_MusicType Mix_GetMusicType(const Mix_Music *music)
 /* Get music title from meta-tag if possible */
 const char* Mix_GetMusicTitle(const Mix_Music *music)
 {
+    const char* tag=Mix_GetMusicTitleTag(music);
+    if(strlen(tag)>0)
+        return tag;
+    if( music_filename != NULL )
+        return music_filename;
+    return "";
+}
+
+const char* Mix_GetMusicTitleTag(const Mix_Music *music)
+{
     if ( music ) {
         switch (music->type) {
         #ifdef OGG_MUSIC
             case MUS_OGG:
-                if((music->data.ogg->mus_title!=NULL)&&(strlen(music->data.ogg->mus_title)>0))
+                if(music->data.ogg->mus_title!=NULL)
                     return music->data.ogg->mus_title;
             break;
         #endif
         #ifdef MP3_MAD_MUSIC
             case MUS_MP3_MAD:
-                if((music->data.mp3_mad->mus_title!=NULL)&&(strlen(music->data.mp3_mad->mus_title)>0))
+                if(music->data.mp3_mad->mus_title!=NULL)
                     return music->data.mp3_mad->mus_title;
             break;
         #endif
         #ifdef MODPLUG_MUSIC
             case MUS_MODPLUG:
-                if((music->data.modplug->mus_title!=NULL)&&(strlen(music->data.modplug->mus_title)>0))
+                if(music->data.modplug->mus_title!=NULL)
                     return music->data.modplug->mus_title;
             break;
         #endif
@@ -965,8 +975,6 @@ const char* Mix_GetMusicTitle(const Mix_Music *music)
                 break;
         }
     }
-    if( music_filename != NULL )
-        return music_filename;
     return "";
 }
 
