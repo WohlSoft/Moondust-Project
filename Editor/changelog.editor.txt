@@ -7,7 +7,7 @@ Editor 0.3.1.2
 - Fixed a small issue with unreseted NPC parameters on taking new NPC's to place
 
 Editor 0.3.1.1
-- Added tool tip to bring attention to some useful features in the Editor.
+- Added "tip of day" to bring attention to some useful features in the Editor.
 
 Editor 0.3.1
 - Added tool which provides clean-up of garbage NPC's caused by SMBX bug (any climbabme NPC's such as vines are flooding SMBX)
