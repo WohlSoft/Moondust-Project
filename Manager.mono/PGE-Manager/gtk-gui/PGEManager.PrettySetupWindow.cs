@@ -12,7 +12,7 @@ namespace PGEManager
 		
 		private global::Gtk.VBox vbox2;
 		
-		private global::Gtk.Label label1;
+		private global::Gtk.Label lblWhereIsPGE;
 		
 		private global::Gtk.HBox hbox2;
 		
@@ -24,11 +24,11 @@ namespace PGEManager
 		
 		private global::Gtk.RadioButton winRegKeyPath;
 		
-		private global::Gtk.Label GtkLabel2;
-		
-		private global::Gtk.HBox hbox1;
+		private global::Gtk.HBox hbox3;
 		
 		private global::Gtk.Button nextButton;
+		
+		private global::Gtk.Label GtkLabel3;
 
 		protected virtual void Build ()
 		{
@@ -57,11 +57,11 @@ namespace PGEManager
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label ();
-			this.label1.Name = "label1";
-			this.label1.LabelProp = "Where is your PGE located?";
-			this.vbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label1]));
+			this.lblWhereIsPGE = new global::Gtk.Label ();
+			this.lblWhereIsPGE.Name = "lblWhereIsPGE";
+			this.lblWhereIsPGE.LabelProp = "Where is your PGE located?";
+			this.vbox2.Add (this.lblWhereIsPGE);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.lblWhereIsPGE]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
@@ -117,37 +117,38 @@ namespace PGEManager
 			w6.Position = 2;
 			w6.Expand = false;
 			w6.Fill = false;
-			this.GtkAlignment.Add (this.vbox2);
-			this.frame1.Add (this.GtkAlignment);
-			this.GtkLabel2 = new global::Gtk.Label ();
-			this.GtkLabel2.WidthRequest = 123;
-			this.GtkLabel2.HeightRequest = 154;
-			this.GtkLabel2.Name = "GtkLabel2";
-			this.GtkLabel2.LabelProp = "<b>PGE Manager Setup</b>";
-			this.GtkLabel2.UseMarkup = true;
-			this.frame1.LabelWidget = this.GtkLabel2;
-			this.vbox1.Add (this.frame1);
-			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.frame1]));
-			w9.Position = 0;
-			// Container child vbox1.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
-			this.hbox1.Name = "hbox1";
-			this.hbox1.Spacing = 6;
-			// Container child hbox1.Gtk.Box+BoxChild
+			// Container child vbox2.Gtk.Box+BoxChild
+			this.hbox3 = new global::Gtk.HBox ();
+			this.hbox3.Name = "hbox3";
+			this.hbox3.Spacing = 6;
+			// Container child hbox3.Gtk.Box+BoxChild
 			this.nextButton = new global::Gtk.Button ();
 			this.nextButton.WidthRequest = 90;
 			this.nextButton.CanFocus = true;
 			this.nextButton.Name = "nextButton";
 			this.nextButton.UseUnderline = true;
 			this.nextButton.Label = "Next";
-			this.hbox1.Add (this.nextButton);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.nextButton]));
-			w10.Position = 2;
-			w10.Expand = false;
-			w10.Fill = false;
-			this.vbox1.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-			w11.Position = 1;
+			this.hbox3.Add (this.nextButton);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox3 [this.nextButton]));
+			w7.Position = 2;
+			w7.Expand = false;
+			w7.Fill = false;
+			this.vbox2.Add (this.hbox3);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox3]));
+			w8.Position = 3;
+			w8.Expand = false;
+			w8.Fill = false;
+			this.GtkAlignment.Add (this.vbox2);
+			this.frame1.Add (this.GtkAlignment);
+			this.GtkLabel3 = new global::Gtk.Label ();
+			this.GtkLabel3.WidthRequest = 123;
+			this.GtkLabel3.Name = "GtkLabel3";
+			this.GtkLabel3.LabelProp = "<b>PGE Manager Setup</b>";
+			this.GtkLabel3.UseMarkup = true;
+			this.frame1.LabelWidget = this.GtkLabel3;
+			this.vbox1.Add (this.frame1);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.frame1]));
+			w11.Position = 0;
 			w11.Expand = false;
 			w11.Fill = false;
 			this.Add (this.vbox1);
@@ -155,8 +156,9 @@ namespace PGEManager
 				this.Child.ShowAll ();
 			}
 			this.DefaultWidth = 491;
-			this.DefaultHeight = 279;
+			this.DefaultHeight = 157;
 			this.Show ();
+			this.entry1.Changed += new global::System.EventHandler (this.OnEntry1Changed);
 			this.browseButton.Clicked += new global::System.EventHandler (this.OnBrowseButtonClicked);
 			this.winRegKeyPath.Toggled += new global::System.EventHandler (this.OnWinRegKeyPathToggled);
 			this.nextButton.Clicked += new global::System.EventHandler (this.OnNextButtonClicked);
