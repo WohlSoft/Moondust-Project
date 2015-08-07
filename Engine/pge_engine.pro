@@ -231,7 +231,8 @@ SOURCES += \
     scenes/level/npc_detectors/lvl_dtc_inarea.cpp \
     script/bindings/level/classes/luaclass_level_inareadetector.cpp \
     script/bindings/level/classes/luaclass_level_playerposdetector.cpp \
-    script/bindings/core/classes/luaclass_core_simpleevent.cpp
+    script/bindings/core/classes/luaclass_core_simpleevent.cpp \
+    gui/pge_questionbox.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -368,7 +369,8 @@ HEADERS  += \
     scenes/level/npc_detectors/lvl_dtc_inarea.h \
     script/bindings/level/classes/luaclass_level_inareadetector.h \
     script/bindings/level/classes/luaclass_level_playerposdetector.h \
-    script/bindings/core/classes/luaclass_core_simpleevent.h
+    script/bindings/core/classes/luaclass_core_simpleevent.h \
+    gui/pge_questionbox.h
 
 
 FORMS    += \

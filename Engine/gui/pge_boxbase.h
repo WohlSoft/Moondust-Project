@@ -16,6 +16,15 @@
 class PGE_BoxBase
 {
 public:
+    enum msgType
+    {
+        msg_info=0,
+        msg_info_light,
+        msg_warn,
+        msg_error,
+        msg_fatal
+    };
+
     PGE_BoxBase();
     PGE_BoxBase(Scene *_parentScene = 0);
     PGE_BoxBase(const PGE_BoxBase &bb);
