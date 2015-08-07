@@ -33,6 +33,7 @@
 
 #ifdef Q_OS_WIN
 #include <windows.h>
+#include <QDesktopWidget>
 #endif
 
 void MainWindow::on_action_doTest_triggered()
@@ -320,7 +321,8 @@ void MainWindow::on_actionRunTestSMBX_triggered()
             PGE_MusPlayer::MUS_stopMusic();
 
             //Minimize PGE Editor
-            this->showMinimized();
+            if(qApp->desktop()->screenCount()==1) // Minimize editor window if alone screen was found
+                this->showMinimized();
 
             //Send command and restore window
             SetForegroundWindow(smbxWind);
