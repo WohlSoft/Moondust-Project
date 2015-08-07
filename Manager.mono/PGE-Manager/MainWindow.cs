@@ -7,20 +7,106 @@ using PGEManager;
 using System.Net;
 using Newtonsoft.Json;
 using System.IO;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using STA.Settings;
 
 public partial class MainWindow: Gtk.Window
 {
     private List<WohlNews> PGENews = new List<WohlNews>();
     private List<ConfigPack> ConfigList = new List<ConfigPack>();
+    private string PGEEditorPath, PGEEnginePath;
+    private Version EditorVersion, EngineVersion;
+
+    public static bool RunningPortable;
 
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		this.Build ();
+        this.ShowAll();
         ReadConfigsIndex();
         InitializeConfigTreeView();
         GetLatestNews();
         InitializeNewsTreeView();
+
+        RunningPortable = DetectRunningPortable();
+        this.Title = "PGE Manager - Portable: " + RunningPortable;
+        DoPGEVersioning();
 	}
+
+    private bool DetectRunningPortable()
+    {
+        PGEEditorPath = Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar;
+        PGEEnginePath = Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar;
+        if (Internals.CurrentOS == InternalOperatingSystem.Windows)
+        {
+            PGEEditorPath += "pge_editor.exe";
+            PGEEnginePath += "pge_engine.exe";
+        }
+        else if (Internals.CurrentOS == InternalOperatingSystem.Linux)
+        {
+            PGEEditorPath += "pge_editor";
+            PGEEnginePath += "pge_engine";
+        }
+        if (File.Exists(PGEEditorPath) && File.Exists(PGEEnginePath))
+        {
+            if (File.Exists(Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar + "pge_editor.ini"))
+            {
+                INIFile editorConfig = new INIFile(Environment.CurrentDirectory + System.IO.Path.DirectorySeparatorChar + "pge_editor.ini");
+                if(editorConfig.GetValue("Main", "force-portable", "false").ToString().ToLower() == "true")
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+        return false;
+    }
+
+    private void DoPGEVersioning()
+    {
+        PGEEditorPath = Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar;
+        PGEEnginePath = Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar;
+        if (Internals.CurrentOS == InternalOperatingSystem.Windows)
+        {
+            PGEEditorPath += "pge_editor.exe";
+            PGEEnginePath += "pge_engine.exe";
+        }
+        else if (Internals.CurrentOS == InternalOperatingSystem.Linux)
+        {
+            PGEEditorPath += "pge_editor";
+            PGEEnginePath += "pge_engine";
+        }
+        EditorVersion = ExtractVersionFromWohlString(PGEEditorPath);
+        EngineVersion = ExtractVersionFromWohlString(PGEEnginePath);
+
+        launcheditorwidget1.SetEditorVersion(EditorVersion);
+        launcheditorwidget1.SetEngineVersion(EngineVersion);
+    }
+
+
+    private Version ExtractVersionFromWohlString(string pathToExe)
+    {
+        Process p = new Process();
+        p.StartInfo.Arguments = "--version";
+        p.StartInfo.RedirectStandardOutput = true;
+        p.StartInfo.UseShellExecute = false;
+        p.StartInfo.FileName = pathToExe;
+        p.Start();
+        string output = "";
+        while (!p.StandardOutput.EndOfStream)
+            output += p.StandardOutput.ReadLine();
+
+        if (output == null || output.Trim() == "")
+            return new Version("0.0.0.0");
+        else
+        {
+            Regex pattern = new Regex("\\d+(\\.\\d+)+");
+            Match m = pattern.Match(output);
+            return new Version(m.Value);
+        }
+    }
 
     private void GetLatestNews()
     {
@@ -56,15 +142,21 @@ public partial class MainWindow: Gtk.Window
 
     private void InitializeConfigTreeView()
     {
-        Gtk.ListStore configPackModel = new ListStore(typeof(string), typeof(string), typeof(string));
+        Gtk.ListStore configPackModel = new ListStore(typeof(string), typeof(string), typeof(bool));
         configListTreeview.AppendColumn("Pack Name", new CellRendererText(), "text", 0);
         configListTreeview.AppendColumn("Upload Date", new CellRendererText(), "text", 1);
         configListTreeview.AppendColumn("Installed", new CellRendererText(), "text", 2);
         foreach (var cfg in ConfigList)
         {
+            bool exists = false;
+            string pathToCheck = Program.ProgramSettings.PGEDirectory + System.IO.Path.DirectorySeparatorChar + cfg.URL.Trim('/');
+            if(Directory.Exists(pathToCheck))
+            {
+                exists = true;
+            }
             configPackModel.AppendValues(
                 cfg.FriendlyName, 
-                ConfigPack.UnixTimeStampToDateTime((double)cfg.upd).ToString(), "No");
+                ConfigPack.UnixTimeStampToDateTime((double)cfg.upd).ToString(), exists);
         }
         configListTreeview.Model = configPackModel;
     }
