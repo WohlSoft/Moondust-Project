@@ -22,7 +22,6 @@ namespace PGEManager.Internal
         public string Website {get;set;}
         public string Comment {get;set;}
 
-
         public AuthorStruct()
         {
         }
