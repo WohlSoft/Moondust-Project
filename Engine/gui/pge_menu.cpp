@@ -27,8 +27,9 @@
 
 #include <QStack>
 
-PGE_Menu::PGE_Menu()
+PGE_Menu::PGE_Menu(menuAlignment align)
 {
+    alignment = align;
     _itemsOnScreen=5;
     _currentItem = 0;
     _line=0;
@@ -75,6 +76,7 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
     is_keygrab = menu.is_keygrab;
     /*******Key grabbing********/
 
+    alignment      = menu.alignment;
     _itemsOnScreen = menu._itemsOnScreen;
     _currentItem   = menu._currentItem;
     _line          = menu._line;
@@ -770,9 +772,20 @@ void PGE_Menu::render()
 
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
     {
-        int xPos = menuRect.x();
-        int xPos_s = menuRect.x()-_selector.w-10;
-        int yPos = menuRect.y()+ j*_item_height;
+        int xPos = 0;
+        int yPos = 0;
+        if (alignment == menuAlignment::HORIZONTAL && i > 0)
+        {
+            xPos = menuRect.x()+_items[i-1]->_width+5;
+            yPos = menuRect.y();
+        }
+        else
+        {
+            xPos = menuRect.x();
+            yPos = menuRect.y()+ j*_item_height;
+        }
+
+        int xPos_s = xPos-_selector.w-10;
 
         if(i==_currentItem)
         {
