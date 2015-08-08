@@ -89,6 +89,7 @@ public:
     bool isKeyGrabbing();         //!< Is a key grabbing mode
     bool processJoystickBinder(); //!< Is a joystick key grabbing mode
     void storeKey(int scancode);
+    menuAlignment getAlignment();
     const PGE_Menuitem currentItem(); //!< Returns current menu item entry
     int currentItemI();       //!< Returns index of current menu item
     void setCurrentItem(int i); //!< Sets current index of menuitem
