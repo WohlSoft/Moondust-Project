@@ -461,6 +461,11 @@ void PGE_QuestionBox::initControllers()
                 _ctrl2=NULL;
             }
         }
+        else
+        {
+            _ctrl1=NULL;
+            _ctrl2=NULL;
+        }
     }
     else
     {
