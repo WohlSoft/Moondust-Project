@@ -457,6 +457,11 @@ void PGE_MenuBox::initControllers()
                 _ctrl2=NULL;
             }
         }
+        else
+        {
+            _ctrl1=NULL;
+            _ctrl2=NULL;
+        }
     }
     else
     {
