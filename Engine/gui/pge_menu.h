@@ -43,7 +43,7 @@ friend class PGE_KeyGrabMenuItem;
 public:
     enum menuAlignment { HORIZONTAL, VERTICLE };
 
-    PGE_Menu(menuAlignment align=VERTICLE);
+    PGE_Menu(menuAlignment align=VERTICLE, int itemGap=5);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
@@ -107,6 +107,7 @@ public:
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(int maxlen, bool strict=false);
+    int getMenuItemGap();
 
     bool isKeygrabViaKey() const;
     void setKeygrabViaKey(bool value);
@@ -148,6 +149,7 @@ private:
     int _width_limit;
     int _text_len_limit;
     bool _text_len_limit_strict;
+    int menuItemGap;
 
     int _font_id;
     int _font_offset;

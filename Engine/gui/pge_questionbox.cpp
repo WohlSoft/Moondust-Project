@@ -36,7 +36,7 @@
 
 PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, QString _title, msgType _type,
                        PGE_Point boxCenterPos, float _padding, QString texture)
-    : PGE_BoxBase(_parentScene), _menu(PGE_Menu::menuAlignment::HORIZONTAL)
+    : PGE_BoxBase(_parentScene), _menu(PGE_Menu::menuAlignment::HORIZONTAL, 30)
 {
     setParentScene(_parentScene);
     construct(_title,_type, boxCenterPos, _padding, texture);
