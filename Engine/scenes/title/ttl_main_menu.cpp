@@ -199,8 +199,13 @@ void TitleScene::processMenu()
             case menu_testboxes:
                 if(value=="messagebox")
                 {
-                    PGE_MsgBox msg(this, "This is a small message box\nЭто маленкая коробочка-сообщение", PGE_BoxBase::msg_info_light);
+                    PGE_MsgBox msg(this, "This is a small message box without texture\nЭто маленкая коробочка-сообщение без текстуры", PGE_BoxBase::msg_info_light);
                     msg.exec();
+
+                    PGE_MsgBox msg2(this, "This is a small message box with texture\nЭто маленкая коробочка-сообщение с текстурой", PGE_BoxBase::msg_info,
+                                    ConfigManager::setup_message_box.box_padding,
+                                    ConfigManager::setup_message_box.sprite);
+                    msg2.exec();
                     menu.resetState();
                 }
                 else
@@ -226,6 +231,14 @@ void TitleScene::processMenu()
                     menubox.setMaxMenuItems(5);
                     menubox.exec();
 
+                    if(menubox.answer()>=0)
+                    {
+                        PGE_MsgBox msg(this, "Your answer is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light,
+                                ConfigManager::setup_message_box.box_padding,
+                                ConfigManager::setup_message_box.sprite);
+                        msg.exec();
+                    }
+
                     menu.resetState();
                 }
                 else
@@ -249,7 +262,15 @@ void TitleScene::processMenu()
                     items<<"Three";
                     items<<"Four";
                     hor.addMenuItems(items);
+                    hor.setRejectSnd(obj_sound_role::BlockSmashed);
                     hor.exec();
+                    if(hor.answer()>=0)
+                    {
+                        PGE_MsgBox msg(this, "Answer on so dumb question is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light,
+                                ConfigManager::setup_message_box.box_padding,
+                                ConfigManager::setup_message_box.sprite);
+                        msg.exec();
+                    }
                     menu.resetState();
                 }
             break;
