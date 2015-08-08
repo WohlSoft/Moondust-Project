@@ -31,7 +31,7 @@
 #include "scene_title.h"
 #include <QtDebug>
 
-TitleScene::TitleScene() : Scene(Title), luaEngine(this), menu(PGE_Menu::menuAlignment::VERTICLE)
+TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
     doExit=false;
     mousePos.setX(-300);
