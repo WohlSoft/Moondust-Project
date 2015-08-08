@@ -674,19 +674,30 @@ void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
 
 void PGE_Menu::refreshRect()
 {
-    if(_items.size()<_itemsOnScreen)
-        menuRect.setHeight(_items.size() * _item_height );
-    else
-        menuRect.setHeight(_itemsOnScreen * _item_height );
-
-    menuRect.setWidth(0);
-    for(int i=0; i<_items.size(); i++)
+    if (alignment == menuAlignment::HORIZONTAL)
     {
-        if(menuRect.width()<_items[i]->_width)
-            menuRect.setWidth(_items[i]->_width);
+        menuRect.setHeight(_item_height);
+        int menuWidth=0;
+        for(int temp = 0; temp <_items.size(); temp++)
+            menuWidth += _items[temp]->_width+30;
+        menuRect.setWidth(menuWidth);
     }
-    if(menuRect.width()>_width_limit)
-        menuRect.setWidth(_width_limit);
+    else if (alignment == menuAlignment::VERTICLE)
+    {
+        if(_items.size()<_itemsOnScreen)
+            menuRect.setHeight(_items.size() * _item_height );
+        else
+            menuRect.setHeight(_itemsOnScreen * _item_height );
+
+        menuRect.setWidth(0);
+        for(int i=0; i<_items.size(); i++)
+        {
+            if(menuRect.width()<_items[i]->_width)
+                menuRect.setWidth(_items[i]->_width);
+        }
+        if(menuRect.width()>_width_limit)
+            menuRect.setWidth(_width_limit);
+    }
 }
 bool PGE_Menu::isKeygrabViaKey() const
 {
