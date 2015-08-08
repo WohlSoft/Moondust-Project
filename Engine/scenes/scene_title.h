@@ -90,6 +90,7 @@ public:
         menu_playbattle,
         menu_opensave,
         menu_tests,
+        menu_testboxes,
         menu_controls,
         menu_controls_plr1,
         menu_controls_plr2,
