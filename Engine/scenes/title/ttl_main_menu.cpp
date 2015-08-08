@@ -202,7 +202,7 @@ void TitleScene::processMenu()
                     PGE_MsgBox msg(this, "This is a small message box without texture\nЭто маленкая коробочка-сообщение без текстуры", PGE_BoxBase::msg_info_light);
                     msg.exec();
 
-                    PGE_MsgBox msg2(this, "This is a small message box with texture\nЭто маленкая коробочка-сообщение с текстурой", PGE_BoxBase::msg_info,
+                    PGE_MsgBox msg2(this, "This is a small message box with texture\nЭто маленкая коробочка-сообщение с текстурой", PGE_BoxBase::msg_info, PGE_Point(-1,-1),
                                     ConfigManager::setup_message_box.box_padding,
                                     ConfigManager::setup_message_box.sprite);
                     msg2.exec();
@@ -233,7 +233,7 @@ void TitleScene::processMenu()
 
                     if(menubox.answer()>=0)
                     {
-                        PGE_MsgBox msg(this, "Your answer is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light,
+                        PGE_MsgBox msg(this, "Your answer is:\n"+items[menubox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1,-1),
                                 ConfigManager::setup_message_box.box_padding,
                                 ConfigManager::setup_message_box.sprite);
                         msg.exec();
@@ -266,7 +266,7 @@ void TitleScene::processMenu()
                     hor.exec();
                     if(hor.answer()>=0)
                     {
-                        PGE_MsgBox msg(this, "Answer on so dumb question is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light,
+                        PGE_MsgBox msg(this, "Answer on so dumb question is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1,-1),
                                 ConfigManager::setup_message_box.box_padding,
                                 ConfigManager::setup_message_box.sprite);
                         msg.exec();
