@@ -677,9 +677,19 @@ void PGE_Menu::refreshRect()
     if (alignment == menuAlignment::HORIZONTAL)
     {
         menuRect.setHeight(_item_height);
+
         int menuWidth=0;
-        for(int temp = 0; temp <_items.size(); temp++)
-            menuWidth += _items[temp]->_width+30;
+        if(_items.size()<_itemsOnScreen) {
+            for(int temp = 0; temp <_items.size(); temp++)
+                menuWidth += _items[temp]->_width+30;
+        } else {
+            int maxWidth=0;
+            for(int temp = 0; temp <_items.size(); temp++)
+            {
+                if(_items[temp]->_width>maxWidth) maxWidth=_items[temp]->_width;
+            }
+            menuWidth=(maxWidth*_itemsOnScreen)+30;
+        }
         menuRect.setWidth(menuWidth);
     }
     else if (alignment == menuAlignment::VERTICLE)
