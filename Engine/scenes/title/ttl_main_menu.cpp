@@ -222,7 +222,7 @@ void TitleScene::processMenu()
                     items<<"Menuitem 11";
                     menubox.addMenuItems(items);
                     menubox.setRejectSnd(obj_sound_role::MenuPause);
-                    menubox.setMaxMenuItems(4);
+                    menubox.setMaxMenuItems(5);
                     menubox.exec();
 
                     menu.resetState();
@@ -239,14 +239,15 @@ void TitleScene::processMenu()
                 }
                 else if (value=="horizontalbox")
                 {
-                    /*PGE_MenuBox hor(0, "AHHHH", PGE_BoxBase::msg_info_light);
+                    PGE_MenuBox hor(this, "AHHHH");
                     QStringList items;
                     items<<"One";
                     items<<"Two";
                     items<<"Three";
                     items<<"Four";
+                    hor.setMaxMenuItems(4);
                     hor.addMenuItems(items);
-                    hor.exec();*/
+                    hor.exec();
                     //tested by having pge_menubox hardcode pge_menu with horizontal
                     //will properly test with new question box when its done
                     menu.resetState();

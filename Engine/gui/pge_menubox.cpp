@@ -36,14 +36,14 @@
 
 PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
                        PGE_Point boxCenterPos, float _padding, QString texture)
-    : _menu(PGE_Menu::menuAlignment::VERTICLE), PGE_BoxBase(_parentScene)
+    : PGE_BoxBase(_parentScene), _menu(PGE_Menu::menuAlignment::VERTICLE)
 {
     setParentScene(_parentScene);
     construct(_title,_type, boxCenterPos, _padding, texture);
 }
 
 PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
-    : _menu(mb._menu), PGE_BoxBase(mb)
+    : PGE_BoxBase(mb), _menu(mb._menu)
 {
     _page     = mb._page;
     running   = mb.running;
@@ -81,13 +81,13 @@ void PGE_MenuBox::construct(QString _title, PGE_MenuBox::msgType _type,
     _answer_id = -1;
     _pos=pos;
     _menu.setTextLenLimit(30, true);
+    setTitleFont(ConfigManager::setup_menu_box.title_font_name);
+    setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
     /****************Word wrap*********************/
     title = _title;
     FontManager::optimizeText(title, 27);
     title_size = FontManager::textSize(_title, fontID, 27);
     /****************Word wrap*end*****************/
-    setTitleFont(ConfigManager::setup_menu_box.title_font_name);
-    setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
     setPadding(_padding);
     setType(_type);
     updateSize();
@@ -187,8 +187,8 @@ void PGE_MenuBox::updateSize()
         _sizeRect.setBottom(_pos.y() + height + padding);
     }
 
-    _menu.setPos(_sizeRect.right()-menuRect.width(),
-                 _sizeRect.bottom()-menuRect.height()+_menu.topOffset()-padding);
+    _menu.setPos(_sizeRect.right() - ( menuRect.width()>title_size.w() ? menuRect.width() : title_size.w() ),
+                 _sizeRect.bottom() - menuRect.height() + _menu.topOffset() - padding);
 }
 
 
@@ -240,7 +240,10 @@ void PGE_MenuBox::render()
                                    _sizeRect.width(), _sizeRect.height(),
                                    bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
         }
-        FontManager::printText(title, _sizeRect.center().x()-title_size.w()/2, _sizeRect.top()+padding, fontID,
+        FontManager::printText(title,
+                               _sizeRect.center().x()-title_size.w()/2,
+                               _sizeRect.top()+padding,
+                               fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
         _menu.render();
 //        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
