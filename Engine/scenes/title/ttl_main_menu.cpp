@@ -205,6 +205,25 @@ void TitleScene::processMenu()
                 else
                 if(value=="menubox")
                 {
+                    PGE_MenuBox menubox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                                         ConfigManager::setup_menu_box.box_padding,
+                                         ConfigManager::setup_message_box.sprite);
+                    QStringList items;
+                    items<<"Menuitem 1";
+                    items<<"Menuitem 2";
+                    items<<"Menuitem 3";
+                    items<<"Menuitem 4";
+                    items<<"Menuitem 5";
+                    items<<"Menuitem 6";
+                    items<<"Menuitem 7";
+                    items<<"Menuitem 8";
+                    items<<"Menuitem 9";
+                    items<<"Menuitem 10";
+                    items<<"Menuitem 11";
+                    menubox.addMenuItems(items);
+                    menubox.setRejectSnd(obj_sound_role::MenuPause);
+                    menubox.setMaxMenuItems(4);
+                    menubox.exec();
 
                     menu.resetState();
                 }
