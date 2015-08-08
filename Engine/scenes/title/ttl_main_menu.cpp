@@ -240,7 +240,9 @@ void TitleScene::processMenu()
                 }
                 else if (value=="questionbox")
                 {
-                    PGE_QuestionBox hor(0, "AHHHH?");
+                    PGE_QuestionBox hor(this, "AHHHH?", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                                        ConfigManager::setup_menu_box.box_padding,
+                                        ConfigManager::setup_message_box.sprite);
                     QStringList items;
                     items<<"One";
                     items<<"Two";
