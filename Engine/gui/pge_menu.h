@@ -41,7 +41,9 @@ class PGE_Menu
 {
 friend class PGE_KeyGrabMenuItem;
 public:
-    PGE_Menu();
+    enum menuAlignment { HORIZONTAL, VERTICLE };
+
+    PGE_Menu(menuAlignment align);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
@@ -119,6 +121,7 @@ private:
     bool is_keygrabViaKey;
     /*******Key grabbing********/
 
+    menuAlignment alignment;
     int _itemsOnScreen;
     int _currentItem;
     int _line;

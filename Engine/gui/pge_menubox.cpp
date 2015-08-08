@@ -36,14 +36,14 @@
 
 PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
                        PGE_Point boxCenterPos, float _padding, QString texture)
-    : PGE_BoxBase(_parentScene)
+    : _menu(PGE_Menu::menuAlignment::VERTICLE), PGE_BoxBase(_parentScene)
 {
     setParentScene(_parentScene);
     construct(_title,_type, boxCenterPos, _padding, texture);
 }
 
 PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
-    : PGE_BoxBase(mb)
+    : _menu(mb._menu), PGE_BoxBase(mb)
 {
     _page     = mb._page;
     running   = mb.running;
@@ -60,7 +60,7 @@ PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
     _sizeRect = mb._sizeRect;
     title     = mb.title;
     title_size= mb.title_size;
-    _menu     = mb._menu;
+    //_menu     = mb._menu;
     width     = mb.width;
 
     height    = mb.height;
