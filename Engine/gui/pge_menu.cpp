@@ -27,7 +27,7 @@
 
 #include <QStack>
 
-PGE_Menu::PGE_Menu(menuAlignment align)
+PGE_Menu::PGE_Menu(menuAlignment align, int itemGap)
 {
     alignment = align;
     _itemsOnScreen=5;
@@ -45,6 +45,7 @@ PGE_Menu::PGE_Menu(menuAlignment align)
     _item_height = ConfigManager::setup_menus.item_height;
     _width_limit=PGE_Window::Width-100;
     _text_len_limit=0;
+    menuItemGap = itemGap;
 
     /// Init menu font
     ConfigManager::setup_menus.font_id = FontManager::getFontID(ConfigManager::setup_menus.font_name);
@@ -99,6 +100,7 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
     _width_limit = menu._width_limit;
     _text_len_limit = menu._text_len_limit;
     _text_len_limit_strict = menu._text_len_limit_strict;
+    menuItemGap = menu.menuItemGap;
 
     _font_id = menu._font_id;
     _font_offset=menu._font_offset;
@@ -530,7 +532,7 @@ int PGE_Menu::findItem(int x, int y)
         {
             return _offset+i;
         }
-        pos+=_item_height;
+        pos+=_item_height+menuItemGap;
     }
 
     return -1;
@@ -671,6 +673,10 @@ void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
     _text_len_limit_strict = strict;
 }
 
+int PGE_Menu::getMenuItemGap()
+{
+    return menuItemGap;
+}
 
 void PGE_Menu::refreshRect()
 {
@@ -681,23 +687,29 @@ void PGE_Menu::refreshRect()
         int menuWidth=0;
         if(_items.size()<_itemsOnScreen) {
             for(int temp = 0; temp <_items.size(); temp++)
-                menuWidth += _items[temp]->_width+30;
+                if (temp == 0)
+                    menuWidth += _items[temp]->_width;
+                else
+                    menuWidth += _items[temp]->_width+menuItemGap;
         } else {
             int maxWidth=0;
             for(int temp = 0; temp <_items.size(); temp++)
             {
                 if(_items[temp]->_width>maxWidth) maxWidth=_items[temp]->_width;
             }
-            menuWidth=(maxWidth+30)*_itemsOnScreen;
+            menuWidth=(maxWidth+menuItemGap)*_itemsOnScreen;
+
+            if (_items.size()>1)
+                menuWidth-=menuItemGap/2;
         }
         menuRect.setWidth(menuWidth);
     }
     else if (alignment == menuAlignment::VERTICLE)
     {
         if(_items.size()<_itemsOnScreen)
-            menuRect.setHeight(_items.size() * _item_height );
+            menuRect.setHeight(_items.size() * (_item_height+menuItemGap) );
         else
-            menuRect.setHeight(_itemsOnScreen * _item_height );
+            menuRect.setHeight(_itemsOnScreen * (_item_height+menuItemGap) );
 
         menuRect.setWidth(0);
         for(int i=0; i<_items.size(); i++)
@@ -766,7 +778,7 @@ void PGE_Menu::render()
 
             if (alignment == menuAlignment::HORIZONTAL)
             {
-                posX -= (w+30);
+                posX -= (w+menuItemGap);
                 posY += h/2;
 
                 //scroll left texture todo
@@ -811,7 +823,7 @@ void PGE_Menu::render()
             if (alignment == menuAlignment::HORIZONTAL)
             {
                 for (int temp = _offset; temp < _offset + _itemsOnScreen; temp++)
-                    posX += _items[temp]->_width+30;
+                    posX += _items[temp]->_width+menuItemGap;
                 posY += h/2;
 
                 //scroll right texture todo
@@ -828,7 +840,10 @@ void PGE_Menu::render()
             else if (alignment == menuAlignment::VERTICLE)
             {
                 posX += (menuRect.width()/2)-(h/2);
-                posY += _item_height*_itemsOnScreen+4;
+                posY += (_item_height+menuItemGap)*_itemsOnScreen+4;
+
+                if (_items.size()>1)
+                    posY -= menuItemGap;
 
                 if(_scroll_down.w==0)
                 {
@@ -851,12 +866,12 @@ void PGE_Menu::render()
         if (alignment == menuAlignment::HORIZONTAL)
         {
             for (int temp = i-1; temp >= _offset; temp--)
-                xPos += _items[temp]->_width+30;
+                xPos += _items[temp]->_width+menuItemGap;
             xPos_s = (xPos+_items[i]->_width/2)-_selector.w/2;
         }
         else if (alignment == menuAlignment::VERTICLE)
         {
-            yPos += j*_item_height;
+            yPos += j*(_item_height+menuItemGap);
             xPos_s = xPos-_selector.w-10;
         }
 
