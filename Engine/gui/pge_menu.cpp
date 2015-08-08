@@ -777,17 +777,19 @@ void PGE_Menu::render()
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
     {
         int xPos = menuRect.x();
-        int xPos_s=0;
-        int yPos = menuRect.y()+ j*_item_height;
+        int yPos = menuRect.y();
+        int xPos_s = 0;
+
         if (alignment == menuAlignment::HORIZONTAL)
         {
             for (int temp = i-1; temp >= 0; temp--)
-                xPos += _items[temp]->_width+10;
-            xPos_s = xPos-_selector.w-10;
+                xPos += _items[temp]->_width+30;
+            xPos_s = (xPos+_items[i]->_width/2)-_selector.w/2;
         }
         else if (alignment == menuAlignment::VERTICLE)
         {
-            xPos_s = menuRect.x()-_selector.w-10;
+            yPos += j*_item_height;
+            xPos_s = xPos-_selector.w-10;
         }
 
         if(i==_currentItem)
@@ -798,7 +800,13 @@ void PGE_Menu::render()
             }
             else
             {
-                int y_offset=(_item_height/2)-(_selector.h/2);
+                int y_offset = 0;
+
+                if (alignment == menuAlignment::HORIZONTAL)
+                    y_offset = 30;
+                else if (alignment == menuAlignment::VERTICLE)
+                    y_offset=(_item_height/2)-(_selector.h/2);
+                //todo: put renderTexture inside their respective ifstatement once texture is complete
                 GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }

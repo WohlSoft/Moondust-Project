@@ -51,6 +51,7 @@ class WorldScene : public Scene
     friend class PGE_MsgBox;
     friend class PGE_MenuBox;
     friend class PGE_TextInputBox;
+    friend class PGE_QuestionBox;
 public:
     WorldScene();
     ~WorldScene();
