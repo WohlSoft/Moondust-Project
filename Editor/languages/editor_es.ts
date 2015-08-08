@@ -1049,7 +1049,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type command here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipear comando aquí...</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
@@ -1450,7 +1450,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="208"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todo %1 en esta seccion en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="209"/>
@@ -1490,12 +1490,12 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="370"/>
         <source>Margin of section</source>
-        <translation type="unfinished">Margen de sección</translation>
+        <translation>Margen de sección</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="371"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="unfinished">Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
     </message>
 </context>
 <context>
@@ -1538,7 +1538,7 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="201"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todo %1 en esta seccion en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="202"/>
@@ -1548,12 +1548,12 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="263"/>
         <source>Margin of section</source>
-        <translation type="unfinished">Margen de sección</translation>
+        <translation>Margen de sección</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="264"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="unfinished">Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="308"/>
@@ -1761,7 +1761,7 @@ Límite: máxima longitud de 27 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly npc&apos;s can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>Amigable (PNJs no amigables no pueden hablar)</translation>
     </message>
     <message>
         <source>Please, enter NPC&apos;s talkative message
@@ -1795,12 +1795,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="180"/>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar en</translation>
+        <translation>Transformar en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="181"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished">Transformar todo %1 en</translation>
+        <translation>Transformar todo %1 en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="185"/>
@@ -1868,12 +1868,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="310"/>
         <source>Margin of section</source>
-        <translation type="unfinished">Margen de sección</translation>
+        <translation>Margen de sección</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="311"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="unfinished">Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
     </message>
     <message>
         <source>Not movable</source>
@@ -1897,7 +1897,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="251"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformar todo %1 en esta seccion en</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="252"/>
@@ -4265,12 +4265,12 @@ Zonas físicas de ambiente:	%6
         <location filename="../main_window/dock/lvl_search_box.ui" line="787"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="799"/>
         <source>[None]</source>
-        <translation type="unfinished">[Nada]</translation>
+        <translation>[Nada]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="535"/>
         <source>Attached layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa adherida:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="661"/>
@@ -4283,22 +4283,22 @@ Zonas físicas de ambiente:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="731"/>
         <source>Evt activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento activar:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="738"/>
         <source>Evt death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento muerte:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="745"/>
         <source>Evt talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento diálogo:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="752"/>
         <source>Evt empty layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento capa vacía:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="513"/>
@@ -6127,18 +6127,18 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="2655"/>
         <source>Clear NPC garbadge...</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar PNJs residuales...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2663"/>
         <location filename="../mainwindow.ui" line="2669"/>
         <source>More sections...</source>
-        <translation type="unfinished"></translation>
+        <translation>Más secciones...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2674"/>
         <source>Tip of the day...</source>
-        <translation type="unfinished"></translation>
+        <translation>Consejo del día...</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -7628,34 +7628,36 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC garbage clean-up</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpieza de residuos </translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Todo está bien, el nivel no tiene PNJs residuales!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
         <source>Found %1 junk NPC&apos;s. Do you want to remove them?
 Press to &quot;Help&quot; button to show up some found junk NPC&apos;s</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 PNJs residuales encontrados. ¿Desea removerlos?
+Presionar el botón de ayuda para ver los PNJs encontrados</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC gargabe has been removed!
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Los residuos han sido removidos!
+Esta operación puede ser deshecha con Ctrl+Z o Editar/Deshacer.</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections.cpp" line="284"/>
         <source>Section %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections.cpp" line="288"/>
         <source>Initialize section %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicializar sección %1...</translation>
     </message>
 </context>
 <context>
@@ -9067,32 +9069,33 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="14"/>
         <source>Tip of day</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>tcvicio is the new account of hacheipe399. I&apos;ve lost my access to the github and e-mail account, so I can&apos;t recover my password for github :/</translatorcomment>
+        <translation>Consejo del día</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
         <source>Did you know...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabías que...</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="58"/>
         <source>Show tip at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar consejo al inicio</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="65"/>
         <source>Previouse tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Consejo previo</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="72"/>
         <source>Next tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente consejo</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="79"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
 </context>
 <context>
@@ -9675,7 +9678,7 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="151"/>
         <source>Transform</source>
-        <translation type="unfinished">Transformar</translation>
+        <translation>Transformar</translation>
     </message>
     <message>
         <source>Changed Worldsetting [%1]</source>
@@ -10502,7 +10505,14 @@ Do you want to save your changes?</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiene un paquete de configuración viejo.
+El editor va a iniciarse, pero tal vez tenga algunos problemas con objetos u opciones.
+
+Por favor descargue e instale la última versión del paquete:
+
+Descargar: %1
+Nota: la mayoría de los paquetes se actualizan junto a PGE,
+por lo tanto puede usar el mismo enlace para obtener la versión actualizada</translation>
     </message>
 </context>
 <context>
