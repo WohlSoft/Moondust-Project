@@ -261,6 +261,9 @@ void TitleScene::processMenu()
                     items<<"Two";
                     items<<"Three";
                     items<<"Four";
+                    items<<"Five";
+                    items<<"Six";
+                    items<<"Seven";
                     hor.addMenuItems(items);
                     hor.setRejectSnd(obj_sound_role::BlockSmashed);
                     hor.exec();

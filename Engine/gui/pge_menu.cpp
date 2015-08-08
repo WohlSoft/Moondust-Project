@@ -688,7 +688,7 @@ void PGE_Menu::refreshRect()
             {
                 if(_items[temp]->_width>maxWidth) maxWidth=_items[temp]->_width;
             }
-            menuWidth=(maxWidth*_itemsOnScreen)+30;
+            menuWidth=(maxWidth+30)*_itemsOnScreen;
         }
         menuRect.setWidth(menuWidth);
     }
