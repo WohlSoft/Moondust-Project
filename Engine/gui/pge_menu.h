@@ -43,7 +43,7 @@ friend class PGE_KeyGrabMenuItem;
 public:
     enum menuAlignment { HORIZONTAL, VERTICLE };
 
-    PGE_Menu(menuAlignment align);
+    PGE_Menu(menuAlignment align=VERTICLE);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
