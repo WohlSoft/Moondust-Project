@@ -22,6 +22,8 @@
 #include <audio/SdlMusPlayer.h>
 #include <graphics/window.h>
 #include <gui/pge_msgbox.h>
+#include <gui/pge_menubox.h>
+#include <gui/pge_textinputbox.h>
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -130,6 +132,12 @@ void TitleScene::processMenu()
                     setMenu(menu_tests);
                 }
                 else
+                if(value=="testboxes")
+                {
+                    menuChain.push(_currentMenu);
+                    setMenu(menu_testboxes);
+                }
+                else
                 if(value=="controls")
                 {
                     menuChain.push(_currentMenu);
@@ -186,7 +194,30 @@ void TitleScene::processMenu()
                     ret = ANSWER_GAMEOVER;
                     doExit=true;
                 }
+            break;
+            case menu_testboxes:
+                if(value=="messagebox")
+                {
+                    PGE_MsgBox msg(this, "This is a small message box\nЭто маленкая коробочка-сообщение", PGE_BoxBase::msg_info_light);
+                    msg.exec();
+                    menu.resetState();
+                }
+                else
+                if(value=="menubox")
+                {
 
+                    menu.resetState();
+                }
+                else
+                if(value=="inputbox")
+                {
+                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light);
+                    text.exec();
+
+                    PGE_MsgBox msg(this, "Typed a text:\n"+text.inputText(), PGE_BoxBase::msg_info_light);
+                    msg.exec();
+                    menu.resetState();
+                }
             break;
             case menu_dummy_and_big:
                 menu.resetState();
@@ -246,6 +277,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setPos(260,284);
                 menu.setItemsNumber(9);
                 menu.addMenuItem("tests", "Test of screens");
+                menu.addMenuItem("testboxes", "Test of message boxes");
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addMenuItem("videosetup", "Video settings");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
@@ -261,6 +293,13 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("credits", "Credits");
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
+                break;
+                case menu_testboxes:
+                    menu.setPos(300, 350);
+                    menu.setItemsNumber(5);
+                    menu.addMenuItem("messagebox", "Message box");
+                    menu.addMenuItem("menubox", "Menu box");
+                    menu.addMenuItem("inputbox", "Text Input box");
                 break;
                     case menu_videosettings:
                         menu.setPos(300, 350);
