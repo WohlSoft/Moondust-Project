@@ -536,6 +536,10 @@ int PGE_Menu::findItem(int x, int y)
     return -1;
 }
 
+PGE_Menu::menuAlignment PGE_Menu::getAlignment()
+{
+    return alignment;
+}
 
 const PGE_Menuitem PGE_Menu::currentItem()
 {
@@ -771,18 +775,17 @@ void PGE_Menu::render()
     }
 
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
-    {
-        int xPos = 0;
-        int yPos = 0;
-        if (alignment == menuAlignment::HORIZONTAL && i > 0)
+    {        
+        int xPos = menuRect.x();
+        int yPos = menuRect.y();
+        if (alignment == menuAlignment::HORIZONTAL)
         {
-            xPos = menuRect.x()+_items[i-1]->_width+5;
-            yPos = menuRect.y();
+            for (int temp = i-1; temp >= 0; temp--)
+                xPos += _items[temp]->_width+10;
         }
-        else
+        else if (alignment == menuAlignment::VERTICLE)
         {
-            xPos = menuRect.x();
-            yPos = menuRect.y()+ j*_item_height;
+            yPos += j*_item_height;
         }
 
         int xPos_s = xPos-_selector.w-10;

@@ -218,6 +218,20 @@ void TitleScene::processMenu()
                     msg.exec();
                     menu.resetState();
                 }
+                else if (value=="horizontalbox")
+                {
+                    /*PGE_MenuBox hor(0, "AHHHH", PGE_BoxBase::msg_info_light);
+                    QStringList items;
+                    items<<"One";
+                    items<<"Two";
+                    items<<"Three";
+                    items<<"Four";
+                    hor.addMenuItems(items);
+                    hor.exec();*/
+                    //tested by having pge_menubox hardcode pge_menu with horizontal
+                    //will properly test with new question box when its done
+                    menu.resetState();
+                }
             break;
             case menu_dummy_and_big:
                 menu.resetState();
@@ -300,6 +314,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("messagebox", "Message box");
                     menu.addMenuItem("menubox", "Menu box");
                     menu.addMenuItem("inputbox", "Text Input box");
+                    menu.addMenuItem("horizontalbox", "Horizontal menu box");
                 break;
                     case menu_videosettings:
                         menu.setPos(300, 350);
