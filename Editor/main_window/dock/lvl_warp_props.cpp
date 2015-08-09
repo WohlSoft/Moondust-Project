@@ -313,6 +313,7 @@ void LvlWarpBox::on_WarpAdd_clicked()
         LevelDoor newDoor = FileFormats::dummyLvlDoor();
         newDoor.array_id = edit->LvlData.doors_array_id++;
         newDoor.index = edit->LvlData.doors.size();
+        newDoor.type = GlobalSettings::LvlItemDefaults.warp_type;//Apply initial warp type value
         edit->LvlData.doors.push_back(newDoor);
 
         edit->scene->addAddWarpHistory(newDoor.array_id, ui->WarpList->count(), newDoor.index);

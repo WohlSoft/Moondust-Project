@@ -31,11 +31,26 @@ struct LevelEditingSettings
     bool semiTransparentPaths;
 };
 
+struct SETTINGS_ItemDefaults {
+    int npc_direction;
+    int npc_generator_type;
+    int npc_generator_delay;
+    int warp_type;
+    bool classicevents_tabs_layviz;
+    bool classicevents_tabs_laymov;
+    bool classicevents_tabs_autoscroll;
+    bool classicevents_tabs_secset;
+    bool classicevents_tabs_common;
+    bool classicevents_tabs_buttons;
+    bool classicevents_tabs_trigger;
+};
+
 class GlobalSettings
 {
 public:
 
     static LevelEditingSettings LvlOpts;
+    static SETTINGS_ItemDefaults LvlItemDefaults;
 
     static QString locale; //Current language
     static long animatorItemsLimit; //If level map have too many items, animation will be stopped

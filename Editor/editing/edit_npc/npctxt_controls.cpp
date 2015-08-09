@@ -704,7 +704,7 @@ void NpcEdit::loadImageFile()
         else
             npcMask = defaultNPC.mask;
 
-        npcImage = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
+        npcImage = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
 
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }

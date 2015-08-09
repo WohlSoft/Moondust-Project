@@ -172,7 +172,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 else
                     uBlock.mask = pConfigs->main_block[i].mask;
 
-                uBlock.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(CustomFile), uBlock.mask);
+                uBlock.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
                 uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -274,7 +274,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 else
                     uBGO.mask = pConfigs->main_bgo[i].mask;
 
-                uBGO.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(CustomFile), uBGO.mask);
+                uBGO.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
                 uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -374,7 +374,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  else
                      uNPC.mask = pConfigs->main_npc[i].mask;
 
-                 uNPC.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
+                 uNPC.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
                  uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)

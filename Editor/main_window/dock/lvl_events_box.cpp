@@ -477,20 +477,24 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
 
     if(!hideAll)
     {
+        bool opened=false;
         if(!event.layers_hide.isEmpty() || !event.layers_show.isEmpty() || !event.layers_toggle.isEmpty())
         {
             ui->layerVisibility_toggleBox->setChecked(true);
             ui->layerVizible_group->setVisible(true);
+            opened=true;
         }
         if(!event.movelayer.isEmpty())
         {
             ui->LayerMovement_toggleBox->setChecked(true);
             ui->layerMovement_group->setVisible(true);
+            opened=true;
         }
         if( ( event.move_camera_x!=0.0f ) && (event.move_camera_y!=0.0f) )
         {
             ui->AutoscrollSection_toggleBox->setChecked(true);
             ui->Autoscroll_Area->setVisible(true);
+            opened=true;
         }
         for(int i=0;i<event.sets.size();i++)
         {
@@ -500,6 +504,7 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
             {
                 ui->SectionSettings_toggleBox->setChecked(true);
                 ui->SectionSettings_area->setVisible(true);
+                opened=true;
                 break;
             }
         }
@@ -507,6 +512,7 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
         {
             ui->Common_toggleBox->setChecked(true);
             ui->common_area->setVisible(true);
+            opened=true;
         }
         if(event.ctrl_left||event.ctrl_right||event.ctrl_up||event.ctrl_down||
                 event.ctrl_run||event.ctrl_altrun||event.ctrl_jump||event.ctrl_altjump||
@@ -514,11 +520,30 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
         {
             ui->playerControl_toggleBox->setChecked(true);
             ui->playerControl_area->setVisible(true);
+            opened=true;
         }
         if(!event.trigger.isEmpty())
         {
             ui->triggerEvent_toggleBox->setChecked(true);
             ui->triggerEvent_area->setVisible(true);
+            opened=true;
+        }
+        if(!opened)
+        {
+            ui->layerVisibility_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
+            ui->layerVizible_group->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
+            ui->LayerMovement_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov);
+            ui->layerMovement_group->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov);
+            ui->AutoscrollSection_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll);
+            ui->Autoscroll_Area->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll);
+            ui->SectionSettings_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_secset);
+            ui->SectionSettings_area->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_secset);
+            ui->Common_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
+            ui->common_area->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
+            ui->playerControl_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
+            ui->playerControl_area->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
+            ui->triggerEvent_toggleBox->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
+            ui->triggerEvent_area->setVisible(GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
         }
     }
 }

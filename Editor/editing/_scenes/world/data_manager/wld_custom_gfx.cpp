@@ -121,7 +121,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 else
                     uTile.mask = pConfigs->main_wtiles[i].mask;
 
-                uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uTile.mask);
+                uTile.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uTile.mask);
                 if(uTile.image.isNull()) WrongImagesDetected=true;
 
                 uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -193,7 +193,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 else
                     uScenery.mask = pConfigs->main_wscene[i].mask;
 
-                uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uScenery.mask);
+                uScenery.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uScenery.mask);
                 if(uScenery.image.isNull()) WrongImagesDetected=true;
 
                 uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -259,7 +259,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 else
                     uPath.mask = pConfigs->main_wpaths[i].mask;
 
-                uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uPath.mask);
+                uPath.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uPath.mask);
                 if(uPath.image.isNull()) WrongImagesDetected=true;
 
                 uPath.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -325,7 +325,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 else
                     uLevel.mask = pConfigs->main_wlevels[i].mask;
 
-                uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uLevel.mask);
+                uLevel.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uLevel.mask);
                 if(uLevel.image.isNull()) WrongImagesDetected=true;
 
                 uLevel.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)

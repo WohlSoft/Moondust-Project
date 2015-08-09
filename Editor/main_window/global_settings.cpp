@@ -26,7 +26,8 @@ QString GlobalSettings::savePath_npctxt=".";
 
 QString GlobalSettings::tools_sox_bin_path="/tools/sox/";
 
-LevelEditingSettings GlobalSettings::LvlOpts;
+LevelEditingSettings  GlobalSettings::LvlOpts;
+SETTINGS_ItemDefaults GlobalSettings::LvlItemDefaults;
 
 bool GlobalSettings::autoPlayMusic=false;
 int GlobalSettings::musicVolume=128;
