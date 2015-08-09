@@ -698,9 +698,7 @@ void PGE_Menu::refreshRect()
                 if(_items[temp]->_width>maxWidth) maxWidth=_items[temp]->_width;
             }
             menuWidth=(maxWidth+menuItemGap)*_itemsOnScreen;
-
-            if (_items.size()>1)
-                menuWidth-=menuItemGap/2;
+            menuWidth-=menuItemGap;
         }
         menuRect.setWidth(menuWidth);
     }
@@ -741,11 +739,26 @@ PGE_Rect PGE_Menu::rectFull()
 {
     PGE_Rect tRect = menuRect;
     tRect.setWidth( menuRect.width() + (_selector.w!=0 ? _selector.w : 20)+10 );
+
     if(_items.size()>_itemsOnScreen)
     {
-        tRect.setHeight(menuRect.height() +
+        if (alignment == menuAlignment::VERTICLE)
+        {
+            tRect.setHeight(menuRect.height() +
                         (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
                         (_scroll_down.w!=0 ? _scroll_down.h : 10 )+20-_font_offset);
+        }
+        else if (alignment == menuAlignment::HORIZONTAL)
+        {
+            tRect.setWidth( menuRect.width() +
+                            (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
+                            (_scroll_down.w!=0 ? _scroll_down.h : 10 ));
+            tRect.setHeight(menuRect.height() + (_selector.h!=0 ? _selector.h : 20)+10);
+        }
+    }
+    else if (alignment == menuAlignment::HORIZONTAL)
+    {
+        tRect.setWidth( menuRect.width() );
     }
     return tRect;
 }
@@ -778,7 +791,7 @@ void PGE_Menu::render()
 
             if (alignment == menuAlignment::HORIZONTAL)
             {
-                posX -= (w+menuItemGap);
+                posX -= (w+30);
                 posY += h/2;
 
                 //scroll left texture todo
@@ -823,7 +836,10 @@ void PGE_Menu::render()
             if (alignment == menuAlignment::HORIZONTAL)
             {
                 for (int temp = _offset; temp < _offset + _itemsOnScreen; temp++)
-                    posX += _items[temp]->_width+menuItemGap;
+                    if (temp == _offset + _itemsOnScreen - 1)
+                        posX += _items[temp]->_width+30;
+                    else
+                        posX += _items[temp]->_width+menuItemGap;
                 posY += h/2;
 
                 //scroll right texture todo

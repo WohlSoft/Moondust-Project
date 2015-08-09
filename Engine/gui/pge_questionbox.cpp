@@ -81,7 +81,7 @@ void PGE_QuestionBox::construct(QString _title, PGE_MenuBox::msgType _type,
     _answer_id = -1;
     _pos=pos;
     _menu.setTextLenLimit(30, true);
-    _menu.setItemsNumber(2);
+    _menu.setItemsNumber(5);
     setTitleFont(ConfigManager::setup_menu_box.title_font_name);
     setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
     /****************Word wrap*********************/
