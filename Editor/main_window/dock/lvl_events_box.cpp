@@ -74,6 +74,9 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     cloneEvent=false;
     cloneEventId=0;
     newEventCounter=1;
+
+    /**Initializing spoilers**/
+    refreshShownTabs(FileFormats::dummyLvlEvent(), true);
 }
 
 LvlEventsBox::~LvlEventsBox()
@@ -435,6 +438,8 @@ void LvlEventsBox::setEventData(long index)
                     }
                     ui->LVLEvent_TriggerDelay->setValue( qreal(event.trigger_timer)/10 );
 
+                    refreshShownTabs(event);
+
                     found=true;
                     break;
                 }
@@ -451,6 +456,71 @@ void LvlEventsBox::setEventData(long index)
     }
     lockSetEventSettings=false;
 
+}
+
+void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
+{
+    ui->layerVisibility_toggleBox->setChecked(false);
+    ui->layerVizible_group->setVisible(false);
+    ui->LayerMovement_toggleBox->setChecked(false);
+    ui->layerMovement_group->setVisible(false);
+    ui->AutoscrollSection_toggleBox->setChecked(false);
+    ui->Autoscroll_Area->setVisible(false);
+    ui->SectionSettings_toggleBox->setChecked(false);
+    ui->SectionSettings_area->setVisible(false);
+    ui->Common_toggleBox->setChecked(false);
+    ui->common_area->setVisible(false);
+    ui->playerControl_toggleBox->setChecked(false);
+    ui->playerControl_area->setVisible(false);
+    ui->triggerEvent_toggleBox->setChecked(false);
+    ui->triggerEvent_area->setVisible(false);
+
+    if(!hideAll)
+    {
+        if(!event.layers_hide.isEmpty() || !event.layers_show.isEmpty() || !event.layers_toggle.isEmpty())
+        {
+            ui->layerVisibility_toggleBox->setChecked(true);
+            ui->layerVizible_group->setVisible(true);
+        }
+        if(!event.movelayer.isEmpty())
+        {
+            ui->LayerMovement_toggleBox->setChecked(true);
+            ui->layerMovement_group->setVisible(true);
+        }
+        if( ( event.move_camera_x!=0.0f ) && (event.move_camera_y!=0.0f) )
+        {
+            ui->AutoscrollSection_toggleBox->setChecked(true);
+            ui->Autoscroll_Area->setVisible(true);
+        }
+        for(int i=0;i<event.sets.size();i++)
+        {
+            if( (event.sets[i].background_id!=-1) ||
+               (event.sets[i].music_id!=-1) ||
+               (event.sets[i].position_left!=-1) )
+            {
+                ui->SectionSettings_toggleBox->setChecked(true);
+                ui->SectionSettings_area->setVisible(true);
+                break;
+            }
+        }
+        if( (!event.msg.isEmpty()) || (event.sound_id>0) || (event.end_game>0) )
+        {
+            ui->Common_toggleBox->setChecked(true);
+            ui->common_area->setVisible(true);
+        }
+        if(event.ctrl_left||event.ctrl_right||event.ctrl_up||event.ctrl_down||
+                event.ctrl_run||event.ctrl_altrun||event.ctrl_jump||event.ctrl_altjump||
+                event.ctrl_drop||event.ctrl_start)
+        {
+            ui->playerControl_toggleBox->setChecked(true);
+            ui->playerControl_area->setVisible(true);
+        }
+        if(!event.trigger.isEmpty())
+        {
+            ui->triggerEvent_toggleBox->setChecked(true);
+            ui->triggerEvent_area->setVisible(true);
+        }
+    }
 }
 
 bool LvlEventsBox::eventIsExist(QString evt)
@@ -924,6 +994,7 @@ void LvlEventsBox::RemoveEvent(QString eventName)
     if(eventName.isEmpty()) return;
     //dummy
 }
+
 
 void LvlEventsBox::on_LVLEvents_add_clicked()
 {
