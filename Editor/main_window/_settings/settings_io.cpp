@@ -28,6 +28,7 @@
 #include <main_window/dock/toolboxes.h>
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
+#include <editing/_scenes/level/lvl_item_placing.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -70,7 +71,22 @@ void MainWindow::loadSettings()
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
-        GraphicsHelps::EnableVBEmulate = settings.value("enable-gfx-fix", "true").toBool();
+        GraphicsHelps::EnableBitBlitMerge = settings.value("enable-gfx-fix", "true").toBool();
+
+        GlobalSettings::LvlItemDefaults.npc_direction=settings.value("defaults-npc-directuin", -1).toInt();
+        GlobalSettings::LvlItemDefaults.npc_generator_type=settings.value("defaults-npc-gen-type", 1).toInt();
+        GlobalSettings::LvlItemDefaults.npc_generator_delay=settings.value("defaults-npc-gen-delay", 20).toInt();
+            LvlPlacingItems::npcSet.direct=GlobalSettings::LvlItemDefaults.npc_direction;
+            LvlPlacingItems::npcSet.generator_type=GlobalSettings::LvlItemDefaults.npc_generator_type;
+            LvlPlacingItems::npcSet.generator_period=GlobalSettings::LvlItemDefaults.npc_generator_delay;
+        GlobalSettings::LvlItemDefaults.warp_type=settings.value("defaults-warp-type", 2).toInt();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz     = settings.value("defaults-classicevents-tabs-layerviz", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov     = settings.value("defaults-classicevents-tabs-layermov", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll = settings.value("defaults-classicevents-tabs-autoscroll", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_secset     = settings.value("defaults-classicevents-tabs-secset", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_common     = settings.value("defaults-classicevents-tabs-common", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons    = settings.value("defaults-classicevents-tabs-buttons", 0).toBool();
+        GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger    = settings.value("defaults-classicevents-tabs-trigger", 0).toBool();
 
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
@@ -245,7 +261,19 @@ void MainWindow::saveSettings()
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
-    settings.setValue("enable-gfx-fix", GraphicsHelps::EnableVBEmulate);
+    settings.setValue("enable-gfx-fix", GraphicsHelps::EnableBitBlitMerge);
+
+    settings.setValue("defaults-npc-directuin", GlobalSettings::LvlItemDefaults.npc_direction);
+    settings.setValue("defaults-npc-gen-type", GlobalSettings::LvlItemDefaults.npc_generator_type);
+    settings.setValue("defaults-npc-gen-delay", GlobalSettings::LvlItemDefaults.npc_generator_delay);
+    settings.setValue("defaults-warp-type", GlobalSettings::LvlItemDefaults.warp_type);
+    settings.setValue("defaults-classicevents-tabs-layerviz", GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
+    settings.setValue("defaults-classicevents-tabs-layermov", GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov);
+    settings.setValue("defaults-classicevents-tabs-autoscroll", GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll);
+    settings.setValue("defaults-classicevents-tabs-secset", GlobalSettings::LvlItemDefaults.classicevents_tabs_secset);
+    settings.setValue("defaults-classicevents-tabs-common", GlobalSettings::LvlItemDefaults.classicevents_tabs_common);
+    settings.setValue("defaults-classicevents-tabs-buttons", GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons);
+    settings.setValue("defaults-classicevents-tabs-trigger", GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger);
 
     settings.setValue("language", GlobalSettings::locale);
 
@@ -308,29 +336,10 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     if(appSettings->exec()==QDialog::Accepted)
     {
-        GlobalSettings::autoPlayMusic = appSettings->autoPlayMusic;
-        GlobalSettings::animatorItemsLimit = appSettings->AnimationItemLimit;
-        GlobalSettings::LvlOpts.animationEnabled = appSettings->Animation;
-        GlobalSettings::LvlOpts.collisionsEnabled = appSettings->Collisions;
-
         ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
         on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
         ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
-
-        GlobalSettings::MainWindowView = appSettings->MainWindowView;
-        GlobalSettings::LVLToolboxPos = appSettings->LVLToolboxPos;
-        GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
-        GlobalSettings::TSTToolboxPos = appSettings->TSTToolboxPos;
-        GlobalSettings::currentTheme = appSettings->selectedTheme;
-
-        GlobalSettings::MidMouse_allowDuplicate = appSettings->midmouse_allowDupe;
-        GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
-        GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
-
-        GlobalSettings::Placing_dontShowPropertiesBox = appSettings->placing_dont_show_props_box;
-
-        GlobalSettings::historyLimit = appSettings->historyLimit;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);

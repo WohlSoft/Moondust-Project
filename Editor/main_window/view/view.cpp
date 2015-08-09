@@ -106,6 +106,6 @@ void MainWindow::on_actionSemi_transparent_paths_triggered(bool checked)
 
 void MainWindow::on_actionVBAlphaEmulate_toggled(bool arg1)
 {
-    GraphicsHelps::EnableVBEmulate = arg1;
+    GraphicsHelps::EnableBitBlitMerge = arg1;
 }
 

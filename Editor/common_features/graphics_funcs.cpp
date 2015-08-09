@@ -32,11 +32,9 @@ extern "C"{
 #include <giflib/gif_lib.h>
 }
 
+bool GraphicsHelps::EnableBitBlitMerge=true;
 
-
-bool GraphicsHelps::EnableVBEmulate=true;
-
-QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
+QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QPixmap mask)
 {
     if(mask.isNull())
         return image;
@@ -52,8 +50,8 @@ QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
         newmask = newmask.copy(0,0, target.width(), target.height());
     }
 
-    if(EnableVBEmulate)
-        target = setAlphaMask_VB(target, newmask);
+    if(EnableBitBlitMerge)
+        target = mergeToRGBA_BitWise(target, newmask);
     else
         {
                 newmask.invertPixels();
@@ -62,8 +60,8 @@ QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
     return QPixmap::fromImage(target);
 }
 
-//Implementation of VB similar transparency function
-QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
+//Implementation of Bitwise merging of bit-mask to RGBA image
+QImage GraphicsHelps::mergeToRGBA_BitWise(QImage image, QImage mask)
 {
     if(mask.isNull())
         return image;
@@ -88,7 +86,6 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
 
     QImage alphaChannel = image.alphaChannel();
 
-    //vbSrcAnd
     for(int y=0; y< image.height(); y++ )
         for(int x=0; x < image.width(); x++ )
         {
@@ -127,28 +124,6 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
 
             alphaChannel.setPixel(x,y, newAlpha);
         }
-//    //vbSrcPaint
-//    for(int y=0; y< image.height(); y++ )
-//        for(int x=0; x < image.width(); x++ )
-//        {
-//            QColor Dpix = QColor(image.pixel(x,y));
-//            QColor Spix = QColor(target.pixel(x,y));
-//            QColor Npix;
-
-//            Npix.setAlpha(255);
-//            Npix.setRed( Dpix.red() | Spix.red());
-//            Npix.setGreen( Dpix.green() | Spix.green());
-//            Npix.setBlue( Dpix.blue() | Spix.blue());
-//            target.setPixel(x, y, Npix.rgba());
-
-//            //QColor curAlpha;
-//            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
-//            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
-
-//            if(newAlpha>255) newAlpha=255;
-//            alphaChannel.setPixel(x,y, newAlpha);
-//        }
-
     target.setAlphaChannel(alphaChannel);
 
     return target;
@@ -188,7 +163,7 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
     else
         out_Mask = QPixmap(rootDir + out_maskName);
 
-    out_Img = GraphicsHelps::setAlphaMask(QPixmap(rootDir+in_imgName), out_Mask);
+    out_Img = GraphicsHelps::mergeToRGBA(QPixmap(rootDir+in_imgName), out_Mask);
     if(out_Img.isNull())
     {
         out_errStr="Broken image file "+rootDir+in_imgName;
