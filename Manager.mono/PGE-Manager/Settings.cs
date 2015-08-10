@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace PGEManager
 {
@@ -19,6 +20,7 @@ namespace PGEManager
         public string ConfigDirectory {get;set;}
         public string ConfigsRepoURL { get; set; }
         public string ConfigsIndexURL {get{return ConfigsRepoURL + "configs.index";}}
+        public List<KeyValuePair<string, long>> InstalledConfigs = new List<KeyValuePair<string, long>>();
 
         public bool ForcePortable {get;set;}
 
