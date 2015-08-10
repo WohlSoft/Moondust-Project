@@ -27,8 +27,9 @@
 
 #include <QStack>
 
-PGE_Menu::PGE_Menu()
+PGE_Menu::PGE_Menu(menuAlignment align, int itemGap)
 {
+    alignment = align;
     _itemsOnScreen=5;
     _currentItem = 0;
     _line=0;
@@ -44,6 +45,7 @@ PGE_Menu::PGE_Menu()
     _item_height = ConfigManager::setup_menus.item_height;
     _width_limit=PGE_Window::Width-100;
     _text_len_limit=0;
+    menuItemGap = itemGap;
 
     /// Init menu font
     ConfigManager::setup_menus.font_id = FontManager::getFontID(ConfigManager::setup_menus.font_name);
@@ -75,6 +77,7 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
     is_keygrab = menu.is_keygrab;
     /*******Key grabbing********/
 
+    alignment      = menu.alignment;
     _itemsOnScreen = menu._itemsOnScreen;
     _currentItem   = menu._currentItem;
     _line          = menu._line;
@@ -97,6 +100,7 @@ PGE_Menu::PGE_Menu(const PGE_Menu &menu)
     _width_limit = menu._width_limit;
     _text_len_limit = menu._text_len_limit;
     _text_len_limit_strict = menu._text_len_limit_strict;
+    menuItemGap = menu.menuItemGap;
 
     _font_id = menu._font_id;
     _font_offset=menu._font_offset;
@@ -528,12 +532,16 @@ int PGE_Menu::findItem(int x, int y)
         {
             return _offset+i;
         }
-        pos+=_item_height;
+        pos+=_item_height+menuItemGap;
     }
 
     return -1;
 }
 
+PGE_Menu::menuAlignment PGE_Menu::getAlignment()
+{
+    return alignment;
+}
 
 const PGE_Menuitem PGE_Menu::currentItem()
 {
@@ -665,22 +673,51 @@ void PGE_Menu::setTextLenLimit(int maxlen, bool strict)
     _text_len_limit_strict = strict;
 }
 
+int PGE_Menu::getMenuItemGap()
+{
+    return menuItemGap;
+}
 
 void PGE_Menu::refreshRect()
 {
-    if(_items.size()<_itemsOnScreen)
-        menuRect.setHeight(_items.size() * _item_height );
-    else
-        menuRect.setHeight(_itemsOnScreen * _item_height );
-
-    menuRect.setWidth(0);
-    for(int i=0; i<_items.size(); i++)
+    if (alignment == menuAlignment::HORIZONTAL)
     {
-        if(menuRect.width()<_items[i]->_width)
-            menuRect.setWidth(_items[i]->_width);
+        menuRect.setHeight(_item_height);
+
+        int menuWidth=0;
+        if(_items.size()<_itemsOnScreen) {
+            for(int temp = 0; temp <_items.size(); temp++)
+                if (temp == 0)
+                    menuWidth += _items[temp]->_width;
+                else
+                    menuWidth += _items[temp]->_width+menuItemGap;
+        } else {
+            int maxWidth=0;
+            for(int temp = 0; temp <_items.size(); temp++)
+            {
+                if(_items[temp]->_width>maxWidth) maxWidth=_items[temp]->_width;
+            }
+            menuWidth=(maxWidth+menuItemGap)*_itemsOnScreen;
+            menuWidth-=menuItemGap;
+        }
+        menuRect.setWidth(menuWidth);
     }
-    if(menuRect.width()>_width_limit)
-        menuRect.setWidth(_width_limit);
+    else if (alignment == menuAlignment::VERTICLE)
+    {
+        if(_items.size()<_itemsOnScreen)
+            menuRect.setHeight(_items.size() * (_item_height+menuItemGap) );
+        else
+            menuRect.setHeight(_itemsOnScreen * (_item_height+menuItemGap) );
+
+        menuRect.setWidth(0);
+        for(int i=0; i<_items.size(); i++)
+        {
+            if(menuRect.width()<_items[i]->_width)
+                menuRect.setWidth(_items[i]->_width);
+        }
+        if(menuRect.width()>_width_limit)
+            menuRect.setWidth(_width_limit);
+    }
 }
 bool PGE_Menu::isKeygrabViaKey() const
 {
@@ -702,11 +739,26 @@ PGE_Rect PGE_Menu::rectFull()
 {
     PGE_Rect tRect = menuRect;
     tRect.setWidth( menuRect.width() + (_selector.w!=0 ? _selector.w : 20)+10 );
+
     if(_items.size()>_itemsOnScreen)
     {
-        tRect.setHeight(menuRect.height() +
+        if (alignment == menuAlignment::VERTICLE)
+        {
+            tRect.setHeight(menuRect.height() +
                         (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
                         (_scroll_down.w!=0 ? _scroll_down.h : 10 )+20-_font_offset);
+        }
+        else if (alignment == menuAlignment::HORIZONTAL)
+        {
+            tRect.setWidth( menuRect.width() +
+                            (_scroll_up.w!=0 ? _scroll_up.h : 10 )+
+                            (_scroll_down.w!=0 ? _scroll_down.h : 10 ));
+            tRect.setHeight(menuRect.height() + (_selector.h!=0 ? _selector.h : 20)+10);
+        }
+    }
+    else if (alignment == menuAlignment::HORIZONTAL)
+    {
+        tRect.setWidth( menuRect.width() );
     }
     return tRect;
 }
@@ -734,15 +786,38 @@ void PGE_Menu::render()
                 w=_scroll_up.w;
                 h=_scroll_up.h;
             }
-            int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()-h-4;
-            if(_scroll_up.w==0)
+            int posX = menuRect.x();
+            int posY = menuRect.y();
+
+            if (alignment == menuAlignment::HORIZONTAL)
             {
-                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                posX -= (w+30);
+                posY += h/2;
+
+                //scroll left texture todo
+                if(_scroll_up.w==0)
+                {
+                    GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                }
+                else
+                {
+                    //scroll left texture todo
+                    GlRenderer::renderTexture(&_scroll_up, posX, posY);
+                }
             }
-            else
+            else if (alignment == menuAlignment::VERTICLE)
             {
-                GlRenderer::renderTexture(&_scroll_up, posX, posY);
+                posX += (menuRect.width()/2)-(h/2);
+                posY += -h-4;
+
+                if(_scroll_up.w==0)
+                {
+                    GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                }
+                else
+                {
+                    GlRenderer::renderTexture(&_scroll_up, posX, posY);
+                }
             }
         }
 
@@ -755,15 +830,45 @@ void PGE_Menu::render()
                 w=_scroll_down.w;
                 h=_scroll_down.h;
             }
-            int posX = menuRect.x()+(menuRect.width()/2)-(h/2);
-            int posY = menuRect.y()+_item_height*_itemsOnScreen+4;
-            if(_scroll_down.w==0)
+            int posX = menuRect.x();
+            int posY = menuRect.y();
+
+            if (alignment == menuAlignment::HORIZONTAL)
             {
-                GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                for (int temp = _offset; temp < _offset + _itemsOnScreen; temp++)
+                    if (temp == _offset + _itemsOnScreen - 1)
+                        posX += _items[temp]->_width+30;
+                    else
+                        posX += _items[temp]->_width+menuItemGap;
+                posY += h/2;
+
+                //scroll right texture todo
+                if(_scroll_down.w==0)
+                {
+                    GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                }
+                else
+                {
+                    //scroll right texture todo
+                    GlRenderer::renderTexture(&_scroll_down, posX, posY);
+                }
             }
-            else
+            else if (alignment == menuAlignment::VERTICLE)
             {
-                GlRenderer::renderTexture(&_scroll_down, posX, posY);
+                posX += (menuRect.width()/2)-(h/2);
+                posY += (_item_height+menuItemGap)*_itemsOnScreen+4;
+
+                if (_items.size()>1)
+                    posY -= menuItemGap;
+
+                if(_scroll_down.w==0)
+                {
+                    GlRenderer::renderRect(posX, posY, w, h, 0.f, 1.f, 0.f, 1.0f);
+                }
+                else
+                {
+                    GlRenderer::renderTexture(&_scroll_down, posX, posY);
+                }
             }
         }
     }
@@ -771,8 +876,20 @@ void PGE_Menu::render()
     for(int i=_offset, j=0; i<_offset+_itemsOnScreen && i<_items.size(); i++, j++ )
     {
         int xPos = menuRect.x();
-        int xPos_s = menuRect.x()-_selector.w-10;
-        int yPos = menuRect.y()+ j*_item_height;
+        int yPos = menuRect.y();
+        int xPos_s = 0;
+
+        if (alignment == menuAlignment::HORIZONTAL)
+        {
+            for (int temp = i-1; temp >= _offset; temp--)
+                xPos += _items[temp]->_width+menuItemGap;
+            xPos_s = (xPos+_items[i]->_width/2)-_selector.w/2;
+        }
+        else if (alignment == menuAlignment::VERTICLE)
+        {
+            yPos += j*(_item_height+menuItemGap);
+            xPos_s = xPos-_selector.w-10;
+        }
 
         if(i==_currentItem)
         {
@@ -782,7 +899,13 @@ void PGE_Menu::render()
             }
             else
             {
-                int y_offset=(_item_height/2)-(_selector.h/2);
+                int y_offset = 0;
+
+                if (alignment == menuAlignment::HORIZONTAL)
+                    y_offset = 30;
+                else if (alignment == menuAlignment::VERTICLE)
+                    y_offset=(_item_height/2)-(_selector.h/2);
+                //todo: put renderTexture inside their respective ifstatement once texture is complete
                 GlRenderer::renderTexture(&_selector, xPos_s, yPos+y_offset);
             }
         }

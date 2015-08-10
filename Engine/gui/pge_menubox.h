@@ -41,15 +41,6 @@ class Controller;
 class PGE_MenuBox : public PGE_BoxBase
 {
 public:
-    enum msgType
-    {
-        msg_info=0,
-        msg_info_light,
-        msg_warn,
-        msg_error,
-        msg_fatal
-    };
-
     PGE_MenuBox(Scene * _parentScene=NULL, QString _title="Menu is works!",
                msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
     PGE_MenuBox(const PGE_MenuBox &mb);

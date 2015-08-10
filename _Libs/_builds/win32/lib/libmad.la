@@ -22,7 +22,7 @@ age=2
 revision=1
 
 # Is this an already installed library?
-installed=yes
+installed=no
 
 # Should we warn about portability when linking against -modules?
 shouldnotlink=no
@@ -32,4 +32,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/d/Developer/PlatfornerGameEngine/_Libs/_sources/../linux/lib'
+libdir='/usr/local/lib'

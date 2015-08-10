@@ -9,7 +9,7 @@
 #include <common_features/pointf.h>
 #include "npc_detectors/lvl_base_detector.h"
 #include "npc_detectors/lvl_dtc_player_pos.h"
-#include "npc_detectors/lvl_dtc_player_inarea.h"
+#include "npc_detectors/lvl_dtc_inarea.h"
 
 #include <luabind/luabind.hpp>
 #include <lua_inclues/lua.hpp>
@@ -43,18 +43,20 @@ public:
     obj_npc *setup;//Global config
     bool isKilled();
     bool killed;
-    enum KillReason{
-        KILL_NOREASON=0,
-        KILL_STOMPED,   //on stomping to head
-        KILL_BY_KICK,   //caused by contact with throwned NPC's
-        KILL_BY_PLAYER_ATTACK, //Caused by attaking by player
+    enum DamageReason{
+        DAMAGE_NOREASON=0,
+        DAMAGE_STOMPED,   //on stomping to head
+        DAMAGE_BY_KICK,   //caused by contact with throwned NPC's
+        DAMAGE_BY_PLAYER_ATTACK, //Caused by attaking by player
         //(for example, by sword, by fists, by teeth sting, by blow claws, by whip, etc.)
-        KILL_TAKEN, //is Power up taken
-        KILL_CUSTOM_REASON
+        DAMAGE_TAKEN, //is Power up taken
+        DAMAGE_CUSTOM_REASON
     };
-    void doHarm(int killReason);
-    void harm(int damage=1, int killReason=KILL_NOREASON);
-    void kill(int killReason, bool nolua=false);
+    void doHarm(int damageReason);
+    void harm(int damage=1, int damageReason = DAMAGE_NOREASON);
+
+    void kill(int damageReason);//! In-Game destroying of NPC with triggering of specific events
+    void unregister();          //! Sielent destroying of NPC without triggering of the events
 
     int taskToTransform;
     int taskToTransform_t;
@@ -114,8 +116,8 @@ public:
     QList<BasicDetector >           detectors_dummy; //!< dummy detectors made directly from a base class, for a some tests
     PlayerPosDetector               detector_player_pos; //! Player position detectors (should have alone copy!)
     PlayerPosDetector * lua_installPlayerPosDetector();//! Detects position and direction of nearest player
-    QList<PlayerInAreaDetector >    detectors_player_inarea; //! Is player touches selected relative area;
-    PlayerInAreaDetector * lua_installPlayerInAreaDetector(float left, float top, float right, float bottom);//! Detects is player(s) are enters into specific area relative to NPC's center
+    QList<InAreaDetector >    detectors_inarea; //! Is player touches selected relative area;
+    InAreaDetector * lua_installInAreaDetector(float left, float top, float right, float bottom, luabind::adl::object filters);//! Detects is player(s) are enters into specific area relative to NPC's center
     QVector<BasicDetector* >        detectors;       //!< Entire list of all detectors
     /***************************************************/
 
@@ -179,10 +181,14 @@ public:
     LVL_Npc*         buddies_leader;
     /**********************************************/
 
+    //Additional lua enums
+
     //Additional lua events
     virtual void lua_onActivated() {}
     virtual void lua_onLoop(float) {}
     virtual void lua_onInit() {}
+    virtual void lua_onKill(int) {}
+    virtual void lua_onHarm(int, int) {}
 
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);
@@ -201,6 +207,8 @@ public:
     inline int getID() { return data.id; }
 
     bool isLuaNPC;
+
+
 
     int health;
 

@@ -43,12 +43,22 @@ typedef struct {
     SDL_AudioCVT cvt;
     int len_available;
     Uint8 *snd_available;
+    /* Loop points stuff [by Wohlstand] */
+    int loop;
+    ogg_int64_t loop_start;
+    ogg_int64_t loop_end;
+    ogg_int64_t loop_len;
+    ogg_int64_t loop_len_ch;
+    /* Loop points stuff [by Wohlstand] */
+    char *mus_title;
 } OGG_music;
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
 extern int OGG_init(SDL_AudioSpec *mixer);
+
+extern void OGG_IgnoreLoop(OGG_music *music);
 
 /* Set the volume for an OGG stream */
 extern void OGG_setvolume(OGG_music *music, int volume);

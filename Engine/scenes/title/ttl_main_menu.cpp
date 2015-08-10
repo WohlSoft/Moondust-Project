@@ -22,9 +22,12 @@
 #include <audio/SdlMusPlayer.h>
 #include <graphics/window.h>
 #include <gui/pge_msgbox.h>
+#include <gui/pge_menubox.h>
+#include <gui/pge_textinputbox.h>
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <gui/pge_questionbox.h>
 
 #include "../scene_title.h"
 
@@ -130,6 +133,12 @@ void TitleScene::processMenu()
                     setMenu(menu_tests);
                 }
                 else
+                if(value=="testboxes")
+                {
+                    menuChain.push(_currentMenu);
+                    setMenu(menu_testboxes);
+                }
+                else
                 if(value=="controls")
                 {
                     menuChain.push(_currentMenu);
@@ -186,7 +195,87 @@ void TitleScene::processMenu()
                     ret = ANSWER_GAMEOVER;
                     doExit=true;
                 }
+            break;
+            case menu_testboxes:
+                if(value=="messagebox")
+                {
+                    PGE_MsgBox msg(this, "This is a small message box without texture\nЭто маленкая коробочка-сообщение без текстуры", PGE_BoxBase::msg_info_light);
+                    msg.exec();
 
+                    PGE_MsgBox msg2(this, "This is a small message box with texture\nЭто маленкая коробочка-сообщение с текстурой", PGE_BoxBase::msg_info, PGE_Point(-1,-1),
+                                    ConfigManager::setup_message_box.box_padding,
+                                    ConfigManager::setup_message_box.sprite);
+                    msg2.exec();
+                    menu.resetState();
+                }
+                else
+                if(value=="menubox")
+                {
+                    PGE_MenuBox menubox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                                         ConfigManager::setup_menu_box.box_padding,
+                                         ConfigManager::setup_message_box.sprite);
+                    QStringList items;
+                    items<<"Menuitem 1";
+                    items<<"Menuitem 2";
+                    items<<"Menuitem 3";
+                    items<<"Menuitem 4";
+                    items<<"Menuitem 5";
+                    items<<"Menuitem 6";
+                    items<<"Menuitem 7";
+                    items<<"Menuitem 8";
+                    items<<"Menuitem 9";
+                    items<<"Menuitem 10";
+                    items<<"Menuitem 11";
+                    menubox.addMenuItems(items);
+                    menubox.setRejectSnd(obj_sound_role::MenuPause);
+                    menubox.setMaxMenuItems(5);
+                    menubox.exec();
+
+                    if(menubox.answer()>=0)
+                    {
+                        PGE_MsgBox msg(this, "Your answer is:\n"+items[menubox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1,-1),
+                                ConfigManager::setup_message_box.box_padding,
+                                ConfigManager::setup_message_box.sprite);
+                        msg.exec();
+                    }
+
+                    menu.resetState();
+                }
+                else
+                if(value=="inputbox")
+                {
+                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light);
+                    text.exec();
+
+                    PGE_MsgBox msg(this, "Typed a text:\n"+text.inputText(), PGE_BoxBase::msg_info_light);
+                    msg.exec();
+                    menu.resetState();
+                }
+                else if (value=="questionbox")
+                {
+                    PGE_QuestionBox hor(this, "AHHHH?", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                                        ConfigManager::setup_menu_box.box_padding,
+                                        ConfigManager::setup_message_box.sprite);
+                    QStringList items;
+                    items<<"One";
+                    items<<"Two";
+                    items<<"Three";
+                    items<<"Four";
+                    items<<"Five";
+                    items<<"Six";
+                    items<<"Seven";
+                    hor.addMenuItems(items);
+                    hor.setRejectSnd(obj_sound_role::BlockSmashed);
+                    hor.exec();
+                    if(hor.answer()>=0)
+                    {
+                        PGE_MsgBox msg(this, "Answer on so dumb question is:\n"+items[hor.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1,-1),
+                                ConfigManager::setup_message_box.box_padding,
+                                ConfigManager::setup_message_box.sprite);
+                        msg.exec();
+                    }
+                    menu.resetState();
+                }
             break;
             case menu_dummy_and_big:
                 menu.resetState();
@@ -246,6 +335,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                 menu.setPos(260,284);
                 menu.setItemsNumber(9);
                 menu.addMenuItem("tests", "Test of screens");
+                menu.addMenuItem("testboxes", "Test of message boxes");
                 menu.addMenuItem("controls", "Player controlling");
                 menu.addMenuItem("videosetup", "Video settings");
                 menu.addIntMenuItem(&AppSettings.volume_music, 0, 128, "vlm_music", "Music volume", false,
@@ -262,13 +352,21 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                     menu.addMenuItem("loading", "Loading screen");
                     menu.addMenuItem("gameover", "Game over screen");
                 break;
+                case menu_testboxes:
+                    menu.setPos(300, 350);
+                    menu.setItemsNumber(5);
+                    menu.addMenuItem("messagebox", "Message box");
+                    menu.addMenuItem("menubox", "Menu box");
+                    menu.addMenuItem("inputbox", "Text Input box");
+                    menu.addMenuItem("questionbox", "Question box");
+                break;
                     case menu_videosettings:
                         menu.setPos(300, 350);
                         menu.setItemsNumber(5);
                         menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
                         menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
                         menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 20, "phys_step", "Frame time (ms.)", false,
+                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 15, "phys_step", "Frame time (ms.)", false,
                                             [this]()->void{
                                                 PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
                                                 PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;

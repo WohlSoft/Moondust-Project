@@ -124,6 +124,8 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
 
 void LVL_EventEngine::processTimers(float tickTime)
 {
+    QHash<QString, bool > triggered;
+
     for(int i=0; i<workingEvents.size(); i++)
     {
         if(workingEvents[i].isEmpty())
@@ -138,7 +140,14 @@ void LVL_EventEngine::processTimers(float tickTime)
                 workingEvents[i][j].action.processEvents(tickTime);
                 if(workingEvents[i][j].action.events.isEmpty())
                 {
-                    workingEvents[i].removeAt(j); j--; continue;
+                    if(triggered.contains(workingEvents[i][j].eventName))
+                    {
+                        workingEvents[i].removeAt(j); j--;
+                        break;
+                    }
+                    triggered[workingEvents[i][j].eventName]=true;
+                    workingEvents[i].removeAt(j); j--;
+                    continue;
                 }
             }
             else

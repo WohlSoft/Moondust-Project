@@ -62,9 +62,14 @@
 #endif
 #ifdef MP3_MAD_MUSIC
 #include "music_mad.h"
+#include "libid3tag/id3tag.h"
 #endif
 #ifdef FLAC_MUSIC
 #include "music_flac.h"
+#ifdef _WIN32
+typedef _off_t off_t;
+#endif
+#include <FLAC/metadata.h>
 #endif
 #ifdef SPC_MUSIC
 #include "music_spc.h"
@@ -79,6 +84,8 @@ int volatile music_active = 1;
 static int volatile music_stopped = 0;
 static int music_loops = 0;
 static char *music_cmd = NULL;
+static char *music_file = NULL;
+static char *music_filename = NULL;
 static Mix_Music * volatile music_playing = NULL;
 static int music_volume = MIX_MAX_VOLUME;
 
@@ -538,6 +545,13 @@ Mix_Music *Mix_LoadMUS(const char *file)
     SDL_RWops *src;
     Mix_Music *music;
     Mix_MusicType type;
+
+    if( music_file ) SDL_free(music_file);
+
+    music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
+    strcpy(music_file, (char*)file);
+    music_filename = strrchr(music_file, '/');
+
     char *ext = strrchr(file, '.');
 
 #ifdef CMD_MUSIC
@@ -671,6 +685,40 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
         music->data.flac = FLAC_new_RW(src, freesrc);
         if (music->data.flac) {
             music->error = 0;
+            FLAC__StreamMetadata *tags=NULL;
+            if(FLAC__metadata_get_tags(music_file, &tags))
+            {
+                int num=tags->data.vorbis_comment.num_comments;
+                int doValue=0;
+                for(int i=0;i<num;i++)
+                {
+                    FLAC__uint32 len=tags->data.vorbis_comment.comments[i].length;
+                    FLAC__byte* ent=tags->data.vorbis_comment.comments[i].entry;
+                    char argument[len+1];
+                    char value[len+1];
+                    for(int j=0, k=0; j<=len; j++, k++)
+                    {
+                        if(doValue==0)
+                        {
+                            argument[j]=(char)ent[j];
+                            if(argument[j]=='=')
+                            {
+                                argument[j]='\0';
+                                doValue=1;
+                                k=-1;
+                            }
+                        } else {
+                            value[k]=(char)ent[j];
+                        }
+                    }
+                    int isMusicTitle = strcasecmp(argument, "TITLE");
+                    if(isMusicTitle==0) {
+                        music->data.flac->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                        strcpy(music->data.flac->mus_title, value);
+                    }
+                    doValue=0;
+                }
+            }
         }
         break;
 #endif
@@ -697,6 +745,24 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
         music->data.mp3_mad = mad_openFileRW(src, &used_mixer, freesrc);
         if (music->data.mp3_mad) {
             music->error = 0;
+            struct id3_file *tags = id3_file_open(music_file, ID3_FILE_MODE_READONLY);
+            if( tags ) {
+                struct id3_tag  *tag= id3_file_tag(tags);
+                //Search for given frame by frame id
+                struct id3_frame *pFrame = id3_tag_findframe(tag,ID3_FRAME_TITLE,0);
+                if ( pFrame != NULL )
+                {
+                    union id3_field field = pFrame->fields[1];
+                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
+                    id3_latin1_t *pStrLatinl;
+                    if ( pTemp != NULL ) {
+                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
+                        music->data.mp3_mad->mus_title=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
+                        strcpy(music->data.mp3_mad->mus_title, (char*)pStrLatinl);
+                    }
+                }
+                id3_file_close(tags);
+            }
         } else {
             Mix_SetError("Could not initialize MPEG stream.");
         }
@@ -910,6 +976,52 @@ Mix_MusicType Mix_GetMusicType(const Mix_Music *music)
     return(type);
 }
 
+/* Get music title from meta-tag if possible */
+const char* Mix_GetMusicTitle(const Mix_Music *music)
+{
+    const char* tag=Mix_GetMusicTitleTag(music);
+    if(strlen(tag)>0)
+        return tag;
+    if( music_filename != NULL )
+        return music_filename;
+    return "";
+}
+
+const char* Mix_GetMusicTitleTag(const Mix_Music *music)
+{
+    if ( music ) {
+        switch (music->type) {
+        #ifdef OGG_MUSIC
+            case MUS_OGG:
+                if(music->data.ogg->mus_title!=NULL)
+                    return music->data.ogg->mus_title;
+            break;
+        #endif
+        #ifdef FLAC_MUSIC
+            case MUS_FLAC:
+                if(music->data.flac->mus_title!=NULL)
+                    return music->data.flac->mus_title;
+            break;
+        #endif
+        #ifdef MP3_MAD_MUSIC
+            case MUS_MP3_MAD:
+                if(music->data.mp3_mad->mus_title!=NULL)
+                    return music->data.mp3_mad->mus_title;
+            break;
+        #endif
+        #ifdef MODPLUG_MUSIC
+            case MUS_MODPLUG:
+                if(music->data.modplug->mus_title!=NULL)
+                    return music->data.modplug->mus_title;
+            break;
+        #endif
+            default:
+                break;
+        }
+    }
+    return "";
+}
+
 /* Play a music chunk.  Returns 0, or -1 if there was an error.
  */
 static int music_internal_play(Mix_Music *music, double position)
@@ -994,6 +1106,7 @@ static int music_internal_play(Mix_Music *music, double position)
 #endif
 #ifdef OGG_MUSIC
         case MUS_OGG:
+            if(music_loops>=0) OGG_IgnoreLoop(music->data.ogg);
         OGG_play(music->data.ogg);
         break;
 #endif
@@ -1599,6 +1712,10 @@ void close_music(void)
     Timidity_Close();
 # endif
 #endif
+
+    if( music_file ) SDL_free(music_file);
+    music_file = NULL;
+    music_filename = NULL;
 
     /* rcg06042009 report available decoders at runtime. */
     SDL_free((void *)music_decoders);

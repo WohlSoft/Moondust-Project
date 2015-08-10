@@ -18,6 +18,7 @@ public:
 
     static QString currentTrack;
     static void MUS_playMusic();
+    static QString MUS_Title();
 	static void MUS_playMusicFadeIn(int ms);
 	static void MUS_pauseMusic();
 	static void MUS_stopMusic();

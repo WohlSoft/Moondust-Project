@@ -53,7 +53,7 @@ void GlobalSettings::load()
     //TicksPerSecond=setup.value("phys-step", TicksPerSecond).toUInt();
     //    NumberLimiter::apply(TicksPerSecond, 65, 180);
     timeOfFrame=setup.value("phys-step-time", TicksPerSecond).toUInt();
-        NumberLimiter::apply(timeOfFrame, 2, 20);
+        NumberLimiter::apply(timeOfFrame, 2, 15);
     TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
 
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();

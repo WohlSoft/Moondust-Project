@@ -67,7 +67,8 @@ void LVL_Npc::update(float tickTime)
     if(not_movable())
     {
         detector_player_pos.processDetector();
-        setDirection(detector_player_pos.directedTo());
+        if(detector_player_pos.directedTo()!=0)
+            setDirection(detector_player_pos.directedTo());
     }
 
     LVL_Section *section=sct();

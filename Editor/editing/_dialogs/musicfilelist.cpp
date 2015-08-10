@@ -43,6 +43,7 @@ MusicFileList::~MusicFileList()
 {
     if(fileWalker.isRunning())
         fileWalker.cancel();
+    fileWalker.waitForFinished();
     delete ui;
 }
 
@@ -74,6 +75,7 @@ void MusicFileList::buildMusicList()
     {
         dirsList.next();
         emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
+        if(fileWalker.isCanceled()) break;
     }
 }
 

@@ -49,6 +49,9 @@ function piranha_plant:__init(npc_obj)
     self.def_bottom = npc_obj.bottom
     self.speed = 1
 
+    -- Detector of player
+    self.plr_detector = self.npc_obj:installInAreaDetector(-44, -600, 44, 600, {4})
+
     -- FOR AI_SHOWING_UP
     self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.height)
 
@@ -104,18 +107,20 @@ function piranha_plant:onLoop(tickTime)
         if(self.def_hidingIdleTicks >= self.cur_hidingIdleTicks)then
             self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
         else
-            local players = Player.get()
-            local goUp = true
-            for _, player in pairs(players) do
-                if(math.abs(player.center_x - self.npc_obj.center_x) <= 44)then
-                    goUp = false
-                    self.cur_hidingIdleTicks = 0 -- NOTE: Unknown if it resets
-                end
-            end
-            if(goUp)then
+            -- local players = Player.get()
+            -- local goUp = true
+            -- for _, player in pairs(players) do
+            --    if(math.abs(player.center_x - self.npc_obj.center_x) <= 44)then
+            --        goUp = false
+            --        self.cur_hidingIdleTicks = 0 -- NOTE: Unknown if it resets
+            --    end
+            -- end
+            if(self.plr_detector:detected()==false)then
                 self.cur_mode = AI_SHOWING_UP
                 self.npc_obj.paused_physics = false
                 self.cur_hidingIdleTicks = 0
+            else
+                self.cur_hidingIdleTicks = 0 -- NOTE: Unknown if it resets
             end
         end
     end

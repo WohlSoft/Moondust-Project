@@ -89,7 +89,7 @@ void lazyFixTool_doMagicIn(QString path, QString q, QString OPath)
     if(mask.isNull()) //Skip null masks
         return;
 
-    target = GraphicsHelps::setAlphaMask_VB(image, mask);
+    target = GraphicsHelps::mergeToRGBA_BitWise(image, mask);
 
     if(!target.isNull())
     {

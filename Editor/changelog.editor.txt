@@ -1,21 +1,26 @@
+Editor 0.3.1.3
+- Fixed a crash in relation to closing the musicbox while fetching is in process
+- Fixed a bug in relation to desynced frames on exported images
+- With the updated SDL2_mixer_ext, it is now possible to have looped OGG files (vorbis tags LOOPSTART and LOOPEND with PCM-sample position are required (you can insert this via Audacity))
+
 Editor 0.3.1.2
-- Fix of a small issue with unreseted NPC parameters on taking new NPC's to place
+- Fixed a small issue with unreseted NPC parameters on taking new NPC's to place
 
 Editor 0.3.1.1
-- Added a tool tip to notice about some useful things of the editor
+- Added "tip of day" to bring attention to some useful features in the Editor.
 
 Editor 0.3.1
 - Added tool which provides clean-up of garbage NPC's caused by SMBX bug (any climbabme NPC's such as vines are flooding SMBX)
-- Added config pack version notifier (if you have old config pack is old, you will be notified about)
-- Better design of development console box
-- Fixed a crash which possible if you pressing F5 keys too often.
-- Performance of big levels and world maps editing has been improved!
-- In a flood-fill mode BGOs now are colliding with ANY other BGO's!
+- Added config pack version notifier (if your config pack is outdated, you will be notified)
+- Better designed development console box
+- Fixed a bug which made crashing possible if the F5 keys were pressed too often.
+- Performance when editing big levels and world maps, has been immproved.
+- In flood-fill mode, BGOs are now colliding with other BGO's.
 
 Editor 0.3.0.2
 - Added "Transform all Item-ID's in current section" menuitem
-- Added ability to transform music boxes!
-- Added multiselection for item selection dialog for "add" action in the editor of custom counters.
+- Added ability to transform music boxes.
+- Added multiselection for item selection dialog for "add" action in the custom counters editor.
 
 Editor 0.3.0
 - Fixed group collision random crash
@@ -23,14 +28,14 @@ Editor 0.3.0
 - Added update checking
 - Better history manager
 - Added support of user specific settings and logs
-- Interprocess communication system is fixed for Linux and Windows systems!
+- Interprocess communication system is fixed for Linux and Windows systems.
 - Fixed freezing on reading some NPC.txts with mistakes
 - Added ability to save progress on file reload
-- Added more soft parsing of NPC.txt files. Instead of rejecting, you will be warned about wrong values but file will be loaded!
-- Added more smart reloading of files
-- Added basic communication with LunaDLL to run test of current level in the opened SMBX Editor. This feature will work on Windows platform only. (LunaDLL with LUA v0.5.3-beta and higher is required in the SMBX)
-- Added "force-portable" settings to keep using of application directory instad of ~/.PGE_Project folder if you was installed editor by installer
-- Added crash autosave which will give chance to keep most of your progess even crash happened
+- Added more soft parsing of NPC.txt files. Instead of outright rejection, you will now be warned about incorrect values while being able to load the file.
+- Added smarter file reloading
+- Added basic communication with LunaDLL in order to run tests of the current level in the opened SMBX Editor. This feature can only work on the Windows platform at the current time. (LunaDLL with LUA v0.5.3-beta and higher is required for SMBX)
+- Added "force-portable" settings to keep using the application directory instad of ~/.PGE_Project folder if the editor was installed via the installer.
+- Added crash autosave which will provide a chance to keep most of your progess in the event of a crash.
 - Added history manager limit to prevent memory overflow.
 - Fixed a lots of bugs in the layers and events tool-boxes.
 - Fixed blinking of toolboxes on startup.

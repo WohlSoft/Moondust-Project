@@ -147,6 +147,11 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
         merged.ani_direct = false;
         merged.ani_directed_direct = true;
     }
+    if((global.framestyle==0)&&(local.framestyle>0))
+    {
+        merged.ani_direct = false;
+        merged.ani_directed_direct = false;
+    }
 
     merged.score = (local.en_score)?local.score:global.score;
     merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;

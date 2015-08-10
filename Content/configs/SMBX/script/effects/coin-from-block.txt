@@ -1,0 +1,14 @@
+//
+// Coin bumped out from a blocks
+//
+
+thread=1; delay=0; id=11; \
+        start-x=0; start-y=0; work-while=pos-y-lt,0; \
+        ani-sequence=0,1,2,3; \
+        vel-x=0.0; vel-y=-3.0; gravity=18; frame-speed=75; framestyle=0
+
+thread=1; delay=0; id=11; \
+        start-x=0; start-y=0; work-while=loops,1; \
+        ani-sequence=4,5,6; \
+        vel-x=0.0; vel-y=0.0; gravity=0; frame-speed=75; framestyle=0
+

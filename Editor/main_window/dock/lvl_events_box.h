@@ -4,6 +4,7 @@
 #include <QDockWidget>
 #include <QModelIndex>
 #include "mwdock_base.h"
+#include <PGE_File_Formats/lvl_filedata.h>
 
 class MainWindow;
 class QListWidget;
@@ -133,6 +134,8 @@ private:
     void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
 
     void RemoveEvent(QString eventName);
+
+    void refreshShownTabs(LevelSMBX64Event event, bool hideAll=false);
 
     Ui::LvlEventsBox *ui;
 
