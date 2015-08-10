@@ -11,6 +11,7 @@
 #include "bindings/core/globalfuncs/luafuncs_core_renderer.h"
 #include "bindings/core/globalfuncs/luafuncs_core_settings.h"
 #include "bindings/core/events/luaevents_core_engine.h"
+#include "bindings/core/classes/luaclass_core_simpleevent.h"
 
 #include <QFile>
 #include <sstream>
@@ -254,7 +255,8 @@ void LuaEngine::bindCore()
         LuaEvent::bindToLua(),
         Binding_Core_GlobalFuncs_Logger::bindToLua(),
         Binding_Core_GlobalFuncs_Settings::bindToLua(),
-        Binding_Core_GlobalFuncs_Audio::bindToLua()
+        Binding_Core_GlobalFuncs_Audio::bindToLua(),
+        Binding_Core_Class_SimpleEvent::bindToLua()
     ];
     if(m_baseScene){
         luabind::module(L)[

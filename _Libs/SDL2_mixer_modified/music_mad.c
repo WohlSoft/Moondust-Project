@@ -54,6 +54,7 @@ mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc)
     mp3_mad->output_begin = 0;
     mp3_mad->output_end = 0;
     mp3_mad->mixer = *mixer;
+    mp3_mad->mus_title = NULL;
 
     mad_target_samplerate=mixer->freq;
   }
@@ -69,6 +70,9 @@ mad_closeFile(mad_data *mp3_mad)
 
   if (mp3_mad->freesrc) {
     SDL_RWclose(mp3_mad->src);
+  }
+  if( mp3_mad->mus_title ) {
+      SDL_free( mp3_mad->mus_title );
   }
   SDL_free(mp3_mad);
 }

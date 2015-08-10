@@ -34,31 +34,6 @@ public:
     explicit AppSettings(QWidget *parent = 0);
     ~AppSettings();
 
-    bool    autoPlayMusic;
-    bool    Animation;
-    long    AnimationItemLimit;
-
-    bool    Collisions;
-
-    bool    logEnabled;
-    int     loglevel;
-
-    bool    midmouse_allowDupe;
-    bool    midmouse_allowPlace;
-    bool    midmouse_allowDragMode;
-
-    bool    placing_dont_show_props_box;
-
-    int     historyLimit;
-
-    QMdiArea::ViewMode   MainWindowView;
-    QTabWidget::TabPosition LVLToolboxPos;
-    QTabWidget::TabPosition WLDToolboxPos;
-    QTabWidget::TabPosition TSTToolboxPos;
-
-    QString logfile;
-    QString selectedTheme;
-
     void applySettings();
     static bool associateFiles();
 

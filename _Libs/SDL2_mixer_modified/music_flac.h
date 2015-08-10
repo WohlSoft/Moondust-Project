@@ -56,6 +56,7 @@ typedef struct {
     SDL_AudioCVT cvt;
     int len_available;
     Uint8 *snd_available;
+    char* mus_title;
 } FLAC_music;
 
 /* Initialize the FLAC player, with the given mixer settings

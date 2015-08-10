@@ -4,7 +4,9 @@ CONFIG -= qt
 CONFIG += dll
 CONFIG -= static
 
-QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-sign-compare
+QMAKE_CFLAGS += -std=c99
+
+QMAKE_CFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-function -Wno-implicit-function-declaration -Wno-pointer-sign
 QMAKE_CXXFLAGS += -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable
 macx: QMAKE_CXXFLAGS += -Wno-header-guard
 !macx:{
@@ -152,7 +154,26 @@ HEADERS += \
     resample/audio.h \
     resample/global.h \
     resample/mad_resample.h \
-    SDL_mixer_ext.h
+    SDL_mixer_ext.h \
+    libid3tag/compat.h \
+    libid3tag/crc.h \
+    libid3tag/debug.h \
+    libid3tag/field.h \
+    libid3tag/file.h \
+    libid3tag/frame.h \
+    libid3tag/frametype.h \
+    libid3tag/genre.h \
+    libid3tag/global.h \
+    libid3tag/id3tag.h \
+    libid3tag/latin1.h \
+    libid3tag/parse.h \
+    libid3tag/render.h \
+    libid3tag/tag.h \
+    libid3tag/ucs4.h \
+    libid3tag/utf8.h \
+    libid3tag/utf16.h \
+    libid3tag/util.h \
+    libid3tag/version.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -205,10 +226,30 @@ SOURCES += \
     music_spc.c \
     resample/mad_resample.c \
     timidity/ctrlmode.c \
-    dynamic_mod.c
+    dynamic_mod.c \
+    libid3tag/compat.c \
+    libid3tag/crc.c \
+    libid3tag/debug.c \
+    libid3tag/field.c \
+    libid3tag/file.c \
+    libid3tag/frame.c \
+    libid3tag/frametype.c \
+    libid3tag/genre.c \
+    libid3tag/latin1.c \
+    libid3tag/parse.c \
+    libid3tag/render.c \
+    libid3tag/tag.c \
+    libid3tag/ucs4.c \
+    libid3tag/utf8.c \
+    libid3tag/utf16.c \
+    libid3tag/util.c \
+    libid3tag/version.c
 
 DISTFILES += \
     timidity/COPYING \
     timidity/FAQ \
-    timidity/README
+    timidity/README \
+    libid3tag/config.h.in \
+    libid3tag/genre.dat \
+    libid3tag/genre.dat.in
 

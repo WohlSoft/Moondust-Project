@@ -72,6 +72,16 @@ PGE_PointF PlayerPosDetector::position()
     return pos;
 }
 
+float PlayerPosDetector::positionX()
+{
+    return pos.x();
+}
+
+float PlayerPosDetector::positionY()
+{
+    return pos.y();
+}
+
 int PlayerPosDetector::playersCharID()
 {
     return _plr_id;

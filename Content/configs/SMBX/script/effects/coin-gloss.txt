@@ -1,0 +1,51 @@
+//
+//Conceptual attempt to implement consisntant effects engine
+//
+//This is an example of effect mini-program. Using of LUA here is too heavy for so small parametric timed animation scripts
+//
+//Small references:
+//   // - comments
+//   empty lines allowed
+//   1 line - 1 effect act, except usage of "\" before line feeds.
+//   all parameters are spliting by semicolon ";".
+//   Parameter name and value spliting with equal sign "=".
+//   Apaces between commands are allowed.
+//
+//   This is not actual program language, it's a declaration of consistant effect only
+//
+//Commands:
+// thread - int, defines separated working effect body
+// delay - int, milliseconds before effect will be started
+// id - int, ID of effect sprite, if -1, possible to use custom effectID (from launch argument)
+// start-x - float, position relative to launching position
+// start-y - float, position relative to launching position
+// work-while - string, condition to finish effect [loops,1; time,500; pos-y-lt,0; pos-y-gt,0; pos-x-gt,0; pos-x-gt,0; offscreen]
+// ani-sequence - int array of frames, if -1 - standard full sequence
+// vel-x - float, initial moving velocity X
+// vel-y - float, initial moving velocity Y
+// gravity - float, directed Y acceleration, makes your effect fall down or fly up
+// frame-speed - int, time of each animation frame
+// framestyle - int, 0 - full frameset independent to direction from input arguments,
+//                   1 - left-right dependency, 2- left-right-upper depencency
+// 
+thread=1; delay=120; id=78; \
+        start-x=-8; start-y=0; work-while=loops,1; \
+        ani-sequence=-1; \
+        vel-x=0.0; vel-y=0.0; gravity=0; frame-speed=75; framestyle=0
+
+thread=2; delay=240; id=78; \
+        start-x=0; start-y=-16; work-while=loops,1; \
+        ani-sequence=-1; \
+        vel-x=0.0; vel-y=0.0; gravity=0; frame-speed=75; framestyle=0
+
+thread=3; delay=360; id=78; \
+        start-x=8; start-y=0; work-while=loops,1; \
+        ani-sequence=-1; \
+        vel-x=0.0; vel-y=0.0; gravity=0; frame-speed=75; framestyle=0
+
+thread=4; delay=480; id=78; \
+        start-x=0; start-y=16; work-while=loops,1; \
+        ani-sequence=-1;\
+        vel-x=0.0; vel-y=0.0; gravity=0; frame-speed=75; framestyle=0
+
+

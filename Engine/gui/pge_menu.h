@@ -41,7 +41,9 @@ class PGE_Menu
 {
 friend class PGE_KeyGrabMenuItem;
 public:
-    PGE_Menu();
+    enum menuAlignment { HORIZONTAL, VERTICLE };
+
+    PGE_Menu(menuAlignment align=VERTICLE, int itemGap=0);
     PGE_Menu(const PGE_Menu&menu);
     ~PGE_Menu();
 
@@ -87,6 +89,7 @@ public:
     bool isKeyGrabbing();         //!< Is a key grabbing mode
     bool processJoystickBinder(); //!< Is a joystick key grabbing mode
     void storeKey(int scancode);
+    menuAlignment getAlignment();
     const PGE_Menuitem currentItem(); //!< Returns current menu item entry
     int currentItemI();       //!< Returns index of current menu item
     void setCurrentItem(int i); //!< Sets current index of menuitem
@@ -104,6 +107,7 @@ public:
     void setSize(int w, int h); //!< Sets size of menu box
     void setSize(PGE_Size s);      //!< Sets size of menu box
     void setTextLenLimit(int maxlen, bool strict=false);
+    int getMenuItemGap();
 
     bool isKeygrabViaKey() const;
     void setKeygrabViaKey(bool value);
@@ -119,6 +123,7 @@ private:
     bool is_keygrabViaKey;
     /*******Key grabbing********/
 
+    menuAlignment alignment;
     int _itemsOnScreen;
     int _currentItem;
     int _line;
@@ -144,6 +149,7 @@ private:
     int _width_limit;
     int _text_len_limit;
     bool _text_len_limit_strict;
+    int menuItemGap;
 
     int _font_id;
     int _font_offset;

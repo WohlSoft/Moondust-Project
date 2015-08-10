@@ -44,6 +44,18 @@ void MainWindow::setDefaults()
 
     GlobalSettings::tools_sox_bin_path = ApplicationPath+GlobalSettings::tools_sox_bin_path;
 
+    GlobalSettings::LvlItemDefaults.npc_direction=-1;
+    GlobalSettings::LvlItemDefaults.npc_generator_type=1;
+    GlobalSettings::LvlItemDefaults.npc_generator_delay=20;
+    GlobalSettings::LvlItemDefaults.warp_type=2;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz     = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov     = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_secset     = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_common     = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons    = false;
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger    = false;
+
     askConfigAgain=false;
 
     _is_reloading=false;
@@ -145,7 +157,7 @@ void MainWindow::setUiDefults()
 
     ui->actionExport_to_image_section->setVisible(false);
 
-    ui->actionVBAlphaEmulate->setChecked(GraphicsHelps::EnableVBEmulate);
+    ui->actionVBAlphaEmulate->setChecked(GraphicsHelps::EnableBitBlitMerge);
 
     ui->centralWidget->cascadeSubWindows();
 

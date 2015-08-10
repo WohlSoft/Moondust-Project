@@ -21,6 +21,9 @@
 #include <QDesktopWidget>
 #include "calibrationmain.h"
 #include <main/app_path.h>
+#include <iostream>
+
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
@@ -36,6 +39,11 @@ int main(int argc, char *argv[])
             AppPathManager::install();
             AppPathManager::initAppPath();
 
+            QApplication::quit();
+            QApplication::exit();
+            return 0;
+        } else if(arg=="--version") {
+            std::cout << _INTERNAL_NAME " " _FILE_VERSION << _FILE_RELEASE << std::endl;
             QApplication::quit();
             QApplication::exit();
             return 0;

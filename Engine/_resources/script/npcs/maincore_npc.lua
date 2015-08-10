@@ -22,16 +22,38 @@ end
 
 function luaNPC:onActivated()
     if(not self.isInvalid and self.controller)then
-        self.controller:onActivated()
+        if(type(self.controller.onActivated) == "function")then
+            self.controller:onActivated()
+        end
     end
     BaseNPC.onActivated(self)
 end
 
 function luaNPC:onLoop(tickTime)
     if(not self.isInvalid and self.controller)then
-        self.controller:onLoop(tickTime)
+        if(type(self.controller.onLoop) == "function")then
+            self.controller:onLoop(tickTime)
+        end
     end
     BaseNPC.onLoop(self, tickTime)
+end
+
+function luaNPC:onKill(damageReason)
+    if(not self.isInvalid and self.controller)then
+        if(type(self.controller.onKill) == "function")then
+            self.controller:onKill(damageReason)
+        end
+    end
+    BaseNPC.onKill(self, damageReason)
+end
+
+function luaNPC:onHarm(damage, damageReason)
+    if(not self.isInvalid and self.controller)then
+        if(type(self.controller.onHarm) == "function")then
+            self.controller:onHarm(damage, damageReason)
+        end
+    end
+    BaseNPC.onHarm(self, damage, damageReason)
 end
 
 return luaNPC

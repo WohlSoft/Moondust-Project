@@ -130,7 +130,7 @@ void LVL_Npc::render(double camX, double camY)
 
     if(PGE_Window::showDebugInfo)
     {
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5  %6 %7")
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5")
                                .arg(collided_top.size())
                                .arg(collided_left.size())
                                .arg(collided_center.size())

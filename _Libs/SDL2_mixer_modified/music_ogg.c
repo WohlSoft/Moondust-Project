@@ -91,10 +91,76 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         OGG_setvolume(music, MIX_MAX_VOLUME);
         music->section = -1;
 
+        music->mus_title=NULL;
+
+        music->loop         = -1;
+        music->loop_start   =  0;
+        music->loop_end     =  0;
+        music->loop_len     =  0;
+
         if ( vorbis.ov_open_callbacks(src, &music->vf, NULL, 0, callbacks) < 0 ) {
             SDL_SetError("Not an Ogg Vorbis audio stream");
             SDL_free(music);
             return(NULL);
+        }
+
+        /* Parse comments and extract title and loop points */
+        vorbis_comment *ptr=ov_comment(&music->vf,-1);
+        int doValue=0;
+        int isLength=0;
+        for(int i=0;i<ptr->comments;i++)
+        {
+            char argument[ptr->comment_lengths[i]+1];
+            char value[ptr->comment_lengths[i]+1];
+            for(int j=0, k=0; j<=ptr->comment_lengths[i]; j++, k++)
+            {
+                if(doValue==0)
+                {
+                    argument[j]=ptr->user_comments[i][j];
+                    if(argument[j]=='=')
+                    {
+                        argument[j]='\0';
+                        doValue=1;
+                        k=-1;
+                    }
+                } else {
+                    value[k]=ptr->user_comments[i][j];
+                }
+            }
+            int isLoopStart  = strcasecmp(argument, "LOOPSTART");
+            int isLoopLen    = strcasecmp(argument, "LOOPLENGTH");
+            int isLoopEnd    = strcasecmp(argument, "LOOPEND");
+            int isMusicTitle = strcasecmp(argument, "TITLE");
+            if(isLoopStart==0) {
+                music->loop_start = atoi(value);
+            } else if(isLoopLen==0) {
+                music->loop_len= atoi(value);
+                isLength=1;
+            } else if(isLoopEnd==0) {
+                isLength=0;
+                music->loop_end= atoi(value);
+            } else if(isMusicTitle==0) {
+                music->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_title, value);
+            }
+            doValue=0;
+        }
+
+        if(isLength==1)
+            music->loop_end=music->loop_start+music->loop_len;
+        else
+            music->loop_len=music->loop_end-music->loop_start;
+
+        if( (music->loop_start > 0)&&
+            (music->loop_end > 0)&&
+            (music->loop_start < music->loop_end) &&
+            (music->loop_start < ov_pcm_total(&music->vf,-1))&&
+            (music->loop_end < ov_pcm_total(&music->vf,-1)) )
+        {
+            music->loop=1;
+            vorbis_info *vi;
+            vi = vorbis.ov_info(&music->vf, -1);
+            music->loop_len_ch = vi->channels;
         }
     } else {
         SDL_OutOfMemory();
@@ -102,6 +168,13 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
     }
     return(music);
 }
+
+/* Ignore loop points if found */
+void OGG_IgnoreLoop(OGG_music *music)
+{
+    if( music ) music->loop=-1;
+}
+
 
 /* Start playback of a given OGG stream */
 void OGG_play(OGG_music *music)
@@ -127,6 +200,12 @@ static void OGG_getsome(OGG_music *music)
     len = vorbis.ov_read(&music->vf, data, sizeof(data), &section);
 #else
     len = vorbis.ov_read(&music->vf, data, sizeof(data), 0, 2, 1, &section);
+    ogg_int64_t pcmpos=ov_pcm_tell(&music->vf);
+    if( (music->loop==1) && ( pcmpos > music->loop_end ) )
+    {
+        len -= ((pcmpos-music->loop_end)*music->loop_len_ch)*2;
+        ov_pcm_seek(&music->vf, music->loop_start);
+    }
 #endif
     if ( len <= 0 ) {
         if ( len == 0 ) {
@@ -207,6 +286,10 @@ void OGG_delete(OGG_music *music)
         if ( music->freesrc ) {
             SDL_RWclose(music->src);
         }
+        if( music->mus_title )
+        {
+            SDL_free(music->mus_title);
+        }
         vorbis.ov_clear(&music->vf);
         SDL_free(music);
     }
@@ -223,3 +306,4 @@ void OGG_jump_to_time(OGG_music *music, double time)
 }
 
 #endif /* OGG_MUSIC */
+
