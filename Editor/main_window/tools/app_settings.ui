@@ -61,7 +61,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabMain">
       <attribute name="title">
@@ -315,14 +315,14 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QRadioButton" name="Editor_Mid_AllowDupe">
+           <widget class="QCheckBox" name="Editor_Mid_AllowDupe">
             <property name="text">
              <string>Duplicate selected items into mouse position</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="Editor_Mid_AllowPlacing">
+           <widget class="QCheckBox" name="Editor_Mid_AllowPlacing">
             <property name="text">
              <string>Switch placing mode of the selected item</string>
             </property>
