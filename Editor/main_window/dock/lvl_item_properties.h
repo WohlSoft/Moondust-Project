@@ -62,13 +62,13 @@ public slots:
     void re_translate();
 
     void LvlItemProps_updateLayer(QString lname);
-    void OpenBlock(LevelBlock block, bool newItem=false);
-    void OpenBGO(LevelBGO bgo, bool newItem=false);
-    void OpenNPC(LevelNPC npc, bool newItem=false);
+    void OpenBlock(LevelBlock block, bool newItem=false, bool dont_reset_props=false);
+    void OpenBGO(LevelBGO bgo, bool newItem=false, bool dont_reset_props=false);
+    void OpenNPC(LevelNPC npc, bool newItem=false, bool dont_reset_props=false);
     void CloseBox();
 
-    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
-    void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false);
+    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false, bool dont_reset_props=false);
+    void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false, bool dont_reset_props=false);
 
 
 private slots:

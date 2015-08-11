@@ -2003,9 +2003,8 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
         if(i<0) return;
 
         ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::EVENT, edit->LvlData.events[i].msg, false,
-                tr("Please, enter message\nMessage limits: max line lenth is 28 characters"));
-        msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
+                tr("Please, enter message\nMessage limits: max line lenth is 28 characters"), "", this);
+        util::DialogToCenter(msgBox);
         if(msgBox->exec()==QDialog::Accepted)
         {
             QList<QVariant> msgData;
@@ -2023,7 +2022,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
             ui->LVLEvent_Cmn_Msg->setText( evnmsg.replace("&", "&&&") );
             edit->LvlData.modified=true;
         }
-
+        delete msgBox;
     }
 }
 

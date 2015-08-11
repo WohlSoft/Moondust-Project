@@ -229,7 +229,7 @@ void WldSearchBox::on_Find_Button_ResetTile_clicked()
 
 void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 {
-    ItemSelectDialog* selLevel = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
+    ItemSelectDialog* selLevel = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id,0,this);
     if(selLevel->exec()==QDialog::Accepted){
         int selected = selLevel->levelID;
         curSearchLevel.id = selected;
@@ -240,7 +240,7 @@ void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 
 void WldSearchBox::on_Find_Button_TypeTile_clicked()
 {
-    ItemSelectDialog* selTile = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_TILE,0,0,0,0,curSearchTile.id,0,0,0);
+    ItemSelectDialog* selTile = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_TILE,0,0,0,0,curSearchTile.id,0,0,0,0,this);
     if(selTile->exec()==QDialog::Accepted){
         int selected = selTile->tileID;
         curSearchTile.id = selected;
@@ -251,7 +251,7 @@ void WldSearchBox::on_Find_Button_TypeTile_clicked()
 
 void WldSearchBox::on_Find_Button_TypeScenery_clicked()
 {
-    ItemSelectDialog* selScenery = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,curSearchScenery.id,0,0);
+    ItemSelectDialog* selScenery = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,curSearchScenery.id,0,0,0,this);
     if(selScenery->exec()==QDialog::Accepted){
         int selected = selScenery->sceneryID;
         curSearchScenery.id = selected;
@@ -262,7 +262,7 @@ void WldSearchBox::on_Find_Button_TypeScenery_clicked()
 
 void WldSearchBox::on_Find_Button_TypePath_clicked()
 {
-    ItemSelectDialog* selPath = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,curSearchPath.id,0);
+    ItemSelectDialog* selPath = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,curSearchPath.id,0,0,this);
     if(selPath->exec()==QDialog::Accepted){
         int selected = selPath->pathID;
         curSearchPath.id = selected;
@@ -273,7 +273,7 @@ void WldSearchBox::on_Find_Button_TypePath_clicked()
 
 void WldSearchBox::on_Find_Button_TypeMusic_clicked()
 {
-    ItemSelectDialog* selMusic = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,curSearchMusic.id);
+    ItemSelectDialog* selMusic = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,curSearchMusic.id,this);
     if(selMusic->exec()==QDialog::Accepted){
         int selected = selMusic->musicID;
         curSearchMusic.id = selected;

@@ -71,7 +71,7 @@ void MainWindow::on_actionChange_log_triggered()
 
 void MainWindow::on_actionCheckUpdates_triggered()
 {
-    UpdateChecker updater;
+    UpdateChecker updater(this);
     util::DialogToCenter(&updater, true);
     updater.exec();
 }
@@ -81,7 +81,7 @@ void MainWindow::on_actionCheckUpdates_triggered()
 //Open About box
 void MainWindow::on_actionAbout_triggered()
 {
-    aboutDialog about;
+    aboutDialog about(this);
     util::DialogToCenter(&about, true);
     about.exec();
 }

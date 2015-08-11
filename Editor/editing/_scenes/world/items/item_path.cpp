@@ -184,7 +184,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_PATH);
+        ItemSelectDialog * itemList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         itemList->removeEmptyEntry(ItemSelectDialog::TAB_PATH);
         util::DialogToCenter(itemList, true);
 
