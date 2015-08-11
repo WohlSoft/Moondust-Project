@@ -31,6 +31,8 @@
 #include "../items/item_playerpoint.h"
 #include "../items/item_door.h"
 
+#include "../lvl_item_placing.h"
+
 LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)
 {
@@ -97,11 +99,23 @@ void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                 QString itp = it->data(ITEM_TYPE).toString();
                 long itd = it->data(ITEM_ID).toInt();
                 if(itp=="Block")
-                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd); return;}
+                {
+                    ItemBlock* blk= qgraphicsitem_cast<ItemBlock*>(it);
+                    if(blk) LvlPlacingItems::blockSet=blk->blockData;
+                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd, true); return;
+                }
                 else if(itp=="BGO")
-                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd); return;}
+                {
+                    ItemBGO* blk= qgraphicsitem_cast<ItemBGO*>(it);
+                    if(blk) LvlPlacingItems::bgoSet=blk->bgoData;
+                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd, true); return;
+                }
                 else if(itp=="NPC")
-                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd); return;}
+                {
+                    ItemNPC* blk= qgraphicsitem_cast<ItemNPC*>(it);
+                    if(blk) LvlPlacingItems::npcSet=blk->npcData;
+                    MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd, true); return;
+                }
             }
         }
         if(GlobalSettings::MidMouse_allowDuplicate)

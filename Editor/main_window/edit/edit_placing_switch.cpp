@@ -126,7 +126,7 @@ void MainWindow::on_actionDrawSand_triggered()
 }
 
 
-void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
+void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props)
 {
     if(activeChildWindow()==1) // Level editing window
     {
