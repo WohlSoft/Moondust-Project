@@ -77,7 +77,7 @@ public partial class MainWindow
 		this.notebook2 = new global::Gtk.Notebook ();
 		this.notebook2.CanFocus = true;
 		this.notebook2.Name = "notebook2";
-		this.notebook2.CurrentPage = 0;
+		this.notebook2.CurrentPage = 1;
 		this.notebook2.ShowBorder = false;
 		// Container child notebook2.Gtk.Notebook+NotebookChild
 		this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
@@ -161,5 +161,6 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.ExitAction.Activated += new global::System.EventHandler (this.OnExitActionActivated);
+		this.configListTreeview.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.OnConfigListTreeviewButtonPressEvent);
 	}
 }

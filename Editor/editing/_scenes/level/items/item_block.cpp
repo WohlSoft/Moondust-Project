@@ -238,7 +238,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK);
+        ItemSelectDialog * blockList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_BLOCK, 0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         blockList->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK);
         util::DialogToCenter(blockList, true);
 
@@ -312,7 +312,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                 goto typeEventAgain;
             if(ok)
             {
-                ItemMsgBox msgBox(Opened_By::BLOCK, "", false, tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"));
+                ItemMsgBox msgBox(Opened_By::BLOCK, "", false, tr("Please, enter message which will be shown\nMessage limits: max line lenth is 27 characters"), tr("Hit message text"), MainWinConnect::pMainWin);
                 util::DialogToCenter(&msgBox, true);
                 if(msgBox.exec()==QDialog::Accepted)
                 {
@@ -394,8 +394,8 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         LevelData selData;
         ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
                                                    ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                   (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id)
-                                                          );
+                                                   (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id),
+                                                          0,0,0,0,0,MainWinConnect::pMainWin);
         npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
         if(npcList->exec()==QDialog::Accepted)

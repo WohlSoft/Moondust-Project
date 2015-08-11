@@ -41,7 +41,7 @@ void LVL_ModeHand::set()
 
     s->EraserEnabled=false;
     s->PasteFromBuffer=false;
-    s->DrawMode=false;
+    s->DrawMode=true;
     s->disableMoveItems=false;
 
     s->_viewPort->setCursor(Qt::ArrowCursor);

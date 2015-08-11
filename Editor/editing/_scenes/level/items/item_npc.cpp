@@ -285,7 +285,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC);
+        ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,MainWinConnect::pMainWin);
         npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
         util::DialogToCenter(npcList, true);
 
@@ -397,7 +397,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
         {
             LevelData selData;
 
-            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg, npcData.friendly);
+            ItemMsgBox msgBox(Opened_By::NPC, npcData.msg, npcData.friendly, "", "", MainWinConnect::pMainWin);
             util::DialogToCenter(&msgBox, true);
             if(msgBox.exec()==QDialog::Accepted)
             {
