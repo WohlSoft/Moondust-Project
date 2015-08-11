@@ -45,21 +45,13 @@ void LVL_ModeHand::set()
     s->disableMoveItems=false;
 
     s->_viewPort->setCursor(Qt::ArrowCursor);
-    s->_viewPort->setInteractive(true);
+    s->_viewPort->setInteractive(false);
     s->_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
 void LVL_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(!scene) return;
-    LvlScene *s = dynamic_cast<LvlScene *>(scene);
-    if( mouseEvent->buttons() & Qt::RightButton )
-    {
-        MainWinConnect::pMainWin->on_actionSelect_triggered();
-        dontCallEvent = true;
-        s->IsMoved = true;
-        return;
-    }
+    Q_UNUSED(mouseEvent);
 }
 
 void LVL_ModeHand::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
