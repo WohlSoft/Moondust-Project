@@ -24,7 +24,7 @@
 
 void MainWindow::on_actionCloneSectionTo_triggered()
 {
-    LvlCloneSection box;
+    LvlCloneSection box(this);
     box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
 

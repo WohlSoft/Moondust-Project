@@ -107,7 +107,7 @@ void LevelEdit::ExportingReady() //slot
         imgSize.push_back(tw);
         imgSize.push_back((int)proportion);
 
-        ExportToImage ExportImage(imgSize);
+        ExportToImage ExportImage(imgSize, MainWinConnect::pMainWin);
         ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
         if(ExportImage.exec()!=QDialog::Rejected)
@@ -131,7 +131,7 @@ void LevelEdit::ExportingReady() //slot
 
         QFileInfo exported(fileName);
 
-        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
+        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, MainWinConnect::pMainWin);
         progress.setWindowTitle(tr("Please wait..."));
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);

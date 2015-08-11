@@ -46,7 +46,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     }
 
     //NpcDialog * npcList = new NpcDialog(&configs);
-    ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC);
+    ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this);
     npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));

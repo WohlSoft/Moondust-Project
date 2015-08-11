@@ -57,12 +57,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     QFont font;
     font.setItalic(true);
-    QListWidgetItem * empBlock = new QListWidgetItem();
-    QListWidgetItem * empBGO = new QListWidgetItem();
-    QListWidgetItem * empNPC = new QListWidgetItem();
-    QListWidgetItem * empScenery = new QListWidgetItem();
-    QListWidgetItem * empLevel = new QListWidgetItem();
-    QListWidgetItem * empMusic = new QListWidgetItem();
+    QListWidgetItem * empBlock = new QListWidgetItem(ui->Sel_List_Block);
+    QListWidgetItem * empBGO = new QListWidgetItem(ui->Sel_List_BGO);
+    QListWidgetItem * empNPC = new QListWidgetItem(ui->Sel_List_NPC);
+    QListWidgetItem * empScenery = new QListWidgetItem(ui->Sel_List_Scenery);
+    QListWidgetItem * empLevel = new QListWidgetItem(ui->Sel_List_Level);
+    QListWidgetItem * empMusic = new QListWidgetItem(ui->Sel_List_Music);
         empBlock->setFont(font);
         empBGO->setFont(font);
         empNPC->setFont(font);
@@ -127,9 +127,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     if(npcExtraData & NPCEXTRA_WITHCOINS)
     {
-        npcFromList = new QRadioButton(tr("NPC from List"));
-        npcCoins = new QRadioButton(tr("Coins"));
-        npcCoinsSel = new QSpinBox();
+        npcFromList = new QRadioButton(tr("NPC from List"), this);
+        npcCoins = new QRadioButton(tr("Coins"), this);
+        npcCoinsSel = new QSpinBox(this);
         npcCoinsSel->setMinimum(1);
         npcCoinsSel->setEnabled(false);
         extraNPCWid << npcFromList << npcCoins << npcCoinsSel;
@@ -167,7 +167,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
                                                 blockItem.frame_h),
                                                       QSize(16,16));
 
-            QListWidgetItem* item = new QListWidgetItem( blockItem.name );
+            QListWidgetItem* item = new QListWidgetItem( blockItem.name, ui->Sel_List_Block);
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(blockItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -182,7 +182,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             //Add category
             QPixmap tmpI = bgoItem.image;
 
-            QListWidgetItem* item = new QListWidgetItem( bgoItem.name );
+            QListWidgetItem* item = new QListWidgetItem( bgoItem.name, ui->Sel_List_BGO );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(bgoItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -199,7 +199,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
                         npcItem.image.copy(0,npcItem.gfx_h*npcItem.display_frame, npcItem.image.width(), npcItem.gfx_h ),
                         QSize(16,16) );
 
-            QListWidgetItem* item = new QListWidgetItem( npcItem.name );
+            QListWidgetItem* item = new QListWidgetItem( npcItem.name, ui->Sel_List_NPC );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(npcItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -212,7 +212,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     {
         foreach (obj_w_scenery sceneryItem, conf->main_wscene) {
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(sceneryItem.id));
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(sceneryItem.id), ui->Sel_List_Scenery);
             item->setIcon( QIcon( sceneryItem.image ) );
             item->setData(3, QString::number(sceneryItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -224,7 +224,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     {
         foreach (obj_w_level levelItem, conf->main_wlevels) {
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(levelItem.id));
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(levelItem.id), ui->Sel_List_Level);
             item->setIcon( QIcon( levelItem.image ) );
             item->setData(3, QString::number(levelItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -236,7 +236,7 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     {
         foreach (obj_music musicItem, conf->main_music_wld) {
             //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id));
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id), ui->Sel_List_Music);
             item->setIcon( QIcon( QPixmap(":/images/playmusic.png") ) );
             item->setData(3, QString::number(musicItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );

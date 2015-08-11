@@ -33,7 +33,7 @@
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
-    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
+    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
     util::DialogToCenter(tilesetConfDia);
     tilesetConfDia->exec();
     delete tilesetConfDia;

@@ -126,7 +126,7 @@ void MainWindow::on_actionDrawSand_triggered()
 }
 
 
-void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
+void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont_reset_props)
 {
     if(activeChildWindow()==1) // Level editing window
     {
@@ -184,7 +184,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    activeLvlEditWin()->scene->setItemPlacer(0, itemID);
 
                    //Open block properties toolbox for define placing properties
-                   dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet, true);
+                   dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet, true, dont_reset_props);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();
@@ -207,7 +207,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    activeLvlEditWin()->scene->setItemPlacer(1, itemID );
 
-                   dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet, true);
+                   dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet, true, dont_reset_props);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();
@@ -234,7 +234,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
-                   dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet, true);
+                   dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet, true, dont_reset_props);
 
                    if(GlobalSettings::Placing_dontShowPropertiesBox)
                         dock_LvlItemProps->hide();

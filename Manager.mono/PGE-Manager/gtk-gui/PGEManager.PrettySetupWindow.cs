@@ -74,6 +74,7 @@ namespace PGEManager
 			this.thisPathRadiobutton.WidthRequest = 1;
 			this.thisPathRadiobutton.CanFocus = true;
 			this.thisPathRadiobutton.Name = "thisPathRadiobutton";
+			this.thisPathRadiobutton.Active = true;
 			this.thisPathRadiobutton.DrawIndicator = true;
 			this.thisPathRadiobutton.UseUnderline = true;
 			this.thisPathRadiobutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);

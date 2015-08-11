@@ -24,6 +24,8 @@
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_scenes/world/wld_scene.h>
 
+#include <common_features/mainwinconnect.h>
+
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
 GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
@@ -365,6 +367,24 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
 
             if (isAccepted)
                 return;
+        }
+    } else {
+        LvlScene *s = dynamic_cast<LvlScene *>(scene());
+        WldScene *w = dynamic_cast<WldScene *>(scene());
+        bool setSelect=false;
+        if(s)
+        {
+            setSelect=(s->EditingMode==LvlScene::MODE_HandScroll);
+        } else if(w)
+        {
+            setSelect=((!w->isSelectionDialog)&&(w->EditingMode==WldScene::MODE_HandScroll));
+        }
+        if(setSelect)
+        {
+            if( event->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+            }
         }
     }
 

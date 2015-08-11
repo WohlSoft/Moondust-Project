@@ -346,7 +346,7 @@ void LvlSearchBox::on_FindStartNPC_clicked()
 
 void LvlSearchBox::on_Find_Button_TypeBlock_clicked()
 {
-    ItemSelectDialog* selBlock = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BLOCK,0,curSearchBlock.id);
+    ItemSelectDialog* selBlock = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BLOCK,0,curSearchBlock.id, 0,0,0,0,0,0,0,this);
     if(selBlock->exec()==QDialog::Accepted)
     {
         int selected = selBlock->blockID;
@@ -360,7 +360,7 @@ void LvlSearchBox::on_Find_Button_ContainsNPCBlock_clicked()
 {
     ItemSelectDialog * npcList = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_NPC,
                                                    ItemSelectDialog::NPCEXTRA_WITHCOINS | (curSearchBlock.npc_id < 0 && curSearchBlock.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                   (curSearchBlock.npc_id < 0 && curSearchBlock.npc_id != 0 ? curSearchBlock.npc_id*(-1) : curSearchBlock.npc_id));
+                                                   (curSearchBlock.npc_id < 0 && curSearchBlock.npc_id != 0 ? curSearchBlock.npc_id*(-1) : curSearchBlock.npc_id),0,0,0,0,0,this);
     if(npcList->exec()==QDialog::Accepted){
         int selected = 0;
         if(npcList->npcID!=0){
@@ -377,7 +377,7 @@ void LvlSearchBox::on_Find_Button_ContainsNPCBlock_clicked()
 
 void LvlSearchBox::on_Find_Button_TypeBGO_clicked()
 {
-    ItemSelectDialog* selBgo = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BGO,0,0,curSearchBGO.id);
+    ItemSelectDialog* selBgo = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_BGO,0,0,curSearchBGO.id,0,0,0,0,0,0,this);
     if(selBgo->exec()==QDialog::Accepted){
         int selected = selBgo->bgoID;
         curSearchBGO.id = selected;
@@ -388,7 +388,7 @@ void LvlSearchBox::on_Find_Button_TypeBGO_clicked()
 
 void LvlSearchBox::on_Find_Button_TypeNPC_clicked()
 {
-    ItemSelectDialog* selNpc = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_NPC,0,0,0,curSearchNPC.id);
+    ItemSelectDialog* selNpc = new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_NPC,0,0,0,curSearchNPC.id,0,0,0,0,0,this);
     if(selNpc->exec()==QDialog::Accepted){
         int selected = selNpc->npcID;
         curSearchNPC.id = selected;

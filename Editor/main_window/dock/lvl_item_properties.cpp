@@ -173,19 +173,19 @@ void LvlItemProperties::mouseMoveEvent(QMouseEvent *event)
 }
 
 
-void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem)
+void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem);
+    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
 }
 
-void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem)
+void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem);
+    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
 }
 
-void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem)
+void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem);
+    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem, dont_reset_props);
 }
 
 void LvlItemProperties::CloseBox()
@@ -202,7 +202,7 @@ void LvlItemProperties::CloseBox()
     LvlPlacingItems::npcSpecialAutoIncrement=false;
 }
 
-void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
+void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem, bool dont_reset_props)
 {
     mw()->LayerListsSync();
     mw()->EventListsSync();
@@ -273,7 +273,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             j=0;
         }
 
-        if(blockPtr<0)
+        if((blockPtr<0) && (!dont_reset_props))
         {
             LvlPlacingItems::blockSet.invisible = mw()->configs.main_block[j].default_invisible_value;
             block.invisible = mw()->configs.main_block[j].default_invisible_value;
@@ -368,7 +368,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             bgoPtr = bgo.array_id;
 
 
-        if(bgoPtr<0)
+        if((bgoPtr<0)&&(!dont_reset_props))
         {
             LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             bgo.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
@@ -484,7 +484,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         ui->PROPS_NPCSpecial2Box->hide();
         ui->Line_Special2_sep->hide();
 
-        if(npcPtr<0)
+        if((npcPtr<0)&&(!dont_reset_props))
         {
             LvlPlacingItems::npcSet.msg="";
             npc.msg="";
@@ -584,7 +584,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
                 ui->PROPS_NPCBoxLabel->setText(mw()->configs.main_npc[j].special_name);
                 ui->PROPS_NPCSpecialBox->show();
 
-                if(newItem)
+                if((newItem)&&(!dont_reset_props))
                 {//Reset value to min, if it out of range
                     if((npc.special_data>=mw()->configs.main_npc[j].special_combobox_opts.size())||
                         (npc.special_data<0))
@@ -609,13 +609,13 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
                 ui->PROPS_NpcSpinLabel->setText( mw()->configs.main_npc[j].special_name );
                 ui->PROPS_NPCSpecialSpin->show();
 
-                if(npcPtr<0)
+                if((npcPtr<0)&&(!dont_reset_props))
                 {
                     ui->PROPS_NPCSpecialSpin_Auto->show();
                     ui->PROPS_NPCSpecialSpin_Auto->setChecked(false);
                 }
 
-                if(newItem)
+                if((newItem)&&(!dont_reset_props))
                 { //Reset value to min, if it out of range
                     if((npc.special_data>mw()->configs.main_npc[j].special_spin_max)||
                        (npc.special_data<mw()->configs.main_npc[j].special_spin_max))
@@ -649,7 +649,7 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
             }
         }
         //refresh special option 2
-        refreshSecondSpecialOption(npc.id, npc.special_data, npc.special_data2, newItem);
+        refreshSecondSpecialOption(npc.id, npc.special_data, npc.special_data2, newItem, dont_reset_props);
 
 
 
@@ -860,7 +860,7 @@ void LvlItemProperties::npc_refreshMinHeight()
     ui->npcProps->setMinimumHeight(minHeightOfBox);
 }
 
-void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem)
+void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem, bool dont_reset_props)
 {
     bool found=false;
     int j;
@@ -915,7 +915,7 @@ void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, lon
             ui->PROPS_NpcSpecial2title->setText(mw()->configs.main_npc[j].special_2_name);
 
             ui->PROPS_NPCSpecial2Box->show();
-            if(newItem)
+            if((newItem)&&(!dont_reset_props))
             {//Reset value to min, if it out of range
                 if((spcOpts2>=mw()->configs.main_npc[j].special_2_combobox_opts.size())||
                     (spcOpts2<0))
@@ -944,7 +944,7 @@ void LvlItemProperties::refreshSecondSpecialOption(long npcID, long spcOpts, lon
             ui->PROPS_NpcSpecial2title->setText(mw()->configs.main_npc[j].special_2_name);
 
             ui->PROPS_NPCSpecial2Spin->show();
-            if(newItem)
+            if((newItem)&&(!dont_reset_props))
             { //Reset value to min, if it out of range
                 if((spcOpts2>mw()->configs.main_npc[j].special_2_spin_max)||
                    (spcOpts2<mw()->configs.main_npc[j].special_2_spin_max))
@@ -1103,10 +1103,8 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
     //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&mw()->configs, ItemSelectDialog::TAB_NPC,
                                                    ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 0 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                   (npcID < 0 && npcID != 0 ? npcID*-1 : npcID));
-    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-    //npcList->setState(npcID);
+                                                   (npcID < 0 && npcID != 0 ? npcID*-1 : npcID), 0,0,0,0,0, this);
+    util::DialogToCenter(npcList, true);
 
     if(npcList->exec()==QDialog::Accepted)
     {
@@ -1681,7 +1679,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
         }
     }
 
-    ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly);
+    ItemMsgBox * msgBox = new ItemMsgBox(Opened_By::NPC, message, friendly, "", "", this);
     util::DialogToCenter(msgBox, true);
 
     if(msgBox->exec()==QDialog::Accepted)
@@ -1843,7 +1841,7 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
         spcData2= LvlPlacingItems::npcSet.special_data2;
     }
     else
-    if (mw()->activeChildWindow()==1)
+    if(mw()->activeChildWindow()==1)
     {
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * targetItem, items1)
@@ -1861,9 +1859,8 @@ void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
     //LevelData selData;
     //QList<QVariant> modNPC;
 
-    ItemSelectDialog* npcList = new ItemSelectDialog(&mw()->configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, npcID);
+    ItemSelectDialog* npcList = new ItemSelectDialog(&mw()->configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, npcID, 0, 0, 0, 0, 0, this);
     util::DialogToCenter(npcList, true);
-
     if(npcList->exec()==QDialog::Accepted)
     {
         //apply to all selected items.

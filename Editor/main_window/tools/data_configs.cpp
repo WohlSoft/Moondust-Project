@@ -114,7 +114,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
 void MainWindow::on_actionCurConfig_triggered()
 {
-    ConfigStatus * cnfWindow = new ConfigStatus(configs);
+    ConfigStatus * cnfWindow = new ConfigStatus(configs, this);
     cnfWindow->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cnfWindow->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cnfWindow->size(), qApp->desktop()->availableGeometry()));
     cnfWindow->exec();
@@ -129,7 +129,7 @@ void MainWindow::on_actionChangeConfig_triggered()
 {
     // Config manager
     ConfigManager * cmanager;
-    cmanager = new ConfigManager();
+    cmanager = new ConfigManager(this);
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath;
