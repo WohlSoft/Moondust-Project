@@ -4,6 +4,8 @@ cd ..
 call _paths.bat
 set CurDir=%CD%
 
+IF NOT EXIST "%SEVENZIP%\7z.exe" GOTO ErrorNo7z
+
 cd "%SOURCEDIR%\Editor"
 call "%SOURCEDIR%\_paths.bat"
 
@@ -28,6 +30,17 @@ if not exist "%DeployDir%\%PgePrjSD%\*" md "%DeployDir%\%PgePrjSD%"
 %CurDir%\upx.exe --compress-icons=0 LazyFixTool.exe
 %CurDir%\upx.exe --compress-icons=0 pge_calibrator.exe
 %CurDir%\upx.exe --compress-icons=0 pge_engine.exe
+
+IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
+%QtDir%\windeployqt pge_editor.exe
+%QtDir%\windeployqt pge_engine.exe
+%QtDir%\windeployqt pge_calibrator.exe
+%QtDir%\windeployqt GIFs2PNG.exe
+%QtDir%\windeployqt PNG2GIFs.exe
+%QtDir%\windeployqt LazyFixTool.exe
+%QtDir%\windeployqt pge_manager.exe
+:noDynamicQt1
+
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
 copy PNG2GIFs.exe "%DeployDir%\%PgePrjSD%"
@@ -36,6 +49,13 @@ copy pge_calibrator.exe "%DeployDir%\%PgePrjSD%"
 copy pge_engine.exe "%DeployDir%\%PgePrjSD%"
 
 copy *.dll "%DeployDir%\%PgePrjSD%"
+IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt2
+xcopy /Y /E /I .\bearer\*.* "%DeployDir%\%PgePrjSD%\bearer"
+xcopy /Y /E /I .\iconengines\*.* "%DeployDir%\%PgePrjSD%\iconengines"
+xcopy /Y /E /I .\imageformats\*.* "%DeployDir%\%PgePrjSD%\imageformats"
+xcopy /Y /E /I .\platforms\*.* "%DeployDir%\%PgePrjSD%\platforms"
+xcopy /Y /E /I .\translations\*.* ".\languages"
+:noDynamicQt2
 xcopy /Y /E /I .\languages\*.* "%DeployDir%\%PgePrjSD%\languages"
 xcopy /Y /E /I .\themes\*.* "%DeployDir%\%PgePrjSD%\themes"
 if not exist "%DeployDir%\%PgePrjSD%\help\*.*" md "%DeployDir%\%PgePrjSD%\help"
@@ -81,6 +101,12 @@ SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\license.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\LICENSE.*.txt"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\languages"
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\help"
+IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt3
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\bearer"
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\iconengines"
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\imageformats"
+SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\platforms"
+:noDynamicQt3
 
 SET PGEEditor=
 SET PGEEditor=%PGEEditor% "%DeployDir%\%PgePrjSD%\changelog.editor.txt"
@@ -111,4 +137,11 @@ echo.
 echo "All done!"
 echo.
 cd %InitDir%
+goto exitFrom
+:ErrorNo7z
+echo.
+echo ERROR: 7zip not found: %SEVENZIP%
+echo.
+:exitFrom
 pause
+
