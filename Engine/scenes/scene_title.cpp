@@ -31,6 +31,11 @@
 #include "scene_title.h"
 #include <QtDebug>
 
+SDL_Thread *                     TitleScene::filefind_thread=NULL;
+QString                          TitleScene::filefind_folder="";
+QList<QPair<QString, QString > > TitleScene::filefind_found_files;
+bool                             TitleScene::filefind_finished=false;
+
 TitleScene::TitleScene() : Scene(Title), luaEngine(this)
 {
     doExit=false;
@@ -124,6 +129,8 @@ TitleScene::TitleScene() : Scene(Title), luaEngine(this)
     debug_joy_keyval=0;
     debug_joy_keyid=0;
     debug_joy_keytype=0;
+
+    filefind_thread =NULL;
 }
 
 TitleScene::~TitleScene()
@@ -458,4 +465,3 @@ void TitleScene::resetController()
         delete controller;
     controller = AppSettings.openController(1);
 }
-

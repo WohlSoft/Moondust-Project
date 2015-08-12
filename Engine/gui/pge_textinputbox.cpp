@@ -68,6 +68,9 @@ PGE_TextInputBox::PGE_TextInputBox(const PGE_TextInputBox &mb)
     height  = mb.height;
     padding = mb.padding;
     bg_color= mb.bg_color;
+
+    blink_shown = mb.blink_shown;
+    blink_timeout = mb.blink_timeout;
 }
 
 
@@ -83,6 +86,9 @@ void PGE_TextInputBox::construct(QString msg, PGE_TextInputBox::msgType _type, P
 
     cursor=0;
     selection_len=0;
+
+    blink_shown=true;
+    blink_timeout=250.0f;
 
     keys = Controller::noKeys();
 
@@ -169,11 +175,9 @@ void PGE_TextInputBox::render()
         }
         FontManager::printText(message, _sizeRect.left()+padding, _sizeRect.top()+padding, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-        FontManager::printText(_inputText, _sizeRect.left()+padding, _sizeRect.top()+_text_input_h_offset+padding*2, fontID,
+
+        FontManager::printText(_inputText+(blink_shown?"_":""), _sizeRect.left()+padding, _sizeRect.top()+_text_input_h_offset+padding*2, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-//        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-//                                         _sizeRect.top()+padding,
-//                                         &textTexture);
     }
     else
     {
@@ -240,7 +244,7 @@ void PGE_TextInputBox::processLoader(float ticks)
     if(fader_opacity>=1.0f) _page++;
 }
 
-void PGE_TextInputBox::processBox(float)
+void PGE_TextInputBox::processBox(float tickTime)
 {
     #ifndef __APPLE__
     if(AppSettings.interprocessing)
@@ -248,12 +252,13 @@ void PGE_TextInputBox::processBox(float)
     #endif
     updateControllers();
 
-//    if(keys.jump || keys.run || keys.alt_run)
-//    {
-//        _page++;
-//        setFade(10, 0.0f, 0.05f);
-//        return;
-//    }
+    blink_timeout-=tickTime;
+    if(blink_timeout<0.0f)
+    {
+        blink_shown = !blink_shown;
+        blink_timeout+=(tickTime<250.0f) ? 250.0f : tickTime+250.0f;
+    }
+
     SDL_StartTextInput();
     SDL_Event event;
     while ( SDL_PollEvent(&event) )
