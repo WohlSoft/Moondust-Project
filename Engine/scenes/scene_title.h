@@ -28,6 +28,7 @@
 #include <common_features/simple_animator.h>
 #include <common_features/point.h>
 #include <controls/controller.h>
+#include <SDL2/SDL_thread.h>
 
 #include <script/lua_titlescreen_engine.h>
 
@@ -86,8 +87,11 @@ public:
         menu_main=0,
         menu_options,
         menu_playlevel,
+        menu_playlevel_wait,
         menu_playepisode,
+        menu_playepisode_wait,
         menu_playbattle,
+        menu_playbattle_wait,
         menu_opensave,
         menu_tests,
         menu_testboxes,
@@ -121,6 +125,14 @@ public:
 
     Controller *controller;
 
+    /**********************file_finder************************/
+    static int findEpisodes(void *);
+    static int findLevels(void *);
+    static SDL_Thread *                     filefind_thread;
+    static QString                          filefind_folder;
+    static QList<QPair<QString, QString > > filefind_found_files;
+    static bool                             filefind_finished;
+    /**********************file_finder************************/
 
 private:
     int ret;//!< Exit code
@@ -140,7 +152,6 @@ private:
     int debug_joy_keyval;
     int debug_joy_keyid;
     int debug_joy_keytype;
-
 
     LuaTitleScreenEngine luaEngine;
 };

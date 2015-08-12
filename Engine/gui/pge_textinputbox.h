@@ -52,7 +52,7 @@ public:
     void exec();
 
     void processLoader(float ticks);
-    void processBox(float);
+    void processBox(float tickTime);
     void processUnLoader(float ticks);
 
     void setInputText(QString text);
@@ -79,6 +79,9 @@ private:
     Sint32 cursor;
     Sint32 selection_len;
     int _text_input_h_offset;
+
+    bool  blink_shown;
+    float blink_timeout;
 
     controller_keys keys;
 
