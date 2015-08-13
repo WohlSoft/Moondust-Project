@@ -275,7 +275,10 @@ void TitleScene::processMenu()
                 else
                 if(value=="inputbox")
                 {
-                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light);
+                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light,
+                                         PGE_Point(-1,-1),
+                                          ConfigManager::setup_message_box.box_padding,
+                                          ConfigManager::setup_message_box.sprite);
                     text.exec();
 
                     PGE_MsgBox msg(this, "Typed a text:\n"+text.inputText(), PGE_BoxBase::msg_info_light);
