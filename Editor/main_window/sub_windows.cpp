@@ -42,7 +42,7 @@ NpcEdit *MainWindow::createNPCChild()
 
     ui->centralWidget->updateGeometry();
 
-    connect(npcWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
+    npcWindow->connect(npcWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
 
     return child;
 }
@@ -54,7 +54,7 @@ LevelEdit *MainWindow::createLvlChild()
 {
     QMdiSubWindow *levelWindow = new QMdiSubWindow(ui->centralWidget);
     LevelEdit *child = new LevelEdit(levelWindow);
-    connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+    child->connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
 
     levelWindow->setWidget(child);
     levelWindow->setAttribute(Qt::WA_DeleteOnClose);
@@ -77,10 +77,8 @@ LevelEdit *MainWindow::createLvlChild()
     ui->centralWidget->updateGeometry();
 
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
-    connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
-
-    connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
-
+    gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
+    levelWindow->connect(levelWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
     return child;
 }
 
@@ -89,7 +87,7 @@ WorldEdit *MainWindow::createWldChild()
 {
     QMdiSubWindow *worldWindow = new QMdiSubWindow(ui->centralWidget);
     WorldEdit *child = new WorldEdit(worldWindow);
-    connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+    child->connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
 
     worldWindow->setWidget(child);
     worldWindow->setAttribute(Qt::WA_DeleteOnClose);
@@ -107,9 +105,9 @@ WorldEdit *MainWindow::createWldChild()
     ui->centralWidget->updateGeometry();
 
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
-    connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
+    gr->connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
 
-    connect(worldWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
+    worldWindow->connect(worldWindow, SIGNAL(destroyed(QObject*)), this, SLOT(recordRemovedWindow(QObject*)));
 
     return child;
 }
