@@ -37,6 +37,7 @@ bool PGE_Window::showPhysicsDebug=false;
 
 
 SDL_Window *PGE_Window::window;
+SDL_GLContext PGE_Window::glcontext_background;
 SDL_GLContext PGE_Window::glcontext;
 
 bool PGE_Window::IsInit=false;
@@ -106,7 +107,8 @@ bool PGE_Window::init(QString WindowTitle)
 #endif
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
-    glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    glcontext_background = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     checkSDLError();
 
     SDL_ShowWindow(window);
@@ -129,6 +131,7 @@ bool PGE_Window::uninit()
     SDL_PumpEvents();
     GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DeleteContext(glcontext_background);
     SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;

@@ -138,8 +138,8 @@ class LVL_Player :
         bool    onGround();
         bool    _onGround;
         bool    on_slippery_surface;
-        QHash<int, int > foot_contacts_map;   //!< staying on ground surfaces
-        QHash<int, int > foot_sl_contacts_map;//!< Slipery surfaces
+        QHash<intptr_t, PGE_Phys_Object* > foot_contacts_map;   //!< staying on ground surfaces
+        QHash<intptr_t, PGE_Phys_Object* > foot_sl_contacts_map;//!< Slipery surfaces
         float   jumpTime;
         float   jumpVelocity;
         /********************Jumps***************************/
@@ -154,9 +154,9 @@ class LVL_Player :
         /********************Bump***************************/
 
         /********************Climbing***************************/
-        QHash<int, int > climbable_map;
-        bool      climbing;
-        double    climbableHeight;
+        QHash<intptr_t, PGE_Phys_Object* > climbable_map;
+        bool        climbing;
+        double      climbableHeight;
         /********************Climbing***************************/
 
         /*******************Warps*********************/

@@ -59,7 +59,6 @@ void LVL_Background::construct()
     isAnimated = false;
     isMagic = false;
     animator_ID = 0;
-    glClearColor(color.r, color.g, color.b, 1.0f);
 }
 
 
@@ -178,6 +177,8 @@ void LVL_Background::setBg(obj_BG &bg)
             break;
     }
 
+    applyColor();
+
     isNoImage=false;
 }
 
@@ -188,6 +189,7 @@ void LVL_Background::setNone()
     color.r = 0.0f;
     color.g = 0.0f;
     color.b = 0.0f;
+    applyColor();
 }
 
 void LVL_Background::setBox(PGE_RectF &_box)
@@ -379,7 +381,8 @@ void LVL_Background::draw(float x, float y, float w, float h)
 
 void LVL_Background::applyColor()
 {
-    glClearColor(0.f, 0.f, 0.f, 1.0f);
+    glClearColor(color.r, color.g, color.b, 1.0f);
+//    glClearColor(0.f, 0.f, 0.f, 1.0f);
 }
 
 bool LVL_Background::isInit()

@@ -51,9 +51,9 @@ void LevelScene::drawLoader()
                      loading_texture.w,
                      loading_texture.h/4);
 
+    GlRenderer::resetViewport();
     AniPos x(0,1);
             x = loading_Ani->image();
-
     GlRenderer::renderTexture(&loading_texture, loadAniG.left(), loadAniG.top(), loadAniG.width(), loadAniG.height(), x.first, x.second);
 
     if(IntProc::isEnabled())

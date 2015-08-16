@@ -197,30 +197,27 @@ bool LevelScene::loadConfigs()
     {
         ConfigManager::loadDefaultMusics();
         ConfigManager::loadMusic(data.path+"/", musIni, true);
-        loaderStep();
     }
 
     if(ConfigManager::sound_lastIniFile!=sndIni)
     {
         ConfigManager::loadDefaultSounds();
-            loaderStep();
         ConfigManager::loadSound(data.path+"/", sndIni, true);
-            loaderStep();
         if(ConfigManager::soundIniChanged())
             ConfigManager::buildSoundIndex();
     }
 
     //Load INI-files
-        loaderStep();
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
-        loaderStep();
+        if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
     success = ConfigManager::loadLevelBGO();    //!< BGO
-        loaderStep();
+        if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
     success = ConfigManager::loadLevelNPC();  //!< NPC
-        loaderStep();
+        if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
-        loaderStep();
+        if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
     success = ConfigManager::loadLevelEffects();  //!< Effects
+        if(!success) { exitLevelCode = LvlExit::EXIT_Error; goto abortInit;}
 
     //Set paths
     ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
@@ -232,11 +229,11 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_PlayerLvl.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelPlayable() );
 
     if(!success) exitLevelCode = LvlExit::EXIT_Error;
-
+abortInit:
     return success;
 }
 
-bool LevelScene::init()
+bool LevelScene::init_items()
 {
     luaEngine.setLuaScriptPath(ConfigManager::PathScript());
     luaEngine.setCoreFile(":/script/maincore_level.lua");
@@ -247,8 +244,8 @@ bool LevelScene::init()
         WriteToLog(QtWarningMsg, "Lua-Error: ");
         WriteToLog(QtWarningMsg, "Error Message: "+errorMessage);
         WriteToLog(QtWarningMsg, "Stacktrace: \n"+stacktrace);
-        PGE_MsgBox msgBox(this, QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!", PGE_MsgBox::msg_error);
-        msgBox.exec();
+        _errorString = QString("A lua error has been thrown: \n") + errorMessage + "\n\nMore details in the log!";
+        return false;
     });
     luaEngine.init();
 
@@ -264,7 +261,7 @@ bool LevelScene::init()
     }
 
 
-    qDebug()<<"Build sections";
+    //qDebug()<<"Build sections";
     for(int i=0;i<data.sections.size();i++)
     {
         LVL_Section sct;
@@ -273,8 +270,7 @@ bool LevelScene::init()
         sections.last().setMusicRoot(data.path);
     }
 
-    qDebug()<<"Create cameras";
-    loaderStep();
+    //qDebug()<<"Create cameras";
     //quit from game if window was closed
     if(!isLevelContinues) return false;
 
@@ -325,48 +321,35 @@ bool LevelScene::init()
                         (float)y,
                         (float)width, (float)height
                     );
-        camera.changeSection(t_sct);
+        camera.changeSection(t_sct, true);
         camera.setPos(x-camera.w()/2 + d.width()/2,
                       y-camera.h()/2 + d.height()/2);
         cameras.push_back(camera);
     }
 
     //Init data
-
-    qDebug()<<"Init blocks";
     //blocks
     for(int i=0; i<data.blocks.size(); i++)
     {
-        loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
         placeBlock(data.blocks[i]);
     }
-
-    qDebug()<<"Init BGOs";
     //BGO
     for(int i=0; i<data.bgo.size(); i++)
     {
-        loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
         placeBGO(data.bgo[i]);
     }
 
-    qDebug()<<"Init NPCs";
-
     //NPC
     for(int i=0; i<data.npc.size(); i++)
     {
-        loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
         placeNPC(data.npc[i]);
     }
-
-
-    qDebug()<<"Init Warps";
     //BGO
     for(int i=0; i<data.doors.size(); i++)
     {
-        loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
 
         //Don't put contactable points for "level entrance" points
@@ -389,11 +372,9 @@ bool LevelScene::init()
         warps.push_back(warpP);
     }
 
-    qDebug()<<"Init Physical environments";
     //BGO
     for(int i=0; i<data.physez.size(); i++)
     {
-        loaderStep();
         if(!isLevelContinues) return false;//!< quit from game if window was closed
 
         LVL_PhysEnv * physesP;
@@ -405,15 +386,12 @@ bool LevelScene::init()
         physenvs.push_back(physesP);
     }
 
-    qDebug() << "Total textures loaded: " << ConfigManager::level_textures.size();
-
-    qDebug() << "Add players";
+    //qDebug() << "Total textures loaded: " << ConfigManager::level_textures.size();
 
     int added_players=0;
     if(!isWarpEntrance) //Dont place players if entered through warp
         for(int i=1; i <= numberOfPlayers; i++)
         {
-            loaderStep();
             if(!isLevelContinues) return false;//!< quit from game if window was closed
             PlayerPoint startPoint = getStartLocation(i);
             startPoint.id=i;
@@ -427,12 +405,12 @@ bool LevelScene::init()
 
     if(added_players<=0 && !isWarpEntrance)
     {
-        qDebug()<<"No defined players!";
+        //qDebug()<<"No defined players!";
+        _errorString="No defined players!";
         return false;
     }
 
-    loaderStep();
-    qDebug() << "Apply layers";
+    //qDebug() << "Apply layers";
     for(int i=0; i<data.layers.size(); i++)
     {
         if(data.layers[i].hidden)
@@ -441,18 +419,58 @@ bool LevelScene::init()
         }
     }
 
-    loaderStep();
-
-    qDebug() << "Apply Events";
+    //qDebug() << "Apply Events";
     for(int i=0; i<data.events.size(); i++)
     {
         events.addSMBX64Event(data.events[i]);
     }
 
-    stopLoaderAnimation();
-
     isInit = true;
     return true;
+}
+
+
+bool LevelScene::init()
+{
+    isInitFinished=false;
+    isInitFailed=false;
+
+    SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
+    initializer_thread=SDL_CreateThread( init_thread, "LevelInitializer", this);
+
+    setLoaderAnimation(62);
+    while(!isInitFinished)
+    {
+        drawLoader();
+        PGE_Window::rePaint();
+        SDL_PumpEvents();
+        SDL_Delay(20);
+    }
+    stopLoaderAnimation();
+    SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
+
+    if(isInitFailed)
+    {
+        PGE_MsgBox::error(_errorString);
+    }
+
+    return !isInitFailed;
+}
+
+
+int LevelScene::init_thread(void *self)
+{
+    SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
+    LevelScene *_self = static_cast<LevelScene*>(self);
+    if(!_self)
+        _self->isInitFailed=true;
+    else if(!_self->loadConfigs())
+        _self->isInitFailed=true;
+    else if(!_self->init_items())
+        _self->isInitFailed=true;
+
+    _self->isInitFinished=true;
+    return 0;
 }
 
 

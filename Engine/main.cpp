@@ -496,14 +496,6 @@ PlayLevel:
             lScene = new LevelScene();
 
             lScene->setGameState(&_game_state);
-
-            lScene->setLoaderAnimation(62);
-            lScene->drawLoader();
-            glFlush();
-            SDL_GL_SwapWindow(PGE_Window::window);
-            while ( SDL_PollEvent(&event) )
-            {}
-
             bool sceneResult=true;
 
             if(_game_state.LevelFile.isEmpty())
@@ -544,9 +536,6 @@ PlayLevel:
 
             if(sceneResult)
                 sceneResult = lScene->setEntrance(entranceID);
-
-            if(sceneResult)
-                sceneResult = lScene->loadConfigs();
 
             if(sceneResult)
                 sceneResult = lScene->init();
