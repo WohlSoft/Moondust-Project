@@ -78,6 +78,7 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(s->cursor)
     {
         attemptFlood(s);
+        s->Debugger_updateItemList();
     }
 
 }
