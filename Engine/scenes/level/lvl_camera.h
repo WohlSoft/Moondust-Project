@@ -56,7 +56,7 @@ public:
     void drawBackground();
     void drawForeground();
 
-    void changeSection(LVL_Section *sct);
+    void changeSection(LVL_Section *sct, bool isInit=false);
     void changeSectionBorders(long left, long top, long right, long bottom);
     void resetLimits();
 

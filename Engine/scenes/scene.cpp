@@ -242,3 +242,9 @@ void Scene::wait(float ms)
     //dif = (ms+dif)-totalDelay;//-(float)(std::chrono::duration_cast<std::chrono::nanoseconds>(isnow-delayed).count()/1000000.0f);
 }
 /************waiting timer************/
+
+
+QString Scene::errorString()
+{
+    return _errorString;
+}

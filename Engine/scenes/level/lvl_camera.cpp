@@ -266,14 +266,17 @@ void PGE_LevelCamera::drawForeground()
 }
 
 
-void PGE_LevelCamera::changeSection(LVL_Section *sct)
+void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
 {
     if(!sct) return;
 
     cur_section=sct;
     section = &sct->data;
-    cur_section->playMusic();//Play current section music
-    cur_section->initBG();   //Init background if not initialized
+    if(!isInit)
+    {
+        cur_section->playMusic();//Play current section music
+        cur_section->initBG();   //Init background if not initialized
+    }
 }
 
 

@@ -77,6 +77,14 @@ public:
     ~LevelScene();
 
     bool init();
+    bool init_items();
+    static int init_thread(void *self);
+    SDL_Thread * initializer_thread;
+private:
+    bool isInit;
+    bool isInitFinished;
+    bool isInitFailed;
+public:
 
     //Init 1
     bool        loadFile(QString filePath);
@@ -259,8 +267,6 @@ public:
     bool isVizibleOnScreen(double x, double y, double w, double h);
 
 private:
-    bool isInit;
-
     LevelData data;
 
     EpisodeState *gameState;
