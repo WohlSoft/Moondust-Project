@@ -1,5 +1,8 @@
 class 'boo'
 
+local AI_SHY_ANIM = 0
+local AI_CHASE_ANIM = 1
+
 function boo:__init(npc_obj)
     self.npc_obj = npc_obj
 	
@@ -7,6 +10,10 @@ function boo:__init(npc_obj)
 	self.max_speed = 3
 	self.speed = 0.003
 	
+        self.animateShy = {0}
+        self.animateChasing = {1}
+        self.cur_mode = AI_SHY_ANIM
+
 	self:initProps()
 end
 
@@ -15,6 +22,8 @@ function boo:initProps()
 	self.npc_obj.speedY = 0
 	self.npc_obj.gravity = 0
 	self.npc_obj.gravity_accel = 0
+        self.cur_mode = AI_SHY_ANIM
+        self.npc_obj:setSequence(self.animateShy)
 end
 
 function boo:onActivated()
@@ -64,22 +73,31 @@ function boo:isPlayerBelowOfBoo()
 end
 
 function boo:decreaseAcceleration(tickTime)
-	if (self.npc_obj.speedX > 0) then
+	if ((self.npc_obj.speedX > 0) and (self.npc_obj.direction > 0)) then
 		self.npc_obj.speedX = self.npc_obj.speedX - (self.speed * 2 * tickTime)
-	elseif (self.npc_obj.speedX < 0) then
+	elseif ((self.npc_obj.speedX < 0)  and (self.npc_obj.direction < 0) ) then
 		self.npc_obj.speedX = self.npc_obj.speedX + (self.speed * 2 * tickTime)
+        else
+		self.npc_obj.speedX = 0
 	end
 	
-	if (self.npc_obj.speedY > 0) then
+	if ((self.npc_obj.speedY > 0) and (self:isPlayerBelowOfBoo()==true))then
 		self.npc_obj.speedY = self.npc_obj.speedY - (self.speed * 2 * tickTime)
-	elseif (self.npc_obj.speedY < 0) then
+	elseif ((self.npc_obj.speedY < 0) and (self:isPlayerBelowOfBoo()==false)) then
 		self.npc_obj.speedY = self.npc_obj.speedY + (self.speed * 2 * tickTime)
+        else
+                self.npc_obj.speedY = 0
 	end
 end
 
 function boo:onLoop(tickTime)
 	--if (self.player_pos_detector:detected() == true) then
-		if (self.player_pos_detector:playerDirection() == self.npc_obj.direction) then
+		if (self.player_pos_detector:playerDirection() == self.player_pos_detector:directedTo()) then
+                        self.npc_obj.direction = self.player_pos_detector:directedTo()
+                        if(self.cur_mode == AI_SHY_ANIM)then
+                                self.cur_mode = AI_CHASE_ANIM
+                                self.npc_obj:setSequence(self.animateChasing)
+                        end
 			--horizontal movement
 			if (self:isPlayerRightOfBoo()) then
 				self.npc_obj.speedX = self.npc_obj.speedX + (self.speed * tickTime)
@@ -99,6 +117,10 @@ function boo:onLoop(tickTime)
 			self:checkOverMaxSpeed()
 		else
 			self:decreaseAcceleration(tickTime)
+                        if(self.cur_mode == AI_CHASE_ANIM)then
+                                self.cur_mode = AI_SHY_ANIM
+                                self.npc_obj:setSequence(self.animateShy)
+                        end
 		end
 	--end
 end
