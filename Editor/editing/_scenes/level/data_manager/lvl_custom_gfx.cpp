@@ -333,10 +333,12 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     //Load NPC
     for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
-        if(!progress.wasCanceled())
+        if((!progress.wasCanceled()) && (i%100==0))
+        {
             progress.setLabelText(
                         tr("Search User NPCs %1")
                         .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()) ) );
+        }
 
              uNPC.withImg = false;
              uNPC.withTxt = false;
