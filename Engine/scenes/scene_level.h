@@ -200,6 +200,7 @@ public:
     void drawLoader();
     void setLoaderAnimation(int speed);
     void stopLoaderAnimation();
+    void destroyLoaderTexture();
     static unsigned int nextLoadAniFrame(unsigned int x, void *p);
     void loaderTick();
     bool doLoaderStep;

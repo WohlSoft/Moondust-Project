@@ -435,19 +435,25 @@ bool LevelScene::init()
     isInitFinished=false;
     isInitFailed=false;
 
+    #if !_WIN32 && !__APPLE__
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread=SDL_CreateThread( init_thread, "LevelInitializer", this);
 
     setLoaderAnimation(62);
-    while(!isInitFinished)
-    {
-        drawLoader();
-        PGE_Window::rePaint();
-        SDL_PumpEvents();
-        SDL_Delay(20);
-    }
+        while(!isInitFinished)
+        {
+            drawLoader();
+            PGE_Window::rePaint();
+            SDL_PumpEvents();
+            SDL_Delay(20);
+        }
     stopLoaderAnimation();
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
+    #else
+    //Load everything without loading animation, in the main thread
+    //(because in the threaded loading some issues are appearence)
+    init_thread(this);
+    #endif
 
     if(isInitFailed)
     {

@@ -600,6 +600,8 @@ int TitleScene::findLevels( void* )
     filter<<"*.lvl" << "*.lvlx";
     QStringList files = leveldir.entryList(filter);
 
+    filefind_found_files.clear();//Clean up old stuff
+
     if(files.isEmpty())
     {
         QPair<QString,QString > file;
