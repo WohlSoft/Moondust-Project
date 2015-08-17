@@ -19,26 +19,9 @@
 #ifndef PGE_MENUBOX_H
 #define PGE_MENUBOX_H
 
-#include "pge_boxbase.h"
-#include "../scenes/scene.h"
+#include "pge_menuboxbase.h"
 
-#include <graphics/gl_renderer.h>
-#include <graphics/gl_color.h>
-#include <common_features/rect.h>
-#include <common_features/point.h>
-#include <common_features/pointf.h>
-#include <common_features/size.h>
-#include <common_features/sizef.h>
-
-#include <QColor>
-#include <QString>
-#include <QStringList>
-
-#include "pge_menu.h"
-
-class Controller;
-
-class PGE_MenuBox : public PGE_BoxBase
+class PGE_MenuBox : public PGE_MenuBoxBase
 {
 public:
     PGE_MenuBox(Scene * _parentScene=NULL, QString _title="Menu is works!",
@@ -50,70 +33,17 @@ public:
 
     ~PGE_MenuBox();
 
-    void setParentScene(Scene * _parentScene);
-    void setType(msgType _type);
-    void setTitleFont(QString fontName);
-    void setTitleFontColor(GlColor color);
-    void setTitleText(QString text);
-    void setPadding(int _padding);
+    void onUpButton();
+    void onDownButton();
+    void onLeftButton();
+    void onRightButton();
+    void onJumpButton();
+    void onAltJumpButton();
+    void onRunButton();
+    void onAltRunButton();
+    void onStartButton();
+    void onDropButton();
 
-    void clearMenu();
-    void addMenuItem(QString &menuitem);
-    void addMenuItems(QStringList &menuitems);
-
-    void setPos(float x, float y);
-    void setMaxMenuItems(int items);
-    void setBoxSize(float _Width, float _Height, float _padding);
-    void update(float ticks);
-    void render();
-    void restart();
-    bool isRunning();
-    void exec();
-    void setRejectSnd(long sndRole);
-    int  answer();
-
-    void reject();
-
-    void processKeyEvent(SDL_Keycode &key);
-
-    void processLoader(float ticks);
-    void processBox(float);
-    void processUnLoader(float ticks);
-
-    static void info(QString msg);
-    //static void info(std::string msg);
-    static void warn(QString msg);
-    //static void warn(std::string msg);
-    static void error(QString msg);
-    //static void error(std::string msg);
-    static void fatal(QString msg);
-    //static void fatal(std::string msg);
-
-private:
-    void updateSize();
-    int     _page;
-    bool    running;
-    int     fontID;
-    GlColor fontRgba;
-    int     _answer_id;
-
-    long    reject_snd;
-    PGE_Point _pos;
-    Controller *_ctrl1;
-    Controller *_ctrl2;
-    msgType type;
-
-    PGE_Rect _sizeRect;
-    QString  title;
-    PGE_Size title_size;
-    PGE_Menu _menu;
-
-    float width;
-    float height;
-    float padding;
-    QColor bg_color;
-    void initControllers();
-    void updateControllers();
 };
 
 #endif // PGE_MENUBOX_H
