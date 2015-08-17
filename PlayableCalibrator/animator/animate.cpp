@@ -100,7 +100,7 @@ void Animate::aniFindSet()
 
 void Animate::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(AniFrames);
+    AnimationEdit dialog(AniFrames, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     AniFrames = dialog.frameList;

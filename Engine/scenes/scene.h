@@ -121,6 +121,8 @@ public:
     void processEffects(float ticks);
     /*  Effects engine   */
 
+    QString errorString();
+
 protected:
     bool        running;
     bool        _doShutDown;
@@ -133,6 +135,7 @@ protected:
     typedef std::chrono::high_resolution_clock::time_point StTimePt;
     void wait(float ms);
     /************waiting timer************/
+    QString _errorString;
 private:
     TypeOfScene sceneType;
     float dif;

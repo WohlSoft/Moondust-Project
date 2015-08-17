@@ -73,6 +73,7 @@ private:
     GlColor fontRgba;
 
     controller_keys keys;
+    bool   _exit_key_lock; //Don't close message box if exiting key already holden (for example, 'Run' key)
 
     msgType type;
     PGE_Rect _sizeRect;

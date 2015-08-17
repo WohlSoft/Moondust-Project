@@ -30,6 +30,9 @@ LVL_Section::LVL_Section()
     isInit=false;
     curMus=0;
     curBgID=0;
+    isAutoscroll=false;
+    _autoscrollVelocityX=0.0f;
+    _autoscrollVelocityY=0.0f;
 }
 
 LVL_Section::LVL_Section(const LVL_Section &_sct)
@@ -42,6 +45,9 @@ LVL_Section::LVL_Section(const LVL_Section &_sct)
     curMus=_sct.curMus;
     curCustomMus=_sct.curCustomMus;
     curBgID=_sct.curBgID;
+    isAutoscroll=_sct.isAutoscroll;
+    _autoscrollVelocityX=_sct._autoscrollVelocityX;
+    _autoscrollVelocityY=_sct._autoscrollVelocityY;
 }
 
 LVL_Section::~LVL_Section()

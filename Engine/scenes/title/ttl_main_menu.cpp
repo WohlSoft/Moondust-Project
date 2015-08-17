@@ -34,6 +34,30 @@
 void TitleScene::processMenu()
 {
     if(doExit) return;
+
+    //Waiter in process
+    switch(_currentMenu)
+    {
+        case menu_playlevel_wait:
+        case menu_playbattle_wait:
+        case menu_playepisode_wait:
+            if(filefind_finished) {
+                switch(_currentMenu)
+                {
+                    case menu_playepisode_wait: setMenu(menu_playepisode); return;
+                    case menu_playlevel_wait: setMenu(menu_playlevel); return;
+                    case menu_playbattle_wait: setMenu(menu_playbattle); return;
+                    default: break;
+                }
+                return;
+            }
+            if(menu.isAccepted()) { menu.resetState(); }
+            return;
+            break;
+        default:
+            break;
+    }
+
     if(!menu.isSelected()) return;
 
     if(menu.isAccepted())
@@ -49,20 +73,20 @@ void TitleScene::processMenu()
                 {
                     numOfPlayers=1;
                     menuChain.push(_currentMenu);
-                    setMenu(menu_playepisode);
+                    setMenu(menu_playepisode_wait);
                 }
                 else
                 if(value=="game2p")
                 {
                     numOfPlayers=2;
                     menuChain.push(_currentMenu);
-                    setMenu(menu_playepisode);
+                    setMenu(menu_playepisode_wait);
                 }
                 else
                 if(value=="gamebt")
                 {
                     menuChain.push(_currentMenu);
-                    setMenu(menu_playlevel);
+                    setMenu(menu_playlevel_wait);
                 }
                 else
                 if(value=="Options")
@@ -123,6 +147,13 @@ void TitleScene::processMenu()
                     ret = ANSWER_PLAYLEVEL;
                     fader.setFade(10, 1.0f, 0.06f);
                     doExit=true;
+                    menu.resetState();
+                }
+            break;
+            case menu_playlevel_wait:
+            case menu_playbattle_wait:
+            case menu_playepisode_wait:
+                {
                     menu.resetState();
                 }
             break;
@@ -244,7 +275,10 @@ void TitleScene::processMenu()
                 else
                 if(value=="inputbox")
                 {
-                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light);
+                    PGE_TextInputBox text(this, "Type a text", PGE_BoxBase::msg_info_light,
+                                         PGE_Point(-1,-1),
+                                          ConfigManager::setup_message_box.box_padding,
+                                          ConfigManager::setup_message_box.sprite);
                     text.exec();
 
                     PGE_MsgBox msg(this, "Typed a text:\n"+text.inputText(), PGE_BoxBase::msg_info_light);
@@ -459,70 +493,44 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                             menu.setValueOffset(210);
                         }
                         break;
+        case menu_playepisode_wait:
+            {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
+                menu.addMenuItem("waitinginprocess", "Please wait...");
+                filefind_finished=false;
+                filefind_folder=ConfigManager::dirs.worlds;
+                filefind_thread=SDL_CreateThread( findEpisodes, "EpisodeFinderThread", NULL);
+            }
+            break;
         case menu_playepisode:
             {
                 menu.setPos(300, 350);
                 menu.setItemsNumber(5);
                 //Build list of episodes
-                QDir worlddir(ConfigManager::dirs.worlds);
-                QStringList filter;
-                filter << "*.wld" << "*.wldx";
-                QStringList files;
-                QStringList folders = worlddir.entryList(QDir::Dirs);
-
-                foreach(QString folder, folders)
-                {
-                    QString path = ConfigManager::dirs.worlds+folder;
-                    QDir episodedir(path);
-                    QStringList worlds = episodedir.entryList(filter);
-                    foreach(QString world, worlds)
-                    {
-                        files << ConfigManager::dirs.worlds+folder+"/"+world;
-                    }
-                }
-
-                if(files.isEmpty())
-                    menu.addMenuItem("noworlds", "<episodes not found>");
-                else
-                {
-                    foreach(QString file, files)
-                    {
-                        WorldData world = FileFormats::OpenWorldFileHeader(file);
-                        if(world.ReadFileValid)
-                        {
-                            QString title = world.EpisodeTitle;
-                            menu.addMenuItem(file, (title.isEmpty()?QFileInfo(file).fileName():title));
-                        }
-                    }
-                    menu.sort();
-                }
+                for(int i=0;i<filefind_found_files.size();i++)
+                    menu.addMenuItem(filefind_found_files[i].first, filefind_found_files[i].second);
+                menu.sort();
+            }
+        break;
+        case menu_playlevel_wait:
+            {
+                menu.setPos(300, 350);
+                menu.setItemsNumber(5);
+                menu.addMenuItem("waitinginprocess", "Please wait...");
+                filefind_finished=false;
+                filefind_folder=ConfigManager::dirs.worlds;
+                filefind_thread=SDL_CreateThread( findLevels, "LevelFinderThread", NULL);
             }
         break;
         case menu_playlevel:
             {
                 menu.setPos(300, 350);
                 menu.setItemsNumber(5);
-                //Build list of casual levels
-                QDir leveldir(ConfigManager::dirs.worlds);
-                QStringList filter;
-                filter<<"*.lvl" << "*.lvlx";
-                QStringList files = leveldir.entryList(filter);
-
-                if(files.isEmpty())
-                    menu.addMenuItem("nolevel", "<levels not found>");
-                else
-                {
-                    foreach(QString file, files)
-                    {
-                        LevelData level = FileFormats::OpenLevelFileHeader(ConfigManager::dirs.worlds+file);
-                        if(level.ReadFileValid)
-                        {
-                            QString title = level.LevelName;
-                            menu.addMenuItem(ConfigManager::dirs.worlds+file, (title.isEmpty()?file:title));
-                        }
-                    }
-                    menu.sort();
-                }
+                //Build list of episodes
+                for(int i=0;i<filefind_found_files.size();i++)
+                    menu.addMenuItem(filefind_found_files[i].first, filefind_found_files[i].second);
+                menu.sort();
             }
         break;
     default:
@@ -534,3 +542,93 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     menu.setCurrentItem(menustates[_menu].first);
     menu.setOffset(menustates[_menu].second);
 }
+
+
+
+
+int TitleScene::findEpisodes( void* )
+{
+    filefind_found_files.clear();
+    QDir worlddir(filefind_folder);
+    QStringList filter;
+    filter << "*.wld" << "*.wldx";
+    QStringList files;
+    QStringList folders = worlddir.entryList(QDir::Dirs);
+
+    foreach(QString folder, folders)
+    {
+        QString path = filefind_folder+folder;
+        QDir episodedir(path);
+        QStringList worlds = episodedir.entryList(filter);
+        foreach(QString world, worlds)
+        {
+            files << filefind_folder+folder+"/"+world;
+        }
+    }
+
+    if(files.isEmpty())
+    {
+        QPair<QString,QString > file;
+        file.first = "noworlds";
+        file.second = "<episodes not found>";
+        filefind_found_files.push_back(file);
+    }
+    else
+    {
+        foreach(QString filename, files)
+        {
+            WorldData world = FileFormats::OpenWorldFileHeader(filename);
+            if(world.ReadFileValid)
+            {
+                QString title = world.EpisodeTitle;
+                QPair<QString,QString > file;
+                file.first = filename;
+                file.second = (title.isEmpty()?QFileInfo(filename).fileName():title);
+                filefind_found_files.push_back(file);
+            }
+        }
+    }
+    filefind_finished=true;
+    return 0;
+}
+
+int TitleScene::findLevels( void* )
+{
+    //Build list of casual levels
+    QDir leveldir(filefind_folder);
+    QStringList filter;
+    filter<<"*.lvl" << "*.lvlx";
+    QStringList files = leveldir.entryList(filter);
+
+    filefind_found_files.clear();//Clean up old stuff
+
+    if(files.isEmpty())
+    {
+        QPair<QString,QString > file;
+        file.first = "noworlds";
+        file.second = "<episodes not found>";
+        filefind_found_files.push_back(file);
+    }
+    else
+    {
+        foreach(QString file, files)
+        {
+            LevelData level = FileFormats::OpenLevelFileHeader(filefind_folder+file);
+            if(level.ReadFileValid)
+            {
+                QString title = level.LevelName;
+                QPair<QString,QString > filex;
+                filex.first = filefind_folder+file;
+                filex.second = (title.isEmpty()?file:title);
+                filefind_found_files.push_back(filex);
+                //QString title = level.LevelName;
+                //menu.addMenuItem(filefind_folder+file, (title.isEmpty()?file:title));
+            }
+        }
+    }
+
+    filefind_finished=true;
+
+    return 0;
+}
+

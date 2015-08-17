@@ -1,3 +1,7 @@
+#ifndef PGE_MENUBOXBASE_H
+#define PGE_MENUBOXBASE_H
+
+
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
@@ -16,9 +20,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PGE_TextInputBox_H
-#define PGE_TextInputBox_H
-
 #include "pge_boxbase.h"
 #include "../scenes/scene.h"
 
@@ -30,33 +31,56 @@
 #include <common_features/size.h>
 #include <common_features/sizef.h>
 
-#include <controls/control_keys.h>
-
 #include <QColor>
 #include <QString>
+#include <QStringList>
 
-class PGE_TextInputBox : public PGE_BoxBase
+#include "pge_menu.h"
+#include "pge_msgbox.h"
+
+class Controller;
+
+class PGE_MenuBoxBase : public PGE_BoxBase
 {
 public:
-    PGE_TextInputBox();
-    PGE_TextInputBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
+    PGE_MenuBoxBase(Scene * _parentScene=NULL, PGE_Menu::menuAlignment alignment=PGE_Menu::menuAlignment::VERTICLE, int gapSpace=0, QString _title="Menu is works!",
                msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
-    PGE_TextInputBox(const PGE_TextInputBox &mb);
-    ~PGE_TextInputBox();
+    PGE_MenuBoxBase(const PGE_MenuBoxBase &mb);
 
+    void construct(QString _title="Menu is works!",
+                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+
+    ~PGE_MenuBoxBase();
+
+    void setParentScene(Scene * _parentScene);
+    void setType(msgType _type);
+    void setTitleFont(QString fontName);
+    void setTitleFontColor(GlColor color);
+    void setTitleText(QString text);
+    void setPadding(int _padding);
+
+    void clearMenu();
+    void addMenuItem(QString &menuitem);
+    void addMenuItems(QStringList &menuitems);
+
+    void setPos(float x, float y);
+    void setMaxMenuItems(int items);
     void setBoxSize(float _Width, float _Height, float _padding);
     void update(float ticks);
     void render();
     void restart();
     bool isRunning();
     void exec();
+    void setRejectSnd(long sndRole);
+    int  answer();
+
+    void reject();
+
+    void processKeyEvent(SDL_Keycode &key);
 
     void processLoader(float ticks);
-    void processBox(float tickTime);
+    void processBox(float);
     void processUnLoader(float ticks);
-
-    void setInputText(QString text);
-    QString inputText();
 
     static void info(QString msg);
     //static void info(std::string msg);
@@ -67,32 +91,44 @@ public:
     static void fatal(QString msg);
     //static void fatal(std::string msg);
 
+protected:
+    PGE_Menu _menu;
+
 private:
-    void construct(QString msg="Message box is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
+    void updateSize();
     int     _page;
     bool    running;
     int     fontID;
     GlColor fontRgba;
+    int     _answer_id;
 
-    QString _inputText;
-    Sint32 cursor;
-    Sint32 selection_len;
-    int _text_input_h_offset;
-
-    bool  blink_shown;
-    float blink_timeout;
-
-    controller_keys keys;
-
+    long    reject_snd;
+    PGE_Point _pos;
+    Controller *_ctrl1;
+    Controller *_ctrl2;
     msgType type;
+
     PGE_Rect _sizeRect;
-    QString message;
+    QString  title;
+    PGE_Size title_size;
+
     float width;
     float height;
     float padding;
     QColor bg_color;
+    void initControllers();
     void updateControllers();
+
+    virtual void onUpButton() {}
+    virtual void onDownButton() {}
+    virtual void onLeftButton() {}
+    virtual void onRightButton() {}
+    virtual void onJumpButton() {}
+    virtual void onAltJumpButton() {}
+    virtual void onRunButton() {}
+    virtual void onAltRunButton() {}
+    virtual void onStartButton() {}
+    virtual void onDropButton() {}
 };
 
-#endif // PGE_TextInputBox_H
+#endif // PGE_MENUBOXBASE_H

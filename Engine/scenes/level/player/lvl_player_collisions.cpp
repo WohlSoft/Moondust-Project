@@ -78,8 +78,8 @@ void LVL_Player::updateCollisions()
                 {
                     LVL_Block *blk= static_cast<LVL_Block*>(collided);
                     if(!blk) continue;
-                    foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
-                    if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    foot_contacts_map[(intptr_t)collided]=collided;
+                    if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(blk);
                 } break;
@@ -87,8 +87,8 @@ void LVL_Player::updateCollisions()
                 {
                     LVL_Npc *npc= static_cast<LVL_Npc*>(collided);
                     if(!npc) continue;
-                    foot_contacts_map[(intptr_t)collided]=(intptr_t)collided;
-                    if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
+                    foot_contacts_map[(intptr_t)collided]=collided;
+                    if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=collided;
                     floor_blocks.push_back(npc);
                 }
                 break;
@@ -535,7 +535,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                 if(bgo->setup->climbing)
                 {
                     bool set=climbable_map.isEmpty();
-                    climbable_map[(intptr_t)collided]=(intptr_t)collided;
+                    climbable_map[(intptr_t)collided]=collided;
                     if(set)
                         climbableHeight=collided->posRect.top();
                     else if(collided->top()<climbableHeight)
@@ -555,7 +555,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                 if(npc->setup->climbable)
                 {
                     bool set=climbable_map.isEmpty();
-                    climbable_map[(intptr_t)collided]=(intptr_t)collided;
+                    climbable_map[(intptr_t)collided]=collided;
                     if(set)
                         climbableHeight=collided->posRect.top();
                     else if(collided->top()<climbableHeight)

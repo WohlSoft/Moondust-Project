@@ -64,6 +64,10 @@ public:
     void setBG(int bgID);
     void resetBG();
 
+    bool isAutoscroll;
+    float _autoscrollVelocityX;
+    float _autoscrollVelocityY;
+
     PGE_RectF sectionRect();
     PGE_RectF sectionLimitBox();
 

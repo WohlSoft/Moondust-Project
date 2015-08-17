@@ -56,6 +56,7 @@ LevelScene::LevelScene()
     data.ReadFileValid = false;
 
     isInit=false;
+    isInitFailed=false;
     isWarpEntrance=false;
     cameraStartDirected=false;
     cameraStartDirection=0;
@@ -339,6 +340,8 @@ LevelScene::~LevelScene()
     sections.clear();
 
     luaEngine.shutdown();
+
+    destroyLoaderTexture();
 
     delete player1Controller;
     delete player2Controller;
@@ -852,6 +855,13 @@ int LevelScene::exec()
   #define PassedTime (SDL_GetTicks()-start_common)
 
     /****************Initial update***********************/
+    //Apply musics and backgrounds
+    for(int i=0; i<cameras.size(); i++)
+    {
+        //Play music from first camera only
+        if(i==0) cameras[i].cur_section->playMusic();
+        cameras[i].cur_section->initBG();
+    }
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
     player1Controller->resetControls();
     player2Controller->resetControls();

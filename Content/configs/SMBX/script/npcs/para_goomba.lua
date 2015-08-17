@@ -45,13 +45,11 @@ function para_goomba:__init(npc_obj)
     self.def_walkingTicks = smbx_utils.ticksToTime(32)
 
     -- FOR AI_JUMPING
-    self.def_normalJumps = 2
+    self.def_normalJumps = 3
     self.def_highJumps = 1
 
     self.def_normalJumpsSpeedY = -4
     self.def_highJumpsSpeedY = -7
-
-
 
     self:initProps()
 end

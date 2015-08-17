@@ -5,6 +5,8 @@ rem V, T - are network drives
 SET SOURCEDIR=%CD%\..\..
 
 SET SEVENZIP=C:\Program Files\7-Zip
+IF NOT EXIST "%SEVENZIP%\7z.exe" SET SEVENZIP=C:\Program Files (x86)\7-Zip
+
 SET GHREPO=D:\Developer\__GitHubRepos\PGE-Project
 
 SET PubDir=V:\engine.wohlnet.ru\docs\docs\_sources\devel
