@@ -31,6 +31,8 @@
 #include <QtDebug>
 #include <QStack>
 
+const float PGE_LevelCamera::_smbxTickTime=1000.0f/65.f;
+
 PGE_LevelCamera::PGE_LevelCamera()
 {
     posRect.setWidth(800);
@@ -40,6 +42,12 @@ PGE_LevelCamera::PGE_LevelCamera()
     section = 0;
     cur_section = NULL;
     fader.setNull();
+
+    isAutoscroll=false;
+    _autoscrollVelocityX_max=0.0f;
+    _autoscrollVelocityY_max=0.0f;
+    _autoscrollVelocityX=0.0f;
+    _autoscrollVelocityY=0.0f;
 }
 
 PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
@@ -55,6 +63,12 @@ PGE_LevelCamera::PGE_LevelCamera(const PGE_LevelCamera &cam)
     cur_section = cam.cur_section;
 
     fader = cam.fader;
+
+    isAutoscroll=cam.isAutoscroll;
+    _autoscrollVelocityX_max=cam._autoscrollVelocityX_max;
+    _autoscrollVelocityY_max=cam._autoscrollVelocityY_max;
+    _autoscrollVelocityX=cam._autoscrollVelocityX;
+    _autoscrollVelocityY=cam._autoscrollVelocityY;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -115,6 +129,9 @@ void PGE_LevelCamera::update(float ticks)
 
     if(!cur_section) return;
     fader.tickFader(ticks);
+
+    if(isAutoscroll) processAutoscroll(ticks);
+
     LvlSceneP::s->queryItems(posRect, &objects_to_render);
 
     int contacts = 0;
@@ -228,8 +245,70 @@ PGE_RenderList &PGE_LevelCamera::renderObjects()
     return objects_to_render;
 }
 
+void PGE_LevelCamera::resetAutoscroll()
+{
+    _autoscrollVelocityX=0.0f;
+    _autoscrollVelocityY=0.0f;
+    if(!cur_section) return;
+    limitBox=cur_section->sectionLimitBox();
+    _autoscrollVelocityX_max = cur_section->_autoscrollVelocityX;
+    _autoscrollVelocityY_max = cur_section->_autoscrollVelocityY;
+}
+
+void PGE_LevelCamera::processAutoscroll(float tickTime)
+{
+    if(!isAutoscroll) return;
+    if(!cur_section) return;
+
+    float coff=tickTime/_smbxTickTime;
+    PGE_RectF sectionBox = cur_section->sectionRect();
+
+    limitBox.setX(limitBox.x() + _autoscrollVelocityX*coff);
+        if(limitBox.left()<sectionBox.left()) limitBox.setX(sectionBox.x());
+        if(limitBox.right()>sectionBox.right()) limitBox.setX(sectionBox.right()-limitBox.width());
+    limitBox.setY(limitBox.y() + _autoscrollVelocityY*coff);
+        if(limitBox.top()<sectionBox.top()) limitBox.setY(sectionBox.y());
+        if(limitBox.bottom()>sectionBox.bottom()) limitBox.setY(sectionBox.bottom()-limitBox.height());
+
+    if((_autoscrollVelocityX_max>0)&&(_autoscrollVelocityX<_autoscrollVelocityX_max)) {
+        _autoscrollVelocityX+=0.05f*coff;
+        if(_autoscrollVelocityX>_autoscrollVelocityX_max)
+           _autoscrollVelocityX=_autoscrollVelocityX_max;
+    } else if((_autoscrollVelocityX_max<0)&&(_autoscrollVelocityX>_autoscrollVelocityX_max)) {
+        _autoscrollVelocityX-=0.05f*coff;
+        if(_autoscrollVelocityX<_autoscrollVelocityX_max)
+           _autoscrollVelocityX=_autoscrollVelocityX_max;
+    }
+
+    if((_autoscrollVelocityY_max>0)&&(_autoscrollVelocityY<_autoscrollVelocityY_max)) {
+        _autoscrollVelocityY+=0.05f*coff;
+        if(_autoscrollVelocityY>_autoscrollVelocityY_max)
+           _autoscrollVelocityY=_autoscrollVelocityY_max;
+    } else if((_autoscrollVelocityY_max<0)&&(_autoscrollVelocityY>_autoscrollVelocityY_max)) {
+        _autoscrollVelocityY-=0.05f*coff;
+        if(_autoscrollVelocityY<_autoscrollVelocityY_max)
+           _autoscrollVelocityY=_autoscrollVelocityY_max;
+    }
+}
+
 void PGE_LevelCamera::_applyLimits()
 {
+    if(isAutoscroll)
+    {
+        if(posRect.left() < limitBox.left())
+            posRect.setX(limitBox.left());
+
+        if(posRect.right() > limitBox.right())
+            posRect.setX(limitBox.right()-posRect.width());
+
+        if(posRect.top() < limitBox.top())
+            posRect.setY(limitBox.top());
+
+        if(posRect.bottom()>limitBox.bottom())
+            posRect.setY(limitBox.bottom()-posRect.height());
+        return;
+    }
+
     if(!cur_section) return;
     if(posRect.left() < cur_section->limitBox.left())
         posRect.setX(cur_section->limitBox.left());
@@ -276,6 +355,8 @@ void PGE_LevelCamera::changeSection(LVL_Section *sct, bool isInit)
     {
         cur_section->playMusic();//Play current section music
         cur_section->initBG();   //Init background if not initialized
+        isAutoscroll=cur_section->isAutoscroll;
+        if(cur_section->isAutoscroll) resetAutoscroll();
     }
 }
 

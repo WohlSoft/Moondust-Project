@@ -404,6 +404,13 @@ void LVL_Player::update(float ticks)
     animator.tickAnimation(ticks);
 
     PGE_RectF sBox = section->sectionLimitBox();
+    float asVelX=0.0f;
+
+    if((section->isAutoscroll)&&(camera->isAutoscroll))
+    {
+        sBox = camera->limitBox;
+        asVelX = camera->_autoscrollVelocityX;
+    }
 
     //Return player to start position on fall down
     if( posY() > sBox.bottom()+_height )
@@ -475,7 +482,9 @@ void LVL_Player::update(float ticks)
                 if( posX() < sBox.left())
                 {
                     setPosX( sBox.left() );
-                    setSpeedX(0.0);
+                    if(asVelX==0.0) setSpeedX(0.0);
+                    if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
+                    if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
                 }
             }
 
@@ -493,13 +502,17 @@ void LVL_Player::update(float ticks)
             if( posX() < sBox.left())
             {
                 setPosX(sBox.left());
-                setSpeedX(0.0);
+                if(asVelX==0.0) setSpeedX(0.0);
+                if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
+                if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
             }
             else
             if( posX()+_width > sBox.right())
             {
                 setPosX(sBox.right()-_width);
-                setSpeedX(0.0);
+                if(asVelX==0.0) setSpeedX(0.0);
+                if((asVelX<0)&&(speedX()>0)) setSpeedX(0.0);
+                if((asVelX>0)&&(speedX()<0)) setSpeedX(0.0);
             }
         }
     }

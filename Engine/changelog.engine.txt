@@ -1,0 +1,3 @@
+0.2.2.4-alpha (First entry of engine changelog)
+Experimental engine part which provides ability play SMBX-compatible levels and episodes with their configuration packages. Provides partial implementation of SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with ability to code NPC's in LUA.
+

@@ -38,6 +38,7 @@ class PGE_LevelCamera
     friend class LVL_Background;
     friend class LVL_Section;
 public:
+    static const float _smbxTickTime;
     PGE_LevelCamera();
     PGE_LevelCamera(const PGE_LevelCamera &cam);
     ~PGE_LevelCamera();
@@ -73,6 +74,17 @@ public:
     /**************Fader**************/
     PGE_Fader fader;
     /**************Fader**************/
+
+    /**************Autoscrool**************/
+    void resetAutoscroll();
+    void processAutoscroll(float tickTime);
+    bool  isAutoscroll;
+    float _autoscrollVelocityX_max;
+    float _autoscrollVelocityY_max;
+    float _autoscrollVelocityX;
+    float _autoscrollVelocityY;
+    PGE_RectF limitBox;
+    /**************Autoscrool**************/
 private:
     void _applyLimits();
     void sortElements();

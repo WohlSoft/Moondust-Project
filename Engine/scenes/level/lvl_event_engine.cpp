@@ -84,6 +84,125 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             evntAct.action.events.push_back(playsnd);
         }
 
+        for(int i=0;i<evt.sets.size(); i++)
+        {
+            if(evt.sets[i].background_id!=-1)
+            {
+                EventQueueEntry<LVL_EventAction> bgToggle;
+                if(evt.sets[i].background_id<0)
+                {
+                    bgToggle.makeCaller([this,evt,i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].resetBG();
+                            for(int j=0;j<LvlSceneP::s->cameras.size();j++)
+                            {
+                                if(LvlSceneP::s->cameras[j].cur_section==&LvlSceneP::s->sections[i])
+                                {
+                                    LvlSceneP::s->sections[i].initBG();
+                                }
+                            }
+                        }
+
+                    }, 0);
+                } else {
+                    bgToggle.makeCaller([this,evt,i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].setBG(evt.sets[i].background_id);
+                            for(int j=0;j<LvlSceneP::s->cameras.size();j++)
+                            {
+                                if(LvlSceneP::s->cameras[j].cur_section==&LvlSceneP::s->sections[i])
+                                {
+                                    LvlSceneP::s->sections[i].initBG();
+                                }
+                            }
+                        }
+                    }, 0);
+                }
+                evntAct.action.events.push_back(bgToggle);
+            }
+            if(evt.sets[i].music_id!=-1)
+            {
+                EventQueueEntry<LVL_EventAction> musToggle;
+                if(evt.sets[i].music_id<0)
+                {
+                    musToggle.makeCaller([this,evt,i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].resetMusic();
+                            for(int j=0;j<LvlSceneP::s->cameras.size();j++)
+                            {
+                                if(LvlSceneP::s->cameras[j].cur_section==&LvlSceneP::s->sections[i])
+                                {
+                                    LvlSceneP::s->sections[i].playMusic();
+                                }
+                            }
+                        }
+                    }, 0);
+                } else {
+                    musToggle.makeCaller([this,evt, i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].setMusic(evt.sets[i].music_id);
+                            for(int j=0;j<LvlSceneP::s->cameras.size();j++)
+                            {
+                                if(LvlSceneP::s->cameras[j].cur_section==&LvlSceneP::s->sections[i])
+                                {
+                                    LvlSceneP::s->sections[i].playMusic();
+                                }
+                            }
+                        }
+                    }, 0);
+                }
+                evntAct.action.events.push_back(musToggle);
+            }
+            if(evt.sets[i].position_left!=-1)
+            {
+                EventQueueEntry<LVL_EventAction> bordersToggle;
+                if(evt.sets[i].position_left==-2)
+                {
+                    bordersToggle.makeCaller([this,evt,i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].resetLimits();
+                        }
+                    }, 0);
+                } else {
+                    bordersToggle.makeCaller([this,evt, i]()->void{
+                        if(i<LvlSceneP::s->sections.size())
+                        {
+                            LvlSceneP::s->sections[i].changeLimitBorders(
+                                        evt.sets[i].position_left,
+                                        evt.sets[i].position_top,
+                                        evt.sets[i].position_right,
+                                        evt.sets[i].position_bottom);
+                        }
+                    }, 0);
+                }
+                evntAct.action.events.push_back(bordersToggle);
+            }
+        }
+
+        if((evt.scroll_section<LvlSceneP::s->sections.size())&&((evt.move_camera_x!=0.0f)||(evt.move_camera_y!=0.0f)))
+        {
+            EventQueueEntry<LVL_EventAction> installAutoscroll;
+            installAutoscroll.makeCaller([this,evt]()->void{
+                                       LvlSceneP::s->sections[evt.scroll_section].isAutoscroll=true;
+                                       LvlSceneP::s->sections[evt.scroll_section]._autoscrollVelocityX=evt.move_camera_x;
+                                       LvlSceneP::s->sections[evt.scroll_section]._autoscrollVelocityY=evt.move_camera_y;
+                                       for(int j=0;j<LvlSceneP::s->cameras.size();j++)
+                                       {
+                                           if(LvlSceneP::s->cameras[j].cur_section==&LvlSceneP::s->sections[evt.scroll_section])
+                                           {
+                                               LvlSceneP::s->cameras[j].isAutoscroll=true;
+                                               LvlSceneP::s->cameras[j].resetAutoscroll();
+                                           }
+                                       }
+                               }, 0);
+            evntAct.action.events.push_back(installAutoscroll);
+        }
+
         if(!evt.msg.isEmpty())
         {
             EventQueueEntry<LVL_EventAction> message;
