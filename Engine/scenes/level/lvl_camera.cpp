@@ -296,16 +296,16 @@ void PGE_LevelCamera::_applyLimits()
     if(isAutoscroll)
     {
         if(posRect.left() < limitBox.left())
-            posRect.setX(limitBox.left());
+            posRect.setX(round(limitBox.left()));
 
         if(posRect.right() > limitBox.right())
-            posRect.setX(limitBox.right()-posRect.width());
+            posRect.setX(round(limitBox.right()-posRect.width()));
 
         if(posRect.top() < limitBox.top())
-            posRect.setY(limitBox.top());
+            posRect.setY(round(limitBox.top()));
 
         if(posRect.bottom()>limitBox.bottom())
-            posRect.setY(limitBox.bottom()-posRect.height());
+            posRect.setY(round(limitBox.bottom()-posRect.height()));
         return;
     }
 
