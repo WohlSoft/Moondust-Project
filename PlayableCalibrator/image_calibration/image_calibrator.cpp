@@ -168,7 +168,7 @@ void ImageCalibrator::on_CropH_valueChanged(int arg1)
 
 void ImageCalibrator::on_Matrix_clicked()
 {
-    Matrix dialog;
+    Matrix dialog(this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(frmX, frmY);
     if(dialog.exec()==QDialog::Accepted)

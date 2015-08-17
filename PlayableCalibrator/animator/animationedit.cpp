@@ -54,7 +54,7 @@ void AnimationEdit::on_AddLeft_clicked()
     int x=-1;
     int y=-1;
 
-    Matrix dialog;
+    Matrix dialog(this);
 
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(dialog.exec()==QDialog::Accepted)
@@ -78,7 +78,7 @@ void AnimationEdit::on_SetLeft_clicked()
 
     QList<QListWidgetItem *> selected = ui->FramesL->selectedItems();
 
-    Matrix dialog;
+    Matrix dialog(this);
 
     foreach(QListWidgetItem * item, selected)
     {
@@ -112,7 +112,7 @@ void AnimationEdit::on_AddRight_clicked()
     int x=-1;
     int y=-1;
 
-    Matrix dialog;
+    Matrix dialog(this);
 
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(dialog.exec()==QDialog::Accepted)
@@ -134,7 +134,7 @@ void AnimationEdit::on_SetRight_clicked()
 
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
 
-    Matrix dialog;
+    Matrix dialog(this);
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
