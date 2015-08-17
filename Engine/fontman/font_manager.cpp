@@ -167,7 +167,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
     font.beginGroup("entries");
     QStringList entries=font.allKeys();
 
-    qDebug()<<entries;
+    //qDebug()<<entries;
 
     foreach(QString x, entries)
     {
@@ -205,7 +205,7 @@ void RasterFont::loadFontMap(QString fontmap_ini)
         */
         if(charX.isEmpty()) continue;
         QChar ch=charX[0];
-        qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
+        //qDebug()<<"=char=" << ch << "=id="<<charPosX.toInt()<<charPosY.toInt()<<"=";
 
         RasChar rch;
         rch.valid=true;

@@ -341,6 +341,8 @@ LevelScene::~LevelScene()
 
     luaEngine.shutdown();
 
+    destroyLoaderTexture();
+
     delete player1Controller;
     delete player2Controller;
     textures_bank.clear();
