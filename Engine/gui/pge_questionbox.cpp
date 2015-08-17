@@ -39,19 +39,12 @@ PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, QString _title, msgType _t
     : PGE_MenuBoxBase(_parentScene, PGE_Menu::menuAlignment::HORIZONTAL, 30)
 {
     setParentScene(_parentScene);
-    construct(_title,_type, boxCenterPos, _padding, texture);
+    PGE_MenuBoxBase::construct(_title, _type, boxCenterPos, _padding, texture);
 }
 
 PGE_QuestionBox::PGE_QuestionBox(const PGE_QuestionBox &mb)
     : PGE_MenuBoxBase(mb)
 {}
-
-
-void PGE_QuestionBox::construct(QString _title, PGE_MenuBox::msgType _type,
-                            PGE_Point pos, float _padding, QString texture)
-{
-    PGE_MenuBoxBase::construct(_title, _type, pos, _padding, texture);
-}
 
 PGE_QuestionBox::~PGE_QuestionBox()
 {}
