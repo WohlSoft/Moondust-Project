@@ -28,9 +28,6 @@ public:
                msgType _type=msg_info, PGE_Point boxCenterPos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
     PGE_MenuBox(const PGE_MenuBox &mb);
 
-    void construct(QString _title="Menu is works!",
-                    msgType _type=msg_info, PGE_Point pos=PGE_Point(-1,-1), float _padding=-1, QString texture="");
-
     ~PGE_MenuBox();
 
     void onUpButton();

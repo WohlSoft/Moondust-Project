@@ -23,19 +23,12 @@ PGE_MenuBox::PGE_MenuBox(Scene *_parentScene, QString _title, msgType _type,
     : PGE_MenuBoxBase(_parentScene)
 {
     setParentScene(_parentScene);
-    construct(_title,_type, boxCenterPos, _padding, texture);
+    PGE_MenuBoxBase::construct(_title, _type, boxCenterPos, _padding, texture);
 }
 
 PGE_MenuBox::PGE_MenuBox(const PGE_MenuBox &mb)
     : PGE_MenuBoxBase(mb)
 {}
-
-
-void PGE_MenuBox::construct(QString _title, PGE_MenuBox::msgType _type,
-                            PGE_Point pos, float _padding, QString texture)
-{
-    PGE_MenuBoxBase::construct(_title, _type, pos, _padding, texture);
-}
 
 PGE_MenuBox::~PGE_MenuBox()
 {}
