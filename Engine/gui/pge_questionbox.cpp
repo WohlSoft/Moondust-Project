@@ -36,551 +36,62 @@
 
 PGE_QuestionBox::PGE_QuestionBox(Scene *_parentScene, QString _title, msgType _type,
                        PGE_Point boxCenterPos, float _padding, QString texture)
-    : PGE_BoxBase(_parentScene), _menu(PGE_Menu::menuAlignment::HORIZONTAL, 30)
+    : PGE_MenuBoxBase(_parentScene, PGE_Menu::menuAlignment::HORIZONTAL, 30)
 {
     setParentScene(_parentScene);
     construct(_title,_type, boxCenterPos, _padding, texture);
 }
 
 PGE_QuestionBox::PGE_QuestionBox(const PGE_QuestionBox &mb)
-    : PGE_BoxBase(mb), _menu(mb._menu)
-{
-    _page     = mb._page;
-    running   = mb.running;
-    fontID    = mb.fontID;
-    fontRgba  = mb.fontRgba;
-    _answer_id= mb._answer_id;
-
-    reject_snd= mb.reject_snd;
-    _ctrl1    = mb._ctrl1;
-    _ctrl2    = mb._ctrl2;
-    type      = mb.type;
-    _pos=       mb._pos;
-
-    _sizeRect = mb._sizeRect;
-    title     = mb.title;
-    title_size= mb.title_size;
-    //_menu     = mb._menu;
-    width     = mb.width;
-
-    height    = mb.height;
-    padding   = mb.padding;
-    bg_color  = mb.bg_color;
-}
+    : PGE_MenuBoxBase(mb)
+{}
 
 
 void PGE_QuestionBox::construct(QString _title, PGE_MenuBox::msgType _type,
                             PGE_Point pos, float _padding, QString texture)
 {
-    if(!texture.isEmpty())
-        loadTexture(texture);
-
-    updateTickValue();
-    _page=0;
-    running=false;
-    _answer_id = -1;
-    _pos=pos;
-    _menu.setTextLenLimit(30, true);
-    _menu.setItemsNumber(5);
-    setTitleFont(ConfigManager::setup_menu_box.title_font_name);
-    setTitleFontColor(ConfigManager::setup_menu_box.title_font_rgba);
-    /****************Word wrap*********************/
-    title = _title;
-    FontManager::optimizeText(title, 27);
-    title_size = FontManager::textSize(_title, fontID, 27);
-    /****************Word wrap*end*****************/
-    setPadding(_padding);
-    setType(_type);
-    updateSize();
+    PGE_MenuBoxBase::construct(_title, _type, pos, _padding, texture);
 }
 
 PGE_QuestionBox::~PGE_QuestionBox()
 {}
 
-void PGE_QuestionBox::setParentScene(Scene *_parentScene)
+void PGE_QuestionBox::onLeftButton()
 {
-    PGE_BoxBase::setParentScene(_parentScene);
-    initControllers();
+    _menu.selectUp();
 }
 
-void PGE_QuestionBox::setType(PGE_MenuBox::msgType _type)
+void PGE_QuestionBox::onRightButton()
 {
-    switch(type)
-    {
-        case msg_info: bg_color =       QColor(qRgb(0,0,0)); break;
-        case msg_info_light: bg_color = QColor(qRgb(0,0,125)); break;
-        case msg_warn: bg_color =       QColor(qRgb(255,201,14)); break;
-        case msg_error: bg_color =      QColor(qRgb(125,0,0)); break;
-        case msg_fatal: bg_color =      QColor(qRgb(255,0,0)); break;
-        default:  bg_color =            QColor(qRgb(0,0,0)); break;
-    }
-    type=_type;
+    _menu.selectDown();
 }
 
-void PGE_QuestionBox::setTitleFont(QString fontName)
+void PGE_QuestionBox::onJumpButton()
 {
-    fontID   = FontManager::getFontID(fontName);
+    _menu.acceptItem();
 }
 
-void PGE_QuestionBox::setTitleFontColor(GlColor color)
+void PGE_QuestionBox::onAltJumpButton()
 {
-    fontRgba=color;
+    _menu.acceptItem();
 }
 
-void PGE_QuestionBox::setTitleText(QString text)
+void PGE_QuestionBox::onRunButton()
 {
-    title = text;
-    FontManager::optimizeText(title, 27);
-    title_size = FontManager::textSize(text, fontID, 27);
-    updateSize();
+    _menu.rejectItem();
 }
 
-void PGE_QuestionBox::setPadding(int _padding)
+void PGE_QuestionBox::onAltRunButton()
 {
-    if(_padding<0)
-        _padding = ConfigManager::setup_menu_box.box_padding;
-    padding=_padding;
+    _menu.rejectItem();
 }
 
-void PGE_QuestionBox::setPos(float x, float y)
+void PGE_QuestionBox::onStartButton()
 {
-    _pos.setX(x);
-    _pos.setY(y);
-    updateSize();
+    _menu.acceptItem();
 }
 
-void PGE_QuestionBox::setMaxMenuItems(int items)
+void PGE_QuestionBox::onDropButton()
 {
-    _menu.setItemsNumber(items);
-    updateSize();
+    _menu.rejectItem();
 }
-
-void PGE_QuestionBox::setBoxSize(float _Width, float _Height, float _padding)
-{
-    width = _Width;
-    height = _Height;
-    padding = _padding;
-}
-
-void PGE_QuestionBox::updateSize()
-{
-    PGE_Rect menuRect = _menu.rectFull();
-    if(menuRect.width()>title_size.w())
-        width = menuRect.width()/2;
-    else
-        width = title_size.w()/2;
-    height=(title_size.h()+menuRect.height())/2;
-
-    if((_pos.x()==-1)&&(_pos.y()==-1))
-    {
-        _sizeRect.setLeft(PGE_Window::Width/2-width-padding);
-        _sizeRect.setTop(PGE_Window::Height/2-height-padding);
-        _sizeRect.setRight(PGE_Window::Width/2 + width + padding);
-        _sizeRect.setBottom(PGE_Window::Height/2+height + padding);
-        if(_sizeRect.top() < padding)
-            _sizeRect.setY(padding);
-    }
-    else
-    {
-        _sizeRect.setLeft( _pos.x() - width-padding);
-        _sizeRect.setTop(_pos.y() - height-padding);
-        _sizeRect.setRight(_pos.x() + width + padding);
-        _sizeRect.setBottom(_pos.y() + height + padding);
-    }
-
-    _menu.setPos(_sizeRect.right() - ( menuRect.width()>title_size.w() ? menuRect.width() : title_size.w() ),
-                 _sizeRect.bottom() - menuRect.height() + _menu.topOffset() - padding);
-}
-
-
-
-void PGE_QuestionBox::clearMenu()
-{
-    _menu.clear();
-    updateSize();
-}
-
-void PGE_QuestionBox::addMenuItem(QString &menuitem)
-{
-    _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
-    updateSize();
-}
-
-void PGE_QuestionBox::addMenuItems(QStringList &menuitems)
-{
-    foreach(QString menuitem, menuitems)
-        _menu.addMenuItem(menuitem.simplified().replace(' ', '_'), menuitem);
-    updateSize();
-}
-
-
-void PGE_QuestionBox::update(float ticks)
-{
-    switch(_page)
-    {
-        case 0: setFade(10, 1.0f, 0.05f); _page++; break;
-        case 1: processLoader(ticks); break;
-        case 2: processBox(ticks); break;
-        case 3: processUnLoader(ticks); break;
-        case 4:
-        default: running=false; break;
-    }
-}
-
-void PGE_QuestionBox::render()
-{
-    if(_page==2)
-    {
-        if(_textureUsed)
-        {
-            drawTexture(_sizeRect);
-        }
-        else
-        {
-            GlRenderer::renderRect(_sizeRect.left(), _sizeRect.top(),
-                                   _sizeRect.width(), _sizeRect.height(),
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-        }
-        FontManager::printText(title,
-                               _sizeRect.center().x()-title_size.w()/2,
-                               _sizeRect.top()+padding,
-                               fontID,
-                               fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
-        _menu.render();
-//        FontManager::SDL_string_render2D(_sizeRect.left()+padding,
-//                                         _sizeRect.top()+padding,
-//                                         &textTexture);
-    }
-    else
-    {
-        if(_textureUsed)
-        {
-            drawTexture(_sizeRect.center().x()-(width + padding)*fader_opacity,
-                        _sizeRect.center().y()-(height + padding)*fader_opacity,
-                        _sizeRect.center().x()+(width + padding)*fader_opacity,
-                        _sizeRect.center().y()+(height + padding)*fader_opacity);
-        }
-        else
-        {
-            GlRenderer::renderRectBR(_sizeRect.center().x() - (width+padding)*fader_opacity ,
-                                   _sizeRect.center().y() - (height+padding)*fader_opacity,
-                                     _sizeRect.center().x() + (width+padding)*fader_opacity,
-                                   _sizeRect.center().y() + (height+padding)*fader_opacity,
-                                   bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, fader_opacity);
-        }
-    }
-}
-
-void PGE_QuestionBox::restart()
-{
-    _page=0;
-    _menu.resetState();
-    _menu.reset();
-    running=true;
-}
-
-bool PGE_QuestionBox::isRunning()
-{
-    return running;
-}
-
-void PGE_QuestionBox::exec()
-{
-    updateControllers();
-    restart();
-    while(running)
-    {
-        Uint32 start_render=SDL_GetTicks();
-
-        update(uTickf);
-        updateControllers();
-        PGE_BoxBase::render();
-        render();
-        glFlush();
-        PGE_Window::rePaint();
-
-        if(uTick > (signed)(SDL_GetTicks() - start_render))
-                SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
-    }
-}
-
-void PGE_QuestionBox::setRejectSnd(long sndRole)
-{
-    obj_sound_role::roles _sndRole =  static_cast<obj_sound_role::roles>(sndRole);
-    reject_snd = ConfigManager::getSoundByRole(_sndRole);
-}
-
-int PGE_QuestionBox::answer()
-{
-    return _answer_id;
-}
-
-void PGE_QuestionBox::reject()
-{
-    _answer_id=-1; _page++; setFade(10, 0.0f, 0.05f);
-    if(reject_snd>0)
-        PGE_Audio::playSound(reject_snd);
-}
-
-void PGE_QuestionBox::processKeyEvent(SDL_Keycode &key)
-{
-    if(_page!=2) return;
-
-    if(_ctrl1)
-    {
-        if(_ctrl1->keys.up) {
-            //_menu.selectUp(); return;
-        } else if(_ctrl1->keys.down) {
-            //_menu.selectDown(); return;
-        } else if(_ctrl1->keys.left) {
-            //_menu.selectLeft(); return;
-            _menu.selectDown();
-        } else if(_ctrl1->keys.right) {
-            //_menu.selectRight(); return;
-            _menu.selectUp();
-        } else if(_ctrl1->keys.jump) {
-            _menu.acceptItem(); return;
-        } else if(_ctrl1->keys.alt_jump) {
-            _menu.acceptItem(); return;
-        } else if(_ctrl1->keys.run) {
-            _menu.rejectItem(); return;
-        } else
-        if(_ctrl1->keys.start) {
-            _menu.acceptItem(); return;
-        }   else
-        if(_ctrl1->keys.drop) {
-           reject();  return;
-        }
-    }
-
-    switch(key)
-    {
-      case SDLK_UP:
-        //_menu.selectUp();
-      break;
-      case SDLK_DOWN:
-        //_menu.selectDown();
-      break;
-      case SDLK_LEFT:
-        //_menu.selectLeft();
-        _menu.selectUp();
-      break;
-      case SDLK_RIGHT:
-        //_menu.selectRight();
-        _menu.selectDown();
-      break;
-      case SDLK_RETURN:
-      case SDLK_KP_ENTER:
-        _menu.acceptItem();
-      break;
-      case SDLK_ESCAPE:
-         reject(); return;
-      break;
-      default:
-        break;
-    }
-}
-
-void PGE_QuestionBox::processLoader(float ticks)
-{
-    SDL_Event event;
-    while ( SDL_PollEvent(&event) ) {
-        PGE_Window::processEvents(event);
-        if(event.type==SDL_QUIT)
-            fader_opacity=1.0;
-    }
-    tickFader(ticks);
-    if(fader_opacity>=1.0f) _page++;
-}
-
-void PGE_QuestionBox::processBox(float)
-{
-    #ifndef __APPLE__
-    if(AppSettings.interprocessing)
-        qApp->processEvents();
-    #endif
-    SDL_Event event;
-    while ( SDL_PollEvent(&event) )
-    {
-        PGE_Window::processEvents(event);
-        switch(event.type)
-        {
-            case SDL_QUIT:
-                reject();
-            break;
-            case SDL_KEYDOWN: // If pressed key
-                processKeyEvent(event.key.keysym.sym);
-            break;
-            default:
-              break;
-        }
-    }
-    if(_menu.isSelected())
-    {
-        if(_menu.isAccepted())
-            _answer_id = _menu.currentItemI();
-        else
-            _answer_id = -1;
-        _page++; setFade(10, 0.0f, 0.05f);return;
-    }
-}
-
-
-
-void PGE_QuestionBox::processUnLoader(float ticks)
-{
-    SDL_Event event;
-    while ( SDL_PollEvent(&event) ) {
-        PGE_Window::processEvents(event);
-        if(event.type==SDL_QUIT)
-            fader_opacity=0.0;
-    }
-    tickFader(ticks);
-    if(fader_opacity<=0.0f) _page++;
-}
-
-
-void PGE_QuestionBox::initControllers()
-{
-    if(parentScene!=NULL)
-    {
-        if(parentScene->type()==Scene::Level)
-        {
-            LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
-            if(s)
-            {
-                _ctrl1 = s->player1Controller;
-                _ctrl2 = s->player2Controller;
-            }
-        }
-        else if(parentScene->type()==Scene::World)
-        {
-            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
-            if(s)
-            {
-                _ctrl1 = s->player1Controller;
-                _ctrl2=NULL;
-            }
-        }
-        else
-        {
-            _ctrl1=NULL;
-            _ctrl2=NULL;
-        }
-    }
-    else
-    {
-        _ctrl1=NULL;
-        _ctrl2=NULL;
-    }
-}
-
-void PGE_QuestionBox::updateControllers()
-{
-    if(_ctrl1)
-    {
-        _ctrl1->update();
-        _ctrl1->sendControls();
-    }
-    if(_ctrl2)
-    {
-        _ctrl2->update();
-        _ctrl2->sendControls();
-    }
-    if(parentScene!=NULL)
-    {
-        if(parentScene->type()==Scene::Level)
-        {
-            LevelScene * s = dynamic_cast<LevelScene *>(parentScene);
-            if(s)
-            {
-                s->tickAnimations(uTickf);
-            }
-        }
-        else if(parentScene->type()==Scene::World)
-        {
-            WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
-            if(s)
-            {
-                s->tickAnimations(uTickf);
-            }
-        }
-    }
-}
-
-
-
-void PGE_QuestionBox::info(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MenuBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_info_light);
-        msgBox.exec();
-    }
-    else
-    {
-        QMessageBox::information(NULL, QTranslator::tr("Information"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::info(std::string msg)
-//{
-//    PGE_MenuBox::info(QString::fromStdString(msg));
-//}
-
-void PGE_QuestionBox::warn(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MenuBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_warn);
-        msgBox.exec();
-    }
-    else
-    {
-        QMessageBox::warning(NULL, QTranslator::tr("Warning"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::warn(std::string msg)
-//{
-//    PGE_MenuBox::warn(QString::fromStdString(msg));
-//}
-
-
-void PGE_QuestionBox::error(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MenuBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_error);
-        msgBox.exec();
-    }
-    else
-    {
-        QMessageBox::critical(NULL, QTranslator::tr("Error"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::error(std::string msg)
-//{
-//    PGE_MenuBox::error(QString::fromStdString(msg));
-//}
-
-
-void PGE_QuestionBox::fatal(QString msg)
-{
-    if(GlRenderer::ready())
-    {
-        PGE_MenuBox msgBox(NULL, msg,
-                          PGE_MenuBox::msg_fatal);
-        msgBox.exec();
-    }
-    else
-    {
-        QMessageBox::critical(NULL, QTranslator::tr("Fatal"), msg, QMessageBox::Ok);
-    }
-}
-//void PGE_MenuBox::fatal(std::string msg)
-//{
-//    PGE_MenuBox::fatal(QString::fromStdString(msg));
-//}
-

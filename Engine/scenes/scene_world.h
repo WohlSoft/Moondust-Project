@@ -49,9 +49,8 @@ struct WorldScene_misc_img
 class WorldScene : public Scene
 {
     friend class PGE_MsgBox;
-    friend class PGE_MenuBox;
     friend class PGE_TextInputBox;
-    friend class PGE_QuestionBox;
+    friend class PGE_MenuBoxBase;
 public:
     WorldScene();
     ~WorldScene();
