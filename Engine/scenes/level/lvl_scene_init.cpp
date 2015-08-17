@@ -435,7 +435,7 @@ bool LevelScene::init()
     isInitFinished=false;
     isInitFailed=false;
 
-    #if !_WIN32 && !__APPLE__
+    #if 0
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread=SDL_CreateThread( init_thread, "LevelInitializer", this);
 
