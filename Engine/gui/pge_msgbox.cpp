@@ -60,6 +60,7 @@ PGE_MsgBox::PGE_MsgBox(const PGE_MsgBox &mb)
     fontRgba= mb.fontRgba;
 
     keys    = mb.keys;
+    _exit_key_lock = mb._exit_key_lock;
 
     type    = mb.type;
     _sizeRect=mb._sizeRect;
@@ -80,6 +81,7 @@ void PGE_MsgBox::construct(QString msg, PGE_MsgBox::msgType _type, PGE_Point pos
     message = msg;
     type = _type;
     running=false;
+    _exit_key_lock=true;
 
     keys = Controller::noKeys();
 
@@ -238,7 +240,10 @@ void PGE_MsgBox::processBox(float)
     #endif
     updateControllers();
 
-    if(keys.jump || keys.run || keys.alt_run)
+    if(_exit_key_lock && !keys.jump && !keys.run && !keys.alt_run)
+        _exit_key_lock=false;
+
+    if((!_exit_key_lock)&&(keys.jump || keys.run || keys.alt_run))
     {
         _page++;
         setFade(10, 0.0f, 0.05f);

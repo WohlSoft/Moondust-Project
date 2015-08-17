@@ -42,18 +42,18 @@ PGE_Phys_Object::PGE_Phys_Object()
     collide_npc = COLLISION_ANY;
 
     _parentSection=NULL;
-    _width = 0.0f;
-    _height = 0.0f;
-    _realWidth=0.0f;
-    _realHeight=0.0f;
-    _posX=0.0f;
-    _posY=0.0f;
-    _velocityX=0.0f;
-    _velocityY=0.0f;
-    _velocityX_prev=0.0f;
-    _velocityY_prev=0.0f;
-    _velocityX_add=0.0f;
-    _velocityY_add=0.0f;
+    _width = 0.0;
+    _height = 0.0;
+    _realWidth=0.0;
+    _realHeight=0.0;
+    _posX=0.0;
+    _posY=0.0;
+    _velocityX=0.0;
+    _velocityY=0.0;
+    _velocityX_prev=0.0;
+    _velocityY_prev=0.0;
+    _velocityX_add=0.0;
+    _velocityY_add=0.0;
 
     _paused=false;
 

@@ -241,7 +241,7 @@ bool CalibrationMain::on_OpenSprite_clicked()
 
 void CalibrationMain::on_AboutButton_clicked()
 {
-    about dialog;
+    about dialog(this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
 }
@@ -300,7 +300,7 @@ void CalibrationMain::on_showGrabItem_clicked(bool checked)
 
 void CalibrationMain::on_Matrix_clicked()
 {
-    Matrix dialog;
+    Matrix dialog(this);
     this->hide();
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(frmX, frmY);
@@ -322,7 +322,7 @@ void CalibrationMain::on_Matrix_clicked()
 void CalibrationMain::on_AnimatorButton_clicked()
 {
     this->hide();
-    Animate dialog;
+    Animate dialog(this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     this->show();
@@ -364,7 +364,7 @@ void CalibrationMain::on_editSizes_clicked()
 
 void CalibrationMain::on_calibrateImage_clicked()
 {
-    ImageCalibrator imgCalibrator;
+    ImageCalibrator imgCalibrator(this);
     imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(!imgCalibrator.init(currentFile)) return;
 

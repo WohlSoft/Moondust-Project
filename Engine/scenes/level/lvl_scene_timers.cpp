@@ -51,9 +51,9 @@ void LevelScene::drawLoader()
                      loading_texture.w,
                      loading_texture.h/4);
 
+    GlRenderer::resetViewport();
     AniPos x(0,1);
             x = loading_Ani->image();
-
     GlRenderer::renderTexture(&loading_texture, loadAniG.left(), loadAniG.top(), loadAniG.width(), loadAniG.height(), x.first, x.second);
 
     if(IntProc::isEnabled())
@@ -68,9 +68,15 @@ void LevelScene::setLoaderAnimation(int speed)
     loaderSpeed = speed;
 
     if(IntProc::isEnabled())
-        GlRenderer::loadTextureP(loading_texture, ":/images/coin.png");
+    {
+        if(!loading_texture.inited)
+            GlRenderer::loadTextureP(loading_texture, ":/images/coin.png");
+    }
     else
-        GlRenderer::loadTextureP(loading_texture, ":/images/shell.png");
+    {
+        if(!loading_texture.inited)
+            GlRenderer::loadTextureP(loading_texture, ":/images/shell.png");
+    }
 
     loading_Ani = new SimpleAnimator(true,
                                      4,
@@ -96,9 +102,14 @@ void LevelScene::stopLoaderAnimation()
         loading_Ani->stop();
         delete loading_Ani;
         loading_Ani = NULL;
-        GlRenderer::deleteTexture( loading_texture );
     }
 
+}
+
+void LevelScene::destroyLoaderTexture()
+{
+    using namespace lvl_scene_loader;
+    GlRenderer::deleteTexture( loading_texture );
 }
 
 unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)

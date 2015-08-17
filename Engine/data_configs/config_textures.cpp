@@ -319,7 +319,6 @@ long  ConfigManager::getLvlPlayerTexture(long playerID, int stateID)
     obj_player_state &state = plr.states[stateID];
     if(state.isInit)
     {
-
         if(state.textureArrayId < level_textures.size())
             return state.textureArrayId;
         else

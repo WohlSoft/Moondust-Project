@@ -44,6 +44,7 @@ public:
     static void rePaint();
 
     static SDL_Window *window;
+    static SDL_GLContext glcontext_background;
     static SDL_GLContext glcontext;
     static int setFullScreen(bool fs);
     static int SDL_ToggleFS(SDL_Window *win=NULL);

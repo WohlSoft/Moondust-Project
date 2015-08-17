@@ -72,11 +72,20 @@ struct transformTask_block
 
 class LevelScene : public Scene
 {
+    friend class LVL_EventEngine;
 public:
     LevelScene();
     ~LevelScene();
 
     bool init();
+    bool init_items();
+    static int init_thread(void *self);
+    SDL_Thread * initializer_thread;
+private:
+    bool isInit;
+    bool isInitFinished;
+    bool isInitFailed;
+public:
 
     //Init 1
     bool        loadFile(QString filePath);
@@ -191,6 +200,7 @@ public:
     void drawLoader();
     void setLoaderAnimation(int speed);
     void stopLoaderAnimation();
+    void destroyLoaderTexture();
     static unsigned int nextLoadAniFrame(unsigned int x, void *p);
     void loaderTick();
     bool doLoaderStep;
@@ -259,8 +269,6 @@ public:
     bool isVizibleOnScreen(double x, double y, double w, double h);
 
 private:
-    bool isInit;
-
     LevelData data;
 
     EpisodeState *gameState;

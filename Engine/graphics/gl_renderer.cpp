@@ -21,6 +21,7 @@
 #include "../common_features/app_path.h"
 
 #include <common_features/graphics_funcs.h>
+#include <common_features/logger.h>
 #include <QtOpenGL/QGLWidget>
 
 #include <gui/pge_msgbox.h>
@@ -150,14 +151,8 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
 
     if(sourceImage.isNull())
     {
-//        SDL_Quit();
-//        //if(ErrorCheck::hardMode)
-//        //{
-            PGE_MsgBox::error(
-                QString("Error loading of image file: \n%1\nReason: %2.")
-                .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
-//            exit(1);
-        //}
+        WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
+            .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"));
         target = _dummyTexture;
         return;
     }

@@ -37,6 +37,7 @@ bool PGE_Window::showPhysicsDebug=false;
 
 
 SDL_Window *PGE_Window::window;
+SDL_GLContext PGE_Window::glcontext_background;
 SDL_GLContext PGE_Window::glcontext;
 
 bool PGE_Window::IsInit=false;
@@ -78,9 +79,6 @@ bool PGE_Window::init(QString WindowTitle)
 //  SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
     //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-    SDL_GL_SetSwapInterval(0);
-    checkSDLError();
-
     GlRenderer::setViewportSize(Width, Height);
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -106,7 +104,15 @@ bool PGE_Window::init(QString WindowTitle)
 #endif
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
-    glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    qDebug()<<"Create context BG...";
+    glcontext_background = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    checkSDLError();
+    SDL_GL_MakeCurrent(PGE_Window::window, NULL);
+    qDebug()<<"Create context Main...";
+    glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    checkSDLError();
+
+    SDL_GL_SetSwapInterval(0);
     checkSDLError();
 
     SDL_ShowWindow(window);
@@ -129,6 +135,7 @@ bool PGE_Window::uninit()
     SDL_PumpEvents();
     GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DeleteContext(glcontext_background);
     SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;

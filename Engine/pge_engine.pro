@@ -233,7 +233,8 @@ SOURCES += \
     script/bindings/level/classes/luaclass_level_playerposdetector.cpp \
     script/bindings/core/classes/luaclass_core_simpleevent.cpp \
     gui/pge_questionbox.cpp \
-    gui/pge_textinputbox.cpp
+    gui/pge_textinputbox.cpp \
+    gui/pge_menuboxbase.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -372,7 +373,8 @@ HEADERS  += \
     script/bindings/level/classes/luaclass_level_playerposdetector.h \
     script/bindings/core/classes/luaclass_core_simpleevent.h \
     gui/pge_questionbox.h \
-    gui/pge_textinputbox.h
+    gui/pge_textinputbox.h \
+    gui/pge_menuboxbase.h
 
 
 FORMS    += \
