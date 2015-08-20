@@ -1,3 +1,29 @@
 0.2.2.4-alpha (First entry of engine changelog)
-Experimental engine part which provides ability play SMBX-compatible levels and episodes with their configuration packages. Provides partial implementation of SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with ability to code NPC's in LUA.
-
+- Experimental engine part which provides ability play SMBX-compatible levels and episodes
+with their configuration packages. Provides partial implementation of SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with ability to code NPC's in LUA.
+- Physics are completely replaced with own coded physical engine
+- Working NPC-AI system with support NPC's coded in the Lua
+- Exits are works!
+- Kill effects [are not works perfect, need a lot of work, but there are works fine]
+- Added generators!
+- Player can climb on NPC-based climbable walls, not only on the BGO-based!
+- Fixed a lot of bugs
+- NPC's finally can be spawned from blocks where there are was included!
+- Added support of the layers and basic events! [layers: show, hide, toggle;
+message box; play SFX; trigger another event; autoscroll speed, changing of limit
+borders per section, toggling section background, toggling section music,
+other event actions are not implemented yet].
+Working event triggers: block destroy, hit, empty-layer; NPC died, activated, empty layer
+[talk is not implemented yet!]
+- Fixed random crash caused by lua activation event when camera catched a corpse of NPC
+- Fixed slow performance caused by bad time delay function
+- Player finally can ride on NPC's heads [anyway, is not finished yet]
+- Basic Detectors API for NPC-AI which giving able to catch objects came to specific area
+- Fixed bug with super-fast game loop
+- Stompable NPC's are can be stomped!
+- Work with a speed-summing part of physical engine gives ability to stay and ride on the moving objects
+- Fixed imperfection with auto-closing of message box while "run" or "jump" key are holding
+- Episode/Level lists are no more freezing engine!
+- Working auto scrolling of sections has been implemented! (Unlike SMBX, autoscroll internally
+is an option of specific section which will works anyway, even you entered into this section from a side,
+you will get autoscrolling in this section)
