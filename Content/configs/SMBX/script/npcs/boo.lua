@@ -65,11 +65,11 @@ function boo:checkOverMaxSpeed()
 end
 
 function boo:isPlayerRightOfBoo()
-	return self.npc_obj.x < self.player_pos_detector:positionX()
+	return self.npc_obj.center_x < self.player_pos_detector:positionX()
 end
 
 function boo:isPlayerBelowOfBoo()
-	return self.npc_obj.y < self.player_pos_detector:positionY()
+	return self.npc_obj.center_y < self.player_pos_detector:positionY()
 end
 
 function boo:decreaseAcceleration(tickTime)
