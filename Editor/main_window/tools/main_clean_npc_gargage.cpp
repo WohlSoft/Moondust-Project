@@ -99,7 +99,7 @@ void MainWindow::on_actionClear_NPC_garbadge_triggered()
         {
             if(!removedItems.npc.isEmpty())
                 sc->addRemoveHistory(removedItems);
-            QMessageBox::information(this, tr("NPC garbage clean-up"), tr("NPC gargabe has been removed!\nThis operation can be undone with Ctrl+Z or Edit/Undo action."), QMessageBox::Ok);
+            QMessageBox::information(this, tr("NPC garbage clean-up"), tr("NPC garbabe has been removed!\nThis operation can be undone with Ctrl+Z or Edit/Undo action."), QMessageBox::Ok);
         }
         else
         {
