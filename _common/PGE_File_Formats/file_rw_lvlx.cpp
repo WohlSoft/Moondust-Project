@@ -1145,7 +1145,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
                 TextData += PGEFile::value("LA", PGEFile::qStrS(FileData.npc[i].attach_layer));  // Attach layer
 
             //Event slots
-            if(!FileData.npc[i].attach_layer.PGESTRINGisEmpty())
+            if(!FileData.npc[i].event_activate.PGESTRINGisEmpty())
                 TextData += PGEFile::value("EA", PGEFile::qStrS(FileData.npc[i].event_activate));
             if(!FileData.npc[i].event_die.PGESTRINGisEmpty())
                 TextData += PGEFile::value("ED", PGEFile::qStrS(FileData.npc[i].event_die));
