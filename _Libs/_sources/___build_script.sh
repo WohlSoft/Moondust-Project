@@ -63,7 +63,7 @@ else
 fi
 cd ..
 }
-LatestSDL='SDL-2.0.4-9723'
+LatestSDL='SDL-dbcbdc2940ef'
 UnArch $LatestSDL
 #UnArch 'SDL2_mixer-2.0.0'
 UnArch 'libogg-1.3.2'
