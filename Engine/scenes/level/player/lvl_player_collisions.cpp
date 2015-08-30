@@ -416,6 +416,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                        if(blk->setup->lava) kill(DEAD_burn);
+                        else if(blk->setup->danger==2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Top of block";
                         #endif
@@ -443,6 +445,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                             if(blk->isHidden) break;
                             collided_bottom[(intptr_t)collided]=collided;//bottom of player
+                            if(blk->setup->lava) kill(DEAD_burn);
+                            else if(blk->setup->danger==2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Top of block";
                             found=true;
@@ -458,6 +462,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                              )
                     {
                         collided_top[(intptr_t)collided]=collided;//top of player
+                        if(blk->setup->lava) kill(DEAD_burn);
+                        else if(blk->setup->danger==-2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Bottom of block";
                         found=true;
@@ -469,6 +475,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_left[(intptr_t)collided]=collided;//right of player
+                        if(blk->setup->lava) kill(DEAD_burn);
+                        else if(blk->setup->danger==1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Right of block";
                         #endif
@@ -479,6 +487,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     {
                         if(blk->isHidden) break;
                         collided_right[(intptr_t)collided]=collided;//left of player
+                        if(blk->setup->lava) kill(DEAD_burn);
+                        else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                         #ifdef COLLIDE_DEBUG
                         qDebug() << "Left of block";
                         found=true;
@@ -612,7 +622,13 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Top of block";
                             #endif
+                        } else {
+                            if( npc->posRect.collideRect(posRect))
+                            {
+                               if(npc->setup->hurt_player) harm(1);
+                            }
                         }
+
                     }
                     break;
                     case COLLISION_ANY:
@@ -650,6 +666,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                  )
                         {
                             collided_top[(intptr_t)collided]=collided;//top of player
+                            if(npc->setup->hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Bottom of block";
                             found=true;
@@ -660,6 +677,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                  && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                         {
                             collided_left[(intptr_t)collided]=collided;//right of player
+                            if(npc->setup->hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Right of block";
                             #endif
@@ -669,6 +687,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                  && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) ) )
                         {
                             collided_right[(intptr_t)collided]=collided;//left of player
+                            if(npc->setup->hurt_player) harm(1);
                             #ifdef COLLIDE_DEBUG
                             qDebug() << "Left of block";
                             found=true;
@@ -692,6 +711,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                                          fabs(_velocityY_prev)*c+c*2.0)
                                 )
                         {
+                            if(npc->setup->hurt_player) harm(1);
                             if(!forceCollideCenter) break;
                             collided_center[(intptr_t)collided]=collided;
                             #ifdef COLLIDE_DEBUG
@@ -708,7 +728,14 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     }
                 case COLLISION_NONE:
                     { //Detect top of stompable NPC!
-                        if(!npc->setup->kill_on_jump) break;
+                        if(!npc->setup->kill_on_jump)
+                        {
+                            if( npc->posRect.collideRect(posRect))
+                            {
+                               if(npc->setup->hurt_player) harm(1);
+                            }
+                            break;
+                        }
 
                         PGE_RectF &r1=posRect;
                         PGE_RectF  rc = collided->posRect;
@@ -739,6 +766,11 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                                 setGravityScale(climbing?0:physics_cur.gravity_scale);
                             }
                             kill_npc(npc, NPC_Stomped);
+                        } else {
+                            if( npc->posRect.collideRect(posRect))
+                            {
+                               if(npc->setup->hurt_player) harm(1);
+                            }
                         }
                         break;
                     }//case COLLISION_NONE
