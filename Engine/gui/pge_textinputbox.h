@@ -75,7 +75,9 @@ private:
     int     fontID;
     GlColor fontRgba;
 
+    QString _inputText_src;
     QString _inputText;
+    QString _inputText_printable;
     Sint32 cursor;
     Sint32 selection_len;
     int _text_input_h_offset;

@@ -234,7 +234,8 @@ SOURCES += \
     script/bindings/core/classes/luaclass_core_simpleevent.cpp \
     gui/pge_questionbox.cpp \
     gui/pge_textinputbox.cpp \
-    gui/pge_menuboxbase.cpp
+    gui/pge_menuboxbase.cpp \
+    settings/debugger.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -374,7 +375,8 @@ HEADERS  += \
     script/bindings/core/classes/luaclass_core_simpleevent.h \
     gui/pge_questionbox.h \
     gui/pge_textinputbox.h \
-    gui/pge_menuboxbase.h
+    gui/pge_menuboxbase.h \
+    settings/debugger.h
 
 
 FORMS    += \

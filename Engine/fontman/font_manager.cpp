@@ -252,7 +252,7 @@ PGE_Size RasterFont::textSize(QString &text, int max_line_lenght, bool cut)
             case '\t':
             case ' ':
                 lastspace=i;
-                widthSumm+=space_width;
+                widthSumm+=space_width+interletter_space/2;
                 if(widthSumm>widthSummMax) widthSummMax=widthSumm;
                 break;
             case '\n':
@@ -319,7 +319,7 @@ void RasterFont::printText(QString text, int x, int y, float Red, float Green, f
             offsetX+=offsetX+offsetX%w;
             continue;
         case ' ':
-            offsetX+=space_width;
+            offsetX+=space_width+interletter_space/2;
             continue;
         }
 

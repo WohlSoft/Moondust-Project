@@ -70,6 +70,10 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     _exiting_swimTimer=700;
 
     health=3;
+    invincible=false;
+    invincible_delay=0.0f;
+    blink_screen=false;
+    blink_screen_state=true;
     doHarm=false;
     doHarm_damage=0;
 

@@ -20,6 +20,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
+#include <settings/debugger.h>
 
 #include <graphics/gl_renderer.h>
 
@@ -29,6 +30,7 @@
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
+#include <gui/pge_textinputbox.h>
 
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
@@ -241,7 +243,6 @@ void LevelScene::processPhysics(float ticks)
     {
         active_npcs[i]->updateCollisions();
     }
-
 }
 
 
@@ -721,6 +722,11 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
               isPauseMenu = true;
           }
       break;
+      case SDLK_BACKQUOTE:
+      {
+          PGE_Debugger::executeCommand(this);
+          break;
+      }
       case SDLK_1:
       {
         if(!players.isEmpty())
@@ -730,7 +736,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
       case SDLK_2:
       {
          if(!players.isEmpty())
-          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 6, -20, 12);
+          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -6, 12);
       }
       break;
       case SDLK_3:
@@ -753,7 +759,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
          {
             Scene_Effect_Phys p;
             p.max_vel_y=12;
-            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, 0, p);
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -3, 12, 0, p);
          }
       }
       break;

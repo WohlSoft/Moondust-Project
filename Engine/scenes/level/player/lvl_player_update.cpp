@@ -21,6 +21,7 @@
 #include "../lvl_section.h"
 
 #include <audio/pge_audio.h>
+#include <settings/debugger.h>
 
 
 void LVL_Player::update(float ticks)
@@ -38,6 +39,16 @@ void LVL_Player::update(float ticks)
         animator.tickAnimation(ticks);
         updateCamera();
         return;
+    }
+
+    if(invincible)
+    {
+        invincible_delay-=ticks;
+        if(invincible_delay<0.0f)
+        {
+            invincible=false;
+            blink_screen=false;
+        }
     }
 
     _onGround = !foot_contacts_map.isEmpty();
@@ -140,7 +151,7 @@ void LVL_Player::update(float ticks)
     }
 
     //Running key
-    if(keys.run)
+    if(keys.run || keys.alt_run)
     {
         if(!_isRunning)
         {
@@ -171,20 +182,23 @@ void LVL_Player::update(float ticks)
 
     if(keys.alt_run)
     {
-        if(attack_enabled && !attack_pressed && !climbing)
+        if(PGE_Debugger::cheat_chucknorris)
         {
-            attack_pressed=true;
-
-            if(keys.up)
-                attack(Attack_Up);
-            else
-            if(keys.down)
-                attack(Attack_Down);
-            else
+            if(attack_enabled && !attack_pressed && !climbing)
             {
-                attack(Attack_Forward);
-                PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
-                animator.playOnce(MatrixAnimator::RacoonTail, _direction, 75, true, true, 1);
+                attack_pressed=true;
+
+                if(keys.up)
+                    attack(Attack_Up);
+                else
+                if(keys.down)
+                    attack(Attack_Down);
+                else
+                {
+                    attack(Attack_Forward);
+                    PGE_Audio::playSoundByRole(obj_sound_role::PlayerTail);
+                    animator.playOnce(MatrixAnimator::RacoonTail, _direction, 75, true, true, 1);
+                }
             }
         }
     }
@@ -294,7 +308,7 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    if( keys.alt_jump )
+    if( keys.alt_jump && PGE_Debugger::cheat_superman )
     {
         //Temporary it is ability to fly up!
         if(!bumpDown && !bumpUp) {
@@ -302,7 +316,7 @@ void LVL_Player::update(float ticks)
         }
     }
 
-    if( keys.jump )
+    if( keys.jump || keys.alt_jump )
     {
         if(!JumpPressed)
         {

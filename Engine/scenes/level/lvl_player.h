@@ -126,9 +126,14 @@ class LVL_Player :
         deathReason kill_reason;
 
         int     health;
+        bool    invincible;
+        float   invincible_delay;
+        bool    blink_screen;
+        bool    blink_screen_state;
         bool    doHarm;
         int     doHarm_damage;
-        void harm(int _damage=1);
+        void    harm(int _damage=1);
+        void    setInvincible(bool state, float delay, bool enableScreenBlink=false);
         /*******************Life and Death*****************/
 
         float   gscale_Backup; //!< BackUP of last gravity scale
