@@ -490,7 +490,7 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
             ui->layerMovement_group->setVisible(true);
             opened=true;
         }
-        if( ( event.move_camera_x!=0.0f ) && (event.move_camera_y!=0.0f) )
+        if( ( event.move_camera_x!=0.0f ) || (event.move_camera_y!=0.0f) )
         {
             ui->AutoscrollSection_toggleBox->setChecked(true);
             ui->Autoscroll_Area->setVisible(true);
