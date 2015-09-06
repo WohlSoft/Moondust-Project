@@ -19,6 +19,7 @@
 #include "lvl_base_object.h"
 #include <scenes/level/lvl_scene_ptr.h>
 #include <graphics/gl_renderer.h>
+#include <common_features/maths.h>
 
 #include <QVector>
 
@@ -54,6 +55,9 @@ PGE_Phys_Object::PGE_Phys_Object()
     _velocityY_prev=0.0;
     _velocityX_add=0.0;
     _velocityY_add=0.0;
+
+    colliding_xSpeed=0.0;
+    colliding_ySpeed=0.0;
 
     _paused=false;
 
@@ -337,6 +341,11 @@ void PGE_Phys_Object::iterateStep(float ticks)
     _velocityX_prev=_velocityX;
     _velocityY_prev=_velocityY;
 
+    colliding_xSpeed = Maths::max(fabs(_velocityX+_velocityX_add), fabs(_velocityX_prev+_velocityX_add))
+            * Maths::sgn(speedX()+_velocityX_add)*(ticks/_smbxTickTime);
+    colliding_ySpeed = Maths::max(fabs(_velocityY+_velocityY_add), fabs(_velocityY_prev+_velocityY_add))
+            * Maths::sgn(speedY()+_velocityY_add)*(ticks/_smbxTickTime);
+
     float G = phys_setup.gravityScale * LvlSceneP::s->globalGravity;
     float accelCof=ticks/1000.0f;
 
@@ -351,12 +360,12 @@ void PGE_Phys_Object::iterateStep(float ticks)
         float decX=phys_setup.decelerate_x*accelCof;
         if(_velocityX>0)
         {
-            if((_velocityX-decX>0.0))
+            if(_velocityX-decX>0.0)
                 _velocityX-=decX;
             else
                 _velocityX=0;
         } else if(_velocityX<0) {
-            if((_velocityX+decX<0.0))
+            if(_velocityX+decX<0.0)
                 _velocityX+=decX;
             else
                 _velocityX=0;
@@ -374,12 +383,12 @@ void PGE_Phys_Object::iterateStep(float ticks)
         float decY=phys_setup.decelerate_y*accelCof;
         if(_velocityY>0)
         {
-            if((_velocityY-decY>0.0))
+            if(_velocityY-decY>0.0)
                 _velocityY-=decY;
             else
                 _velocityY=0;
         } else if(_velocityY<0) {
-            if((_velocityY+decY<0.0))
+            if(_velocityY+decY<0.0)
                 _velocityY+=decY;
             else
                 _velocityY=0;

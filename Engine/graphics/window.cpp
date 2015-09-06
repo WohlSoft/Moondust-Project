@@ -23,6 +23,7 @@
 #include "../common_features/graphics_funcs.h"
 
 #include <settings/global_settings.h>
+#include <gui/pge_msgbox.h>
 #include "gl_renderer.h"
 
 int PGE_Window::Width=800;
@@ -31,6 +32,7 @@ int PGE_Window::Height=600;
 int PGE_Window::MaxFPS=250;
 float PGE_Window::TicksPerSecond=1000.0f/15.0f;
 int PGE_Window::TimeOfFrame=15;
+bool PGE_Window::vsync=true;
 
 bool PGE_Window::showDebugInfo=false;
 bool PGE_Window::showPhysicsDebug=false;
@@ -52,9 +54,8 @@ void PGE_Window::checkSDLError(int line)
     const char *error = SDL_GetError();
     if (*error != '\0')
     {
-        qDebug() << QString("SDL Error: %1").arg(error)
-        << ((line != -1)?
-            QString(" + line: %i").arg(line) : "");
+        PGE_MsgBox::warn(QString("SDL Error: %1").arg(error)+((line != -1)?
+            QString(" + line: %i").arg(line) : "") );
         SDL_ClearError();
     }
 }
@@ -112,13 +113,37 @@ bool PGE_Window::init(QString WindowTitle)
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     checkSDLError();
 
-    SDL_GL_SetSwapInterval(0);
-    checkSDLError();
+    toggleVSync(vsync);
 
     SDL_ShowWindow(window);
 
     IsInit=true;
     return true;
+}
+
+void PGE_Window::toggleVSync(bool vsync)
+{
+   if(vsync)
+   {
+       int display_count = 0, display_index = 0, mode_index = 0;
+       SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+       if ((display_count = SDL_GetNumVideoDisplays()) < 1) {
+           SDL_Log("SDL_GetNumVideoDisplays returned: %i", display_count);
+           return;
+       }
+       if (SDL_GetDisplayMode(display_index, mode_index, &mode) != 0) {
+           SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
+           return;
+       }
+       //SDL_Log("SDL_GetDisplayMode(0, 0, &mode):\t\t%i bpp\t%i x %i",
+       //SDL_BITSPERPIXEL(mode.format), mode.w, mode.h);
+       SDL_GL_SetSwapInterval(1);
+       TimeOfFrame = ceil(1000.f/float(mode.refresh_rate));
+       TicksPerSecond=1000.0f/TimeOfFrame;
+       checkSDLError();
+   } else {
+       SDL_GL_SetSwapInterval(0);
+   }
 }
 
 

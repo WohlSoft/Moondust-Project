@@ -77,6 +77,7 @@ void GlobalSettings::load()
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
+    vsync=setup.value("vsync", vsync).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
 
@@ -136,6 +137,7 @@ void GlobalSettings::save()
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
+        setup.setValue("vsync", vsync);
         setup.setValue("player1-controller", player1_controller);
         setup.setValue("player2-controller", player2_controller);
         setup.setValue("volume-sfx", volume_sound);
@@ -166,6 +168,7 @@ void GlobalSettings::resetDefaults()
     MaxFPS=250;
     TicksPerSecond=65;
     timeOfFrame=15;
+    vsync=true;
 
     showDebugInfo=false;
 
@@ -199,6 +202,7 @@ void GlobalSettings::apply()
     PGE_Window::Height=ScreenHeight;
     PGE_Window::showDebugInfo=showDebugInfo;
     PGE_Window::TimeOfFrame=timeOfFrame;
+    PGE_Window::vsync=vsync;
 }
 
 

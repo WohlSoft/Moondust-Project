@@ -52,6 +52,7 @@ public:
     int    MaxFPS;
     float  TicksPerSecond;
     int    timeOfFrame;
+    bool   vsync;
 
     bool showDebugInfo;
 
