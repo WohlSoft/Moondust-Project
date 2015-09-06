@@ -845,7 +845,7 @@ int LevelScene::exec()
     //Level scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
-    float doUpdate_render=0;
+  float doUpdate_render=0;
 
  Uint32 start_physics=0;
  Uint32 stop_physics=0;
@@ -854,7 +854,6 @@ int LevelScene::exec()
   Uint32 stop_events=0;
   //float junkTicks=0.0f;
 
-  bool skipFrame=false;
   //StTimePt start_common=StClock::now();
   Uint32 start_common = SDL_GetTicks();
   //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
@@ -901,26 +900,24 @@ int LevelScene::exec()
         stop_render=0;
         start_render=0;
         /**********************Process rendering of stuff****************************/
-        skipFrame=true;
-        if(doUpdate_render<=0.f)
+        if((PGE_Window::vsync)||(doUpdate_render<=0.f))
         {
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
             glFlush();
+            PGE_Window::rePaint();
             stop_render=SDL_GetTicks();
-            skipFrame=false;
-            doUpdate_render = frameSkip? (stop_render-start_render) : 0;
+            doUpdate_render = frameSkip? uTickf+(stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
 
-        if(!skipFrame) PGE_Window::rePaint();
         //printf("U-%08.5f, P-%08.5f, J-%08.5f", uTickf, PassedTime, junkTicks);
         //fflush(stdout);
-        if( uTick > (signed)PassedTime )
+        if( (!PGE_Window::vsync) && (uTick > (signed)PassedTime) )
         {
             if(!slowTimeMode)
                 SDL_Delay( uTick-PassedTime );

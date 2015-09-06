@@ -1061,8 +1061,6 @@ int WorldScene::exec()
 
   Uint32 start_common=0;
 
-  bool   skipFrame=false;
-
     running = !doExit;
     /****************Initial update***********************/
     //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
@@ -1086,23 +1084,22 @@ int WorldScene::exec()
 
         stop_render=0;
         start_render=0;
-        skipFrame=true;
-        if(doUpdate_render<=0.f)
+        if((PGE_Window::vsync)||(doUpdate_render<=0.f))
         {
             start_render = SDL_GetTicks();
             render();
+            glFlush();
+            PGE_Window::rePaint();
+
             stop_render = SDL_GetTicks();
-            doUpdate_render = frameSkip ? (stop_render-start_render) : 0;
-            skipFrame=false;
+            doUpdate_render = frameSkip ? uTickf+(stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
         if(stop_render < start_render) {stop_render=0; start_render=0; }
 
-        glFlush();
-        if(!skipFrame) PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks()-start_common) )
+        if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks()-start_common)) )
         {
             SDL_Delay(uTick-(signed)(SDL_GetTicks()-start_common));
         }
