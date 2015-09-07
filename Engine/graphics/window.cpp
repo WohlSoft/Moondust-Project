@@ -125,13 +125,13 @@ void PGE_Window::toggleVSync(bool vsync)
 {
    if(vsync)
    {
-       int display_count = 0, display_index = 0, mode_index = 0;
+       int display_count = 0, display_index = 0;
        SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
        if ((display_count = SDL_GetNumVideoDisplays()) < 1) {
            SDL_Log("SDL_GetNumVideoDisplays returned: %i", display_count);
            return;
        }
-       if (SDL_GetDisplayMode(display_index, mode_index, &mode) != 0) {
+       if (SDL_GetCurrentDisplayMode(display_index, &mode) != 0) {
            SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
            return;
        }
