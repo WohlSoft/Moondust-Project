@@ -134,7 +134,10 @@ struct obj_npc
 
     int speed;     //    speed=64			; Default movement speed in px/s
     bool movement; //    moving=1			; NPC simply moving right/left
-    bool scenery;  //    scenery=0			; NPC as block
+    bool scenery;  //    scenery=0			; NPC as block or BGO
+    bool activity;  //   activity=1         ; NPC has "Activated" event, doing regular loops, etc.
+                    //                        If flag is false, NPC doing job while on screen only and keeps position
+    bool shared_ani;//   shared-animation   ; All NPC's of same ID will do same animation
     bool immortal; //    immortal=0			; NPC Can't be destroy
     bool can_be_eaten; //    yoshicaneat=1			; NPC can be eaten by yoshi
     bool takable;  //    takeble=0			; NPC destroyble on contact with player
