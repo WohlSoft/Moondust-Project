@@ -55,6 +55,8 @@ public:
     void doHarm(int damageReason);
     void harm(int damage=1, int damageReason = DAMAGE_NOREASON);
 
+    void talkWith();
+
     void kill(int damageReason);//! In-Game destroying of NPC with triggering of specific events
     void unregister();          //! Sielent destroying of NPC without triggering of the events
 

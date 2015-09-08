@@ -46,6 +46,8 @@ void LVL_Player::updateCollisions()
     collided_bottom.clear();
     collided_center.clear();
 
+    collided_talkable_npc = NULL;
+
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
     #endif
@@ -560,6 +562,11 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
             if(npc)
             {
                 if(npc->isKilled())        break;
+
+                if(!npc->data.msg.isEmpty())
+                {
+                    collided_talkable_npc=npc;
+                }
                 if(npc->data.friendly) break;
                 if(npc->isGenerator) break;
                 if(npc->setup->climbable)
@@ -574,6 +581,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                 if((!npc->data.friendly)&&(npc->setup->takable))
                 {
+                    collided_talkable_npc=NULL;
                     npc->doHarm(LVL_Npc::DAMAGE_TAKEN);
                     kill_npc(npc, LVL_Player::NPC_Taked_Coin);
                 }

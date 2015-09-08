@@ -67,6 +67,7 @@ class LVL_Player :
         QHash<int, PGE_Phys_Object*> collided_right;
         QHash<int, PGE_Phys_Object*> collided_bottom;
         QHash<int, PGE_Phys_Object*> collided_center;
+        LVL_Npc *  collided_talkable_npc;
         bool _stucked;
         /***************************************************/
 

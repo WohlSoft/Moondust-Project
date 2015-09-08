@@ -94,6 +94,8 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     isWarping=false;
     warpPipeOffset=0;
 
+    collided_talkable_npc = NULL;
+
     gscale_Backup=0.f;//!< BackUP of last gravity scale
 
     duck_allow=false;

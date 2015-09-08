@@ -243,6 +243,8 @@ void LVL_Player::update(float ticks)
         {
             if(posRect.center().y() >= climbableHeight)
                 setSpeedY(-physics_cur.velocity_climb_y_up);
+        } else {
+            if(collided_talkable_npc) collided_talkable_npc->talkWith();
         }
     }
 

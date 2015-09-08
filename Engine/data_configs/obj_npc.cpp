@@ -290,7 +290,9 @@ bool ConfigManager::loadLevelNPC()
         snpc.coins =        npcset.value("coins", "0").toInt();
         snpc.speed =        npcset.value("speed", "64").toInt();
         snpc.movement =     npcset.value("moving", "1").toBool();
+        snpc.activity =     npcset.value("activity", "1").toBool();
         snpc.scenery =      npcset.value("scenery", "0").toBool();
+        snpc.shared_ani =   npcset.value("shared-animation", "0").toBool();
         snpc.immortal =     npcset.value("immortal", "0").toBool();
         snpc.can_be_eaten = npcset.value("can-be-eaten", "0").toBool();
         snpc.can_be_eaten = npcset.value("yoshicaneat", snpc.can_be_eaten).toBool();
