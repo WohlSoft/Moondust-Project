@@ -65,6 +65,8 @@ void AudioCvt_Sox_gui::resetStat()
     stat_overwritten_levels=0;
     stat_overwritten_worlds=0;
     stat_failed_levels=0;
+    stat_failed_files=0;
+    fails.clear();
 }
 
 void AudioCvt_Sox_gui::setEnableControls(bool en)
@@ -209,17 +211,22 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
 
     if(exitStatus==QProcess::CrashExit)
     {
-        QMessageBox::warning(this, tr("SoX error"), tr("SoX was crashed"));
-        stop(true);
-        return;
+        fails << current_musFileOld << " -> "<<current_musFileNew<< ": " << tr("SoX was crashed");
+        stat_failed_files++;
+        //stop(true);
+        //return;
     }
 
     if(retStatus!=0)
     {
-        QMessageBox::warning(this, tr("SoX error"), tr("SoX returned non-zero code: %1\n%2").arg(retStatus)
-                             .arg(lastOutput));
-        stop(true);
-        return;
+        //QMessageBox::warning(this, tr("SoX error"), tr("SoX returned non-zero code: %1\n%2").arg(retStatus)
+                             //.arg(lastOutput));
+        fails << current_musFileOld << " -> "<<current_musFileNew<<": "<<tr("SoX returned non-zero code: %1\n%2").arg(retStatus)
+                 .arg(lastOutput);
+
+        stat_failed_files++;
+        //stop(true);
+        //return;
     }
     ui->progress->setValue(ui->progress->maximum()-filesToConvert.size());
     if((!current_musFileOld.isEmpty()) && (QFile(current_musFileOld).exists()))
