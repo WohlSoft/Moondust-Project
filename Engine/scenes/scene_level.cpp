@@ -923,7 +923,7 @@ int LevelScene::exec()
                 SDL_Delay( uTick-PassedTime );
             else
                 SDL_Delay( uTick-PassedTime+300 );
-        }
+        } else if(slowTimeMode) SDL_Delay( uTick-PassedTime+300 );
     }
     return exitLevelCode;
 }
