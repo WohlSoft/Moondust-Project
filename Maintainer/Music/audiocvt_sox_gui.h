@@ -68,7 +68,9 @@ private:
     long stat_converted_files;
     long stat_overwritten_levels;
     long stat_overwritten_worlds;
+    long stat_failed_files;
     long stat_failed_levels;
+    QStringList fails;
 };
 
 #endif // AUDIOCVT_SOX_GUI_H
