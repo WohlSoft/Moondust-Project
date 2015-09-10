@@ -172,6 +172,36 @@ public:
                                              (posRect.bottom() > collided->posRect.top()) );
     }
 
+    enum Slopes{
+        SLOPE_LEFT=-1,
+        SLOPE_RIGHT=1
+    };
+
+    inline double SL_HeightTopRight(PGE_Phys_Object *collided)
+    {
+        return (fabs(collided->posRect.right()-posRect.left()))
+                *(collided->posRect.height()/collided->posRect.width());
+    }
+
+    inline double SL_HeightTopLeft(PGE_Phys_Object *collided)
+    {
+        return (fabs(collided->posRect.left()-posRect.right()))
+                *(collided->posRect.height()/collided->posRect.width());
+    }
+
+    inline bool isCollideSlopeFloor(PGE_Phys_Object *collided, int direction=-1)
+    {
+        double floorH;
+        if(direction<0)
+            floorH = SL_HeightTopRight(collided);
+        else
+            floorH = SL_HeightTopLeft(collided);
+        double slopeTop = collided->posRect.bottom()-floorH;
+        if(slopeTop<collided->top()) slopeTop=collided->posRect.top();
+        else if(slopeTop>collided->bottom()) slopeTop=collided->posRect.bottom();
+        return (posRect.bottom()>=slopeTop)&&(posRect.bottom()<=collided->posRect.bottom());
+    }
+
     PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
     PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);
     bool isWall(QVector<PGE_Phys_Object *> &blocks);
