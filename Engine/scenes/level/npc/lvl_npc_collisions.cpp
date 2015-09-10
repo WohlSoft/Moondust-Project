@@ -62,6 +62,12 @@ void LVL_Npc::updateCollisions()
     double _wallX=posRect.x();
     double _floorY=posRect.y();
 
+    double _floorX_vel=0.0;//velocities sum
+    double _floorX_num=0.0;//num of velocities
+    double _floorY_vel=0.0;//velocities sum
+    double _floorY_num=0.0;//num of velocities
+
+    QVector<PGE_Phys_Object*> topbottom_blocks;
     QVector<PGE_Phys_Object*> floor_blocks;
     QVector<PGE_Phys_Object*> wall_blocks;
     QVector<PGE_Phys_Object*> add_speed_to;
@@ -81,6 +87,10 @@ void LVL_Npc::updateCollisions()
                     if(blk->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(blk);
+                    _floorY_vel+=blk->speedYsum();
+                    _floorY_num+=1.0;
+                    _floorX_vel+=blk->speedXsum();
+                    _floorX_num+=1.0;
                 }
                 case PGE_Phys_Object::LVLNPC:
                 {
@@ -90,15 +100,23 @@ void LVL_Npc::updateCollisions()
                     if(npc->slippery_surface) foot_sl_contacts_map[(intptr_t)collided]=(intptr_t)collided;
                     //if(blk->setup->bounce) blocks_to_hit.push_back(blk);
                     floor_blocks.push_back(npc);
+                    _floorY_vel+=npc->speedYsum();
+                    _floorY_num+=1.0;
+                    _floorX_vel+=npc->speedXsum();
+                    _floorX_num+=1.0;
                 }
                 break;
                 default:break;
             }
-            if(!foot_contacts_map.isEmpty())
-            {
-                _velocityX_add=collided->speedXsum();
-            }
         }
+        if(_floorX_num!=0.0) _floorX_vel=_floorX_vel/_floorX_num;
+        if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
+        if(!foot_contacts_map.isEmpty())
+        {
+            _velocityX_add=_floorX_vel;
+            _velocityY_add=_floorY_vel;
+        }
+
         if(isFloor(floor_blocks, &cliffDetected))
         {
             PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
@@ -146,9 +164,9 @@ void LVL_Npc::updateCollisions()
             break;
             default:break;
             }
-            if(collided) floor_blocks.push_back(collided);
+            if(collided) topbottom_blocks.push_back(collided);
         }
-        if(isFloor(floor_blocks))
+        if(isFloor(topbottom_blocks))
         {
             PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
             if(nearest)
@@ -157,6 +175,9 @@ void LVL_Npc::updateCollisions()
                 resolveTop=true;
             }
         }
+
+        foreach(PGE_Phys_Object* x, floor_blocks)
+            topbottom_blocks.push_back(x);
     }
 
     bool wall=false;
@@ -231,7 +252,10 @@ void LVL_Npc::updateCollisions()
     {
         posRect.setY(_floorY);
         //float bumpSpeed=speedY();
-        setSpeedY(0);
+        if(resolveTop)
+            setSpeedY(0.0);
+        else
+            setSpeedY(_floorY_vel);
         _velocityY_add=0;
         //if(!blocks_to_hit.isEmpty())
         //{
