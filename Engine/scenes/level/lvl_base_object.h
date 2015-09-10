@@ -179,27 +179,45 @@ public:
 
     inline double SL_HeightTopRight(PGE_Phys_Object *collided)
     {
-        return (fabs(collided->posRect.right()-posRect.left()))
+        return (fabs(collided->posRect.left()-posRect.right()))
                 *(collided->posRect.height()/collided->posRect.width());
     }
 
     inline double SL_HeightTopLeft(PGE_Phys_Object *collided)
     {
-        return (fabs(collided->posRect.left()-posRect.right()))
-                *(collided->posRect.height()/collided->posRect.width());
+        return (fabs(collided->posRect.right()-posRect.left()))
+                        *(collided->posRect.height()/collided->posRect.width());
     }
 
     inline bool isCollideSlopeFloor(PGE_Phys_Object *collided, int direction=-1)
     {
         double floorH;
         if(direction<0)
-            floorH = SL_HeightTopRight(collided);
-        else
             floorH = SL_HeightTopLeft(collided);
+        else
+            floorH = SL_HeightTopRight(collided);
         double slopeTop = collided->posRect.bottom()-floorH;
         if(slopeTop<collided->top()) slopeTop=collided->posRect.top();
         else if(slopeTop>collided->bottom()) slopeTop=collided->posRect.bottom();
-        return (posRect.bottom()>=slopeTop)&&(posRect.bottom()<=collided->posRect.bottom());
+        return (posRect.bottom()>=slopeTop)&&
+               (posRect.bottom()<=collided->posRect.bottom())&&
+               (!( (posRect.left()>=collided->posRect.right()-0.2) || (posRect.right() <= collided->posRect.left()+0.2) ) )
+                ;
+    }
+
+    inline bool isCollideSlopeCelling(PGE_Phys_Object *collided, int direction=-1)
+    {
+        double cellingH;
+        if(direction>0)
+            cellingH = SL_HeightTopLeft(collided);
+        else
+            cellingH = SL_HeightTopRight(collided);
+        double slopeBottom = collided->posRect.top()+cellingH;
+        if(slopeBottom >collided->bottom()) slopeBottom =collided->posRect.bottom();
+        else if(slopeBottom <collided->top()) slopeBottom = collided->posRect.top();
+        return (posRect.top()<=slopeBottom )&&
+               (posRect.top()>=collided->posRect.top())&&
+               (!( (posRect.left()>=collided->posRect.right()-0.2) || (posRect.right() <= collided->posRect.left()+0.2) ) );
     }
 
     PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
