@@ -360,6 +360,7 @@ void LVL_Player::update(float ticks)
                 jumpTime=physics_cur.jump_time;
                 jumpVelocity=physics_cur.velocity_jump;
                 floating_timer = floating_maxtime;
+                _velocityY_add=0;//Remove Y speed-add when player jumping
                 setSpeedY(-jumpVelocity-fabs(speedX()/physics_cur.velocity_jump_c));
             }
             else
