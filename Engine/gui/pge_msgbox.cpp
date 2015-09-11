@@ -213,7 +213,7 @@ void PGE_MsgBox::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks() - start_render))
+        if((!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks() - start_render)))
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 }
