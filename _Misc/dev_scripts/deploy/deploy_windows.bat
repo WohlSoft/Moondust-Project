@@ -30,6 +30,8 @@ if not exist "%DeployDir%\%PgePrjSD%\*" md "%DeployDir%\%PgePrjSD%"
 %CurDir%\upx.exe --compress-icons=0 LazyFixTool.exe
 %CurDir%\upx.exe --compress-icons=0 pge_calibrator.exe
 %CurDir%\upx.exe --compress-icons=0 pge_engine.exe
+%CurDir%\upx.exe --compress-icons=0 pge_manager.exe
+%CurDir%\upx.exe --compress-icons=0 pge_maintainer.exe
 
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
 %QtDir%\windeployqt pge_editor.exe
@@ -39,6 +41,7 @@ IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
 %QtDir%\windeployqt PNG2GIFs.exe
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
+%QtDir%\windeployqt pge_maintainer.exe
 :noDynamicQt1
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
