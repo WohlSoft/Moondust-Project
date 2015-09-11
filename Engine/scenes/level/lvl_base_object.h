@@ -201,7 +201,8 @@ public:
         else if(slopeTop>collided->bottom()) slopeTop=collided->posRect.bottom();
         return (posRect.bottom()>=slopeTop)&&
                (posRect.bottom()<=collided->posRect.bottom())&&
-               (!( (posRect.left()>=collided->posRect.right()-0.2) || (posRect.right() <= collided->posRect.left()+0.2) ) )
+       (!( (posRect.left()+collided->colliding_xSpeed>=collided->posRect.right()+colliding_xSpeed) ||
+           (posRect.right()+collided->colliding_xSpeed<=collided->posRect.left()+colliding_xSpeed) ) )
                 ;
     }
 
@@ -217,7 +218,8 @@ public:
         else if(slopeBottom <collided->top()) slopeBottom = collided->posRect.top();
         return (posRect.top()<=slopeBottom )&&
                (posRect.top()>=collided->posRect.top())&&
-               (!( (posRect.left()>=collided->posRect.right()-0.2) || (posRect.right() <= collided->posRect.left()+0.2) ) );
+        (!( (posRect.left()+collided->colliding_xSpeed>=collided->posRect.right()+colliding_xSpeed) ||
+            (posRect.right()+collided->colliding_xSpeed<=collided->posRect.left()+colliding_xSpeed) ) );
     }
 
     PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
