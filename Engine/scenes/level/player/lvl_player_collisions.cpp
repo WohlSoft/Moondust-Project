@@ -494,9 +494,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     #endif
                     //*****************************Feet of player****************************/
                     if(
-                        (( blk->shape==LVL_Block::shape_rect||
-                           blk->shape==LVL_Block::shape_tr_bottom_left||
-                           blk->shape==LVL_Block::shape_tr_bottom_right) && isCollideFloor(collided))||
+                        (( (blk->shape==LVL_Block::shape_rect)||
+                           (blk->shape==LVL_Block::shape_tr_bottom_left)||
+                           (blk->shape==LVL_Block::shape_tr_bottom_right) ) && isCollideFloor(collided))||
                         ((blk->shape==LVL_Block::shape_tr_top_right)&&isCollideSlopeFloor(collided, SLOPE_RIGHT)) ||
                         ((blk->shape==LVL_Block::shape_tr_top_left)&&isCollideSlopeFloor(collided, SLOPE_LEFT))
 
@@ -508,9 +508,9 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Head of player****************************/
                     else if(
-                            (( blk->shape==LVL_Block::shape_rect||
-                                blk->shape==LVL_Block::shape_tr_top_left||
-                                blk->shape==LVL_Block::shape_tr_top_right) &&
+                            (( (blk->shape==LVL_Block::shape_rect)||
+                                (blk->shape==LVL_Block::shape_tr_top_left)||
+                                (blk->shape==LVL_Block::shape_tr_top_right)) &&
                                 isCollideCelling(collided, _heightDelta, forceCollideCenter))||
                             ((blk->shape==LVL_Block::shape_tr_bottom_right)&&isCollideSlopeCelling(collided, SLOPE_RIGHT)) ||
                             ((blk->shape==LVL_Block::shape_tr_bottom_left)&&isCollideSlopeCelling(collided, SLOPE_LEFT))
