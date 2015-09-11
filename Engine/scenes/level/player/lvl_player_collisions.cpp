@@ -549,7 +549,8 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
 
                     float c=forceCollideCenter? 0.0f : 1.0f;
                     //*****************************Center****************************/
-                    if( (!forceCollideCenter && blk->shape==LVL_Block::shape_rect) && blk->posRect.collideRectDeep(posRect,
+                    if( ((!forceCollideCenter && blk->shape==LVL_Block::shape_rect)||(forceCollideCenter))
+                            && blk->posRect.collideRectDeep(posRect,
                                                      fabs(_velocityX_prev+_velocityX_add)*c+c*2.0,
                                                      fabs(_velocityY_prev+_velocityY_add)*c+c*2.0)
                             )
