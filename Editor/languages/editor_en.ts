@@ -1284,58 +1284,58 @@ Please save them first before doing anything else.</translation>
         <translation>Export to image</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="99"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="67"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of the target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="35"/>
-        <location filename="../main_window/file/lvl_export_image.ui" line="102"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="70"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="83"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="62"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="141"/>
         <source>Hide door and water marking</source>
         <translation>Hide doors and water markers</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="127"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
         <source>Please, select target image size:</source>
         <translation>Please select target image size:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="112"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="131"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, this will calculate the size of the opposite dimension (height or width) to make a target image with the correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="115"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="134"/>
         <source>Save proportion</source>
         <translation>Save proportions</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="32"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="80"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of the target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="45"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="32"/>
         <source>Width</source>
         <translation>Width</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="82"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="121"/>
         <source>Export current section to image</source>
         <translation>Export current section to image</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="92"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Height</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="137"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="148"/>
         <source>Tiled background</source>
         <translation>Tiled background</translation>
     </message>
@@ -4255,7 +4255,24 @@ Please, reconvert your images to the valid format and try to reload this level.<
         <translation type="vanished">BGO Sorting Priority</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="239"/>
+        <source>LEVELSCENE_CONTEXTMENU_SectionProperties</source>
+        <comment>Section properties...</comment>
+        <translation type="vanished">Section properties...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="231"/>
+        <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
+        <comment>Section properties...</comment>
+        <translation>Section properties...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="232"/>
+        <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
+        <comment>Level properties...</comment>
+        <translation>Level properties...</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="262"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -9784,58 +9801,62 @@ because object configurations are not loaded
         <translation>Export to image</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="32"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="93"/>
         <source>Please, select target image size:</source>
         <translation>Please select target image size:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="42"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="27"/>
         <source>Height</source>
         <translation>Height</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="49"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="52"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="147"/>
         <source>Save proportion</source>
         <translation>Save proportions</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="72"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="127"/>
         <source>Export selected rectangle to image</source>
         <translation>Export selected area into the image</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="82"/>
+        <source>2x</source>
+        <translation type="obsolete">2x</translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/wld_export_image.ui" line="62"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="85"/>
-        <location filename="../main_window/file/wld_export_image.ui" line="111"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="65"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="78"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="108"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="75"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="121"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="34"/>
         <source>Width</source>
         <translation>Width</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="139"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="154"/>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
         <translation>Hide all paths and levels as if game has already started</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="146"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="137"/>
         <source>Hide music boxes</source>
         <translation>Hide music boxes</translation>
     </message>

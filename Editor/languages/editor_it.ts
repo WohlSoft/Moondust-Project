@@ -1142,59 +1142,59 @@ Please save them first before doing anything else.</source>
         <translation>esporta immagine</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="99"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="67"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;questo e&apos; un&lt;span style=&quot;font weight:600;&quot;&gt;altezza&lt;/span&gt; delli&apos;mmagine. l&apos;immagine verra&apos; scalata in questa altezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="35"/>
-        <location filename="../main_window/file/lvl_export_image.ui" line="102"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="70"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="83"/>
         <source> px</source>
         <translation>pixel</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="62"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="141"/>
         <source>Hide door and water marking</source>
         <translation>cancella porta e watermark</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="127"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
         <source>Please, select target image size:</source>
         <translatorcomment>HELLO</translatorcomment>
         <translation>per favore, seleziona l&apos;altezza dell&apos;immagine:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="112"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="131"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;con questa opzione verra&apos; calcolata il valore opposto per l&apos;altezza e larghezza, per rendere l&apos;mmagine con le corrette proporzioni&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="115"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="134"/>
         <source>Save proportion</source>
         <translation>salva proporzione</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="32"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="80"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;this is a &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con la sua larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="45"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="32"/>
         <source>Width</source>
         <translation>larghezza</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="82"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="121"/>
         <source>Export current section to image</source>
         <translation>esporta sezione corrente all&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="92"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Height</source>
         <translation>altezza</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.ui" line="137"/>
+        <location filename="../main_window/file/lvl_export_image.ui" line="148"/>
         <source>Tiled background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3686,7 +3686,19 @@ converti il vormato e tenta di ricaricare il livello.</translation>
         <translation type="obsolete">musica</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="239"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="231"/>
+        <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
+        <comment>Section properties...</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="232"/>
+        <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
+        <comment>Level properties...</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="262"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -7929,58 +7941,58 @@ because object configurations are not loaded
         <translation>Esporta immagine</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="32"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="93"/>
         <source>Please, select target image size:</source>
         <translation>per favore, seleziona l&apos;altezza dell&apos;immagine:</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="42"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="27"/>
         <source>Height</source>
         <translation>Altezza</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="49"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Con questa opzione verra&apos; calcolata il valore opposto per l&apos;altezza e larghezza, per rendere l&apos;mmagine con le corrette proporzioni&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="52"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="147"/>
         <source>Save proportion</source>
         <translation>Salva proporzione</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="72"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="127"/>
         <source>Export selected rectangle to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="82"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="62"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo e&apos; un &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con la sua larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="85"/>
-        <location filename="../main_window/file/wld_export_image.ui" line="111"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="65"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="78"/>
         <source> px</source>
         <translation>pixel</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="108"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="75"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo e&apos; un &lt;span style=&quot;font weight:600;&quot;&gt;altezza&lt;/span&gt; delli&apos;mmagine. l&apos;immagine verra&apos; scalata in questa altezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="121"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="34"/>
         <source>Width</source>
         <translation>Larghezza</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="139"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="154"/>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.ui" line="146"/>
+        <location filename="../main_window/file/wld_export_image.ui" line="137"/>
         <source>Hide music boxes</source>
         <translation type="unfinished"></translation>
     </message>
