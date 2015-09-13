@@ -18,6 +18,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/debugger.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -227,16 +228,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QMenu lmenu;
             //QMenu* jumptoSide = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SIDE", "Jump to side"));
             //QMenu* jumptoSection = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SECTION", "Jump to section"));
-            QAction *props=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_Properties", "Section properties..."));
-            QAction *lvlprops=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_Properties", "Level properties..."));
+            QAction *props=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_SectionProperties...", "Section properties..."));
+            QAction *lvlprops=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_LevelProperties...", "Level properties..."));
             QAction *answer=lmenu.exec(mouseEvent->screenPos());
             if(answer!=nullptr)
             {
                 if(answer==props)
                 {
-                    //MainWinConnect::pMainWin->dock_LvlSectionProps
+                    MainWinConnect::pMainWin->dock_LvlSectionProps->show();
+                    MainWinConnect::pMainWin->dock_LvlSectionProps->raise();
                 } else if(answer==lvlprops) {
-                    //MainWinConnect::pMainWin->dock_LvlSectionProps
+                    MainWinConnect::pMainWin->on_actionLevelProp_triggered();
                 }
             }
         }

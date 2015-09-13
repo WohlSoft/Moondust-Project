@@ -257,3 +257,21 @@ void WldSaveImage::on_HideMusBoxes_clicked(bool checked)
 {
     hideMusBoxes = checked;
 }
+
+void WldSaveImage::on_size1x_clicked()
+{
+    ui->imgWidth->setValue( imageSize.width());
+    ui->imgHeight->setValue( imageSize.height());
+}
+
+void WldSaveImage::on_size05x_clicked()
+{
+    ui->imgWidth->setValue( imageSize.width()/2);
+    ui->imgHeight->setValue( imageSize.height()/2);
+}
+
+void WldSaveImage::on_size2x_clicked()
+{
+    ui->imgWidth->setValue( imageSize.width()*2);
+    ui->imgHeight->setValue( imageSize.height()*2);
+}
