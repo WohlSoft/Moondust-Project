@@ -2,6 +2,10 @@
 - Text Input dialog box has been completely implemented
 - Cheating features are been moved into cheat environment and can be used only after typing of special commands by "~" key clicking
 - Playable character can be harmed by dangerouse surfaces and will die in lava
+- Experimental support of slopes
+- Player can talk with NPC's
+- better work of collisions, but some things are still experimental
+- better V-Sync control
 
 0.2.2.4-alpha (First entry of engine changelog)
 - Experimental engine part which provides ability play SMBX-compatible levels and episodes
