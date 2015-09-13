@@ -24,16 +24,9 @@ if exist "%DeployDir%\*" del /Q /F /S "%DeployDir%\*"
 if not exist "%DeployDir%\*" md "%DeployDir%"
 if not exist "%DeployDir%\%PgePrjSD%\*" md "%DeployDir%\%PgePrjSD%"
 
-%CurDir%\upx.exe --compress-icons=0 pge_editor.exe
-%CurDir%\upx.exe --compress-icons=0 PNG2GIFs.exe
-%CurDir%\upx.exe --compress-icons=0 GIFs2PNG.exe
-%CurDir%\upx.exe --compress-icons=0 LazyFixTool.exe
-%CurDir%\upx.exe --compress-icons=0 pge_calibrator.exe
-%CurDir%\upx.exe --compress-icons=0 pge_engine.exe
-%CurDir%\upx.exe --compress-icons=0 pge_manager.exe
-%CurDir%\upx.exe --compress-icons=0 pge_maintainer.exe
-
 IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
+copy "%QtDir%\libstdc++-6.dll" ".\libstdc++-6.dll"
+copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt pge_editor.exe
 %QtDir%\windeployqt pge_engine.exe
 %QtDir%\windeployqt pge_calibrator.exe
@@ -42,7 +35,23 @@ IF NOT "%DynamicQT%"=="TRUE" GOTO noDynamicQt1
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
 %QtDir%\windeployqt pge_maintainer.exe
+rem %CurDir%\upx.exe Qt5Core.dll
+rem %CurDir%\upx.exe Qt5Gui.dll
+rem %CurDir%\upx.exe D3Dcompiler_43.dll
+rem %CurDir%\upx.exe libGLESV2.dll
+rem %CurDir%\upx.exe Qt5Network.dll
+rem %CurDir%\upx.exe Qt5Widgets.dll
+rem %CurDir%\upx.exe libstdc++-6.dll
 :noDynamicQt1
+
+%CurDir%\upx.exe --compress-icons=0 pge_editor.exe
+%CurDir%\upx.exe --compress-icons=0 PNG2GIFs.exe
+%CurDir%\upx.exe --compress-icons=0 GIFs2PNG.exe
+%CurDir%\upx.exe --compress-icons=0 LazyFixTool.exe
+%CurDir%\upx.exe --compress-icons=0 pge_calibrator.exe
+%CurDir%\upx.exe --compress-icons=0 pge_engine.exe
+%CurDir%\upx.exe --compress-icons=0 pge_manager.exe
+%CurDir%\upx.exe --compress-icons=0 pge_maintainer.exe
 
 copy pge_editor.exe "%DeployDir%\%PgePrjSD%"
 copy GIFs2PNG.exe "%DeployDir%\%PgePrjSD%"
