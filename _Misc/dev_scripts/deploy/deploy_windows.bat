@@ -35,13 +35,13 @@ copy "%QtDir%\libstdc++-6.dll" "%DeployDir%\%PgePrjSD%"
 %QtDir%\windeployqt LazyFixTool.exe
 %QtDir%\windeployqt pge_manager.exe
 %QtDir%\windeployqt pge_maintainer.exe
-rem %CurDir%\upx.exe Qt5Core.dll
-rem %CurDir%\upx.exe Qt5Gui.dll
-rem %CurDir%\upx.exe D3Dcompiler_43.dll
-rem %CurDir%\upx.exe libGLESV2.dll
-rem %CurDir%\upx.exe Qt5Network.dll
-rem %CurDir%\upx.exe Qt5Widgets.dll
-rem %CurDir%\upx.exe libstdc++-6.dll
+%CurDir%\upx.exe Qt5Core.dll
+%CurDir%\upx.exe Qt5Gui.dll
+%CurDir%\upx.exe D3Dcompiler_43.dll
+%CurDir%\upx.exe libGLESV2.dll
+%CurDir%\upx.exe Qt5Network.dll
+%CurDir%\upx.exe Qt5Widgets.dll
+%CurDir%\upx.exe libstdc++-6.dll
 :noDynamicQt1
 
 %CurDir%\upx.exe --compress-icons=0 pge_editor.exe
