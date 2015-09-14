@@ -445,7 +445,7 @@ int TitleScene::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks()-start_render) )
+        if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks()-start_render)) )
         {
             SDL_Delay(uTick-(signed)(SDL_GetTicks()-start_render) );
         }

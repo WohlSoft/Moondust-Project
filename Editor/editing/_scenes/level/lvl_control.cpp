@@ -18,6 +18,7 @@
 
 #include <common_features/mainwinconnect.h>
 #include <main_window/dock/lvl_item_properties.h>
+#include <main_window/dock/lvl_sctc_props.h>
 #include <main_window/dock/debugger.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -121,9 +122,9 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
-    #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, QString("mousePress -> done"));
-    #endif
+    //#ifdef _DEBUG_
+    WriteToLog(QtDebugMsg, QString("mousePress -> done %1").arg(mouseEvent->isAccepted()));
+    //#endif
     haveSelected=(!selectedItems().isEmpty());
 }
 
@@ -181,6 +182,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     bool isLeftMouse=false;
     bool isMiddleMouse=false;
+    bool isRightMouse=false;
 
     if( mouseEvent->button() == Qt::LeftButton )
     {
@@ -197,6 +199,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->button() == Qt::RightButton )
     {
         mouseRight=false;
+        isRightMouse=true;
         WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
     }
 
@@ -219,6 +222,26 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
 
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
+
+        if(isRightMouse && !IsMoved && (!mouseEvent->isAccepted()))
+        {
+            QMenu lmenu;
+            //QMenu* jumptoSide = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SIDE", "Jump to side"));
+            //QMenu* jumptoSection = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SECTION", "Jump to section"));
+            QAction *props=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_SectionProperties...", "Section properties..."));
+            QAction *lvlprops=lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_LevelProperties...", "Level properties..."));
+            QAction *answer=lmenu.exec(mouseEvent->screenPos());
+            if(answer!=nullptr)
+            {
+                if(answer==props)
+                {
+                    MainWinConnect::pMainWin->dock_LvlSectionProps->show();
+                    MainWinConnect::pMainWin->dock_LvlSectionProps->raise();
+                } else if(answer==lvlprops) {
+                    MainWinConnect::pMainWin->on_actionLevelProp_triggered();
+                }
+            }
+        }
         return;
     }
 

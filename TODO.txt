@@ -5,8 +5,10 @@ Editor
 - Add re-configurable hot-keys
 
 Engine
-- Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
-- Question box
+- Exclamation sign sprite over talkable NPC's
+- Split sense of "scenery" argument to "scenery" and "shared-animation"
++ Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
++ Question box
 
 Engine: Lua
 - Better Memory Management, either transfere ownership to C++ or use smart pointers.

@@ -53,6 +53,19 @@ void LVL_Npc::harm(int damage, int damageReason)
         PGE_Audio::playSound(39);
 }
 
+void LVL_Npc::talkWith()
+{
+    if(data.msg.isEmpty()) return;
+    PGE_MsgBox msgX(LvlSceneP::s, data.msg, PGE_MsgBox::msg_info, PGE_Point(-1,-1),
+               ConfigManager::setup_message_box.box_padding,
+               ConfigManager::setup_message_box.sprite);
+    msgX.exec();
+    if(!data.event_talk.isEmpty())
+    {
+        LvlSceneP::s->events.triggerEvent(data.event_talk);
+    }
+}
+
 
 void LVL_Npc::kill(int damageReason)
 {

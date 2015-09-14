@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "global_settings.h"
 #include <common_features/app_path.h>
 #include <graphics/window.h>
@@ -59,6 +77,7 @@ void GlobalSettings::load()
     showDebugInfo=setup.value("show-debug-info", showDebugInfo).toBool();
     fullScreen=setup.value("full-screen", fullScreen).toBool();
     frameSkip=setup.value("frame-skip", frameSkip).toBool();
+    vsync=setup.value("vsync", vsync).toBool();
     player1_controller=setup.value("player1-controller", player1_controller).toInt();
     player2_controller=setup.value("player2-controller", player2_controller).toInt();
 
@@ -118,6 +137,7 @@ void GlobalSettings::save()
         setup.setValue("show-debug-info", showDebugInfo);
         setup.setValue("frame-skip", frameSkip);
         setup.setValue("full-screen", fullScreen);
+        setup.setValue("vsync", vsync);
         setup.setValue("player1-controller", player1_controller);
         setup.setValue("player2-controller", player2_controller);
         setup.setValue("volume-sfx", volume_sound);
@@ -148,6 +168,7 @@ void GlobalSettings::resetDefaults()
     MaxFPS=250;
     TicksPerSecond=65;
     timeOfFrame=15;
+    vsync=true;
 
     showDebugInfo=false;
 
@@ -181,6 +202,7 @@ void GlobalSettings::apply()
     PGE_Window::Height=ScreenHeight;
     PGE_Window::showDebugInfo=showDebugInfo;
     PGE_Window::TimeOfFrame=timeOfFrame;
+    PGE_Window::vsync=vsync;
 }
 
 

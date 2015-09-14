@@ -70,6 +70,10 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     _exiting_swimTimer=700;
 
     health=3;
+    invincible=false;
+    invincible_delay=0.0f;
+    blink_screen=false;
+    blink_screen_state=true;
     doHarm=false;
     doHarm_damage=0;
 
@@ -89,6 +93,8 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
     warpDirectO = 0;
     isWarping=false;
     warpPipeOffset=0;
+
+    collided_talkable_npc = NULL;
 
     gscale_Backup=0.f;//!< BackUP of last gravity scale
 

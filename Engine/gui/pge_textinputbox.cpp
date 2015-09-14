@@ -176,7 +176,7 @@ void PGE_TextInputBox::render()
         FontManager::printText(message, _sizeRect.left()+padding, _sizeRect.top()+padding, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
 
-        FontManager::printText(_inputText+(blink_shown?"_":""), _sizeRect.left()+padding, _sizeRect.top()+_text_input_h_offset+padding*2, fontID,
+        FontManager::printText(_inputText_printable+(blink_shown?"_":""), _sizeRect.left()+padding, _sizeRect.top()+_text_input_h_offset+padding*2, fontID,
                                fontRgba.Red(), fontRgba.Green(), fontRgba.Blue(), fontRgba.Alpha());
     }
     else
@@ -225,7 +225,7 @@ void PGE_TextInputBox::exec()
         glFlush();
         PGE_Window::rePaint();
 
-        if( uTick > (signed)(SDL_GetTicks() - start_render))
+        if( (!PGE_Window::vsync) && (uTick > (signed)(SDL_GetTicks() - start_render)) )
                 SDL_Delay(uTick - (SDL_GetTicks()-start_render) );
     }
 }
@@ -268,6 +268,7 @@ void PGE_TextInputBox::processBox(float tickTime)
         {
             case SDL_QUIT:
                 _page++; setFade(10, 0.0f, 0.05f);
+                SDL_StopTextInput();
             break;
             case SDL_KEYDOWN: // If pressed key
                 switch(event.key.keysym.sym)
@@ -276,6 +277,8 @@ void PGE_TextInputBox::processBox(float tickTime)
                 case SDLK_RETURN:// Enter
                 case SDLK_KP_ENTER:
                 {
+                    if(event.key.keysym.sym!=SDLK_ESCAPE)
+                        _inputText_src = _inputText;
                     _page++;
                     setFade(10, 0.0f, 0.05f);
                     SDL_StopTextInput();
@@ -285,6 +288,9 @@ void PGE_TextInputBox::processBox(float tickTime)
                     if(_inputText.length() > 0 )
                     { //lop off character
                         _inputText.remove(_inputText.size()-1, 1);
+
+                        _inputText_printable=_inputText;
+                        if(_inputText_printable.size()>25) _inputText_printable.remove(0, _inputText_printable.size()-26);
                     }
 
                 default:
@@ -294,6 +300,9 @@ void PGE_TextInputBox::processBox(float tickTime)
             case SDL_TEXTINPUT:
                 {
                     _inputText.append(event.text.text);
+
+                    _inputText_printable=_inputText;
+                    if(_inputText_printable.size()>25) _inputText_printable.remove(0, _inputText_printable.size()-26);
                 }
             break;
             case SDL_TEXTEDITING:
@@ -301,6 +310,9 @@ void PGE_TextInputBox::processBox(float tickTime)
                     _inputText = event.edit.text;
                     cursor     = event.edit.start;
                     selection_len = event.edit.length;
+
+                    _inputText_printable=_inputText;
+                    if(_inputText_printable.size()>25) _inputText_printable.remove(0, _inputText_printable.size()-26);
                 }
             break;
 //            case SDL_MOUSEBUTTONDOWN:
@@ -339,12 +351,16 @@ void PGE_TextInputBox::processUnLoader(float ticks)
 
 void PGE_TextInputBox::setInputText(QString text)
 {
+    _inputText_src=text;
     _inputText=text;
+
+    _inputText_printable=_inputText;
+    if(_inputText_printable.size()>25) _inputText_printable.remove(0, _inputText_printable.size()-26);
 }
 
 QString PGE_TextInputBox::inputText()
 {
-    return _inputText;
+    return _inputText_src;
 }
 
 

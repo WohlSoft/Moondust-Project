@@ -47,4 +47,8 @@ Difference between original and this library:
 1) Attempt to add .SPC playback
 2) Added resample source from 'madplay' player to implement better audio resampling
 3) Ability to build via qmake from Qt
+4) Support of custom paths in the timidity
+5) Tracker musics are can do internal loops
+6) Loop points support for OGG files
+7) Ability to get music title from Vorbis Comments or from ID3
 =============================================================================

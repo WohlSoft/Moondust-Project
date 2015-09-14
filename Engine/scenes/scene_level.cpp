@@ -20,6 +20,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
+#include <settings/debugger.h>
 
 #include <graphics/gl_renderer.h>
 
@@ -29,6 +30,7 @@
 #include <fontman/font_manager.h>
 
 #include <gui/pge_msgbox.h>
+#include <gui/pge_textinputbox.h>
 
 #include <networking/intproc.h>
 #include <audio/pge_audio.h>
@@ -241,7 +243,6 @@ void LevelScene::processPhysics(float ticks)
     {
         active_npcs[i]->updateCollisions();
     }
-
 }
 
 
@@ -721,6 +722,11 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
               isPauseMenu = true;
           }
       break;
+      case SDLK_BACKQUOTE:
+      {
+          PGE_Debugger::executeCommand(this);
+          break;
+      }
       case SDLK_1:
       {
         if(!players.isEmpty())
@@ -730,7 +736,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
       case SDLK_2:
       {
          if(!players.isEmpty())
-          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 6, -20, 12);
+          launchStaticEffect(1, players.first()->posX(), players.first()->posY(), 0, 2000, 3, -6, 12);
       }
       break;
       case SDLK_3:
@@ -753,7 +759,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
          {
             Scene_Effect_Phys p;
             p.max_vel_y=12;
-            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -7, 5, 0, p);
+            launchStaticEffect(11, players.first()->posX(), players.first()->posY(), 0, 5000, 0, -3, 12, 0, p);
          }
       }
       break;
@@ -839,7 +845,7 @@ int LevelScene::exec()
     //Level scene's Loop
  Uint32 start_render=0;
  Uint32 stop_render=0;
-    float doUpdate_render=0;
+  float doUpdate_render=0;
 
  Uint32 start_physics=0;
  Uint32 stop_physics=0;
@@ -848,7 +854,6 @@ int LevelScene::exec()
   Uint32 stop_events=0;
   //float junkTicks=0.0f;
 
-  bool skipFrame=false;
   //StTimePt start_common=StClock::now();
   Uint32 start_common = SDL_GetTicks();
   //#define PassedTime (((float)std::chrono::duration_cast<std::chrono::nanoseconds>(StClock::now()-start_common).count())/1000000.0f)
@@ -895,32 +900,30 @@ int LevelScene::exec()
         stop_render=0;
         start_render=0;
         /**********************Process rendering of stuff****************************/
-        skipFrame=true;
-        if(doUpdate_render<=0.f)
+        if((PGE_Window::vsync)||(doUpdate_render<=0.f))
         {
             start_render = SDL_GetTicks();
             /**********************Render everything***********************/
             render();
             glFlush();
+            PGE_Window::rePaint();
             stop_render=SDL_GetTicks();
-            skipFrame=false;
-            doUpdate_render = frameSkip? (stop_render-start_render) : 0;
+            doUpdate_render = frameSkip? uTickf+(stop_render-start_render) : 0;
             if(PGE_Window::showDebugInfo) debug_render_delay = stop_render-start_render;
         }
         doUpdate_render -= uTickf;
         if(stop_render < start_render) { stop_render=0; start_render=0; }
         /****************************************************************************/
 
-        if(!skipFrame) PGE_Window::rePaint();
         //printf("U-%08.5f, P-%08.5f, J-%08.5f", uTickf, PassedTime, junkTicks);
         //fflush(stdout);
-        if( uTick > (signed)PassedTime )
+        if( (!PGE_Window::vsync) && (uTick > (signed)PassedTime) )
         {
             if(!slowTimeMode)
                 SDL_Delay( uTick-PassedTime );
             else
                 SDL_Delay( uTick-PassedTime+300 );
-        }
+        } else if(slowTimeMode) SDL_Delay( uTick-PassedTime+300 );
     }
     return exitLevelCode;
 }

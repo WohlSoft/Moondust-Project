@@ -32,11 +32,13 @@ public:
     static int Width;
     static int Height;
     static int MaxFPS;
+    static bool vsync;
     static float TicksPerSecond;
     static int TimeOfFrame;
     static bool showDebugInfo;
     static bool showPhysicsDebug;
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
+    static void toggleVSync(bool vsync);
     static bool uninit();
     static bool isReady();
     static void setCursorVisibly(bool viz);

@@ -49,6 +49,13 @@ Engine reserved keys and key combinations
 ==============================================
 Ctrl+F - Toggle fullscreen mode
 
+"~" - opens text input box in the levels where you can type special commands:
+------------------
+ donthurtme - enable/disable god mode (player will don't get damage from dangerouse surfaces and will dont burn in lava)
+ iamsuperman - player has ability to fly up via alt-jump key
+ chucknorris - player via alt-run key will be able destroy any nearest object except BGO's, warps and other playable characters
+------------------
+
 F2 - enable/disable drawing a debug rectangles of physical engine (render all hitboxes)
 F3 - enable/disable printing of debug information
 F5 - pause/resume physical loopsteps. Used while collisions are debugged

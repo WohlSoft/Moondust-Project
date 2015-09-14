@@ -45,6 +45,10 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
+    void on_size1x_clicked();
+    void on_size05x_clicked();
+    void on_size2x_clicked();
+
 private:
     Ui::ExportToImage *ui;
 };
