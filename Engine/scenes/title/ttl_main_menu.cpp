@@ -83,7 +83,7 @@ void TitleScene::processMenu()
                     setMenu(menu_playepisode_wait);
                 }
                 else
-                if(value=="gamebt")
+                if(value=="playlevel")
                 {
                     menuChain.push(_currentMenu);
                     setMenu(menu_playlevel_wait);
@@ -361,7 +361,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             menu.setItemsNumber(5);
             menu.addMenuItem("game1p", "1 Player Game");
             menu.addMenuItem("game2p", "2 Player Game");
-            menu.addMenuItem("gamebt", "Battle Game");
+            menu.addMenuItem("playlevel", "Play level");
             menu.addMenuItem("Options", "Options");
             menu.addMenuItem("Exit", "Exit");
         break;
@@ -399,14 +399,26 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
                         menu.setItemsNumber(5);
                         menu.addBoolMenuItem(&AppSettings.showDebugInfo, "dbg_flag", "Show debug info");
                         menu.addBoolMenuItem(&AppSettings.frameSkip, "frame_skip", "Enable frame-skip");
-                        menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
-                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 15, "phys_step", "Frame time (ms.)", false,
+                        menu.addBoolMenuItem(&AppSettings.vsync, "vsync", "Enable V-Sync",
+                                                 [this]()->void{
+                                                     PGE_Window::vsync=AppSettings.vsync;
+                                                     PGE_Window::toggleVSync(AppSettings.vsync);
+                                                     AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
+                                                 }
+                                             );
+                        //menu.addIntMenuItem(&AppSettings.MaxFPS, 65, 1000, "max_fps", "Max FPS");
+                        menu.addIntMenuItem(&AppSettings.timeOfFrame, 2, 16, "phys_step", "Frame time (ms.)", false,
                                             [this]()->void{
-                                                PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
-                                                PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;
-                                                AppSettings.TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
-                                                //PGE_Window::TicksPerSecond =AppSettings.TicksPerSecond;
-                                                this->updateTickValue();
+                                                if(!PGE_Window::vsync)
+                                                {
+                                                    PGE_Window::TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+                                                    PGE_Window::TimeOfFrame=AppSettings.timeOfFrame;
+                                                    AppSettings.TicksPerSecond=1000.0f/AppSettings.timeOfFrame;
+                                                    //PGE_Window::TicksPerSecond =AppSettings.TicksPerSecond;
+                                                    this->updateTickValue();
+                                                } else {
+                                                    AppSettings.timeOfFrame=PGE_Window::TimeOfFrame;
+                                                }
                                             }
                                             );
                     break;

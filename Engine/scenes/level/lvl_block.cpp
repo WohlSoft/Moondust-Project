@@ -108,8 +108,8 @@ void LVL_Block::transformTo_x(long id)
     if(setup->sizable)
     {
         z_index = LevelScene::Z_blockSizable +
-                ((double)data.y/(double)10000000000) + 1 -
-                ((double)data.w * (double)0.00000000001);
+                ((double)data.y/1000000000.0) + 1 -
+                ((double)data.w *0.00000000000001);
     }
     else
     {
@@ -118,7 +118,7 @@ void LVL_Block::transformTo_x(long id)
             z_index = LevelScene::Z_BlockFore;
         else
             z_index = LevelScene::Z_Block;
-        LevelScene::zCounter += 0.0000000000001;
+        LevelScene::zCounter += 0.0000000001;
         z_index += LevelScene::zCounter;
     }
     long tID = ConfigManager::getBlockTexture(data.id);

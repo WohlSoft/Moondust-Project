@@ -27,6 +27,12 @@ void LVL_Player::render(double camX, double camY)
     if(!_isInited) return;
     if(_no_render) return;
 
+    if(blink_screen)
+    {
+        blink_screen_state=!blink_screen_state;
+        if(blink_screen_state) return;
+    }
+
     PGE_RectF tPos = animator.curFrame();
     PGE_PointF Ofs = animator.curOffset();
 

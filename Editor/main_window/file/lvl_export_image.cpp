@@ -264,3 +264,21 @@ void ExportToImage::on_buttonBox_rejected()
 {
     reject();
 }
+
+void ExportToImage::on_size1x_clicked()
+{
+    ui->imgWidth->setValue( imageSize[1]);
+    ui->imgHeight->setValue( imageSize[0]);
+}
+
+void ExportToImage::on_size05x_clicked()
+{
+    ui->imgWidth->setValue( imageSize[1]/2);
+    ui->imgHeight->setValue( imageSize[0]/2);
+}
+
+void ExportToImage::on_size2x_clicked()
+{
+    ui->imgWidth->setValue( imageSize[1]*2);
+    ui->imgHeight->setValue( imageSize[0]*2);
+}

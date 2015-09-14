@@ -459,7 +459,7 @@ int MIX_string_equals(const char *str1, const char *str2)
             break;
         ++str1;
         ++str2;
-    }   
+    }
     return (!*str1 && !*str2);
 }
 
@@ -844,6 +844,7 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 #endif
         break;
 #endif
+
     default:
         Mix_SetError("Unrecognized music format");
         break;

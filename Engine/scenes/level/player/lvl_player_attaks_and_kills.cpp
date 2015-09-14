@@ -22,7 +22,7 @@
 #include <audio/pge_audio.h>
 #include <audio/SdlMusPlayer.h>
 
-
+#include <settings/debugger.h>
 
 void LVL_Player::attack(LVL_Player::AttackDirection _dir)
 {
@@ -164,13 +164,31 @@ void LVL_Player::kill_npc(LVL_Npc *target, LVL_Player::kill_npc_reasons reason)
 
 void LVL_Player::harm(int _damage)
 {
-    doHarm=true;
-    doHarm_damage=_damage;
+    if(invincible||PGE_Debugger::cheat_pagangod) return;
+
+    //doHarm=true;
+    health-=_damage;
+    if(health<=0)
+    {
+        kill(DEAD_killed);
+    } else {
+        PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+        setInvincible(true, 3000, true);
+    }
+}
+
+void LVL_Player::setInvincible(bool state, float delay, bool enableScreenBlink)
+{
+    invincible=state;
+    invincible_delay=delay;
+    blink_screen=enableScreenBlink;
 }
 
 
 void LVL_Player::kill(deathReason reason)
 {
+    if( (reason!=DEAD_fall) && PGE_Debugger::cheat_pagangod) return;
+
     doKill=true;
     kill_reason=reason;
 }

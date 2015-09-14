@@ -98,6 +98,7 @@ win32: {
 SDL2MixerSO.path = ../_builds/win32/bin
 SDL2MixerSO.files += ../_builds/win32/lib/*.dll
 INSTALLS =  SDL2MixerSO
+QMAKE_POST_LINK = $$PWD/_misc/post_link_win32.bat
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
 

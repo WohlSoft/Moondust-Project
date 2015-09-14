@@ -1,3 +1,20 @@
+# PGE Engine, a free tool for playable srite design
+# This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
+# Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #-------------------------------------------------
 #
 # Project created by QtCreator 2014-09-05T22:51:01
@@ -234,7 +251,8 @@ SOURCES += \
     script/bindings/core/classes/luaclass_core_simpleevent.cpp \
     gui/pge_questionbox.cpp \
     gui/pge_textinputbox.cpp \
-    gui/pge_menuboxbase.cpp
+    gui/pge_menuboxbase.cpp \
+    settings/debugger.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -374,7 +392,8 @@ HEADERS  += \
     script/bindings/core/classes/luaclass_core_simpleevent.h \
     gui/pge_questionbox.h \
     gui/pge_textinputbox.h \
-    gui/pge_menuboxbase.h
+    gui/pge_menuboxbase.h \
+    settings/debugger.h
 
 
 FORMS    += \

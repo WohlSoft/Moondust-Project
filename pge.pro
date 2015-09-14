@@ -7,7 +7,8 @@ SUBDIRS = DependentLibs \
     GIFs2PNG \
     PNG2GIFs \
     LazyFixTool \
-    Manager
+    Manager \
+    Maintainer
 
 DEFINES += USE_LUA_JIT
 
@@ -20,6 +21,7 @@ GIFs2PNG.file	 = GIFs2PNG/GIFs2PNG.pro
 PNG2GIFs.file	 = PNG2GIFs/png2gifs.pro
 LazyFixTool.file = LazyFixTool/LazyFixTool.pro
 Manager.file     = Manager/pge_manager.pro
+Maintainer.file  = Maintainer/pge_maintainer.pro
 
 configs.path = bin/configs
 configs.files = Content/configs/*
@@ -34,7 +36,7 @@ INSTALLS += configs helps themes calibrator_cnfs
 
 android:{
 DEFINES -= USE_LUA_JIT
-SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager
+SUBDIRS -= Engine pcalibrator GIFs2PNG PNG2GIFs LazyFixTool Manager Maintainer
 INSTALLS -= configs helps themes calibrator_cnfs
 }
 
