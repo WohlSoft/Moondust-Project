@@ -305,6 +305,16 @@ int PGE_Window::processEvents(SDL_Event &event)
                     return 2;
                  }
               break;
+              #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
+                               //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
+                               //        and then you can press NumPad + to instantly close game)
+              case SDLK_KP_PLUS:
+                  SDL_DestroyWindow(window);
+                  SDL_CloseAudio();
+                  exit(EXIT_FAILURE);
+                  return 2;
+              break;
+              #endif
               case SDLK_F2:
                   PGE_Window::showPhysicsDebug=!PGE_Window::showPhysicsDebug;
                   return 2;
