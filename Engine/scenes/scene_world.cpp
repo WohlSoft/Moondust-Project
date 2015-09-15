@@ -176,13 +176,13 @@ void WorldScene::setGameState(EpisodeState *_state)
 
     numOfPlayers=_state->numOfPlayers;
 
-    points = 1000;//gameState->game_state.points;
-    coins  = 55;//gameState->game_state.coins;
-    stars  = 5;//gameState->game_state.gottenStars;
+    points = gameState->game_state.points;
+    coins  = gameState->game_state.coins;
+    stars  = gameState->game_state.gottenStars.size();
+    lives = gameState->game_state.lives;
 
     PlayerState x = gameState->getPlayerState(1);
     health = x._chsetup.health;
-
 
     gameState->replay_on_fail = data.restartlevel;
     if(gameState->episodeIsStarted && !data.HubStyledWorld)
@@ -924,7 +924,7 @@ void WorldScene::render()
     if(common_setup.health_en)
     {
         FontManager::printText(QString("%1")
-                               .arg(health),
+                               .arg(lives),
                                common_setup.health_x,
                                common_setup.health_y,
                                common_setup.health_fontID,

@@ -141,6 +141,7 @@ private:
 
     /************Printable stuff****************/
     long      health;
+    long      lives;
     long      stars;
     long      points;
     long      coins;
