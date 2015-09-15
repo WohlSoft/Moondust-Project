@@ -55,6 +55,14 @@ struct WorldMapSetup
     QString health_color;
     GlColor health_rgba;
 
+    bool    lives_en;
+    int     lives_x;
+    int     lives_y;
+    QString lives_font_name;
+    int     lives_fontID;
+    QString lives_color;
+    GlColor lives_rgba;
+
     bool    star_en;
     int     star_x;
     int     star_y;

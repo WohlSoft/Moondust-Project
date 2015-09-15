@@ -924,7 +924,7 @@ void WorldScene::render()
     if(common_setup.health_en)
     {
         FontManager::printText(QString("%1")
-                               .arg(lives),
+                               .arg(health),
                                common_setup.health_x,
                                common_setup.health_y,
                                common_setup.health_fontID,
@@ -932,6 +932,19 @@ void WorldScene::render()
                                common_setup.health_rgba.Green(),
                                common_setup.health_rgba.Blue(),
                                common_setup.health_rgba.Alpha());
+    }
+
+    if(common_setup.lives_en)
+    {
+        FontManager::printText(QString("%1")
+                               .arg(lives),
+                               common_setup.lives_x,
+                               common_setup.lives_y,
+                               common_setup.lives_fontID,
+                               common_setup.lives_rgba.Red(),
+                               common_setup.lives_rgba.Green(),
+                               common_setup.lives_rgba.Blue(),
+                               common_setup.lives_rgba.Alpha());
     }
 
     if(common_setup.coin_en)
