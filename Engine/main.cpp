@@ -57,6 +57,7 @@
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
 #include "scenes/scene_credits.h"
+#include "scenes/scene_gameover.h"
 
 #include <QMessageBox>
 
@@ -327,6 +328,8 @@ CreditsScreen:
 
 GameOverScreen:
 {
+    GameOverScene GOScene;
+    GOScene.exec();
 
     if(_flags.testWorld)
         goto ExitFromApplication;

@@ -687,10 +687,7 @@ void PGE_Menu::refreshRect()
         int menuWidth=0;
         if(_items.size()<_itemsOnScreen) {
             for(int temp = 0; temp <_items.size(); temp++)
-                if (temp == 0)
-                    menuWidth += _items[temp]->_width;
-                else
-                    menuWidth += _items[temp]->_width+menuItemGap;
+                menuWidth += _items[temp]->_width+menuItemGap;
         } else {
             int maxWidth=0;
             for(int temp = 0; temp <_items.size(); temp++)

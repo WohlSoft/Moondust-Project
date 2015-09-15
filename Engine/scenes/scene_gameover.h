@@ -25,6 +25,13 @@ class GameOverScene : public Scene
 {
 public:
     GameOverScene();
+
+    void update();
+    void render();
+    int exec();
+
+private:
+
 };
 
 #endif // SCENE_GAMEOVER_H
