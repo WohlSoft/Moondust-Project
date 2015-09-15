@@ -28,10 +28,13 @@ GameOverScene::GameOverScene(): Scene(GameOver)
     player1Controller = AppSettings.openController(1);
 }
 
-void GameOverScene::update()
+GameOverScene::~GameOverScene()
 {
-
+    delete player1Controller;
 }
+
+void GameOverScene::update()
+{}
 
 void GameOverScene::render()
 {

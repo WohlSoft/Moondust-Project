@@ -29,6 +29,7 @@ class GameOverScene : public Scene
 {
 public:
     GameOverScene();
+    ~GameOverScene();
 
     void update();
     void render();
