@@ -21,9 +21,12 @@
 #include "../gui/pge_questionbox.h"
 #include <data_configs/config_manager.h>
 #include <gui/pge_menubox.h>
+#include <settings/global_settings.h>
 
-GameOverScene::GameOverScene()
-{}
+GameOverScene::GameOverScene(): Scene(GameOver)
+{
+    player1Controller = AppSettings.openController(1);
+}
 
 void GameOverScene::update()
 {
@@ -53,3 +56,8 @@ int GameOverScene::exec()
     return GameOverSceneResult::QUIT;
 }
 
+void GameOverScene::processEvents()
+{
+    player1Controller->update();
+    Scene::processEvents();
+}
