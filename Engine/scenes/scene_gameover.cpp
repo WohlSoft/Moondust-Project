@@ -18,6 +18,35 @@
 
 #include "scene_gameover.h"
 
+#include "../gui/pge_questionbox.h"
+#include <data_configs/config_manager.h>
+#include <gui/pge_menubox.h>
+
 GameOverScene::GameOverScene()
+{}
+
+void GameOverScene::update()
 {
+
 }
+
+void GameOverScene::render()
+{
+
+}
+
+int GameOverScene::exec()
+{
+    PGE_QuestionBox continueOrQuit(this, "What do?", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+                                   ConfigManager::setup_menu_box.box_padding,
+                                   ConfigManager::setup_message_box.sprite);
+    QStringList items;
+    items<<"Continue";
+    items<<"Quit";
+    continueOrQuit.addMenuItems(items);
+    continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
+    continueOrQuit.exec();
+
+    return 0;
+}
+
