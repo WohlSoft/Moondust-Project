@@ -329,7 +329,14 @@ CreditsScreen:
 GameOverScreen:
 {
     GameOverScene GOScene;
-    GOScene.exec();
+    int result = GOScene.exec();
+    if (result == GameOverSceneResult::CONTINUE)
+    {
+        if (_game_state.isHubLevel)
+            goto PlayLevel;
+        else
+            goto PlayWorldMap;
+    }
 
     if(_flags.testWorld)
         goto ExitFromApplication;
@@ -608,8 +615,11 @@ PlayLevel:
                 break;
             case LvlExit::EXIT_PlayerDeath:
                 {
-                    playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
-                    end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    //playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
+                    //end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    //check the number of player lives here and decided to return worldmap or gameover
+                    playAgain = false;
+                    end_level_jump = _game_state.isEpisode ? RETURN_TO_GAMEOVER_SCREEN : RETURN_TO_MAIN_MENU;
                 }
                 break;
             case LvlExit::EXIT_Error:
