@@ -27,6 +27,7 @@
 
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
+#include "../scenes/scene_gameover.h"
 
 #include <QFontMetrics>
 #include <QMessageBox>
@@ -457,17 +458,21 @@ void PGE_MenuBoxBase::initControllers()
                 _ctrl2=NULL;
             }
         }
-        else
+        else if(parentScene->type()==Scene::GameOver)
         {
-            _ctrl1=NULL;
-            _ctrl2=NULL;
+            GameOverScene * s = dynamic_cast<GameOverScene *>(parentScene);
+            if(s)
+            {
+                _ctrl1 = s->player1Controller;
+                _ctrl2=NULL;
+            }
         }
+
+        return;
     }
-    else
-    {
-        _ctrl1=NULL;
-        _ctrl2=NULL;
-    }
+
+    _ctrl1=NULL;
+    _ctrl2=NULL;
 }
 
 void PGE_MenuBoxBase::updateControllers()

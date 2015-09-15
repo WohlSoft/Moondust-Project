@@ -21,6 +21,8 @@
 
 #include "scene.h"
 
+#include <controls/controller.h>
+
 enum GameOverSceneResult { CONTINUE, QUIT };
 
 class GameOverScene : public Scene
@@ -32,8 +34,9 @@ public:
     void render();
     int exec();
 
-private:
+    void processEvents();
 
+    Controller* player1Controller;
 };
 
 #endif // SCENE_GAMEOVER_H
