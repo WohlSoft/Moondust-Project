@@ -615,11 +615,21 @@ PlayLevel:
                 break;
             case LvlExit::EXIT_PlayerDeath:
                 {
-                    //playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
-                    //end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
+                    end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     //check the number of player lives here and decided to return worldmap or gameover
-                    playAgain = false;
-                    end_level_jump = _game_state.isEpisode ? RETURN_TO_GAMEOVER_SCREEN : RETURN_TO_MAIN_MENU;
+                    if(_game_state.isEpisode)
+                    {
+                        _game_state.game_state.lives--;
+                        if(_game_state.game_state.lives<0)
+                        {
+                            playAgain=false;
+                            _game_state.game_state.coins=0;
+                            _game_state.game_state.points=0;
+                            _game_state.game_state.lives=3;
+                            end_level_jump=RETURN_TO_GAMEOVER_SCREEN;
+                        }
+                    }
                 }
                 break;
             case LvlExit::EXIT_Error:
