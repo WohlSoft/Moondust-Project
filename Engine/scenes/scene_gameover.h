@@ -21,6 +21,8 @@
 
 #include "scene.h"
 
+enum GameOverSceneResult { CONTINUE, QUIT };
+
 class GameOverScene : public Scene
 {
 public:

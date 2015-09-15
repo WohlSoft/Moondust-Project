@@ -37,7 +37,7 @@ void GameOverScene::render()
 
 int GameOverScene::exec()
 {
-    PGE_QuestionBox continueOrQuit(this, "What do?", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
+    PGE_QuestionBox continueOrQuit(this, "Game Over!", PGE_MenuBox::msg_info, PGE_Point(-1,-1),
                                    ConfigManager::setup_menu_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
     QStringList items;
@@ -47,6 +47,9 @@ int GameOverScene::exec()
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();
 
-    return 0;
+    if (items[continueOrQuit.answer()] == "Continue")
+        return GameOverSceneResult::CONTINUE;
+
+    return GameOverSceneResult::QUIT;
 }
 
