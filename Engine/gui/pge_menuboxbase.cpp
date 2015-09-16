@@ -467,12 +467,17 @@ void PGE_MenuBoxBase::initControllers()
                 _ctrl2=NULL;
             }
         }
-
-        return;
+        else
+        {
+            _ctrl1=NULL;
+            _ctrl2=NULL;
+        }
     }
-
-    _ctrl1=NULL;
-    _ctrl2=NULL;
+    else
+    {
+        _ctrl1=NULL;
+        _ctrl2=NULL;
+    }
 }
 
 void PGE_MenuBoxBase::updateControllers()
