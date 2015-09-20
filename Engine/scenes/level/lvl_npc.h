@@ -36,6 +36,8 @@ public:
     int _direction;
     float motionSpeed;
     bool  is_scenery;
+    bool  is_activity;
+    bool  is_shared_animation;
 
     bool animated;
     long animator_ID;

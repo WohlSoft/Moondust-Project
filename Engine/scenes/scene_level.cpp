@@ -467,7 +467,7 @@ void LevelScene::update()
                     active_npcs[i]->deActivate();
                 if(active_npcs[i]->wasDeactivated)
                 {
-                    if(!isVizibleOnScreen(active_npcs[i]->posRect)||!active_npcs[i]->isVisible() || active_npcs[i]->is_scenery)
+                    if(!isVizibleOnScreen(active_npcs[i]->posRect)||!active_npcs[i]->isVisible() || !active_npcs[i]->is_activity)
                     {
                         active_npcs[i]->wasDeactivated=false;
                         active_npcs.removeAt(i); i--;

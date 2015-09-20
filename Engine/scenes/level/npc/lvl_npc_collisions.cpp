@@ -113,8 +113,11 @@ void LVL_Npc::updateCollisions()
         if(_floorY_num!=0.0) _floorY_vel=_floorY_vel/_floorY_num;
         if(!foot_contacts_map.isEmpty())
         {
-            _velocityX_add=_floorX_vel;
-            _velocityY_add=_floorY_vel;
+            if(!is_scenery)
+            {
+                _velocityX_add=_floorX_vel;
+                _velocityY_add=_floorY_vel;
+            }
         }
 
         if(isFloor(floor_blocks, &cliffDetected))
@@ -279,13 +282,13 @@ void LVL_Npc::updateCollisions()
     }
     _stucked = ( (!collided_center.isEmpty()) && (!collided_bottom.isEmpty()) && (!wall) );
 
-    for(int i=0;i<add_speed_to.size();i++)
-    {
-        if(add_speed_to[i]->_velocityX_add!=0.0f)
-            add_speed_to[i]->setSpeedY(speedYsum());
-        else
-            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedXsum(), speedYsum());
-    }
+//    for(int i=0;i<add_speed_to.size();i++)
+//    {
+//        if(add_speed_to[i]->_velocityX_add!=0.0f)
+//            add_speed_to[i]->setSpeedY(speedYsum());
+//        else
+//            add_speed_to[i]->setSpeed(add_speed_to[i]->speedX()+speedXsum(), speedYsum());
+//    }
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve end======";

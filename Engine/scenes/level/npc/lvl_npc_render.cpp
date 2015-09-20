@@ -32,7 +32,7 @@ void LVL_Npc::render(double camX, double camY)
     AniPos x(0,1);
     if(animated)
     {
-        if(is_scenery)
+        if(is_shared_animation)
             x=ConfigManager::Animator_NPC[animator_ID].image(_direction);
         else
             x=animator.image(_direction);
