@@ -94,6 +94,8 @@ void LVL_Npc::setDefaults()
     setDirection(data.direct);
     motionSpeed = ((!data.nomove)&&(setup->movement)) ? ((float)setup->speed) : 0.0f;
     is_scenery  = setup->scenery;
+    is_activity = setup->activity;
+    is_shared_animation = setup->shared_ani;
 }
 
 void LVL_Npc::transformTo_x(long id)
@@ -152,7 +154,7 @@ void LVL_Npc::transformTo_x(long id)
         return;
     }
 
-    deActivatable = ((setup->deactivation)||(setup->scenery));
+    deActivatable = ((setup->deactivation)||(!setup->activity));
     activationTimeout= setup->deactivetionDelay;
 
     disableBlockCollision=!setup->collision_with_blocks;
