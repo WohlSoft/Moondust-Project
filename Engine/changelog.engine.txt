@@ -12,7 +12,7 @@
 with their configuration packages. Provides partial implementation of SMBX64 standard which wasn't finished yet. Partial implementation of NPC-AI with ability to code NPC's in LUA.
 - Physics are completely replaced with own coded physical engine
 - Working NPC-AI system with support NPC's coded in the Lua
-- Exits are works!
+- Exits works!
 - Kill effects [are not works perfect, need a lot of work, but there are works fine]
 - Added generators!
 - Player can climb on NPC-based climbable walls, not only on the BGO-based!
