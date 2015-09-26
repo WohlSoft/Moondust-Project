@@ -1030,6 +1030,12 @@ const char* Mix_GetMusicTitleTag(const Mix_Music *music)
                     return music->data.modplug->mus_title;
             break;
         #endif
+        #ifdef SPC_MUSIC
+            case MUS_SPC:
+                if(music->data.snes_spcmus->mus_title!=NULL)
+                    return music->data.snes_spcmus->mus_title;
+            break;
+        #endif
             default:
                 break;
         }

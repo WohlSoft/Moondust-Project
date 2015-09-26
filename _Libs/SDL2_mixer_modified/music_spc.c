@@ -168,7 +168,7 @@ struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
             return NULL;
         }
 
-        err = gme_start_track( game_emu, 0);
+        err = (char*)gme_start_track( game_emu, 0);
         if(err!=0)
         {
             Mix_SetError("GAME-EMU: %s", err);
@@ -179,6 +179,17 @@ struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
         spcSpec->playing=0;
         spcSpec->spc_t_sample_rate=mixer.freq;
         spcSpec->volume=MIX_MAX_VOLUME;
+        spcSpec->mus_title=NULL;
+        gme_info_t *musInfo;
+        err = (char*)gme_track_info(game_emu, &musInfo, 0);
+        if(err!=0)
+        {
+            Mix_SetError("GAME-EMU: %s", err);
+            return NULL;
+        }
+        spcSpec->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(musInfo->song)+1);
+        strcpy(spcSpec->mus_title, musInfo->song);
+        gme_free_info( musInfo );
 
         return spcSpec;
     }
@@ -364,11 +375,15 @@ void SPC_stop(struct MUSIC_SPC *music)
 /* Close the given MOD stream */
 void SPC_delete(struct MUSIC_SPC *music)
 {
+    if( music->mus_title )
+    {
+        SDL_free(music->mus_title);
+    }
     if(music)
     {
         music->playing=-1;
         free(music);
-    }
+    }    
     SPC_exit();
 }
 
