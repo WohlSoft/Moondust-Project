@@ -5,7 +5,7 @@
 #include "SDL_mixer_ext.h"
 #include "music_spc.h"
 
-#include "snes_spc/spc.h"
+#include "gme/gme.h"
 #include "resample/mad_resample.h"
 
 #include <stdio.h>
@@ -24,8 +24,8 @@ static Uint16 current_output_format;
 static int music_swap8;
 static int music_swap16;
 
-SNES_SPC* snes_spc=NULL;
-static SPC_Filter* spc_filter=NULL;
+Music_Emu* game_emu=NULL;
+//static SPC_Filter* spc_filter=NULL;
 
 int spc_is_playing=-1;
 int spc_t_sample_rate=44100;
@@ -45,23 +45,23 @@ static SDL_AudioSpec mixer;
 
 int SPC_init(SDL_AudioSpec *mixerfmt)
 {
-    if(snes_spc)
+    if(game_emu)
     {
         return 0;
     }
-    if(spc_filter)
-    {
-        return 0;
-    }
+//    if(spc_filter)
+//    {
+//        return 0;
+//    }
     spc_is_playing=-1;
 
-    snes_spc = spc_new();
-    spc_filter = spc_filter_new();
-    if ( !snes_spc || !spc_filter )
-    {
-        Mix_SetError("SNES_SPC: Out of memory");
-        return -1;
-    }
+//    game_emu = spc_new();
+//    //spc_filter = spc_filter_new();
+//    if ( !game_emu )
+//    {
+//        Mix_SetError("SNES_SPC: Out of memory");
+//        return -1;
+//    }
 
     spc_t_sample_rate = mixerfmt->freq;
 
@@ -107,15 +107,15 @@ int SPC_init(SDL_AudioSpec *mixerfmt)
 /* Uninitialize the music players */
 void SPC_exit(void)
 {
-    if(spc_filter)
-    {
-        spc_filter_delete( spc_filter );
-        spc_filter=NULL;
-    }
+//    if(spc_filter)
+//    {
+//        spc_filter_delete( spc_filter );
+//        spc_filter=NULL;
+//    }
 
-    if (snes_spc) {
-        spc_delete( snes_spc );
-        snes_spc=NULL;
+    if (game_emu) {
+        gme_delete( game_emu );
+        game_emu=NULL;
     }
 }
 
@@ -137,7 +137,7 @@ struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
         length = SDL_RWseek(src, 0, RW_SEEK_END);
         if (length < 0)
         {
-            Mix_SetError("SNES_SPC: wrong file\n");
+            Mix_SetError("GAME-EMU: wrong file\n");
             return NULL;
         }
 
@@ -155,15 +155,23 @@ struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
 
         if (spcsize == 0)
         {
-            Mix_SetError("SNES_SPC: wrong file\n");
+            Mix_SetError("GAME-EMU: wrong file\n");
             return NULL;
         }
 
-        char *err = (char*)spc_load_spc( snes_spc, bytes, spcsize );
+        char *err = (char*)gme_open_data( bytes, spcsize, &game_emu, spc_t_sample_rate );
+        //spc_load_spc( snes_spc, bytes, spcsize );
         free(bytes);
         if(err!=0)
         {
-            Mix_SetError("SNES_SPC: %s", err);
+            Mix_SetError("GAME-EMU: %s", err);
+            return NULL;
+        }
+
+        err = gme_start_track( game_emu, 0);
+        if(err!=0)
+        {
+            Mix_SetError("GAME-EMU: %s", err);
             return NULL;
         }
 
@@ -171,6 +179,7 @@ struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
         spcSpec->playing=0;
         spcSpec->spc_t_sample_rate=mixer.freq;
         spcSpec->volume=MIX_MAX_VOLUME;
+
         return spcSpec;
     }
     return NULL;
@@ -182,19 +191,19 @@ struct MUSIC_SPC *SPC_new_RW(struct SDL_RWops *src, int freesrc)
     struct MUSIC_SPC *spcMusic;
 
     SPC_exit();
-    snes_spc = spc_new();
-    spc_filter = spc_filter_new();
-    if ( !snes_spc || !spc_filter )
-    {
-        Mix_SetError("SNES_SPC: Out of memory");
-        return NULL;
-    }
-    /* Make sure the mikmod library is loaded */
-    if ( snes_spc==NULL )
-    {
-        Mix_SetError("SNES_SPC: SPC Emulator is not loaded");
-        return NULL;
-    }
+    //snes_spc = spc_new();
+    //spc_filter = spc_filter_new();
+//    if ( !snes_spc )
+//    {
+//        Mix_SetError("SNES_SPC: Out of memory");
+//        return NULL;
+//    }
+//    /* Make sure the mikmod library is loaded */
+//    if ( snes_spc==NULL )
+//    {
+//        Mix_SetError("SNES_SPC: SPC Emulator is not loaded");
+//        return NULL;
+//    }
 
     spc_is_playing=-1;
 
@@ -206,10 +215,10 @@ struct MUSIC_SPC *SPC_new_RW(struct SDL_RWops *src, int freesrc)
     }
 
     /* Most SPC files have garbage data in the echo buffer, so clear that */
-    spc_clear_echo( snes_spc );
+    //spc_clear_echo( snes_spc );
 
     /* Clear filter before playing */
-    spc_filter_clear( spc_filter );
+    //spc_filter_clear( spc_filter );
 
     if ( freesrc ) {
         SDL_RWclose(src);
@@ -234,94 +243,106 @@ int SPC_playing(struct MUSIC_SPC *music)
         return spc_is_playing;
 }
 
-short CosineInterpolate(
-   short y1,short y2,
-   float mu)
-{
-   float mu2;
-   mu2 = (1 - cosf(mu*3.141592) )/2;
-   return( (short)(y1*(1-mu2)+y2*mu2) );
-}
+//short CosineInterpolate(
+//   short y1,short y2,
+//   float mu)
+//{
+//   float mu2;
+//   mu2 = (1 - cosf(mu*3.141592) )/2;
+//   return( (short)(y1*(1-mu2)+y2*mu2) );
+//}
 
-short LinearInterpolate(
-   short y1,short y2,
-   float mu)
-{
-   return( (short)((float)y1*(1.f-mu) + (float)y2*mu));
-}
+//short LinearInterpolate(
+//   short y1,short y2,
+//   float mu)
+//{
+//   return( (short)((float)y1*(1.f-mu) + (float)y2*mu));
+//}
 
 /* Play some of a stream previously started with SPC_play() */
 int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len)
 {
     if(music==NULL) return 1;
-    if(snes_spc==NULL) return 1;
+    if(game_emu==NULL) return 1;
     if(spc_is_playing==-1) return 1;
 
     short buf[len];
     Uint8 dstt[len];
-    short left[len];
-    short right[len];
-    short left_new[len];
-    short right_new[len];
+//    short left[len];
+//    short right[len];
+//    short left_new[len];
+//    short right_new[len];
 
-    float ratio=(float)mixer.freq/(float)spc_sample_rate;
-    int old_len2 = len/ratio;
-    int old_len = old_len2/2;
-    int old_len_c = old_len2/2;
+    //float ratio=(float)mixer.freq/(float)spc_sample_rate;
+    //int old_len2 = len/ratio;
+    //int old_len = old_len2/2;
+    //int old_len_c = old_len2/2;
     int new_len = len/2;
 
-    spc_play( snes_spc, old_len, buf);
-    spc_filter_run( spc_filter, buf, old_len );
+    //spc_play( snes_spc, old_len, buf);
+    //spc_filter_run( spc_filter, buf, old_len );
+    gme_play( game_emu, new_len, buf );
 
     //Spliting channels
     int i,j;
-    float p, q, r;
-    for(i=0, j=0; i<old_len_c; i++, j+=2)
+    //float p, q, r;
+    for(i=0, j=0; i<len; i+=4, j+=2)
     {
-        left[i] =buf[j];
-        right[i]=buf[j+1];
+        //left[i] =buf[j];
+        //right[i]=buf[j+1];
+        dstt[i] = buf[j]&0xff;
+        dstt[i+1]= (buf[j]>>8)&0xff;
+        dstt[i+2] = buf[j+1]&0xff;
+        dstt[i+3] = (buf[j+1]>>8)&0xff;
     }
+//    //Merge stereo
+//    for(i=0, j=0; j<new_len; i+=4, j++)
+//    {
+//        dstt[i] = left_new[j]&0xff;
+//        dstt[i+1]= (left_new[j]>>8)&0xff;
+//        dstt[i+2] = right_new[j]&0xff;
+//        dstt[i+3] = (right_new[j]>>8)&0xff;
+//    }
 
-    //Resample left
-    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
-    {
-        int oldSam = (int)p;
-        left_new[(int)q] = left[oldSam];
-        //left_new[(int)q] = CosineInterpolate(last_left, left[oldSam], r);
-        r+= 1/ratio;
-        if(r>=1)
-        {
-            last_left = left[oldSam];
-            p = roundf(q/ratio);
-            r=0.f;
-        }
-    }
-    last_left = left[(int)p];
+//    //Resample left
+//    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
+//    {
+//        int oldSam = (int)p;
+//        left_new[(int)q] = left[oldSam];
+//        //left_new[(int)q] = CosineInterpolate(last_left, left[oldSam], r);
+//        r+= 1/ratio;
+//        if(r>=1)
+//        {
+//            last_left = left[oldSam];
+//            p = roundf(q/ratio);
+//            r=0.f;
+//        }
+//    }
+//    last_left = left[(int)p];
 
-    //Resample right
-    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
-    {
-        int oldSam = (int)p;
-        right_new[(int)q] = right[oldSam];
-        //right_new[(int)q] = CosineInterpolate(last_right, right[oldSam], r);
-        r+= 1/ratio;
-        if(r>=1)
-        {
-            last_right = right[oldSam];
-            p = roundf(q/ratio);
-            r=0.f;
-        }
-    }
-    last_right = right[(int)p];
-
-    //Merge stereo
-    for(i=0, j=0; j<new_len; i+=4, j++)
-    {
-        dstt[i] = left_new[j]&0xff;
-        dstt[i+1]= (left_new[j]>>8)&0xff;
-        dstt[i+2] = right_new[j]&0xff;
-        dstt[i+3] = (right_new[j]>>8)&0xff;
-    }
+//    //Resample right
+//    for(p=0.f, q=0.f, r=0.f; q<=old_len_c; q+=1.f )
+//    {
+//        int oldSam = (int)p;
+//        right_new[(int)q] = right[oldSam];
+//        //right_new[(int)q] = CosineInterpolate(last_right, right[oldSam], r);
+//        r+= 1/ratio;
+//        if(r>=1)
+//        {
+//            last_right = right[oldSam];
+//            p = roundf(q/ratio);
+//            r=0.f;
+//        }
+//    }
+//    last_right = right[(int)p];
+//    //Merge stereo
+//    for(i=0, j=0; j<new_len; i+=4, j++)
+//    {
+//        dstt[i] = left_new[j]&0xff;
+//        dstt[i+1]= (left_new[j]>>8)&0xff;
+//        dstt[i+2] = right_new[j]&0xff;
+//        dstt[i+3] = (right_new[j]>>8)&0xff;
+//    }
 
     if ( music->volume == MIX_MAX_VOLUME )
     {

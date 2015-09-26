@@ -527,6 +527,10 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_SPC;
     }
 
+    if (strcmp((char *)magic, "NESM") == 0) {
+        return MUS_SPC;
+    }
+
     if (detect_mp3(magic)) {
         return MUS_MP3;
     }
@@ -592,7 +596,17 @@ Mix_Music *Mix_LoadMUS(const char *file)
                     MIX_string_equals(ext, "MIDI") ||
                     MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
-        } else if ( MIX_string_equals(ext, "SPC") ) {
+        } else if ( MIX_string_equals(ext, "AY") ||
+                    MIX_string_equals(ext, "GBS") ||
+                    MIX_string_equals(ext, "GYM") ||
+                    MIX_string_equals(ext, "HES") ||
+                    MIX_string_equals(ext, "KSS") ||
+                    MIX_string_equals(ext, "NSF") ||
+                    MIX_string_equals(ext, "NSFE") ||
+                    MIX_string_equals(ext, "SAP") ||
+                    MIX_string_equals(ext, "SPC") ||
+                    MIX_string_equals(ext, "VGM") ||
+                    MIX_string_equals(ext, "VGZ") ) {
             type = MUS_SPC;
         } else if ( MIX_string_equals(ext, "OGG") ) {
             type = MUS_OGG;
