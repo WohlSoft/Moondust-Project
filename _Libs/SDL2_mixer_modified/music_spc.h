@@ -33,6 +33,7 @@ struct MUSIC_SPC
     int playing;
     int volume;
     int spc_t_sample_rate;
+    char *mus_title;
 };
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
