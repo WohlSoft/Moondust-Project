@@ -48,7 +48,7 @@ LIBS += -lwinmm -lm -lwinmm
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -141,7 +141,6 @@ HEADERS += \
     timidity/resample.h \
     timidity/tables.h \
     timidity/timidity.h \
-    music_spc.h \
     resample/audio.h \
     resample/global.h \
     resample/mad_resample.h \
@@ -221,7 +220,8 @@ HEADERS += \
     gme/Vgm_Emu.h \
     gme/Vgm_Emu_Impl.h \
     gme/Ym2413_Emu.h \
-    gme/Ym2612_Emu.h
+    gme/Ym2612_Emu.h \
+    music_gme.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -264,7 +264,6 @@ SOURCES += \
     timidity/sdl_c.c \
     timidity/tables.c \
     timidity/timidity.c \
-    music_spc.c \
     resample/mad_resample.c \
     timidity/ctrlmode.c \
     dynamic_mod.c \
@@ -330,5 +329,6 @@ SOURCES += \
     gme/Vgm_Emu.cpp \
     gme/Vgm_Emu_Impl.cpp \
     gme/Ym2413_Emu.cpp \
-    gme/Ym2612_Emu.cpp
+    gme/Ym2612_Emu.cpp \
+    music_gme.c
 

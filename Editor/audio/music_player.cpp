@@ -136,9 +136,25 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
 
     WriteToLog(QtDebugMsg, QString("path is %1").arg(currentMusicPath));
 
+    QString trackNum;
+    if(currentMusicPath.contains('|'))
+    {
+        QStringList x=currentMusicPath.split("|");
+        currentMusicPath=x[0];
+        trackNum=x[1];
+    }
     QFileInfo mus(currentMusicPath);
     if((!mus.exists())||(!mus.isFile()))
+    {
         currentMusicPath.clear();
+    }
+    else
+    {
+        if(!trackNum.isEmpty())
+        {
+            currentMusicPath=currentMusicPath+"|"+trackNum;
+        }
+    }
 }
 
 void LvlMusPlay::setNoMusic()
