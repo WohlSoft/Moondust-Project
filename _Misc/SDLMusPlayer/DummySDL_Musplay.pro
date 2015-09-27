@@ -28,9 +28,13 @@ win32: static: {
     QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
     LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lflac -logg
 }
-
+win32: {
+INCLUDEPATH += $$PWD/../../_Libs/_builds/win32/include
+LIBS += -L$$PWD/../../_Libs/_builds/win32/lib
+} else {
 INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
 LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
+}
 
 SOURCES += main.cpp\
         mainwindow.cpp
