@@ -123,7 +123,9 @@ void SPC_exit(void)
 void SPC_setvolume(struct MUSIC_SPC *music, int volume)
 {
     if(music)
-        music->volume=volume;
+    {
+        music->volume=(int)round(128.0f*sqrt(((float)volume)*(1.f/128.f) ));
+    }
 }
 
 struct MUSIC_SPC *SnesSPC_LoadSongRW(SDL_RWops *src)
