@@ -1,5 +1,5 @@
-#ifndef MUSIC_SPC_H
-#define MUSIC_SPC_H
+#ifndef MUSIC_GME_H
+#define MUSIC_GME_H
 
 /*
   SDL_mixer:  An audio mixer library based on the SDL library
@@ -22,53 +22,53 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-/* $Id: music_spc.h Wohlstnd $ */
+/* $Id: music_gme.h Wohlstand $ */
 
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
 
-/* This file supports MOD tracker music streams */
+/* This file supports Game Music Emulator music streams */
 
-struct MUSIC_SPC
+struct MUSIC_GME
 {
     int playing;
     int volume;
-    int spc_t_sample_rate;
+    int gme_t_sample_rate;
     char *mus_title;
 };
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */
-extern int SPC_init(SDL_AudioSpec *mixer);
+extern int GME_init(SDL_AudioSpec *mixer);
 
 /* Uninitialize the music players */
-extern void SPC_exit(void);
+extern void GME_exit(void);
 
-/* Set the volume for a MOD stream */
-extern void SPC_setvolume(struct MUSIC_SPC *music, int volume);
+/* Set the volume for a Game Music Emulators stream */
+extern void GME_setvolume(struct MUSIC_GME *music, int volume);
 
-/* Load a MOD stream from an SDL_RWops object */
-extern struct MUSIC_SPC *SPC_new_RW(SDL_RWops *rw, int freerw);
+/* Load a Game Music Emulators stream from an SDL_RWops object */
+extern struct MUSIC_GME *GME_new_RW(SDL_RWops *rw, int freerw, int trackNum);
 
-/* Start playback of a given MOD stream */
-extern void SPC_play(struct MUSIC_SPC *music);
+/* Start playback of a given Game Music Emulators stream */
+extern void GME_play(struct MUSIC_GME *music);
 
 /* Return non-zero if a stream is currently playing */
-extern int SPC_playing(struct MUSIC_SPC *music);
+extern int GME_playing(struct MUSIC_GME *music);
 
-/* Play some of a stream previously started with MOD_play() */
-extern int SPC_playAudio(struct MUSIC_SPC *music, Uint8 *stream, int len);
+/* Play some of a stream previously started with GME_play() */
+extern int GME_playAudio(struct MUSIC_GME *music, Uint8 *stream, int len);
 
-/* Stop playback of a stream previously started with MOD_play() */
-extern void SPC_stop(struct MUSIC_SPC *music);
+/* Stop playback of a stream previously started with GME_play() */
+extern void GME_stop(struct MUSIC_GME *music);
 
-/* Close the given MOD stream */
-extern void SPC_delete(struct MUSIC_SPC *music);
+/* Close the given Game Music Emulators stream */
+extern void GME_delete(struct MUSIC_GME *music);
 
 /* Jump (seek) to a given position (time is in seconds) */
-extern void SPC_jump_to_time(struct MUSIC_SPC *music, double time);
+extern void GME_jump_to_time(struct MUSIC_GME *music, double time);
 
-#endif /* SPC_MUSIC */
+#endif /* GME_MUSIC */
 
-#endif // MUSIC_SPC_H
+#endif // MUSIC_GME_H
 
