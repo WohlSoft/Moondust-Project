@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
+    <width>364</width>
     <height>87</height>
    </rect>
   </property>
@@ -53,6 +53,13 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QSpinBox" name="trackID">
+      <property name="maximum">
+       <number>9999999</number>
       </property>
      </widget>
     </item>

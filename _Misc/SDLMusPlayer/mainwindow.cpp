@@ -137,7 +137,7 @@ void MainWindow::on_stop_clicked()
 
 void MainWindow::on_play_clicked()
 {
-    PGE_MusicPlayer::MUS_openFile(currentMusic);
+    PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text());
     PGE_MusicPlayer::MUS_changeVolume(128);
     PGE_MusicPlayer::MUS_playMusic();
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
