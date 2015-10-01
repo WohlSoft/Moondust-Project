@@ -139,6 +139,7 @@ bool ConfigManager::loadLevelNPC()
         snpc.adhesion =             npcset.value("adhesion", false).toBool();
 
         snpc.container =                  npcset.value("container", false).toBool();
+        snpc.contents_id =                (unsigned long)npcset.value("contents-id", "0").toULongLong();
         snpc.container_elastic =          npcset.value("container-elastic", false).toBool();
         snpc.container_elastic_border_w = npcset.value("container-elastic-border-w", "4").toInt();
             NumberLimiter::apply(snpc.container_elastic_border_w, 0);
