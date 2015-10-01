@@ -688,7 +688,7 @@
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
-    <iconset resource="../Engine/_resources/engine.qrc">
+    <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
    </property>
    <property name="text">
@@ -1664,7 +1664,7 @@
     <string>Reload current file data</string>
    </property>
    <property name="shortcut">
-    <string notr="true">F5</string>
+    <string notr="true">F8</string>
    </property>
   </action>
   <action name="actionHandScroll">
@@ -2683,7 +2683,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Engine/_resources/engine.qrc"/>
   <include location="_resources/editor.qrc"/>
  </resources>
  <connections/>
