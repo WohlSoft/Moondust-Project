@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1664,7 +1664,7 @@
     <string>Reload current file data</string>
    </property>
    <property name="shortcut">
-    <string notr="true">F5</string>
+    <string notr="true">F8</string>
    </property>
   </action>
   <action name="actionHandScroll">
@@ -2384,6 +2384,12 @@
   <action name="action_doTest">
    <property name="text">
     <string>Run testing &lt;Alpha&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">F5</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="action_testSettings">
