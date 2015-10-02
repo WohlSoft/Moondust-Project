@@ -54,7 +54,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="215"/>
         <source>Animation Items limit</source>
-        <translation>Animation Items limit</translation>
+        <translation>Animation items limit</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="231"/>
@@ -80,13 +80,13 @@
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
         <source>Music will be automatically launched when you will open file</source>
         <comment>Pop-up hint text</comment>
-        <translation>Music will be automatically launched when you will open file</translation>
+        <translation>Music will be automatically started when you open a level file</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="196"/>
         <source>Maximal number of elements which allow animation for items. If limit will be exided, animation will be paused while you will not remove outed of range elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>Maximal number of elements which allow animation for items. If limit will be exided, animation will be paused while you will not remove outed of range elements.</translation>
+        <translation>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="247"/>
@@ -106,22 +106,22 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="314"/>
         <source>Middle mouse button features</source>
-        <translation>Middle mouse button features</translation>
+        <translation>Middle mouse button actions</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="320"/>
         <source>Duplicate selected items into mouse position</source>
-        <translation>Duplicate selected items into mouse position</translation>
+        <translation>Duplicate selected items onto the mouse&apos;s position</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
         <source>Switch placing mode of the selected item</source>
-        <translation>Switch placing mode of the selected item</translation>
+        <translation>Change the placing mode of the selected item</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="334"/>
         <source>Switch to drag scroll without selection</source>
-        <translation>Switch to drag scroll without selection</translation>
+        <translation>Toggle drag-to-scroll while selection is empty</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="344"/>
@@ -132,12 +132,13 @@
         <location filename="../main_window/tools/app_settings.ui" line="350"/>
         <source>Properties box will not be shown atomatically when you will take item to place. For example, you clicked item from item toolbox or from tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>Properties box will not be shown atomatically when you will take item to place. For example, you clicked item from item toolbox or from tileset item box.</translation>
+        <translation>Properties box will not be shown atomatically when you select an item to place, 
+like when choosing an item from the item toolbox or from the tileset item box.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="353"/>
         <source>Don&apos;t show properties box on taking item to place</source>
-        <translation>Don&apos;t show properties box on taking item to place</translation>
+        <translation>Don&apos;t show properties box on when placing items</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="376"/>
@@ -147,12 +148,12 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="385"/>
         <source>Max history entries limit:</source>
-        <translation>Max history entries limit:</translation>
+        <translation>Max history entries:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="392"/>
         <source>Maximal number of remembered history actions.</source>
-        <translation>Maximal number of remembered history actions.</translation>
+        <translation>Maximum number of remembered history actions.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="412"/>
@@ -162,7 +163,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="424"/>
         <source>Classic Events tabs auto-expending</source>
-        <translation>Classic Events tabs auto-expending</translation>
+        <translation>Classic Events tabs to auto-expand</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="430"/>
@@ -227,7 +228,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="568"/>
         <source>Delay:</source>
-        <translation>Delay:</translation>
+        <translation>Delay (seconds):</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="597"/>
@@ -282,26 +283,26 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="745"/>
         <source>Level item Toolbox</source>
-        <translation>Level item Toolbox</translation>
+        <translation>Level Item toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="715"/>
         <location filename="../main_window/tools/app_settings.ui" line="751"/>
         <location filename="../main_window/tools/app_settings.ui" line="786"/>
         <source>Display tabs horizontal</source>
-        <translation>Display tabs horizontal</translation>
+        <translation>Display tabs horizontally</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="722"/>
         <location filename="../main_window/tools/app_settings.ui" line="758"/>
         <location filename="../main_window/tools/app_settings.ui" line="793"/>
         <source>Display tabs vertical</source>
-        <translation>Display tabs vertical</translation>
+        <translation>Display tabs vertically</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="709"/>
         <source>World item Toolbox</source>
-        <translation>World map item Toolbox</translation>
+        <translation>World Map Item toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="768"/>
@@ -311,7 +312,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="780"/>
         <source>Tilesets Item Toolbox</source>
-        <translation>Tilesets Item Toolbox</translation>
+        <translation>Tilesets Item toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="804"/>
@@ -409,7 +410,7 @@
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="21"/>
         <source>Counting stars of placed levels</source>
-        <translation>Counting stars of placed levels</translation>
+        <translation>Counting stars in placed levels</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="21"/>
@@ -432,7 +433,7 @@
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>Sox binary path:</source>
-        <translation>SoX binary path:</translation>
+        <translation>SoX executable path:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
@@ -442,7 +443,7 @@
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
         <source>make backup</source>
-        <translation>make backup</translation>
+        <translation>Make backup</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
@@ -454,7 +455,7 @@
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
         <translation>Convert into new format
-(open necessary tab to choice target format)</translation>
+(select a tab to choose target format)</translation>
     </message>
     <message>
         <source>44100</source>
@@ -479,15 +480,15 @@
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="106"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
-        <translation>SoX binary path is not defined.
-Please set SoX path first</translation>
+        <translation>SoX executable path is not defined.
+Please set SoX path first.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="112"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
-        <translation>SoX binary path is wrong.
-Please set SoX path first</translation>
+        <translation>SoX executable path is invalid.
+Please set SoX path first.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="136"/>
@@ -508,24 +509,24 @@ Please set SoX path first</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="188"/>
         <source>Operation cancaled</source>
-        <translation>Operation cancaled</translation>
+        <translation>Operation canceled</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="198"/>
         <source>SoX was crashed</source>
-        <translation>SoX was crashed</translation>
+        <translation>Sorry, SoX has crashed</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="205"/>
         <source>SoX returned non-zero code: %1
 %2</source>
-        <translation>SoX returned non-zero code: %1
+        <translation>SoX returned a non-zero exit code: %1
 %2</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
         <source>All works completed</source>
-        <translation>All works completed</translation>
+        <translation>Operation complete</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="253"/>
@@ -542,12 +543,12 @@ Please set SoX path first</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="412"/>
         <source>Open SoX binary path</source>
-        <translation>Open SoX binary path</translation>
+        <translation>Open SoX executable path</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="424"/>
         <source>Add file to convert</source>
-        <translation>Add file to convert</translation>
+        <translation>Select file to convert</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
@@ -577,7 +578,7 @@ Please set SoX path first</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
         <source>Files will be in same format</source>
-        <translation>Files will be in same format</translation>
+        <translation>The files&apos; format will not be changed.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
@@ -668,8 +669,8 @@ Please set SoX path first</translation>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences&lt;br&gt;
-(for example, wrong sample rate).&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
+&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -722,7 +723,7 @@ Please set SoX path first</translation>
         <source>Remember current screen position on the level map or on the world map
 and store bookmark.</source>
         <translation>Remember current screen position on the level map or on the world map
-and store bookmark.</translation>
+and store a bookmark.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="71"/>
@@ -733,8 +734,8 @@ and store bookmark.</translation>
         <location filename="../main_window/dock/bookmarks_box.ui" line="84"/>
         <source>Scroll to remembered position in selected item back.
 You also can double-click to item to scroll to bookmarked position.</source>
-        <translation>Scroll to remembered position in selected item back.
-You also can double-click to item to scroll to bookmarked position.</translation>
+        <translation>Scroll to the saved position in the selected item.
+You also can double-click an item to scroll to its bookmarked position.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="88"/>
@@ -757,12 +758,12 @@ You also can double-click to item to scroll to bookmarked position.</translation
     <message>
         <location filename="../data_configs/config_manager.ui" line="82"/>
         <source>Please select the game configuration with which you wish to start the Editor with </source>
-        <translation>Please select the game configuration with which you wish to start the Editor with</translation>
+        <translation>Please select the game configuration you want to start the Editor with.</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.ui" line="111"/>
         <source>Ask every Startup</source>
-        <translation>Ask every Startup</translation>
+        <translation>Ask every startup</translation>
     </message>
     <message>
         <source>Please, select the game configuration which defining the game settings and stuff</source>
@@ -771,7 +772,7 @@ You also can double-click to item to scroll to bookmarked position.</translation
     <message>
         <location filename="../data_configs/config_manager.cpp" line="284"/>
         <source>Config packs are not found</source>
-        <translation>Config packs are not found</translation>
+        <translation>No config packs were found!</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="290"/>
@@ -781,7 +782,7 @@ Please download and install them into directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can take any configuration package here:&lt;br&gt;%2</source>
-        <translation>Available configuration packages are not found!&lt;br&gt;
+        <translation>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
@@ -844,7 +845,7 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/configstatus.ui" line="217"/>
         <source>Errors of configuration loading:</source>
-        <translation>Configuration Load Errors:</translation>
+        <translation>Configuration Loading Errors:</translation>
     </message>
     <message>
         <source>Level Blocks (%1/%1)</source>
@@ -925,22 +926,22 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="161"/>
         <source>World map Tiles (%1/%2)</source>
-        <translation>World map: Tiles (%1/%2)</translation>
+        <translation>World Map: Tiles (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="173"/>
         <source>World map Sceneries (%1/%2)</source>
-        <translation>World map: Sceneries (%1/%2)</translation>
+        <translation>World Map: Sceneries (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="186"/>
         <source>World map Paths (%1/%2)</source>
-        <translation>World map: Paths (%1/%2)</translation>
+        <translation>World Map: Paths (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="199"/>
         <source>World map Levels (%1/%2)</source>
-        <translation>World map: Levels (%1/%2)</translation>
+        <translation>World Map: Levels (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="211"/>
@@ -985,7 +986,7 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="275"/>
         <source>[Error list is empty]</source>
-        <translation>[Error list is empty]</translation>
+        <translation>[Error list is empty, congratulations!]</translation>
     </message>
 </context>
 <context>
@@ -1003,7 +1004,7 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="55"/>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
-        <translation>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</translation>
+        <translation>Oh noes, PGE crashed :(&lt;br&gt;Crash information:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="79"/>
@@ -1013,19 +1014,19 @@ You can take any configuration package here:&lt;br&gt;%2</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="86"/>
         <source>Exit Application</source>
-        <translation>Exit from application</translation>
+        <translation>Exit</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="194"/>
         <source>Crashsave</source>
-        <translation>Crashsave</translation>
+        <translation>Crash recovery</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="194"/>
         <source>Since the last crash, the editor recorved some files.
 Please save them first before doing anything else.</source>
-        <translation>Since the last crash, the editor recorved some files.
-Please save them first before doing anything else.</translation>
+        <translation>Since the last crash, the editor recovered some files.
+Please save them before doing anything else.</translation>
     </message>
 </context>
 <context>
@@ -1038,7 +1039,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add item ID&apos;s which will be in counter group</source>
-        <translation>Please add item ID&apos;s which will be in counter group</translation>
+        <translation>Please add item ID&apos;s which will be in this counter group:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
@@ -1048,7 +1049,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Name of counter</source>
-        <translation>Name of counter</translation>
+        <translation>Counter name:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
@@ -1170,7 +1171,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type command here...</source>
-        <translation>Type command here...</translation>
+        <translation>Type commands here...</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
@@ -1239,12 +1240,12 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="268"/>
         <source>Arg: {Path to file} testing of PGE-X file format</source>
-        <translation>Arg: {Path to file} testing of PGE-X file format</translation>
+        <translation>Arg: {Path to file} tests if the file is in the PGE-X file format</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="269"/>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
-        <translation>[WIP] Attempt to test the level in the SMBX Level Editor!</translation>
+        <translation>[WIP] Attempt to test the level in the SMBX Level Editor</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="270"/>
@@ -1254,7 +1255,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="271"/>
         <source>Args: {engine commands} Send command or message into running engine</source>
-        <translation>Args: {engine commands} Send command or message into running engine</translation>
+        <translation>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</translation>
     </message>
     <message>
         <source>Args: {String array} validating the PGE-X string array</source>
@@ -1263,7 +1264,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="265"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation>Args: {[Number] Gigabytes} | Floods the memory with megabytes</translation>
+        <translation>Args: {[Number] Megabytes} | Floods the memory with the selected amount of data (Be careful with this!)</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="266"/>
@@ -1273,7 +1274,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="267"/>
         <source>Does a segmentation violation</source>
-        <translation>Does a segmentation violation</translation>
+        <translation>Causes a segmentation fault, for crash-testing purposes</translation>
     </message>
 </context>
 <context>
@@ -1297,7 +1298,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="141"/>
         <source>Hide door and water marking</source>
-        <translation>Hide doors and water markers</translation>
+        <translation>Hide door and water markers (recommended)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
@@ -1312,7 +1313,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="134"/>
         <source>Save proportion</source>
-        <translation>Save proportions</translation>
+        <translation>Save proportions (recommended)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="80"/>
@@ -1337,7 +1338,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="148"/>
         <source>Tiled background</source>
-        <translation>Tiled background</translation>
+        <translation>Tile background image (recommended)</translation>
     </message>
 </context>
 <context>
@@ -1486,7 +1487,7 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../editing/_components/history/historyelementresizewater.cpp" line="18"/>
         <source>Resize Water</source>
-        <translation>Resize Physical Environment Zone</translation>
+        <translation>Resize Water area</translation>
     </message>
 </context>
 <context>
@@ -1606,17 +1607,17 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="324"/>
         <source>Please enter the Z-value offset:</source>
-        <translation>Please enter the Z-value offset:</translation>
+        <translation>Please enter the Z-offset value:</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="370"/>
         <source>Margin of section</source>
-        <translation>Margin of section</translation>
+        <translation>Section margin</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="371"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation>Please select, how far items out of section should be removed too (in pixels)</translation>
+        <translation>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed</translation>
     </message>
 </context>
 <context>
@@ -1669,12 +1670,12 @@ Please save them first before doing anything else.</translation>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="263"/>
         <source>Margin of section</source>
-        <translation>Margin of section</translation>
+        <translation>Section margin</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="264"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation>Please select, how far items out of section should be removed too (in pixels)</translation>
+        <translation>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="308"/>
@@ -1892,7 +1893,7 @@ Message limits: max line lenth is 27 characters</translation>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="30"/>
         <source>Please, enter NPC&apos;s talkative message
 Message limits: max line lenth is 27 characters</source>
-        <translation>Please enter NPC&apos;s dialog message
+        <translation>Please enter the NPC&apos;s dialog message
 (Max length per line is 27 characters)</translation>
     </message>
     <message>
@@ -2005,12 +2006,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="310"/>
         <source>Margin of section</source>
-        <translation>Margin of section</translation>
+        <translation>Section margin</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="311"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation>Please select, how far items out of section should be removed too (in pixels)</translation>
+        <translation>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed</translation>
     </message>
     <message>
         <source>Not movable</source>
@@ -2240,7 +2241,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="847"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="869"/>
         <source>[all]</source>
-        <translation>[all]</translation>
+        <translation>[All]</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
@@ -2301,7 +2302,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1115"/>
         <source>Please, save file</source>
-        <translation>Please, save file</translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="1115"/>
@@ -2459,14 +2460,14 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</translation>
+        <translation>This is a tool for fixing lazily-made masks from SMBX images/sprites. This utility corrects the mask via color comparison. The original images will be overwritten, but backups will be created in a new directory so you can restore the originals if something goes wrong.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
         <source>Output dir, where will be saved fixed images
 (If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
-        <translation>Output dir, where will be saved fixed images
-(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</translation>
+        <translation>Output directory, where the fixed images will be saved.
+(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -2492,7 +2493,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="68"/>
         <source>Please, set the source directory</source>
-        <translation>Please, set the source directory</translation>
+        <translation>Please set the source directory</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="82"/>
@@ -2506,7 +2507,7 @@ Message limits: max line lenth is 28 characters</source>
 Please, check the application directory.</source>
         <translation>Can&apos;t run application: 
 %1
-Please, check the application directory.</translation>
+Please check the application directory to ensure it&apos;s properly installed..</translation>
     </message>
 </context>
 <context>
@@ -2628,13 +2629,13 @@ because object configurations are not loaded
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="178"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="203"/>
         <source>Extension is not set</source>
-        <translation>Extension is not set</translation>
+        <translation>File extension not set</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="204"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>File Extension isn&apos;t defined, please enter file extension!</translation>
+        <translation>File extension isn&apos;t set, please enter a valid file extension!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="287"/>
@@ -2644,7 +2645,7 @@ because object configurations are not loaded
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="288"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
-        <translation>Which version you wish to save? (from 0 to 64)</translation>
+        <translation>Which version do you wish to save? (from 0 to 64)</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="297"/>
@@ -2664,10 +2665,10 @@ because object configurations are not loaded
 The maximum number of blocks is %2.
 
 Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 blocks
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 blocks.
 The maximum number of blocks is %2.
 
-Please remove excess blocks from this level or save file into LVLX format.</translation>
+Please remove excess blocks from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="309"/>
@@ -2675,10 +2676,10 @@ Please remove excess blocks from this level or save file into LVLX format.</tran
 The maximum number of Background Objects is %2.
 
 Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Background Objects
-The maximum number of Background Objects is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 background objects (BGOs).
+The maximum number of background objects is %2.
 
-Please remove excess Background Objects from this level or save file into LVLX format.</translation>
+Please remove excess background objects from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="320"/>
@@ -2686,10 +2687,10 @@ Please remove excess Background Objects from this level or save file into LVLX f
 The maximum number of Non-Playable Characters is %2.
 
 Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
-The maximum number of Non-Playable Characters is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 NPCs.
+The maximum number of NPCs is %2.
 
-Please remove excess Non-Playable Characters from this level or save file into LVLX format.</translation>
+Please remove excess NPCs from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="331"/>
@@ -2697,10 +2698,10 @@ Please remove excess Non-Playable Characters from this level or save file into L
 The maximum number of Warps is %2.
 
 Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Warps
-The maximum number of Warps is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 warps
+The maximum number of warps is %2.
 
-Please remove excess Warps from this level or save file into LVLX format.</translation>
+Please remove excess warps from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="342"/>
@@ -2708,10 +2709,10 @@ Please remove excess Warps from this level or save file into LVLX format.</trans
 The maximum number of Water Boxes is %2.
 
 Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
-The maximum number of Water Boxes is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 water-boxes.
+The maximum number of water-boxes is %2.
 
-Please remove excess Water Boxes from this level or save file into LVLX format.</translation>
+Please remove excess water-boxes from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="353"/>
@@ -2719,10 +2720,10 @@ Please remove excess Water Boxes from this level or save file into LVLX format.<
 The maximum number of Layers is %2.
 
 Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Layers
-The maximum number of Layers is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 layers.
+The maximum number of layers is %2.
 
-Please remove excess Layers from this level or save file into LVLX format.</translation>
+Please remove excess layers from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="364"/>
@@ -2730,10 +2731,10 @@ Please remove excess Layers from this level or save file into LVLX format.</tran
 The maximum number of Events is %2.
 
 Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Events
-The maximum number of Events is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 events.
+The maximum number of events is %2.
 
-Please remove excess Events from this level or save file into LVLX format.</translation>
+Please remove excess events from this level or save the level in the LVLX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="262"/>
@@ -2757,15 +2758,15 @@ Please remove excess Events from this level or save file into LVLX format.</tran
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>Do you want to save file anyway?
-Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
+        <translation>Are you sure you want to save in this format?
+Exceeding the SMBX64 limits may crash SMBX with an &apos;overflow&apos; error.
 
-Installed LunaLUA partially extends than limits.</translation>
+Installing LunaLUA can partially extend these limits.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="463"/>
         <source>Read file error</source>
-        <translation>Read file error</translation>
+        <translation>File read error</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
@@ -2798,7 +2799,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="560"/>
         <source> not saved</source>
-        <translation> not saved</translation>
+        <translation> has not been saved</translation>
     </message>
 </context>
 <context>
@@ -2806,18 +2807,18 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="20"/>
         <source>Level files list</source>
-        <translation>Level files list</translation>
+        <translation>Level file list</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="30"/>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files which are located with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files which are located in the same folder as the current file.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.ui" line="33"/>
         <source>Please, select level file from list for use them:</source>
-        <translation>Please select level file from list to use:</translation>
+        <translation>Please select a level file from list to use:</translation>
     </message>
 </context>
 <context>
@@ -2825,7 +2826,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level Toolbox</source>
-        <translation>Level Itembox</translation>
+        <translation>Level Item toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="38"/>
@@ -2865,7 +2866,7 @@ Do you want to save your changes?</translation>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="356"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="540"/>
         <source>Uniform icon size</source>
-        <translation>Uniform icon size</translation>
+        <translation>Standard icon size</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="206"/>
@@ -2955,7 +2956,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="159"/>
         <source>Level name</source>
-        <translation>Level name</translation>
+        <translation>Level name:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
@@ -2985,7 +2986,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="257"/>
         <source>Timer type:</source>
-        <translation>Timer type:</translation>
+        <translation>Timer action:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="264"/>
@@ -3066,7 +3067,8 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="33"/>
         <source>Please select opened file and it&apos;s section which you want to clone and destination file and target section where you want to clone section.</source>
-        <translation>Please select opened file and it&apos;s section which you want to clone and destination file and target section where you want to clone section.</translation>
+        <translatorcomment>Yeah, I&apos;m gonna try and see if I can phrase this message a little better next time ;)</translatorcomment>
+        <translation>Please select an opened file and the section which you want to clone, as well as the destination file and target section where the selected section will be cloned.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="52"/>
@@ -3076,12 +3078,13 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="62"/>
         <source>Destiation</source>
-        <translation>Destiation</translation>
+        <translation>Destination</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="89"/>
         <source>Margin (How far out of section items should be copied, in pixels):</source>
-        <translation>Margin (How far out of section items should be copied, in pixels):</translation>
+        <translatorcomment>Had to resize the UI window to make the text fit, sorry!</translatorcomment>
+        <translation>Margin (How far outside of the target section items should be allowed to be copied, in pixels):</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="81"/>
@@ -3111,7 +3114,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="129"/>
         <source>Source and Destination sections should be selected!</source>
-        <translation>Source and Destination sections should be selected!</translation>
+        <translation>Source and Destination sections must be selected!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="151"/>
@@ -3128,16 +3131,16 @@ Please select another section.</translation>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="169"/>
         <source>Section is used</source>
-        <translation>Section is busy</translation>
+        <translation>Section is already being used</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="170"/>
         <source>Destination section is used!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
-        <translation>Destination section is used!
+        <translation>Destination section is already used!
 Please select another section
-or delete them first with &apos;Delete Section&apos; option.</translation>
+or clear the destination section first with &apos;Delete Section&apos;.</translation>
     </message>
     <message>
         <source>Section is busy</source>
@@ -3167,12 +3170,12 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="172"/>
         <source>Layer visibly</source>
-        <translation>Layer visibly</translation>
+        <translation>Layer visibility</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="206"/>
         <source>Disable smoke effects</source>
-        <translation>Disable smoke effects</translation>
+        <translation>Disable smoke transition</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="377"/>
@@ -3238,7 +3241,7 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="762"/>
         <source>Current section:</source>
-        <translation>Set settings for section:</translation>
+        <translation>Change settings for section:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="784"/>
@@ -3319,7 +3322,7 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1227"/>
         <source>Do end game:</source>
-        <translation>Do end game:</translation>
+        <translation>Trigger game end:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1189"/>
@@ -3339,17 +3342,17 @@ or delete them first with &apos;Delete Section&apos; option.</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1238"/>
         <source>Nothing</source>
-        <translation>Don&apos;t do</translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1243"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Game end &quot;Bowser defeat&quot;</translation>
+        <translation>Game end: &quot;Bowser defeat&quot;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1285"/>
         <source>Player Control hold keys</source>
-        <translation>Hold player&apos;s control button</translation>
+        <translation>Auto-hold player&apos;s controls</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1326"/>
@@ -3514,7 +3517,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="597"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1401"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>Current Layer:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="359"/>
@@ -3616,7 +3619,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1194"/>
         <source>Attach to:</source>
-        <translation>Attach layer:</translation>
+        <translation>Attach to layer:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="659"/>
@@ -3773,7 +3776,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="729"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation>Layer with name &apos;%1&apos; already exist, do you want to merge the layers?</translation>
+        <translation>Layer with name &apos;%1&apos; already exists, do you want to merge the layers?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="802"/>
@@ -3829,9 +3832,9 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>This level has wrong custom graphic[s] files. 
-You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to, a bad conversion, say from BMP to GIF. 
-Please, reconvert your images to the valid format and try to reload this level.</translation>
+        <translation>This level has incorrect custom graphics files. 
+You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This is probably due to a bad conversion, such as from BMP to GIF. 
+Please reconvert your images to a valid format and try reloading this level.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="459"/>
@@ -4297,7 +4300,7 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="27"/>
         <source>Search of items on the level</source>
-        <translation>Search of items on the level</translation>
+        <translation>Search for items in the level</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="61"/>
@@ -4388,17 +4391,17 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="238"/>
         <source>Ev. Destroyed:</source>
-        <translation>Ev. Destroyed:</translation>
+        <translation>Evt. Destroyed:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="245"/>
         <source>Ev. Hited</source>
-        <translation>Ev. Hit</translation>
+        <translation>Evt. Hit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="252"/>
         <source>Ev. Layer Empty:</source>
-        <translation>Ev. Layer Empty:</translation>
+        <translation>Evt. Layer Empty:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="289"/>
@@ -4449,22 +4452,22 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="731"/>
         <source>Evt activate:</source>
-        <translation>Evt activate:</translation>
+        <translation>Evt. Activate:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="738"/>
         <source>Evt death:</source>
-        <translation>Evt death:</translation>
+        <translation>Evt. Death:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="745"/>
         <source>Evt talk:</source>
-        <translation>Evt talk:</translation>
+        <translation>Evt. Talk:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="752"/>
         <source>Evt empty layer:</source>
-        <translation>Evt empty layer:</translation>
+        <translation>Evt. Layer empty:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="513"/>
@@ -4577,13 +4580,13 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="49"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation>When leaving the screen, the player will reappear on the opposite side</translation>
+        <translation>When leaving the screen, the player will reappear on the opposite side.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="52"/>
         <source>Warp section</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation>Connect left and right sides</translation>
+        <translation>Connect left and right sides (wrap level)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="62"/>
@@ -4667,7 +4670,7 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="511"/>
         <source>Please, save file</source>
-        <translation>Please, save file</translation>
+        <translation>Please save the file</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="511"/>
@@ -4788,7 +4791,7 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="859"/>
         <source>Warp to World map</source>
-        <translation>Go to World Map Position</translation>
+        <translation>Go to World Map Position:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="865"/>
@@ -4818,13 +4821,13 @@ Physical env. zones:	 %6</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="940"/>
         <source>Level file</source>
-        <translation>Level file</translation>
+        <translation>Level file:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="972"/>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation>Door #</translation>
+        <translation>Enter at warp #</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="893"/>
@@ -4836,8 +4839,8 @@ Physical env. zones:	 %6</translation>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation>You haven&apos;t available world map files with this level file.
-Please, put this level file with a world map, or create new world map in the same folder with this level file.
+        <translation>You haven&apos;t placed any world map files with this level file.
+Please put this level file with a world map, or create a new world map in the same folder as this level file.
 File path: %1</translation>
     </message>
     <message>
@@ -4849,8 +4852,8 @@ File path: %1</translation>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="906"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation>Found more than one world map files.
-Please, select necessary world map in a list:</translation>
+        <translation>Found more than one world map file.
+Please select the map you want to use:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="917"/>
@@ -4860,7 +4863,7 @@ Please, select necessary world map in a list:</translation>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="918"/>
         <source>Can&apos;t open the file.</source>
-        <translation>Can&apos;t open the file!.</translation>
+        <translation>Can&apos;t open the file!</translation>
     </message>
 </context>
 <context>
@@ -5064,7 +5067,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1320"/>
         <source>Warp section</source>
-        <translation>Connect left and right sides</translation>
+        <translation>Connect left and right sides (wrap level)</translation>
     </message>
     <message>
         <source>Off screen exit</source>
@@ -5741,7 +5744,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2110"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
-        <translation>Fix Lazily-made graphics (LazyFixTool)...</translation>
+        <translation>Fix lazily-made graphics (LazyFixTool)...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2115"/>
@@ -5822,7 +5825,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2287"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
-        <translation>Search on the world map</translation>
+        <translation>Search on world map</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2295"/>
@@ -5872,18 +5875,18 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2386"/>
         <source>Run testing &lt;Alpha&gt;</source>
-        <translation>Run testing &lt;Alpha&gt;</translation>
+        <translation>Test level &lt;Alpha&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2391"/>
         <location filename="../mainwindow.ui" line="2394"/>
         <source>Testing settings</source>
-        <translation>Testing settings</translation>
+        <translation>Testing options</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2655"/>
         <source>Clear NPC garbadge...</source>
-        <translation>Clear NPC garbadge...</translation>
+        <translation>Clean up NPCs...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2663"/>
@@ -5943,12 +5946,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2453"/>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
-        <translation>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</translation>
+        <translation>This enables an alternate masking algorithm to allow lazily-made graphics with bad masks to be displayed correctly.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2468"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
-        <translation>Bookmarks of position. Saving current camera position. You can use them to return back into necessary place on large map.</translation>
+        <translation>Bookmark specific camera positions. You can use these bookmarks to return back into necessary place on large map.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2476"/>
@@ -5987,12 +5990,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2553"/>
         <source>Fix wrong masks</source>
-        <translation>Fix wrong masks</translation>
+        <translation>Fix bad masks</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2556"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
-        <translation>This tool will fix all wrong masks of images which causing display bugs</translation>
+        <translation>This tool will fix any visual bugs caused by images with bad masks.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2564"/>
@@ -6022,7 +6025,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2613"/>
         <source>Don&apos;t fill out of section</source>
-        <translation>Don&apos;t fill out of section</translation>
+        <translation>Don&apos;t fill outside of section</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2618"/>
@@ -6032,12 +6035,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2623"/>
         <source>Run testing of saved file</source>
-        <translation>Run testing of saved file</translation>
+        <translation>Test a saved file</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2628"/>
         <source>Change log</source>
-        <translation>Change log</translation>
+        <translation>Changelog</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2633"/>
@@ -6047,17 +6050,17 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2642"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Run testing in the SMBX (LunaDLL required)</translation>
+        <translation>Test in SMBX (LunaDLL required)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2645"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBX, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature uses LunaDLL to send commands into SMBX, so your SMBX will need to have the latest LunaDLL build installed.&lt;/p&gt;&lt;p&gt;Without LunaDLL v0.5.3-beta or newer in your SMBX directory, this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2650"/>
         <source>Convert Audio (SoX)...</source>
-        <translation>Convert Audio (SoX)...</translation>
+        <translation>Convert Audio files (SoX)...</translation>
     </message>
     <message>
         <source>World map Search</source>
@@ -6194,7 +6197,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1411"/>
         <source>Level Toolbox</source>
-        <translation>Level Itembox</translation>
+        <translation>Level Item toolbox</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -6600,7 +6603,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="542"/>
         <source>World map Toolbar</source>
-        <translation>World map Toolbar</translation>
+        <translation>World Map toolbar</translation>
     </message>
     <message>
         <source>Paths</source>
@@ -6779,7 +6782,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="1394"/>
         <source>Restart level after fail</source>
-        <translation>Restart level after fail</translation>
+        <translation>Restart level after death</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1429"/>
@@ -6789,7 +6792,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="1477"/>
         <source>Eriser (E)</source>
-        <translation>Eraser</translation>
+        <translation>Eraser (E)</translation>
     </message>
     <message>
         <source>Level Section Settings</source>
@@ -6827,7 +6830,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="1588"/>
         <source>Lock all door objects</source>
-        <translation>Lock all door objects</translation>
+        <translation>Lock all warps and doors</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1601"/>
@@ -6935,7 +6938,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="1890"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to similar item Protection&lt;/p&gt;&lt;p&gt;(If enabled, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Protects similar items from overlapping each other.&lt;/p&gt;&lt;p&gt;(If enabled, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1905"/>
@@ -7036,8 +7039,8 @@ File: %1</translation>
         <location filename="../main_window/tools/data_configs.cpp" line="144"/>
         <source>The Configuration was switched!
 To start work with new configuration, please restart application.</source>
-        <translation>The Configuration was switched!
-To start work with new configuration, please restart application.</translation>
+        <translation>The Configuration has changed!
+To start using the new configuration, please restart the application.</translation>
     </message>
     <message>
         <source>Reload configuration</source>
@@ -7110,7 +7113,7 @@ Please, select necessary world map in a list:</translation>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="45"/>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation>File doesn&apos;t saved on disk.</translation>
+        <translation>File not saved to disk.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="57"/>
@@ -7118,21 +7121,21 @@ Please, select necessary world map in a list:</translation>
         <source>Can&apos;t open the file.
 File not exist.</source>
         <translation>Can&apos;t open the file.
-File not exist.</translation>
+File does not exist.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="63"/>
         <location filename="../main_window/file/file_reload.cpp" line="183"/>
         <location filename="../main_window/file/file_reload.cpp" line="239"/>
         <source>Reload file and custom stuff</source>
-        <translation>Reload file and custom stuff</translation>
+        <translation>Reload file and custom data</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="64"/>
         <location filename="../main_window/file/file_reload.cpp" line="184"/>
         <location filename="../main_window/file/file_reload.cpp" line="240"/>
         <source>Do you want to save before reload stuff?</source>
-        <translation>Do you want to save before reload stuff?</translation>
+        <translation>Do you want to save before reloading?</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="76"/>
@@ -7182,7 +7185,8 @@ File not exist.</translation>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="174"/>
         <source>Dummy</source>
-        <translation>Dummy</translation>
+        <translatorcomment>Haha, references!</translatorcomment>
+        <translation>A wild MISSINGFEATURE. appeared!</translation>
     </message>
     <message>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
@@ -7192,15 +7196,15 @@ File not exist.</translation>
         <location filename="../main_window/file/file_open.cpp" line="46"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
-        <translation>Editor cannot open files:
-Configuration package is loaded with errors.</translation>
+        <translation>The editor was unable to open some files:
+The configuration pack was loaded, but contains errors.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="85"/>
         <source>Cannot open file:
 Configuration package loaded with errors.</source>
-        <translation>Cannot open file:
-Configuration package loaded with errors.</translation>
+        <translation>The editor was unable to open a file:
+The configuration pack was loaded, but contains erro</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="212"/>
@@ -7231,7 +7235,7 @@ Configuration package loaded with errors.</translation>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="31"/>
         <source>Saving of file...</source>
-        <translation>Saving of the file...</translation>
+        <translation>Saving file...</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="32"/>
@@ -7248,7 +7252,7 @@ Configuration package loaded with errors.</translation>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="77"/>
         <source>Saving of files...</source>
-        <translation>Saving of files...</translation>
+        <translation>Saving files...</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="53"/>
@@ -7313,14 +7317,14 @@ Configuration package loaded with errors.</translation>
         <location filename="../main_window/file/file_open.cpp" line="45"/>
         <location filename="../main_window/file/file_open.cpp" line="84"/>
         <source>Configuration is loaded with errors</source>
-        <translation>Configuration is loaded with errors</translation>
+        <translation>Configuration pack contains errors</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="42"/>
         <source>Cannot create NPC config file:
 Configuration package loaded with errors.</source>
         <translation>Cannot create NPC config file:
-Configuration package loaded with errors.</translation>
+The configuration pack contains errors.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="53"/>
@@ -7332,14 +7336,14 @@ Configuration package loaded with errors.</translation>
         <source>Cannot create level file:
 Configuration package loaded with errors.</source>
         <translation>Cannot create level file:
-Configuration package loaded with errors.</translation>
+The configuration pack contains errors.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_new.cpp" line="109"/>
         <source>Cannot create world map file:
 Configuration package loaded with errors.</source>
         <translation>Cannot create world map file:
-Configuration package loaded with errors.</translation>
+The configuration pack contains errors.</translation>
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
@@ -7545,21 +7549,21 @@ Configuration package loaded with errors.</translation>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
-        <translation>Can&apos;t start testing, engine is not found: 
+        <translation>Can&apos;t start testing, the engine executable was not found: 
 %1
-Please, check the application directory.</translation>
+Please, check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="62"/>
         <source>Engine already runned</source>
-        <translation>Engine already runned</translation>
+        <translation>Engine already running</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="63"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Engine is already testing another level.
-Do you want to abort current testing process?</translation>
+Do you want to abort the current testing process?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="124"/>
@@ -7573,13 +7577,13 @@ Do you want to abort current testing process?</translation>
         <location filename="../main_window/testing/testing.cpp" line="149"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
-        <translation>To run testing of saved file, please save them into disk first!
-You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</translation>
+        <translation>To test a saved file, please save it to the disk first!
+You can test without saving by using the &quot;Test level (F5)&quot; menu item.</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="189"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation>To run testing via SMBX file must be saved into disk first!</translation>
+        <translation>To run testing via SMBX, the file must be saved to the disk first!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="198"/>
@@ -7590,8 +7594,8 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <location filename="../main_window/testing/testing.cpp" line="199"/>
         <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
 Will be created a temporary file. Do you want to continue?</source>
-        <translation>To take able to test level in the SMBX, file should be saved into SMBX64 format!
-Will be created a temporary file. Do you want to continue?</translation>
+        <translation>To test this level in SMBX, it must be saved in the SMBX64 format.
+A temporary file will be created automatically. Do you want to continue?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="210"/>
@@ -7606,7 +7610,7 @@ Will be created a temporary file. Do you want to continue?</translation>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="211"/>
         <source>Fail to create temp file %1</source>
-        <translation>Fail to create temp file %1</translation>
+        <translation>Failed to create temp file %1</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="231"/>
@@ -7617,7 +7621,7 @@ Will be created a temporary file. Do you want to continue?</translation>
         <location filename="../main_window/testing/testing.cpp" line="232"/>
         <source>Do you wanna to save file before start testing?
 </source>
-        <translation>Do you wanna to save file before start testing?</translation>
+        <translation>Do you want to save the file before testing?</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="258"/>
@@ -7627,7 +7631,7 @@ Will be created a temporary file. Do you want to continue?</translation>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="273"/>
         <source>Fail to send file patth into LunaDLL: (%1)</source>
-        <translation>Fail to send file patth into LunaDLL: (%1)</translation>
+        <translation>Failed to send file path to LunaDLL: (%1)</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="288"/>
@@ -7637,13 +7641,13 @@ Will be created a temporary file. Do you want to continue?</translation>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="297"/>
         <source>Too long path: </source>
-        <translation>Too long path: </translation>
+        <translation>File path too long:</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="336"/>
         <location filename="../main_window/testing/testing.cpp" line="339"/>
         <source>Failed to find SMBX Window</source>
-        <translation>Failed to find SMBX Window</translation>
+        <translation>Failed to find SMBX window</translation>
     </message>
     <message>
         <source>Engine is already testing another level.
@@ -7656,7 +7660,7 @@ Please exit from engine and try again.</translation>
         <source>Sorry, the testing feature is under construction.
 Settings will available soon.</source>
         <translation>Sorry, the testing feature is under construction.
-Settings will available soon.</translation>
+Settings will be available soon.</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -7665,17 +7669,17 @@ Settings will available soon.</translation>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="56"/>
         <source>Clonning of section...</source>
-        <translation>Clonning of section...</translation>
+        <translation>Cloning section...</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="222"/>
         <source>Section has been clonned</source>
-        <translation>Section has been clonned</translation>
+        <translation>Section has been cloned</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="223"/>
         <source>Section has been successfully clonned!</source>
-        <translation>Section has been successfully clonned!</translation>
+        <translation>Section has been successfully cloned!</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="236"/>
@@ -7685,7 +7689,7 @@ Settings will available soon.</translation>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="237"/>
         <source>Do you want to remove all objects of this section?</source>
-        <translation>Do you want to remove all objects of this section?</translation>
+        <translation>Do you want to remove all objects from this section?</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="243"/>
@@ -7694,12 +7698,12 @@ Settings will available soon.</translation>
         <location filename="../main_window/level/level_sections_mods.cpp" line="377"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="404"/>
         <source>Margin of section</source>
-        <translation>Margin of section</translation>
+        <translation>Section margin</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="244"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation>Please select, how far items out of section should be removed too (in pixels)</translation>
+        <translation>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="307"/>
@@ -7717,7 +7721,7 @@ Settings will available soon.</translation>
         <location filename="../main_window/level/level_sections_mods.cpp" line="378"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="405"/>
         <source>Please select, how far items out of section should be rotated too (in pixels)</source>
-        <translation>Please select, how far items out of section should be rotated too (in pixels)</translation>
+        <translation>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="54"/>
@@ -7745,12 +7749,12 @@ Settings will available soon.</translation>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</translation>
+        <translation>This file does not use GIF graphics with transparent masks or isn&apos;t a custom graphics file.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="199"/>
         <source>Fixing of masks...</source>
-        <translation>Fixing of masks...</translation>
+        <translation>Fixing masks...</translation>
     </message>
     <message>
         <location filename="../main_window/level/level_sections_mods.cpp" line="57"/>
@@ -7767,20 +7771,20 @@ Settings will available soon.</translation>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="230"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
-        <translation>Masks has been fixed!
-Please reload current file to apply result.</translation>
+        <translation>Masks have been fixed!
+Please reload current file to see the changes.</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="44"/>
         <location filename="../main_window/script/script_compile.cpp" line="67"/>
         <source>Already exsist</source>
-        <translation>Already exsist</translation>
+        <translation>Already exists</translation>
     </message>
     <message>
         <location filename="../main_window/script/script_compile.cpp" line="44"/>
         <source>Lunadll.lua already exsist!
 Overwrite?</source>
-        <translation>Lunadll.lua already exsist!
+        <translation>Lunadll.lua already exists!
 Overwrite?</translation>
     </message>
     <message>
@@ -7812,7 +7816,7 @@ Overwrite?</translation>
         <location filename="../main_window/script/script_compile.cpp" line="67"/>
         <source>lunadll.txt already exsist!
 Overwrite?</source>
-        <translation>lunadll.txt already exsist!
+        <translation>lunadll.txt already exists!
 Overwrite?</translation>
     </message>
     <message>
@@ -7838,7 +7842,7 @@ See in %1 for more information.</translation>
         <location filename="../main_window/tools/data_configs.cpp" line="107"/>
         <location filename="../mainwindow.cpp" line="153"/>
         <source>Configuration package is loaded with errors.</source>
-        <translation>Configuration package is loaded with errors.</translation>
+        <translation>Configuration pack is loaded, but has errors.</translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded.
@@ -7881,15 +7885,15 @@ to get more information.</translation>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
         <source>Found %1 junk NPC&apos;s. Do you want to remove them?
 Press to &quot;Help&quot; button to show up some found junk NPC&apos;s</source>
-        <translation>Found %1 junk NPC&apos;s. Do you want to remove them?
-Press to &quot;Help&quot; button to show up some found junk NPC&apos;s</translation>
+        <translation>Found %1 junk NPCs. Do you want to remove them?
+Press &quot;Help&quot; to show info about the junk NPCs we found.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="102"/>
         <source>NPC garbabe has been removed!
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
-        <translation>NPC garbabe has been removed!
-This operation can be undone with Ctrl+Z or Edit/Undo action.</translation>
+        <translation>NPC garbage has been removed!
+This operation can be undone with Ctrl+Z or by clicking Edit/Undo.</translation>
     </message>
     <message>
         <source>Found %1 junk NPC&apos;s. Are you want to remove them?
@@ -7929,7 +7933,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</translation>
         <location filename="../editing/_dialogs/musicfilelist.ui" line="36"/>
         <location filename="../editing/_dialogs/musicfilelist.ui" line="55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, which placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files located in the same folder as the current file, as well as any subdirectories.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/musicfilelist.ui" line="42"/>
@@ -7992,7 +7996,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_dialogs/npcdialog.ui" line="107"/>
         <source>Please, select NPC from list</source>
-        <translation>Please select NPC from list</translation>
+        <translation>Please select an NPC from the list:</translation>
     </message>
 </context>
 <context>
@@ -8305,7 +8309,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../data_configs/conf_wld_scene.cpp" line="84"/>
         <source>Loading Sceneries...</source>
-        <translation>Loading Sceneries...</translation>
+        <translation>Loading Scenery...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_tile.cpp" line="84"/>
@@ -8344,7 +8348,7 @@ Forum link: engine.wohlnet.ru/forum</source>
         <translation>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
-Please inform our forum staff so we can try to fix this problem, Thank you
+Please inform our forum staff so we can try to fix this problem, Thank you.
 
 Forum link: engine.wohlnet.ru/forum</translation>
     </message>
@@ -8712,17 +8716,17 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="224"/>
         <source>Is Warp</source>
-        <translation>Left-Right sides connection</translation>
+        <translation>Level Wrap</translation>
     </message>
     <message>
         <location filename="../defines.h" line="225"/>
         <source>No Back</source>
-        <translation>Disable returns to left</translation>
+        <translation>One-way scrolling (no turn-back)</translation>
     </message>
     <message>
         <location filename="../defines.h" line="226"/>
         <source>Off Screen Exit</source>
-        <translation>Off Screen Level Exit</translation>
+        <translation>Offscreen Level Exit</translation>
     </message>
     <message>
         <location filename="../defines.h" line="227"/>
@@ -8798,7 +8802,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="248"/>
         <source>Hub styled world</source>
-        <translation>Hub styled world</translation>
+        <translation>Hub-styled world</translation>
     </message>
     <message>
         <location filename="../defines.h" line="249"/>
@@ -8843,7 +8847,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     <message>
         <location filename="../defines.h" line="257"/>
         <source>Restart after fail</source>
-        <translation>Restart after fail</translation>
+        <translation>Restart current level after death</translation>
     </message>
     <message>
         <location filename="../defines.h" line="258"/>
@@ -8966,12 +8970,12 @@ File: %1
     <message>
         <location filename="../tools/smart_import/smartimporter.cpp" line="54"/>
         <source>You need to save the level, so you can import custom graphics!</source>
-        <translation>You need to save the level, so you can import custom graphics!</translation>
+        <translation>You need to save the level before you can import custom graphics!</translation>
     </message>
     <message>
         <location filename="../tools/smart_import/smartimporter.cpp" line="103"/>
         <source>You need to save the world, so you can import custom graphics!</source>
-        <translation>You need to save the world, so you can import custom graphics!</translation>
+        <translation>You need to save the world before you can import custom graphics!</translation>
     </message>
 </context>
 <context>
@@ -9143,11 +9147,11 @@ If you wish to create level/world specific tilesets with using of custom graphic
         <translation>Welcome to tileset editor!
 
 This is an editor of global tilesets.
-All tilesets which made here will be saved in this folder:
+All tilesets made here will be saved in this folder:
 %1
-I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
+I.e. They will be globally available for this configuration package and can be used in the groups of tilesets.
 
-If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</translation>
+If you wish to create level/world-specific tilesets with custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tilesetconfiguredialog.cpp" line="424"/>
@@ -9310,7 +9314,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/tileset_item_box.cpp" line="172"/>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation>File doesn&apos;t saved on disk.</translation>
+        <translation>File not saved to disk.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/tileset_item_box.cpp" line="309"/>
@@ -9323,22 +9327,22 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="14"/>
         <source>Tip of day</source>
-        <translation>Tip of day</translation>
+        <translation>Tip of the day</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
         <source>Did you know...</source>
-        <translation>Did you know...</translation>
+        <translation>Did you know?</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="58"/>
         <source>Show tip at startup</source>
-        <translation>Show tip at startup</translation>
+        <translation>Show tips at startup</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="65"/>
         <source>Previouse tip</source>
-        <translation>Previouse tip</translation>
+        <translation>Previous tip</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="72"/>
@@ -9399,7 +9403,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="54"/>
         <source>Check for latest stable builds</source>
-        <translation>Check for latest stable builds</translation>
+        <translation>Check for new stable builds</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="100"/>
@@ -9416,7 +9420,7 @@ Data may be corrupted!</translation>
         <location filename="../main_window/updater/check_updates.ui" line="198"/>
         <location filename="../main_window/updater/check_updates.ui" line="208"/>
         <source>Click to check updates</source>
-        <translation>Click to check updates</translation>
+        <translation>Click to check for updates</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="237"/>
@@ -9426,7 +9430,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="113"/>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
-        <translation>Here you can get bug fixes and new features before new stable will be released</translation>
+        <translation>Here you can get bug fixes and new features before they&apos;re available in the stable versions</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="80"/>
@@ -9441,7 +9445,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/updater/check_updates.ui" line="152"/>
         <source>This is an update checker dialog. Here you can check available updates.</source>
-        <translation>This is an update checker dialog. Here you can check available updates.</translation>
+        <translation>This is an update checker dialog. Here you can check for available updates.</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="71"/>
@@ -9476,22 +9480,22 @@ Data may be corrupted!</translation>
         <location filename="../main_window/updater/check_updates.cpp" line="196"/>
         <location filename="../main_window/updater/check_updates.cpp" line="203"/>
         <source>You have a latest version!</source>
-        <translation>You have a latest version!</translation>
+        <translation>You have the latest version!</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="199"/>
         <source>Available new update!</source>
-        <translation>Available new update!</translation>
+        <translation>A new version is available!</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="206"/>
         <source>Latest update is</source>
-        <translation>Latest update is</translation>
+        <translation>The latest version is</translation>
     </message>
     <message>
         <location filename="../main_window/updater/check_updates.cpp" line="250"/>
         <source>One or more SSL errors has occurred: %1</source>
-        <translation>One or more SSL errors has occurred: %1</translation>
+        <translation>One or more SSL errors have occurred: %1</translation>
     </message>
 </context>
 <context>
@@ -9509,7 +9513,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="76"/>
         <source>Big path background</source>
-        <translation>Big path background</translation>
+        <translation>Big background path</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="90"/>
@@ -9559,7 +9563,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="240"/>
         <source>Open path by exists:</source>
-        <translation>Open path by exists:</translation>
+        <translation>Open paths by exit type:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.ui" line="249"/>
@@ -9608,7 +9612,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
         <source>1 - Card Roulette Exit</source>
-        <translation>1 - Card Roulette Exit</translation>
+        <translation>1 - SMB3 Card Roulette exit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
@@ -9623,27 +9627,27 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
         <source>4 - Secret Exit</source>
-        <translation>4 - Secret keyhole Exit</translation>
+        <translation>4 - Secret keyhole exit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Crystal Sphare Exit</translation>
+        <translation>5 - SMB2 Crystal Sphere exit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
         <source>6 - Warp Exit</source>
-        <translation>6 - Exit via door</translation>
+        <translation>6 - Exit via warp/door</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
         <source>7 - Star Exit</source>
-        <translation>7 - Gotten star Exit</translation>
+        <translation>7 - Collected a star</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
         <source>8 - Tape Exit</source>
-        <translation>8 - Tape Exit</translation>
+        <translation>8 - SMW Goal Tape exit</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="669"/>
@@ -9653,7 +9657,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="669"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation>Place item on the map first and call &apos;Properties&apos; context menu item.</translation>
+        <translation>Place item on the map first and open the &apos;Properties&apos; context menu item.</translation>
     </message>
 </context>
 <context>
@@ -9661,7 +9665,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="14"/>
         <source>Selecting point on the world map</source>
-        <translation>Selecting point on the world map</translation>
+        <translation>Selecting a point on the world map</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</source>
@@ -9680,7 +9684,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="96"/>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>You will change current position to the last selected point. If point is not set, position will not be changed.</translation>
+        <translation>You will change current position to the last selected point. If a point is not set, position will not be changed.</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="99"/>
@@ -9690,7 +9694,7 @@ Data may be corrupted!</translation>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="110"/>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation>Start and stop animation of placed on the map items.</translation>
+        <translation>Start and stop animation of items placed on the map.</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="113"/>
@@ -9735,7 +9739,7 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation>Cannot open level world %1:
 because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
+Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="225"/>
@@ -9780,7 +9784,7 @@ because object configurations are not loaded
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="320"/>
         <source>5/%1 Applying Musics...</source>
-        <translation>5/%1 Applying Musics Boxes...</translation>
+        <translation>5/%1 Applying Music Boxes...</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="455"/>
@@ -9790,7 +9794,7 @@ because object configurations are not loaded
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="455"/>
         <source>Select the point on the world map first.</source>
-        <translation>Select the point on the world map first.</translation>
+        <translation>Select a point on the world map first.</translation>
     </message>
 </context>
 <context>
@@ -9813,7 +9817,7 @@ because object configurations are not loaded
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="144"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, this will calculate the size of the opposite dimension (height or width) to make a target image with the correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="147"/>
@@ -9832,7 +9836,7 @@ because object configurations are not loaded
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="62"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of the image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="65"/>
@@ -9843,7 +9847,7 @@ because object configurations are not loaded
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="75"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of the image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="34"/>
@@ -9853,7 +9857,7 @@ because object configurations are not loaded
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="154"/>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
-        <translation>Hide all paths and levels as if game has already started</translation>
+        <translation>Hide all paths and levels</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.ui" line="137"/>
@@ -9884,12 +9888,12 @@ Bottom:	%4</translation>
     <message>
         <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="174"/>
         <source>Search User Sceneries %1</source>
-        <translation>Search Custom Sceneries %1</translation>
+        <translation>Search Custom Scenery %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="240"/>
         <source>Search User Paths %1</source>
-        <translation>Search Custom  Paths %1</translation>
+        <translation>Search Custom Paths %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="306"/>
@@ -9899,16 +9903,16 @@ Bottom:	%4</translation>
     <message>
         <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="377"/>
         <source>Wrong custom images</source>
-        <translation>Wrong custom image files</translation>
+        <translation>Bad custom image files</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="378"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>This level has wrong custom graphic[s] files. 
-You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to, a bad conversion, say from BMP to GIF. 
-Please, reconvert your images to the valid format and try to reload this level.</translation>
+        <translation>This level has invalid custom graphics files. 
+You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to a bad conversion, such as from BMP to GIF. 
+Please reconvert your images to a valid format and try reloading this level.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="170"/>
@@ -10048,7 +10052,7 @@ Levels:	%4
 Music boxes:		%5
 </source>
         <translation>Tiles:		%1
-Sceneries:	%2
+Scenery:	%2
 Paths:		%3
 Levels:		%4
 Music boxes:	%5
@@ -10064,7 +10068,7 @@ Music boxes:	%5
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="27"/>
         <source>Search of items on the World Map</source>
-        <translation>Search of items on the World Map</translation>
+        <translation>Search for items on the World Map</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="64"/>
@@ -10330,7 +10334,7 @@ Music boxes:	%5
     <message>
         <location filename="../editing/edit_world/wld_draw.cpp" line="59"/>
         <source>2/%1 Applying Sceneries...</source>
-        <translation>2/%1 Applying Sceneries...</translation>
+        <translation>2/%1 Applying Scenery...</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_draw.cpp" line="68"/>
@@ -10349,7 +10353,7 @@ Music boxes:	%5
     <message>
         <location filename="../editing/edit_world/wld_draw.cpp" line="87"/>
         <source>5/%1 Applying Musics...</source>
-        <translation>5/%1 Applying Musics Boxes...</translation>
+        <translation>5/%1 Applying Music Boxes...</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="42"/>
@@ -10404,7 +10408,7 @@ because object configurations are not loaded
         <location filename="../editing/edit_world/wld_files_io.cpp" line="278"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="288"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation>The SMBX64 limit has been exceeded</translation>
+        <translation>The SMBX64 limit has been exceded</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="238"/>
@@ -10412,10 +10416,10 @@ because object configurations are not loaded
 The maximum number of Tiles is %2.
 
 Please remove excess Tiles from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Tiles
-The maximum number of Tiles is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 tiles
+The maximum number of tiles is %2.
 
-Please remove excess Tiles from this world map or save file into WLDX format.</translation>
+Please remove excess tiles from this level or save the world in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="248"/>
@@ -10423,10 +10427,10 @@ Please remove excess Tiles from this world map or save file into WLDX format.</t
 The maximum number of Sceneries is %2.
 
 Please remove excess Sceneries from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Sceneries
-The maximum number of Sceneries is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 scenery
+The maximum number of scenery is %2.
 
-Please remove excess Sceneries from this world map or save file into WLDX format.</translation>
+Please remove excess scenery from this level or save the world in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="258"/>
@@ -10434,10 +10438,10 @@ Please remove excess Sceneries from this world map or save file into WLDX format
 The maximum number of Paths is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Paths
-The maximum number of Paths is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 paths
+The maximum number of paths is %2.
 
-Please remove excess Paths from this world map or save file into WLDX format.</translation>
+Please remove excess paths from this level or save the world in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="268"/>
@@ -10445,10 +10449,10 @@ Please remove excess Paths from this world map or save file into WLDX format.</t
 The maximum number of Levels is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Levels
-The maximum number of Levels is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 levels
+The maximum number of levels is %2.
 
-Please remove excess Paths from this world map or save file into WLDX format.</translation>
+Please remove excess levels from this level or save the world in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="279"/>
@@ -10456,10 +10460,10 @@ Please remove excess Paths from this world map or save file into WLDX format.</t
 The maximum number of Music Boxes is %2.
 
 Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
-The maximum number of Music Boxes is %2.
+        <translation>SMBX64 standard doesn&apos;t allow more than %1 music boxes
+The maximum number of music boxes is %2.
 
-Please remove excess Music Boxes from this world map or save file into WLDX format.</translation>
+Please remove excess music boxes from this world or save the world in the WLDX format.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="289"/>
@@ -10467,10 +10471,10 @@ Please remove excess Music Boxes from this world map or save file into WLDX form
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>Do you want to save file anyway?
-Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
+        <translation>Are you sure you want to save in this format?
+Exceeding the SMBX64 limits may crash SMBX with an &apos;overflow&apos; error.
 
-Installed LunaLUA partially extends than limits.</translation>
+Installing LunaLUA can partially extend these limits.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="301"/>
@@ -10679,12 +10683,12 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="152"/>
         <source>Restart last level after fail</source>
-        <translation>Restart last level after fail</translation>
+        <translation>Restart last level after death</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="159"/>
         <source>Hub-styled world (without world map)</source>
-        <translation>Hub-styled world (without world map)</translation>
+        <translation>Hub-styled world (disable world map)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="166"/>
@@ -10704,7 +10708,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="492"/>
         <source>Counting stars of placed levels</source>
-        <translation>Counting stars of placed levels</translation>
+        <translation>Counting stars in placed levels</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="492"/>
@@ -10774,13 +10778,13 @@ Do you want to save your changes?</translation>
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
         <translation>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;Editor will be started, but you may have some problems with items or settings.
 &lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;Please download and install the latest version of your configuration package:
 &lt;br&gt;
 &lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</translation>
+&lt;br&gt;Note: most config packs are updated togeter with PGE,&lt;br&gt;
+therefore you can use the same link to get an updated version.</translation>
     </message>
 </context>
 <context>
@@ -10796,7 +10800,7 @@ therefore you can use same link to get updated version</translation>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
         <translatorcomment>Not so necessary to convey that the result has its own transparance.</translatorcomment>
-        <translation>This console tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.</translation>
+        <translation>This tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/gifs2png_gui.ui" line="66"/>
@@ -11402,7 +11406,7 @@ Do you want to save your changes?</translation>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="53"/>
         <source>This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format.</translation>
+        <translation>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="66"/>
@@ -11414,8 +11418,8 @@ Do you want to save your changes?</translation>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</translation>
+        <translation>Output dir, where the GIF files will be saved (*.gif and *m.gif)
+(if this field is left empty, the target images will be stored in the original directory)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
@@ -11440,7 +11444,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Input directory wich contains the PNG Images with own transparency (*.png)</translation>
+        <translation>Input directory which contains the PNG images (*.png)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="165"/>
@@ -11470,7 +11474,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="83"/>
         <source>Tool is not found</source>
-        <translation>Tool is not found</translation>
+        <translation>Tool not found</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.cpp" line="83"/>
@@ -11479,7 +11483,7 @@ Do you want to save your changes?</translation>
 Please, check the application directory.</source>
         <translation>Can&apos;t run application: 
 %1
-Please, check the application directory.</translation>
+Please, check the application directory and make sure it is installed properly.</translation>
     </message>
 </context>
 <context>
@@ -11488,8 +11492,8 @@ Please, check the application directory.</translation>
         <location filename="../tools/tilesets/tileset.cpp" line="74"/>
         <source>Drag &amp; Drop items to this box!
 Rightclick to remove!</source>
-        <translation>Drag &amp; Drop items to this box!
-Rightclick to remove!</translation>
+        <translation>Drag &amp; Drop items into this box!
+Right-click to remove!</translation>
     </message>
 </context>
 </TS>
