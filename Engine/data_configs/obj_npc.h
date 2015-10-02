@@ -86,13 +86,14 @@ struct obj_npc
     int custom_ani_er; //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
 
     QList<int> frames_left;     //Frame srquence for left
-    QList<int> frames_right;    //Frame srquence for right
+    QList<int> frames_right;    //Frame sequence for right
 
-    bool container;// container=0; NPC can containing inside other NPC (need enable special option type 2)
+    bool container; // container=0; NPC can contain another NPC inside itself which is released when it dies
+    unsigned long contents_id; //contents-id=0; ID of contained NPC
     bool container_elastic; //Elastic sprite of container (like sizable block)
     int  container_elastic_border_w; //Width of border to draw elastic container
     bool container_show_contents; //Show contents of container
-   float container_content_z_offset; //Render target sprite with next offset
+    float container_content_z_offset; //Render target sprite with next offset
     bool container_crop_contents;    //Crop contents GFX size to the size of an item
     int container_align_contents;    //align contents to center-0 or top-1
 
@@ -103,18 +104,19 @@ struct obj_npc
     bool special_option;  //    ; Special option
                           //    have-special=0; Special NPC's option, what can used by NPC's algorithm
     QString special_name; //    ;special-name="Cheep-cheep"	; 60
-    int special_type; //    ;special-type=0; 61 0 combobox, 1 - spin, 2 - npc-id
+    int special_type; //    ;special-type=0; 61 0 - combobox, 1 - spin, 2 - npc-id
     QStringList special_combobox_opts;//;special-combobox-size=3; 62 quantity of options
                                       //;special-option-0="Swim"; 63 set title for 0 option combobox
                                       //;special-option-1="Jump"; 64 set title for 1 option combobox
                                       //;special-option-2="Projective"	; 65 set title for 2 option combobox
-    int special_spin_min;   //    ;special-spin-min=0		; 66 milimal value of spin
-    int special_spin_max;   //    ;special-spin-max=25		; 67 maximal value of spin
+    int special_spin_min;   //    ;special-spin-min=0		; 66 minimum value of spin
+    int special_spin_max;   //    ;special-spin-max=25		; 67 maximum value of spin
     int special_spin_value_offset;  //    have-special-2=0			; Special NPC's option, what can used by NPC's algorithm
+
     bool special_option_2; //   Second special option
-                           //   special-2-npc-spin-required
-    QList<long > special_2_npc_spin_required;   //    special-2-npc-box-required
-    QList<long > special_2_npc_box_required;
+
+    QList<long > special_2_npc_spin_required;   //   special-2-npc-spin-required
+    QList<long > special_2_npc_box_required;    //   special-2-npc-box-required
 
     QString special_2_name; //    ;special-2-name="Cheep-cheep"	; 60
     int special_2_type; //    ;special-2-type=0			; 61 0 combobox, 1 - spin
@@ -122,8 +124,8 @@ struct obj_npc
                                             //;special-option-0="Swim"		; 63 set title for 0 option combobox
                                             //;special-option-1="Jump"		; 64 set title for 1 option combobox
                                             //;special-option-2="Projective"	; 65 set title for 2 option combobox
-    int special_2_spin_min; //    ;special-2-spin-min=0		; 66 milimal value of spin
-    int special_2_spin_max; //    ;special-2-spin-max=25		; 67 maximal value of spin
+    int special_2_spin_min; //    ;special-2-spin-min=0		; 66 minimum value of spin
+    int special_2_spin_max; //    ;special-2-spin-max=25		; 67 maximum value of spin
     int special_2_spin_value_offset;    //special-2-spin-value-offset
 
     //;game process
