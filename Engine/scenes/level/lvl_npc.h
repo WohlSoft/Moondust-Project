@@ -193,6 +193,7 @@ public:
     virtual void lua_onInit() {}
     virtual void lua_onKill(int) {}
     virtual void lua_onHarm(int, int) {}
+    virtual void lua_onTransform(long) {}
 
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);

@@ -40,6 +40,12 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onHarm(int damage, int damageReason
         call<void>("onHarm", damage, damageReason);
 }
 
+void Binding_Level_ClassWrapper_LVL_NPC::lua_onTransform(long id)
+{
+    if(!LuaGlobal::getEngine(m_self.state())->shouldShutdown())
+        call<void>("onTransform", id);
+}
+
 luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 {
     using namespace luabind;
