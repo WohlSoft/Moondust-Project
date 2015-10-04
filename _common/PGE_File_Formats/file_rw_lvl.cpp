@@ -139,8 +139,17 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
         FileData.ReadFileValid=false;
         return FileData;
     }
-    FileData.filename = "in_1.baseName()";
-    FileData.path = "in_1.absoluteDir().absolutePath()";
+    char buf[PATH_MAX + 1];
+    char *res = realpath(filePath.c_str(), buf);
+    if(res)
+    {
+        FileData.filename = buf;
+        char *last_slash = strrchr(buf, '/');
+        if (last_slash != NULL) {
+            *last_slash = '\0';
+        }
+        FileData.path = buf;
+    }
     inf.seekg(std::ios::beg);
     #endif
 
@@ -234,8 +243,17 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
         #else
-        FileData.filename = "in_1.baseName()";
-        FileData.path = "in_1.absoluteDir().absolutePath()";
+        char buf[PATH_MAX + 1];
+        char *res = realpath(filePath.c_str(), buf);
+        if(res)
+        {
+            FileData.filename = buf;
+            char *last_slash = strrchr(buf, '/');
+            if (last_slash != NULL) {
+                *last_slash = '\0';
+            }
+            FileData.path = buf;
+        }
         #endif
     }
 
@@ -682,8 +700,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         //Add system layers if not exist
         bool def=false,desb=false,spawned=false;
 
-        foreach(LevelLayer lr, FileData.layers)
+        for(int lrID=0; lrID<FileData.layers.size();lrID++)
         {
+            LevelLayer &lr=FileData.layers[lrID];
             if(lr.name=="Default") def=true;
             else
             if(lr.name=="Destroyed Blocks") desb=true;
@@ -715,8 +734,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         //P Switch - Start
         //P Switch - End
         bool lstart=false, pstart=false, pend=false;
-        foreach(LevelSMBX64Event ev, FileData.events)
+        for(int evID=0; evID<FileData.events.size(); evID++)
         {
+            LevelSMBX64Event &ev=FileData.events[evID];
             if(ev.name=="Level - Start") lstart=true;
             else
             if(ev.name=="P Switch - Start") pstart=true;
@@ -759,7 +779,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 
     badfile:    //If file format is not correct
     if(!sielent)
-        BadFileMsg(filePath+"\nFile format "+PGESTRING::number(file_format), str_count, line);
+        BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -868,19 +888,36 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
 
     //Blocks
-    QMap<long, QMap<long, QMap<long, LevelBlock > > > sortedBlocks;
-    foreach(LevelBlock block, FileData.blocks)
+    PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBlock > > > sortedBlocks;
+    for(int blkID=0;blkID<FileData.blocks.size();blkID++)
     {
+        LevelBlock &block=FileData.blocks[blkID];
         sortedBlocks[block.x][block.y][block.array_id] = block;
     }
 
     //for(i=0; i<FileData.blocks.size(); i++)
     //{
-    for (QMap<long, QMap<long, QMap<long, LevelBlock > > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
+    for (PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBlock > > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
     {
-      for (QMap<long, QMap<long, LevelBlock > >::iterator bBrr = (* bArr).begin(); bBrr != (* bArr).end(); bBrr++)
-        for (QMap<long, LevelBlock >::iterator block = (* bBrr).begin(); block != (*bBrr).end(); block++)
+      #ifdef PGE_FILES_QT
+        PGEMAP<long, PGEMAP<long, LevelBlock > > *it2= &*bArr;
+      #else
+        PGEMAP<long, PGEMAP<long, LevelBlock > > *it2= &(bArr->second);
+      #endif
+      for (PGEMAP<long, PGEMAP<long, LevelBlock > >::iterator bBrr = (*it2).begin(); bBrr != (*it2).end(); bBrr++)
+      {
+        #ifdef PGE_FILES_QT
+          PGEMAP<long, LevelBlock > *it1= &*bBrr;
+        #else
+          PGEMAP<long, LevelBlock > *it1= &(bBrr->second);
+        #endif
+        for (PGEMAP<long, LevelBlock >::iterator blockIt = (* it1).begin(); blockIt != (*it1).end(); blockIt++)
         {
+            #ifdef PGE_FILES_QT
+              LevelBlock *block= &*blockIt;
+            #else
+              LevelBlock *block= &(blockIt->second);
+            #endif
             TextData += SMBX64::IntS((*block).x);
             TextData += SMBX64::IntS((*block).y);
             TextData += SMBX64::IntS((*block).h);
@@ -931,30 +968,56 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
                 TextData += SMBX64::qStrS((*block).event_emptylayer);
                 }
         }
+      }
     }
     TextData += "\"next\"\n";//Separator
 
 
     //BGOs
-    QMap<long, QMap<long, QMap<long, QMap<long, LevelBGO > > > > sortedBGO;
-    foreach(LevelBGO bgo1, FileData.bgo)
+    PGEMAP<long, PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > > sortedBGO;
+    for(int bgoID=0;bgoID<FileData.bgo.size();bgoID++)
     {
+        LevelBGO &bgo1=FileData.bgo[bgoID];
         sortedBGO[bgo1.smbx64_sp_apply][bgo1.x][bgo1.y][bgo1.array_id] = bgo1;
     }
 
     //for(i=0; i<FileData.bgo.size(); i++)
-    for (QMap<long, QMap<long, QMap<long, QMap<long, LevelBGO > > > >::iterator sArr = sortedBGO.begin(); sArr != sortedBGO.end(); sArr++)
+    for (PGEMAP<long, PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > >::iterator sArr = sortedBGO.begin(); sArr != sortedBGO.end(); sArr++)
     {
-        for (QMap<long, QMap<long, QMap<long, LevelBGO > > >::iterator bArr = (* sArr).begin(); bArr != (* sArr).end(); bArr++)
-          for (QMap<long, QMap<long, LevelBGO > >::iterator bBrr = (* bArr).begin(); bBrr != (* bArr).end(); bBrr++)
-            for (QMap<long, LevelBGO >::iterator bgo = (* bBrr).begin(); bgo != (*bBrr).end(); bgo++)
+        #ifdef PGE_FILES_QT
+          PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > *it3= &*sArr;
+        #else
+          PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > *it3= &(sArr->second);
+        #endif
+        for (PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > >::iterator bArr = (* it3).begin(); bArr != (* it3).end(); bArr++)
+        {
+          #ifdef PGE_FILES_QT
+            PGEMAP<long, PGEMAP<long, LevelBGO > > *it2= &*bArr;
+          #else
+            PGEMAP<long, PGEMAP<long, LevelBGO > > *it2= &(bArr->second);
+          #endif
+          for (PGEMAP<long, PGEMAP<long, LevelBGO > >::iterator bBrr = (* it2).begin(); bBrr != (* it2).end(); bBrr++)
+          {
+            #ifdef PGE_FILES_QT
+              PGEMAP<long, LevelBGO > *it1= &*bBrr;
+            #else
+              PGEMAP<long, LevelBGO > *it1= &(bBrr->second);
+            #endif
+            for (PGEMAP<long, LevelBGO >::iterator bgoIt = (* it1).begin(); bgoIt != (*it1).end(); bgoIt++)
             {
+            #ifdef PGE_FILES_QT
+              LevelBGO *bgo= &*bgoIt;
+            #else
+              LevelBGO *bgo= &(bgoIt->second);
+            #endif
             TextData += SMBX64::IntS( (*bgo).x);
             TextData += SMBX64::IntS( (*bgo).y);
             TextData += SMBX64::IntS( (*bgo).id);
             if(file_format>=10)
             TextData += SMBX64::qStrS( (*bgo).layer);
             }
+          }
+        }
     }
     TextData += "\"next\"\n";//Separator
 

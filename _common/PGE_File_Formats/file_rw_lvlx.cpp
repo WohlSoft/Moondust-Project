@@ -158,8 +158,17 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
         #else
-        FileData.filename = "unknown.lvl";
-        FileData.path = ".";
+        char buf[PATH_MAX + 1];
+        char *res = realpath(filePath.c_str(), buf);
+        if(res)
+        {
+            FileData.filename = buf;
+            char *last_slash = strrchr(buf, '/');
+            if (last_slash != NULL) {
+                *last_slash = '\0';
+            }
+            FileData.path = buf;
+        }
         #endif
     }
 
