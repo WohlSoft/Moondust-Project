@@ -5,18 +5,24 @@ function luaNPC:__init()
     BaseNPC.__init(self)
 end
 
--- This function will be called if we have all data we need.
-function luaNPC:onInit()
+function luaNPC:baseReInit(theID)
     -- Init all variable by default
-    self.isInvalid = false -- If this is true, then events won't be forwarded to the algorithm controller. 
+    self.isInvalid = false -- If this is true, then events won't be forwarded to the algorithm controller.
     self.controller = nil -- This is the controller class
-    
+
     -- Setup NPC Controller
-    if(npc_class_table[self.id])then
-        self.controller = npc_class_table[self.id](self)
+    if(npc_class_table[theID])then
+        self.controller = npc_class_table[theID](self)
     else
         self.isInvalid = true
     end
+end
+
+
+
+-- This function will be called if we have all data we need.
+function luaNPC:onInit()
+    self:baseReInit(self.id)
     BaseNPC.onInit(self)
 end
 
@@ -54,6 +60,17 @@ function luaNPC:onHarm(damage, damageReason)
         end
     end
     BaseNPC.onHarm(self, damage, damageReason)
+end
+
+function luaNPC:onTransform(id)
+    if(not self.isInvalid and self.controller)then
+        if(type(self.controller.onTransform) == "function")then
+            self.controller:onTransform(id)
+        end
+    end
+
+    self:baseReInit(id)
+    BaseNPC.onTransform(self, id)
 end
 
 return luaNPC

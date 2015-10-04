@@ -17,12 +17,14 @@ public:
     virtual void lua_onInit();
     virtual void lua_onKill(int damageReason);
     virtual void lua_onHarm(int damage, int damageReason);
+    virtual void lua_onTransform(long id);
 
     static void def_lua_onActivated(LVL_Npc* base) { base->LVL_Npc::lua_onActivated(); }
     static void def_lua_onLoop(LVL_Npc* base, float tickTime) { base->LVL_Npc::lua_onLoop(tickTime); }
     static void def_lua_onInit(LVL_Npc* base) { base->LVL_Npc::lua_onInit(); }
     static void def_lua_onKill(LVL_Npc* base, int damageReason) { base->LVL_Npc::lua_onKill(damageReason); }
     static void def_lua_onHarm(LVL_Npc* base, int damage, int damageReason) { base->LVL_Npc::lua_onHarm(damage, damageReason); }
+    static void def_lua_onTransform(LVL_Npc* base, long id) { base->LVL_Npc::lua_onTransform(id); }
 
 
     static luabind::scope bindToLua();

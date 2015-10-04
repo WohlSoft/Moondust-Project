@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#ifdef PGE_FILES_QT
 #include <QRegExp>
 #include <QMutex>
 #include <QMutexLocker>
+#endif
 #include "smbx64.h"
-
-#include <QMutex>
-#include <QMutexLocker>
 
 namespace smbx64Format
 {
@@ -143,7 +143,9 @@ bool SMBX64::sFloat(QString &in) // SIGNED FLOAT
 bool SMBX64::qStr(QString in) // QUOTED STRING
 {
     using namespace smbx64Format;
+    #ifdef PGE_FILES_QT
     QMutexLocker locker(&qstr_mutex);
+    #endif
     return !qstr.exactMatch(in);
 }
 

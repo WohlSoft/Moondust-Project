@@ -16,8 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef PGE_FILES_QT
 #include <QFileInfo>
 #include <QDir>
+#endif
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
 #include <QTranslator>
