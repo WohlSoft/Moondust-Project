@@ -23,7 +23,7 @@ win32:{
 LIBS += -L../_builds/win32/lib
 LIBS += -lmingw32 -lSDL2main -mwindows
 INCLUDEPATH += ../_builds/win32/include
-DEFINES += USE_NATIVE_MIDI
+DEFINES -= USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
 LIBS += -L../_builds/linux/lib
@@ -48,7 +48,7 @@ LIBS += -lwinmm -lm -lwinmm
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC SPC_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -141,17 +141,6 @@ HEADERS += \
     timidity/resample.h \
     timidity/tables.h \
     timidity/timidity.h \
-    snes_spc/blargg_common.h \
-    snes_spc/blargg_config.h \
-    snes_spc/blargg_endian.h \
-    snes_spc/blargg_source.h \
-    snes_spc/dsp.h \
-    snes_spc/SNES_SPC.h \
-    snes_spc/spc.h \
-    snes_spc/SPC_CPU.h \
-    snes_spc/SPC_DSP.h \
-    snes_spc/SPC_Filter.h \
-    music_spc.h \
     resample/audio.h \
     resample/global.h \
     resample/mad_resample.h \
@@ -174,7 +163,65 @@ HEADERS += \
     libid3tag/utf8.h \
     libid3tag/utf16.h \
     libid3tag/util.h \
-    libid3tag/version.h
+    libid3tag/version.h \
+    gme/Ay_Apu.h \
+    gme/Ay_Cpu.h \
+    gme/Ay_Emu.h \
+    gme/blargg_common.h \
+    gme/blargg_config.h \
+    gme/blargg_endian.h \
+    gme/blargg_source.h \
+    gme/Blip_Buffer.h \
+    gme/Classic_Emu.h \
+    gme/Data_Reader.h \
+    gme/Dual_Resampler.h \
+    gme/Effects_Buffer.h \
+    gme/Fir_Resampler.h \
+    gme/Gb_Apu.h \
+    gme/Gb_Cpu.h \
+    gme/gb_cpu_io.h \
+    gme/Gb_Oscs.h \
+    gme/Gbs_Emu.h \
+    gme/gme.h \
+    gme/Gme_File.h \
+    gme/gme_types.h \
+    gme/gme_types.h.in \
+    gme/Gym_Emu.h \
+    gme/Hes_Apu.h \
+    gme/Hes_Cpu.h \
+    gme/hes_cpu_io.h \
+    gme/Hes_Emu.h \
+    gme/Kss_Cpu.h \
+    gme/Kss_Emu.h \
+    gme/Kss_Scc_Apu.h \
+    gme/M3u_Playlist.h \
+    gme/Multi_Buffer.h \
+    gme/Music_Emu.h \
+    gme/Nes_Apu.h \
+    gme/Nes_Cpu.h \
+    gme/nes_cpu_io.h \
+    gme/Nes_Fme7_Apu.h \
+    gme/Nes_Namco_Apu.h \
+    gme/Nes_Oscs.h \
+    gme/Nes_Vrc6_Apu.h \
+    gme/Nsfe_Emu.h \
+    gme/Nsf_Emu.h \
+    gme/Sap_Apu.h \
+    gme/Sap_Cpu.h \
+    gme/sap_cpu_io.h \
+    gme/Sap_Emu.h \
+    gme/Sms_Apu.h \
+    gme/Sms_Oscs.h \
+    gme/Snes_Spc.h \
+    gme/Spc_Cpu.h \
+    gme/Spc_Dsp.h \
+    gme/Spc_Emu.h \
+    gme/Spc_Filter.h \
+    gme/Vgm_Emu.h \
+    gme/Vgm_Emu_Impl.h \
+    gme/Ym2413_Emu.h \
+    gme/Ym2612_Emu.h \
+    music_gme.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -217,14 +264,6 @@ SOURCES += \
     timidity/sdl_c.c \
     timidity/tables.c \
     timidity/timidity.c \
-    snes_spc/dsp.cpp \
-    snes_spc/SNES_SPC.cpp \
-    snes_spc/SNES_SPC_misc.cpp \
-    snes_spc/SNES_SPC_state.cpp \
-    snes_spc/spc.cpp \
-    snes_spc/SPC_DSP.cpp \
-    snes_spc/SPC_Filter.cpp \
-    music_spc.c \
     resample/mad_resample.c \
     timidity/ctrlmode.c \
     dynamic_mod.c \
@@ -244,13 +283,52 @@ SOURCES += \
     libid3tag/utf8.c \
     libid3tag/utf16.c \
     libid3tag/util.c \
-    libid3tag/version.c
-
-DISTFILES += \
-    timidity/COPYING \
-    timidity/FAQ \
-    timidity/README \
-    libid3tag/config.h.in \
-    libid3tag/genre.dat \
-    libid3tag/genre.dat.in
+    libid3tag/version.c \
+    gme/Ay_Apu.cpp \
+    gme/Ay_Cpu.cpp \
+    gme/Ay_Emu.cpp \
+    gme/Blip_Buffer.cpp \
+    gme/Classic_Emu.cpp \
+    gme/Data_Reader.cpp \
+    gme/Dual_Resampler.cpp \
+    gme/Effects_Buffer.cpp \
+    gme/Fir_Resampler.cpp \
+    gme/Gb_Apu.cpp \
+    gme/Gb_Cpu.cpp \
+    gme/Gb_Oscs.cpp \
+    gme/Gbs_Emu.cpp \
+    gme/gme.cpp \
+    gme/Gme_File.cpp \
+    gme/Gym_Emu.cpp \
+    gme/Hes_Apu.cpp \
+    gme/Hes_Cpu.cpp \
+    gme/Hes_Emu.cpp \
+    gme/Kss_Cpu.cpp \
+    gme/Kss_Emu.cpp \
+    gme/Kss_Scc_Apu.cpp \
+    gme/M3u_Playlist.cpp \
+    gme/Multi_Buffer.cpp \
+    gme/Music_Emu.cpp \
+    gme/Nes_Apu.cpp \
+    gme/Nes_Cpu.cpp \
+    gme/Nes_Fme7_Apu.cpp \
+    gme/Nes_Namco_Apu.cpp \
+    gme/Nes_Oscs.cpp \
+    gme/Nes_Vrc6_Apu.cpp \
+    gme/Nsfe_Emu.cpp \
+    gme/Nsf_Emu.cpp \
+    gme/Sap_Apu.cpp \
+    gme/Sap_Cpu.cpp \
+    gme/Sap_Emu.cpp \
+    gme/Sms_Apu.cpp \
+    gme/Snes_Spc.cpp \
+    gme/Spc_Cpu.cpp \
+    gme/Spc_Dsp.cpp \
+    gme/Spc_Emu.cpp \
+    gme/Spc_Filter.cpp \
+    gme/Vgm_Emu.cpp \
+    gme/Vgm_Emu_Impl.cpp \
+    gme/Ym2413_Emu.cpp \
+    gme/Ym2612_Emu.cpp \
+    music_gme.c
 

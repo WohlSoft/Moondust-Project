@@ -48,6 +48,10 @@ void LVL_Player::updateCollisions()
 
     collided_talkable_npc = NULL;
 
+    collided_slope=false;
+    collided_slope_direct=0;
+    collided_slope_angle_ratio=0.0f;
+
     _velocityX_add=0;
     _velocityY_add=0;
 
@@ -530,7 +534,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         if(blk->isHidden) break;
                         collided_left[(intptr_t)collided]=collided;//right of player
                         if(blk->setup->lava) kill(DEAD_burn);
-                        else if(blk->setup->danger==1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
+                        else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                     }
                     //*****************************Right****************************/
                     else if( (isCollideRight(collided)&&(blk->shape==LVL_Block::shape_rect))||
@@ -543,7 +547,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         if(blk->isHidden) break;
                         collided_right[(intptr_t)collided]=collided;//left of player
                         if(blk->setup->lava) kill(DEAD_burn);
-                        else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
+                        else if(blk->setup->danger==1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                     }
 
 

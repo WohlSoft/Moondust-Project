@@ -226,7 +226,7 @@ long  ConfigManager::getNpcTexture(long npcID)
         loadNpcTxtConfig(npcID);
 
         //Also, load and init animator
-        if( (npcSetup->scenery)&&((npcSetup->frames > 1)||(npcSetup->framestyle > 0)) )
+        if( (npcSetup->shared_ani)&&((npcSetup->frames > 1)||(npcSetup->framestyle > 0)) )
         {
             AdvNpcAnimator animator(*(npcSetup->image), *npcSetup);
             Animator_NPC.push_back(animator);

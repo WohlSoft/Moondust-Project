@@ -45,7 +45,7 @@ struct GamesaveData
 
     int version;
 
-    unsigned int lives;      //!< Number of lives
+    int lives;               //!< Number of lives
     unsigned int coins;      //!< Number of coins
     unsigned int points;     //!< Number of points
     unsigned int totalStars; //!< Total stars

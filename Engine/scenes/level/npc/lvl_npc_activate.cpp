@@ -21,7 +21,7 @@
 
 void LVL_Npc::Activate()
 {
-    if(!is_scenery)
+    if(is_activity)
         activationTimeout = setup->deactivetionDelay;
     else
         activationTimeout = 150;
@@ -29,7 +29,7 @@ void LVL_Npc::Activate()
     if(isActivated) return;
     setPaused(false);
 
-    deActivatable = ((setup->deactivation)||(setup->scenery)); //!< Allow deactivation of this NPC when it going offscreen
+    deActivatable = ((setup->deactivation)||(!setup->activity)); //!< Allow deactivation of this NPC when it going offscreen
     wasDeactivated=false;
 
     animator.start();
@@ -56,7 +56,7 @@ void LVL_Npc::deActivate()
     if(!isActivated) return;
 
     isActivated=false;
-    if(!is_scenery)
+    if(!is_shared_animation)
     {
         setDefaults();
         setPos(data.x, data.y);

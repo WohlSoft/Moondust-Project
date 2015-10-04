@@ -57,6 +57,7 @@
 #include "scenes/scene_loading.h"
 #include "scenes/scene_title.h"
 #include "scenes/scene_credits.h"
+#include "scenes/scene_gameover.h"
 
 #include <QMessageBox>
 
@@ -327,6 +328,15 @@ CreditsScreen:
 
 GameOverScreen:
 {
+    GameOverScene GOScene;
+    int result = GOScene.exec();
+    if (result == GameOverSceneResult::CONTINUE)
+    {
+        if (_game_state.isHubLevel)
+            goto PlayLevel;
+        else
+            goto PlayWorldMap;
+    }
 
     if(_flags.testWorld)
         goto ExitFromApplication;
@@ -607,6 +617,19 @@ PlayLevel:
                 {
                     playAgain = _game_state.isEpisode ? _game_state.replay_on_fail : true;
                     end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    //check the number of player lives here and decided to return worldmap or gameover
+                    if(_game_state.isEpisode)
+                    {
+                        _game_state.game_state.lives--;
+                        if(_game_state.game_state.lives<0)
+                        {
+                            playAgain=false;
+                            _game_state.game_state.coins=0;
+                            _game_state.game_state.points=0;
+                            _game_state.game_state.lives=3;
+                            end_level_jump=RETURN_TO_GAMEOVER_SCREEN;
+                        }
+                    }
                 }
                 break;
             case LvlExit::EXIT_Error:

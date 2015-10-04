@@ -63,8 +63,8 @@ void MusicFileList::buildMusicList()
             << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
             << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
             << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
-            //SNES SPC
-            << "*.spc";
+            //GAME EMU
+            << "*.ay" << "*.gbs"<<"*.gym"<<"*.hes"<<"*.kss"<<"*.nsf"<<"*.nsfe"<<"*.sap"<<"*.spc"<<"*.vgm"<<"*.vgz";
 
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);

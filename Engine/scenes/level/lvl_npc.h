@@ -36,6 +36,8 @@ public:
     int _direction;
     float motionSpeed;
     bool  is_scenery;
+    bool  is_activity;
+    bool  is_shared_animation;
 
     bool animated;
     long animator_ID;
@@ -191,6 +193,7 @@ public:
     virtual void lua_onInit() {}
     virtual void lua_onKill(int) {}
     virtual void lua_onHarm(int, int) {}
+    virtual void lua_onTransform(long) {}
 
     //Additional lua functions
     void lua_setSequenceLeft(luabind::object frames);

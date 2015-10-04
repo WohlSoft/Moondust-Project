@@ -260,9 +260,10 @@ void Scene_Effect::update(float ticks)
     if(_limit_delay)
     {
         _delay-=ticks;
-        if(_delay<=0.0f) _finished=true;
+        //I changed this because we don't want the animator to stop our effect if we specify a custom delay also!
+        if((_delay<=0.0f) & animator.isFinished()) _finished=true;
     }
-    if(animator.isFinished())
+    if(!_limit_delay & animator.isFinished())
         _finished=true;
     iterateStep(ticks);
 }

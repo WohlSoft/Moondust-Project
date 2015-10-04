@@ -25,6 +25,8 @@
 #include <common_features/mainwinconnect.h>
 #endif
 
+#include <functional>
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
@@ -34,464 +36,475 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad)
     errorString.clear();
     int str_count=0;        //Line Counter
     //int i;                  //counters
-    QString line;           //Current Line data
-    QStringList Params;
+    PGESTRING line;           //Current Line data
+    PGESTRINGList Params;
+    #ifdef PGE_FILES_QT
     QTextStream in(&inf);   //Read File
-
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
     in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+    #endif
 
-    QString unknownLines;
+    PGESTRING unknownLines;
 
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();
 
     //Read NPC.TXT File config
+    #ifdef PGE_FILES_QT
+    #define NextLine(line) str_count++;line = in.readLine();
+    #else
+    #define NextLine(line) str_count++; line.clear(); while(inf.eof()) { char x=inf.get(); if(x=='\n') break;  line+=x;}
+    #endif
 
-    str_count++;line = in.readLine(); // Read file line
-    while(!line.isNull())
+    NextLine(line)
+    while(!IsNULL(line))
     {
-       QString ln = line;
-       if(line.remove(' ')=="")
+       PGESTRING ln = line;
+       if(PGE_RemSSTR(line, " ")=="")
        {
-           str_count++;line = in.readLine();
+           NextLine(line)
            continue;
        } //Skip empty strings
 
        line=ln;
 
+       #ifdef PGE_FILES_QT
        Params=line.split("=", QString::SkipEmptyParts); // split the Parameter and value (example: chicken=2)
-       if(Params.count() != 2) // If string does not contain strings with "=" as separator
+       #else
+       PGE_SPLITSTR(Params, line, "=");
+       #endif
+
+       if(Params.size() != 2) // If string does not contain strings with "=" as separator
        {
            if(!IgnoreBad)
            {
-               unknownLines += QString::number(str_count)+": "+line+" <wrong syntax!>\n";
-               str_count++;line = in.readLine();
+               unknownLines += fromNum(str_count)+": "+line+" <wrong syntax!>\n";
+               NextLine(line)
                continue;
            }
        }
 
-       Params[0] = Params[0].simplified();
-       Params[0].remove(' '); //Delete spaces
+       Params[0] = PGESTR_Simpl(Params[0]);
+       Params[0]=PGE_RemSSTR(Params[0], " "); //Delete spaces
 
        if(Params[0]=="gfxoffsetx")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be signed intger!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
-               FileData.gfxoffsetx=Params[1].toInt();
+               FileData.gfxoffsetx=toInt(Params[1]);
                FileData.en_gfxoffsetx=true;
            }
         }
        else
        if(Params[0]=="gfxoffsety")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be signed intger!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be signed intger!>\n";
            }
            else
            {
-               Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
-               FileData.gfxoffsety=Params[1].toInt();
+               Params[1] = PGE_ReplSTR(Params[1], PGESTRING(" "), PGESTRING("")); //Delete spaces
+               FileData.gfxoffsety=toInt(Params[1]);
                FileData.en_gfxoffsety=true;
            }
         }
        else
        if(Params[0]=="width")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-               FileData.width=Params[1].toInt();
+               FileData.width=toInt(Params[1]);
                FileData.en_width=true;
            }
         }
        else
        if(Params[0]=="height")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-               Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
-               FileData.height=Params[1].toInt();
+               Params[1] = PGE_ReplSTR(Params[1], PGESTRING(" "), PGESTRING("")); //Delete spaces
+               FileData.height=toInt(Params[1]);
                FileData.en_height=true;
            }
         }
        else
        if(Params[0]=="gfxwidth")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-               FileData.gfxwidth=Params[1].toInt();
+               FileData.gfxwidth=toInt(Params[1]);
                FileData.en_gfxwidth=true;
            }
         }
        else
        if(Params[0]=="gfxheight")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-              FileData.gfxheight=Params[1].toInt();
+              FileData.gfxheight=toInt(Params[1]);
               FileData.en_gfxheight=true;
            }
         }
        else
        if(Params[0]=="score")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-              unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-              FileData.score=Params[1].toInt();
+              FileData.score=toInt(Params[1]);
               FileData.en_score=true;
            }
         }
        else
        if(Params[0]=="playerblock")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.playerblock=(bool)Params[1].toInt();
+               FileData.playerblock=(bool)toInt(Params[1]);
                FileData.en_playerblock=true;
            }
         }
        else
        if(Params[0]=="playerblocktop")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.playerblocktop=(bool)Params[1].toInt();
+               FileData.playerblocktop=(bool)toInt(Params[1]);
                FileData.en_playerblocktop=true;
            }
         }
        else
        if(Params[0]=="npcblock")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.npcblock=(bool)Params[1].toInt();
+               FileData.npcblock=(bool)toInt(Params[1]);
                FileData.en_npcblock=true;
            }
         }
        else
        if(Params[0]=="npcblocktop")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.npcblocktop=(bool)Params[1].toInt();
+               FileData.npcblocktop=(bool)toInt(Params[1]);
                FileData.en_npcblocktop=true;
            }
         }
        else
        if(Params[0]=="grabside")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.grabside=(bool)Params[1].toInt();
+               FileData.grabside=(bool)toInt(Params[1]);
                FileData.en_grabside=true;
            }
         }
        else
        if(Params[0]=="grabtop")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.grabtop=(bool)Params[1].toInt();
+               FileData.grabtop=(bool)toInt(Params[1]);
                FileData.en_grabtop=true;
            }
         }
        else
        if(Params[0]=="jumphurt")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.jumphurt=(bool)Params[1].toInt();
+               FileData.jumphurt=(bool)toInt(Params[1]);
                FileData.en_jumphurt=true;
            }
         }
        else
        if(Params[0]=="nohurt")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.nohurt=(bool)Params[1].toInt();
+               FileData.nohurt=(bool)toInt(Params[1]);
                FileData.en_nohurt=true;
            }
         }
        else
        if(Params[0]=="noblockcollision")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.noblockcollision=(bool)Params[1].toInt();
+               FileData.noblockcollision=(bool)toInt(Params[1]);
                FileData.en_noblockcollision=true;
            }
         }
        else
        if(Params[0]=="cliffturn")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.cliffturn=(bool)Params[1].toInt();
+               FileData.cliffturn=(bool)toInt(Params[1]);
                FileData.en_cliffturn=true;
            }
         }
        else
        if(Params[0]=="noyoshi")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.noyoshi=(bool)Params[1].toInt();
+               FileData.noyoshi=(bool)toInt(Params[1]);
                FileData.en_noyoshi=true;
            }
         }
        else
        if(Params[0]=="foreground")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.foreground=(bool)Params[1].toInt();
+               FileData.foreground=(bool)toInt(Params[1]);
                FileData.en_foreground=true;
            }
         }
        else
        if(Params[0]=="speed")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::sFloat(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be signed floating point number!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be signed floating point number!>\n";
            }
            else
            {
-               FileData.speed=Params[1].replace(QChar(','), QChar('.')).toFloat();
+               FileData.speed=toFloat(PGE_ReplSTR(Params[1], PGESTRING(","), PGESTRING(".")));
                FileData.en_speed=true;
            }
         }
        else
        if(Params[0]=="nofireball")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.nofireball=(bool)Params[1].toInt();
+               FileData.nofireball=(bool)toInt(Params[1]);
                FileData.en_nofireball=true;
            }
         }
        else
        if(Params[0]=="nogravity")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.nogravity=(bool)Params[1].toInt();
+               FileData.nogravity=(bool)toInt(Params[1]);
                FileData.en_nogravity=true;
            }
         }
        else
        if(Params[0]=="frames")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-               FileData.frames=Params[1].toInt();
+               FileData.frames=toInt(Params[1]);
                FileData.en_frames=true;
            }
         }
        else
        if(Params[0]=="framespeed")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be unsigned intger!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
            }
            else
            {
-               FileData.framespeed=Params[1].toInt();
+               FileData.framespeed=toInt(Params[1]);
                FileData.en_framespeed=true;
            }
         }
        else
        if(Params[0]=="framestyle")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::uInt(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be from 0 to 3!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be from 0 to 3!>\n";
            }
            else
            {
-               FileData.framestyle=Params[1].toInt();
+               FileData.framestyle=toInt(Params[1]);
                FileData.en_framestyle=true;
            }
         }
        else
        if(Params[0]=="noiceball")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-              unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+              unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.noiceball=(bool)Params[1].toInt();
+               FileData.noiceball=(bool)toInt(Params[1]);
                FileData.en_noiceball=true;
            }
         }
        else // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.nohammer=(bool)Params[1].toInt();
+               FileData.nohammer=(bool)toInt(Params[1]);
                FileData.en_nohammer=true;
            }
         }
        else
        if(Params[0]=="noshell")
         {
-           Params[1] = Params[1].simplified();
-           Params[1].remove(' '); //Delete spaces
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
            if(SMBX64::dBool(Params[1]))
            {
-               unknownLines += QString::number(str_count)+": "+line+" <Should be 1 or 0!>\n";
+               unknownLines += fromNum(str_count)+": "+line+" <Should be 1 or 0!>\n";
            }
            else
            {
-               FileData.noshell=(bool)Params[1].toInt();
+               FileData.noshell=(bool)toInt(Params[1]);
                FileData.en_noshell=true;
            }
         }
@@ -527,10 +540,10 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad)
               //errStr = "Unknown value";
               //if(!IgnoreBad) goto badfile;
            //Store unknown value into warning
-           unknownLines += QString::number(str_count)+": "+line+"\n";
+           unknownLines += fromNum(str_count)+": "+line+"\n";
        }
 
-    str_count++;line = in.readLine();
+    NextLine(line)
     }
 
     #ifdef PGE_EDITOR
@@ -563,128 +576,128 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad)
 //*********************************************************
 
 //Convert NPC Options structore to text for saving
-QString FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
+PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
 {
 
-    QString TextData;
+    PGESTRING TextData;
     if(FileData.en_gfxoffsetx)
     {
-        TextData += "gfxoffsetx=" + QString::number(FileData.gfxoffsetx) +"\n";
+        TextData += "gfxoffsetx=" + fromNum(FileData.gfxoffsetx) +"\n";
     }
     if(FileData.en_gfxoffsety)
     {
-        TextData += "gfxoffsety=" + QString::number(FileData.gfxoffsety) +"\n";
+        TextData += "gfxoffsety=" + fromNum(FileData.gfxoffsety) +"\n";
     }
     if(FileData.en_gfxwidth)
     {
-        TextData += "gfxwidth=" + QString::number(FileData.gfxwidth) +"\n";
+        TextData += "gfxwidth=" + fromNum(FileData.gfxwidth) +"\n";
     }
     if(FileData.en_gfxheight)
     {
-        TextData += "gfxheight=" + QString::number(FileData.gfxheight) +"\n";
+        TextData += "gfxheight=" + fromNum(FileData.gfxheight) +"\n";
     }
     if(FileData.en_foreground)
     {
-        TextData += "foreground=" + QString::number((int)FileData.foreground) +"\n";
+        TextData += "foreground=" + fromNum((int)FileData.foreground) +"\n";
     }
     if(FileData.en_width)
     {
-        TextData += "width=" + QString::number(FileData.width) +"\n";
+        TextData += "width=" + fromNum(FileData.width) +"\n";
     }
     if(FileData.en_height)
     {
-        TextData += "height=" + QString::number(FileData.height) +"\n";
+        TextData += "height=" + fromNum(FileData.height) +"\n";
     }
 
     if(FileData.en_score)
     {
-        TextData += "score=" + QString::number(FileData.score) +"\n";
+        TextData += "score=" + fromNum(FileData.score) +"\n";
     }
 
     if(FileData.en_playerblock)
     {
-        TextData += "playerblock=" + QString::number((int)FileData.playerblock) +"\n";
+        TextData += "playerblock=" + fromNum((int)FileData.playerblock) +"\n";
     }
 
     if(FileData.en_playerblocktop)
     {
-        TextData += "playerblocktop=" + QString::number((int)FileData.playerblocktop) +"\n";
+        TextData += "playerblocktop=" + fromNum((int)FileData.playerblocktop) +"\n";
     }
 
     if(FileData.en_npcblock)
     {
-        TextData += "npcblock=" + QString::number((int)FileData.npcblock) +"\n";
+        TextData += "npcblock=" + fromNum((int)FileData.npcblock) +"\n";
     }
 
     if(FileData.en_npcblocktop)
     {
-        TextData += "npcblocktop=" + QString::number((int)FileData.npcblocktop) +"\n";
+        TextData += "npcblocktop=" + fromNum((int)FileData.npcblocktop) +"\n";
     }
     if(FileData.en_grabside)
     {
-        TextData += "grabside=" + QString::number((int)FileData.grabside) +"\n";
+        TextData += "grabside=" + fromNum((int)FileData.grabside) +"\n";
     }
     if(FileData.en_grabtop)
     {
-        TextData += "grabtop=" + QString::number((int)FileData.grabtop) +"\n";
+        TextData += "grabtop=" + fromNum((int)FileData.grabtop) +"\n";
     }
     if(FileData.en_jumphurt)
     {
-        TextData += "jumphurt=" + QString::number((int)FileData.jumphurt) +"\n";
+        TextData += "jumphurt=" + fromNum((int)FileData.jumphurt) +"\n";
     }
     if(FileData.en_nohurt)
     {
-        TextData += "nohurt=" + QString::number((int)FileData.nohurt) +"\n";
+        TextData += "nohurt=" + fromNum((int)FileData.nohurt) +"\n";
     }
     if(FileData.en_speed)
     {
-        TextData += "speed=" + QString::number(FileData.speed) +"\n";
+        TextData += "speed=" + fromNum(FileData.speed) +"\n";
     }
     if(FileData.en_noblockcollision)
     {
-        TextData += "noblockcollision=" + QString::number((int)FileData.noblockcollision) +"\n";
+        TextData += "noblockcollision=" + fromNum((int)FileData.noblockcollision) +"\n";
     }
     if(FileData.en_cliffturn)
     {
-        TextData += "cliffturn=" + QString::number((int)FileData.cliffturn) +"\n";
+        TextData += "cliffturn=" + fromNum((int)FileData.cliffturn) +"\n";
     }
     if(FileData.en_noyoshi)
     {
-        TextData += "noyoshi=" + QString::number((int)FileData.noyoshi) +"\n";
+        TextData += "noyoshi=" + fromNum((int)FileData.noyoshi) +"\n";
     }
     if(FileData.en_nofireball)
     {
-        TextData += "nofireball=" + QString::number((int)FileData.nofireball) +"\n";
+        TextData += "nofireball=" + fromNum((int)FileData.nofireball) +"\n";
     }
     if(FileData.en_nogravity)
     {
-        TextData += "nogravity=" + QString::number((int)FileData.nogravity) +"\n";
+        TextData += "nogravity=" + fromNum((int)FileData.nogravity) +"\n";
     }
     if(FileData.en_noiceball)
     {
-        TextData += "noiceball=" + QString::number((int)FileData.noiceball) +"\n";
+        TextData += "noiceball=" + fromNum((int)FileData.noiceball) +"\n";
     }
     if(FileData.en_frames)
     {
-        TextData += "frames=" + QString::number(FileData.frames) +"\n";
+        TextData += "frames=" + fromNum(FileData.frames) +"\n";
     }
     if(FileData.en_framespeed)
     {
-        TextData += "framespeed=" + QString::number(FileData.framespeed) +"\n";
+        TextData += "framespeed=" + fromNum(FileData.framespeed) +"\n";
     }
     if(FileData.en_framestyle)
     {
-        TextData += "framestyle=" + QString::number(FileData.framestyle) +"\n";
+        TextData += "framestyle=" + fromNum(FileData.framestyle) +"\n";
     }
 
     //Extended
     if(FileData.en_nohammer)
     {
-        TextData += "nohammer=" + QString::number((int)FileData.nohammer) +"\n";
+        TextData += "nohammer=" + fromNum((int)FileData.nohammer) +"\n";
     }
     if(FileData.en_noshell)
     {
-        TextData += "noshell=" + QString::number((int)FileData.noshell) +"\n";
+        TextData += "noshell=" + fromNum((int)FileData.noshell) +"\n";
     }
     if(FileData.en_name)
     {

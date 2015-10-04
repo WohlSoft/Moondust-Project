@@ -32,5 +32,13 @@ namespace PGE_FileFormats_misc
         if ( foundpos != std::string::npos )
             sInput.erase(sInput.begin() + foundpos, sInput.begin() + foundpos + sub.length());
     }
+
+    bool hasEnding (std::string const &fullString, std::string const &ending) {
+        if (fullString.length() >= ending.length()) {
+            return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+        } else {
+            return false;
+        }
+    }
 }
 #endif
