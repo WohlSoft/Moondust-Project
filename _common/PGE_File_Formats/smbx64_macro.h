@@ -59,9 +59,10 @@
 #ifdef PGE_FILES_QT
 #define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, line.replace(QChar(','), QChar('.')).toFloat());
 #else
-#define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, { PGE_FileFormats_misc::replaceAll(line, ",", "."); toFloat(line); } );
+#define SFltVar(target, line) parseLine( SMBX64::sFloat(line), target, ([line]() -> float { std::string newx=line;PGE_FileFormats_misc::replaceAll(newx, ",", "."); return toFloat(newx); })() )
 #endif
 
+#ifdef PGE_FILES_QT
 #define strVarMultiLine(target, line) {\
 bool first=true;\
 while( (first && (line.size()==1)&&(line=="\""))||(!line.endsWith('\"')))\
@@ -74,6 +75,20 @@ while( (first && (line.size()==1)&&(line=="\""))||(!line.endsWith('\"')))\
 }\
 strVar(target, line);\
 }
+#else
+#define strVarMultiLine(target, line) {\
+bool first=true;\
+while( (first && (line.size()==1)&&(line=="\""))||(!PGE_FileFormats_misc::hasEnding(line, "\"")))\
+{\
+    first=false;\
+    line.append("\n");\
+    str_count++;line.append(in.readLine());\
+    if(PGE_FileFormats_misc::hasEnding(line, "\""))\
+        break;\
+}\
+strVar(target, line);\
+}
+#endif
 
 //Version comparison
 #define ge(v) file_format>=v
