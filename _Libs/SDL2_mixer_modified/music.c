@@ -71,8 +71,9 @@ typedef _off_t off_t;
 #endif
 #include <FLAC/metadata.h>
 #endif
-#ifdef SPC_MUSIC
-#include "music_spc.h"
+#ifdef GME_MUSIC
+#include "music_gme.h"
+static int gme_track_number = 0;
 #endif
 
 #if defined(MP3_MUSIC) || defined(MP3_MAD_MUSIC)
@@ -104,8 +105,9 @@ struct _Mix_Music {
 #ifdef MOD_MUSIC
         struct MODULE *module;
 #endif
-#ifdef SPC_MUSIC
-        struct MUSIC_SPC *snes_spcmus;
+#ifdef GME_MUSIC
+        int gameemu_track;
+        struct MUSIC_GME *gameemu;
 #endif
 #ifdef MID_MUSIC
 #ifdef USE_TIMIDITY_MIDI
@@ -296,9 +298,9 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                 left = modplug_playAudio(music_playing->data.modplug, stream, len);
                 break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
             case MUS_SPC:
-                left = SPC_playAudio(music_playing->data.snes_spcmus, stream, len);
+                left = GME_playAudio(music_playing->data.gameemu, stream, len);
                 break;
 #endif
 #ifdef MOD_MUSIC
@@ -383,9 +385,9 @@ int open_music(SDL_AudioSpec *mixer)
         add_music_decoder("MIKMOD");
     }
 #endif
-#ifdef SPC_MUSIC
-    if ( SPC_init(mixer) == 0 ) {
-        add_music_decoder("SNESSPC");
+#ifdef GME_MUSIC
+    if ( GME_init(mixer) == 0 ) {
+        add_music_decoder("GAMEEMU");
     }
 #endif
 #ifdef MID_MUSIC
@@ -527,6 +529,10 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_SPC;
     }
 
+    if (strcmp((char *)magic, "NESM") == 0) {
+        return MUS_SPC;
+    }
+
     if (detect_mp3(magic)) {
         return MUS_MP3;
     }
@@ -548,11 +554,34 @@ Mix_Music *Mix_LoadMUS(const char *file)
 
     if( music_file ) SDL_free(music_file);
 
-    music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
-    strcpy(music_file, (char*)file);
-    music_filename = strrchr(music_file, '/');
+        music_file = (char *)SDL_malloc(sizeof(char)*strlen(file)+1);
+        strcpy(music_file, (char*)file);
+        gme_track_number=0;
+        int hasTrackNum=0;
+        int i, j;
+        for(i=0; i<strlen(music_file); i++)
+            if(music_file[i]=='|') hasTrackNum=1;
+        if(hasTrackNum==1)
+        {
+            char trackNum[strlen(music_file)];
+            for(i=strlen(music_file)-1;i>=0;i-- )
+            {
+                trackNum[i]=music_file[i];
+                if(music_file[i]=='|')
+                {
+                    music_file[i]='\0';
+                    i++;
+                    break;
+                }
+            }
+            for(j=0;i<strlen(file);i++,j++)
+                trackNum[j]=trackNum[i];
+            if(j<strlen(file)) trackNum[j]='\0';
+            gme_track_number=atoi(trackNum);
+        }
+        music_filename = strrchr(music_file, '/');
 
-    char *ext = strrchr(file, '.');
+    char *ext = strrchr(music_file, '.');
 
 #ifdef CMD_MUSIC
     if ( music_cmd ) {
@@ -564,7 +593,7 @@ Mix_Music *Mix_LoadMUS(const char *file)
         }
         music->error = 0;
         music->type = MUS_CMD;
-        music->data.cmd = MusicCMD_LoadSong(music_cmd, file);
+        music->data.cmd = MusicCMD_LoadSong(music_cmd, music_file);
         if ( music->data.cmd == NULL ) {
             SDL_free(music);
             music = NULL;
@@ -573,15 +602,15 @@ Mix_Music *Mix_LoadMUS(const char *file)
     }
 #endif
 
-    src = SDL_RWFromFile(file, "rb");
+    src = SDL_RWFromFile(music_file, "rb");
     if ( src == NULL ) {
-        Mix_SetError("Couldn't open '%s'", file);
+        Mix_SetError("Couldn't open '%s'", music_file);
         return NULL;
     }
 
     /* Use the extension as a first guess on the file type */
     type = MUS_NONE;
-    ext = strrchr(file, '.');
+    ext = strrchr(music_file, '.');
     /* No need to guard these with #ifdef *_MUSIC stuff,
      * since we simply call Mix_LoadMUSType_RW() later */
     if ( ext ) {
@@ -592,7 +621,18 @@ Mix_Music *Mix_LoadMUS(const char *file)
                     MIX_string_equals(ext, "MIDI") ||
                     MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
-        } else if ( MIX_string_equals(ext, "SPC") ) {
+        } else if ( MIX_string_equals(ext, "AY") ||
+                    MIX_string_equals(ext, "GBS") ||
+                    MIX_string_equals(ext, "GYM") ||
+                    MIX_string_equals(ext, "PCE") ||
+                    MIX_string_equals(ext, "HES") ||
+                    MIX_string_equals(ext, "KSS") ||
+                    MIX_string_equals(ext, "NSF") ||
+                    MIX_string_equals(ext, "NSFE") ||
+                    MIX_string_equals(ext, "SAP") ||
+                    MIX_string_equals(ext, "SPC") ||
+                    MIX_string_equals(ext, "VGM") ||
+                    MIX_string_equals(ext, "VGZ") ) {
             type = MUS_SPC;
         } else if ( MIX_string_equals(ext, "OGG") ) {
             type = MUS_OGG;
@@ -808,13 +848,14 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
 #endif
         break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
     case MUS_SPC:
         if (music->error) {
+            music->data.gameemu_track = gme_track_number;
             SDL_RWseek(src, start, RW_SEEK_SET);
             music->type = MUS_SPC;
-            music->data.snes_spcmus = SPC_new_RW(src, freesrc);
-            if (music->data.snes_spcmus) {
+            music->data.gameemu = GME_new_RW(src, freesrc, music->data.gameemu_track);
+            if (music->data.gameemu) {
                 music->error = 0;
             }
         }
@@ -901,9 +942,9 @@ void Mix_FreeMusic(Mix_Music *music)
                 MOD_delete(music->data.module);
                 break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
             case MUS_SPC:
-                SPC_delete(music->data.snes_spcmus);
+                GME_delete(music->data.gameemu);
                 break;
 #endif
 #ifdef MID_MUSIC
@@ -1016,6 +1057,12 @@ const char* Mix_GetMusicTitleTag(const Mix_Music *music)
                     return music->data.modplug->mus_title;
             break;
         #endif
+        #ifdef GME_MUSIC
+            case MUS_SPC:
+                if(music->data.gameemu->mus_title!=NULL)
+                    return music->data.gameemu->mus_title;
+            break;
+        #endif
             default:
                 break;
         }
@@ -1077,9 +1124,9 @@ static int music_internal_play(Mix_Music *music, double position)
         music_internal_initialize_volume();
         break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
         case MUS_SPC:
-        SPC_play(music->data.snes_spcmus);
+        GME_play(music->data.gameemu);
         music_internal_initialize_volume();
         break;
 #endif
@@ -1305,9 +1352,9 @@ static void music_internal_volume(int volume)
         MOD_setvolume(music_playing->data.module, volume);
         break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
         case MUS_SPC:
-        SPC_setvolume(music_playing->data.snes_spcmus, volume);
+        GME_setvolume(music_playing->data.gameemu, volume);
         break;
 #endif
 #ifdef MID_MUSIC
@@ -1401,9 +1448,9 @@ static void music_internal_halt(void)
         MOD_stop(music_playing->data.module);
         break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
         case MUS_SPC:
-        SPC_stop(music_playing->data.snes_spcmus);
+        GME_stop(music_playing->data.gameemu);
         break;
 #endif
 #ifdef MID_MUSIC
@@ -1584,9 +1631,9 @@ static int music_internal_playing()
         }
         break;
 #endif
-#ifdef SPC_MUSIC
+#ifdef GME_MUSIC
         case MUS_SPC:
-        if ( ! SPC_playing(music_playing->data.snes_spcmus) ) {
+        if ( ! GME_playing(music_playing->data.gameemu) ) {
             playing = 0;
         }
         break;

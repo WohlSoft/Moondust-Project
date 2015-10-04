@@ -38,6 +38,8 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
     isLuaNPC=false;
     isWarping=false;
     is_scenery=false;
+    is_activity=true;
+    is_shared_animation=false;
 
     warpDirectO=0;
     warpSpriteOffset=1.0f;

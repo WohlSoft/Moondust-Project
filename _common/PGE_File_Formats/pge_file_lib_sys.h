@@ -14,6 +14,8 @@
 #include <regex>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
+#include <limits.h> /* PATH_MAX */
 #endif
 
 

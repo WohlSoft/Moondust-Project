@@ -21,10 +21,23 @@
 
 #include "scene.h"
 
+#include <controls/controller.h>
+
+enum GameOverSceneResult { CONTINUE, QUIT };
+
 class GameOverScene : public Scene
 {
 public:
     GameOverScene();
+    ~GameOverScene();
+
+    void update();
+    void render();
+    int exec();
+
+    void processEvents();
+
+    Controller* player1Controller;
 };
 
 #endif // SCENE_GAMEOVER_H

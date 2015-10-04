@@ -27,6 +27,7 @@
 
 #include "../scenes/scene_level.h"
 #include "../scenes/scene_world.h"
+#include "../scenes/scene_gameover.h"
 
 #include <QFontMetrics>
 #include <QMessageBox>
@@ -451,6 +452,15 @@ void PGE_MenuBoxBase::initControllers()
         else if(parentScene->type()==Scene::World)
         {
             WorldScene * s = dynamic_cast<WorldScene *>(parentScene);
+            if(s)
+            {
+                _ctrl1 = s->player1Controller;
+                _ctrl2=NULL;
+            }
+        }
+        else if(parentScene->type()==Scene::GameOver)
+        {
+            GameOverScene * s = dynamic_cast<GameOverScene *>(parentScene);
             if(s)
             {
                 _ctrl1 = s->player1Controller;

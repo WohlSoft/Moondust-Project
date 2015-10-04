@@ -53,6 +53,14 @@ void WorldMapSetup::init(QSettings &engine_ini)
         health_color = engine_ini.value("health-counter-color", "#FFFFFF").toString();
         health_rgba.setRgba(health_color);
 
+        lives_en = engine_ini.value("lives-counter", false).toBool();
+        lives_x = engine_ini.value("lives-counter-x", "").toInt();
+        lives_y = engine_ini.value("lives-counter-y", "").toInt();
+        lives_font_name= engine_ini.value("lives-counter-font", "numeric").toString();
+        lives_fontID=0;
+        lives_color = engine_ini.value("lives-counter-color", "#FFFFFF").toString();
+        lives_rgba.setRgba(health_color);
+
         star_en = engine_ini.value("star-counter", false).toBool();
         star_x = engine_ini.value("star-counter-x", "").toInt();
         star_y = engine_ini.value("star-counter-y", "").toInt();
