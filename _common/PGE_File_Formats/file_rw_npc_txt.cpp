@@ -25,29 +25,54 @@
 #include <common_features/mainwinconnect.h>
 #endif
 
+#ifdef PGE_FILES_QT
+#include <QFile>
+#include <QFileInfo>
+#endif
+
 #include <functional>
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-NPCConfigFile FileFormats::ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad)
+NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
     errorString.clear();
     int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
     PGESTRINGList Params;
+    PGESTRING unknownLines;
+    NPCConfigFile FileData = CreateEmpytNpcTXTArray();
+
     #ifdef PGE_FILES_QT
+    if(!QFileInfo(file).exists())
+    {
+        FileData.ReadFileValid=false;
+        errorString="File not exists: "+file;
+        #ifdef PGE_EDITOR
+        QMessageBox::critical(MainWinConnect::pMainWin, QTranslator::tr("File open error"),
+        QTranslator::tr("File is not exist"), QMessageBox::Ok);
+        #endif
+        return FileData;
+    }
+    QFile inf(file);
+    if(!inf.open(QFile::ReadOnly|QFile::Text))
+    {
+        FileData.ReadFileValid=false;
+        errorString="Can't open file to read: "+file;
+        #ifdef PGE_EDITOR
+        QMessageBox::critical(MainWinConnect::pMainWin, QTranslator::tr("File open error"),
+        QTranslator::tr("Can't read the file"), QMessageBox::Ok);
+        #endif
+        return FileData;
+    }
     QTextStream in(&inf);   //Read File
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
     in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
     #endif
-
-    PGESTRING unknownLines;
-
-    NPCConfigFile FileData = CreateEmpytNpcTXTArray();
 
     //Read NPC.TXT File config
     #ifdef PGE_FILES_QT
