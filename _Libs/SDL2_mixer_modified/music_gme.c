@@ -147,7 +147,7 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
             return NULL;
         }
 
-        if(trackNum >= gme_track_count(game_emu))
+        if((trackNum<0)||(trackNum >= gme_track_count(game_emu)))
             trackNum = gme_track_count(game_emu)-1;
 
         err = (char*)gme_start_track( game_emu, trackNum );
