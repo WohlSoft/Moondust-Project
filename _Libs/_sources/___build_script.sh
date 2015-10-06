@@ -9,6 +9,15 @@
 #Install Builds into /usr/ directory globally
 #InstallTo = /usr/
 
+OurOS="linux_defaut"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+OurOS="macos"
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+OurOS="linux"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+OurOS="freebsd"
+fi
+
 #=======================================================================
 errorofbuid()
 {
@@ -126,8 +135,12 @@ cd libmad-0.15.1b
 if [ ! -f ./configure_before_patch ]
 then
 	mv ./configure ./configure_before_patch
-	cp ../libmad-0.15.1b.patched_configure.txt ./configure
-	chmod u+x ./configure
+    if [[ "$OurOS" == "macos" ]]; then
+        cp ../libmad-0.15.1b.patched_osx_configure.txt ./configure
+    else
+        cp ../libmad-0.15.1b.patched_configure.txt ./configure
+    fi
+    chmod u+x ./configure
 fi
 cd ..
 sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
