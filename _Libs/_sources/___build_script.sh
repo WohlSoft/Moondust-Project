@@ -83,6 +83,7 @@ UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
 UnArch 'luajit-2.0'
 cp ../libmad-0.15.1b.patched_configure.txt .
+cp ../libmad-0.15.1b.patched_osx_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
 #############################Build libraries#####################
