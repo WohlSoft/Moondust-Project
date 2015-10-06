@@ -652,7 +652,7 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         } else {
                             if( npc->posRect.collideRect(posRect))
                             {
-                               if(npc->setup->hurt_player) harm(1);
+                               if(npc->setup->hurt_player & !npc->setup->kill_on_jump) harm(1);
                             }
                         }
 
@@ -779,7 +779,12 @@ void LVL_Player::solveCollision(PGE_Phys_Object *collided)
                         } else {
                             if( npc->posRect.collideRect(posRect))
                             {
-                               if(npc->setup->hurt_player) harm(1);
+                                //The second half of this "if" statement is there to fix a bug with falling collisions,
+                                //and should NOT remain here because it is not how we should handle this!
+                                //The bug occurs when the player is moving fast enough when they land on an enemy that they
+                                //partially enter the enemy before the collision is resolved, causing the engine to think
+                                //that the player is INSIDE the NPC, when they are actually only JUMPING on the NPC.
+                                if(npc->setup->hurt_player & (!npc->setup->kill_on_jump || colliding_ySpeed > -1.0f)) harm(1);
                             }
                         }
                         break;

@@ -90,7 +90,7 @@ void LVL_Player::attack(LVL_Player::AttackDirection _dir)
     foreach(LVL_Npc *x, target_npcs)
     {
         if(!x) continue;
-        if(x->isPaused()) continue; //Don't attak NPC with paused physics!
+        if(x->isPaused()) continue; //Don't attack NPC with paused physics!
         if(x->isKilled()) continue;
         if(x->isGenerator) continue;
         x->doHarm(LVL_Npc::DAMAGE_BY_PLAYER_ATTACK);
@@ -173,6 +173,10 @@ void LVL_Player::harm(int _damage)
         kill(DEAD_killed);
     } else {
         PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
+        if(health==2)
+            setCharacterSafe(characterID, 2);
+        if(health==1)
+            setCharacterSafe(characterID, 1);
         setInvincible(true, 3000, true);
     }
 }
