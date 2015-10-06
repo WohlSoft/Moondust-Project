@@ -34,13 +34,13 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-WorldData FileFormats::ReadExtendedWorldFile(PGEFILE &inf)
-{
-    QTextStream in(&inf);   //Read File
-    in.setCodec("UTF-8");
+//WorldData FileFormats::ReadExtendedWorldFile(PGEFILE &inf)
+//{
+//    QTextStream in(&inf);   //Read File
+//    in.setCodec("UTF-8");
 
-    return ReadExtendedWldFile( in.readAll(), inf.fileName() );
-}
+//    return ReadExtendedWldFile( in.readAll(), inf.fileName() );
+//}
 
 WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
 {

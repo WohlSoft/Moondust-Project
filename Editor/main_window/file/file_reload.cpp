@@ -169,7 +169,6 @@ void MainWindow::on_actionReload_triggered()
     if (activeChildWindow()==2)
     {
         filePath = activeNpcEditWin()->curFile;
-        QFile fileIn(filePath);
 
         if(activeNpcEditWin()->isUntitled)
         {
@@ -189,13 +188,13 @@ void MainWindow::on_actionReload_triggered()
                 save();
         }
 
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
-        }
+//        if (!fileIn.open(QIODevice::ReadOnly)) {
+//        QMessageBox::critical(this, tr("File open error"),
+//        tr("Can't open the file."), QMessageBox::Ok);
+//            return;
+//        }
 
-        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(fileIn);
+        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(filePath);
         if( !FileData.ReadFileValid ) return;
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         activeNpcEditWin()->isModyfied = false;

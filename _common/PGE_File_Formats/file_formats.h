@@ -50,8 +50,8 @@ public:
     static LevelData OpenLevelFile(PGESTRING filePath, bool silent=false); //!< Open supported level file via direct path
     static LevelData OpenLevelFileHeader(PGESTRING filePath);
 
-    static LevelData ReadLevelFile(PGEFILE &inf); //!< Parse SMBX64 Level file by file stream
-    static LevelData ReadExtendedLevelFile(PGEFILE &inf); //!< Parse PGE-X level file by file stream
+    //static LevelData ReadLevelFile(PGEFILE &inf); //!< Parse SMBX64 Level file by file stream
+    //static LevelData ReadExtendedLevelFile(PGEFILE &inf); //!< Parse PGE-X level file by file stream
     static LevelData dummyLvlDataArray(); //!< Generate empty level map
 
     // SMBX64 LVL File
@@ -80,8 +80,8 @@ public:
     static WorldData OpenWorldFile(PGESTRING filePath, bool silent=false);
     static WorldData OpenWorldFileHeader(PGESTRING filePath);
 
-    static WorldData ReadWorldFile(PGEFILE &inf); //!< Parse SMBX64 World file by file stream
-    static WorldData ReadExtendedWorldFile(PGEFILE &inf); //!< Parse PGE-X World file by file stream
+    //static WorldData ReadWorldFile(PGEFILE &inf); //!< Parse SMBX64 World file by file stream
+    //static WorldData ReadExtendedWorldFile(PGEFILE &inf); //!< Parse PGE-X World file by file stream
     static WorldData dummyWldDataArray(); //!< Generate empty world map
 
     // SMBX64 WLD File
@@ -116,7 +116,7 @@ public:
 
     /******************************NPC.txt file***********************************/
     // SMBX64 NPC.TXT File
-    static NPCConfigFile ReadNpcTXTFile(PGEFILE &inf, bool IgnoreBad=false); //read
+    static NPCConfigFile ReadNpcTXTFile(PGESTRING file, bool IgnoreBad=false); //read
     static PGESTRING WriteNPCTxtFile(NPCConfigFile FileData);                //write
 
     static NPCConfigFile CreateEmpytNpcTXTArray();
