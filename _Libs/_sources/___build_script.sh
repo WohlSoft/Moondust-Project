@@ -19,7 +19,7 @@ OurOS="freebsd"
 fi
 
 #=======================================================================
-errorofbuid()
+errorofbuild()
 {
 	printf "\n\n=========ERROR!!===========\n\n"
 	exit 1
@@ -52,7 +52,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 
 make
@@ -60,7 +60,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 
 make install
@@ -68,7 +68,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 cd ..
 }
@@ -146,7 +146,11 @@ fi
 cd ..
 sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
 sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
-BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+if [[ "$OurOS" == "macos" ]]; then
+    BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --prefix='$InstallTo
+else
+    BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+fi
 
 ###########LuaJIT###########
 echo "==========LuaJIT============"
@@ -156,14 +160,14 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 make install PREFIX=$InstallTo BUILDMODE=static
 if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 cd ..
 
