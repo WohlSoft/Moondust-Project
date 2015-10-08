@@ -33,24 +33,24 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-LevelData FileFormats::ReadExtendedLevelFile(PGEFILE &inf)
-{
-    #ifdef PGE_FILES_QT
-    QTextStream in(&inf);   //Read File
-    in.setCodec("UTF-8");
-    #define FileBuffer in.readAll()
-    #define FileName inf.fileName()
-    #else
-    std::string buffer;
-    while(inf.peek()!=EOF)
-    {
-        buffer+= inf.get();
-    }
-    #define FileBuffer buffer
-    #define FileName "unknown.lvlx"
-    #endif
-    return ReadExtendedLvlFile(FileBuffer, FileName );
-}
+//LevelData FileFormats::ReadExtendedLevelFile(PGEFILE &inf)
+//{
+//    #ifdef PGE_FILES_QT
+//    QTextStream in(&inf);   //Read File
+//    in.setCodec("UTF-8");
+//    #define FileBuffer in.readAll()
+//    #define FileName inf.fileName()
+//    #else
+//    std::string buffer;
+//    while(inf.peek()!=EOF)
+//    {
+//        buffer+= inf.get();
+//    }
+//    #define FileBuffer buffer
+//    #define FileName "unknown.lvlx"
+//    #endif
+//    return ReadExtendedLvlFile(FileBuffer, FileName );
+//}
 
 
 LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)

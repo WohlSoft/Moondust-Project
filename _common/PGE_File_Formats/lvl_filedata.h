@@ -187,13 +187,6 @@ struct LevelLayer
     unsigned int array_id;
 };
 
-struct LevelEvent_layers
-{
-    PGESTRING hide;
-    PGESTRING show;
-    PGESTRING toggle;
-};
-
 struct LevelEvent_Sets
 {
     long music_id;
@@ -210,7 +203,6 @@ struct LevelSMBX64Event
     PGESTRING msg;
     long sound_id;
     long end_game;
-    PGELIST<LevelEvent_layers > layers;
 
     bool nosmoke;
     PGESTRINGList layers_hide;

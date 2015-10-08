@@ -397,10 +397,7 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
     obj_npc* npcSetup=&lvl_npc_indexes[npcID];
     PGESTRING file = Dir_NPC.getCustomFile(PGESTRING("npc-%1.txt").arg(npcID));
     if(file.isEmpty()) return;
-    if(!QFileInfo(file).exists()) return;
-    QFile npcFile(file);
-    if(!npcFile.open(QFile::ReadOnly|QFile::Text)) return;
-    npcTxt=FileFormats::ReadNpcTXTFile(npcFile, true);
+    npcTxt=FileFormats::ReadNpcTXTFile(file, true);
     if(!npcTxt.ReadFileValid) return;
     if(npcSetup->isInit)
         *npcSetup=FileFormats::mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));

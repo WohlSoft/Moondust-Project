@@ -222,7 +222,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     else
     if(in_1.suffix().toLower() == "txt")
     {
-        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(file);
+        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(FilePath);
         if( !FileData.ReadFileValid ) return;
 
         NpcEdit *child = createNPCChild();

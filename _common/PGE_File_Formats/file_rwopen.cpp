@@ -29,7 +29,7 @@
 #include "file_formats.h"
 
 
-LevelData FileFormats::OpenLevelFile(QString filePath, bool silent)
+LevelData FileFormats::OpenLevelFile(PGESTRING filePath, bool silent)
 {
     errorString.clear();
     QFile file(filePath);
@@ -69,7 +69,7 @@ LevelData FileFormats::OpenLevelFile(QString filePath, bool silent)
     return data;
 }
 
-LevelData FileFormats::OpenLevelFileHeader(QString filePath)
+LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     LevelData data;
