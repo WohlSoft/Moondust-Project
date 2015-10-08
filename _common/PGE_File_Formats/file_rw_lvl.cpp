@@ -110,6 +110,13 @@
 //    #endif
 //}
 
+struct LevelEvent_layers
+{
+    PGESTRING hide;
+    PGESTRING show;
+    PGESTRING toggle;
+};
+
 LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 {
     errorString.clear();
@@ -620,7 +627,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
             if(ge(14)){ nextLine(); UIntVar(events.sound_id, line);}
             if(ge(18)){ nextLine(); UIntVar(events.end_game, line);}
 
-            events.layers.clear();
+            PGELIST<LevelEvent_layers > events_layersArr;
+            events_layersArr.clear();
 
             events.layers_hide.clear();
             events.layers_show.clear();
@@ -636,7 +644,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
                 if(events_layers.hide!="") events.layers_hide.push_back(events_layers.hide);
                 if(events_layers.show!="") events.layers_show.push_back(events_layers.show);
                 if(events_layers.toggle!="") events.layers_toggle.push_back(events_layers.toggle);
-                events.layers.push_back(events_layers);
+                events_layersArr.push_back(events_layers);
             }
 
             if(ge(13))
@@ -1186,7 +1194,8 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             if(file_format>=18)
             TextData += SMBX64::IntS(FileData.events[i].end_game);
 
-            FileData.events[i].layers.clear();
+            PGELIST<LevelEvent_layers > events_layersArr;
+            //FileData.events[i].layers.clear();
             for(j=0; j<20; j++)
             {
                 layerSet.hide =
@@ -1199,15 +1208,15 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
                         ((j<FileData.events[i].layers_toggle.size())?
                           FileData.events[i].layers_toggle[j] : "");
 
-                FileData.events[i].layers.push_back(layerSet);
+                events_layersArr.push_back(layerSet);
             }
 
-            for(j=0; j< FileData.events[i].layers.size()  && j<s_limit-1; j++)
+            for(j=0; j< events_layersArr.size()  && j<s_limit-1; j++)
             {
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].hide);
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
+                TextData += SMBX64::qStrS(events_layersArr[j].hide);
+                TextData += SMBX64::qStrS(events_layersArr[j].show);
                 if(file_format>=14)
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
+                TextData += SMBX64::qStrS(events_layersArr[j].toggle);
             }
             for( ; j<s_limit; j++)
             {

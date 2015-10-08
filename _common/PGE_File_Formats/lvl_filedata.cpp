@@ -175,15 +175,6 @@ LevelSMBX64Event FileFormats::dummyLvlEvent()
     dummyEvent.move_camera_y=0.0;
     dummyEvent.scroll_section=0;
 
-    LevelEvent_layers events_layers;
-    dummyEvent.layers.clear();
-    for(int j=0; j< 21; j++)
-    {
-        events_layers.hide="";
-        events_layers.show="";
-        events_layers.toggle="";
-        dummyEvent.layers.push_back(events_layers);
-    }
     dummyEvent.layers_hide.clear();
     dummyEvent.layers_show.clear();
     dummyEvent.layers_toggle.clear();
