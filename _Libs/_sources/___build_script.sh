@@ -9,8 +9,17 @@
 #Install Builds into /usr/ directory globally
 #InstallTo = /usr/
 
+OurOS="linux_defaut"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+OurOS="macos"
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+OurOS="linux"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+OurOS="freebsd"
+fi
+
 #=======================================================================
-errorofbuid()
+errorofbuild()
 {
 	printf "\n\n=========ERROR!!===========\n\n"
 	exit 1
@@ -43,7 +52,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 
 make
@@ -51,7 +60,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 
 make install
@@ -59,7 +68,7 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 cd ..
 }
@@ -74,6 +83,7 @@ UnArch 'libmodplug-0.8.8.5'
 UnArch 'libmad-0.15.1b'
 UnArch 'luajit-2.0'
 cp ../libmad-0.15.1b.patched_configure.txt .
+cp ../libmad-0.15.1b.patched_osx_configure.txt .
 #UnArch "SDL2_ttf-2.0.12"
 
 #############################Build libraries#####################
@@ -126,13 +136,21 @@ cd libmad-0.15.1b
 if [ ! -f ./configure_before_patch ]
 then
 	mv ./configure ./configure_before_patch
-	cp ../libmad-0.15.1b.patched_configure.txt ./configure
-	chmod u+x ./configure
+    if [[ "$OurOS" == "macos" ]]; then
+        cp ../libmad-0.15.1b.patched_osx_configure.txt ./configure
+    else
+        cp ../libmad-0.15.1b.patched_configure.txt ./configure
+    fi
+    chmod u+x ./configure
 fi
 cd ..
 sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.am'
 sed -i 's/-version-info \$(version_info)/-avoid-version/g' 'libmad-0.15.1b/Makefile.in'
-BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+if [[ "$OurOS" == "macos" ]]; then
+    BuildSrc 'libmad-0.15.1b' 'x86_64-apple-darwin --prefix='$InstallTo
+else
+    BuildSrc 'libmad-0.15.1b' '--prefix='$InstallTo
+fi
 
 ###########LuaJIT###########
 echo "==========LuaJIT============"
@@ -142,14 +160,14 @@ if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 make install PREFIX=$InstallTo BUILDMODE=static
 if [ $? -eq 0 ]
 then
   echo "[good]"
 else
-  errorofbuid
+  errorofbuild
 fi
 cd ..
 

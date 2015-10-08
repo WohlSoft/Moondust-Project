@@ -25,90 +25,97 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
+//LevelData FileFormats::ReadLevelFile(PGEFILE &inf)
+//{
+//    errorString.clear();
+
+//    #ifdef PGE_FILES_QT
+//    QByteArray data;
+//    data = inf.read(7);
+//    if( (data.size()==0) || (data.size()<7))
+//    {
+//    #else
+//    char data[8];
+//    inf.read(data, 7);
+//    #endif
+//        LevelData FileData = dummyLvlDataArray();
+//        #ifdef PGE_FILES_QT
+//        if(data.size()==0)
+//        BadFileMsg(inf.fileName()+
+//            PGESTRING("\nFile is empty! (size of file is 0 bytes)"),
+//                   0, "<FILE IS EMPTY>");
+//        else
+//        BadFileMsg(inf.fileName()+
+//            PGESTRING("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
+//                   0, "<FILE IS TOO SMALL>");
+//        #else
+//        if(inf.eof())
+//        {
+//            std::ostringstream badFileMsgText;
+//            badFileMsgText <<"\nFile is too small! (size of file is " << inf.tellg() <<  "bytes)";
+//            BadFileMsg("filename.lvl"+ badFileMsgText.str(), 0, "<FILE IS TOO SMALL>");
+//        }
+//        #endif
+//        FileData.ReadFileValid=false;
+//        return FileData;
+//    #ifdef PGE_FILES_QT
+//    }
+//    #endif
+
+//    #ifdef PGE_FILES_QT
+//    //Check magic number: should be number from 0 to 64 and \n character after
+//    if(
+//            ((int)data.at(0)>0x39)||
+//            ((int)data.at(0)<0x30)||
+//            ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
+//             ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
+//      )
+//        {
+//            LevelData FileData = dummyLvlDataArray();
+//            BadFileMsg(inf.fileName()+
+//                "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
+//            FileData.ReadFileValid=false;
+//            return FileData;
+//        }
+//    inf.reset();
+//    QTextStream in(&inf);   //Read File
+
+//    in.setAutoDetectUnicode(true);
+//    in.setLocale(QLocale::system());
+//    in.setCodec(QTextCodec::codecForLocale());
+
+//    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+//    #else
+//    if(
+//            ((int)data[0]>0x39)||
+//            ((int)data[0]<0x30)||
+//            ( ((int)data[1]!=0x0D && (int)data[1]!=0x0A)&&
+//             ((int)data[2]!=0x0D && (int)data[2]!=0x0A) )
+//      )
+//    {
+//        LevelData FileData = dummyLvlDataArray();
+//        BadFileMsg(PGESTRING("unknown.lvl")+
+//            "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
+//        FileData.ReadFileValid=false;
+//        return FileData;
+//    }
+//    inf.seekg(std::ios::beg);
+
+//    PGESTRING buffer;
+//    while(!inf.eof())
+//    {
+//        buffer.push_back(inf.get());
+//    }
+//    return ReadSMBX64LvlFile( buffer, "unknown.lvl" );
+//    #endif
+//}
+
+struct LevelEvent_layers
 {
-    errorString.clear();
-
-    #ifdef PGE_FILES_QT
-    QByteArray data;
-    data = inf.read(7);
-    if( (data.size()==0) || (data.size()<7))
-    {
-    #else
-    char data[8];
-    inf.read(data, 7);
-    #endif
-        LevelData FileData = dummyLvlDataArray();
-        #ifdef PGE_FILES_QT
-        if(data.size()==0)
-        BadFileMsg(inf.fileName()+
-            PGESTRING("\nFile is empty! (size of file is 0 bytes)"),
-                   0, "<FILE IS EMPTY>");
-        else
-        BadFileMsg(inf.fileName()+
-            PGESTRING("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
-                   0, "<FILE IS TOO SMALL>");
-        #else
-        if(inf.eof())
-        {
-            std::ostringstream badFileMsgText;
-            badFileMsgText <<"\nFile is too small! (size of file is " << inf.tellg() <<  "bytes)";
-            BadFileMsg("filename.lvl"+ badFileMsgText.str(), 0, "<FILE IS TOO SMALL>");
-        }
-        #endif
-        FileData.ReadFileValid=false;
-        return FileData;
-    #ifdef PGE_FILES_QT
-    }
-    #endif
-
-    #ifdef PGE_FILES_QT
-    //Check magic number: should be number from 0 to 64 and \n character after
-    if(
-            ((int)data.at(0)>0x39)||
-            ((int)data.at(0)<0x30)||
-            ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
-             ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
-      )
-        {
-            LevelData FileData = dummyLvlDataArray();
-            BadFileMsg(inf.fileName()+
-                "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
-            FileData.ReadFileValid=false;
-            return FileData;
-        }
-    inf.reset();
-    QTextStream in(&inf);   //Read File
-
-    in.setAutoDetectUnicode(true);
-    in.setLocale(QLocale::system());
-    in.setCodec(QTextCodec::codecForLocale());
-
-    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
-    #else
-    if(
-            ((int)data[0]>0x39)||
-            ((int)data[0]<0x30)||
-            ( ((int)data[1]!=0x0D && (int)data[1]!=0x0A)&&
-             ((int)data[2]!=0x0D && (int)data[2]!=0x0A) )
-      )
-    {
-        LevelData FileData = dummyLvlDataArray();
-        BadFileMsg(PGESTRING("unknown.lvl")+
-            "\nThis is not SMBX64 level file, Bad magic number!", 0, "<NULL>");
-        FileData.ReadFileValid=false;
-        return FileData;
-    }
-    inf.seekg(std::ios::beg);
-
-    PGESTRING buffer;
-    while(!inf.eof())
-    {
-        buffer.push_back(inf.get());
-    }
-    return ReadSMBX64LvlFile( buffer, "unknown.lvl" );
-    #endif
-}
+    PGESTRING hide;
+    PGESTRING show;
+    PGESTRING toggle;
+};
 
 LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
 {
@@ -620,7 +627,8 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
             if(ge(14)){ nextLine(); UIntVar(events.sound_id, line);}
             if(ge(18)){ nextLine(); UIntVar(events.end_game, line);}
 
-            events.layers.clear();
+            PGELIST<LevelEvent_layers > events_layersArr;
+            events_layersArr.clear();
 
             events.layers_hide.clear();
             events.layers_show.clear();
@@ -636,7 +644,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
                 if(events_layers.hide!="") events.layers_hide.push_back(events_layers.hide);
                 if(events_layers.show!="") events.layers_show.push_back(events_layers.show);
                 if(events_layers.toggle!="") events.layers_toggle.push_back(events_layers.toggle);
-                events.layers.push_back(events_layers);
+                events_layersArr.push_back(events_layers);
             }
 
             if(ge(13))
@@ -1186,7 +1194,8 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             if(file_format>=18)
             TextData += SMBX64::IntS(FileData.events[i].end_game);
 
-            FileData.events[i].layers.clear();
+            PGELIST<LevelEvent_layers > events_layersArr;
+            //FileData.events[i].layers.clear();
             for(j=0; j<20; j++)
             {
                 layerSet.hide =
@@ -1199,15 +1208,15 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
                         ((j<FileData.events[i].layers_toggle.size())?
                           FileData.events[i].layers_toggle[j] : "");
 
-                FileData.events[i].layers.push_back(layerSet);
+                events_layersArr.push_back(layerSet);
             }
 
-            for(j=0; j< FileData.events[i].layers.size()  && j<s_limit-1; j++)
+            for(j=0; j< events_layersArr.size()  && j<s_limit-1; j++)
             {
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].hide);
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
+                TextData += SMBX64::qStrS(events_layersArr[j].hide);
+                TextData += SMBX64::qStrS(events_layersArr[j].show);
                 if(file_format>=14)
-                TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
+                TextData += SMBX64::qStrS(events_layersArr[j].toggle);
             }
             for( ; j<s_limit; j++)
             {
