@@ -389,7 +389,8 @@ struct id3_file *new_file(FILE *iofile, enum id3_file_mode mode,
 
   file->iofile  = iofile;
   file->mode    = mode;
-  file->path    = path ? strdup(path) : 0;
+  char *nullP=0;
+  file->path    = path ? strdup(path) : nullP;
 
   file->flags   = 0;
 
