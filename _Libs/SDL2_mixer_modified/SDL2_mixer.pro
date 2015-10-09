@@ -48,7 +48,7 @@ LIBS += -lwinmm -lm -lwinmm
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -221,7 +221,12 @@ HEADERS += \
     gme/Vgm_Emu_Impl.h \
     gme/Ym2413_Emu.h \
     gme/Ym2612_Emu.h \
-    music_gme.h
+    music_gme.h \
+    ADLMIDI/adldata.hh \
+    ADLMIDI/adlmidi.h \
+    ADLMIDI/dbopl.h \
+    ADLMIDI/fraction.h \
+    music_midi_adl.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -330,5 +335,9 @@ SOURCES += \
     gme/Vgm_Emu_Impl.cpp \
     gme/Ym2413_Emu.cpp \
     gme/Ym2612_Emu.cpp \
-    music_gme.c
+    music_gme.c \
+    ADLMIDI/dbopl.cpp \
+    music_midi_adl.c \
+    ADLMIDI/adlmidi.cpp \
+    ADLMIDI/adldata.cpp
 
