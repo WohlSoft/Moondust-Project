@@ -129,8 +129,9 @@ modplug_data *modplug_new_RW(SDL_RWops *src, int freesrc)
                 if (!music->file) {
                     SDL_free(music);
                     music = NULL;
+                } else {
+                    music->mus_title = (char*)ModPlug_GetName(music->file);
                 }
-                music->mus_title = (char*)ModPlug_GetName(music->file);
             } else {
                 SDL_OutOfMemory();
             }
