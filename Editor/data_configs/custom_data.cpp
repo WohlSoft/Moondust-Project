@@ -32,7 +32,24 @@ CustomDirManager::CustomDirManager(QString path, QString name)
 QString CustomDirManager::getCustomFile(QString name)
 {
     if(name.isEmpty()) return "";
+    QString backupName;
+
+    //Try to look up for a backup images (if original not found, try to search images in second format)
+    if(name.endsWith(".gif", Qt::CaseInsensitive))
+    {
+       backupName=name;
+       backupName.replace(backupName.size()-3, 3, "png");
+       //find PNG's first!
+       QString tmp=backupName;
+       backupName=name;
+       name=tmp;
+    } else if(name.endsWith(".png", Qt::CaseInsensitive)) {
+        backupName=name;
+        backupName.replace(backupName.size()-3, 3, "gif");
+    }
+
     QString target="";
+tryBackup:
     if((QFile::exists(dirCustom) ) &&
             (QFile::exists(dirCustom+"/" + name)) )
     {
@@ -42,6 +59,12 @@ QString CustomDirManager::getCustomFile(QString name)
     if(QFile::exists(dirEpisode + "/" + name) )
     {
         target = dirEpisode + "/" + name;
+    }
+
+    if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName!=name))
+    {
+        name=backupName;
+        goto tryBackup;
     }
 
     return target;
