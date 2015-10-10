@@ -30,27 +30,44 @@ CustomDirManager::CustomDirManager(QString path, QString name, QString stuffPath
 QString CustomDirManager::getCustomFile(QString name, bool *isDefault)
 {
     if(name.isEmpty()) return "";
+    QString srcName=name;
+    QString backupName;
+
+    //Try to look up for a backup images (if original not found, try to search images in second format)
+    if(name.endsWith(".gif", Qt::CaseInsensitive))
+    {
+       backupName=srcName;
+       backupName.replace(backupName.size()-3, 3, "png");
+       //find PNG's first!
+       QString tmp=backupName;
+       backupName=srcName;
+       srcName=tmp;
+    } else if(name.endsWith(".png", Qt::CaseInsensitive)) {
+        backupName=srcName;
+        backupName.replace(backupName.size()-3, 3, "gif");
+    }
+
     QString target="";
+tryBackup:
     if((QFile::exists(dirCustom) ) &&
-            (QFile::exists(dirCustom+"/" + name)) )
+            (QFile::exists(dirCustom+"/" + srcName)) )
     {
-        target = dirCustom+"/"+name;
+        target = dirCustom+"/"+srcName;
         if(isDefault) *isDefault = false;
     }
     else
-    if(QFile::exists(dirEpisode + "/" + name) )
+    if(QFile::exists(dirEpisode + "/" + srcName) )
     {
-        target = dirEpisode + "/" + name;
+        target = dirEpisode + "/" + srcName;
         if(isDefault) *isDefault = false;
     }
-//    else
-//    if(QFile::exists(mainStuffFullPath + "/" + name) )
-//    {
-//        target = mainStuffFullPath + name;
-//        if(isDefault) *isDefault = true;
-//    }
     else
     {
+        if((!backupName.isEmpty()) && (backupName!=srcName))
+        {
+            srcName=backupName;
+            goto tryBackup;
+        }
         target = mainStuffFullPath + name;
         if(isDefault) *isDefault = true;
     }
