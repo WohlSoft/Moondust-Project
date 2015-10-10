@@ -57,12 +57,13 @@ Mix_Music *play_mus = NULL;
         qDebug() << QString("Mix_VolumeMusic: %1\n").arg(volume);
     }
 
-    void MUS_openFile(QString musFile)
+    bool MUS_openFile(QString musFile)
     {
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
         play_mus = Mix_LoadMUS( musFile.toUtf8() );
         if(!play_mus) {
             error(QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError()));
+            return false;
         }
 
         Mix_MusicType type=Mix_GetMusicType(play_mus);
@@ -78,6 +79,7 @@ Mix_Music *play_mus = NULL;
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
                 "Unknown");
+        return true;
     }
 }
 
@@ -137,8 +139,10 @@ void MainWindow::on_stop_clicked()
 
 void MainWindow::on_play_clicked()
 {
-    PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text());
-    PGE_MusicPlayer::MUS_changeVolume(128);
-    PGE_MusicPlayer::MUS_playMusic();
+    if(PGE_MusicPlayer::MUS_openFile(currentMusic+"|"+ui->trackID->text()))
+    {
+        PGE_MusicPlayer::MUS_changeVolume(128);
+        PGE_MusicPlayer::MUS_playMusic();
+    }
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
 }
