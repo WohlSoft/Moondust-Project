@@ -42,6 +42,11 @@
 # include "tag.h"
 # include "field.h"
 
+#if !defined(__MINGW32__) && !defined(__MINGW64__) && !defined(_WIN32)
+extern char *strdup(const char *);
+extern FILE *fdopen(int, const char *);
+#endif
+
 struct filetag {
   struct id3_tag *tag;
   unsigned long location;
