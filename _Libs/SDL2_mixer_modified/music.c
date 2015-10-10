@@ -1886,9 +1886,13 @@ const char* Mix_GetSoundFonts(void)
     }
 }
 
+#if !defined(__MINGW32__) && !defined(__MINGW64__) && !defined(_WIN32)
+extern char *strtok_r(char *, const char *, char **);
+#endif
+
 int Mix_EachSoundFont(int (*function)(const char*, void*), void *data)
 {
-    char *context, *path, *paths;
+    char *context, *path = NULL, *paths;
     const char* cpaths = Mix_GetSoundFonts();
 
     if (!cpaths) {
