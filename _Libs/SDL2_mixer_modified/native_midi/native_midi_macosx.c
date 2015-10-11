@@ -24,7 +24,7 @@
 
 #include <SDL2/SDL_config.h>
 
-#if __MACOSX__
+#if __MACOSX__ && USE_NATIVE_MIDI
 
 #include <CoreServices/CoreServices.h>      /* ComponentDescription */
 #include <AudioUnit/AudioUnit.h>
