@@ -46,19 +46,22 @@ void LVL_Npc::harm(int damage, int damageReason)
     health -= damage;
     if(health <= 0)
     {
-        kill(damageReason);
         if(!setup->container || setup->contents_id == 0)
+        {
+            kill(damageReason);
             LvlSceneP::s->launchStaticEffectC(setup->effect_1, posCenterX(), posCenterY(), 1, 250, 0, 0, 0, _direction);
+        }
         else
         {
             //Spawn the contents of the dead NPC's container
             if (damageReason == LVL_Npc::DAMAGE_STOMPED)
             {
-                LevelNPC def = data;
-                def.id=setup->contents_id;
-                def.x=posX();
-                def.y=posY();
-                LvlSceneP::s->placeNPC(def);
+                transformTo_x(setup->contents_id);
+                //LevelNPC def = data;
+                //def.id=setup->contents_id;
+                //def.x=posX();
+                //def.y=posY();
+                //LvlSceneP::s->placeNPC(def);
             }
         }
     }

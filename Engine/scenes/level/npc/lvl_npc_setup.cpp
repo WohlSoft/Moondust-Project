@@ -192,4 +192,9 @@ void LVL_Npc::transformTo_x(long id)
     }
     else
        health=(setup->health>0)?setup->health : 1;
+
+    if(_isInited)
+    {
+        lua_onTransform(data.id);
+    }
 }
