@@ -21,7 +21,12 @@ DESTDIR = $$PWD/../../bin
 CONFIG += c++11
 CONFIG += thread
 
+!macx: {
 LIBS += -lSDL2 -lSDL2_mixer_ext
+} else {
+INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+}
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 win32: static: {
@@ -31,6 +36,10 @@ win32: static: {
 win32: {
 INCLUDEPATH += $$PWD/../../_Libs/_builds/win32/include
 LIBS += -L$$PWD/../../_Libs/_builds/win32/lib
+} else
+macx: {
+INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
+LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
 } else {
 INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
 LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
