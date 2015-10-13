@@ -72,6 +72,16 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
     in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+    #else
+    std::ifstream inf;
+    inf.open(file, std::ios::in);
+    if(!inf)
+    {
+        FileData.ReadFileValid=false;
+        errorString="Can't open file: "+file;
+        return FileData;
+    }
+    inf.seekg(std::ios::beg);
     #endif
 
     //Read NPC.TXT File config

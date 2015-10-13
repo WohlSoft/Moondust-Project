@@ -28,36 +28,6 @@
 
 namespace PGEExtendedFormat
 {
-    #ifdef PGE_FILES_QT
-    QMutex locker;
-    QRegExp section_title = QRegExp("^[A-Z0-9_]*$");
-    QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    QRegExp heximal = QRegExp("^[0-9a-fA-F]+$");
-
-    QRegExp boolean = QRegExp("^(1|0)$");
-
-    QRegExp usig_int = QRegExp("\\d+");     //Check "Is Numeric"
-
-    QRegExp sig_int = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-
-    QRegExp floatptr = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-
-    //Arrays
-    QRegExp boolArray = QRegExp("^[1|0]+$");
-    QRegExp intArray = QRegExp("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
-    #else
-    std::regex section_title("^[A-Z0-9_]*$");
-    std::regex qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    std::regex heximal("^[0-9a-fA-F]+$");
-    std::regex boolean("^(1|0)$");
-    std::regex usig_int("\\d+");     //Check "Is Numeric"
-    std::regex sig_int("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    std::regex floatptr("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    //Arrays
-    std::regex boolArray("^[1|0]+$");
-    std::regex intArray("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
-    #endif
-
     const char *section_title_valid_chars    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
     const int   section_title_valid_chars_len= 38;
 
@@ -67,11 +37,11 @@ namespace PGEExtendedFormat
     const char *uint_vc = "0123456789";
     const int   uint_vc_len = 10;
 
-    bool isDegit(QChar c)
+    bool isDegit(PGEChar c)
     {
         for(int i=0;i<uint_vc_len;i++)
         {
-            if(c.toLatin1()==uint_vc[i])
+            if(PGEGetChar(c)==uint_vc[i])
                 return true;
         }
         return false;
@@ -79,13 +49,13 @@ namespace PGEExtendedFormat
 
     bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
     {
-        if(s.isEmpty()) return false;
+        if(s.PGESTRINGisEmpty()) return false;
         int i, j;
-        for(i=0;i<s.size();i++)
+        for(i=0;i<(signed)s.size();i++)
         {
             bool found=false;
             for(j=0;j<valid_chars_len;j++) {
-                if(s[i].toLatin1()==valid_chars[j]) { found=true; break; }
+                if(PGEGetChar(s[i])==valid_chars[j]) { found=true; break; }
             }
             if(!found) return false;
         }
@@ -170,7 +140,7 @@ bool PGEFile::buildTreeFromRaw()
 
     //Building tree
 
-    for(int z=0; z< rawDataTree.size(); z++)
+    for(int z=0; z<(signed)rawDataTree.size(); z++)
     {
         bool valid=true;
         PGEX_Entry subTree = buildTree( rawDataTree[z].second, &valid );
@@ -297,8 +267,12 @@ bool PGEFile::IsSectionTitle(PGESTRING in)
 bool PGEFile::IsQStr(PGESTRING in) // QUOTED STRING
 {
     using namespace PGEExtendedFormat;
-    QMutexLocker lock(&locker);
-    return qstr.exactMatch(in);
+    #ifdef PGE_FILES_QT
+    return QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$").exactMatch(in);
+    #else
+    std::regex rex("^\"(?:[^\"\\\\]|\\\\.)*\"$");
+    return std::regex_match(in, rex);
+    #endif
 }
 
 bool PGEFile::IsHex(PGESTRING in) // Heximal string
@@ -396,10 +370,10 @@ bool PGEFile::IsIntArray(PGESTRING in) // Boolean array
 {
     using namespace PGEExtendedFormat;
     #ifdef PGE_FILES_QT
-    QMutexLocker lock(&locker);
-    return intArray.exactMatch(in);
+    return QRegExp("^\\[(\\-?\\d+,?)*\\]$").exactMatch(in);
     #else
-    return std::regex_match(in, intArray);
+    std::regex rex("^\\[(\\-?\\d+,?)*\\]$");
+    return std::regex_match(in, rex);
     #endif
 }
 
