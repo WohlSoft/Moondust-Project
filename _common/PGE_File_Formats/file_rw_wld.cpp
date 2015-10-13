@@ -107,7 +107,7 @@
 //}
 
 
-WorldData FileFormats::ReadSMBX64WldFileHeader(QString filePath)
+WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
 {
     SMBX64_FileBegin();
 
@@ -205,7 +205,7 @@ badfile:
     return FileData;
 }
 
-WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath, bool sielent)
+WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
     SMBX64_File(RawData);
 
@@ -421,9 +421,9 @@ return FileData;
 //*********************************************************
 
 
-QString FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
+PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
 {
-    QString TextData;
+    PGESTRING TextData;
     int i;
 
     //Prevent out of range: 0....64

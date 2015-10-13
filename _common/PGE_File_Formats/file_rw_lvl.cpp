@@ -708,7 +708,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         //Add system layers if not exist
         bool def=false,desb=false,spawned=false;
 
-        for(int lrID=0; lrID<FileData.layers.size();lrID++)
+        for(int lrID=0; lrID<(signed)FileData.layers.size();lrID++)
         {
             LevelLayer &lr=FileData.layers[lrID];
             if(lr.name=="Default") def=true;
@@ -742,7 +742,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
         //P Switch - Start
         //P Switch - End
         bool lstart=false, pstart=false, pend=false;
-        for(int evID=0; evID<FileData.events.size(); evID++)
+        for(int evID=0; evID<(signed)FileData.events.size(); evID++)
         {
             LevelSMBX64Event &ev=FileData.events[evID];
             if(ev.name=="Level - Start") lstart=true;
@@ -811,7 +811,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
     //Count placed stars on this level
     FileData.stars=0;
-    for(i=0;i<FileData.npc.size();i++)
+    for(i=0;i<(signed)FileData.npc.size();i++)
     {
         if(FileData.npc[i].is_star)
             FileData.stars++;
@@ -837,7 +837,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     //qDebug() << "sections "<<s_limit << "format "<<file_format ;
 
     //Sections settings
-    for(i=0; (i<s_limit)&&(i<FileData.sections.size()) ; i++)
+    for(i=0; (i<s_limit)&&(i<(signed)FileData.sections.size()) ; i++)
     {
         TextData += SMBX64::IntS(FileData.sections[i].size_left);
         TextData += SMBX64::IntS(FileData.sections[i].size_top);
@@ -875,7 +875,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     for(j=1;j<=2 && playerpoints<2;j++)
     {
         bool found=false;
-        for(i=0; i<FileData.players.size(); i++ )
+        for(i=0; i<(signed)FileData.players.size(); i++ )
         {
             if(FileData.players[i].id!=(unsigned int)j) continue;
             TextData += SMBX64::IntS(FileData.players[i].x);
@@ -897,7 +897,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
     //Blocks
     PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBlock > > > sortedBlocks;
-    for(int blkID=0;blkID<FileData.blocks.size();blkID++)
+    for(int blkID=0;blkID<(signed)FileData.blocks.size();blkID++)
     {
         LevelBlock &block=FileData.blocks[blkID];
         sortedBlocks[block.x][block.y][block.array_id] = block;
@@ -983,7 +983,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
     //BGOs
     PGEMAP<long, PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > > sortedBGO;
-    for(int bgoID=0;bgoID<FileData.bgo.size();bgoID++)
+    for(int bgoID=0;bgoID<(signed)FileData.bgo.size();bgoID++)
     {
         LevelBGO &bgo1=FileData.bgo[bgoID];
         sortedBGO[bgo1.smbx64_sp_apply][bgo1.x][bgo1.y][bgo1.array_id] = bgo1;
@@ -1030,7 +1030,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     TextData += "\"next\"\n";//Separator
 
     //NPCs
-    for(i=0; i<FileData.npc.size(); i++)
+    for(i=0; i<(signed)FileData.npc.size(); i++)
     {
         //Section size
         TextData += SMBX64::IntS(FileData.npc[i].x);
@@ -1112,7 +1112,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     TextData += "\"next\"\n";//Separator
 
     //Doors
-    for(i=0; i<FileData.doors.size(); i++)
+    for(i=0; i<(signed)FileData.doors.size(); i++)
     {
         if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
             if(!FileData.doors[i].isSetIn) continue; // Skip broken door
@@ -1157,7 +1157,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
     if(file_format>=29)
     {
         TextData += "\"next\"\n";//Separator
-        for(i=0; i<FileData.physez.size(); i++)
+        for(i=0; i<(signed)FileData.physez.size(); i++)
         {
             TextData += SMBX64::IntS(FileData.physez[i].x);
             TextData += SMBX64::IntS(FileData.physez[i].y);
@@ -1176,7 +1176,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         TextData += "\"next\"\n";//Separator
 
         //Layers
-        for(i=0; i<FileData.layers.size(); i++)
+        for(i=0; i<(signed)FileData.layers.size(); i++)
         {
             TextData += SMBX64::qStrS(FileData.layers[i].name);
             TextData += SMBX64::BoolS(FileData.layers[i].hidden);
@@ -1184,7 +1184,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         TextData += "\"next\"\n";//Separator
 
         LevelEvent_layers layerSet;
-        for(i=0; i<FileData.events.size(); i++)
+        for(i=0; i<(signed)FileData.events.size(); i++)
         {
             TextData += SMBX64::qStrS(FileData.events[i].name);
             if(file_format>=11)
@@ -1199,19 +1199,19 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
             for(j=0; j<20; j++)
             {
                 layerSet.hide =
-                        ((j<FileData.events[i].layers_hide.size())?
+                        ((j<(signed)FileData.events[i].layers_hide.size())?
                           FileData.events[i].layers_hide[j] : "");
                 layerSet.show =
-                        ((j<FileData.events[i].layers_show.size())?
+                        ((j<(signed)FileData.events[i].layers_show.size())?
                           FileData.events[i].layers_show[j] : "");;
                 layerSet.toggle =
-                        ((j<FileData.events[i].layers_toggle.size())?
+                        ((j<(signed)FileData.events[i].layers_toggle.size())?
                           FileData.events[i].layers_toggle[j] : "");
 
                 events_layersArr.push_back(layerSet);
             }
 
-            for(j=0; j< events_layersArr.size()  && j<s_limit-1; j++)
+            for(j=0; j< (signed)events_layersArr.size()  && j<s_limit-1; j++)
             {
                 TextData += SMBX64::qStrS(events_layersArr[j].hide);
                 TextData += SMBX64::qStrS(events_layersArr[j].show);
@@ -1228,7 +1228,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
             if(file_format>=13)
             {
-                for(j=0; j< FileData.events[i].sets.size()  && j<s_limit; j++)
+                for(j=0; j< (signed)FileData.events[i].sets.size()  && j<s_limit; j++)
                 {
                     TextData += SMBX64::IntS(FileData.events[i].sets[j].music_id);
                     TextData += SMBX64::IntS(FileData.events[i].sets[j].background_id);

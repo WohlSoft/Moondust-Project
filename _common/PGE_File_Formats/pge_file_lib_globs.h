@@ -18,6 +18,7 @@
 #define PGESTRING QString
 #define PGESTRINGisEmpty() isEmpty()
 #define PGESTR_Simpl(str) str.simplified()
+#define PGEGetChar(chr) chr.toLatin1()
 #define PGEChar QChar
 #define PGESTRINGList QStringList
 #define PGEVECTOR QVector
@@ -28,6 +29,7 @@
 #define PGE_SPLITSTR(dst, src, sep) dst=src.split(sep);
 #define PGE_ReplSTR(src, from, to) src.replace(from, to)
 #define PGE_RemSSTR(src, substr) src.remove(substr)
+#define PGE_RemSRng(pos, len) remove(pos, len)
 inline bool IsNULL(PGESTRING str) { return str.isNull(); }
 inline int toInt(PGESTRING str){ return str.toInt(); }
 inline float toFloat(PGESTRING str){ return str.toFloat(); }
@@ -50,6 +52,7 @@ PGESTRING fromNum(T num) { return QString::number(num); }
 inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );
         return str;}
+#define PGEGetChar(chr) chr
 #define PGEChar char
 #define PGESTRINGList std::vector<std::string >
 #define PGEVECTOR std::vector
@@ -71,6 +74,7 @@ inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
 }
 
 inline PGESTRING PGE_RemSSTR(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
+#define PGE_RemSRng(pos, len) erase(pos, len)
 inline bool IsNULL(PGESTRING str) { return (str.empty()!=0); }
 inline int toInt(PGESTRING str){ return std::atoi(str.c_str()); }
 inline float toFloat(PGESTRING str){ return std::atof(str.c_str()); }

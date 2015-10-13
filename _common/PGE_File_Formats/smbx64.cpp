@@ -21,46 +21,36 @@
 #include <QRegExp>
 #include <QMutex>
 #include <QMutexLocker>
+#include <regex>
+#else
+#include <regex>
 #endif
 #include "smbx64.h"
 
 namespace smbx64Format
 {
-    QRegExp isint = QRegExp("^\\d+$");     //Check "Is Numeric"
-    QMutex isint_mutex;
-    QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QMutex issint_mutex;
-    QRegExp issfloat = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QMutex issfloat_mutex;
-    QRegExp qstr = QRegExp("^\"(?:[^\\\\]|\\\\.)*\"$");
-    QMutex qstr_mutex;
-    QRegExp boolwords = QRegExp("^(#TRUE#|#FALSE#)$");
-    QMutex boolwords_mutex;
-    QRegExp booldeg = QRegExp("^(1|0)$");
-    QMutex booldeg_mutex;
-
     const char *uint_vc = "0123456789";
     const int   uint_vc_len = 10;
 
-    bool isDegit(QChar c)
+    bool isDegit(PGEChar c)
     {
         for(int i=0;i<uint_vc_len;i++)
         {
-            if(c.toLatin1()==uint_vc[i])
+            if(PGEGetChar(c)==uint_vc[i])
                 return true;
         }
         return false;
     }
 
-    bool isValid(QString &s, const char*valid_chars, const int& valid_chars_len)
+    bool isValid(PGESTRING &s, const char*valid_chars, const int& valid_chars_len)
     {
-        if(s.isEmpty()) return false;
+        if(s.PGESTRINGisEmpty()) return false;
         int i, j;
-        for(i=0;i<s.size();i++)
+        for(i=0;i<(signed)s.size();i++)
         {
             bool found=false;
             for(j=0;j<valid_chars_len;j++) {
-                if(s[i].toLatin1()==valid_chars[j]) { found=true; break; }
+                if(PGEGetChar(s[i])==valid_chars[j]) { found=true; break; }
             }
             if(!found) return false;
         }
@@ -71,55 +61,55 @@ namespace smbx64Format
 // /////////////Validators///////////////
 //returns TRUE on wrong data
 
-bool SMBX64::uInt(QString in) // UNSIGNED INT
+bool SMBX64::uInt(PGESTRING in) // UNSIGNED INT
 {
     using namespace smbx64Format;
     return !isValid(in, uint_vc, uint_vc_len);
 }
 
-bool SMBX64::sInt(QString in) // SIGNED INT
+bool SMBX64::sInt(PGESTRING in) // SIGNED INT
 {
     using namespace smbx64Format;
-    if(in.isEmpty()) return true;
+    if(in.PGESTRINGisEmpty()) return true;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return true;
-    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')) return true;
+    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return true;
 
-    for(int i=1; i<in.size(); i++)
+    for(int i=1; i<(signed)in.size(); i++)
         if(!isDegit(in[i])) return true;
 
     return false;
 }
 
-bool SMBX64::sFloat(QString &in) // SIGNED FLOAT
+bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
 {
     using namespace smbx64Format;
-    if(in.isEmpty()) return true;
+    if(in.PGESTRINGisEmpty()) return true;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return true;
-    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')&&(in[0].toLatin1()!='.')&&(in[0].toLatin1()!=',')) return true;
+    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return true;
 
     bool decimal=false;
     bool pow10  =false;
     bool sign   =false;
-    for(int i=((in[0].toLatin1()=='-')?1:0); i<in.size(); i++)
+    for(int i=((PGEGetChar(in[0])=='-')?1:0); i<(signed)in.size(); i++)
     {
         if((!decimal) &&(!pow10))
         {
-            if((in[i].toLatin1()=='.')||(in[i].toLatin1()==','))
+            if((PGEGetChar(in[i])=='.')||(PGEGetChar(in[i])==','))
             {
                 in[i]='.';//replace comma with a dot
                 decimal=true;
-                if(i==(in.size()-1)) return true;
+                if(i==((signed)in.size()-1)) return true;
                 continue;
             }
         }
         if(!pow10)
         {
-            if((in[i].toLatin1()=='E')||(in[i].toLatin1()=='e'))
+            if((PGEGetChar(in[i])=='E')||(PGEGetChar(in[i])=='e'))
             {
                 pow10=true;
-                if(i==(in.size()-1)) return true;
+                if(i==((signed)in.size()-1)) return true;
                 continue;
             }
         }
@@ -128,9 +118,9 @@ bool SMBX64::sFloat(QString &in) // SIGNED FLOAT
             if(!sign)
             {
                 sign=true;
-                if((in[i].toLatin1()=='+')||(in[i].toLatin1()=='-'))
+                if((PGEGetChar(in[i])=='+')||(PGEGetChar(in[i])=='-'))
                 {
-                    if(i==(in.size()-1)) return true;
+                    if(i==((signed)in.size()-1)) return true;
                     continue;
                 }
             }
@@ -140,60 +130,72 @@ bool SMBX64::sFloat(QString &in) // SIGNED FLOAT
     return false;
 }
 
-bool SMBX64::qStr(QString in) // QUOTED STRING
+bool SMBX64::qStr(PGESTRING in) // QUOTED STRING
 {
     using namespace smbx64Format;
     #ifdef PGE_FILES_QT
-    QMutexLocker locker(&qstr_mutex);
+    return !QRegExp("^\"(?:[^\\\\]|\\\\.)*\"$").exactMatch(in);
+    #else
+    std::regex rex("^\"(?:[^\\\\]|\\\\.)*\"$");
+    return !std::regex_match(in, rex);
     #endif
-    return !qstr.exactMatch(in);
 }
 
-bool SMBX64::wBool(QString in) //Worded BOOL
+bool SMBX64::wBool(PGESTRING in) //Worded BOOL
 {
     return !( (in=="#TRUE#")||(in=="#FALSE#") );
 }
 
-bool SMBX64::dBool(QString in) //Digital BOOL
+bool SMBX64::dBool(PGESTRING in) //Digital BOOL
 {
-    if((in.size()!=1) || (in.isEmpty()) )
+    if((in.size()!=1) || (in.PGESTRINGisEmpty()) )
         return true;
-    return !((in[0].toLatin1()=='1')||(in[0].toLatin1()=='0'));
+    return !((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
 }
 
 //Convert from string to internal data
-bool SMBX64::wBoolR(QString in)
+bool SMBX64::wBoolR(PGESTRING in)
 {
     return ((in=="#TRUE#")?true:false);
 }
 
-QString SMBX64::StrToStr(QString in)
+PGESTRING SMBX64::StrToStr(PGESTRING in)
 {
-    QString target = in;
-    if(target.isEmpty())
+    PGESTRING target = in;
+    if(target.PGESTRINGisEmpty())
         return target;
-    if(target[0]==QChar('\"'))
-        target.remove(0,1);
-    if((!target.isEmpty()) && (target[target.size()-1]==QChar('\"')))
-        target.remove(target.size()-1,1);
+    if(target[0]==PGEChar('\"'))
+        target.PGE_RemSRng(0,1);
+    if((!target.PGESTRINGisEmpty()) && (target[target.size()-1]==PGEChar('\"')))
+        target.PGE_RemSRng(target.size()-1, 1);
 
-    target.replace("\"", "\'");//Correct damaged by SMBX line
+    target=PGE_ReplSTR(target, "\"", "\'");//Correct damaged by SMBX line
     return target;
 }
 
 
 //SMBX64 parameter string generators
-QString SMBX64::IntS(long input)
-{  return QString::number(input)+"\n"; }
+PGESTRING SMBX64::IntS(long input)
+{  return fromNum(input)+"\n"; }
 
-QString SMBX64::FloatS(float input)
-{  return QString::number(input)+"\n"; }
+PGESTRING SMBX64::FloatS(float input)
+{  return fromNum(input)+"\n"; }
 
-QString SMBX64::BoolS(bool input)
-{  return QString( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
+PGESTRING SMBX64::BoolS(bool input)
+{  return PGESTRING( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
 
-QString SMBX64::qStrS(QString input)
-{ return QString("\"%1\"\n").arg(input.remove('\n').remove('\r').remove('\t').remove('\"') ); }
+PGESTRING SMBX64::qStrS(PGESTRING input)
+{
+    input = PGE_RemSSTR(input, "\n");
+    input = PGE_RemSSTR(input, "\r");
+    input = PGE_RemSSTR(input, "\t");
+    input = PGE_RemSSTR(input, "\"");
+    return PGESTRING("\"")+input+PGESTRING("\"\n");
+}
 
-QString SMBX64::qStrS_multiline(QString input)
-{ return QString("\"%1\"\n").arg(input.remove('\t').remove('\"') ); }
+PGESTRING SMBX64::qStrS_multiline(PGESTRING input)
+{
+    input = PGE_RemSSTR(input, "\t");
+    input = PGE_RemSSTR(input, "\"");
+    return PGESTRING("\"")+input+PGESTRING("\"\n");
+}

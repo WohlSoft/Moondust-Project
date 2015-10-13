@@ -354,9 +354,9 @@ return NewFileData;
 
 
 
-bool LevelData::eventIsExist(QString title)
+bool LevelData::eventIsExist(PGESTRING title)
 {
-    for(int i=0; i<events.size(); i++)
+    for(int i=0; i<(signed)events.size(); i++)
     {
         if( events[i].name == title )
             return true;
@@ -364,9 +364,9 @@ bool LevelData::eventIsExist(QString title)
     return false;
 }
 
-bool LevelData::layerIsExist(QString title)
+bool LevelData::layerIsExist(PGESTRING title)
 {
-    for(int i=0; i<layers.size(); i++)
+    for(int i=0; i<(signed)layers.size(); i++)
     {
         if( layers[i].name == title )
             return true;

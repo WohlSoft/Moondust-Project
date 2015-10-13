@@ -28,7 +28,7 @@
 #endif
 
 
-SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(QString RawData, QString filePath)
+SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(PGESTRING RawData, PGESTRING filePath)
 {
     errorString.clear();
     SMBX64_File( RawData );
@@ -100,7 +100,7 @@ PGESTRING FileFormats::WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int fi
         FileData.players.push_back(plr);
     }
 
-    for(i=0;i<(FileData.players.size()); i++)
+    for(i=0;i<((signed)FileData.players.size()); i++)
     {
         TextData += SMBX64::IntS(FileData.players[i].controllerType);
         TextData += SMBX64::IntS(FileData.players[i].k_up);
