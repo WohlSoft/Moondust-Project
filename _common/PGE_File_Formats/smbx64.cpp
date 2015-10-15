@@ -16,15 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifdef PGE_FILES_QT
-#include <QRegExp>
-#include <QMutex>
-#include <QMutexLocker>
-#include <regex>
-#else
-#include <regex>
-#endif
 #include "smbx64.h"
 
 namespace smbx64Format
@@ -132,13 +123,22 @@ bool SMBX64::sFloat(PGESTRING &in) // SIGNED FLOAT
 
 bool SMBX64::qStr(PGESTRING in) // QUOTED STRING
 {
-    using namespace smbx64Format;
-    #ifdef PGE_FILES_QT
-    return !QRegExp("^\"(?:[^\\\\]|\\\\.)*\"$").exactMatch(in);
-    #else
-    std::regex rex("^\"(?:[^\\\\]|\\\\.)*\"$");
-    return !std::regex_match(in, rex);
-    #endif
+    //This is INVERTED validator. If false - good, true - bad.
+    #define QStrGOOD false
+    #define QStrBAD true
+    int i=0;
+    for(i=0; i<(signed)in.size();i++)
+    {
+        if(i==0)
+        {
+            if(in[i]!='"') return QStrBAD;
+        } else if(i==(signed)in.size()-1) {
+            if(in[i]!='"') return QStrBAD;
+        } else if(in[i]=='"') return QStrBAD;
+        else if(in[i]=='"') return QStrBAD;
+    }
+    if(i==0) return QStrBAD; //This is INVERTED validator. If false - good, true - bad.
+    return QStrGOOD;
 }
 
 bool SMBX64::wBool(PGESTRING in) //Worded BOOL

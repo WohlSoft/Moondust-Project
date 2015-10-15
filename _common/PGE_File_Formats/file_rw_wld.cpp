@@ -16,16 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFileInfo>
-#include <QDir>
-
+#include "pge_file_lib_sys.h"
 #include "file_formats.h"
 #include "wld_filedata.h"
 #include "file_strlist.h"
 #include "smbx64.h"
 #include "smbx64_macro.h"
-
-#include <QtDebug>
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -115,22 +111,18 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
     WorldData FileData;
     FileData = dummyWldDataArray();
 
-    QFile inf(filePath);
-    if(!inf.open(QIODevice::ReadOnly|QIODevice::Text))
+    PGE_FileFormats_misc::TextFileInput in;
+    if(!in.open(filePath, false))
     {
         FileData.ReadFileValid=false;
         return FileData;
     }
 
-    QFileInfo in_1(filePath);
-    FileData.filename = in_1.baseName();
-    FileData.path = in_1.absoluteDir().absolutePath();
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    FileData.filename = in_1.basename();
+    FileData.path = in_1.dirpath();
 
-    QTextStream in(&inf);
-    in.setAutoDetectUnicode(true);
-    in.setLocale(QLocale::system());
-    in.setCodec(QTextCodec::codecForLocale());
-    in.seek(0);
+    in.seek(0, PGE_FileFormats_misc::TextFileInput::begin);
 
     FileData.untitled = false;
     FileData.modified = false;
@@ -141,7 +133,7 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
     nextLine();   //Read first Line
     if( SMBX64::uInt(line) ) //File format number
         goto badfile;
-    else file_format=line.toInt();
+    else file_format=toInt(line);
 
     nextLine();
     if( SMBX64::qStr(line) ) //Episode name
@@ -159,12 +151,11 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
             nextLine(); wBoolVar(FileData.nocharacter5, line);//Edisode without Link
         }
         //Convert into the bool array
-        FileData.nocharacter<<
-             FileData.nocharacter1<<
-             FileData.nocharacter2<<
-             FileData.nocharacter3<<
-             FileData.nocharacter4<<
-             FileData.nocharacter5;
+        FileData.nocharacter.push_back(FileData.nocharacter1);
+        FileData.nocharacter.push_back(FileData.nocharacter2);
+        FileData.nocharacter.push_back(FileData.nocharacter3);
+        FileData.nocharacter.push_back(FileData.nocharacter4);
+        FileData.nocharacter.push_back(FileData.nocharacter5);
     }
 
     if(ge(3))
@@ -188,19 +179,19 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
         nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
-        FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
-        FileData.authors += (FileData.author2.isEmpty())? "" : FileData.author2+"\n";
-        FileData.authors += (FileData.author3.isEmpty())? "" : FileData.author3+"\n";
-        FileData.authors += (FileData.author4.isEmpty())? "" : FileData.author4+"\n";
-        FileData.authors += (FileData.author5.isEmpty())? "" : FileData.author5;
+        FileData.authors += (FileData.author1.PGESTRINGisEmpty())? "" : FileData.author1+"\n";
+        FileData.authors += (FileData.author2.PGESTRINGisEmpty())? "" : FileData.author2+"\n";
+        FileData.authors += (FileData.author3.PGESTRINGisEmpty())? "" : FileData.author3+"\n";
+        FileData.authors += (FileData.author4.PGESTRINGisEmpty())? "" : FileData.author4+"\n";
+        FileData.authors += (FileData.author5.PGESTRINGisEmpty())? "" : FileData.author5;
     }
 
     FileData.ReadFileValid=true;
-    inf.close();
+    in.close();
     return FileData;
 badfile:
-    qDebug()<<"Wrong file"<<filePath<<"format"<<file_format<<"line: "<<str_count<< "data: "<<line;
-    inf.close();
+    //qDebug()<<"Wrong file"<<filePath<<"format"<<file_format<<"line: "<<str_count<< "data: "<<line;
+    in.close();
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -212,11 +203,11 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     WorldData FileData = dummyWldDataArray();
 
     //Add path data
-    if(!filePath.isEmpty())
+    if(!filePath.PGESTRINGisEmpty())
     {
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
+        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     FileData.untitled = false;
@@ -247,12 +238,11 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
             nextLine(); wBoolVar(FileData.nocharacter5, line);//Edisode without Link
         }
         //Convert into the bool array
-        FileData.nocharacter<<
-             FileData.nocharacter1<<
-             FileData.nocharacter2<<
-             FileData.nocharacter3<<
-             FileData.nocharacter4<<
-             FileData.nocharacter5;
+        FileData.nocharacter.push_back(FileData.nocharacter1);
+        FileData.nocharacter.push_back(FileData.nocharacter2);
+        FileData.nocharacter.push_back(FileData.nocharacter3);
+        FileData.nocharacter.push_back(FileData.nocharacter4);
+        FileData.nocharacter.push_back(FileData.nocharacter5);
     }
 
     if(ge(3))
@@ -276,11 +266,11 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
         nextLine(); strVar(FileData.author5, line); //Author 5
 
         FileData.authors.clear();
-        FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
-        FileData.authors += (FileData.author2.isEmpty())? "" : FileData.author2+"\n";
-        FileData.authors += (FileData.author3.isEmpty())? "" : FileData.author3+"\n";
-        FileData.authors += (FileData.author4.isEmpty())? "" : FileData.author4+"\n";
-        FileData.authors += (FileData.author5.isEmpty())? "" : FileData.author5;
+        FileData.authors += (FileData.author1.PGESTRINGisEmpty())? "" : FileData.author1+"\n";
+        FileData.authors += (FileData.author2.PGESTRINGisEmpty())? "" : FileData.author2+"\n";
+        FileData.authors += (FileData.author3.PGESTRINGisEmpty())? "" : FileData.author3+"\n";
+        FileData.authors += (FileData.author4.PGESTRINGisEmpty())? "" : FileData.author4+"\n";
+        FileData.authors += (FileData.author5.PGESTRINGisEmpty())? "" : FileData.author5;
     }
 
 
@@ -400,7 +390,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
 
     nextLine(); // Read last line
 
-    if((line!="")&&(!line.isNull()))
+    if((line!="")&&(!in.isEOF()))
         goto badfile;
 
 
@@ -410,7 +400,7 @@ return FileData;
 
 badfile:    //If file format not corrects
     if(!sielent)
-        BadFileMsg(FileData.path, str_count, line);
+        BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
     FileData.ReadFileValid=false;
 return FileData;
 }
@@ -460,7 +450,8 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     if(file_format>=20)
         TextData += SMBX64::IntS(FileData.stars);
 
-    QStringList credits = FileData.authors.split(QChar('\n'));
+    PGESTRINGList credits;
+    PGE_SPLITSTR(credits, FileData.authors, "\n");
     FileData.author1 = (credits.size()>0) ? credits[0] : "";
     FileData.author2 = (credits.size()>1) ? credits[1] : "";
     FileData.author3 = (credits.size()>2) ? credits[2] : "";
@@ -476,7 +467,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
         TextData += SMBX64::qStrS(FileData.author5);
     }
 
-    for(i=0;i<FileData.tiles.size();i++)
+    for(i=0;i<(signed)FileData.tiles.size();i++)
     {
         TextData += SMBX64::IntS(FileData.tiles[i].x);
         TextData += SMBX64::IntS(FileData.tiles[i].y);
@@ -484,7 +475,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     }
     TextData += "\"next\"\n";//Separator
 
-    for(i=0;i<FileData.scenery.size();i++)
+    for(i=0;i<(signed)FileData.scenery.size();i++)
     {
         TextData += SMBX64::IntS(FileData.scenery[i].x);
         TextData += SMBX64::IntS(FileData.scenery[i].y);
@@ -492,7 +483,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     }
     TextData += "\"next\"\n";//Separator
 
-    for(i=0;i<FileData.paths.size();i++)
+    for(i=0;i<(signed)FileData.paths.size();i++)
     {
         TextData += SMBX64::IntS(FileData.paths[i].x);
         TextData += SMBX64::IntS(FileData.paths[i].y);
@@ -500,7 +491,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     }
     TextData += "\"next\"\n";//Separator
 
-    for(i=0;i<FileData.levels.size();i++)
+    for(i=0;i<(signed)FileData.levels.size();i++)
     {
         TextData += SMBX64::IntS(FileData.levels[i].x);
         TextData += SMBX64::IntS(FileData.levels[i].y);
@@ -525,7 +516,7 @@ PGESTRING FileFormats::WriteSMBX64WldFile(WorldData FileData, int file_format)
     }
     TextData += "\"next\"\n";//Separator
 
-    for(i=0;i<FileData.music.size();i++)
+    for(i=0;i<(signed)FileData.music.size();i++)
     {
         TextData += SMBX64::IntS(FileData.music[i].x);
         TextData += SMBX64::IntS(FileData.music[i].y);

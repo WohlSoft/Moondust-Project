@@ -95,8 +95,8 @@ PGEFile::PGEFile(PGESTRING _rawData)
 
 PGESTRING PGEFile::removeQuotes(PGESTRING str)
 {
-    PGESTRING target = str.remove(0,1);
-    target = target.remove(target.size()-1,1);
+    PGESTRING target = str.PGE_RemSRng(0,1);
+    target = target.PGE_RemSRng(target.size()-1,1);
     return target;
 }
 
@@ -119,7 +119,8 @@ bool PGEFile::buildTreeFromRaw()
         PGEXsection.first = in.readLine();
         PGEXsection.second.clear();
 
-        if(PGESTRING(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
+        //Skip empty parts
+        if(removeSpaces(PGEXsection.first).PGESTRINGisEmpty()) continue;
 
         sectionOpened=true;
         PGESTRING data;
@@ -134,7 +135,7 @@ bool PGEFile::buildTreeFromRaw()
 
     if(sectionOpened)
     {
-        _lastError=PGESTRING("Section [%1] is not closed").arg(PGEXsection.first);
+        _lastError=PGESTRING("Section ["+PGEXsection.first+"] is not closed");
         return false;
     }
 
@@ -158,7 +159,7 @@ bool PGEFile::buildTreeFromRaw()
             subTree.subTree.clear();
             PGEX_Val dataValue;
                 dataValue.marker = "PlainText";
-                for(int i=0;i<rawDataTree[z].second.size();i++) dataValue.value += rawDataTree[z].second[i]+"\n";
+                for(int i=0;i<(signed)rawDataTree[z].second.size();i++) dataValue.value += rawDataTree[z].second[i]+"\n";
             dataItem.values.push_back(dataValue);
             subTree.name = rawDataTree[z].first;
             subTree.type = PGEX_PlainText;
@@ -177,14 +178,14 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
     PGEX_Entry entryData;
 
     bool valid=true;
-    for(int q=0; q<src_data.size(); q++)
+    for(int q=0; q<(signed)src_data.size(); q++)
     {
-        if( IsSectionTitle(PGESTRING(src_data[q]).remove(' ') ) )
+        if( IsSectionTitle( removeSpaces(src_data[q]) ) )
         {//Build and store subTree
-            PGESTRING nameOfTree = PGESTRING(src_data[q]).remove(' ');
+            PGESTRING nameOfTree = removeSpaces(src_data[q]);
             PGESTRINGList rawSubTree;
             q++;
-            for(; q<src_data.size() && src_data[q] != nameOfTree+"_END" ;q++)
+            for(; q<(signed)src_data.size() && src_data[q] != nameOfTree+"_END" ;q++)
             {
                 rawSubTree.push_back( src_data[q] );
             }
@@ -207,7 +208,7 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
 
                 dataValue.marker = nameOfTree;
                 //foreach(PGESTRING x, rawSubTree) dataValue.value += x+"\n";
-                for(int i=0;i<rawSubTree.size();i++) dataValue.value += rawSubTree[i]+"\n";
+                for(int i=0;i<(signed)rawSubTree.size();i++) dataValue.value += rawSubTree[i]+"\n";
                 dataItem.values.push_back(dataValue);
                 subTree.data.push_back(dataItem);
                 entryData.subTree.push_back( subTree );
@@ -218,15 +219,18 @@ PGEFile::PGEX_Entry PGEFile::buildTree(PGESTRINGList &src_data, bool *_valid)
         }
         else
         {
-            PGESTRINGList fields = encodeEscape(src_data[q]).split(';');
+            PGESTRINGList fields;
+            PGE_SPLITSTR(fields, encodeEscape(src_data[q]), ";");
             PGEX_Item dataItem;
             dataItem.type = PGEX_Struct;
-            for(int i=0;i<fields.size();i++)
+            for(int i=0;i<(signed)fields.size();i++)
             {
-                if(PGESTRING(fields[i]).remove(' ').isEmpty()) continue;
+                if(removeSpaces(fields[i]).PGESTRINGisEmpty()) continue;
 
                 //Store data into list
-                PGESTRINGList value = fields[i].split(':');
+
+                PGESTRINGList value; //= fields[i].split(':');
+                PGE_SPLITSTR(value, fields[i], ":");
 
                 if(value.size()!=2)
                 {
@@ -266,13 +270,20 @@ bool PGEFile::IsSectionTitle(PGESTRING in)
 //validatos
 bool PGEFile::IsQStr(PGESTRING in) // QUOTED STRING
 {
-    using namespace PGEExtendedFormat;
-    #ifdef PGE_FILES_QT
-    return QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$").exactMatch(in);
-    #else
-    std::regex rex("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    return std::regex_match(in, rex);
-    #endif
+    //return QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$").exactMatch(in);
+    int i=0;
+    for(i=0; i<(signed)in.size();i++)
+    {
+        if(i==0)
+        {
+            if(in[i]!='"') return false;
+        } else if(i==(signed)in.size()-1) {
+            if(in[i]!='"') return false;
+        } else if(in[i]=='"') return false;
+        else if(in[i]=='"') return false;
+    }
+    if(i==0) return false;
+    return true;
 }
 
 bool PGEFile::IsHex(PGESTRING in) // Heximal string
@@ -283,9 +294,9 @@ bool PGEFile::IsHex(PGESTRING in) // Heximal string
 
 bool PGEFile::IsBool(PGESTRING in) // Boolean
 {
-    if((in.size()!=1) || (in.isEmpty()) )
+    if((in.size()!=1) || (in.PGESTRINGisEmpty()) )
         return false;
-    return ((in[0].toLatin1()=='1')||(in[0].toLatin1()=='0'));
+    return ((PGEGetChar(in[0])=='1')||(PGEGetChar(in[0])=='0'));
 }
 
 bool PGEFile::IsIntU(PGESTRING in) // Unsigned Int
@@ -298,12 +309,12 @@ bool PGEFile::IsIntS(PGESTRING in) // Signed Int
 {
     using namespace PGEExtendedFormat;
 
-    if(in.isEmpty()) return false;
+    if(in.PGESTRINGisEmpty()) return false;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return false;
-    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')) return false;
+    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')) return false;
 
-    for(int i=1; i<in.size(); i++)
+    for(int i=1; i<(signed)in.size(); i++)
         if(!isDegit(in[i])) return false;
 
     return true;
@@ -313,32 +324,32 @@ bool PGEFile::IsFloat(PGESTRING &in) // Float Point numeric
 {
     using namespace PGEExtendedFormat;
 
-    if(in.isEmpty()) return false;
+    if(in.PGESTRINGisEmpty()) return false;
 
     if((in.size()==1)&&(!isDegit(in[0])))          return false;
-    if((!isDegit(in[0])) && (in[0].toLatin1()!='-')&&(in[0].toLatin1()!='.')&&(in[0].toLatin1()!=',')) return false;
+    if((!isDegit(in[0])) && (PGEGetChar(in[0])!='-')&&(PGEGetChar(in[0])!='.')&&(PGEGetChar(in[0])!=',')) return false;
 
     bool decimal=false;
     bool pow10  =false;
     bool sign   =false;
-    for(int i=((in[0].toLatin1()=='-')?1:0); i<in.size(); i++)
+    for(int i=((PGEGetChar(in[0])=='-')?1:0); i<(signed)in.size(); i++)
     {
         if((!decimal) &&(!pow10))
         {
-            if((in[i].toLatin1()=='.')||(in[i].toLatin1()==','))
+            if((PGEGetChar(in[i])=='.')||(PGEGetChar(in[i])==','))
             {
                 in[i]='.';//replace comma with a dot
                 decimal=true;
-                if(i==(in.size()-1)) return false;
+                if(i==((signed)in.size()-1)) return false;
                 continue;
             }
         }
         if(!pow10)
         {
-            if((in[i].toLatin1()=='E')||(in[i].toLatin1()=='e'))
+            if((PGEGetChar(in[i])=='E')||(PGEGetChar(in[i])=='e'))
             {
                 pow10=true;
-                if(i==(in.size()-1)) return false;
+                if(i==((signed)in.size()-1)) return false;
                 continue;
             }
         }
@@ -347,9 +358,9 @@ bool PGEFile::IsFloat(PGESTRING &in) // Float Point numeric
             if(!sign)
             {
                 sign=true;
-                if((in[i].toLatin1()=='+')||(in[i].toLatin1()=='-'))
+                if((PGEGetChar(in[i])=='+')||(PGEGetChar(in[i])=='-'))
                 {
-                    if(i==(in.size()-1)) return false;
+                    if(i==((signed)in.size()-1)) return false;
                     continue;
                 }
             }
@@ -372,8 +383,9 @@ bool PGEFile::IsIntArray(PGESTRING in) // Boolean array
     #ifdef PGE_FILES_QT
     return QRegExp("^\\[(\\-?\\d+,?)*\\]$").exactMatch(in);
     #else
-    std::regex rex("^\\[(\\-?\\d+,?)*\\]$");
-    return std::regex_match(in, rex);
+    //FIXME
+    std::regex rx("^\\[(\\-?\\d+,?)*\\]$");
+    return std::regex_match(in, rx);
     #endif
 }
 
@@ -381,7 +393,7 @@ bool PGEFile::IsStringArray(PGESTRING in) // String array
 {
     bool valid=true;
     int i=0, depth=0, comma=0;
-    while(i<in.size())
+    while(i<(signed)in.size())
     {
         switch(depth)
         {
@@ -419,9 +431,10 @@ bool PGEFile::IsStringArray(PGESTRING in) // String array
 PGESTRINGList PGEFile::X2STRArr(PGESTRING src)
 {
     PGESTRINGList strArr;
-    src.remove("[").remove("]");
-    strArr = src.split(',');
-    for(int i=0; i<strArr.size(); i++)
+    src=PGE_RemSSTR(src, "[");
+    src=PGE_RemSSTR(src, "]");
+    PGE_SPLITSTR(strArr, src, ",");
+    for(int i=0; i<(signed)strArr.size(); i++)
     {
         strArr[i] = X2STR(strArr[i]);
     }
@@ -429,11 +442,11 @@ PGESTRINGList PGEFile::X2STRArr(PGESTRING src)
     return strArr;
 }
 
-QList<bool > PGEFile::X2BollArr(PGESTRING src)
+PGELIST<bool > PGEFile::X2BollArr(PGESTRING src)
 {
-    QList<bool > arr;
+    PGELIST<bool > arr;
 
-    for(int i=0;i<src.size();i++)
+    for(int i=0;i<(signed)src.size();i++)
         arr.push_back(src[i]=='1');
 
     return arr;
@@ -445,12 +458,15 @@ PGELIST<PGESTRINGList > PGEFile::splitDataLine(PGESTRING src_data, bool *valid)
 
     bool wrong=false;
 
-    PGESTRINGList fields = encodeEscape(src_data).split(';');
-    for(int i=0;i<fields.size();i++)
-    {
-        if(PGESTRING(fields[i]).remove(' ').isEmpty()) continue;
+    PGESTRING encoded=encodeEscape(src_data);
+    PGESTRINGList fields;
+    PGE_SPLITSTR(fields, encoded, ";");
 
-        PGESTRINGList value = fields[i].split(':');
+    for(int i=0;i<(signed)fields.size();i++)
+    {
+        if(removeSpaces(fields[i]).PGESTRINGisEmpty()) continue;
+        PGESTRINGList value;
+        PGE_SPLITSTR(value, fields[i], ":");
 
         if(value.size()!=2) {wrong=true; break;}
         entryData.push_back(value);
@@ -473,7 +489,7 @@ PGESTRING PGEFile::BoolS(bool input)
 
 PGESTRING PGEFile::FloatS(double input)
 {
-    return PGESTRING::number(input, 'g', 10);
+    return fromNum(input);//fromNum(input, 'g', 10);
 }
 
 PGESTRING PGEFile::qStrS(PGESTRING input)
@@ -483,34 +499,34 @@ PGESTRING PGEFile::qStrS(PGESTRING input)
 
 PGESTRING PGEFile::hStrS(PGESTRING input)
 {
-    return input.toLatin1();
+    return PGEGetChar(input);
 }
 
 PGESTRING PGEFile::strArrayS(PGESTRINGList input)
 {
     PGESTRING output;
 
-    if(input.isEmpty()) return PGESTRING("");
+    if(input.PGESTRINGisEmpty()) return PGESTRING("");
 
     output.append("[");
 
-    for(int i=0; i< input.size(); i++)
+    for(int i=0; i< (signed)input.size(); i++)
     {
-        output.append(qStrS(input[i])+(i<input.size()-1?",":""));
+        output.append(qStrS(input[i])+(i<(signed)input.size()-1?",":""));
     }
 
     output.append("]");
     return output;
 }
 
-PGESTRING PGEFile::intArrayS(QList<int> input)
+PGESTRING PGEFile::intArrayS(PGELIST<int> input)
 {
     PGESTRING output;
-    if(input.isEmpty()) return PGESTRING("");
+    if(input.PGESTRINGisEmpty()) return PGESTRING("");
     output.append("[");
-    for(int i=0; i< input.size(); i++)
+    for(int i=0; i< (signed)input.size(); i++)
     {
-        output.append(fromNum(input[i])+(i<input.size()-1?",":""));
+        output.append(fromNum(input[i])+(i<(signed)input.size()-1?",":""));
     }
     output.append("]");
     return output;
@@ -519,7 +535,7 @@ PGESTRING PGEFile::intArrayS(QList<int> input)
 PGESTRING PGEFile::BoolArrayS(PGELIST<bool> input)
 {
     PGESTRING output;
-    for(int i=0;i<input.size(); i++)
+    for(int i=0;i<(signed)input.size(); i++)
     {
         output.append(input[i]?"1":"0");
     }
@@ -529,30 +545,30 @@ PGESTRING PGEFile::BoolArrayS(PGELIST<bool> input)
 PGESTRING PGEFile::encodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
-    output.replace("\\n", "==n==");
-    output.replace("\\\"", "==q==");
-    output.replace("\\\\", "==sl==");
-    output.replace("\\;", "==Sc==");
-    output.replace("\\:", "==Cl==");
-    output.replace("\\[", "==Os==");
-    output.replace("\\]", "==Cs==");
-    output.replace("\\,", "==Cm==");
-    output.replace("\\%", "==Pc==");
+    output=PGE_ReplSTR(output, "\\n", "==n==");
+    output=PGE_ReplSTR(output, "\\\"", "==q==");
+    output=PGE_ReplSTR(output, "\\\\", "==sl==");
+    output=PGE_ReplSTR(output, "\\;", "==Sc==");
+    output=PGE_ReplSTR(output, "\\:", "==Cl==");
+    output=PGE_ReplSTR(output, "\\[", "==Os==");
+    output=PGE_ReplSTR(output, "\\]", "==Cs==");
+    output=PGE_ReplSTR(output, "\\,", "==Cm==");
+    output=PGE_ReplSTR(output, "\\%", "==Pc==");
     return output;
 }
 
 PGESTRING PGEFile::decodeEscape(PGESTRING input)
 {
     PGESTRING output = input;
-    output.replace("==n==", "\\n");
-    output.replace("==q==", "\\\"");
-    output.replace("==sl==","\\\\");
-    output.replace("==Sc==", "\\;");
-    output.replace("==Cl==", "\\:");
-    output.replace("==Os==", "\\[");
-    output.replace("==Cs==", "\\]");
-    output.replace("==Cm==", "\\,");
-    output.replace("==Pc==", "\\%");
+    output=PGE_ReplSTR(output, "==n==", "\\n");
+    output=PGE_ReplSTR(output, "==q==", "\\\"");
+    output=PGE_ReplSTR(output, "==sl==","\\\\");
+    output=PGE_ReplSTR(output, "==Sc==", "\\;");
+    output=PGE_ReplSTR(output, "==Cl==", "\\:");
+    output=PGE_ReplSTR(output, "==Os==", "\\[");
+    output=PGE_ReplSTR(output, "==Cs==", "\\]");
+    output=PGE_ReplSTR(output, "==Cm==", "\\,");
+    output=PGE_ReplSTR(output, "==Pc==", "\\%");
     return output;
 }
 
@@ -568,30 +584,30 @@ PGESTRING PGEFile::X2STR(PGESTRING input)
 PGESTRING PGEFile::restoreStr(PGESTRING input)
 {
     PGESTRING output = input;
-    output.replace("\\n", "\n");
-    output.replace("\\\"", "\"");
-    output.replace("\\;", ";");
-    output.replace("\\:", ":");
-    output.replace("\\[", "[");
-    output.replace("\\]", "]");
-    output.replace("\\,", ",");
-    output.replace("\\%", "%");
-    output.replace("\\\\", "\\");
+    output=PGE_ReplSTR(output, "\\n", "\n");
+    output=PGE_ReplSTR(output, "\\\"", "\"");
+    output=PGE_ReplSTR(output, "\\;", ";");
+    output=PGE_ReplSTR(output, "\\:", ":");
+    output=PGE_ReplSTR(output, "\\[", "[");
+    output=PGE_ReplSTR(output, "\\]", "]");
+    output=PGE_ReplSTR(output, "\\,", ",");
+    output=PGE_ReplSTR(output, "\\%", "%");
+    output=PGE_ReplSTR(output, "\\\\", "\\");
     return output;
 }
 
 PGESTRING PGEFile::escapeStr(PGESTRING input)
 {
     PGESTRING output = input;
-    output.replace("\\", "\\\\");
-    output.replace("\n", "\\n");
-    output.replace("\"", "\\\"");
-    output.replace(";", "\\;");
-    output.replace(":", "\\:");
-    output.replace("[", "\\[");
-    output.replace("]", "\\]");
-    output.replace(",", "\\,");
-    output.replace("%", "\\%");
+    output=PGE_ReplSTR(output, "\\", "\\\\");
+    output=PGE_ReplSTR(output, "\n", "\\n");
+    output=PGE_ReplSTR(output, "\"", "\\\"");
+    output=PGE_ReplSTR(output, ";", "\\;");
+    output=PGE_ReplSTR(output, ":", "\\:");
+    output=PGE_ReplSTR(output, "[", "\\[");
+    output=PGE_ReplSTR(output, "]", "\\]");
+    output=PGE_ReplSTR(output, ",", "\\,");
+    output=PGE_ReplSTR(output, "%", "\\%");
     return output;
 }
 
