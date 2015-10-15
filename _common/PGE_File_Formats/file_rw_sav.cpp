@@ -48,23 +48,9 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
     {
-        #ifdef PGE_FILES_QT
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
-        #else
-        char buf[PATH_MAX + 1];
-        char *res = realpath(filePath.c_str(), buf);
-        if(res)
-        {
-            FileData.filename = buf;
-            char *last_slash = strrchr(buf, '/');
-            if (last_slash != NULL) {
-                *last_slash = '\0';
-            }
-            FileData.path = buf;
-        }
-        #endif
+        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     //Enable strict mode for SMBX LVL file format

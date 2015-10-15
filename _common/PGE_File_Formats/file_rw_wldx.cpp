@@ -16,14 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QFileInfo>
-#include <QDir>
-
 #include "file_formats.h"
 #include "file_strlist.h"
 #include "wld_filedata.h"
 #include "pge_x.h"
 #include "pge_x_macro.h"
+#include "pge_file_lib_sys.h"
 
 #ifdef PGE_FILES_USE_MESSAGEBOXES
 #include <QMessageBox>
@@ -48,42 +46,42 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
     WorldData FileData;
     FileData = dummyWldDataArray();
 
-    QFile inf(filePath);
-    if(!inf.open(QIODevice::ReadOnly))
+    PGE_FileFormats_misc::TextFileInput  inf;
+    if(!inf.open(filePath, true))
     {
         FileData.ReadFileValid=false;
         return FileData;
     }
+
     PGESTRING line;
     int str_count=0;
     bool valid=false;
-    QFileInfo in_1(filePath);
-    FileData.filename = in_1.baseName();
-    FileData.path = in_1.absoluteDir().absolutePath();
-    QTextStream in(&inf);
-    in.setCodec("UTF-8");
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    FileData.filename = in_1.basename();
+    FileData.path = in_1.dirpath();
 
     //Find level header part
     do{
-    str_count++;line = in.readLine();
-    }while((line!="HEAD") && (!line.isNull()));
+    str_count++;line = inf.readLine();
+    }while((line!="HEAD") && (!inf.eof()));
 
     PGESTRINGList header;
-    str_count++;line = in.readLine();
+    str_count++;line = inf.readLine();
     bool closed=false;
-    while((line!="HEAD_END") && (!line.isNull()))
+    while((line!="HEAD_END") && (!inf.eof()))
     {
         header.push_back(line);
-        str_count++;line = in.readLine();
+        str_count++;line = inf.readLine();
         if(line=="HEAD_END") closed=true;
     }
     if(!closed) goto badfile;
 
-    foreach(PGESTRING header_line, header)
+    for(int zzz=0;zzz<(signed)header.size();zzz++)
     {
-        QList<PGESTRINGList >data = PGEFile::splitDataLine(header_line, &valid);
+        PGESTRING &header_line=header[zzz];
+        PGELIST<PGESTRINGList >data = PGEFile::splitDataLine(header_line, &valid);
 
-        for(int i=0;i<data.size();i++)
+        for(int i=0;i<(signed)data.size();i++)
         {
             if(data[i].size()!=2) goto badfile;
             if(data[i][0]=="TL") //Episode Title
@@ -169,11 +167,11 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
      WorldData FileData = dummyWldDataArray();
 
      //Add path data
-     if(!filePath.isEmpty())
+     if(!filePath.PGESTRINGisEmpty())
      {
-         QFileInfo in_1(filePath);
-         FileData.filename = in_1.baseName();
-         FileData.path = in_1.absoluteDir().absolutePath();
+         PGE_FileFormats_misc::FileInfo in_1(filePath);
+         FileData.filename = in_1.basename();
+         FileData.path = in_1.dirpath();
      }
 
      FileData.untitled = false;
@@ -208,9 +206,11 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////HEADER//////////////////////
          PGEX_Section("HEAD")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
              PGEX_Items()
              {
+                 str_count+=8;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
                  PGEX_Values() //Look markers and values
                  {
@@ -230,10 +230,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////////////////MetaDATA/////////////////////////////////////////////
          PGEX_Section("META_BOOKMARKS")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                  Bookmark meta_bookmark;
@@ -255,10 +257,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ////////////////////////meta bookmarks////////////////////////
          PGEX_Section("META_SYS_CRASH")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                  PGEX_Values() //Look markers and values
@@ -281,10 +285,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////TILES//////////////////////
          PGEX_Section("TILES")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
                  tile = dummyWldTile();
 
@@ -306,10 +312,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////SCENERY//////////////////////
          PGEX_Section("SCENERY")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
                  scen = dummyWldScen();
 
@@ -331,10 +339,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////PATHS//////////////////////
          PGEX_Section("PATHS")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
                  pathitem = dummyWldPath();
 
@@ -355,10 +365,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////MUSICBOXES//////////////////////
          PGEX_Section("MUSICBOXES")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
                  musicbox = dummyWldMusic();
 
@@ -379,10 +391,12 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          ///////////////////LEVELS//////////////////////
          PGEX_Section("LEVELS")
          {
+             str_count++;
              PGEX_SectionBegin(PGEFile::PGEX_Struct);
 
              PGEX_Items()
              {
+                 str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
                  lvlitem = dummyWldLevel();
@@ -422,7 +436,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
 
      badfile:    //If file format not corrects
          if(!sielent)
-            BadFileMsg(FileData.path, str_count, line);
+            BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
          FileData.ReadFileValid=false;
      return FileData;
 }
@@ -440,30 +454,30 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     bool addArray=false;
 
     addArray=false;
-    foreach(bool x, FileData.nocharacter)
-    { if(x) addArray=true; }
+    for(int z=0; z<(signed)FileData.nocharacter.size();z++)
+    { bool x=FileData.nocharacter[z]; if(x) addArray=true; }
     //HEAD section
     if(
-            (!FileData.EpisodeTitle.isEmpty())||
+            (!FileData.EpisodeTitle.PGESTRINGisEmpty())||
             (addArray)||
-            (!FileData.IntroLevel_file.isEmpty())||
+            (!FileData.IntroLevel_file.PGESTRINGisEmpty())||
             (FileData.HubStyledWorld)||
             (FileData.restartlevel)||
             (FileData.stars>0)||
-            (!FileData.authors.isEmpty())
+            (!FileData.authors.PGESTRINGisEmpty())
       )
     {
         TextData += "HEAD\n";
-            if(!FileData.EpisodeTitle.isEmpty())
+            if(!FileData.EpisodeTitle.PGESTRINGisEmpty())
                 TextData += PGEFile::value("TL", PGEFile::qStrS(FileData.EpisodeTitle)); // Episode title
 
             addArray=false;
-            foreach(bool x, FileData.nocharacter)
-            { if(x) addArray=true; }
+            for(int z=0; z<(signed)FileData.nocharacter.size();z++)
+            { bool x=FileData.nocharacter[z]; if(x) addArray=true; }
             if(addArray)
                 TextData += PGEFile::value("DC", PGEFile::BoolArrayS(FileData.nocharacter)); // Disabled characters
 
-            if(!FileData.IntroLevel_file.isEmpty())
+            if(!FileData.IntroLevel_file.PGESTRINGisEmpty())
                 TextData += PGEFile::value("IT", PGEFile::qStrS(FileData.IntroLevel_file)); // Intro level
 
             if(FileData.HubStyledWorld)
@@ -473,7 +487,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
                 TextData += PGEFile::value("RL", PGEFile::BoolS(FileData.restartlevel)); // Restart on fail
             if(FileData.stars>0)
                 TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Total stars number
-            if(!FileData.authors.isEmpty())
+            if(!FileData.authors.PGESTRINGisEmpty())
                 TextData += PGEFile::value("CD", PGEFile::qStrS( FileData.authors )); // Credits
 
         TextData += "\n";
@@ -482,10 +496,10 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
 
     //////////////////////////////////////MetaData////////////////////////////////////////////////
     //Bookmarks
-    if(!FileData.metaData.bookmarks.isEmpty())
+    if(!FileData.metaData.bookmarks.PGESTRINGisEmpty())
     {
         TextData += "META_BOOKMARKS\n";
-        for(i=0;i<FileData.metaData.bookmarks.size(); i++)
+        for(i=0;i<(signed)FileData.metaData.bookmarks.size(); i++)
         {
             //Bookmark name
             TextData += PGEFile::value("BM", PGEFile::qStrS(FileData.metaData.bookmarks[i].bookmarkName));
@@ -510,11 +524,11 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     }
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
-    if(!FileData.tiles.isEmpty())
+    if(!FileData.tiles.PGESTRINGisEmpty())
     {
         TextData += "TILES\n";
 
-        for(i=0; i<FileData.tiles.size();i++)
+        for(i=0; i<(signed)FileData.tiles.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.tiles[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.tiles[i].x ));
@@ -525,11 +539,11 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "TILES_END\n";
     }
 
-    if(!FileData.scenery.isEmpty())
+    if(!FileData.scenery.PGESTRINGisEmpty())
     {
         TextData += "SCENERY\n";
 
-        for(i=0; i<FileData.scenery.size();i++)
+        for(i=0; i<(signed)FileData.scenery.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.scenery[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.scenery[i].x ));
@@ -540,11 +554,11 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "SCENERY_END\n";
     }
 
-    if(!FileData.paths.isEmpty())
+    if(!FileData.paths.PGESTRINGisEmpty())
     {
         TextData += "PATHS\n";
 
-        for(i=0; i<FileData.paths.size();i++)
+        for(i=0; i<(signed)FileData.paths.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.paths[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.paths[i].x ));
@@ -555,16 +569,16 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "PATHS_END\n";
     }
 
-    if(!FileData.music.isEmpty())
+    if(!FileData.music.PGESTRINGisEmpty())
     {
         TextData += "MUSICBOXES\n";
 
-        for(i=0; i<FileData.music.size();i++)
+        for(i=0; i<(signed)FileData.music.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.music[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.music[i].x ));
             TextData += PGEFile::value("Y", PGEFile::IntS(FileData.music[i].y ));
-            if(!FileData.music[i].music_file.isEmpty())
+            if(!FileData.music[i].music_file.PGESTRINGisEmpty())
                 TextData += PGEFile::value("MF", PGEFile::qStrS(FileData.music[i].music_file ));
             TextData += "\n";
         }
@@ -573,19 +587,19 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     }
 
 
-    if(!FileData.levels.isEmpty())
+    if(!FileData.levels.PGESTRINGisEmpty())
     {
         TextData += "LEVELS\n";
 
         WorldLevels defLvl = dummyWldLevel();
-        for(i=0; i<FileData.levels.size();i++)
+        for(i=0; i<(signed)FileData.levels.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.levels[i].id ));
             TextData += PGEFile::value("X", PGEFile::IntS(FileData.levels[i].x ));
             TextData += PGEFile::value("Y", PGEFile::IntS(FileData.levels[i].y ));
-            if(!FileData.levels[i].title.isEmpty())
+            if(!FileData.levels[i].title.PGESTRINGisEmpty())
                 TextData += PGEFile::value("LT", PGEFile::qStrS(FileData.levels[i].title ));
-            if(!FileData.levels[i].lvlfile.isEmpty())
+            if(!FileData.levels[i].lvlfile.PGESTRINGisEmpty())
                 TextData += PGEFile::value("LF", PGEFile::qStrS(FileData.levels[i].lvlfile ));
             if(FileData.levels[i].entertowarp!=defLvl.entertowarp)
                 TextData += PGEFile::value("EI", PGEFile::IntS(FileData.levels[i].entertowarp ));
@@ -614,8 +628,5 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
 
         TextData += "LEVELS_END\n";
     }
-
-
-
     return TextData;
 }

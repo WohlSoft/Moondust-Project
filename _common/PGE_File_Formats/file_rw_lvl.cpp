@@ -123,53 +123,20 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
-    #ifdef PGE_FILES_QT
-    QFile inf(filePath);
-    if(!inf.open(QIODevice::ReadOnly|QIODevice::Text))
+    PGE_FileFormats_misc::TextFileInput inf;
+    if(!inf.open(filePath, false))
     {
         FileData.ReadFileValid=false;
         return FileData;
     }
-    QFileInfo in_1(filePath);
-    FileData.filename = in_1.baseName();
-    FileData.path = in_1.absoluteDir().absolutePath();
-    QTextStream in(&inf);
-    in.setAutoDetectUnicode(true);
-    in.setLocale(QLocale::system());
-    in.setCodec(QTextCodec::codecForLocale());
-    in.seek(0);
-    #else
-    std::ifstream inf;
-    inf.open(filePath.c_str(), std::ios::in);
-    if(!inf.is_open())
-    {
-        FileData.ReadFileValid=false;
-        return FileData;
-    }
-    char buf[PATH_MAX + 1];
-    char *res = realpath(filePath.c_str(), buf);
-    if(res)
-    {
-        FileData.filename = buf;
-        char *last_slash = strrchr(buf, '/');
-        if (last_slash != NULL) {
-            *last_slash = '\0';
-        }
-        FileData.path = buf;
-    }
-    inf.seekg(std::ios::beg);
-    #endif
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    FileData.filename = in_1.basename();
+    FileData.path = in_1.dirpath();
 
+    inf.seek(0, PGE_FileFormats_misc::TextFileInput::begin);
     SMBX64_FileBegin();
 
-
-    /*****************Macroses*****************************/
-    #ifdef PGE_FILES_QT
-    #define nextLineH() str_count++;line = in.readLine();
-    #else
-    #define nextLineH() str_count++; {line.clear(); char x; while( ((x=inf.get())!='\n') && (!inf.eof()) ) { line.push_back(x); } }
-    #endif
-    /*****************Macroses*end*************************/
+    #define nextLineH() str_count++;line = inf.readLine();
 
     nextLineH();   //Read first line
     if( SMBX64::uInt(line) ) //File format number
@@ -201,6 +168,7 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     return FileData;
 badfile:
     FileData.ReadFileValid=false;
+    errorString="Bad file format: line contents: "+line;
     return FileData;
 }
 
@@ -245,23 +213,9 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
     {
-        #ifdef PGE_FILES_QT
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
-        #else
-        char buf[PATH_MAX + 1];
-        char *res = realpath(filePath.c_str(), buf);
-        if(res)
-        {
-            FileData.filename = buf;
-            char *last_slash = strrchr(buf, '/');
-            if (last_slash != NULL) {
-                *last_slash = '\0';
-            }
-            FileData.path = buf;
-        }
-        #endif
+        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     #ifdef PGE_EDITOR
@@ -595,7 +549,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     if(ge(10)) {
         ////////////Layers Data//////////
         nextLine();
-        while((line!="\"next\"")&&(!line.PGESTRINGisEmpty()))
+        while((line!="\"next\"")&&(!in.isEOF())&&(!line.PGESTRINGisEmpty()))
         {
 
                           strVar(layers.name, line);     //Layer name
@@ -612,7 +566,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 
         ////////////Events Data//////////
         nextLine();
-        while((line!="")&&(!line.PGESTRINGisEmpty()))
+        while((line!="")&&(!in.isEOF())&&(!line.PGESTRINGisEmpty()))
         {
             events = dummyLvlEvent();
 

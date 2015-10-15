@@ -59,32 +59,21 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
     LevelData FileData;
     FileData = dummyLvlDataArray();
 
-    #ifdef PGE_FILES_QT
-    QFile inf(filePath);
-    if(!inf.open(QIODevice::ReadOnly))
+    PGE_FileFormats_misc::TextFileInput inf;
+    if(!inf.open(filePath, true))
     {
-    #else
-    std::fstream inf;
-    inf.open(filePath.c_str(), std::ios::in);
-    if(! inf.is_open() )
-    {
-    #endif
         FileData.ReadFileValid=false;
         return FileData;
     }
+
     PGESTRING line;
     int str_count=0;
     bool valid=false;
-    #ifdef PGE_FILES_QT
-    QFileInfo in_1(filePath);
-    FileData.filename = in_1.baseName();
-    FileData.path = in_1.absoluteDir().absolutePath();
-    QTextStream in(&inf);
-    in.setCodec("UTF-8");
-    #define NextLine(line) str_count++;line = in.readLine();
-    #else
-    #define NextLine(line) str_count++; line.clear(); while(inf.eof()) { char x=inf.get(); if(x=='\n') break;  line+=x;}
-    #endif
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    FileData.filename = in_1.basename();
+    FileData.path = in_1.dirpath();
+
+    #define NextLine(line) str_count++;line = inf.readLine();
 
     //Find level header part
     do{
@@ -153,23 +142,9 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     //Add path data
     if(filePath.size() > 0)
     {
-        #ifdef PGE_FILES_QT
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
-        #else
-        char buf[PATH_MAX + 1];
-        char *res = realpath(filePath.c_str(), buf);
-        if(res)
-        {
-            FileData.filename = buf;
-            char *last_slash = strrchr(buf, '/');
-            if (last_slash != NULL) {
-                *last_slash = '\0';
-            }
-            FileData.path = buf;
-        }
-        #endif
+        PGE_FileFormats_misc::FileInfo  in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     FileData.untitled = false;

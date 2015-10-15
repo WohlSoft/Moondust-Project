@@ -46,8 +46,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     PGESTRING unknownLines;
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();
 
-    #ifdef PGE_FILES_QT
-    if(!QFileInfo(file).exists())
+    if(!PGE_FileFormats_misc::TextFileInput::exists(file))
     {
         FileData.ReadFileValid=false;
         errorString="File not exists: "+file;
@@ -57,8 +56,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         #endif
         return FileData;
     }
-    QFile inf(file);
-    if(!inf.open(QFile::ReadOnly|QFile::Text))
+    PGE_FileFormats_misc::TextFileInput inf;
+    if(!inf.open(file))
     {
         FileData.ReadFileValid=false;
         errorString="Can't open file to read: "+file;
@@ -68,28 +67,9 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         #endif
         return FileData;
     }
-    QTextStream in(&inf);   //Read File
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system()); //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
-    #else
-    std::ifstream inf;
-    inf.open(file, std::ios::in);
-    if(!inf)
-    {
-        FileData.ReadFileValid=false;
-        errorString="Can't open file: "+file;
-        return FileData;
-    }
-    inf.seekg(std::ios::beg);
-    #endif
 
     //Read NPC.TXT File config
-    #ifdef PGE_FILES_QT
-    #define NextLine(line) str_count++;line = in.readLine();
-    #else
-    #define NextLine(line) str_count++; line.clear(); while(inf.eof()) { char x=inf.get(); if(x=='\n') break;  line+=x;}
-    #endif
+    #define NextLine(line) str_count++;line = inf.readLine();
 
     NextLine(line)
     while(!IsNULL(line))
