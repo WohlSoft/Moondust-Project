@@ -33,6 +33,7 @@ struct NPCConfigFile
     bool en_gfxwidth;
     bool en_gfxheight;
     bool en_score;
+    bool en_health;
     bool en_playerblock;
     bool en_playerblocktop;
     bool en_npcblock;
@@ -67,6 +68,7 @@ struct NPCConfigFile
     unsigned int gfxwidth;
     unsigned int gfxheight;
     unsigned int score;
+    unsigned int health;
     bool playerblock;
     bool playerblocktop;
     bool npcblock;

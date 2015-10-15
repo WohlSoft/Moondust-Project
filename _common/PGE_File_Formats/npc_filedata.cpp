@@ -33,6 +33,7 @@ NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
     FileData.en_gfxwidth=false;
     FileData.en_gfxheight=false;
     FileData.en_score=false;
+    FileData.en_health=false;
     FileData.en_playerblock=false;
     FileData.en_playerblocktop=false;
     FileData.en_npcblock=false;
@@ -154,6 +155,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     }
 
     merged.score = (local.en_score)?local.score:global.score;
+    merged.health = (local.en_health)?local.health:global.health;
     merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
     merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
     merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;

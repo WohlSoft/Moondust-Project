@@ -209,6 +209,23 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            }
         }
        else
+       if(Params[0]=="health")
+        {
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
+           if(SMBX64::uInt(Params[1]))
+           {
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+           }
+           else
+           {
+              FileData.health=toInt(Params[1]);
+              if(FileData.health<1)
+                  FileData.health=1;
+              FileData.en_health=true;
+           }
+        }
+       else
        if(Params[0]=="playerblock")
         {
            Params[1] = PGESTR_Simpl(Params[1]);
@@ -627,6 +644,10 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     if(FileData.en_score)
     {
         TextData += "score=" + fromNum(FileData.score) +"\n";
+    }
+    if(FileData.en_health)
+    {
+        TextData += "health=" + fromNum(FileData.health) +"\n";
     }
 
     if(FileData.en_playerblock)

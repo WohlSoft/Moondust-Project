@@ -134,6 +134,18 @@ void NpcEdit::setDataBoxes()
         ui->Score->setCurrentIndex(StartNPCData.score);
 
 
+    ui->En_Health->setChecked(StartNPCData.en_health);
+    ui->health_label->setEnabled(StartNPCData.en_health);
+    ui->Health->setEnabled(StartNPCData.en_health);
+    if(!StartNPCData.en_health)
+    {
+        ui->Health->setValue(DefaultNPCData.health);
+        NpcData.health=DefaultNPCData.health;
+    }
+    else
+        ui->Health->setValue(StartNPCData.health);
+
+
     ui->En_JumpHurt->setChecked(StartNPCData.en_jumphurt);
     ui->JumpHurt->setEnabled(StartNPCData.en_jumphurt);
     if(!StartNPCData.en_jumphurt)
@@ -356,6 +368,15 @@ void NpcEdit::setDataBoxes()
     else
         ui->Name->setText(StartNPCData.name);
 
+    ui->En_Health->setChecked(StartNPCData.en_health);
+    ui->Health->setEnabled(StartNPCData.en_health);
+    if(!StartNPCData.en_health)
+    {
+        ui->Health->setValue(DefaultNPCData.health);
+        NpcData.health=DefaultNPCData.health;
+    }
+    else
+        ui->Health->setValue(StartNPCData.health);
 }
 
 void NpcEdit::setDefaultData(unsigned long npc_id)
@@ -368,6 +389,7 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
     DefaultNPCData.en_gfxwidth=false;
     DefaultNPCData.en_gfxheight=false;
     DefaultNPCData.en_score=false;
+    DefaultNPCData.en_health=false;
     DefaultNPCData.en_playerblock=false;
     DefaultNPCData.en_playerblocktop=false;
     DefaultNPCData.en_npcblock=false;
@@ -421,6 +443,7 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.noiceball=0;
         DefaultNPCData.nohammer=0;
         DefaultNPCData.name="";
+        DefaultNPCData.health=1;
     }
     else
     {
@@ -480,6 +503,7 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.nohammer=(int)(!pConfigs->main_npc[j].kill_hammer);
         DefaultNPCData.noshell=(int)(!pConfigs->main_npc[j].kill_by_npc);
         DefaultNPCData.name=pConfigs->main_npc[j].name;
+        DefaultNPCData.health=pConfigs->main_npc[j].health;
     }
 }
 

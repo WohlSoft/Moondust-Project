@@ -539,6 +539,19 @@ void NpcEdit::on_Name_textEdited(const QString &arg1)
 }
 
 
+void NpcEdit::on_En_Health_clicked(bool checked)
+{
+    ui->Health->setEnabled(checked);
+    ui->health_label->setEnabled(checked);
+    NpcData.en_health=checked;
+    documentNotModified();
+}
+
+void NpcEdit::on_Health_valueChanged(int arg1)
+{
+    documentWasModified();
+    NpcData.health=arg1;
+}
 
 
 
