@@ -255,6 +255,7 @@ namespace PGE_FileFormats_misc
         if(rez) filePath=buf;
         #else
         filePath=GetFullPathNameA(filePath.c_str());
+        replaceAll(filePath, "\\", "/");
         #endif
         #endif
 
