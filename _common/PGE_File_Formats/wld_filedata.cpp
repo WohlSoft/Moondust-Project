@@ -19,6 +19,77 @@
 #include "file_formats.h"
 #include "wld_filedata.h"
 
+
+bool FileFormats::smbx64WorldCheckLimits(WorldData &wld, PGESTRING *message)
+{
+    bool isSMBX64limit=true;
+
+    //Tiles limit
+    if(wld.tiles.size()>20000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(wld.tiles.size())+" Tiles\n"
+            "The maximum number of Tiles is "+fromNum(20000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Sceneries limit
+    if(wld.scenery.size()>5000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(wld.scenery.size())+" Sceneries\n"
+            "The maximum number of Sceneries is "+fromNum(5000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Paths limit
+    if(wld.paths.size()>2000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(wld.paths.size())+" Paths\n"
+            "The maximum number of Paths is "+fromNum(2000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Levels limit
+    if(wld.levels.size()>400)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(wld.levels.size())+" Levels\n"
+            "The maximum number of Levels is "+fromNum(400)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+
+    //Music boxes limit
+    if(wld.music.size()>1000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(wld.music.size())+" Music Boxes\n"
+            "The maximum number of Music Boxes is "+fromNum(1000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+
+    //Append common message part
+    if(!isSMBX64limit && message)
+        *message+="Please remove excess elements from this world map or save file into WLDX format.";
+
+    return isSMBX64limit;
+}
+
+
+
 WorldTiles FileFormats::dummyWldTile()
 {
     WorldTiles dummyTile;

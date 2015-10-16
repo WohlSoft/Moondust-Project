@@ -41,8 +41,6 @@ class FileFormats
 
 public:
     //File format read/write functions
-
-
     static MetaData ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePath="");
     static PGESTRING WriteNonSMBX64MetaData(MetaData metaData);
 
@@ -53,6 +51,10 @@ public:
     //static LevelData ReadLevelFile(PGEFILE &inf); //!< Parse SMBX64 Level file by file stream
     //static LevelData ReadExtendedLevelFile(PGEFILE &inf); //!< Parse PGE-X level file by file stream
     static LevelData dummyLvlDataArray(); //!< Generate empty level map
+    static void smbx64LevelPrepare(LevelData &lvl);
+    static bool smbx64LevelCheckLimits(LevelData &lvl, PGESTRING *message=0);
+    static void smbx64LevelSortBlocks(LevelData &lvl);
+    static void smbx64LevelSortBGOs(LevelData &lvl);
 
     // SMBX64 LVL File
     static LevelData ReadSMBX64LvlFileHeader(PGESTRING filePath); //!< Read file header only
@@ -88,11 +90,13 @@ public:
     static WorldData ReadSMBX64WldFileHeader(PGESTRING filePath); //!< Read file header only
     static WorldData ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse SMBX1-SMBX64 world
     static PGESTRING WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
+    static bool smbx64WorldCheckLimits(WorldData &wld, PGESTRING *message=0);
 
     // PGE Extended World map File
     static WorldData ReadExtendedWldFileHeader(PGESTRING filePath); //!< Read file header only
     static WorldData ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse PGE-X world file
     static PGESTRING WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
+
 
     //Wld Data
     static WorldTiles dummyWldTile();

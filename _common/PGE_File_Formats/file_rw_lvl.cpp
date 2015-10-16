@@ -757,7 +757,6 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
 //****************WRITE FILE FORMAT************************
 //*********************************************************
 
-
 PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 {
     PGESTRING TextData;
@@ -770,6 +769,11 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         if(FileData.npc[i].is_star)
             FileData.stars++;
     }
+
+    //Sort blocks array by X->Y
+    smbx64LevelSortBlocks(FileData);
+    //Sort BGO's array by SortPriority->X->Y
+    smbx64LevelSortBGOs(FileData);
 
     //Prevent out of range: 0....64
     if(file_format<0) file_format = 0;
@@ -850,136 +854,71 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
 
 
     //Blocks
-    PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBlock > > > sortedBlocks;
     for(int blkID=0;blkID<(signed)FileData.blocks.size();blkID++)
     {
         LevelBlock &block=FileData.blocks[blkID];
-        sortedBlocks[block.x][block.y][block.array_id] = block;
-    }
-
-    //for(i=0; i<FileData.blocks.size(); i++)
-    //{
-    for (PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBlock > > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
-    {
-      #ifdef PGE_FILES_QT
-        PGEMAP<long, PGEMAP<long, LevelBlock > > *it2= &*bArr;
-      #else
-        PGEMAP<long, PGEMAP<long, LevelBlock > > *it2= &(bArr->second);
-      #endif
-      for (PGEMAP<long, PGEMAP<long, LevelBlock > >::iterator bBrr = (*it2).begin(); bBrr != (*it2).end(); bBrr++)
-      {
-        #ifdef PGE_FILES_QT
-          PGEMAP<long, LevelBlock > *it1= &*bBrr;
-        #else
-          PGEMAP<long, LevelBlock > *it1= &(bBrr->second);
-        #endif
-        for (PGEMAP<long, LevelBlock >::iterator blockIt = (* it1).begin(); blockIt != (*it1).end(); blockIt++)
+        TextData += SMBX64::IntS(block.x);
+        TextData += SMBX64::IntS(block.y);
+        TextData += SMBX64::IntS(block.h);
+        TextData += SMBX64::IntS(block.w);
+        TextData += SMBX64::IntS(block.id);
+        int npcID = block.npc_id;
+        if(npcID < 0)
         {
-            #ifdef PGE_FILES_QT
-              LevelBlock *block= &*blockIt;
-            #else
-              LevelBlock *block= &(blockIt->second);
-            #endif
-            TextData += SMBX64::IntS((*block).x);
-            TextData += SMBX64::IntS((*block).y);
-            TextData += SMBX64::IntS((*block).h);
-            TextData += SMBX64::IntS((*block).w);
-            TextData += SMBX64::IntS((*block).id);
-            int npcID = (*block).npc_id;
-            if(npcID < 0)
-            {
-                npcID *= -1; if(npcID>99) npcID = 99;
-            }
-            else
-            if(npcID!=0)
-            {
-                npcID+=1000;
-                if(file_format<=64)
-                {
-                    long xnpcID = npcID;
-                    //Convert NPC-ID value from SMBX64 to SMBX1/2
-                    switch(xnpcID)
-                    {
-                        case 1009://Mushroom
-                            xnpcID = 100; break;
-                        case 1001://Goomba
-                            xnpcID = 101; break;
-                        case 1014://Fire flower
-                            xnpcID = 102; break;
-                        case 1034://Super leaf
-                            xnpcID = 103; break;
-                        case 1035://Shoe
-                            xnpcID = 104; break;
-                        default:
-                            break;
-                    }
-                    npcID = xnpcID;
-                }
-            }
-
-            TextData += SMBX64::IntS(npcID);
-            TextData += SMBX64::BoolS((*block).invisible);
-            if(file_format>=61)
-            TextData += SMBX64::BoolS((*block).slippery);
-            if(file_format>=10)
-            TextData += SMBX64::qStrS((*block).layer);
-            if(file_format>=14)
-                {
-                TextData += SMBX64::qStrS((*block).event_destroy);
-                TextData += SMBX64::qStrS((*block).event_hit);
-                TextData += SMBX64::qStrS((*block).event_emptylayer);
-                }
+            npcID *= -1; if(npcID>99) npcID = 99;
         }
-      }
+        else
+        if(npcID!=0)
+        {
+            npcID+=1000;
+            if(file_format<=64)
+            {
+                long xnpcID = npcID;
+                //Convert NPC-ID value from SMBX64 to SMBX1/2
+                switch(xnpcID)
+                {
+                    case 1009://Mushroom
+                        xnpcID = 100; break;
+                    case 1001://Goomba
+                        xnpcID = 101; break;
+                    case 1014://Fire flower
+                        xnpcID = 102; break;
+                    case 1034://Super leaf
+                        xnpcID = 103; break;
+                    case 1035://Shoe
+                        xnpcID = 104; break;
+                    default:
+                        break;
+                }
+                npcID = xnpcID;
+            }
+        }
+
+        TextData += SMBX64::IntS(npcID);
+        TextData += SMBX64::BoolS(block.invisible);
+        if(file_format>=61)
+        TextData += SMBX64::BoolS(block.slippery);
+        if(file_format>=10)
+        TextData += SMBX64::qStrS(block.layer);
+        if(file_format>=14)
+        {
+            TextData += SMBX64::qStrS(block.event_destroy);
+            TextData += SMBX64::qStrS(block.event_hit);
+            TextData += SMBX64::qStrS(block.event_emptylayer);
+        }
     }
     TextData += "\"next\"\n";//Separator
 
 
     //BGOs
-    PGEMAP<long, PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > > sortedBGO;
     for(int bgoID=0;bgoID<(signed)FileData.bgo.size();bgoID++)
     {
         LevelBGO &bgo1=FileData.bgo[bgoID];
-        sortedBGO[bgo1.smbx64_sp_apply][bgo1.x][bgo1.y][bgo1.array_id] = bgo1;
-    }
-
-    //for(i=0; i<FileData.bgo.size(); i++)
-    for (PGEMAP<long, PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > >::iterator sArr = sortedBGO.begin(); sArr != sortedBGO.end(); sArr++)
-    {
-        #ifdef PGE_FILES_QT
-          PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > *it3= &*sArr;
-        #else
-          PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > > *it3= &(sArr->second);
-        #endif
-        for (PGEMAP<long, PGEMAP<long, PGEMAP<long, LevelBGO > > >::iterator bArr = (* it3).begin(); bArr != (* it3).end(); bArr++)
-        {
-          #ifdef PGE_FILES_QT
-            PGEMAP<long, PGEMAP<long, LevelBGO > > *it2= &*bArr;
-          #else
-            PGEMAP<long, PGEMAP<long, LevelBGO > > *it2= &(bArr->second);
-          #endif
-          for (PGEMAP<long, PGEMAP<long, LevelBGO > >::iterator bBrr = (* it2).begin(); bBrr != (* it2).end(); bBrr++)
-          {
-            #ifdef PGE_FILES_QT
-              PGEMAP<long, LevelBGO > *it1= &*bBrr;
-            #else
-              PGEMAP<long, LevelBGO > *it1= &(bBrr->second);
-            #endif
-            for (PGEMAP<long, LevelBGO >::iterator bgoIt = (* it1).begin(); bgoIt != (*it1).end(); bgoIt++)
-            {
-            #ifdef PGE_FILES_QT
-              LevelBGO *bgo= &*bgoIt;
-            #else
-              LevelBGO *bgo= &(bgoIt->second);
-            #endif
-            TextData += SMBX64::IntS( (*bgo).x);
-            TextData += SMBX64::IntS( (*bgo).y);
-            TextData += SMBX64::IntS( (*bgo).id);
-            if(file_format>=10)
-            TextData += SMBX64::qStrS( (*bgo).layer);
-            }
-          }
-        }
+        TextData += SMBX64::IntS( bgo1.x);
+        TextData += SMBX64::IntS( bgo1.y);
+        TextData += SMBX64::IntS( bgo1.id);
+        if(file_format>=10)
+        TextData += SMBX64::qStrS( bgo1.layer);
     }
     TextData += "\"next\"\n";//Separator
 

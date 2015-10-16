@@ -19,6 +19,273 @@
 #include "file_formats.h"
 #include "lvl_filedata.h"
 
+#include <stack>
+
+/*********************************************************************************/
+/***************************SMBX64-Specific features******************************/
+/*********************************************************************************/
+
+//Built-in order priorities per SMBX-64 BGO's
+const int _smbx64_bgo_sort_priorities[190] = {
+    44,25,27,25,33,27,27,27,27,27,5,4,13,3,37,2,2,30,30,30,18,18,51,51,51,7,29,29,33,1,
+    28,28,33,39,39,24,37,34,1,1,1,1,5,5,56,56,3,48,59,58,58,14,14,14,14,14,14,11,14,4,
+    5,34,34,1,6,5,19,55,55,47,47,47,47,47,1,0,1,1,8,33,20,6,7,37,21,37,46,46,31,31,
+    31,46,22,38,38,39,5,39,17,47,8,8,23,46,46,50,46,34,34,9,10,10,10,26,11,12,12,12,24,24,
+    21,21,21,21,21,22,22,22,41,43,42,11,12,32,32,32,53,53,45,45,46,20,54,21,54,22,22,23,23,19,
+    20,24,9,52,52,52,52,5,5,8,49,20,40,7,6,6,7,7,6,16,16,5,36,35,35,35,35,35,35,35,
+    35,35,35,35,15,9,57,57,13,13
+};
+
+void FileFormats::smbx64LevelPrepare(LevelData &lvl)
+{
+    //Set SMBX64 specific option to BGO
+    for(int q=0; q< (signed)lvl.bgo.size(); q++)
+    {
+        if(lvl.bgo[q].smbx64_sp < 0)
+        {
+            if( (lvl.bgo[q].id>0) && (lvl.bgo[q].id < (unsigned)190) )
+            {
+                lvl.bgo[q].smbx64_sp_apply = _smbx64_bgo_sort_priorities[lvl.bgo[q].id-1];
+            }
+        }
+        else
+        {
+            lvl.bgo[q].smbx64_sp_apply = lvl.bgo[q].smbx64_sp;
+        }
+    }
+
+    //Mark & Count Stars
+    lvl.stars = 0;
+    for(int q=0; q< (signed)lvl.npc.size(); q++)
+    {
+        lvl.npc[q].is_star = ((lvl.npc[q].id==97)||(lvl.npc[q].id==196));
+        if((lvl.npc[q].is_star) && (lvl.npc[q].friendly))
+        {
+            lvl.npc[q].is_star=false;
+        } else {
+            lvl.stars+=1;
+        }
+    }
+}
+
+void FileFormats::smbx64LevelSortBlocks(LevelData &lvl)
+{
+    if(lvl.blocks.size()<=1) return; //Nothing to sort!
+
+    class my_stack : public std::stack< int > {
+    public:
+        using std::stack<int>::c; // expose the container
+    };
+
+    my_stack beg;
+    my_stack end;
+    LevelBlock piv;
+    int i=0, L, R, swapv;
+    beg.push(0);
+    end.push(lvl.blocks.size());
+    while (i>=0)
+    {
+        L=beg.c[i]; R=end.c[i]-1;
+        if (L<R)
+        {
+            piv=lvl.blocks[L];
+            while (L<R)
+            {
+                while ( (
+                           (lvl.blocks[R].x > piv.x)||
+                           ( ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y > piv.y))||
+                              ((lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id >= piv.array_id)) )
+                        ) && (L<R) ) R--;
+                if (L<R) lvl.blocks[L++]=lvl.blocks[R];
+
+                while (
+                       (
+                          (lvl.blocks[R].x < piv.x)||
+                          ( ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y < piv.y))||
+                             ((lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id <= piv.array_id)) )
+                       ) && (L<R)) L++;
+                if (L<R) lvl.blocks[R--]=lvl.blocks[L];
+            }
+            lvl.blocks[L]=piv; beg.push(L+1); end.push(end.c[i]); end.c[i++]=(L);
+            if((end.c[i]-beg.c[i]) > (end.c[i-1]-beg.c[i-1]))
+            {
+                swapv=beg.c[i]; beg.c[i]=beg.c[i-1]; beg.c[i-1]=swapv;
+                swapv=end.c[i]; end.c[i]=end.c[i-1]; end.c[i-1]=swapv;
+            }
+        }
+        else
+        {
+            i--;
+            beg.pop();
+            end.pop();
+        }
+    }
+}
+
+void FileFormats::smbx64LevelSortBGOs(LevelData &lvl)
+{
+    if(lvl.bgo.size()<=1) return; //Nothing to sort!
+
+    class my_stack : public std::stack< int > {
+    public:
+        using std::stack<int>::c; // expose the container
+    };
+
+    my_stack beg;
+    my_stack end;
+    LevelBGO piv;
+    int i=0, L, R, swapv;
+    beg.push(0);
+    end.push(lvl.bgo.size());
+    while (i>=0)
+    {
+        L=beg.c[i]; R=end.c[i]-1;
+        if (L<R)
+        {
+            piv=lvl.bgo[L];
+            while (L<R)
+            {
+                while ( (
+                            (lvl.bgo[R].smbx64_sp_apply > piv.smbx64_sp_apply)||
+                            (((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[R].x > piv.x))||
+                            ( ((lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
+                               ((lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id)) ))
+                         ) && (L<R) ) R--;
+                if (L<R) lvl.bgo[L++]=lvl.bgo[R];
+
+                while (
+                       (
+                           (lvl.bgo[R].smbx64_sp_apply < piv.smbx64_sp_apply)||
+                           (((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[R].x < piv.x))||
+                           ( ((lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y < piv.y))||
+                              ((lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id <= piv.array_id)) ))
+                        ) && (L<R)) L++;
+                if (L<R) lvl.bgo[R--]=lvl.bgo[L];
+            }
+            lvl.bgo[L]=piv; beg.push(L+1); end.push(end.c[i]); end.c[i++]=(L);
+            if((end.c[i]-beg.c[i]) > (end.c[i-1]-beg.c[i-1]))
+            {
+                swapv=beg.c[i]; beg.c[i]=beg.c[i-1]; beg.c[i-1]=swapv;
+                swapv=end.c[i]; end.c[i]=end.c[i-1]; end.c[i-1]=swapv;
+            }
+        }
+        else
+        {
+            i--;
+            beg.pop();
+            end.pop();
+        }
+    }
+}
+
+bool FileFormats::smbx64LevelCheckLimits(LevelData &lvl, PGESTRING *message)
+{
+    bool isSMBX64limit=true;
+
+    //Sections limit
+    if(lvl.sections.size()>21)
+    {
+        if(message)
+        {
+            *message=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.sections.size())+" section\n"
+            "The maximum number of sections is 21.\n"
+            "All boundaries and settings of more than 21 sections will be lost\n\n";
+        }
+        isSMBX64limit=false;
+    }
+
+    //Blocks limit
+    if(lvl.blocks.size()>16384)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.blocks.size())+" blocks\n"
+            "The maximum number of blocks is "+fromNum(16384)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //BGO limits
+    if(lvl.bgo.size()>8000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.bgo.size())+" Background Objects\n"
+            "The maximum number of Background Objects is "+fromNum(8000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //NPC limits
+    if(lvl.npc.size()>5000)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.npc.size())+" NPC's\n"
+            "The maximum number of NPC's is "+fromNum(5000)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Warps limits
+    if(lvl.doors.size()>199)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.doors.size())+" Warps\n"
+            "The maximum number of Warps is "+fromNum(199)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Physical Environment zones
+    if(lvl.physez.size()>450)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.physez.size())+" Water Boxes\n"
+            "The maximum number of Water Boxes is "+fromNum(450)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Layers limits
+    if(lvl.layers.size()>100)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.layers.size())+" Layers\n"
+            "The maximum number of Layers is "+fromNum(100)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+    //Events limits
+    if(lvl.events.size()>100)
+    {
+        if(message)
+        {
+            *message+=
+            "SMBX64 standard isn't allows to save "+fromNum(lvl.events.size())+" Events\n"
+            "The maximum number of Events is "+fromNum(100)+".\n\n";
+        }
+        isSMBX64limit=false;
+    }
+
+    //Append common message part
+    if(!isSMBX64limit && message)
+    {
+        *message="A some issues are found on preparing to save SMBX64 Level file format:\n\n"+*message;
+        *message+="Please remove excess elements (or settings) from this level or save file into LVLX format.";
+    }
+
+    return isSMBX64limit;
+}
+/*********************************************************************************/
+
+
+
 //*********************************************************
 //*******************Dummy arrays**************************
 //*********************************************************
