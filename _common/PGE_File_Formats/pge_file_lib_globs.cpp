@@ -249,12 +249,19 @@ namespace PGE_FileFormats_misc
         #ifdef PGE_FILES_QT
         filePath=QFileInfo(filePath).absoluteFilePath();
         #else
-        #ifndef _WIN32
         char buf[PATH_MAX + 1];
-        char *rez=realpath(filePath.c_str(), buf);
+        char *rez=NULL;
+        #ifndef _WIN32
+        rez=realpath(filePath.c_str(), buf);
         if(rez) filePath=buf;
         #else
-        filePath=GetFullPathNameA(filePath.c_str());
+        int ret=0;
+        #ifdef UNICODE
+        ret=GetFullPathNameA(filePath.c_str(), PATH_MAX, buf, &rez);
+        #else
+        ret=GetFullPathName(filePath.c_str(), PATH_MAX, buf, &rez);
+        #endif
+        if(ret!=0) filePath=buf;
         replaceAll(filePath, "\\", "/");
         #endif
         #endif
