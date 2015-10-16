@@ -1,3 +1,8 @@
+Editor 0.3.1.7
+- Small update of File Library
+- Support for "health" tag inside npc-*.txt custom configs
+- Added support of emulated FM Synth MIDI playback based on ADLMIDI. Also added support of loopStart/loopEnd tags in MIDI files
+
 Editor 0.3.1.6
 - Added support of game musics formats
 - Updated application icon (New 32x32 and 48x48 versions made by Orakel)
