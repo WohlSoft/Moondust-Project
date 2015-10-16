@@ -100,6 +100,10 @@ int main()
         printLevelInfo(level);
     }
 
+    FileFormats::smbx64LevelPrepare(level);
+    FileFormats::smbx64LevelSortBlocks(level);
+    FileFormats::smbx64LevelSortBGOs(level);
+
     fout.open("test_out.lvlx", std::ios::out);
     fout<<FileFormats::WriteExtendedLvlFile(level);
     fout.close();
