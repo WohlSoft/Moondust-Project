@@ -40,7 +40,7 @@ struct PlayerState
 {
     int characterID;
     int stateID;
-    saveCharacterState _chsetup;
+    saveCharState _chsetup;
 };
 
 class EpisodeState

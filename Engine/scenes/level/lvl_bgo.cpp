@@ -25,7 +25,7 @@
 LVL_Bgo::LVL_Bgo() : PGE_Phys_Object()
 {
     type = LVLBGO;
-    data=FileFormats::dummyLvlBgo();
+    data=FileFormats::CreateLvlBgo();
     animated=false;
     animator_ID=0;
     _isInited=false;

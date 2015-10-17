@@ -30,6 +30,7 @@
 #include <main_window/global_settings.h>
 #include <audio/music_player.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/smbx64_validation_messages.h>
 
 #include "world_edit.h"
 #include <ui_world_edit.h>
@@ -41,7 +42,7 @@ bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
-    WldData = FileFormats::dummyWldDataArray();
+    WldData = FileFormats::CreateWorldData();
     WldData.modified = true;
     WldData.untitled = true;
     StartWldData = WldData;
@@ -220,7 +221,6 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         isSMBX64limit=false;
 
         int file_format=64;
-        QString smbx64LimitsMsg;
 
         if(choiceVersionID)
         {
@@ -232,9 +232,13 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
-        if(!FileFormats::smbx64WorldCheckLimits(WldData, &smbx64LimitsMsg))
+        int ErrorCode=FileFormats::smbx64WorldCheckLimits(WldData);
+        if(ErrorCode!=FileFormats::SMBX64_FINE)
         {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"), smbx64LimitsMsg, QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 smbx64ErrMsgs(WldData, ErrorCode),
+                                 QMessageBox::Ok);
             isSMBX64limit=true;
         }
 

@@ -379,7 +379,7 @@ MainMenu:
             end_level_jump=RETURN_TO_WORLDMAP;
             _game_state.numOfPlayers=(answer==TitleScene::ANSWER_PLAYEPISODE_2P)?2:1;
             PlayerState plr;
-            plr._chsetup = FileFormats::dummySavCharacterState();
+            plr._chsetup = FileFormats::CreateSavCharacterState();
             plr.characterID=1;
             plr.stateID=1;
             plr._chsetup.id=1;

@@ -326,7 +326,7 @@ QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
                         eventName = QString(eventName+" %1").arg(count);
                     }
 
-                        LevelSMBX64Event msgEvent = FileFormats::dummyLvlEvent();
+                        LevelSMBX64Event msgEvent = FileFormats::CreateLvlEvent();
                         msgEvent.name = eventName;
                         msgEvent.msg = msgText;
                         msgEvent.array_id = ++scene->LvlData->events_array_id;

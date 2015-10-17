@@ -23,7 +23,7 @@ void EpisodeState::reset()
 
     LevelFile_hub.clear();
     replay_on_fail=false;
-    game_state = FileFormats::dummySaveDataArray();
+    game_state = FileFormats::CreateGameSaveData();
     gameType=Testing;
     LevelTargetWarp=0;
 
@@ -79,7 +79,7 @@ PlayerState EpisodeState::getPlayerState(int playerID)
     PlayerState ch;
     ch.characterID=1;
     ch.stateID=1;
-    ch._chsetup = FileFormats::dummySavCharacterState();
+    ch._chsetup = FileFormats::CreateSavCharacterState();
     ch._chsetup.id=1;
     ch._chsetup.state=1;
 

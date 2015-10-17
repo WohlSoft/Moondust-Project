@@ -21,6 +21,7 @@
 #include <common_features/graphics_funcs.h>
 #include <common_features/number_limiter.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/npctxt_manager.h>
 
 #include <QFileInfo>
 #include <QDir>
@@ -389,7 +390,7 @@ bool ConfigManager::loadLevelNPC()
 
 void ConfigManager::loadNpcTxtConfig(long npcID)
 {
-    NPCConfigFile npcTxt = FileFormats::CreateEmpytNpcTXTArray();
+    NPCConfigFile npcTxt = FileFormats::CreateEmpytNpcTXT();
     if(!lvl_npc_indexes.contains(npcID))
     {
         return;
@@ -400,7 +401,7 @@ void ConfigManager::loadNpcTxtConfig(long npcID)
     npcTxt=FileFormats::ReadNpcTXTFile(file, true);
     if(!npcTxt.ReadFileValid) return;
     if(npcSetup->isInit)
-        *npcSetup=FileFormats::mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
+        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(npcSetup->image->w, npcSetup->image->h));
     else
-        *npcSetup=FileFormats::mergeNPCConfigs( *npcSetup,npcTxt, QSize(0, 0));
+        *npcSetup = mergeNPCConfigs( *npcSetup,npcTxt, QSize(0, 0));
 }

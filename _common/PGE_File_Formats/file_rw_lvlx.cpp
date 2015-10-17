@@ -57,7 +57,7 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     LevelData FileData;
-    FileData = dummyLvlDataArray();
+    FileData = CreateLevelData();
 
     PGE_FileFormats_misc::TextFileInput inf;
     if(!inf.open(filePath, true))
@@ -137,7 +137,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     PGEX_FileBegin();
 
     LevelData FileData;
-    FileData = dummyLvlDataArray();
+    FileData = CreateLevelData();
 
     //Add path data
     if(filePath.size() > 0)
@@ -377,7 +377,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                lvl_section = dummyLvlSection();
+                lvl_section = CreateLvlSection();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -408,7 +408,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     int needToAdd = (FileData.sections.size()-1) - lvl_section.id;
                     while(needToAdd > 0)
                     {
-                        LevelSection dummySct = dummyLvlSection();
+                        LevelSection dummySct = CreateLvlSection();
                         dummySct.id = FileData.sections.size();
                         FileData.sections.push_back(dummySct);
                         needToAdd--;
@@ -438,7 +438,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                player = dummyLvlPlayerPoint();
+                player = CreateLvlPlayerPoint();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -457,7 +457,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     if(FileData.players[q].id==player.id){found=true; break;}
                 }
 
-                PlayerPoint sz = dummyLvlPlayerPoint(player.id);
+                PlayerPoint sz = CreateLvlPlayerPoint(player.id);
                 player.w = sz.w;
                 player.h = sz.h;
 
@@ -477,7 +477,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                block = dummyLvlBlock();
+                block = CreateLvlBlock();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -511,7 +511,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                bgodata = dummyLvlBgo();
+                bgodata = CreateLvlBgo();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -540,7 +540,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                npcdata = dummyLvlNpc();
+                npcdata = CreateLvlNpc();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -582,7 +582,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                physiczone = dummyLvlPhysEnv();
+                physiczone = CreateLvlPhysEnv();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -608,7 +608,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                door = dummyLvlDoor();
+                door = CreateLvlWarp();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -649,7 +649,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                layer = dummyLvlLayer();
+                layer = CreateLvlLayer();
                 PGEX_Values() //Look markers and values
                 {
                     PGEX_ValueBegin()
@@ -710,7 +710,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                event = dummyLvlEvent();
+                event = CreateLvlEvent();
 
                 PGESTRINGList musicSets;
                 PGESTRINGList bgSets;
@@ -1007,7 +1007,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "BLOCK\n";
 
-        LevelBlock defBlock = dummyLvlBlock();
+        LevelBlock defBlock = CreateLvlBlock();
 
         for(i=0;i<(signed)FileData.blocks.size();i++)
         {
@@ -1055,7 +1055,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "BGO\n";
 
-        LevelBGO defBGO = dummyLvlBgo();
+        LevelBGO defBGO = CreateLvlBgo();
 
         for(i=0;i<(signed)FileData.bgo.size();i++)
         {
@@ -1087,7 +1087,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "NPC\n";
 
-        LevelNPC defNPC = dummyLvlNpc();
+        LevelNPC defNPC = CreateLvlNpc();
 
         for(i=0;i<(signed)FileData.npc.size();i++)
         {
@@ -1148,7 +1148,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     if(!FileData.physez.empty())
     {
         TextData += "PHYSICS\n";
-        LevelPhysEnv defPhys = dummyLvlPhysEnv();
+        LevelPhysEnv defPhys = CreateLvlPhysEnv();
 
         for(i=0;i<(signed)FileData.physez.size();i++)
         {
@@ -1176,7 +1176,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "DOORS\n";
 
-        LevelDoor defDoor = dummyLvlDoor();
+        LevelDoor defDoor = CreateLvlWarp();
         for(i=0;i<(signed)FileData.doors.size();i++)
         {
             if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )

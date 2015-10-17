@@ -37,19 +37,19 @@
 */
 
 //Default dataSets
-LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
+LevelNPC    LvlPlacingItems::npcSet=FileFormats::CreateLvlNpc();
 long        LvlPlacingItems::npcGfxOffsetX1=0;
 long        LvlPlacingItems::npcGfxOffsetX2=0;
 long        LvlPlacingItems::npcGfxOffsetY=0;
 long        LvlPlacingItems::npcGrid=0;
 bool        LvlPlacingItems::npcSpecialAutoIncrement=false;
 long        LvlPlacingItems::npcSpecialAutoIncrement_begin=0;
-LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
-LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
+LevelBlock  LvlPlacingItems::blockSet=FileFormats::CreateLvlBlock();
+LevelBGO    LvlPlacingItems::bgoSet=FileFormats::CreateLvlBgo();
 long        LvlPlacingItems::itemW = 0;
 long        LvlPlacingItems::itemH = 0;
 
-LevelPhysEnv  LvlPlacingItems::waterSet=FileFormats::dummyLvlPhysEnv();
+LevelPhysEnv  LvlPlacingItems::waterSet=FileFormats::CreateLvlPhysEnv();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
 long LvlPlacingItems::doorArrayId = 0;
@@ -444,7 +444,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 playerPixmap = Themes::Image(Themes::player_point); break;
         }
 
-        PlayerPoint x = FileFormats::dummyLvlPlayerPoint(itemID+1);
+        PlayerPoint x = FileFormats::CreateLvlPlayerPoint(itemID+1);
 
         cursor = addPixmap(playerPixmap);
         dynamic_cast<QGraphicsPixmapItem *>(cursor)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );

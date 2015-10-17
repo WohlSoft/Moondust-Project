@@ -26,7 +26,7 @@
 
 LVL_Section::LVL_Section()
 {
-    data= FileFormats::dummyLvlSection();
+    data= FileFormats::CreateLvlSection();
     isInit=false;
     curMus=0;
     curBgID=0;

@@ -22,7 +22,7 @@
 LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
 {
     type = LVLNPC;
-    data = FileFormats::dummyLvlNpc();
+    data = FileFormats::CreateLvlNpc();
     animated=false;
     animator_ID=0;
     killed=false;

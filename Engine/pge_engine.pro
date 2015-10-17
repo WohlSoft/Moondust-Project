@@ -252,7 +252,8 @@ SOURCES += \
     gui/pge_questionbox.cpp \
     gui/pge_textinputbox.cpp \
     gui/pge_menuboxbase.cpp \
-    settings/debugger.cpp
+    settings/debugger.cpp \
+    ../_common/data_functions/npctxt_manager.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -393,7 +394,8 @@ HEADERS  += \
     gui/pge_questionbox.h \
     gui/pge_textinputbox.h \
     gui/pge_menuboxbase.h \
-    settings/debugger.h
+    settings/debugger.h \
+    ../_common/data_functions/npctxt_manager.h
 
 
 FORMS    += \

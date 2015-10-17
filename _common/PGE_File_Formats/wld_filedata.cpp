@@ -20,77 +20,26 @@
 #include "wld_filedata.h"
 
 
-bool FileFormats::smbx64WorldCheckLimits(WorldData &wld, PGESTRING *message)
+int FileFormats::smbx64WorldCheckLimits(WorldData &wld)
 {
-    bool isSMBX64limit=true;
+    int errorCode=0;
 
     //Tiles limit
-    if(wld.tiles.size()>20000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(wld.tiles.size())+" Tiles\n"
-            "The maximum number of Tiles is "+fromNum(20000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(wld.tiles.size()>20000) errorCode|=SMBX64EXC_TILES;
     //Sceneries limit
-    if(wld.scenery.size()>5000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(wld.scenery.size())+" Sceneries\n"
-            "The maximum number of Sceneries is "+fromNum(5000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(wld.scenery.size()>5000) errorCode|=SMBX64EXC_SCENERIES;
     //Paths limit
-    if(wld.paths.size()>2000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(wld.paths.size())+" Paths\n"
-            "The maximum number of Paths is "+fromNum(2000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(wld.paths.size()>2000) errorCode|=SMBX64EXC_PATHS;
     //Levels limit
-    if(wld.levels.size()>400)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(wld.levels.size())+" Levels\n"
-            "The maximum number of Levels is "+fromNum(400)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
-
+    if(wld.levels.size()>400) errorCode|=SMBX64EXC_LEVELS;
     //Music boxes limit
-    if(wld.music.size()>1000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(wld.music.size())+" Music Boxes\n"
-            "The maximum number of Music Boxes is "+fromNum(1000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(wld.music.size()>1000) errorCode|=SMBX64EXC_MUSICBOXES;
 
-    //Append common message part
-    if(!isSMBX64limit && message)
-        *message+="Please remove excess elements from this world map or save file into WLDX format.";
-
-    return isSMBX64limit;
+    return errorCode;
 }
 
 
-
-WorldTiles FileFormats::dummyWldTile()
+WorldTiles FileFormats::CreateWldTile()
 {
     WorldTiles dummyTile;
     dummyTile.array_id=0;
@@ -102,7 +51,7 @@ WorldTiles FileFormats::dummyWldTile()
     return dummyTile;
 }
 
-WorldScenery FileFormats::dummyWldScen()
+WorldScenery FileFormats::CreateWldScenery()
 {
     WorldScenery dummyScen;
     dummyScen.array_id = 0;
@@ -114,7 +63,7 @@ WorldScenery FileFormats::dummyWldScen()
     return dummyScen;
 }
 
-WorldPaths FileFormats::dummyWldPath()
+WorldPaths FileFormats::CreateWldPath()
 {
     WorldPaths dummyPath;
     dummyPath.array_id = 0;
@@ -126,7 +75,7 @@ WorldPaths FileFormats::dummyWldPath()
     return dummyPath;
 }
 
-WorldLevels FileFormats::dummyWldLevel()
+WorldLevels FileFormats::CreateWldLevel()
 {
     WorldLevels dummyLevel;
     dummyLevel.array_id = 0;
@@ -159,7 +108,7 @@ WorldLevels FileFormats::dummyWldLevel()
     return dummyLevel;
 }
 
-WorldMusic FileFormats::dummyWldMusic()
+WorldMusic FileFormats::CreateWldMusicbox()
 {
     WorldMusic dummyMusicBox;
     dummyMusicBox.array_id = 0;
@@ -172,7 +121,7 @@ WorldMusic FileFormats::dummyWldMusic()
     return dummyMusicBox;
 }
 
-WorldData FileFormats::dummyWldDataArray()
+WorldData FileFormats::CreateWorldData()
 {
     WorldData NewFileData;
 

@@ -44,7 +44,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
     PGESTRING line;           //Current Line data
     PGESTRINGList Params;
     PGESTRING unknownLines;
-    NPCConfigFile FileData = CreateEmpytNpcTXTArray();
+    NPCConfigFile FileData = CreateEmpytNpcTXT();
 
     if(!PGE_FileFormats_misc::TextFileInput::exists(file))
     {
