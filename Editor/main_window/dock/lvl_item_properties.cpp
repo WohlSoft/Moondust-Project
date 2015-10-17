@@ -175,17 +175,17 @@ void LvlItemProperties::mouseMoveEvent(QMouseEvent *event)
 
 void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::CreateLvlBgo(), FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
 }
 
 void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::CreateLvlBlock(), bgo, FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
 }
 
 void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::CreateLvlBlock(), FileFormats::CreateLvlBgo(), npc, newItem, dont_reset_props);
 }
 
 void LvlItemProperties::CloseBox()

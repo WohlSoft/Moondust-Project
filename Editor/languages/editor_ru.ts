@@ -2515,7 +2515,7 @@ Please, check the application directory.</source>
         <translation>Сохранение секции в изображение...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="512"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="134"/>
         <source>Abort</source>
         <translation>Прервать</translation>
@@ -2526,7 +2526,7 @@ Please, check the application directory.</source>
         <translation>Пожалуйста, подождите...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="40"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="41"/>
         <source>Untitled %1</source>
         <translation>Безымянный %1</translation>
     </message>
@@ -2543,7 +2543,7 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="102"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="103"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation>Пожалуйста, ввездите название уровня для &apos;%1&apos;!</translation>
     </message>
@@ -2552,155 +2552,142 @@ because object configurations are not loaded
         <translation type="vanished">Сохранение</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="103"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="104"/>
         <source>Saving</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="107"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="562"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="485"/>
         <source>Level title: </source>
         <translation>Заголовок уровня:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="109"/>
         <source>Make custom folder</source>
         <translation>Создать польз. папку</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="153"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="154"/>
         <source>Save As</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="178"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="203"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="204"/>
         <source>Extension is not set</source>
         <translation>Расширение не задано</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="204"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="180"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="205"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>Расширение файла не определно, пожалуйста, введите расширение файла!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="287"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="288"/>
         <source>SMBX file version</source>
         <translation>Версия файла SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="288"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="289"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>Какую версию вы желаете сохранить? (от 0 до 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="297"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="298"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="308"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="319"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="330"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="341"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="363"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="375"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>Допустимые ограничения SMBX64 превышены</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="298"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
 The maximum number of blocks is %2.
 
 Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Блоков
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Блоков
 Максимальное число Блоков -  %2.
 
 Подалуйста, удалите лишние Блоки с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="309"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
 The maximum number of Background Objects is %2.
 
 Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Фоновых объектов
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Фоновых объектов
 Максимальное число Фоновых объектов -  %2.
 
 Подалуйста, удалите лишние Фоновые объекты с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="320"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
 The maximum number of Non-Playable Characters is %2.
 
 Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Неигровых персонажей
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Неигровых персонажей
 Максимальное число Неигровых персонажей -  %2.
 
 Подалуйста, удалите лишних Неигровых персонажей с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="331"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Warps
 The maximum number of Warps is %2.
 
 Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Проходов
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Проходов
 Максимальное число Проходов -  %2.
 
 Подалуйста, удалите лишние Проходы с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="342"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
 The maximum number of Water Boxes is %2.
 
 Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяные зоны
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Водяные зоны
 Максимальное число Водяных зон -  %2.
 
 Подалуйста, удалите лишние Водяные зоны с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="353"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Layers
 The maximum number of Layers is %2.
 
 Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Слоёв
 Максимальное число Слоёв -  %2.
 
 Подалуйста, удалите лишние Слои с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="364"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Events
 The maximum number of Events is %2.
 
 Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Событий
 Максимальное число Событий -  %2.
 
 Подалуйста, удалите лишние События с уровеня  или сохрание файл в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="262"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="403"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="434"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="263"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="326"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="357"/>
         <source>File save error</source>
         <translation>Ошибка сохранения файла</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="263"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="404"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="264"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="327"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="358"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Невозможно сохранить файл %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="309"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -2711,12 +2698,12 @@ Installed LunaLUA partially extends than limits.</source>
 Установленный LunaLUA частично облегчает эти ограничения.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="463"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="386"/>
         <source>Read file error</source>
         <translation>Ошибка чтения файла</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="387"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Невозможно прочитать файл %1:
@@ -2731,20 +2718,20 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="512"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="513"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="436"/>
         <source>Loading level data</source>
         <translation>Загрузка данных уровня</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="558"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="481"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="560"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="483"/>
         <source> not saved</source>
         <translation> не сохранён</translation>
     </message>
@@ -2901,9 +2888,8 @@ Do you want to save your changes?</source>
         <translation>Заголовок</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="159"/>
         <source>Level name</source>
-        <translation>Название уровня</translation>
+        <translation type="vanished">Название уровня</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
@@ -2944,6 +2930,11 @@ Do you want to save your changes?</source>
         <location filename="../editing/edit_level/levelprops.ui" line="219"/>
         <source>Enable</source>
         <translation>Включить</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/levelprops.ui" line="159"/>
+        <source>Level name:</source>
+        <translation>Название уровня:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="226"/>
@@ -3747,33 +3738,33 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="96"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="97"/>
         <source>Search User Backgrounds %1</source>
         <translation>Поиск польз. фонов %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="156"/>
         <source>Search User Blocks %1</source>
         <translation>Поиск польз. блоков %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="258"/>
         <source>Search User BGOs %1</source>
         <translation>Поикс польз. фон.об. %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="326"/>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="339"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="340"/>
         <source>Search User NPCs %1</source>
         <translation>Поиск польз. НИП %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="453"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="455"/>
         <source>Wrong custom images</source>
         <translation>Плохой формат пользовательских изображений</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="454"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="456"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -4765,14 +4756,23 @@ Physical env. zones:	%6
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="940"/>
-        <source>Level file</source>
-        <translation>Файл уровня</translation>
+        <source>Level file:</source>
+        <translation>Файл уровня:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="972"/>
+        <source>Warp #</source>
+        <comment>Translate as &quot;Door #&quot;</comment>
+        <translation>Войти в Дв. №</translation>
+    </message>
+    <message>
+        <source>Level file</source>
+        <translation type="vanished">Файл уровня</translation>
+    </message>
+    <message>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation>Дверь №</translation>
+        <translation type="vanished">Дверь №</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="893"/>
@@ -5320,7 +5320,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Обновить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2465"/>
+        <location filename="../mainwindow.ui" line="2471"/>
         <source>Position bookmarks</source>
         <translation>Закладки позиции</translation>
     </message>
@@ -5836,24 +5836,24 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Начать тестирование &lt;Альфа&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2391"/>
-        <location filename="../mainwindow.ui" line="2394"/>
+        <location filename="../mainwindow.ui" line="2397"/>
+        <location filename="../mainwindow.ui" line="2400"/>
         <source>Testing settings</source>
         <translation>Настройки тестирования</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2655"/>
+        <location filename="../mainwindow.ui" line="2661"/>
         <source>Clear NPC garbadge...</source>
         <translation>Чистка от лишних НИП...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2663"/>
         <location filename="../mainwindow.ui" line="2669"/>
+        <location filename="../mainwindow.ui" line="2675"/>
         <source>More sections...</source>
         <translation>Дополнительные секции...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2674"/>
+        <location filename="../mainwindow.ui" line="2680"/>
         <source>Tip of the day...</source>
         <translation>Совет дня...</translation>
     </message>
@@ -5862,161 +5862,161 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Настройки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2409"/>
+        <location filename="../mainwindow.ui" line="2415"/>
         <source>Fill</source>
         <translation>Заливка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2414"/>
+        <location filename="../mainwindow.ui" line="2420"/>
         <source>Clear unused data</source>
         <translation>Очистить неиспользуемые данные</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2426"/>
+        <location filename="../mainwindow.ui" line="2432"/>
         <source>Show properties</source>
         <translation>Показать свойства</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2429"/>
+        <location filename="../mainwindow.ui" line="2435"/>
         <source>Show properties of item</source>
         <translation>Показать свойства элемента</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2434"/>
+        <location filename="../mainwindow.ui" line="2440"/>
         <source>Sprite Editor</source>
         <translation>Редактор спрайтов</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2439"/>
+        <location filename="../mainwindow.ui" line="2445"/>
         <source>Import...</source>
         <translation>Импортировать...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2442"/>
+        <location filename="../mainwindow.ui" line="2448"/>
         <source>Import</source>
         <translation>Импортировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2450"/>
+        <location filename="../mainwindow.ui" line="2456"/>
         <source>Enable GFX fix (reload of the file required)</source>
         <translation>Вкл. граф. исправление (требутеся переоткрыть файл)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2453"/>
+        <location filename="../mainwindow.ui" line="2459"/>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
         <translation>Этот флаг включает альтернативный алогритм применения маски чтобы корректно отобразить лениво-сделанную графику</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2468"/>
+        <location filename="../mainwindow.ui" line="2474"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
         <translation>Заклазки позиции. Сохраняют текущую позицию камеры. Вы можете использовать их, чтобы быстро вернуться в нужное место на большой карте.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2476"/>
+        <location filename="../mainwindow.ui" line="2482"/>
         <source>Clone section to...</source>
         <translation>Клонировать секцию в...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2484"/>
-        <location filename="../mainwindow.ui" line="2524"/>
+        <location filename="../mainwindow.ui" line="2490"/>
+        <location filename="../mainwindow.ui" line="2530"/>
         <source>Rotate left</source>
         <translation>Повернуть налево</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2492"/>
-        <location filename="../mainwindow.ui" line="2532"/>
+        <location filename="../mainwindow.ui" line="2498"/>
+        <location filename="../mainwindow.ui" line="2538"/>
         <source>Rotate right</source>
         <translation>Повернуть направо</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2500"/>
-        <location filename="../mainwindow.ui" line="2540"/>
+        <location filename="../mainwindow.ui" line="2506"/>
+        <location filename="../mainwindow.ui" line="2546"/>
         <source>Flip horizontal</source>
         <translation>Отразить по горизонтали</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2508"/>
-        <location filename="../mainwindow.ui" line="2548"/>
+        <location filename="../mainwindow.ui" line="2514"/>
+        <location filename="../mainwindow.ui" line="2554"/>
         <source>Flip vertical</source>
         <translation>Отразить по вертикали</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2516"/>
+        <location filename="../mainwindow.ui" line="2522"/>
         <source>Align selected</source>
         <translation>Выровнять выделенное</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2553"/>
+        <location filename="../mainwindow.ui" line="2559"/>
         <source>Fix wrong masks</source>
         <translation>Исправить неправильные маски</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2556"/>
+        <location filename="../mainwindow.ui" line="2562"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Этот инструмент исправит все неправильные маски изображений, приводящие к некорректному отображению</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2564"/>
+        <location filename="../mainwindow.ui" line="2570"/>
         <source>Delete section</source>
         <translation>Удалить секцию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2572"/>
+        <location filename="../mainwindow.ui" line="2578"/>
         <source>Additional Settings</source>
         <translation>Дополнительные настройки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2580"/>
+        <location filename="../mainwindow.ui" line="2586"/>
         <source>Compile To: </source>
         <translation>Скомпилировать в: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2591"/>
+        <location filename="../mainwindow.ui" line="2597"/>
         <source>Autocode [Lunadll Original Language]</source>
         <translation>Автокод [Оригинальный язык LunaDLL]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2602"/>
+        <location filename="../mainwindow.ui" line="2608"/>
         <source>LunaLua</source>
         <translation>LunaLua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2613"/>
+        <location filename="../mainwindow.ui" line="2619"/>
         <source>Don&apos;t fill out of section</source>
         <translation>Не заливать за пределы секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2618"/>
+        <location filename="../mainwindow.ui" line="2624"/>
         <source>SMBX-like GUI</source>
         <translation>Интерфейс SMBX</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2623"/>
+        <location filename="../mainwindow.ui" line="2629"/>
         <source>Run testing of saved file</source>
         <translation>Начать тестирование сохранённого файла</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2628"/>
+        <location filename="../mainwindow.ui" line="2634"/>
         <source>Change log</source>
         <translation>Отчёт изменений</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2633"/>
+        <location filename="../mainwindow.ui" line="2639"/>
         <source>Check for updates...</source>
         <translation>Проверить обновления...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2642"/>
+        <location filename="../mainwindow.ui" line="2648"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation>Запустить тест через SMBX (Необходим LunaDLL)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2645"/>
+        <location filename="../mainwindow.ui" line="2651"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Запускает напрямую тестирование уровня через открытый редактор SMBX.&lt;/p&gt;&lt;p&gt;Эта функция использует LunaDLL чтобы отправить команду в SMBX, поэтому ваш SMBX должен иметь последнюю сборку LunaDLL.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Эта функция не будет работать без LunaDLL (начиная с LunaLUA v 0.5.3-beta) в Вашем SMBX!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2650"/>
+        <location filename="../mainwindow.ui" line="2656"/>
         <source>Convert Audio (SoX)...</source>
         <translation>Конвертировать Аудио (SoX)...</translation>
     </message>
@@ -7058,9 +7058,8 @@ Please, select necessary world map in a list:</source>
         <location filename="../main_window/file/file_open.cpp" line="195"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
         <location filename="../main_window/file/file_reload.cpp" line="100"/>
-        <location filename="../main_window/file/file_reload.cpp" line="193"/>
-        <location filename="../main_window/file/file_reload.cpp" line="233"/>
-        <location filename="../main_window/file/file_reload.cpp" line="272"/>
+        <location filename="../main_window/file/file_reload.cpp" line="232"/>
+        <location filename="../main_window/file/file_reload.cpp" line="271"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
@@ -7069,15 +7068,14 @@ Please, select necessary world map in a list:</source>
         <location filename="../main_window/file/file_open.cpp" line="146"/>
         <location filename="../main_window/file/file_open.cpp" line="196"/>
         <location filename="../main_window/file/file_reload.cpp" line="101"/>
-        <location filename="../main_window/file/file_reload.cpp" line="194"/>
-        <location filename="../main_window/file/file_reload.cpp" line="273"/>
+        <location filename="../main_window/file/file_reload.cpp" line="272"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="50"/>
-        <location filename="../main_window/file/file_reload.cpp" line="176"/>
-        <location filename="../main_window/file/file_reload.cpp" line="227"/>
+        <location filename="../main_window/file/file_reload.cpp" line="175"/>
+        <location filename="../main_window/file/file_reload.cpp" line="226"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="35"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
@@ -7086,8 +7084,8 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="51"/>
-        <location filename="../main_window/file/file_reload.cpp" line="177"/>
-        <location filename="../main_window/file/file_reload.cpp" line="228"/>
+        <location filename="../main_window/file/file_reload.cpp" line="176"/>
+        <location filename="../main_window/file/file_reload.cpp" line="227"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="36"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="45"/>
@@ -7096,7 +7094,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="57"/>
-        <location filename="../main_window/file/file_reload.cpp" line="234"/>
+        <location filename="../main_window/file/file_reload.cpp" line="233"/>
         <source>Can&apos;t open the file.
 File not exist.</source>
         <translation>Невозможно открыть файл.
@@ -7104,21 +7102,21 @@ File not exist.</source>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="63"/>
-        <location filename="../main_window/file/file_reload.cpp" line="183"/>
-        <location filename="../main_window/file/file_reload.cpp" line="239"/>
+        <location filename="../main_window/file/file_reload.cpp" line="182"/>
+        <location filename="../main_window/file/file_reload.cpp" line="238"/>
         <source>Reload file and custom stuff</source>
         <translation>Перезагрузить файл и пользовательское содержание</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="64"/>
-        <location filename="../main_window/file/file_reload.cpp" line="184"/>
-        <location filename="../main_window/file/file_reload.cpp" line="240"/>
+        <location filename="../main_window/file/file_reload.cpp" line="183"/>
+        <location filename="../main_window/file/file_reload.cpp" line="239"/>
         <source>Do you want to save before reload stuff?</source>
         <translation>Хотите ли вы сохранить файл перед перезагрузкой содержимого?</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="76"/>
-        <location filename="../main_window/file/file_reload.cpp" line="251"/>
+        <location filename="../main_window/file/file_reload.cpp" line="250"/>
         <source>Reloading error</source>
         <translation>Ошибка перезагрузки</translation>
     </message>
@@ -7128,7 +7126,7 @@ File not exist.</source>
         <translation>Файл уровня перезагружен</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="210"/>
+        <location filename="../main_window/file/file_reload.cpp" line="209"/>
         <source>NPC Config reloaded</source>
         <translation>Конфируация NPC перезагружена</translation>
     </message>
@@ -7162,9 +7160,8 @@ File not exist.</source>
         <translation>Файл уровня загружен</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="174"/>
         <source>Dummy</source>
-        <translation>Пустышка</translation>
+        <translation type="vanished">Пустышка</translation>
     </message>
     <message>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
@@ -7186,7 +7183,7 @@ Configuration package loaded with errors.</source>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="212"/>
-        <location filename="../main_window/file/file_reload.cpp" line="306"/>
+        <location filename="../main_window/file/file_reload.cpp" line="305"/>
         <source>World map file loaded</source>
         <translation>Файл карты мира загружен</translation>
     </message>
@@ -7557,6 +7554,11 @@ Do you want to abort current testing process?</source>
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation>Чтобы запустить тестирование сохранённого файла, сперва сохраните его на диск!
 Вы можете запустить тестирование без сохранения файла если вы выберите пункт &quot;Начать Тестирование&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing.cpp" line="174"/>
+        <source>Dummy!</source>
+        <translation>Пустышка!</translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing.cpp" line="189"/>
@@ -7937,49 +7939,40 @@ Do you want to continue?</source>
 <context>
     <name>NpcDialog</name>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="14"/>
         <source>NPC Select dialog</source>
-        <translation>Выбор НИП</translation>
+        <translation type="vanished">Выбор НИП</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="114"/>
         <source>Content type</source>
-        <translation>Тип содержимого</translation>
+        <translation type="vanished">Тип содержимого</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="120"/>
         <source>Coins</source>
-        <translation>Монетки</translation>
+        <translation type="vanished">Монетки</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="137"/>
         <source>Empty</source>
-        <translation>Ничего</translation>
+        <translation type="vanished">Ничего</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="144"/>
         <source>NPC from list</source>
-        <translation>Из списка НИП</translation>
+        <translation type="vanished">Из списка НИП</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation>Фильтр:</translation>
+        <translation type="vanished">Фильтр:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation>Текст</translation>
+        <translation type="vanished">Текст</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="107"/>
         <source>Please, select NPC from list</source>
-        <translation>Пожалуйста, выберите НИП из списка</translation>
+        <translation type="vanished">Пожалуйста, выберите НИП из списка</translation>
     </message>
 </context>
 <context>
@@ -8127,32 +8120,32 @@ Do you want to continue?</source>
         <translation>Игровой процесс</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="647"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="661"/>
         <source>Grab side</source>
         <translation>Захват со стороны</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="805"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="812"/>
         <source>Don&apos;t kill on fireball</source>
         <translation>Неуязвим к огненным шарам</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="777"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="791"/>
         <source>Score</source>
         <translation>Очки</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="791"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="784"/>
         <source>Can&apos;t be eaten</source>
         <translation>Не может быть съеден</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="675"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="689"/>
         <source>Jump hurt</source>
         <translation>Ранить при прыжке</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="689"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="640"/>
         <source>Don&apos;t hurt</source>
         <translation>Безопасен для игрока</translation>
     </message>
@@ -8167,7 +8160,7 @@ Do you want to continue?</source>
         <translation>Не замораживать ледяным шаром</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="661"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="675"/>
         <source>Grab top</source>
         <translation>Захват сверху</translation>
     </message>
@@ -8182,7 +8175,12 @@ Do you want to continue?</source>
         <translation>Неуязвим к другим НИП</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="876"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="884"/>
+        <source>Default health level</source>
+        <translation>Нач. уровень здоровья</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_npc/npcedit.ui" line="900"/>
         <source>Preview</source>
         <translation>Предпросмотр</translation>
     </message>
@@ -8837,14 +8835,16 @@ Reason: Signal Segmentation Violation [SIGSERV]
 <context>
     <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="42"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="105"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="43"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="103"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="43"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="106"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="44"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="104"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл!.</translation>
     </message>
@@ -8908,16 +8908,138 @@ File: %1
         <translation>Отключить ограничение размера</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="540"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
+        <source>File is not exist</source>
+        <translation>Файл не существует</translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="66"/>
+        <source>Can&apos;t read the file</source>
+        <translation>Невозможно прочитать файл</translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="585"/>
         <source>Unknown values are presented</source>
         <translation>Обнаружены неизвестные значения</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="541"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="586"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Ваш файл содержит неизвестные значения.
 Эти значения будут удалены при сохранении файла</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="29"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 section
+The maximum number of sections is %2.
+All boundaries and settings of more than 21 sections will be lost.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 секций
+Максимальное число секций -  %2.
+
+Все границы и настройки секций с номером старше 21 будут утеряны.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="38"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 blocks
+The maximum number of blocks is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков
+Максимальное число блоков -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="45"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
+The maximum number of Background Objects is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
+Максимальное число фоновых объектов -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="52"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
+The maximum number of NPC&apos;s is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
+Максимальное число неигровых персонажей -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="59"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Warps
+The maximum number of Warps is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 проходов
+Максимальное число проходов -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="66"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
+The maximum number of Water Boxes is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
+Максимальное число водяных зон -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="73"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Layers
+The maximum number of Layers is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
+Максимальное число слоёв -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="80"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Events
+The maximum number of Events is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
+Максимальное число событий -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="87"/>
+        <source>A some issues are found on preparing to save SMBX64 Level file format:
+
+%1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
+        <translation>Во время сохранения уровня в формат SMBX64 проихошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="101"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
+The maximum number of Tiles is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
+Максимальное число плиток -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="108"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
+The maximum number of Sceneries is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 декораций
+Максимальное число декораций -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="115"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Paths
+The maximum number of Paths is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 путей
+Максимальное число путей -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="122"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Levels
+The maximum number of Levels is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
+Максимальное число уровней -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="130"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
+The maximum number of Music Boxes is %2.</source>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
+Максимальное число музыкальных шкатулок -  %2.</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="137"/>
+        <source>A some issues are found on preparing to save SMBX64 World map file format:
+
+%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
+        <translation>Во время сохранения карты мира в формат SMBX64 проихошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
     </message>
 </context>
 <context>
@@ -9309,9 +9431,13 @@ Data may be corrupted!</source>
         <translation>Совет дня</translation>
     </message>
     <message>
-        <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
         <source>Did you know...</source>
-        <translation>Знаете ли вы...</translation>
+        <translation type="obsolete">Знаете ли вы?</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
+        <source>Did you know?</source>
+        <translation>Знаете ли вы?</translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="58"/>
@@ -10333,7 +10459,7 @@ Music boxes:		%5
         <translation>5/%1 Применение Муз. Шкатулок...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="42"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="43"/>
         <source>Untitled %1</source>
         <translation>Безымянный %1</translation>
     </message>
@@ -10346,104 +10472,95 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="102"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="103"/>
         <source>Saving</source>
         <translation>Сохранение</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="147"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="148"/>
         <source>Save As</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="173"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="209"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="174"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="210"/>
         <source>Extension is not set</source>
         <translation>Расширение не задано</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="174"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="210"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="175"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="211"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>Расширение файла не определно, пожалуйста, введите расширение файла!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="228"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
         <source>SMBX file version</source>
         <translation>Версия файла SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="230"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>Какую версию вы желаете сохранить? (от 0 до 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="237"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="239"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="247"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="257"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="267"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="278"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="288"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>Допустимые ограничения SMBX64 превышены</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="238"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Tiles
 The maximum number of Tiles is %2.
 
 Please remove excess Tiles from this world map or save file into WLDX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Плиток
 Максимальное число Плиток -  %2.
 
 Подалуйста, удалите лишние Плитки с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="248"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
 The maximum number of Sceneries is %2.
 
 Please remove excess Sceneries from this world map or save file into WLDX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Декораций
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Декораций
 Максимальное число Декораций -  %2.
 
 Подалуйста, удалите лишние Декорации с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="258"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Paths
 The maximum number of Paths is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Дорог
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Дорог
 Максимальное число Дорог -  %2.
 
 Подалуйста, удалите лишние Дороги с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="268"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Levels
 The maximum number of Levels is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Уровней
 Максимальное число Уровней -  %2.
 
 Подалуйста, удалите лишние Уровни с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="279"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
 The maximum number of Music Boxes is %2.
 
 Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных коробок
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Музыкальных коробок
 Максимальное число Музыкальных коробок -  %2.
 
 Подалуйста, удалите лишние Музыкальные коробки с карты мира или сохрание файл в формат WLDX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="289"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="248"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -10454,28 +10571,28 @@ Installed LunaLUA partially extends than limits.</source>
 Установленный LunaLUA частично облегчает эти ограничения.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="301"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="333"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="356"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="260"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="292"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="315"/>
         <source>File save error</source>
         <translation>Ошибка сохранения файла</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="302"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="334"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="357"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="293"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="316"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Невозможно сохранить файл %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="395"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="354"/>
         <source>Read file error</source>
         <translation>Ошибка чтения файла</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="396"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="355"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Невозможно прочитать файл %1:
@@ -10514,7 +10631,7 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="101"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="102"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>Пожалуйста, введите заголовок эпизода для &apos;%1&apos;!</translation>
     </message>
@@ -10523,7 +10640,7 @@ because object configurations are not loaded
         <translation type="vanished">Сохранение</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="104"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="105"/>
         <source>Episode Title: </source>
         <translation>Название мира:</translation>
     </message>
@@ -10536,17 +10653,17 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="438"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="397"/>
         <source>Loading World map data</source>
         <translation>Загрузка данных Карты Мира</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="485"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="444"/>
         <source>Episode title: </source>
         <translation>Название мира:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="438"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="397"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="104"/>
         <source>Abort</source>
         <translation>Прервать</translation>
@@ -10560,17 +10677,17 @@ because object configurations are not loaded
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="439"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="398"/>
         <source>Loading World data</source>
         <translation>Загрузка данных Мира</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="483"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="442"/>
         <source> not saved</source>
         <translation> не сохранён</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="481"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="440"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.

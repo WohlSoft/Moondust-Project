@@ -20,6 +20,7 @@
 #include <common_features/items.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/npctxt_manager.h>
 
 #include "../../../../defines.h"
 
@@ -393,17 +394,17 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              if(uNPC.withTxt)
              {  //Merge global and user's settings from NPC.txt file
-                 uNPC.merged = FileFormats::mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
+                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
              }
              else
              {
                  if(uNPC.withImg)
                  {
-                     NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXTArray();
+                     NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXT();
 
                      autoConf.gfxwidth = capturedS.width();
 
-                     uNPC.merged = FileFormats::mergeNPCConfigs(
+                     uNPC.merged = mergeNPCConfigs(
                                  pConfigs->main_npc[i],
                                  autoConf, capturedS);
                  }

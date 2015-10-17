@@ -68,8 +68,8 @@ void MainWindow::setDefaults()
     cat_bgos="[all]";
     cat_npcs="[all]";
 
-    WldBuffer=FileFormats::dummyWldDataArray();
-    LvlBuffer=FileFormats::dummyLvlDataArray();
+    WldBuffer=FileFormats::CreateWorldData();
+    LvlBuffer=FileFormats::CreateLevelData();
 
     LastActiveSubWindow = NULL;
 

@@ -130,7 +130,7 @@ WorldScene::WorldScene()
     _playStopSnd=false;
     _playDenySnd=false;
 
-    data = FileFormats::dummyWldDataArray();
+    data = FileFormats::CreateWorldData();
 }
 
 WorldScene::~WorldScene()
@@ -306,7 +306,7 @@ bool WorldScene::init()
         {
             state.characterID=1;
             state.stateID=1;
-            state._chsetup=FileFormats::dummySavCharacterState();
+            state._chsetup=FileFormats::CreateSavCharacterState();
             players.push_back(state);
         }
 

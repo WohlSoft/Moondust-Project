@@ -19,12 +19,12 @@
 #include "file_formats.h"
 
 //*********************************************************
-//*******************Dummy arrays**************************
+//****************Sctructure initalizers*******************
 //*********************************************************
 
-saveCharacterState FileFormats::dummySavCharacterState()
+saveCharState FileFormats::CreateSavCharacterState()
 {
-    saveCharacterState newData;
+    saveCharState newData;
 
     newData.id          = 1;
     newData.health      = 0;
@@ -37,7 +37,7 @@ saveCharacterState FileFormats::dummySavCharacterState()
 }
 
 
-GamesaveData FileFormats::dummySaveDataArray()
+GamesaveData FileFormats::CreateGameSaveData()
 {
     GamesaveData newData;
 
@@ -64,7 +64,7 @@ GamesaveData FileFormats::dummySaveDataArray()
     newData.smbx64strict = false;
     newData.filename = "";
     newData.path = "";
-    newData.characterStates.push_back(dummySavCharacterState());
+    newData.characterStates.push_back(CreateSavCharacterState());
     newData.currentCharacter.push_back(1);
 
     return newData;

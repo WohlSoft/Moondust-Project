@@ -937,7 +937,7 @@
        <item row="0" column="0" colspan="3">
         <widget class="QLabel" name="label_11">
          <property name="text">
-          <string>Level file</string>
+          <string>Level file:</string>
          </property>
         </widget>
        </item>
@@ -969,7 +969,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string comment="Translate as &quot;Door #&quot;">Warp to</string>
+          <string comment="Translate as &quot;Door #&quot;">Warp #</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

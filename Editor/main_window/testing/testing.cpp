@@ -171,7 +171,7 @@ void MainWindow::on_action_doSafeTest_triggered()
 void MainWindow::on_action_testSettings_triggered()
 {
 
-    QMessageBox::information(this, tr("Dummy"),
+    QMessageBox::information(this, tr("Dummy!"),
     tr("Sorry, the testing feature is under construction.\nSettings will available soon."),
     QMessageBox::Ok);
 

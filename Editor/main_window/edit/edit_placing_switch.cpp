@@ -191,7 +191,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       LevelData buffer=FileFormats::CreateLevelData();
                        buffer.blocks.push_back(LvlPlacingItems::blockSet);
                        buffer.layers.clear();
                        buffer.events.clear();
@@ -214,7 +214,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       LevelData buffer=FileFormats::CreateLevelData();
                        buffer.bgo.push_back(LvlPlacingItems::bgoSet);
                        buffer.layers.clear();
                        buffer.events.clear();
@@ -241,7 +241,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                    if(IntEngine::isWorking())
                    {
-                       LevelData buffer=FileFormats::dummyLvlDataArray();
+                       LevelData buffer=FileFormats::CreateLevelData();
                        buffer.npc.push_back(LvlPlacingItems::npcSet);
                        buffer.layers.clear();
                        buffer.events.clear();
@@ -311,19 +311,19 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 case ItemTypes::WLD_Tile:
                     {
                         activeWldEditWin()->scene->setItemPlacer(0, itemID);
-                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Scenery:
                     {
                         activeWldEditWin()->scene->setItemPlacer(1, itemID);
-                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Path:\
                     {
                         activeWldEditWin()->scene->setItemPlacer(2, itemID);
-                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
                 case ItemTypes::WLD_Level:
@@ -345,7 +345,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                         ui->actionLine->setEnabled(false);
                         ui->actionFill->setEnabled(false);
                         activeWldEditWin()->scene->setItemPlacer(4, itemID);
-                        dock_WldItemProps->WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+                        dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
                         break;
                     }
             }

@@ -41,7 +41,7 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     int i;                  //counters
     int arrayIdCounter=0;
     GamesaveData FileData;
-    FileData = dummySaveDataArray();
+    FileData = CreateGameSaveData();
 
     FileData.untitled = false;
 
@@ -66,8 +66,8 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     for(i=0; i< (ge(56)? 5 : 2) ;i++)
     {
-        saveCharacterState charState;
-        charState = dummySavCharacterState();
+        saveCharState charState;
+        charState = CreateSavCharacterState();
         nextLine(); UIntVar(charState.state, line);//Character's power up state
         nextLine(); UIntVar(charState.itemID, line) //ID of item in the slot
         if(ge(10)) { nextLine();UIntVar(charState.mountType, line); } //Type of mount

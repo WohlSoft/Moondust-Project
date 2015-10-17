@@ -25,6 +25,7 @@
 #include <script/scriptholder.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/smbx64_validation_messages.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
@@ -39,7 +40,7 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
-    LvlData = FileFormats::dummyLvlDataArray();
+    LvlData = FileFormats::CreateLevelData();
     LvlData.metaData.script = new ScriptHolder;
     LvlData.untitled = true;
     StartLvlData = LvlData;
@@ -275,7 +276,6 @@ bool LevelEdit::savePGEXLVL(QString fileName, bool silent)
 bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
 {
     using namespace lvl_file_io;
-    QString smbx64LimitsMsg;
 
     //SMBX64 Standard check
     isSMBX64limit=false;
@@ -291,9 +291,14 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         QApplication::setOverrideCursor(Qt::WaitCursor);
     }
 
-    if(!FileFormats::smbx64LevelCheckLimits(LvlData, &smbx64LimitsMsg))
+    int ErrorCode=FileFormats::smbx64LevelCheckLimits(LvlData);
+    if(ErrorCode!=FileFormats::SMBX64_FINE)
     {
-        if(!silent) QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"), smbx64LimitsMsg, QMessageBox::Ok);
+        if(!silent)
+            QMessageBox::warning(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 smbx64ErrMsgs(LvlData, ErrorCode),
+                                 QMessageBox::Ok);
         isSMBX64limit=true;
     }
 

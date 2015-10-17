@@ -11,6 +11,7 @@
 #include <QPair>
 #include <QMap>
 #include <QObject>
+#include <tgmath.h>
 #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 #include <QSize>
 #endif

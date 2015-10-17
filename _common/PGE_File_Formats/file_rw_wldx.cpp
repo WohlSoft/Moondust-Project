@@ -44,7 +44,7 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     WorldData FileData;
-    FileData = dummyWldDataArray();
+    FileData = CreateWorldData();
 
     PGE_FileFormats_misc::TextFileInput  inf;
     if(!inf.open(filePath, true))
@@ -164,7 +164,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
 
      PGEX_FileBegin();
 
-     WorldData FileData = dummyWldDataArray();
+     WorldData FileData = CreateWorldData();
 
      //Add path data
      if(!filePath.PGESTRINGisEmpty())
@@ -292,7 +292,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
              {
                  str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                 tile = dummyWldTile();
+                 tile = CreateWldTile();
 
                  PGEX_Values() //Look markers and values
                  {
@@ -319,7 +319,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
              {
                  str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                 scen = dummyWldScen();
+                 scen = CreateWldScenery();
 
                  PGEX_Values() //Look markers and values
                  {
@@ -346,7 +346,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
              {
                  str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                 pathitem = dummyWldPath();
+                 pathitem = CreateWldPath();
 
                  PGEX_Values() //Look markers and values
                  {
@@ -372,7 +372,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
              {
                  str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                 musicbox = dummyWldMusic();
+                 musicbox = CreateWldMusicbox();
 
                  PGEX_Values() //Look markers and values
                  {
@@ -399,7 +399,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
                  str_count++;
                  PGEX_ItemBegin(PGEFile::PGEX_Struct);
 
-                 lvlitem = dummyWldLevel();
+                 lvlitem = CreateWldLevel();
                  PGEX_Values() //Look markers and values
                  {
                      PGEX_ValueBegin()
@@ -591,7 +591,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
     {
         TextData += "LEVELS\n";
 
-        WorldLevels defLvl = dummyWldLevel();
+        WorldLevels defLvl = CreateWldLevel();
         for(i=0; i<(signed)FileData.levels.size();i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.levels[i].id ));

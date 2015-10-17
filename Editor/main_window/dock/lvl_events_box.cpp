@@ -76,7 +76,7 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     newEventCounter=1;
 
     /**Initializing spoilers**/
-    refreshShownTabs(FileFormats::dummyLvlEvent(), true);
+    refreshShownTabs(FileFormats::CreateLvlEvent(), true);
 }
 
 LvlEventsBox::~LvlEventsBox()
@@ -862,7 +862,7 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
     }
     else
     {
-        LevelSMBX64Event NewEvent = FileFormats::dummyLvlEvent();
+        LevelSMBX64Event NewEvent = FileFormats::CreateLvlEvent();
         if(cloneEvent)
         {
             bool found=false;

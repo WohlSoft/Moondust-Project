@@ -2532,7 +2532,7 @@ Por favor, controle la ruta de aplicación.</translation>
         <translation>Guardar sección en imagen...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="512"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="134"/>
         <source>Abort</source>
         <translation>Abortar</translation>
@@ -2543,7 +2543,7 @@ Por favor, controle la ruta de aplicación.</translation>
         <translation>Por favor, espere...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="40"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="41"/>
         <source>Untitled %1</source>
         <translation>Sin título %1</translation>
     </message>
@@ -2560,7 +2560,7 @@ porque las configuraciones no están cargadas.
 Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="102"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="103"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
@@ -2569,155 +2569,142 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <translation type="vanished">Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="103"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="104"/>
         <source>Saving</source>
         <translation>Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="107"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="562"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="485"/>
         <source>Level title: </source>
         <translation>Título:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="108"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="109"/>
         <source>Make custom folder</source>
         <translation>Hacer carpeta personalizada</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="153"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="154"/>
         <source>Save As</source>
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="178"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="203"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="204"/>
         <source>Extension is not set</source>
         <translation>La extensión no está definida</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="204"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="180"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="205"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>La extensión no está definida, por favor especifique una extensión!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="287"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="288"/>
         <source>SMBX file version</source>
         <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="288"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="289"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="297"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="298"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="308"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="319"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="330"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="341"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="363"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="375"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>El límite SMBX64 ha sido excedido</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="298"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
 The maximum number of blocks is %2.
 
 Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 bloques
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 bloques
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="309"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
 The maximum number of Background Objects is %2.
 
 Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 Objetos de Fondo
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Objetos de Fondo
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="320"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
 The maximum number of Non-Playable Characters is %2.
 
 Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 Personajes No Jugadores (PNJ)
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Personajes No Jugadores (PNJ)
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="331"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Warps
 The maximum number of Warps is %2.
 
 Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 Traslados
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Traslados
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="342"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
 The maximum number of Water Boxes is %2.
 
 Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 cajas de agua
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 cajas de agua
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="353"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Layers
 The maximum number of Layers is %2.
 
 Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 capas
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 capas
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="364"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Events
 The maximum number of Events is %2.
 
 Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 eventos
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 eventos
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="262"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="403"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="434"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="263"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="326"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="357"/>
         <source>File save error</source>
         <translation>Error de escritura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="263"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="404"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="264"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="327"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="358"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>No se puede escribir archivo %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="309"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -2728,12 +2715,12 @@ El exceso de los límites de SMBX64 puede causar un error &apos;overflow&apos; e
 LunaLUA parcialmente extiende esos límites.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="463"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="386"/>
         <source>Read file error</source>
         <translation>Error de lectura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="387"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>No se puede leer archivo %1:
@@ -2748,20 +2735,20 @@ porque no se cargaron las configuraciones de objetos.
 Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="512"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="513"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="436"/>
         <source>Loading level data</source>
         <translation>Cargando datos de nivel</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="558"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="481"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; fue modificado.
 ¿Desea guardar sus cambios?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="560"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="483"/>
         <source> not saved</source>
         <translation>No guardado</translation>
     </message>
@@ -2918,9 +2905,8 @@ Do you want to save your changes?</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.ui" line="159"/>
         <source>Level name</source>
-        <translation>Nombre del nivel</translation>
+        <translation type="vanished">Nombre del nivel</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
@@ -2961,6 +2947,11 @@ Do you want to save your changes?</source>
         <location filename="../editing/edit_level/levelprops.ui" line="219"/>
         <source>Enable</source>
         <translation>Habilitar</translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_level/levelprops.ui" line="159"/>
+        <source>Level name:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="226"/>
@@ -3764,33 +3755,33 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="96"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="97"/>
         <source>Search User Backgrounds %1</source>
         <translation>Buscar fondos personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="156"/>
         <source>Search User Blocks %1</source>
         <translation>Buscar bloques personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="257"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="258"/>
         <source>Search User BGOs %1</source>
         <translation>Buscar OFs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="326"/>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="339"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="340"/>
         <source>Search User NPCs %1</source>
         <translation>Buscar PNJs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="453"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="455"/>
         <source>Wrong custom images</source>
         <translation>Imágenes equivocadas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="454"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="456"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -4783,14 +4774,23 @@ Zonas físicas de ambiente:	%6
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="940"/>
-        <source>Level file</source>
-        <translation>Archivo de nivel</translation>
+        <source>Level file:</source>
+        <translation type="unfinished">Archivo de nivel:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="972"/>
+        <source>Warp #</source>
+        <comment>Translate as &quot;Door #&quot;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level file</source>
+        <translation type="vanished">Archivo de nivel</translation>
+    </message>
+    <message>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation>Trasladar a</translation>
+        <translation type="vanished">Trasladar a</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="893"/>
@@ -6251,24 +6251,24 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Ejecutar prueba &lt;Alpha&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2391"/>
-        <location filename="../mainwindow.ui" line="2394"/>
+        <location filename="../mainwindow.ui" line="2397"/>
+        <location filename="../mainwindow.ui" line="2400"/>
         <source>Testing settings</source>
         <translation>Opciones de prueba</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2655"/>
+        <location filename="../mainwindow.ui" line="2661"/>
         <source>Clear NPC garbadge...</source>
         <translation>Limpiar PNJs residuales...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2663"/>
         <location filename="../mainwindow.ui" line="2669"/>
+        <location filename="../mainwindow.ui" line="2675"/>
         <source>More sections...</source>
         <translation>Más secciones...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2674"/>
+        <location filename="../mainwindow.ui" line="2680"/>
         <source>Tip of the day...</source>
         <translation>Consejo del día...</translation>
     </message>
@@ -6277,161 +6277,161 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Opciones</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2409"/>
+        <location filename="../mainwindow.ui" line="2415"/>
         <source>Fill</source>
         <translation>Llenar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2414"/>
+        <location filename="../mainwindow.ui" line="2420"/>
         <source>Clear unused data</source>
         <translation>Limpiar datos sin usar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2426"/>
+        <location filename="../mainwindow.ui" line="2432"/>
         <source>Show properties</source>
         <translation>Mostrar propiedades</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2429"/>
+        <location filename="../mainwindow.ui" line="2435"/>
         <source>Show properties of item</source>
         <translation>Mostrar propiedades de artículo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2434"/>
+        <location filename="../mainwindow.ui" line="2440"/>
         <source>Sprite Editor</source>
         <translation>Editor de gráficos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2439"/>
+        <location filename="../mainwindow.ui" line="2445"/>
         <source>Import...</source>
         <translation>Importar...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2442"/>
+        <location filename="../mainwindow.ui" line="2448"/>
         <source>Import</source>
         <translation>Importar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2450"/>
+        <location filename="../mainwindow.ui" line="2456"/>
         <source>Enable GFX fix (reload of the file required)</source>
         <translation>Habilitar arreglo de GFX (recargar el archivo requerido)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2453"/>
+        <location filename="../mainwindow.ui" line="2459"/>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
         <translation>Ésta función habilita máscara alternativa aplicando un algoritmo que permite la correcta visualización de máscaras mal hechas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2468"/>
+        <location filename="../mainwindow.ui" line="2474"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
         <translation>Marcadores de posición. Guardando posición de la cámara actual el cual permite saltar rápidamente.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2476"/>
+        <location filename="../mainwindow.ui" line="2482"/>
         <source>Clone section to...</source>
         <translation>Clonar sección a...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2484"/>
-        <location filename="../mainwindow.ui" line="2524"/>
+        <location filename="../mainwindow.ui" line="2490"/>
+        <location filename="../mainwindow.ui" line="2530"/>
         <source>Rotate left</source>
         <translation>Rotar a izquierda</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2492"/>
-        <location filename="../mainwindow.ui" line="2532"/>
+        <location filename="../mainwindow.ui" line="2498"/>
+        <location filename="../mainwindow.ui" line="2538"/>
         <source>Rotate right</source>
         <translation>Rotar a la derecha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2500"/>
-        <location filename="../mainwindow.ui" line="2540"/>
+        <location filename="../mainwindow.ui" line="2506"/>
+        <location filename="../mainwindow.ui" line="2546"/>
         <source>Flip horizontal</source>
         <translation>Voltear horizontalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2508"/>
-        <location filename="../mainwindow.ui" line="2548"/>
+        <location filename="../mainwindow.ui" line="2514"/>
+        <location filename="../mainwindow.ui" line="2554"/>
         <source>Flip vertical</source>
         <translation>Voltear verticalmente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2516"/>
+        <location filename="../mainwindow.ui" line="2522"/>
         <source>Align selected</source>
         <translation>Alinear seleccionado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2553"/>
+        <location filename="../mainwindow.ui" line="2559"/>
         <source>Fix wrong masks</source>
         <translation>Arreglar máscaras mal hechas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2556"/>
+        <location filename="../mainwindow.ui" line="2562"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Ésta herramienta arreglará todas las máscaras de imágenes que causen errores visuales</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2564"/>
+        <location filename="../mainwindow.ui" line="2570"/>
         <source>Delete section</source>
         <translation>Eliminar sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2572"/>
+        <location filename="../mainwindow.ui" line="2578"/>
         <source>Additional Settings</source>
         <translation>Opciones adicionales</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2580"/>
+        <location filename="../mainwindow.ui" line="2586"/>
         <source>Compile To: </source>
         <translation>Compilar a: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2591"/>
+        <location filename="../mainwindow.ui" line="2597"/>
         <source>Autocode [Lunadll Original Language]</source>
         <translation>Autocode [Lenguaje de Lunadll]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2602"/>
+        <location filename="../mainwindow.ui" line="2608"/>
         <source>LunaLua</source>
         <translation>LunaLua</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2613"/>
+        <location filename="../mainwindow.ui" line="2619"/>
         <source>Don&apos;t fill out of section</source>
         <translation>No llenar sección</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2618"/>
+        <location filename="../mainwindow.ui" line="2624"/>
         <source>SMBX-like GUI</source>
         <translation>GUI estilo SMBX</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2623"/>
+        <location filename="../mainwindow.ui" line="2629"/>
         <source>Run testing of saved file</source>
         <translation>Ejecutar prueba de archivo guardado</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2628"/>
+        <location filename="../mainwindow.ui" line="2634"/>
         <source>Change log</source>
         <translation>Cambiar log</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2633"/>
+        <location filename="../mainwindow.ui" line="2639"/>
         <source>Check for updates...</source>
         <translation>Buscar actualizaciones...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2642"/>
+        <location filename="../mainwindow.ui" line="2648"/>
         <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation>Probar en SMBX (requiere LunaDLL)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2645"/>
+        <location filename="../mainwindow.ui" line="2651"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2650"/>
+        <location filename="../mainwindow.ui" line="2656"/>
         <source>Convert Audio (SoX)...</source>
         <translation>Convertir audio (SoX)...</translation>
     </message>
@@ -6665,7 +6665,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Refrescar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2465"/>
+        <location filename="../mainwindow.ui" line="2471"/>
         <source>Position bookmarks</source>
         <translation>Marcadores de posición</translation>
     </message>
@@ -6948,9 +6948,8 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <location filename="../main_window/file/file_open.cpp" line="195"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
         <location filename="../main_window/file/file_reload.cpp" line="100"/>
-        <location filename="../main_window/file/file_reload.cpp" line="193"/>
-        <location filename="../main_window/file/file_reload.cpp" line="233"/>
-        <location filename="../main_window/file/file_reload.cpp" line="272"/>
+        <location filename="../main_window/file/file_reload.cpp" line="232"/>
+        <location filename="../main_window/file/file_reload.cpp" line="271"/>
         <source>File open error</source>
         <translation>Error al abrir archivo</translation>
     </message>
@@ -6959,15 +6958,14 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <location filename="../main_window/file/file_open.cpp" line="146"/>
         <location filename="../main_window/file/file_open.cpp" line="196"/>
         <location filename="../main_window/file/file_reload.cpp" line="101"/>
-        <location filename="../main_window/file/file_reload.cpp" line="194"/>
-        <location filename="../main_window/file/file_reload.cpp" line="273"/>
+        <location filename="../main_window/file/file_reload.cpp" line="272"/>
         <source>Can&apos;t open the file.</source>
         <translation>No se puede abrir archivo.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="50"/>
-        <location filename="../main_window/file/file_reload.cpp" line="176"/>
-        <location filename="../main_window/file/file_reload.cpp" line="227"/>
+        <location filename="../main_window/file/file_reload.cpp" line="175"/>
+        <location filename="../main_window/file/file_reload.cpp" line="226"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="35"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
@@ -6976,8 +6974,8 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="51"/>
-        <location filename="../main_window/file/file_reload.cpp" line="177"/>
-        <location filename="../main_window/file/file_reload.cpp" line="228"/>
+        <location filename="../main_window/file/file_reload.cpp" line="176"/>
+        <location filename="../main_window/file/file_reload.cpp" line="227"/>
         <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="36"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="45"/>
@@ -6986,7 +6984,7 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="57"/>
-        <location filename="../main_window/file/file_reload.cpp" line="234"/>
+        <location filename="../main_window/file/file_reload.cpp" line="233"/>
         <source>Can&apos;t open the file.
 File not exist.</source>
         <translation>No se puede abrir el archivo.
@@ -6994,21 +6992,21 @@ El archivo no existe.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="63"/>
-        <location filename="../main_window/file/file_reload.cpp" line="183"/>
-        <location filename="../main_window/file/file_reload.cpp" line="239"/>
+        <location filename="../main_window/file/file_reload.cpp" line="182"/>
+        <location filename="../main_window/file/file_reload.cpp" line="238"/>
         <source>Reload file and custom stuff</source>
         <translation>Recargar archivo y elementos personalizados</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="64"/>
-        <location filename="../main_window/file/file_reload.cpp" line="184"/>
-        <location filename="../main_window/file/file_reload.cpp" line="240"/>
+        <location filename="../main_window/file/file_reload.cpp" line="183"/>
+        <location filename="../main_window/file/file_reload.cpp" line="239"/>
         <source>Do you want to save before reload stuff?</source>
         <translation>¿Desea guardar antes de recargar?</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_reload.cpp" line="76"/>
-        <location filename="../main_window/file/file_reload.cpp" line="251"/>
+        <location filename="../main_window/file/file_reload.cpp" line="250"/>
         <source>Reloading error</source>
         <translation>Error recargando</translation>
     </message>
@@ -7018,7 +7016,7 @@ El archivo no existe.</translation>
         <translation>Nivel recargado</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="210"/>
+        <location filename="../main_window/file/file_reload.cpp" line="209"/>
         <source>NPC Config reloaded</source>
         <translation>Configuración PNJ recargada</translation>
     </message>
@@ -7052,9 +7050,8 @@ El archivo no existe.</translation>
         <translation>Nivel cargado</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="174"/>
         <source>Dummy</source>
-        <translation>Muñeco</translation>
+        <translation type="vanished">Muñeco</translation>
     </message>
     <message>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
@@ -7076,7 +7073,7 @@ El paquete de configuración se cargó con errores.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="212"/>
-        <location filename="../main_window/file/file_reload.cpp" line="306"/>
+        <location filename="../main_window/file/file_reload.cpp" line="305"/>
         <source>World map file loaded</source>
         <translation>Mapa cargado</translation>
     </message>
@@ -7465,6 +7462,11 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
 Puede ejecutar sin guardar si usa la opción &quot;Ejecutar prueba&quot; del menú.</translation>
     </message>
     <message>
+        <location filename="../main_window/testing/testing.cpp" line="174"/>
+        <source>Dummy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/testing/testing.cpp" line="189"/>
         <source>To run testing via SMBX file must be saved into disk first!</source>
         <translation>¡Para probar vía SMBX el archivo debe ser guardado!</translation>
@@ -7828,49 +7830,40 @@ Do you want to continue?</source>
 <context>
     <name>NpcDialog</name>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="14"/>
         <source>NPC Select dialog</source>
-        <translation>Selección de PNJ</translation>
+        <translation type="vanished">Selección de PNJ</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="114"/>
         <source>Content type</source>
-        <translation>Tipo de contenido</translation>
+        <translation type="vanished">Tipo de contenido</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="120"/>
         <source>Coins</source>
-        <translation>Monedas</translation>
+        <translation type="vanished">Monedas</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="137"/>
         <source>Empty</source>
-        <translation>Vacío</translation>
+        <translation type="vanished">Vacío</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="144"/>
         <source>NPC from list</source>
-        <translation>PNJ desde lista</translation>
+        <translation type="vanished">PNJ desde lista</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation>Filtro:</translation>
+        <translation type="vanished">Filtro:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation>Texto</translation>
+        <translation type="vanished">Texto</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/npcdialog.ui" line="107"/>
         <source>Please, select NPC from list</source>
-        <translation>Por favor, seleccione PNJ de la lista</translation>
+        <translation type="vanished">Por favor, seleccione PNJ de la lista</translation>
     </message>
 </context>
 <context>
@@ -8022,32 +8015,32 @@ Do you want to continue?</source>
         <translation>Juego</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="647"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="661"/>
         <source>Grab side</source>
         <translation>Agarrar de lado</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="805"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="812"/>
         <source>Don&apos;t kill on fireball</source>
         <translation>No morir con fuego</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="777"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="791"/>
         <source>Score</source>
         <translation>Puntuación</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="791"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="784"/>
         <source>Can&apos;t be eaten</source>
         <translation>No puede ser comido</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="675"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="689"/>
         <source>Jump hurt</source>
         <translation>Daño al saltar</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="689"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="640"/>
         <source>Don&apos;t hurt</source>
         <translation>No hacer daño</translation>
     </message>
@@ -8062,7 +8055,7 @@ Do you want to continue?</source>
         <translation>No congelar con nieve</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="661"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="675"/>
         <source>Grab top</source>
         <translation>Agarrar de arriba</translation>
     </message>
@@ -8077,7 +8070,12 @@ Do you want to continue?</source>
         <translation>No matar por otros PNJs</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npcedit.ui" line="876"/>
+        <location filename="../editing/edit_npc/npcedit.ui" line="884"/>
+        <source>Default health level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_npc/npcedit.ui" line="900"/>
         <source>Preview</source>
         <translation>Previsualización</translation>
     </message>
@@ -8739,14 +8737,16 @@ Razón: Violación de segmentación de señal [SIGSERV]
 <context>
     <name>QTranslator</name>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="42"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="105"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="54"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="65"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="43"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="103"/>
         <source>File open error</source>
         <translation>Error al abrir archivo</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="43"/>
-        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="106"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="44"/>
+        <location filename="../../_common/PGE_File_Formats/file_rwopen.cpp" line="104"/>
         <source>Can&apos;t open the file.</source>
         <translation>No se puede abrir archivo.</translation>
     </message>
@@ -8808,16 +8808,119 @@ File: %1
         <translation>Deshabilitar límite de tamaño</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="540"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="55"/>
+        <source>File is not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="66"/>
+        <source>Can&apos;t read the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="585"/>
         <source>Unknown values are presented</source>
         <translation>Valores desconocidos están presentados</translation>
     </message>
     <message>
-        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="541"/>
+        <location filename="../../_common/PGE_File_Formats/file_rw_npc_txt.cpp" line="586"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Su archivo tiene valores desconocidos que serán removidos
 cuando guarde su archivo</translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="29"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 section
+The maximum number of sections is %2.
+All boundaries and settings of more than 21 sections will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="38"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 blocks
+The maximum number of blocks is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="45"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
+The maximum number of Background Objects is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="52"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
+The maximum number of NPC&apos;s is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="59"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Warps
+The maximum number of Warps is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="66"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
+The maximum number of Water Boxes is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="73"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Layers
+The maximum number of Layers is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="80"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Events
+The maximum number of Events is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="87"/>
+        <source>A some issues are found on preparing to save SMBX64 Level file format:
+
+%1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="101"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
+The maximum number of Tiles is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="108"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
+The maximum number of Sceneries is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="115"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Paths
+The maximum number of Paths is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="122"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Levels
+The maximum number of Levels is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="130"/>
+        <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
+The maximum number of Music Boxes is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="137"/>
+        <source>A some issues are found on preparing to save SMBX64 World map file format:
+
+%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9210,9 +9313,13 @@ Data may be corrupted!</source>
         <translation>Consejo del día</translation>
     </message>
     <message>
-        <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
         <source>Did you know...</source>
-        <translation>Sabías que...</translation>
+        <translation type="vanished">Sabías que...</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tip_of_day/tip_of_day.ui" line="51"/>
+        <source>Did you know?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tip_of_day/tip_of_day.ui" line="58"/>
@@ -10233,7 +10340,7 @@ Cajas de música:		%5
         <translation>5/%1 Aplicando músicas...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="42"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="43"/>
         <source>Untitled %1</source>
         <translation>Sin título %1</translation>
     </message>
@@ -10246,104 +10353,95 @@ porque las configuraciones del proyecto no están cargadas.
 Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="102"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="103"/>
         <source>Saving</source>
         <translation>Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="147"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="148"/>
         <source>Save As</source>
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="173"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="209"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="174"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="210"/>
         <source>Extension is not set</source>
         <translation>La extensión no se definió</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="174"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="210"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="175"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="211"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>¡La extensión no se definió, por favor ponga una extensión!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="228"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
         <source>SMBX file version</source>
         <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="229"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="230"/>
         <source>Which version you wish to save? (from 0 to 64)</source>
         <translation>¿A qué versión desea guardar? (de 0 a 64)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="237"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="239"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="247"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="257"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="267"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="278"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="288"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>El límite SMBX64 fue excedido</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="238"/>
         <source>SMBX64 standard isn&apos;t allow to save %1 Tiles
 The maximum number of Tiles is %2.
 
 Please remove excess Tiles from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 azulejos
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 azulejos
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
+The maximum number of Sceneries is %2.
+
+Please remove excess Sceneries from this world map or save file into WLDX format.</source>
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 decoraciones
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allow to save %1 Paths
+The maximum number of Paths is %2.
+
+Please remove excess Paths from this world map or save file into WLDX format.</source>
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 caminos
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allow to save %1 Levels
+The maximum number of Levels is %2.
+
+Please remove excess Paths from this world map or save file into WLDX format.</source>
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 niveles
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
+    </message>
+    <message>
+        <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
+The maximum number of Music Boxes is %2.
+
+Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
+        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 cajas de música
 El número máximo de objetos es %2.
 
 Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="248"/>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
-The maximum number of Sceneries is %2.
-
-Please remove excess Sceneries from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 decoraciones
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="258"/>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Paths
-The maximum number of Paths is %2.
-
-Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 caminos
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="268"/>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Levels
-The maximum number of Levels is %2.
-
-Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 niveles
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="279"/>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
-The maximum number of Music Boxes is %2.
-
-Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
-        <translation>SMBX64 standar no ésta habilitado para guardar %1 cajas de música
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="289"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -10354,28 +10452,28 @@ El exceso de los límites de SMBX64 puede causar un error &apos;overflow&apos; e
 LunaLUA parcialmente extiende esos límites.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="301"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="333"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="356"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="260"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="292"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="315"/>
         <source>File save error</source>
         <translation>Error de escritura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="302"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="334"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="357"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="293"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="316"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>No se puede escribir archivo %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="395"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="354"/>
         <source>Read file error</source>
         <translation>Error de lectura</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="396"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="355"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>No se puede leer archivo %1:
@@ -10406,7 +10504,7 @@ LunaLUA parcialmente extiende esos límites.</translation>
         <translation>Por favor, espere...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="101"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="102"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
@@ -10415,7 +10513,7 @@ LunaLUA parcialmente extiende esos límites.</translation>
         <translation type="vanished">Guardando</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="104"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="105"/>
         <source>Episode Title: </source>
         <translation>Título:</translation>
     </message>
@@ -10428,17 +10526,17 @@ porque no se cargaron las configuraciones de objetos.
 Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="438"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="397"/>
         <source>Loading World map data</source>
         <translation>Cargando datos del mapa</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="485"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="444"/>
         <source>Episode title: </source>
         <translation>Título:</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="438"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="397"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="104"/>
         <source>Abort</source>
         <translation>Abortar</translation>
@@ -10452,17 +10550,17 @@ porque las configuraciones no están cargadas.
 Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="439"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="398"/>
         <source>Loading World data</source>
         <translation>Cargando datos del mundo</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="483"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="442"/>
         <source> not saved</source>
         <translation>No guardado</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="481"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="440"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; fue modificado.

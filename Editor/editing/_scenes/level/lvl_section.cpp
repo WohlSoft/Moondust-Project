@@ -39,7 +39,7 @@ void LvlScene::InitSection(int sect)
         int needToAdd = (LvlData->sections.size()-1) - sect;
         while(needToAdd > 0)
         {
-            LevelSection dummySct = FileFormats::dummyLvlSection();
+            LevelSection dummySct = FileFormats::CreateLvlSection();
             dummySct.id = LvlData->sections.size();
             LvlData->sections.push_back(dummySct);
             needToAdd--;

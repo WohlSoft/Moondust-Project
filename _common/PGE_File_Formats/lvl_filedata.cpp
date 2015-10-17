@@ -178,109 +178,27 @@ void FileFormats::smbx64LevelSortBGOs(LevelData &lvl)
     }
 }
 
-bool FileFormats::smbx64LevelCheckLimits(LevelData &lvl, PGESTRING *message)
+int FileFormats::smbx64LevelCheckLimits(LevelData &lvl)
 {
-    bool isSMBX64limit=true;
-
+    int errorCode=SMBX64_FINE;
     //Sections limit
-    if(lvl.sections.size()>21)
-    {
-        if(message)
-        {
-            *message=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.sections.size())+" section\n"
-            "The maximum number of sections is 21.\n"
-            "All boundaries and settings of more than 21 sections will be lost\n\n";
-        }
-        isSMBX64limit=false;
-    }
-
+    if(lvl.sections.size()>21) errorCode|=SMBX64EXC_SECTIONS;
     //Blocks limit
-    if(lvl.blocks.size()>16384)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.blocks.size())+" blocks\n"
-            "The maximum number of blocks is "+fromNum(16384)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.blocks.size()>16384) errorCode|=SMBX64EXC_BLOCKS;
     //BGO limits
-    if(lvl.bgo.size()>8000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.bgo.size())+" Background Objects\n"
-            "The maximum number of Background Objects is "+fromNum(8000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.bgo.size()>8000) errorCode|=SMBX64EXC_BGOS;
     //NPC limits
-    if(lvl.npc.size()>5000)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.npc.size())+" NPC's\n"
-            "The maximum number of NPC's is "+fromNum(5000)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.npc.size()>5000) errorCode|=SMBX64EXC_NPCS;
     //Warps limits
-    if(lvl.doors.size()>199)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.doors.size())+" Warps\n"
-            "The maximum number of Warps is "+fromNum(199)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.doors.size()>199) errorCode|=SMBX64EXC_WARPS;
     //Physical Environment zones
-    if(lvl.physez.size()>450)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.physez.size())+" Water Boxes\n"
-            "The maximum number of Water Boxes is "+fromNum(450)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.physez.size()>450) errorCode|=SMBX64EXC_WATERBOXES;
     //Layers limits
-    if(lvl.layers.size()>100)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.layers.size())+" Layers\n"
-            "The maximum number of Layers is "+fromNum(100)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.layers.size()>100) errorCode|=SMBX64EXC_LAYERS;
     //Events limits
-    if(lvl.events.size()>100)
-    {
-        if(message)
-        {
-            *message+=
-            "SMBX64 standard isn't allows to save "+fromNum(lvl.events.size())+" Events\n"
-            "The maximum number of Events is "+fromNum(100)+".\n\n";
-        }
-        isSMBX64limit=false;
-    }
+    if(lvl.events.size()>100) errorCode|=SMBX64EXC_EVENTS;
 
-    //Append common message part
-    if(!isSMBX64limit && message)
-    {
-        *message="A some issues are found on preparing to save SMBX64 Level file format:\n\n"+*message;
-        *message+="Please remove excess elements (or settings) from this level or save file into LVLX format.";
-    }
-
-    return isSMBX64limit;
+    return errorCode;
 }
 /*********************************************************************************/
 
@@ -291,7 +209,7 @@ bool FileFormats::smbx64LevelCheckLimits(LevelData &lvl, PGESTRING *message)
 //*********************************************************
 
 //Default dataSets
-LevelNPC    FileFormats::dummyLvlNpc()
+LevelNPC    FileFormats::CreateLvlNpc()
 {
     LevelNPC dummyNPC;
     dummyNPC.x = 0;
@@ -321,7 +239,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
     return dummyNPC;
 }
 
-LevelDoor  FileFormats::dummyLvlDoor()
+LevelDoor  FileFormats::CreateLvlWarp()
 {
     LevelDoor dummyDoor;
 
@@ -354,7 +272,7 @@ LevelDoor  FileFormats::dummyLvlDoor()
 }
 
 
-LevelBlock  FileFormats::dummyLvlBlock()
+LevelBlock  FileFormats::CreateLvlBlock()
 {
     LevelBlock dummyBlock;
     dummyBlock.x = 0;
@@ -375,7 +293,7 @@ LevelBlock  FileFormats::dummyLvlBlock()
     return dummyBlock;
 }
 
-LevelBGO FileFormats::dummyLvlBgo()
+LevelBGO FileFormats::CreateLvlBgo()
 {
     LevelBGO dummyBGO;
     //SMBX64
@@ -397,7 +315,7 @@ LevelBGO FileFormats::dummyLvlBgo()
 }
 
 
-LevelPhysEnv FileFormats::dummyLvlPhysEnv()
+LevelPhysEnv FileFormats::CreateLvlPhysEnv()
 {
     LevelPhysEnv dummyWater;
     dummyWater.x  = 0;
@@ -413,7 +331,7 @@ LevelPhysEnv FileFormats::dummyLvlPhysEnv()
     return dummyWater;
 }
 
-LevelSMBX64Event FileFormats::dummyLvlEvent()
+LevelSMBX64Event FileFormats::CreateLvlEvent()
 {
     LevelSMBX64Event dummyEvent;
 
@@ -465,7 +383,7 @@ LevelSMBX64Event FileFormats::dummyLvlEvent()
 }
 
 
-LevelSection FileFormats::dummyLvlSection()
+LevelSection FileFormats::CreateLvlSection()
 {
     LevelSection dummySection;
     dummySection.id = 0;
@@ -487,7 +405,7 @@ LevelSection FileFormats::dummyLvlSection()
     return dummySection;
 }
 
-LevelLayer FileFormats::dummyLvlLayer()
+LevelLayer FileFormats::CreateLvlLayer()
 {
     LevelLayer dummyLayer;
     dummyLayer.array_id = 0;
@@ -497,7 +415,7 @@ LevelLayer FileFormats::dummyLvlLayer()
     return dummyLayer;
 }
 
-PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
+PlayerPoint FileFormats::CreateLvlPlayerPoint(int id)
 {
     PlayerPoint dummyPlayer;
     dummyPlayer.id=id;
@@ -520,7 +438,7 @@ PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
     return dummyPlayer;
 }
 
-LevelData FileFormats::dummyLvlDataArray()
+LevelData FileFormats::CreateLevelData()
 {
     LevelData NewFileData;
 
@@ -552,7 +470,7 @@ LevelData FileFormats::dummyLvlDataArray()
     LevelSection section;
     for(int i=0; i<21;i++)
     {
-        section = dummyLvlSection();
+        section = CreateLvlSection();
         section.id = i;
         NewFileData.sections.push_back( section );
     }
@@ -595,7 +513,7 @@ LevelData FileFormats::dummyLvlDataArray()
         //P Switch - Start
         //P Switch - End
 
-    LevelSMBX64Event events = dummyLvlEvent();
+    LevelSMBX64Event events = CreateLvlEvent();
 
         events.array_id = NewFileData.events_array_id;
         NewFileData.events_array_id++;

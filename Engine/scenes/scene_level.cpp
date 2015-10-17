@@ -54,7 +54,7 @@ LevelScene::LevelScene()
 {
     LvlSceneP::s = this;
 
-    data = FileFormats::dummyLvlDataArray();
+    data = FileFormats::CreateLevelData();
     data.ReadFileValid = false;
 
     isInit=false;
@@ -83,9 +83,9 @@ LevelScene::LevelScene()
     /**************************/
     placingMode=false;
     placingMode_item_type=0;
-    placingMode_block=FileFormats::dummyLvlBlock();
-    placingMode_bgo  =FileFormats::dummyLvlBgo();
-    placingMode_npc  =FileFormats::dummyLvlNpc();
+    placingMode_block=FileFormats::CreateLvlBlock();
+    placingMode_bgo  =FileFormats::CreateLvlBgo();
+    placingMode_npc  =FileFormats::CreateLvlNpc();
     /**************************/
 
     /*********Default players number*************/

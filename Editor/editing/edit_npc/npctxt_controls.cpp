@@ -20,6 +20,7 @@
 
 #include <common_features/graphics_funcs.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/npctxt_manager.h>
 
 #include "npcedit.h"
 #include <ui_npcedit.h>
@@ -587,7 +588,7 @@ void NpcEdit::loadPreview()
         npcPreview = new ItemNPC(true);
         npcPreview->setScenePoint();
     }
-    LevelNPC npcData = FileFormats::dummyLvlNpc();
+    LevelNPC npcData = FileFormats::CreateLvlNpc();
     npcData.id = npc_id;
     npcData.x = 10;
     npcData.y = 10;
@@ -618,7 +619,7 @@ void NpcEdit::loadPreview()
 
     defaultNPC = targetNPC;
 
-    targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    targetNPC = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
     npcPreview->localProps = targetNPC;
 
     loadImageFile();
@@ -674,7 +675,7 @@ void NpcEdit::updatePreview()
     if(!physics || !npcPreview)
         return;
 
-    npcPreview->localProps = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    npcPreview->localProps = mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
 
     //update PhysicsBox
     //update Dir

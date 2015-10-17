@@ -31,11 +31,11 @@
 
 GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
 {
-    GamesaveData FileData = dummySaveDataArray();
+    GamesaveData FileData = CreateGameSaveData();
     errorString.clear();
     PGEX_FileBegin();
 
-    saveCharacterState plr_state;
+    saveCharState plr_state;
     visibleItem        vz_item;
     starOnLevel        star_level;
 
@@ -102,7 +102,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                plr_state = dummySavCharacterState();
+                plr_state = CreateSavCharacterState();
                 PGEX_Values()
                 {
                     PGEX_ValueBegin()

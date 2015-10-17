@@ -109,7 +109,7 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
 
     errorString.clear();
     WorldData FileData;
-    FileData = dummyWldDataArray();
+    FileData = CreateWorldData();
 
     PGE_FileFormats_misc::TextFileInput in;
     if(!in.open(filePath, false))
@@ -200,7 +200,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
 {
     SMBX64_File(RawData);
 
-    WorldData FileData = dummyWldDataArray();
+    WorldData FileData = CreateWorldData();
 
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
@@ -278,7 +278,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     nextLine();
     while(line!="\"next\"")
     {
-        tile = dummyWldTile();
+        tile = CreateWldTile();
                     SIntVar(tile.x,line);//Tile x
         nextLine(); SIntVar(tile.y,line);//Tile y
         nextLine(); UIntVar(tile.id,line);//Tile ID
@@ -295,7 +295,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     nextLine();
     while(line!="\"next\"")
     {
-        scen = dummyWldScen();
+        scen = CreateWldScenery();
                     SIntVar(scen.x,line);//Scenery x
         nextLine(); SIntVar(scen.y,line);//Scenery y
         nextLine(); UIntVar(scen.id,line);//Scenery ID
@@ -313,7 +313,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     nextLine();
     while(line!="\"next\"")
     {
-        pathitem = dummyWldPath();
+        pathitem = CreateWldPath();
                     SIntVar(pathitem.x,line);//Path x
         nextLine(); SIntVar(pathitem.y,line);//Path y
         nextLine(); UIntVar(pathitem.id,line);//Path ID
@@ -331,7 +331,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     nextLine();
     while(line!="\"next\"")
     {
-        lvlitem = dummyWldLevel();
+        lvlitem = CreateWldLevel();
 
                     SIntVar(lvlitem.x,line);//Level x
         nextLine(); SIntVar(lvlitem.y,line);//Level y
@@ -373,7 +373,7 @@ WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, 
     nextLine();
     while(line!="\"next\"")
     {
-        musicbox = dummyWldMusic();
+        musicbox = CreateWldMusicbox();
                     SIntVar(musicbox.x,line);//MusicBox x
         nextLine(); SIntVar(musicbox.y,line);//MusicBox y
         nextLine(); UIntVar(musicbox.id,line);//MusicBox ID
