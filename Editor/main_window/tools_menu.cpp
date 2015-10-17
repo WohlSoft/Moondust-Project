@@ -23,7 +23,6 @@
 #include <tools/external_tools/gifs2png_gui.h>
 #include <tools/external_tools/png2gifs_gui.h>
 #include <tools/external_tools/audiocvt_sox_gui.h>
-#include <editing/_dialogs/npcdialog.h>
 #include <dev_console/devconsole.h>
 
 #include <main_window/dock/lvl_sctc_props.h>
