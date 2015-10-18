@@ -167,13 +167,18 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             QString CustomFile=uLVL.getCustomFile(pConfigs->main_block[i].image_n);
             if(!CustomFile.isEmpty())
             {
-                QString CustomMask=uLVL.getCustomFile(pConfigs->main_block[i].mask_n);
-                if(!CustomMask.isEmpty())
-                    uBlock.mask = GraphicsHelps::loadPixmap( CustomMask );
-                else
-                    uBlock.mask = pConfigs->main_block[i].mask;
-
-                uBlock.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBlock.mask);
+                if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
+                {
+                    QString CustomMask=uLVL.getCustomFile(pConfigs->main_block[i].mask_n);
+                    if(!CustomMask.isEmpty())
+                        uBlock.mask = GraphicsHelps::loadPixmap( CustomMask );
+                    else
+                        uBlock.mask = pConfigs->main_block[i].mask;
+                    uBlock.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBlock.mask);
+                } else {
+                    uBlock.image = GraphicsHelps::loadPixmap(CustomFile);
+                    uBlock.mask = QPixmap();
+                }
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
                 uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -269,13 +274,18 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             QString CustomFile=uLVL.getCustomFile(pConfigs->main_bgo[i].image_n);
             if(!CustomFile.isEmpty())
             {
-                QString CustomMask=uLVL.getCustomFile(pConfigs->main_bgo[i].mask_n);
-                if(!CustomMask.isEmpty())
-                    uBGO.mask = GraphicsHelps::loadPixmap( CustomMask );
-                else
-                    uBGO.mask = pConfigs->main_bgo[i].mask;
-
-                uBGO.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBGO.mask);
+                if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
+                {
+                    QString CustomMask=uLVL.getCustomFile(pConfigs->main_bgo[i].mask_n);
+                    if(!CustomMask.isEmpty())
+                        uBGO.mask = GraphicsHelps::loadPixmap( CustomMask );
+                    else
+                        uBGO.mask = pConfigs->main_bgo[i].mask;
+                    uBGO.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap(CustomFile), uBGO.mask);
+                } else {
+                    uBGO.image = GraphicsHelps::loadPixmap(CustomFile);
+                    uBGO.mask = QPixmap();
+                }
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
                 uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -372,13 +382,19 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              if(!CustomImg.isEmpty())
              {
-                 QString CustomMask=uLVL.getCustomFile(pConfigs->main_npc[i].mask_n);
-                 if(!CustomMask.isEmpty())
-                     uNPC.mask = GraphicsHelps::loadPixmap( CustomMask );
-                 else
-                     uNPC.mask = pConfigs->main_npc[i].mask;
+                 if(!CustomImg.endsWith(".png", Qt::CaseInsensitive))
+                 {
+                     QString CustomMask=uLVL.getCustomFile(pConfigs->main_npc[i].mask_n);
+                     if(!CustomMask.isEmpty())
+                         uNPC.mask = GraphicsHelps::loadPixmap( CustomMask );
+                     else
+                         uNPC.mask = pConfigs->main_npc[i].mask;
+                     uNPC.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
+                 } else {
+                     uNPC.image = GraphicsHelps::loadPixmap( CustomImg );
+                     uNPC.mask = QPixmap();//Don't use bit mask for PNG sprites
+                 }
 
-                 uNPC.image = GraphicsHelps::mergeToRGBA(GraphicsHelps::loadPixmap( CustomImg ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
                  uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
