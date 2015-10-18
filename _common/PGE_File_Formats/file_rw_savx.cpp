@@ -29,10 +29,10 @@
 #endif
 #endif
 
-GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath)
 {
     GamesaveData FileData = CreateGameSaveData();
-    errorString.clear();
+    QString errorString;
     PGEX_FileBegin();
 
     saveCharState plr_state;
@@ -58,17 +58,6 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     PGEX_FetchSection()
     {
         PGEX_FetchSection_begin()
-        ///////////////////JOKES//////////////////////
-        PGEX_Section("JOKES")
-        {
-            #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode)&&(!f_section.data.isEmpty()))
-                if(!f_section.data[0].values.isEmpty())
-                    QMessageBox::information(nullptr, "Jokes",
-                            f_section.data[0].values[0].value,
-                            QMessageBox::Ok);
-            #endif
-        }//jokes
 
         ///////////////////HEADER//////////////////////
         PGEX_Section("SAVE_HEADER")
@@ -222,9 +211,10 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     return FileData;
 
     badfile:    //If file format not corrects
-    if(!sielent)
-       BadFileMsg(FileData.path+"/"+FileData.filename+"\nError message: "+errorString, str_count, line);
-        FileData.ReadFileValid=false;
+    FileData.ERROR_info=errorString;
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
+    FileData.ReadFileValid=false;
     return FileData;
 }
 

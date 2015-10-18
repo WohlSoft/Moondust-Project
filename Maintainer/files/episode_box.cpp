@@ -27,7 +27,7 @@ bool EpisodeBox_level::open(QString filePath)
         ftype=F_LVLX;
     else if(fPath.endsWith(".lvl", Qt::CaseInsensitive))
         ftype=F_LVL;
-    d = FileFormats::OpenLevelFile(filePath, true);
+    d = FileFormats::OpenLevelFile(filePath);
     qDebug()<< "Opened level, is valid ="<<d.ReadFileValid << filePath;
     return d.ReadFileValid;
 }
@@ -110,7 +110,7 @@ EpisodeBox_world::~EpisodeBox_world()
 bool EpisodeBox_world::open(QString filePath)
 {
     fPath=filePath;
-    d = FileFormats::OpenWorldFile(filePath, true);
+    d = FileFormats::OpenWorldFile(filePath);
     qDebug()<< "Opened world, valud="<<d.ReadFileValid<< filePath;
     return d.ReadFileValid;
 }

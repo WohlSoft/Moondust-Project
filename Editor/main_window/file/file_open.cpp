@@ -113,7 +113,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         WriteToLog(QtDebugMsg, "> parsing level file format");
         FileData = FileFormats::OpenLevelFile(FilePath);
 
-        if( !FileData.ReadFileValid ) return;
+        if( !FileData.ReadFileValid )
+        {
+            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            return;
+        }
         WriteToLog(QtDebugMsg, "File was read!");
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
@@ -137,7 +141,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                     FileData.metaData.script = NULL;
                 }
 
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
                 WriteToLog(QtDebugMsg, "Meta-File was read!");
             }
             else
@@ -176,7 +180,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     {
         WorldData FileData;
         FileData= FileFormats::OpenWorldFile(FilePath);
-        if( !FileData.ReadFileValid ) return;
+        if( !FileData.ReadFileValid )
+        {
+            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            return;
+        }
 
         file.close();
         file.setFileName(FilePath+".meta");
@@ -188,7 +196,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
             }
             else
             {

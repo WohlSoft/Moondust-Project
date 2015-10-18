@@ -42,6 +42,9 @@ struct savePlayerState
 struct GamesaveData
 {
     bool ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
 
     int version;
 

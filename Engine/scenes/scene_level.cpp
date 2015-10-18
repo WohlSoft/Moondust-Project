@@ -545,7 +545,7 @@ void LevelScene::update()
             {
                 QString raw = IntProc::getCMD();
                 WriteToLog(QtDebugMsg, raw);
-                LevelData got=FileFormats::ReadExtendedLvlFile(raw, ".", true);
+                LevelData got=FileFormats::ReadExtendedLvlFile(raw, ".");
                 if(!got.ReadFileValid)
                 {
                     WriteToLog(QtDebugMsg, FileFormats::errorString);

@@ -58,6 +58,11 @@ struct MetaData
     //only for level
     ScriptHolder* script;
     #endif
+
+    bool      ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
 };
 
 #endif // META_FILEDATA_H

@@ -55,7 +55,6 @@
 
 LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 {
-    errorString.clear();
     LevelData FileData;
     FileData = CreateLevelData();
 
@@ -127,13 +126,16 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 
     return FileData;
 badfile:
+    FileData.ERROR_info="Invalid file format";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }
 
-LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath)
 {
-    errorString.clear();
+    QString errorString;
     PGEX_FileBegin();
 
     LevelData FileData;
@@ -167,19 +169,6 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     PGEX_FetchSection() //look sections
     {
         PGEX_FetchSection_begin()
-
-        ///////////////////JOKES//////////////////////
-        PGEX_Section("JOKES")
-        {
-            #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode) && (!f_section.data.isEmpty()))
-                if(!f_section.data[0].values.isEmpty())
-                    QMessageBox::information(nullptr, "Jokes",
-                            f_section.data[0].values[0].value,
-                            QMessageBox::Ok);
-            #endif
-        }//jokes
-
         ///////////////////HEADER//////////////////////
         PGEX_Section("HEAD")
         {
@@ -813,8 +802,11 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     return FileData;
 
     badfile:    //If file format is not correct
-    if(!sielent)
-        BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+
+    FileData.ERROR_info=errorString;
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
+
     FileData.ReadFileValid=false;
     return FileData;
 }

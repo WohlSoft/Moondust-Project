@@ -83,15 +83,16 @@ LevelData FileFormats::ReadSMBX64LvlFileHeader(PGESTRING filePath)
     return FileData;
 badfile:
     FileData.ReadFileValid=false;
-    errorString="Bad file format: line contents: "+line;
+    FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     return FileData;
 }
 
-LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 {
     errorString.clear();
     SMBX64_File( RawData );
-    (void)sielent;
 
     int i;                  //counters
     LevelData FileData;
@@ -655,9 +656,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath, 
     return FileData;
 
     badfile:    //If file format is not correct
-    if(!sielent)
-        BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
-    FileData.ReadFileValid=false;
+        if(file_format>0)
+            FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
+        else
+            FileData.ERROR_info="It is not an SMBX level file";
+        FileData.ERROR_linenum=str_count;
+        FileData.ERROR_linedata=line;
+        FileData.ReadFileValid=false;
     return FileData;
 }
 

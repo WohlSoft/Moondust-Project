@@ -38,7 +38,7 @@
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
-    errorString.clear();
+    QString errorString;
     int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
