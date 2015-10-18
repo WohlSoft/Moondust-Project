@@ -75,16 +75,28 @@ bool Installer::associateFiles()
         //QFile w(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.wld"));
         QFile l(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvl"));
         QFile w(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wld"));
+        QFile lx(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvlx"));
+        QFile wx(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wldx"));
 
         success = l.open(QIODevice::WriteOnly);
         if(success){
-            l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::dummyLvlDataArray()).toStdString().c_str()));
+            l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::CreateLevelData()).toStdString().c_str()));
             l.close();
         }
         success = w.open(QIODevice::WriteOnly);
         if(success){
-            w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::dummyWldDataArray()).toStdString().c_str()));
+            w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::CreateWorldData()).toStdString().c_str()));
             w.close();
+        }
+        success = lx.open(QIODevice::WriteOnly);
+        if(success){
+            lx.write(QByteArray(FileFormats::WriteExtendedLvlFile(FileFormats::CreateLevelData()).toStdString().c_str()));
+            lx.close();
+        }
+        success = wx.open(QIODevice::WriteOnly);
+        if(success){
+            wx.write(QByteArray(FileFormats::WriteExtendedWldFile(FileFormats::CreateWorldData()).toStdString().c_str()));
+            wx.close();
         }
 
 
@@ -94,6 +106,8 @@ bool Installer::associateFiles()
         registry_hkcu.setValue("Software/Classes/.lvl/Default", "SMBX64.Level");
         registry_hkcu.setValue("Software/Classes/.wld/Default", "SMBX64.World");
 
+        registry_hkcu.setValue("Software/Classes/.lvlx/ShellNew/FileName", "sample.lvlx");
+        registry_hkcu.setValue("Software/Classes/.wldx/ShellNew/FileName", "sample.wldx");
         registry_hkcu.setValue("Software/Classes/.lvl/ShellNew/FileName", "sample.lvl");
         registry_hkcu.setValue("Software/Classes/.wld/ShellNew/FileName", "sample.wld");
         //registry_hkcr.setValue(".lvlx/Default", "PGWWohlstand.Level");
@@ -103,18 +117,22 @@ bool Installer::associateFiles()
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Default", tr("PGE Level file", "File Types"));
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Shell/Play level/Command/Default", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\\pge_engine.exe\" \"%1\"");
 
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Default", tr("PGE World Map", "File Types"));
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",2");
         registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Shell/Play episode/Command/Default", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\\pge_engine.exe\" \"%1\"");
 
         registry_hkcu.setValue("Software/Classes/SMBX64.Level/Default", tr("SMBX Level file", "File Types"));
         registry_hkcu.setValue("Software/Classes/SMBX64.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",3");
         registry_hkcu.setValue("Software/Classes/SMBX64.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/SMBX64.Level/Shell/Play level/Command/Default", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\\pge_engine.exe\" \"%1\"");
 
         registry_hkcu.setValue("Software/Classes/SMBX64.World/Default", tr("SMBX World Map", "File Types"));
         registry_hkcu.setValue("Software/Classes/SMBX64.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",4");
         registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Play episode/Command/Default", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\\pge_engine.exe\" \"%1\"");
 
         // User variable(s)
         registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
