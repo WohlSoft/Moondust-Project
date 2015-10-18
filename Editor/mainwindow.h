@@ -164,6 +164,13 @@ public:
         bool getCurrentSceneCoordinates(qreal &x, qreal &y);
     private:
         ///
+        /// \brief formatErrorMsgBox Prints file format error message box
+        /// \param filePath path to broken file
+        /// \param lineNum number Number of line where error found. If <0 - don't show line information.
+        /// \param lineContents contents of line with error. If empty string - don't show field.
+        ///
+        void formatErrorMsgBox(QString filePath, QString errorMessage, int lineNum=-1, QString lineContents="");
+        ///
         /// \brief setDefaults Init settings on start application
         ///
         void setDefaults();

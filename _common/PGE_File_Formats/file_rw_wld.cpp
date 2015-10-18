@@ -27,82 +27,6 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-//WorldData FileFormats::ReadWorldFile(PGEFILE &inf)
-//{
-//    errorString.clear();
-//    QByteArray data;
-
-//    typedef QPair<QByteArray, QString > magicFileFormat;
-
-//    //Check known file formats before start parsing
-//    QList<magicFileFormat > formats;
-//    magicFileFormat format;
-
-//    char terraria[7] = {0x66,0x00,0x00,0x00,0x0A,0x00,0x5B};
-//        format.first.setRawData((char *)&terraria, 7);
-//        format.second = "Terraria world";
-//    formats.push_back(format);
-
-//    char smbgm[7] = {0x32,0x44,0x30,0x31,0x30,0x30,0x30};
-//        format.first.setRawData((char *)&smbgm, 7);
-//        format.second = "Super Mario Game Master world map";
-//    formats.push_back(format);
-
-//    data = inf.read(7);
-//    if(data.size()==0)
-//    {
-//        WorldData FileData = dummyWldDataArray();
-//        if(data.size()==0)
-//        BadFileMsg(inf.fileName()+
-//            QString("\nFile is empty! (size of file is 0 bytes)"),
-//                   0, "<FILE IS EMPTY>");
-//        else
-//        BadFileMsg(inf.fileName()+
-//            QString("\nFile is too small! (size of file is %1 bytes)").arg(data.size()),
-//                   0, "<FILE IS TOO SMALL>");
-//        FileData.ReadFileValid=false;
-//        return FileData;
-//    }
-//    else
-//    //Check magic number: should be number from 0 to 64 and \n character after
-//    if(
-//            ((int)data.at(0)>0x36)||
-//            ((int)data.at(0)<0x30)||
-//            ( ((int)data.at(1)!=0x0D && (int)data.at(1)!=0x0A)&&
-//             ((int)data.at(2)!=0x0D && (int)data.at(2)!=0x0A) )
-//      )
-//    {
-//        foreach (magicFileFormat format, formats)
-//        {
-//            if(data == format.first)
-//            {
-//                WorldData FileData = dummyWldDataArray();
-//                BadFileMsg(inf.fileName()+
-//                    "\nThis is a "+format.second+" file, this format is not support.", 0, "<BYNARY>");
-//                FileData.ReadFileValid=false;
-//                return FileData;
-//            }
-//        }
-
-//        WorldData FileData = dummyWldDataArray();
-//        BadFileMsg(inf.fileName()+
-//            "\nThis is not SMBX64 world map file, Bad magic number!", 0, "<NULL>");
-//        FileData.ReadFileValid=false;
-//        return FileData;
-//    }
-
-
-//    inf.reset();
-//    QTextStream in(&inf);   //Read File
-
-//    in.setAutoDetectUnicode(true);
-//    in.setLocale(QLocale::system());
-//    in.setCodec(QTextCodec::codecForLocale());
-
-//    return ReadSMBX64WldFile( in.readAll(), inf.fileName() );
-//}
-
-
 WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
 {
     SMBX64_FileBegin();
@@ -190,13 +114,15 @@ WorldData FileFormats::ReadSMBX64WldFileHeader(PGESTRING filePath)
     in.close();
     return FileData;
 badfile:
-    //qDebug()<<"Wrong file"<<filePath<<"format"<<file_format<<"line: "<<str_count<< "data: "<<line;
     in.close();
+    FileData.ERROR_info="Invalid file format, detected file SMBX-"+fromNum(file_format)+"format";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }
 
-WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+WorldData FileFormats::ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath)
 {
     SMBX64_File(RawData);
 
@@ -399,8 +325,12 @@ FileData.ReadFileValid=true;
 return FileData;
 
 badfile:    //If file format not corrects
-    if(!sielent)
-        BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
+    if(file_format>0)
+        FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
+    else
+        FileData.ERROR_info="It is not an SMBX world map file";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
 return FileData;
 }

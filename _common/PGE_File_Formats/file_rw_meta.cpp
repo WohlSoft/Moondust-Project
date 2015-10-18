@@ -27,9 +27,9 @@
 #include <QMessageBox>
 #endif
 
-MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePath)
+MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData)
 {
-    errorString.clear();
+    QString errorString;
     int str_count=0;        //Line Counter
     PGESTRING line;           //Current Line data
 
@@ -49,17 +49,6 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePat
     for(int section=0; section<(signed)pgeX_Data.dataTree.size(); section++) //look sections
     {
         PGEFile::PGEX_Entry &f_section = pgeX_Data.dataTree[section];
-        if(f_section.name=="JOKES")
-        {
-            #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode)&&(!f_section.data.isEmpty()))
-                if(!f_section.data[0].values.isEmpty())
-                    QMessageBox::information(nullptr, "Jokes",
-                            f_section.data[0].values[0].value,
-                            QMessageBox::Ok);
-            #endif
-        }
-        else
         if(f_section.name=="META_BOOKMARKS")
         {
             if(f_section.type!=PGEFile::PGEX_Struct)
@@ -303,10 +292,16 @@ MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePat
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
     errorString.clear(); //If no errors, clear string;
+    FileData.ReadFileValid=true;
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+    //BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+    FileData.ERROR_info=errorString;
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
+    FileData.ReadFileValid=false;
+
     FileData.bookmarks.clear();
 
     return FileData;

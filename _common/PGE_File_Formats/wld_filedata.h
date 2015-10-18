@@ -95,6 +95,9 @@ struct WorldMusic
 struct WorldData
 {
     bool ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
 
     PGESTRING EpisodeTitle;
     bool nocharacter1;

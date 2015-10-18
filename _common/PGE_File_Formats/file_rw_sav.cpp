@@ -157,7 +157,12 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
+    if(file_format>0)
+        FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
+    else
+        FileData.ERROR_info="It is not an SMBX game save file";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }

@@ -28,23 +28,17 @@
 #include "file_formats.h"
 #include "pge_file_lib_globs.h"
 
-LevelData FileFormats::OpenLevelFile(PGESTRING filePath, bool silent)
+LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
 {
     errorString.clear();
     PGE_FileFormats_misc::TextFileInput file;
     LevelData data;
-    silentMode = silent;
     if(!file.open(filePath))
     {
-        //qDebug() << "Failed to open file: " << filePath;
-        #ifdef PGE_FILES_USE_MESSAGEBOXES
-        if(!silentMode)
-        {
-            QMessageBox::critical(NULL, QTranslator::tr("File open error"),
-                    QTranslator::tr("Can't open the file."), QMessageBox::Ok);
-        }
-        #endif
         data.ReadFileValid = false;
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
         return data;
     }
     file.close();
@@ -61,7 +55,6 @@ LevelData FileFormats::OpenLevelFile(PGESTRING filePath, bool silent)
             file.open(filePath, true);
             data = ReadExtendedLvlFile( file.readAll(), filePath );
         }
-
     return data;
 }
 
@@ -90,20 +83,18 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
 
 
 
-WorldData FileFormats::OpenWorldFile(PGESTRING filePath, bool silent)
+WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
 {
     errorString.clear();
     PGE_FileFormats_misc::TextFileInput file;
     WorldData data;
-    silentMode=silent;
 
     if(!file.open(filePath))
     {
-        #ifdef PGE_FILES_USE_MESSAGEBOXES
-        QMessageBox::critical(NULL, QTranslator::tr("File open error"),
-                QTranslator::tr("Can't open the file."), QMessageBox::Ok);
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
         data.ReadFileValid = false;
-        #endif
         return data;
     }
     file.close();

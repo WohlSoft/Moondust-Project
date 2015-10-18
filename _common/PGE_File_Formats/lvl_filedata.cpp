@@ -204,9 +204,9 @@ int FileFormats::smbx64LevelCheckLimits(LevelData &lvl)
 
 
 
-//*********************************************************
-//*******************Dummy arrays**************************
-//*********************************************************
+//********************************************************************
+//*******************Structure initializators*************************
+//********************************************************************
 
 //Default dataSets
 LevelNPC    FileFormats::CreateLvlNpc()
@@ -465,6 +465,8 @@ LevelData FileFormats::CreateLevelData()
     #ifdef PGE_EDITOR
     NewFileData.metaData.script = NULL;
     #endif
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_linenum=-1;
 
     //Create Section array
     LevelSection section;

@@ -51,6 +51,9 @@ struct SMBX64_ConfigFile
     PGEVECTOR<SMBX64_ConfigPlayer> players;
 
     bool ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
 };
 
 #endif // SMBX64_CNF_FILEDATA_H

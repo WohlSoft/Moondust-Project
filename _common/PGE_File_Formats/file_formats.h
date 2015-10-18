@@ -37,21 +37,21 @@ class FileFormats
 
 public:
     //File format read/write functions
-    static MetaData         ReadNonSMBX64MetaData(PGESTRING RawData, PGESTRING filePath="");
+    static MetaData         ReadNonSMBX64MetaData(PGESTRING RawData);
     static PGESTRING        WriteNonSMBX64MetaData(MetaData metaData);
 
     /******************************Level files***********************************/
-    static LevelData        OpenLevelFile(PGESTRING filePath, bool silent=false); //!< Open supported level file via direct path
+    static LevelData        OpenLevelFile(PGESTRING filePath); //!< Open supported level file via direct path
     static LevelData        OpenLevelFileHeader(PGESTRING filePath);
 
     // SMBX64 LVL File
     static LevelData        ReadSMBX64LvlFileHeader(PGESTRING filePath); //!< Read file header only
-    static LevelData        ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath="", bool sielent=false); //!< Parse SMBX1-SMBX64 level
+    static LevelData        ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath=""); //!< Parse SMBX1-SMBX64 level
     static PGESTRING        WriteSMBX64LvlFile(LevelData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 level raw data
 
     // PGE Extended Level File
     static LevelData        ReadExtendedLvlFileHeader(PGESTRING filePath); //!< Read file header only
-    static LevelData        ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath="", bool sielent=false); //!< Parse PGE-X level file
+    static LevelData        ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath=""); //!< Parse PGE-X level file
     static PGESTRING        WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
 
     // Lvl Data
@@ -74,17 +74,17 @@ public:
 
 
     /******************************World file***********************************/
-    static WorldData        OpenWorldFile(PGESTRING filePath, bool silent=false);
+    static WorldData        OpenWorldFile(PGESTRING filePath);
     static WorldData        OpenWorldFileHeader(PGESTRING filePath);
 
     // SMBX64 WLD File
     static WorldData        ReadSMBX64WldFileHeader(PGESTRING filePath); //!< Read file header only
-    static WorldData        ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse SMBX1-SMBX64 world
+    static WorldData        ReadSMBX64WldFile(PGESTRING RawData, PGESTRING filePath); //!< Parse SMBX1-SMBX64 world
     static PGESTRING        WriteSMBX64WldFile(WorldData FileData, int file_format=64);  //!< Generate SMBX1-SMBX64 world raw data
 
     // PGE Extended World map File
     static WorldData        ReadExtendedWldFileHeader(PGESTRING filePath); //!< Read file header only
-    static WorldData        ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false); //!< Parse PGE-X world file
+    static WorldData        ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath); //!< Parse PGE-X world file
     static PGESTRING        WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
 
     //Wld Data
@@ -100,7 +100,7 @@ public:
     /****************************Save of game file********************************/
     static GamesaveData     ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePath);  //!< Parse SMBX1-SMBX64 game save
 
-    static GamesaveData     ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent=false);  //!< Parse PGE-X game save
+    static GamesaveData     ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath);  //!< Parse PGE-X game save
     static PGESTRING        WriteExtendedSaveFile(GamesaveData &FileData);
 
     //Save Data
@@ -108,7 +108,7 @@ public:
     static saveCharState    CreateSavCharacterState();
 
     /****************************SMBX64 Config file********************************/
-    static SMBX64_ConfigFile ReadSMBX64ConfigFile(PGESTRING RawData, PGESTRING filePath);  //!< Parse SMBX1-SMBX64 Config file
+    static SMBX64_ConfigFile ReadSMBX64ConfigFile(PGESTRING RawData);  //!< Parse SMBX1-SMBX64 Config file
     static PGESTRING        WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int file_format);
 
     /******************************NPC.txt file***********************************/
@@ -143,9 +143,6 @@ public:
     /******************************Internal stuff***********************************/
     static PGESTRING        removeQuotes(PGESTRING str); // Remove quotes from begin and end
     static PGESTRING        errorString; //!< String which contains info about last happened error
-private:
-    static void             BadFileMsg(PGESTRING fileName_DATA, int str_count, PGESTRING line);
-    static bool             silentMode;
 };
 
 #endif // FILE_FORMATS_H

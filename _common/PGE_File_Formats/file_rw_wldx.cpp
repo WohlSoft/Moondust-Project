@@ -42,7 +42,6 @@
 
 WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
 {
-    errorString.clear();
     WorldData FileData;
     FileData = CreateWorldData();
 
@@ -154,14 +153,16 @@ WorldData FileFormats::ReadExtendedWldFileHeader(PGESTRING filePath)
     return FileData;
 badfile:
     inf.close();
+    FileData.ERROR_info="Invalid file format";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }
 
-WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
 {
-     errorString.clear();
-
+     QString errorString;
      PGEX_FileBegin();
 
      WorldData FileData = CreateWorldData();
@@ -189,19 +190,6 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
      PGEX_FetchSection() //look sections
      {
          PGEX_FetchSection_begin()
-
-         ///////////////////JOKES//////////////////////
-         PGEX_Section("JOKES")
-         {
-             #ifdef PGE_FILES_USE_MESSAGEBOXES
-             if((!silentMode)&&(!f_section.data.isEmpty()))
-                 if(!f_section.data[0].values.isEmpty())
-                     QMessageBox::information(nullptr, "Jokes",
-                             f_section.data[0].values[0].value,
-                             QMessageBox::Ok);
-             #endif
-         }//jokes
-
 
          ///////////////////HEADER//////////////////////
          PGEX_Section("HEAD")
@@ -435,8 +423,9 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
      return FileData;
 
      badfile:    //If file format not corrects
-         if(!sielent)
-            BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+         FileData.ERROR_info=errorString;
+         FileData.ERROR_linenum=str_count;
+         FileData.ERROR_linedata=line;
          FileData.ReadFileValid=false;
      return FileData;
 }
