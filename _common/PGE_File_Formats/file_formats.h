@@ -133,7 +133,7 @@ public:
         SMBX64EXC_SCENERIES     =1<<9,
         SMBX64EXC_PATHS         =1<<10,
         SMBX64EXC_LEVELS        =1<<11,
-        SMBX64EXC_MUSICBOXES   =1<<12
+        SMBX64EXC_MUSICBOXES    =1<<12
     };
 
     //Check SMBX64 limits
