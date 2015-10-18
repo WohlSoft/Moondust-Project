@@ -149,6 +149,9 @@ void GlRenderer::loadTextureP(PGE_Texture &target, QString path, QString maskPat
     // Load the OpenGL texture
     sourceImage = GraphicsHelps::loadQImage(path); // Gives us the information to make the texture
 
+    //Don't load mask if PNG image is used
+    if(path.endsWith(".png", Qt::CaseInsensitive)) maskPath.clear();
+
     if(sourceImage.isNull())
     {
         WriteToLog(QtWarningMsg, QString("Error loading of image file: \n%1\nReason: %2.")
