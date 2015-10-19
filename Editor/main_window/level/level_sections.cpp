@@ -99,10 +99,15 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
         dock_LvlSectionProps->ui->LVLPropsMusicCustomEn->setChecked( (e->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
         WriteToLog(QtDebugMsg, "Set background index");
-        if(e->LvlData.sections[SectionId].background < (unsigned int)dock_LvlSectionProps->ui->LVLPropsBackImage->count() )
-            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( e->LvlData.sections[SectionId].background );
-        else
-            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( dock_LvlSectionProps->ui->LVLPropsBackImage->count()-1 );
+        dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex(0);
+        for(int i=0;i<dock_LvlSectionProps->ui->LVLPropsBackImage->count();i++)
+        {
+            if((unsigned long)dock_LvlSectionProps->ui->LVLPropsBackImage->itemData(i).toInt() ==
+                    e->LvlData.sections[e->LvlData.CurSection].background)
+            {
+                dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex(i); break;
+            }
+        }
 
         dock_LvlSectionProps->loadMusic();
     }
