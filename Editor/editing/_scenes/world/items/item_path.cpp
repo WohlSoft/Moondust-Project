@@ -36,7 +36,6 @@ ItemPath::ItemPath(WldScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
-    scene->registerElement(this);
     setZValue(scene->pathZ);
 }
 

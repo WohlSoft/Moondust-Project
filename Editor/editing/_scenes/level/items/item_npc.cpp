@@ -44,7 +44,6 @@ ItemNPC::ItemNPC(LvlScene *parentScene, QGraphicsPixmapItem *parent)
     construct();
     if(!parentScene) return;
     setScenePoint(parentScene);
-    scene->registerElement(this);
     scene->addItem(this);
     setLocked(scene->lock_npc);
 }
