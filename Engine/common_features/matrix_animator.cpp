@@ -18,6 +18,10 @@
 
 #include "matrix_animator.h"
 
+#ifdef __APPLE__
+#include <tgmath.h>
+#endif
+
 MatrixAnimator::MatrixAnimator()
 {
     framespeed=128;
