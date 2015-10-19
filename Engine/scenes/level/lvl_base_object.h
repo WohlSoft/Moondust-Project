@@ -24,6 +24,7 @@
 #include <common_features/pge_texture.h>
 
 #include <QVector>
+#include <tgmath.h>
 
 struct PGE_Phys_Object_Phys
 {
