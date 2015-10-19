@@ -32,7 +32,6 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
 
-    UserBGs uBG;
     UserBlocks uBlock;
     UserBGOs uBGO;
     UserNPCs uNPC;
@@ -99,34 +98,45 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     qApp->processEvents();
     //Load Backgrounds
-    for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
+    for(QHash<int, obj_BG>::iterator bg=pConfigs->main_bg.begin(); bg!=pConfigs->main_bg.end(); bg++) //Add user images
         {
             loaded1 = false;
             loaded2 = false;
+            obj_BG *bgD = &(*bg);
+            UserBGs uBG;
+
+            QString CustomTxt=uLVL.getCustomFile("background2-" + QString::number(bgD->id)+".txt");
+            if(!CustomTxt.isEmpty())
+            {
+                uBGs[bgD->id]=*bgD;
+                obj_BG &bgN=uBGs[bgD->id];
+                pConfigs->loadLevelBackground(bgN, "background2-" + QString::number(bgD->id), bgD, CustomTxt);
+                bgD=&bgN;
+            }
 
             //check for first image
-            QString CustomFile=uLVL.getCustomFile(pConfigs->main_bg[i].image_n);
+            QString CustomFile=uLVL.getCustomFile(bgD->image_n);
             if(!CustomFile.isEmpty())
             {
                 uBG.image = GraphicsHelps::loadPixmap( CustomFile );
-                uBG.id = pConfigs->main_bg[i].id;
+                uBG.id = bgD->id;
                 if(uBG.image.isNull()) WrongImagesDetected=true;
                 loaded1 = true;
             }
 
-            if((loaded1)&&(pConfigs->main_bg[i].animated) )
+            if((loaded1)&&(bgD->animated) )
             {
-                uBG.image=uBG.image.copy(0, 0, uBG.image.width(), (int)round(uBG.image.height()/pConfigs->main_bg[i].frames));
+                uBG.image=uBG.image.copy(0, 0, uBG.image.width(), (int)round(uBG.image.height()/bgD->frames));
             }
 
             //check for second image
-            if(pConfigs->main_bg[i].type == 1)
+            if(bgD->type == 1)
             {
-                QString CustomFile=uLVL.getCustomFile(pConfigs->main_bg[i].second_image_n);
+                QString CustomFile=uLVL.getCustomFile(bgD->second_image_n);
                 if(!CustomFile.isEmpty())
                 {
                     uBG.second_image = GraphicsHelps::loadPixmap( CustomFile );
-                    uBG.id = pConfigs->main_bg[i].id;
+                    uBG.id = bgD->id;
                     loaded2 = true;
                     if(uBG.second_image.isNull()) WrongImagesDetected=true;
                 }
@@ -136,10 +146,14 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if((!loaded1)&&(loaded2)) uBG.q = 1;
             if((loaded1)&&(loaded2)) uBG.q = 2;
 
-
             //If user images found and loaded
             if( (loaded1) || (loaded2) )
-                uBGs.push_back(uBG);
+            {
+                if(!uBGs.contains(uBG.id)) uBGs[uBG.id]=*bgD;
+                obj_BG &bgU=uBGs[uBG.id];
+                if(loaded1) bgU.image=uBG.image;
+                if(loaded2) bgU.second_image=uBG.second_image;
+            }
 
         total++;
         qApp->processEvents(QEventLoop::ExcludeUserInputEvents);

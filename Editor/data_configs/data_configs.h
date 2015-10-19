@@ -20,6 +20,7 @@
 #define DATACONFIGS_H
 
 #include <QVector>
+#include <QHash>
 #include <QObject>
 #include <QPixmap>
 #include <QBitmap>
@@ -116,7 +117,7 @@ public:
     QList<obj_playable_character > characters;
 
     //Level map items
-    QList<obj_BG > main_bg;
+    QHash<int, obj_BG > main_bg;
     QList<obj_bgo > main_bgo;
     QList<obj_block > main_block;
     QList<obj_npc > main_npc;
@@ -167,7 +168,6 @@ public:
     long getNpcI(unsigned long itemID);
     long getBlockI(unsigned long itemID);
     long getBgoI(unsigned long itemID);
-    long getBgI(unsigned long itemID);
 
     long getTileI(unsigned long itemID);
     long getSceneI(unsigned long itemID);
@@ -186,6 +186,7 @@ public:
     void setConfigPath(QString p);
     void loadBasics();
 
+    bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
 signals:
     void progressValue(int);
     void progressMax(int);

@@ -106,10 +106,10 @@ void LvlSectionProps::setLevelSectionData()
     QPixmap empty(100,70);
     empty.fill(QColor(Qt::black));
 
-    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), "0" );
-    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), "0" );
-    ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
-    mw()->dock_LvlEvents->cbox_sct_mus()->addItem( tr("[Silence]"), "0" );
+    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0) );
+    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0) );
+    ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), QVariant::fromValue<unsigned long>(0) );
+    mw()->dock_LvlEvents->cbox_sct_mus()->addItem( tr("[Silence]"), QVariant::fromValue<unsigned long>(0) );
 
 #ifdef Q_OS_WIN
 #define BkgIconHeight 70
@@ -143,31 +143,30 @@ void LvlSectionProps::setLevelSectionData()
             }
 
 
-    for(i=0; i< mw()->configs.main_bg.size();i++)
+    for(QHash<int, obj_BG>::iterator bg=mw()->configs.main_bg.begin();bg!=mw()->configs.main_bg.end();bg++)
     {
+        obj_BG &bgD=*bg;
         QPixmap bgThumb(100,BkgIconHeight);
         bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb);
         bool isCustom=false;
+        QString bgTitle=bgD.name;
 
         QPixmap tmp;
-        tmp = mw()->configs.main_bg[i].image.scaledToHeight(70);
+        tmp = bgD.image.scaledToHeight(70);
 
         if (mw()->activeChildWindow()==1)
         {
             LevelEdit * edit = mw()->activeLvlEditWin();
-            for(int q=0; q<edit->scene->uBGs.size();q++)
+            if(edit->scene->uBGs.contains(bgD.id))
             {
-                if(edit->scene->uBGs[q].id==mw()->configs.main_bg[i].id)
-                {
-                    if(!edit->scene->uBGs[q].image.isNull())
-                        tmp = edit->scene->uBGs[q].image.scaledToHeight(70);
-                    isCustom=true;
-                    break;
-                }
+                obj_BG &bgX = edit->scene->uBGs[bgD.id];
+                if(!bgX.image.isNull())
+                    tmp = bgX.image.scaledToHeight(70);
+                bgTitle=bgX.name;
+                isCustom=true;
             }
         }
-
         if(!tmp.isNull())
         {
             int d=0;
@@ -187,9 +186,12 @@ void LvlSectionProps::setLevelSectionData()
         bgThumb = bgThumb.copy(0, ((bgThumb.height()/2)-(25/2)), bgThumb.width(), 25);
         #endif
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
-        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), mw()->configs.main_bg[i].name, QString::number(mw()->configs.main_bg[i].id));
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), (isCustom?"* ":"")+bgTitle, QVariant::fromValue<unsigned long>(bgD.id));
+        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.id));
     }
+
+//    ui->LVLPropsBackImage->model()->sort(0);
+//    mw()->dock_LvlEvents->cbox_sct_bg()->model()->sort(0);
 
     for(i=0; i< mw()->configs.main_music_lvl.size();i++)
     {
@@ -202,8 +204,6 @@ void LvlSectionProps::setLevelSectionData()
     {
         LevelEdit * edit = mw()->activeLvlEditWin();
         if(!edit) {lockSctSettingsProps=false; return;}
-        //edit->LvlData.sections[edit->LvlData.CurSection].background
-        //edit->LvlData.sections[edit->LvlData.CurSection].music_id
         ui->LVLPropsBackImage->setCurrentIndex(0);
         for(int i=0;i<ui->LVLPropsBackImage->count();i++)
         {
