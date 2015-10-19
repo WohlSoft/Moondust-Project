@@ -44,7 +44,6 @@ ItemBlock::ItemBlock(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     parentScene->addItem(this);
-    scene->registerElement(this);
     setLocked(scene->lock_block);
 }
 

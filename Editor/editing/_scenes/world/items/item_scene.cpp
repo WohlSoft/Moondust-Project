@@ -38,7 +38,6 @@ ItemScene::ItemScene(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     scene->addItem(this);
     setZValue(scene->sceneZ);
-    scene->registerElement(this);
 }
 
 
