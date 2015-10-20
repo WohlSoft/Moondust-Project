@@ -82,7 +82,7 @@ void HistoryElementModifyEvent::doEventPlace()
     item->setFlags(Qt::ItemIsEditable);
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-    item->setData(3, QString::number(rmEvents.array_id) );
+    item->setData(Qt::UserRole, QString::number(rmEvents.array_id) );
     QListWidget* evList = MainWinConnect::pMainWin->dock_LvlEvents->getEventList();
     LevelSMBX64Event NewEvent = rmEvents;
 
