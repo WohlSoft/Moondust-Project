@@ -65,6 +65,9 @@ void MainWindow::updateMenus(bool force)
     ui->actionSave_all->setEnabled(hasSWindow);
     ui->actionClose->setEnabled(hasSWindow);
 
+    ui->action_openEpisodeFolder->setEnabled( WinType!=0 );
+    ui->action_openCustomFolder->setEnabled( (WinType==1) || (WinType==3) );
+
     ui->menuView->setEnabled( (hasSWindow) && (WinType!=2) );
 
     ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));

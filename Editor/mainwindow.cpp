@@ -227,5 +227,3 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
-
-

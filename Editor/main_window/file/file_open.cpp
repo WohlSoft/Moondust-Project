@@ -36,6 +36,85 @@ void MainWindow::openFilesByArgs(QStringList args)
     }
 }
 
+void MainWindow::on_action_openEpisodeFolder_triggered()
+{
+    QString path;
+    bool isUntitled=false;
+    if(activeChildWindow()==1)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        if(e)
+        {
+            path=e->LvlData.path;
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==2) {
+        NpcEdit *e = activeNpcEditWin();
+        if(e)
+        {
+            path=QFileInfo(e->curFile).absoluteDir().absolutePath();
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==3) {
+        WorldEdit *e = activeWldEditWin();
+        if(e)
+        {
+            path=e->WldData.path;
+            isUntitled=e->isUntitled;
+        }
+    }
+
+    if(isUntitled)
+    {
+        QMessageBox::warning(this, tr("Untitled file"), tr("Please save file to the disk first."));
+        return;
+    }
+
+    if(!path.isEmpty())
+    {
+        QDesktopServices::openUrl(QUrl("file:///"+path));
+    }
+}
+
+void MainWindow::on_action_openCustomFolder_triggered()
+{
+    QString path;
+    bool isUntitled=false;
+    if(activeChildWindow()==1)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        if(e)
+        {
+            path=e->LvlData.path+"/"+e->LvlData.filename;
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==2) {
+        return;
+    } else if(activeChildWindow()==3) {
+        WorldEdit *e = activeWldEditWin();
+        if(e)
+        {
+            path=e->WldData.path+"/"+e->WldData.filename;
+            isUntitled=e->isUntitled;
+        }
+    }
+
+    if(isUntitled)
+    {
+        QMessageBox::warning(this, tr("Untitled file"), tr("Please save file to the disk first."));
+        return;
+    }
+
+    if(!path.isEmpty())
+    {
+        if(!QFileInfo(path).dir().exists())
+        {
+            QDir(path).mkpath(path);
+        }
+        QDesktopServices::openUrl(QUrl("file:///"+path));
+    }
+}
+
 void MainWindow::on_OpenFile_triggered()
 {
     //Check if data configs are valid

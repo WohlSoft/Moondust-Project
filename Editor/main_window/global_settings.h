@@ -45,12 +45,28 @@ struct SETTINGS_ItemDefaults {
     bool classicevents_tabs_trigger;
 };
 
+struct SETTINGS_TestSettings {
+    bool xtra_god;
+    bool xtra_flyup;
+    bool xtra_chuck;
+    bool xtra_debug;
+    bool xtra_physdebug;
+    bool xtra_worldfreedom;
+    int  numOfPlayers;
+    int  p1_char;
+    int  p1_state;
+    int  p2_char;
+    int  p2_state;
+};
+
 class GlobalSettings
 {
 public:
 
     static LevelEditingSettings LvlOpts;
     static SETTINGS_ItemDefaults LvlItemDefaults;
+
+    static SETTINGS_TestSettings testing; //Testing settings
 
     static QString locale; //Current language
     static long animatorItemsLimit; //If level map have too many items, animation will be stopped

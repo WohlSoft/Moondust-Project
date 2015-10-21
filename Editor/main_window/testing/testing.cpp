@@ -23,9 +23,12 @@
 
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
+#include <common_features/util.h>
 #include <main_window/global_settings.h>
 #include <dev_console/devconsole.h>
 #include <audio/sdl_music_player.h>
+
+#include "testing_settings.h"
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -117,6 +120,10 @@ void MainWindow::on_action_doSafeTest_triggered()
         return;
     }
 
+    QStringList args;
+    args << "--debug";
+    args << "--config=\""+configs.config_dir+"\"";
+
     if(activeChildWindow()==1)
     {
         if(activeLvlEditWin()->isUntitled)
@@ -127,18 +134,7 @@ void MainWindow::on_action_doSafeTest_triggered()
             QMessageBox::Ok);
             return;
         }
-
-        QStringList args;
-        args << "--debug";
-        args << "--config=\""+configs.config_dir+"\"";
         args << activeLvlEditWin()->curFile;
-
-        QProcess::startDetached(command, args);
-
-        //Stop music playback in the PGE!
-        on_actionPlayMusic_triggered(false);
-        setMusicButton(false);
-        PGE_MusPlayer::MUS_stopMusic();
     }
     else
     if(activeChildWindow()==3)
@@ -151,32 +147,56 @@ void MainWindow::on_action_doSafeTest_triggered()
             QMessageBox::Ok);
             return;
         }
-
-        QStringList args;
-        args << "--debug";
-        args << "--config=\""+configs.config_dir+"\"";
         args << activeWldEditWin()->curFile;
-
-        QProcess::startDetached(command, args);
-
-        //Stop music playback in the PGE!
-        on_actionPlayMusic_triggered(false);
-        setMusicButton(false);
-        PGE_MusPlayer::MUS_stopMusic();
     }
+
+    QProcess::startDetached(command, args);
+
+    //Stop music playback in the PGE Editor!
+    on_actionPlayMusic_triggered(false);
+    setMusicButton(false);
+    PGE_MusPlayer::MUS_stopMusic();
 }
 
+
+void MainWindow::on_action_Start_Engine_triggered()
+{
+    QString command;
+
+    #ifdef _WIN32
+    command = ApplicationPath+"/pge_engine.exe";
+    #elif __APPLE__
+    command = ApplicationPath+"/pge_engine.app/Contents/MacOS/pge_engine";
+    #else
+    command = ApplicationPath+"/pge_engine";
+    #endif
+
+    if(!QFileInfo(command).exists())
+    {
+        QMessageBox::warning(this, tr("Engine is not found"),
+                             tr("Engine is not found: \n%1\nPlease, check the application directory.")
+                             .arg(command),
+                             QMessageBox::Ok);
+        return;
+    }
+
+    QStringList args;
+    args << "--config=\""+configs.config_dir+"\"";
+
+    QProcess::startDetached(command, args);
+    //Stop music playback in the PGE Editor!
+    on_actionPlayMusic_triggered(false);
+    setMusicButton(false);
+    PGE_MusPlayer::MUS_stopMusic();
+}
 
 
 void MainWindow::on_action_testSettings_triggered()
 {
-
-    QMessageBox::information(this, tr("Dummy!"),
-    tr("Sorry, the testing feature is under construction.\nSettings will available soon."),
-    QMessageBox::Ok);
-
+    TestingSettings testingSetup(this);
+    util::DialogToCenter(&testingSetup, true);
+    testingSetup.exec();
 }
-
 
 void MainWindow::on_actionRunTestSMBX_triggered()
 {

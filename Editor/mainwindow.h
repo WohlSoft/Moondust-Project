@@ -199,6 +199,9 @@ public:
         /// \brief on_actionReload_triggered - Reload/Reopen current file
         ///
         void on_actionReload_triggered();
+
+        void on_action_openEpisodeFolder_triggered(); //!< Open folder where current file is located
+        void on_action_openCustomFolder_triggered();  //!< Open folder which contains level/worldmap specific stuff
     private:
         bool _is_reloading;
     public slots:
@@ -736,6 +739,7 @@ public:
         void on_action_doTest_triggered();
         void on_action_doSafeTest_triggered();
 
+        void on_action_Start_Engine_triggered();
         void on_action_testSettings_triggered();
 
     public slots:

@@ -413,7 +413,8 @@ SOURCES += main.cpp\
     common_features/version_cmp.cpp \
     main_window/tip_of_day/tip_of_day.cpp \
     ../_common/data_functions/npctxt_manager.cpp \
-    ../_common/data_functions/smbx64_validation_messages.cpp
+    ../_common/data_functions/smbx64_validation_messages.cpp \
+    main_window/testing/testing_settings.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -607,7 +608,8 @@ HEADERS  += defines.h \
     common_features/RTree.h \
     main_window/tip_of_day/tip_of_day.h \
     ../_common/data_functions/npctxt_manager.h \
-    ../_common/data_functions/smbx64_validation_messages.h
+    ../_common/data_functions/smbx64_validation_messages.h \
+    main_window/testing/testing_settings.h
 
 
 FORMS    += \
@@ -656,7 +658,8 @@ FORMS    += \
     main_window/dock/debugger.ui \
     main_window/dock/wld_settings_box.ui \
     main_window/dock/lvl_events_box.ui \
-    main_window/tip_of_day/tip_of_day.ui
+    main_window/tip_of_day/tip_of_day.ui \
+    main_window/testing/testing_settings.ui
 
 
 
