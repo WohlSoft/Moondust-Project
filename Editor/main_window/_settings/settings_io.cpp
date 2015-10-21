@@ -167,6 +167,20 @@ void MainWindow::loadSettings()
         GlobalSettings::tools_sox_bin_path = settings.value("sox-bin-path", GlobalSettings::tools_sox_bin_path).toString();
     settings.endGroup();
 
+    settings.beginGroup("testing");
+        GlobalSettings::testing.xtra_god = settings.value("ex-god", false).toBool();
+        GlobalSettings::testing.xtra_flyup = settings.value("ex-flyup", false).toBool();
+        GlobalSettings::testing.xtra_chuck = settings.value("ex-chuck", false).toBool();
+        GlobalSettings::testing.xtra_worldfreedom = settings.value("ex-wfree", false).toBool();
+        GlobalSettings::testing.xtra_debug = settings.value("ex-debug", false).toBool();
+        GlobalSettings::testing.xtra_physdebug = settings.value("ex-physdebug", false).toBool();
+        GlobalSettings::testing.numOfPlayers = settings.value("num-players", 1).toInt();
+        GlobalSettings::testing.p1_char= settings.value("p1-char", 1).toInt();
+        GlobalSettings::testing.p1_state= settings.value("p1-state", 1).toInt();
+        GlobalSettings::testing.p2_char= settings.value("p2-char", 1).toInt();
+        GlobalSettings::testing.p2_state= settings.value("p2-state", 1).toInt();
+    settings.endGroup();
+
     settings.beginGroup("Recent");
         for(int i = 1; i<=10;i++){
             recentOpen.push_back(settings.value("recent"+QString::number(i),"<empty>").toString());
@@ -288,6 +302,20 @@ void MainWindow::saveSettings()
 
     settings.beginGroup("ext-tools");
     settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
+    settings.endGroup();
+
+    settings.beginGroup("testing");
+        settings.setValue("ex-god", GlobalSettings::testing.xtra_god);
+        settings.setValue("ex-flyup", GlobalSettings::testing.xtra_flyup);
+        settings.setValue("ex-chuck", GlobalSettings::testing.xtra_chuck);
+        settings.setValue("ex-wfree", GlobalSettings::testing.xtra_worldfreedom);
+        settings.setValue("ex-debug", GlobalSettings::testing.xtra_debug);
+        settings.setValue("ex-physdebug", GlobalSettings::testing.xtra_physdebug);
+        settings.setValue("num-players", GlobalSettings::testing.numOfPlayers);
+        settings.setValue("p1-char", GlobalSettings::testing.p1_char);
+        settings.setValue("p1-state", GlobalSettings::testing.p1_state);
+        settings.setValue("p2-char", GlobalSettings::testing.p2_char);
+        settings.setValue("p2-state", GlobalSettings::testing.p2_state);
     settings.endGroup();
 
     settings.beginGroup("Recent");
