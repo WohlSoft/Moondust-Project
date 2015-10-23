@@ -24,8 +24,7 @@
 QT       += core gui
 QT       -= opengl
 
-DESTDIR = $$PWD/../bin
-
+include(../_common/dest_dir.pri)
 include(../_common/build_props.pri)
 
 macx: QMAKE_CXXFLAGS += -Wno-header-guard

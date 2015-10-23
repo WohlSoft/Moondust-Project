@@ -20,31 +20,31 @@ TARGET = SDL2_mixer_ext
 include(../../_common/build_props.pri)
 
 win32:{
-LIBS += -L../_builds/win32/lib
-LIBS += -lmingw32 -lSDL2main -mwindows
-INCLUDEPATH += ../_builds/win32/include
-DEFINES -= USE_NATIVE_MIDI
+    LIBS += -L../_builds/win32/lib
+    LIBS += -lmingw32 -lSDL2main -mwindows
+    INCLUDEPATH += ../_builds/win32/include
+    DEFINES -= USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
-LIBS += -L../_builds/linux/lib
-INCLUDEPATH += ../_builds/linux/include
-CONFIG += unversioned_libname
+    LIBS += -L../_builds/linux/lib
+    INCLUDEPATH += ../_builds/linux/include
+    CONFIG += unversioned_libname
 }
 android:{
-LIBS += -L../_builds/android/lib
-INCLUDEPATH += ../_builds/android/include
+    LIBS += -L../_builds/android/lib
+    INCLUDEPATH += ../_builds/android/include
 }
 macx:{
-LIBS += -L../_builds/macos/lib
-INCLUDEPATH += ../_builds/macos/include
-LIBS += -F../_builds/macos/frameworks -framework SDL2
-INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -L../_builds/macos/lib
+    INCLUDEPATH += ../_builds/macos/include
+    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
 } else {
-LIBS += -lSDL2
+    LIBS += -lSDL2
 }
 
 win32:{
-LIBS += -lwinmm -lm -lwinmm
+    LIBS += -lwinmm -lm -lwinmm
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
@@ -85,20 +85,19 @@ macx: {
 SDL2MixerH.files += SDL_mixer_ext.h
 
 linux-g++||unix:!macx:!android:{
-SDL2MixerSO.path = ../_builds/linux/lib
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
-INSTALLS =  SDL2MixerSO
+    SDL2MixerSO.path = ../_builds/linux/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    INSTALLS =  SDL2MixerSO
 }
 android:{
-SDL2MixerSO.path = ../_builds/android/lib
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
-INSTALLS =  SDL2MixerSO
+    SDL2MixerSO.path = ../_builds/android/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    INSTALLS =  SDL2MixerSO
 }
 win32: {
-SDL2MixerSO.path = ../_builds/win32/bin
-SDL2MixerSO.files += ../_builds/win32/lib/*.dll
-INSTALLS =  SDL2MixerSO
-QMAKE_POST_LINK = $$PWD/_misc/post_link_win32.bat
+    SDL2MixerSO.path = ../_builds/win32/bin
+    SDL2MixerSO.files += ../_builds/win32/lib/*.dll
+    INSTALLS =  SDL2MixerSO
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
 

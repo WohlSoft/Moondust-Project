@@ -36,7 +36,7 @@ include(../_common/dest_dir.pri)
 android:{
     LANGUAGES_TARGET=/assets/languages
 } else {
-    LANGUAGES_TARGET=$$PWD/../bin/languages
+    LANGUAGES_TARGET=$$DESTDIR/languages
 }
 
 include(../_common/build_props.pri)
@@ -96,7 +96,7 @@ win32: {
         LIBS += -lSDL2 -lSDL2_mixer_ext
         LIBS += -lSDL2main
     }
-    LIBS += libversion -lDbghelp libwinmm
+    LIBS += libversion -ldbghelp libwinmm
 }
 
 linux-g++||unix:!macx:!android: {
