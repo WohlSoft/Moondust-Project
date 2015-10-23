@@ -21,7 +21,11 @@ LINKTYPE=dynamic
 }
 
 contains(TEMPLATE, lib) {
-    BUILD_OBJ_DIR=$$PWD/../bin
+	win32: {
+	BUILD_OBJ_DIR=$$PWD/../bin-w32
+	} else {
+	BUILD_OBJ_DIR=$$PWD/../bin
+	}
 } else {
     BUILD_OBJ_DIR=$$DESTDIR
 }

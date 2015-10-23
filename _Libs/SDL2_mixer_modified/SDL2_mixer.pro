@@ -14,10 +14,10 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
 include (../../_common/lib_destdir.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
 TARGET = SDL2_mixer_ext
-
 include(../../_common/build_props.pri)
+DESTDIR = ../_builds/$$TARGETOS/lib
+
 
 win32:{
     LIBS += -L../_builds/win32/lib
