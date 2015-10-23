@@ -1,4 +1,8 @@
 del MakeFile
+del _Libs\MakeFile
+del _Libs\MakeFile*
+del _Libs\SDL2_mixer_modified\MakeFile
+del _Libs\SDL2_mixer_modified\MakeFile*
 del Editor\MakeFile
 del Editor\MakeFile*
 del Engine\MakeFile
