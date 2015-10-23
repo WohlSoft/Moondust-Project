@@ -23,7 +23,7 @@
 
 QT       += gui widgets
 
-DESTDIR = ../bin
+include(../_common/dest_dir.pri)
 
 android:{
     LANGUAGES_TARGET=/assets/languages

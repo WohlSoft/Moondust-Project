@@ -14,35 +14,42 @@ QMAKE_CXXFLAGS += -static -static-libgcc
 QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
-TARGET = DummySDL_Musplay
 TEMPLATE = app
-DESTDIR = $$PWD/../../bin
+
+include(../../_common/dest_dir.pri)
+include (../../_common/lib_destdir.pri)
+TARGET = DummySDL_Musplay
+
+include(../../_common/build_props.pri)
 
 CONFIG += c++11
 CONFIG += thread
 
-!macx: {
-LIBS += -lSDL2 -lSDL2_mixer_ext
-} else {
-INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
-LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+win32:{
+    LIBS += -L$$PWD/../../_Libs/_builds/win32/lib
+    LIBS += -lSDL2main -lversion -lSDL2_mixer_ext
+    INCLUDEPATH += $$PWD/../../_Libs/_builds/win32/include
+    static: {
+        QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
+        LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lFLAC -logg
+    }
 }
-win32: LIBS += -lSDL2main
-win32: LIBS += libversion
-win32: static: {
-    QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
-    LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lflac -logg
+    linux-g++||unix:!macx:!android:{
+    LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
+    INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
+    CONFIG += unversioned_libname
 }
-win32: {
-INCLUDEPATH += $$PWD/../../_Libs/_builds/win32/include
-LIBS += -L$$PWD/../../_Libs/_builds/win32/lib
-} else
-macx: {
-INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
-LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
+android:{
+    LIBS += -L$$PWD/../../_Libs/_builds/android/lib -lSDL2_mixer_ext
+    INCLUDEPATH += $$PWD/../../_Libs/_builds/android/include
+}
+macx:{
+    LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
+    INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
+    INCLUDEPATH += $$PWD/../../_Libs/_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
 } else {
-INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
-LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
+    LIBS += -lSDL2 -lSDL2_mixer_ext
 }
 
 SOURCES += main.cpp\

@@ -10,13 +10,13 @@ cd "%SOURCEDIR%\Editor"
 call "%SOURCEDIR%\_paths.bat"
 
 "%QtDir%\lrelease" pge_editor.pro
-copy languages\*.qm %SOURCEDIR%\bin\languages
-copy languages\*.png %SOURCEDIR%\bin\languages
+copy languages\*.qm %SOURCEDIR%\bin-w32\languages
+copy languages\*.png %SOURCEDIR%\bin-w32\languages
 
 echo "Preparing Windows deploy..."
-cd %SOURCEDIR%\bin
+cd %SOURCEDIR%\bin-w32
 
-set DeployDir=%SOURCEDIR%\bin\_win32_deploy
+set DeployDir=%SOURCEDIR%\bin-w32\_win32_deploy
 set PgePrjSD=PGE_Project
 set TarGzArName=pge-project-dev-win32.zip
 
@@ -77,6 +77,7 @@ xcopy /Y /E /I .\calibrator "%DeployDir%\%PgePrjSD%\calibrator"
 del /Q "%DeployDir%\%PgePrjSD%\calibrator\templates\*.*"
 copy "%SOURCEDIR%\Content\readmes\*.txt" "%DeployDir%\%PgePrjSD%"
 copy "%SOURCEDIR%\Editor\changelog.editor.txt" "%DeployDir%\%PgePrjSD%"
+copy "%SOURCEDIR%\Engine\changelog.engine.txt" "%DeployDir%\%PgePrjSD%"
 copy "%SOURCEDIR%\LICENSE" "%DeployDir%\%PgePrjSD%\license.txt"
 del "%DeployDir%\%PgePrjSD%\themes\*.zip"
 del "%DeployDir%\%PgePrjSD%\themes\pge_default\*.zip"
@@ -100,12 +101,12 @@ cd "%DeployDir%"
 
 if exist ".\%TarGzArName%" del ".\%TarGzArName%"
 
-if not exist "%SOURCEDIR%\bin\_packed" md "%SOURCEDIR%\bin\_packed"
-if exist "%SOURCEDIR%\bin\_packed\%TarGzArName%" del "%SOURCEDIR%\bin\_packed\%TarGzArName%"
+if not exist "%SOURCEDIR%\bin-w32\_packed" md "%SOURCEDIR%\bin-w32\_packed"
+if exist "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%" del "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 
 echo Packing complete archive...
 "%SEVENZIP%\7z" a -tzip "%TarGzArName%" "%PgePrjSD%"
-move ".\%TarGzArName%" "%SOURCEDIR%\bin\_packed\%TarGzArName%"
+move ".\%TarGzArName%" "%SOURCEDIR%\bin-w32\_packed\%TarGzArName%"
 
 SET PGECommon=
 SET PGECommon=%PGECommon% "%DeployDir%\%PgePrjSD%\*.dll"
@@ -143,7 +144,7 @@ echo Packing of editor data
 "%SEVENZIP%\7z" a -tzip "install-pge-editor-dev-win32.zip" %PGEEditor%
 "%SEVENZIP%\7z" a -tzip "install-pge-engine-dev-win32.zip" %PGEEngine%
 "%SEVENZIP%\7z" a -tzip "install-pge-tools-dev-win32.zip" %PGETools%
-move ".\*.zip" "%SOURCEDIR%\bin\_packed"
+move ".\*.zip" "%SOURCEDIR%\bin-w32\_packed"
 
 echo.
 echo "All done!"

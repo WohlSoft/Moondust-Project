@@ -1,3 +1,6 @@
+
+include(../_common/dest_dir.pri)
+
 TEMPLATE = subdirs
 CONFIG -= app_bundle
 SUBDIRS = SDL2MixerModded OOLua
@@ -17,10 +20,11 @@ LuaBindnoJit.file = luabind/_project/luabind_nojit.pro
 
 deplibs.path = bin
 linux-g++: {
-deplibs.files += $$PWD/_builds/linux/lib/*.so*
+deplibs.files += $$PWD/_builds/linux/lib/*.so
 }
 win32: {
 deplibs.files += $$PWD/_builds/win32/bin/*.dll
+deplibs.files += $$PWD/_builds/win32/lib/*.dll
 }
 macx: {
 deplibs.files += $$PWD/_builds/macos/lib/*.dylib
@@ -28,7 +32,7 @@ deplibs.files += $$PWD/_builds/macos/frameworks/*
 }
 
 !macx: {
-deplibs.path = $$PWD/../bin
+deplibs.path = $$DESTDIR
 } else {
 deplibs.path = $$PWD/../bin/_Libs
 }
