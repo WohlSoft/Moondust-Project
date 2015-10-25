@@ -380,7 +380,8 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     PGEX_UIntVal("MZ", lvl_section.music_id)//Stuff music ID
                     PGEX_UIntVal("BG", lvl_section.background)//Stuff music ID
                     PGEX_StrVal ("MF", lvl_section.music_file)//External music file path
-                    PGEX_BoolVal("CS", lvl_section.IsWarp)//Connect sides
+                    PGEX_BoolVal("CS", lvl_section.wrap_h)//Connect sides horizontally
+                    PGEX_BoolVal("CSV", lvl_section.wrap_v)//Connect sides vertically
                     PGEX_BoolVal("OE", lvl_section.OffScreenEn)//Offscreen exit
                     PGEX_BoolVal("SR", lvl_section.lock_left_scroll)//Right-way scroll only (No Turn-back)
                     PGEX_BoolVal("UW", lvl_section.underwater)//Underwater bit
@@ -950,8 +951,10 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += PGEFile::value("BG", PGEFile::IntS(FileData.sections[i].background));  // Background ID
             //TextData += PGEFile::value("BG", PGEFile::qStrS(FileData.sections[i].background_file));  // Background file
 
-            if(FileData.sections[i].IsWarp)
-                TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].IsWarp));  // Connect sides
+            if(FileData.sections[i].wrap_h)
+                TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].wrap_h));  // Connect sides horizontally
+            if(FileData.sections[i].wrap_v)
+                TextData += PGEFile::value("CSV", PGEFile::BoolS(FileData.sections[i].wrap_v));  // Connect sides vertically
             if(FileData.sections[i].OffScreenEn)
                 TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
             if(FileData.sections[i].lock_left_scroll)

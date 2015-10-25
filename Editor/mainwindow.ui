@@ -228,7 +228,8 @@
     <addaction name="separator"/>
     <addaction name="menuSection_tools"/>
     <addaction name="separator"/>
-    <addaction name="actionLevWarp"/>
+    <addaction name="actionWrapHorizontal"/>
+    <addaction name="actionWrapVertically"/>
     <addaction name="actionLevOffScr"/>
     <addaction name="actionLevNoBack"/>
     <addaction name="actionLevUnderW"/>
@@ -1313,7 +1314,7 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionLevWarp">
+  <action name="actionWrapHorizontal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1321,7 +1322,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Warp section</string>
+    <string>Wrap Horizontally</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2710,6 +2711,14 @@
    </property>
    <property name="toolTip">
     <string>Open custom folder: a folder with a name equal to basename of currently opened file</string>
+   </property>
+  </action>
+  <action name="actionWrapVertically">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wrap Vertically</string>
    </property>
   </action>
  </widget>

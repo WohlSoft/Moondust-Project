@@ -165,7 +165,7 @@ LevelData FileFormats::ReadSMBX64LvlFile(PGESTRING RawData, PGESTRING filePath)
 
         nextLine(); UIntVar(section.music_id, line);    //Music ID
         nextLine(); UIntVar(section.bgcolor, line);     //BG Color
-        nextLine(); wBoolVar(section.IsWarp, line);     //Connect sides of section
+        nextLine(); wBoolVar(section.wrap_h, line);     //Connect sides of section
         nextLine(); wBoolVar(section.OffScreenEn, line);//Offscreen exit
         nextLine(); UIntVar(section.background, line);  //BackGround id
         if(ge(1)) {nextLine(); wBoolVar(section.lock_left_scroll, line);} //Don't walk to left (no turn back)
@@ -723,7 +723,7 @@ PGESTRING FileFormats::WriteSMBX64LvlFile(LevelData FileData, int file_format)
         TextData += SMBX64::IntS(FileData.sections[i].size_right);
         TextData += SMBX64::IntS(FileData.sections[i].music_id);
         TextData += SMBX64::IntS(FileData.sections[i].bgcolor);
-        TextData += SMBX64::BoolS(FileData.sections[i].IsWarp);
+        TextData += SMBX64::BoolS(FileData.sections[i].wrap_h);
         TextData += SMBX64::BoolS(FileData.sections[i].OffScreenEn);
         TextData += SMBX64::IntS(FileData.sections[i].background);
         if(file_format>=1)

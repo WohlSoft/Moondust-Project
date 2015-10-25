@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>299</width>
-    <height>520</height>
+    <width>263</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>299</width>
-    <height>520</height>
+    <width>263</width>
+    <height>387</height>
    </size>
   </property>
   <property name="focusPolicy">
@@ -31,42 +31,58 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout_4">
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <property name="spacing">
+     <number>3</number>
+    </property>
     <item row="1" column="0" colspan="2">
      <widget class="QGroupBox" name="LVLPropSettingsGrp">
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>121</height>
+        <height>95</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>95</height>
        </size>
       </property>
       <property name="title">
        <string>Section Settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="LVLPropsLevelWarp">
-         <property name="whatsThis">
-          <string>Leaving for the screen, the player enters the screen on the other side</string>
-         </property>
-         <property name="text">
-          <string comment="This must be translated as &quot;Connect left and right sides&quot;">Warp section</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="LVLPropsOffScr">
-         <property name="text">
-          <string>Off screen exit</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>2</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>1</number>
+       </property>
+       <item row="3" column="0">
         <widget class="QCheckBox" name="LVLPropsNoTBack">
          <property name="text">
           <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
@@ -76,13 +92,59 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="LVLPropsOffScr">
+         <property name="text">
+          <string>Off screen exit</string>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="0">
         <widget class="QCheckBox" name="LVLPropsUnderWater">
          <property name="text">
           <string>Underwater</string>
          </property>
          <property name="tristate">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="LVLPropsWrapHorizontal">
+         <property name="whatsThis">
+          <string>Leaving for the screen, the player enters the screen on the other side</string>
+         </property>
+         <property name="text">
+          <string comment="This must be translated as &quot;Connect left and right sides&quot;">Wrap horizontaly</string>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="LVLPropsWrapVertical">
+         <property name="text">
+          <string>Wrap vertucally</string>
          </property>
         </widget>
        </item>
@@ -95,6 +157,21 @@
        <string>Current Section</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,80,0,0">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>4</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>4</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -153,6 +230,24 @@
        <string>Style</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>0</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>1</number>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="LVLPropBckrImg">
          <property name="text">
@@ -206,7 +301,7 @@
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Sunken</enum>
       </property>
       <widget class="QPushButton" name="cancelResize">
        <property name="geometry">
@@ -275,18 +370,42 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>99</height>
+        <height>83</height>
        </size>
       </property>
       <property name="title">
        <string>Music</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" columnstretch="90,1,1">
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>2</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>1</number>
+       </property>
        <item row="0" column="0">
         <widget class="QComboBox" name="LVLPropsMusicNumber">
          <property name="minimumSize">
           <size>
            <width>0</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
            <height>24</height>
           </size>
          </property>
@@ -343,6 +462,12 @@
            <height>20</height>
           </size>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="2" column="2">
@@ -350,7 +475,7 @@
          <property name="maximumSize">
           <size>
            <width>23</width>
-           <height>16777215</height>
+           <height>20</height>
           </size>
          </property>
          <property name="text">

@@ -251,6 +251,9 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
 
+    //Refresh Strict SMBX64 flag
+    emit MainWinConnect::pMainWin->setSMBX64Strict(LvlData.smbx64strict);
+
     return true;
 }
 
