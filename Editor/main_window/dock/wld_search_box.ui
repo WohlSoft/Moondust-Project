@@ -48,9 +48,6 @@
       <property name="currentIndex">
        <number>3</number>
       </property>
-      <property name="tabBarAutoHide">
-       <bool>false</bool>
-      </property>
       <widget class="QWidget" name="FindToolboxWLDPage1" native="true">
        <attribute name="title">
         <string>Tile</string>
