@@ -110,7 +110,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 uBGs[bgD->id]=*bgD;
                 obj_BG &bgN=uBGs[bgD->id];
-                pConfigs->loadLevelBackground(bgN, "background2-" + QString::number(bgD->id), bgD, CustomTxt);
+                pConfigs->loadLevelBackground(bgN, "background2", bgD, CustomTxt);
                 bgD=&bgN;
             }
 
