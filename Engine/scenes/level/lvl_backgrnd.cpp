@@ -69,6 +69,15 @@ LVL_Background::~LVL_Background()
 
 void LVL_Background::setBg(obj_BG &bg)
 {
+    if((!bg.isInit) && (!bg.second_isInit))
+    {
+        QString CustomTxt=ConfigManager::Dir_BG.getCustomFile("background2-" + QString::number(bg.id)+".txt");
+        if(!CustomTxt.isEmpty())
+        {
+            ConfigManager::loadLevelBackground(bg, "background2", &bg, CustomTxt);
+        }
+    }
+
     setup = bg;
     bgType = (type)setup.type;
 
