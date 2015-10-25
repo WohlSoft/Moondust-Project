@@ -163,9 +163,14 @@ PGE_RectF LVL_Section::sectionLimitBox()
     return limitBox;
 }
 
-bool LVL_Section::isWarp()
+bool LVL_Section::isWrapH()
 {
-    return data.IsWarp;
+    return data.wrap_h;
+}
+
+bool LVL_Section::isWrapV()
+{
+    return data.wrap_v;
 }
 
 bool LVL_Section::RightOnly()

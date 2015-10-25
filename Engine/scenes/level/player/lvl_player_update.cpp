@@ -430,8 +430,14 @@ void LVL_Player::update(float ticks)
     }
 
     //Return player to start position on fall down
-    if( posY() > sBox.bottom()+_height )
+    if(section->isWrapV())
     {
+        if(posY()<sBox.top()-_height-1 )
+            setPosY(sBox.bottom()-1);
+        else
+        if(posY()>sBox.bottom() + 1 )
+            setPosY(sBox.top()-_height+1);
+    } else if( posY() > sBox.bottom()+_height ) {
         kill(DEAD_fall);
     }
 
@@ -481,7 +487,7 @@ void LVL_Player::update(float ticks)
         }
     }
     else
-    if(section->isWarp())
+    if(section->isWrapH())
     {
         if(posX() < sBox.left()-_width-1 )
             setPosX( sBox.right()+1 );
