@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>400</height>
+    <height>316</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>265</width>
-    <height>400</height>
+    <height>316</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -44,23 +44,15 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QToolBox" name="FindToolboxWLD">
+     <widget class="QTabWidget" name="FindToolboxWLD">
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
-      <property name="tabSpacing">
-       <number>0</number>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
       </property>
-      <widget class="QWidget" name="WLDFindTile">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>265</width>
-         <height>273</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxWLDPage1" native="true">
+       <attribute name="title">
         <string>Tile</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_21">
@@ -173,16 +165,8 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="WLDFindScenery">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>153</width>
-         <height>107</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxWLDPage2" native="true">
+       <attribute name="title">
         <string>Scenery</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_24">
@@ -295,16 +279,8 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="WLDFindPath">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>153</width>
-         <height>107</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxWLDPage3" native="true">
+       <attribute name="title">
         <string>Path</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_23">
@@ -417,16 +393,8 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="WLDFindLevel">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>231</width>
-         <height>220</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxWLDPage4" native="true">
+       <attribute name="title">
         <string>Level</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_20">
@@ -649,8 +617,8 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -664,17 +632,9 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="WLDFindMusic">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>153</width>
-         <height>107</height>
-        </rect>
-       </property>
-       <attribute name="label">
-        <string>Music</string>
+      <widget class="QWidget" name="FindToolboxWLDPage5" native="true">
+       <attribute name="title">
+        <string>Music box</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_22">
         <property name="leftMargin">

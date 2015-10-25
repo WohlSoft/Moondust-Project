@@ -65,6 +65,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
 
     #ifdef Q_OS_WIN
     setFloating(true);
@@ -134,6 +135,11 @@ QComboBox *LvlItemProperties::cbox_event_npc_talk()
 QComboBox *LvlItemProperties::cbox_event_npc_le()
 {
     return ui->PROPS_NpcEventEmptyLayer;
+}
+
+void LvlItemProperties::setSMBX64Strict(bool en)
+{
+    ui->PROPS_BGO_Z_Pos->setEnabled(!en);
 }
 /******************Comobo boxes*********************************/
 
@@ -390,12 +396,6 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         }
 
         //PGE-X values
-            bool isPGE=true;
-            if(mw()->activeChildWindow()==1)
-                isPGE = !mw()->activeLvlEditWin()->LvlData.smbx64strict;
-
-            ui->PROPS_BGO_Z_Pos->setEnabled(isPGE);
-
             int zMode=2;
             switch(bgo.z_mode)
             {

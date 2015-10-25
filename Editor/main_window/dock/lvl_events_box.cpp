@@ -115,7 +115,7 @@ void LvlEventsBox::re_translate()
     ui->retranslateUi(this);
     EventListsSync();
     setEventData(-1);
-    setSoundList();
+    reloadSoundsList();
     lockSetEventSettings=false;
     LvlEventBoxLock=false;
 }
@@ -283,7 +283,7 @@ void MainWindow::EventListsSync()
         dock_LvlEvents->setEventData(dock_LvlEvents->currentEventArrayID);
 }
 
-void LvlEventsBox::setSoundList()
+void LvlEventsBox::reloadSoundsList()
 {
     lockSetEventSettings=true;
     ui->LVLEvent_Cmn_PlaySnd->clear();

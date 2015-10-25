@@ -393,7 +393,8 @@ LevelSection FileFormats::CreateLvlSection()
     dummySection.size_right=0;
     dummySection.music_id=0;
     dummySection.bgcolor=16291944;
-    dummySection.IsWarp=false;
+    dummySection.wrap_h=false;
+    dummySection.wrap_v=false;
     dummySection.OffScreenEn=false;
     dummySection.background=0;
     dummySection.lock_left_scroll=false;

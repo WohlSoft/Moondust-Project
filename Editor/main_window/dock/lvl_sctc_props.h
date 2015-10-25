@@ -22,9 +22,11 @@ public:
     bool lockSctSettingsProps;
 
 public slots:
+    void setSMBX64Strict(bool en);
     void re_translate();
 
-    void setLevelSectionData();
+    void initDefaults();
+    void refreshFileData();
 
     void on_ResizeSection_clicked();
 
@@ -39,9 +41,8 @@ public slots:
     void loadMusic();
 
 private slots:
-    void on_LvlSectionProps_visibilityChanged(bool visible);
-
-    void on_LVLPropsLevelWarp_clicked(bool checked);
+    void on_LVLPropsWrapHorizontal_clicked(bool checked);
+    void on_LVLPropsWrapVertical_clicked(bool checked);
     void on_LVLPropsOffScr_clicked(bool checked);
     void on_LVLPropsNoTBack_clicked(bool checked);
     void on_LVLPropsUnderWater_clicked(bool checked);

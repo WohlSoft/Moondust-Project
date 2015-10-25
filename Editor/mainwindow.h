@@ -162,6 +162,9 @@ public:
         /// \return True, if the current window is either a level window or a world window.
         ///
         bool getCurrentSceneCoordinates(qreal &x, qreal &y);
+    signals:
+        void setSMBX64Strict(bool enabled);
+
     private:
         ///
         /// \brief formatErrorMsgBox Prints file format error message box
@@ -605,10 +608,6 @@ public:
 
     private slots:
         void on_actionSection_Settings_triggered(bool checked);
-        void on_actionLevWarp_triggered(bool checked);
-        void on_actionLevOffScr_triggered(bool checked);
-        void on_actionLevNoBack_triggered(bool checked);
-        void on_actionLevUnderW_triggered(bool checked);
 
         void on_actionAnimation_triggered(bool checked);
         void on_actionCollisions_triggered(bool checked);

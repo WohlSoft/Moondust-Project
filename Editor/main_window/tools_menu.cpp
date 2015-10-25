@@ -106,7 +106,7 @@ void MainWindow::on_actionAudioCvt_triggered()
     sox_cvt.exec();
 
     if(activeChildWindow()==1)
-        dock_LvlSectionProps->setLevelSectionData();
+        dock_LvlSectionProps->refreshFileData();
 }
 
 

@@ -138,7 +138,8 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionLevNoBack->setEnabled( (WinType==1) );
     ui->actionLevOffScr->setEnabled( (WinType==1) );
-    ui->actionLevWarp->setEnabled( (WinType==1) );
+    ui->actionWrapHorizontal->setEnabled( (WinType==1) );
+    ui->actionWrapVertically->setEnabled( (WinType==1) );
     ui->actionLevUnderW->setEnabled( (WinType==1) );
 
     ui->actionLevelProp->setEnabled( (WinType==1) );
@@ -205,6 +206,7 @@ void MainWindow::updateMenus(bool force)
 
     if(WinType==1)
     {
+        emit setSMBX64Strict(lvlWin->LvlData.smbx64strict);
         if(lvlWin->LvlData.metaData.script)
         {
             Script::CompilerType ct = lvlWin->LvlData.metaData.script->usingCompilerType();
@@ -256,7 +258,7 @@ void MainWindow::updateMenus(bool force)
         LayerListsSync();
         dock_BookmarksBox->updateBookmarkBoxByData();
 
-        dock_LvlSectionProps->setLevelSectionData();
+        dock_LvlSectionProps->initDefaults();
         ui->actionSelect->trigger();
 
         if(lvlWin->sceneCreated)
@@ -283,13 +285,7 @@ void MainWindow::updateMenus(bool force)
     else
     if(WinType==3)
     {
-        if( configs.check() )
-        {
-            WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
-            return;
-        }
-
-        WriteToLog(QtDebugMsg, "-> Current world settings");
+        emit setSMBX64Strict(wldWin->WldData.smbx64strict);
 
         dock_WldSettingsBox->setCurrentWorldSettings();
         dock_BookmarksBox->updateBookmarkBoxByData();

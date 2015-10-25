@@ -32,7 +32,8 @@ struct LevelSection
     long size_right;
     unsigned int music_id;
     long bgcolor;
-    bool IsWarp;
+    bool wrap_h;
+    bool wrap_v;
     bool OffScreenEn;
     unsigned int background;
     bool lock_left_scroll;

@@ -68,8 +68,8 @@ void MainWindow::on_actionLoad_configs_triggered()
     dock_LvlItemBox->setLvlItemBoxes(false); //Apply item boxes from reloaded configs
     dock_WldItemBox->setWldItemBoxes(false);
 
-    dock_LvlSectionProps->setLevelSectionData();
-    dock_LvlEvents->setSoundList();
+    dock_LvlSectionProps->initDefaults();
+    dock_LvlEvents->reloadSoundsList();
     dock_LvlItemBox->clearFilter();
 
     //Set tools from loaded configs
