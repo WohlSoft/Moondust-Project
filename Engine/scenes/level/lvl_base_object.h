@@ -119,7 +119,7 @@ public:
                  (
                     (summSpeedY >= 0.0)
                     &&
-                    (posRect.bottom() < collided->posRect.top()+summSpeedYprv)
+                    ( (posRect.bottom()-(summSpeedYprv>=0 ? 1 : 0 )) < collided->posRect.top()+summSpeedYprv)
                     &&
                     (
                          (posRect.left()<collided->posRect.right()-1 ) &&
