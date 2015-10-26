@@ -5,7 +5,7 @@ cd $PWD
 #=======================================================================
 errorofbuid()
 {
-	printf "\n\n=========ERROR!!===========\n\n"
+	printf "\n\n=========An error occured===========\n\n"
 	cd $bak
 	exit 1
 }
