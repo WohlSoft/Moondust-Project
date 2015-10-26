@@ -256,7 +256,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
             itemRect = new QGraphicsRectItem;
             itemRect->setPen(pen);
             itemRect->setBrush(brush);
-            itemRect->setRect(x, y, (long)fabs(x-w), (long)fabs(y-h));
+            itemRect->setRect(x, y, labs(x-w), labs(y-h));
             addItem(itemRect);
         }
 
@@ -313,8 +313,8 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
          RectPlus=0,
          toY; //Placing position Y 0 - top
 
-    sctW = (long)fabs(x-w);
-    sctH = (long)fabs(y-h);
+    sctW = abs(x-w);
+    sctH = abs(y-h);
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Draw BG -> Draw BG Image");

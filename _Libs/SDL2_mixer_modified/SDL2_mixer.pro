@@ -89,6 +89,10 @@ linux-g++||unix:!macx:!android:{
     SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
     INSTALLS =  SDL2MixerSO
 }
+macx:{
+    SDL2MixerSO.path = ../_builds/linux/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib*
+}
 android:{
     SDL2MixerSO.path = ../_builds/android/lib
     SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
