@@ -110,12 +110,12 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize sma
     long x = lineItem.p1().x();
     long y = lineItem.p1().y();
 
-    long tW = fabs(qRound(lineItem.dx())); //targetWidth
-    long tH = fabs(qRound(lineItem.dy())); //targetHeight
+    long tW = abs(qRound(lineItem.dx())); //targetWidth
+    long tH = abs(qRound(lineItem.dy())); //targetHeight
 
         QBrush brush = QBrush(Qt::darkYellow);
 
-    for(int k=0,l=0, i=0, j=0; (i<=tW)&&(j<=tH); i+=smallRect.width()*fabs(h_dir), j+=smallRect.height()*fabs(v_dir),k++,l++ )
+    for(int k=0,l=0, i=0, j=0; (i<=tW)&&(j<=tH); i+=smallRect.width()*abs(h_dir), j+=smallRect.height()*abs(v_dir),k++,l++ )
     {
         long x1 = x + k * smallRect.width()*h_dir;
         long y1 = y + l * smallRect.height()*v_dir;
