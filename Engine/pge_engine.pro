@@ -75,7 +75,13 @@ linux-g++||unix:!macx:!android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lglut -lGLU
 }
 
-contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
+contains(DEFINES, USE_LUA_JIT): {
+    macx: {
+        LIBS += -lluajit
+    } else {
+        LIBS += -lluajit-5.1
+    }
+}
 unix:{
 contains(CONFIG, debug)||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
