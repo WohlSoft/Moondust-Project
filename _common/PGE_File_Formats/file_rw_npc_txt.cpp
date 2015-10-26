@@ -510,7 +510,10 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.en_noiceball=true;
            }
         }
-       else // Non-SMBX64 parameters (not working in SMBX <=1.3)
+       else
+
+
+       // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
            Params[1] = PGESTR_Simpl(Params[1]);
@@ -566,6 +569,50 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            else
                FileData.script= Params[1];
                FileData.en_script=true;
+        }
+       else
+       if(Params[0]=="grid")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid = toInt(Params[1]);
+               FileData.en_grid=true;
+           }
+        }
+       else
+       if(Params[0]=="gridoffsetx")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_offset_x = toInt(Params[1]);
+               FileData.en_grid_offset_x=true;
+           }
+        }
+       else
+       if(Params[0]=="gridoffsety")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_offset_y = toInt(Params[1]);
+               FileData.en_grid_offset_y=true;
+           }
+        }
+       else
+       if(Params[0]=="gridalign")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_align = toInt(Params[1]);
+               FileData.en_grid_align=true;
+           }
         }
        else
        {
@@ -726,7 +773,7 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
         TextData += "framestyle=" + fromNum(FileData.framestyle) +"\n";
     }
 
-    //Extended
+//Extended
     if(FileData.en_nohammer)
     {
         TextData += "nohammer=" + fromNum((int)FileData.nohammer) +"\n";
@@ -746,6 +793,22 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     if(FileData.en_script)
     {
         TextData += "script=" + SMBX64::qStrS(FileData.script);
+    }
+    if(FileData.en_grid)
+    {
+        TextData += "grid=" + fromNum(FileData.grid) +"\n";
+    }
+    if(FileData.en_grid_offset_x)
+    {
+        TextData += "gridoffsetx=" + fromNum(FileData.grid_offset_x) +"\n";
+    }
+    if(FileData.en_grid_offset_y)
+    {
+        TextData += "gridoffsety=" + fromNum(FileData.grid_offset_y) +"\n";
+    }
+    if(FileData.en_grid_align)
+    {
+        TextData += "gridalign=" + fromNum(FileData.grid_align) +"\n";
     }
 
     return TextData;

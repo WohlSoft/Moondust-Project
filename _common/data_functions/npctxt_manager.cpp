@@ -132,6 +132,11 @@ obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
     merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
 
+    merged.grid = (local.en_grid)?local.grid:global.grid;
+    merged.grid_offset_x = (local.en_grid_offset_x)?local.grid_offset_x:global.grid_offset_x;
+    merged.grid_offset_y = (local.en_grid_offset_y)?local.grid_offset_y:global.grid_offset_y;
+    merged.grid_attach_style = (local.en_grid_align)?local.grid_align:global.grid_attach_style;
+
     #ifdef PGE_EDITOR
     WriteToLog(QtDebugMsg, QString("-------------------------------------"));
     WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
