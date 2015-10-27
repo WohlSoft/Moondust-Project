@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     if(!as->shouldContinue())
     {
         QTextStream(stdout) << "Editor already runned!\n";
+        delete as;
         return 0;
     }
 
