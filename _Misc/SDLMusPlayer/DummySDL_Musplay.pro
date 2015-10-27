@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets network
 
 CONFIG += static
 
@@ -53,9 +53,13 @@ macx:{
 }
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    SingleApplication/localserver.cpp \
+    SingleApplication/singleapplication.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    SingleApplication/localserver.h \
+    SingleApplication/singleapplication.h
 
 FORMS    += mainwindow.ui
 
