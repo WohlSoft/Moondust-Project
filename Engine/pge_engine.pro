@@ -404,7 +404,8 @@ HEADERS  += \
     settings/debugger.h \
     ../_common/data_functions/npctxt_manager.h \
     script/bindings/core/lua_global_constants.h \
-    script/lua_defines.h
+    script/lua_defines.h \
+    scenes/level/collision_checks.h
 
 
 FORMS    += \

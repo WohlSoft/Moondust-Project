@@ -32,6 +32,7 @@ LVL_Block::LVL_Block() : PGE_Phys_Object()
     animator_ID=0;
 
     shape=0;
+    shape_slope_angle_ratio=0.0;
 
     offset_x = 0.f;
     offset_y = 0.f;
@@ -153,6 +154,15 @@ void LVL_Block::transformTo_x(long id)
     }
 
     this->shape = setup->phys_shape;
+    if(shape==shape_tr_top_right)
+        shape_slope_angle_ratio=-(height()/width());
+    if(shape==shape_tr_top_left)
+        shape_slope_angle_ratio=(height()/width());
+    if(shape==shape_tr_bottom_right)
+        shape_slope_angle_ratio=(height()/width());
+    if(shape==shape_tr_bottom_left)
+        shape_slope_angle_ratio=-(height()/width());
+
     isRectangle=(setup->phys_shape==0);
     if(setup->algorithm==3)
          ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);

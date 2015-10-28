@@ -69,9 +69,6 @@ class LVL_Player :
         QHash<int, PGE_Phys_Object*> collided_center;
         LVL_Npc *  collided_talkable_npc;
         bool _stucked;
-        bool   collided_slope;
-        int    collided_slope_direct;
-        float  collided_slope_angle_ratio;
         /***************************************************/
 
         int playerID;
