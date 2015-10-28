@@ -415,7 +415,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         {
             transformTo(setup->transfororm_on_hit_into, 2);
         }
-        LevelNPC npcDef = FileFormats::dummyLvlNpc();
+        LevelNPC npcDef = FileFormats::CreateLvlNpc();
         npcDef.id=data.npc_id;
           data.npc_id=0;
         npcDef.direct = 0;

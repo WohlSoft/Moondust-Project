@@ -1,0 +1,57 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+		6AFAD9F342BFF283533830BC = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+			};
+			name = "Debug";
+		};
+		CD18C1A9AC3165542B82731B = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				QT_LIBRARY_SUFFIX = "";
+				SDKROOT = "macosx";
+			};
+			name = "Release";
+		};
+		941B8F306527EED6BAEE6854 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"6AFAD9F342BFF283533830BC",
+				"CD18C1A9AC3165542B82731B");
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4AD538A3D0084C90CD57CDE = {
+			children = (
+				);
+			isa = PBXGroup;
+			sourceTree = "<group>";
+		};
+		7D83457ADECB0CF2CAADA435 = {
+			buildSettings = {
+			};
+			buildStyles = (
+				);
+			isa = PBXProject;
+			mainGroup = "C4AD538A3D0084C90CD57CDE";
+			projectDirPath = "";
+			buildConfigurationList = "941B8F306527EED6BAEE6854";
+			projectReferences = (
+			);
+			targets = (
+				);
+		};
+	};
+	rootObject = "7D83457ADECB0CF2CAADA435";
+}

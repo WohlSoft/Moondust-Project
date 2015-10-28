@@ -38,7 +38,6 @@ ItemTile::ItemTile(WldScene *parentScene, QGraphicsItem *parent)
     setScenePoint(parentScene);
     scene->addItem(this);
     setZValue(scene->tileZ);
-    scene->registerElement(this);
 }
 
 void ItemTile::construct()

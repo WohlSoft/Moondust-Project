@@ -41,10 +41,7 @@ ItemPoint::ItemPoint(QGraphicsItem *parent)
 
 
 ItemPoint::~ItemPoint()
-{
-    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
-    //if(timer) delete timer;
-}
+{}
 
 void ItemPoint::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {

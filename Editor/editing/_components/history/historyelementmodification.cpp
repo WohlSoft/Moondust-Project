@@ -170,7 +170,7 @@ void HistoryElementModification::processBlock(const LevelBlock &sourceBlock, QGr
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemBlock*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -181,7 +181,7 @@ void HistoryElementModification::processBGO(const LevelBGO &sourceBGO, QGraphics
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemBGO*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -192,7 +192,7 @@ void HistoryElementModification::processNPC(const LevelNPC &sourceNPC, QGraphics
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemNPC*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -203,7 +203,7 @@ void HistoryElementModification::processPhysEnv(const LevelPhysEnv &sourcePhysEn
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemWater*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -214,7 +214,7 @@ void HistoryElementModification::processDoor(const LevelDoor &sourceDoor, QGraph
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemDoor*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -225,7 +225,7 @@ void HistoryElementModification::processPlayerPoint(const PlayerPoint &sourcePay
     LvlScene* scene = qobject_cast<LvlScene*>(m_scene);
     if(scene){
         ((ItemDoor*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -236,7 +236,7 @@ void HistoryElementModification::processTile(const WorldTiles &sourceTile, QGrap
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
     if(scene){
         ((ItemTile*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -247,7 +247,7 @@ void HistoryElementModification::processScenery(const WorldScenery &sourceScener
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
     if(scene){
         ((ItemScene*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -258,7 +258,7 @@ void HistoryElementModification::processPath(const WorldPaths &sourcePath, QGrap
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
     if(scene){
         ((ItemPath*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -269,7 +269,7 @@ void HistoryElementModification::processLevel(const WorldLevels &sourceLevel, QG
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
     if(scene){
         ((ItemLevel*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }
@@ -280,7 +280,7 @@ void HistoryElementModification::processMusicbox(const WorldMusic &sourceMusic, 
     WldScene* scene = qobject_cast<WldScene*>(m_scene);
     if(scene){
         ((ItemMusic*)item)->removeFromArray();
-        scene->removeItem(item);
+        //scene->removeItem(item);
         delete item;
     }
 }

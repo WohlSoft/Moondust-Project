@@ -30,6 +30,7 @@
 #include <main_window/global_settings.h>
 #include <audio/music_player.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/smbx64_validation_messages.h>
 
 #include "world_edit.h"
 #include <ui_world_edit.h>
@@ -41,7 +42,7 @@ bool WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
-    WldData = FileFormats::dummyWldDataArray();
+    WldData = FileFormats::CreateWorldData();
     WldData.modified = true;
     WldData.untitled = true;
     StartWldData = WldData;
@@ -217,10 +218,10 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
         //SMBX64 Standard check
-
         isSMBX64limit=false;
 
         int file_format=64;
+
         if(choiceVersionID)
         {
             QApplication::restoreOverrideCursor();
@@ -231,55 +232,13 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             QApplication::setOverrideCursor(Qt::WaitCursor);
         }
 
-        //Tiles limit
-        if(WldData.tiles.size()>20000)
+        int ErrorCode=FileFormats::smbx64WorldCheckLimits(WldData);
+        if(ErrorCode!=FileFormats::SMBX64_FINE)
         {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Tiles\n"
-                "The maximum number of Tiles is %2.\n\n"
-                "Please remove excess Tiles from this world map or save file into WLDX format.")
-             .arg(WldData.tiles.size()).arg(20000), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Sceneries limit
-        if(WldData.scenery.size()>5000)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Sceneries\n"
-                "The maximum number of Sceneries is %2.\n\n"
-                "Please remove excess Sceneries from this world map or save file into WLDX format.")
-             .arg(WldData.scenery.size()).arg(5000), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Paths limit
-        if(WldData.paths.size()>2000)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Paths\n"
-                "The maximum number of Paths is %2.\n\n"
-                "Please remove excess Paths from this world map or save file into WLDX format.")
-             .arg(WldData.paths.size()).arg(2000), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-        //Levels limit
-        if(WldData.levels.size()>400)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Levels\n"
-                "The maximum number of Levels is %2.\n\n"
-                "Please remove excess Paths from this world map or save file into WLDX format.")
-             .arg(WldData.levels.size()).arg(400), QMessageBox::Ok);
-            isSMBX64limit=true;
-        }
-
-        //Music boxes limit
-        if(WldData.music.size()>1000)
-        {
-            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-             tr("SMBX64 standard isn't allow to save %1 Music Boxes\n"
-                "The maximum number of Music Boxes is %2.\n\n"
-                "Please remove excess Music Boxes from this world map or save file into WLDX format.")
-             .arg(WldData.music.size()).arg(1000), QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 smbx64ErrMsgs(WldData, ErrorCode),
+                                 QMessageBox::Ok);
             isSMBX64limit=true;
         }
 

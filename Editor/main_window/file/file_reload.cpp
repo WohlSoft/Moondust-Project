@@ -73,6 +73,7 @@ void MainWindow::on_actionReload_triggered()
         FileData = FileFormats::OpenLevelFile(filePath);
 
         if( !FileData.ReadFileValid ){
+            formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
@@ -93,7 +94,7 @@ void MainWindow::on_actionReload_triggered()
                     delete FileData.metaData.script;
                     FileData.metaData.script = NULL;
                 }
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
             }
             else
             {
@@ -247,6 +248,7 @@ void MainWindow::on_actionReload_triggered()
         FileData = FileFormats::OpenWorldFile(filePath);
 
         if( !FileData.ReadFileValid ){
+            formatErrorMsgBox(filePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
@@ -264,7 +266,7 @@ void MainWindow::on_actionReload_triggered()
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
             }
             else
             {

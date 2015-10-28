@@ -55,36 +55,24 @@
 
 LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 {
-    errorString.clear();
     LevelData FileData;
-    FileData = dummyLvlDataArray();
+    FileData = CreateLevelData();
 
-    #ifdef PGE_FILES_QT
-    QFile inf(filePath);
-    if(!inf.open(QIODevice::ReadOnly))
+    PGE_FileFormats_misc::TextFileInput inf;
+    if(!inf.open(filePath, true))
     {
-    #else
-    std::fstream inf;
-    inf.open(filePath.c_str(), std::ios::in);
-    if(! inf.is_open() )
-    {
-    #endif
         FileData.ReadFileValid=false;
         return FileData;
     }
+
     PGESTRING line;
     int str_count=0;
     bool valid=false;
-    #ifdef PGE_FILES_QT
-    QFileInfo in_1(filePath);
-    FileData.filename = in_1.baseName();
-    FileData.path = in_1.absoluteDir().absolutePath();
-    QTextStream in(&inf);
-    in.setCodec("UTF-8");
-    #define NextLine(line) str_count++;line = in.readLine();
-    #else
-    #define NextLine(line) str_count++; line.clear(); while(inf.eof()) { char x=inf.get(); if(x=='\n') break;  line+=x;}
-    #endif
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    FileData.filename = in_1.basename();
+    FileData.path = in_1.dirpath();
+
+    #define NextLine(line) str_count++;line = inf.readLine();
 
     //Find level header part
     do{
@@ -138,38 +126,27 @@ LevelData FileFormats::ReadExtendedLvlFileHeader(PGESTRING filePath)
 
     return FileData;
 badfile:
+    FileData.ERROR_info="Invalid file format";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }
 
-LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath)
 {
-    errorString.clear();
+    QString errorString;
     PGEX_FileBegin();
 
     LevelData FileData;
-    FileData = dummyLvlDataArray();
+    FileData = CreateLevelData();
 
     //Add path data
     if(filePath.size() > 0)
     {
-        #ifdef PGE_FILES_QT
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
-        #else
-        char buf[PATH_MAX + 1];
-        char *res = realpath(filePath.c_str(), buf);
-        if(res)
-        {
-            FileData.filename = buf;
-            char *last_slash = strrchr(buf, '/');
-            if (last_slash != NULL) {
-                *last_slash = '\0';
-            }
-            FileData.path = buf;
-        }
-        #endif
+        PGE_FileFormats_misc::FileInfo  in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     FileData.untitled = false;
@@ -192,19 +169,6 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     PGEX_FetchSection() //look sections
     {
         PGEX_FetchSection_begin()
-
-        ///////////////////JOKES//////////////////////
-        PGEX_Section("JOKES")
-        {
-            #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode) && (!f_section.data.isEmpty()))
-                if(!f_section.data[0].values.isEmpty())
-                    QMessageBox::information(nullptr, "Jokes",
-                            f_section.data[0].values[0].value,
-                            QMessageBox::Ok);
-            #endif
-        }//jokes
-
         ///////////////////HEADER//////////////////////
         PGEX_Section("HEAD")
         {
@@ -402,7 +366,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                lvl_section = dummyLvlSection();
+                lvl_section = CreateLvlSection();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -416,7 +380,8 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     PGEX_UIntVal("MZ", lvl_section.music_id)//Stuff music ID
                     PGEX_UIntVal("BG", lvl_section.background)//Stuff music ID
                     PGEX_StrVal ("MF", lvl_section.music_file)//External music file path
-                    PGEX_BoolVal("CS", lvl_section.IsWarp)//Connect sides
+                    PGEX_BoolVal("CS", lvl_section.wrap_h)//Connect sides horizontally
+                    PGEX_BoolVal("CSV", lvl_section.wrap_v)//Connect sides vertically
                     PGEX_BoolVal("OE", lvl_section.OffScreenEn)//Offscreen exit
                     PGEX_BoolVal("SR", lvl_section.lock_left_scroll)//Right-way scroll only (No Turn-back)
                     PGEX_BoolVal("UW", lvl_section.underwater)//Underwater bit
@@ -433,7 +398,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     int needToAdd = (FileData.sections.size()-1) - lvl_section.id;
                     while(needToAdd > 0)
                     {
-                        LevelSection dummySct = dummyLvlSection();
+                        LevelSection dummySct = CreateLvlSection();
                         dummySct.id = FileData.sections.size();
                         FileData.sections.push_back(dummySct);
                         needToAdd--;
@@ -463,7 +428,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                player = dummyLvlPlayerPoint();
+                player = CreateLvlPlayerPoint();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -482,7 +447,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
                     if(FileData.players[q].id==player.id){found=true; break;}
                 }
 
-                PlayerPoint sz = dummyLvlPlayerPoint(player.id);
+                PlayerPoint sz = CreateLvlPlayerPoint(player.id);
                 player.w = sz.w;
                 player.h = sz.h;
 
@@ -502,7 +467,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                block = dummyLvlBlock();
+                block = CreateLvlBlock();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -536,7 +501,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                bgodata = dummyLvlBgo();
+                bgodata = CreateLvlBgo();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -565,7 +530,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                npcdata = dummyLvlNpc();
+                npcdata = CreateLvlNpc();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -607,7 +572,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                physiczone = dummyLvlPhysEnv();
+                physiczone = CreateLvlPhysEnv();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -633,7 +598,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                door = dummyLvlDoor();
+                door = CreateLvlWarp();
 
                 PGEX_Values() //Look markers and values
                 {
@@ -674,7 +639,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                layer = dummyLvlLayer();
+                layer = CreateLvlLayer();
                 PGEX_Values() //Look markers and values
                 {
                     PGEX_ValueBegin()
@@ -735,7 +700,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                event = dummyLvlEvent();
+                event = CreateLvlEvent();
 
                 PGESTRINGList musicSets;
                 PGESTRINGList bgSets;
@@ -838,8 +803,11 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
     return FileData;
 
     badfile:    //If file format is not correct
-    if(!sielent)
-        BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
+
+    FileData.ERROR_info=errorString;
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
+
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -983,8 +951,10 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += PGEFile::value("BG", PGEFile::IntS(FileData.sections[i].background));  // Background ID
             //TextData += PGEFile::value("BG", PGEFile::qStrS(FileData.sections[i].background_file));  // Background file
 
-            if(FileData.sections[i].IsWarp)
-                TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].IsWarp));  // Connect sides
+            if(FileData.sections[i].wrap_h)
+                TextData += PGEFile::value("CS", PGEFile::BoolS(FileData.sections[i].wrap_h));  // Connect sides horizontally
+            if(FileData.sections[i].wrap_v)
+                TextData += PGEFile::value("CSV", PGEFile::BoolS(FileData.sections[i].wrap_v));  // Connect sides vertically
             if(FileData.sections[i].OffScreenEn)
                 TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
             if(FileData.sections[i].lock_left_scroll)
@@ -1032,7 +1002,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "BLOCK\n";
 
-        LevelBlock defBlock = dummyLvlBlock();
+        LevelBlock defBlock = CreateLvlBlock();
 
         for(i=0;i<(signed)FileData.blocks.size();i++)
         {
@@ -1080,7 +1050,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "BGO\n";
 
-        LevelBGO defBGO = dummyLvlBgo();
+        LevelBGO defBGO = CreateLvlBgo();
 
         for(i=0;i<(signed)FileData.bgo.size();i++)
         {
@@ -1112,7 +1082,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "NPC\n";
 
-        LevelNPC defNPC = dummyLvlNpc();
+        LevelNPC defNPC = CreateLvlNpc();
 
         for(i=0;i<(signed)FileData.npc.size();i++)
         {
@@ -1173,7 +1143,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     if(!FileData.physez.empty())
     {
         TextData += "PHYSICS\n";
-        LevelPhysEnv defPhys = dummyLvlPhysEnv();
+        LevelPhysEnv defPhys = CreateLvlPhysEnv();
 
         for(i=0;i<(signed)FileData.physez.size();i++)
         {
@@ -1201,7 +1171,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
     {
         TextData += "DOORS\n";
 
-        LevelDoor defDoor = dummyLvlDoor();
+        LevelDoor defDoor = CreateLvlWarp();
         for(i=0;i<(signed)FileData.doors.size();i++)
         {
             if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )

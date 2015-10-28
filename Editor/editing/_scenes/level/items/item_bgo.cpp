@@ -43,7 +43,6 @@ ItemBGO::ItemBGO(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
-    scene->registerElement(this);
     setLocked(scene->lock_bgo);
 }
 

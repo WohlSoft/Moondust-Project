@@ -19,7 +19,27 @@
 #include "file_formats.h"
 #include "wld_filedata.h"
 
-WorldTiles FileFormats::dummyWldTile()
+
+int FileFormats::smbx64WorldCheckLimits(WorldData &wld)
+{
+    int errorCode=0;
+
+    //Tiles limit
+    if(wld.tiles.size()>20000) errorCode|=SMBX64EXC_TILES;
+    //Sceneries limit
+    if(wld.scenery.size()>5000) errorCode|=SMBX64EXC_SCENERIES;
+    //Paths limit
+    if(wld.paths.size()>2000) errorCode|=SMBX64EXC_PATHS;
+    //Levels limit
+    if(wld.levels.size()>400) errorCode|=SMBX64EXC_LEVELS;
+    //Music boxes limit
+    if(wld.music.size()>1000) errorCode|=SMBX64EXC_MUSICBOXES;
+
+    return errorCode;
+}
+
+
+WorldTiles FileFormats::CreateWldTile()
 {
     WorldTiles dummyTile;
     dummyTile.array_id=0;
@@ -31,7 +51,7 @@ WorldTiles FileFormats::dummyWldTile()
     return dummyTile;
 }
 
-WorldScenery FileFormats::dummyWldScen()
+WorldScenery FileFormats::CreateWldScenery()
 {
     WorldScenery dummyScen;
     dummyScen.array_id = 0;
@@ -43,7 +63,7 @@ WorldScenery FileFormats::dummyWldScen()
     return dummyScen;
 }
 
-WorldPaths FileFormats::dummyWldPath()
+WorldPaths FileFormats::CreateWldPath()
 {
     WorldPaths dummyPath;
     dummyPath.array_id = 0;
@@ -55,7 +75,7 @@ WorldPaths FileFormats::dummyWldPath()
     return dummyPath;
 }
 
-WorldLevels FileFormats::dummyWldLevel()
+WorldLevels FileFormats::CreateWldLevel()
 {
     WorldLevels dummyLevel;
     dummyLevel.array_id = 0;
@@ -88,7 +108,7 @@ WorldLevels FileFormats::dummyWldLevel()
     return dummyLevel;
 }
 
-WorldMusic FileFormats::dummyWldMusic()
+WorldMusic FileFormats::CreateWldMusicbox()
 {
     WorldMusic dummyMusicBox;
     dummyMusicBox.array_id = 0;
@@ -101,7 +121,7 @@ WorldMusic FileFormats::dummyWldMusic()
     return dummyMusicBox;
 }
 
-WorldData FileFormats::dummyWldDataArray()
+WorldData FileFormats::CreateWorldData()
 {
     WorldData NewFileData;
 
@@ -146,6 +166,8 @@ WorldData FileFormats::dummyWldDataArray()
     #ifdef PGE_EDITOR
     NewFileData.metaData.script = NULL;
     #endif
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_linenum=-1;
 
     return NewFileData;
 }

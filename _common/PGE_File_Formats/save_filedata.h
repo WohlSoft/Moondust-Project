@@ -24,7 +24,7 @@
 typedef PGEPAIR<unsigned int, bool > visibleItem; //!< ArrayID, Is Visible
 typedef PGEPAIR<PGESTRING, int > starOnLevel; //!< Level file, section of level
 
-struct saveCharacterState
+struct saveCharState
 {
     int id;
     unsigned int state;
@@ -42,6 +42,9 @@ struct savePlayerState
 struct GamesaveData
 {
     bool ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
 
     int version;
 
@@ -60,7 +63,7 @@ struct GamesaveData
 
     bool gameCompleted;   //!< Is episode was completed in last time
 
-    PGEVECTOR<saveCharacterState > characterStates;
+    PGEVECTOR<saveCharState > characterStates;
     PGELIST<int > currentCharacter;
 
     //Visible state of world map items

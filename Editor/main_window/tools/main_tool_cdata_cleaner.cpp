@@ -331,19 +331,17 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             }
         }
 
-        foreach(UserBGs x, s->uBGs)
+        for(QHash<int, obj_BG>::iterator bgIT=s->uBGs.begin(); bgIT!=s->uBGs.end(); bgIT++)
         {
+            obj_BG &x=*bgIT;
             foreach(LevelSection y, box->LvlData.sections)
             {
                 if(y.background == x.id)
                 {
-
                     QString image;
-
-                    long I = configs.getBgI(x.id);
-                    if(I>=0)
+                    if(configs.main_bg.contains(x.id))
                     {
-                        image = levelCustomDirectory + "/" + configs.main_bg[I].image_n;
+                        image = levelCustomDirectory + "/" + configs.main_bg[x.id].image_n;
                     }
                     bool imageRemoved = !QFileInfo(image).exists();
 

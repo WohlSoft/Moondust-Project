@@ -33,8 +33,12 @@ void HistoryElementSettingsSection::undo()
     int sectionID = m_sectionID;
     QVariant extraData = m_extraData;
 
-    if(m_subtype == HistorySettings::SETTING_SECISWARP){
-        lvlScene->LvlData->sections[sectionID].IsWarp = !extraData.toBool();
+    if(m_subtype == HistorySettings::SETTING_SECWRAPH){
+        lvlScene->LvlData->sections[sectionID].wrap_h = !extraData.toBool();
+    }
+    else
+    if(m_subtype == HistorySettings::SETTING_SECWRAPV){
+        lvlScene->LvlData->sections[sectionID].wrap_v = !extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECOFFSCREENEXIT){
@@ -61,7 +65,7 @@ void HistoryElementSettingsSection::undo()
         lvlScene->LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
     }
 
-    MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
+    MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
     LvlMusPlay::updateMusic();
     MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 }
@@ -78,8 +82,12 @@ void HistoryElementSettingsSection::redo()
     int sectionID = m_sectionID;
     QVariant extraData = m_extraData;
 
-    if(m_subtype == HistorySettings::SETTING_SECISWARP){
-        lvlScene->LvlData->sections[sectionID].IsWarp = extraData.toBool();
+    if(m_subtype == HistorySettings::SETTING_SECWRAPH){
+        lvlScene->LvlData->sections[sectionID].wrap_h = extraData.toBool();
+    }
+    else
+    if(m_subtype == HistorySettings::SETTING_SECWRAPV){
+        lvlScene->LvlData->sections[sectionID].wrap_v = extraData.toBool();
     }
     else
     if(m_subtype == HistorySettings::SETTING_SECOFFSCREENEXIT){
@@ -105,7 +113,8 @@ void HistoryElementSettingsSection::redo()
     if(m_subtype == HistorySettings::SETTING_SECCUSTOMMUSIC){
         lvlScene->LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
     }
-    MainWinConnect::pMainWin->dock_LvlSectionProps->setLevelSectionData();
+    MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
     LvlMusPlay::updateMusic();
     MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 }
+

@@ -85,7 +85,7 @@ void MainWindow::on_actionPaste_triggered()
     if (activeChildWindow()==1)
     {
         LevelData tmp;
-        tmp = FileFormats::ReadExtendedLvlFile(QApplication::clipboard()->text(), "<clipboard>", true);
+        tmp = FileFormats::ReadExtendedLvlFile(QApplication::clipboard()->text(), "<clipboard>");
         if(tmp.ReadFileValid)
             LvlBuffer = tmp;
         if
@@ -100,7 +100,7 @@ void MainWindow::on_actionPaste_triggered()
     if (activeChildWindow()==3)
     {
         WorldData tmp;
-        tmp = FileFormats::ReadExtendedWldFile(QApplication::clipboard()->text(), "<clipboard>", true);
+        tmp = FileFormats::ReadExtendedWldFile(QApplication::clipboard()->text(), "<clipboard>");
         if(tmp.ReadFileValid)
             WldBuffer = tmp;
 

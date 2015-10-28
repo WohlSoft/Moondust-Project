@@ -29,22 +29,22 @@
 #endif
 #endif
 
-GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath, bool sielent)
+GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath)
 {
-    GamesaveData FileData = dummySaveDataArray();
-    errorString.clear();
+    GamesaveData FileData = CreateGameSaveData();
+    QString errorString;
     PGEX_FileBegin();
 
-    saveCharacterState plr_state;
+    saveCharState plr_state;
     visibleItem        vz_item;
     starOnLevel        star_level;
 
     //Add path data
-    if(!filePath.isEmpty())
+    if(!filePath.PGESTRINGisEmpty())
     {
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
+        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     FileData.characterStates.clear();
@@ -58,17 +58,6 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     PGEX_FetchSection()
     {
         PGEX_FetchSection_begin()
-        ///////////////////JOKES//////////////////////
-        PGEX_Section("JOKES")
-        {
-            #ifdef PGE_FILES_USE_MESSAGEBOXES
-            if((!silentMode)&&(!f_section.data.isEmpty()))
-                if(!f_section.data[0].values.isEmpty())
-                    QMessageBox::information(nullptr, "Jokes",
-                            f_section.data[0].values[0].value,
-                            QMessageBox::Ok);
-            #endif
-        }//jokes
 
         ///////////////////HEADER//////////////////////
         PGEX_Section("SAVE_HEADER")
@@ -102,7 +91,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
             PGEX_Items()
             {
                 PGEX_ItemBegin(PGEFile::PGEX_Struct);
-                plr_state = dummySavCharacterState();
+                plr_state = CreateSavCharacterState();
                 PGEX_Values()
                 {
                     PGEX_ValueBegin()
@@ -211,7 +200,7 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
                     PGEX_StrVal("L", star_level.first)
                     PGEX_UIntVal("S", star_level.second)
                 }
-                FileData.gottenStars.push_back(vz_item);
+                FileData.gottenStars.push_back(star_level);
             }
         }//STARS
     }
@@ -222,9 +211,10 @@ GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING file
     return FileData;
 
     badfile:    //If file format not corrects
-    if(!sielent)
-       BadFileMsg(FileData.path+"/"+FileData.filename+"\nError message: "+errorString, str_count, line);
-        FileData.ReadFileValid=false;
+    FileData.ERROR_info=errorString;
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
+    FileData.ReadFileValid=false;
     return FileData;
 }
 
@@ -249,10 +239,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
     TextData += "\n";
     TextData += "SAVE_HEADER_END\n";
 
-    if(!FileData.characterStates.isEmpty())
+    if(!FileData.characterStates.empty())
     {
         TextData += "CHARACTERS\n";
-        for(i=0;i< FileData.characterStates.size(); i++)
+        for(i=0;i< (signed)FileData.characterStates.size(); i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.characterStates[i].id));
             TextData += PGEFile::value("ST", PGEFile::IntS(FileData.characterStates[i].state));
@@ -265,10 +255,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
         TextData += "CHARACTERS_END\n";
     }
 
-    if(!FileData.currentCharacter.isEmpty())
+    if(!FileData.currentCharacter.empty())
     {
         TextData += "CHARACTERS_PER_PLAYERS\n";
-        for(i=0;i< FileData.currentCharacter.size(); i++)
+        for(i=0;i< (signed)FileData.currentCharacter.size(); i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.currentCharacter[i]));
             TextData += "\n";
@@ -276,10 +266,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
         TextData += "CHARACTERS_PER_PLAYERS_END\n";
     }
 
-    if(!FileData.visibleLevels.isEmpty())
+    if(!FileData.visibleLevels.empty())
     {
         TextData += "VIZ_LEVELS\n";
-        for(i=0;i< FileData.visibleLevels.size(); i++)
+        for(i=0;i< (signed)FileData.visibleLevels.size(); i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visibleLevels[i].first));
             TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visibleLevels[i].second));
@@ -288,10 +278,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
         TextData += "VIZ_LEVELS_END\n";
     }
 
-    if(!FileData.visiblePaths.isEmpty())
+    if(!FileData.visiblePaths.empty())
     {
         TextData += "VIZ_PATHS\n";
-        for(i=0;i< FileData.visiblePaths.size(); i++)
+        for(i=0;i< (signed)FileData.visiblePaths.size(); i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visiblePaths[i].first));
             TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visiblePaths[i].second));
@@ -300,10 +290,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
         TextData += "VIZ_PATHS_END\n";
     }
 
-    if(!FileData.visibleScenery.isEmpty())
+    if(!FileData.visibleScenery.empty())
     {
         TextData += "VIZ_SCENERY\n";
-        for(i=0;i< FileData.visibleScenery.size(); i++)
+        for(i=0;i< (signed)FileData.visibleScenery.size(); i++)
         {
             TextData += PGEFile::value("ID", PGEFile::IntS(FileData.visibleScenery[i].first));
             TextData += PGEFile::value("V", PGEFile::BoolS(FileData.visibleScenery[i].second));
@@ -312,10 +302,10 @@ PGESTRING FileFormats::WriteExtendedSaveFile(GamesaveData &FileData)
         TextData += "VIZ_SCENERY_END\n";
     }
 
-    if(!FileData.gottenStars.isEmpty())
+    if(!FileData.gottenStars.empty())
     {
         TextData += "STARS\n";
-        for(i=0;i< FileData.gottenStars.size(); i++)
+        for(i=0;i< (signed)FileData.gottenStars.size(); i++)
         {
             TextData += PGEFile::value("L", PGEFile::qStrS(FileData.gottenStars[i].first));
             TextData += PGEFile::value("S", PGEFile::IntS(FileData.gottenStars[i].second));

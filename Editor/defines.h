@@ -141,7 +141,8 @@ public:
         SETTING_EV_KSTART,          //extraData: bool [Activated?]
         SETTING_EV_TRIACTIVATE,     //extraData: QList<QVariant[String]> [Old trigger, New trigger]
         SETTING_EV_TRIDELAY,        //extraData: QList<QVariant[long]> [Old delay, New delay]
-        SETTING_SECISWARP,          //extraData: bool [Activated?]
+        SETTING_SECWRAPH,           //extraData: bool [Activated?]
+        SETTING_SECWRAPV,           //extraData: bool [Activated?]
         SETTING_SECNOBACK,          //extraData: bool [Activated?]
         SETTING_SECOFFSCREENEXIT,   //extraData: bool [Activated?]
         SETTING_SECUNDERWATER,      //extraData: bool [Activated?]
@@ -221,7 +222,7 @@ public:
         case SETTING_EV_KSTART: return QObject::tr("Start Key Activate");
         case SETTING_EV_TRIACTIVATE: return QObject::tr("Trigger Activate");
         case SETTING_EV_TRIDELAY: return QObject::tr("Trigger Delay");
-        case SETTING_SECISWARP: return QObject::tr("Is Warp");
+        case SETTING_SECWRAPH: return QObject::tr("Is Warp");
         case SETTING_SECNOBACK: return QObject::tr("No Back");
         case SETTING_SECOFFSCREENEXIT: return QObject::tr("Off Screen Exit");
         case SETTING_SECUNDERWATER: return QObject::tr("Underwater");

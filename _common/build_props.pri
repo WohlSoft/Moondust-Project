@@ -21,7 +21,11 @@ LINKTYPE=dynamic
 }
 
 contains(TEMPLATE, lib) {
-    BUILD_OBJ_DIR=$$PWD/../bin
+	win32: {
+	BUILD_OBJ_DIR=$$PWD/../bin-w32
+	} else {
+	BUILD_OBJ_DIR=$$PWD/../bin
+	}
 } else {
     BUILD_OBJ_DIR=$$DESTDIR
 }
@@ -32,5 +36,5 @@ OBJECTS_DIR = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.obj
 MOC_DIR     = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.moc
 RCC_DIR     = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.rcc
 UI_DIR      = $$BUILD_OBJ_DIR/_build_$$ARCH/$$TARGET/_$$BUILDTP/.ui
-message("$$TARGET will be built as $$BUILDTP $$ARCH ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
+message("$$TARGET will be built as $$BUILDTP $$ARCH $$TARGETOS ($$QMAKE_TARGET.arch) $${LINKTYPE}ally in $$OBJECTS_DIR")
 

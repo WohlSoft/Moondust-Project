@@ -25,47 +25,36 @@
 #include <QTranslator>
 #endif
 
-
 #include "file_formats.h"
+#include "pge_file_lib_globs.h"
 
-
-LevelData FileFormats::OpenLevelFile(PGESTRING filePath, bool silent)
+LevelData FileFormats::OpenLevelFile(PGESTRING filePath)
 {
     errorString.clear();
-    QFile file(filePath);
+    PGE_FileFormats_misc::TextFileInput file;
     LevelData data;
-    silentMode = silent;
-    if (!file.open(QIODevice::ReadOnly))
+    if(!file.open(filePath))
     {
-        //qDebug() << "Failed to open file: " << filePath;
-        #ifdef PGE_FILES_USE_MESSAGEBOXES
-        if(!silentMode)
-        {
-            QMessageBox::critical(NULL, QTranslator::tr("File open error"),
-                    QTranslator::tr("Can't open the file."), QMessageBox::Ok);
-        }
-        #endif
         data.ReadFileValid = false;
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
         return data;
     }
+    file.close();
 
-    QTextStream in(&file);   //Read File
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
 
-    QFileInfo in_1(filePath);
-
-    if(in_1.suffix().toLower() == "lvl")
+    if(in_1.suffix() == "lvl")
         {   //Read SMBX LVL File
-            in.setAutoDetectUnicode(true);
-            in.setLocale(QLocale::system());
-            in.setCodec(QTextCodec::codecForLocale());
-            data = ReadSMBX64LvlFile( in.readAll(), filePath );
+            file.open(filePath, false);
+            data = ReadSMBX64LvlFile( file.readAll(), filePath );
         }
     else
         {   //Read PGE LVLX File
-            in.setCodec("UTF-8");
-            data = ReadExtendedLvlFile( in.readAll(), filePath );
+            file.open(filePath, true);
+            data = ReadExtendedLvlFile( file.readAll(), filePath );
         }
-
     return data;
 }
 
@@ -73,9 +62,9 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     LevelData data;
-    QFileInfo in_1(filePath);
 
-    if(in_1.suffix().toLower() == "lvl")
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
+    if(in_1.suffix() == "lvl")
         {   //Read SMBX LVL File
             data = ReadSMBX64LvlFileHeader( filePath );
         }
@@ -94,50 +83,45 @@ LevelData FileFormats::OpenLevelFileHeader(PGESTRING filePath)
 
 
 
-WorldData FileFormats::OpenWorldFile(QString filePath, bool silent)
+WorldData FileFormats::OpenWorldFile(PGESTRING filePath)
 {
     errorString.clear();
-    QFile file(filePath);
+    PGE_FileFormats_misc::TextFileInput file;
     WorldData data;
-    silentMode=silent;
 
-    if (!file.open(QIODevice::ReadOnly))
+    if(!file.open(filePath))
     {
-        #ifdef PGE_FILES_USE_MESSAGEBOXES
-        QMessageBox::critical(NULL, QTranslator::tr("File open error"),
-                QTranslator::tr("Can't open the file."), QMessageBox::Ok);
+        data.ERROR_info="Can't open file";
+        data.ERROR_linedata="";
+        data.ERROR_linenum=-1;
         data.ReadFileValid = false;
-        #endif
         return data;
     }
+    file.close();
 
-    QTextStream in(&file);   //Read File
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
 
-    QFileInfo in_1(filePath);
-
-    if(in_1.suffix().toLower() == "wld")
+    if(in_1.suffix() == "wld")
         {   //Read SMBX WLD File
-            in.setAutoDetectUnicode(true);
-            in.setLocale(QLocale::system());
-            in.setCodec(QTextCodec::codecForLocale());
-            data = ReadSMBX64WldFile( in.readAll(), filePath );
+            file.open(filePath, false);
+            data = ReadSMBX64WldFile( file.readAll(), filePath );
         }
     else
         {   //Read PGE WLDX File
-            in.setCodec("UTF-8");
-            data = ReadExtendedWldFile( in.readAll(), filePath );
+            file.open(filePath, true);
+            data = ReadExtendedWldFile( file.readAll(), filePath );
         }
 
     return data;
 }
 
-WorldData FileFormats::OpenWorldFileHeader(QString filePath)
+WorldData FileFormats::OpenWorldFileHeader(PGESTRING filePath)
 {
     errorString.clear();
     WorldData data;
-    QFileInfo in_1(filePath);
+    PGE_FileFormats_misc::FileInfo in_1(filePath);
 
-    if(in_1.suffix().toLower() == "wld")
+    if(in_1.suffix() == "wld")
         {   //Read SMBX LVL File
             data = ReadSMBX64WldFileHeader( filePath );
         }

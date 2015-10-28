@@ -41,30 +41,16 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     int i;                  //counters
     int arrayIdCounter=0;
     GamesaveData FileData;
-    FileData = dummySaveDataArray();
+    FileData = CreateGameSaveData();
 
     FileData.untitled = false;
 
     //Add path data
     if(!filePath.PGESTRINGisEmpty())
     {
-        #ifdef PGE_FILES_QT
-        QFileInfo in_1(filePath);
-        FileData.filename = in_1.baseName();
-        FileData.path = in_1.absoluteDir().absolutePath();
-        #else
-        char buf[PATH_MAX + 1];
-        char *res = realpath(filePath.c_str(), buf);
-        if(res)
-        {
-            FileData.filename = buf;
-            char *last_slash = strrchr(buf, '/');
-            if (last_slash != NULL) {
-                *last_slash = '\0';
-            }
-            FileData.path = buf;
-        }
-        #endif
+        PGE_FileFormats_misc::FileInfo in_1(filePath);
+        FileData.filename = in_1.basename();
+        FileData.path = in_1.dirpath();
     }
 
     //Enable strict mode for SMBX LVL file format
@@ -80,8 +66,8 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
 
     for(i=0; i< (ge(56)? 5 : 2) ;i++)
     {
-        saveCharacterState charState;
-        charState = dummySavCharacterState();
+        saveCharState charState;
+        charState = CreateSavCharacterState();
         nextLine(); UIntVar(charState.state, line);//Character's power up state
         nextLine(); UIntVar(charState.itemID, line) //ID of item in the slot
         if(ge(10)) { nextLine();UIntVar(charState.mountType, line); } //Type of mount
@@ -171,7 +157,12 @@ GamesaveData FileFormats::ReadSMBX64SavFile(PGESTRING RawData, PGESTRING filePat
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
+    if(file_format>0)
+        FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
+    else
+        FileData.ERROR_info="It is not an SMBX game save file";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }

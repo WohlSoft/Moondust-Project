@@ -39,7 +39,7 @@ void LvlScene::InitSection(int sect)
         int needToAdd = (LvlData->sections.size()-1) - sect;
         while(needToAdd > 0)
         {
-            LevelSection dummySct = FileFormats::dummyLvlSection();
+            LevelSection dummySct = FileFormats::CreateLvlSection();
             dummySct.id = LvlData->sections.size();
             LvlData->sections.push_back(dummySct);
             needToAdd--;
@@ -163,8 +163,10 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
         }
     }
 
-    if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
-            LvlData->sections[sctID].background = BG_Id;
+    if((BG_Id>0) && (pConfigs->main_bg.contains(BG_Id)))
+        LvlData->sections[sctID].background = BG_Id;
+    else
+        LvlData->sections[sctID].background = 0;
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
@@ -183,12 +185,14 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
     QBrush brush;
     QPen pen;
     QPixmap image = Themes::Image(Themes::dummy_bg);
-    QPixmap img;
-    QPixmap img2; //Second image buffer
+    QPixmap nullimage;
+    obj_BG *bgConfig=NULL;
+    QPixmap *img=NULL;
+    QPixmap *img2=NULL; //Second image buffer
     //need a BGitem
 
-    bool isUser1=false, isUser2=false, noimage=false, wrong=false;
-    long x,y,h,w, j;
+    bool noimage=false, wrong=false;
+    long x,y,h,w;
 
     if(
         (section.size_left!=0) ||
@@ -206,65 +210,44 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         WriteToLog(QtDebugMsg, "SetSectionBG-> Check for user images");
         #endif
 
-        isUser1=false; // user's images are exist
-        isUser2=false; // user's images are exist
         noimage=true;
-        j = 0;
         if(section.background != 0 )
         {
             //Find user image
-            for(j=0;j<uBGs.size();j++)
-            {
-                if(uBGs[j].id==section.background)
-                {
-                    noimage=false;
-                    if((uBGs[j].q==0)||(uBGs[j].q==2)) //set first image
-                        {img = uBGs[j].image; isUser1=true;}
-                    if((uBGs[j].q>=1)){ // set Second image
-                        img2 = uBGs[j].second_image; isUser2=true;}
-                    break;
-                }
-            } //If not exist, will be used default
-
-            j=pConfigs->getBgI(section.background);
-            if(j>=0)
+            if(uBGs.contains(section.background))
             {
                 noimage=false;
-                  if(!isUser1)
-                      img = pConfigs->main_bg[j].image;
-                  if(!isUser2)
-                      img2 = pConfigs->main_bg[j].second_image;
+                obj_BG &bgx = uBGs[section.background];
+                bgConfig=&bgx;
+                img =&bgx.image;
+                img2=&bgx.second_image;
+            } else //If not exist, will be used default
+            if(pConfigs->main_bg.contains(section.background))
+            {
+                noimage=false;
+                obj_BG &bgx = pConfigs->main_bg[section.background];
+                bgConfig=&bgx;
+                img =&bgx.image;
+                img2=&bgx.second_image;
             }
-
-            if((noimage)&&(!isUser1))
+            if(noimage)
             {
                 #ifdef _DEBUG_
                 WriteToLog(QtWarningMsg, "SetSectionBG-> Image not found");
                 #endif
-                img=image;
+                img=&image;
+                img2=&nullimage;
                 wrong=true;
             }
         }
         else noimage=true;
 
-        //pConfigs->main_bg[j].type;
-
         brush = QBrush(QColor(0, 0, 0));
-        //QBrush brush(QColor(255, 255, 255));
         pen = QPen(Qt::NoPen);
-        //for (int i = 0; i < 11; i++) {
 
-        //item = addRect(QRectF(x, y, , ), pen, brush);
-
-        if((!noimage)&&(!img.isNull()))
+        if((!noimage)&&(!img->isNull()))
         {
-            //item = addPixmap(image);
-            //item = new QGraphicsPixmapItem;
-            DrawBG(x, y, w, h, section.id, img, img2, pConfigs->main_bg[j], forceTiled);
-            //BgItem[section.id]->setParentItem(item);
-            //addItem(item);
-            //item->setData(ITEM_TYPE, "BackGround"+QString::number(section.id) );
-            //item->setPos(x, y);
+            DrawBG(x, y, w, h, section.id, *img, *img2, *bgConfig, forceTiled);
         }
         else
         {
@@ -273,7 +256,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
             itemRect = new QGraphicsRectItem;
             itemRect->setPen(pen);
             itemRect->setBrush(brush);
-            itemRect->setRect(x, y, (long)fabs(x-w), (long)fabs(y-h));
+            itemRect->setRect(x, y, labs(x-w), labs(y-h));
             addItem(itemRect);
         }
 
@@ -330,8 +313,8 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
          RectPlus=0,
          toY; //Placing position Y 0 - top
 
-    sctW = (long)fabs(x-w);
-    sctH = (long)fabs(y-h);
+    sctW = abs(x-w);
+    sctH = abs(y-h);
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Draw BG -> Draw BG Image");

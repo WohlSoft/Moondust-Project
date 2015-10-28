@@ -68,8 +68,8 @@ void MainWindow::setDefaults()
     cat_bgos="[all]";
     cat_npcs="[all]";
 
-    WldBuffer=FileFormats::dummyWldDataArray();
-    LvlBuffer=FileFormats::dummyLvlDataArray();
+    WldBuffer=FileFormats::CreateWorldData();
+    LvlBuffer=FileFormats::CreateLevelData();
 
     LastActiveSubWindow = NULL;
 
@@ -114,36 +114,36 @@ void MainWindow::setUiDefults()
 
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
 
-    #ifndef Q_OS_WIN
-    tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
-    tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
-    tabifyDockWidget(dock_LvlItemProps, dock_LvlSearchBox);
-    tabifyDockWidget(dock_LvlSearchBox, dock_LvlLayers);
-    tabifyDockWidget(dock_LvlLayers, dock_LvlEvents);
-    tabifyDockWidget(dock_LvlEvents, dock_WldItemProps);
-    tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
-    tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
-    tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
+//    #ifndef Q_OS_WIN
+//    tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
+//    tabifyDockWidget(dock_LvlSectionProps, dock_LvlItemProps);
+//    tabifyDockWidget(dock_LvlItemProps, dock_LvlSearchBox);
+//    tabifyDockWidget(dock_LvlSearchBox, dock_LvlLayers);
+//    tabifyDockWidget(dock_LvlLayers, dock_LvlEvents);
+//    tabifyDockWidget(dock_LvlEvents, dock_WldItemProps);
+//    tabifyDockWidget(dock_WldItemProps, dock_WldSearchBox);
+//    tabifyDockWidget(dock_WldSearchBox, dock_WldSettingsBox);
+//    tabifyDockWidget(dock_WldSettingsBox, dock_DebuggerBox);
 
     #define DisableFloatFeature(dock) dock->setFeatures(dock->features()&(~QDockWidget::DockWidgetFloatable));
-    DisableFloatFeature(dock_LvlItemBox);
-    DisableFloatFeature(dock_WldItemBox);
+//    DisableFloatFeature(dock_LvlItemBox);
+//    DisableFloatFeature(dock_WldItemBox);
 
-    DisableFloatFeature(dock_LvlWarpProps);
-    DisableFloatFeature(dock_LvlSectionProps);
-    DisableFloatFeature(dock_LvlItemProps);
-    DisableFloatFeature(dock_LvlSearchBox);
-    DisableFloatFeature(dock_LvlLayers);
-    DisableFloatFeature(dock_LvlWarpProps);
-    DisableFloatFeature(dock_WldItemProps);
-    DisableFloatFeature(dock_WldSearchBox);
-    DisableFloatFeature(dock_WldSettingsBox);
-    DisableFloatFeature(dock_DebuggerBox);
+//    DisableFloatFeature(dock_LvlWarpProps);
+//    DisableFloatFeature(dock_LvlSectionProps);
+//    DisableFloatFeature(dock_LvlItemProps);
+//    DisableFloatFeature(dock_LvlSearchBox);
+//    DisableFloatFeature(dock_LvlLayers);
+//    DisableFloatFeature(dock_LvlWarpProps);
+//    DisableFloatFeature(dock_WldItemProps);
+//    DisableFloatFeature(dock_WldSearchBox);
+//    DisableFloatFeature(dock_WldSettingsBox);
+//    DisableFloatFeature(dock_DebuggerBox);
     #ifdef Q_OS_ANDROID
     DisableFloatFeature(dock_TilesetBox);
     DisableFloatFeature(dock_BookmarksBox);
     #endif
-    #endif
+//    #endif
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateMenus()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));

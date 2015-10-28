@@ -1,3 +1,11 @@
+Editor 0.3.1.7
+- Small update of File Library
+- Support for "health" tag inside npc-*.txt custom configs
+- Added support of emulated FM Synth MIDI playback based on ADLMIDI. Also added support of loopStart/loopEnd tags in MIDI files
+- Fixed serious bug causes crash on attempt to place something after removing with enabled collisions.
+- Added experimental support of background2-*.txt custom configs (currently works with Editor only, engine still don't work with it) which allows to reconfigure animation, image filenames or settings for custom backgrounds. Note: unlike npc-*.txt, background2-*.txt uses INI-file syntax and requires a header "[background2-x]" at top of file. Instead of X put a number of background.
+- Fixed bug with locked event entry after undeletion
+
 Editor 0.3.1.6
 - Added support of game musics formats
 - Updated application icon (New 32x32 and 48x48 versions made by Orakel)

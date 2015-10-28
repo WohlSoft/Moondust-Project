@@ -28,7 +28,7 @@
 #endif
 
 
-SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(QString RawData, QString filePath)
+SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(PGESTRING RawData)
 {
     errorString.clear();
     SMBX64_File( RawData );
@@ -75,7 +75,12 @@ SMBX64_ConfigFile FileFormats::ReadSMBX64ConfigFile(QString RawData, QString fil
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(filePath+"\nFile format "+fromNum(file_format), str_count, line);
+    if(file_format>0)
+        FileData.ERROR_info="Detected file format: SMBX-"+fromNum(file_format)+" is invalid";
+    else
+        FileData.ERROR_info="It is not an SMBX game settings file";
+    FileData.ERROR_linenum=str_count;
+    FileData.ERROR_linedata=line;
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -100,7 +105,7 @@ PGESTRING FileFormats::WriteSMBX64ConfigFile(SMBX64_ConfigFile &FileData, int fi
         FileData.players.push_back(plr);
     }
 
-    for(i=0;i<(FileData.players.size()); i++)
+    for(i=0;i<((signed)FileData.players.size()); i++)
     {
         TextData += SMBX64::IntS(FileData.players[i].controllerType);
         TextData += SMBX64::IntS(FileData.players[i].k_up);

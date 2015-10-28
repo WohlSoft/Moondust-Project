@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>1469</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -141,6 +141,9 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="actionSave_all"/>
+    <addaction name="separator"/>
+    <addaction name="action_openEpisodeFolder"/>
+    <addaction name="action_openCustomFolder"/>
     <addaction name="separator"/>
     <addaction name="actionExport_to_image"/>
     <addaction name="actionExport_to_image_section"/>
@@ -225,7 +228,8 @@
     <addaction name="separator"/>
     <addaction name="menuSection_tools"/>
     <addaction name="separator"/>
-    <addaction name="actionLevWarp"/>
+    <addaction name="actionWrapHorizontal"/>
+    <addaction name="actionWrapVertically"/>
     <addaction name="actionLevOffScr"/>
     <addaction name="actionLevNoBack"/>
     <addaction name="actionLevUnderW"/>
@@ -366,6 +370,7 @@
     <addaction name="action_doSafeTest"/>
     <addaction name="actionRunTestSMBX"/>
     <addaction name="separator"/>
+    <addaction name="action_Start_Engine"/>
     <addaction name="action_testSettings"/>
    </widget>
    <widget class="QMenu" name="menuScript">
@@ -1309,7 +1314,7 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionLevWarp">
+  <action name="actionWrapHorizontal">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1317,7 +1322,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Warp section</string>
+    <string>Wrap Horizontally</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2680,10 +2685,47 @@
     <string>Tip of the day...</string>
    </property>
   </action>
+  <action name="action_Start_Engine">
+   <property name="icon">
+    <iconset resource="../Engine/_resources/engine.qrc">
+     <normaloff>:/icon/cat_16.png</normaloff>:/icon/cat_16.png</iconset>
+   </property>
+   <property name="text">
+    <string>Start Engine</string>
+   </property>
+   <property name="toolTip">
+    <string>Launch game engine application.</string>
+   </property>
+  </action>
+  <action name="action_openEpisodeFolder">
+   <property name="text">
+    <string>Open folder of current file</string>
+   </property>
+   <property name="toolTip">
+    <string>Open folder which contains currently opened file</string>
+   </property>
+  </action>
+  <action name="action_openCustomFolder">
+   <property name="text">
+    <string>Open custom data folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Open custom folder: a folder with a name equal to basename of currently opened file</string>
+   </property>
+  </action>
+  <action name="actionWrapVertically">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Wrap Vertically</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="_resources/editor.qrc"/>
+  <include location="../Engine/_resources/engine.qrc"/>
  </resources>
  <connections/>
 </ui>

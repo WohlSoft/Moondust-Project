@@ -42,7 +42,6 @@ ItemDoor::ItemDoor(LvlScene *parentScene, QGraphicsRectItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
-    scene->registerElement(this);
     setLocked(scene->lock_door);
 }
 

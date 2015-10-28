@@ -36,7 +36,7 @@ include(../_common/dest_dir.pri)
 android:{
     LANGUAGES_TARGET=/assets/languages
 } else {
-    LANGUAGES_TARGET=$$PWD/../bin/languages
+    LANGUAGES_TARGET=$$DESTDIR/languages
 }
 
 include(../_common/build_props.pri)
@@ -96,7 +96,7 @@ win32: {
         LIBS += -lSDL2 -lSDL2_mixer_ext
         LIBS += -lSDL2main
     }
-    LIBS += libversion -lDbghelp libwinmm
+    LIBS += libversion -ldbghelp libwinmm
 }
 
 linux-g++||unix:!macx:!android: {
@@ -181,7 +181,6 @@ SOURCES += main.cpp\
     editing/_dialogs/itemselectdialog.cpp \
     editing/_dialogs/levelfilelist.cpp \
     editing/_dialogs/musicfilelist.cpp \
-    editing/_dialogs/npcdialog.cpp \
     editing/_dialogs/wld_setpoint.cpp \
     editing/_scenes/level/itemmsgbox.cpp \
     editing/_scenes/level/lvl_clipboard.cpp \
@@ -412,7 +411,10 @@ SOURCES += main.cpp\
     main_window/tools/main_clean_npc_gargage.cpp \
     common_features/bool_reseter.cpp \
     common_features/version_cmp.cpp \
-    main_window/tip_of_day/tip_of_day.cpp
+    main_window/tip_of_day/tip_of_day.cpp \
+    ../_common/data_functions/npctxt_manager.cpp \
+    ../_common/data_functions/smbx64_validation_messages.cpp \
+    main_window/testing/testing_settings.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -459,7 +461,6 @@ HEADERS  += defines.h \
     editing/_dialogs/itemselectdialog.h \
     editing/_dialogs/levelfilelist.h \
     editing/_dialogs/musicfilelist.h \
-    editing/_dialogs/npcdialog.h \
     editing/_dialogs/wld_setpoint.h \
     editing/_scenes/level/itemmsgbox.h \
     editing/_scenes/level/lvl_item_placing.h \
@@ -605,7 +606,10 @@ HEADERS  += defines.h \
     common_features/bool_reseter.h \
     common_features/version_cmp.h \
     common_features/RTree.h \
-    main_window/tip_of_day/tip_of_day.h
+    main_window/tip_of_day/tip_of_day.h \
+    ../_common/data_functions/npctxt_manager.h \
+    ../_common/data_functions/smbx64_validation_messages.h \
+    main_window/testing/testing_settings.h
 
 
 FORMS    += \
@@ -616,7 +620,6 @@ FORMS    += \
     editing/_dialogs/itemselectdialog.ui \
     editing/_dialogs/levelfilelist.ui \
     editing/_dialogs/musicfilelist.ui \
-    editing/_dialogs/npcdialog.ui \
     editing/_dialogs/wld_setpoint.ui \
     editing/_scenes/level/itemmsgbox.ui \
     editing/_scenes/level/tonewlayerbox.ui \
@@ -655,7 +658,8 @@ FORMS    += \
     main_window/dock/debugger.ui \
     main_window/dock/wld_settings_box.ui \
     main_window/dock/lvl_events_box.ui \
-    main_window/tip_of_day/tip_of_day.ui
+    main_window/tip_of_day/tip_of_day.ui \
+    main_window/testing/testing_settings.ui
 
 
 

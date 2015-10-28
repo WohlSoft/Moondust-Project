@@ -59,6 +59,7 @@ public:
     QComboBox *cbox_event_npc_le();
 
 public slots:
+    void setSMBX64Strict(bool en);
     void re_translate();
 
     void LvlItemProps_updateLayer(QString lname);

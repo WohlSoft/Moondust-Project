@@ -135,8 +135,10 @@ private slots:
     void on_NoShell_stateChanged(int checked);
 
     void on_En_Name_clicked(bool checked);
-
     void on_Name_textEdited(const QString &arg1);
+
+    void on_En_Health_clicked(bool checked);
+    void on_Health_valueChanged(int arg1);
 
 private:
     Ui::NpcEdit *ui;

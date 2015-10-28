@@ -1,3 +1,4 @@
+include(_common/dest_dir.pri)
 
 TEMPLATE = subdirs
 SUBDIRS = DependentLibs \
@@ -23,13 +24,13 @@ LazyFixTool.file = LazyFixTool/LazyFixTool.pro
 Manager.file     = Manager/pge_manager.pro
 Maintainer.file  = Maintainer/pge_maintainer.pro
 
-configs.path = bin/configs
+configs.path = $$DESTDIR/configs
 configs.files = Content/configs/*
-helps.path = bin/help
+helps.path = $$DESTDIR/help
 helps.files = Content/help/*
-themes.path = bin/themes
+themes.path = $$DESTDIR/themes
 themes.files = Content/themes/*
-calibrator_cnfs.path = bin/calibrator
+calibrator_cnfs.path = $$DESTDIR/calibrator
 calibrator_cnfs.files  = Content/calibrator/*
 
 INSTALLS += configs helps themes calibrator_cnfs

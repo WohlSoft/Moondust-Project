@@ -252,6 +252,7 @@ public:
 
     /*****Level Backgrounds************/
     static bool loadLevelBackG();
+    static bool loadLevelBackground(obj_BG &sbg, QString section, obj_BG *merge_with=0, QString iniFile="", QSettings *setup=0);
     static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
     static QMap<long, obj_BG>   lvl_bg_indexes;

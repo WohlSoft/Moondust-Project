@@ -310,7 +310,7 @@ void LvlWarpBox::on_WarpAdd_clicked()
     if (WinType==1)
     {
         LevelEdit* edit = mw()->activeLvlEditWin();
-        LevelDoor newDoor = FileFormats::dummyLvlDoor();
+        LevelDoor newDoor = FileFormats::CreateLvlWarp();
         newDoor.array_id = edit->LvlData.doors_array_id++;
         newDoor.index = edit->LvlData.doors.size();
         newDoor.type = GlobalSettings::LvlItemDefaults.warp_type;//Apply initial warp type value

@@ -383,6 +383,7 @@ void LvlScene::queryItems(double x, double y, PGE_ItemList *resultList)
     queryItems(zone, resultList);
 }
 
+
 void LvlScene::registerElement(QGraphicsItem *item)
 {
     QPointF pt=item->scenePos();
@@ -398,7 +399,7 @@ void LvlScene::registerElement(QGraphicsItem *item)
 
 void LvlScene::unregisterElement(QGraphicsItem *item)
 {
-    if(item->data(ITEM_LAST_POS).isNull()) return;
+    if(!item->data(ITEM_LAST_POS).isValid()) return;
     if(item->data(ITEM_LAST_SIZE).isNull()) return;
     QPointF pt=item->data(ITEM_LAST_POS).toPointF();
     QSizeF pz=item->data(ITEM_LAST_POS).toSizeF();
