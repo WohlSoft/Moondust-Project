@@ -133,7 +133,7 @@ void LvlCloneSection::on_buttonBox_accepted()
     clone_margin= ui->padding_src->value();
 
     LevelSection tmps;
-    tmps = FileFormats::dummyLvlSection();
+    tmps = FileFormats::CreateLvlSection();
 
     clone_source = ui->FileList_src->currentData().value<LevelEdit *>();
     clone_source_id = ui->SectionList_src->selectedItems().first()->data(3).toInt();

@@ -75,7 +75,13 @@ linux-g++||unix:!macx:!android: {
     LIBS += -lSDL2 -lSDL2_mixer_ext -lglut -lGLU
 }
 
-contains(DEFINES, USE_LUA_JIT): LIBS += -lluajit-5.1
+contains(DEFINES, USE_LUA_JIT): {
+    macx: {
+        LIBS += -lluajit
+    } else {
+        LIBS += -lluajit-5.1
+    }
+}
 unix:{
 contains(CONFIG, debug)||lessThan(QT_MINOR_VERSION, 3): LIBS += -ldl
 }
@@ -252,7 +258,8 @@ SOURCES += \
     gui/pge_questionbox.cpp \
     gui/pge_textinputbox.cpp \
     gui/pge_menuboxbase.cpp \
-    settings/debugger.cpp
+    settings/debugger.cpp \
+    ../_common/data_functions/npctxt_manager.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -393,7 +400,8 @@ HEADERS  += \
     gui/pge_questionbox.h \
     gui/pge_textinputbox.h \
     gui/pge_menuboxbase.h \
-    settings/debugger.h
+    settings/debugger.h \
+    ../_common/data_functions/npctxt_manager.h
 
 
 FORMS    += \

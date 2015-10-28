@@ -155,7 +155,7 @@ public:
         QList<npcIndexes > index_npc;
 
         //Custom data containers
-        QList<UserBGs > uBGs;
+        QHash<int, obj_BG > uBGs;
         QList<UserBGOs > uBGOs;
         QList<UserBlocks > uBlocks;
         QList<UserNPCs > uNPCs;

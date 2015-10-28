@@ -14,41 +14,41 @@ QMAKE_LFLAGS += -Wl,-rpath=\'\$\$ORIGIN\'
 }
 
 include (../../_common/lib_destdir.pri)
-DESTDIR = ../_builds/$$TARGETOS/lib
 TARGET = SDL2_mixer_ext
-
 include(../../_common/build_props.pri)
+DESTDIR = ../_builds/$$TARGETOS/lib
+
 
 win32:{
-LIBS += -L../_builds/win32/lib
-LIBS += -lmingw32 -lSDL2main -mwindows
-INCLUDEPATH += ../_builds/win32/include
-DEFINES -= USE_NATIVE_MIDI
+    LIBS += -L../_builds/win32/lib
+    LIBS += -lmingw32 -lSDL2main -mwindows
+    INCLUDEPATH += ../_builds/win32/include
+    DEFINES -= USE_NATIVE_MIDI
 }
 linux-g++||unix:!macx:!android:{
-LIBS += -L../_builds/linux/lib
-INCLUDEPATH += ../_builds/linux/include
-CONFIG += unversioned_libname
+    LIBS += -L../_builds/linux/lib
+    INCLUDEPATH += ../_builds/linux/include
+    CONFIG += unversioned_libname
 }
 android:{
-LIBS += -L../_builds/android/lib
-INCLUDEPATH += ../_builds/android/include
+    LIBS += -L../_builds/android/lib
+    INCLUDEPATH += ../_builds/android/include
 }
 macx:{
-LIBS += -L../_builds/macos/lib
-INCLUDEPATH += ../_builds/macos/include
-LIBS += -F../_builds/macos/frameworks -framework SDL2
-INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
+    LIBS += -L../_builds/macos/lib
+    INCLUDEPATH += ../_builds/macos/include
+    LIBS += -F../_builds/macos/frameworks -framework SDL2
+    INCLUDEPATH += ../_builds/macos/frameworks/SDL2.framework/Headers
 } else {
-LIBS += -lSDL2
+    LIBS += -lSDL2
 }
 
 win32:{
-LIBS += -lwinmm -lm -lwinmm
+    LIBS += -lwinmm -lm -lwinmm
 }
 
 DEFINES += main=SDL_main HAVE_SIGNAL_H HAVE_SETBUF WAV_MUSIC MID_MUSIC \
-USE_TIMIDITY_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
+USE_TIMIDITY_MIDI USE_ADL_MIDI OGG_MUSIC FLAC_MUSIC MP3_MAD_MUSIC GME_MUSIC NO_OLDNAMES SPC_MORE_ACCURACY
 DEFINES += MODPLUG_MUSIC
 
 android: {
@@ -85,20 +85,23 @@ macx: {
 SDL2MixerH.files += SDL_mixer_ext.h
 
 linux-g++||unix:!macx:!android:{
-SDL2MixerSO.path = ../_builds/linux/lib
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
-INSTALLS =  SDL2MixerSO
+    SDL2MixerSO.path = ../_builds/linux/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    INSTALLS =  SDL2MixerSO
+}
+macx:{
+    SDL2MixerSO.path = ../_builds/linux/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.dylib*
 }
 android:{
-SDL2MixerSO.path = ../_builds/android/lib
-SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
-INSTALLS =  SDL2MixerSO
+    SDL2MixerSO.path = ../_builds/android/lib
+    SDL2MixerSO.files += ../_builds/sdl2_mixer_mod/*.so*
+    INSTALLS =  SDL2MixerSO
 }
 win32: {
-SDL2MixerSO.path = ../_builds/win32/bin
-SDL2MixerSO.files += ../_builds/win32/lib/*.dll
-INSTALLS =  SDL2MixerSO
-QMAKE_POST_LINK = $$PWD/_misc/post_link_win32.bat
+    SDL2MixerSO.path = ../_builds/win32/bin
+    SDL2MixerSO.files += ../_builds/win32/lib/*.dll
+    INSTALLS =  SDL2MixerSO
 }
 INSTALLS = SDL2MixerH SDL2MixerSO
 
@@ -221,7 +224,12 @@ HEADERS += \
     gme/Vgm_Emu_Impl.h \
     gme/Ym2413_Emu.h \
     gme/Ym2612_Emu.h \
-    music_gme.h
+    music_gme.h \
+    ADLMIDI/adldata.hh \
+    ADLMIDI/adlmidi.h \
+    ADLMIDI/dbopl.h \
+    ADLMIDI/fraction.h \
+    music_midi_adl.h
 
 SOURCES += \
     dynamic_flac.c \
@@ -330,5 +338,9 @@ SOURCES += \
     gme/Vgm_Emu_Impl.cpp \
     gme/Ym2413_Emu.cpp \
     gme/Ym2612_Emu.cpp \
-    music_gme.c
+    music_gme.c \
+    ADLMIDI/dbopl.cpp \
+    music_midi_adl.c \
+    ADLMIDI/adlmidi.cpp \
+    ADLMIDI/adldata.cpp
 

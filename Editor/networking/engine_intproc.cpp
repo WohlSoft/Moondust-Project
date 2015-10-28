@@ -63,7 +63,7 @@ void IntEngine::init()
 
 void IntEngine::quit()
 {
-    testBuffer = FileFormats::dummyLvlDataArray();
+    testBuffer = FileFormats::CreateLevelData();
 
     qDebug() << "isWorking check";
     if(isWorking())

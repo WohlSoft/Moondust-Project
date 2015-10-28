@@ -25,6 +25,7 @@
 #include <script/scriptholder.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <data_functions/smbx64_validation_messages.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
@@ -39,7 +40,7 @@ bool LevelEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
-    LvlData = FileFormats::dummyLvlDataArray();
+    LvlData = FileFormats::CreateLevelData();
     LvlData.metaData.script = new ScriptHolder;
     LvlData.untitled = true;
     StartLvlData = LvlData;
@@ -250,6 +251,9 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent)
         MainWinConnect::pMainWin->SyncRecentFiles();
     }
 
+    //Refresh Strict SMBX64 flag
+    emit MainWinConnect::pMainWin->setSMBX64Strict(LvlData.smbx64strict);
+
     return true;
 }
 
@@ -290,81 +294,14 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         QApplication::setOverrideCursor(Qt::WaitCursor);
     }
 
-    //Blocks limit
-    if(LvlData.blocks.size()>16384)
+    int ErrorCode=FileFormats::smbx64LevelCheckLimits(LvlData);
+    if(ErrorCode!=FileFormats::SMBX64_FINE)
     {
         if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 blocks\n"
-            "The maximum number of blocks is %2.\n\n"
-            "Please remove excess blocks from this level or save file into LVLX format.")
-         .arg(LvlData.blocks.size()).arg(16384), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //BGO limits
-    if(LvlData.bgo.size()>8000)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Background Objects\n"
-            "The maximum number of Background Objects is %2.\n\n"
-            "Please remove excess Background Objects from this level or save file into LVLX format.")
-         .arg(LvlData.bgo.size()).arg(8000), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //NPC limits
-    if(LvlData.npc.size()>5000)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Non-Playable Characters\n"
-            "The maximum number of Non-Playable Characters is %2.\n\n"
-            "Please remove excess Non-Playable Characters from this level or save file into LVLX format.")
-         .arg(LvlData.npc.size()).arg(5000), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //Warps limits
-    if(LvlData.doors.size()>199)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Warps\n"
-            "The maximum number of Warps is %2.\n\n"
-            "Please remove excess Warps from this level or save file into LVLX format.")
-         .arg(LvlData.doors.size()).arg(199), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //Physical Environment zones
-    if(LvlData.physez.size()>450)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Water Boxes\n"
-            "The maximum number of Water Boxes is %2.\n\n"
-            "Please remove excess Water Boxes from this level or save file into LVLX format.")
-         .arg(LvlData.physez.size()).arg(450), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //Layers limits
-    if(LvlData.layers.size()>100)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Layers\n"
-            "The maximum number of Layers is %2.\n\n"
-            "Please remove excess Layers from this level or save file into LVLX format.")
-         .arg(LvlData.layers.size()).arg(100), QMessageBox::Ok);
-        isSMBX64limit=true;
-    }
-    //Events limits
-    if(LvlData.events.size()>100)
-    {
-        if(!silent)
-        QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
-         tr("SMBX64 standard isn't allow to save %1 Events\n"
-            "The maximum number of Events is %2.\n\n"
-            "Please remove excess Events from this level or save file into LVLX format.")
-         .arg(LvlData.events.size()).arg(100), QMessageBox::Ok);
+            QMessageBox::warning(this,
+                                 tr("The SMBX64 limit has been exceeded"),
+                                 smbx64ErrMsgs(LvlData, ErrorCode),
+                                 QMessageBox::Ok);
         isSMBX64limit=true;
     }
 
@@ -384,18 +321,8 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent)
         }
     }
 
-    //set SMBX64 specific option to BGO
-    for(int q=0; q< LvlData.bgo.size(); q++)
-    {
-        if(LvlData.bgo[q].smbx64_sp < 0)
-        {
-            if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
-                LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
-        }
-        else
-            LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
-        //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
-    }
+    //Apply SMBX64-specific things to entire array
+    FileFormats::smbx64LevelPrepare(LvlData);
 
     QFile file(fileName);
     if(!file.open(QFile::WriteOnly))

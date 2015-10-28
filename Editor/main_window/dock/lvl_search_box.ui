@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
-    <height>514</height>
+    <width>264</width>
+    <height>517</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>265</width>
-    <height>450</height>
-   </size>
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
@@ -41,23 +35,12 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QToolBox" name="FindToolbox">
+     <widget class="QTabWidget" name="FindToolbox">
       <property name="currentIndex">
-       <number>2</number>
-      </property>
-      <property name="tabSpacing">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="LVLFindBlock">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>211</width>
-         <height>250</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxBlock" native="true">
+       <attribute name="title">
         <string>Block</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,0,0,0,90">
@@ -73,8 +56,11 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <property name="spacing">
+        <property name="horizontalSpacing">
          <number>3</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>1</number>
         </property>
         <item row="12" column="0" colspan="5">
          <widget class="QPushButton" name="Find_Button_ResetBlock">
@@ -188,19 +174,6 @@
           </property>
          </widget>
         </item>
-        <item row="11" column="0">
-         <spacer name="verticalSpacer_11">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_29">
           <property name="text">
@@ -274,18 +247,23 @@
           </property>
          </widget>
         </item>
+        <item row="11" column="0" colspan="5">
+         <spacer name="verticalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="LVLFindBGO">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>190</width>
-         <height>146</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxBgo" native="true">
+       <attribute name="title">
         <string>BGO</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11" columnstretch="0,0,0,0,90">
@@ -301,8 +279,11 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <property name="spacing">
+        <property name="horizontalSpacing">
          <number>3</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>1</number>
         </property>
         <item row="3" column="0" alignment="Qt::AlignHCenter">
          <widget class="QCheckBox" name="Find_Check_LayerBGO"/>
@@ -320,19 +301,6 @@
            <string>Search?</string>
           </property>
          </widget>
-        </item>
-        <item row="5" column="0">
-         <spacer name="verticalSpacer_12">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>136</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="7" column="0" colspan="5">
          <widget class="QPushButton" name="FindStartBGO">
@@ -423,18 +391,23 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0" colspan="5">
+         <spacer name="verticalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="LVLFindNPC">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>265</width>
-         <height>429</height>
-        </rect>
-       </property>
-       <attribute name="label">
+      <widget class="QWidget" name="FindToolboxNpc" native="true">
+       <attribute name="title">
         <string>NPC</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_12">
@@ -450,8 +423,11 @@
         <property name="bottomMargin">
          <number>0</number>
         </property>
-        <property name="spacing">
+        <property name="horizontalSpacing">
          <number>3</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>1</number>
         </property>
         <item row="12" column="3">
          <widget class="QLabel" name="label_51">

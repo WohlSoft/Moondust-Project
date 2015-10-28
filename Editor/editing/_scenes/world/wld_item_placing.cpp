@@ -37,11 +37,11 @@
 
 //Default dataSets
 
-WorldTiles WldPlacingItems::TileSet=FileFormats::dummyWldTile();
-WorldScenery WldPlacingItems::SceneSet=FileFormats::dummyWldScen();
-WorldPaths WldPlacingItems::PathSet=FileFormats::dummyWldPath();
-WorldLevels WldPlacingItems::LevelSet=FileFormats::dummyWldLevel();
-WorldMusic WldPlacingItems::MusicSet=FileFormats::dummyWldMusic();
+WorldTiles WldPlacingItems::TileSet=FileFormats::CreateWldTile();
+WorldScenery WldPlacingItems::SceneSet=FileFormats::CreateWldScenery();
+WorldPaths WldPlacingItems::PathSet=FileFormats::CreateWldPath();
+WorldLevels WldPlacingItems::LevelSet=FileFormats::CreateWldLevel();
+WorldMusic WldPlacingItems::MusicSet=FileFormats::CreateWldMusicbox();
 
 int WldPlacingItems::c_offset_x=0;
 int WldPlacingItems::c_offset_y=0;

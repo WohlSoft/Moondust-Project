@@ -246,8 +246,9 @@ void WldScene::registerElement(QGraphicsItem *item)
 
 void WldScene::unregisterElement(QGraphicsItem *item)
 {
-    if(item->data(ITEM_LAST_POS).isNull()) return;
+    if(!item->data(ITEM_LAST_POS).isValid()) return;
     if(item->data(ITEM_LAST_SIZE).isNull()) return;
+
     QPointF pt=item->data(ITEM_LAST_POS).toPointF();
     QSizeF pz=item->data(ITEM_LAST_POS).toSizeF();
     RPoint lt={pt.x(), pt.y()};

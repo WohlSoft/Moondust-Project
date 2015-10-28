@@ -27,9 +27,7 @@ public slots:
 private slots:
 
     void on_open_clicked();
-
     void on_stop_clicked();
-
     void on_play_clicked();
 
 private:

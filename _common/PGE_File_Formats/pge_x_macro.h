@@ -10,7 +10,7 @@
                                 errorString = pgeX_Data.lastError();\
                                 goto badfile;\
                             }
-#define PGEX_FetchSection() for(int section=0; section<pgeX_Data.dataTree.size(); section++)
+#define PGEX_FetchSection() for(int section=0; section<(signed)pgeX_Data.dataTree.size(); section++)
 #define PGEX_FetchSection_begin() PGEFile::PGEX_Entry &f_section = pgeX_Data.dataTree[section];\
                                   if(f_section.name=="") continue;
 

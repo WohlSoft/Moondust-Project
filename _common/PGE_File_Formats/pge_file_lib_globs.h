@@ -11,6 +11,7 @@
 #include <QPair>
 #include <QMap>
 #include <QObject>
+#include <tgmath.h>
 #if defined(PGE_ENGINE)||defined(PGE_EDITOR)
 #include <QSize>
 #endif
@@ -18,6 +19,7 @@
 #define PGESTRING QString
 #define PGESTRINGisEmpty() isEmpty()
 #define PGESTR_Simpl(str) str.simplified()
+#define PGEGetChar(chr) chr.toLatin1()
 #define PGEChar QChar
 #define PGESTRINGList QStringList
 #define PGEVECTOR QVector
@@ -28,10 +30,12 @@
 #define PGE_SPLITSTR(dst, src, sep) dst=src.split(sep);
 #define PGE_ReplSTR(src, from, to) src.replace(from, to)
 #define PGE_RemSSTR(src, substr) src.remove(substr)
+#define PGE_RemSRng(pos, len) remove(pos, len)
 inline bool IsNULL(PGESTRING str) { return str.isNull(); }
 inline int toInt(PGESTRING str){ return str.toInt(); }
 inline float toFloat(PGESTRING str){ return str.toFloat(); }
 inline double toDouble(PGESTRING str){ return str.toDouble(); }
+inline PGESTRING removeSpaces(PGESTRING src) { return src.remove(' '); }
 template<typename T>
 PGESTRING fromNum(T num) { return QString::number(num); }
 #else
@@ -50,6 +54,7 @@ PGESTRING fromNum(T num) { return QString::number(num); }
 inline PGESTRING PGESTR_Simpl(PGESTRING str)
     { str.erase( std::remove_if( str.begin(), str.end(), ::isspace ), str.end() );
         return str;}
+#define PGEGetChar(chr) chr
 #define PGEChar char
 #define PGESTRINGList std::vector<std::string >
 #define PGEVECTOR std::vector
@@ -59,7 +64,7 @@ inline PGESTRING PGESTR_Simpl(PGESTRING str)
 #define PGEFILE std::fstream
 namespace PGE_FileFormats_misc
 {
-    void split(std::vector<std::string>& dest, const std::string& str, const char* separator);
+    void split(std::vector<std::string>& dest, const std::string& str, std::string separator);
     void replaceAll(std::string& str, const std::string& from, const std::string& to);
     void RemoveSub(std::string& sInput, const std::string& sub);
     bool hasEnding (std::string const &fullString, std::string const &ending);
@@ -71,13 +76,68 @@ inline PGESTRING PGE_ReplSTR(PGESTRING src, PGESTRING from, PGESTRING to) {
 }
 
 inline PGESTRING PGE_RemSSTR(PGESTRING src, PGESTRING substr) { PGE_FileFormats_misc::RemoveSub(src, substr); return src; }
+#define PGE_RemSRng(pos, len) erase(pos, len)
 inline bool IsNULL(PGESTRING str) { return (str.empty()!=0); }
 inline int toInt(PGESTRING str){ return std::atoi(str.c_str()); }
 inline float toFloat(PGESTRING str){ return std::atof(str.c_str()); }
 inline double toDouble(PGESTRING str){ return std::atof(str.c_str()); }
+inline PGESTRING removeSpaces(PGESTRING src) { return PGE_RemSSTR(src, " "); }
 template<typename T>
 PGESTRING fromNum(T num) { std::ostringstream n; n<<num; return n.str(); }
 #endif
+
+namespace PGE_FileFormats_misc
+{
+    class FileInfo
+    {
+    public:
+        FileInfo();
+        FileInfo(PGESTRING filepath);
+        void setFile(PGESTRING filepath);
+        PGESTRING suffix();
+        PGESTRING filename();
+        PGESTRING fullPath();
+        PGESTRING basename();
+        PGESTRING dirpath();
+    private:
+        void rebuildData();
+        PGESTRING filePath;
+        PGESTRING _filename;
+        PGESTRING _suffix;
+        PGESTRING _basename;
+        PGESTRING _dirpath;
+    };
+
+    class TextFileInput
+    {
+    public:
+        enum positions{
+            current=0,
+            begin,
+            end
+        };
+        static bool exists(PGESTRING filePath);
+        TextFileInput();
+        TextFileInput(PGESTRING filePath, bool utf8=false);
+        ~TextFileInput();
+        bool open(PGESTRING filePath, bool utf8=false);
+        void close();
+        PGESTRING read(long len);
+        PGESTRING readLine();
+        PGESTRING readAll();
+        bool eof();
+        long long tell();
+        void seek(long long pos, positions relativeTo);
+    private:
+        #ifdef PGE_FILES_QT
+        QFile file;
+        QTextStream stream;
+        #else
+        std::fstream stream;
+        #endif
+    };
+
+}
 
 #endif // _PGE_FILE_LIB_GLOBS_H
 

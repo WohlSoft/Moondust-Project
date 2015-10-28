@@ -65,6 +65,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     int GOffset=240;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
     connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
+    connect(mw(), SIGNAL(setSMBX64Strict(bool)), this, SLOT(setSMBX64Strict(bool)));
 
     #ifdef Q_OS_WIN
     setFloating(true);
@@ -135,6 +136,11 @@ QComboBox *LvlItemProperties::cbox_event_npc_le()
 {
     return ui->PROPS_NpcEventEmptyLayer;
 }
+
+void LvlItemProperties::setSMBX64Strict(bool en)
+{
+    ui->PROPS_BGO_Z_Pos->setEnabled(!en);
+}
 /******************Comobo boxes*********************************/
 
 void LvlItemProperties::re_translate()
@@ -175,17 +181,17 @@ void LvlItemProperties::mouseMoveEvent(QMouseEvent *event)
 
 void LvlItemProperties::OpenBlock(LevelBlock block, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_Block, block, FileFormats::CreateLvlBgo(), FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
 }
 
 void LvlItemProperties::OpenBGO(LevelBGO bgo, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::dummyLvlBlock(), bgo, FileFormats::dummyLvlNpc(), newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_BGO, FileFormats::CreateLvlBlock(), bgo, FileFormats::CreateLvlNpc(), newItem, dont_reset_props);
 }
 
 void LvlItemProperties::OpenNPC(LevelNPC npc, bool newItem, bool dont_reset_props)
 {
-    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), npc, newItem, dont_reset_props);
+    LvlItemProps(ItemTypes::LVL_NPC, FileFormats::CreateLvlBlock(), FileFormats::CreateLvlBgo(), npc, newItem, dont_reset_props);
 }
 
 void LvlItemProperties::CloseBox()
@@ -390,12 +396,6 @@ void LvlItemProperties::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, L
         }
 
         //PGE-X values
-            bool isPGE=true;
-            if(mw()->activeChildWindow()==1)
-                isPGE = !mw()->activeLvlEditWin()->LvlData.smbx64strict;
-
-            ui->PROPS_BGO_Z_Pos->setEnabled(isPGE);
-
             int zMode=2;
             switch(bgo.z_mode)
             {

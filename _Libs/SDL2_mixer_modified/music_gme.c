@@ -29,9 +29,6 @@ Music_Emu* game_emu=NULL;
 int gme_is_playing=-1;
 int gme_t_sample_rate=44100;
 
-short last_left=0;
-short last_right=0;
-
 /* Initialize the Game Music Emulators player, with the given mixer settings
    This function returns 0, or -1 if there was an error.
  */

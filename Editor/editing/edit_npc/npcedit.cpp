@@ -60,3 +60,4 @@ void NpcEdit::closeEvent(QCloseEvent *event)
         event->ignore();
     }
 }
+

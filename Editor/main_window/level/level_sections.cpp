@@ -72,41 +72,8 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 
     if(e!=NULL)
     {
-        WriteToLog(QtDebugMsg, "Set Section Data in menu");
-        //Set Section Data in menu
-        ui->actionLevNoBack->setChecked(e->LvlData.sections[SectionId].lock_left_scroll);
-        ui->actionLevOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
-        ui->actionLevUnderW->setChecked(e->LvlData.sections[SectionId].underwater);
-        ui->actionLevWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
-
-        WriteToLog(QtDebugMsg, "Set text label");
-        //set data in Section Settings Widget
-        dock_LvlSectionProps->ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
-
-        WriteToLog(QtDebugMsg, "Set ToolBar data");
-        dock_LvlSectionProps->ui->LVLPropsNoTBack->setChecked(e->LvlData.sections[SectionId].lock_left_scroll);
-        dock_LvlSectionProps->ui->LVLPropsOffScr->setChecked(e->LvlData.sections[SectionId].OffScreenEn);
-        dock_LvlSectionProps->ui->LVLPropsUnderWater->setChecked(e->LvlData.sections[SectionId].underwater);
-        dock_LvlSectionProps->ui->LVLPropsLevelWarp->setChecked(e->LvlData.sections[SectionId].IsWarp);
-
-        WriteToLog(QtDebugMsg, "Set text to custom music file");
-        dock_LvlSectionProps->ui->LVLPropsMusicCustom->setText(e->LvlData.sections[SectionId].music_file);
-
-        WriteToLog(QtDebugMsg, "Set standart Music index");
-        dock_LvlSectionProps->ui->LVLPropsMusicNumber->setCurrentIndex( e->LvlData.sections[SectionId].music_id );
-
-        WriteToLog(QtDebugMsg, "Set Custom music checkbox");
-        dock_LvlSectionProps->ui->LVLPropsMusicCustomEn->setChecked( (e->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
-
-        WriteToLog(QtDebugMsg, "Set background index");
-        if(e->LvlData.sections[SectionId].background < (unsigned int)dock_LvlSectionProps->ui->LVLPropsBackImage->count() )
-            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( e->LvlData.sections[SectionId].background );
-        else
-            dock_LvlSectionProps->ui->LVLPropsBackImage->setCurrentIndex( dock_LvlSectionProps->ui->LVLPropsBackImage->count()-1 );
-
-        dock_LvlSectionProps->loadMusic();
+        dock_LvlSectionProps->refreshFileData();
     }
-
     dock_LvlSectionProps->lockSctSettingsProps=false;
 }
 

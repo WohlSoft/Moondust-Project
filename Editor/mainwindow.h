@@ -162,7 +162,17 @@ public:
         /// \return True, if the current window is either a level window or a world window.
         ///
         bool getCurrentSceneCoordinates(qreal &x, qreal &y);
+    signals:
+        void setSMBX64Strict(bool enabled);
+
     private:
+        ///
+        /// \brief formatErrorMsgBox Prints file format error message box
+        /// \param filePath path to broken file
+        /// \param lineNum number Number of line where error found. If <0 - don't show line information.
+        /// \param lineContents contents of line with error. If empty string - don't show field.
+        ///
+        void formatErrorMsgBox(QString filePath, QString errorMessage, int lineNum=-1, QString lineContents="");
         ///
         /// \brief setDefaults Init settings on start application
         ///
@@ -192,6 +202,9 @@ public:
         /// \brief on_actionReload_triggered - Reload/Reopen current file
         ///
         void on_actionReload_triggered();
+
+        void on_action_openEpisodeFolder_triggered(); //!< Open folder where current file is located
+        void on_action_openCustomFolder_triggered();  //!< Open folder which contains level/worldmap specific stuff
     private:
         bool _is_reloading;
     public slots:
@@ -595,10 +608,6 @@ public:
 
     private slots:
         void on_actionSection_Settings_triggered(bool checked);
-        void on_actionLevWarp_triggered(bool checked);
-        void on_actionLevOffScr_triggered(bool checked);
-        void on_actionLevNoBack_triggered(bool checked);
-        void on_actionLevUnderW_triggered(bool checked);
 
         void on_actionAnimation_triggered(bool checked);
         void on_actionCollisions_triggered(bool checked);
@@ -729,6 +738,7 @@ public:
         void on_action_doTest_triggered();
         void on_action_doSafeTest_triggered();
 
+        void on_action_Start_Engine_triggered();
         void on_action_testSettings_triggered();
 
     public slots:

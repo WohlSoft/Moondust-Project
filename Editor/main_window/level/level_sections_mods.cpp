@@ -275,7 +275,7 @@ void MainWindow::on_actionSCT_Delete_triggered()
             edit->scene->removeLvlItems(itemsToRemove);
 
             id = edit->LvlData.sections[edit->LvlData.CurSection].id;
-            edit->LvlData.sections[edit->LvlData.CurSection] = FileFormats::dummyLvlSection();
+            edit->LvlData.sections[edit->LvlData.CurSection] = FileFormats::CreateLvlSection();
             edit->LvlData.sections[edit->LvlData.CurSection].id = id;
 
             edit->scene->ChangeSectionBG(0, edit->LvlData.CurSection);

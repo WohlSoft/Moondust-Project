@@ -188,7 +188,7 @@ void LevelEdit::setCurrentSection(int scId)
     //Change Current Section
     while(LvlData.sections.size()<=scId)
     {
-        LevelSection newSct= FileFormats::dummyLvlSection();
+        LevelSection newSct= FileFormats::CreateLvlSection();
         newSct.id=LvlData.sections.size();
         LvlData.sections.push_back(newSct);
     }

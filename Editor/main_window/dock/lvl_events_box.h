@@ -37,7 +37,7 @@ public slots:
     void re_translate();
 
     void eventSectionSettingsSync();
-    void setSoundList();
+    void reloadSoundsList();
 
     void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 

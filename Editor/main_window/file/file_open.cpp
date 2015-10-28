@@ -36,6 +36,85 @@ void MainWindow::openFilesByArgs(QStringList args)
     }
 }
 
+void MainWindow::on_action_openEpisodeFolder_triggered()
+{
+    QString path;
+    bool isUntitled=false;
+    if(activeChildWindow()==1)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        if(e)
+        {
+            path=e->LvlData.path;
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==2) {
+        NpcEdit *e = activeNpcEditWin();
+        if(e)
+        {
+            path=QFileInfo(e->curFile).absoluteDir().absolutePath();
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==3) {
+        WorldEdit *e = activeWldEditWin();
+        if(e)
+        {
+            path=e->WldData.path;
+            isUntitled=e->isUntitled;
+        }
+    }
+
+    if(isUntitled)
+    {
+        QMessageBox::warning(this, tr("Untitled file"), tr("Please save file to the disk first."));
+        return;
+    }
+
+    if(!path.isEmpty())
+    {
+        QDesktopServices::openUrl(QUrl("file:///"+path));
+    }
+}
+
+void MainWindow::on_action_openCustomFolder_triggered()
+{
+    QString path;
+    bool isUntitled=false;
+    if(activeChildWindow()==1)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        if(e)
+        {
+            path=e->LvlData.path+"/"+e->LvlData.filename;
+            isUntitled=e->isUntitled;
+        }
+    } else if(activeChildWindow()==2) {
+        return;
+    } else if(activeChildWindow()==3) {
+        WorldEdit *e = activeWldEditWin();
+        if(e)
+        {
+            path=e->WldData.path+"/"+e->WldData.filename;
+            isUntitled=e->isUntitled;
+        }
+    }
+
+    if(isUntitled)
+    {
+        QMessageBox::warning(this, tr("Untitled file"), tr("Please save file to the disk first."));
+        return;
+    }
+
+    if(!path.isEmpty())
+    {
+        if(!QFileInfo(path).dir().exists())
+        {
+            QDir(path).mkpath(path);
+        }
+        QDesktopServices::openUrl(QUrl("file:///"+path));
+    }
+}
+
 void MainWindow::on_OpenFile_triggered()
 {
     //Check if data configs are valid
@@ -113,7 +192,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         WriteToLog(QtDebugMsg, "> parsing level file format");
         FileData = FileFormats::OpenLevelFile(FilePath);
 
-        if( !FileData.ReadFileValid ) return;
+        if( !FileData.ReadFileValid )
+        {
+            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            return;
+        }
         WriteToLog(QtDebugMsg, "File was read!");
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
@@ -137,7 +220,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                     FileData.metaData.script = NULL;
                 }
 
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
                 WriteToLog(QtDebugMsg, "Meta-File was read!");
             }
             else
@@ -176,7 +259,11 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     {
         WorldData FileData;
         FileData= FileFormats::OpenWorldFile(FilePath);
-        if( !FileData.ReadFileValid ) return;
+        if( !FileData.ReadFileValid )
+        {
+            formatErrorMsgBox(FilePath, FileData.ERROR_info, FileData.ERROR_linenum, FileData.ERROR_linedata);
+            return;
+        }
 
         file.close();
         file.setFileName(FilePath+".meta");
@@ -188,7 +275,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
-                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw);
             }
             else
             {

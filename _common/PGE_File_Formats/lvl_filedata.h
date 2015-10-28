@@ -32,7 +32,8 @@ struct LevelSection
     long size_right;
     unsigned int music_id;
     long bgcolor;
-    bool IsWarp;
+    bool wrap_h;
+    bool wrap_v;
     bool OffScreenEn;
     unsigned int background;
     bool lock_left_scroll;
@@ -243,6 +244,10 @@ struct LevelData
 {
     int stars;
     bool ReadFileValid;
+    PGESTRING ERROR_info;
+    PGESTRING ERROR_linedata;
+    int       ERROR_linenum;
+
     PGESTRING LevelName;
     PGELIST<LevelSection > sections;       //Sections
     PGELIST<PlayerPoint > players;         //Players

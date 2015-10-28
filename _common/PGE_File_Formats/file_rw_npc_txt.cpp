@@ -38,16 +38,15 @@
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
-    errorString.clear();
+    QString errorString;
     int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
     PGESTRINGList Params;
     PGESTRING unknownLines;
-    NPCConfigFile FileData = CreateEmpytNpcTXTArray();
+    NPCConfigFile FileData = CreateEmpytNpcTXT();
 
-    #ifdef PGE_FILES_QT
-    if(!QFileInfo(file).exists())
+    if(!PGE_FileFormats_misc::TextFileInput::exists(file))
     {
         FileData.ReadFileValid=false;
         errorString="File not exists: "+file;
@@ -57,8 +56,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         #endif
         return FileData;
     }
-    QFile inf(file);
-    if(!inf.open(QFile::ReadOnly|QFile::Text))
+    PGE_FileFormats_misc::TextFileInput inf;
+    if(!inf.open(file))
     {
         FileData.ReadFileValid=false;
         errorString="Can't open file to read: "+file;
@@ -68,18 +67,9 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
         #endif
         return FileData;
     }
-    QTextStream in(&inf);   //Read File
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system()); //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
-    #endif
 
     //Read NPC.TXT File config
-    #ifdef PGE_FILES_QT
-    #define NextLine(line) str_count++;line = in.readLine();
-    #else
-    #define NextLine(line) str_count++; line.clear(); while(inf.eof()) { char x=inf.get(); if(x=='\n') break;  line+=x;}
-    #endif
+    #define NextLine(line) str_count++;line = inf.readLine();
 
     NextLine(line)
     while(!IsNULL(line))
@@ -216,6 +206,23 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            {
               FileData.score=toInt(Params[1]);
               FileData.en_score=true;
+           }
+        }
+       else
+       if(Params[0]=="health")
+        {
+           Params[1] = PGESTR_Simpl(Params[1]);
+           Params[1]=PGE_RemSSTR(Params[1], " ");//Delete spaces
+           if(SMBX64::uInt(Params[1]))
+           {
+              unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned intger!>\n";
+           }
+           else
+           {
+              FileData.health=toInt(Params[1]);
+              if(FileData.health<1)
+                  FileData.health=1;
+              FileData.en_health=true;
            }
         }
        else
@@ -503,7 +510,10 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                FileData.en_noiceball=true;
            }
         }
-       else // Non-SMBX64 parameters (not working in SMBX <=1.3)
+       else
+
+
+       // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
            Params[1] = PGESTR_Simpl(Params[1]);
@@ -559,6 +569,50 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
            else
                FileData.script= Params[1];
                FileData.en_script=true;
+        }
+       else
+       if(Params[0]=="grid")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid = toInt(Params[1]);
+               FileData.en_grid=true;
+           }
+        }
+       else
+       if(Params[0]=="gridoffsetx")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_offset_x = toInt(Params[1]);
+               FileData.en_grid_offset_x=true;
+           }
+        }
+       else
+       if(Params[0]=="gridoffsety")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_offset_y = toInt(Params[1]);
+               FileData.en_grid_offset_y=true;
+           }
+        }
+       else
+       if(Params[0]=="gridalign")
+        {
+           if(!SMBX64::uInt(Params[1]))
+           {
+               unknownLines += fromNum(str_count)+": "+line+" <Should be unsigned integer!>\n";
+           } else {
+               FileData.grid_align = toInt(Params[1]);
+               FileData.en_grid_align=true;
+           }
         }
        else
        {
@@ -638,6 +692,10 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     {
         TextData += "score=" + fromNum(FileData.score) +"\n";
     }
+    if(FileData.en_health)
+    {
+        TextData += "health=" + fromNum(FileData.health) +"\n";
+    }
 
     if(FileData.en_playerblock)
     {
@@ -715,7 +773,7 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
         TextData += "framestyle=" + fromNum(FileData.framestyle) +"\n";
     }
 
-    //Extended
+//Extended
     if(FileData.en_nohammer)
     {
         TextData += "nohammer=" + fromNum((int)FileData.nohammer) +"\n";
@@ -735,6 +793,22 @@ PGESTRING FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     if(FileData.en_script)
     {
         TextData += "script=" + SMBX64::qStrS(FileData.script);
+    }
+    if(FileData.en_grid)
+    {
+        TextData += "grid=" + fromNum(FileData.grid) +"\n";
+    }
+    if(FileData.en_grid_offset_x)
+    {
+        TextData += "gridoffsetx=" + fromNum(FileData.grid_offset_x) +"\n";
+    }
+    if(FileData.en_grid_offset_y)
+    {
+        TextData += "gridoffsety=" + fromNum(FileData.grid_offset_y) +"\n";
+    }
+    if(FileData.en_grid_align)
+    {
+        TextData += "gridalign=" + fromNum(FileData.grid_align) +"\n";
     }
 
     return TextData;

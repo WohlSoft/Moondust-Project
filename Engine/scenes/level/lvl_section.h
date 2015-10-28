@@ -71,7 +71,8 @@ public:
     PGE_RectF sectionRect();
     PGE_RectF sectionLimitBox();
 
-    bool isWarp();
+    bool isWrapH();
+    bool isWrapV();
     bool RightOnly();
     bool ExitOffscreen();
 

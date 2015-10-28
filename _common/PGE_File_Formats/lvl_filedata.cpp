@@ -19,12 +19,197 @@
 #include "file_formats.h"
 #include "lvl_filedata.h"
 
-//*********************************************************
-//*******************Dummy arrays**************************
-//*********************************************************
+#include <stack>
+
+/*********************************************************************************/
+/***************************SMBX64-Specific features******************************/
+/*********************************************************************************/
+
+//Built-in order priorities per SMBX-64 BGO's
+const int _smbx64_bgo_sort_priorities[190] = {
+    44,25,27,25,33,27,27,27,27,27,5,4,13,3,37,2,2,30,30,30,18,18,51,51,51,7,29,29,33,1,
+    28,28,33,39,39,24,37,34,1,1,1,1,5,5,56,56,3,48,59,58,58,14,14,14,14,14,14,11,14,4,
+    5,34,34,1,6,5,19,55,55,47,47,47,47,47,1,0,1,1,8,33,20,6,7,37,21,37,46,46,31,31,
+    31,46,22,38,38,39,5,39,17,47,8,8,23,46,46,50,46,34,34,9,10,10,10,26,11,12,12,12,24,24,
+    21,21,21,21,21,22,22,22,41,43,42,11,12,32,32,32,53,53,45,45,46,20,54,21,54,22,22,23,23,19,
+    20,24,9,52,52,52,52,5,5,8,49,20,40,7,6,6,7,7,6,16,16,5,36,35,35,35,35,35,35,35,
+    35,35,35,35,15,9,57,57,13,13
+};
+
+void FileFormats::smbx64LevelPrepare(LevelData &lvl)
+{
+    //Set SMBX64 specific option to BGO
+    for(int q=0; q< (signed)lvl.bgo.size(); q++)
+    {
+        if(lvl.bgo[q].smbx64_sp < 0)
+        {
+            if( (lvl.bgo[q].id>0) && (lvl.bgo[q].id < (unsigned)190) )
+            {
+                lvl.bgo[q].smbx64_sp_apply = _smbx64_bgo_sort_priorities[lvl.bgo[q].id-1];
+            }
+        }
+        else
+        {
+            lvl.bgo[q].smbx64_sp_apply = lvl.bgo[q].smbx64_sp;
+        }
+    }
+
+    //Mark & Count Stars
+    lvl.stars = 0;
+    for(int q=0; q< (signed)lvl.npc.size(); q++)
+    {
+        lvl.npc[q].is_star = ((lvl.npc[q].id==97)||(lvl.npc[q].id==196));
+        if((lvl.npc[q].is_star) && (lvl.npc[q].friendly))
+        {
+            lvl.npc[q].is_star=false;
+        } else {
+            lvl.stars+=1;
+        }
+    }
+}
+
+void FileFormats::smbx64LevelSortBlocks(LevelData &lvl)
+{
+    if(lvl.blocks.size()<=1) return; //Nothing to sort!
+
+    class my_stack : public std::stack< int > {
+    public:
+        using std::stack<int>::c; // expose the container
+    };
+
+    my_stack beg;
+    my_stack end;
+    LevelBlock piv;
+    int i=0, L, R, swapv;
+    beg.push(0);
+    end.push(lvl.blocks.size());
+    while (i>=0)
+    {
+        L=beg.c[i]; R=end.c[i]-1;
+        if (L<R)
+        {
+            piv=lvl.blocks[L];
+            while (L<R)
+            {
+                while ( (
+                           (lvl.blocks[R].x > piv.x)||
+                           ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y > piv.y))||
+                           ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id >= piv.array_id))
+                        ) && (L<R) ) R--;
+                if (L<R) lvl.blocks[L++]=lvl.blocks[R];
+
+                while (
+                       (
+                          (lvl.blocks[L].x < piv.x)||
+                          ((lvl.blocks[L].x == piv.x) && (lvl.blocks[L].y < piv.y))||
+                          ((lvl.blocks[L].x == piv.x) && (lvl.blocks[L].y == piv.y) && (lvl.blocks[L].array_id <= piv.array_id) )
+                       ) && (L<R)) L++;
+                if (L<R) lvl.blocks[R--]=lvl.blocks[L];
+            }
+            lvl.blocks[L]=piv; beg.push(L+1); end.push(end.c[i]); end.c[i++]=(L);
+            if((end.c[i]-beg.c[i]) > (end.c[i-1]-beg.c[i-1]))
+            {
+                swapv=beg.c[i]; beg.c[i]=beg.c[i-1]; beg.c[i-1]=swapv;
+                swapv=end.c[i]; end.c[i]=end.c[i-1]; end.c[i-1]=swapv;
+            }
+        }
+        else
+        {
+            i--;
+            beg.pop();
+            end.pop();
+        }
+    }
+}
+
+void FileFormats::smbx64LevelSortBGOs(LevelData &lvl)
+{
+    if(lvl.bgo.size()<=1) return; //Nothing to sort!
+
+    class my_stack : public std::stack< int > {
+    public:
+        using std::stack<int>::c; // expose the container
+    };
+
+    my_stack beg;
+    my_stack end;
+    LevelBGO piv;
+    int i=0, L, R, swapv;
+    beg.push(0);
+    end.push(lvl.bgo.size());
+    while (i>=0)
+    {
+        L=beg.c[i]; R=end.c[i]-1;
+        if (L<R)
+        {
+            piv=lvl.bgo[L];
+            while (L<R)
+            {
+                while ( (
+                            (lvl.bgo[R].smbx64_sp_apply > piv.smbx64_sp_apply)||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x > piv.x))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id))
+                         ) && (L<R) ) R--;
+                if (L<R) lvl.bgo[L++]=lvl.bgo[R];
+
+                while (
+                       (
+                           (lvl.bgo[L].smbx64_sp_apply < piv.smbx64_sp_apply)||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x < piv.x))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y < piv.y))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y == piv.y) && (lvl.bgo[L].array_id <= piv.array_id))
+                        ) && (L<R)) L++;
+                if (L<R) lvl.bgo[R--]=lvl.bgo[L];
+            }
+            lvl.bgo[L]=piv; beg.push(L+1); end.push(end.c[i]); end.c[i++]=(L);
+            if((end.c[i]-beg.c[i]) > (end.c[i-1]-beg.c[i-1]))
+            {
+                swapv=beg.c[i]; beg.c[i]=beg.c[i-1]; beg.c[i-1]=swapv;
+                swapv=end.c[i]; end.c[i]=end.c[i-1]; end.c[i-1]=swapv;
+            }
+        }
+        else
+        {
+            i--;
+            beg.pop();
+            end.pop();
+        }
+    }
+}
+
+int FileFormats::smbx64LevelCheckLimits(LevelData &lvl)
+{
+    int errorCode=SMBX64_FINE;
+    //Sections limit
+    if(lvl.sections.size()>21) errorCode|=SMBX64EXC_SECTIONS;
+    //Blocks limit
+    if(lvl.blocks.size()>16384) errorCode|=SMBX64EXC_BLOCKS;
+    //BGO limits
+    if(lvl.bgo.size()>8000) errorCode|=SMBX64EXC_BGOS;
+    //NPC limits
+    if(lvl.npc.size()>5000) errorCode|=SMBX64EXC_NPCS;
+    //Warps limits
+    if(lvl.doors.size()>199) errorCode|=SMBX64EXC_WARPS;
+    //Physical Environment zones
+    if(lvl.physez.size()>450) errorCode|=SMBX64EXC_WATERBOXES;
+    //Layers limits
+    if(lvl.layers.size()>100) errorCode|=SMBX64EXC_LAYERS;
+    //Events limits
+    if(lvl.events.size()>100) errorCode|=SMBX64EXC_EVENTS;
+
+    return errorCode;
+}
+/*********************************************************************************/
+
+
+
+//********************************************************************
+//*******************Structure initializators*************************
+//********************************************************************
 
 //Default dataSets
-LevelNPC    FileFormats::dummyLvlNpc()
+LevelNPC    FileFormats::CreateLvlNpc()
 {
     LevelNPC dummyNPC;
     dummyNPC.x = 0;
@@ -54,7 +239,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
     return dummyNPC;
 }
 
-LevelDoor  FileFormats::dummyLvlDoor()
+LevelDoor  FileFormats::CreateLvlWarp()
 {
     LevelDoor dummyDoor;
 
@@ -87,7 +272,7 @@ LevelDoor  FileFormats::dummyLvlDoor()
 }
 
 
-LevelBlock  FileFormats::dummyLvlBlock()
+LevelBlock  FileFormats::CreateLvlBlock()
 {
     LevelBlock dummyBlock;
     dummyBlock.x = 0;
@@ -108,7 +293,7 @@ LevelBlock  FileFormats::dummyLvlBlock()
     return dummyBlock;
 }
 
-LevelBGO FileFormats::dummyLvlBgo()
+LevelBGO FileFormats::CreateLvlBgo()
 {
     LevelBGO dummyBGO;
     //SMBX64
@@ -130,7 +315,7 @@ LevelBGO FileFormats::dummyLvlBgo()
 }
 
 
-LevelPhysEnv FileFormats::dummyLvlPhysEnv()
+LevelPhysEnv FileFormats::CreateLvlPhysEnv()
 {
     LevelPhysEnv dummyWater;
     dummyWater.x  = 0;
@@ -146,7 +331,7 @@ LevelPhysEnv FileFormats::dummyLvlPhysEnv()
     return dummyWater;
 }
 
-LevelSMBX64Event FileFormats::dummyLvlEvent()
+LevelSMBX64Event FileFormats::CreateLvlEvent()
 {
     LevelSMBX64Event dummyEvent;
 
@@ -198,7 +383,7 @@ LevelSMBX64Event FileFormats::dummyLvlEvent()
 }
 
 
-LevelSection FileFormats::dummyLvlSection()
+LevelSection FileFormats::CreateLvlSection()
 {
     LevelSection dummySection;
     dummySection.id = 0;
@@ -208,7 +393,8 @@ LevelSection FileFormats::dummyLvlSection()
     dummySection.size_right=0;
     dummySection.music_id=0;
     dummySection.bgcolor=16291944;
-    dummySection.IsWarp=false;
+    dummySection.wrap_h=false;
+    dummySection.wrap_v=false;
     dummySection.OffScreenEn=false;
     dummySection.background=0;
     dummySection.lock_left_scroll=false;
@@ -220,7 +406,7 @@ LevelSection FileFormats::dummyLvlSection()
     return dummySection;
 }
 
-LevelLayer FileFormats::dummyLvlLayer()
+LevelLayer FileFormats::CreateLvlLayer()
 {
     LevelLayer dummyLayer;
     dummyLayer.array_id = 0;
@@ -230,7 +416,7 @@ LevelLayer FileFormats::dummyLvlLayer()
     return dummyLayer;
 }
 
-PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
+PlayerPoint FileFormats::CreateLvlPlayerPoint(int id)
 {
     PlayerPoint dummyPlayer;
     dummyPlayer.id=id;
@@ -253,7 +439,7 @@ PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
     return dummyPlayer;
 }
 
-LevelData FileFormats::dummyLvlDataArray()
+LevelData FileFormats::CreateLevelData()
 {
     LevelData NewFileData;
 
@@ -280,12 +466,14 @@ LevelData FileFormats::dummyLvlDataArray()
     #ifdef PGE_EDITOR
     NewFileData.metaData.script = NULL;
     #endif
+    NewFileData.metaData.ReadFileValid=true;
+    NewFileData.metaData.ERROR_linenum=-1;
 
     //Create Section array
     LevelSection section;
     for(int i=0; i<21;i++)
     {
-        section = dummyLvlSection();
+        section = CreateLvlSection();
         section.id = i;
         NewFileData.sections.push_back( section );
     }
@@ -328,7 +516,7 @@ LevelData FileFormats::dummyLvlDataArray()
         //P Switch - Start
         //P Switch - End
 
-    LevelSMBX64Event events = dummyLvlEvent();
+    LevelSMBX64Event events = CreateLvlEvent();
 
         events.array_id = NewFileData.events_array_id;
         NewFileData.events_array_id++;
@@ -354,9 +542,9 @@ return NewFileData;
 
 
 
-bool LevelData::eventIsExist(QString title)
+bool LevelData::eventIsExist(PGESTRING title)
 {
-    for(int i=0; i<events.size(); i++)
+    for(int i=0; i<(signed)events.size(); i++)
     {
         if( events[i].name == title )
             return true;
@@ -364,9 +552,9 @@ bool LevelData::eventIsExist(QString title)
     return false;
 }
 
-bool LevelData::layerIsExist(QString title)
+bool LevelData::layerIsExist(PGESTRING title)
 {
-    for(int i=0; i<layers.size(); i++)
+    for(int i=0; i<(signed)layers.size(); i++)
     {
         if( layers[i].name == title )
             return true;

@@ -74,13 +74,22 @@ void LVL_Npc::update(float tickTime)
     LVL_Section *section=sct();
     PGE_RectF sBox = section->sectionRect();
 
-    if(section->isWarp())
+    if(section->isWrapH())
     {
         if(posX()<sBox.left()-_width-1 )
             setPosX(sBox.right()-1);
         else
         if(posX()>sBox.right() + 1 )
             setPosX(sBox.left()-_width+1);
+    }
+
+    if(section->isWrapV())
+    {
+        if(posY()<sBox.top()-_height-1 )
+            setPosY(sBox.bottom()-1);
+        else
+        if(posY()>sBox.bottom() + 1 )
+            setPosY(sBox.top()-_height+1);
     }
 
     for(int i=0; i<detectors.size(); i++)

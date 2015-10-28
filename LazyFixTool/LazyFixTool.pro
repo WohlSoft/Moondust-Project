@@ -24,8 +24,7 @@
 
 QT       += core gui
 
-DESTDIR = ../bin
-
+include(../_common/dest_dir.pri)
 include(../_common/build_props.pri)
 
 TARGET = LazyFixTool

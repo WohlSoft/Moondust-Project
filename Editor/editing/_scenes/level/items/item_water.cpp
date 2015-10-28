@@ -39,7 +39,6 @@ ItemWater::ItemWater(LvlScene *parentScene, QGraphicsPolygonItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
-    scene->registerElement(this);
     gridSize = scene->pConfigs->default_grid/2;
     setZValue(scene->Z_sys_PhysEnv);
     setLocked(scene->lock_water);

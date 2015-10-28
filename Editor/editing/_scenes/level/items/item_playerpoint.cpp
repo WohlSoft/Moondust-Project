@@ -33,7 +33,6 @@ ItemPlayerPoint::ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent)
     if(!parentScene) return;
     setScenePoint(parentScene);
     scene->addItem(this);
-    scene->registerElement(this);
 }
 
 void ItemPlayerPoint::construct()

@@ -4,7 +4,7 @@
 #ifdef Q_OS_WIN
 #include <QtWinExtras>
 #include <QSysInfo>
-#include <WinBase.h>
+#include <winbase.h>
 
 void MainWindow::initWindowsThumbnail()
 {

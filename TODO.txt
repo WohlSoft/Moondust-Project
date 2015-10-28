@@ -1,12 +1,13 @@
 Editor
 - Improve detector of unused custom data to provide clean-up of unused data.
-- New custom stuff indexing system to have more convenient usage of customized stuff.
+* New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 - Add re-configurable hot-keys
+- "Open Episode folder in explorer" and "Open Custom folder in explorer" actions
 
 Engine
 - Exclamation sign sprite over talkable NPC's
-- Split sense of "scenery" argument to "scenery" and "shared-animation"
++ Split sense of "scenery" argument to "scenery" and "shared-animation"
 + Text input box to have able type a texts (Cheats, Messages, Save game filename, etc.)
 + Question box
 

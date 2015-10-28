@@ -44,6 +44,9 @@
 #include "music_mod.h"
 #endif
 #ifdef MID_MUSIC
+#  ifdef USE_ADL_MIDI
+#    include "music_midi_adl.h"
+#  endif
 #  ifdef USE_TIMIDITY_MIDI
 #    include "timidity/timidity.h"
 #  endif
@@ -113,6 +116,9 @@ struct _Mix_Music {
 #ifdef USE_TIMIDITY_MIDI
         MidiSong *midi;
 #endif
+#ifdef USE_ADL_MIDI
+        struct MUSIC_MIDIADL*midi_adl;
+#endif
 #ifdef USE_FLUIDSYNTH_MIDI
         FluidSynthMidiSong *fluidsynthmidi;
 #endif
@@ -142,6 +148,9 @@ struct _Mix_Music {
 #ifdef USE_TIMIDITY_MIDI
 static int timidity_ok;
 static int samplesize;
+#endif
+#ifdef USE_ADL_MIDI
+static int adl_midi_ok;
 #endif
 #ifdef USE_FLUIDSYNTH_MIDI
 static int fluidsynth_ok;
@@ -322,6 +331,12 @@ void music_mixer(void *udata, Uint8 *stream, int len)
                     goto skip;
                 }
 #endif
+#ifdef USE_ADL_MIDI
+                if (adl_midi_ok) {
+                    left = ADLMIDI_playAudio(music_playing->data.midi_adl, stream, len);
+                    goto skip;
+                }
+#endif
 #ifdef USE_TIMIDITY_MIDI
                 if ( timidity_ok ) {
                     int samples = len / samplesize;
@@ -391,6 +406,12 @@ int open_music(SDL_AudioSpec *mixer)
     }
 #endif
 #ifdef MID_MUSIC
+#ifdef USE_ADL_MIDI
+    if ( ADLMIDI_init(mixer) == 0 ) {
+        adl_midi_ok = 1;
+        add_music_decoder("ADLMIDI");
+    }
+#endif
 #ifdef USE_TIMIDITY_MIDI
     samplesize = mixer->size / mixer->samples;
     if ( Timidity_Init(mixer->freq, mixer->format,
@@ -412,6 +433,10 @@ int open_music(SDL_AudioSpec *mixer)
 #ifdef USE_NATIVE_MIDI
 #ifdef USE_FLUIDSYNTH_MIDI
     native_midi_ok = !fluidsynth_ok;
+    if ( native_midi_ok )
+#endif
+#ifdef USE_ADL_MIDI
+        native_midi_ok = !adl_midi_ok;
     if ( native_midi_ok )
 #endif
 #ifdef USE_TIMIDITY_MIDI
@@ -524,6 +549,11 @@ static Mix_MusicType detect_music_type(SDL_RWops *src)
         return MUS_MID;
     }
 
+    /* WAVE files have the magic four bytes "RIFF" */
+    if ((strcmp((char *)magic, "RIFF") == 0) && (strcmp((char *)(moremagic+4), "RMID") == 0)) {
+        return MUS_MID;
+    }
+
     /* SPC files have the magic four bytes "SNES" */
     if (strcmp((char *)magic, "SNES") == 0) {
         return MUS_SPC;
@@ -619,6 +649,10 @@ Mix_Music *Mix_LoadMUS(const char *file)
             type = MUS_WAV;
         } else if ( MIX_string_equals(ext, "MID") ||
                     MIX_string_equals(ext, "MIDI") ||
+                    #ifdef USE_ADL_MIDI
+                    MIX_string_equals(ext, "RMI") ||
+                    MIX_string_equals(ext, "MUS") ||
+                    #endif
                     MIX_string_equals(ext, "KAR") ) {
             type = MUS_MID;
         } else if ( MIX_string_equals(ext, "AY") ||
@@ -833,6 +867,16 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
             break;
         }
 #endif
+#ifdef USE_ADL_MIDI
+        if (adl_midi_ok) {
+            SDL_RWseek(src, start, RW_SEEK_SET);
+            music->data.midi_adl = ADLMIDI_new_RW(src, freesrc);
+            if (music->data.midi_adl) {
+                music->error = 0;
+            }
+            break;
+        }
+#endif
 #ifdef USE_TIMIDITY_MIDI
         if (timidity_ok) {
             SDL_RWseek(src, start, RW_SEEK_SET);
@@ -958,6 +1002,12 @@ void Mix_FreeMusic(Mix_Music *music)
 #ifdef USE_FLUIDSYNTH_MIDI
                 if ( fluidsynth_ok ) {
                     fluidsynth_freesong(music->data.fluidsynthmidi);
+                    goto skip;
+                }
+#endif
+#ifdef USE_ADL_MIDI
+                if (adl_midi_ok) {
+                    ADLMIDI_delete(music->data.midi_adl);
                     goto skip;
                 }
 #endif
@@ -1141,6 +1191,13 @@ static int music_internal_play(Mix_Music *music, double position)
 #ifdef USE_FLUIDSYNTH_MIDI
         if (fluidsynth_ok ) {
             fluidsynth_start(music->data.fluidsynthmidi);
+            goto skip;
+        }
+#endif
+#ifdef USE_ADL_MIDI
+        if (adl_midi_ok) {
+            ADLMIDI_play(music->data.midi_adl);
+            music_internal_initialize_volume();
             goto skip;
         }
 #endif
@@ -1371,6 +1428,12 @@ static void music_internal_volume(int volume)
             return;
         }
 #endif
+#ifdef USE_ADL_MIDI
+        if (adl_midi_ok) {
+            ADLMIDI_setvolume(music_playing->data.midi_adl, volume);
+            return;
+        }
+#endif
 #ifdef USE_TIMIDITY_MIDI
         if ( timidity_ok ) {
             Timidity_SetVolume(volume);
@@ -1464,6 +1527,12 @@ static void music_internal_halt(void)
 #ifdef USE_FLUIDSYNTH_MIDI
         if ( fluidsynth_ok ) {
             fluidsynth_stop(music_playing->data.fluidsynthmidi);
+            goto skip;
+        }
+#endif
+#ifdef USE_ADL_MIDI
+        if (adl_midi_ok) {
+            ADLMIDI_stop(music_playing->data.midi_adl);
             goto skip;
         }
 #endif
@@ -1654,6 +1723,14 @@ static int music_internal_playing()
             goto skip;
         }
 #endif
+#ifdef USE_ADL_MIDI
+        if (adl_midi_ok) {
+            if ( ! ADLMIDI_playing(music_playing->data.midi_adl) ) {
+                playing = 0;
+            }
+            goto skip;
+        }
+#endif
 #ifdef USE_TIMIDITY_MIDI
         if ( timidity_ok ) {
             if ( ! Timidity_Active() )
@@ -1755,7 +1832,13 @@ void close_music(void)
 #ifdef MOD_MUSIC
     MOD_exit();
 #endif
+#ifdef GME_MUSIC
+    GME_exit();
+#endif
 #ifdef MID_MUSIC
+# ifdef USE_ADL_MIDI
+    ADLMIDI_exit();
+# endif
 # ifdef USE_TIMIDITY_MIDI
     Timidity_Close();
 # endif
@@ -1803,9 +1886,13 @@ const char* Mix_GetSoundFonts(void)
     }
 }
 
+#if !defined(__MINGW32__) && !defined(__MINGW64__) && !defined(_WIN32)
+extern char *strtok_r(char *, const char *, char **);
+#endif
+
 int Mix_EachSoundFont(int (*function)(const char*, void*), void *data)
 {
-    char *context, *path, *paths;
+    char *context, *path = NULL, *paths;
     const char* cpaths = Mix_GetSoundFonts();
 
     if (!cpaths) {

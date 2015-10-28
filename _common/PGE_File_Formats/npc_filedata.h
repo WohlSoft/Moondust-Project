@@ -33,6 +33,7 @@ struct NPCConfigFile
     bool en_gfxwidth;
     bool en_gfxheight;
     bool en_score;
+    bool en_health;
     bool en_playerblock;
     bool en_playerblocktop;
     bool en_npcblock;
@@ -58,6 +59,10 @@ struct NPCConfigFile
     bool en_name;
     bool en_image;
     bool en_script;
+    bool en_grid;
+    bool en_grid_offset_x;
+    bool en_grid_offset_y;
+    bool en_grid_align;
     /* Using options flags END */
 
     int gfxoffsetx;
@@ -67,6 +72,7 @@ struct NPCConfigFile
     unsigned int gfxwidth;
     unsigned int gfxheight;
     unsigned int score;
+    unsigned int health;
     bool playerblock;
     bool playerblocktop;
     bool npcblock;
@@ -92,6 +98,10 @@ struct NPCConfigFile
     PGESTRING name;
     PGESTRING image;
     PGESTRING script;
+    unsigned int grid;
+    unsigned int grid_offset_x;
+    unsigned int grid_offset_y;
+    unsigned int grid_align;
 };
 
 #endif // NPC_FILEDATA_H

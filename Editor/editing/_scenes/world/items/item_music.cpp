@@ -42,7 +42,6 @@ ItemMusic::ItemMusic(WldScene *parentScene, QGraphicsItem *parent)
     imageSize = QRectF(0, 0, gridSize, gridSize);
     setData(ITEM_WIDTH, QString::number( gridSize ) ); //width
     setData(ITEM_HEIGHT, QString::number( gridSize ) ); //height
-    scene->registerElement(this);
 }
 
 void ItemMusic::construct()

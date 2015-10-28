@@ -303,6 +303,7 @@ static void *Mix_DoEffects(int chan, void *snd, int len)
 /* Mixing function */
 static void mix_channels(void *udata, Uint8 *stream, int len)
 {
+    (void)udata;
     Uint8 *mix_input;
     int i, mixable, volume = SDL_MIX_MAXVOLUME;
     Uint32 sdl_ticks;

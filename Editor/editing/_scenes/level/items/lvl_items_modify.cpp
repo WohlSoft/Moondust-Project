@@ -455,7 +455,7 @@ void LvlScene::placeItemUnderCursor()
 
                 bool found=true;
                 QList<QVariant> oData;
-                PlayerPoint pnt = FileFormats::dummyLvlPlayerPoint(LvlPlacingItems::playerID+1);
+                PlayerPoint pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID+1);
                 //Check exists point on map
                 foreach(PlayerPoint ptr, LvlData->players)
                 {
@@ -478,7 +478,7 @@ void LvlScene::placeItemUnderCursor()
                 oData.push_back((qlonglong)pnt.h);
 
 
-                pnt = FileFormats::dummyLvlPlayerPoint(LvlPlacingItems::playerID+1);
+                pnt = FileFormats::CreateLvlPlayerPoint(LvlPlacingItems::playerID+1);
                 pnt.x = cursor->scenePos().x();
                 pnt.y = cursor->scenePos().y();
 
