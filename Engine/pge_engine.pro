@@ -259,7 +259,8 @@ SOURCES += \
     gui/pge_textinputbox.cpp \
     gui/pge_menuboxbase.cpp \
     settings/debugger.cpp \
-    ../_common/data_functions/npctxt_manager.cpp
+    ../_common/data_functions/npctxt_manager.cpp \
+    script/bindings/core/lua_global_constants.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -401,7 +402,9 @@ HEADERS  += \
     gui/pge_textinputbox.h \
     gui/pge_menuboxbase.h \
     settings/debugger.h \
-    ../_common/data_functions/npctxt_manager.h
+    ../_common/data_functions/npctxt_manager.h \
+    script/bindings/core/lua_global_constants.h \
+    script/lua_defines.h
 
 
 FORMS    += \
