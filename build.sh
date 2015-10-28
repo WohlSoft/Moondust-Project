@@ -1,11 +1,22 @@
 #/bin/bash
 bak=~+
-cd $PWD
+
+#=============Detect directory that contains script=====================
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+#=======================================================================
+
+cd $SCRDIR
 
 #=======================================================================
 errorofbuid()
 {
-	printf "\n\n=========An error occured===========\n\n"
+	printf "\n\n=========AN ERROR OCCURED!==========\n\n"
 	cd $bak
 	exit 1
 }
@@ -20,9 +31,9 @@ checkState()
 	fi
 }
 
-if [ -f "$PWD/_paths.sh" ]
+if [ -f "$SCRDIR/_paths.sh" ]
 then
-	source "$PWD/_paths.sh"
+	source "$SCRDIR/_paths.sh"
 else
 	echo ""
 	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
