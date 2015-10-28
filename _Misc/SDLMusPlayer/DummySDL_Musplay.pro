@@ -34,7 +34,7 @@ win32:{
         LIBS += -lvorbisfile -lvorbis -lmikmod -lmad -lFLAC -logg
     }
 }
-    linux-g++||unix:!macx:!android:{
+linux-g++||unix:!macx:!android:{
     LIBS += -L$$PWD/../../_Libs/_builds/linux/lib
     INCLUDEPATH += $$PWD/../../_Libs/_builds/linux/include
     CONFIG += unversioned_libname
