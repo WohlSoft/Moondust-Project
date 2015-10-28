@@ -1,4 +1,5 @@
 #include "lua_credits_engine.h"
+#include "bindings/core/lua_global_constants.h"
 
 #include <scenes/scene_credits.h>
 
@@ -18,5 +19,6 @@ void LuaCreditsEngine::onBindAll()
     luabind::module(getNativeState())/*[
 
         ]*/;
+    Binding_Global_Constants::bindToLua(getNativeState());
 }
 
