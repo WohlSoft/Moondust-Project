@@ -25,6 +25,7 @@
 #include <common_features/number_limiter.h>
 #include <common_features/maths.h>
 
+#include "../collision_checks.h"
 
 void LVL_Npc::updateCollisions()
 {
@@ -45,6 +46,11 @@ void LVL_Npc::updateCollisions()
     collided_bottom.clear();
     collided_center.clear();
     cliffDetected=false;
+
+    collided_slope=false;
+    collided_slope_angle_ratio=0.0f;
+    collided_slope_celling=false;
+    collided_slope_angle_ratio_celling=0.0f;
 
     #ifdef COLLIDE_DEBUG
     qDebug() << "=====Collision check and resolve begin======";
@@ -130,28 +136,16 @@ void LVL_Npc::updateCollisions()
                 {
                     if(blk->shape==LVL_Block::shape_tr_top_right)
                     {
-                        _floorY = nearest->posRect.bottom()-SL_HeightTopRight(nearest);
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopRight(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
                     }
                     else
                     if(blk->shape==LVL_Block::shape_tr_top_left)
                     {
-                        _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(nearest);
-                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
-                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
-                    }
-                    else
-                    if(blk->shape==LVL_Block::shape_tr_bottom_right)
-                    {
-                        _floorY = nearest->posRect.top()+SL_HeightTopRight(nearest);
-                        if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
-                        else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
-                    }
-                    else
-                    if(blk->shape==LVL_Block::shape_tr_bottom_left)
-                    {
-                        _floorY = nearest->posRect.top()+SL_HeightTopLeft(nearest);
+                        collided_slope=true; collided_slope_angle_ratio=blk->shape_slope_angle_ratio;
+                        _floorY = nearest->posRect.bottom()-SL_HeightTopLeft(*this, nearest);
                         if(_floorY<nearest->top()) _floorY=nearest->posRect.top();
                         else if(_floorY>nearest->bottom()) _floorY=nearest->posRect.bottom();
                     }
@@ -202,11 +196,11 @@ void LVL_Npc::updateCollisions()
             break;
             default:break;
             }
-            if(collided) topbottom_blocks.push_back(collided);
+            topbottom_blocks.push_back(collided);
         }
         if(isFloor(topbottom_blocks))
         {
-            PGE_Phys_Object*nearest = nearestBlockY(floor_blocks);
+            PGE_Phys_Object*nearest = nearestBlockY(topbottom_blocks);
             if(nearest)
             {
                 if(!resolveBottom) _floorY = nearest->posRect.bottom()+1;
@@ -397,7 +391,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
 //                    PGE_RectF  rc = collided->posRect;
 //                    float summSpeedY=(speedY()+_velocityY_add)-(collided->speedY()+collided->_velocityY_add);
 //                    float summSpeedYprv=_velocityY_prev-collided->_velocityY_prev;
-                    if(isCollideFloorToponly(collided))
+                    if(isCollideFloorToponly(*this, collided))
                     {
                         if(blk->isHidden) break;
                         collided_bottom[(intptr_t)collided]=collided;//bottom of player
@@ -416,9 +410,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 if(
                     (( (blk->shape==LVL_Block::shape_rect)||
                        (blk->shape==LVL_Block::shape_tr_bottom_left)||
-                       (blk->shape==LVL_Block::shape_tr_bottom_right) ) && isCollideFloor(collided))||
-                    ((blk->shape==LVL_Block::shape_tr_top_right)&&isCollideSlopeFloor(collided, SLOPE_RIGHT)) ||
-                    ((blk->shape==LVL_Block::shape_tr_top_left)&&isCollideSlopeFloor(collided, SLOPE_LEFT))
+                       (blk->shape==LVL_Block::shape_tr_bottom_right) ) && isCollideFloor(*this, collided))||
+                    ((blk->shape==LVL_Block::shape_tr_top_right)&&isCollideSlopeFloor(*this, collided, SLOPE_RIGHT)) ||
+                    ((blk->shape==LVL_Block::shape_tr_top_left)&&isCollideSlopeFloor(*this, collided, SLOPE_LEFT))
 
                   ){
                     if(blk->isHidden) break;
@@ -431,9 +425,9 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                         (( (blk->shape==LVL_Block::shape_rect)||
                             (blk->shape==LVL_Block::shape_tr_top_left)||
                             (blk->shape==LVL_Block::shape_tr_top_right)) &&
-                            isCollideCelling(collided, _heightDelta, forceCollideCenter))||
-                        ((blk->shape==LVL_Block::shape_tr_bottom_right)&&isCollideSlopeCelling(collided, SLOPE_RIGHT)) ||
-                        ((blk->shape==LVL_Block::shape_tr_bottom_left)&&isCollideSlopeCelling(collided, SLOPE_LEFT))
+                            isCollideCelling(*this, collided, _heightDelta, forceCollideCenter))||
+                        ((blk->shape==LVL_Block::shape_tr_bottom_right)&&isCollideSlopeCelling(*this, collided, SLOPE_RIGHT)) ||
+                        ((blk->shape==LVL_Block::shape_tr_bottom_left)&&isCollideSlopeCelling(*this, collided, SLOPE_LEFT))
                        )
                 {
                     collided_top[(intptr_t)collided]=collided;//top of NPC
@@ -441,11 +435,11 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     //else if(blk->setup->danger==-2||blk->setup->danger==-3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Left****************************/
-                else if( (isCollideLeft(collided)&&(blk->shape==LVL_Block::shape_rect))||
-                         (isCollideLeft(collided)&&(blk->shape==LVL_Block::shape_tr_top_left)
-                          &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopRight(collided)+1.0)))||
-                         (isCollideLeft(collided)&&(blk->shape==LVL_Block::shape_tr_bottom_left)
-                          &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopRight(collided)-1.0))) )
+                else if( (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
+                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_top_left)
+                          &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopRight(*this, collided)+1.0)))||
+                         (isCollideLeft(*this, collided)&&(blk->shape==LVL_Block::shape_tr_bottom_left)
+                          &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopRight(*this, collided)-1.0))) )
                 {
                     if(blk->isHidden) break;
                     collided_left[(intptr_t)collided]=collided;//right of NPC
@@ -453,11 +447,11 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     //else if(blk->setup->danger==-1||blk->setup->danger==3||blk->setup->danger==4) harm(1);
                 }
                 //*****************************Right****************************/
-                else if( (isCollideRight(collided)&&(blk->shape==LVL_Block::shape_rect))||
-                         (isCollideRight(collided)&&(blk->shape==LVL_Block::shape_tr_top_right)
-                         &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopLeft(collided)+1.0)))||
-                         (isCollideRight(collided)&&(blk->shape==LVL_Block::shape_tr_bottom_right)
-                         &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopLeft(collided)-1.0)))
+                else if( (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_rect))||
+                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_top_right)
+                         &&(posRect.bottom()>=(collided->posRect.top()+SL_HeightTopLeft(*this, collided)+1.0)))||
+                         (isCollideRight(*this, collided)&&(blk->shape==LVL_Block::shape_tr_bottom_right)
+                         &&(posRect.top()<=(collided->posRect.bottom()-SL_HeightTopLeft(*this, collided)-1.0)))
                        )
                 {
                     if(blk->isHidden) break;
@@ -528,7 +522,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                 {
 //                    PGE_RectF &r1=posRect;
 //                    PGE_RectF  rc = collided->posRect;
-                    if(isCollideFloorToponly(collided))
+                    if(isCollideFloorToponly(*this, collided))
 //                            (
 //                                (speedY() >= 0.0)
 //                                &&
@@ -560,7 +554,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
 //                    double xSpeedO = Maths::max(fabs(collided->speedXsum()), fabs(collided->_velocityX_prev)) * Maths::sgn(collided->speedXsum());
 //                    double ySpeedO = Maths::max(fabs(collided->speedYsum()), fabs(collided->_velocityY_prev)) * Maths::sgn(collided->speedYsum());
                     //*****************************Feet of NPC****************************/
-                    if(isCollideFloor(collided))
+                    if(isCollideFloor(*this, collided))
 //                            (
 //                                (fabs(speedYsum()) >= 0.0)
 //                                &&
@@ -577,7 +571,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                             #endif
                     }
                     //*****************************Head of NPC****************************/
-                    else if(isCollideCelling(collided, _heightDelta, forceCollideCenter))
+                    else if(isCollideCelling(*this, collided, _heightDelta, forceCollideCenter))
 //                    else if( (
 //                                 (  ((!forceCollideCenter)&&(-fabs(speedYsum())<0.0))||(forceCollideCenter&&(-fabs(speedYsum())<=0.0))   )
 //                                 &&
@@ -594,7 +588,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Left****************************/
                     else if( /*(speedXsum()<0.0) && (c1.x() > cc.x()) && (r1.left() >= rc.right()+xSpeed+xSpeedO-1.0)
-                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) )*/ isCollideLeft(collided) )
+                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) )*/ isCollideLeft(*this, collided) )
                     {
                         collided_left[(intptr_t)collided]=collided;//right of player
                         #ifdef COLLIDE_DEBUG
@@ -603,7 +597,7 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
                     }
                     //*****************************Right****************************/
                     else if( /*(speedX()>0.0) && (c1.x() < cc.x()) && ( r1.right() <= rc.left()+xSpeed+xSpeedO+1.0)
-                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) )*/ isCollideRight(collided) )
+                             && ( (r1.top()<rc.bottom())&&(r1.bottom()>rc.top()) )*/ isCollideRight(*this, collided) )
                     {
                         collided_right[(intptr_t)collided]=collided;//left of player
                         #ifdef COLLIDE_DEBUG

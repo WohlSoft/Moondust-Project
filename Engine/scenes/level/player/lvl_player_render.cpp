@@ -110,12 +110,12 @@ void LVL_Player::render(double camX, double camY)
     if(PGE_Window::showDebugInfo)
     {
         //FontManager::printText(QString("%1-%2").arg(characterID).arg(stateID), round(posX()-camX), round(posY()-camY));
-        FontManager::printText(QString(" %1 \n%2%3%4\n %5 ")
+        FontManager::printText(QString(" %1 \n%2%3%4\n %5 %6")
                                .arg(collided_top.size())
                                .arg(collided_left.size())
                                .arg(collided_center.size())
                                .arg(collided_right.size())
-                               .arg(collided_bottom.size())
+                               .arg(collided_bottom.size()).arg(collided_slope?"slope!":"")
                                , round(20+posX()-camX), -50+round(posY()-camY), 3);
     }
 

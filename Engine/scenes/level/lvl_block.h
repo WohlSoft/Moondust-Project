@@ -62,6 +62,7 @@ public:
     };
 
     int shape;
+    double shape_slope_angle_ratio;
 
     int taskToTransform;
     int taskToTransform_t;

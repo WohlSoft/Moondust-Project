@@ -42,6 +42,11 @@ PGE_Phys_Object::PGE_Phys_Object()
     collide_player = COLLISION_ANY;
     collide_npc = COLLISION_ANY;
 
+    collided_slope=false;
+    collided_slope_angle_ratio=0.0f;
+    collided_slope_celling=false;
+    collided_slope_angle_ratio_celling=0.0f;
+
     _parentSection=NULL;
     _width = 0.0;
     _height = 0.0;
@@ -336,10 +341,18 @@ void PGE_Phys_Object::iterateStep(float ticks)
     if(_paused) return;
 
     posRect.setX(posRect.x()+(_velocityX+_velocityX_add) * (ticks/_smbxTickTime));
-    posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
-
     _velocityX_prev=_velocityX;
-    _velocityY_prev=_velocityY;
+
+    if(collided_slope)
+    {
+        _velocityY_prev = (_velocityY+(_velocityX*collided_slope_angle_ratio));
+        posRect.setY(posRect.y()+ _velocityY_prev * (ticks/_smbxTickTime));
+    }
+    else
+    {
+        posRect.setY(posRect.y()+_velocityY * (ticks/_smbxTickTime));
+        _velocityY_prev=_velocityY;
+    }
 
     colliding_xSpeed = Maths::max(fabs(_velocityX+_velocityX_add), fabs(_velocityX_prev+_velocityX_add))
             * Maths::sgn(speedX()+_velocityX_add)*(ticks/_smbxTickTime);
