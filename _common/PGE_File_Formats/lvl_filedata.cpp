@@ -93,16 +93,16 @@ void FileFormats::smbx64LevelSortBlocks(LevelData &lvl)
             {
                 while ( (
                            (lvl.blocks[R].x > piv.x)||
-                           ( ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y > piv.y))||
-                              ((lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id >= piv.array_id)) )
+                           ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y > piv.y))||
+                           ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id >= piv.array_id))
                         ) && (L<R) ) R--;
                 if (L<R) lvl.blocks[L++]=lvl.blocks[R];
 
                 while (
                        (
-                          (lvl.blocks[R].x < piv.x)||
-                          ( ((lvl.blocks[R].x == piv.x) && (lvl.blocks[R].y < piv.y))||
-                             ((lvl.blocks[R].y == piv.y) && (lvl.blocks[R].array_id <= piv.array_id)) )
+                          (lvl.blocks[L].x < piv.x)||
+                          ((lvl.blocks[L].x == piv.x) && (lvl.blocks[L].y < piv.y))||
+                          ((lvl.blocks[L].x == piv.x) && (lvl.blocks[L].y == piv.y) && (lvl.blocks[L].array_id <= piv.array_id) )
                        ) && (L<R)) L++;
                 if (L<R) lvl.blocks[R--]=lvl.blocks[L];
             }
@@ -147,18 +147,18 @@ void FileFormats::smbx64LevelSortBGOs(LevelData &lvl)
             {
                 while ( (
                             (lvl.bgo[R].smbx64_sp_apply > piv.smbx64_sp_apply)||
-                            (((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[R].x > piv.x))||
-                            ( ((lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
-                               ((lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id)) ))
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) && (lvl.bgo[R].x > piv.x))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y > piv.y))||
+                            ((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply) &&(lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id >= piv.array_id))
                          ) && (L<R) ) R--;
                 if (L<R) lvl.bgo[L++]=lvl.bgo[R];
 
                 while (
                        (
-                           (lvl.bgo[R].smbx64_sp_apply < piv.smbx64_sp_apply)||
-                           (((lvl.bgo[R].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[R].x < piv.x))||
-                           ( ((lvl.bgo[R].x == piv.x) && (lvl.bgo[R].y < piv.y))||
-                              ((lvl.bgo[R].y == piv.y) && (lvl.bgo[R].array_id <= piv.array_id)) ))
+                           (lvl.bgo[L].smbx64_sp_apply < piv.smbx64_sp_apply)||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x < piv.x))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y < piv.y))||
+                           ((lvl.bgo[L].smbx64_sp_apply == piv.smbx64_sp_apply)&&(lvl.bgo[L].x == piv.x) && (lvl.bgo[L].y == piv.y) && (lvl.bgo[L].array_id <= piv.array_id))
                         ) && (L<R)) L++;
                 if (L<R) lvl.bgo[R--]=lvl.bgo[L];
             }
