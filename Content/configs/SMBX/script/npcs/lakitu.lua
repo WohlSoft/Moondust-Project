@@ -1,7 +1,9 @@
 class 'lakitu'
 
-local AI_SHY_ANIM = 0
-local AI_CHASE_ANIM = 1
+local AI_NOPLAYER_ANIM = 0
+local AI_FOUNDPLAYER_ANIM = 1
+local AI_READYTHROW_ANIM = 2
+local AI_THROW_ANIM = 3
 
 function lakitu:__init(npc_obj)
     self.npc_obj = npc_obj
@@ -10,9 +12,12 @@ function lakitu:__init(npc_obj)
     self.max_speed = 6
     self.speed = 0.007
     
-        self.animateShy = {0}
-        self.animateChasing = {1}
-        self.cur_mode = AI_SHY_ANIM
+    self.animateFlyL = {0,1,2,1}
+    self.animateFlyR = {2,3,4,3}
+    self.animateThrowL = {0,1,2,1}
+    self.animateThrowR = {2,3,4,3}
+    self.def_throwInterval = smbx_utils.ticksToTime(100)
+    self.cur_mode = AI_NOPLAYER_ANIM 
 
     self:initProps()
 end
@@ -22,8 +27,29 @@ function lakitu:initProps()
     self.npc_obj.speedY = 0
     self.npc_obj.gravity = 0
     self.npc_obj.gravity_accel = 0
-        self.cur_mode = AI_SHY_ANIM
-        -- self.npc_obj:setSequence(self.animateShy)
+    self.throwTimer = 0
+    self.throwID = 48
+    if(self.npc_obj.id==284)then
+        self.throwID=self.npc_obj.special1
+    end
+    self.cur_mode = AI_NOPLAYER_ANIM 
+    -- self.npc_obj:setSequence(self.animateShy)
+end
+
+function lakitu:updateThrower(tickTime)
+    self.throwTimer = self.throwTimer+tickTime
+    if (self.throwTimer>self.def_throwInterval) then
+        self.throwTimer=0
+        self:throwNPC()
+    end    
+end
+
+function lakitu:throwNPC()
+    local thrownNPC=self.npc_obj:spawnNPC(self.throwID, GENERATOR_APPEAR, SPAWN_UP, false)
+    thrownNPC.speedX = self.npc_obj.direction * 3
+    thrownNPC.speedY = -3
+    thrownNPC.center_x = self.npc_obj.center_x + self.npc_obj.direction*(self.npc_obj.width/2)
+    thrownNPC.center_y = self.npc_obj.top-16
 end
 
 function lakitu:onActivated()
@@ -106,7 +132,11 @@ function lakitu:onLoop(tickTime)
             self.npc_obj.speedY = self.npc_obj.speedY - (self.speed * tickTime)
         end
 
+        self:updateThrower(tickTime)
+
         self:checkOverMaxSpeed()
 end
 
 return lakitu
+
+
