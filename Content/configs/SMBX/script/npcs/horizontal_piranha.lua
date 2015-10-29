@@ -83,12 +83,6 @@ function horizontal_piranha:onActivated()
 end
 
 function horizontal_piranha:onLoop(tickTime)
-	if(self.npc_obj.direction>0) then
-    	Renderer.printText("poison plant: "..tostring(self.npc_obj.direction), 100, 200, 0, 15, 0xFFFF0055)
-	else
-    	Renderer.printText("poison plant: "..tostring(self.npc_obj.direction), 100, 230, 0, 15, 0xFFFF0055)
-	end
-
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
             self.cur_showingUpTicks = self.cur_showingUpTicks + tickTime
