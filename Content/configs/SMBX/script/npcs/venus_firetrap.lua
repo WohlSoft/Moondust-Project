@@ -14,15 +14,15 @@ function venus_firetrap:updateWarp()
 end
 
 function venus_firetrap:shot()
-	local bullet=self.npc_obj:spawnNPC(246, GENERATOR_APPEAR, SPAWN_UP, false)
-	bullet.speedX = self.npc_obj.direction * 2
-	bullet.center_x = self.npc_obj.center_x+self.npc_obj.direction*(self.npc_obj.width/2)
-	bullet.center_y = self.def_top+16
-	if((self.plrpos_detector:positionY()<self.def_centerY)) then
+    local bullet=self.npc_obj:spawnNPC(246, GENERATOR_APPEAR, SPAWN_UP, false)
+    bullet.speedX = self.npc_obj.direction * 2
+    bullet.center_x = self.npc_obj.center_x+self.npc_obj.direction*(self.npc_obj.width/2)
+    bullet.center_y = self.def_top+16
+    if((self.plrpos_detector:positionY()<self.def_centerY)) then
         bullet.speedY = -1.5
-	elseif((self.plrpos_detector:positionY()>self.def_centerY)) then
+    elseif((self.plrpos_detector:positionY()>self.def_centerY)) then
         bullet.speedY = 1.5
-	end
+    end
 end
 
 
@@ -43,7 +43,7 @@ function venus_firetrap:initProps()
 
     -- FOR AI_SHOWING_IDLE
     self.cur_showingIdleTicks = 0
-	self.shooted = false
+    self.shooted = false
 
     -- FOR AI_HIDING_DOWN
     self.cur_hidingDownTicks = 0
@@ -51,8 +51,8 @@ function venus_firetrap:initProps()
     -- FOR AI_HIDING_IDLE
     self.cur_hidingIdleTicks = 0
 
-	self.curani = -1
-	self:refreshAnimation();
+    self.curani = -1
+    self:refreshAnimation();
     self:updateWarp()
 end
 
@@ -64,16 +64,16 @@ function venus_firetrap:__init(npc_obj)
     self.def_height = npc_obj.height
     self.def_bottom = npc_obj.bottom
     self.speed = 1
-	self.def_centerY = self.npc_obj.center_y
+    self.def_centerY = self.npc_obj.center_y
 
-	self.curani = -1
+    self.curani = -1
 
-	self.def_frame_lookup = {1}
-	self.def_frame_lookdown = {0}
+    self.def_frame_lookup = {1}
+    self.def_frame_lookdown = {0}
 
     -- Detector of player
     self.plr_detector = self.npc_obj:installInAreaDetector(-44, -600, 44, 600, {4})
-	self.plrpos_detector = self.npc_obj:installPlayerPosDetector()
+    self.plrpos_detector = self.npc_obj:installPlayerPosDetector()
 
     -- FOR AI_SHOWING_UP
     self.def_showingUpTicks = smbx_utils.ticksToTime(self.npc_obj.height)
@@ -98,19 +98,19 @@ function venus_firetrap:onActivated()
 end
 
 function venus_firetrap:refreshAnimation()
-	if((self.plrpos_detector:positionY()<self.def_centerY) and (self.curani~=0)) then
+    if((self.plrpos_detector:positionY()<self.def_centerY) and (self.curani~=0)) then
         self.npc_obj:setSequence(self.def_frame_lookup)
-		self.curani=0
-	elseif((self.plrpos_detector:positionY()>self.def_centerY) and (self.curani~=1)) then
+        self.curani=0
+    elseif((self.plrpos_detector:positionY()>self.def_centerY) and (self.curani~=1)) then
         self.npc_obj:setSequence(self.def_frame_lookdown)
-		self.curani=1
-	end
+        self.curani=1
+    end
 end
 
 function venus_firetrap:onLoop(tickTime)
 
     self.npc_obj.direction = self.plrpos_detector:directedTo()
-	self:refreshAnimation()
+    self:refreshAnimation()
 
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
@@ -122,15 +122,15 @@ function venus_firetrap:onLoop(tickTime)
             self.npc_obj.top = self.def_top
             self.npc_obj:resetSpriteWarp()
             self.cur_showingUpTicks = 0
-			self.shooted = false;
+            self.shooted = false;
         end
     elseif(self.cur_mode == AI_SHOWING_IDLE)then
         if(self.def_showingIdleTicks >= self.cur_showingIdleTicks)then
             self.cur_showingIdleTicks = self.cur_showingIdleTicks + tickTime
-			if((not self.shooted) and (self.def_shootDelayTicks <= self.cur_showingIdleTicks))then
-				self:shot()
-				self.shooted = true
-			end
+            if((not self.shooted) and (self.def_shootDelayTicks <= self.cur_showingIdleTicks))then
+                self:shot()
+                self.shooted = true
+            end
         else
             self.cur_mode = AI_HIDING_DOWN
             self.cur_showingIdleTicks = 0
