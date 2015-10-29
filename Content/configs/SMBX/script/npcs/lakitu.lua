@@ -132,7 +132,9 @@ function lakitu:onLoop(tickTime)
             self.npc_obj.speedY = self.npc_obj.speedY - (self.speed * tickTime)
         end
 
-        self:updateThrower(tickTime)
+        if(self.throwID~=0)then
+            self:updateThrower(tickTime)
+        end
 
         self:checkOverMaxSpeed()
 end
