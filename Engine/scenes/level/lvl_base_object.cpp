@@ -163,7 +163,7 @@ double PGE_Phys_Object::right()
 
 void PGE_Phys_Object::setRight(double rt)
 {
-    posRect.setLeft(rt);
+    posRect.setRight(rt);
     _realWidth=posRect.width();
     _height_half = _realWidth/2.0f;
     _syncPositionAndSize();
