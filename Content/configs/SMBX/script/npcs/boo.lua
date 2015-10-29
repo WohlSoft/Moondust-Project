@@ -7,8 +7,8 @@ function boo:__init(npc_obj)
     self.npc_obj = npc_obj
 	
 	self.player_pos_detector = self.npc_obj:installPlayerPosDetector()
-	self.max_speed = 3
-	self.speed = 0.003
+	self.max_speed = 2
+	self.speed = 0.002
 	
         self.animateShy = {0}
         self.animateChasing = {1}
@@ -126,3 +126,4 @@ function boo:onLoop(tickTime)
 end
 
 return boo
+
