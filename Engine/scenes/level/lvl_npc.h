@@ -204,6 +204,7 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
+    LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
 
     inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
