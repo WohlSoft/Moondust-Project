@@ -17,11 +17,11 @@ function elevator:onActivated()
 end
 
 function elevator:onLoop(tickTime)
-	self.npc_obj.speedX=0
+    self.npc_obj.speedX=0
     if(self.direction<0) then
-		self.npc_obj.speedY=-2
+        self.npc_obj.speedY=-2
     else
-		self.npc_obj.speedY=2
+        self.npc_obj.speedY=2
     end
 end
 

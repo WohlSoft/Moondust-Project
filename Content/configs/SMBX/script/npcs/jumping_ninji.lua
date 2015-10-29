@@ -77,7 +77,7 @@ function jumping_ninji:onLoop(tickTime)
                 self.cur_jumpingUpAnimTicks = 0
                 self.npc_obj:setSequence(self.animateJumpUp)
             end
-		elseif(not self.cur_beganJump)then
+        elseif(not self.cur_beganJump)then
                 self.npc_obj:setSequence(self.animateJumpUp)
                 self.cur_beganJump = true
         end
