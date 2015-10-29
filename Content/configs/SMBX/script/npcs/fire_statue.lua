@@ -18,7 +18,11 @@ end
 function fire_statue:__init(npc_obj)
     self.npc_obj = npc_obj
 
-	self.def_shootDelay = smbx_utils.ticksToTime(230)
+	if(self.npc_obj.id==181)then
+		self.def_shootDelay = smbx_utils.ticksToTime(220)
+	else
+		self.def_shootDelay = smbx_utils.ticksToTime(230)
+	end
     self:initProps()
 end
 
