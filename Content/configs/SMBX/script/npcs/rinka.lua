@@ -35,21 +35,10 @@ function rinka:onLoop(tickTime)
             vdist = math.abs(pposY-self.npc_obj.center_y)
             angle = 0
             if(vdist~=0)then
-                angle = (180.0/math.pi) * math.atan(hdist/vdist)
+                angle = math.atan(hdist/vdist)
             end
-            if((hDirect>=0) and vDirect>=0)then
-                self.npc_obj.speedX=math.cos(angle)*self.def_speed
-                self.npc_obj.speedY=math.sin(angle)*self.def_speed
-            elseif((hDirect>=0) and vDirect<0)then
-                self.npc_obj.speedX=-math.sin(angle)*self.def_speed*hDirect
-                self.npc_obj.speedY=-math.cos(angle)*self.def_speed*vDirect
-            elseif((hDirect<0) and vDirect<0)then
-                self.npc_obj.speedX=-math.sin(angle)*self.def_speed*hDirect
-                self.npc_obj.speedY=-math.cos(angle)*self.def_speed*vDirect
-            elseif((hDirect<0) and vDirect>=0)then
-                self.npc_obj.speedX=-math.sin(angle)*self.def_speed*hDirect
-                self.npc_obj.speedY=-math.cos(angle)*self.def_speed*vDirect
-            end
+            self.npc_obj.speedX=math.sin(angle)*self.def_speed*hDirect
+            self.npc_obj.speedY=math.cos(angle)*self.def_speed*vDirect
             self.target_detected = true
         end
     end
