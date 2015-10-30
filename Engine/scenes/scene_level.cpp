@@ -1038,6 +1038,12 @@ LevelScene::LVL_NpcsArray &LevelScene::getNpcs()
     return npcs;
 }
 
+LevelScene::LVL_NpcsArray &LevelScene::getActiveNpcs()
+{
+    return active_npcs;
+}
+
+
 LevelScene::LVL_PlayersArray& LevelScene::getPlayers()
 {
     return players;
