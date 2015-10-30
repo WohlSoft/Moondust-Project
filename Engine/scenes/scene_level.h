@@ -343,6 +343,7 @@ public:
 
     LVL_PlayersArray& getPlayers();
     LVL_NpcsArray& getNpcs();
+    LVL_NpcsArray& getActiveNpcs();
 private:
     typedef RTree<PGE_Phys_Object*, double, 2, double > IndexTree;
     IndexTree tree;
