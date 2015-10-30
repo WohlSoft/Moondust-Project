@@ -10,7 +10,7 @@ class Binding_Level_GlobalFuncs_NPC
 {
 public:
     static luabind::object get(lua_State *L);
-
+    static luabind::object getActive(lua_State *L);
     static luabind::scope bindToLua();
 };
 

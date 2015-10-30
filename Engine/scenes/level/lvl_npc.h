@@ -211,6 +211,10 @@ public:
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
+    inline long getHealth() { return health; }
+    inline void setHealth(int _health) { health=_health; }
+    inline bool getCollideWithBlocks() { return !disableBlockCollision; }
+    inline void setCollideWithBlocks(bool blkcol) { disableBlockCollision=!blkcol; }
 
     bool isLuaNPC;
 

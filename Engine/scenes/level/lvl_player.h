@@ -157,6 +157,10 @@ class LVL_Player :
         float   bumpJumpVelocity;//! Up jump velocity
         int     bumpJumpTime;    //!< Up jump time
         void    bump(bool _up=false, double bounceSpeed=0.0, int timeToJump=0);
+        inline void bumpf(bool _up, float bounceSpeed=0.0f, int timeToJump=0)
+        {
+            bump(_up, (double)bounceSpeed, timeToJump);
+        }
         /********************Bump***************************/
 
         /********************Climbing***************************/
@@ -250,7 +254,6 @@ public:
         /********************Lua Stuff******************/
 
         bool isInited();
-
 private:
         bool _no_render;
         bool isLocked;

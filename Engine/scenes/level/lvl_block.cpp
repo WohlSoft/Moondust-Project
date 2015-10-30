@@ -375,17 +375,16 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     hitDirection = _dir;
     isHidden=false;
     data.invisible=false;
-    bool doFade=false;
+    bool doFade=false, triggerEvent=false, playHitSnd=false;
 
     PGE_Audio::playSoundByRole(obj_sound_role::BlockHit);
-    if(!data.event_hit.isEmpty())
-    {
-        LvlSceneP::s->events.triggerEvent(data.event_hit);
-    }
-
     if((setup->destroyable)&&(data.npc_id==0))
     {
-        PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
+        triggerEvent=true;
+        if(setup->destroy_sound_id==0)
+            PGE_Audio::playSoundByRole(obj_sound_role::BlockSmashed);
+        else
+            PGE_Audio::playSound(setup->destroy_sound_id);
         destroyed=true;
         QString oldLayer=data.layer;
         LvlSceneP::s->layers.removeRegItem(data.layer, this);
@@ -405,6 +404,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(data.npc_id<0)
     {
+        triggerEvent=true;
+        playHitSnd=true;
         //Coin!
         PGE_Audio::playSoundByRole(obj_sound_role::BonusCoin);
         data.npc_id++;
@@ -418,6 +419,8 @@ void LVL_Block::hit(LVL_Block::directions _dir)
     else
     if(data.npc_id>0)
     {
+        triggerEvent=true;
+        playHitSnd=true;
         //NPC!
         PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
         doFade=true;
@@ -441,13 +444,26 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(setup->switch_Button)
     {
+        triggerEvent=true;
         LvlSceneP::s->toggleSwitch(setup->switch_ID);
     }
 
     if(setup->hitable)
     {
+        triggerEvent=true;
         transformTo(setup->spawn_obj_id, setup->spawn_obj);
         doFade=true;
+        playHitSnd=!destroyed;
+    }
+
+    if(playHitSnd && (setup->hit_sound_id>0))
+    {
+        PGE_Audio::playSound(setup->hit_sound_id);
+    }
+
+    if(triggerEvent && (!data.event_hit.isEmpty()))
+    {
+        LvlSceneP::s->events.triggerEvent(data.event_hit);
     }
 
     if(doFade)

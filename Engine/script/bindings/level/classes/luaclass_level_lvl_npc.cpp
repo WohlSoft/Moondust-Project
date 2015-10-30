@@ -87,6 +87,10 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .property("special2", &LVL_Npc::special2)
             .property("isBoss", &LVL_Npc::isBoss)
 
+            .property("collideWithBlocks", &LVL_Npc::getCollideWithBlocks, &LVL_Npc::setCollideWithBlocks)
+
+            .property("health", &LVL_Npc::getHealth, &LVL_Npc::setHealth)
+
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
 
             //States
