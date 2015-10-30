@@ -254,6 +254,8 @@ bool ConfigManager::loadSoundRolesTable()
         main_sound_table[obj_sound_role::WeaponBigFire]=soundset.value("weaponbigfire", 0).toInt();
         main_sound_table[obj_sound_role::NpcLavaBurn]=soundset.value("npclavaburn", 0).toInt();
         main_sound_table[obj_sound_role::NpcStoneFall]=soundset.value("npcstonefall", 0).toInt();
+        main_sound_table[obj_sound_role::NpcHit]=soundset.value("npchit", 0).toInt();
+        main_sound_table[obj_sound_role::NpcDeath]=soundset.value("npcdeath", 0).toInt();
         main_sound_table[obj_sound_role::WarpPipe]=soundset.value("warppipe", 0).toInt();
         main_sound_table[obj_sound_role::WarpDoor]=soundset.value("warpdoor", 0).toInt();
         main_sound_table[obj_sound_role::WarpTeleport]=soundset.value("warpteleport", 0).toInt();

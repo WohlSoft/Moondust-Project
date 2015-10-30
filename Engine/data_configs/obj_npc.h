@@ -147,9 +147,14 @@ struct obj_npc
     bool grab_side;//    grab-side=0			; NPC can be grabbed on side
     bool grab_top; //    grab-top=0			; NPC can be grabbed on top
     bool grab_any; //    grab-any=0			; NPC can be grabbed on any collisions
-    int health;    //    default-health=1		; NPC's health value
+    int  health;    //    default-health=1		; NPC's health value
     bool hurt_player; //    hurtplayer=1			; Hurt player on contact
     bool hurt_npc; //    hurtnpc=0			; Hurt other npc on contact
+
+    //Hardcoded sound effects
+    int  hit_sound_id;
+    int  death_sound_id;
+
 
     //;Editor featured
     QString direct_alt_title;
