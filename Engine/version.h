@@ -22,6 +22,12 @@
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 
+#ifdef GIT_VERSION
+#define _BUILD_VER GIT_VERSION
+#else
+#define _BUILD_VER "<empty>"
+#endif
+
 //Version of this program
 #define _LATEST_STABLE "0.2.3.1-alpha"
 
