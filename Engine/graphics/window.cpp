@@ -49,7 +49,7 @@ bool PGE_Window::showCursor=true;
 #include <QMessageBox>
 #include <QtDebug>
 
-void PGE_Window::checkSDLError(int line)
+bool PGE_Window::checkSDLError(int line)
 {
     const char *error = SDL_GetError();
     if (*error != '\0')
@@ -57,7 +57,9 @@ void PGE_Window::checkSDLError(int line)
         PGE_MsgBox::warn(QString("SDL Error: %1").arg(error)+((line != -1)?
             QString(" + line: %i").arg(line) : "") );
         SDL_ClearError();
+        return false;
     }
+    return true;
 }
 
 
@@ -84,7 +86,7 @@ bool PGE_Window::init(QString WindowTitle)
 
     window = SDL_CreateWindow(WindowTitle.toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               Width, Height, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-    checkSDLError();
+    if(!checkSDLError()) return false;
 
     SDL_SetWindowMinimumSize(window, Width, Height);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
@@ -106,12 +108,13 @@ bool PGE_Window::init(QString WindowTitle)
     SDL_SetWindowIcon(window, GraphicsHelps::QImage_toSDLSurface(icon));
 
     qDebug()<<"Create context BG...";
-    glcontext_background = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    checkSDLError();
-    SDL_GL_MakeCurrent(PGE_Window::window, NULL);
+    //glcontext_background = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    //if(!checkSDLError()) return false;
+    //SDL_GL_MakeCurrent(PGE_Window::window, NULL);
+
     qDebug()<<"Create context Main...";
     glcontext            = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    checkSDLError();
+    if(!checkSDLError()) return false;
 
     toggleVSync(vsync);
 
@@ -160,7 +163,7 @@ bool PGE_Window::uninit()
     SDL_PumpEvents();
     GlRenderer::uninit();
     SDL_GL_DeleteContext(glcontext);
-    SDL_GL_DeleteContext(glcontext_background);
+    //SDL_GL_DeleteContext(glcontext_background);
     SDL_DestroyWindow(window);
     SDL_Quit();
     IsInit=false;
