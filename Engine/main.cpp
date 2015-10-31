@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     LoadLogSettings();
 
     QString configPath="";
-    QString fileToOpen = "";//ApplicationPath+"/physics.lvl";
+    QString fileToOpen = "";
     PlayEpisodeResult episode;
     episode.character=0;
     episode.savefile="save1.savx";
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
     //Init Window
-    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
 
     AppSettings.initJoysticks();
     AppSettings.loadJoystickSettings();
