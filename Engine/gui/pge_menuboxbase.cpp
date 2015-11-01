@@ -292,8 +292,9 @@ void PGE_MenuBoxBase::exec()
     {
         Uint32 start_render=SDL_GetTicks();
 
-        update(uTickf);
+        //update(uTickf);
         updateControllers();
+        update(uTickf);
         PGE_BoxBase::render();
         render();
         glFlush();
