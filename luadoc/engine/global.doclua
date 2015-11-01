@@ -4,6 +4,9 @@
 
 -- Values:
 
+-------------------------------------------------------------------------------
+-- Game engine identification: "PGE_Engine" or "LunaLUA"
+-- @field[parent = #global] #string GAME_ENGINE
 
 
 -- TODO Hardcoded funcs/fields
