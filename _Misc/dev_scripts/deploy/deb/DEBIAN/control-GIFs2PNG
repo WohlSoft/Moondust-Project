@@ -1,0 +1,11 @@
+Package: pge-wohlstand-GIFs2PNG
+Version: 1.0.5-0
+Version: 2015.10.31-1
+Section: games
+Maintainer: Wohlstand <admin@wohlnet.ru>
+Description: PGE Project by Wohlstand - SMBX64-GIFs to PNG Image Converter tool
+ This utility will convert compatible with SMBX64 CGFX standard GIFs into transparent PNG images
+Architecture: amd64
+Origin: Wohlstand <admin@wohlnet.ru>, Kevsoft <kevin.waldock@gmail.com>, http://engine.wohlnet.ru
+X-Source: https://github.com/Wohlhabend-Networks/PGE-Project/archive/master.tar.gz
+

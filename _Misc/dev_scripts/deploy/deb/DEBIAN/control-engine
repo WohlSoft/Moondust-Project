@@ -1,0 +1,13 @@
+Package: pge-wohlstand-engine
+Version: 0.2.3.1-alpha-1
+Version: 2015.10.31-1
+Depends: pge-wohlstand-common (=0.3.3.1)
+Section: games
+Maintainer: Wohlstand <admin@wohlnet.ru>
+Description: PGE Project by Wohlstand - Engine
+ PGE Engine provides a gameplay core. It used to play games, episodes and levels.
+ Together With editor it can be used for real-time level and world map testing and debugging.
+Architecture: amd64
+Origin: Wohlstand <admin@wohlnet.ru>, Kevsoft <kevin.waldock@gmail.com>, http://engine.wohlnet.ru
+X-Source: https://github.com/Wohlhabend-Networks/PGE-Project/archive/master.tar.gz
+

@@ -1,0 +1,12 @@
+Package: pge-wohlstand-common
+Version: 0.3.3.1
+Version: 2015.10.31-1
+Section: games
+Maintainer: Wohlstand <admin@wohlnet.ru>
+Description: PGE Project by Wohlstand Common Files
+ Platform Game Engine Project by Wohlstand common files are contains dependent files
+ and shared libraries which are using by many PGE components
+Architecture: amd64
+Origin: Wohlstand <admin@wohlnet.ru>, Kevsoft <kevin.waldock@gmail.com>, http://engine.wohlnet.ru
+X-Source: https://github.com/Wohlhabend-Networks/PGE-Project/archive/master.tar.gz
+
