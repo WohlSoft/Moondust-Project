@@ -46,7 +46,7 @@ android:{
 macx:{
     LIBS += -L$$PWD/../../_Libs/_builds/macos/lib
     INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
-    INCLUDEPATH += $$PWD/../../_Libs/_Libs/_builds/macos/frameworks/SDL2.framework/Headers
+    INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
 } else {
     LIBS += -lSDL2 -lSDL2_mixer_ext
