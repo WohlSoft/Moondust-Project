@@ -58,6 +58,9 @@ typedef struct {
   unsigned char output_buffer[MAD_OUTPUT_BUFFER_SIZE];
 
   char *mus_title;
+  char *mus_artist;
+  char *mus_album;
+  char *mus_copyright;
 } mad_data;
 
 mad_data *mad_openFileRW(SDL_RWops *src, SDL_AudioSpec *mixer, int freesrc);

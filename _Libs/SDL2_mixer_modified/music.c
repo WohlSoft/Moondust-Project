@@ -790,6 +790,21 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
                         music->data.flac->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
                         strcpy(music->data.flac->mus_title, value);
                     }
+                    isMusicTitle = strcasecmp(argument, "ARTIST");
+                    if(isMusicTitle==0) {
+                        music->data.flac->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                        strcpy(music->data.flac->mus_artist, value);
+                    }
+                    isMusicTitle = strcasecmp(argument, "ALBUM");
+                    if(isMusicTitle==0) {
+                        music->data.flac->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                        strcpy(music->data.flac->mus_album, value);
+                    }
+                    isMusicTitle = strcasecmp(argument, "COPYRIGHT");
+                    if(isMusicTitle==0) {
+                        music->data.flac->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                        strcpy(music->data.flac->mus_copyright, value);
+                    }
                     doValue=0;
                 }
             }
@@ -833,6 +848,42 @@ Mix_Music *Mix_LoadMUSType_RW(SDL_RWops *src, Mix_MusicType type, int freesrc)
                         pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
                         music->data.mp3_mad->mus_title=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
                         strcpy(music->data.mp3_mad->mus_title, (char*)pStrLatinl);
+                    }
+                }
+                pFrame = id3_tag_findframe(tag,ID3_FRAME_ARTIST,0);
+                if ( pFrame != NULL )
+                {
+                    union id3_field field = pFrame->fields[1];
+                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
+                    id3_latin1_t *pStrLatinl;
+                    if ( pTemp != NULL ) {
+                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
+                        music->data.mp3_mad->mus_artist=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
+                        strcpy(music->data.mp3_mad->mus_artist, (char*)pStrLatinl);
+                    }
+                }
+                pFrame = id3_tag_findframe(tag,ID3_FRAME_ALBUM,0);
+                if ( pFrame != NULL )
+                {
+                    union id3_field field = pFrame->fields[1];
+                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
+                    id3_latin1_t *pStrLatinl;
+                    if ( pTemp != NULL ) {
+                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
+                        music->data.mp3_mad->mus_album=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
+                        strcpy(music->data.mp3_mad->mus_album, (char*)pStrLatinl);
+                    }
+                }
+                pFrame = id3_tag_findframe(tag, "TCOP",0);
+                if ( pFrame != NULL )
+                {
+                    union id3_field field = pFrame->fields[1];
+                    id3_ucs4_t const *pTemp = id3_field_getstrings(&field,0);
+                    id3_latin1_t *pStrLatinl;
+                    if ( pTemp != NULL ) {
+                        pStrLatinl = id3_ucs4_latin1duplicate(pTemp);
+                        music->data.mp3_mad->mus_copyright=(char *)SDL_malloc(sizeof(char)*strlen((char*)pStrLatinl)+1);
+                        strcpy(music->data.mp3_mad->mus_copyright, (char*)pStrLatinl);
                     }
                 }
                 id3_file_close(tags);
@@ -1119,6 +1170,112 @@ const char* Mix_GetMusicTitleTag(const Mix_Music *music)
     }
     return "";
 }
+
+const char* Mix_GetMusicArtistTag(const Mix_Music *music)
+{
+    if ( music ) {
+        switch (music->type) {
+        #ifdef OGG_MUSIC
+            case MUS_OGG:
+                if(music->data.ogg->mus_artist!=NULL)
+                    return music->data.ogg->mus_artist;
+            break;
+        #endif
+        #ifdef FLAC_MUSIC
+            case MUS_FLAC:
+                if(music->data.flac->mus_artist!=NULL)
+                    return music->data.flac->mus_artist;
+            break;
+        #endif
+        #ifdef MP3_MAD_MUSIC
+            case MUS_MP3_MAD:
+                if(music->data.mp3_mad->mus_artist!=NULL)
+                    return music->data.mp3_mad->mus_artist;
+            break;
+        #endif
+        #ifdef GME_MUSIC
+            case MUS_SPC:
+                if(music->data.gameemu->mus_artist!=NULL)
+                    return music->data.gameemu->mus_artist;
+            break;
+        #endif
+            default:
+                break;
+        }
+    }
+    return "";
+}
+
+const char* Mix_GetMusicAlbumTag(const Mix_Music *music)
+{
+    if ( music ) {
+        switch (music->type) {
+        #ifdef OGG_MUSIC
+            case MUS_OGG:
+                if(music->data.ogg->mus_album!=NULL)
+                    return music->data.ogg->mus_album;
+            break;
+        #endif
+        #ifdef FLAC_MUSIC
+            case MUS_FLAC:
+                if(music->data.flac->mus_album!=NULL)
+                    return music->data.flac->mus_album;
+            break;
+        #endif
+        #ifdef MP3_MAD_MUSIC
+            case MUS_MP3_MAD:
+                if(music->data.mp3_mad->mus_album!=NULL)
+                    return music->data.mp3_mad->mus_album;
+            break;
+        #endif
+        #ifdef GME_MUSIC
+            case MUS_SPC:
+                if(music->data.gameemu->mus_album!=NULL)
+                    return music->data.gameemu->mus_album;
+            break;
+        #endif
+            default:
+                break;
+        }
+    }
+    return "";
+}
+
+const char* Mix_GetMusicCopyrightTag(const Mix_Music *music)
+{
+    if ( music ) {
+        switch (music->type) {
+        #ifdef OGG_MUSIC
+            case MUS_OGG:
+                if(music->data.ogg->mus_copyright!=NULL)
+                    return music->data.ogg->mus_copyright;
+            break;
+        #endif
+        #ifdef FLAC_MUSIC
+            case MUS_FLAC:
+                if(music->data.flac->mus_copyright!=NULL)
+                    return music->data.flac->mus_copyright;
+            break;
+        #endif
+        #ifdef MP3_MAD_MUSIC
+            case MUS_MP3_MAD:
+                if(music->data.mp3_mad->mus_copyright!=NULL)
+                    return music->data.mp3_mad->mus_copyright;
+            break;
+        #endif
+        #ifdef GME_MUSIC
+            case MUS_SPC:
+                if(music->data.gameemu->mus_copyright!=NULL)
+                    return music->data.gameemu->mus_copyright;
+            break;
+        #endif
+            default:
+                break;
+        }
+    }
+    return "";
+}
+
 
 /* Play a music chunk.  Returns 0, or -1 if there was an error.
  */
