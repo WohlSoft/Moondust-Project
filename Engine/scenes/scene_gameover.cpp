@@ -61,6 +61,5 @@ int GameOverScene::exec()
 
 void GameOverScene::processEvents()
 {
-    player1Controller->update();
     Scene::processEvents();
 }
