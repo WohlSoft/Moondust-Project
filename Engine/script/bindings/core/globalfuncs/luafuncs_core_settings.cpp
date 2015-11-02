@@ -18,10 +18,10 @@ int Binding_Core_GlobalFuncs_Settings::getScreenHeight()
     return AppSettings.ScreenHeight;
 }
 
-int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
-{
-    return AppSettings.MaxFPS;
-}
+//int Binding_Core_GlobalFuncs_Settings::getMaxFPS()
+//{
+//    return AppSettings.MaxFPS;
+//}
 
 int Binding_Core_GlobalFuncs_Settings::getTicksPerSecond()
 {
@@ -63,7 +63,7 @@ luabind::scope Binding_Core_GlobalFuncs_Settings::bindToLua()
             def("isFullscreenActive", &isFullscreenActive),
             def("getScreenWidth", &getScreenWidth),
             def("getScreenHeight", &getScreenHeight),
-            def("getMaxFPS", &getMaxFPS),
+            //def("getMaxFPS", &getMaxFPS),// Useless field, never used
             def("getTicksPerSecond", &getTicksPerSecond),
             def("useFrameSkip", &useFrameSkip),
             def("getSoundVolume", &getSoundVolume),

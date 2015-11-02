@@ -10,7 +10,7 @@ public:
     static bool isFullscreenActive();
     static int getScreenWidth();
     static int getScreenHeight();
-    static int getMaxFPS();
+    //static int getMaxFPS();
     static int getTicksPerSecond();
     static bool useFrameSkip();
     static int getSoundVolume();
