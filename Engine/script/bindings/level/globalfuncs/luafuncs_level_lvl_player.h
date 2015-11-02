@@ -9,6 +9,7 @@
 class Binding_Level_GlobalFuncs_Player
 {
 public:
+    static int count(lua_State *L);
     static luabind::object get(lua_State *L);
 
     static luabind::scope bindToLua();

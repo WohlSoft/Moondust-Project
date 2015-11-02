@@ -680,6 +680,11 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
     }
 }
 
+bool LVL_Npc::onCliff()
+{
+    return cliffDetected;
+}
+
 bool LVL_Npc::onGround()
 {
     return _onGround;

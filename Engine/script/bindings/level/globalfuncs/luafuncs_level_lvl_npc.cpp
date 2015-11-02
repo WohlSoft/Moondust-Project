@@ -4,11 +4,17 @@
 
 #include <scenes/scene_level.h>
 
+int Binding_Level_GlobalFuncs_NPC::count(lua_State *L)
+{
+    LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
+    LevelScene::LVL_NpcsArray &allNPCs = scene->getNpcs();
+    return allNPCs.count();
+}
 
 luabind::adl::object Binding_Level_GlobalFuncs_NPC::get(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    LevelScene::LVL_NpcsArray allNPCs = scene->getNpcs();
+    LevelScene::LVL_NpcsArray &allNPCs = scene->getNpcs();
 
     luabind::object tableOfNPCs = luabind::newtable(L);
 
@@ -28,7 +34,7 @@ luabind::adl::object Binding_Level_GlobalFuncs_NPC::get(lua_State *L)
 luabind::adl::object Binding_Level_GlobalFuncs_NPC::getActive(lua_State *L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    LevelScene::LVL_NpcsArray allActiveNPCs = scene->getActiveNpcs();
+    LevelScene::LVL_NpcsArray &allActiveNPCs = scene->getActiveNpcs();
 
     luabind::object tableOfNPCs = luabind::newtable(L);
 
@@ -50,6 +56,7 @@ luabind::scope Binding_Level_GlobalFuncs_NPC::bindToLua()
     using namespace luabind;
     return
         namespace_("NPC")[
+            def("count", &Binding_Level_GlobalFuncs_NPC::count),
             def("get", &Binding_Level_GlobalFuncs_NPC::get),
             def("getActive", &Binding_Level_GlobalFuncs_NPC::getActive)
         ];
