@@ -48,6 +48,7 @@ macx:{
     INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/include
     INCLUDEPATH += $$PWD/../../_Libs/_builds/macos/frameworks/SDL2.framework/Headers
     LIBS += -F$$PWD/../../_Libs/_builds/macos/frameworks -framework SDL2 -lSDL2_mixer_ext
+    QMAKE_POST_LINK = $$PWD/mac_deploy_libs.sh
 } else {
     LIBS += -lSDL2 -lSDL2_mixer_ext
 }
