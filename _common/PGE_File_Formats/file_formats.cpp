@@ -50,6 +50,21 @@ PGESTRING FileFormats::removeQuotes(PGESTRING str)
     return target;
 }
 
+PGESTRING FileFormats::getErrorString(FileFormats::ErrorCodes errCode)
+{
+    switch(errCode)
+    {
+        case Success: return "";
+        case ERROR_NotExist: return "File not exist";
+        case ERROR_AccessDenied: return "Access denied";
+        case ERROR_InvalidSyntax: return "Invalid file format";
+        case ERROR_PGEX_SectionNotClosed: return "PGE-X Section is not closed";
+        case ERROR_PGEX_InvalidSyntax: return "PGE-X Invalid data entry syntax";
+        case ERROR_PGEX_InvalidDataType: return "PGE-X Invalid data type";
+        default: return "Unknown error";
+    }
+}
+
 /***************************************************************************/
 #ifdef PGE_EDITOR
 CrashData::CrashData() : used(false),untitled(false), modifyed(false) {}
