@@ -38,7 +38,7 @@ signals:
     void messageIn(QString msg);
 
 protected slots:
-    void readData();
+    void doReadData();
     void displayError(QAbstractSocket::SocketError socketError);
 };
 

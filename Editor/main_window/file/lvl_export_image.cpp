@@ -88,8 +88,8 @@ void LevelEdit::ExportingReady() //slot
             y=LvlData.sections[LvlData.CurSection].size_top;
             w=LvlData.sections[LvlData.CurSection].size_right;
             h=LvlData.sections[LvlData.CurSection].size_bottom;
-            w=(long)fabs(x-w);
-            h=(long)fabs(y-h);
+            w=labs(x-w);
+            h=labs(y-h);
         }
         else
         {
