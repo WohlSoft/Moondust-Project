@@ -29,7 +29,7 @@
 
 MetaData FileFormats::ReadNonSMBX64MetaData(PGESTRING RawData)
 {
-    QString errorString;
+    PGESTRING errorString;
     int str_count=0;        //Line Counter
     PGESTRING line;           //Current Line data
 

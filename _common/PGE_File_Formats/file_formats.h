@@ -146,3 +146,4 @@ public:
 };
 
 #endif // FILE_FORMATS_H
+
