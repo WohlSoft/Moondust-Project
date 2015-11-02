@@ -5,7 +5,7 @@ IF NOT EXIST _paths.bat goto error
 
 call _paths.bat
 set OldPATH=%PATH%
-PATH=%QtDir%;%MinGW%;%SystemRoot%\system32;%SystemRoot%;
+PATH=%QtDir%;%MinGW%;%GitDir%;%SystemRoot%\system32;%SystemRoot%;
 
 echo %PATH%
 
