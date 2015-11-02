@@ -40,7 +40,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         int w = LvlData->sections[LvlData->CurSection].size_right;
         int h = LvlData->sections[LvlData->CurSection].size_bottom;
 
-        pResizer = new ItemResizer( QSize((long)fabs(x-w), (long)fabs(y-h)), Qt::green, 32 );
+        pResizer = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::green, 32 );
         this->addItem(pResizer);
         pResizer->setPos(x, y);
         pResizer->type=0;

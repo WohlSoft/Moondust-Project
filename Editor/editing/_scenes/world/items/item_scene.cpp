@@ -145,7 +145,7 @@ void ItemScene::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(true);
     }
 
-    this->setSelected(this);
+    setSelected(true);//minor, but so dumb mistake was here: "this" instead of "true"
     QMenu ItemMenu;
 
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));

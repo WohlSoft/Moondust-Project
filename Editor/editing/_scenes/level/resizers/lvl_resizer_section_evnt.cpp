@@ -43,7 +43,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
         int w = LvlData->events[eventID].sets[LvlData->CurSection].position_right;
         int h = LvlData->events[eventID].sets[LvlData->CurSection].position_bottom;
 
-        pResizer = new ItemResizer( QSize((long)fabs(x-w), (long)fabs(y-h)), Qt::yellow, 32 );
+        pResizer = new ItemResizer( QSize(abs(x-w), abs(y-h)), Qt::yellow, 32 );
         this->addItem(pResizer);
         pResizer->setPos(x, y);
         pResizer->type=1;
