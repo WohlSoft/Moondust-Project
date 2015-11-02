@@ -57,6 +57,9 @@ typedef struct {
     int len_available;
     Uint8 *snd_available;
     char* mus_title;
+    char* mus_artist;
+    char* mus_album;
+    char* mus_copyright;
 } FLAC_music;
 
 /* Initialize the FLAC player, with the given mixer settings

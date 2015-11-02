@@ -51,6 +51,9 @@ typedef struct {
     ogg_int64_t loop_len_ch;
     /* Loop points stuff [by Wohlstand] */
     char *mus_title;
+    char *mus_artist;
+    char *mus_album;
+    char *mus_copyright;
 } OGG_music;
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings
