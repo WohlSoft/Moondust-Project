@@ -51,6 +51,7 @@ PGESTRING FileFormats::removeQuotes(PGESTRING str)
 }
 
 /***************************************************************************/
+#ifdef PGE_EDITOR
 CrashData::CrashData() : used(false),untitled(false), modifyed(false) {}
 
 CrashData::CrashData(const CrashData &_cd)
@@ -82,4 +83,4 @@ void CrashData::reset()
     filename.clear();
     path.clear();
 }
-
+#endif
