@@ -135,7 +135,7 @@ badfile:
 
 LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath)
 {
-    QString errorString;
+    PGESTRING errorString;
     PGEX_FileBegin();
 
     LevelData FileData;
@@ -211,6 +211,7 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
         }
 
         ////////////////////////meta bookmarks////////////////////////
+        #ifdef PGE_EDITOR
         PGEX_Section("META_SYS_CRASH")
         {
             PGEX_SectionBegin(PGEFile::PGEX_Struct);
@@ -232,7 +233,6 @@ LevelData FileFormats::ReadExtendedLvlFile(PGESTRING RawData, PGESTRING filePath
             }
         }//meta sys crash
 
-        #ifdef PGE_EDITOR
         PGEX_Section("META_SCRIPT_EVENTS")
         {
             PGEX_SectionBegin(PGEFile::PGEX_Struct);
@@ -857,6 +857,7 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
         TextData += "META_BOOKMARKS_END\n";
     }
 
+    #ifdef PGE_EDITOR
     //Some System information
     if(FileData.metaData.crash.used)
     {
@@ -870,7 +871,6 @@ PGESTRING FileFormats::WriteExtendedLvlFile(LevelData FileData)
         TextData += "META_SYS_CRASH_END\n";
     }
 
-    #ifdef PGE_EDITOR
     if(FileData.metaData.script)
     {
         if(!FileData.metaData.script->events().isEmpty())
