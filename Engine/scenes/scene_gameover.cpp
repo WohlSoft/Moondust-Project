@@ -55,7 +55,7 @@ int GameOverScene::exec()
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();
 
-    if (continueOrQuit.answer() > 0)
+    if (continueOrQuit.answer() >= 0)
         if (items[continueOrQuit.answer()] == "Continue")
             return GameOverSceneResult::CONTINUE;
 
