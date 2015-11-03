@@ -7836,9 +7836,13 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
         <translation>Limpieza de residuos </translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation>¡Todo está bien, el nivel no tiene PNJs residuales!</translation>
+        <translation type="vanished">¡Todo está bien, el nivel no tiene PNJs residuales!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbabe!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
