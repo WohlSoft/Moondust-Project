@@ -7960,9 +7960,13 @@ to get more information.</translation>
         <translation type="vanished">Everything is fine, level has no NPC gargabe!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC garbabe!</source>
-        <translation>Everything is fine, level has no NPC garbabe!</translation>
+        <translation type="vanished">Everything is fine, level has no NPC garbage!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbage!</source>
+        <translation>Everything is fine, level has no NPC garbage!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
