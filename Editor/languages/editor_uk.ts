@@ -5918,7 +5918,7 @@ See in %1 for more information.</source>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
-        <source>Everything is fine, level has no NPC garbabe!</source>
+        <source>Everything is fine, level has no NPC garbage!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

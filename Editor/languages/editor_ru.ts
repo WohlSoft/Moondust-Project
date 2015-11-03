@@ -7941,8 +7941,12 @@ to get more information.</source>
         <translation type="vanished">Всё хорошо, на уровне нет лишних НИП!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC garbabe!</source>
+        <translation type="vanished">Всё хорошо, на уровне нет мусора НИП!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbage!</source>
         <translation>Всё хорошо, на уровне нет мусора НИП!</translation>
     </message>
     <message>
