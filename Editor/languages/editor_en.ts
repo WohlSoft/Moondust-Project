@@ -7956,9 +7956,13 @@ to get more information.</translation>
         <translation>NPC garbage clean-up</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation>Everything is fine, level has no NPC gargabe!</translation>
+        <translation type="vanished">Everything is fine, level has no NPC gargabe!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbabe!</source>
+        <translation>Everything is fine, level has no NPC garbabe!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>

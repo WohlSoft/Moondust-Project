@@ -7937,9 +7937,13 @@ to get more information.</source>
         <translation>Очистить от лишних НИП</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation>Всё хорошо, на уровне нет лишних НИП!</translation>
+        <translation type="vanished">Всё хорошо, на уровне нет лишних НИП!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbabe!</source>
+        <translation>Всё хорошо, на уровне нет мусора НИП!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>
