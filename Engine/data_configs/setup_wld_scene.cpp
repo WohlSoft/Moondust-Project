@@ -123,4 +123,5 @@ void WorldMapSetup::initFonts()
     star_fontID=FontManager::getFontID(star_font_name);
     coin_fontID=FontManager::getFontID(coin_font_name);
     health_fontID=FontManager::getFontID(health_font_name);
+    lives_fontID=FontManager::getFontID(lives_font_name);
 }
