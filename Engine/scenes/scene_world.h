@@ -34,6 +34,7 @@
 
 #include "world/wld_tilebox.h"
 #include "world/wld_player_portrait.h"
+#include "world/wld_pathopener.h"
 
 #include <script/lua_world_engine.h>
 
@@ -51,6 +52,7 @@ class WorldScene : public Scene
     friend class PGE_MsgBox;
     friend class PGE_TextInputBox;
     friend class PGE_MenuBoxBase;
+    friend class WldPathOpener;
 public:
     WorldScene();
     ~WorldScene();
@@ -155,6 +157,11 @@ private:
     void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
     void    updateCenter();
     void    fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, float cx, float cy);
+    void    initElementsVizibility();
+    void    saveElementsVizibility();
+
+    bool    pathOpeningInProcess;
+    WldPathOpener pathOpener;
 
     QVector<WorldScene_misc_img > imgs;
     QVector<WorldScene_Portrait > portraits;

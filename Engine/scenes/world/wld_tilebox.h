@@ -44,6 +44,7 @@ public:
     WorldNode(const WorldNode &xx);
     virtual void render(float, float) {}
     virtual bool collidePoint(long rx, long ry);
+    virtual bool collideWith(WorldNode *it);
     int type;
     long x;
     long y;
@@ -56,6 +57,7 @@ public:
     PGE_Texture texture;
     bool animated;
     long animatorID;
+    bool vizible;
 };
 
 class WldTileItem: public WorldNode
@@ -80,7 +82,6 @@ public:
     void render(float rx, float ry);
     obj_w_scenery setup;
     WorldScenery data;
-    bool vizible;
 };
 
 class WldPathItem: public WorldNode
@@ -93,7 +94,6 @@ public:
     void render(float rx, float ry);
     obj_w_path setup;
     WorldPaths data;
-    bool vizible;
 };
 
 class WldLevelItem: public WorldNode
@@ -115,7 +115,6 @@ public:
     float       _path_big_offset_x;
     float       _path_big_offset_y;
     WorldLevels data;
-    bool vizible;
 };
 
 class WldMusicBoxItem: public WorldNode

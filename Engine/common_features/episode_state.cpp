@@ -27,6 +27,9 @@ void EpisodeState::reset()
     gameType=Testing;
     LevelTargetWarp=0;
 
+    _recent_ExitCode_level=0;
+    _recent_ExitCode_world=0;
+
     saveFileName="";
     _episodePath="";
 }
