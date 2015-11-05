@@ -21,6 +21,10 @@
 #include <gui/pge_textinputbox.h>
 #include <audio/pge_audio.h>
 
+#include <scenes/scene_level.h>
+
+#include <QStringList>
+
 bool PGE_Debugger::cheat_allowed=true;
 bool PGE_Debugger::cheat_pagangod=false;
 bool PGE_Debugger::cheat_chucknorris=false;
@@ -54,6 +58,20 @@ void PGE_Debugger::executeCommand(Scene *parent)
             cheat_superman=!cheat_superman;
             en=cheat_superman;
             cheatfound=true;
+        } else if(parent && (inputBox.inputText().startsWith("iwishexitas")) && (parent->type()==Scene::Level)) {
+            QStringList args=inputBox.inputText().split(' ');
+            if(args.size()==2)
+            {
+                bool ok=false;
+                int exitcode=args[1].toInt(&ok);
+                if(ok)
+                {
+                    LevelScene *s = static_cast<LevelScene *>(parent);
+                    if(s) { s->setExiting(1500, exitcode);
+                    en=true;
+                    cheatfound=true; }
+                }
+            }
         }
     }
 
