@@ -197,29 +197,55 @@ void WldPathOpener::initFetcher()
                 _current_pos.setX(wl->x);
                 _current_pos.setY(wl->y);
 
+                QVector<WorldNode* > nodes;
+                bool found=false;
+                long x,y;
+
+
                 if(force || ((wl->data.left_exit!=0)&&((wl->data.left_exit==exitCode) || (wl->data.left_exit<0))) )
                 {
+                    //left
                     _search_pos.setX(_current_pos.x()-s->_indexTable.grid());
                     _search_pos.setY(_current_pos.y());
-                    need_to_walk.push_back(_search_pos);
+                    x=_current_pos.x()+s->_indexTable.grid_half()-s->_indexTable.grid();
+                    y=_current_pos.y()+s->_indexTable.grid_half();
+                    s->_indexTable.query(x,y, nodes);
+                    fetchSideNodes(found, nodes, x,y);
+                    nodes.clear();
                 }
                 if(force || ((wl->data.right_exit!=0)&&((wl->data.right_exit==exitCode) || (wl->data.right_exit<0))) )
                 {
+                    //Right
                     _search_pos.setX(_current_pos.x()+s->_indexTable.grid());
                     _search_pos.setY(_current_pos.y());
-                    need_to_walk.push_back(_search_pos);
+                    x=_current_pos.x()+s->_indexTable.grid_half()+s->_indexTable.grid();
+                    y=_current_pos.y()+s->_indexTable.grid_half();
+                    s->_indexTable.query(x,y, nodes);
+                    fetchSideNodes(found, nodes, x, y);
+                    nodes.clear();
+
                 }
                 if(force || ((wl->data.top_exit!=0)&&( (wl->data.top_exit==exitCode) || (wl->data.top_exit<0))) )
                 {
+                    //Top
                     _search_pos.setX(_current_pos.x());
                     _search_pos.setY(_current_pos.y()-s->_indexTable.grid());
-                    need_to_walk.push_back(_search_pos);
+                    x=_current_pos.x()+s->_indexTable.grid_half();
+                    y=_current_pos.y()+s->_indexTable.grid_half()-s->_indexTable.grid();
+                    s->_indexTable.query(x, y, nodes);
+                    fetchSideNodes(found, nodes, x, y);
+                    nodes.clear();
                 }
                 if(force || ((wl->data.bottom_exit!=0)&&( (wl->data.bottom_exit==exitCode) || (wl->data.bottom_exit<0))) )
                 {
+                    //Bottom
                     _search_pos.setX(_current_pos.x());
                     _search_pos.setY(_current_pos.y()+s->_indexTable.grid());
-                    need_to_walk.push_back(_search_pos);
+                    x=_current_pos.x()+s->_indexTable.grid_half();
+                    y=_current_pos.y()+s->_indexTable.grid_half()+s->_indexTable.grid();
+                    s->_indexTable.query(x,y, nodes);
+                    fetchSideNodes(found, nodes, x, y);
+                    nodes.clear();
                 }
                 break;
             }
