@@ -397,7 +397,7 @@ bool WorldScene::init()
     }
 
     //Apply vizibility settings to elements
-    initElementsVizibility();
+    initElementsVisibility();
     pathOpener.startAt(PGE_PointF(posX, posY));
     pathOpeningInProcess=true;
 
@@ -534,14 +534,14 @@ void WorldScene::processPauseMenu()
                     //Save game state!
                     gameState->game_state.worldPosX=posX;
                     gameState->game_state.worldPosY=posY;
-                    saveElementsVizibility();
+                    saveElementsVisibility();
                     gameState->save();
                 break;
                 case PAUSE_SaveQuit:
                     //Save game state! and exit from episode
                     gameState->game_state.worldPosX=posX;
                     gameState->game_state.worldPosY=posY;
-                    saveElementsVizibility();
+                    saveElementsVisibility();
                     gameState->save();
                     setExiting(0, WldExit::EXIT_exitWithSave);
                     break;
@@ -716,7 +716,7 @@ void WorldScene::update()
             {
                 gameState->game_state.worldPosX=posX;
                 gameState->game_state.worldPosY=posY;
-                saveElementsVizibility();
+                saveElementsVisibility();
                 PGE_Audio::playSoundByRole(obj_sound_role::WorldEnterLevel);
                 stopMusic(true, 300);
                 lock_controls=true;
@@ -898,7 +898,7 @@ void WorldScene::updateCenter()
     }
 }
 
-void WorldScene::initElementsVizibility()
+void WorldScene::initElementsVisibility()
 {
     if(gameState)
     {
@@ -952,7 +952,7 @@ void WorldScene::initElementsVizibility()
     }
 }
 
-void WorldScene::saveElementsVizibility()
+void WorldScene::saveElementsVisibility()
 {
     if(gameState)
     {

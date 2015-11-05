@@ -157,8 +157,8 @@ private:
     void    updateAvailablePaths();//!< Checks paths by sides arround player and sets walking permission
     void    updateCenter();
     void    fetchSideNodes(bool &side, QVector<WorldNode *> &nodes, float cx, float cy);
-    void    initElementsVizibility();
-    void    saveElementsVizibility();
+    void    initElementsVisibility();
+    void    saveElementsVisibility();
 
     bool    pathOpeningInProcess;
     WldPathOpener pathOpener;
