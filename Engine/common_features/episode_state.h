@@ -64,6 +64,8 @@ public:
     QString WorldPath;
     QString saveFileName;
     QString _episodePath;
+    int _recent_ExitCode_level;
+    int _recent_ExitCode_world;
 
     QString LevelFile;
     QString LevelFile_hub;

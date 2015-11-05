@@ -1,3 +1,6 @@
+0.2.4
+- Working paths system on world map! Now there are closed at episode start, but opens on level passes.
+
 0.2.3.1
 - Small update of File Library
 - Support for "health" tag inside npc-*.txt custom configs

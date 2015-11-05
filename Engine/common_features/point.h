@@ -35,9 +35,14 @@ public:
     bool isNull();
     int x();
     int y();
+    friend bool operator==(const PGE_Point& lhs, const PGE_Point& rhs);
+    friend bool operator!=(const PGE_Point& lhs, const PGE_Point& rhs);
 private:
     int _x;
     int _y;
 };
+
+bool operator==(const PGE_Point& lhs, const PGE_Point& rhs);
+bool operator!=(const PGE_Point& lhs, const PGE_Point& rhs);
 
 #endif // PGE_Point_H

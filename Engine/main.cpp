@@ -439,6 +439,8 @@ PlayWorldMap:
     if(sceneResult)
         ExitCode = wScene->exec();
 
+    _game_state._recent_ExitCode_world=ExitCode;
+
     if(wScene->doShutDown())
     {
         delete wScene;
@@ -553,7 +555,8 @@ PlayLevel:
             if(sceneResult)
             {
                 lScene->fader.setFade(10, 0.0f, 0.02f);
-                ExitCode = lScene->exec();                
+                ExitCode = lScene->exec();
+                _game_state._recent_ExitCode_level=ExitCode;
             }
 
             if(!sceneResult)
