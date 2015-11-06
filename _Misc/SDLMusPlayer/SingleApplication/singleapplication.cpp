@@ -32,6 +32,7 @@ SingleApplication::SingleApplication(QStringList &args)
   _shouldContinue = false; // By default this is not the main process
 
   socket = new QUdpSocket();
+  server = NULL;
   QUdpSocket acceptor;
   acceptor.bind(QHostAddress::LocalHost, 58235, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
@@ -101,7 +102,7 @@ SingleApplication::~SingleApplication()
   if(_shouldContinue)
   {
       emit stopServer();
-      if(!server->wait(5000))
+      if(server && (!server->wait(5000)))
       {
           qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
           server->terminate();
@@ -110,7 +111,7 @@ SingleApplication::~SingleApplication()
           qDebug() << "Terminated!";
       }
   }
-  delete server;
+  if(server) delete server;
 }
 
 /**
