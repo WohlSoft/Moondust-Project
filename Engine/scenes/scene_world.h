@@ -149,7 +149,6 @@ private:
     long      coins;
     QString   levelTitle;
     /*******************************************/
-    bool    ignore_paths;
     bool    allow_left;
     bool    allow_up;
     bool    allow_right;

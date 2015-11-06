@@ -32,6 +32,8 @@ public:
     static bool cheat_chucknorris;
     static bool cheat_superman;
 
+    static bool cheat_worldfreedom;
+
     static void resetEverything();
     static void setRestriction(bool denyed);
 

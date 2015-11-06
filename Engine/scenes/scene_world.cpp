@@ -31,6 +31,7 @@
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
 #include <settings/global_settings.h>
+#include <settings/debugger.h>
 
 #include <QHash>
 #include <QPair>
@@ -124,7 +125,6 @@ WorldScene::WorldScene()
 
     walk_direction=Walk_Idle;
     lock_controls=false;
-    ignore_paths=false;
     allow_left=false;
     allow_up=false;
     allow_right=false;
@@ -614,13 +614,13 @@ void WorldScene::update()
         {
             if(!lock_controls)
             {
-                if(controls_1.left && (allow_left || ignore_paths))
+                if(controls_1.left && (allow_left || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Left;
-                if(controls_1.right && (allow_right || ignore_paths))
+                if(controls_1.right && (allow_right || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Right;
-                if(controls_1.up && (allow_up || ignore_paths))
+                if(controls_1.up && (allow_up || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Up;
-                if(controls_1.down && (allow_down || ignore_paths))
+                if(controls_1.down && (allow_down || PGE_Debugger::cheat_worldfreedom))
                     walk_direction=Walk_Down;
 
                 //If movement denied - play sound
@@ -692,19 +692,7 @@ void WorldScene::update()
 
         _itemsToRender.clear();
         _indexTable.query(posX-(viewportRect.width()/2), posY-(viewportRect.height()/2), posX+(viewportRect.width()/2), posY+(viewportRect.height()/2), _itemsToRender, true);
-
-        if(isPauseMenu)
-        {
-            PGE_MsgBox msgBox(this, "Hi guys!\nThis is a dummy world map. I think, it works fine!",
-                              PGE_MsgBox::msg_info);
-
-            if(!ConfigManager::setup_message_box.sprite.isEmpty())
-                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
-            msgBox.exec();
-            isPauseMenu=false;
-        }
     }
-
 
 
 
@@ -1185,13 +1173,11 @@ void WorldScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
                 isPauseMenu = true;
             }
         break;
-        case SDLK_i:
-            ignore_paths= !ignore_paths;
-            if(ignore_paths)
-                PGE_Audio::playSoundByRole(obj_sound_role::PlayerGrow);
-            else
-                PGE_Audio::playSoundByRole(obj_sound_role::PlayerShrink);
-        break;
+        case SDLK_BACKQUOTE:
+        {
+            PGE_Debugger::executeCommand(this);
+            break;
+        }
         default: break;
     }
 }
