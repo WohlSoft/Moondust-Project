@@ -19,6 +19,7 @@
 #include "debugger.h"
 #include <data_configs/config_manager.h>
 #include <gui/pge_textinputbox.h>
+#include <gui/pge_msgbox.h>
 #include <audio/pge_audio.h>
 
 #include <scenes/scene_level.h>
@@ -29,6 +30,8 @@ bool PGE_Debugger::cheat_allowed=true;
 bool PGE_Debugger::cheat_pagangod=false;
 bool PGE_Debugger::cheat_chucknorris=false;
 bool PGE_Debugger::cheat_superman=false;
+
+bool PGE_Debugger::cheat_worldfreedom=false;
 
 void PGE_Debugger::executeCommand(Scene *parent)
 {
@@ -44,33 +47,57 @@ void PGE_Debugger::executeCommand(Scene *parent)
     /*Special commands part*/
 
     /*Cheat codes part (must be at bottom!)*/
-    if(cheat_allowed)
+    if(cheat_allowed && (parent!=NULL))
     {
-        if(inputBox.inputText()=="donthurtme") {
-            cheat_pagangod=!cheat_pagangod;
-            en=cheat_pagangod;
-            cheatfound=true;
-        } else if(inputBox.inputText()=="chucknorris") {
-            cheat_chucknorris=!cheat_chucknorris;
-            en=cheat_chucknorris;
-            cheatfound=true;
-        } else if(inputBox.inputText()=="iamsuperman") {
-            cheat_superman=!cheat_superman;
-            en=cheat_superman;
-            cheatfound=true;
-        } else if(parent && (inputBox.inputText().startsWith("iwishexitas")) && (parent->type()==Scene::Level)) {
-            QStringList args=inputBox.inputText().split(' ');
-            if(args.size()==2)
-            {
-                bool ok=false;
-                int exitcode=args[1].toInt(&ok);
-                if(ok)
+        ///////////////////////////////////////////////
+        ////////////////Common commands////////////////
+        ///////////////////////////////////////////////
+        if(inputBox.inputText()=="redigitiscool") {
+            PGE_MsgBox msgBox(parent, "Redigit is no more cool,\nSorry!",
+                              PGE_MsgBox::msg_warn);
+            if(!ConfigManager::setup_message_box.sprite.isEmpty())
+                msgBox.loadTexture(ConfigManager::setup_message_box.sprite);
+            msgBox.exec();
+        } else
+        if(parent->type()==Scene::Level) {
+            ///////////////////////////////////////////////
+            ////////////Level specific commands////////////
+            ///////////////////////////////////////////////
+            if(inputBox.inputText()=="donthurtme") {
+                cheat_pagangod=!cheat_pagangod;
+                en=cheat_pagangod;
+                cheatfound=true;
+            } else if(inputBox.inputText()=="chucknorris") {
+                cheat_chucknorris=!cheat_chucknorris;
+                en=cheat_chucknorris;
+                cheatfound=true;
+            } else if(inputBox.inputText()=="iamsuperman") {
+                cheat_superman=!cheat_superman;
+                en=cheat_superman;
+                cheatfound=true;
+            } else if(inputBox.inputText().startsWith("iwishexitas")) {
+                QStringList args=inputBox.inputText().split(' ');
+                if(args.size()==2)
                 {
-                    LevelScene *s = static_cast<LevelScene *>(parent);
-                    if(s) { s->setExiting(1500, exitcode);
-                    en=true;
-                    cheatfound=true; }
+                    bool ok=false;
+                    int exitcode=args[1].toInt(&ok);
+                    if(ok)
+                    {
+                        LevelScene *s = static_cast<LevelScene *>(parent);
+                        if(s) { s->setExiting(1500, exitcode);
+                        en=true;
+                        cheatfound=true; }
+                    }
                 }
+            }
+        } else if(parent->type()==Scene::World) {
+            ///////////////////////////////////////////////
+            //////////World map specific commands//////////
+            ///////////////////////////////////////////////
+            if(inputBox.inputText()=="illparkwhereiwant") {
+                cheat_worldfreedom=!cheat_worldfreedom;
+                en=cheat_worldfreedom;
+                cheatfound=true;
             }
         }
     }
