@@ -14,10 +14,13 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Simple SDL2 Mixer ext Music player</string>
+   <string>Simple SDL2 Mixer X Music player</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <item row="2" column="0" colspan="4">
      <widget class="QLabel" name="musAlbum">
       <property name="text">
