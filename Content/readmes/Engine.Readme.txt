@@ -55,6 +55,8 @@ Ctrl+F - Toggle fullscreen mode
  donthurtme - enable/disable god mode (player will don't get damage from dangerouse surfaces and will dont burn in lava)
  iamsuperman - player has ability to fly up via alt-jump key
  chucknorris - player via alt-run key will be able destroy any nearest object except BGO's, warps and other playable characters
+ iwishexitas X - exit from level with code X (replace X with unsigned integer
+        (usually from 1 to 8. Exit code hints you can take from a world map editor))
 
 ==World specific commands:==
  illparkwhereiwant - allows walking anywhere on world map
