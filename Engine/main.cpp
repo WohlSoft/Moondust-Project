@@ -639,9 +639,11 @@ PlayLevel:
                 {
                     end_level_jump = (_game_state.isEpisode)? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     playAgain = false;
+                    PGE_MsgBox::error("Level was closed with error.\nRead log file for detail info.");
                 }
                 break;
             default:
+                end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
             }
 
