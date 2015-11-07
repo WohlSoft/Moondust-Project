@@ -865,7 +865,11 @@ void LvlLayersBox::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 void LvlLayersBox::on_RemoveLayer_clicked()
 {
     if(ui->LvlLayerList->selectedItems().isEmpty()) return;
-    RemoveCurrentLayer(true);
+    QMessageBox::StandardButton answer=QMessageBox::question(mw(),
+                                     tr("Remove layer"),
+                                     tr("Are you want to remove this layer?\nAll elements on this layer will be moved to the 'Default' layer."),
+                                     QMessageBox::Yes|QMessageBox::No);
+    if(answer==QMessageBox::Yes) RemoveCurrentLayer(true);
 }
 
 void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
@@ -895,10 +899,18 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     if((selected==removeLayer)||(selected==removeLayerOnly))
     {
         if(selected==removeLayerOnly){
-            RemoveCurrentLayer(true);
-        }else
+            QMessageBox::StandardButton answer=QMessageBox::question(mw(),
+                                             tr("Remove layer"),
+                                             tr("Are you want to remove this layer?\nAll elements of this layer will be moved to the 'Default' layer!"),
+                                             QMessageBox::Yes|QMessageBox::No);
+            if(answer==QMessageBox::Yes) RemoveCurrentLayer(true);
+        } else
         if(selected==removeLayer){
-            RemoveCurrentLayer(false);
+            QMessageBox::StandardButton answer=QMessageBox::question(mw(),
+                                             tr("Remove layer"),
+                                             tr("Are you want to remove this layer?\nAll elements of this layer will be removed too!"),
+                                             QMessageBox::Yes|QMessageBox::No);
+            if(answer==QMessageBox::Yes) RemoveCurrentLayer(false);
         }
     }
 }
