@@ -3775,19 +3775,47 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <translation>New Layer %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="882"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="869"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="910"/>
+        <source>Remove layer</source>
+        <translation>Remove layer</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <source>Are you want to remove this layer?
+All elements on this layer will be moved to the &apos;Default&apos; layer.</source>
+        <translation>Are you want to remove this layer?
+All elements on this layer will be moved to the &apos;Default&apos; layer.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
         <source>Rename layer</source>
         <translation>Rename layer</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="890"/>
         <source>Remove layer with items</source>
         <translation>Remove layer and items</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
         <source>Remove layer and save items</source>
         <translation>Remove layer and keep items</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
+        <translation>Are you want to remove this layer?
+All elements on this layer will be moved to the &apos;Default&apos; layer!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be removed too!</source>
+        <translation>Are you want to remove this layer?
+All elements of this layer will be removed too!</translation>
     </message>
 </context>
 <context>
