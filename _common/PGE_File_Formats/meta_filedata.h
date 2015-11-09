@@ -32,6 +32,7 @@ struct Bookmark
     double y;
 };
 
+#ifdef PGE_EDITOR
 class CrashData
 {
 public:
@@ -46,15 +47,16 @@ public:
     PGESTRING path;
     PGESTRING filename;
 };
+#endif
 
 struct MetaData
 {
     PGEVECTOR<Bookmark> bookmarks;
 
-    //Crash backup of special data
-    CrashData crash;
     //For Editor application only
     #ifdef PGE_EDITOR
+    //Crash backup of special data
+    CrashData crash;
     //only for level
     ScriptHolder* script;
     #endif

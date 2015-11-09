@@ -6,31 +6,33 @@ local AI_HIDING_DOWN = 2
 local AI_HIDING_IDLE = 3
 
 function horizontal_piranha:hideSprite()
-	if (self.npc_obj.direction == 1) then
-		self.npc_obj:setSpriteWarp(1.0, 2, true)
-	elseif (self.npc_obj.direction == -1) then
-		self.npc_obj:setSpriteWarp(1.0, 4, true)
-	end
+    if (self.npc_obj.direction == 1) then
+        self.npc_obj:setSpriteWarp(1.0, 2, true)
+    elseif (self.npc_obj.direction == -1) then
+        self.npc_obj:setSpriteWarp(1.0, 4, true)
+    end
 end
 
 function horizontal_piranha:updateWarp()
-	if (self.npc_obj.direction == 1) then
-		self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.left-self.npc_obj.right)/self.def_width), 2, true)
-	elseif (self.npc_obj.direction == -1) then
-		self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.right-self.npc_obj.left)/self.def_width), 4, true)
-	end
+    if (self.npc_obj.direction == 1) then
+        self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.left-self.npc_obj.right)/self.def_width), 2, true)
+    elseif (self.npc_obj.direction == -1) then
+        self.npc_obj:setSpriteWarp(1.0-(math.abs(self.npc_obj.left-self.npc_obj.right)/self.def_width), 4, true)
+    end
 end
 
 
 function horizontal_piranha:initProps()
     -- Animation properties
 
-    -- right position (reset size to initial)
-	if (self.npc_obj.direction == 1) then
-		self.npc_obj.right = self.npc_obj.left
-	elseif (self.npc_obj.direction == -1) then
-		self.npc_obj.left = self.npc_obj.right
-	end
+    -- right-left position (reset size to initial)
+    self.npc_obj.left     = self.def_left
+    self.npc_obj.right    = self.def_right
+    if (self.npc_obj.direction == 1) then
+        self.npc_obj.right = self.npc_obj.left
+    elseif (self.npc_obj.direction == -1) then
+        self.npc_obj.left = self.npc_obj.right
+    end
 
     -- Currents
     self.cur_mode = AI_HIDING_IDLE
@@ -55,8 +57,8 @@ function horizontal_piranha:__init(npc_obj)
     self.npc_obj = npc_obj
     -- Config
     self.def_right = npc_obj.right
-    self.def_width = npc_obj.width
     self.def_left = npc_obj.left
+    self.def_width = npc_obj.width
     self.speed = 1
     
     -- FOR AI_SHOWING_UP
@@ -73,7 +75,7 @@ function horizontal_piranha:__init(npc_obj)
 
     npc_obj.gravity = 0
 
-    self:initProps()
+    -- self:initProps()
 end
 
 function horizontal_piranha:onActivated()
@@ -84,19 +86,19 @@ function horizontal_piranha:onLoop(tickTime)
     if(self.cur_mode == AI_SHOWING_UP)then
         if(self.def_showingUpTicks > self.cur_showingUpTicks)then
             self.cur_showingUpTicks = self.cur_showingUpTicks + tickTime
-			if (self.npc_obj.direction == 1) then
-				self.npc_obj.left = self.npc_obj.left + smbx_utils.speedConv(self.speed, tickTime)
-			elseif (self.npc_obj.direction == -1) then
-				self.npc_obj.right = self.npc_obj.right - smbx_utils.speedConv(self.speed, tickTime)
-			end
+            if (self.npc_obj.direction == 1) then
+                self.npc_obj.right = self.npc_obj.right + smbx_utils.speedConv(self.speed, tickTime)
+            elseif (self.npc_obj.direction == -1) then
+                self.npc_obj.left = self.npc_obj.left - smbx_utils.speedConv(self.speed, tickTime)
+            end
             self:updateWarp()
         else
             self.cur_mode = AI_SHOWING_IDLE
-			if (self.npc_obj.direction == 1) then
-				self.npc_obj.left = self.def_left
-			elseif (self.npc_obj.direction == -1) then
-				self.npc_obj.right = self.def_right
-			end
+            if (self.npc_obj.direction == 1) then
+                self.npc_obj.right = self.def_right
+            elseif (self.npc_obj.direction == -1) then
+                self.npc_obj.left = self.def_left
+            end
             self.npc_obj:resetSpriteWarp()
             self.cur_showingUpTicks = 0
         end
@@ -111,10 +113,10 @@ function horizontal_piranha:onLoop(tickTime)
         if(self.def_hidingDownTicks > self.cur_hidingDownTicks)then
             self.cur_hidingDownTicks = self.cur_hidingDownTicks + tickTime
             if (self.npc_obj.direction == 1) then
-				self.npc_obj.left = self.npc_obj.left - smbx_utils.speedConv(self.speed, tickTime)
-			elseif (self.npc_obj.direction == -1) then
-				self.npc_obj.right = self.npc_obj.right + smbx_utils.speedConv(self.speed, tickTime)
-			end
+                self.npc_obj.right = self.npc_obj.right - smbx_utils.speedConv(self.speed, tickTime)
+            elseif (self.npc_obj.direction == -1) then
+                self.npc_obj.left = self.npc_obj.left + smbx_utils.speedConv(self.speed, tickTime)
+            end
             self:updateWarp()
         else
             self.cur_mode = AI_HIDING_IDLE
@@ -126,11 +128,12 @@ function horizontal_piranha:onLoop(tickTime)
         if(self.def_hidingIdleTicks >= self.cur_hidingIdleTicks)then
             self.cur_hidingIdleTicks = self.cur_hidingIdleTicks + tickTime
         else
-			self.cur_mode = AI_SHOWING_UP
-			self.npc_obj.paused_physics = false
-			self.cur_hidingIdleTicks = 0
+            self.cur_mode = AI_SHOWING_UP
+            self.npc_obj.paused_physics = false
+            self.cur_hidingIdleTicks = 0
         end
     end
 end
 
 return horizontal_piranha
+

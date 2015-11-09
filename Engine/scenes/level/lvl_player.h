@@ -69,9 +69,6 @@ class LVL_Player :
         QHash<int, PGE_Phys_Object*> collided_center;
         LVL_Npc *  collided_talkable_npc;
         bool _stucked;
-        bool   collided_slope;
-        int    collided_slope_direct;
-        float  collided_slope_angle_ratio;
         /***************************************************/
 
         int playerID;
@@ -160,6 +157,10 @@ class LVL_Player :
         float   bumpJumpVelocity;//! Up jump velocity
         int     bumpJumpTime;    //!< Up jump time
         void    bump(bool _up=false, double bounceSpeed=0.0, int timeToJump=0);
+        inline void bumpf(bool _up, float bounceSpeed=0.0f, int timeToJump=0)
+        {
+            bump(_up, (double)bounceSpeed, timeToJump);
+        }
         /********************Bump***************************/
 
         /********************Climbing***************************/
@@ -253,7 +254,6 @@ public:
         /********************Lua Stuff******************/
 
         bool isInited();
-
 private:
         bool _no_render;
         bool isLocked;

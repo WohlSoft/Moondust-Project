@@ -97,6 +97,20 @@ int LVL_Npc::lua_activate_neighbours()
     return found;
 }
 
+LVL_Npc *LVL_Npc::lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable)
+{
+    LevelNPC def = data;
+    def.id=npcID;
+    def.x=round(posX());
+    def.y=round(posY());
+    def.direct=_direction;
+    def.generator=false;
+    def.layer="Spawned NPCs";
+    return LvlSceneP::s->spawnNPC(def,
+                           (LevelScene::NpcSpawnType)sp_type,
+                           (LevelScene::NpcSpawnDirection)sp_dir, reSpawnable);
+}
+
 PlayerPosDetector *LVL_Npc::lua_installPlayerPosDetector()
 {
 

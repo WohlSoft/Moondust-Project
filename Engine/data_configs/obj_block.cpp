@@ -152,6 +152,10 @@ bool ConfigManager::loadLevelBlocks()
                     NumberLimiter::apply(sblock.frames, 1u);
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
                     NumberLimiter::apply(sblock.framespeed, 1);
+                sblock.hit_sound_id = blockset.value("hit-sound-id", "0").toInt();
+                    NumberLimiter::apply(sblock.hit_sound_id, 0);
+                sblock.destroy_sound_id = blockset.value("destroy-sound-id", "0").toInt();
+                    NumberLimiter::apply(sblock.destroy_sound_id, 0);
 
                 static int switchID=0;
                 sblock.switch_Button    = blockset.value("switch-button", false).toBool();
@@ -160,6 +164,58 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.switch_transform = blockset.value("switch-transform", "1").toInt();;
 
                 sblock.display_frame = blockset.value("display-frame", "0").toInt();
+
+                sblock.plSwitch_Button = blockset.value("player-switch-button", false).toBool();
+                sblock.plSwitch_Button_id = blockset.value("player-switch-button-id", 0).toInt();
+                sblock.plSwitch_frames_true.clear();
+                sblock.plSwitch_frames_false.clear();
+                if(sblock.plSwitch_Button)
+                {
+                    QString tmp = blockset.value("player-switch-frames-true", "").toString();
+                    if(!tmp.isEmpty())
+                    {
+                        QStringList tmlL = tmp.split(',');
+                        foreach(QString fr, tmlL)
+                            sblock.plSwitch_frames_true.push_back(fr.toInt());
+                    }
+                    else
+                        sblock.plSwitch_frames_true.push_back(0);
+                    tmp = blockset.value("player-switch-frames-false", "").toString();
+                    if(!tmp.isEmpty())
+                    {
+                        QStringList tmlL = tmp.split(',');
+                        foreach(QString fr, tmlL)
+                            sblock.plSwitch_frames_false.push_back(fr.toInt());
+                    }
+                    else
+                        sblock.plSwitch_frames_false.push_back(0);
+                }
+
+                sblock.plFilter_Block= blockset.value("player-filter-block", false).toBool();
+                sblock.plFilter_Block_id= blockset.value("player-filter-block-id", 0).toInt();
+                sblock.plFilter_frames_true.clear();
+                sblock.plFilter_frames_false.clear();
+                if(sblock.plFilter_Block)
+                {
+                    QString tmp = blockset.value("player-filter-frames-true", "").toString();
+                    if(!tmp.isEmpty())
+                    {
+                        QStringList tmlL = tmp.split(',');
+                        foreach(QString fr, tmlL)
+                            sblock.plFilter_frames_true.push_back(fr.toInt());
+                    }
+                    else
+                        sblock.plFilter_frames_true.push_back(0);
+                    tmp = blockset.value("player-filter-frames-false", "").toString();
+                    if(!tmp.isEmpty())
+                    {
+                        QStringList tmlL = tmp.split(',');
+                        foreach(QString fr, tmlL)
+                            sblock.plFilter_frames_false.push_back(fr.toInt());
+                    }
+                    else
+                        sblock.plFilter_frames_false.push_back(0);
+                }
 
                 long iTmp;
                 iTmp = blockset.value("default-invisible", "-1").toInt();

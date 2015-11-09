@@ -73,7 +73,6 @@ void LVL_Player::setDuck(bool duck)
     }
 }
 
-
 void LVL_Player::bump(bool _up, double bounceSpeed, int timeToJump)
 {
     if(_up)

@@ -47,10 +47,6 @@ LVL_Player::LVL_Player() : PGE_Phys_Object()
 
     _stucked=false;
 
-    collided_slope=false;
-    collided_slope_direct=0;
-    collided_slope_angle_ratio=0.0f;
-
     JumpPressed=false;
     _onGround=false;
     on_slippery_surface=false;

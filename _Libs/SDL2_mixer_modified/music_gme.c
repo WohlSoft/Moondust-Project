@@ -159,6 +159,9 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         spcSpec->gme_t_sample_rate=mixer.freq;
         spcSpec->volume=MIX_MAX_VOLUME;
         spcSpec->mus_title=NULL;
+        spcSpec->mus_artist=NULL;
+        spcSpec->mus_album=NULL;
+        spcSpec->mus_copyright=NULL;
         gme_info_t *musInfo;
         err = (char*)gme_track_info(game_emu, &musInfo, trackNum);
         if(err!=0)
@@ -168,6 +171,12 @@ struct MUSIC_GME *GME_LoadSongRW(SDL_RWops *src, int trackNum)
         }
         spcSpec->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(musInfo->song)+1);
         strcpy(spcSpec->mus_title, musInfo->song);
+        spcSpec->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(musInfo->author)+1);
+        strcpy(spcSpec->mus_artist, musInfo->author);
+        spcSpec->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(musInfo->game)+1);
+        strcpy(spcSpec->mus_album, musInfo->game);
+        spcSpec->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(musInfo->copyright)+1);
+        strcpy(spcSpec->mus_copyright, musInfo->copyright);
         gme_free_info( musInfo );
 
         return spcSpec;
@@ -262,6 +271,19 @@ void GME_delete(struct MUSIC_GME *music)
     {
         SDL_free(music->mus_title);
     }
+    if( music->mus_artist)
+    {
+        SDL_free(music->mus_artist);
+    }
+    if( music->mus_album)
+    {
+        SDL_free(music->mus_album);
+    }
+    if( music->mus_copyright)
+    {
+        SDL_free(music->mus_copyright);
+    }
+
     if(music)
     {
         music->playing=-1;

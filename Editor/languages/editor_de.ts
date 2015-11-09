@@ -3773,19 +3773,44 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <translation>Neue Ebene %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="882"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="869"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="910"/>
+        <source>Remove layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <source>Are you want to remove this layer?
+All elements on this layer will be moved to the &apos;Default&apos; layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
         <source>Rename layer</source>
         <translation>Ebene umbennen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="890"/>
         <source>Remove layer with items</source>
         <translation>Lösche Ebene mit Items</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
         <source>Remove layer and save items</source>
         <translation>Lösche Ebene, aber speichere Items</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be removed too!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7865,7 +7890,7 @@ Siehe in %1 für mehr Informationen.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
-        <source>Everything is fine, level has no NPC gargabe!</source>
+        <source>Everything is fine, level has no NPC garbage!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

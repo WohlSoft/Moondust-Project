@@ -119,6 +119,17 @@ public:
     static NPCConfigFile    CreateEmpytNpcTXT();
 
     /******************************common stuff***********************************/
+    enum ErrorCodes{
+        Success=0,
+        ERROR_NotExist,
+        ERROR_AccessDenied,
+        ERROR_InvalidSyntax,
+        ERROR_PGEX_SectionNotClosed,
+        ERROR_PGEX_InvalidSyntax,
+        ERROR_PGEX_InvalidDataType
+    };
+    static PGESTRING        getErrorString(ErrorCodes errCode);
+
     enum SMBX64_violations {
         SMBX64_FINE             =0,
         SMBX64EXC_SECTIONS      =1<<0,
@@ -146,3 +157,4 @@ public:
 };
 
 #endif // FILE_FORMATS_H
+

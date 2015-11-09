@@ -1,4 +1,5 @@
 #include "lua_world_engine.h"
+#include "bindings/core/lua_global_constants.h"
 
 #include <scenes/scene_world.h>
 
@@ -16,5 +17,6 @@ WorldScene *LuaWorldEngine::getScene()
 void LuaWorldEngine::onBindAll()
 {
     luabind::module(getNativeState())/*[]*/;
+    Binding_Global_Constants::bindToLua(getNativeState());
 }
 

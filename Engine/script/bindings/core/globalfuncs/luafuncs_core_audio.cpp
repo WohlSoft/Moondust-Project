@@ -66,6 +66,8 @@ void Binding_Core_GlobalFuncs_Audio::bindConstants(lua_State *L)
 
     SoundRoles["NpcLavaBurn"] = obj_sound_role::NpcLavaBurn;
     SoundRoles["NpcStoneFall"] = obj_sound_role::NpcStoneFall;
+    SoundRoles["NpcHit"] = obj_sound_role::NpcHit;
+    SoundRoles["NpcDeath"] = obj_sound_role::NpcDeath;
 
     SoundRoles["WarpPipe"] = obj_sound_role::WarpPipe;
     SoundRoles["WarpDoor"] = obj_sound_role::WarpDoor;

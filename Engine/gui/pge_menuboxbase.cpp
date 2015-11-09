@@ -286,14 +286,14 @@ bool PGE_MenuBoxBase::isRunning()
 
 void PGE_MenuBoxBase::exec()
 {
-    updateControllers();
     restart();
+
     while(running)
     {
         Uint32 start_render=SDL_GetTicks();
 
-        update(uTickf);
         updateControllers();
+        update(uTickf);
         PGE_BoxBase::render();
         render();
         glFlush();

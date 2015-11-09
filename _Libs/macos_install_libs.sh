@@ -9,6 +9,16 @@ TARGET_APP=$1
 
 bak=~+
 
+#=============Detect directory that contains script=====================
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+SOURCE="$(readlink "$SOURCE")"
+[[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+#=======================================================================
+
 realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
@@ -16,8 +26,8 @@ realpath() {
 SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname $SCRIPT)
 
-curd="$SCRIPTPATH/../"
-CONFIGURATION_BUILD_DIR=$curd'bin'
+curd="$SCRDIR/../"
+CONFIGURATION_BUILD_DIR=$SCRDIR'/../bin'
 
 if [[ "$curd" == "" ]]; then
    exit 1
@@ -29,8 +39,8 @@ if [ ! -d $curd"/bin/_Libs" ]; then
     if [ -d $curd"/bin/_Libs/SDL2.framework" ]; then
         rm -Rf $curd"/bin/_Libs/SDL2.framework"
     fi
-    cp -Rfa "$curd/_Libs/_builds/macos/frameworks/SDL2.framework" $curd"/bin/_Libs"
-    cp -a $curd/_Libs/_builds/macos/lib/*.dylib $curd"/bin/_Libs"
+    cp -Rfa "$SCRDIR/_builds/macos/frameworks/SDL2.framework" $curd"/bin/_Libs"
+    cp -a $SCRDIR/_builds/macos/lib/*.dylib $curd"/bin/_Libs"
 fi
 
 EXECUTABLE_PATH="$TARGET_APP.app/Contents/MacOS/$TARGET_APP"
@@ -72,11 +82,11 @@ echo "Installing libs for $TARGET_APP..."
 fetchPathsForApp # Fetch for executable
 relocateLibraryInCurrentApp "@rpath/" SDL2.framework/Versions/A/SDL2 #note the space
 
-EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.dylib"
+EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.0.dylib"
+EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.dylib"
 fetchPathsForLib #fetch for our dylib
-EXECUTABLE_PATH="_Libs/libSDL2_mixer.1.0.0.dylib"
+EXECUTABLE_PATH="_Libs/libSDL2_mixer_ext.1.0.0.dylib"
 fetchPathsForLib #fetch for our dylib
 EXECUTABLE_PATH="_Libs/libvorbisfile.3.dylib"
 fetchPathsForLib #fetch for our dylib

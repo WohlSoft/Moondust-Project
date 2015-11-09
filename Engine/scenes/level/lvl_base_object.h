@@ -105,125 +105,16 @@ public:
     virtual void solveCollision(PGE_Phys_Object *collided);
     double colliding_xSpeed;
     double colliding_ySpeed;
-    /*
-    PGE_PointF c1 = posRect.center();
-    PGE_RectF &r1 = posRect;
-    PGE_PointF cc = collided->posRect.center();
-    PGE_RectF  rc = collided->posRect;
-    */
-    inline bool isCollideFloorToponly(PGE_Phys_Object *collided)
-    {
-        float summSpeedY=(_velocityY+_velocityY_add)-(collided->_velocityY+collided->_velocityY_add);
-        float summSpeedYprv=colliding_ySpeed-collided->colliding_ySpeed;
-        return  (
-                 (
-                    (summSpeedY >= 0.0)
-                    &&
-                    ( (posRect.bottom()-(summSpeedYprv>=0 ? 1 : 0 )) < collided->posRect.top()+summSpeedYprv)
-                    &&
-                    (
-                         (posRect.left()<collided->posRect.right()-1 ) &&
-                         (posRect.right()>collided->posRect.left()+1 )
-                     )
-                 )
-                ||
-                (posRect.bottom() <= collided->posRect.top())
-                );
-    }
 
-    inline bool isCollideFloor(PGE_Phys_Object *collided)
-    {
-        return (
-         (
-            (_velocityY+_velocityY_add >= 0.0)
-            &&
-            (floor(posRect.bottom())+collided->colliding_ySpeed < collided->posRect.top()+
-                                       fabs(_velocityY+_velocityX_add)
-                                       +2.0+colliding_ySpeed)
-            &&( !( (posRect.left()>=collided->posRect.right()-0.2) || (posRect.right() <= collided->posRect.left()+0.2) ) )
-         ) || (posRect.bottom() <= collided->posRect.top())
-        );
-    }
-
-    inline bool isCollideCelling(PGE_Phys_Object *collided, float _heightDelta=0.0f, bool forceCollideCenter=false)
-    {
-        return ( (
-                     (  ((!forceCollideCenter)&&(_velocityY+_velocityY_add<0.0))||
-                        (forceCollideCenter&&(_velocityY+_velocityY_add<=0.0)) )
-                     &&
-                     (posRect.top()+collided->colliding_ySpeed > collided->posRect.bottom()
-                      +colliding_ySpeed-2.0+_heightDelta)
-                     &&( !( (posRect.left()>=collided->posRect.right()-0.5 ) ||
-                            (posRect.right() <= collided->posRect.left()+0.5 ) ) )
-                  )
-                 );
-    }
-
-    inline bool isCollideLeft(PGE_Phys_Object *collided)
-    {
-        return (_velocityX+_velocityX_add<0.0) && (posRect.center().x() > collided->posRect.center().x()) &&
-                (posRect.left()+collided->colliding_xSpeed >= collided->posRect.right()+colliding_xSpeed-collided->_width_half)
-                                         && ( (posRect.top()<collided->posRect.bottom())&&
-                                              (posRect.bottom()>collided->posRect.top()) );
-    }
-
-    inline bool isCollideRight(PGE_Phys_Object *collided)
-    {
-        return (_velocityX+_velocityX_add>0.0) && (posRect.center().x() < collided->posRect.center().x()) &&
-                ( posRect.right()+collided->colliding_xSpeed <= collided->posRect.left()+colliding_xSpeed+collided->_width_half)
-                                        && ( (posRect.top() < collided->posRect.bottom())&&
-                                             (posRect.bottom() > collided->posRect.top()) );
-    }
+    bool   collided_slope;
+    float  collided_slope_angle_ratio;
+    bool   collided_slope_celling;
+    float  collided_slope_angle_ratio_celling;
 
     enum Slopes{
         SLOPE_LEFT=-1,
         SLOPE_RIGHT=1
     };
-
-    inline double SL_HeightTopRight(PGE_Phys_Object *collided)
-    {
-        return (fabs(collided->posRect.left()-posRect.right()))
-                *(collided->posRect.height()/collided->posRect.width());
-    }
-
-    inline double SL_HeightTopLeft(PGE_Phys_Object *collided)
-    {
-        return (fabs(collided->posRect.right()-posRect.left()))
-                        *(collided->posRect.height()/collided->posRect.width());
-    }
-
-    inline bool isCollideSlopeFloor(PGE_Phys_Object *collided, int direction=-1)
-    {
-        double floorH;
-        if(direction<0)
-            floorH = SL_HeightTopLeft(collided);
-        else
-            floorH = SL_HeightTopRight(collided);
-        double slopeTop = collided->posRect.bottom()-floorH;
-        if(slopeTop<collided->top()) slopeTop=collided->posRect.top();
-        else if(slopeTop>collided->bottom()) slopeTop=collided->posRect.bottom();
-        return (posRect.bottom()>=slopeTop)&&
-               (posRect.bottom()<=collided->posRect.bottom())&&
-       (!( (posRect.left()+collided->colliding_xSpeed>=collided->posRect.right()+colliding_xSpeed) ||
-           (posRect.right()+collided->colliding_xSpeed<=collided->posRect.left()+colliding_xSpeed) ) )
-                ;
-    }
-
-    inline bool isCollideSlopeCelling(PGE_Phys_Object *collided, int direction=-1)
-    {
-        double cellingH;
-        if(direction>0)
-            cellingH = SL_HeightTopLeft(collided);
-        else
-            cellingH = SL_HeightTopRight(collided);
-        double slopeBottom = collided->posRect.top()+cellingH;
-        if(slopeBottom >collided->bottom()) slopeBottom =collided->posRect.bottom();
-        else if(slopeBottom <collided->top()) slopeBottom = collided->posRect.top();
-        return (posRect.top()<=slopeBottom )&&
-               (posRect.top()>=collided->posRect.top())&&
-        (!( (posRect.left()+collided->colliding_xSpeed>=collided->posRect.right()+colliding_xSpeed) ||
-            (posRect.right()+collided->colliding_xSpeed<=collided->posRect.left()+colliding_xSpeed) ) );
-    }
 
     PGE_Phys_Object *nearestBlock(QVector<PGE_Phys_Object *> &blocks);
     PGE_Phys_Object *nearestBlockY(QVector<PGE_Phys_Object *> &blocks);

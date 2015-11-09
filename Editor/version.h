@@ -21,16 +21,22 @@
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 
-//Version of this program
-#define _LATEST_STABLE "0.3.1.7"
+#ifdef GIT_VERSION
+#define _BUILD_VER GIT_VERSION
+#else
+#define _BUILD_VER "<empty>"
+#endif
 
-#define _FILE_VERSION "0.3.1.7"
+//Version of this program
+#define _LATEST_STABLE "0.3.1.8"
+
+#define _FILE_VERSION "0.3.1.8"
 #define _FILE_RELEASE ""
 
 #define _VF1 0
 #define _VF2 3
 #define _VF3 1
-#define _VF4 7
+#define _VF4 8
 
 
 #define _FILE_DESC "Platformer Game Engine - Editor"

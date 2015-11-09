@@ -69,6 +69,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 
             .def("installInAreaDetector", &LVL_Npc::lua_installInAreaDetector)
             .def("installPlayerPosDetector", &LVL_Npc::lua_installPlayerPosDetector)
+            .def("spawnNPC", &LVL_Npc::lua_spawnNPC)
 
             .def("setSpriteWarp", &LVL_Npc::setSpriteWarp)
             .def("resetSpriteWarp", &LVL_Npc::resetSpriteWarp)
@@ -76,6 +77,7 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .def("activateNeighbours", &LVL_Npc::lua_activate_neighbours)
 
             .def("unregister", &LVL_Npc::unregister)         // Destroy NPC with no effects and no events
+            .def("kill", &LVL_Npc::kill)
 
             //Properties
             .property("id", &LVL_Npc::getID)
@@ -85,11 +87,16 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             .property("special2", &LVL_Npc::special2)
             .property("isBoss", &LVL_Npc::isBoss)
 
+            .property("collideWithBlocks", &LVL_Npc::getCollideWithBlocks, &LVL_Npc::setCollideWithBlocks)
+
+            .property("health", &LVL_Npc::getHealth, &LVL_Npc::setHealth)
+
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
 
             //States
             .def_readonly("onGround", &LVL_Npc::onGround)
-            .def_readonly("animationIsFinished", &LVL_Npc::lua_animationIsFinished);
+            .def_readonly("animationIsFinished", &LVL_Npc::lua_animationIsFinished)
+            .def_readonly("onCliff", &LVL_Npc::onCliff);
 
 }
 

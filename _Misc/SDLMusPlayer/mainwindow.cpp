@@ -32,6 +32,27 @@ Mix_Music *play_mus = NULL;
         else
             return QString("[No music]");
     }
+    QString MUS_getMusArtist()
+    {
+        if(play_mus)
+            return QString(Mix_GetMusicArtistTag(play_mus));
+        else
+            return QString("[Unknown Artist]");
+    }
+    QString MUS_getMusAlbum()
+    {
+        if(play_mus)
+            return QString(Mix_GetMusicAlbumTag(play_mus));
+        else
+            return QString("[Unknown Album]");
+    }
+    QString MUS_getMusCopy()
+    {
+        if(play_mus)
+            return QString(Mix_GetMusicCopyrightTag(play_mus));
+        else
+            return QString("");
+    }
 
     void MUS_playMusic()
     {
@@ -145,4 +166,7 @@ void MainWindow::on_play_clicked()
         PGE_MusicPlayer::MUS_playMusic();
     }
     ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
+    ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
+    ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
+    ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
 }

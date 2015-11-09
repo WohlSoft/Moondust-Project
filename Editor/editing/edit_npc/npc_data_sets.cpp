@@ -18,6 +18,7 @@
 
 #include <QtWidgets>
 
+#include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/npc_filedata.h>
 
 #include "npcedit.h"
@@ -382,36 +383,7 @@ void NpcEdit::setDataBoxes()
 void NpcEdit::setDefaultData(unsigned long npc_id)
 {
 
-    DefaultNPCData.en_gfxoffsetx=false;
-    DefaultNPCData.en_gfxoffsety=false;
-    DefaultNPCData.en_width=false;
-    DefaultNPCData.en_height=false;
-    DefaultNPCData.en_gfxwidth=false;
-    DefaultNPCData.en_gfxheight=false;
-    DefaultNPCData.en_score=false;
-    DefaultNPCData.en_health=false;
-    DefaultNPCData.en_playerblock=false;
-    DefaultNPCData.en_playerblocktop=false;
-    DefaultNPCData.en_npcblock=false;
-    DefaultNPCData.en_npcblocktop=false;
-    DefaultNPCData.en_grabside=false;
-    DefaultNPCData.en_grabtop=false;
-    DefaultNPCData.en_jumphurt=false;
-    DefaultNPCData.en_nohurt=false;
-    DefaultNPCData.en_noblockcollision=false;
-    DefaultNPCData.en_cliffturn=false;
-    DefaultNPCData.en_noyoshi=false;
-    DefaultNPCData.en_foreground=false;
-    DefaultNPCData.en_speed=false;
-    DefaultNPCData.en_nofireball=false;
-    DefaultNPCData.en_nogravity=false;
-    DefaultNPCData.en_frames=false;
-    DefaultNPCData.en_framespeed=false;
-    DefaultNPCData.en_framestyle=false;
-    DefaultNPCData.en_noiceball=false;
-    DefaultNPCData.en_nohammer=false;
-    DefaultNPCData.en_noshell=false;
-    DefaultNPCData.en_name=false;
+    DefaultNPCData = FileFormats::CreateEmpytNpcTXT();
 
     if((npc_id==0)||(npc_id > (unsigned long)pConfigs->main_npc.size()))
     {
@@ -444,6 +416,12 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.nohammer=0;
         DefaultNPCData.name="";
         DefaultNPCData.health=1;
+        DefaultNPCData.script="";
+        DefaultNPCData.image="";
+        DefaultNPCData.grid=32;
+        DefaultNPCData.grid_offset_x=0;
+        DefaultNPCData.grid_offset_y=0;
+        DefaultNPCData.grid_align=0;
     }
     else
     {
@@ -504,6 +482,12 @@ void NpcEdit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.noshell=(int)(!pConfigs->main_npc[j].kill_by_npc);
         DefaultNPCData.name=pConfigs->main_npc[j].name;
         DefaultNPCData.health=pConfigs->main_npc[j].health;
+        DefaultNPCData.script=pConfigs->main_npc[j].algorithm_script;
+        DefaultNPCData.image=pConfigs->main_npc[j].image_n;
+        DefaultNPCData.grid=pConfigs->main_npc[j].grid;
+        DefaultNPCData.grid_offset_x=pConfigs->main_npc[j].grid_offset_x;
+        DefaultNPCData.grid_offset_y=pConfigs->main_npc[j].grid_offset_y;
+        DefaultNPCData.grid_align=pConfigs->main_npc[j].grid_attach_style;
     }
 }
 

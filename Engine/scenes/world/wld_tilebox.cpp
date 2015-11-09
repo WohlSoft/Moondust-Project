@@ -36,6 +36,7 @@ WorldNode::WorldNode()
     texture.texture=0;
     animatorID=0;
     animated=false;
+    vizible=true;
 }
 
 WorldNode::~WorldNode() {}
@@ -54,6 +55,7 @@ WorldNode::WorldNode(const WorldNode &xx)
     texture=xx.texture;
     animatorID=xx.animatorID;
     animated=xx.animated;
+    vizible=xx.vizible;
 }
 
 bool WorldNode::collidePoint(long rx, long ry)
@@ -65,8 +67,14 @@ bool WorldNode::collidePoint(long rx, long ry)
     return true;
 }
 
-
-
+bool WorldNode::collideWith(WorldNode *it)
+{
+    if((it->x+it->w) <= x) return false;
+    if((it->y+it->h) <= y) return false;
+    if( (x+w) <= it->x) return false;
+    if( (y+h) <= it->y) return false;
+    return true;
+}
 
 
 
@@ -415,7 +423,7 @@ QVector<WorldNode *> TileBox::query(long Left, long Top, long Right, long Bottom
                 {
                     QVector<WorldNode*> &v=map[listI][listJ];
                     for(QVector<WorldNode*>::iterator it=v.begin(); it!=v.end(); it++)
-                        list.append(*it);
+                        if(!z_sort||(*it)->vizible) list.append(*it);
                 }
             }
         }

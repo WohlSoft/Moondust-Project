@@ -53,7 +53,7 @@ public:
 
     static int processEvents(SDL_Event &event);
 
-    static void checkSDLError(int line = -1);
+    static bool checkSDLError(int line = -1);
 private:
     static bool IsInit;
     static bool showCursor;

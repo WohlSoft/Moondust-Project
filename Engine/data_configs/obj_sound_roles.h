@@ -50,6 +50,8 @@ struct obj_sound_role
 
         NpcLavaBurn,
         NpcStoneFall,
+        NpcHit,
+        NpcDeath,
 
         WarpPipe,
         WarpDoor,

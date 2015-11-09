@@ -73,9 +73,9 @@ void MainWindow::on_actionCloneSectionTo_triggered()
         x = dst->LvlData.sections[d_id].size_left;
         y = dst->LvlData.sections[d_id].size_top;
 
-        w = (long)fabs(src->LvlData.sections[s_id].size_left-
+        w = labs(src->LvlData.sections[s_id].size_left-
                 src->LvlData.sections[s_id].size_right);
-        h = (long)fabs(src->LvlData.sections[s_id].size_top-
+        h = labs(src->LvlData.sections[s_id].size_top-
                 src->LvlData.sections[s_id].size_bottom);
 
         if(h!=600)
@@ -201,15 +201,15 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             long targetX;// = baseX;
 
             if(baseX<src->LvlData.sections[s_id].size_left)
-                targetX = x-(long)fabs(baseX-src->LvlData.sections[s_id].size_left);
+                targetX = x-labs(baseX-src->LvlData.sections[s_id].size_left);
             else
-                targetX = x+(long)fabs(src->LvlData.sections[s_id].size_left-baseX);
+                targetX = x+labs(src->LvlData.sections[s_id].size_left-baseX);
             long targetY;// = baseY;
 
             if(baseY<src->LvlData.sections[s_id].size_top)
-                targetY = y-(long)fabs(baseY-src->LvlData.sections[s_id].size_top);
+                targetY = y-labs(baseY-src->LvlData.sections[s_id].size_top);
             else
-                targetY = y+(long)fabs(src->LvlData.sections[s_id].size_top-baseY);
+                targetY = y+labs(src->LvlData.sections[s_id].size_top-baseY);
 
             dst->scene->paste(buffer, QPoint(targetX, targetY));
         }

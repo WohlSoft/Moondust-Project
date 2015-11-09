@@ -28,7 +28,7 @@
 
 IntProcServer::IntProcServer()
 {
-    connect(this, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(this, SIGNAL(readyRead()), this, SLOT(doReadData()));
 }
 
 IntProcServer::~IntProcServer()
@@ -48,7 +48,7 @@ void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
     }
 }
 
-void IntProcServer::readData()
+void IntProcServer::doReadData()
 {
     while (hasPendingDatagrams())
     {

@@ -317,6 +317,9 @@ FLAC_music *FLAC_new_RW(SDL_RWops *src, int freesrc)
         music->flac_data.data_len = 0;
         music->flac_data.data_read = 0;
         music->mus_title = NULL;
+        music->mus_artist = NULL;
+        music->mus_album = NULL;
+        music->mus_copyright = NULL;
 
         init_stage++; // stage 1!
 
@@ -533,6 +536,15 @@ void FLAC_delete(FLAC_music *music)
 
         if(music->mus_title) {
             SDL_free (music->mus_title);
+        }
+        if(music->mus_artist) {
+            SDL_free (music->mus_artist);
+        }
+        if(music->mus_album) {
+            SDL_free (music->mus_album);
+        }
+        if(music->mus_copyright) {
+            SDL_free (music->mus_copyright);
         }
 
         SDL_free (music);

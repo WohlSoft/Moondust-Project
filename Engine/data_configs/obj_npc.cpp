@@ -308,6 +308,10 @@ bool ConfigManager::loadLevelNPC()
         snpc.hurt_player =  npcset.value("hurtplayer", "0").toBool();
         snpc.hurt_npc =     npcset.value("hurtnpc", "0").toBool();
 
+        //Sound effects
+        snpc.hit_sound_id = npcset.value("hit-sound-id", "0").toInt();
+        snpc.death_sound_id=npcset.value("death-sound-id", "0").toInt();
+
         //Editor features
         snpc.direct_alt_title =      npcset.value("direction-alt-title", "").toString();
         snpc.direct_alt_left =       npcset.value("direction-alt-left-field", "").toString();

@@ -201,6 +201,12 @@ extern DECLSPEC Mix_MusicType SDLCALL Mix_GetMusicType(const Mix_Music *music);
 extern DECLSPEC const char* SDLCALL Mix_GetMusicTitle(const Mix_Music *music);
 /* Get music title from meta-tag if possible */
 extern DECLSPEC const char* SDLCALL Mix_GetMusicTitleTag(const Mix_Music *music);
+/* Get music artist from meta-tag if possible */
+extern DECLSPEC const char* SDLCALL Mix_GetMusicArtistTag(const Mix_Music *music);
+/* Get music album from meta-tag if possible */
+extern DECLSPEC const char* SDLCALL Mix_GetMusicAlbumTag(const Mix_Music *music);
+/* Get music copyright from meta-tag if possible */
+extern DECLSPEC const char* SDLCALL Mix_GetMusicCopyrightTag(const Mix_Music *music);
 
 /* Set a function that is called after all mixing is performed.
    This can be used to provide real-time visual display of the audio stream

@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     LoadLogSettings();
 
     QString configPath="";
-    QString fileToOpen = "";//ApplicationPath+"/physics.lvl";
+    QString fileToOpen = "";
     PlayEpisodeResult episode;
     episode.character=0;
     episode.savefile="save1.savx";
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
     ConfigManager::buildSoundIndex(); //Load all sound effects into memory
 
     //Init Window
-    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
+    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE+" build "+_BUILD_VER)) exit(1);
 
     AppSettings.initJoysticks();
     AppSettings.loadJoystickSettings();
@@ -439,6 +439,8 @@ PlayWorldMap:
     if(sceneResult)
         ExitCode = wScene->exec();
 
+    _game_state._recent_ExitCode_world=ExitCode;
+
     if(wScene->doShutDown())
     {
         delete wScene;
@@ -553,7 +555,8 @@ PlayLevel:
             if(sceneResult)
             {
                 lScene->fader.setFade(10, 0.0f, 0.02f);
-                ExitCode = lScene->exec();                
+                ExitCode = lScene->exec();
+                _game_state._recent_ExitCode_level=ExitCode;
             }
 
             if(!sceneResult)
@@ -636,9 +639,11 @@ PlayLevel:
                 {
                     end_level_jump = (_game_state.isEpisode)? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                     playAgain = false;
+                    PGE_MsgBox::error("Level was closed with error.\nRead log file for detail info.");
                 }
                 break;
             default:
+                end_level_jump = _game_state.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
             }
 

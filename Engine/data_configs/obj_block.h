@@ -23,6 +23,7 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QList>
 
 struct obj_block
 {
@@ -65,17 +66,31 @@ struct obj_block
     unsigned long transfororm_on_hit_into;
     unsigned long algorithm;
 
+    //Toggable Switch blocks
     bool switch_Button;
     bool switch_Block;
     int  switch_ID;
     int  switch_transform;
+
+    //Playable character Switch/Filter blocks
+    bool       plSwitch_Button;
+    int        plSwitch_Button_id; //Target Character ID
+    QList<int> plSwitch_frames_true;
+    QList<int> plSwitch_frames_false;
+
+    bool       plFilter_Block;   //Target Character ID
+    int        plFilter_Block_id;//Target Character ID
+    QList<int> plFilter_frames_true;
+    QList<int> plFilter_frames_false;
 
     unsigned int view;
     bool animated;
     bool animation_rev; //Reverse animation
     bool animation_bid; //Bidirectional animation
     unsigned int frames;
-    int framespeed;
+    int  framespeed;
+    int  hit_sound_id; //Play custom sound on hit
+    int  destroy_sound_id; //Play custom sound on destroy
 
     unsigned int frame_h; //Hegth of the frame. Calculating automatically
 

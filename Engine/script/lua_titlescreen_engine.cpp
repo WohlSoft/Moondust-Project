@@ -1,5 +1,6 @@
 #include "lua_titlescreen_engine.h"
 
+#include "bindings/core/lua_global_constants.h"
 
 #include <scenes/scene_title.h>
 
@@ -16,6 +17,6 @@ TitleScene *LuaTitleScreenEngine::getScene()
 
 void LuaTitleScreenEngine::onBindAll()
 {
-
+    Binding_Global_Constants::bindToLua(getNativeState());
 }
 

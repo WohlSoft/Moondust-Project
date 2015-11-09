@@ -76,5 +76,10 @@ int PGE_Point::y()
     return _y;
 }
 
+bool operator==(const PGE_Point& lhs, const PGE_Point& rhs)
+{return ((lhs._x==rhs._x)&&(lhs._y==rhs._y));}
+
+bool operator!=(const PGE_Point& lhs, const PGE_Point& rhs)
+{return ((lhs._x!=rhs._x)||(lhs._y!=rhs._y));}
 
 
