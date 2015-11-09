@@ -10,11 +10,11 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 SCRDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #=======================================================================
-
+echo $SCRDIR
 cd $SCRDIR
 
 #=======================================================================
-errorofbuid()
+errorofbuild()
 {
 	printf "\n\n=========AN ERROR OCCURED!==========\n\n"
 	cd $bak
@@ -27,7 +27,7 @@ checkState()
 	then
 	  echo "[good]"
 	else
-	  errorofbuid
+	  errorofbuild
 	fi
 }
 
@@ -37,7 +37,7 @@ then
 else
 	echo ""
 	echo "_paths.sh is not exist! Run \"generate_paths.sh\" first!"
-	errorofbuid
+	errorofbuild
 fi
 
 #=======================================================================

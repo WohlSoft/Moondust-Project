@@ -4,10 +4,17 @@
 
 #include <scenes/scene_level.h>
 
+int Binding_Level_GlobalFuncs_Player::count(lua_State *L)
+{
+    LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
+    LevelScene::LVL_PlayersArray &allPlayers = scene->getPlayers();
+    return allPlayers.count();
+}
+
 luabind::adl::object Binding_Level_GlobalFuncs_Player::get(lua_State* L)
 {
     LevelScene* scene = LuaGlobal::getLevelEngine(L)->getScene();
-    LevelScene::LVL_PlayersArray allPlayers = scene->getPlayers();
+    LevelScene::LVL_PlayersArray &allPlayers = scene->getPlayers();
 
     luabind::object tableOfPlayers = luabind::newtable(L);
 
@@ -29,6 +36,7 @@ luabind::scope Binding_Level_GlobalFuncs_Player::bindToLua()
     using namespace luabind;
     return
         namespace_("Player")[
+            def("count", &Binding_Level_GlobalFuncs_Player::count),
             def("get", &Binding_Level_GlobalFuncs_Player::get)
         ];
 }

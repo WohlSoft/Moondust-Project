@@ -3720,19 +3720,47 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Новый слой %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="882"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="869"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="910"/>
+        <source>Remove layer</source>
+        <translation>Удалить слой</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <source>Are you want to remove this layer?
+All elements on this layer will be moved to the &apos;Default&apos; layer.</source>
+        <translation>Вы действительно хотите удалить этот слой?
+Все элементы этого слоя будут перемещены на слой &quot;Default&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
         <source>Rename layer</source>
         <translation>Переименовать слой</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="890"/>
         <source>Remove layer with items</source>
         <translation>Удалить слой вместе с объектами</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
         <source>Remove layer and save items</source>
         <translation>Удалить слой и сохранить объекты</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
+        <translation>Вы действительно хотите удалить этот слой?
+Все элементы этого слоя будут перемещены на слой &quot;Default&quot;!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
+        <source>Are you want to remove this layer?
+All elements of this layer will be removed too!</source>
+        <translation>Вы действительно хотите удалить этот слой?
+Все элементы этого слоя будут удалены тоже!</translation>
     </message>
 </context>
 <context>
@@ -7937,9 +7965,17 @@ to get more information.</source>
         <translation>Очистить от лишних НИП</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
         <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation>Всё хорошо, на уровне нет лишних НИП!</translation>
+        <translation type="vanished">Всё хорошо, на уровне нет лишних НИП!</translation>
+    </message>
+    <message>
+        <source>Everything is fine, level has no NPC garbabe!</source>
+        <translation type="vanished">Всё хорошо, на уровне нет мусора НИП!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
+        <source>Everything is fine, level has no NPC garbage!</source>
+        <translation>Всё хорошо, на уровне нет мусора НИП!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="64"/>

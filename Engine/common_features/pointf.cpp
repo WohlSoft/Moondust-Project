@@ -24,3 +24,9 @@ PGE_PointF::PGE_PointF(const PGE_Point &p)
     _x=p._x;
     _y=p._y;
 }
+
+bool operator==(const PGE_PointF& lhs, const PGE_PointF& rhs)
+{return ((lhs._x==rhs._x)&&(lhs._y==rhs._y));}
+
+bool operator!=(const PGE_PointF& lhs, const PGE_PointF& rhs)
+{return ((lhs._x!=rhs._x)||(lhs._y!=rhs._y));}

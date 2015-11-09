@@ -34,6 +34,9 @@ struct MUSIC_GME
     int volume;
     int gme_t_sample_rate;
     char *mus_title;
+    char *mus_artist;
+    char *mus_album;
+    char *mus_copyright;
 };
 
 /* Initialize the Ogg Vorbis player, with the given mixer settings

@@ -1,0 +1,12 @@
+Package: pge-wohlstand-calibrator
+Version: 2.1.0.1-0
+Version: 2015.10.31-1
+Section: games
+Maintainer: Wohlstand <admin@wohlnet.ru>
+Description: PGE Project by Wohlstand - Playable Character Calibrator
+ This tool configures and helps with calibration of playable character hitbox.
+ Also this tool provides animator to define and set up player's animations
+Architecture: amd64
+Origin: Wohlstand <admin@wohlnet.ru>, Kevsoft <kevin.waldock@gmail.com>, http://engine.wohlnet.ru
+X-Source: https://github.com/Wohlhabend-Networks/PGE-Project/archive/master.tar.gz
+

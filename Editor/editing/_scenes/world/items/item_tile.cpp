@@ -140,7 +140,7 @@ void ItemTile::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(true);
     }
 
-    this->setSelected(this);
+    setSelected(true);
     QMenu ItemMenu;
 
     QAction *copyTile = ItemMenu.addAction(tr("Copy"));

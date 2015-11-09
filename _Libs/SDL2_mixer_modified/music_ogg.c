@@ -92,6 +92,9 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
         music->section = -1;
 
         music->mus_title=NULL;
+        music->mus_artist=NULL;
+        music->mus_album=NULL;
+        music->mus_copyright=NULL;
 
         music->loop         = -1;
         music->loop_start   =  0;
@@ -131,6 +134,10 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             int isLoopLen    = strcasecmp(argument, "LOOPLENGTH");
             int isLoopEnd    = strcasecmp(argument, "LOOPEND");
             int isMusicTitle = strcasecmp(argument, "TITLE");
+            int isMusicArtist = strcasecmp(argument, "ARTIST");
+            int isMusicAlbum = strcasecmp(argument, "ALBUM");
+            int isMusicCopyright = strcasecmp(argument, "COPYRIGHT");
+
             if(isLoopStart==0) {
                 music->loop_start = atoi(value);
             } else if(isLoopLen==0) {
@@ -142,6 +149,15 @@ OGG_music *OGG_new_RW(SDL_RWops *src, int freesrc)
             } else if(isMusicTitle==0) {
                 music->mus_title = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
                 strcpy(music->mus_title, value);
+            } else if(isMusicArtist==0) {
+                music->mus_artist = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_artist, value);
+            } else if(isMusicAlbum==0) {
+                music->mus_album = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_album, value);
+            } else if(isMusicCopyright==0) {
+                music->mus_copyright = (char *)SDL_malloc(sizeof(char)*strlen(value)+1);
+                strcpy(music->mus_copyright, value);
             }
             doValue=0;
         }
@@ -289,6 +305,18 @@ void OGG_delete(OGG_music *music)
         if( music->mus_title )
         {
             SDL_free(music->mus_title);
+        }
+        if( music->mus_artist )
+        {
+            SDL_free(music->mus_artist);
+        }
+        if( music->mus_album )
+        {
+            SDL_free(music->mus_album);
+        }
+        if( music->mus_copyright )
+        {
+            SDL_free(music->mus_copyright);
         }
         vorbis.ov_clear(&music->vf);
         SDL_free(music);

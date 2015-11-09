@@ -38,7 +38,7 @@
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
 {
-    QString errorString;
+    PGESTRING errorString;
     int str_count=0;        //Line Counter
     //int i;                  //counters
     PGESTRING line;           //Current Line data
@@ -635,7 +635,6 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(PGESTRING file, bool IgnoreBad)
                              QMessageBox::Ok);
     }
     #endif
-
 
     FileData.ReadFileValid=true;
     return FileData;

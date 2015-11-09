@@ -1,0 +1,11 @@
+Package: pge-wohlstand-LazyFixTool
+Version: 2.0.0-0
+Version: 2015.10.31-1
+Section: games
+Maintainer: Wohlstand <admin@wohlnet.ru>
+Description: PGE Project by Wohlstand - Lazily-made image masks fix tool for SMBX64-GIFs
+ This utility will fix lazily-made image masks into accepted by SMBX64 standard format.
+Architecture: amd64
+Origin: Wohlstand <admin@wohlnet.ru>, Kevsoft <kevin.waldock@gmail.com>, http://engine.wohlnet.ru
+X-Source: https://github.com/Wohlhabend-Networks/PGE-Project/archive/master.tar.gz
+

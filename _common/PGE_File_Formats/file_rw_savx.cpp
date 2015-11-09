@@ -32,7 +32,7 @@
 GamesaveData FileFormats::ReadExtendedSaveFile(PGESTRING RawData, PGESTRING filePath)
 {
     GamesaveData FileData = CreateGameSaveData();
-    QString errorString;
+    PGESTRING errorString;
     PGEX_FileBegin();
 
     saveCharState plr_state;

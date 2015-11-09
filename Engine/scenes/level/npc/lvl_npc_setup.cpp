@@ -142,7 +142,7 @@ void LVL_Npc::transformTo_x(long id)
     {
         isGenerator=true;
         generatorDirection=data.generator_direct;
-        generatorTimeLeft= data.generator_period*100;
+        generatorTimeLeft= 1;
         generatorType    = data.generator_type;
 
         deActivatable    = true;

@@ -83,7 +83,7 @@ QImage setAlphaMask_VB(QImage image, QImage mask)
     target.fill(qRgb(128,128,128));
 
     QImage newmask = mask;
-    target.convertToFormat(QImage::Format_ARGB32);
+    target=target.convertToFormat(QImage::Format_ARGB32);
 
     if(target.size()!= newmask.size())
     {

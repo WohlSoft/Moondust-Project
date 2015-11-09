@@ -77,6 +77,7 @@ public:
     void solveCollision(PGE_Phys_Object *collided);
     bool forceCollideCenter;//!< collide with invizible blocks at center
     float _heightDelta; //Delta of changing height. Need to protect going through block on character switching
+    bool onCliff();
     bool cliffDetected;
 
     /*****************NPC's and blocks******************/
@@ -204,12 +205,17 @@ public:
     int  lua_frameDelay();
     void lua_setFrameDelay(int ms);
     int lua_activate_neighbours();
+    LVL_Npc *lua_spawnNPC(int npcID, int sp_type, int sp_dir, bool reSpawnable=false);
 
     inline bool not_movable() { return data.nomove; }
     inline long special1() { return data.special_data; }
     inline long special2() { return data.special_data2; }
     inline bool isBoss() { return data.is_boss; }
     inline int getID() { return data.id; }
+    inline long getHealth() { return health; }
+    inline void setHealth(int _health) { health=_health; }
+    inline bool getCollideWithBlocks() { return !disableBlockCollision; }
+    inline void setCollideWithBlocks(bool blkcol) { disableBlockCollision=!blkcol; }
 
     bool isLuaNPC;
 

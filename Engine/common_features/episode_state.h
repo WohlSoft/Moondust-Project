@@ -11,7 +11,8 @@ public:
         EXIT_MenuExit=-3,
         EXIT_Error=-2,
         EXIT_PlayerDeath=-1,
-        EXIT_Closed=0,
+        EXIT_Closed=-4,
+        EXIT_Neutral=0,
         EXIT_Card=1,
         EXIT_Ball=2,
         EXIT_OffScreen=3,
@@ -64,6 +65,8 @@ public:
     QString WorldPath;
     QString saveFileName;
     QString _episodePath;
+    int _recent_ExitCode_level;
+    int _recent_ExitCode_world;
 
     QString LevelFile;
     QString LevelFile_hub;

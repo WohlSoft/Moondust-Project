@@ -66,7 +66,12 @@ void LVL_Npc::harm(int damage, int damageReason)
         }
     }
     else
-        PGE_Audio::playSound(39);
+    {
+        if(setup->hit_sound_id==0)
+            PGE_Audio::playSoundByRole(obj_sound_role::NpcHit);
+        else
+            PGE_Audio::playSound(setup->hit_sound_id);
+    }
 }
 
 void LVL_Npc::talkWith()
@@ -97,6 +102,11 @@ void LVL_Npc::kill(int damageReason)
         LvlSceneP::s->events.triggerEvent(data.event_die);
 
     unregister();
+
+    if(setup->death_sound_id==0)
+        PGE_Audio::playSoundByRole(obj_sound_role::NpcDeath);
+    else
+        PGE_Audio::playSound(setup->death_sound_id);
 
     //Post-unregistring event
     if(!data.event_emptylayer.isEmpty())

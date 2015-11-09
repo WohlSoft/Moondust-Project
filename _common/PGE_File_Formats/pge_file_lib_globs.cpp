@@ -13,7 +13,11 @@ namespace PGE_FileFormats_misc
 #ifndef PGE_FILES_QT
     void split(std::vector<std::string>& dest, const std::string& str, std::string separator)
     {
-        char* pTempStr = strdup( str.c_str() );
+        #ifdef _MSC_VER
+        char* pTempStr = _strdup( str.c_str() );//Microsoft Visual Studio on Windows
+        #else
+        char* pTempStr = strdup( str.c_str() );//GCC, CLang on Linux and on Mac OS X, or MinGW on Windows
+        #endif
         char* pWord = std::strtok(pTempStr, separator.c_str());
         while(pWord != NULL)
         {
@@ -121,9 +125,9 @@ namespace PGE_FileFormats_misc
         return stream.read(len);
         #else
         if(!stream) return "";
-        char arr[len+1];
-        stream.read(arr, len);
-        return std::string(arr);
+        std::string buf(len + 1, '\0');
+        stream.read(&buf[0], len);
+        return buf;
         #endif
     }
 
@@ -239,6 +243,11 @@ namespace PGE_FileFormats_misc
 
     void FileInfo::rebuildData()
     {
+        #ifdef _MSC_VER
+        #define PATH_MAXLEN MAX_PATH
+        #else
+        #define PATH_MAXLEN PATH_MAX
+        #endif
         int i;
         _suffix.clear();
         _filename.clear();
@@ -249,7 +258,7 @@ namespace PGE_FileFormats_misc
         #ifdef PGE_FILES_QT
         filePath=QFileInfo(filePath).absoluteFilePath();
         #else
-        char buf[PATH_MAX + 1];
+        char buf[PATH_MAXLEN + 1];
         char *rez=NULL;
         #ifndef _WIN32
         rez=realpath(filePath.c_str(), buf);
@@ -257,9 +266,9 @@ namespace PGE_FileFormats_misc
         #else
         int ret=0;
         #ifdef UNICODE
-        ret=GetFullPathNameA(filePath.c_str(), PATH_MAX, buf, &rez);
+        ret=GetFullPathNameA(filePath.c_str(), PATH_MAXLEN, buf, &rez);
         #else
-        ret=GetFullPathName(filePath.c_str(), PATH_MAX, buf, &rez);
+        ret=GetFullPathName(filePath.c_str(), PATH_MAXLEN, buf, &rez);
         #endif
         if(ret!=0) filePath=buf;
         replaceAll(filePath, "\\", "/");

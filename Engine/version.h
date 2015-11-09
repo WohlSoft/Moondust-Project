@@ -22,16 +22,22 @@
 #ifndef EDITOR_VERSION_H
 #define EDITOR_VERSION_H
 
-//Version of this program
-#define _LATEST_STABLE "0.2.3.1-alpha"
+#ifdef GIT_VERSION
+#define _BUILD_VER GIT_VERSION
+#else
+#define _BUILD_VER "<empty>"
+#endif
 
-#define _FILE_VERSION "0.2.3.1"
+//Version of this program
+#define _LATEST_STABLE "0.2.4-alpha"
+
+#define _FILE_VERSION "0.2.4"
 #define _FILE_RELEASE "-alpha"
 
 #define _VF1 0
 #define _VF2 2
-#define _VF3 3
-#define _VF4 1
+#define _VF3 4
+#define _VF4 0
 
 #define _FILE_DESC "Game Engine"
 

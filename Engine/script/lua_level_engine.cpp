@@ -13,6 +13,8 @@
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_npc.h"
 #include "bindings/level/globalfuncs/luafuncs_level_lvl_player.h"
 
+#include "bindings/core/lua_global_constants.h"
+
 #include <luabind/adopt_policy.hpp>
 
 LuaLevelEngine::LuaLevelEngine(LevelScene *scene) : LuaEngine(scene)
@@ -107,6 +109,7 @@ void LuaLevelEngine::onBindAll()
         Binding_Level_GlobalFuncs_Player::bindToLua(),
         Binding_Level_GlobalFuncs_NPC::bindToLua()
     ];
+    Binding_Global_Constants::bindToLua(getNativeState());
 
     {
         luabind::object _G = luabind::globals(getNativeState());

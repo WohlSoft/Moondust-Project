@@ -162,7 +162,7 @@ badfile:
 
 WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath)
 {
-     QString errorString;
+     PGESTRING errorString;
      PGEX_FileBegin();
 
      WorldData FileData = CreateWorldData();
@@ -243,6 +243,7 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
          }
 
          ////////////////////////meta bookmarks////////////////////////
+         #ifdef PGE_EDITOR
          PGEX_Section("META_SYS_CRASH")
          {
              str_count++;
@@ -266,8 +267,8 @@ WorldData FileFormats::ReadExtendedWldFile(PGESTRING RawData, PGESTRING filePath
                  }
              }
          }//meta sys crash
+         #endif
          ///////////////////////////////MetaDATA//End////////////////////////////////////////
-
 
 
          ///////////////////TILES//////////////////////
@@ -499,6 +500,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
         TextData += "META_BOOKMARKS_END\n";
     }
 
+    #ifdef PGE_EDITOR
     //Some System information
     if(FileData.metaData.crash.used)
     {
@@ -511,6 +513,7 @@ PGESTRING FileFormats::WriteExtendedWldFile(WorldData FileData)
             TextData += "\n";
         TextData += "META_SYS_CRASH_END\n";
     }
+    #endif
     //////////////////////////////////////MetaData///END//////////////////////////////////////////
 
     if(!FileData.tiles.PGESTRINGisEmpty())

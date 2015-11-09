@@ -34,7 +34,9 @@ GameOverScene::~GameOverScene()
 }
 
 void GameOverScene::update()
-{}
+{
+    Scene::update();
+}
 
 void GameOverScene::render()
 {
@@ -53,14 +55,14 @@ int GameOverScene::exec()
     continueOrQuit.setRejectSnd(obj_sound_role::BlockSmashed);
     continueOrQuit.exec();
 
-    if (items[continueOrQuit.answer()] == "Continue")
-        return GameOverSceneResult::CONTINUE;
+    if (continueOrQuit.answer() >= 0)
+        if (items[continueOrQuit.answer()] == "Continue")
+            return GameOverSceneResult::CONTINUE;
 
     return GameOverSceneResult::QUIT;
 }
 
 void GameOverScene::processEvents()
 {
-    player1Controller->update();
     Scene::processEvents();
 }

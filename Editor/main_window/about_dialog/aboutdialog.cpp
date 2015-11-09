@@ -58,7 +58,8 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui->About1->setText(ui->About1->text()
                         .arg(_FILE_VERSION)
                         .arg(_FILE_RELEASE)
-                        .arg(QString("Build date: <u>%2</u>")
+                        .arg(QString("Revision: %1, Build date: <u>%2</u>")
+                             .arg(_BUILD_VER)
                              .arg(_DATE_OF_BUILD))
                         );
 
