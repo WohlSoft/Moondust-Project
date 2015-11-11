@@ -6,7 +6,15 @@ a free platform for game making
 
 Created by Vitaly Novichkov "Wohlstand" <admin@wohlnet.ru>
 
-Project site: http://engine.wohlnet.ru
+Official Project Site: http://engine.wohlnet.ru
+
+How to build (Linux, Windows, Mac OS X):
+http://engine.wohlnet.ru/pgewiki/Building_of_PGE_From_sources
+
+Downloads: http://engine.wohlnet.ru/#links
+
+Official forums: http://engine.wohlnet.ru/forum/
+
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
