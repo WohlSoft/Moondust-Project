@@ -261,7 +261,8 @@ SOURCES += \
     settings/debugger.cpp \
     ../_common/data_functions/npctxt_manager.cpp \
     script/bindings/core/lua_global_constants.cpp \
-    scenes/world/wld_pathopener.cpp
+    scenes/world/wld_pathopener.cpp \
+    scenes/level/npc_detectors/lvl_dtc_contact.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -407,7 +408,8 @@ HEADERS  += \
     script/bindings/core/lua_global_constants.h \
     script/lua_defines.h \
     scenes/level/collision_checks.h \
-    scenes/world/wld_pathopener.h
+    scenes/world/wld_pathopener.h \
+    scenes/level/npc_detectors/lvl_dtc_contact.h
 
 
 FORMS    += \
