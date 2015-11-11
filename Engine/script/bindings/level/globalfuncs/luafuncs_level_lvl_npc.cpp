@@ -1,7 +1,6 @@
 #include "luafuncs_level_lvl_npc.h"
 
 #include <script/bindings/level/classes/luaclass_level_lvl_npc.h>
-
 #include <scenes/scene_level.h>
 
 int Binding_Level_GlobalFuncs_NPC::count(lua_State *L)
