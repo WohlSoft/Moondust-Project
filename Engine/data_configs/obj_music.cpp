@@ -34,6 +34,19 @@ bool ConfigManager::loadDefaultMusics()
     return loadMusic(dirs.music, config_dir+"music.ini", false);
 }
 
+QString ConfigManager::clearMusTrack(QString path)
+{
+    if(path.contains('|'))
+    {
+        QStringList x=path.split('|');
+        if(x.size()>1)
+            return x[0];
+        else
+            return path;
+    } else
+        return path;
+}
+
 bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
 {
     unsigned int i;
@@ -126,7 +139,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_wld.absPath = rootPath + smusic_wld.file;
-            if((smusic_wld.id!=music_w_custom_id)&&(!QFileInfo(smusic_wld.absPath).exists()))
+            if(
+                    (smusic_wld.id!=music_w_custom_id) &&
+                    (!QFileInfo(clearMusTrack(smusic_wld.absPath)).exists())
+                )
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -170,7 +186,7 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
                 goto skipSpcMusic;
             }
             smusic_spc.absPath = rootPath + smusic_spc.file;
-            if(!QFileInfo(smusic_spc.absPath).exists())
+            if(!QFileInfo(clearMusTrack(smusic_spc.absPath)).exists())
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
@@ -217,7 +233,10 @@ bool ConfigManager::loadMusic(QString rootPath, QString iniFile, bool isCustom)
             }
 
             smusic_lvl.absPath = rootPath + smusic_lvl.file;
-            if((smusic_lvl.id!=music_custom_id)&&(!QFileInfo(smusic_lvl.absPath).exists()))
+            if(
+                  (smusic_lvl.id!=music_custom_id) &&
+                  (!QFileInfo(clearMusTrack(smusic_lvl.absPath)).exists())
+              )
             {
                 if(!isCustom) //Show errors if error caused with the internal stuff folder
                 {
