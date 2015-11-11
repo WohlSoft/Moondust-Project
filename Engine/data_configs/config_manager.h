@@ -354,6 +354,8 @@ public:
     static QString PathWorldMusic();
     static QString PathWorldSound();
 
+    static QString clearMusTrack(QString path);
+
 private:
     static void checkForImage(QString &imgPath, QString root);
 
