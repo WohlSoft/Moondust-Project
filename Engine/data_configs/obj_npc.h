@@ -24,6 +24,7 @@
 #include <common_features/size.h>
 
 #include "../graphics/graphics.h"
+#include "spawn_effect_def.h"
 
 // //Defines:// //
 //  obj_npc     //
@@ -51,6 +52,15 @@ struct obj_npc
     QString algorithm_script;   //    ; Filename of the lua algorithm
     unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC
+
+    enum blockSpawn {
+        spawn_warp=0,
+        spawn_bump
+    };
+    unsigned int block_spawn_type;
+    float        block_spawn_speed;
+    bool         block_spawn_sound;//Play sound on spawn from block (if false - spawn without 'radish' sound)
+
 
     //    ; graphics
     int gfx_offset_x;   //    gfx-offst-x=0
@@ -248,6 +258,15 @@ struct npc_Markers
             float phs_max_fall_speed;
     //effects
     unsigned long eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
+
+    //projectile properties
+    SpawnEffectDef projectile_effect;
+    long projectile_sound_id;
+    long projectile_speed;
+
+    //Projectile appearence from block
+    long projectile_block_speed;
+
 };
 
 #endif // OBJ_NPC_H
