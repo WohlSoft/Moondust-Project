@@ -96,6 +96,7 @@ void LVL_Npc::setDefaults()
     is_scenery  = setup->scenery;
     is_activity = setup->activity;
     is_shared_animation = setup->shared_ani;
+    keep_position_on_despawn = setup->keep_position;
 }
 
 void LVL_Npc::transformTo_x(long id)
@@ -119,7 +120,7 @@ void LVL_Npc::transformTo_x(long id)
     else
         targetZ = LevelScene::Z_npcStd;
 
-    z_index += targetZ;
+    z_index += targetZ+setup->z_offset;
 
     LevelScene::zCounter += 0.00000001;
     z_index += LevelScene::zCounter;

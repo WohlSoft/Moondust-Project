@@ -190,6 +190,7 @@ bool ConfigManager::loadLevelNPC()
             NumberLimiter::apply(snpc.display_frame, 0u);
         snpc.foreground =           npcset.value("foreground", false).toBool();
         snpc.background =           npcset.value("background", false).toBool();
+        snpc.z_offset =             npcset.value("z-offset", 0.0f).toDouble();
         snpc.ani_directed_direct =  npcset.value("animation-directed-direction", false).toBool();
         snpc.ani_direct =           npcset.value("animation-direction", false).toBool();
         snpc.ani_bidir =            npcset.value("animation-bidirectional", false).toBool();
@@ -302,6 +303,7 @@ bool ConfigManager::loadLevelNPC()
         snpc.movement =     npcset.value("moving", "1").toBool();
         snpc.activity =     npcset.value("activity", "1").toBool();
         snpc.scenery =      npcset.value("scenery", "0").toBool();
+        snpc.keep_position = npcset.value("keep-position", "0").toBool();
         snpc.shared_ani =   npcset.value("shared-animation", "0").toBool();
         snpc.immortal =     npcset.value("immortal", "0").toBool();
         snpc.can_be_eaten = npcset.value("can-be-eaten", "0").toBool();

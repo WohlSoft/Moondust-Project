@@ -79,6 +79,7 @@ struct obj_npc
     unsigned int framespeed;//    frame-speed=128
     bool foreground;        //    foreground=0
     bool background;        //    background=0
+    double z_offset;
     bool ani_bidir;         //    animation-bidirectional=0
     bool ani_direct;        //    animation-direction=0
 
@@ -147,6 +148,7 @@ struct obj_npc
     int speed;     //    speed=64			; Default movement speed in px/s
     bool movement; //    moving=1			; NPC simply moving right/left
     bool scenery;  //    scenery=0			; NPC as block or BGO
+    bool keep_position;  //    scenery=0			; Keep NPC's position on despawn
     bool activity;  //   activity=1         ; NPC has "Activated" event, doing regular loops, etc.
                     //                        If flag is false, NPC doing job while on screen only and keeps position
     bool shared_ani;//   shared-animation   ; All NPC's of same ID will do same animation

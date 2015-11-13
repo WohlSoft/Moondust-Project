@@ -38,6 +38,7 @@ public:
     bool  is_scenery;
     bool  is_activity;
     bool  is_shared_animation;
+    bool  keep_position_on_despawn;
 
     bool animated;
     long animator_ID;

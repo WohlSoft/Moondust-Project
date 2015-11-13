@@ -40,6 +40,7 @@ LVL_Npc::LVL_Npc() : PGE_Phys_Object(), detector_player_pos(this)
     is_scenery=false;
     is_activity=true;
     is_shared_animation=false;
+    keep_position_on_despawn=false;
 
     warpDirectO=0;
     warpSpriteOffset=1.0f;
