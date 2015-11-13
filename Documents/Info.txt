@@ -13,3 +13,7 @@ SMBX64 standard
 	Level sprites supports only 292 NPCs, 638 blocks, 58 Background images, 190 background objects and 148 effect animations.
 	Music supports 56 level music files with custom music pointer, numbered as 24.
 	World music has 16 music files and does not support customizing.
+
+SMBX65-38A
+	This is a format used in unofficial Chinese continuation of SMBX with version 1.4/1.4.1.
+	New file formats are not similar to SMBX 1.3
