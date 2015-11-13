@@ -129,28 +129,39 @@ LVL_Npc *LevelScene::spawnNPC(LevelNPC npcData, NpcSpawnType sp_type, NpcSpawnDi
     npc->reSpawnable=reSpawnable;
     npc->data = npcData;
     npc->init();
-    npc->Activate();
     switch(sp_type)
     {
         case GENERATOR_WARP:
-        switch(sp_dir)
-        {
-            case SPAWN_DOWN:
-                npc->setWarpSpawn(LVL_Npc::WARP_TOP); break;
-            case SPAWN_UP:
-                npc->setWarpSpawn(LVL_Npc::WARP_BOTTOM); break;
-            case SPAWN_LEFT:
-                npc->setWarpSpawn(LVL_Npc::WARP_RIGHT); break;
-            case SPAWN_RIGHT:
-                npc->setWarpSpawn(LVL_Npc::WARP_LEFT); break;
-        }
-        break;
+            switch(sp_dir)
+            {
+                case SPAWN_DOWN:
+                    npc->setWarpSpawn(LVL_Npc::WARP_TOP); break;
+                case SPAWN_UP:
+                    npc->setWarpSpawn(LVL_Npc::WARP_BOTTOM); break;
+                case SPAWN_LEFT:
+                    npc->setWarpSpawn(LVL_Npc::WARP_RIGHT); break;
+                case SPAWN_RIGHT:
+                    npc->setWarpSpawn(LVL_Npc::WARP_LEFT); break;
+            }
+            break;
         case GENERATOR_PROJECTILE:
-
-        break;
+            switch(sp_dir)
+            {
+                case SPAWN_DOWN:
+                    npc->setSpeedX(0.0f); npc->setSpeedY(ConfigManager::marker_npc.projectile_speed); break;
+                case SPAWN_UP:
+                    npc->setSpeedX(0.0f); npc->setSpeedY(-ConfigManager::marker_npc.projectile_speed);  break;
+                case SPAWN_LEFT:
+                    npc->setSpeedX(-ConfigManager::marker_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
+                case SPAWN_RIGHT:
+                    npc->setSpeedX(ConfigManager::marker_npc.projectile_speed); npc->setSpeedY(0.0f);  break;
+            }
+            PGE_Audio::playSound(ConfigManager::marker_npc.projectile_sound_id);
+            break;
         default:
             break;
     }
+    npc->Activate();
     active_npcs.push_back(npc);
     npcs.push_back(npc);
     return npc;
