@@ -38,6 +38,7 @@ void LVL_Npc::updateCollisions()
     environments_map.clear();
     contacted_bgos.clear();
     contacted_npc.clear();
+    contacted_blocks.clear();
     contacted_players.clear();
 
     collided_top.clear();
@@ -333,6 +334,8 @@ void LVL_Npc::solveCollision(PGE_Phys_Object *collided)
     {
         case PGE_Phys_Object::LVLBlock:
         {
+            contacted_blocks[(intptr_t)collided]=collided;
+
             //Don't collide with blocks if disabled!
             if(disableBlockCollision) break;
 

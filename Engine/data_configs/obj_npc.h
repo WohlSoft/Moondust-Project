@@ -24,6 +24,7 @@
 #include <common_features/size.h>
 
 #include "../graphics/graphics.h"
+#include "spawn_effect_def.h"
 
 // //Defines:// //
 //  obj_npc     //
@@ -52,6 +53,15 @@ struct obj_npc
     unsigned long effect_1;     //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_2;     //    shell-effect=4			;effect on kick by shell or other NPC
 
+    enum blockSpawn {
+        spawn_warp=0,
+        spawn_bump
+    };
+    unsigned int block_spawn_type;
+    float        block_spawn_speed;
+    bool         block_spawn_sound;//Play sound on spawn from block (if false - spawn without 'radish' sound)
+
+
     //    ; graphics
     int gfx_offset_x;   //    gfx-offst-x=0
     int gfx_offset_y;   //    gfx-offst-y=2
@@ -69,6 +79,7 @@ struct obj_npc
     unsigned int framespeed;//    frame-speed=128
     bool foreground;        //    foreground=0
     bool background;        //    background=0
+    double z_offset;
     bool ani_bidir;         //    animation-bidirectional=0
     bool ani_direct;        //    animation-direction=0
 
@@ -137,6 +148,7 @@ struct obj_npc
     int speed;     //    speed=64			; Default movement speed in px/s
     bool movement; //    moving=1			; NPC simply moving right/left
     bool scenery;  //    scenery=0			; NPC as block or BGO
+    bool keep_position;  //    scenery=0			; Keep NPC's position on despawn
     bool activity;  //   activity=1         ; NPC has "Activated" event, doing regular loops, etc.
                     //                        If flag is false, NPC doing job while on screen only and keeps position
     bool shared_ani;//   shared-animation   ; All NPC's of same ID will do same animation
@@ -248,6 +260,11 @@ struct npc_Markers
             float phs_max_fall_speed;
     //effects
     unsigned long eff_lava_burn; //Lava burn effect [Effect to spawn on contact with lava]
+
+    //projectile properties
+    SpawnEffectDef projectile_effect;
+    long  projectile_sound_id;
+    float projectile_speed;
 };
 
 #endif // OBJ_NPC_H

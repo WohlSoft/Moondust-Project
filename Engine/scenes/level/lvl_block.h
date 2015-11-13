@@ -23,6 +23,10 @@
 #include <data_configs/obj_block.h>
 #include <common_features/rectf.h>
 #include <PGE_File_Formats/file_formats.h>
+#include "lvl_player.h"
+
+#include <luabind/luabind.hpp>
+#include <lua_inclues/lua.hpp>
 
 class LVL_Block : public PGE_Phys_Object
 {
@@ -70,6 +74,8 @@ public:
     void transformTo_x(long id);
 
     void hit(directions _dir=up);
+    void hit(bool isUp, LVL_Player* player, int numHits=1);
+    void destroy(bool playEffect=false);
     directions hitDirection;
 
     GLdouble zIndex();
@@ -89,6 +95,21 @@ public:
     void render(double camX, double camY);
 
     bool isInited();
+
+    /************LUA-Specific functions*********/
+    long lua_getID();
+    int  lua_contentID_old();
+    void lua_setContentID_old(int npcid);
+    int  lua_contentID();
+    void lua_setContentID(int npcid);
+    bool lua_invisible();
+    void lua_setInvisible(bool iv);
+    bool lua_slippery();
+    void lua_setSlippery(bool sl);
+    bool lua_isSolid();
+    static luabind::scope bindToLua();
+    /*******************************************/
+
 private:
     void drawPiece(PGE_RectF target, PGE_RectF block, PGE_RectF texture);
     bool _isInited;

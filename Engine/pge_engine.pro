@@ -261,7 +261,12 @@ SOURCES += \
     settings/debugger.cpp \
     ../_common/data_functions/npctxt_manager.cpp \
     script/bindings/core/lua_global_constants.cpp \
-    scenes/world/wld_pathopener.cpp
+    scenes/world/wld_pathopener.cpp \
+    scenes/level/npc_detectors/lvl_dtc_contact.cpp \
+    data_configs/spawn_effect_def.cpp \
+    script/bindings/level/classes/luaclass_lvl_block.cpp \
+    script/bindings/level/classes/luaclass_lvl_bgo.cpp \
+    script/bindings/level/classes/luaclass_level_contact_detector.cpp
 
 HEADERS  += \
     graphics/graphics.h \
@@ -407,7 +412,10 @@ HEADERS  += \
     script/bindings/core/lua_global_constants.h \
     script/lua_defines.h \
     scenes/level/collision_checks.h \
-    scenes/world/wld_pathopener.h
+    scenes/world/wld_pathopener.h \
+    scenes/level/npc_detectors/lvl_dtc_contact.h \
+    data_configs/spawn_effect_def.h \
+    script/bindings/level/classes/luaclass_level_contact_detector.h
 
 
 FORMS    += \
