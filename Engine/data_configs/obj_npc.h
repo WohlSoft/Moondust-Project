@@ -261,12 +261,8 @@ struct npc_Markers
 
     //projectile properties
     SpawnEffectDef projectile_effect;
-    long projectile_sound_id;
-    long projectile_speed;
-
-    //Projectile appearence from block
-    long projectile_block_speed;
-
+    long  projectile_sound_id;
+    float projectile_speed;
 };
 
 #endif // OBJ_NPC_H

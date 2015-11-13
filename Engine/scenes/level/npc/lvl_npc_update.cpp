@@ -38,6 +38,8 @@ void LVL_Npc::update(float tickTime)
 
     event_queue.processEvents(tickTime);
 
+    animator.manualTick(tickTime);
+
     if(warpSpawing)
     {
         setSpeed(0.0, 0.0);
@@ -46,7 +48,6 @@ void LVL_Npc::update(float tickTime)
 
     PGE_Phys_Object::update(tickTime);
     if(deActivatable) activationTimeout-=tickTime;
-    animator.manualTick(tickTime);
 
     if(motionSpeed!=0)
     {
