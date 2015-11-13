@@ -422,23 +422,46 @@ void LVL_Block::hit(LVL_Block::directions _dir)
         triggerEvent=true;
         playHitSnd=true;
         //NPC!
-        PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
-        doFade=true;
-        if((!setup->bounce)&&(!setup->switch_Button))
+        if(ConfigManager::lvl_npc_indexes.contains(data.npc_id))
         {
-            transformTo(setup->transfororm_on_hit_into, 2);
-        }
-        LevelNPC npcDef = FileFormats::CreateLvlNpc();
-        npcDef.id=data.npc_id;
-          data.npc_id=0;
-        npcDef.direct = 0;
-        npcDef.x=data.x;
-        npcDef.y=data.y-(hitDirection==up?data.h:(-data.h*2));
-        LVL_Npc * npc = LvlSceneP::s->spawnNPC(npcDef, LevelScene::GENERATOR_WARP, hitDirection==up?LevelScene::SPAWN_UP:LevelScene::SPAWN_DOWN, false);
-        if(npc)
-        {
-            npc->setCenterX(posRect.center().x());
-            npc->setPosY(posRect.top()-npc->height());
+            obj_npc &npcSet=ConfigManager::lvl_npc_indexes[data.npc_id];
+
+            if(npcSet.block_spawn_sound)
+                PGE_Audio::playSoundByRole(obj_sound_role::BlockOpen);
+
+            doFade=true;
+            if((!setup->bounce)&&(!setup->switch_Button))
+            {
+                transformTo(setup->transfororm_on_hit_into, 2);
+            }
+
+            LevelNPC npcDef = FileFormats::CreateLvlNpc();
+            npcDef.id=data.npc_id;
+              data.npc_id=0;
+            npcDef.direct = 0;
+            npcDef.x=data.x;
+            npcDef.y=data.y-(hitDirection==up?data.h:(-data.h*2));
+
+            LVL_Npc * npc;
+            npc = LvlSceneP::s->spawnNPC(npcDef,
+                                        (npcSet.block_spawn_type==0)?
+                                             LevelScene::GENERATOR_WARP:
+                                             LevelScene::GENERATOR_APPEAR,
+                                         hitDirection==up?LevelScene::SPAWN_UP:LevelScene::SPAWN_DOWN,
+                                         false);
+            if(npc)
+            {
+                npc->setCenterX(posRect.center().x());
+                if(_dir==up)
+                    npc->setPosY(posRect.top()-npc->height());
+                else
+                    npc->setPosY(posRect.bottom());
+
+                if(npcSet.block_spawn_type==1)
+                {
+                    npc->setSpeedY(fabs(npcSet.block_spawn_speed)*((_dir==up)?-1:1));
+                }
+            }
         }
     }
 
