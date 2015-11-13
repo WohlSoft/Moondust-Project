@@ -32,7 +32,7 @@ function jumping_ninji:__init(npc_obj)
     -- FOR AI_JUMPING
     self.def_jumpingUpAnimTicks = smbx_utils.ticksToTime(9)
     self.def_jumpingUpAnimTicksLaunch = smbx_utils.ticksToTime(8)
-    self.def_speedJumpingUp = -6.7
+    self.def_speedJumpingUp = -7
     -- FOR AI_IDLE
     self.def_idleChargingTicks  = smbx_utils.ticksToTime(5)
 
